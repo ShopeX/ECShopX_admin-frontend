@@ -75,7 +75,6 @@ function install(Vue) {
   Vue.prototype.VERSION_PLATFORM = VERSION_PLATFORM
   Vue.prototype.VERSION_B2C = VERSION_B2C
   Vue.prototype.VERSION_IN_PURCHASE = VERSION_IN_PURCHASE
-  Vue.prototype.VUE_APP_PRODUCT_MODEL = process.env.VUE_APP_PRODUCT_MODEL
   Vue.prototype.VERSION_SHUYUN = VERSION_SHUYUN
   Vue.prototype.VUE_APP_CHUZHI = process.env.VUE_APP_CHUZHI == 'true'
 

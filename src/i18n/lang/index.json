@@ -32743,5 +32743,6485 @@
 		"zh-cn": "请输入结算周期数",
 		"en": "Please enter the number of settlement cycles",
 		"zh-tw": "請輸入結算週期數"
+	},
+	"deqidq4": {
+		"zh-cn": "更新于 ",
+		"en": "Updated on",
+		"zh-tw": "更新於"
+	},
+	"b2spxe5": {
+		"zh-cn": " 取 消 ",
+		"en": "Eliminate",
+		"zh-tw": "取 消"
+	},
+	"fovd945": {
+		"zh-cn": " 确 定 ",
+		"en": "\"Confirmed\"",
+		"zh-tw": "確 定"
+	},
+	"gg26b4": {
+		"zh-cn": " 查询 ",
+		"en": "Query",
+		"zh-tw": "查詢"
+	},
+	"h5x2": {
+		"zh-cn": " 包",
+		"en": "package",
+		"zh-tw": "包"
+	},
+	"bga1km10": {
+		"zh-cn": " 若有优惠券限领 1 张，券包组合含 2 张，按优惠券规则领取 1 张 ",
+		"en": "If there is a coupon, only one can be claimed. The coupon package includes two coupons. Claim one coupon according to the coupon rules",
+		"zh-tw": "若有優惠券限領 1 張，券包組合含 2 張，按優惠券規則領取 1 張"
+	},
+	"dd4ni4": {
+		"zh-cn": " 取消 ",
+		"en": "Cancel",
+		"zh-tw": "取消"
+	},
+	"in1ck4": {
+		"zh-cn": " 确定 ",
+		"en": "\"Sure\"",
+		"zh-tw": "確定"
+	},
+	"i1gx3": {
+		"zh-cn": " 是 ",
+		"en": "is",
+		"zh-tw": "是"
+	},
+	"ez163": {
+		"zh-cn": " 否 ",
+		"en": "no",
+		"zh-tw": "否"
+	},
+	"b5rlyx5": {
+		"zh-cn": " 兑换券 ",
+		"en": "Exchange coupon",
+		"zh-tw": "兌換券"
+	},
+	"dc2rhw5": {
+		"zh-cn": " 折扣卷 ",
+		"en": "Discount coupon",
+		"zh-tw": "折扣卷"
+	},
+	"etfamu5": {
+		"zh-cn": " 满减券 ",
+		"en": "Full discount coupon",
+		"zh-tw": "滿減券"
+	},
+	"ufzqewf": {
+		"zh-cn": " 张，最多选择 20 张优惠券",
+		"en": "A maximum of 20 coupons can be selected",
+		"zh-tw": "張，最多選擇 20 張優惠券"
+	},
+	"juz394": {
+		"zh-cn": " 编辑 ",
+		"en": "\"Editor",
+		"zh-tw": "編輯"
+	},
+	"ao6x3c5": {
+		"zh-cn": "商品名： ",
+		"en": "Product Name",
+		"zh-tw": "商品名："
+	},
+	"3oueee6": {
+		"zh-cn": " 本地上传 ",
+		"en": "Local upload",
+		"zh-tw": "本地上傳"
+	},
+	"euf2i45": {
+		"zh-cn": "添加货架 ",
+		"en": "Add shelves",
+		"zh-tw": "添加貨架"
+	},
+	"miwv34": {
+		"zh-cn": " 重置 ",
+		"en": "Reset",
+		"zh-tw": "重置"
+	},
+	"4rrpkw6": {
+		"zh-cn": " 更新时间：",
+		"en": "Update time",
+		"zh-tw": "更新時間："
+	},
+	"yvxihq2x": {
+		"zh-cn": "\n          () =>\n            $notify.success({\n              message: '复制成功'\n            })\n        ",
+		"en": "() =>\n$notify.success({\nmessage: 'Copy successful\n})",
+		"zh-tw": "() =>\n$notify.success({\nmessage: '複製成功'\n})"
+	},
+	"d3trih8": {
+		"zh-cn": " 复制文章链接 ",
+		"en": "Copy the article link",
+		"zh-tw": "複製文章鏈接"
+	},
+	"fljs34": {
+		"zh-cn": " 排序 ",
+		"en": "Sorting",
+		"zh-tw": "排序"
+	},
+	"db22k4": {
+		"zh-cn": " 删除 ",
+		"en": "Delete",
+		"zh-tw": "刪除"
+	},
+	"p37lrc2e": {
+		"zh-cn": "\n      () =>\n        $message.success({\n          message: '复制成功'\n        })\n    ",
+		"en": "() =>\n$message.success({\nmessage: 'Copy successful\n})",
+		"zh-tw": "() =>\n$message.success({\nmessage: '複製成功'\n})"
+	},
+	"mx7g2f6": {
+		"zh-cn": " 选择图片 ",
+		"en": "Select the picture",
+		"zh-tw": "選擇圖片"
+	},
+	"xaf4i96": {
+		"zh-cn": " 编辑内容 ",
+		"en": "Edit content",
+		"zh-tw": "編輯內容"
+	},
+	"mwj79c6": {
+		"zh-cn": " 选择全部 ",
+		"en": "Select all",
+		"zh-tw": "選擇全部"
+	},
+	"mrhp3": {
+		"zh-cn": " 至 ",
+		"en": "to",
+		"zh-tw": "至"
+	},
+	"unjubc6": {
+		"zh-cn": " 点击上传 ",
+		"en": "Click to upload",
+		"zh-tw": "點擊上傳"
+	},
+	"kboxkfb": {
+		"zh-cn": " EXCEL格式模板请",
+		"en": "Please refer to the EXCEL format template",
+		"zh-tw": "EXCEL格式模板請"
+	},
+	"6r3hro6": {
+		"zh-cn": " 确认上传 ",
+		"en": "Confirm upload",
+		"zh-tw": "確認上傳"
+	},
+	"hu613": {
+		"zh-cn": " 刷新",
+		"en": "Refresh",
+		"zh-tw": "刷新"
+	},
+	"7xisbpb": {
+		"zh-cn": " 跳转到历史消息列表 ",
+		"en": "Jump to the historical message list",
+		"zh-tw": "跳轉到歷史消息列表"
+	},
+	"trb40t6": {
+		"zh-cn": " 添加分组 ",
+		"en": "Add groups",
+		"zh-tw": "添加分組"
+	},
+	"j171z4": {
+		"zh-cn": " 移组 ",
+		"en": "Group shift",
+		"zh-tw": "移組"
+	},
+	"32ol2q6": {
+		"zh-cn": " 全部取消 ",
+		"en": "All cancelled",
+		"zh-tw": "全部取消"
+	},
+	"1ublr7": {
+		"zh-cn": " 选择商品: ",
+		"en": "Select products",
+		"zh-tw": "選擇商品:"
+	},
+	"ide6e4": {
+		"zh-cn": " 登录 ",
+		"en": "Log in",
+		"zh-tw": "登錄"
+	},
+	"dk58u4": {
+		"zh-cn": " 后退 ",
+		"en": "Back off",
+		"zh-tw": "後退"
+	},
+	"d7exy4": {
+		"zh-cn": " 关闭 ",
+		"en": "\"Close",
+		"zh-tw": "關閉"
+	},
+	"cp35x4": {
+		"zh-cn": " 保存 ",
+		"en": "Save",
+		"zh-tw": "保存"
+	},
+	"llhwm4": {
+		"zh-cn": " 警示：",
+		"en": "Warning",
+		"zh-tw": "警示："
+	},
+	"eixn3": {
+		"zh-cn": " 内 ",
+		"en": "Within the",
+		"zh-tw": "內"
+	},
+	"avb2ds5": {
+		"zh-cn": " 优惠券 ",
+		"en": "Coupon",
+		"zh-tw": "優惠券"
+	},
+	"nlwrma6": {
+		"zh-cn": " 不可领取 ",
+		"en": "Not available for collection",
+		"zh-tw": "不可領取"
+	},
+	"d4rgte5": {
+		"zh-cn": " 搜 索 ",
+		"en": "\"Search\"",
+		"zh-tw": "搜 索"
+	},
+	"flzk9x1f": {
+		"zh-cn": " 上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留",
+		"en": "If there are lines of processing failure in the uploaded file, an error file will be generated. Please check the error message in time, make corrections and then download again. The error description file will only be retained",
+		"zh-tw": "上傳文件如果有處理失敗的行數後將會生成錯誤文件，請及時查看錯誤信息修改後重新下載，錯誤描述文件只保留"
+	},
+	"gb8vax6": {
+		"zh-cn": " 下载模版 ",
+		"en": "Download the template",
+		"zh-tw": "下載模版"
+	},
+	"cowk0a5": {
+		"zh-cn": " 已删除 ",
+		"en": "Deleted",
+		"zh-tw": "已刪除"
+	},
+	"likox4": {
+		"zh-cn": " 详情 ",
+		"en": "For details",
+		"zh-tw": "詳情"
+	},
+	"dpmnl4": {
+		"zh-cn": " 回复 ",
+		"en": "Reply",
+		"zh-tw": "回覆"
+	},
+	"oyu1vj7": {
+		"zh-cn": " 评价星级： ",
+		"en": "Star rating:",
+		"zh-tw": "評價星級："
+	},
+	"rphtar7": {
+		"zh-cn": " 评价内容： ",
+		"en": "Evaluation content",
+		"zh-tw": "評價內容："
+	},
+	"3qbytt6": {
+		"zh-cn": " 评价图： ",
+		"en": "Evaluation chart",
+		"zh-tw": "評價圖："
+	},
+	"3p4dsd6": {
+		"zh-cn": " 评价人： ",
+		"en": "Reviewer",
+		"zh-tw": "評價人："
+	},
+	"ow5d7t7": {
+		"zh-cn": " 评价时间： ",
+		"en": "Evaluation time",
+		"zh-tw": "評價時間："
+	},
+	"g3953o7": {
+		"zh-cn": " 是否回复： ",
+		"en": "Whether to reply",
+		"zh-tw": "是否回覆："
+	},
+	"cpb4lb5": {
+		"zh-cn": " 已回复 ",
+		"en": "Replied",
+		"zh-tw": "已回覆"
+	},
+	"dv61mv5": {
+		"zh-cn": " 未回复 ",
+		"en": "No reply",
+		"zh-tw": "未回覆"
+	},
+	"79u2xj7": {
+		"zh-cn": " 回复内容： ",
+		"en": "Reply content",
+		"zh-tw": "回覆內容："
+	},
+	"b8bci96": {
+		"zh-cn": " 回复人： ",
+		"en": "Responder",
+		"zh-tw": "回覆人："
+	},
+	"4ghmul7": {
+		"zh-cn": " 回复时间： ",
+		"en": "Reply time",
+		"zh-tw": "回覆時間："
+	},
+	"trhr726": {
+		"zh-cn": " 添加员工 ",
+		"en": "Add employees",
+		"zh-tw": "添加員工"
+	},
+	"u9wioa6": {
+		"zh-cn": " 导入员工 ",
+		"en": "Import employees",
+		"zh-tw": "導入員工"
+	},
+	"efepu4": {
+		"zh-cn": " 导出 ",
+		"en": "Export",
+		"zh-tw": "導出"
+	},
+	"tuikx06": {
+		"zh-cn": " 添加标签 ",
+		"en": "Add tags",
+		"zh-tw": "添加標籤"
+	},
+	"pam6x6": {
+		"zh-cn": " 确定保存 ",
+		"en": "Confirm to save",
+		"zh-tw": "確定保存"
+	},
+	"tqmwua6": {
+		"zh-cn": " 添加企业 ",
+		"en": "Add enterprise",
+		"zh-tw": "添加企業"
+	},
+	"gf7rtk8": {
+		"zh-cn": " 添加销售分类 ",
+		"en": "Add sales categories",
+		"zh-tw": "添加銷售分類"
+	},
+	"akaly76": {
+		"zh-cn": " 查看商品 ",
+		"en": "View the product",
+		"zh-tw": "查看商品"
+	},
+	"1vg0hl6": {
+		"zh-cn": " 新增子类 ",
+		"en": "New subclasses",
+		"zh-tw": "新增子類"
+	},
+	"axjir55": {
+		"zh-cn": " 下载码 ",
+		"en": "Download code",
+		"zh-tw": "下載碼"
+	},
+	"j66ck06": {
+		"zh-cn": " 复制链接 ",
+		"en": "Copy the link",
+		"zh-tw": "複製鏈接"
+	},
+	"fhh3r4": {
+		"zh-cn": " 投放 ",
+		"en": "\"Release\"",
+		"zh-tw": "投放"
+	},
+	"hy1k3": {
+		"zh-cn": " 截止",
+		"en": "Deadline",
+		"zh-tw": "截止"
+	},
+	"ciwwh3": {
+		"zh-cn": "到期 ",
+		"en": "Due",
+		"zh-tw": "到期"
+	},
+	"hfhk3": {
+		"zh-cn": " 折 ",
+		"en": "fold",
+		"zh-tw": "折"
+	},
+	"m1m0m4": {
+		"zh-cn": " 返回 ",
+		"en": "Return",
+		"zh-tw": "返回"
+	},
+	"ogr3hk6": {
+		"zh-cn": " 上传日志 ",
+		"en": "Upload log",
+		"zh-tw": "上傳日誌"
+	},
+	"ehbft4": {
+		"zh-cn": " 审核 ",
+		"en": "Review",
+		"zh-tw": "審覈"
+	},
+	"gjbjs4": {
+		"zh-cn": " 核销 ",
+		"en": "Write-off",
+		"zh-tw": "覈銷"
+	},
+	"dbv9925": {
+		"zh-cn": " 打标签 ",
+		"en": "Tag",
+		"zh-tw": "打標籤"
+	},
+	"4tu6mn7": {
+		"zh-cn": " 赠送优惠券 ",
+		"en": "\"Gift coupon",
+		"zh-tw": "贈送優惠券"
+	},
+	"s2rjfj6": {
+		"zh-cn": " 群发短信 ",
+		"en": "Mass text messaging",
+		"zh-tw": "羣發短信"
+	},
+	"iq9d148": {
+		"zh-cn": " 付费会员延期 ",
+		"en": "Extension of paid membership",
+		"zh-tw": "付費會員延期"
+	},
+	"ozioic8": {
+		"zh-cn": " 会员等级设置 ",
+		"en": "Membership level Settings",
+		"zh-tw": "會員等級設置"
+	},
+	"ekjn2a5": {
+		"zh-cn": " 注册时间",
+		"en": "Registration time",
+		"zh-tw": "註冊時間"
+	},
+	"jhjwek6": {
+		"zh-cn": " 基础信息 ",
+		"en": "Basic information",
+		"zh-tw": "基礎信息"
+	},
+	"jk7yf06": {
+		"zh-cn": " 会员等级 ",
+		"en": "Membership level",
+		"zh-tw": "會員等級"
+	},
+	"7h5xle6": {
+		"zh-cn": " 调整上级 ",
+		"en": "Adjust the superior",
+		"zh-tw": "調整上級"
+	},
+	"d6c1s4": {
+		"zh-cn": " 全部 ",
+		"en": "All",
+		"zh-tw": "全部"
+	},
+	"dc2jv75": {
+		"zh-cn": " 折扣券 ",
+		"en": "Discount coupon",
+		"zh-tw": "折扣券"
+	},
+	"q4f2c6": {
+		"zh-cn": " 确定发送 ",
+		"en": "Confirm sending",
+		"zh-tw": "確定發送"
+	},
+	"rk8976": {
+		"zh-cn": " 确定延期 ",
+		"en": "Confirmed postponement",
+		"zh-tw": "確定延期"
+	},
+	"pcnah6": {
+		"zh-cn": " 确定修改 ",
+		"en": "Confirm the modification",
+		"zh-tw": "確定修改"
+	},
+	"tnxv36": {
+		"zh-cn": " 确定添加 ",
+		"en": "Confirm to add",
+		"zh-tw": "確定添加"
+	},
+	"g4yo14": {
+		"zh-cn": " 有效 ",
+		"en": "Effective",
+		"zh-tw": "有效"
+	},
+	"fyufs4": {
+		"zh-cn": " 无效 ",
+		"en": "Invalid",
+		"zh-tw": "無效"
+	},
+	"agptt76": {
+		"zh-cn": " 提交审核 ",
+		"en": "Submit for review",
+		"zh-tw": "提交審覈"
+	},
+	"6qipxq7": {
+		"zh-cn": " 保存并审核 ",
+		"en": "Save and review",
+		"zh-tw": "保存並審覈"
+	},
+	"euf53": {
+		"zh-cn": " 付费",
+		"en": "\"Pay",
+		"zh-tw": "付費"
+	},
+	"cx85385": {
+		"zh-cn": " 待审核 ",
+		"en": "Pending review",
+		"zh-tw": "待審覈"
+	},
+	"cxy8ch5": {
+		"zh-cn": " 已通过 ",
+		"en": "Passed",
+		"zh-tw": "已通過"
+	},
+	"cr8l5v5": {
+		"zh-cn": " 已拒绝 ",
+		"en": "Rejected",
+		"zh-tw": "已拒絕"
+	},
+	"qxrmpa6": {
+		"zh-cn": " 活动添加 ",
+		"en": "Event addition",
+		"zh-tw": "活動添加"
+	},
+	"gcika4": {
+		"zh-cn": " 查看 ",
+		"en": "View",
+		"zh-tw": "查看"
+	},
+	"jn7om4": {
+		"zh-cn": " 终止 ",
+		"en": "Termination",
+		"zh-tw": "終止"
+	},
+	"e5k1zh6": {
+		"zh-cn": " 报名记录 ",
+		"en": "Registration Record",
+		"zh-tw": "報名記錄"
+	},
+	"f3xz84": {
+		"zh-cn": " 总店 ",
+		"en": "Head store",
+		"zh-tw": "總店"
+	},
+	"h9ea34": {
+		"zh-cn": " 清空 ",
+		"en": "Clear",
+		"zh-tw": "清空"
+	},
+	"uezq6r6": {
+		"zh-cn": " 导出文件 ",
+		"en": "Export file",
+		"zh-tw": "導出文件"
+	},
+	"4773isr": {
+		"zh-cn": " 分账金额 = (订单金额-手续费) * 商户分账占比",
+		"en": "The revenue-sharing amount = (order amount - handling fee) * merchant revenue-sharing ratio",
+		"zh-tw": "分賬金額 = (訂單金額-手續費) * 商戶分賬佔比"
+	},
+	"bkgcy4t": {
+		"zh-cn": "若计算金额存在三位及以上的小数，则四舍五入精确至两位小数 ",
+		"en": "If the calculated amount has three or more decimal places, it shall be rounded to two decimal places",
+		"zh-tw": "若計算金額存在三位及以上的小數，則四捨五入精確至兩位小數"
+	},
+	"et2fgor": {
+		"zh-cn": " 分账金额 = (订单金额-手续费) * 总部分账占比",
+		"en": "The revenue-sharing amount = (order amount - handling fee) * The revenue-sharing ratio of the headquarters",
+		"zh-tw": "分賬金額 = (訂單金額-手續費) * 總部分賬佔比"
+	},
+	"r61xhq7": {
+		"zh-cn": " 分账金额： ",
+		"en": "Sharing amount",
+		"zh-tw": "分賬金額："
+	},
+	"9dw4n71x": {
+		"zh-cn": " 建议尺寸:750*750，文件格式为：png、jpeg、bmp、 jpg大小不超 2M，小程序卡片分享与报名活动列表取详情第一张图展示 ",
+		"en": "Suggested size :750*750, file format: png, jpeg, bmp, jpg, size no more than 2M. The details of the mini-program card sharing and registration activity list are displayed in the first picture",
+		"zh-tw": "建議尺寸:750*750，文件格式爲：png、jpeg、bmp、 jpg大小不超 2M，小程序卡片分享與報名活動列表取詳情第一張圖展示"
+	},
+	"mvv65j6": {
+		"zh-cn": " 选择企业 ",
+		"en": "\"Choose an enterprise",
+		"zh-tw": "選擇企業"
+	},
+	"59roon8": {
+		"zh-cn": " 全部店铺适用 ",
+		"en": "Applicable to all stores",
+		"zh-tw": "全部店鋪適用"
+	},
+	"ib1uw48": {
+		"zh-cn": " 指定店铺适用 ",
+		"en": "Applicable to designated stores",
+		"zh-tw": "指定店鋪適用"
+	},
+	"myhesd6": {
+		"zh-cn": " 选择店铺 ",
+		"en": "Select a store",
+		"zh-tw": "選擇店鋪"
+	},
+	"gulg07z": {
+		"zh-cn": " 您参与的\"活动名称\"活动，已经\"审核结果\"(允许参与 或 已拒绝) ",
+		"en": "The \"Activity Name\" activity you participated in has been \"reviewed \"(allowed to participate or rejected).",
+		"zh-tw": "您參與的\"活動名稱\"活動，已經\"審覈結果\"(允許參與 或 已拒絕)"
+	},
+	"chrn675": {
+		"zh-cn": " 富文本 ",
+		"en": "Rich text",
+		"zh-tw": "富文本"
+	},
+	"hwyjay6": {
+		"zh-cn": " 优惠金额：",
+		"en": "Discount amount",
+		"zh-tw": "優惠金額："
+	},
+	"ehct3": {
+		"zh-cn": " 元 ",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"dtml2": {
+		"zh-cn": "元 ",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"eec744": {
+		"zh-cn": " 实付：",
+		"en": "Actual payment",
+		"zh-tw": "實付："
+	},
+	"lul33": {
+		"zh-cn": " 积分",
+		"en": "Points",
+		"zh-tw": "積分"
+	},
+	"51yl7c6": {
+		"zh-cn": " 支付成功 ",
+		"en": "Payment successful",
+		"zh-tw": "支付成功"
+	},
+	"dx7srx5": {
+		"zh-cn": " 未支付 ",
+		"en": "Unpaid",
+		"zh-tw": "未支付"
+	},
+	"coswvo5": {
+		"zh-cn": " 已关闭 ",
+		"en": "Closed",
+		"zh-tw": "已關閉"
+	},
+	"crly9e5": {
+		"zh-cn": " 已撤销 ",
+		"en": "Revoked",
+		"zh-tw": "已撤銷"
+	},
+	"52zet96": {
+		"zh-cn": " 支付失败 ",
+		"en": "Payment failed",
+		"zh-tw": "支付失敗"
+	},
+	"svi31v7": {
+		"zh-cn": " 退款处理中 ",
+		"en": "Refund processing in progress",
+		"zh-tw": "退款處理中"
+	},
+	"nvk9cj6": {
+		"zh-cn": " 退款成功 ",
+		"en": "Refund successful",
+		"zh-tw": "退款成功"
+	},
+	"nujfqm6": {
+		"zh-cn": " 退款失败 ",
+		"en": "Refund failed",
+		"zh-tw": "退款失敗"
+	},
+	"lcr0v48": {
+		"zh-cn": " （企业电话） ",
+		"en": "(Enterprise Telephone",
+		"zh-tw": "（企業電話）"
+	},
+	"or4hqz8": {
+		"zh-cn": " （企业邮箱） ",
+		"en": "(Enterprise Email",
+		"zh-tw": "（企業郵箱）"
+	},
+	"vrhco25": {
+		"zh-cn": "个人信息 ",
+		"en": "Personal information",
+		"zh-tw": "個人信息"
+	},
+	"xrpttm7": {
+		"zh-cn": " 附件信息： ",
+		"en": "Attachment information",
+		"zh-tw": "附件信息："
+	},
+	"my7m64": {
+		"zh-cn": " 附件 ",
+		"en": "Attachment",
+		"zh-tw": "附件"
+	},
+	"5crk2m6": {
+		"zh-cn": " 解除关联 ",
+		"en": "Dissolve the association",
+		"zh-tw": "解除關聯"
+	},
+	"68xv6qs": {
+		"zh-cn": " 分账金额 = (订单金额-手续费) * 经销商分账占比",
+		"en": "The amount of revenue sharing = (order amount - handling fee) * the proportion of revenue sharing by dealers",
+		"zh-tw": "分賬金額 = (訂單金額-手續費) * 經銷商分賬佔比"
+	},
+	"ck9bnw7": {
+		"zh-cn": " 人员类型： ",
+		"en": "Personnel type",
+		"zh-tw": "人員類型："
+	},
+	"i6wgh4": {
+		"zh-cn": " 用户 ",
+		"en": "\"User",
+		"zh-tw": "用戶"
+	},
+	"coc5ll5": {
+		"zh-cn": " 导购员 ",
+		"en": "Sales assistant",
+		"zh-tw": "導購員"
+	},
+	"gkc7ql5": {
+		"zh-cn": " 管理员 ",
+		"en": "Administrator",
+		"zh-tw": "管理員"
+	},
+	"jh16k4": {
+		"zh-cn": " 系统 ",
+		"en": "System",
+		"zh-tw": "系統"
+	},
+	"vzhzow7": {
+		"zh-cn": " 店铺管理员 ",
+		"en": "Shop manager",
+		"zh-tw": "店鋪管理員"
+	},
+	"g8t454": {
+		"zh-cn": " 未知 ",
+		"en": "Unknown",
+		"zh-tw": "未知"
+	},
+	"ls72bq7": {
+		"zh-cn": " 配送照片： ",
+		"en": "Delivery photo",
+		"zh-tw": "配送照片："
+	},
+	"e2mh8s1s": {
+		"zh-cn": " * 分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金； ",
+		"en": "When a distributor selects a bank card as the type of commission for withdrawal, the transfer will be made from the available withdrawal amount. To prevent the withdrawal from failing due to insufficient funds when the distributor withdraws, please reserve some funds when withdrawing.",
+		"zh-tw": "* 分銷員提現佣金選擇類型爲銀行卡時，將從可提現金額進行轉賬，爲避免分銷員提現時資金不足導致提現失敗，請提現時預留部分資金；"
+	},
+	"bd1gqp14": {
+		"zh-cn": " * 提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。 ",
+		"en": "It is recommended that the withdrawal operation be carried out between 10:00:00 and 22:00:00 to avoid affecting the operation efficiency.",
+		"zh-tw": "* 提現操作建議在10:00:00-22:00:00進行，以免影響操作時效。"
+	},
+	"1or7ka6": {
+		"zh-cn": " 新增街道 ",
+		"en": "New streets added",
+		"zh-tw": "新增街道"
+	},
+	"1vgv0d6": {
+		"zh-cn": " 新增居委 ",
+		"en": "New neighborhood committee",
+		"zh-tw": "新增居委"
+	},
+	"gr2h3": {
+		"zh-cn": " 导入",
+		"en": "\"Import",
+		"zh-tw": "導入"
+	},
+	"s0mq867": {
+		"zh-cn": " 退款单号: ",
+		"en": "Refund tracking number",
+		"zh-tw": "退款單號:"
+	},
+	"3ptilm6": {
+		"zh-cn": " 订单号: ",
+		"en": "Order Number",
+		"zh-tw": "訂單號:"
+	},
+	"i3bhp47": {
+		"zh-cn": " 售后单号: ",
+		"en": "After-sales tracking number",
+		"zh-tw": "售後單號:"
+	},
+	"7pkh9w9": {
+		"zh-cn": " 对应支付单号: ",
+		"en": "Corresponding payment tracking number:",
+		"zh-tw": "對應支付單號:"
+	},
+	"e1kopq7": {
+		"zh-cn": " 应退金额: ",
+		"en": "Refundable amount",
+		"zh-tw": "應退金額:"
+	},
+	"aazfpw7": {
+		"zh-cn": " 实退金额: ",
+		"en": "Actual refund amount",
+		"zh-tw": "實退金額:"
+	},
+	"aqsj1l7": {
+		"zh-cn": " 应退积分: ",
+		"en": "Refundable points",
+		"zh-tw": "應退積分:"
+	},
+	"707a1r7": {
+		"zh-cn": " 实退积分: ",
+		"en": "Actual refund points",
+		"zh-tw": "實退積分:"
+	},
+	"kfusvc8": {
+		"zh-cn": " 退款单状态: ",
+		"en": "Refund form status",
+		"zh-tw": "退款單狀態:"
+	},
+	"dvxqf35": {
+		"zh-cn": " 未审核 ",
+		"en": "Unreviewed",
+		"zh-tw": "未審覈"
+	},
+	"568wpv9": {
+		"zh-cn": " 审核成功待退款 ",
+		"en": "The review has been successful and a refund is pending",
+		"zh-tw": "審覈成功待退款"
+	},
+	"o3ub2v6": {
+		"zh-cn": " 退款驳回 ",
+		"en": "Refund rejection",
+		"zh-tw": "退款駁回"
+	},
+	"1v0bom6": {
+		"zh-cn": " 撤销退款 ",
+		"en": "Cancel the refund",
+		"zh-tw": "撤銷退款"
+	},
+	"gdlensb": {
+		"zh-cn": " 已发起退款等待到账 ",
+		"en": "A refund has been initiated and is awaiting arrival",
+		"zh-tw": "已發起退款等待到賬"
+	},
+	"nv64i46": {
+		"zh-cn": " 退款异常 ",
+		"en": "Abnormal refund",
+		"zh-tw": "退款異常"
+	},
+	"x7zt9w7": {
+		"zh-cn": " 退款类型: ",
+		"en": "Refund type",
+		"zh-tw": "退款類型:"
+	},
+	"dfvq84": {
+		"zh-cn": " 售后 ",
+		"en": "After-sales service",
+		"zh-tw": "售後"
+	},
+	"dfkzl4": {
+		"zh-cn": " 售前 ",
+		"en": "Pre-sale",
+		"zh-tw": "售前"
+	},
+	"ffonx4": {
+		"zh-cn": " 拒单 ",
+		"en": "Reject the order",
+		"zh-tw": "拒單"
+	},
+	"f5ioqg8": {
+		"zh-cn": " 是否退运费: ",
+		"en": "Will the shipping fee be refunded?",
+		"zh-tw": "是否退運費:"
+	},
+	"g26cho6": {
+		"zh-cn": " 不退运费 ",
+		"en": "The shipping fee will not be refunded.",
+		"zh-tw": "不退運費"
+	},
+	"j96bqv5": {
+		"zh-cn": " 退运费 ",
+		"en": "Refund of shipping fee",
+		"zh-tw": "退運費"
+	},
+	"4fl1yd8": {
+		"zh-cn": " 退运费金额: ",
+		"en": "Refund of shipping fee amount",
+		"zh-tw": "退運費金額:"
+	},
+	"u5hmo39": {
+		"zh-cn": " 退款支付方式: ",
+		"en": "Refund payment method",
+		"zh-tw": "退款支付方式:"
+	},
+	"vn4n3r7": {
+		"zh-cn": " 退款渠道: ",
+		"en": "Refund channel",
+		"zh-tw": "退款渠道:"
+	},
+	"8sulti5": {
+		"zh-cn": "线下退款 ",
+		"en": "Offline refund",
+		"zh-tw": "線下退款"
+	},
+	"c5sbt35": {
+		"zh-cn": " 备注: ",
+		"en": "Note",
+		"zh-tw": "備註:"
+	},
+	"864uaa": {
+		"zh-cn": " 第三方退款单号: ",
+		"en": "Third-party refund tracking number",
+		"zh-tw": "第三方退款單號:"
+	},
+	"zfprc87": {
+		"zh-cn": " 申请时间: ",
+		"en": "Application time",
+		"zh-tw": "申請時間:"
+	},
+	"m0vbyp9": {
+		"zh-cn": " 退款成功时间: ",
+		"en": "Successful refund time",
+		"zh-tw": "退款成功時間:"
+	},
+	"3js5l6b": {
+		"zh-cn": " 商家处理申请说明: ",
+		"en": "Merchant application processing instructions",
+		"zh-tw": "商家處理申請說明:"
+	},
+	"8wqj9m8": {
+		"zh-cn": " 售后提醒内容 ",
+		"en": "After-sales reminder content",
+		"zh-tw": "售後提醒內容"
+	},
+	"b0utb15": {
+		"zh-cn": " 仅退款 ",
+		"en": "Refund only",
+		"zh-tw": "僅退款"
+	},
+	"scdpff6": {
+		"zh-cn": " 退货退款 ",
+		"en": "Return and refund",
+		"zh-tw": "退貨退款"
+	},
+	"fshi34": {
+		"zh-cn": " 换货 ",
+		"en": "Exchange goods",
+		"zh-tw": "換貨"
+	},
+	"cwwdax5": {
+		"zh-cn": " 待处理 ",
+		"en": "To be processed",
+		"zh-tw": "待處理"
+	},
+	"c757795": {
+		"zh-cn": " 处理中 ",
+		"en": "In processing",
+		"zh-tw": "處理中"
+	},
+	"cpr1l85": {
+		"zh-cn": " 已处理 ",
+		"en": "Dealt with",
+		"zh-tw": "已處理"
+	},
+	"cz744j5": {
+		"zh-cn": " 已驳回 ",
+		"en": "Rejected",
+		"zh-tw": "已駁回"
+	},
+	"e4ean4": {
+		"zh-cn": " 备注 ",
+		"en": "Remarks",
+		"zh-tw": "備註"
+	},
+	"jm9d2v8": {
+		"zh-cn": " 添加商品标签 ",
+		"en": "Add product labels",
+		"zh-tw": "添加商品標籤"
+	},
+	"g469w4": {
+		"zh-cn": " 显示 ",
+		"en": "\"Display",
+		"zh-tw": "顯示"
+	},
+	"n93tt4": {
+		"zh-cn": " 隐藏 ",
+		"en": "Hide",
+		"zh-tw": "隱藏"
+	},
+	"cvyene7": {
+		"zh-cn": " 售后类型: ",
+		"en": "After-sales service type",
+		"zh-tw": "售後類型:"
+	},
+	"aj9ebh4": {
+		"zh-cn": "仅退款 ",
+		"en": "Refund only",
+		"zh-tw": "僅退款"
+	},
+	"d6xst75": {
+		"zh-cn": "退货退款 ",
+		"en": "Return and refund",
+		"zh-tw": "退貨退款"
+	},
+	"f81x73": {
+		"zh-cn": "换货 ",
+		"en": "Exchange goods",
+		"zh-tw": "換貨"
+	},
+	"s59ao18": {
+		"zh-cn": " 应退总金额: ",
+		"en": "Total amount to be refunded",
+		"zh-tw": "應退總金額:"
+	},
+	"ouh4zw8": {
+		"zh-cn": " 应退总积分: ",
+		"en": "Total points to be refunded",
+		"zh-tw": "應退總積分:"
+	},
+	"z5h4r77": {
+		"zh-cn": " 退款运费: ",
+		"en": "Refund of shipping fee",
+		"zh-tw": "退款運費:"
+	},
+	"trsz3b7": {
+		"zh-cn": " 申请门店: ",
+		"en": "Application for store",
+		"zh-tw": "申請門店:"
+	},
+	"5uf5no6": {
+		"zh-cn": " 申请人: ",
+		"en": "Applicant",
+		"zh-tw": "申請人:"
+	},
+	"e32qq77": {
+		"zh-cn": " 售后状态: ",
+		"en": "After-sales status",
+		"zh-tw": "售後狀態:"
+	},
+	"sr297y7": {
+		"zh-cn": " 等待商家处理",
+		"en": "Wait for the merchant to handle it",
+		"zh-tw": "等待商家處理"
+	},
+	"5cx5ej6": {
+		"zh-cn": " 商家处理中",
+		"en": "Merchant processing",
+		"zh-tw": "商家處理中"
+	},
+	"erkyc4": {
+		"zh-cn": " 已处理",
+		"en": "Dealt with",
+		"zh-tw": "已處理"
+	},
+	"f2jvh4": {
+		"zh-cn": " 已驳回",
+		"en": "Rejected",
+		"zh-tw": "已駁回"
+	},
+	"etqni4": {
+		"zh-cn": " 已撤销",
+		"en": "Revoked",
+		"zh-tw": "已撤銷"
+	},
+	"baaskz7": {
+		"zh-cn": " 处理进度: ",
+		"en": "Processing progress",
+		"zh-tw": "處理進度:"
+	},
+	"o0yo6v7": {
+		"zh-cn": " 商家备注: ",
+		"en": "Merchant's Note",
+		"zh-tw": "商家備註:"
+	},
+	"c5auna5": {
+		"zh-cn": " 处方药 ",
+		"en": "Prescription drugs",
+		"zh-tw": "處方藥"
+	},
+	"msvlso7": {
+		"zh-cn": " 退货理由: ",
+		"en": "Reason for return",
+		"zh-tw": "退貨理由:"
+	},
+	"2zt75d7": {
+		"zh-cn": " 问题描述: ",
+		"en": "Problem description",
+		"zh-tw": "問題描述:"
+	},
+	"z9eepp7": {
+		"zh-cn": " 图片信息: ",
+		"en": "Image information",
+		"zh-tw": "圖片信息:"
+	},
+	"yupi8g7": {
+		"zh-cn": " 退款金额: ",
+		"en": "Refund amount",
+		"zh-tw": "退款金額:"
+	},
+	"w0vh737": {
+		"zh-cn": " 退款状态: ",
+		"en": "Refund status",
+		"zh-tw": "退款狀態:"
+	},
+	"s1ywba7": {
+		"zh-cn": " 退款关闭。 ",
+		"en": "Refund closed.",
+		"zh-tw": "退款關閉。"
+	},
+	"su57np7": {
+		"zh-cn": " 退款备注: ",
+		"en": "Refund Note",
+		"zh-tw": "退款備註:"
+	},
+	"mg5ze7": {
+		"zh-cn": " 物流公司: ",
+		"en": "Logistics company",
+		"zh-tw": "物流公司:"
+	},
+	"v4dts7": {
+		"zh-cn": " 物流单号: ",
+		"en": "Logistics tracking number",
+		"zh-tw": "物流單號:"
+	},
+	"fk4a44": {
+		"zh-cn": " 提交 ",
+		"en": "Submit",
+		"zh-tw": "提交"
+	},
+	"6s8iac6": {
+		"zh-cn": " 确认发货 ",
+		"en": "Confirm shipment",
+		"zh-tw": "確認發貨"
+	},
+	"96a2sx7": {
+		"zh-cn": " 处理结果: ",
+		"en": "Processing result",
+		"zh-tw": "處理結果:"
+	},
+	"aorgmo5": {
+		"zh-cn": " 不同意 ",
+		"en": "Disagree",
+		"zh-tw": "不同意"
+	},
+	"dc4bh4": {
+		"zh-cn": " 同意 ",
+		"en": "agree",
+		"zh-tw": "同意"
+	},
+	"wvme2j7": {
+		"zh-cn": " 退款积分: ",
+		"en": "Refund points",
+		"zh-tw": "退款積分:"
+	},
+	"qxn9wy7": {
+		"zh-cn": " 拒绝原因: ",
+		"en": "Reason for rejection",
+		"zh-tw": "拒絕原因:"
+	},
+	"iv7ii4": {
+		"zh-cn": " 确认 ",
+		"en": "Confirm",
+		"zh-tw": "確認"
+	},
+	"hlby167": {
+		"zh-cn": " 售后地址: ",
+		"en": "After-sales address",
+		"zh-tw": "售後地址:"
+	},
+	"1obzjk8": {
+		"zh-cn": " 选择售后地址 ",
+		"en": "Select the after-sales address",
+		"zh-tw": "選擇售後地址"
+	},
+	"hot89u8": {
+		"zh-cn": " 新增售后地址 ",
+		"en": "New after-sales address",
+		"zh-tw": "新增售後地址"
+	},
+	"z92qtj6": {
+		"zh-cn": " 联系人: ",
+		"en": "Contact person",
+		"zh-tw": "聯繫人:"
+	},
+	"fu9vny5": {
+		"zh-cn": " 电话: ",
+		"en": "Telephone",
+		"zh-tw": "電話:"
+	},
+	"406hoc7": {
+		"zh-cn": " 回寄地址: ",
+		"en": "Return address",
+		"zh-tw": "回寄地址:"
+	},
+	"kwp9er7": {
+		"zh-cn": " 退货方式: ",
+		"en": "Return method",
+		"zh-tw": "退貨方式:"
+	},
+	"qzezmk7": {
+		"zh-cn": " 退货门店: ",
+		"en": "Return store",
+		"zh-tw": "退貨門店:"
+	},
+	"lxhuiz7": {
+		"zh-cn": " 联系电话: ",
+		"en": "Contact number:",
+		"zh-tw": "聯繫電話:"
+	},
+	"tw3p4l8": {
+		"zh-cn": " 新增运费模板 ",
+		"en": "New freight template added",
+		"zh-tw": "新增運費模板"
+	},
+	"1wgbuh6": {
+		"zh-cn": " 新增品牌 ",
+		"en": "New brand added",
+		"zh-tw": "新增品牌"
+	},
+	"u9zv6k6": {
+		"zh-cn": " 导入商品 ",
+		"en": "Import products",
+		"zh-tw": "導入商品"
+	},
+	"mwtd0l6": {
+		"zh-cn": " 选择商品 ",
+		"en": "Select products",
+		"zh-tw": "選擇商品"
+	},
+	"7166jq6": {
+		"zh-cn": " 批量设置 ",
+		"en": "Batch Settings",
+		"zh-tw": "批量設置"
+	},
+	"loeoa4": {
+		"zh-cn": " 货号：",
+		"en": "Item Number:",
+		"zh-tw": "貨號："
+	},
+	"n4lgqw6": {
+		"zh-cn": " 选择规格 ",
+		"en": "Select specifications",
+		"zh-tw": "選擇規格"
+	},
+	"j57pz4": {
+		"zh-cn": " 移除 ",
+		"en": "\"Remove",
+		"zh-tw": "移除"
+	},
+	"gr6m3": {
+		"zh-cn": " 导出",
+		"en": "Export",
+		"zh-tw": "導出"
+	},
+	"z6sz0b6": {
+		"zh-cn": "未开票订单 ",
+		"en": "Uninvoiced order",
+		"zh-tw": "未開票訂單"
+	},
+	"ag26pe4": {
+		"zh-cn": "主订单 ",
+		"en": "Main order",
+		"zh-tw": "主訂單"
+	},
+	"c3glrx4": {
+		"zh-cn": "子订单 ",
+		"en": "Sub-order",
+		"zh-tw": "子訂單"
+	},
+	"79aqr06": {
+		"zh-cn": " 批量发货 ",
+		"en": "Bulk shipment",
+		"zh-tw": "批量發貨"
+	},
+	"79g0o86": {
+		"zh-cn": " 批量取消 ",
+		"en": "Batch cancellation",
+		"zh-tw": "批量取消"
+	},
+	"b1zcxp7": {
+		"zh-cn": " 分配配送员 ",
+		"en": "Assign delivery personnel",
+		"zh-tw": "分配配送員"
+	},
+	"27uxkq6": {
+		"zh-cn": " 取消配送 ",
+		"en": "Cancel delivery",
+		"zh-tw": "取消配送"
+	},
+	"fy0tq4": {
+		"zh-cn": " 日志 ",
+		"en": "Log",
+		"zh-tw": "日誌"
+	},
+	"inra3": {
+		"zh-cn": " 更多",
+		"en": "More",
+		"zh-tw": "更多"
+	},
+	"1054mv6": {
+		"zh-cn": " 新建活动 ",
+		"en": "Create a new event",
+		"zh-tw": "新建活動"
+	},
+	"4r8dps6": {
+		"zh-cn": " 更改状态 ",
+		"en": "Change the status",
+		"zh-tw": "更改狀態"
+	},
+	"apjwmh5": {
+		"zh-cn": "商品信息 ",
+		"en": "Product information",
+		"zh-tw": "商品信息"
+	},
+	"4jjxpq6": {
+		"zh-cn": " 商品标签 ",
+		"en": "Product label",
+		"zh-tw": "商品標籤"
+	},
+	"ht3vec7": {
+		"zh-cn": " H5二维码 ",
+		"en": "H5 QR code",
+		"zh-tw": "H5二維碼"
+	},
+	"7apsvya": {
+		"zh-cn": " 上传商品到旺店通 ",
+		"en": "Upload your products to Wangdiantong",
+		"zh-tw": "上傳商品到旺店通"
+	},
+	"3x49dga": {
+		"zh-cn": " 上传商品到聚水潭 ",
+		"en": "Upload the goods to Jushuitan",
+		"zh-tw": "上傳商品到聚水潭"
+	},
+	"ftd23": {
+		"zh-cn": " 多 ",
+		"en": "more",
+		"zh-tw": "多"
+	},
+	"dkd2zb7": {
+		"zh-cn": " SPU编码：",
+		"en": "SPU code",
+		"zh-tw": "SPU編碼："
+	},
+	"4gnqgs6": {
+		"zh-cn": " 商品名称：",
+		"en": "Product Name",
+		"zh-tw": "商品名稱："
+	},
+	"o8ez846": {
+		"zh-cn": " 统一库存：",
+		"en": "Unified inventory",
+		"zh-tw": "統一庫存："
+	},
+	"gt7ccj5": {
+		"zh-cn": " 组件式 ",
+		"en": "Component-based",
+		"zh-tw": "組件式"
+	},
+	"ywxb0e7": {
+		"zh-cn": " 自定义运费 ",
+		"en": "Custom shipping fee",
+		"zh-tw": "自定義運費"
+	},
+	"z57l1r8": {
+		"zh-cn": " 卖家承担运费 ",
+		"en": "The seller bears the shipping cost.",
+		"zh-tw": "賣家承擔運費"
+	},
+	"dlbj915": {
+		"zh-cn": " 按重量 ",
+		"en": "By weight",
+		"zh-tw": "按重量"
+	},
+	"dbbjj15": {
+		"zh-cn": " 按件数 ",
+		"en": "By piece",
+		"zh-tw": "按件數"
+	},
+	"dlcrvv5": {
+		"zh-cn": " 按金额 ",
+		"en": "By amount",
+		"zh-tw": "按金額"
+	},
+	"dbgxzv5": {
+		"zh-cn": " 按体积 ",
+		"en": "By volume",
+		"zh-tw": "按體積"
+	},
+	"dg9c74": {
+		"zh-cn": " 启用 ",
+		"en": "Enabled",
+		"zh-tw": "啓用"
+	},
+	"ix1qx4": {
+		"zh-cn": " 禁用 ",
+		"en": "Disabled",
+		"zh-tw": "禁用"
+	},
+	"xb7kez6": {
+		"zh-cn": " 编辑地区 ",
+		"en": "Edit region",
+		"zh-tw": "編輯地區"
+	},
+	"mry565b": {
+		"zh-cn": " 重量（kg以内）： ",
+		"en": "Weight (within kg) :",
+		"zh-tw": "重量（kg以內）："
+	},
+	"hbwqnp8": {
+		"zh-cn": " 运费（元）： ",
+		"en": "Freight (yuan)",
+		"zh-tw": "運費（元）："
+	},
+	"e3yn7nb": {
+		"zh-cn": " 每增加（kg内）： ",
+		"en": "For each increase (within kg) :",
+		"zh-tw": "每增加（kg內）："
+	},
+	"2b44vi8": {
+		"zh-cn": " 增加（元）： ",
+		"en": "Increase (yuan) :",
+		"zh-tw": "增加（元）："
+	},
+	"truxox6": {
+		"zh-cn": " 添加地区 ",
+		"en": "Add region",
+		"zh-tw": "添加地區"
+	},
+	"1wlqyf9": {
+		"zh-cn": " 指定条件包邮: ",
+		"en": "Free shipping under specified conditions",
+		"zh-tw": "指定條件包郵:"
+	},
+	"ettk2": {
+		"zh-cn": "在 ",
+		"en": "in",
+		"zh-tw": "在"
+	},
+	"6r3zte6": {
+		"zh-cn": " kg内包邮",
+		"en": "Free shipping within kg",
+		"zh-tw": "kg內包郵"
+	},
+	"mf24276": {
+		"zh-cn": " 元以上包邮",
+		"en": "Free shipping for orders over yuan",
+		"zh-tw": "元以上包郵"
+	},
+	"qtjvgna": {
+		"zh-cn": " 件数（件以内）： ",
+		"en": "Number of pieces (within) :",
+		"zh-tw": "件數（件以內）："
+	},
+	"3o62x5a": {
+		"zh-cn": " 每增加（件内）： ",
+		"en": "For each additional item:",
+		"zh-tw": "每增加（件內）："
+	},
+	"iv332": {
+		"zh-cn": "满 ",
+		"en": "full",
+		"zh-tw": "滿"
+	},
+	"etfrz4": {
+		"zh-cn": " 件包邮",
+		"en": "Free shipping for the item",
+		"zh-tw": "件包郵"
+	},
+	"fkibhb": {
+		"zh-cn": " 体积（m³以内）： ",
+		"en": "Volume (within m³) :",
+		"zh-tw": "體積（m³以內）："
+	},
+	"c031btb": {
+		"zh-cn": " 每增加（m³内）： ",
+		"en": "For each increase (within m³) :",
+		"zh-tw": "每增加（m³內）："
+	},
+	"6tk4086": {
+		"zh-cn": " m³内包邮",
+		"en": "Free shipping within m³",
+		"zh-tw": "m³內包郵"
+	},
+	"f1pc34": {
+		"zh-cn": " 已选：",
+		"en": "Selected",
+		"zh-tw": "已選："
+	},
+	"1t0na36": {
+		"zh-cn": " 新增活动 ",
+		"en": "New activities",
+		"zh-tw": "新增活動"
+	},
+	"lb8f936": {
+		"zh-cn": " 亲友数据 ",
+		"en": "Data of relatives and friends",
+		"zh-tw": "親友數據"
+	},
+	"oiirve8": {
+		"zh-cn": " 是否共享额度 ",
+		"en": "Whether to share the quota",
+		"zh-tw": "是否共享額度"
+	},
+	"e1ty3": {
+		"zh-cn": " 人 ",
+		"en": "people",
+		"zh-tw": "人"
+	},
+	"32l7x76": {
+		"zh-cn": " 全部商品 ",
+		"en": "All goods",
+		"zh-tw": "全部商品"
+	},
+	"q7xfmc8": {
+		"zh-cn": " 指定商品适用 ",
+		"en": "Applicable to designated goods",
+		"zh-tw": "指定商品適用"
+	},
+	"xx0gpa8": {
+		"zh-cn": " 指定分类适用 ",
+		"en": "Applicable to designated categories",
+		"zh-tw": "指定分類適用"
+	},
+	"5ghnxxa": {
+		"zh-cn": " 指定商品标签适用 ",
+		"en": "Applicable to designated product labels",
+		"zh-tw": "指定商品標籤適用"
+	},
+	"oiwwqs8": {
+		"zh-cn": " 指定品牌适用 ",
+		"en": "Applicable to designated brands",
+		"zh-tw": "指定品牌適用"
+	},
+	"e39m3": {
+		"zh-cn": " 件 ",
+		"en": "a",
+		"zh-tw": "件"
+	},
+	"7afr9o6": {
+		"zh-cn": " 批量上传 ",
+		"en": "Batch upload",
+		"zh-tw": "批量上傳"
+	},
+	"gbapcg6": {
+		"zh-cn": " 下载模板 ",
+		"en": "Download the template",
+		"zh-tw": "下載模板"
+	},
+	"trl3pc6": {
+		"zh-cn": " 添加商品 ",
+		"en": "Add products",
+		"zh-tw": "添加商品"
+	},
+	"fz87h48": {
+		"zh-cn": " 更改销售分类 ",
+		"en": "Change the sales category",
+		"zh-tw": "更改銷售分類"
+	},
+	"2uxvo48": {
+		"zh-cn": " 更改运费模板 ",
+		"en": "Change the freight template",
+		"zh-tw": "更改運費模板"
+	},
+	"u67c9t8": {
+		"zh-cn": " 批量提交审核 ",
+		"en": "Batch submission review",
+		"zh-tw": "批量提交審覈"
+	},
+	"o8dkuy6": {
+		"zh-cn": " 统一库存 ",
+		"en": "Unified inventory",
+		"zh-tw": "統一庫存"
+	},
+	"3quayr6": {
+		"zh-cn": " 设为赠品 ",
+		"en": "Set it as a gift",
+		"zh-tw": "設爲贈品"
+	},
+	"og2d437": {
+		"zh-cn": " 设为非赠品 ",
+		"en": "Set it as a non-complimentary item",
+		"zh-tw": "設爲非贈品"
+	},
+	"cqnla4": {
+		"zh-cn": " 停售 ",
+		"en": "Out of sale",
+		"zh-tw": "停售"
+	},
+	"evus24": {
+		"zh-cn": " 开售 ",
+		"en": "On sale",
+		"zh-tw": "開售"
+	},
+	"4hl9uk6": {
+		"zh-cn": " 商品导入 ",
+		"en": "Product introduction",
+		"zh-tw": "商品導入"
+	},
+	"tcfgge6": {
+		"zh-cn": " 库存导入 ",
+		"en": "Inventory import",
+		"zh-tw": "庫存導入"
+	},
+	"4fvzzr6": {
+		"zh-cn": " 商品信息 ",
+		"en": "Product information",
+		"zh-tw": "商品信息"
+	},
+	"zaknla6": {
+		"zh-cn": " 小程序码 ",
+		"en": "\"Mini Program code\"",
+		"zh-tw": "小程序碼"
+	},
+	"bjd62c5": {
+		"zh-cn": " 同步商品",
+		"en": "Synchronized products",
+		"zh-tw": "同步商品"
+	},
+	"iukbnq9": {
+		"zh-cn": " 同步至所有店铺 ",
+		"en": "Synchronize to all stores",
+		"zh-tw": "同步至所有店鋪"
+	},
+	"fmsxgr6": {
+		"zh-cn": " 保存设置 ",
+		"en": "Save Settings",
+		"zh-tw": "保存設置"
+	},
+	"nk2ws4": {
+		"zh-cn": " 预览 ",
+		"en": "Preview",
+		"zh-tw": "預覽"
+	},
+	"gix7z4": {
+		"zh-cn": " 标题 ",
+		"en": "Title",
+		"zh-tw": "標題"
+	},
+	"pma37cb": {
+		"zh-cn": " 确定删除这篇图文？ ",
+		"en": "Are you sure you want to delete this picture and text?",
+		"zh-tw": "確定刪除這篇圖文？"
+	},
+	"dltwx6": {
+		"zh-cn": " 原文链接 ",
+		"en": "Original link",
+		"zh-tw": "原文鏈接"
+	},
+	"7zd4h57": {
+		"zh-cn": " 封面小图片 ",
+		"en": "Small cover image",
+		"zh-tw": "封面小圖片"
+	},
+	"rexvoc8": {
+		"zh-cn": " 从图片库选择 ",
+		"en": "Select from the image library",
+		"zh-tw": "從圖片庫選擇"
+	},
+	"fwxkn4": {
+		"zh-cn": " 摘要 ",
+		"en": "Abstract",
+		"zh-tw": "摘要"
+	},
+	"da59z3": {
+		"zh-cn": "图片 ",
+		"en": "Picture",
+		"zh-tw": "圖片"
+	},
+	"99iynda": {
+		"zh-cn": " 导出活动销售数据 ",
+		"en": "Export the event sales data",
+		"zh-tw": "導出活動銷售數據"
+	},
+	"diekq4": {
+		"zh-cn": " 发货 ",
+		"en": "Shipment",
+		"zh-tw": "發貨"
+	},
+	"l5a3w88": {
+		"zh-cn": " 选择活动商品 ",
+		"en": "Select event products",
+		"zh-tw": "選擇活動商品"
+	},
+	"caubqm5": {
+		"zh-cn": " 多规格 ",
+		"en": "Multiple specifications",
+		"zh-tw": "多規格"
+	},
+	"w1qlxa6": {
+		"zh-cn": " 审核驳回 ",
+		"en": "Review rejection",
+		"zh-tw": "審覈駁回"
+	},
+	"ekg7gx6": {
+		"zh-cn": "前台不展示 ",
+		"en": "The front desk does not display",
+		"zh-tw": "前臺不展示"
+	},
+	"on7m3v7": {
+		"zh-cn": " 设置起送量 ",
+		"en": "Set the minimum delivery volume",
+		"zh-tw": "設置起送量"
+	},
+	"iy3ewq6": {
+		"zh-cn": " 团长导入 ",
+		"en": "Introduction by the team leader",
+		"zh-tw": "團長導入"
+	},
+	"iy4g0b6": {
+		"zh-cn": " 团长审批 ",
+		"en": "Approval by the team leader",
+		"zh-tw": "團長審批"
+	},
+	"tv32jy6": {
+		"zh-cn": " 添加活动 ",
+		"en": "Add activities",
+		"zh-tw": "添加活動"
+	},
+	"bc4vpo6": {
+		"zh-cn": " 按总件数 ",
+		"en": "By the total number of pieces",
+		"zh-tw": "按總件數"
+	},
+	"b23ncu6": {
+		"zh-cn": " 按总金额 ",
+		"en": "According to the total amount",
+		"zh-tw": "按總金額"
+	},
+	"eejr2o4": {
+		"zh-cn": "消费满 ",
+		"en": "Full consumption",
+		"zh-tw": "消費滿"
+	},
+	"sl7d3q6": {
+		"zh-cn": "，送赠品  ",
+		"en": "Free gifts are given",
+		"zh-tw": "，送贈品"
+	},
+	"tzsxay6": {
+		"zh-cn": " 添加赠品 ",
+		"en": "Add a gift",
+		"zh-tw": "添加贈品"
+	},
+	"h2eu34": {
+		"zh-cn": " 添加 ",
+		"en": "\"Add",
+		"zh-tw": "添加"
+	},
+	"lq3q697": {
+		"zh-cn": " 按比例赠送 ",
+		"en": "Given in proportion",
+		"zh-tw": "按比例贈送"
+	},
+	"acj85n6": {
+		"zh-cn": " 全场可用 ",
+		"en": "Available throughout the venue",
+		"zh-tw": "全場可用"
+	},
+	"vrwg5b8": {
+		"zh-cn": " 全部商品适用 ",
+		"en": "Applicable to all products",
+		"zh-tw": "全部商品適用"
+	},
+	"j25ub85": {
+		"zh-cn": " 选店铺 ",
+		"en": "Select a store",
+		"zh-tw": "選店鋪"
+	},
+	"axfois5": {
+		"zh-cn": " 不返佣 ",
+		"en": "No commission refund",
+		"zh-tw": "不返傭"
+	},
+	"deswn4": {
+		"zh-cn": " 包邮 ",
+		"en": "Free shipping",
+		"zh-tw": "包郵"
+	},
+	"b8lvna": {
+		"zh-cn": " 商品自身运费模板 ",
+		"en": "Template for the shipping cost of the product itself",
+		"zh-tw": "商品自身運費模板"
+	},
+	"uzti1t6": {
+		"zh-cn": " 客户下单 ",
+		"en": "Customer places an order",
+		"zh-tw": "客戶下單"
+	},
+	"1szw5fh": {
+		"zh-cn": " 分钟后未支付的订单，将自动取消 ",
+		"en": "Orders that have not been paid for within minutes will be automatically cancelled",
+		"zh-tw": "分鐘後未支付的訂單，將自動取消"
+	},
+	"wfqadd7": {
+		"zh-cn": " 实体类商品 ",
+		"en": "Physical goods",
+		"zh-tw": "實體類商品"
+	},
+	"gihr8f8": {
+		"zh-cn": " 添加满赠促销 ",
+		"en": "Add the \"Get a free gift\" promotion",
+		"zh-tw": "添加滿贈促銷"
+	},
+	"ham9c4": {
+		"zh-cn": " 消费满",
+		"en": "Full consumption",
+		"zh-tw": "消費滿"
+	},
+	"ascou36": {
+		"zh-cn": " 查看详情 ",
+		"en": "For more details",
+		"zh-tw": "查看詳情"
+	},
+	"hstyvw6": {
+		"zh-cn": " 付款异常 ",
+		"en": "Abnormal payment",
+		"zh-tw": "付款異常"
+	},
+	"5sjjhg6": {
+		"zh-cn": " 提现完成 ",
+		"en": "Withdrawal completed",
+		"zh-tw": "提現完成"
+	},
+	"6ipb8w6": {
+		"zh-cn": " 操作备注 ",
+		"en": "Operation Notes",
+		"zh-tw": "操作備註"
+	},
+	"codn736": {
+		"zh-cn": " 打款完成 ",
+		"en": "The payment has been completed",
+		"zh-tw": "打款完成"
+	},
+	"fn3854": {
+		"zh-cn": " 拒绝 ",
+		"en": "\"Refuse",
+		"zh-tw": "拒絕"
+	},
+	"du2tyo5": {
+		"zh-cn": " 未付款 ",
+		"en": "Unpaid",
+		"zh-tw": "未付款"
+	},
+	"hsfu1h6": {
+		"zh-cn": " 付款成功 ",
+		"en": "Payment successful",
+		"zh-tw": "付款成功"
+	},
+	"htgnne6": {
+		"zh-cn": " 付款失败 ",
+		"en": "Payment failed",
+		"zh-tw": "付款失敗"
+	},
+	"211af36": {
+		"zh-cn": " 取消操作 ",
+		"en": "Cancel operation",
+		"zh-tw": "取消操作"
+	},
+	"6ud6xr6": {
+		"zh-cn": " 确认拒绝 ",
+		"en": "Confirm rejection",
+		"zh-tw": "確認拒絕"
+	},
+	"6t5xvq6": {
+		"zh-cn": " 确认完成 ",
+		"en": "Confirmation completed",
+		"zh-tw": "確認完成"
+	},
+	"4vi0d96": {
+		"zh-cn": "可提现佣金 ",
+		"en": "Commissions can be withdrawn",
+		"zh-tw": "可提現佣金"
+	},
+	"5qsbyc6": {
+		"zh-cn": " 申请提现 ",
+		"en": "Apply for withdrawal",
+		"zh-tw": "申請提現"
+	},
+	"3gw3gn8": {
+		"zh-cn": " 打款到分销商 ",
+		"en": "Make the payment to the distributor",
+		"zh-tw": "打款到分銷商"
+	},
+	"epyq3": {
+		"zh-cn": " 下载",
+		"en": "Download",
+		"zh-tw": "下載"
+	},
+	"90jbtf8": {
+		"zh-cn": " 添加满减区间 ",
+		"en": "Add a discount range",
+		"zh-tw": "添加滿減區間"
+	},
+	"ew56285": {
+		"zh-cn": " 消费满 ",
+		"en": "Full consumption",
+		"zh-tw": "消費滿"
+	},
+	"bsbewq5": {
+		"zh-cn": " 元，减 ",
+		"en": "Yuan, minus",
+		"zh-tw": "元，減"
+	},
+	"aqlesd5": {
+		"zh-cn": " 元   ",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"bhvbmv5": {
+		"zh-cn": " 件，减 ",
+		"en": "Pieces, reduced",
+		"zh-tw": "件，減"
+	},
+	"anfkos1y": {
+		"zh-cn": " 上不封顶(若勾选，则按照最后一条规则成比例优惠递减，如最后一条设置了满200减20，则默认为满400减40，满800减80，以此类推。) ",
+		"en": "There is no upper limit. (If selected, the discount will be reduced proportionally according to the last rule. For example, if the last rule sets a discount of 20 for every 200 spent, it will default to a discount of 40 for every 400 spent and 80 for every 800 spent, and so on.)",
+		"zh-tw": "上不封頂(若勾選，則按照最後一條規則成比例優惠遞減，如最後一條設置了滿200減20，則默認爲滿400減40，滿800減80，以此類推。)"
+	},
+	"3jtao07": {
+		"zh-cn": " 添加白名单 ",
+		"en": "Add a whitelist",
+		"zh-tw": "添加白名單"
+	},
+	"jeiyhw7": {
+		"zh-cn": " 导入白名单 ",
+		"en": "Import the whitelist",
+		"zh-tw": "導入白名單"
+	},
+	"m1ig5s7": {
+		"zh-cn": " 清空白名单 ",
+		"en": "Clear the blank list",
+		"zh-tw": "清空白名單"
+	},
+	"900w9c8": {
+		"zh-cn": " 添加满减促销 ",
+		"en": "Add a discount promotion for reaching a certain amount",
+		"zh-tw": "添加滿減促銷"
+	},
+	"b09wnb4": {
+		"zh-cn": "件，减 ",
+		"en": "Pieces, reduced",
+		"zh-tw": "件，減"
+	},
+	"bapzx64": {
+		"zh-cn": "元，减 ",
+		"en": "Yuan, minus",
+		"zh-tw": "元，減"
+	},
+	"b4r2ga8": {
+		"zh-cn": " 添加满折区间 ",
+		"en": "Add a full discount range",
+		"zh-tw": "添加滿折區間"
+	},
+	"af8e2w6": {
+		"zh-cn": " 元，给予 ",
+		"en": "Yuan, give",
+		"zh-tw": "元，給予"
+	},
+	"wqquts7": {
+		"zh-cn": " %折扣   ",
+		"en": "% discount",
+		"zh-tw": "%折扣"
+	},
+	"1fdkl76": {
+		"zh-cn": " 件，给予 ",
+		"en": "\"Piece, given",
+		"zh-tw": "件，給予"
+	},
+	"loben4": {
+		"zh-cn": " 赠品 ",
+		"en": "Free gift",
+		"zh-tw": "贈品"
+	},
+	"to04ti6": {
+		"zh-cn": " 天，购买 ",
+		"en": "Oh my god, purchase",
+		"zh-tw": "天，購買"
+	},
+	"n6mjxj18": {
+		"zh-cn": " 天数设置0视为此次活动有效期内，例如：0天，购买1件是指活动有效期内只能购买一件商品 ",
+		"en": "Setting the number of days to 0 is regarded as the validity period of this event. For example, \"0 days, purchase 1 item\" means that only one item can be purchased during the validity period of the event",
+		"zh-tw": "天數設置0視爲此次活動有效期內，例如：0天，購買1件是指活動有效期內只能購買一件商品"
+	},
+	"b48mw78": {
+		"zh-cn": " 添加满折促销 ",
+		"en": "Add full-discount promotions",
+		"zh-tw": "添加滿折促銷"
+	},
+	"dq2c115": {
+		"zh-cn": "件，给予 ",
+		"en": "\"Piece, given",
+		"zh-tw": "件，給予"
+	},
+	"fk8s04": {
+		"zh-cn": "%折扣 ",
+		"en": "% discount",
+		"zh-tw": "%折扣"
+	},
+	"4q7ijc5": {
+		"zh-cn": "元，给予 ",
+		"en": "Yuan, give",
+		"zh-tw": "元，給予"
+	},
+	"xefpa06": {
+		"zh-cn": " 编辑活动 ",
+		"en": "Editing activities",
+		"zh-tw": "編輯活動"
+	},
+	"rn93i16": {
+		"zh-cn": " 终止活动 ",
+		"en": "Terminate the activity",
+		"zh-tw": "終止活動"
+	},
+	"anskst6": {
+		"zh-cn": " 查看活动 ",
+		"en": "View the event",
+		"zh-tw": "查看活動"
+	},
+	"w0rbb48": {
+		"zh-cn": " 下载小程序码 ",
+		"en": "Download the mini-program code",
+		"zh-tw": "下載小程序碼"
+	},
+	"kbkj12a": {
+		"zh-cn": " 添加限购商品活动 ",
+		"en": "Add limited-purchase items promotion",
+		"zh-tw": "添加限購商品活動"
+	},
+	"d7f168": {
+		"zh-cn": " 添加组合促销 ",
+		"en": "Add combo promotions",
+		"zh-tw": "添加組合促銷"
+	},
+	"2tupti7": {
+		"zh-cn": " 主商品选择 ",
+		"en": "Main product selection",
+		"zh-tw": "主商品選擇"
+	},
+	"18gjbp6": {
+		"zh-cn": " 可提现: ",
+		"en": "Available for withdrawal",
+		"zh-tw": "可提現:"
+	},
+	"unetuw6": {
+		"zh-cn": " 已提现: ",
+		"en": "Withdrawn",
+		"zh-tw": "已提現:"
+	},
+	"z0xw3u7": {
+		"zh-cn": " 申请提现: ",
+		"en": "Application for withdrawal",
+		"zh-tw": "申請提現:"
+	},
+	"8u0ous6": {
+		"zh-cn": " 未结算: ",
+		"en": "Unsettled",
+		"zh-tw": "未結算:"
+	},
+	"kcst7a7": {
+		"zh-cn": " 佣金总额: ",
+		"en": "Total commission",
+		"zh-tw": "佣金總額:"
+	},
+	"qvcha77": {
+		"zh-cn": " 积分总额: ",
+		"en": "Total points",
+		"zh-tw": "積分總額:"
+	},
+	"i8wll3": {
+		"zh-cn": "积分 ",
+		"en": "Points",
+		"zh-tw": "積分"
+	},
+	"236zwd7": {
+		"zh-cn": " 商品总额: ",
+		"en": "Total amount of goods",
+		"zh-tw": "商品總額:"
+	},
+	"cvbp0q5": {
+		"zh-cn": " 已结算 ",
+		"en": "Settled",
+		"zh-tw": "已結算"
+	},
+	"e16m2a5": {
+		"zh-cn": " 未结算 ",
+		"en": "Unsettled",
+		"zh-tw": "未結算"
+	},
+	"mj3cs18": {
+		"zh-cn": " 导出业绩统计 ",
+		"en": "Export performance statistics",
+		"zh-tw": "導出業績統計"
+	},
+	"ul4w66a": {
+		"zh-cn": " 导出业绩订单统计 ",
+		"en": "Export performance order statistics",
+		"zh-tw": "導出業績訂單統計"
+	},
+	"umzee8a": {
+		"zh-cn": " 导出业绩订单详细 ",
+		"en": "Export the detailed performance orders",
+		"zh-tw": "導出業績訂單詳細"
+	},
+	"lp9v0rb": {
+		"zh-cn": "* 下载订单详细日期 ",
+		"en": "Download the detailed date of the order",
+		"zh-tw": "* 下載訂單詳細日期"
+	},
+	"8p5m9o6": {
+		"zh-cn": " 分佣详情 ",
+		"en": "Commission sharing details",
+		"zh-tw": "分傭詳情"
+	},
+	"9y0zg58": {
+		"zh-cn": " 批量设置开启 ",
+		"en": "Batch Settings enabled",
+		"zh-tw": "批量設置開啓"
+	},
+	"9pw6le6": {
+		"zh-cn": " 设置参数 ",
+		"en": "Set parameters",
+		"zh-tw": "設置參數"
+	},
+	"keyltg6": {
+		"zh-cn": " 任务参数 ",
+		"en": "Task parameters",
+		"zh-tw": "任務參數"
+	},
+	"cesw256": {
+		"zh-cn": " 等待审核 ",
+		"en": "Awaiting review",
+		"zh-tw": "等待審覈"
+	},
+	"vts2ym6": {
+		"zh-cn": " 审核拒绝 ",
+		"en": "\"Review rejection",
+		"zh-tw": "審覈拒絕"
+	},
+	"bzssl67": {
+		"zh-cn": " 前台可销售 ",
+		"en": "Available for sale at the front desk",
+		"zh-tw": "前臺可銷售"
+	},
+	"cyn37z7": {
+		"zh-cn": " 前台不展示 ",
+		"en": "The front desk does not display",
+		"zh-tw": "前臺不展示"
+	},
+	"nmf48g6": {
+		"zh-cn": " 不可销售 ",
+		"en": "Not for sale",
+		"zh-tw": "不可銷售"
+	},
+	"u87dqf6": {
+		"zh-cn": " 满足条件 ",
+		"en": "Meet the conditions",
+		"zh-tw": "滿足條件"
+	},
+	"mna1g4": {
+		"zh-cn": " 金额 ",
+		"en": "Amount",
+		"zh-tw": "金額"
+	},
+	"p0lgrg11": {
+		"zh-cn": " 如果设置为固定金额，金额就是设置的固定金额。否则按照 【计算类型】计算 ",
+		"en": "If it is set to a fixed amount, the amount will be the fixed amount set. Otherwise, calculate according to the [Calculation Type]",
+		"zh-tw": "如果設置爲固定金額，金額就是設置的固定金額。否則按照 【計算類型】計算"
+	},
+	"u06msj6": {
+		"zh-cn": " 添加软文 ",
+		"en": "Add soft articles",
+		"zh-tw": "添加軟文"
+	},
+	"givl1z6": {
+		"zh-cn": " AI创作 ",
+		"en": "\"AI creation",
+		"zh-tw": "AI創作"
+	},
+	"17u7wk7": {
+		"zh-cn": " 添加推广员 ",
+		"en": "Add promoters",
+		"zh-tw": "添加推廣員"
+	},
+	"pcuq5p7": {
+		"zh-cn": " 调整至顶级 ",
+		"en": "Adjust to the top level",
+		"zh-tw": "調整至頂級"
+	},
+	"73uxnc7": {
+		"zh-cn": " 开通虚拟店 ",
+		"en": "Open a virtual store",
+		"zh-tw": "開通虛擬店"
+	},
+	"vwj8056": {
+		"zh-cn": " 审核申请 ",
+		"en": "Review the application",
+		"zh-tw": "審覈申請"
+	},
+	"6w8mp47": {
+		"zh-cn": " 关闭虚拟店 ",
+		"en": "Close the virtual store",
+		"zh-tw": "關閉虛擬店"
+	},
+	"qq9hv89": {
+		"zh-cn": " 修改推广员等级 ",
+		"en": "Modify the level of the promoter",
+		"zh-tw": "修改推廣員等級"
+	},
+	"dwdvdr5": {
+		"zh-cn": " 未开店 ",
+		"en": "Not open a store",
+		"zh-tw": "未開店"
+	},
+	"cqiyc75": {
+		"zh-cn": " 已开店 ",
+		"en": "The store has been opened.",
+		"zh-tw": "已開店"
+	},
+	"m1rdtp6": {
+		"zh-cn": " 店铺关闭 ",
+		"en": "The store is closed.",
+		"zh-tw": "店鋪關閉"
+	},
+	"w0hq586": {
+		"zh-cn": " 审核通过 ",
+		"en": "Approved",
+		"zh-tw": "審覈通過"
+	},
+	"ikkbfb5": {
+		"zh-cn": " 调整为 ",
+		"en": "Adjust to",
+		"zh-tw": "調整爲"
+	},
+	"y5hwj6": {
+		"zh-cn": " 确定调整 ",
+		"en": "Confirm the adjustment",
+		"zh-tw": "確定調整"
+	},
+	"fiqa3": {
+		"zh-cn": " 取消",
+		"en": "Cancel",
+		"zh-tw": "取消"
+	},
+	"6o66xb7": {
+		"zh-cn": " 创建优惠券 ",
+		"en": "Create a coupon",
+		"zh-tw": "創建優惠券"
+	},
+	"h49p3": {
+		"zh-cn": " 元 ",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"gqcj3": {
+		"zh-cn": " 份 ",
+		"en": "Copy of",
+		"zh-tw": "份"
+	},
+	"ayecq55": {
+		"zh-cn": " 不限制 ",
+		"en": "No restrictions",
+		"zh-tw": "不限制"
+	},
+	"gt4ap4": {
+		"zh-cn": " 满  ",
+		"en": "full",
+		"zh-tw": "滿"
+	},
+	"2c67b88": {
+		"zh-cn": "  元可用   ",
+		"en": "\"Yuan available",
+		"zh-tw": "元可用"
+	},
+	"busanv6": {
+		"zh-cn": " 最高限额 ",
+		"en": "Maximum limit",
+		"zh-tw": "最高限額"
+	},
+	"38n994": {
+		"zh-cn": "  元 ",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"c1yuti6": {
+		"zh-cn": " 固定日期 ",
+		"en": "Fixed date",
+		"zh-tw": "固定日期"
+	},
+	"p29joy7": {
+		"zh-cn": " 领取后,  ",
+		"en": "After collection,",
+		"zh-tw": "領取後,"
+	},
+	"o0e05la": {
+		"zh-cn": " 生效，有效天数  ",
+		"en": "Effective, valid for several days",
+		"zh-tw": "生效，有效天數"
+	},
+	"ftpz3": {
+		"zh-cn": " 天 ",
+		"en": "day",
+		"zh-tw": "天"
+	},
+	"taw6qf8": {
+		"zh-cn": " 统一过期时间 ",
+		"en": "Uniform expiration time",
+		"zh-tw": "統一過期時間"
+	},
+	"pqektg6": {
+		"zh-cn": " 门店专用 ",
+		"en": "Exclusive for stores",
+		"zh-tw": "門店專用"
+	},
+	"eq6bu08": {
+		"zh-cn": " 线上商城专用 ",
+		"en": "Exclusive for online mall",
+		"zh-tw": "線上商城專用"
+	},
+	"epytx88": {
+		"zh-cn": " 线上商城使用 ",
+		"en": "Use of online mall",
+		"zh-tw": "線上商城使用"
+	},
+	"cyxj528": {
+		"zh-cn": " 快捷买单使用 ",
+		"en": "Quick payment for use",
+		"zh-tw": "快捷買單使用"
+	},
+	"1rdva0c": {
+		"zh-cn": " 自助核销（到店使用） ",
+		"en": "Self-service reimbursement (for in-store use)",
+		"zh-tw": "自助覈銷（到店使用）"
+	},
+	"6d2hf7": {
+		"zh-cn": " 启用验证码 ",
+		"en": "Enable verification codes",
+		"zh-tw": "啓用驗證碼"
+	},
+	"ek662i8": {
+		"zh-cn": " 不启用验证码 ",
+		"en": "Do not enable verification codes",
+		"zh-tw": "不啓用驗證碼"
+	},
+	"1lrv0r8": {
+		"zh-cn": " 全部门店适用 ",
+		"en": "Applicable to all stores",
+		"zh-tw": "全部門店適用"
+	},
+	"en21888": {
+		"zh-cn": " 指定门店适用 ",
+		"en": "Applicable to designated stores",
+		"zh-tw": "指定門店適用"
+	},
+	"n6bub56": {
+		"zh-cn": " 选择门店 ",
+		"en": "Select a store",
+		"zh-tw": "選擇門店"
+	},
+	"qgq7c78": {
+		"zh-cn": " 指定商品可用 ",
+		"en": "The designated goods are available",
+		"zh-tw": "指定商品可用"
+	},
+	"i293698": {
+		"zh-cn": " 指定店铺可用 ",
+		"en": "Available at designated stores",
+		"zh-tw": "指定店鋪可用"
+	},
+	"5z3wbd8": {
+		"zh-cn": " 按订单总件数 ",
+		"en": "According to the total number of items in the order",
+		"zh-tw": "按訂單總件數"
+	},
+	"5p2nyj8": {
+		"zh-cn": " 按订单总金额 ",
+		"en": "According to the total order amount",
+		"zh-tw": "按訂單總金額"
+	},
+	"a8s1xp6": {
+		"zh-cn": " 元，加价购",
+		"en": "Yuan, purchase at an extra price",
+		"zh-tw": "元，加價購"
+	},
+	"18x8g06": {
+		"zh-cn": " 件，加价购",
+		"en": "Purchase at a premium",
+		"zh-tw": "件，加價購"
+	},
+	"f2sriw7": {
+		"zh-cn": " 加价购金额：",
+		"en": "Premium purchase amount",
+		"zh-tw": "加價購金額："
+	},
+	"j0hsjg5": {
+		"zh-cn": " 选商品 ",
+		"en": "Select products",
+		"zh-tw": "選商品"
+	},
+	"otp3pn8": {
+		"zh-cn": " 添加店铺员工 ",
+		"en": "Add store staff",
+		"zh-tw": "添加店鋪員工"
+	},
+	"vgb3he1w": {
+		"zh-cn": " 平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。前往：",
+		"en": "The platform management backend can only add super administrators to the platform's self-operated stores. If you need to add a super administrator to the stores of the merchants who have joined, please log in to the merchant management backend with the merchant super administrator account to operate. Head to",
+		"zh-tw": "平臺管理後臺僅可給平臺自營店鋪添加超級管理員，如需給入駐商戶的店鋪添加超級管理員，請使用商戶超級管理員賬號登錄商戶管理後臺操作。前往："
+	},
+	"65k8y56": {
+		"zh-cn": " 商户后台 ",
+		"en": "Merchant Backend",
+		"zh-tw": "商戶後臺"
+	},
+	"3r3dnx1h": {
+		"zh-cn": " 店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子账号，并通过角色控制子账号权限范围。前往：",
+		"en": "The store super administrator has all the permissions of the store. They can log in to the store management backend to add sub-accounts for the store and control the permission scope of the sub-accounts through roles. Head to",
+		"zh-tw": "店鋪超級管理員擁有店鋪所有權限，可登錄店鋪管理後臺爲店鋪添加子賬號，並通過角色控制子賬號權限範圍。前往："
+	},
+	"m1ovb96": {
+		"zh-cn": " 店铺后台 ",
+		"en": "Store back-end",
+		"zh-tw": "店鋪後臺"
+	},
+	"ud7swa": {
+		"zh-cn": " + 点击搜索店铺 ",
+		"en": "Click to search for the store",
+		"zh-tw": "+ 點擊搜索店鋪"
+	},
+	"k59ok58": {
+		"zh-cn": " 添加售后地址 ",
+		"en": "Add after-sales address",
+		"zh-tw": "添加售後地址"
+	},
+	"et7om4": {
+		"zh-cn": " 已提交",
+		"en": "Submitted",
+		"zh-tw": "已提交"
+	},
+	"g5tni4": {
+		"zh-cn": " 未提交",
+		"en": "Not submitted",
+		"zh-tw": "未提交"
+	},
+	"u81zd56": {
+		"zh-cn": " 重新提交 ",
+		"en": "Resubmit",
+		"zh-tw": "重新提交"
+	},
+	"nw1asu9": {
+		"zh-cn": " 添加加价购促销 ",
+		"en": "Add a premium purchase promotion",
+		"zh-tw": "添加加價購促銷"
+	},
+	"ilfi0qp": {
+		"zh-cn": "可在设置-店铺管理员添加店铺端账号，登录地址 【 ",
+		"en": "You can add a store-end account in Settings - Store Manager. The login address is [",
+		"zh-tw": "可在設置-店鋪管理員添加店鋪端賬號，登錄地址 【"
+	},
+	"d8bz54": {
+		"zh-cn": " 加盟 ",
+		"en": "\"Join",
+		"zh-tw": "加盟"
+	},
+	"k7y054": {
+		"zh-cn": " 自营 ",
+		"en": "Self-operated",
+		"zh-tw": "自營"
+	},
+	"tt95h46": {
+		"zh-cn": " 添加店铺 ",
+		"en": "Add a store",
+		"zh-tw": "添加店鋪"
+	},
+	"ubnwyc6": {
+		"zh-cn": " 导入店铺 ",
+		"en": "Import the store",
+		"zh-tw": "導入店鋪"
+	},
+	"a2kz26c": {
+		"zh-cn": " 设置店铺默认可见范围 ",
+		"en": "Set the default visible range of the store",
+		"zh-tw": "設置店鋪默認可見範圍"
+	},
+	"2itprab": {
+		"zh-cn": " 新增默认虚拟店信息 ",
+		"en": "Add default virtual store information",
+		"zh-tw": "新增默認虛擬店信息"
+	},
+	"pd2nh5b": {
+		"zh-cn": " 编辑默认虚拟店信息 ",
+		"en": "Edit the default virtual store information",
+		"zh-tw": "編輯默認虛擬店信息"
+	},
+	"ltzl586": {
+		"zh-cn": " 店铺装修 ",
+		"en": "Shop decoration",
+		"zh-tw": "店鋪裝修"
+	},
+	"eh5114": {
+		"zh-cn": " 客服 ",
+		"en": "Customer Service",
+		"zh-tw": "客服"
+	},
+	"9rlfm47": {
+		"zh-cn": " 下载店铺码 ",
+		"en": "Download the store code",
+		"zh-tw": "下載店鋪碼"
+	},
+	"y3aazx8": {
+		"zh-cn": " 复制店铺链接 ",
+		"en": "Copy the store link",
+		"zh-tw": "複製店鋪鏈接"
+	},
+	"snwp438": {
+		"zh-cn": " 微信支付配置 ",
+		"en": "Wechat Pay configuration",
+		"zh-tw": "微信支付配置"
+	},
+	"f626tx7": {
+		"zh-cn": " 支付宝配置 ",
+		"en": "Alipay configuration",
+		"zh-tw": "支付寶配置"
+	},
+	"8uv84ja": {
+		"zh-cn": " 银联商务支付配置 ",
+		"en": "Unionpay Business payment configuration",
+		"zh-tw": "銀聯商務支付配置"
+	},
+	"mlnaq38": {
+		"zh-cn": " 店铺范围配置 ",
+		"en": "Store scope configuration",
+		"zh-tw": "店鋪範圍配置"
+	},
+	"7hn61p8": {
+		"zh-cn": " 微商城小程序 ",
+		"en": "Micro-mall mini-program",
+		"zh-tw": "微商城小程序"
+	},
+	"evj244": {
+		"zh-cn": " 废弃 ",
+		"en": "\"Abandoned\"",
+		"zh-tw": "廢棄"
+	},
+	"za33p87": {
+		"zh-cn": " 重复时间： ",
+		"en": "Repeat time",
+		"zh-tw": "重複時間："
+	},
+	"cwuov4": {
+		"zh-cn": " 全天 ",
+		"en": "All day",
+		"zh-tw": "全天"
+	},
+	"m272": {
+		"zh-cn": " 每",
+		"en": "every",
+		"zh-tw": "每"
+	},
+	"p139fha": {
+		"zh-cn": " 有权限，生效时间：",
+		"en": "With permission, effective time:",
+		"zh-tw": "有權限，生效時間："
+	},
+	"radl006": {
+		"zh-cn": " 结束时间：",
+		"en": "End time",
+		"zh-tw": "結束時間："
+	},
+	"d3714c5": {
+		"zh-cn": " 提 交 ",
+		"en": "Submit",
+		"zh-tw": "提 交"
+	},
+	"tzhybf6": {
+		"zh-cn": " 添加角色 ",
+		"en": "Add roles",
+		"zh-tw": "添加角色"
+	},
+	"mcqer4": {
+		"zh-cn": " 通过 ",
+		"en": "\"Through",
+		"zh-tw": "通過"
+	},
+	"nlm6t4": {
+		"zh-cn": " 驳回 ",
+		"en": "Rejection",
+		"zh-tw": "駁回"
+	},
+	"26sz536": {
+		"zh-cn": " 关闭权限 ",
+		"en": "Disable permissions",
+		"zh-tw": "關閉權限"
+	},
+	"e604ca6": {
+		"zh-cn": " 打开权限 ",
+		"en": "Open permissions",
+		"zh-tw": "打開權限"
+	},
+	"equn64": {
+		"zh-cn": " 已发送",
+		"en": "Sent",
+		"zh-tw": "已發送"
+	},
+	"ohxsvr6": {
+		"zh-cn": " 上传封面 ",
+		"en": "Upload the cover",
+		"zh-tw": "上傳封面"
+	},
+	"f5g9y3": {
+		"zh-cn": "撤回 ",
+		"en": "\"Withdraw\"",
+		"zh-tw": "撤回"
+	},
+	"cpyby3": {
+		"zh-cn": "发布 ",
+		"en": "\"Publish",
+		"zh-tw": "發佈"
+	},
+	"cqmho3": {
+		"zh-cn": "删除 ",
+		"en": "Delete",
+		"zh-tw": "刪除"
+	},
+	"i6ns3": {
+		"zh-cn": " 月 ",
+		"en": "month",
+		"zh-tw": "月"
+	},
+	"f0m03": {
+		"zh-cn": " 周 ",
+		"en": "weeks",
+		"zh-tw": "周"
+	},
+	"1d6sh77": {
+		"zh-cn": " 添加优惠券 ",
+		"en": "Add a coupon",
+		"zh-tw": "添加優惠券"
+	},
+	"fvorza6": {
+		"zh-cn": " 保存修改 ",
+		"en": "Save the modifications",
+		"zh-tw": "保存修改"
+	},
+	"3xvmjx5": {
+		"zh-cn": "回复会员 ",
+		"en": "Reply to member",
+		"zh-tw": "回覆會員"
+	},
+	"iewc84": {
+		"zh-cn": " 的投诉",
+		"en": "\"Complaint",
+		"zh-tw": "的投訴"
+	},
+	"bggqc55": {
+		"zh-cn": " 回 复 ",
+		"en": "Reply",
+		"zh-tw": "回 復"
+	},
+	"i5anit5": {
+		"zh-cn": " 详 情 ",
+		"en": "For more details",
+		"zh-tw": "詳 情"
+	},
+	"djbsj35": {
+		"zh-cn": " 操作人：",
+		"en": "Operator",
+		"zh-tw": "操作人："
+	},
+	"bb9dil6": {
+		"zh-cn": " 回复时间：",
+		"en": "Reply time",
+		"zh-tw": "回覆時間："
+	},
+	"1nqfrt6": {
+		"zh-cn": " 新增通知 ",
+		"en": "New Notice",
+		"zh-tw": "新增通知"
+	},
+	"diw1c4": {
+		"zh-cn": " 发送 ",
+		"en": "Send",
+		"zh-tw": "發送"
+	},
+	"67r51m6": {
+		"zh-cn": " 撤回发送 ",
+		"en": "Withdraw the send",
+		"zh-tw": "撤回發送"
+	},
+	"2t2qmn6": {
+		"zh-cn": " 全部门店 ",
+		"en": "All stores",
+		"zh-tw": "全部門店"
+	},
+	"mdefkte": {
+		"zh-cn": " 店铺总计收入(不含退款) ",
+		"en": "Total store revenue (excluding refunds)",
+		"zh-tw": "店鋪總計收入(不含退款)"
+	},
+	"tegz2a9": {
+		"zh-cn": " 店铺总退款金额 ",
+		"en": "The total refund amount of the store",
+		"zh-tw": "店鋪總退款金額"
+	},
+	"zf5juf9": {
+		"zh-cn": " 店铺未结算金额 ",
+		"en": "The outstanding settlement amount of the store",
+		"zh-tw": "店鋪未結算金額"
+	},
+	"gboqrj9": {
+		"zh-cn": " 店铺已结算金额 ",
+		"en": "The settled amount of the store",
+		"zh-tw": "店鋪已結算金額"
+	},
+	"pror0n9": {
+		"zh-cn": " 当前可提现余额 ",
+		"en": "Current available balance for withdrawal",
+		"zh-tw": "當前可提現餘額"
+	},
+	"ftlbu4": {
+		"zh-cn": " 搜索 ",
+		"en": "Search",
+		"zh-tw": "搜索"
+	},
+	"pqr9xna": {
+		"zh-cn": " 未结算手续费总额 ",
+		"en": "The total amount of outstanding handling fees",
+		"zh-tw": "未結算手續費總額"
+	},
+	"k7ehtk5": {
+		"zh-cn": "支付成功 ",
+		"en": "Payment successful",
+		"zh-tw": "支付成功"
+	},
+	"7e6ett8": {
+		"zh-cn": " 导出导购分润 ",
+		"en": "Export the sales assistant's commission",
+		"zh-tw": "導出導購分潤"
+	},
+	"ewchqr8": {
+		"zh-cn": " 导出门店分润 ",
+		"en": "Export the store's share of profits",
+		"zh-tw": "導出門店分潤"
+	},
+	"fqf4w4": {
+		"zh-cn": " 提现 ",
+		"en": "Withdrawal",
+		"zh-tw": "提現"
+	},
+	"1wtto48": {
+		"zh-cn": " 提现限额：满 ",
+		"en": "Withdrawal limit: Full",
+		"zh-tw": "提現限額：滿"
+	},
+	"a92cyu6": {
+		"zh-cn": " 元，可提现",
+		"en": "Yuan, can be withdrawn",
+		"zh-tw": "元，可提現"
+	},
+	"e1r76919": {
+		"zh-cn": " 3、根据支付公司逻辑，申请提现后一个工作日到账，节假日顺延具体提现信息请查询提现记录。 ",
+		"en": "According to the logic of the payment company, the funds will be credited to the account within one working day after the application for withdrawal. The withdrawal will be postponed in case of holidays. For specific withdrawal information, please check the withdrawal record.",
+		"zh-tw": "3、根據支付公司邏輯，申請提現後一個工作日到賬，節假日順延具體提現信息請查詢提現記錄。"
+	},
+	"p9rz6v45": {
+		"zh-cn": "<div style=\"margin-left:45px\">\n              <p><i class=\"el-icon-warning\" style=\"color:#E6A23C; font-size: 20px;margin-right:5px\"></i>请确认您的提现金额: ¥ ",
+		"en": "<div style=\"margin-left:45px\">\n<p><i class=\"el-icon-warning\" style=\"color:#E6A23C; font-size: 20px; margin-right:5px ></i> Please confirm your withdrawal amount: ¥",
+		"zh-tw": "<div style=\"margin-left:45px\">\n<p><i class=\"el-icon-warning\" style=\"color:#E6A23C; font-size: 20px;margin-right:5px\"></i>請確認您的提現金額: ¥"
+	},
+	"grk4ir7": {
+		"zh-cn": "结算账户信息 ",
+		"en": "Settlement account information",
+		"zh-tw": "結算賬戶信息"
+	},
+	"1h92vab": {
+		"zh-cn": " （结算银行卡姓名要与",
+		"en": "The name of the settlement bank card should be the same as",
+		"zh-tw": "（結算銀行卡姓名要與"
+	},
+	"ef93h4": {
+		"zh-cn": " 对公 ",
+		"en": "\"Corporate\"",
+		"zh-tw": "對公"
+	},
+	"em42g4": {
+		"zh-cn": " 对私 ",
+		"en": "To private",
+		"zh-tw": "對私"
+	},
+	"h2xxz85": {
+		"zh-cn": "入驻信息 ",
+		"en": "\"Entry information",
+		"zh-tw": "入駐信息"
+	},
+	"766l3o5": {
+		"zh-cn": "证照信息 ",
+		"en": "License and certificate information",
+		"zh-tw": "證照信息"
+	},
+	"hhj9055": {
+		"zh-cn": " 营业执照",
+		"en": "Business license",
+		"zh-tw": "營業執照"
+	},
+	"f3idpw9": {
+		"zh-cn": "手持身份证人像面 ",
+		"en": "The face of the person holding the ID card",
+		"zh-tw": "手持身份證人像面"
+	},
+	"dzt6eh9": {
+		"zh-cn": "手持身份证国徽面 ",
+		"en": "Holding the national emblem side of the ID card",
+		"zh-tw": "手持身份證國徽面"
+	},
+	"5fjyf35": {
+		"zh-cn": "账号信息 ",
+		"en": "Account information",
+		"zh-tw": "賬號信息"
+	},
+	"cttsbc4": {
+		"zh-cn": "手机号 ",
+		"en": "Mobile phone number",
+		"zh-tw": "手機號"
+	},
+	"cvduo4": {
+		"zh-cn": " 其他 ",
+		"en": "Others",
+		"zh-tw": "其他"
+	},
+	"8xrcfc6": {
+		"zh-cn": " 立即发送 ",
+		"en": "Send immediately",
+		"zh-tw": "立即發送"
+	},
+	"6e0j3ud": {
+		"zh-cn": " 商家H5确认入驻协议后 ",
+		"en": "After the merchant H5 confirms the agreement for entry",
+		"zh-tw": "商家H5確認入駐協議後"
+	},
+	"c2p8uo5": {
+		"zh-cn": " 复制链接",
+		"en": "Copy the link",
+		"zh-tw": "複製鏈接"
+	},
+	"417q756": {
+		"zh-cn": "审批备注: ",
+		"en": "Approval remarks",
+		"zh-tw": "審批備註:"
+	},
+	"cq1u6u5": {
+		"zh-cn": " 已审批 ",
+		"en": "Approved",
+		"zh-tw": "已審批"
+	},
+	"l1w07fb": {
+		"zh-cn": " 获取企业微信通讯录 ",
+		"en": "Get the Enterprise wechat contact list",
+		"zh-tw": "獲取企業微信通訊錄"
+	},
+	"lksddib": {
+		"zh-cn": " 同步选中部门到店铺 ",
+		"en": "Select the department to the store simultaneously",
+		"zh-tw": "同步選中部門到店鋪"
+	},
+	"areiucb": {
+		"zh-cn": " 同步选中成员到导购 ",
+		"en": "Synchronize the selection of members to the sales assistant",
+		"zh-tw": "同步選中成員到導購"
+	},
+	"qz8k998": {
+		"zh-cn": " 同步至此店铺 ",
+		"en": "Synchronize to this store",
+		"zh-tw": "同步至此店鋪"
+	},
+	"jj2rp39": {
+		"zh-cn": " 添加供应商配置 ",
+		"en": "Add supplier configuration",
+		"zh-tw": "添加供應商配置"
+	},
+	"lmbw6g6": {
+		"zh-cn": "审核状态: ",
+		"en": "Review status",
+		"zh-tw": "審覈狀態:"
+	},
+	"icfrttk": {
+		"zh-cn": " 密码6-16位，支持字母、数字、下划线",
+		"en": "The password is 6 to 16 characters long and supports letters, numbers and underscores",
+		"zh-tw": "密碼6-16位，支持字母、數字、下劃線"
+	},
+	"qslzor6": {
+		"zh-cn": " 问卷调查 ",
+		"en": "Questionnaire survey",
+		"zh-tw": "問卷調查"
+	},
+	"5207ouc": {
+		"zh-cn": " 基础录入(统计报表) ",
+		"en": "Basic input (Statistical report)",
+		"zh-tw": "基礎錄入(統計報表)"
+	},
+	"i84sx5c": {
+		"zh-cn": " 单页问卷(多项集合) ",
+		"en": "Single-page questionnaire (set of multiple items",
+		"zh-tw": "單頁問卷(多項集合)"
+	},
+	"el5h7l8": {
+		"zh-cn": " 选择表单内容 ",
+		"en": "Select the form content",
+		"zh-tw": "選擇表單內容"
+	},
+	"fqea3": {
+		"zh-cn": " 增 ",
+		"en": "increase",
+		"zh-tw": "增"
+	},
+	"emn43": {
+		"zh-cn": " 删 ",
+		"en": "delete",
+		"zh-tw": "刪"
+	},
+	"ko6kd015": {
+		"zh-cn": " 只能上传jpg/png文件，且不超过2M （建议尺寸：640px，高度自适应） ",
+		"en": "Only jpg/png files can be uploaded, and they should not exceed 2M (suggested size: 640px, height adaptive).",
+		"zh-tw": "只能上傳jpg/png文件，且不超過2M （建議尺寸：640px，高度自適應）"
+	},
+	"c3nzu25": {
+		"zh-cn": " 导 出 ",
+		"en": "Lead out",
+		"zh-tw": "導 出"
+	},
+	"cxpkpx5": {
+		"zh-cn": " 已达标 ",
+		"en": "Has met the standard",
+		"zh-tw": "已達標"
+	},
+	"cq1c3u5": {
+		"zh-cn": " 已完成 ",
+		"en": "Completed",
+		"zh-tw": "已完成"
+	},
+	"d2jzuh5": {
+		"zh-cn": " 待统计 ",
+		"en": "To be counted",
+		"zh-tw": "待統計"
+	},
+	"jk9v24": {
+		"zh-cn": " 累计 ",
+		"en": "Cumulative",
+		"zh-tw": "累計"
+	},
+	"4ad64g6": {
+		"zh-cn": " 月度统计 ",
+		"en": "Monthly statistics",
+		"zh-tw": "月度統計"
+	},
+	"na5hod8": {
+		"zh-cn": " 直属下线数量 ",
+		"en": "The number of direct downlines",
+		"zh-tw": "直屬下線數量"
+	},
+	"xn2nn2a": {
+		"zh-cn": " 直属下线销售总额 ",
+		"en": "Total sales of direct downlines",
+		"zh-tw": "直屬下線銷售總額"
+	},
+	"ako8wb5": {
+		"zh-cn": " 保 存 ",
+		"en": "Preservation",
+		"zh-tw": "保 存"
+	},
+	"v2fnu08": {
+		"zh-cn": " 指定分销商品 ",
+		"en": "Designated distribution goods",
+		"zh-tw": "指定分銷商品"
+	},
+	"xidvkc1a": {
+		"zh-cn": " 全部商品，表示所有的商品推广进行返佣。指定分销商品后，只有设置指定的商品可以进行推广返佣 ",
+		"en": "All products indicate that all product promotions will offer rebates. After specifying the distribution products, only the designated products can be promoted with rebates",
+		"zh-tw": "全部商品，表示所有的商品推廣進行返傭。指定分銷商品後，只有設置指定的商品可以進行推廣返傭"
+	},
+	"h4kacj1j": {
+		"zh-cn": " 注意：将指定分销商品模式切换到全部商品模式，不会清空以前的选择，重新再切回指定商品模式，保留以前的选择商品 ",
+		"en": "Note: Switching the specified distribution product mode to the all product mode will not clear the previous selections. Switching back to the specified product mode will retain the previously selected products",
+		"zh-tw": "注意：將指定分銷商品模式切換到全部商品模式，不會清空以前的選擇，重新再切回指定商品模式，保留以前的選擇商品"
+	},
+	"asyzha9": {
+		"zh-cn": " 单笔金额不低于 ",
+		"en": "The single transaction amount shall not be less than",
+		"zh-tw": "單筆金額不低於"
+	},
+	"3re4yx6": {
+		"zh-cn": " 订单完成 ",
+		"en": "Order completed",
+		"zh-tw": "訂單完成"
+	},
+	"jqt5iv6": {
+		"zh-cn": " 天后结算 ",
+		"en": "Settlement after diva",
+		"zh-tw": "天后結算"
+	},
+	"j34fcv8": {
+		"zh-cn": " 选择付费等级 ",
+		"en": "Select the paid level",
+		"zh-tw": "選擇付費等級"
+	},
+	"m0d1q4": {
+		"zh-cn": " 达到 ",
+		"en": "\"Reach",
+		"zh-tw": "達到"
+	},
+	"efu644": {
+		"zh-cn": " 完成 ",
+		"en": "Completed",
+		"zh-tw": "完成"
+	},
+	"llf03": {
+		"zh-cn": " 笔 ",
+		"en": "pen",
+		"zh-tw": "筆"
+	},
+	"nitggt7": {
+		"zh-cn": " 按利润分佣 ",
+		"en": "Share the commission according to the profit",
+		"zh-tw": "按利潤分傭"
+	},
+	"hva04b9": {
+		"zh-cn": " 按订单金额分佣 ",
+		"en": "Commission is allocated based on the order amount",
+		"zh-tw": "按訂單金額分傭"
+	},
+	"lc74ol1q": {
+		"zh-cn": " 如果商品未指定，返佣计算类型，那么则使用当前设置的通用方式，如果在商品中指定了返佣模式，那么指定商品则使用自己的返佣方式 ",
+		"en": "If the product is not specified, the type of rebate calculation will be used, then the currently set general method will be adopted. If the rebate mode is specified in the product, then the designated product will use its own rebate method",
+		"zh-tw": "如果商品未指定，返傭計算類型，那麼則使用當前設置的通用方式，如果在商品中指定了返傭模式，那麼指定商品則使用自己的返傭方式"
+	},
+	"k7u3us6": {
+		"zh-cn": " 奖励现金 ",
+		"en": "Cash reward",
+		"zh-tw": "獎勵現金"
+	},
+	"kulnjf5": {
+		"zh-cn": "提现状态 ",
+		"en": "Withdrawal status",
+		"zh-tw": "提現狀態"
+	},
+	"jubs7p5": {
+		"zh-cn": " 银行卡 ",
+		"en": "Bank card",
+		"zh-tw": "銀行卡"
+	},
+	"xzrry17": {
+		"zh-cn": " 提现待处理 ",
+		"en": "Withdrawal pending processing",
+		"zh-tw": "提現待處理"
+	},
+	"xa0lud7": {
+		"zh-cn": " 提现处理中 ",
+		"en": "Withdrawal processing in progress",
+		"zh-tw": "提現處理中"
+	},
+	"chc9io6": {
+		"zh-cn": " 打款记录 ",
+		"en": "Payment record",
+		"zh-tw": "打款記錄"
+	},
+	"8ao5rg6": {
+		"zh-cn": " 拒绝原因 ",
+		"en": "Reasons for rejection",
+		"zh-tw": "拒絕原因"
+	},
+	"qvxhm36": {
+		"zh-cn": " 失败原因 ",
+		"en": "Reasons for failure",
+		"zh-tw": "失敗原因"
+	},
+	"fh4wl4": {
+		"zh-cn": " 打款 ",
+		"en": "Make a payment",
+		"zh-tw": "打款"
+	},
+	"dc4i0u5": {
+		"zh-cn": " 打款中 ",
+		"en": "Payment in progress",
+		"zh-tw": "打款中"
+	},
+	"1gtcos8": {
+		"zh-cn": " 打款到推广员 ",
+		"en": "Transfer the payment to the promoter",
+		"zh-tw": "打款到推廣員"
+	},
+	"6q5vidb": {
+		"zh-cn": " 批量设置返佣任务制 ",
+		"en": "Batch set the rebate task system",
+		"zh-tw": "批量設置返傭任務制"
+	},
+	"9j1ni8a": {
+		"zh-cn": " 批量设置返佣状态 ",
+		"en": "Set the rebate status in batches",
+		"zh-tw": "批量設置返傭狀態"
+	},
+	"59pgo6": {
+		"zh-cn": " 分销参数 ",
+		"en": "Distribution parameters",
+		"zh-tw": "分銷參數"
+	},
+	"5ic0sv8": {
+		"zh-cn": " 不支持任务制 ",
+		"en": "Task-based system is not supported",
+		"zh-tw": "不支持任務制"
+	},
+	"3lfrada": {
+		"zh-cn": " 任务制-按总金额 ",
+		"en": "Task system - based on the total amount",
+		"zh-tw": "任務制-按總金額"
+	},
+	"3ewlaqa": {
+		"zh-cn": " 任务制-按总数量 ",
+		"en": "Task system - by total quantity",
+		"zh-tw": "任務制-按總數量"
+	},
+	"m0c7l4": {
+		"zh-cn": " 返佣 ",
+		"en": "\"Rebate",
+		"zh-tw": "返傭"
+	},
+	"wou0vq1a": {
+		"zh-cn": " 如果设置的返佣为固定金额，返佣金额就是设置的固定金额。否则按照 【返佣计算类型】计算返佣 ",
+		"en": "If the set rebate is a fixed amount, the rebate commission amount will be the fixed amount set. Otherwise, the rebate will be calculated according to the \"Rebate Calculation Type\"",
+		"zh-tw": "如果設置的返傭爲固定金額，返佣金額就是設置的固定金額。否則按照 【返傭計算類型】計算返傭"
+	},
+	"dtn6qak": {
+		"zh-cn": " 您的浏览器不支持 video 标签。 ",
+		"en": "Your browser does not support the video tag.",
+		"zh-tw": "您的瀏覽器不支持 video 標籤。"
+	},
+	"xrrl86": {
+		"zh-cn": " 单文本框 ",
+		"en": "Single text box",
+		"zh-tw": "單文本框"
+	},
+	"4fohl89": {
+		"zh-cn": " 数字(纯数字) ",
+		"en": "Numbers (pure numbers",
+		"zh-tw": "數字(純數字)"
+	},
+	"cbj39y5": {
+		"zh-cn": " 复选框 ",
+		"en": "Checkbox",
+		"zh-tw": "複選框"
+	},
+	"lsqvoe6": {
+		"zh-cn": " 下拉选择 ",
+		"en": "Drop-down selection",
+		"zh-tw": "下拉選擇"
+	},
+	"4euebr6": {
+		"zh-cn": " 单选按钮 ",
+		"en": "Radio button",
+		"zh-tw": "單選按鈕"
+	},
+	"lm9kdc6": {
+		"zh-cn": " 多文本域 ",
+		"en": "Multi-text field",
+		"zh-tw": "多文本域"
+	},
+	"z5kva6": {
+		"zh-cn": " 日期选择 ",
+		"en": "Date selection",
+		"zh-tw": "日期選擇"
+	},
+	"bzs8mu6": {
+		"zh-cn": " 地区选择 ",
+		"en": "Regional selection",
+		"zh-tw": "地區選擇"
+	},
+	"s08euf7": {
+		"zh-cn": " 上传身份证 ",
+		"en": "Upload your ID card",
+		"zh-tw": "上傳身份證"
+	},
+	"ad01bc8": {
+		"zh-cn": " 上传其他附件 ",
+		"en": "Upload other attachments",
+		"zh-tw": "上傳其他附件"
+	},
+	"k0y0zv17": {
+		"zh-cn": " 只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px） ",
+		"en": "Only jpg/png files can be uploaded, and they should not exceed 2M (suggested size: 400px * 450px).",
+		"zh-tw": "只能上傳jpg/png文件，且不超過2M （建議尺寸：400px * 450px）"
+	},
+	"mm5phn6y": {
+		"zh-cn": " 需填写姓名请选择字符username、生日为birthday、 身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address、 公司名称为Company name、统一社会信用代码为Unified Social Credit Code、出席人身份证号为Attendance IDCard、帐号为account number、 类型为type、提示信息为Reminder information、上传附件为Attachment upload，若都不是，选其他。 ",
+		"en": "To fill in the name, please select the characters username, birthday, ID number idcard, mobile phone number bankcard, address, Company name company, and Unified social credit code unified Social Credit Code: The ID number of the attendee is Attendance ID card, the account number is account number, the type is Type, the prompt information is Reminder information, and the uploaded Attachment is attachment upload. If none of these are available, choose \"Others\".",
+		"zh-tw": "需填寫姓名請選擇字符username、生日爲birthday、 身份證號碼爲idcard、手機號碼爲mobile、銀行卡號爲bankcard、地址爲address、 公司名稱爲Company name、統一社會信用代碼爲Unified Social Credit Code、出席人身份證號爲Attendance IDCard、帳號爲account number、 類型爲type、提示信息爲Reminder information、上傳附件爲Attachment upload，若都不是，選其他。"
+	},
+	"57d56d6": {
+		"zh-cn": " 视频回放 ",
+		"en": "Video replay",
+		"zh-tw": "視頻回放"
+	},
+	"tuq9el6": {
+		"zh-cn": " 添加模板 ",
+		"en": "Add template",
+		"zh-tw": "添加模板"
+	},
+	"j21wgi8": {
+		"zh-cn": " (只能是数字)",
+		"en": "(Can only be numbers)",
+		"zh-tw": "(只能是數字)"
+	},
+	"6ua7zq6": {
+		"zh-cn": " 确认提交 ",
+		"en": "Confirm submission",
+		"zh-tw": "確認提交"
+	},
+	"m66kr38": {
+		"zh-cn": " 表单元素添加 ",
+		"en": "Addition of form elements",
+		"zh-tw": "表單元素添加"
+	},
+	"ew22d4": {
+		"zh-cn": " 库存：",
+		"en": "Inventory",
+		"zh-tw": "庫存："
+	},
+	"y2mmehc": {
+		"zh-cn": " 元，最多保留两位小数 ",
+		"en": "Yuan, with a maximum of two decimal places retained",
+		"zh-tw": "元，最多保留兩位小數"
+	},
+	"m4r284": {
+		"zh-cn": " 选择 ",
+		"en": "\"Choose\"",
+		"zh-tw": "選擇"
+	},
+	"8l4fa51j": {
+		"zh-cn": " 文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px） ",
+		"en": "The file format should be bmp, png, jpeg, jpg or gif, and the size should not exceed 2M (suggested size: 500px * 500px).",
+		"zh-tw": "文件格式爲bmp、png、jpeg、jpg或gif，大小不超過2M（建議尺寸：500px * 500px）"
+	},
+	"ej76h4": {
+		"zh-cn": " 小时 ",
+		"en": "\"Hour",
+		"zh-tw": "小時"
+	},
+	"6o0jvp1p": {
+		"zh-cn": " (开启成团机器人后，成团时效内人数未满的团，系统将会使用机器人凑满人数，使该团成团。商家只需对真实订单进行发货处理。) ",
+		"en": "After the group-forming robot is activated, if the number of people in a group does not reach the limit within the group-forming period, the system will use the robot to make up the number of people and complete the group. Merchants only need to handle the shipment of real orders.\"",
+		"zh-tw": "(開啓成團機器人後，成團時效內人數未滿的團，系統將會使用機器人湊滿人數，使該團成團。商家只需對真實訂單進行發貨處理。)"
+	},
+	"vuv2l1g": {
+		"zh-cn": " (开启凑团后，消费者可以在拼团商品详情页看到未成团的团列表，可选择其中一个参团。有效提高成团成功率) ",
+		"en": "After enabling group buying, consumers can see the list of unformed groups on the group buying product detail page and choose one of them to join the group. Effectively increase the success rate of group formation",
+		"zh-tw": "(開啓湊團後，消費者可以在拼團商品詳情頁看到未成團的團列表，可選擇其中一個參團。有效提高成團成功率)"
+	},
+	"blyvdja": {
+		"zh-cn": " （最多25个字） ",
+		"en": "(Up to 25 characters",
+		"zh-tw": "（最多25個字）"
+	},
+	"12vtz38": {
+		"zh-cn": " 新增拼团活动 ",
+		"en": "New group-buying activities have been added",
+		"zh-tw": "新增拼團活動"
+	},
+	"capwrh8": {
+		"zh-cn": " 清除所有商品 ",
+		"en": "Clear all goods",
+		"zh-tw": "清除所有商品"
+	},
+	"f4nq36": {
+		"zh-cn": " 删除关联 ",
+		"en": "Delete the association",
+		"zh-tw": "刪除關聯"
+	},
+	"xo7xc79": {
+		"zh-cn": "当可提现余额大于 ",
+		"en": "When the withdrawable balance is greater than",
+		"zh-tw": "當可提現餘額大於"
+	},
+	"dcmi74": {
+		"zh-cn": " 可提现",
+		"en": "Withdrawable",
+		"zh-tw": "可提現"
+	},
+	"mwvnfz6": {
+		"zh-cn": " 选择商户 ",
+		"en": "Select a merchant",
+		"zh-tw": "選擇商戶"
+	},
+	"q5tipr6": {
+		"zh-cn": " 长期有效 ",
+		"en": "Long-term effective",
+		"zh-tw": "長期有效"
+	},
+	"vzfr7nc": {
+		"zh-cn": " 生日当月1日统一发放 ",
+		"en": "It will be distributed uniformly on the 1st of the month of the birthday",
+		"zh-tw": "生日當月1日統一發放"
+	},
+	"s7y1nqc": {
+		"zh-cn": " 生日当周周日统一发放 ",
+		"en": "They will be distributed uniformly on the Sunday of the birthday week",
+		"zh-tw": "生日當週週日統一發放"
+	},
+	"8jf2oqa": {
+		"zh-cn": " 生日当日统一发放 ",
+		"en": "They will be distributed uniformly on the birthday",
+		"zh-tw": "生日當日統一發放"
+	},
+	"ddygk2b": {
+		"zh-cn": " 会员升级成功后发放 ",
+		"en": "It will be distributed after a successful membership upgrade",
+		"zh-tw": "會員升級成功後發放"
+	},
+	"8sk5mbd": {
+		"zh-cn": " 付费会员升级成功后发放 ",
+		"en": "The paid membership will be issued after a successful upgrade",
+		"zh-tw": "付費會員升級成功後發放"
+	},
+	"abgpnce": {
+		"zh-cn": " 周年入会当月1日统一发放 ",
+		"en": "The annual membership will be distributed uniformly on the 1st of the month",
+		"zh-tw": "週年入會當月1日統一發放"
+	},
+	"i9jgfe": {
+		"zh-cn": " 周年入会当周周日统一发放 ",
+		"en": "The distribution will be made uniformly on Sunday of the first week of the anniversary membership",
+		"zh-tw": "週年入會當週週日統一發放"
+	},
+	"513we9c": {
+		"zh-cn": " 周年入会当日统一发放 ",
+		"en": "It will be distributed uniformly on the day of the anniversary membership",
+		"zh-tw": "週年入會當日統一發放"
+	},
+	"gsyzf4": {
+		"zh-cn": " 每年 ",
+		"en": "Every year",
+		"zh-tw": "每年"
+	},
+	"gufif4": {
+		"zh-cn": " 每月 ",
+		"en": "Every month",
+		"zh-tw": "每月"
+	},
+	"gr9gn4": {
+		"zh-cn": " 每周 ",
+		"en": "Every week",
+		"zh-tw": "每週"
+	},
+	"dbou8zd": {
+		"zh-cn": " 请确保短信账户余额充足 ",
+		"en": "Please ensure that the balance in your SMS account is sufficient",
+		"zh-tw": "請確保短信賬戶餘額充足"
+	},
+	"a6bml58": {
+		"zh-cn": " 查看短息账户 ",
+		"en": "Check the short interest account",
+		"zh-tw": "查看短息賬戶"
+	},
+	"srscmu7": {
+		"zh-cn": " 小程序名称 ",
+		"en": "Mini-program name",
+		"zh-tw": "小程序名稱"
+	},
+	"8x9zfd6": {
+		"zh-cn": " 立即创建 ",
+		"en": "Create now",
+		"zh-tw": "立即創建"
+	},
+	"gtmdb4": {
+		"zh-cn": " 每年的",
+		"en": "Every year",
+		"zh-tw": "每年的"
+	},
+	"hixk2": {
+		"zh-cn": "月 ",
+		"en": "month",
+		"zh-tw": "月"
+	},
+	"gv2wb4": {
+		"zh-cn": " 每月的",
+		"en": "Monthly",
+		"zh-tw": "每月的"
+	},
+	"ea6h2": {
+		"zh-cn": "号 ",
+		"en": "number",
+		"zh-tw": "號"
+	},
+	"lmxgrv6": {
+		"zh-cn": " 每周的星期",
+		"en": "The week of each week",
+		"zh-tw": "每週的星期"
+	},
+	"phvl3": {
+		"zh-cn": " 赠送",
+		"en": "\"Gift\"",
+		"zh-tw": "贈送"
+	},
+	"dlrfl6": {
+		"zh-cn": " 】优惠券 ",
+		"en": "\"Coupon\"",
+		"zh-tw": "】優惠券"
+	},
+	"lynov4": {
+		"zh-cn": " 赠送【",
+		"en": "\"Gift",
+		"zh-tw": "贈送【"
+	},
+	"f3l8jl7": {
+		"zh-cn": " 】 优惠券 ",
+		"en": "\"Coupon\"",
+		"zh-tw": "】 優惠券"
+	},
+	"ay3j6p9": {
+		"zh-cn": " 赠送服务类商品 ",
+		"en": "Complimentary service items",
+		"zh-tw": "贈送服務類商品"
+	},
+	"kkovv38": {
+		"zh-cn": " 】服务类商品 ",
+		"en": "\"Service-oriented goods.",
+		"zh-tw": "】服務類商品"
+	},
+	"dhuqvpb": {
+		"zh-cn": " 元获取一次抽奖次数 ",
+		"en": "Each yuan earns one chance to participate in the lottery",
+		"zh-tw": "元獲取一次抽獎次數"
+	},
+	"evisox6": {
+		"zh-cn": " 图片上传 ",
+		"en": "Upload the picture",
+		"zh-tw": "圖片上傳"
+	},
+	"4xbx0q7": {
+		"zh-cn": " 添加背景图 ",
+		"en": "Add a background image",
+		"zh-tw": "添加背景圖"
+	},
+	"iwm7xl7": {
+		"zh-cn": " 删除背景图 ",
+		"en": "Delete the background image",
+		"zh-tw": "刪除背景圖"
+	},
+	"ogx93r6": {
+		"zh-cn": " 上传指针 ",
+		"en": "Upload pointer",
+		"zh-tw": "上傳指針"
+	},
+	"hss8r6": {
+		"zh-cn": " 删除指针 ",
+		"en": "Delete the pointer",
+		"zh-tw": "刪除指針"
+	},
+	"w0r6rdb": {
+		"zh-cn": " 添加会员优先购活动 ",
+		"en": "Join the member priority purchase event",
+		"zh-tw": "添加會員優先購活動"
+	},
+	"j09soa6": {
+		"zh-cn": " 复制活动 ",
+		"en": "Copy activity",
+		"zh-tw": "複製活動"
+	},
+	"cglukn8": {
+		"zh-cn": " 添加标签折扣 ",
+		"en": "Add label discount",
+		"zh-tw": "添加標籤折扣"
+	},
+	"rvc5k08": {
+		"zh-cn": " 查看优惠日志 ",
+		"en": "View the discount log",
+		"zh-tw": "查看優惠日誌"
+	},
+	"hcjy6c5": {
+		"zh-cn": " 自然月 ",
+		"en": "Natural moon",
+		"zh-tw": "自然月"
+	},
+	"mhwbr46": {
+		"zh-cn": " 特定时段 ",
+		"en": "Specific time period",
+		"zh-tw": "特定時段"
+	},
+	"g0hpm4": {
+		"zh-cn": " 暂存 ",
+		"en": "Temporary storage",
+		"zh-tw": "暫存"
+	},
+	"41flcz6": {
+		"zh-cn": " 直接发布 ",
+		"en": "\"Publish directly",
+		"zh-tw": "直接發佈"
+	},
+	"cw3ec4": {
+		"zh-cn": " 停用 ",
+		"en": "\"Deactivated\"",
+		"zh-tw": "停用"
+	},
+	"g85dku5": {
+		"zh-cn": " 移动端 ",
+		"en": "Mobile terminal",
+		"zh-tw": "移動端"
+	},
+	"umkm80g": {
+		"zh-cn": " (包含小程序/H5/APP） ",
+		"en": "(Including mini-programs /H5/ apps",
+		"zh-tw": "(包含小程序/H5/APP）"
+	},
+	"dgwqza5": {
+		"zh-cn": " 按现金 ",
+		"en": "In cash",
+		"zh-tw": "按現金"
+	},
+	"dhiu0w5": {
+		"zh-cn": " 按积分 ",
+		"en": "By integral",
+		"zh-tw": "按積分"
+	},
+	"4xh0rjb": {
+		"zh-cn": "积分 抵扣1元人民币 ",
+		"en": "Points will be deducted by 1 RMB",
+		"zh-tw": "積分 抵扣1元人民幣"
+	},
+	"13voxk6": {
+		"zh-cn": " 向下取整 ",
+		"en": "Round down",
+		"zh-tw": "向下取整"
+	},
+	"13wbx36": {
+		"zh-cn": " 向上取整 ",
+		"en": "Round up",
+		"zh-tw": "向上取整"
+	},
+	"7abkpu6": {
+		"zh-cn": " 批量上架 ",
+		"en": "Batch listing",
+		"zh-tw": "批量上架"
+	},
+	"7abjz56": {
+		"zh-cn": " 批量下架 ",
+		"en": "Batch delisting",
+		"zh-tw": "批量下架"
+	},
+	"pz0j478": {
+		"zh-cn": " 导出商品信息 ",
+		"en": "Export product information",
+		"zh-tw": "導出商品信息"
+	},
+	"9s3fhd6": {
+		"zh-cn": " 预警数量 ",
+		"en": "Warning quantity",
+		"zh-tw": "預警數量"
+	},
+	"twhu6v6": {
+		"zh-cn": " 添加相似 ",
+		"en": "Add similarity",
+		"zh-tw": "添加相似"
+	},
+	"4o9eom6": {
+		"zh-cn": " 更改库存 ",
+		"en": "Change inventory",
+		"zh-tw": "更改庫存"
+	},
+	"chlcl4": {
+		"zh-cn": " 下架 ",
+		"en": "Taken off the shelves",
+		"zh-tw": "下架"
+	},
+	"chklw4": {
+		"zh-cn": " 上架 ",
+		"en": "\"Listed",
+		"zh-tw": "上架"
+	},
+	"k4iqbb1w": {
+		"zh-cn": " 1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px） ",
+		"en": "Up to 9 images can be uploaded. The file formats should be bmp, png, jpeg, jpg or gif, and the size should not exceed 2M (suggested size: 500px * 500px).",
+		"zh-tw": "1. 最多可上傳9張圖片，文件格式爲bmp、png、jpeg、jpg或gif，大小不超過2M（建議尺寸：500px * 500px）"
+	},
+	"itc6h4": {
+		"zh-cn": " 积分 ",
+		"en": "Points",
+		"zh-tw": "積分"
+	},
+	"dwhdy4": {
+		"zh-cn": " 填充 ",
+		"en": "Fill",
+		"zh-tw": "填充"
+	},
+	"he57l4": {
+		"zh-cn": " 清除 ",
+		"en": "Clear",
+		"zh-tw": "清除"
+	},
+	"gtsr2o7": {
+		"zh-cn": " 导出主订单 ",
+		"en": "Export the master order",
+		"zh-tw": "導出主訂單"
+	},
+	"ih76577": {
+		"zh-cn": " 导出子订单 ",
+		"en": "Export sub-orders",
+		"zh-tw": "導出子訂單"
+	},
+	"26qq4b6": {
+		"zh-cn": " 取消订单 ",
+		"en": "Cancel the order",
+		"zh-tw": "取消訂單"
+	},
+	"m5zeq4": {
+		"zh-cn": " 退款 ",
+		"en": "Refund",
+		"zh-tw": "退款"
+	},
+	"cxsu9f5": {
+		"zh-cn": " 待开票 ",
+		"en": "Pending invoice",
+		"zh-tw": "待開票"
+	},
+	"3hga7r6": {
+		"zh-cn": " 整单发货 ",
+		"en": "Full order shipment",
+		"zh-tw": "整單發貨"
+	},
+	"e4l1va6": {
+		"zh-cn": " 拆分发货 ",
+		"en": "Split shipment",
+		"zh-tw": "拆分發貨"
+	},
+	"g7i0w85": {
+		"zh-cn": " 知道了 ",
+		"en": "Got it",
+		"zh-tw": "知道了"
+	},
+	"5m7jme6": {
+		"zh-cn": " 积分订单 ",
+		"en": "Points order",
+		"zh-tw": "積分訂單"
+	},
+	"uz2j9f9": {
+		"zh-cn": " 未支付自动取消 ",
+		"en": "Non-payment will be automatically cancelled",
+		"zh-tw": "未支付自動取消"
+	},
+	"en6w3": {
+		"zh-cn": " 优惠",
+		"en": "\"Discount",
+		"zh-tw": "優惠"
+	},
+	"dl1zp45": {
+		"zh-cn": " 支付成功",
+		"en": "Payment successful",
+		"zh-tw": "支付成功"
+	},
+	"eqhbg4": {
+		"zh-cn": " 已关闭",
+		"en": "Closed",
+		"zh-tw": "已關閉"
+	},
+	"cw8a1o5": {
+		"zh-cn": " 微信支付",
+		"en": "Wechat Pay",
+		"zh-tw": "微信支付"
+	},
+	"jydaof7": {
+		"zh-cn": " 微信PC支付",
+		"en": "Wechat PC payment",
+		"zh-tw": "微信PC支付"
+	},
+	"jy7weh7": {
+		"zh-cn": " 微信H5支付",
+		"en": "Wechat H5 payment",
+		"zh-tw": "微信H5支付"
+	},
+	"52t0836": {
+		"zh-cn": " 支付宝支付",
+		"en": "Alipay payment",
+		"zh-tw": "支付寶支付"
+	},
+	"87a24q8": {
+		"zh-cn": " 支付宝H5支付",
+		"en": "Alipay H5 payment",
+		"zh-tw": "支付寶H5支付"
+	},
+	"b4q4ul5": {
+		"zh-cn": " 余额支付",
+		"en": "Balance payment",
+		"zh-tw": "餘額支付"
+	},
+	"g7r3z45": {
+		"zh-cn": " 积分支付",
+		"en": "Points payment",
+		"zh-tw": "積分支付"
+	},
+	"mqovgg9": {
+		"zh-cn": " POS银行卡支付",
+		"en": "POS bank card payment",
+		"zh-tw": "POS銀行卡支付"
+	},
+	"cdzcg4": {
+		"zh-cn": " 个人 ",
+		"en": "\"Personal",
+		"zh-tw": "個人"
+	},
+	"cw1v84": {
+		"zh-cn": " 公司 ",
+		"en": "\"Company",
+		"zh-tw": "公司"
+	},
+	"g56yu4": {
+		"zh-cn": " 普票 ",
+		"en": "Ordinary ticket",
+		"zh-tw": "普票"
+	},
+	"ckrmz4": {
+		"zh-cn": " 专票 ",
+		"en": "Special ticket",
+		"zh-tw": "專票"
+	},
+	"3psbh87": {
+		"zh-cn": " 商品名称： ",
+		"en": "Product Name",
+		"zh-tw": "商品名稱："
+	},
+	"1fcdhc7": {
+		"zh-cn": " 商品数量： ",
+		"en": "Quantity of goods",
+		"zh-tw": "商品數量："
+	},
+	"u4oblp8": {
+		"zh-cn": " 查看物流详情 ",
+		"en": "View logistics details",
+		"zh-tw": "查看物流詳情"
+	},
+	"dgrejn5": {
+		"zh-cn": " 排序： ",
+		"en": "Sorting",
+		"zh-tw": "排序："
+	},
+	"gqrjo4": {
+		"zh-cn": " 正序 ",
+		"en": "Positive sequence",
+		"zh-tw": "正序"
+	},
+	"cqq5f4": {
+		"zh-cn": " 倒序 ",
+		"en": "Reverse order",
+		"zh-tw": "倒序"
+	},
+	"c8cm868": {
+		"zh-cn": " 关联经销商: ",
+		"en": "Associated dealers",
+		"zh-tw": "關聯經銷商:"
+	},
+	"i6kjp46": {
+		"zh-cn": " 优惠劵包 ",
+		"en": "Coupon package",
+		"zh-tw": "優惠劵包"
+	},
+	"rqlv47": {
+		"zh-cn": " 选择优惠券 ",
+		"en": "Select a coupon",
+		"zh-tw": "選擇優惠券"
+	},
+	"7l74crq": {
+		"zh-cn": "券包内任一优惠券库存大于等于1时，券包都可继续发放 ",
+		"en": "When the inventory of any coupon in the coupon package is greater than or equal to 1, the coupon package can continue to be issued",
+		"zh-tw": "券包內任一優惠券庫存大於等於1時，券包都可繼續發放"
+	},
+	"xh1c9s18": {
+		"zh-cn": " 例：选择券包内有5张优惠券，其中1张优惠券库存为零，用户可继续领取有库存的4张优惠券 ",
+		"en": "For example: If there are 5 coupons in the coupon package and 1 coupon has zero inventory, the user can continue to claim the remaining 4 coupons in stock",
+		"zh-tw": "例：選擇券包內有5張優惠券，其中1張優惠券庫存爲零，用戶可繼續領取有庫存的4張優惠券"
+	},
+	"ivr33": {
+		"zh-cn": " 次 ",
+		"en": "time",
+		"zh-tw": "次"
+	},
+	"dpez2k72": {
+		"zh-cn": " 分账金额计算公式：\n            内扣：\n            总部：（交易金额-手续费）*总部分账占比；\n            经销商:（交易金额-手续费）*经销商分账占比；\n            店铺：订单金额-手续费-总部分账金额-经销商分账金额。\n            外扣：\n            总部：交易金额*总部分账占比；\n            经销商:交易金额*经销商分账占比；\n            店铺：订单金额-总部分账金额-经销商分账金额。",
+		"en": "Formula for calculating the share amount\nInternal buckle\nHeadquarters: (Transaction amount - Handling fee) * Headquarters' share of the account;\nDealer: (Transaction amount - handling fee) * Dealer's share of the revenue;\nStore: Order amount - Handling fee - headquarters' share amount - Dealer's share amount.\nExternal buckle\nHeadquarters: Transaction amount * Headquarters' share of the revenue;\nDealer: Transaction amount * Dealer's share of revenue;\nStore: Order amount - headquarters revenue-sharing amount - Dealer revenue-sharing amount.",
+		"zh-tw": "分賬金額計算公式：\n內扣：\n總部：（交易金額-手續費）*總部分賬佔比；\n經銷商:（交易金額-手續費）*經銷商分賬佔比；\n店鋪：訂單金額-手續費-總部分賬金額-經銷商分賬金額。\n外扣：\n總部：交易金額*總部分賬佔比；\n經銷商:交易金額*經銷商分賬佔比；\n店鋪：訂單金額-總部分賬金額-經銷商分賬金額。"
+	},
+	"nf14s8i": {
+		"zh-cn": " 开启后用户可通过特定行为获得积分，",
+		"en": "After activation, users can earn points through specific actions",
+		"zh-tw": "開啓後用戶可通過特定行爲獲得積分，"
+	},
+	"7at75yb": {
+		"zh-cn": "下方所有设置将生效。 ",
+		"en": "All Settings below will take effect.",
+		"zh-tw": "下方所有設置將生效。"
+	},
+	"fs2j8a6": {
+		"zh-cn": " 保存栏目 ",
+		"en": "Save column",
+		"zh-tw": "保存欄目"
+	},
+	"3pfzrj8": {
+		"zh-cn": " 复制栏目链接 ",
+		"en": "Copy the column link",
+		"zh-tw": "複製欄目鏈接"
+	},
+	"78btvx6": {
+		"zh-cn": " 批量审核 ",
+		"en": "Batch review",
+		"zh-tw": "批量審覈"
+	},
+	"vbpfp6": {
+		"zh-cn": " 新建话题 ",
+		"en": "Create a new topic",
+		"zh-tw": "新建話題"
+	},
+	"vzwvla6": {
+		"zh-cn": " 审核话题 ",
+		"en": "Review topics",
+		"zh-tw": "審覈話題"
+	},
+	"oh08ct8": {
+		"zh-cn": " 话题置顶设置 ",
+		"en": "Topic pinning setting",
+		"zh-tw": "話題置頂設置"
+	},
+	"wwo57bl": {
+		"zh-cn": " 在此配置完成角标后，可在笔记中选择角标。",
+		"en": "After configuring the superscript here, you can select the superscript in the notes.",
+		"zh-tw": "在此配置完成角標後，可在筆記中選擇角標。"
+	},
+	"y5h9jg11": {
+		"zh-cn": "一篇笔记仅能与一个角标关联，关联后将在笔记列表页下的笔记右上角展示角标。 ",
+		"en": "A note can only be associated with one superscript. After association, the superscript will be displayed in the upper right corner of the note under the note list page.",
+		"zh-tw": "一篇筆記僅能與一個角標關聯，關聯後將在筆記列表頁下的筆記右上角展示角標。"
+	},
+	"vuqn36": {
+		"zh-cn": " 新建角标 ",
+		"en": "New corner marker",
+		"zh-tw": "新建角標"
+	},
+	"tu5aki6": {
+		"zh-cn": " 添加文章 ",
+		"en": "Add an article",
+		"zh-tw": "添加文章"
+	},
+	"fpvuu4": {
+		"zh-cn": " 撤回 ",
+		"en": "\"Withdraw\"",
+		"zh-tw": "撤回"
+	},
+	"dadwu4": {
+		"zh-cn": " 发布 ",
+		"en": "\"Publish",
+		"zh-tw": "發佈"
+	},
+	"i44d3": {
+		"zh-cn": " 排序",
+		"en": "Sorting",
+		"zh-tw": "排序"
+	},
+	"wthhr4m": {
+		"zh-cn": " 企业微信的小程序AppID，点击跳转说明 ",
+		"en": "The AppID of the mini-program in Enterprise wechat. Click to jump to the instructions",
+		"zh-tw": "企業微信的小程序AppID，點擊跳轉說明"
+	},
+	"347kst2l": {
+		"zh-cn": " 2. 点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至此处。 ",
+		"en": "2. Click to enter the application details page and then click the \"View\" button after \"Secret\". This Secret will be sent to the Enterprise wechat account of the currently logged-in administrator. The administrator can copy and obtain it within the Enterprise wechat account and paste the obtained Secret here.",
+		"zh-tw": "2. 點擊進入應用詳情頁，點擊「Secret」後的「查看」按鈕。該Secret會發送到當前登錄的管理員賬號的企業微信內，管理員在企業微信內複製獲取，將獲取到的Secret粘貼至此處。"
+	},
+	"y9ywxk1b": {
+		"zh-cn": " 1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到云店小程序 ",
+		"en": "1. In the Enterprise wechat management backend - \"Application Management\" - Applications - below \"Self-Built Applications\", find the Cloud Store Mini Program",
+		"zh-tw": "1. 在企業微信管理後臺 - 「應用管理」- 應用 - 下方的「自建應用」中找到雲店小程序"
+	},
+	"nyd9e91q": {
+		"zh-cn": " 2. 点击进入应用详情页，找到「功能」中的「接收消息」，点击「设置 API 接收」，依次复制下方内容填写至对应输入框中。 ",
+		"en": "2. Click to enter the application details page, find \"Receive Messages\" under \"Functions\", click \"Set API Reception\", and copy the content below in sequence to fill in the corresponding input box.",
+		"zh-tw": "2. 點擊進入應用詳情頁，找到「功能」中的「接收消息」，點擊「設置 API 接收」，依次複製下方內容填寫至對應輸入框中。"
+	},
+	"2zurj2e": {
+		"zh-cn": " 企业微信小程序的加密密钥 ",
+		"en": "The encryption key of the Enterprise wechat mini-program",
+		"zh-tw": "企業微信小程序的加密密鑰"
+	},
+	"ziiccw2o": {
+		"zh-cn": " 3. 点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至下方输入框。 ",
+		"en": "3. Click to enter the application details page and then click the \"View\" button after \"Secret\". This Secret will be sent to the Enterprise wechat of the currently logged-in administrator account. The administrator can copy and obtain it in the Enterprise wechat, and then paste the obtained Secret into the input box below.",
+		"zh-tw": "3. 點擊進入應用詳情頁，點擊「Secret」後的「查看」按鈕。該Secret會發送到當前登錄的管理員賬號的企業微信內，管理員在企業微信內複製獲取，將獲取到的Secret粘貼至下方輸入框。"
+	},
+	"sr6u6od": {
+		"zh-cn": " 企业微信的自建应用凭证 ",
+		"en": "Self-built application credentials of Enterprise wechat",
+		"zh-tw": "企業微信的自建應用憑證"
+	},
+	"sso9z9d": {
+		"zh-cn": " 企业微信的自建应用密钥 ",
+		"en": "The self-built application key of Enterprise wechat",
+		"zh-tw": "企業微信的自建應用密鑰"
+	},
+	"k6dgu01c": {
+		"zh-cn": " 1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到店务工作台。 ",
+		"en": "1. In the Enterprise wechat management backend - \"Application Management\" - Applications - below \"Self-Built Applications\", find the Store Management Workbench.",
+		"zh-tw": "1. 在企業微信管理後臺 - 「應用管理」- 應用 - 下方的「自建應用」中找到店務工作臺。"
+	},
+	"53g62q1d": {
+		"zh-cn": " 2. 点击进入应用详情页，点击「应用主页」后的「设置」按钮，并复制下方的url为「网页地址」。 ",
+		"en": "2. Click to enter the application details page, click the \"Settings\" button after \"Application Home\", and copy the url below as the \"Web Address\".",
+		"zh-tw": "2. 點擊進入應用詳情頁，點擊「應用主頁」後的「設置」按鈕，並複製下方的url爲「網頁地址」。"
+	},
+	"8k3anr7": {
+		"zh-cn": " 创建并发布 ",
+		"en": "Create and publish",
+		"zh-tw": "創建併發布"
+	},
+	"jyavp4": {
+		"zh-cn": " 置项 ",
+		"en": "\"Item\"",
+		"zh-tw": "置項"
+	},
+	"ejnu8sm": {
+		"zh-cn": " 最多置顶两篇笔记，置顶后将自动排序最优。 ",
+		"en": "At most two notes can be pinned to the top. After being pinned, the best ones will be automatically sorted.",
+		"zh-tw": "最多置頂兩篇筆記，置頂後將自動排序最優。"
+	},
+	"q807ipp": {
+		"zh-cn": " 默认为0，排序数字越小优先级越高；相同优先级下 ",
+		"en": "The default is 0. The smaller the sorted number, the higher the priority. Under the same priority",
+		"zh-tw": "默認爲0，排序數字越小優先級越高；相同優先級下"
+	},
+	"dgq4vs5": {
+		"zh-cn": " 打角标 ",
+		"en": "Mark the corner",
+		"zh-tw": "打角標"
+	},
+	"n54r2d6": {
+		"zh-cn": " 选择话题 ",
+		"en": "Choose a topic",
+		"zh-tw": "選擇話題"
+	},
+	"buxgc45": {
+		"zh-cn": "最多可选 ",
+		"en": "Maximum selectable",
+		"zh-tw": "最多可選"
+	},
+	"cjrf54": {
+		"zh-cn": " 件商品",
+		"en": "Piece of goods",
+		"zh-tw": "件商品"
+	},
+	"z839i71p": {
+		"zh-cn": " 用户发表的笔记会通过「机器审核」，若包含违禁内容将自动变为下架状态；官方笔记不会被审核，默认下架状态，需人工上架笔记； ",
+		"en": "Notes posted by users will pass \"machine review\". If they contain prohibited content, they will be automatically taken down. Official notes will not be reviewed and will be taken down by default. You need to manually repost the notes.",
+		"zh-tw": "用戶發表的筆記會通過「機器審覈」，若包含違禁內容將自動變爲下架狀態；官方筆記不會被審覈，默認下架狀態，需人工上架筆記；"
+	},
+	"as4bmj10": {
+		"zh-cn": "若通过「机器审核」，则会为待审核，等待人工审核，此时社区内会展示笔记。 ",
+		"en": "If it passes the \"machine review\", it will be marked as pending review, waiting for manual review. At this time, the notes will be displayed within the community.",
+		"zh-tw": "若通過「機器審覈」，則會爲待審覈，等待人工審覈，此時社區內會展示筆記。"
+	},
+	"l31ll36": {
+		"zh-cn": " 状态变更 ",
+		"en": "Status change",
+		"zh-tw": "狀態變更"
+	},
+	"ymhqjd8": {
+		"zh-cn": " 新建官方笔记 ",
+		"en": "Create an official note",
+		"zh-tw": "新建官方筆記"
+	},
+	"i7h89u8": {
+		"zh-cn": " 官方账号设置 ",
+		"en": "Official account Settings",
+		"zh-tw": "官方賬號設置"
+	},
+	"iv4r3": {
+		"zh-cn": " 未知",
+		"en": "Unknown",
+		"zh-tw": "未知"
+	},
+	"1wqysv6": {
+		"zh-cn": " 新增原因 ",
+		"en": "New reasons added",
+		"zh-tw": "新增原因"
+	},
+	"6n9hu76": {
+		"zh-cn": " 创建劵包 ",
+		"en": "Create a coupon package",
+		"zh-tw": "創建劵包"
+	},
+	"cgxcqh6": {
+		"zh-cn": " 拼团订单 ",
+		"en": "Group buying order",
+		"zh-tw": "拼團訂單"
+	},
+	"coyml85": {
+		"zh-cn": " 已取消 ",
+		"en": "Cancelled",
+		"zh-tw": "已取消"
+	},
+	"kxnvwv8": {
+		"zh-cn": " 等待拼团成功 ",
+		"en": "Waiting for the group buying to be successful",
+		"zh-tw": "等待拼團成功"
+	},
+	"dukuv4": {
+		"zh-cn": " 图片 ",
+		"en": "Picture",
+		"zh-tw": "圖片"
+	},
+	"evooh4": {
+		"zh-cn": " 开启 ",
+		"en": "\"Start\"",
+		"zh-tw": "開啓"
+	},
+	"apziog8": {
+		"zh-cn": " 第一次启动时 ",
+		"en": "When starting up for the first time",
+		"zh-tw": "第一次啓動時"
+	},
+	"q5qrvv7": {
+		"zh-cn": " 每次启动时 ",
+		"en": "Each time it starts up",
+		"zh-tw": "每次啓動時"
+	},
+	"d8dbd4": {
+		"zh-cn": " 右上 ",
+		"en": "Upper right",
+		"zh-tw": "右上"
+	},
+	"d8dc84": {
+		"zh-cn": " 右下 ",
+		"en": "Lower right",
+		"zh-tw": "右下"
+	},
+	"ldpq3": {
+		"zh-cn": " 秒 ",
+		"en": "seconds",
+		"zh-tw": "秒"
+	},
+	"571yxx5": {
+		"zh-cn": "设置路径 ",
+		"en": "Set the path",
+		"zh-tw": "設置路徑"
+	},
+	"fhojexd": {
+		"zh-cn": "\nTITLE(页面标题）",
+		"en": "TITLE(Page Title",
+		"zh-tw": "TITLE(頁面標題）"
+	},
+	"qmapa1o": {
+		"zh-cn": "\nMATE_DESCRIPTION(页面描述）",
+		"en": "MATE_DESCRIPTION(Page description",
+		"zh-tw": "MATE_DESCRIPTION(頁面描述）"
+	},
+	"bzb0upl": {
+		"zh-cn": "\nMATE_KEYWORDS (关键词）",
+		"en": "MATE_KEYWORDS",
+		"zh-tw": "MATE_KEYWORDS (關鍵詞）"
+	},
+	"u1qoz26": {
+		"zh-cn": " 添加页面 ",
+		"en": "Add page",
+		"zh-tw": "添加頁面"
+	},
+	"duwobh5": {
+		"zh-cn": " 未启用 ",
+		"en": "Not enabled",
+		"zh-tw": "未啓用"
+	},
+	"8d291y6": {
+		"zh-cn": " 页面装修 ",
+		"en": "Page decoration",
+		"zh-tw": "頁面裝修"
+	},
+	"ctr9ka5": {
+		"zh-cn": " 已用完 ",
+		"en": "Used up",
+		"zh-tw": "已用完"
+	},
+	"dyoyb35": {
+		"zh-cn": " 无限次 ",
+		"en": "Infinite times",
+		"zh-tw": "無限次"
+	},
+	"cxplue5": {
+		"zh-cn": " 已过期 ",
+		"en": "Expired",
+		"zh-tw": "已過期"
+	},
+	"eyp874": {
+		"zh-cn": " 延期 ",
+		"en": "\"Extension",
+		"zh-tw": "延期"
+	},
+	"m8g6b4": {
+		"zh-cn": " 转让 ",
+		"en": "\"Transfer",
+		"zh-tw": "轉讓"
+	},
+	"gaj8z4": {
+		"zh-cn": " 权益：",
+		"en": "Rights and interests",
+		"zh-tw": "權益："
+	},
+	"gt04th7": {
+		"zh-cn": " ,有效期至：",
+		"en": "Valid until:",
+		"zh-tw": ",有效期至："
+	},
+	"cwj7f45": {
+		"zh-cn": " 延期至：",
+		"en": "Extended to:",
+		"zh-tw": "延期至："
+	},
+	"e5snt4": {
+		"zh-cn": " 备注：",
+		"en": "Note",
+		"zh-tw": "備註："
+	},
+	"fn5xin7": {
+		"zh-cn": " 转让手机号：",
+		"en": "Transfer of mobile phone number",
+		"zh-tw": "轉讓手機號："
+	},
+	"th6xin7": {
+		"zh-cn": " 白名单提示 ",
+		"en": "Whitelist prompt",
+		"zh-tw": "白名單提示"
+	},
+	"qsfr597": {
+		"zh-cn": " 分类样式： ",
+		"en": "Classification style",
+		"zh-tw": "分類樣式："
+	},
+	"jh7izyc": {
+		"zh-cn": " 是否开启自定义分类： ",
+		"en": "Whether to enable custom categories",
+		"zh-tw": "是否開啓自定義分類："
+	},
+	"jtblg55": {
+		"zh-cn": " 门店： ",
+		"en": "Store",
+		"zh-tw": "門店："
+	},
+	"cj1vl4": {
+		"zh-cn": " 今天 ",
+		"en": "today",
+		"zh-tw": "今天"
+	},
+	"fxqbp4": {
+		"zh-cn": " 明天 ",
+		"en": "tomorrow",
+		"zh-tw": "明天"
+	},
+	"datfp4": {
+		"zh-cn": " 后天 ",
+		"en": "The day after tomorrow",
+		"zh-tw": "後天"
+	},
+	"h99slj5": {
+		"zh-cn": " 自定义 ",
+		"en": "\"Custom\"",
+		"zh-tw": "自定義"
+	},
+	"mygmwf6": {
+		"zh-cn": " 系统占位 ",
+		"en": "System occupation",
+		"zh-tw": "系統佔位"
+	},
+	"17bho46": {
+		"zh-cn": " 占用时间：",
+		"en": "Occupied time",
+		"zh-tw": "佔用時間："
+	},
+	"k92kma5": {
+		"zh-cn": " 预约人：",
+		"en": "Reservation person",
+		"zh-tw": "預約人："
+	},
+	"belzyv6": {
+		"zh-cn": " 预约手机：",
+		"en": "Reservation mobile phone",
+		"zh-tw": "預約手機："
+	},
+	"b6ln196": {
+		"zh-cn": " 预约项目：",
+		"en": "Reservation Project",
+		"zh-tw": "預約項目："
+	},
+	"6aapxn6": {
+		"zh-cn": " 到店时间：",
+		"en": "Arrival time",
+		"zh-tw": "到店時間："
+	},
+	"jd30td6": {
+		"zh-cn": " 代客预约 ",
+		"en": "Make reservations on behalf of customers",
+		"zh-tw": "代客預約"
+	},
+	"levzh4": {
+		"zh-cn": " 订单 ",
+		"en": "Order",
+		"zh-tw": "訂單"
+	},
+	"dght14": {
+		"zh-cn": " 商品 ",
+		"en": "Commodity",
+		"zh-tw": "商品"
+	},
+	"p4c4efd": {
+		"zh-cn": " 订单金额1元人民币 获得",
+		"en": "The order amount is 1 RMB",
+		"zh-tw": "訂單金額1元人民幣 獲得"
+	},
+	"d4id64": {
+		"zh-cn": " 包含 ",
+		"en": "\"Included",
+		"zh-tw": "包含"
+	},
+	"aojuod5": {
+		"zh-cn": " 不包含 ",
+		"en": "Not included",
+		"zh-tw": "不包含"
+	},
+	"louzko": {
+		"zh-cn": " 说明：可设置订单中运费部分金额是否可获取积分 ",
+		"en": "Note: You can set whether the amount of the shipping fee in the order can earn points",
+		"zh-tw": "說明：可設置訂單中運費部分金額是否可獲取積分"
+	},
+	"v94doy7": {
+		"zh-cn": " 每月最多获取",
+		"en": "Maximum monthly acquisition",
+		"zh-tw": "每月最多獲取"
+	},
+	"ig9mqf5": {
+		"zh-cn": " 订单完成",
+		"en": "Order completed",
+		"zh-tw": "訂單完成"
+	},
+	"9x7xxj7": {
+		"zh-cn": "天，获取积分 ",
+		"en": "Day, get points",
+		"zh-tw": "天，獲取積分"
+	},
+	"gzp4uh": {
+		"zh-cn": "% 上限范围：1<=x<=100 ",
+		"en": "% upper limit range: 1<=x<=100",
+		"zh-tw": "% 上限範圍：1<=x<=100"
+	},
+	"27n2f3c": {
+		"zh-cn": " 积分 抵扣1元人民币 ",
+		"en": "Points will be deducted by 1 RMB",
+		"zh-tw": "積分 抵扣1元人民幣"
+	},
+	"j8u0gwq": {
+		"zh-cn": " 开启优先积分抵扣功能，消费者下单时优先使用积分抵扣",
+		"en": "Enable the priority points deduction function. When consumers place orders, they will be given priority to use points for deduction",
+		"zh-tw": "開啓優先積分抵扣功能，消費者下單時優先使用積分抵扣"
+	},
+	"d66pr4": {
+		"zh-cn": " 全选 ",
+		"en": "select all",
+		"zh-tw": "全選"
+	},
+	"4uss5t6": {
+		"zh-cn": "所属来源： ",
+		"en": "Source:",
+		"zh-tw": "所屬來源："
+	},
+	"egc944": {
+		"zh-cn": " 审批 ",
+		"en": "Approval",
+		"zh-tw": "審批"
+	},
+	"3cjoi16": {
+		"zh-cn": " 最多提前 ",
+		"en": "At most in advance",
+		"zh-tw": "最多提前"
+	},
+	"ju1cl46": {
+		"zh-cn": " 天可预约 ",
+		"en": "Appointment available on a daily basis",
+		"zh-tw": "天可預約"
+	},
+	"3q0bjm6": {
+		"zh-cn": " 最少提前 ",
+		"en": "At least in advance",
+		"zh-tw": "最少提前"
+	},
+	"5rtdp47": {
+		"zh-cn": " 分钟可预约 ",
+		"en": "Available for reservation within minutes",
+		"zh-tw": "分鐘可預約"
+	},
+	"b90qpm5": {
+		"zh-cn": " 到店前 ",
+		"en": "Before arriving at the store",
+		"zh-tw": "到店前"
+	},
+	"6jhutqm": {
+		"zh-cn": " 分钟可取消预约 (必须大于最小预约周期) ",
+		"en": "Reservations can be cancelled within minutes (must be longer than the minimum reservation period)",
+		"zh-tw": "分鐘可取消預約 (必須大於最小預約週期)"
+	},
+	"fkqoz4": {
+		"zh-cn": " 提前 ",
+		"en": "\"Advance",
+		"zh-tw": "提前"
+	},
+	"esb631a": {
+		"zh-cn": " 小时发送短信提醒 ",
+		"en": "Send text message reminders every hour",
+		"zh-tw": "小時發送短信提醒"
+	},
+	"qzf06jh": {
+		"zh-cn": "天内可预约1次(从预约日开始算) ",
+		"en": "You can make an appointment once within a day (counting from the appointment date).",
+		"zh-tw": "天內可預約1次(從預約日開始算)"
+	},
+	"70r1s48": {
+		"zh-cn": " 1天内可预约 ",
+		"en": "Appointments can be made within one day",
+		"zh-tw": "1天內可預約"
+	},
+	"i80v2": {
+		"zh-cn": "次 ",
+		"en": "time",
+		"zh-tw": "次"
+	},
+	"dzrf7u19": {
+		"zh-cn": " 注销协议内容修改后，提交后对线上客户生效；注销协议在客户注销账号时须同意才可继续注销。 ",
+		"en": "After the content of the cancellation agreement is modified and submitted, it will take effect for online customers. The cancellation agreement must be agreed upon by the customer when they cancel their account before the cancellation can continue.",
+		"zh-tw": "註銷協議內容修改後，提交後對線上客戶生效；註銷協議在客戶註銷賬號時須同意纔可繼續註銷。"
+	},
+	"xyzltva": {
+		"zh-cn": "导购分润计算方式: ",
+		"en": "The calculation method for the sales assistant's commission",
+		"zh-tw": "導購分潤計算方式:"
+	},
+	"7uu3of8": {
+		"zh-cn": " 添加管理分类 ",
+		"en": "Add management categories",
+		"zh-tw": "添加管理分類"
+	},
+	"m1iaym6": {
+		"zh-cn": " 店铺商品 ",
+		"en": "Store goods",
+		"zh-tw": "店鋪商品"
+	},
+	"4zyj9r6": {
+		"zh-cn": " 关联参数 ",
+		"en": "Associated parameters",
+		"zh-tw": "關聯參數"
+	},
+	"4s19zt6": {
+		"zh-cn": " 关联规格 ",
+		"en": "Associated specifications",
+		"zh-tw": "關聯規格"
+	},
+	"4bu1s27": {
+		"zh-cn": " 添加等级卡 ",
+		"en": "Add level cards",
+		"zh-tw": "添加等級卡"
+	},
+	"mg9y74": {
+		"zh-cn": " 配置 ",
+		"en": "\"Configuration\"",
+		"zh-tw": "配置"
+	},
+	"grrc2": {
+		"zh-cn": "折 ",
+		"en": "fold",
+		"zh-tw": "折"
+	},
+	"xdu8wce": {
+		"zh-cn": " 高德地图Key获取路径： ",
+		"en": "The path to obtain the Key for Gaode Map",
+		"zh-tw": "高德地圖Key獲取路徑："
+	},
+	"pieu8k9": {
+		"zh-cn": " 高德地图控制台 ",
+		"en": "Gaode Map Console",
+		"zh-tw": "高德地圖控制檯"
+	},
+	"1d39l7y": {
+		"zh-cn": " ，进入 「我的应用」-「 创建新应用 」-「 添加新Key 」。 ",
+		"en": "Go to \"My Apps\" - \"Create New App\" - \"Add New Key\".",
+		"zh-tw": "，進入 「我的應用」-「 創建新應用 」-「 添加新Key 」。"
+	},
+	"vu4kmzj": {
+		"zh-cn": " （ 推荐尺寸:147*46px ） ",
+		"en": "(Recommended size :147*46px",
+		"zh-tw": "（ 推薦尺寸:147*46px ）"
+	},
+	"qfvhpyl": {
+		"zh-cn": " （ 推荐尺寸:1920*690px ） ",
+		"en": "(Recommended size :1920*690px",
+		"zh-tw": "（ 推薦尺寸:1920*690px ）"
+	},
+	"6rf6vj6": {
+		"zh-cn": " 确认保存 ",
+		"en": "Confirm save",
+		"zh-tw": "確認保存"
+	},
+	"vq945qa": {
+		"zh-cn": " 添加分类模版页面 ",
+		"en": "Add a category template page",
+		"zh-tw": "添加分類模版頁面"
+	},
+	"sisg387": {
+		"zh-cn": " 小程序配置 ",
+		"en": "\"Mini Program configuration",
+		"zh-tw": "小程序配置"
+	},
+	"dwy50e9": {
+		"zh-cn": " 小程序导航配置 ",
+		"en": "Mini-program navigation configuration",
+		"zh-tw": "小程序導航配置"
+	},
+	"u2xpgh9": {
+		"zh-cn": " 同步模板至店铺 ",
+		"en": "Synchronize the template to the store",
+		"zh-tw": "同步模板至店鋪"
+	},
+	"uugmmy7": {
+		"zh-cn": " 从店铺移除 ",
+		"en": "Remove from the store",
+		"zh-tw": "從店鋪移除"
+	},
+	"mi7yg7": {
+		"zh-cn": " 商品码下载 ",
+		"en": "Download the product code",
+		"zh-tw": "商品碼下載"
+	},
+	"dikeo55": {
+		"zh-cn": " 批量操作",
+		"en": "Batch operation",
+		"zh-tw": "批量操作"
+	},
+	"bbz4p05": {
+		"zh-cn": " 免费版 ",
+		"en": "Free version",
+		"zh-tw": "免費版"
+	},
+	"qd7den9": {
+		"zh-cn": " 增值版（按单） ",
+		"en": "Value-added version (by order",
+		"zh-tw": "增值版（按單）"
+	},
+	"q9pw439": {
+		"zh-cn": " 增值版（按次） ",
+		"en": "Value-added version (by the time",
+		"zh-tw": "增值版（按次）"
+	},
+	"4y9nvmb": {
+		"zh-cn": " 快递鸟快递物流跟踪 ",
+		"en": "Express Bird Express logistics tracking",
+		"zh-tw": "快遞鳥快遞物流跟蹤"
+	},
+	"2aw9aed": {
+		"zh-cn": " 快递100实时快递查询 ",
+		"en": "\"Express 100 Real-time express delivery inquiry.",
+		"zh-tw": "快遞100實時快遞查詢"
+	},
+	"1wnroc6": {
+		"zh-cn": " 新增参数 ",
+		"en": "New parameters",
+		"zh-tw": "新增參數"
+	},
+	"x7o896a": {
+		"zh-cn": " 支持商品高级筛选 ",
+		"en": "Support advanced product filtering",
+		"zh-tw": "支持商品高級篩選"
+	},
+	"4a7quub": {
+		"zh-cn": " 仅用于商品详情展示 ",
+		"en": "For the display of product details only",
+		"zh-tw": "僅用於商品詳情展示"
+	},
+	"rco7d7": {
+		"zh-cn": " 添加参数值 ",
+		"en": "Add parameter values",
+		"zh-tw": "添加參數值"
+	},
+	"1oqiee6": {
+		"zh-cn": " 新增规格 ",
+		"en": "New specifications",
+		"zh-tw": "新增規格"
+	},
+	"fvbkg4": {
+		"zh-cn": " 文字 ",
+		"en": "Text",
+		"zh-tw": "文字"
+	},
+	"62abcx7": {
+		"zh-cn": " 添加规格值 ",
+		"en": "Add specification values",
+		"zh-tw": "添加規格值"
+	},
+	"gtf2": {
+		"zh-cn": " 元",
+		"en": "yuan",
+		"zh-tw": "元"
+	},
+	"pg53x6": {
+		"zh-cn": " 确定充值 ",
+		"en": "Confirm the recharge",
+		"zh-tw": "確定充值"
+	},
+	"fvpaq4": {
+		"zh-cn": " 新增 ",
+		"en": "New addition",
+		"zh-tw": "新增"
+	},
+	"8c8dc26": {
+		"zh-cn": " 页面路径 ",
+		"en": "Page path",
+		"zh-tw": "頁面路徑"
+	},
+	"s00ehz6": {
+		"zh-cn": " 强制下架 ",
+		"en": "Forced removal from shelves",
+		"zh-tw": "強制下架"
+	},
+	"powvvw6": {
+		"zh-cn": "H5二维码 ",
+		"en": "H5 QR code",
+		"zh-tw": "H5二維碼"
+	},
+	"bkn8435": {
+		"zh-cn": " 单规格 ",
+		"en": "Single specification",
+		"zh-tw": "單規格"
+	},
+	"fs59o45": {
+		"zh-cn": " 百分比 ",
+		"en": "Percentage",
+		"zh-tw": "百分比"
+	},
+	"c8mvg46": {
+		"zh-cn": " 固定金额 ",
+		"en": "Fixed amount",
+		"zh-tw": "固定金額"
+	},
+	"4mkzuoc": {
+		"zh-cn": " Shopex通行证书 ",
+		"en": "Shopex Pass certificate",
+		"zh-tw": "Shopex通行證書"
+	},
+	"xy3tama": {
+		"zh-cn": " Shopex证书 ",
+		"en": "Shopex certificate",
+		"zh-tw": "Shopex證書"
+	},
+	"nflsn6": {
+		"zh-cn": " 删除证书 ",
+		"en": "Delete the certificate",
+		"zh-tw": "刪除證書"
+	},
+	"ekdb6lb": {
+		"zh-cn": " 电商ERP关系绑定 ",
+		"en": "E-commerce ERP relationship binding",
+		"zh-tw": "電商ERP關係綁定"
+	},
+	"5my1d96": {
+		"zh-cn": " 申请绑定 ",
+		"en": "Application binding",
+		"zh-tw": "申請綁定"
+	},
+	"fx1cp58": {
+		"zh-cn": " 查看绑定关系 ",
+		"en": "View the binding relationship",
+		"zh-tw": "查看綁定關係"
+	},
+	"as5gao5": {
+		"zh-cn": " 关 闭 ",
+		"en": "Close",
+		"zh-tw": "關 閉"
+	},
+	"bldbgs5": {
+		"zh-cn": " 启用中 ",
+		"en": "Enabled",
+		"zh-tw": "啓用中"
+	},
+	"thrm2mf": {
+		"zh-cn": " 开通微信开放平台绑定小程序 ",
+		"en": "Activate the wechat Open Platform to bind mini-programs",
+		"zh-tw": "開通微信開放平臺綁定小程序"
+	},
+	"x923t37": {
+		"zh-cn": " 仅上传代码 ",
+		"en": "Only upload the code",
+		"zh-tw": "僅上傳代碼"
+	},
+	"9wcmdpb": {
+		"zh-cn": " 上传代码并提交审核 ",
+		"en": "Upload the code and submit it for review",
+		"zh-tw": "上傳代碼並提交審覈"
+	},
+	"u846wc6": {
+		"zh-cn": " 重新提审 ",
+		"en": "Re-examination",
+		"zh-tw": "重新提審"
+	},
+	"vtuvlb6": {
+		"zh-cn": " 审核撤回 ",
+		"en": "Review withdrawal",
+		"zh-tw": "審覈撤回"
+	},
+	"iab3wa6": {
+		"zh-cn": " 回退版本 ",
+		"en": "Rollback version",
+		"zh-tw": "回退版本"
+	},
+	"wvsrca6": {
+		"zh-cn": " 尝试发布 ",
+		"en": "Try to publish",
+		"zh-tw": "嘗試發佈"
+	},
+	"du2lu4": {
+		"zh-cn": " 域名 ",
+		"en": "Domain name",
+		"zh-tw": "域名"
+	},
+	"xe2w4n6": {
+		"zh-cn": " 编辑模板 ",
+		"en": "Edit template",
+		"zh-tw": "編輯模板"
+	},
+	"k405se9": {
+		"zh-cn": " 小程序合法域名 ",
+		"en": "Legal domain names for mini-programs",
+		"zh-tw": "小程序合法域名"
+	},
+	"e114p95": {
+		"zh-cn": " 未绑定 ",
+		"en": "Unbound",
+		"zh-tw": "未綁定"
+	},
+	"4kmpvt6": {
+		"zh-cn": " 更换绑定 ",
+		"en": "Change binding",
+		"zh-tw": "更換綁定"
+	},
+	"qfmk687": {
+		"zh-cn": " 体验二维码 ",
+		"en": "Experience the QR code",
+		"zh-tw": "體驗二維碼"
+	},
+	"psha7z7": {
+		"zh-cn": " 授权第三方 ",
+		"en": "Authorize a third party",
+		"zh-tw": "授權第三方"
+	},
+	"a56u589": {
+		"zh-cn": " 添加直连小程序 ",
+		"en": "Add the direct connection mini-program",
+		"zh-tw": "添加直連小程序"
+	},
+	"4r5k2x6": {
+		"zh-cn": " 更新授权 ",
+		"en": "Update authorization",
+		"zh-tw": "更新授權"
+	},
+	"8mjubn9": {
+		"zh-cn": " 添加直连公众号 ",
+		"en": "Add a direct link to the public account",
+		"zh-tw": "添加直連公衆號"
+	},
+	"inh6281k": {
+		"zh-cn": " 对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内 ",
+		"en": "Compare the current domain name of the mini-program with the actual configured domain name locally to determine if the domain name of the mini-program is consistent. Otherwise, it may cause the mini-program to report an error because the domain name is not on the whitelist",
+		"zh-tw": "對比當前小程序域名和本地實際配置的域名，判斷小程序域名是否一致，否則可能導致小程序報錯，因爲域名不在白名單內"
+	},
+	"d2slw75": {
+		"zh-cn": " 推 送 ",
+		"en": "\"Push and send",
+		"zh-tw": "推 送"
+	},
+	"hg9np4": {
+		"zh-cn": " 激活 ",
+		"en": "Activate",
+		"zh-tw": "激活"
+	},
+	"kpwldo6": {
+		"zh-cn": " 返回登录 ",
+		"en": "Return to Login",
+		"zh-tw": "返回登錄"
+	},
+	"t061zsc": {
+		"zh-cn": " 此资源包到期时间为  ",
+		"en": "The expiration time of this resource package is",
+		"zh-tw": "此資源包到期時間爲"
+	},
+	"skvt416": {
+		"zh-cn": " 点我复制 ",
+		"en": "Click me to copy",
+		"zh-tw": "點我複製"
+	},
+	"bgukwa5": {
+		"zh-cn": " 去授权 ",
+		"en": "Go to authorize",
+		"zh-tw": "去授權"
+	},
+	"g4rsdf8": {
+		"zh-cn": " 一洽客服保存 ",
+		"en": "Save it to the customer service",
+		"zh-tw": "一洽客服保存"
+	},
+	"jif2mh7": {
+		"zh-cn": " 切换短信商 ",
+		"en": "Switch SMS providers",
+		"zh-tw": "切換短信商"
+	},
+	"2qlybi6": {
+		"zh-cn": " 短信余额：",
+		"en": "SMS balance",
+		"zh-tw": "短信餘額："
+	},
+	"hl272": {
+		"zh-cn": "条 ",
+		"en": "article",
+		"zh-tw": "條"
+	},
+	"8le25z7": {
+		"zh-cn": " 短信签名： ",
+		"en": "SMS signature",
+		"zh-tw": "短信簽名："
+	},
+	"6tuhona": {
+		"zh-cn": " 签名设置规范详见 ",
+		"en": "For the signature setting specifications, please refer to the details",
+		"zh-tw": "簽名設置規範詳見"
+	},
+	"yox7fg20": {
+		"zh-cn": " 1.“通知类”短信无发送时间限制；“营销类”短信可发送时间为每天08:00-22:00，超出可发送时间提交的短信任务将在下一个可发送时间发送。",
+		"en": "1. There is no time limit for sending \"notification\" text messages. The available sending time for \"marketing\" text messages is from 08:00 to 22:00 every day. Text message tasks submitted after the available sending time will be sent at the next available sending time.",
+		"zh-tw": "1.“通知類”短信無發送時間限制；“營銷類”短信可發送時間爲每天08:00-22:00，超出可發送時間提交的短信任務將在下一個可發送時間發送。"
+	},
+	"uiktcoa": {
+		"zh-cn": " 2.关于短信长度：",
+		"en": "2. Regarding the length of text messages:",
+		"zh-tw": "2.關於短信長度："
+	},
+	"qwxgfe8": {
+		"zh-cn": " 变量预估长度 ",
+		"en": "Variable estimated length",
+		"zh-tw": "變量預估長度"
+	},
+	"vlcf111x": {
+		"zh-cn": " 1）预估长度：是系统评估当前模板可能产生的计费条数和字数，可用于评估充值短信条数；预估长度=短信签名+退订文案+短信正文+变量预估长度。",
+		"en": "1) Estimated length: It is the system's assessment of the possible number of billing entries and word count generated by the current template, and can be used to evaluate the number of recharge short messages. Estimated length = Text message signature + unsubscribe message text + text message body + variable estimated length.",
+		"zh-tw": "1）預估長度：是系統評估當前模板可能產生的計費條數和字數，可用於評估充值短信條數；預估長度=短信簽名+退訂文案+短信正文+變量預估長度。"
+	},
+	"8spo811t": {
+		"zh-cn": " 2）预扣费长度：短信任务执行时，将替换已知变量后（品牌名称、活动名称、支付金额等），重新预估短信长度，完成预扣费并提交至运营商。",
+		"en": "2) Pre-deduction length: When the SMS task is executed, the known variables (brand name, activity name, payment amount, etc.) will be replaced to re-estimate the SMS length, complete the pre-deduction and submit it to the operator.",
+		"zh-tw": "2）預扣費長度：短信任務執行時，將替換已知變量後（品牌名稱、活動名稱、支付金額等），重新預估短信長度，完成預扣費並提交至運營商。"
+	},
+	"l4hu1j1t": {
+		"zh-cn": " 3）实际扣费：短信发送成功后，待运营商返回发送账单（一般为5个自然日，大促期间可能会有延迟），根据账单中的实际发送结果进行返款。",
+		"en": "3) Actual deduction: After the SMS is successfully sent, once the operator returns the sending bill (usually within 5 natural days, there may be delays during major promotions), the refund will be made based on the actual sending result stated in the bill.",
+		"zh-tw": "3）實際扣費：短信發送成功後，待運營商返回發送賬單（一般爲5個自然日，大促期間可能會有延遲），根據賬單中的實際發送結果進行返款。"
+	},
+	"huxeai18": {
+		"zh-cn": " 3.短信内容请输入汉字、英文、常用标点符号、数字。其他特殊字符在实际发送中会展示异常。",
+		"en": "3. Please enter Chinese characters, English, common punctuation marks and numbers in the text message content. Other special characters will display exceptions in actual sending.",
+		"zh-tw": "3.短信內容請輸入漢字、英文、常用標點符號、數字。其他特殊字符在實際發送中會展示異常。"
+	},
+	"ucvsgr1a": {
+		"zh-cn": " 4.编辑“通知类”短信内容时，请慎重添加营销链接，可能会触发运营商拦截，导致短信发送失败。",
+		"en": "4. When editing the content of \"notification\" text messages, please be cautious about adding marketing links, as they may trigger interception by the operator, resulting in the failure of message sending.",
+		"zh-tw": "4.編輯“通知類”短信內容時，請慎重添加營銷鏈接，可能會觸發運營商攔截，導致短信發送失敗。"
+	},
+	"nk5bo14": {
+		"zh-cn": " 5.应运营商要求，“通知类”短信不可添加退订文案；“营销类”必须添加退订文案。",
+		"en": "5. At the request of the operator, unsubscribe messages cannot be added to \"notification type\" text messages. The \"marketing category\" must add an unsubscribe copy.",
+		"zh-tw": "5.應運營商要求，“通知類”短信不可添加退訂文案；“營銷類”必須添加退訂文案。"
+	},
+	"7nlxk8m": {
+		"zh-cn": "条短信，以实际发送为准（可能超过默认字段） ",
+		"en": "One text message, subject to actual sending (may exceed the default field)",
+		"zh-tw": "條短信，以實際發送爲準（可能超過默認字段）"
+	},
+	"68akj48": {
+		"zh-cn": " 拒收请回复R ",
+		"en": "If you refuse to accept, please reply with R",
+		"zh-tw": "拒收請回復R"
+	},
+	"yamwee6": {
+		"zh-cn": " 测试发送 ",
+		"en": "Test sending",
+		"zh-tw": "測試發送"
+	},
+	"yu81fmf": {
+		"zh-cn": " 1、当前通道单条短信字数限制",
+		"en": "1. The character limit for a single text message in the current channel",
+		"zh-tw": "1、當前通道單條短信字數限制"
+	},
+	"vc1lwh1c": {
+		"zh-cn": "个字一条计费； 2、上图仅为操作预览，变量无固定长度，最终字数和计费条数以实际执行时发送为准。 ",
+		"en": "Charge per character per item. 2. The above picture is only a preview of the operation. The variables have no fixed length. The final word count and the number of billing entries will be subject to the actual execution sent.",
+		"zh-tw": "個字一條計費； 2、上圖僅爲操作預覽，變量無固定長度，最終字數和計費條數以實際執行時發送爲準。"
+	},
+	"rrlm4w1s": {
+		"zh-cn": " 为丰富小程序的服务能力，提高服务质量，微信为小程序提供客服消息能力，以便小程序用户可以方便快捷地与小程序服务提供方进行沟通。 ",
+		"en": "To enrich the service capabilities of mini-programs and improve service quality, wechat provides customer service message capabilities for mini-programs, enabling mini-program users to communicate with mini-program service providers conveniently and quickly.",
+		"zh-tw": "爲豐富小程序的服務能力，提高服務質量，微信爲小程序提供客服消息能力，以便小程序用戶可以方便快捷地與小程序服務提供方進行溝通。"
+	},
+	"bno16s5": {
+		"zh-cn": " 去配置 ",
+		"en": "Go to configure",
+		"zh-tw": "去配置"
+	},
+	"k9wmef": {
+		"zh-cn": " 进入微信小程序管理端，进入“",
+		"en": "Enter the wechat Mini Program management End and go to\"",
+		"zh-tw": "進入微信小程序管理端，進入“"
+	},
+	"2kyckbc": {
+		"zh-cn": "，进行客服添加绑定操作 ",
+		"en": "Perform the customer service addition and binding operation",
+		"zh-tw": "，進行客服添加綁定操作"
+	},
+	"8c6yyw6": {
+		"zh-cn": " 页面路径：",
+		"en": "Page path",
+		"zh-tw": "頁面路徑："
+	},
+	"pny9v56": {
+		"zh-cn": " 注册量: ",
+		"en": "Registration volume",
+		"zh-tw": "註冊量:"
+	},
+	"9dua4y6": {
+		"zh-cn": " 购买量: ",
+		"en": "Purchase quantity",
+		"zh-tw": "購買量:"
+	},
+	"bw6jb8a": {
+		"zh-cn": " 注册购买转化率: ",
+		"en": "Registration purchase conversion rate",
+		"zh-tw": "註冊購買轉化率:"
+	},
+	"acgfgr7": {
+		"zh-cn": " 二维码打包 ",
+		"en": "Qr code packaging",
+		"zh-tw": "二維碼打包"
+	},
+	"bksgyk5": {
+		"zh-cn": " 去绑定 ",
+		"en": "\"Go binding",
+		"zh-tw": "去綁定"
+	},
+	"luterf1d": {
+		"zh-cn": " 推广短信由 [签名+模板] 组成，当前场景仅支持「推广短信」类型的模板，如需添加模板：点这里。 ",
+		"en": "The promotional text message consists of [signature + template]. Currently, only the \"promotional text message\" type template is supported in the scene. If you need to add a template: click here.",
+		"zh-tw": "推廣短信由 [簽名+模板] 組成，當前場景僅支持「推廣短信」類型的模板，如需添加模板：點這裏。"
+	},
+	"om71s0c": {
+		"zh-cn": " 没有需要的签名，马上 ",
+		"en": "There's no signature needed. Right now",
+		"zh-tw": "沒有需要的簽名，馬上"
+	},
+	"tx6ics6": {
+		"zh-cn": " 添加签名 ",
+		"en": "Add signature",
+		"zh-tw": "添加簽名"
+	},
+	"u9xlirh": {
+		"zh-cn": " 验证码（0.045元 / 条） ",
+		"en": "Verification code (0.045 yuan per piece",
+		"zh-tw": "驗證碼（0.045元 / 條）"
+	},
+	"mu6bc0i": {
+		"zh-cn": " 短信通知（0.045元 / 条） ",
+		"en": "SMS notification (0.045 yuan per message)",
+		"zh-tw": "短信通知（0.045元 / 條）"
+	},
+	"7msg2zi": {
+		"zh-cn": " 推广短信（0.055元 / 条） ",
+		"en": "Promotional text message (0.055 yuan per message)",
+		"zh-tw": "推廣短信（0.055元 / 條）"
+	},
+	"oammbc2c": {
+		"zh-cn": " 短信字数含 \" 签名 + 模版内容 + 变量内容”，短信 70 个字数含以内，按 1 条短信计费；超出 70 个字为长短信，按照 67 个字数记为 1 条短信费用。 ",
+		"en": "The word count of a text message includes \"signature + template content + variable content\". If the text message is within 70 characters, it will be charged as one text message. Messages exceeding 70 characters are considered long or short messages and are charged as one text message with 67 characters.",
+		"zh-tw": "短信字數含 \" 簽名 + 模版內容 + 變量內容”，短信 70 個字數含以內，按 1 條短信計費；超出 70 個字爲長短信，按照 67 個字數記爲 1 條短信費用。"
+	},
+	"5lw7jiy": {
+		"zh-cn": " 短信服务的模板都需要经过审核，审核通过后才可以使用该模板，请参见 ",
+		"en": "All templates for SMS services need to be reviewed. Only after the review is passed can the template be used. Please refer to",
+		"zh-tw": "短信服務的模板都需要經過審覈，審覈通過後纔可以使用該模板，請參見"
+	},
+	"kkroyt6": {
+		"zh-cn": " 返回列表 ",
+		"en": "Return list",
+		"zh-tw": "返回列表"
+	},
+	"mvkykm9": {
+		"zh-cn": " 再添加一个模板 ",
+		"en": "Add another template",
+		"zh-tw": "再添加一個模板"
+	},
+	"ybsthu2x": {
+		"zh-cn": " 欢迎使用商派产品。以下所述条款和条件即构成您与商派软件有限公司（以下简称 “商派” ）就软件使用许可所达成的协议（以下简称 “ 本协议 ” ）。一旦您安装使用了此产品，即表示您已接受了以下所述的条款和条件。 ",
+		"en": "Welcome to use Shangpai products. The terms and conditions described below constitute the agreement between you and Shopex Software Limited (hereinafter referred to as \"Shopex\") regarding the software license (hereinafter referred to as \"this Agreement\"). Once you install and use this product, it indicates that you have accepted the terms and conditions described below.",
+		"zh-tw": "歡迎使用商派產品。以下所述條款和條件即構成您與商派軟件有限公司（以下簡稱 “商派” ）就軟件使用許可所達成的協議（以下簡稱 “ 本協議 ” ）。一旦您安裝使用了此產品，即表示您已接受了以下所述的條款和條件。"
+	},
+	"vystoz78": {
+		"zh-cn": " 1.1 本\"软件\"由商派开发。本“软件”的一切著作权、商标权、专利权、商业秘密等知识产权及其他合法权益，以及与本“软件”相关的信息内容，包括但不限于：计算机程序源代码、目标代码、使用说明、本协议内容、图标、图示、色彩、界面设计、版面框架、文字和附加程序等皆为商派公司所有。本软件产品受《中华人民共和国著作权法》、《中华人民共和国计算机软件保护条例》、《伯尔尼公约》以及公约成员国已生效的著作权保护法律及其他知识产权法律法规的保护。未经商派事先书面同意，您不得以任何方式将软件进行商业性使用或通过信息网络传播软件内容。 ",
+		"en": "1.1 This \"Software\" was developed by Shangpai. All Copyrights, trademark rights, patent rights, trade secrets and other intellectual property rights and other legitimate rights and interests of this \"Software\", as well as information content related to this \"Software\", including but not limited to The source code of the computer program, object code, user manual, content of this agreement, ICONS, diagrams, colors, interface design, layout framework, text and additional programs, etc. are all owned by Shopex. This software product is protected by the Copyright Law of the People's Republic of China, the Regulations of the People's Republic of China on the Protection of Computer Software, the Berne Convention, as well as the copyright protection laws and other intellectual property laws and regulations that have come into effect in the member states of the Convention. Without the prior written consent of Shangshangpai, you may not use the software for commercial purposes in any way or disseminate its content through information networks.",
+		"zh-tw": "1.1 本\"軟件\"由商派開發。本“軟件”的一切著作權、商標權、專利權、商業祕密等知識產權及其他合法權益，以及與本“軟件”相關的信息內容，包括但不限於：計算機程序源代碼、目標代碼、使用說明、本協議內容、圖標、圖示、色彩、界面設計、版面框架、文字和附加程序等皆爲商派公司所有。本軟件產品受《中華人民共和國著作權法》、《中華人民共和國計算機軟件保護條例》、《伯爾尼公約》以及公約成員國已生效的著作權保護法律及其他知識產權法律法規的保護。未經商派事先書面同意，您不得以任何方式將軟件進行商業性使用或通過信息網絡傳播軟件內容。"
+	},
+	"qg9dxm22": {
+		"zh-cn": " 1.2 软件可能涉及第三方知识产权，而该等第三方对您基于本协议在软件中使用该等知识产权有要求的，商派将以适当方式向您告知该要求，您应当一并遵守。 ",
+		"en": "1.2 If the software may involve third-party intellectual property rights and such third parties have requirements for your use of such intellectual property rights in the software based on this agreement, Shangpai will inform you of such requirements in an appropriate manner, and you shall comply with them.",
+		"zh-tw": "1.2 軟件可能涉及第三方知識產權，而該等第三方對您基於本協議在軟件中使用該等知識產權有要求的，商派將以適當方式向您告知該要求，您應當一併遵守。"
+	},
+	"gtzd2o1l": {
+		"zh-cn": " 2.1 保留权利：本《协议》未明示授权的其他一切权利仍归商派所有，用户使用其他权利时须另外取得商派的书面同意。 ",
+		"en": "2.1 Reservation of Rights: All other rights not expressly granted in this Agreement remain the property of Shopex. Users must obtain written consent from Shopex before exercising any other rights.",
+		"zh-tw": "2.1 保留權利：本《協議》未明示授權的其他一切權利仍歸商派所有，用戶使用其他權利時須另外取得商派的書面同意。"
+	},
+	"nrjz9v2i": {
+		"zh-cn": " 2.2 软件在未获商业授权之前，不可用于商业目的（包括但不限于企业网站、经营性网站、以营利为目或实现盈利及具有同等或类似功能的网站），您不可为商业运营目的安装、使用、运行软件。 ",
+		"en": "2.2 Before obtaining commercial authorization, the software may not be used for commercial purposes (including but not limited to enterprise websites, business websites, websites aimed at making profits or achieving profits, and websites with equivalent or similar functions). You may not install, use or run the software for commercial operation purposes.",
+		"zh-tw": "2.2 軟件在未獲商業授權之前，不可用於商業目的（包括但不限於企業網站、經營性網站、以營利爲目或實現盈利及具有同等或類似功能的網站），您不可爲商業運營目的安裝、使用、運行軟件。"
+	},
+	"bb9kl72p": {
+		"zh-cn": " 2.3 如商派对软件及其相关功能不时进行变更、升级、修改或转移，并会在软件系统中开发新的功能或其他服务。上述新的功能、软件服务如无独立协议的，您仍可取得相应功能或服务的授权，并可适用本协议。 ",
+		"en": "2.3 If the business party software and its related functions are changed, upgraded, modified or transferred from time to time, and new functions or other services will be developed in the software system. If there is no independent agreement for the above-mentioned new functions or software services, you can still obtain the authorization for the corresponding functions or services and apply this agreement.",
+		"zh-tw": "2.3 如商派對軟件及其相關功能不時進行變更、升級、修改或轉移，並會在軟件系統中開發新的功能或其他服務。上述新的功能、軟件服務如無獨立協議的，您仍可取得相應功能或服務的授權，並可適用本協議。"
+	},
+	"hhawod3e": {
+		"zh-cn": " 2.4 除本《协议》有明确规定外，本《协议》并未对利用本\"软件\"访问的商派的其他相关单独服务的服务条款予以列明条款，对于这些服务可能有单独的服务条款加以规范，请用户在使用有关服务时另行了解与确认。如用户使用该服务，视为对相关服务条款的接受。 ",
+		"en": "2.4 Except as expressly provided in this \"Agreement\", this \"Agreement\" does not specify the terms of service for other related separate services accessed by Shangpai through this \"Software\". These services may be regulated by separate terms of service. Users are advised to understand and confirm them separately when using the relevant services. If a user uses this service, it is deemed as acceptance of the relevant terms of service.",
+		"zh-tw": "2.4 除本《協議》有明確規定外，本《協議》並未對利用本\"軟件\"訪問的商派的其他相關單獨服務的服務條款予以列明條款，對於這些服務可能有單獨的服務條款加以規範，請用戶在使用有關服務時另行了解與確認。如用戶使用該服務，視爲對相關服務條款的接受。"
+	},
+	"v599vr2p": {
+		"zh-cn": " 2) 对软件及其中的相关信息擅自出租、出借、复制、泄露、发放子许可证、修改、链接、转载、汇编、发表、出版、建立镜像站点，借助软件发展与之有关的衍生产品、作品、服务、插件、外挂、兼容、互联等。 ",
+		"en": "2) Renting, lending, copying, disclosing, issuing sub-licenses, modifying, linking, reprinting, compiling, publishing, publishing, establishing mirror sites of the software and its related information without authorization, and developing derivative products, works, services, plugins, add-ons, compatibility, interconnection, etc. related to the software.",
+		"zh-tw": "2) 對軟件及其中的相關信息擅自出租、出借、複製、泄露、發放子許可證、修改、鏈接、轉載、彙編、發表、出版、建立鏡像站點，藉助軟件發展與之有關的衍生產品、作品、服務、插件、外掛、兼容、互聯等。"
+	},
+	"2tknxi23": {
+		"zh-cn": " 3) 通过非由商派及其关联公司开发、授权或认可的第三方兼容软件、系统登录或使用软件，或针对软件使用非商派及其关联公司开发、授权或认证的插件和外挂。 ",
+		"en": "3) Log in to or use the software through third-party compatible software or systems not developed, authorized or recognized by Shopex and its affiliated companies, or use plugins and add-ons not developed, authorized or certified by Shopex and its affiliated companies for the software.",
+		"zh-tw": "3) 通過非由商派及其關聯公司開發、授權或認可的第三方兼容軟件、系統登錄或使用軟件，或針對軟件使用非商派及其關聯公司開發、授權或認證的插件和外掛。"
+	},
+	"3fxpd61n": {
+		"zh-cn": " 4) 删除软件及其他副本上关于版权的信息、内容。修改、删除或避开应用产品中商派为保护知识产权而设置的任何技术措施。 ",
+		"en": "4) Delete the information and content related to copyright on the software and other copies. Modify, delete or circumvent any technical measures set by Shangpai in the application product for the protection of intellectual property rights.",
+		"zh-tw": "4) 刪除軟件及其他副本上關於版權的信息、內容。修改、刪除或避開應用產品中商派爲保護知識產權而設置的任何技術措施。"
+	},
+	"nx8n3u24": {
+		"zh-cn": " 5) 未经商派的书面同意，擅自将软件出租、出借或再许可给第三方使用，或在获得软件的升级版本的许可使用后，同时使用多个版本的许可使用版本，或分开转让。 ",
+		"en": "5) Without the written consent of Shangshangpai, renting, lending or sublicense the software to a third party for use, or using multiple versions of the licensed version simultaneously after obtaining the license to use an upgraded version of the software, or transferring them separately.",
+		"zh-tw": "5) 未經商派的書面同意，擅自將軟件出租、出借或再許可給第三方使用，或在獲得軟件的升級版本的許可使用後，同時使用多個版本的許可使用版本，或分開轉讓。"
+	},
+	"sq8vnp3o": {
+		"zh-cn": " 6) 复制、反汇编、修改软件或其任何部分或制造其衍生作品；对软件或者软件运行过程中释放在终端中的任何数据及软件运行过程中终端与服务器端的交互数据进行复制、修改、挂接运行或创作任何衍生作品，包括使用插件、外挂或非经授权的第三方工具/服务接入软件和相关系统等形式。 ",
+		"en": "6) Copying, disassembling, modifying the software or any part thereof or manufacturing derivative works thereof; Copying, modifying, connecting to run or creating any derivative works of the software or any data released in the terminal during the software's operation, as well as the interaction data between the terminal and the server during the software's operation, including using plugins, external programs or unauthorized third-party tools/services to access the software and related systems, etc.",
+		"zh-tw": "6) 複製、反彙編、修改軟件或其任何部分或製造其衍生作品；對軟件或者軟件運行過程中釋放在終端中的任何數據及軟件運行過程中終端與服務器端的交互數據進行復制、修改、掛接運行或創作任何衍生作品，包括使用插件、外掛或非經授權的第三方工具/服務接入軟件和相關係統等形式。"
+	},
+	"bi7fj53f": {
+		"zh-cn": " 7) 进行任何危害信息网络安全的行为，包括使用软件时以任何方式损坏或破坏软件或使其不能运行或超负荷或干扰第三方对软件的使用；未经允许进入他人计算机系统并删除、修改、增加存储信息；故意传播恶意程序或病毒以及其他破坏、干扰正常网络信息服务的行为。 ",
+		"en": "7) Engage in any behavior that endangers the security of information networks, including damaging or destroying software in any way when using it, making it inoperable or overloaded, or interfering with the use of software by third parties; Entering another person's computer system without permission and deleting, modifying or adding stored information; Intentionally spreading malicious programs or viruses and other acts that disrupt or interfere with normal network information services.",
+		"zh-tw": "7) 進行任何危害信息網絡安全的行爲，包括使用軟件時以任何方式損壞或破壞軟件或使其不能運行或超負荷或干擾第三方對軟件的使用；未經允許進入他人計算機系統並刪除、修改、增加存儲信息；故意傳播惡意程序或病毒以及其他破壞、干擾正常網絡信息服務的行爲。"
+	},
+	"rnxe6v1u": {
+		"zh-cn": " 8) 利用软件发表、传送、传播、储存侵害他人知识产权、商业秘密权等合法权利的内容，或从事欺诈、盗用他人账户、资金等违法犯罪活动。 ",
+		"en": "8) Using software to publish, transmit, disseminate or store content that infringes upon others' intellectual property rights, trade secret rights and other legitimate rights, or engaging in illegal and criminal activities such as fraud and embezzlement of others' accounts and funds.",
+		"zh-tw": "8) 利用軟件發表、傳送、傳播、儲存侵害他人知識產權、商業祕密權等合法權利的內容，或從事欺詐、盜用他人賬戶、資金等違法犯罪活動。"
+	},
+	"j1xwvl2k": {
+		"zh-cn": " 9) 通过修改或伪造软件运行中的指令、数据、数据包，增加、删减、变动软件的功能或运行效果，私自去除商派软件前台、后台版权，及/或将具有上述用途的软件通过信息网络向公众传播或者运营。 ",
+		"en": "9) By modifying or forging instructions, data or data packets during the software's operation, adding, deleting or changing the software's functions or operational effects, privately removing the front-end and back-end Copyrights of Shangpai software, and/or disseminating or operating software with the above-mentioned purposes to the public through information networks.",
+		"zh-tw": "9) 通過修改或僞造軟件運行中的指令、數據、數據包，增加、刪減、變動軟件的功能或運行效果，私自去除商派軟件前臺、後臺版權，及/或將具有上述用途的軟件通過信息網絡向公衆傳播或者運營。"
+	},
+	"v3yaf1q": {
+		"zh-cn": " 1) 商派会对您是否涉嫌违反上述使用规范作出认定，并根据认定结果中止、终止对您的使用许可或采取其他依约可采取的限制措施。 ",
+		"en": "1) Shangpai will determine whether you are suspected of violating the above usage regulations and, based on the determination result, suspend or terminate your usage license or take other restrictive measures that can be taken as agreed.",
+		"zh-tw": "1) 商派會對您是否涉嫌違反上述使用規範作出認定，並根據認定結果中止、終止對您的使用許可或採取其他依約可採取的限制措施。"
+	},
+	"jfsq1m1g": {
+		"zh-cn": " 2) 对于您使用软件时发布的涉嫌违法或涉嫌侵犯他人合法权利或违反本协议的信息，商派有权直接予以删除。 ",
+		"en": "2) For any information you post while using the software that is suspected of being illegal, infringing upon the legitimate rights of others, or violating this agreement, Shangpai reserves the right to directly delete it.",
+		"zh-tw": "2) 對於您使用軟件時發佈的涉嫌違法或涉嫌侵犯他人合法權利或違反本協議的信息，商派有權直接予以刪除。"
+	},
+	"rl7v3j1x": {
+		"zh-cn": " 3) 对于您违反上述使用规范的行为对任意第三方造成损害的，您需要以自己的名义独立承担法律责任，并应确保商派免于因此产生损失或增加费用。 ",
+		"en": "3) If your violation of the above usage norms causes damage to any third party, you shall independently bear legal responsibility in your own name and ensure that Shangpai is not subject to any loss or additional expenses as a result.",
+		"zh-tw": "3) 對於您違反上述使用規範的行爲對任意第三方造成損害的，您需要以自己的名義獨立承擔法律責任，並應確保商派免於因此產生損失或增加費用。"
+	},
+	"3p48r5b": {
+		"zh-cn": " 4) 您所购软件产品仅供自身作为商品所有者进行经营性业务开展的使用，若涉及其他业务类型的，则需提供《支付业务许可证》或已取得第三方《支付业务许可证》的合法授权，否则您不得使用所购软件产品或因使用所产生的任何经营性问题以及法律风险和责任由您自行解决，均与商派无关，及因此被任何第三方投诉或起诉，或造成商派被追究责任的，则由您承担全部的赔偿与责任，商派有权向您追偿并要求您承担责任。 ",
+		"en": "4) The software product you purchase is only for your own use as the owner of the commodity to conduct business operations. If it involves other types of business, you need to provide a \"Payment Business License\" or have obtained a legal authorization from a third party's \"Payment Business License\". Otherwise, you are not allowed to use the purchased software products. Any business issues, legal risks and responsibilities arising from the use shall be resolved by you alone and have nothing to do with Shopee. If you are complained about or sued by any third party as a result, or if Shopee is held accountable, you shall bear all compensation and responsibilities. Shopee has the right to claim compensation from you and demand that you take responsibility.",
+		"zh-tw": "4) 您所購軟件產品僅供自身作爲商品所有者進行經營性業務開展的使用，若涉及其他業務類型的，則需提供《支付業務許可證》或已取得第三方《支付業務許可證》的合法授權，否則您不得使用所購軟件產品或因使用所產生的任何經營性問題以及法律風險和責任由您自行解決，均與商派無關，及因此被任何第三方投訴或起訴，或造成商派被追究責任的，則由您承擔全部的賠償與責任，商派有權向您追償並要求您承擔責任。"
+	},
+	"8fi2922s": {
+		"zh-cn": " 5) 如您违反有关法律或者本协议之规定，使商派遭受任何损失，或受到任何第三方的索赔，或受到任何行政管理部门的处罚，您应当赔偿商派因此造成的损失及（或）发生的费用，包括合理的律师费用、调查取证费用。 ",
+		"en": "5) If you violate any relevant laws or the provisions of this agreement, causing any losses to Shangpai, or subject it to any claims from any third party, or penalties from any administrative department, you shall compensate Shangpai for the losses and/or expenses incurred thereby, including reasonable legal fees and investigation and evidence collection fees.",
+		"zh-tw": "5) 如您違反有關法律或者本協議之規定，使商派遭受任何損失，或受到任何第三方的索賠，或受到任何行政管理部門的處罰，您應當賠償商派因此造成的損失及（或）發生的費用，包括合理的律師費用、調查取證費用。"
+	},
+	"8dh7v6a": {
+		"zh-cn": "无担保和责任限制  ",
+		"en": "No warranty or limitation of liability",
+		"zh-tw": "無擔保和責任限制"
+	},
+	"juwnwj26": {
+		"zh-cn": " 4.1 除法律法规有明确规定外，商派将尽最大努力确保许可软件及其所涉及的技术及信息安全、有效、准确、可靠，但受限于现有技术，您理解商派不能对此进行担保。 ",
+		"en": "4.1 Except as expressly provided by laws and regulations, Shopex will make every effort to ensure that the licensed software and the technologies and information involved are secure, effective, accurate and reliable. However, due to the limitations of existing technology, you understand that Shopex cannot guarantee this.",
+		"zh-tw": "4.1 除法律法規有明確規定外，商派將盡最大努力確保許可軟件及其所涉及的技術及信息安全、有效、準確、可靠，但受限於現有技術，您理解商派不能對此進行擔保。"
+	},
+	"hakeff2g": {
+		"zh-cn": " 4.3 由于您因下述任一情况所引起或与此有关的人身伤害或附带的、间接的损害赔偿，包括但不限于利润损失、资料损失、业务中断的损害赔偿或其他商业损害赔偿或损失，需由您自行承担： ",
+		"en": "4.3 Any personal injury or incidental, indirect damages, including but not limited to loss of profits, loss of data, damages for business interruption or other commercial damages or losses, arising out of or in connection with any of the following circumstances shall be borne by you yourself:",
+		"zh-tw": "4.3 由於您因下述任一情況所引起或與此有關的人身傷害或附帶的、間接的損害賠償，包括但不限於利潤損失、資料損失、業務中斷的損害賠償或其他商業損害賠償或損失，需由您自行承擔："
+	},
+	"hni5jp1i": {
+		"zh-cn": " 4.4 授权用户拥有其系统内全部会员资料、商品资料、订单资料及相关信息的所有权，并独立承担相关法律义务。 ",
+		"en": "4.4 Authorize the user to own all member information, product information, order information and related information within their system, and independently bear the relevant legal obligations.",
+		"zh-tw": "4.4 授權用戶擁有其系統內全部會員資料、商品資料、訂單資料及相關信息的所有權，並獨立承擔相關法律義務。"
+	},
+	"s3k0tf1l": {
+		"zh-cn": " 4.5 利用本授权软件发生的商业行为均由授权用户自行负责，利用本软件进行商业行为所产生的一切纠纷均与商派无关。 ",
+		"en": "4.5 All commercial activities arising from the use of this authorized software shall be the sole responsibility of the authorized user. Any disputes arising from commercial activities conducted through this software shall have nothing to do with Shangpai.",
+		"zh-tw": "4.5 利用本授權軟件發生的商業行爲均由授權用戶自行負責，利用本軟件進行商業行爲所產生的一切糾紛均與商派無關。"
+	},
+	"qwwy4p2o": {
+		"zh-cn": " 4.6 为方便用户使用，软件内置了譬如网上支付网关等诸多第三方系统。但您应自行评估使用这些系统的风险。这些系统的具体开通与服务由相应第三方公司提供，由此而产生的任何商业纠纷，均与商派无关。 ",
+		"en": "4.6 To facilitate user operation, the software is equipped with many third-party systems such as an online payment gateway. However, you should assess the risks of using these systems by yourself. The specific activation and services of these systems are provided by the corresponding third-party companies. Any commercial disputes arising therefrom are not the responsibility of Shangpai.",
+		"zh-tw": "4.6 爲方便用戶使用，軟件內置了譬如網上支付網關等諸多第三方系統。但您應自行評估使用這些系統的風險。這些系統的具體開通與服務由相應第三方公司提供，由此而產生的任何商業糾紛，均與商派無關。"
+	},
+	"63hcz81p": {
+		"zh-cn": " 4.7 商派不对因授权软件使用错误、软件错误等问题所引起的授权用户损失而承担任何责任，但商派将尽量避免此类情况的发生。 ",
+		"en": "4.7 Shopex shall not be held responsible for any losses suffered by authorized users due to incorrect use of the authorized software, software errors or other issues. However, Shopex will make every effort to avoid such situations.",
+		"zh-tw": "4.7 商派不對因授權軟件使用錯誤、軟件錯誤等問題所引起的授權用戶損失而承擔任何責任，但商派將盡量避免此類情況的發生。"
+	},
+	"xtg4b02o": {
+		"zh-cn": " 4.8 授权用户将在享有上述条款授予的权力的同时，受到相关的约束和限制。协议许可范围以外的行为，将直接违反本授权协议并构成侵权，商派有权随时终止授权，责令停止损害，并保留追究相关责任的权力 ",
+		"en": "4.8 Authorized users will enjoy the rights granted by the above terms while being subject to relevant constraints and restrictions. Any behavior beyond the scope permitted by the agreement will directly violate this authorization agreement and constitute infringement. Shangpai reserves the right to terminate the authorization at any time, order the cessation of damage, and retain the right to pursue relevant responsibilities",
+		"zh-tw": "4.8 授權用戶將在享有上述條款授予的權力的同時，受到相關的約束和限制。協議許可範圍以外的行爲，將直接違反本授權協議並構成侵權，商派有權隨時終止授權，責令停止損害，並保留追究相關責任的權力"
+	},
+	"f4t0z830": {
+		"zh-cn": " 4.9 非经商派或商派授权开发并正式发布的其他任何由许可软件衍生的软件均属非法，下载、安装、使用此类软件，可能导致不可预知的风险，由此产生的法律责任与纠纷与商派无关，商派有权中止、终止使用许可和/或其他一切服务。 ",
+		"en": "4.9 Any software derived from the licensed software that is not developed by Shangpai or authorized by Shangpai and officially released is illegal. Downloading, installing or using such software may lead to unpredictable risks. Any legal liability and disputes arising therefrom are not the responsibility of Shangpai. Shangpai reserves the right to suspend or terminate the use of the license and/or all other services.",
+		"zh-tw": "4.9 非經商派或商派授權開發並正式發佈的其他任何由許可軟件衍生的軟件均屬非法，下載、安裝、使用此類軟件，可能導致不可預知的風險，由此產生的法律責任與糾紛與商派無關，商派有權中止、終止使用許可和/或其他一切服務。"
+	},
+	"93a1rp32": {
+		"zh-cn": " 5.1 您拥有其系统内全部会员资料、商品资料、订单资料及相关信息的所有权，并独立承担相关法律义务。若您提供的信息中含有其他用户的个人信息，在您自行使用或向我们提供这些个人信息之前，您需确保您已经取得合法的授权或许可。 ",
+		"en": "5.1 You own all the member information, product information, order information and related information within its system, and independently bear the relevant legal obligations. If the information you provide contains personal information of other users, before you use it yourself or provide such personal information to us, you must ensure that you have obtained legal authorization or permission.",
+		"zh-tw": "5.1 您擁有其系統內全部會員資料、商品資料、訂單資料及相關信息的所有權，並獨立承擔相關法律義務。若您提供的信息中含有其他用戶的個人信息，在您自行使用或向我們提供這些個人信息之前，您需確保您已經取得合法的授權或許可。"
+	},
+	"dzvxck1r": {
+		"zh-cn": " 5.2 若我们将信息用于本政策未载明的其他用途，或者将基于特定目的收集而来的信息用于其他目的，均会事先获得您的同意或授权。 ",
+		"en": "5.2 If we use the information for purposes not specified in this policy, or use the information collected for a specific purpose for other purposes, we will obtain your consent or authorization in advance.",
+		"zh-tw": "5.2 若我們將信息用於本政策未載明的其他用途，或者將基於特定目的收集而來的信息用於其他目的，均會事先獲得您的同意或授權。"
+	},
+	"u17ja97a": {
+		"zh-cn": " 5.3 若我们从第三方处间接获取您的信息，我们会在收集前明确以书面形式要求该第三方说明其个人信息来源，以及是否已经就其收集、处理以及向我们提供您的个人信息取得了您的合法授权。除法律明确允许的情形外，我们只会在确认第三方已经取得您的授权同意后再从第三方收集您的个人信息，如果第三方的授权范围无法涵盖我们的处理和使用目的时，我们会自行或者要求该第三方征得您的同意后再行处理您的个人信息。同时，我们的专业安全团队对个人信息会进行安全加固。我们会使用不低于我们对自身用户个人信息同等的保护手段与措施对间接获取的个人信息进行保护。 ",
+		"en": "5.3 If we obtain your information indirectly from a third party, we will clearly request the third party in writing before collection to explain the source of their personal information and whether they have obtained your legal authorization for the collection, processing and provision of your personal information to us. Except for the circumstances explicitly permitted by law, we will only collect your personal information from third parties after confirming that they have obtained your authorization and consent. If the authorization scope of the third party cannot cover our processing and usage purposes, we will either obtain your consent ourselves or require the third party to do so before processing your personal information. Meanwhile, our professional security team will enhance the security of personal information. We will use no less than the same protective means and measures as we do for our own users' personal information to protect the personal information obtained indirectly.",
+		"zh-tw": "5.3 若我們從第三方處間接獲取您的信息，我們會在收集前明確以書面形式要求該第三方說明其個人信息來源，以及是否已經就其收集、處理以及向我們提供您的個人信息取得了您的合法授權。除法律明確允許的情形外，我們只會在確認第三方已經取得您的授權同意後再從第三方收集您的個人信息，如果第三方的授權範圍無法涵蓋我們的處理和使用目的時，我們會自行或者要求該第三方徵得您的同意後再行處理您的個人信息。同時，我們的專業安全團隊對個人信息會進行安全加固。我們會使用不低於我們對自身用戶個人信息同等的保護手段與措施對間接獲取的個人信息進行保護。"
+	},
+	"qddxkv1e": {
+		"zh-cn": " 9) 用于维护所提供的产品及/或服务的安全稳定运行所必需的，例如发现、处置产品及/或服务的故障； ",
+		"en": "9) Necessary for maintaining the safe and stable operation of the provided products and/or services, such as discovering and handling faults of the products and/or services;",
+		"zh-tw": "9) 用於維護所提供的產品及/或服務的安全穩定運行所必需的，例如發現、處置產品及/或服務的故障；"
+	},
+	"na2up55a": {
+		"zh-cn": " 5.5 请知悉，根据适用的法律，若我们对个人信息采取技术措施和其他必要措施进行处理，使得数据接收方无法重新识别特定个人且不能复原，或我们可能会对收集的信息进行去标识化地研究、统计分析和预测，用于改善许可软件的内容和布局，为商业决策提供产品或服务支撑，以及改进我们的产品和服务（包括使用匿名数据进行机器学习或模型算法训练），则此类处理后数据的使用无需另行向您通知并征得您的同意。 ",
+		"en": "5.5 Please be informed that, in accordance with applicable laws, if we take technical measures and other necessary measures to process personal information so that the data recipient cannot re-identify a specific individual and cannot restore it, or if we may conduct de-identified research, statistical analysis and prediction on the collected information to improve the content and layout of the licensed software, To provide product or service support for business decisions and to improve our products and services (including using anonymous data for machine learning or model algorithm training), the use of such processed data does not require further notice to you or your consent.",
+		"zh-tw": "5.5 請知悉，根據適用的法律，若我們對個人信息採取技術措施和其他必要措施進行處理，使得數據接收方無法重新識別特定個人且不能復原，或我們可能會對收集的信息進行去標識化地研究、統計分析和預測，用於改善許可軟件的內容和佈局，爲商業決策提供產品或服務支撐，以及改進我們的產品和服務（包括使用匿名數據進行機器學習或模型算法訓練），則此類處理後數據的使用無需另行向您通知並徵得您的同意。"
+	},
+	"88w2614q": {
+		"zh-cn": " 对您提供的除个人信息外的信息，为了向您提供您使用的各项服务，并维护、改进这些服务，及优化我们的服务质量等用途，对于您提交的文字、图片和视频等受知识产权保护的内容，您同意授予我们排他的、可转让、可分发次级许可、无使用费的全球性许可，用于我们及我们关联公司使用、复制、修订、改写、发布、翻译、分发、执行和展示您提交的资料数据或制作派生作品。 ",
+		"en": "For the information you provide other than your personal information, in order to provide you with the various services you use, maintain and improve these services, and optimize the quality of our services, etc., for the content you submit that is protected by intellectual property rights, such as text, images and videos, you agree to grant us an exclusive, transferable, distributable sub-license, royalty-free, worldwide license For our and our affiliated companies to use, copy, revise, adapt, publish, translate, distribute, execute and display the materials and data you submit or to create derivative works.",
+		"zh-tw": "對您提供的除個人信息外的信息，爲了向您提供您使用的各項服務，並維護、改進這些服務，及優化我們的服務質量等用途，對於您提交的文字、圖片和視頻等受知識產權保護的內容，您同意授予我們排他的、可轉讓、可分發次級許可、無使用費的全球性許可，用於我們及我們關聯公司使用、複製、修訂、改寫、發佈、翻譯、分發、執行和展示您提交的資料數據或製作派生作品。"
+	},
+	"mc5de428": {
+		"zh-cn": " 7.1 您在使用许可软件服务过程中应当遵守当地相关的法律法规，并尊重当地的道德和风俗习惯。如果您的行为违反了当地法律法规或道德风俗，您应当为此独立承担责任。 ",
+		"en": "7.1 During your use of the licensed software services, you shall abide by the relevant local laws and regulations and respect the local morality and customs. If your actions violate local laws, regulations or moral customs, you shall bear independent responsibility for this.",
+		"zh-tw": "7.1 您在使用許可軟件服務過程中應當遵守當地相關的法律法規，並尊重當地的道德和風俗習慣。如果您的行爲違反了當地法律法規或道德風俗，您應當爲此獨立承擔責任。"
+	},
+	"yp1k591e": {
+		"zh-cn": " 7.2 您应避免因使用许可软件服务而使我们卷入政治和公共事件，否则我们有权暂停或终止对您的服务。 ",
+		"en": "7.2 You should avoid involving us in political and public events due to your use of the licensed software services. Otherwise, we reserve the right to suspend or terminate the services to you.",
+		"zh-tw": "7.2 您應避免因使用許可軟件服務而使我們捲入政治和公共事件，否則我們有權暫停或終止對您的服務。"
+	},
+	"uigrh32m": {
+		"zh-cn": " 7.3 本协议签订地为中华人民共和国上海市徐汇区。若您和商派之间因本协议发生任何纠纷或争议，首先应友好协商解决；协商不成的，您同意将纠纷或争议提交至本协议签订地有管辖权的人民法院管辖。 ",
+		"en": "7.3 This agreement is signed in Xuhui District, Shanghai City, People's Republic of China. If any dispute or controversy arises between you and Shangpai due to this agreement, it should first be resolved through friendly consultation. If the negotiation fails, you agree to submit the dispute or controversy to the people's court with jurisdiction at the place where this agreement is signed.",
+		"zh-tw": "7.3 本協議簽訂地爲中華人民共和國上海市徐彙區。若您和商派之間因本協議發生任何糾紛或爭議，首先應友好協商解決；協商不成的，您同意將糾紛或爭議提交至本協議簽訂地有管轄權的人民法院管轄。"
+	},
+	"meej072x": {
+		"zh-cn": " 欢迎使用数云产品。以下所述条款和条件即构成您与数云软件有限公司（以下简称 “数云” ）就软件使用许可所达成的协议（以下简称 “ 本协议 ” ）。一旦您安装使用了此产品，即表示您已接受了以下所述的条款和条件。 ",
+		"en": "Welcome to use the Shuyun products. The terms and conditions described below constitute the agreement between you and Shuyun Software Co., LTD. (hereinafter referred to as \"Shuyun\") regarding the software license (hereinafter referred to as \"this Agreement\"). Once you install and use this product, it indicates that you have accepted the terms and conditions described below.",
+		"zh-tw": "歡迎使用數雲產品。以下所述條款和條件即構成您與數雲軟件有限公司（以下簡稱 “數雲” ）就軟件使用許可所達成的協議（以下簡稱 “ 本協議 ” ）。一旦您安裝使用了此產品，即表示您已接受了以下所述的條款和條件。"
+	},
+	"l29v5i78": {
+		"zh-cn": " 1.1 本\"软件\"由数云开发。本“软件”的一切著作权、商标权、专利权、商业秘密等知识产权及其他合法权益，以及与本“软件”相关的信息内容，包括但不限于：计算机程序源代码、目标代码、使用说明、本协议内容、图标、图示、色彩、界面设计、版面框架、文字和附加程序等皆为数云公司所有。本软件产品受《中华人民共和国著作权法》、《中华人民共和国计算机软件保护条例》、《伯尔尼公约》以及公约成员国已生效的著作权保护法律及其他知识产权法律法规的保护。未经数云事先书面同意，您不得以任何方式将软件进行商业性使用或通过信息网络传播软件内容。 ",
+		"en": "1.1 This \"software\" is developed by Shuyun. All Copyrights, trademark rights, patent rights, trade secrets and other intellectual property rights and other legitimate rights and interests of this \"Software\", as well as information content related to this \"Software\", including but not limited to The source code of the computer program, object code, user manual, content of this agreement, ICONS, diagrams, colors, interface design, layout framework, text and additional programs, etc. are all owned by Shuyun Company. This software product is protected by the Copyright Law of the People's Republic of China, the Regulations of the People's Republic of China on the Protection of Computer Software, the Berne Convention, as well as the copyright protection laws and other intellectual property laws and regulations that have come into effect in the member states of the Convention. Without the prior written consent of Shuyun, you may not use the software for commercial purposes in any way or disseminate the software content through information networks.",
+		"zh-tw": "1.1 本\"軟件\"由數雲開發。本“軟件”的一切著作權、商標權、專利權、商業祕密等知識產權及其他合法權益，以及與本“軟件”相關的信息內容，包括但不限於：計算機程序源代碼、目標代碼、使用說明、本協議內容、圖標、圖示、色彩、界面設計、版面框架、文字和附加程序等皆爲數雲公司所有。本軟件產品受《中華人民共和國著作權法》、《中華人民共和國計算機軟件保護條例》、《伯爾尼公約》以及公約成員國已生效的著作權保護法律及其他知識產權法律法規的保護。未經數雲事先書面同意，您不得以任何方式將軟件進行商業性使用或通過信息網絡傳播軟件內容。"
+	},
+	"anhkyb22": {
+		"zh-cn": " 1.2 软件可能涉及第三方知识产权，而该等第三方对您基于本协议在软件中使用该等知识产权有要求的，数云将以适当方式向您告知该要求，您应当一并遵守。 ",
+		"en": "1.2 If the software may involve the intellectual property rights of third parties and such third parties have requirements for your use of such intellectual property rights in the software based on this agreement, Shuyun will inform you of such requirements in an appropriate manner, and you shall comply with them together.",
+		"zh-tw": "1.2 軟件可能涉及第三方知識產權，而該等第三方對您基於本協議在軟件中使用該等知識產權有要求的，數雲將以適當方式向您告知該要求，您應當一併遵守。"
+	},
+	"8cgf5c1l": {
+		"zh-cn": " 2.1 保留权利：本《协议》未明示授权的其他一切权利仍归数云所有，用户使用其他权利时须另外取得数云的书面同意。 ",
+		"en": "2.1 Reservation of Rights: All other rights not expressly granted in this Agreement shall remain the property of Shuyun. Users must obtain written consent from Shuyun before exercising any other rights.",
+		"zh-tw": "2.1 保留權利：本《協議》未明示授權的其他一切權利仍歸數雲所有，用戶使用其他權利時須另外取得數雲的書面同意。"
+	},
+	"1auzlw2p": {
+		"zh-cn": " 2.3 如数云对软件及其相关功能不时进行变更、升级、修改或转移，并会在软件系统中开发新的功能或其他服务。上述新的功能、软件服务如无独立协议的，您仍可取得相应功能或服务的授权，并可适用本协议。 ",
+		"en": "2.3 If Shuyun makes changes, upgrades, modifications or transfers to the software and its related functions from time to time, and will develop new functions or other services in the software system. If there is no independent agreement for the above-mentioned new functions or software services, you can still obtain the authorization for the corresponding functions or services and apply this agreement.",
+		"zh-tw": "2.3 如數雲對軟件及其相關功能不時進行變更、升級、修改或轉移，並會在軟件系統中開發新的功能或其他服務。上述新的功能、軟件服務如無獨立協議的，您仍可取得相應功能或服務的授權，並可適用本協議。"
+	},
+	"hr49be3e": {
+		"zh-cn": " 2.4 除本《协议》有明确规定外，本《协议》并未对利用本\"软件\"访问的数云的其他相关单独服务的服务条款予以列明条款，对于这些服务可能有单独的服务条款加以规范，请用户在使用有关服务时另行了解与确认。如用户使用该服务，视为对相关服务条款的接受。 ",
+		"en": "2.4 Except as expressly provided in this \"Agreement\", this \"Agreement\" does not specify the terms of service for other related separate services of Shuyun accessed through this \"Software\". These services may be regulated by separate terms of service. Users are requested to understand and confirm them separately when using the relevant services. If a user uses this service, it is deemed as acceptance of the relevant terms of service.",
+		"zh-tw": "2.4 除本《協議》有明確規定外，本《協議》並未對利用本\"軟件\"訪問的數雲的其他相關單獨服務的服務條款予以列明條款，對於這些服務可能有單獨的服務條款加以規範，請用戶在使用有關服務時另行了解與確認。如用戶使用該服務，視爲對相關服務條款的接受。"
+	},
+	"ort8jq23": {
+		"zh-cn": " 3) 通过非由数云及其关联公司开发、授权或认可的第三方兼容软件、系统登录或使用软件，或针对软件使用非数云及其关联公司开发、授权或认证的插件和外挂。 ",
+		"en": "3) Log in to or use the software through third-party compatible software or systems that are not developed, authorized or recognized by Shuyun and its affiliated companies, or use plugins and add-ons for the software that are not developed, authorized or certified by Shuyun and its affiliated companies.",
+		"zh-tw": "3) 通過非由數雲及其關聯公司開發、授權或認可的第三方兼容軟件、系統登錄或使用軟件，或針對軟件使用非數雲及其關聯公司開發、授權或認證的插件和外掛。"
+	},
+	"5p74251n": {
+		"zh-cn": " 4) 删除软件及其他副本上关于版权的信息、内容。修改、删除或避开应用产品中数云为保护知识产权而设置的任何技术措施。 ",
+		"en": "4) Delete the information and content related to copyright on the software and other copies. Modify, delete or bypass any technical measures set by Shuyun for the protection of intellectual property rights in the application product.",
+		"zh-tw": "4) 刪除軟件及其他副本上關於版權的信息、內容。修改、刪除或避開應用產品中數云爲保護知識產權而設置的任何技術措施。"
+	},
+	"r3upyn24": {
+		"zh-cn": " 5) 未经数云的书面同意，擅自将软件出租、出借或再许可给第三方使用，或在获得软件的升级版本的许可使用后，同时使用多个版本的许可使用版本，或分开转让。 ",
+		"en": "5) Without the written consent of Shuyun, renting, lending or sublicense the software to a third party for use, or using multiple versions of the licensed version simultaneously after obtaining the license to use the upgraded version of the software, or transferring them separately.",
+		"zh-tw": "5) 未經數雲的書面同意，擅自將軟件出租、出借或再許可給第三方使用，或在獲得軟件的升級版本的許可使用後，同時使用多個版本的許可使用版本，或分開轉讓。"
+	},
+	"d5yje2k": {
+		"zh-cn": " 9) 通过修改或伪造软件运行中的指令、数据、数据包，增加、删减、变动软件的功能或运行效果，私自去除数云软件前台、后台版权，及/或将具有上述用途的软件通过信息网络向公众传播或者运营。 ",
+		"en": "9) By modifying or forging instructions, data or data packets during the operation of the software, adding, deleting or changing the functions or operation effects of the software, privately removing the front-end and back-end Copyrights of the data cloud software, and/or disseminating or operating the software with the above purposes to the public through information networks.",
+		"zh-tw": "9) 通過修改或僞造軟件運行中的指令、數據、數據包，增加、刪減、變動軟件的功能或運行效果，私自去除數雲軟件前臺、後臺版權，及/或將具有上述用途的軟件通過信息網絡向公衆傳播或者運營。"
+	},
+	"d2szde1q": {
+		"zh-cn": " 1) 数云会对您是否涉嫌违反上述使用规范作出认定，并根据认定结果中止、终止对您的使用许可或采取其他依约可采取的限制措施。 ",
+		"en": "1) Shuyun will determine whether you are suspected of violating the above usage norms and, based on the determination result, suspend or terminate your usage license or take other restrictive measures that can be taken as agreed.",
+		"zh-tw": "1) 數雲會對您是否涉嫌違反上述使用規範作出認定，並根據認定結果中止、終止對您的使用許可或採取其他依約可採取的限制措施。"
+	},
+	"fjsav71g": {
+		"zh-cn": " 2) 对于您使用软件时发布的涉嫌违法或涉嫌侵犯他人合法权利或违反本协议的信息，数云有权直接予以删除。 ",
+		"en": "2) For any information you post while using the software that is suspected of being illegal, infringing upon the legitimate rights of others, or violating this agreement, Shuyun reserves the right to directly delete it.",
+		"zh-tw": "2) 對於您使用軟件時發佈的涉嫌違法或涉嫌侵犯他人合法權利或違反本協議的信息，數雲有權直接予以刪除。"
+	},
+	"kn4i1m1x": {
+		"zh-cn": " 3) 对于您违反上述使用规范的行为对任意第三方造成损害的，您需要以自己的名义独立承担法律责任，并应确保数云免于因此产生损失或增加费用。 ",
+		"en": "3) If your violation of the above usage norms causes damage to any third party, you shall independently bear legal responsibility in your own name and ensure that Shuyun is not subject to any loss or additional costs as a result.",
+		"zh-tw": "3) 對於您違反上述使用規範的行爲對任意第三方造成損害的，您需要以自己的名義獨立承擔法律責任，並應確保數雲免於因此產生損失或增加費用。"
+	},
+	"2pyc785b": {
+		"zh-cn": " 4) 您所购软件产品仅供自身作为商品所有者进行经营性业务开展的使用，若涉及其他业务类型的，则需提供《支付业务许可证》或已取得第三方《支付业务许可证》的合法授权，否则您不得使用所购软件产品或因使用所产生的任何经营性问题以及法律风险和责任由您自行解决，均与数云无关，及因此被任何第三方投诉或起诉，或造成数云被追究责任的，则由您承担全部的赔偿与责任，数云有权向您追偿并要求您承担责任。 ",
+		"en": "4) The software product you purchase is only for your own use as the owner of the commodity to conduct business operations. If it involves other types of business, you need to provide a \"Payment Business License\" or have obtained a legal authorization from a third party's \"Payment Business License\". Otherwise, you are not allowed to use the purchased software products. Any business issues, legal risks and responsibilities arising from the use shall be resolved by you alone and have nothing to do with Shuyun. If you are complained about or sued by any third party as a result, or if Shuyun is held accountable, you shall bear all compensation and responsibilities. Shuyun has the right to claim compensation from you and demand that you take responsibility.",
+		"zh-tw": "4) 您所購軟件產品僅供自身作爲商品所有者進行經營性業務開展的使用，若涉及其他業務類型的，則需提供《支付業務許可證》或已取得第三方《支付業務許可證》的合法授權，否則您不得使用所購軟件產品或因使用所產生的任何經營性問題以及法律風險和責任由您自行解決，均與數雲無關，及因此被任何第三方投訴或起訴，或造成數雲被追究責任的，則由您承擔全部的賠償與責任，數雲有權向您追償並要求您承擔責任。"
+	},
+	"luodl22s": {
+		"zh-cn": " 5) 如您违反有关法律或者本协议之规定，使数云遭受任何损失，或受到任何第三方的索赔，或受到任何行政管理部门的处罚，您应当赔偿数云因此造成的损失及（或）发生的费用，包括合理的律师费用、调查取证费用。 ",
+		"en": "5) If you violate any relevant laws or the provisions of this agreement, causing any losses to Shuyun, or subject it to any claims from any third party, or penalties from any administrative department, you shall compensate Shuyun for the losses and/or expenses incurred thereby, including reasonable legal fees and investigation and evidence collection fees.",
+		"zh-tw": "5) 如您違反有關法律或者本協議之規定，使數雲遭受任何損失，或受到任何第三方的索賠，或受到任何行政管理部門的處罰，您應當賠償數雲因此造成的損失及（或）發生的費用，包括合理的律師費用、調查取證費用。"
+	},
+	"715q1p26": {
+		"zh-cn": " 4.1 除法律法规有明确规定外，数云将尽最大努力确保许可软件及其所涉及的技术及信息安全、有效、准确、可靠，但受限于现有技术，您理解数云不能对此进行担保。 ",
+		"en": "4.1 Except as explicitly provided by laws and regulations, Shuyun will make every effort to ensure that the licensed software and the technologies and information involved are secure, effective, accurate and reliable. However, due to the limitations of existing technology, you understand that Shuyun cannot guarantee this.",
+		"zh-tw": "4.1 除法律法規有明確規定外，數雲將盡最大努力確保許可軟件及其所涉及的技術及信息安全、有效、準確、可靠，但受限於現有技術，您理解數雲不能對此進行擔保。"
+	},
+	"zf6dom1l": {
+		"zh-cn": " 4.5 利用本授权软件发生的商业行为均由授权用户自行负责，利用本软件进行商业行为所产生的一切纠纷均与数云无关。 ",
+		"en": "4.5 All commercial activities arising from the use of this authorized software shall be the sole responsibility of the authorized user. Any disputes arising from commercial activities conducted using this software shall have nothing to do with Shuyun.",
+		"zh-tw": "4.5 利用本授權軟件發生的商業行爲均由授權用戶自行負責，利用本軟件進行商業行爲所產生的一切糾紛均與數雲無關。"
+	},
+	"jejanm2o": {
+		"zh-cn": " 4.6 为方便用户使用，软件内置了譬如网上支付网关等诸多第三方系统。但您应自行评估使用这些系统的风险。这些系统的具体开通与服务由相应第三方公司提供，由此而产生的任何商业纠纷，均与数云无关。 ",
+		"en": "4.6 To facilitate user operation, the software is equipped with many third-party systems such as an online payment gateway. However, you should assess the risks of using these systems by yourself. The specific activation and services of these systems are provided by the corresponding third-party companies. Any commercial disputes arising therefrom have nothing to do with Shuyun.",
+		"zh-tw": "4.6 爲方便用戶使用，軟件內置了譬如網上支付網關等諸多第三方系統。但您應自行評估使用這些系統的風險。這些系統的具體開通與服務由相應第三方公司提供，由此而產生的任何商業糾紛，均與數雲無關。"
+	},
+	"r8yu721p": {
+		"zh-cn": " 4.7 数云不对因授权软件使用错误、软件错误等问题所引起的授权用户损失而承担任何责任，但数云将尽量避免此类情况的发生。 ",
+		"en": "4.7 Shuyun shall not be held responsible for any losses of authorized users caused by errors in the use of authorized software, software errors or other issues. However, Shuyun will make every effort to avoid such situations.",
+		"zh-tw": "4.7 數雲不對因授權軟件使用錯誤、軟件錯誤等問題所引起的授權用戶損失而承擔任何責任，但數雲將盡量避免此類情況的發生。"
+	},
+	"db7g5x2o": {
+		"zh-cn": " 4.8 授权用户将在享有上述条款授予的权力的同时，受到相关的约束和限制。协议许可范围以外的行为，将直接违反本授权协议并构成侵权，数云有权随时终止授权，责令停止损害，并保留追究相关责任的权力 ",
+		"en": "4.8 Authorized users will enjoy the rights granted by the above terms while being subject to relevant constraints and restrictions. Any behavior beyond the scope permitted by the agreement will directly violate this authorization agreement and constitute infringement. Shuyun reserves the right to terminate the authorization at any time, order the cessation of damage, and reserve the right to pursue relevant responsibilities",
+		"zh-tw": "4.8 授權用戶將在享有上述條款授予的權力的同時，受到相關的約束和限制。協議許可範圍以外的行爲，將直接違反本授權協議並構成侵權，數雲有權隨時終止授權，責令停止損害，並保留追究相關責任的權力"
+	},
+	"ivp3xw30": {
+		"zh-cn": " 4.9 非经数云或数云授权开发并正式发布的其他任何由许可软件衍生的软件均属非法，下载、安装、使用此类软件，可能导致不可预知的风险，由此产生的法律责任与纠纷与数云无关，数云有权中止、终止使用许可和/或其他一切服务。 ",
+		"en": "4.9 Any software derived from licensed software that is not developed and officially released with the authorization of Shuyun or Shuyun is illegal. Downloading, installing or using such software may lead to unpredictable risks. Any legal liability and disputes arising therefrom are not the responsibility of Shuyun. Shuyun reserves the right to suspend or terminate the use of the license and/or all other services.",
+		"zh-tw": "4.9 非經數雲或數雲授權開發並正式發佈的其他任何由許可軟件衍生的軟件均屬非法，下載、安裝、使用此類軟件，可能導致不可預知的風險，由此產生的法律責任與糾紛與數雲無關，數雲有權中止、終止使用許可和/或其他一切服務。"
+	},
+	"qvlitq2m": {
+		"zh-cn": " 7.3 本协议签订地为中华人民共和国上海市徐汇区。若您和数云之间因本协议发生任何纠纷或争议，首先应友好协商解决；协商不成的，您同意将纠纷或争议提交至本协议签订地有管辖权的人民法院管辖。 ",
+		"en": "7.3 This agreement is signed in Xuhui District, Shanghai City, People's Republic of China. If any dispute or controversy arises between you and Shuyun due to this agreement, it should first be resolved through friendly consultation. If the negotiation fails, you agree to submit the dispute or controversy to the people's court with jurisdiction at the place where this agreement is signed.",
+		"zh-tw": "7.3 本協議簽訂地爲中華人民共和國上海市徐彙區。若您和數雲之間因本協議發生任何糾紛或爭議，首先應友好協商解決；協商不成的，您同意將糾紛或爭議提交至本協議簽訂地有管轄權的人民法院管轄。"
+	},
+	"y4ej87": {
+		"zh-cn": " · 了解更多",
+		"en": "Learn more",
+		"zh-tw": "· 瞭解更多"
+	},
+	"ixjrr6d": {
+		"zh-cn": " 企事业单位的全称或简称 ",
+		"en": "The full name or abbreviation of an enterprise or public institution",
+		"zh-tw": "企事業單位的全稱或簡稱"
+	},
+	"ptdv69f": {
+		"zh-cn": " 工信部备案网站的全称或简称 ",
+		"en": "The full name or abbreviation of the website filed with the Ministry of Industry and Information Technology",
+		"zh-tw": "工信部備案網站的全稱或簡稱"
+	},
+	"25mpjne": {
+		"zh-cn": " App 应用的全称或简称 ",
+		"en": "The full name or abbreviation of an App application",
+		"zh-tw": "App 應用的全稱或簡稱"
+	},
+	"xpb6arf": {
+		"zh-cn": " 公众号或小程序的全称或简称 ",
+		"en": "The full name or abbreviation of the official account or mini-program",
+		"zh-tw": "公衆號或小程序的全稱或簡稱"
+	},
+	"k1388af": {
+		"zh-cn": " 电商平台店铺名的全称或简称 ",
+		"en": "The full name or abbreviation of the store name on the e-commerce platform",
+		"zh-tw": "電商平臺店鋪名的全稱或簡稱"
+	},
+	"15lf4qb": {
+		"zh-cn": " 商标名的全称或简称 ",
+		"en": "The full name or abbreviation of the trademark name",
+		"zh-tw": "商標名的全稱或簡稱"
+	},
+	"ewsc1oo": {
+		"zh-cn": " 自用（签名为本账号实名认证的网站、App等） ",
+		"en": "For personal use (websites, apps, etc. signed with the real-name authentication of this account)",
+		"zh-tw": "自用（簽名爲本賬號實名認證的網站、App等）"
+	},
+	"fryuas": {
+		"zh-cn": " 他用（签名为非本账号实名认证的企业、网站、产品名等） ",
+		"en": "He used (with signatures from enterprises, websites, product names, etc. that are not real-name authenticated by this account)",
+		"zh-tw": "他用（簽名爲非本賬號實名認證的企業、網站、產品名等）"
+	},
+	"my17it9": {
+		"zh-cn": " 再添加一个签名 ",
+		"en": "Add another signature",
+		"zh-tw": "再添加一個簽名"
+	},
+	"1qx7h96": {
+		"zh-cn": " 新增签名 ",
+		"en": "New signature",
+		"zh-tw": "新增簽名"
+	},
+	"tzrlgq6": {
+		"zh-cn": " 添加账号 ",
+		"en": "Add an account",
+		"zh-tw": "添加賬號"
+	},
+	"arjil35": {
+		"zh-cn": " 不显示 ",
+		"en": "Not displayed",
+		"zh-tw": "不顯示"
+	},
+	"uzu0rw1k": {
+		"zh-cn": " 根据场景配置好短信，用户进入对应场景时即可触发系统发送对应给用户，支持短信验证码，订单通知，快递提醒等场景。 ",
+		"en": "Configure the SMS according to the scene. When the user enters the corresponding scene, the system will trigger the corresponding message to the user. It supports scenarios such as SMS verification codes, order notifications, and express delivery reminders.",
+		"zh-tw": "根據場景配置好短信，用戶進入對應場景時即可觸發系統發送對應給用戶，支持短信驗證碼，訂單通知，快遞提醒等場景。"
+	},
+	"twmzt36": {
+		"zh-cn": " 添加短信 ",
+		"en": "Add a text message",
+		"zh-tw": "添加短信"
+	},
+	"1b6qi07": {
+		"zh-cn": " 添加供应商 ",
+		"en": "Add a supplier",
+		"zh-tw": "添加供應商"
+	},
+	"d1xfyo7": {
+		"zh-cn": " 供应商名称 ",
+		"en": "Supplier Name",
+		"zh-tw": "供應商名稱"
+	},
+	"h6ymul5": {
+		"zh-cn": " 联系人 ",
+		"en": "Contact person",
+		"zh-tw": "聯繫人"
+	},
+	"dbf7aw5": {
+		"zh-cn": " 手机号 ",
+		"en": "Mobile phone number",
+		"zh-tw": "手機號"
+	},
+	"vrs4dp6": {
+		"zh-cn": " 客服电话 ",
+		"en": "Customer service phone number",
+		"zh-tw": "客服電話"
+	},
+	"q5bonp6": {
+		"zh-cn": " 营业执照 ",
+		"en": "Business license",
+		"zh-tw": "營業執照"
+	},
+	"ef85n27": {
+		"zh-cn": " 客服二维码 ",
+		"en": "Customer service QR code",
+		"zh-tw": "客服二維碼"
+	},
+	"15gftq6": {
+		"zh-cn": " 收款银行 ",
+		"en": "Receiving bank",
+		"zh-tw": "收款銀行"
+	},
+	"16ujax6": {
+		"zh-cn": " 收款账号 ",
+		"en": "Receiving account number",
+		"zh-tw": "收款賬號"
+	},
+	"lwra3": {
+		"zh-cn": " 确认",
+		"en": "Confirm",
+		"zh-tw": "確認"
+	},
+	"f98u5p1w": {
+		"zh-cn": " 短信服务由阿里云提供，是广大企业客户快速触达手机用户所优选使用的通信能力，国内验证短信秒级触达，到达率最高可达99%。开始使用前您需要",
+		"en": "The SMS service is provided by Alibaba Cloud and is the preferred communication capability for a large number of enterprise customers to quickly reach mobile phone users. It has been verified in China that SMS can reach users within seconds, with the highest delivery rate reaching up to 99%. You need it before you start using it",
+		"zh-tw": "短信服務由阿里雲提供，是廣大企業客戶快速觸達手機用戶所優選使用的通信能力，國內驗證短信秒級觸達，到達率最高可達99%。開始使用前您需要"
+	},
+	"1wgbpb6": {
+		"zh-cn": " 新增商户 ",
+		"en": "New merchants",
+		"zh-tw": "新增商戶"
+	},
+	"ansmhe5": {
+		"zh-cn": "商品审核 ",
+		"en": "Commodity review",
+		"zh-tw": "商品審覈"
+	},
+	"gdz0p4": {
+		"zh-cn": " 标签 ",
+		"en": "Tag",
+		"zh-tw": "標籤"
+	},
+	"77911m6": {
+		"zh-cn": " 批量提交 ",
+		"en": "Batch submission",
+		"zh-tw": "批量提交"
+	},
+	"69tr296": {
+		"zh-cn": " 加入心愿 ",
+		"en": "Join your wish",
+		"zh-tw": "加入心願"
+	},
+	"639hew6": {
+		"zh-cn": " 加入购买 ",
+		"en": "Join the purchase",
+		"zh-tw": "加入購買"
+	},
+	"amwkno6": {
+		"zh-cn": " 查看更多 ",
+		"en": "View more",
+		"zh-tw": "查看更多"
+	},
+	"f6qt4b4": {
+		"zh-cn": "用户名\t",
+		"en": "User name",
+		"zh-tw": "用戶名"
+	},
+	"mrlmwl5": {
+		"zh-cn": "券包标题\t",
+		"en": "Coupon Package Title",
+		"zh-tw": "券包標題"
+	},
+	"8w1bd05": {
+		"zh-cn": "发送失败 ",
+		"en": "Failed to send",
+		"zh-tw": "發送失敗"
+	},
+	"ct3zr35": {
+		"zh-cn": "群发失败 ",
+		"en": "Group sending failed",
+		"zh-tw": "羣發失敗"
+	},
+	"ca0j9u4": {
+		"zh-cn": "已撤销 ",
+		"en": "Revoked",
+		"zh-tw": "已撤銷"
+	},
+	"gmztyt5": {
+		"zh-cn": "审核失败 ",
+		"en": "Review failed",
+		"zh-tw": "審覈失敗"
+	},
+	"3lcbsu8": {
+		"zh-cn": " 加载中... ",
+		"en": "Loading...",
+		"zh-tw": "加載中..."
+	},
+	"tudqs46": {
+		"zh-cn": " 添加权益 ",
+		"en": "Add rights",
+		"zh-tw": "添加權益"
+	},
+	"idl2": {
+		"zh-cn": " 天",
+		"en": "day",
+		"zh-tw": "天"
+	},
+	"cqrdis5": {
+		"zh-cn": " 已开通 ",
+		"en": "It has been opened",
+		"zh-tw": "已開通"
+	},
+	"3wgesm6": {
+		"zh-cn": " 免费开通 ",
+		"en": "Free activation",
+		"zh-tw": "免費開通"
+	},
+	"r2l9lu8": {
+		"zh-cn": " 新增图文消息 ",
+		"en": "New graphic and text messages added",
+		"zh-tw": "新增圖文消息"
+	},
+	"hr0c3": {
+		"zh-cn": " 您的",
+		"en": "Yours",
+		"zh-tw": "您的"
+	},
+	"bzorwp4": {
+		"zh-cn": "审核于 ",
+		"en": "Reviewed by",
+		"zh-tw": "審覈於"
+	},
+	"e3t5e15": {
+		"zh-cn": " 未通过 ",
+		"en": "Failed",
+		"zh-tw": "未通過"
+	},
+	"gz91uk6": {
+		"zh-cn": " 顺利通过 ",
+		"en": "Pass smoothly",
+		"zh-tw": "順利通過"
+	},
+	"lhafj4": {
+		"zh-cn": " 请在 ",
+		"en": "Please",
+		"zh-tw": "請在"
+	},
+	"ifsq2tp": {
+		"zh-cn": " 前提交证照信息进行审核，否则入驻审核结果将失效 ",
+		"en": "Submit the license and certificate information before review; otherwise, the review result for entry will be invalid",
+		"zh-tw": "前提交證照信息進行審覈，否則入駐審覈結果將失效"
+	},
+	"u6eehb6": {
+		"zh-cn": " 重新填写 ",
+		"en": "Fill in again",
+		"zh-tw": "重新填寫"
+	},
+	"anw2345": {
+		"zh-cn": " 下一步 ",
+		"en": "Next step",
+		"zh-tw": "下一步"
+	},
+	"3z47r08": {
+		"zh-cn": " 进入结算信息 ",
+		"en": "Enter the settlement information",
+		"zh-tw": "進入結算信息"
+	},
+	"ob89c16": {
+		"zh-cn": " 上传视频 ",
+		"en": "Upload a video",
+		"zh-tw": "上傳視頻"
+	},
+	"oiujgf6": {
+		"zh-cn": " 上传图片 ",
+		"en": "Upload pictures",
+		"zh-tw": "上傳圖片"
+	},
+	"itoyb4": {
+		"zh-cn": " 移动 ",
+		"en": "\"Mobile\"",
+		"zh-tw": "移動"
+	},
+	"ff4aoa8": {
+		"zh-cn": " 实际可退金额：",
+		"en": "Actual refundable amount",
+		"zh-tw": "實際可退金額："
+	},
+	"rfm90q6": {
+		"zh-cn": " 运费承担方",
+		"en": "The party bearing the freight charges",
+		"zh-tw": "運費承擔方"
+	},
+	"5e7rze6": {
+		"zh-cn": " 商家承担 ",
+		"en": "The merchant bears",
+		"zh-tw": "商家承擔"
+	},
+	"lc06ek6": {
+		"zh-cn": " 买家承担 ",
+		"en": "The buyer bears",
+		"zh-tw": "買家承擔"
+	},
+	"flzmak6": {
+		"zh-cn": " 保存配置 ",
+		"en": "Save the configuration",
+		"zh-tw": "保存配置"
+	},
+	"2gd3hn7": {
+		"zh-cn": " 达达同城配 ",
+		"en": "Dada City Delivery",
+		"zh-tw": "達達同城配"
+	},
+	"4x77bx6": {
+		"zh-cn": " 未开通过 ",
+		"en": "Not opened and passed",
+		"zh-tw": "未開通過"
+	},
+	"v4f90b6": {
+		"zh-cn": " 已开通过 ",
+		"en": "Approved",
+		"zh-tw": "已開通過"
+	},
+	"67r2fr6": {
+		"zh-cn": " 商户手机号",
+		"en": "Merchant mobile phone number",
+		"zh-tw": "商戶手機號"
+	},
+	"lrzfi07": {
+		"zh-cn": " 商户城市名称",
+		"en": "Merchant city name",
+		"zh-tw": "商戶城市名稱"
+	},
+	"dqcwva5": {
+		"zh-cn": " 是否开启",
+		"en": "Whether to open",
+		"zh-tw": "是否開啓"
+	},
+	"7yf5oh17": {
+		"zh-cn": " 3. 收到“商派软件有限公司”开发者绑定通知后，请您审核通过，通过完成后即可使用。 ",
+		"en": "3. After receiving the developer binding notice from \"Shangpai Software Co., LTD.\", please approve it. Once approved, you can use it.",
+		"zh-tw": "3. 收到“商派軟件有限公司”開發者綁定通知後，請您審覈通過，通過完成後即可使用。"
+	},
+	"fek5ji7": {
+		"zh-cn": " 按折扣改价 ",
+		"en": "Change the price at a discount",
+		"zh-tw": "按折扣改價"
+	},
+	"3yydbj6": {
+		"zh-cn": " 直接改价 ",
+		"en": "Change the price directly",
+		"zh-tw": "直接改價"
+	},
+	"bchdai5": {
+		"zh-cn": " 免运费 ",
+		"en": "Free shipping",
+		"zh-tw": "免運費"
+	},
+	"fxhrsk8": {
+		"zh-cn": " 积分抵扣运费：",
+		"en": "Points deduction for freight charges",
+		"zh-tw": "積分抵扣運費："
+	},
+	"43rdgp1d": {
+		"zh-cn": " 一键改价后的金额为商品总价，该金额会按商品单价的金额比例分摊到每个商品，不会分摊到优惠和运费。 ",
+		"en": "The amount after one-click price change is the total price of the product. This amount will be allocated to each product in proportion to the unit price of the product, and will not be allocated to discounts or shipping fees.",
+		"zh-tw": "一鍵改價後的金額爲商品總價，該金額會按商品單價的金額比例分攤到每個商品，不會分攤到優惠和運費。"
+	},
+	"v37sw1f": {
+		"zh-cn": " 一个自提点仅可被一个店铺绑定使用；每个店铺可绑定多个自提点，绑定至同一店铺的自提点共享该店铺库存。 ",
+		"en": "One self-pickup point can only be bound and used by one store. Each store can be bound to multiple self-pickup points. Self-pickup points bound to the same store share the inventory of that store.",
+		"zh-tw": "一個自提點僅可被一個店鋪綁定使用；每個店鋪可綁定多個自提點，綁定至同一店鋪的自提點共享該店鋪庫存。"
+	},
+	"hqim2j7": {
+		"zh-cn": " 新增自提点 ",
+		"en": "New self-pickup points have been added",
+		"zh-tw": "新增自提點"
+	},
+	"524lx6c": {
+		"zh-cn": " 商家自配送是否开启： ",
+		"en": "Is the merchant's self-delivery enabled?",
+		"zh-tw": "商家自配送是否開啓："
+	},
+	"w416ntb": {
+		"zh-cn": " 开启后前台不可购买 ",
+		"en": "Once opened, the front desk cannot purchase",
+		"zh-tw": "開啓後前臺不可購買"
+	},
+	"yn7qiwc": {
+		"zh-cn": "选中以下图片生成分享码 ",
+		"en": "Select the following picture to generate a sharing code",
+		"zh-tw": "選中以下圖片生成分享碼"
+	},
+	"lguz94": {
+		"zh-cn": " 视频 ",
+		"en": "Video",
+		"zh-tw": "視頻"
+	},
+	"m1uxt4": {
+		"zh-cn": " 轮播 ",
+		"en": "Carousel",
+		"zh-tw": "輪播"
+	},
+	"fxc0r4": {
+		"zh-cn": " 文本 ",
+		"en": "Text",
+		"zh-tw": "文本"
+	},
+	"y8tzep9": {
+		"zh-cn": " 请拖选左侧挂件 ",
+		"en": "Please drag and select the pendant on the left",
+		"zh-tw": "請拖選左側掛件"
+	},
+	"dvlyms5": {
+		"zh-cn": " 未处理 ",
+		"en": "Unprocessed",
+		"zh-tw": "未處理"
+	},
+	"fbkgh4": {
+		"zh-cn": " 成功 ",
+		"en": "Success",
+		"zh-tw": "成功"
+	},
+	"o8m7oz6": {
+		"zh-cn": " 部分成功 ",
+		"en": "Partial success",
+		"zh-tw": "部分成功"
+	},
+	"eaquk4": {
+		"zh-cn": " 失败 ",
+		"en": "Failure",
+		"zh-tw": "失敗"
+	},
+	"nyaifq6": {
+		"zh-cn": " 线下退款 ",
+		"en": "Offline refund",
+		"zh-tw": "線下退款"
+	},
+	"5g9bpi6": {
+		"zh-cn": " 原路返回 ",
+		"en": "Return by the same route",
+		"zh-tw": "原路返回"
+	},
+	"ntg3u06": {
+		"zh-cn": " 退款关闭 ",
+		"en": "Refund closed",
+		"zh-tw": "退款關閉"
+	},
+	"70w34c6": {
+		"zh-cn": " 确认退款 ",
+		"en": "Confirm refund",
+		"zh-tw": "確認退款"
+	},
+	"ezvs74": {
+		"zh-cn": " 待处理",
+		"en": "To be processed",
+		"zh-tw": "待處理"
+	},
+	"dyz4u4": {
+		"zh-cn": " 回退 ",
+		"en": "\"Back\"",
+		"zh-tw": "回退"
+	},
+	"xe4q666": {
+		"zh-cn": " 编辑模版 ",
+		"en": "Editing template",
+		"zh-tw": "編輯模版"
+	},
+	"4jgmb26": {
+		"zh-cn": " 商品栅格 ",
+		"en": "Product grid",
+		"zh-tw": "商品柵格"
+	},
+	"f2y65r5": {
+		"zh-cn": " 热区图 ",
+		"en": "Heat zone map",
+		"zh-tw": "熱區圖"
+	},
+	"ext0fd6": {
+		"zh-cn": " 图片导航 ",
+		"en": "Image navigation",
+		"zh-tw": "圖片導航"
+	},
+	"dgfy2u6": {
+		"zh-cn": " 楼层挂件 ",
+		"en": "Floor hangers",
+		"zh-tw": "樓層掛件"
+	},
+	"lmys04": {
+		"zh-cn": " 设置 ",
+		"en": "\"Settings",
+		"zh-tw": "設置"
+	},
+	"yosrys9": {
+		"zh-cn": " 请选择左侧挂件 ",
+		"en": "Please select the pendant on the left",
+		"zh-tw": "請選擇左側掛件"
+	},
+	"i3d6ql6": {
+		"zh-cn": " 附近商家 ",
+		"en": "Nearby merchants",
+		"zh-tw": "附近商家"
+	},
+	"esy47u7": {
+		"zh-cn": " 商品Tab ",
+		"en": "Product Tab",
+		"zh-tw": "商品Tab"
+	},
+	"4kcz2v6": {
+		"zh-cn": " 商品滚动 ",
+		"en": "Product rolling",
+		"zh-tw": "商品滾動"
+	},
+	"1y3rgv6": {
+		"zh-cn": " 文字轮播 ",
+		"en": "Text carousel",
+		"zh-tw": "文字輪播"
+	},
+	"gqjqy4": {
+		"zh-cn": " 橱窗 ",
+		"en": "Window display",
+		"zh-tw": "櫥窗"
+	},
+	"4ewia36": {
+		"zh-cn": " 推荐店铺 ",
+		"en": "Recommended stores",
+		"zh-tw": "推薦店鋪"
+	},
+	"deulg16": {
+		"zh-cn": " 楼层图片 ",
+		"en": "Floor picture",
+		"zh-tw": "樓層圖片"
+	},
+	"23mp6p6": {
+		"zh-cn": " 文字标题 ",
+		"en": "Text title",
+		"zh-tw": "文字標題"
+	},
+	"ihxgb15": {
+		"zh-cn": " 视频图 ",
+		"en": "Video image",
+		"zh-tw": "視頻圖"
+	},
+	"ppyuw76": {
+		"zh-cn": " 热点话题 ",
+		"en": "Hot topics",
+		"zh-tw": "熱點話題"
+	},
+	"no7yru22": {
+		"zh-cn": " 退货点信息会在买家选择到店退货时展示，初次使用此功能时本店退货点默认为选中状态（可退货店铺列表内未展示），可在保存店铺信息后再次进入此页面移除。 ",
+		"en": "The return point information will be displayed when the buyer selects to return goods in-store. When using this function for the first time, the return point of this store will be selected by default (not displayed in the list of returnable stores). After saving the store information, you can enter this page again to remove it.",
+		"zh-tw": "退貨點信息會在買家選擇到店退貨時展示，初次使用此功能時本店退貨點默認爲選中狀態（可退貨店鋪列表內未展示），可在保存店鋪信息後再次進入此頁面移除。"
+	},
+	"gu8w3": {
+		"zh-cn": " 张 ",
+		"en": "zhang",
+		"zh-tw": "張"
+	},
+	"q500q56": {
+		"zh-cn": " 长期活动 ",
+		"en": "Long-term activities",
+		"zh-tw": "長期活動"
+	},
+	"axjgh6": {
+		"zh-cn": " 短期活动 ",
+		"en": "Short-term activities",
+		"zh-tw": "短期活動"
+	},
+	"gsxi14": {
+		"zh-cn": " 小时 ",
+		"en": "\"Hour",
+		"zh-tw": "小時"
+	},
+	"uczex81g": {
+		"zh-cn": " 消费者使用兑换券选定商品后，为避免到店后无兑换商品，则该商品对应库存锁定时间，时间需大于0，且为整数 ",
+		"en": "After consumers select goods with exchange coupons, to avoid the situation where there are no redeemable goods when they arrive at the store, the corresponding inventory lock time for the goods must be greater than 0 and an integer",
+		"zh-tw": "消費者使用兌換券選定商品後，爲避免到店後無兌換商品，則該商品對應庫存鎖定時間，時間需大於0，且爲整數"
+	},
+	"fymg64": {
+		"zh-cn": " 暂停 ",
+		"en": "Pause",
+		"zh-tw": "暫停"
+	},
+	"8q4cqb5": {
+		"zh-cn": "退款成功 ",
+		"en": "Refund successful",
+		"zh-tw": "退款成功"
+	},
+	"aveuqz5": {
+		"zh-cn": " 价格: ",
+		"en": "Price",
+		"zh-tw": "價格:"
+	},
+	"dersh85": {
+		"zh-cn": " 提交审批",
+		"en": "Submit for approval",
+		"zh-tw": "提交審批"
+	},
+	"4rva8wg": {
+		"zh-cn": "(短信费用将在短信余额中扣除) ",
+		"en": "The cost of the text message will be deducted from the text message balance.",
+		"zh-tw": "(短信費用將在短信餘額中扣除)"
+	},
+	"bwioq3": {
+		"zh-cn": "元) ",
+		"en": "\"Yuan",
+		"zh-tw": "元)"
+	},
+	"qwlfx16": {
+		"zh-cn": " 活动数据 ",
+		"en": "Activity data",
+		"zh-tw": "活動數據"
+	},
+	"av7zvg5": {
+		"zh-cn": " 删 除 ",
+		"en": "Delete",
+		"zh-tw": "刪 除"
+	},
+	"gr6e667": {
+		"zh-cn": " 服务类商品 ",
+		"en": "Service goods",
+		"zh-tw": "服務類商品"
+	},
+	"73b7y06": {
+		"zh-cn": " 分帐信息 ",
+		"en": "Accounting information",
+		"zh-tw": "分帳信息"
+	},
+	"henq518": {
+		"zh-cn": " 累计积分总额 ",
+		"en": "Total accumulated points",
+		"zh-tw": "累計積分總額"
+	},
+	"jtid3": {
+		"zh-cn": " 添加",
+		"en": "\"Add",
+		"zh-tw": "添加"
+	},
+	"cqh6m75": {
+		"zh-cn": " 已开启 ",
+		"en": "Enabled",
+		"zh-tw": "已開啓"
+	},
+	"hw3cfc8": {
+		"zh-cn": " 配置默认排班 ",
+		"en": "Configure the default shift scheduling",
+		"zh-tw": "配置默認排班"
+	},
+	"v2hfx38": {
+		"zh-cn": " 管理班次类型 ",
+		"en": "Manage shift types",
+		"zh-tw": "管理班次類型"
+	},
+	"anriby5": {
+		"zh-cn": " 上一周 ",
+		"en": "Last week",
+		"zh-tw": "上一週"
+	},
+	"ans5bh5": {
+		"zh-cn": " 下一周 ",
+		"en": "Next week",
+		"zh-tw": "下一週"
+	},
+	"fl9sq07": {
+		"zh-cn": " 门店名称： ",
+		"en": "Store Name",
+		"zh-tw": "門店名稱："
+	},
+	"8jezsr7": {
+		"zh-cn": " 开店时间： ",
+		"en": "Opening hours",
+		"zh-tw": "開店時間："
+	},
+	"96hd9o8": {
+		"zh-cn": " 添加默认排班 ",
+		"en": "Add default scheduling",
+		"zh-tw": "添加默認排班"
+	},
+	"w3ncd38": {
+		"zh-cn": " 添加班次类型 ",
+		"en": "Add shift type",
+		"zh-tw": "添加班次類型"
+	},
+	"voqx6": {
+		"zh-cn": " 发布已选 ",
+		"en": "\"Publish selected\"",
+		"zh-tw": "發佈已選"
+	},
+	"ldi5b66": {
+		"zh-cn": " 下架已选 ",
+		"en": "Selected for removal",
+		"zh-tw": "下架已選"
+	},
+	"txe0v36": {
+		"zh-cn": " 添加系列 ",
+		"en": "Add series",
+		"zh-tw": "添加系列"
+	},
+	"hku854": {
+		"zh-cn": " 热推 ",
+		"en": "Hot Recommendation",
+		"zh-tw": "熱推"
+	},
+	"sb0vt48": {
+		"zh-cn": " 添加三级分类 ",
+		"en": "Add three-level classification",
+		"zh-tw": "添加三級分類"
+	},
+	"ub1xjf8": {
+		"zh-cn": " 添加二级分类 ",
+		"en": "Add secondary categories",
+		"zh-tw": "添加二級分類"
+	},
+	"traq126": {
+		"zh-cn": " 添加分类 ",
+		"en": "Add categories",
+		"zh-tw": "添加分類"
+	},
+	"4gc2ts6": {
+		"zh-cn": " 商品分类 ",
+		"en": "Commodity classification",
+		"zh-tw": "商品分類"
+	},
+	"gaz7466": {
+		"zh-cn": " 管理分类 ",
+		"en": "Management classification",
+		"zh-tw": "管理分類"
+	},
+	"qtt46dm": {
+		"zh-cn": " 单选，选择后在小程序中将在笔记右上角展示；",
+		"en": "Single choice. After selection, it will be displayed in the upper right corner of the note in the mini-program.",
+		"zh-tw": "單選，選擇後在小程序中將在筆記右上角展示；"
+	},
+	"qu6i7k": {
+		"zh-cn": "角标的设置需在「官方角标管理」中调整。 ",
+		"en": "The Settings of the corner marks need to be adjusted in the \"Official Corner Mark Management\".",
+		"zh-tw": "角標的設置需在「官方角標管理」中調整。"
+	},
+	"bcnkhi6": {
+		"zh-cn": " 评论内容 ",
+		"en": "Comment content",
+		"zh-tw": "評論內容"
+	},
+	"b60xgq6": {
+		"zh-cn": " 用户昵称 ",
+		"en": "User nickname",
+		"zh-tw": "用戶暱稱"
+	},
+	"bfx9e46": {
+		"zh-cn": " 评论时间 ",
+		"en": "Comment time",
+		"zh-tw": "評論時間"
+	},
+	"rgitl16": {
+		"zh-cn": " 当前状态 ",
+		"en": "Current status",
+		"zh-tw": "當前狀態"
+	},
+	"uxbg4u5": {
+		"zh-cn": "已选话题 ",
+		"en": "Selected topic",
+		"zh-tw": "已選話題"
+	},
+	"2co9f58": {
+		"zh-cn": " 上下拖动以排序",
+		"en": "Drag up and down to sort",
+		"zh-tw": "上下拖動以排序"
+	},
+	"h7btmv6": {
+		"zh-cn": " 笔记排序 ",
+		"en": "Note sorting",
+		"zh-tw": "筆記排序"
+	},
+	"hcz4i76": {
+		"zh-cn": " 笔记角标 ",
+		"en": "Note superscript",
+		"zh-tw": "筆記角標"
+	},
+	"n4lpuz6": {
+		"zh-cn": " 选择角标 ",
+		"en": "Select the superscript",
+		"zh-tw": "選擇角標"
+	},
+	"h8972r6": {
+		"zh-cn": " 笔记标题 ",
+		"en": "Note Title",
+		"zh-tw": "筆記標題"
+	},
+	"h7lh8j6": {
+		"zh-cn": " 笔记描述 ",
+		"en": "Note description",
+		"zh-tw": "筆記描述"
+	},
+	"4rhzoc6": {
+		"zh-cn": " 关联话题 ",
+		"en": "Related topics",
+		"zh-tw": "關聯話題"
+	},
+	"h5kupn6": {
+		"zh-cn": " 笔记图片 ",
+		"en": "Notes and pictures",
+		"zh-tw": "筆記圖片"
+	},
+	"lxao2q8": {
+		"zh-cn": " 图片内Tag ",
+		"en": "Tag within the picture",
+		"zh-tw": "圖片內Tag"
+	},
+	"4gkk1v6": {
+		"zh-cn": " 推荐商品 ",
+		"en": "Recommended products",
+		"zh-tw": "推薦商品"
+	},
+	"h7xuna6": {
+		"zh-cn": " 笔记时间 ",
+		"en": "Note-taking time",
+		"zh-tw": "筆記時間"
+	},
+	"j96ke4": {
+		"zh-cn": " 笔记:",
+		"en": "Note",
+		"zh-tw": "筆記:"
+	},
+	"xpd0df8": {
+		"zh-cn": " 累积消费金额 ",
+		"en": "Cumulative consumption amount",
+		"zh-tw": "累積消費金額"
+	},
+	"k2eg3": {
+		"zh-cn": " 折 ",
+		"en": "fold",
+		"zh-tw": "折"
+	},
+	"nviq5x8": {
+		"zh-cn": " 选择优惠券包 ",
+		"en": "Select the coupon package",
+		"zh-tw": "選擇優惠券包"
+	},
+	"efve13": {
+		"zh-cn": "已选 ",
+		"en": "Selected",
+		"zh-tw": "已選"
+	},
+	"cf43e4": {
+		"zh-cn": " 个劵包",
+		"en": "Individual coupon package",
+		"zh-tw": "個劵包"
+	},
+	"clx4z15": {
+		"zh-cn": " 小程序 ",
+		"en": "\"Mini Program",
+		"zh-tw": "小程序"
+	},
+	"9d74id8": {
+		"zh-cn": " 新增监控链接 ",
+		"en": "New monitoring link added",
+		"zh-tw": "新增監控鏈接"
+	},
+	"4cexdh6": {
+		"zh-cn": " 监控详情 ",
+		"en": "Monitoring details",
+		"zh-tw": "監控詳情"
+	},
+	"iw8og55": {
+		"zh-cn": " 重 置 ",
+		"en": "\"Reset",
+		"zh-tw": "重 置"
+	},
+	"1tqo7t6": {
+		"zh-cn": " 新增来源 ",
+		"en": "New sources",
+		"zh-tw": "新增來源"
+	},
+	"pbxn798": {
+		"zh-cn": " 选择会员标签 ",
+		"en": "Select the member tag",
+		"zh-tw": "選擇會員標籤"
+	},
+	"xzc2m216": {
+		"zh-cn": " 建议将来源名称命名为要使用的推广渠道的名称，方便理解与跟踪，例如：微信朋友圈广告 ",
+		"en": "It is suggested that the source name be named after the name of the promotion channel to be used, which is convenient for understanding and tracking. For example: wechat Moments advertising",
+		"zh-tw": "建議將來源名稱命名爲要使用的推廣渠道的名稱，方便理解與跟蹤，例如：微信朋友圈廣告"
+	},
+	"l7hi899": {
+		"zh-cn": " 添加关联打印机 ",
+		"en": "Add associated printers",
+		"zh-tw": "添加關聯打印機"
+	},
+	"fci374": {
+		"zh-cn": " 总部 ",
+		"en": "Headquarters",
+		"zh-tw": "總部"
+	},
+	"f4jkt4": {
+		"zh-cn": " 店铺 ",
+		"en": "Shop",
+		"zh-tw": "店鋪"
+	},
+	"epjvxw5": {
+		"zh-cn": " 添加成功",
+		"en": "Added successfully",
+		"zh-tw": "添加成功"
+	},
+	"xm6a2h12": {
+		"zh-cn": " 适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】",
+		"en": "Applicable to [wechat browsers, third-party apps, third-party mobile browsers, wechat mini-programs, PC websites]",
+		"zh-tw": "適用於【微信瀏覽器、第三方APP、第三方手機瀏覽器、微信小程序、PC網站】"
+	},
+	"fjqxi4c": {
+		"zh-cn": " 适用于【第三方APP】",
+		"en": "Applicable to [Third-party Apps",
+		"zh-tw": "適用於【第三方APP】"
+	},
+	"d4nd54": {
+		"zh-cn": " 允许 ",
+		"en": "\"Allowed",
+		"zh-tw": "允許"
+	},
+	"ciaxz4": {
+		"zh-cn": " 企业 ",
+		"en": "Enterprise",
+		"zh-tw": "企業"
+	},
+	"aol9ua5": {
+		"zh-cn": " 个体户 ",
+		"en": "Sole proprietorship",
+		"zh-tw": "個體戶"
+	},
+	"n8h72s": {
+		"zh-cn": " 开启默认积分支付功能，消费者下单时优先使用积分支付下单",
+		"en": "Enable the default points payment function. When consumers place orders, they should give priority to using points payment",
+		"zh-tw": "開啓默認積分支付功能，消費者下單時優先使用積分支付下單"
+	},
+	"1wszsz6": {
+		"zh-cn": " 新增分类 ",
+		"en": "New categories added",
+		"zh-tw": "新增分類"
+	},
+	"n55yjv6": {
+		"zh-cn": " 选择路径 ",
+		"en": "Select a path",
+		"zh-tw": "選擇路徑"
+	},
+	"gw9ilo6": {
+		"zh-cn": " H5链接 ",
+		"en": "\"H5 Link",
+		"zh-tw": "H5鏈接"
+	},
+	"bnfdzq5": {
+		"zh-cn": " 商家： ",
+		"en": "Merchant",
+		"zh-tw": "商家："
+	},
+	"35d6fys": {
+		"zh-cn": " 默认全部店铺适用，若该券只适用于部分店铺请点击右上角 ",
+		"en": "By default, this coupon is applicable to all stores. If this coupon is only applicable to some stores, please click the upper right corner",
+		"zh-tw": "默認全部店鋪適用，若該券只適用於部分店鋪請點擊右上角"
+	},
+	"3smnyo10": {
+		"zh-cn": " (多规格商品支持SPU级别，如只能兑换其中一个规格产品请选择相应规格)",
+		"en": "(Multi-specification products support SPU levels. If you can only redeem one specification of the product, please select the corresponding specification.)",
+		"zh-tw": "(多規格商品支持SPU級別，如只能兌換其中一個規格產品請選擇相應規格)"
+	},
+	"8s82hlf": {
+		"zh-cn": " 暂未无可兑商品，请点击右上角",
+		"en": "There are no redeemable items available at the moment. Please click the top right corner",
+		"zh-tw": "暫未無可兌商品，請點擊右上角"
+	},
+	"bvg5l65": {
+		"zh-cn": "进行添加 ",
+		"en": "Add",
+		"zh-tw": "進行添加"
+	},
+	"eixun4": {
+		"zh-cn": " 居左 ",
+		"en": "On the left",
+		"zh-tw": "居左"
+	},
+	"eg9ko4": {
+		"zh-cn": " 居中 ",
+		"en": "In the middle",
+		"zh-tw": "居中"
+	},
+	"eh8xe4": {
+		"zh-cn": " 居右 ",
+		"en": "On the right",
+		"zh-tw": "居右"
+	},
+	"drj384": {
+		"zh-cn": " 圆形 ",
+		"en": "\"Circle\"",
+		"zh-tw": "圓形"
+	},
+	"jrpnsf5": {
+		"zh-cn": " 长方型 ",
+		"en": "Rectangular",
+		"zh-tw": "長方型"
+	},
+	"hac8v4": {
+		"zh-cn": " 深色 ",
+		"en": "Dark color",
+		"zh-tw": "深色"
+	},
+	"cphx84": {
+		"zh-cn": " 亮色 ",
+		"en": "Bright colors",
+		"zh-tw": "亮色"
+	},
+	"eb0hmm5": {
+		"zh-cn": " 模板一 ",
+		"en": "Template One",
+		"zh-tw": "模板一"
+	},
+	"eb0kz65": {
+		"zh-cn": " 模板二 ",
+		"en": "Template Two",
+		"zh-tw": "模板二"
+	},
+	"eb0hud5": {
+		"zh-cn": " 模板三 ",
+		"en": "Template Three",
+		"zh-tw": "模板三"
+	},
+	"eb1zur5": {
+		"zh-cn": " 模板四 ",
+		"en": "Template Four",
+		"zh-tw": "模板四"
+	},
+	"bmepcx5": {
+		"zh-cn": " 商品： ",
+		"en": "Product",
+		"zh-tw": "商品："
+	},
+	"bdgxgb5": {
+		"zh-cn": " 分类： ",
+		"en": "Category",
+		"zh-tw": "分類："
+	},
+	"dtsm735": {
+		"zh-cn": " 文章： ",
+		"en": "Article",
+		"zh-tw": "文章："
+	},
+	"j0y53y5": {
+		"zh-cn": " 软文： ",
+		"en": "Soft article",
+		"zh-tw": "軟文："
+	},
+	"kd80qb5": {
+		"zh-cn": " 页面： ",
+		"en": "Page",
+		"zh-tw": "頁面："
+	},
+	"hsn4m95": {
+		"zh-cn": " 营销： ",
+		"en": "Marketing",
+		"zh-tw": "營銷："
+	},
+	"6rik7a7": {
+		"zh-cn": " 添加轮播图 ",
+		"en": "Add a carousel",
+		"zh-tw": "添加輪播圖"
+	},
+	"nay284": {
+		"zh-cn": " 领取 ",
+		"en": "\"Claim",
+		"zh-tw": "領取"
+	},
+	"y50ecr9": {
+		"zh-cn": " 搜索想要的商品 ",
+		"en": "Search for the desired product",
+		"zh-tw": "搜索想要的商品"
+	},
+	"hi7us26": {
+		"zh-cn": " 一行两个 ",
+		"en": "Two per row",
+		"zh-tw": "一行兩個"
+	},
+	"hi8est6": {
+		"zh-cn": " 一行三个 ",
+		"en": "Three in a row",
+		"zh-tw": "一行三個"
+	},
+	"xaxqfe6": {
+		"zh-cn": " 编辑商品 ",
+		"en": "Edit the product",
+		"zh-tw": "編輯商品"
+	},
+	"67iedi7": {
+		"zh-cn": " * 最多上传",
+		"en": "\"Maximum uploads",
+		"zh-tw": "* 最多上傳"
+	},
+	"i1xnpo8": {
+		"zh-cn": " 自定义页面： ",
+		"en": "Custom page",
+		"zh-tw": "自定義頁面："
+	},
+	"gksytc7": {
+		"zh-cn": " 设置优惠券 ",
+		"en": "Set up coupons",
+		"zh-tw": "設置優惠券"
+	},
+	"bcv4ds5": {
+		"zh-cn": " 单商品 ",
+		"en": "Single commodity",
+		"zh-tw": "單商品"
+	},
+	"7q6tt16": {
+		"zh-cn": " 秒杀活动 ",
+		"en": "Flash sale event",
+		"zh-tw": "秒殺活動"
+	},
+	"n2iln16": {
+		"zh-cn": " 限时特惠 ",
+		"en": "Limited-time special offer",
+		"zh-tw": "限時特惠"
+	},
+	"vctlwh5": {
+		"zh-cn": "上传图片 ",
+		"en": "Upload pictures",
+		"zh-tw": "上傳圖片"
+	},
+	"m20w84": {
+		"zh-cn": " 软文 ",
+		"en": "Soft article",
+		"zh-tw": "軟文"
+	},
+	"n5ew3s6": {
+		"zh-cn": " 选择软文 ",
+		"en": "Select soft articles",
+		"zh-tw": "選擇軟文"
+	},
+	"tu1xx26": {
+		"zh-cn": " 添加文本 ",
+		"en": "Add text",
+		"zh-tw": "添加文本"
+	},
+	"u1l97q6": {
+		"zh-cn": " 添加项目 ",
+		"en": "Add project",
+		"zh-tw": "添加項目"
+	},
+	"e134e05": {
+		"zh-cn": " 样式一 ",
+		"en": "Style One",
+		"zh-tw": "樣式一"
+	},
+	"s7kfz129": {
+		"zh-cn": " * 只能上传jpg/png文件，且不超过2M （建议尺寸：左：200px * 310px，右上：200px * 170px，右下：200px * 130px） ",
+		"en": "Only jpg/png files can be uploaded, and they must not exceed 2M (suggested sizes: left: 200px * 310px, top right: 200px * 170px, bottom right: 200px * 130px)",
+		"zh-tw": "* 只能上傳jpg/png文件，且不超過2M （建議尺寸：左：200px * 310px，右上：200px * 170px，右下：200px * 130px）"
+	},
+	"9sytcp6": {
+		"zh-cn": " 设置标签 ",
+		"en": "\"Set labels\"",
+		"zh-tw": "設置標籤"
+	},
+	"ojlg7c17": {
+		"zh-cn": " 只能上传jpg/png文件，且不超过2M （建议尺寸：160px * 160px） ",
+		"en": "Only jpg/png files can be uploaded, and they should not exceed 2M (suggested size: 160px * 160px).",
+		"zh-tw": "只能上傳jpg/png文件，且不超過2M （建議尺寸：160px * 160px）"
+	},
+	"x896qc17": {
+		"zh-cn": " 只能上传jpg/png文件，且不超过2M （建议尺寸：160px * 230px） ",
+		"en": "Only jpg/png files can be uploaded, and they should not exceed 2M (suggested size: 160px * 230px).",
+		"zh-tw": "只能上傳jpg/png文件，且不超過2M （建議尺寸：160px * 230px）"
+	},
+	"trz6r66": {
+		"zh-cn": " 添加图片 ",
+		"en": "Add pictures",
+		"zh-tw": "添加圖片"
+	},
+	"tzwhr46": {
+		"zh-cn": " 添加话题 ",
+		"en": "Add a topic",
+		"zh-tw": "添加話題"
+	},
+	"58qxph7": {
+		"zh-cn": " 添加菜单项 ",
+		"en": "Add menu items",
+		"zh-tw": "添加菜單項"
+	},
+	"afqz896": {
+		"zh-cn": " 颜色背景 ",
+		"en": "Color background",
+		"zh-tw": "顏色背景"
+	},
+	"f32ems6": {
+		"zh-cn": " 图片背景 ",
+		"en": "Background of the picture",
+		"zh-tw": "圖片背景"
+	},
+	"yyq9b67": {
+		"zh-cn": " 自定义页： ",
+		"en": "Custom page",
+		"zh-tw": "自定義頁："
+	},
+	"og481n7": {
+		"zh-cn": " 加入购物车 ",
+		"en": "Add to Cart",
+		"zh-tw": "加入購物車"
+	},
+	"6wq5ae5": {
+		"zh-cn": " 【商品】",
+		"en": "\"Product",
+		"zh-tw": "【商品】"
+	},
+	"6ye7265": {
+		"zh-cn": " 【店铺】",
+		"en": "\"Shop",
+		"zh-tw": "【店鋪】"
+	},
+	"o3d34r8": {
+		"zh-cn": " 【自定义页面】",
+		"en": "\"Custom Page",
+		"zh-tw": "【自定義頁面】"
+	},
+	"6wfrm45": {
+		"zh-cn": " 【分类】",
+		"en": "\"Category",
+		"zh-tw": "【分類】"
+	},
+	"tss7ot6": {
+		"zh-cn": " 添加导航 ",
+		"en": "Add navigation",
+		"zh-tw": "添加導航"
+	},
+	"qvh15t1d": {
+		"zh-cn": " ( 导航说明：导航菜单数量限制为8，不过建议根据实际菜单名称的长度，选择性显示导航菜单数量。) ",
+		"en": "(Navigation Description: The number of navigation menus is limited to 8. However, it is recommended to selectively display the number of navigation menus based on the actual length of the menu names.)\"",
+		"zh-tw": "( 導航說明：導航菜單數量限制爲8，不過建議根據實際菜單名稱的長度，選擇性顯示導航菜單數量。)"
+	},
+	"ttg5oo6": {
+		"zh-cn": " 添加快链 ",
+		"en": "Add acceleration chain",
+		"zh-tw": "添加快鏈"
+	},
+	"9q1c516": {
+		"zh-cn": " 设置商品 ",
+		"en": "Set the product",
+		"zh-tw": "設置商品"
+	},
+	"cypd677": {
+		"zh-cn": " 请先设置导航",
+		"en": "Please set the navigation first",
+		"zh-tw": "請先設置導航"
+	},
+	"g26fz4": {
+		"zh-cn": " 收起 ",
+		"en": "\"Collapse",
+		"zh-tw": "收起"
+	},
+	"ejggl4": {
+		"zh-cn": " 展开 ",
+		"en": "\"Unfold",
+		"zh-tw": "展開"
+	},
+	"17fg2v8": {
+		"zh-cn": " 所有商品分类 ",
+		"en": "All product categories",
+		"zh-tw": "所有商品分類"
+	},
+	"3t0exn7": {
+		"zh-cn": " 【自定义页】",
+		"en": "\"Custom Page",
+		"zh-tw": "【自定義頁】"
 	}
 }

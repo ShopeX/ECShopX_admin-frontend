@@ -241,7 +241,6 @@ Vue.prototype.VERSION_PLATFORM = VERSION_PLATFORM
 Vue.prototype.VERSION_B2C = VERSION_B2C
 Vue.prototype.VERSION_IN_PURCHASE = VERSION_IN_PURCHASE
 Vue.prototype.VERSION_SHUYUN = VERSION_SHUYUN
-Vue.prototype.VUE_APP_PRODUCT_MODEL = process.env.VUE_APP_PRODUCT_MODEL
 Vue.prototype.VUE_APP_SYSTEM_NAME = SYSTEM_CONFIG[store.getters.versionMode].name
 Vue.prototype.VUE_APP_CHUZHI = process.env.VUE_APP_CHUZHI == 'true'
 
@@ -285,6 +284,3 @@ Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex
 Vue.prototype.$EventBus = new Vue()
 // 动态改变页面的title
 document.title = Vue.prototype.VUE_APP_SYSTEM_NAME
-
-console.log(`VUE_APP_PRODUCT_MODEL: ${process.env.VUE_APP_PRODUCT_MODEL}`)
-console.log(`VUE_APP_FREE: ${process.env.VUE_APP_FREE}`)

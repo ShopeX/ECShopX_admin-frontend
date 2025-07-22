@@ -102,6 +102,9 @@
       <SpFilterFormItem prop="supplier_name">
         <el-input v-model="formData.supplier_name" placeholder="所属供应商" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="item_bn">
+        <el-input v-model="formData.item_bn" placeholder="请输入商品货号" />
+      </SpFilterFormItem>
       <SpFilterFormItem prop="item_holder">
         <el-select v-model="formData.item_holder" placeholder="请选择商品类型" clearable>
           <el-option
@@ -227,7 +230,8 @@ export default {
       supplier_name: '',
       item_holder: '',
       is_gift: '',
-      is_prescription: ''
+      is_prescription: '',
+      item_bn:""
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {

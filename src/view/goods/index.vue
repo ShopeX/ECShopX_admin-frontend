@@ -1080,7 +1080,7 @@ export default {
       this.form.regionsId = regions_id
       this.form.isGift = is_gift
       this.form.taxRate = tax_rate
-      this.form.videos = videos
+      this.form.videos = videos || ''
       this.form.isShowSpecimg = is_show_specimg
       this.form.is_market = is_market
       this.form.aftersales_end_date = aftersales_end_date
@@ -1432,7 +1432,7 @@ export default {
         }
       }
       // 销售分类
-      const _salesCategory = salesCategory.map((item) => item[item.length - 1])
+      const _salesCategory = salesCategory?.map((item) => item?.[item?.length ? item.length - 1 : 0]) || []
       let _picsQrcode = []
       pics.forEach((pic, index) => {
         _picsQrcode.push(picsQrcode.includes(index))
@@ -1475,7 +1475,7 @@ export default {
             attribute_id: id,
             attribute_value_id: attr_id,
             attribute_value_name: attr_id
-              ? children.find(({ value }) => value == attr_id).label
+              ? children.find(({ value }) => value == attr_id)?.label || ''
               : ''
           }
         }),
@@ -1507,7 +1507,7 @@ export default {
             )
           ),
           spec_items: JSON.stringify(
-            specItems.map((item, index) => {
+            specItems?.filter(el => el.spec_name)?.map((item, index) => {
               const { sku_id, is_default, price, cost_price, market_price } = item
               const skuIds = sku_id.split('_')
               return {
@@ -1517,7 +1517,7 @@ export default {
                 item_spec: skuIds.map((id) => {
                   let resItemSpec = {}
                   skus.forEach((s) => {
-                    s.skuValue.forEach(
+                    s.skuValue?.forEach(
                       ({ attribute_value_id, attribute_value, custom_attribute_value }) => {
                         if (attribute_value_id == id) {
                           resItemSpec['spec_id'] = s.skuId
@@ -1546,7 +1546,7 @@ export default {
           }
         }
       }
-
+      console.log('params', params)
       //处方药
       if (is_medicine == '1') {
         params = {

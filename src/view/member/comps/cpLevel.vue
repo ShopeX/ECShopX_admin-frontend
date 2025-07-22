@@ -465,6 +465,7 @@ export default {
               if (!result[i].privileges.discount && !result[i].privileges.discount_desc) {
                 result[i]['privileges'].discount = 10
               }
+              result[i].grade_background = result[i].grade_background || ''
               result[i].discount_checked = true
             }
             this.levelData = result

@@ -587,9 +587,9 @@ export default {
       const { skus } = this.value
       const specNames = []
       keys.forEach((key, index) => {
-        const { attribute_value, custom_attribute_value } = skus[index].skuValue.find(
-          (s) => s.attribute_value_id == key
-        )
+        const { attribute_value, custom_attribute_value } = skus[index]?.skuValue?.find(
+          (s) => s?.attribute_value_id == key
+        ) || {}
         specNames.push(custom_attribute_value || attribute_value)
       })
       return specNames.join(' ')

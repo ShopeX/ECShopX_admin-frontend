@@ -106,7 +106,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
       return vm.form.invoice_type === 'enterprise'
     },
     component(_, value) {
-      return value.invoice_type == 'enterprise' ? invoice_type_code_map[value.invoice_type_code] : ''
+      return invoice_type_code_map[value.invoice_type_code]
     }
   },
   {
@@ -223,8 +223,8 @@ export const formSchema = (vm) => bindThisForFormSchema([
               </el-button>
               {/* 开票成功的线上  开票失败的线下 展示 */}
               { (
-                (vm.form.invoice_status == 'success' && vm.form.invoice_method == 'online') 
-                || 
+                (vm.form.invoice_status == 'success' && vm.form.invoice_method == 'online')
+                ||
                 (vm.form.invoice_status == 'failed' && vm.form.invoice_method != 'online')
                 ) && <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
                 重发至邮箱

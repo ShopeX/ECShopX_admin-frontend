@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="invoice-detail-page">
     <SpForm v-model="form" size="min" :form-list="formList" :submit="false" />
 
     <!-- 请确认重发邮箱 -->
@@ -95,4 +95,10 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.invoice-detail-page .sp-form .el-form-item{
+  &.inline{
+    width: 33% !important;
+  }
+}
+</style>

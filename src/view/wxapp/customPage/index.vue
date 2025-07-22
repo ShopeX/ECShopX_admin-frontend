@@ -2,6 +2,10 @@
   <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
+      <el-tabs v-model="activeTab" type="card" @tab-click="fetchPageList">
+        <el-tab-pane label="自定义页面" name="normal" />
+        <el-tab-pane label="我的页面" name="my" />
+      </el-tabs>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
@@ -75,6 +79,16 @@
         <el-form v-model="pageForm" label-width="200px">
           <el-form-item label="页面名称">
             <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
+          </el-form-item>
+          <el-form-item label="页面类型">
+            <el-select v-model="pageForm.page_type" placeholder="请选择页面类型" style="width: 55%">
+              <el-option
+                v-for="item in pageOption"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item label="页面描述">
             <el-input
@@ -171,10 +185,16 @@ export default {
         page_share_title: '',
         page_share_desc: '',
         page_share_imageUrl: '',
-        is_open: true
+        is_open: true,
+        page_type: 'normal'
       },
       list: [],
-      store: null
+      store: null,
+      pageOption: [
+        { label: '自定义', value: 'normal' },
+        { label: '个人中心', value: 'my' }
+      ],
+      activeTab: 'normal' // 添加activeTab
     }
   },
   computed: {
@@ -202,7 +222,7 @@ export default {
         page,
         id
       }
-      getPageCode(params).then(response => {
+      getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
@@ -218,7 +238,11 @@ export default {
     temDialog(id, type) {
       // this.pageForm.id = id
       // this.template_dialog = true
-      this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1004`)
+      if (this.activeTab == 'normal') {
+        this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1004`)
+      } else {
+        this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1008`)
+      }
     },
     closeDialog() {
       this.template_dialog = false
@@ -228,8 +252,8 @@ export default {
       this.fetchPageList()
     },
     delPage(id) {
-      this.$confirm('确认删除当前页面吗？').then(_ => {
-        delCustomPage(id).then(res => {
+      this.$confirm('确认删除当前页面吗？').then((_) => {
+        delCustomPage(id).then((res) => {
           this.$message({ type: 'success', message: '操作成功！' })
           this.fetchPageList()
         })
@@ -252,7 +276,8 @@ export default {
           page_share_title: '',
           page_share_desc: '',
           page_share_imageUrl: '',
-          is_open: true
+          is_open: true,
+          page_type: 'normal'
         }
       }
     },
@@ -264,7 +289,8 @@ export default {
         page_share_desc,
         page_share_imageUrl,
         is_open,
-        id
+        id,
+        page_type
       } = this.pageForm
       const params = {
         page_name,
@@ -273,10 +299,11 @@ export default {
         page_share_title,
         page_share_desc,
         page_share_imageUrl,
-        template_name: this.template_name
+        template_name: this.template_name,
+        page_type
       }
       if (this.dialogTitle == '编辑页面') {
-        editCustomPage(id, params).then(res => {
+        editCustomPage(id, params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -286,7 +313,7 @@ export default {
         })
       }
       if (this.dialogTitle == '新增页面') {
-        createCustomPage(params).then(res => {
+        createCustomPage(params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -298,8 +325,8 @@ export default {
     },
     fetchPageList() {
       this.loading = true
-      Object.assign(this.params, { template_name: this.template_name })
-      getCustomPageList(this.params).then(response => {
+      Object.assign(this.params, { template_name: this.template_name, page_type: this.activeTab })
+      getCustomPageList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

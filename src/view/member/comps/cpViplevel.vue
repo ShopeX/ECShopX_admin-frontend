@@ -42,6 +42,10 @@
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
               <el-input v-model="item.lv_type" type="hidden" :name="index + ''" />
             </div>
+            <div style="display: flex">
+              <span class="txt">等级背景</span>
+              <SpImagePicker v-model="item.grade_background" />
+            </div>
             <div class="clearfix">
               <span class="txt f_l">购买金额</span>
               <template>
@@ -211,6 +215,7 @@ export default {
           is_default: false,
           guide_title: '',
           grade_name: '',
+          grade_background: '',
           background_pic_url: '',
           price_list: [
             { name: 'monthly', price: 0, day: 30, desc: '30天' },
@@ -270,7 +275,7 @@ export default {
       }
       var check = this.isInArray(this.levelData, true)
       let canSaveResult = true
-      this.levelData.forEach(item => {
+      this.levelData.forEach((item) => {
         // if (check === true) {
         if (item.lv_type == this.IsDefault) {
           if (!item.guide_title) {
@@ -299,7 +304,7 @@ export default {
         return
       }
       saveVipGrade(this.params).then(
-        res => {
+        (res) => {
           if (res.data.data.status) {
             this.$message.success('保存成功')
           }
@@ -352,6 +357,7 @@ export default {
       var arr = {
         vip_grade_id: '',
         grade_name: '',
+        grade_background: '',
         is_default: false,
         guide_title: '',
         background_pic_url: '',
@@ -447,7 +453,7 @@ export default {
       this.imgDialog = false
     },
     getListVipGrade() {
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         // this.IsDefault = 'svip'
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
@@ -526,6 +532,7 @@ export default {
   width: 200px;
   margin-top: 15px;
   margin: 15px 20px 0 0;
+  text-align: center;
 }
 .item-content {
   width: 500px;

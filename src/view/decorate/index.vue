@@ -144,18 +144,12 @@ export default {
   },
   computed: {
     weappBodyStyle() {
-      const { pageBackgroundStyle, pageBackgroundColor, pageBackgroundImage } =
-        this.headerData || {}
-      if (pageBackgroundStyle == '1') {
-        return {
-          'background-color': pageBackgroundColor
-        }
-      } else {
-        return {
-          'background-image': `url(${pageBackgroundImage})`,
-          'background-size': 'cover',
-          'background-position': 'center'
-        }
+      const { newPageBackgroundStyle } = this.headerData || {}
+      return {
+        'background-color': newPageBackgroundStyle?.color,
+        'background-image': `url(${newPageBackgroundStyle?.image})`,
+        'background-size': 'cover',
+        'background-position': 'center'
       }
     },
     headerVisible() {
@@ -177,7 +171,9 @@ export default {
         1002: '商品详情',
         1003: '店铺装修',
         1004: '自定义页装修',
-        1006: '分类模版装修'
+        1006: '分类模版装修',
+        1008: '个人中心模版装修',
+        1009: '导购模板装修'
       }
       this.localTitle = _title[scene]
     } else {
@@ -201,7 +197,7 @@ export default {
     regsiterWgts() {
       // const { scene = '1001' } = this.$route.query
       const wgts = gWgts[this.localScene]
-      Object.keys(wgts).forEach(index => {
+      Object.keys(wgts).forEach((index) => {
         this.widgets.push(wgts[index])
         Vue.component(wgts[index].name, wgts[index])
       })
@@ -215,7 +211,7 @@ export default {
       document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
     },
     getComponentAttr(item) {
-      const { wgtName, config } = this.widgets.find(wgt => {
+      const { wgtName, config } = this.widgets.find((wgt) => {
         return wgt.name?.toLowerCase() == item.name?.toLowerCase()
       })
       return {
@@ -231,7 +227,7 @@ export default {
         wgtName,
         wgtDesc
       }
-      setting.forEach(item => {
+      setting.forEach((item) => {
         compData[item.key] = item.value
       })
       // console.log('compData', compData)
@@ -259,7 +255,7 @@ export default {
       const { id } = this.$route.query
       let list = []
       try {
-        if (this.localScene == '1004' || this.localScene == '1006') {
+        if (this.localScene == '1004' || this.localScene == '1006' || this.localScene == '1008') {
           const resTemplate = await this.$api.wxa.getParamByTempName({
             template_name: 'yykweishop',
             page_name: `custom_${id}`,
@@ -284,10 +280,10 @@ export default {
         wgtName: Header.wgtName,
         wgtDesc: Header.wgtDesc
       }
-      setting.forEach(item => {
+      setting.forEach((item) => {
         headerData[item.key] = item.value
       })
-      const wgtHeader = list.find(item => item.name == 'page')
+      const wgtHeader = list.find((item) => item.name == 'page')
       if (wgtHeader) {
         const headParams = Header.config.transformIn(wgtHeader.params)
         headerData = {
@@ -302,9 +298,9 @@ export default {
         ...Header.config
       }
 
-      list.forEach(li => {
+      list.forEach((li) => {
         // 是否存在挂件
-        const wgt = this.widgets.find(item => item.name?.toLowerCase() == li.name?.toLowerCase())
+        const wgt = this.widgets.find((item) => item.name?.toLowerCase() == li.name?.toLowerCase())
         if (wgt) {
           // console.log('getTemplateDetial wgt:', wgt)
           const wgtInitParams = this.cloneDefaultField(wgt)
@@ -340,15 +336,15 @@ export default {
         this.$emit('change', this.contentComps)
         return
       }
-      const data = this.contentComps.map(item => {
+      const data = this.contentComps.map((item) => {
         const { transformOut } = this.widgets.find(
-          wgt => wgt.name?.toLowerCase() == item.name?.toLowerCase()
+          (wgt) => wgt.name?.toLowerCase() == item.name?.toLowerCase()
         )?.config
         return transformOut(item)
       })
       data.unshift(this.headerAttr.transformOut(this.headerData))
       const { id } = this.$route.query
-      if (this.localScene == '1004' || this.localScene == '1006') {
+      if (this.localScene == '1004' || this.localScene == '1006' || this.localScene == '1008') {
         await this.$api.wxa.savePageParams({
           template_name: 'yykweishop',
           page_name: `custom_${id}`,

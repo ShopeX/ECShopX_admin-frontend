@@ -15,7 +15,7 @@
             </svg>
             附近商家
           </template>
-          <template v-if="item.name === 'coupon'">
+          <template v-if="item.name === 'coupon' && pagetype !== 'guide'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
@@ -155,7 +155,11 @@
                   :res="item"
                   :active="index == editorIndex"
                 />
-                <coupon v-if="item.name === 'coupon'" :res="item" :active="index == editorIndex" />
+                <coupon
+                  v-if="item.name === 'coupon' && pagetype !== 'guide'"
+                  :res="item"
+                  :active="index == editorIndex"
+                />
                 <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
                 <goodsGrid
                   v-if="item.name === 'goodsGrid'"
@@ -478,15 +482,6 @@ export default {
       },
       saveInit: '',
       initData: [
-        {
-          name: 'coupon',
-          base: {
-            title: '到店优惠',
-            subtitle: '游客专享福利',
-            padded: true
-          },
-          data: []
-        },
         {
           name: 'film',
           base: {
@@ -851,7 +846,7 @@ export default {
             page_name: `custom_${newName}`,
             template_name: this.template_name
           })
-        getParamByTempName(filter).then(res => {
+        getParamByTempName(filter).then((res) => {
           this.components = res.data.data.config
         })
       },
@@ -863,8 +858,8 @@ export default {
   },
   methods: {
     async getData() {
-      const isHaveStore = this.initData.some(item => item.name === 'store')
-      const isHaveNearbyShop = this.initData.some(item => item.name === 'nearbyShop')
+      const isHaveStore = this.initData.some((item) => item.name === 'store')
+      const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
       if (this.VERSION_PLATFORM() && !isHaveStore) {
         this.initData.push({
           name: 'store',
@@ -900,7 +895,7 @@ export default {
       }
       const res = await getRecommendLikeItemList()
       let data = []
-      res.data.data.list.forEach(item => {
+      res.data.data.list.forEach((item) => {
         data.push({
           imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,
@@ -972,13 +967,13 @@ export default {
     // 删除当前组件
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then(_ => {
+        .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 视频选择器绑定事件
     getVideo(data) {
@@ -1039,7 +1034,7 @@ export default {
         }
       }
       if (items && items.length > 0 && items[0].goodsId) {
-        items.forEach(item => {
+        items.forEach((item) => {
           ids.push(item.key || item.goodsId)
         })
         let itemParams = {
@@ -1052,7 +1047,7 @@ export default {
         if (index !== undefined) {
           Object(itemParams, { distributor_id: this.relStore.id })
         }
-        getItemsList(itemParams).then(res => {
+        getItemsList(itemParams).then((res) => {
           this.relItemsIds = res.data.data.list
           setTimeout(() => {
             this.setItemStatus = true
@@ -1106,7 +1101,7 @@ export default {
       let values = []
 
       if (data.length > 0) {
-        data.forEach(item => {
+        data.forEach((item) => {
           let obj = {
             imgUrl: item.pics[0],
             title: item.itemName,
@@ -1247,7 +1242,7 @@ export default {
           page_name: `custom_${this.id}`,
           template_name: this.template_name
         })
-      savePageParams(filter).then(res => {
+      savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

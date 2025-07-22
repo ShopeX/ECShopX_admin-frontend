@@ -128,8 +128,8 @@ export default {
   methods: {
     getWgtsValue(val) {
       const filterWidget = []
-      val.forEach(k => {
-        const wgt = this.widgets.find(item => item.name.toLowerCase() == k.name.toLowerCase())
+      val.forEach((k) => {
+        const wgt = this.widgets.find((item) => item.name.toLowerCase() == k.name.toLowerCase())
         if (wgt) {
           const wgtInitParams = this.cloneDefaultField(wgt)
           const params = wgt.config.transformIn(k)
@@ -145,7 +145,7 @@ export default {
     registerWgts() {
       // const { scene = '1001' } = this.$route.query
       const wgts = gWgts[this.scene]
-      Object.keys(wgts).forEach(index => {
+      Object.keys(wgts).forEach((index) => {
         this.widgets.push(wgts[index])
         Vue.component(wgts[index].name, wgts[index])
       })
@@ -158,7 +158,7 @@ export default {
         wgtName,
         wgtDesc
       }
-      setting.forEach(item => {
+      setting.forEach((item) => {
         compData[item.key] = item.value
       })
       return compData
@@ -167,13 +167,14 @@ export default {
       this.dialogVisible = true
     },
     onSave(data) {
-      const result = data.map(item => {
+      const result = data.map((item) => {
         const { transformOut } = this.widgets.find(
-          wgt => wgt.name.toLowerCase() == item.name.toLowerCase()
+          (wgt) => wgt.name.toLowerCase() == item.name.toLowerCase()
         )?.config
         return transformOut(item)
       })
       this.$emit('input', result)
+      this.$emit('change', result) // 导购货架，传change事件，为了点击保存直接调接口，页面不需要加保存按钮
       this.dialogVisible = false
     },
     onClose() {

@@ -49,7 +49,7 @@ import langJSON from './index.json'
     // 初始化语言对象
     const langObj = {}
     // 遍历JSON对象的所有键
-    Object.keys(JSONObj).forEach(value => {
+    Object.keys(JSONObj).forEach((value) => {
       // 将每个语言的对应键值添加到语言对象中
       langObj[value] = JSONObj[value][key]
     })
@@ -59,15 +59,15 @@ import langJSON from './index.json'
 })()
 // 定义语言映射对象
 const langMap = {
-  en:
+  'en':
     globalThis && globalThis.lang && globalThis.lang.en
       ? globalThis.lang.en
       : globalThis._getJSONKey('en', langJSON),
-  zhtw:
+  'zhtw':
     globalThis && globalThis.lang && globalThis.lang.zhtw
       ? globalThis.lang.zhtw
       : globalThis._getJSONKey('zh-tw', langJSON),
-  zhcn:
+  'zhcn':
     globalThis && globalThis.lang && globalThis.lang.zhcn
       ? globalThis.lang.zhcn
       : globalThis._getJSONKey('zh-cn', langJSON)
@@ -75,7 +75,7 @@ const langMap = {
 globalThis.langMap = langMap
 // 存储语言是否存在
 // 判断 globalThis.localStorage.getItem 是否为函数
-const isFunction = fn => {
+const isFunction = (fn) => {
   return typeof fn === 'function'
 }
 
@@ -98,6 +98,6 @@ const baseLang = withStorageLang ? globalThis.localStorage.getItem('lang') : 'zh
 const lang = commonLang ? commonLang : baseLang
 // 根据当前语言设置翻译函数的语言包
 globalThis.$t.locale(globalThis.langMap[lang], 'lang')
-globalThis.$changeLang = lang => {
+globalThis.$changeLang = (lang) => {
   globalThis.$t.locale(globalThis.langMap[lang], 'lang')
 }

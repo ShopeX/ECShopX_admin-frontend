@@ -1,7 +1,5 @@
 <style lang="scss" scoped>
 .isolate-contanier {
-  display: flex;
-  align-items: center;
 }
 
 .isolate-set {
@@ -53,7 +51,8 @@ export default {
         clientSecret: '',
         storeId: '',
         stores_isolate: false,
-        stores_isolate_template: ''
+        stores_isolate_template: '',
+        stores_isolate_type: 1
       },
       formList: [
         {
@@ -87,7 +86,7 @@ export default {
               2.
               顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
             </p></div>`,
-          onChange: async e => {
+          onChange: async (e) => {
             const { distributor_param_status } = this.form
             await this.$api.system.saveShareParams({
               distributor_param_status
@@ -99,7 +98,7 @@ export default {
           key: 'rate_status',
           type: 'switch',
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { rate_status } = this.form
             await this.$api.company.setRateSetting({
               rate_status
@@ -111,7 +110,7 @@ export default {
           key: 'pickupcode_status',
           type: 'switch',
           isShow: !this.VERSION_SHUYUN() && !this.VERSION_B2C() && !this.isMicorMall,
-          onChange: async e => {
+          onChange: async (e) => {
             const { pickupcode_status } = this.form
             await this.$api.company.setPickupcodeSetting({
               pickupcode_status
@@ -122,7 +121,7 @@ export default {
           label: '会员白名单',
           key: 'whitelist_status',
           type: 'switch',
-          onChange: async e => {
+          onChange: async (e) => {
             const { whitelist_status } = this.form
             await this.$api.company.setWhitelistSetting({
               whitelist_status
@@ -135,7 +134,7 @@ export default {
           type: 'switch',
           tip: '赠品缺货是否能继续下单',
           isShow: !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { check_gift_store } = this.form
             await this.$api.company.setGiftSetting({
               check_gift_store
@@ -148,7 +147,7 @@ export default {
           type: 'switch',
           tip: '自提订单推oms',
           isShow: !this.VERSION_SHUYUN() && !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { ziti_send_oms } = this.form
             await this.$api.company.setSendOmsSetting({
               ziti_send_oms
@@ -208,7 +207,7 @@ export default {
           key: 'repeat_cancel',
           type: 'switch',
           tip: '拒绝后是否能再次发起申请',
-          onChange: async e => {
+          onChange: async (e) => {
             const { repeat_cancel } = this.form
             await this.$api.company.setRepeatCancelSetting({
               repeat_cancel
@@ -220,7 +219,7 @@ export default {
           key: 'item_store_status',
           type: 'switch',
           tip: '商品详情页是否显示库存',
-          onChange: async e => {
+          onChange: async (e) => {
             const { item_store_status } = this.form
             await this.$api.company.setItemStoreSetting({
               item_store_status
@@ -231,7 +230,7 @@ export default {
           label: '商品销量显示',
           key: 'item_sales_status',
           type: 'switch',
-          onChange: async e => {
+          onChange: async (e) => {
             const { item_sales_status } = this.form
             await this.$api.company.setItemSalesSetting({
               item_sales_status
@@ -244,7 +243,7 @@ export default {
           type: 'switch',
           tip: '结算页是否显示发票',
           isShow: !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { invoice_status } = this.form
             await this.$api.company.setInvoiceStatus({
               invoice_status
@@ -257,7 +256,7 @@ export default {
           type: 'switch',
           tip: '移动端会员中心是否展示店务端入口',
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
               dianwu_show_status
@@ -291,7 +290,7 @@ export default {
             }
           ],
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async e => {
+          onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
               dianwu_show_status
@@ -319,7 +318,7 @@ export default {
         {
           label: '',
           component: () => (
-            <elButton type="primary" onClick={() => this.primarySetting('button')}>
+            <elButton type='primary' onClick={() => this.primarySetting('button')}>
               保存
             </elButton>
           ),
@@ -344,7 +343,7 @@ export default {
                 { label: 2, name: '会员等级价' },
                 { label: 3, name: '付费会员价' }
               ],
-          onChange: async e => {
+          onChange: async (e) => {
             this.saveItemPriceSetting()
           }
         },
@@ -358,7 +357,7 @@ export default {
                 { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
                 { label: 1, name: '原价' }
               ],
-          onChange: async e => {
+          onChange: async (e) => {
             this.saveItemPriceSetting()
           }
         },
@@ -372,7 +371,7 @@ export default {
                 { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
                 { label: 1, name: '原价' }
               ],
-          onChange: async e => {
+          onChange: async (e) => {
             this.saveItemPriceSetting()
           }
         }
@@ -479,11 +478,12 @@ export default {
     },
     // 保存店铺隔离设置
     async saveOpenDividedSetting() {
-      const { stores_isolate, stores_isolate_template } = this.form
+      const { stores_isolate, stores_isolate_template, stores_isolate_type } = this.form
       const params = {
         open_distributor_divided: {
           status: stores_isolate,
-          template: stores_isolate_template
+          template: stores_isolate_template,
+          type: stores_isolate ? stores_isolate_type : ''
         }
       }
       await this.$api.company.saveOpenDividedSetting(params)

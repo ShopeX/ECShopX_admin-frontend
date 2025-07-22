@@ -54,6 +54,11 @@
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
             </div>
+            <!-- TODO:数云是否需要等级背景 -->
+            <div style="display: flex">
+              <span class="txt">等级背景</span>
+              <SpImagePicker v-model="item.grade_background" />
+            </div>
             <div v-if="!VERSION_SHUYUN()" class="clearfix">
               <span class="txt f_l">升级条件</span>
               <span v-if="item.default_grade" class="txt-none">无</span>
@@ -93,13 +98,7 @@
               <div class="f_l">
                 <template>
                   <div style="margin-bottom: 5px">
-                    <el-input
-                      v-model="item.description"
-                      type="textarea"
-                      style="width: 400px"
-                      :rows="3"
-                      placeholder="请输入等级说明"
-                    />
+                    <SpRichText v-model="item.description" />
                   </div>
                 </template>
                 &nbsp;<span class="frm-tips">（注：等级说明在c端展示！）</span>
@@ -205,6 +204,7 @@ export default {
         {
           grade_id: '',
           grade_name: '',
+          grade_background: '',
           background_pic_url: '',
           promotion_condition: {
             total_consumption: 0
@@ -249,7 +249,7 @@ export default {
       console.log(this.levelData)
       this.params.grade_info = JSON.stringify(this.levelData)
 
-      updateGrade(this.params).then(res => {
+      updateGrade(this.params).then((res) => {
         if (res.data.data.status) {
           this.$message.success('保存成功')
         }
@@ -336,6 +336,7 @@ export default {
       this.levelData.push({
         grade_id: '',
         grade_name: '',
+        grade_background: '',
         background_pic_url: '',
         promotion_condition: { total_consumption: 0 },
         privileges: { discount: '' },
@@ -428,7 +429,7 @@ export default {
       this.imgDialog = false
     },
     getGradeList() {
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
           if (result) {
@@ -451,6 +452,7 @@ export default {
               if (!result[i].privileges.discount && !result[i].privileges.discount_desc) {
                 result[i]['privileges'].discount = 10
               }
+              result[i].grade_background = result[i].grade_background || ''
               result[i].discount_checked = true
             }
             this.levelData = result
@@ -536,6 +538,7 @@ export default {
   width: 200px;
   margin-top: 15px;
   margin: 15px 20px 0 0;
+  text-align: center;
 }
 .item-content {
   // width: 500px;

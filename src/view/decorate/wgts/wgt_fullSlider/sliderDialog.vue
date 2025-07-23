@@ -206,6 +206,9 @@ export default {
                             class='zone-item-picker'
                             on-change={(e) => this.onChangeLink(e, index)}
                           />
+                          <el-button type="text" size="small" onClick={() => {
+                            this.sliderForm.hotData.splice(index, 1)
+                          }}>删除</el-button>
                         </div>
                       )
                     })}
@@ -258,6 +261,9 @@ export default {
                           class='zone-item-picker'
                           on-change={(e) => this.onChangeHotDataLink(e, index)}
                         />
+                        <el-button type="text" size="small" onClick={() => {
+                          this.sliderForm.overlayHotData.splice(index, 1)
+                        }}>重置地址</el-button>
                       </div>
                     )
                   })}
@@ -299,7 +305,24 @@ export default {
           label: '查看更多跳转地址',
           key: 'moreLink',
           component: ({ key }) => {
-            return <CompPickerLink v-model={this.sliderForm[key]} size="small" class="video-link" />
+            return <div style={{display: 'flex'}}>
+              <CompPickerLink v-model={this.sliderForm[key]} size="small" class="video-link" />
+             {this.sliderForm.moreLink?.linkPage && <el-button type="text" size="small" onClick={() => {
+                this.sliderForm = {
+                  ...this.sliderForm,
+                  moreLink: {
+                    linkPage: '',
+                    linkTitle: '',
+                    linkAppid: '',
+                  }
+                }
+              }}
+              style={{
+                alignSelf: 'flex-end',
+                fontSize: '25px'
+              }}
+              ><i class="el-icon-delete"></i></el-button>}
+            </div>
           }
         }
       ]

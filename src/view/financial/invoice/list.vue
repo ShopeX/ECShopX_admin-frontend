@@ -30,8 +30,11 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="formData.mobile" placeholder="请输入手机号" />
+      <SpFilterFormItem prop="mobile" label="开票申请手机号:">
+        <el-input v-model="formData.mobile" placeholder="请输入开票申请手机号" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="email" label="开票申请邮箱:">
+        <el-input v-model="formData.email" placeholder="请输入开票申请邮箱" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="invoice_type_code" label="发票类型:">
         <el-select v-model="formData.invoice_type_code" clearable placeholder="请选择">
@@ -184,6 +187,7 @@ export default {
         company_title:'',
         invoice_source:'',
         mobile:'',
+        email:'',
         invoice_type_code:'',
         cycleTime:[]
       },

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="$route.path.indexOf('templ') === -1 && $route.path.indexOf('editor') === -1">
+  <SpRouterView>
+    <SpPage>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-input v-model="params.title" placeholder="活动名称">
@@ -24,7 +24,7 @@
       <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
         <el-table-column prop="activity_id" label="ID" width="50" />
         <el-table-column label="活动名称" width="150">
-          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
+          <template slot-scope="scope"> {{ scope.row.title }}<br /> </template>
         </el-table-column>
         <el-table-column label="活动时间">
           <template slot-scope="scope">
@@ -74,9 +74,8 @@
           @current-change="handleCurrentChange"
         />
       </div>
-    </div>
-    <router-view />
-  </div>
+    </SpPage>
+  </SpRouterView>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -154,7 +153,7 @@ export default {
     },
     getList(params) {
       this.loading = true
-      getExtrapointList(params).then(response => {
+      getExtrapointList(params).then((response) => {
         this.activityLists = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -169,7 +168,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            extrapointUpdateStatus({ activity_id: row.activity_id }).then(response => {
+            extrapointUpdateStatus({ activity_id: row.activity_id }).then((response) => {
               this.getList()
               this.$message({
                 message: '修改活动状态成功',
@@ -212,7 +211,7 @@ export default {
       this.goodsVisible = false
     },
     updateActivityData(params) {
-      updateActivityItemData(params).then(res => {})
+      updateActivityItemData(params).then((res) => {})
     },
     editItemPrice(row) {
       let form = {

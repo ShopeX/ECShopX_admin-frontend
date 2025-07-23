@@ -1,5 +1,5 @@
-<template lang="html">
-  <section class="section section-white">
+<template>
+  <SpPage>
     <div v-for="item in list">
       <div class="section-header with-border">
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
@@ -20,11 +20,10 @@
         </el-row>
       </div>
     </div>
-  </section>
+  </SpPage>
 </template>
 
 <script>
-import { isValidActivity } from '../../../../api/promotions'
 export default {
   data() {
     return {

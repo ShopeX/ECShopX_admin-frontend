@@ -270,6 +270,44 @@ const routes = [
         component: () => import('@/view/member/promotions/recommendlike')
       },
       {
+        name: `memberMarketingPointupvaluation`,
+        path: 'member-marketing/pointupvaluation',
+        meta: {
+          aliasName: 'pointupvaluation',
+          icon: 'pay-circle',
+          title: '积分升值',
+          permissions: ['marketing.membermarket.pointupvaluation']
+        },
+        component: () => import('@/view/member/promotions/pointupvaluation/list'),
+        children: [
+          {
+            path: 'editor/:id?',
+            component: () => import('@/view/member/promotions/pointupvaluation/add')
+          }
+        ]
+      },
+      {
+        name: `memberMarketingExtrapoint`,
+        path: 'member-marketing/extrapoint',
+        meta: {
+          aliasName: 'extrapoint',
+          icon: 'pay-circle',
+          title: '额外积分',
+          permissions: ['marketing.membermarket.extrapoint']
+        },
+        component: () => import('@/view/member/promotions/extrapoint/list'),
+        children: [
+          {
+            path: 'editor/:id?',
+            component: () => import('@/view/member/promotions/extrapoint/editor')
+          },
+          {
+            path: 'templ/:id?',
+            component: () => import('@/view/member/promotions/extrapoint/templ')
+          }
+        ]
+      },
+      {
         name: 'groupBuying',
         path: 'fission-marketing/group-buying',
         meta: {

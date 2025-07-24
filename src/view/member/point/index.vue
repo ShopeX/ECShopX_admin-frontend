@@ -50,7 +50,7 @@
               type="number"
               placeholder=""
               style="width: 120px"
-              :min="1"
+              :min="0"
               :max="9999999"
             />积分
           </el-form-item>

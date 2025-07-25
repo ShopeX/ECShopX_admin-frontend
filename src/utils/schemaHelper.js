@@ -16,13 +16,16 @@ export function generatorParams(options, data) {
 // 绑定表单schema的this指向
 export function bindThisForFormSchema(formSchema, target) {
   formSchema?.forEach((item) => {
-    if (item?.component) {
+    if (item?.component && typeof item.component === 'function') {
       item.component = item.component.bind(target)
     }
-    if (item?.validator) {
+    if (item?.validator && typeof item.validator === 'function') {
       item.validator = item.validator.bind(target)
     }
-    if (item?.isShow) {
+    if (item?.disabled && typeof item.disabled === 'function') {
+      item.disabled = item.disabled.bind(target)
+    }
+    if (item?.isShow && typeof item.isShow === 'function') {
       item.isShow = item.isShow.bind(target)
     }
   })

@@ -135,6 +135,11 @@ export default {
       component: () => import('@/view/base/setting/publicsetting')
     },
     {
+      path: 'systemsetting/invoinceConfiguration',
+      name: `开票配置`,
+      component: () => import('@/view/financial/invoice/baiSetting')
+    },
+    {
       path: 'GoodsShareSetting',
       name: `商品分享设置`,
       component: () => import('@/view/base/setting/goodsShareSetting')
@@ -316,6 +321,11 @@ export default {
       path: 'systemsetting/certificate',
       name: `商派ERP`,
       component: () => import('@/view/base/setting/certificate/index')
+    },
+    {
+      path: 'systemsetting/damoCrm',
+      name: `达摩CRM`,
+      component: () => import('@/view/base/setting/damoCrm/index')
     },
     {
       path: 'systemsetting/domain_setting',

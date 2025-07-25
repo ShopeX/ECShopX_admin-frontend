@@ -1075,7 +1075,7 @@ export default {
       this.form.supplier_id = supplier_id
       this.form.brief = brief
       this.form.templatesId = templates_id.toString()
-      this.form.brandId = brand_id
+      this.form.brandId = brand_id + ''
       this.form.itemUnit = item_unit
       this.form.sort = sort
       this.form.regionsId = regions_id

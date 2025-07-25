@@ -324,24 +324,16 @@ export default {
       let value = e.target.value
       let index = Number(e.target.name)
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
-      if (this.levelData[index].discount_checked) {
+      if (this.levelData[index].discount_checked && this.VERSION_SHUYUN()) {
         if (value == '') {
           this.$message({ message: '请输入会员折扣', type: 'error' })
           return
         }
-        if (!reg.test(value)) {
+        if (!reg.test(value) && this.VERSION_SHUYUN()) {
           this.$message({
             message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
             type: 'error'
           })
-          return
-        }
-        if (
-          !this.VERSION_SHUYUN() &&
-          index > 0 &&
-          Number(value) >= Number(this.levelData[index - 1].privileges.discount)
-        ) {
-          this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
           return
         }
       }
@@ -388,30 +380,21 @@ export default {
       var conditionReg = /(^[1-9]\d*$)/
       var discountReg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
       for (var i = 0; i < this.levelData.length; i++) {
-        if (this.levelData[i].grade_name == '') {
+        if (this.levelData[i].grade_name == '' && this.VERSION_SHUYUN()) {
           isflag = true
           this.$message({ message: '请输入等级名称', type: 'error' })
           break
         }
-        if (this.levelData[i].privileges.discount == '') {
+        if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
           isflag = true
           this.$message({ message: '请输入会员折扣', type: 'error' })
           break
-        } else if (!discountReg.test(this.levelData[i].privileges.discount)) {
+        } else if (!discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())) {
           isflag = true
           this.$message({
             message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
             type: 'error'
           })
-          break
-        } else if (
-          !this.VERSION_SHUYUN() &&
-          i > 0 &&
-          Number(this.levelData[i].privileges.discount) >
-            Number(this.levelData[i - 1].privileges.discount)
-        ) {
-          isflag = true
-          this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
           break
         }
 

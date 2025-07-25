@@ -52,7 +52,8 @@
               :height="48"
             />
             <span>{{ scope.row.category_name }}</span>
-          </template>
+          </div>
+        </template>
         </el-table-column>
         <el-table-column prop="sort" label="分类排序" width="140">
           <template slot-scope="scope">

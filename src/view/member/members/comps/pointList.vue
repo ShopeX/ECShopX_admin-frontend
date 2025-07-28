@@ -12,7 +12,7 @@
         beforeSearch: beforeSearch
       }"
     >
-      <template slot="tableTop">
+      <template slot="tableTop" v-if="!dmcrmIsOpen">
         <div class="action-container">
           <el-button @click="updatePoint">积分调整</el-button>
         </div>
@@ -73,6 +73,7 @@ export default {
         adjustment_type: 'plus',
         point: ''
       },
+      dmcrmIsOpen: false,
       pointFormList: [
         {
           label: '调整方式',
@@ -93,7 +94,11 @@ export default {
       ]
     }
   },
-  created() {},
+  created() {
+    this.$api.third.getDmcrmSetting().then((response) => {
+      this.dmcrmIsOpen = response.is_open
+    })
+  },
   methods: {
     beforeSearch(params) {
       const { user_id } = this.$route.query

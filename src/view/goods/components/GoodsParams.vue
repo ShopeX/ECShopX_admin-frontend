@@ -12,7 +12,7 @@
         filterable
         allow-create
         default-first-option
-        placeholder="请选择444"
+        placeholder="请选择"
         @change="handleChange(item)"
       >
         <el-option

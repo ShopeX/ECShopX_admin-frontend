@@ -176,6 +176,7 @@ export default {
           tax_rate_code: '',
           buy_limit_area: ['all'],
           package_type: 'sku', // 后端要求单规格传sku/spu
+          delivery_time:"",
           start_num: 0 //起订量
         },
         skuParams: {
@@ -990,6 +991,7 @@ export default {
         pics,
         pics_create_qrcode,
         nospec,
+        delivery_time,
         // 单规格数据
         approve_status,
         store,
@@ -1127,6 +1129,7 @@ export default {
         tax_rate,
         tax_rate_code,
         package_num,
+        delivery_time,
         buy_limit_area: _limit_area,
         package_type: 'sku', // 后端要求单规格传sku/spu
         max_num

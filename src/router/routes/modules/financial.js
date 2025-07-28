@@ -133,7 +133,7 @@ const routes = [
           aliasName: 'InvoiceRequest',
           icon: 'pay-circle',
           title: '开票申请',
-          permissions: ['financial.invoice.list']
+          permissions: ['financial.invoice.InvoiceRequest']
         },
         component: () => import('@/view/financial/invoice/list'),
         children: [
@@ -154,7 +154,7 @@ const routes = [
           aliasName: 'invoiceSetting',
           icon: 'pay-circle',
           title: '发票配置',
-          permissions: ['financial.invoice.setting']
+          permissions: ['financial.invoice.invoiceSetting']
         },
         component: () => import('@/view/financial/invoice/setting')
       },
@@ -165,13 +165,13 @@ const routes = [
           aliasName: 'invoiceInfo',
           icon: 'pay-circle',
           title: '销方信息',
-          permissions: ['financial.invoice.information']
+          permissions: ['financial.invoice.invoiceInfo']
         },
         component: () => import('@/view/financial/invoice/information')
       },
       {
         name: 'invoiceTax',
-        path: 'invoice/invoice-tex',
+        path: 'invoice/invoice-tax',
         meta: {
           aliasName: 'invoiceTax',
           icon: 'pay-circle',

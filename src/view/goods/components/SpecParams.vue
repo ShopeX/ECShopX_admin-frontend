@@ -76,6 +76,7 @@ export default {
         cost_price: '',
         market_price: '',
         barcode: '',
+        delivery_time:"",
         point_num: 0,
         start_num: 0 //起订量
       },
@@ -171,6 +172,12 @@ export default {
         {
           label: '起订量',
           key: 'start_num',
+          type: 'input',
+          display: 'inline'
+        },
+        {
+          label: '发货时间',
+          key: 'delivery_time',
           type: 'input',
           display: 'inline'
         }

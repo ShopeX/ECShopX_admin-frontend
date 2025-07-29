@@ -20,6 +20,7 @@ export default {
       value: [
         {
           tabTitle: '标签',
+          type: 'normal',
           goodsList: [
             {
               imgUrl: '',
@@ -56,6 +57,48 @@ export default {
               id: '',
               price: 0,
               market_price: 0
+            }
+          ],
+          pointGoods:[
+            {
+              imgUrl: '',
+              linkPage: '',
+              content: '',
+              title: '商品名称',
+              id: '',
+              price: 0,
+              market_price: 0,
+              point: 0
+            },
+            {
+              imgUrl: '',
+              linkPage: '',
+              content: '',
+              title: '商品名称',
+              id: '',
+              price: 0,
+              market_price: 0,
+              point: 0
+            },
+            {
+              imgUrl: '',
+              linkPage: '',
+              content: '',
+              title: '商品名称',
+              id: '',
+              price: 0,
+              market_price: 0,
+              point: 0
+            },
+            {
+              imgUrl: '',
+              linkPage: '',
+              content: '',
+              title: '商品名称',
+              id: '',
+              price: 0,
+              market_price: 0,
+              point: 0
             }
           ]
         }

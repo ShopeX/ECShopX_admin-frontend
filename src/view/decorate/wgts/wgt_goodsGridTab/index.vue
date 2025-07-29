@@ -113,8 +113,9 @@ export default {
   },
   computed: {
     leftGoodsList() {
-      const { goodsList } = this.value.list[this.checked]
-      const leftFilterGoods = goodsList.filter((item, index) => {
+      const { goodsList, type ,pointGoods} = this.value.list[this.checked]
+      const list = type == 'point' ? pointGoods : goodsList
+      const leftFilterGoods = list.filter((item, index) => {
         if (index % 2 == 0) {
           return item
         }
@@ -122,8 +123,9 @@ export default {
       return leftFilterGoods
     },
     rightGoodsList() {
-      const { goodsList } = this.value.list[this.checked]
-      const rightFilterGoods = goodsList.filter((item, index) => {
+      const { goodsList, type ,pointGoods} = this.value.list[this.checked]
+      const list = type == 'point' ? pointGoods : goodsList
+      const rightFilterGoods = list.filter((item, index) => {
         if (index % 2 == 1) {
           return item
         }
@@ -137,7 +139,7 @@ export default {
         let data = val
         const { list } = data
         if (!list || list.length === 0) {
-          data.list = [{ tabTitle: 'newTable', goodsList: [] }]
+          data.list = [{ tabTitle: 'newTable', goodsList: [], type: 'normal', pointGoods: [] }]
         }
         this.data = data
       },

@@ -24,7 +24,13 @@
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="item.medicine_data?.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                  >处方药</el-tag
+                >
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
@@ -51,7 +57,13 @@
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="item.medicine_data?.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                  >处方药</el-tag
+                >
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
@@ -68,14 +80,20 @@
         </div>
       </div>
       <div v-else class="list-grids">
-        <div v-for="(item, index) in value.data" :key="`grids-item__${index}`" class="item-box">
+        <div v-for="(item, index) in goodsList" :key="`grids-item__${index}`" class="item-box">
           <SpImage :src="item.imgUrl" />
           <div class="item-info" :style="{ 'padding-top': value.brand ? '30px' : '4px' }">
             <div v-if="value.brand" class="brand-logo">
               <SpImage :src="item.brand" :width="60" :height="60" circle />
             </div>
             <div class="name">
-              <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+              <el-tag
+                v-if="item.medicine_data?.is_prescription == 1"
+                type="primary"
+                size="mini"
+                style="background-color: #fff"
+                >处方药</el-tag
+              >
               {{ item.title }}
             </div>
             <div v-if="value.showPrice" class="price">
@@ -154,32 +172,54 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {}
-  },
-  computed: {
-    leftGoodsList() {
-      const { type, data, pointGoods } = this.value.goodsSetting
-      const list = type == 'point' ? pointGoods : data
-      const leftFilterGoods = list.filter((item, index) => {
-        if (index % 2 == 0) {
-          return item
-        }
-      })
-      return leftFilterGoods
-    },
-    rightGoodsList() {
-      const { type, data, pointGoods } = this.value.goodsSetting
-      const list = type == 'point' ? pointGoods : data
-      const rightFilterGoods = list.filter((item, index) => {
-        if (index % 2 == 1) {
-          return item
-        }
-      })
-      return rightFilterGoods
+    return {
+      leftGoodsList: [],
+      rightGoodsList: [],
+      goodsList: []
     }
   },
-  created() {},
-  mounted() {},
+  // computed: {
+  //   leftGoodsList() {
+  //     console.log('leftGoodsList computed 执行')
+  //     const { goodsSetting = {} } = this.localValue || {}
+  //     const { type, data = [], pointGoods = [] } = goodsSetting
+  //     const list = type === 'point' ? pointGoods : data
+  //     const result = list.filter((_, index) => index % 2 === 0)
+  //     console.log('leftGoodsList result:', result)
+  //     return result
+  //   },
+  //   rightGoodsList() {
+  //     console.log('rightGoodsList computed 执行')
+  //     const { goodsSetting = {} } = this.localValue || {}
+  //     const { type, data = [], pointGoods = [] } = goodsSetting
+  //     const list = type === 'point' ? pointGoods : data
+  //     const result = list.filter((_, index) => index % 2 === 1)
+  //     console.log('rightGoodsList result:', result)
+  //     return result
+  //   }
+  // },
+  watch: {
+    value: {
+      handler(newVal) {
+        console.log(newVal, 'newVal')
+        const { goodsSetting = {} } = newVal || {}
+        const { type, data = [], pointGoods = [] } = goodsSetting
+        const list = type === 'point' ? pointGoods : data
+        if(newVal.style === 'grid'){
+          this.leftGoodsList = list.filter((_, index) => index % 2 === 0)
+          this.rightGoodsList = list.filter((_, index) => index % 2 === 1)
+        }else{
+          this.goodsList = list
+        }
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  created() {
+  },
+  mounted() {
+  },
   methods: {}
 }
 </script>

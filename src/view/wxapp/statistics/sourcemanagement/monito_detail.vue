@@ -62,19 +62,49 @@
           >新客访问量:&nbsp;<span>{{ statstotal.total_fans_num }}</span></el-col
         > -->
         <el-col
-          :span="6"
+          :span="2"
+        >
+          PV:&nbsp;<span>{{ statstotal.total_pv }}</span>
+        </el-col>
+        <el-col
+          :span="2"
+        >
+          UV:&nbsp;<span>{{ statstotal.total_uv }}</span>
+        </el-col>
+        <el-col
+          :span="3"
+        >
+          会员访客量:&nbsp;<span>{{ statstotal.total_member_visitor }}</span>
+        </el-col>
+        <el-col
+          :span="3"
+        >
+          游客访问量:&nbsp;<span>{{ statstotal.total_visitor }}</span>
+        </el-col>
+        <el-col
+          :span="2"
         >
           注册量:&nbsp;<span>{{ statstotal.total_register_num }}</span>
         </el-col>
         <el-col
-          :span="6"
+          :span="3"
         >
-          购买量:&nbsp;<span>{{ statstotal.total_entries_num }}</span>
+          支付人数:&nbsp;<span>{{ statstotal.total_pay_num }}</span>
         </el-col>
         <el-col
-          :span="6"
+          :span="3"
         >
-          注册购买转化率:&nbsp;<span>{{ statstotal.total_register_entries_rate }}</span>
+          支付单数:&nbsp;<span>{{ statstotal.total_entries_num }}</span>
+        </el-col>
+        <el-col
+          :span="3"
+        >
+          支付总价:&nbsp;<span>{{ statstotal.total_pay_amount / 100 }}</span>
+        </el-col>
+        <el-col
+          :span="2"
+        >
+          转化率:&nbsp;<span>{{ statstotal.total_conversion_rate }}</span>
         </el-col>
       </el-row>
     </div>
@@ -105,21 +135,45 @@
           prop="source_name"
           label="来源名称"
         />
+        <el-table-column
+          prop="total_pv"
+          label="PV"
+        />
+        <el-table-column
+          prop="total_uv"
+          label="UV"
+        />
+        <el-table-column
+          prop="total_member_visitor"
+          label="会员访客数"
+        />
         <!-- <el-table-column prop="view_num" label="浏览人数"></el-table-column> -->
         <el-table-column
-          prop="fans_num"
-          label="新客访问量"
+          prop="total_visitor"
+          label="游客访问量"
         />
         <el-table-column
           prop="register_num"
           label="注册量"
         />
         <el-table-column
-          prop="entries_num"
-          label="购买量"
+          prop="total_pay_num"
+          label="支付人数"
         />
         <el-table-column
-          prop="register_entries_rate"
+          prop="entries_num"
+          label="支付单数"
+        />
+        <el-table-column
+          prop="total_pay_amount"
+          label="支付总价"
+          >
+          <template slot-scope="scope">
+            {{ scope.row.total_pay_amount / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="conversion_rate"
           label="转化率"
         />
         <el-table-column label="操作">
@@ -131,7 +185,11 @@
             <a
               href="#"
               @click="remove(scope.row)"
-            >删除</a>
+            >删除</a> &nbsp;
+            <a
+              href="#"
+              @click="viewOrder(scope.row)"
+            >查看订单</a>
           </template>
         </el-table-column>
       </el-table>
@@ -174,14 +232,19 @@
             >
           </el-col>
         </el-row>
-        <el-row class="row-bg">
+        <el-row class="row-bg-btn">
           <el-col
-            :span="15"
+            :span="12"
           >
-            <a
-              href="javascript:void(0)"
-              @click="downloadCode(wxaCodeInfo.source_name, wxaCodeInfo.code_src)"
-            ><i class="iconfont icon-download" />下载二维码</a>
+          <el-button type="primary" plain @click="downloadCode(wxaCodeInfo.source_name, wxaCodeInfo.code_src)">
+            下载二维码
+            </el-button>
+          </el-col>
+          <el-col :span="12">
+            <el-button type="primary" v-clipboard:copy="linkPathStr"
+            v-clipboard:success="onCopySuccess" plain>
+            复制链接
+          </el-button>
           </el-col>
         </el-row>
       </template>
@@ -218,6 +281,7 @@ import axios from 'axios'
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
 import timeChoose from '../../../../components/timechoose'
+import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import {
   getMonitorsDetail,
   getMonitorsStats,
@@ -254,6 +318,7 @@ export default {
   components: {
     timeChoose
   },
+  mixins: [mixin, remarkMixin, pageMixin],
   data () {
     return {
       monitor_id: '',
@@ -266,15 +331,23 @@ export default {
       dialogVisible: false,
       loading: false,
       statstotal: {
+        'total_pv':0,
+        'total_uv': 0,
+        'total_member_visitor': 0,
+        'total_visitor': 0,
+        'total_pay_num': 0,
+        'total_pay_amount': 0,
         'total_fans_num': 0,
         'total_register_num': 0,
         'total_entries_num': 0,
-        'total_register_entries_rate': '0%'
+        'total_conversion_rate': '0%'
       },
       dataList: [],
       wxaCodeInfo: {
         source_name: '',
-        code_src: ''
+        code_src: '',
+        source_id: '',
+        monitor_id: ''
       },
       pickerOptions: {
         disabledDate (time) {
@@ -324,7 +397,8 @@ export default {
       codespanIndex: -1,
       codeSpanMax: -1,
       codeSpanMin: -1,
-      isdownloadOk: false
+      isdownloadOk: false,
+      linkPathStr:''
     }
   },
   mounted () {
@@ -365,13 +439,19 @@ export default {
           })
         })
     },
+    viewOrder(row){
+       window.open(`/order/entitytrade/orders?source=${row?.source_id}&monitorId=${row?.monitor_id}`, '_blank')
+    },
     showlink (row) {
       var that = this
       that.wxaCodeInfo.source_name = row.source_name
+      that.wxaCodeInfo.source_id = row.source_id
+      that.wxaCodeInfo.monitor_id = row.monitor_id
       let params = { monitor_id: row.monitor_id, source_id: row.source_id }
       getMonitorsWxaCode64(params).then((response) => {
         that.wxaCodeInfo.code_src = response.data.data.base64Image
       })
+      that.linkPathStr = this.detail?.monitor_path_params ? this.detail?.monitor_path + '?' + this.detail?.monitor_path_params + '&m=' + row?.monitor_id + '&s=' + row?.source_id : this.detail?.monitor_path + '?m=' + row?.monitor_id + '&s=' + row?.source_id
       that.dialogVisible = true
     },
     cancelDialog () {
@@ -534,7 +614,7 @@ export default {
         const promise = getWxaCodeImg(url).then((result_file) => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = item.source_name + '(' + item.source_id + ')' + '.png' // 获取文件名
-          zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
+          zip.file(file_name, result_file, { binary: true,date: new Date( Date.now() +  (8 * 60 * 60 * 1000)) }) // 逐个添加文件
           cache[file_name] = result_file
         })
         promises.push(promise)
@@ -642,5 +722,8 @@ export default {
   i {
     font-size: 12px;
   }
+}
+.row-bg-btn{
+  text-align: center;
 }
 </style>

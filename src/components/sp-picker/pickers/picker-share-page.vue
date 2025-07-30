@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-link {
+.picker-pages {
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
   }
@@ -35,25 +35,30 @@
 }
 </style>
 <template>
-  <div class="picker-link">
-    <!-- <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
+  <div class="picker-pages">
+    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="请输入页面名称" />
       </SpFilterFormItem>
-    </SpFilterForm> -->
+    </SpFilterForm>
     <SpFinder
       ref="finder"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': 460
       }"
-      :data="list"
+      url="/wxa/customizepage/list?page_type=task_share"
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: 'ID', key: 'id', width: 120 },
-          { name: '页面名称', key: 'title' }
+          { name: 'ID', key: 'id', width: 80 },
+          { name: '页面名称', key: 'page_name' },
+          { name: '页面描述', key: 'page_description' }
         ]
+      }"
+      :hooks="{
+        beforeSearch: beforeSearch,
+        afterSearch: afterSearch
       }"
       @select="onSelect"
       @selection-change="onSelectionChange"
@@ -65,11 +70,11 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerPages',
+  name: 'SharePickerPage',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择页面'
+    title: '选择分享页面'
   },
   props: ['value'],
   data() {
@@ -77,53 +82,37 @@ export default {
       formData: {
         keywords: ''
       },
-      list: [
-        { id: 'vipgrades', title: '会员开通' },
-        { id: 'applyChief', title: '社区团长申请' },
-        { id: 'recharge', title: '储值卡' },
-        { id: 'purchase', title: '内购' },
-        { id: 'pointShop', title: '积分商城' },
-        { id: 'registActivity', title: '报名活动' },
-        { id: 'group', title: '我的拼团' },
-        { id: 'coupon_list', title: '优惠券' },
-        { id: 'my_collect', title: '我的收藏' },
-        { id: 'address', title: '地址管理' },
-        { id: 'groups_list', title: '限时团购' },
-        { id: 'hottopic', title: '种草列表' },
-        { id: 'zitiOrder', title: '自提订单' },
-        { id: 'customerService', title: '客服' },
-        { id: 'homeSearch', title: '搜索' },
-      ],
       multiple: this.value?.multiple ?? true
     }
   },
   created() {},
-  mounted() {
-    if (!this.VERSION_PLATFORM && !this.VERSION_B2C) { // 平台版&b2c隐藏助力活动和助力订单
-      this.list.push(
-        { id: 'boost_activity', title: '助力活动' },
-        { id: 'boost_order', title: '助力订单' },
-      )
-    }
-    if (!this.VERSION_STANDARD) {
-      this.list.push(
-        { id: 'tenants', title: '商家入驻' },
-      )
-    }
-    if (!this.VERSION_IN_PURCHASE) {
-      this.list.push(
-        { id: 'community_group_enable', title: '社区团购（H5不支持）' },
-      )
-    }
-    if (this.value.data) {
-      const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
-      const { finderTable } = this.$refs.finder.$refs
-      setTimeout(() => {
-        finderTable.$refs.finderTable.setSelection(selectRows)
-      })
-    }
-  },
   methods: {
+    beforeSearch(params) {
+      console.log('params:', params, this.value)
+      params = {
+        ...params,
+        template_name: 'yykweishop',
+        ...(this.value?.params || {})
+      }
+      const { keywords } = this.formData
+      if (keywords) {
+        params = {
+          ...params,
+          page_name: keywords
+        }
+      }
+      return params
+    },
+    afterSearch(response) {
+      const { list } = response.data.data
+      if (this.value.data) {
+        const selectRows = list.filter((item) => this.value.data.includes(item.id))
+        const { finderTable } = this.$refs.finder.$refs
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection(selectRows)
+        })
+      }
+    },
     onSearch() {
       this.$refs.finder.refresh(true)
     },

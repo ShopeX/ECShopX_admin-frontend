@@ -1323,14 +1323,16 @@ export default {
             name: '是否处方',
             key: 'item_bn',
             width: 150,
-            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否'),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '审核结果',
             key: 'audit_status',
             width: 150,
             render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : '',
+            visible: !!this.is_pharma_industry
           },
           {
             name: '错误信息',
@@ -1345,7 +1347,8 @@ export default {
                   </div>
                 )}
               </div>
-            )
+            ),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '排序编号',

@@ -12,18 +12,28 @@
   <div class="picker-path">
     <!-- {{ value }} -->
     <el-tabs v-if="value.guide" v-model="tabValue" :tab-position="'left'">
-      <el-tab-pane label="商品" name="goods">
-        <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
-      </el-tab-pane>
-      <el-tab-pane label="管理分类" name="category">
-        <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
-      </el-tab-pane>
-      <el-tab-pane label="软文" name="planting">
-        <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
-      </el-tab-pane>
-      <el-tab-pane label="自定义页面" name="custom_page">
-        <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
-      </el-tab-pane>
+      <template v-if="value.guide == 'share_page'">
+        <el-tab-pane label="商品详情" name="goods">
+          <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="优惠券详情" name="coupon">
+          <PickerCoupon v-if="tabValue == 'coupon'" ref="coupon" :value="value" />
+        </el-tab-pane>
+      </template>
+      <template v-else>
+        <el-tab-pane label="商品" name="goods">
+          <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="管理分类" name="category">
+          <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="软文" name="planting">
+          <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="自定义页面" name="custom_page">
+          <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+        </el-tab-pane>
+      </template>
     </el-tabs>
     <el-tabs v-else v-model="tabValue" :tab-position="'left'">
       <el-tab-pane label="商品" name="goods">
@@ -57,7 +67,11 @@
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
       <el-tab-pane label="内购活动" name="purchase_activity">
-        <PickerPurchaseActivity v-if="tabValue == 'purchase_activity'" ref="purchase_activity" :value="value" />
+        <PickerPurchaseActivity
+          v-if="tabValue == 'purchase_activity'"
+          ref="purchase_activity"
+          :value="value"
+        />
       </el-tab-pane>
       <el-tab-pane label="秒杀" name="seckill">
         <PickerSeckill v-if="tabValue == 'seckill'" ref="seckill" :value="value" />
@@ -74,6 +88,9 @@
       <!-- <el-tab-pane label="商家" name="shop_tag">
         <PickerShopTag v-if="tabValue == 'shop_tag'" ref="shop_tag" :value="value" />
       </el-tab-pane> -->
+      <el-tab-pane label="分享页" name="share_page">
+        <PickerSharePage v-if="tabValue == 'share_page'" ref="share_page" :value="value" />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -98,6 +115,9 @@ import PickerPages from './picker-pages'
 import PickerLive from './picker-live'
 import PickerWxApp from './picker-wxapp'
 import PickerShopTag from './picker-shoptag'
+import PickerSharePage from './picker-share-page'
+import PickerCoupon from './picker-coupon'
+
 export default {
   name: 'PickerPath',
   components: {
@@ -116,7 +136,9 @@ export default {
     PickerPages,
     PickerLive,
     PickerWxApp,
-    PickerShopTag
+    PickerShopTag,
+    PickerSharePage,
+    PickerCoupon
   },
   // extends: BasePicker,
   config: {
@@ -135,7 +157,7 @@ export default {
   },
   methods: {
     getVal() {
-      const { data } = this.$refs[this.tabValue].getVal()
+      const { data } = this.$refs[this.tabValue]?.getVal?.()
       if (data.length > 0) {
         const [{ id, title, extra }] = this.resolveData(data)
         return {
@@ -255,6 +277,18 @@ export default {
           return pickBy(data, {
             id: 'tag_id',
             title: 'tag_name'
+          })
+        },
+        share_page: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'page_name'
+          })
+        },
+        coupon: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'name'
           })
         }
       }

@@ -198,6 +198,12 @@ export default {
           return '七'
         case 7:
           return '八'
+        case 8:
+          return '九'
+        case 9:
+          return '十'
+        case 10:
+          return '十一'
       }
     }
   },
@@ -333,8 +339,8 @@ export default {
       }
     },
     addGrade() {
-      if (this.levelData.length >= 5) {
-        this.$message({ message: '最多添加5个等级', type: 'error' })
+      if (this.levelData.length >= 10) {
+        this.$message({ message: '最多添加10个等级', type: 'error' })
         return
       }
       let crmopen = this.levelData[0].crm_open

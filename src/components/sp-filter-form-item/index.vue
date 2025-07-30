@@ -6,14 +6,14 @@
       display: block;
     }
     .form-item__content {
-      margin-left: 90px;
+      margin-left: 110px;
     }
   }
 }
 .form-item {
   &__label {
     float: left;
-    width: 90px;
+    width: 110px;
     line-height: 36px;
     padding-right: 8px;
     text-align: right;

@@ -229,7 +229,7 @@
           <template slot-scope="scope">
             {{ scope.row.mobile }}
             <el-tooltip
-              v-if="$store.getters.login_type != 'distributor' && datapass_block == 0"
+              v-if="$store.getters.login_type != 'distributor' && datapass_block == 0 && !dmcrmIsOpen"
               class="item"
               effect="dark"
               content="修改手机号"
@@ -1071,7 +1071,8 @@ export default {
       },
       datapass_block: 1,
       gradeList: [], // 普通会员等级列表
-      vipGrade: [] // 付费会员等级列表
+      vipGrade: [], // 付费会员等级列表
+      dmcrmIsOpen:false
     }
   },
   computed: {
@@ -1109,6 +1110,9 @@ export default {
 
     // 获取短信type
     this.getAliSMS()
+    this.$api.third.getDmcrmSetting().then((response) => {
+      this.dmcrmIsOpen = response.is_open
+    })
   },
   methods: {
     chiefupload() {

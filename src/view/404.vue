@@ -9,19 +9,15 @@
 </style>
 <template>
   <div class="page-404">
-    <div class="context-404">
-      404
-    </div>
-    <el-button @click="goBack">
-      返回
-    </el-button>
+    <div class="context-404">404</div>
+    <el-button @click="goBack"> 返回 </el-button>
   </div>
 </template>
 
 <script>
 export default {
   methods: {
-    goBack () {
+    goBack() {
       this.$router.go(-1)
     }
   }

@@ -294,23 +294,23 @@ export const SYSTEM_CONFIG = {
 }
 
 export const LINK_PATH = {
-  goods: '商品',
-  store: '店铺',
-  sale_category: '销售分类',
-  category: '管理分类',
-  tag: '商品标签',
-  article: '文章',
-  planting: '软文',
-  link: '页面',
-  marketing: '营销',
-  regactivity: '活动报名',
-  purchase_activity: '内购活动',
-  seckill: '秒杀',
-  custom_page: '自定义页面',
-  liverooms: '直播',
-  other_wxapp: '外部小程序',
-  shop_tag: '商家',
-  lottery: '抽奖活动'
+  'goods': '商品',
+  'store': '店铺',
+  'sale_category': '销售分类',
+  'category': '管理分类',
+  'tag': '商品标签',
+  'article': '文章',
+  'planting': '软文',
+  'link': '页面',
+  // 'marketing': '营销',
+  'regactivity': '活动报名',
+  'purchase_activity': '内购活动',
+  'seckill': '秒杀',
+  'custom_page': '自定义页面',
+  'liverooms': '直播',
+  'other_wxapp': '外部小程序',
+  'shop_tag': '商家',
+  'lottery': '抽奖活动'
 }
 
 export const CARD_TYPE = {

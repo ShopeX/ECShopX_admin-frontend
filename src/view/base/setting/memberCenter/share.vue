@@ -10,22 +10,10 @@
 -->
 <template>
   <div>
-    <el-form
-      ref="form"
-      :model="form.data"
-      label-position="left"
-      label-width="100px"
-      :rules="rules"
-    >
+    <el-form ref="form" :model="form.data" label-position="left" label-width="100px" :rules="rules">
       <div class="section-body">
-        <el-form-item
-          label="分享信息"
-          class="title"
-        />
-        <el-form-item
-          label="分享标题"
-          prop="title"
-        >
+        <el-form-item label="分享信息" class="title" />
+        <el-form-item label="分享标题" prop="title">
           <el-input
             v-model="form.data.title"
             :maxlength="15"
@@ -33,10 +21,7 @@
             style="width: 300px"
           />&nbsp;<span class="frm-tips">{{ form.data.title.length }}/{{ gift_max }}</span>
         </el-form-item>
-        <el-form-item
-          label="分享描述"
-          prop="description"
-        >
+        <el-form-item label="分享描述" prop="description">
           <el-input
             v-model="form.data.description"
             :maxlength="30"
@@ -45,17 +30,11 @@
             style="width: 300px"
             placeholder="字数上限为30个汉字"
           />&nbsp;
-          <div
-            class="frm-tips2"
-            style=""
-          >
+          <div class="frm-tips2" style="">
             {{ form.data.description.length }}/{{ description_max }}
           </div>
         </el-form-item>
-        <el-form-item
-          label="分享图片"
-          class="inline-label paddingleft9"
-        >
+        <el-form-item label="分享图片" class="inline-label paddingleft9">
           <div class="inline">
             <imgBox
               :img-url="form.data.pic"
@@ -66,31 +45,13 @@
             <p>建议尺寸5:4</p>
           </div>
         </el-form-item>
-        <el-form-item
-          label="预览效果"
-          class="inline-label paddingleft9"
-        >
-          <el-button
-            size="small"
-            type="primary"
-            style="margin-bottom: 20px"
-          >
-            小程序
-          </el-button>
-          <wechatShare
-            :title="form.data.title"
-            :content-img-src="form.data.pic"
-          />
+        <el-form-item label="预览效果" class="inline-label paddingleft9">
+          <el-button size="small" type="primary" style="margin-bottom: 20px"> 小程序 </el-button>
+          <wechatShare :title="form.data.title" :content-img-src="form.data.pic" />
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button
-          v-loading="loading"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
       </div>
     </el-form>
     <imgPicker
@@ -114,7 +75,7 @@ export default {
     imgPicker,
     wechatShare
   },
-  data () {
+  data() {
     var titleChecked = (rule, value, callback) => {
       if (value == '' || !value) {
         callback(new Error('分享标题不能为空'))
@@ -158,7 +119,7 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'wwidth', 'app_type', 'template_name', 'ali_template_name'])
   },
-  mounted () {
+  mounted() {
     getDistributorInfo({ distributor_id: 0 }).then(({ data: { data } }) => {
       if (!this.form.data.pic) {
         this.form.data.pic = data && data.logo ? data.logo : ''
@@ -185,21 +146,21 @@ export default {
     })
   },
   methods: {
-    handleClick (tab, event) {},
+    handleClick(tab, event) {},
     //门店LOGO
-    handleImgChange (pickerImgType) {
+    handleImgChange(pickerImgType) {
       this.pickerImgType = pickerImgType
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.pickerImgType == 'pic') {
         this.form.data.pic = data.url
       }
       this.imgDialog = false
     },
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       const { title, description, pic } = this.form.data
       let info = {
         share_title: title,
@@ -208,7 +169,7 @@ export default {
         type: this.template_name
         // type: this.app_type === 'wechat' ? this.template_name : this.ali_template_name
       }
-      setShareInfo(info).then((res) => {
+      setShareInfo(info).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -216,7 +177,7 @@ export default {
         })
       })
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

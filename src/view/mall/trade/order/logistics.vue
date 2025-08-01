@@ -3,16 +3,16 @@
     <div class="section-white">
       <div v-loading="loading" class="detail-info">
         <el-timeline v-if="list.length > 0" :reverse="false">
-        <el-timeline-item
-          v-for="(key, index) in list"
-          :key="index"
-          :timestamp="key.AcceptTime"
-          placement="top"
-        >
-          <p>{{ key.AcceptStation }}</p>
-        </el-timeline-item>
-      </el-timeline>
-      <p v-else>目前暂无物流信息~</p>
+          <el-timeline-item
+            v-for="(key, index) in list"
+            :key="index"
+            :timestamp="key.AcceptTime"
+            placement="top"
+          >
+            <p>{{ key.AcceptStation }}</p>
+          </el-timeline-item>
+        </el-timeline>
+        <p v-else>目前暂无物流信息~</p>
       </div>
     </div>
   </SpPage>
@@ -77,18 +77,18 @@ export default {
     retrunClick() {
       this.$router.go(-1)
     },
-    deliveryDesc () {
+    deliveryDesc() {
       this.loading = true
       let query = {
         delivery_corp: this.delivery_corp,
         delivery_code: this.delivery_code,
         delivery_corp_source: this.delivery_corp_source
       }
-      getDeliveryDetail(query).then((response) => {
+      getDeliveryDetail(query).then(response => {
         this.list = response.data.data
         this.loading = false
       })
-    },
+    }
   }
 }
 </script>

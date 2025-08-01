@@ -1,11 +1,10 @@
 <template>
   <SpPage>
-   
-      <el-form
-        ref="dataForm"
-        v-loading="formLoad"
-        :model="ruleForm"
-        :rules="rules"
+    <el-form
+      ref="dataForm"
+      v-loading="formLoad"
+      :model="ruleForm"
+      :rules="rules"
       class="point-form"
       label-width="140px"
     >
@@ -87,7 +86,7 @@ export default {
     getFetch() {
       this.$data.formLoad = true
       getUGCSetting({ type: 'contentCheck' }).then(
-        (res) => {
+        res => {
           // console.log('res',res.data.data)
           var { data } = res.data
           var ruleForm = {
@@ -99,7 +98,7 @@ export default {
           this.$data.ruleForm = ruleForm
           this.$data.formLoad = false
         },
-        (err) => {
+        err => {
           this.$data.formLoad = false
         }
       )
@@ -108,10 +107,10 @@ export default {
       const { ruleForm } = this.$data
       var params = { type: 'contentCheck', setting: null }
       var formtext = {
-        'contentCheck_enable': ruleForm.enable ? '1' : '0',
-        'contentCheck_url': ruleForm.url,
-        'contentCheck_appid': ruleForm.appid,
-        'contentCheck_appsecret': ruleForm.appsecret
+        contentCheck_enable: ruleForm.enable ? '1' : '0',
+        contentCheck_url: ruleForm.url,
+        contentCheck_appid: ruleForm.appid,
+        contentCheck_appsecret: ruleForm.appsecret
       }
       params.setting = JSON.stringify(formtext)
       //console.log('formTrans',params);
@@ -120,14 +119,14 @@ export default {
     confirmHandle() {
       const that = this
       const { ruleForm } = this.$data
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           //console.log('confirmHandle submit!!',ruleForm);
           //console.log('confirmHandle submit!!',ruleForm);
           var params = that.formTrans()
           //console.log('confirmHandle params',params);
           // return false;
-          setUGCSetting(params).then((res) => {
+          setUGCSetting(params).then(res => {
             var { message } = res.data.data
             this.$message({
               type: 'success',

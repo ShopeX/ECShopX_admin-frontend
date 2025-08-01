@@ -7,16 +7,8 @@
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+      <el-input v-model="name" placeholder="输入店铺名称" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
     <el-table
@@ -28,29 +20,12 @@
       :row-key="getRowKeys"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="name"
-        label="店铺名称"
-      />
-      <el-table-column
-        prop="contact"
-        label="联系人"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="name" label="店铺名称" />
+      <el-table-column prop="contact" label="联系人" />
+      <el-table-column prop="address" label="地址" show-overflow-tooltip />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -58,15 +33,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -94,7 +63,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       storeData: [],
@@ -111,19 +80,19 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.storeVisible
     }
   },
   watch: {
-    relDataIds (newVal, oldVal) {
+    relDataIds(newVal, oldVal) {
       if (newVal) {
         this.selectRows = newVal
       } else {
         this.selectRows = []
       }
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.params.is_valid = this.isValid ? this.isValid : 'true'
         this.getNewsList()
@@ -131,33 +100,33 @@ export default {
     }
   },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.shop_id
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.getNewsList()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val) {
         this.multipleSelection = val
-        val.forEach((item) => {
+        val.forEach(item => {
           let isInArr = -1
           if (this.selectRows.length > 0) {
-            isInArr = this.selectRows.findIndex((n) => n.shop_id == item.shop_id)
+            isInArr = this.selectRows.findIndex(n => n.shop_id == item.shop_id)
           }
           if (isInArr == -1) {
             this.selectRows.push(item)
@@ -165,23 +134,23 @@ export default {
         })
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getDistributorEasyList(this.params).then((response) => {
+        getDistributorEasyList(this.params).then(response => {
           this.storeData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false
           this.multipleSelection = []
           this.$refs.multipleTable.clearSelection()
           if (this.selectRows) {
-            this.selectRows.forEach((item) => {
+            this.selectRows.forEach(item => {
               this.$refs.multipleTable.toggleRowSelection(item, true)
             })
           }

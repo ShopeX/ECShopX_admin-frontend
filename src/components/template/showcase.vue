@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -21,27 +15,15 @@
     <div :class="'showcase-scheme-' + config.style">
       <div class="scheme-item">
         <div class="layout layout-1">
-          <img
-            v-if="data[0]"
-            class="show-img"
-            :src="wximageurl + data[0].imgUrl"
-          >
+          <img v-if="data[0]" class="show-img" :src="wximageurl + data[0].imgUrl">
         </div>
       </div>
       <div class="scheme-item">
         <div class="layout layout-2">
-          <img
-            v-if="data[1]"
-            class="show-img"
-            :src="wximageurl + data[1].imgUrl"
-          >
+          <img v-if="data[1]" class="show-img" :src="wximageurl + data[1].imgUrl">
         </div>
         <div class="layout layout-3">
-          <img
-            v-if="data[2]"
-            class="show-img"
-            :src="wximageurl + data[2].imgUrl"
-          >
+          <img v-if="data[2]" class="show-img" :src="wximageurl + data[2].imgUrl">
         </div>
       </div>
     </div>
@@ -60,7 +42,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -68,17 +50,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

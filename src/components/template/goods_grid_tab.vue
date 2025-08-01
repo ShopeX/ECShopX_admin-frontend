@@ -1,5 +1,5 @@
 <template>
-  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
     <div v-if="base.title" class="component-header">
       <div class="component-title">

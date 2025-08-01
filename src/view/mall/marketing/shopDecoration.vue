@@ -11,7 +11,7 @@ export default {
   components: {
     shopDecoration
   },
-  data () {
+  data() {
     return {
       current: ''
     }

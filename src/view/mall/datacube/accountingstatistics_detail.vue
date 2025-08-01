@@ -3,10 +3,7 @@
   <div v-loading="loading">
     <OrderInfo :info="orderInfoList" />
     <LedgerInfo :data="lendgerInfoData" />
-    <RefundInfo
-      :data="refundInfoData"
-      :arr="concatArr"
-    />
+    <RefundInfo :data="refundInfoData" :arr="concatArr" />
   </div>
 </template>
 <script>
@@ -20,7 +17,7 @@ export default {
     RefundInfo,
     LedgerInfo
   },
-  data () {
+  data() {
     return {
       concatArr: [],
       testPosition: 0,
@@ -32,11 +29,11 @@ export default {
       isShowRefund: false // 是否展示退款信息
     }
   },
-  mounted () {
+  mounted() {
     this.onGetDetail()
   },
   methods: {
-    rowspan (spanArr, position, spanName) {
+    rowspan(spanArr, position, spanName) {
       this.refundInfoData.forEach((item, index) => {
         if (index === 0) {
           spanArr.push(1)
@@ -52,9 +49,9 @@ export default {
         }
       })
     },
-    onGetDetail () {
+    onGetDetail() {
       let orderId = this.$route.query.orderId
-      GetOrderInfoList(orderId).then((res) => {
+      GetOrderInfoList(orderId).then(res => {
         // const { profitsharing_status, order_status } = res.data.data || {}
         // let profit = profitsharing_status === '2' // 已结算
         // let noprofit = profitsharing_status === '1' // 未结算

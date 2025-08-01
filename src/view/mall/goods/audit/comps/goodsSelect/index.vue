@@ -128,7 +128,7 @@ export default {
       return row.itemId
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
@@ -146,8 +146,8 @@ export default {
       if (this.limitNum) {
         this.$message({ message: '当前组件不支持全选', type: 'warning' })
         this.$refs.multipleTable.clearSelection()
-        this.itemsData.forEach((item) => {
-          let checked = this.selectRows.find((n) => n.itemId === item.itemId)
+        this.itemsData.forEach(item => {
+          let checked = this.selectRows.find(n => n.itemId === item.itemId)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -155,15 +155,15 @@ export default {
         return
       }
       if (val.length > 0) {
-        val.forEach((item) => {
-          let inChecked = this.selectRows.findIndex((n) => item.itemId === n.itemId)
+        val.forEach(item => {
+          let inChecked = this.selectRows.findIndex(n => item.itemId === n.itemId)
           if (inChecked === -1) {
             this.selectRows.push(item)
           }
         })
       } else {
         this.itemsData.forEach((item, index) => {
-          let inChecked = this.selectRows.findIndex((n) => item.itemId === n.itemId)
+          let inChecked = this.selectRows.findIndex(n => item.itemId === n.itemId)
           if (inChecked !== -1) {
             this.selectRows.splice(inChecked, 1)
           }
@@ -171,7 +171,7 @@ export default {
       }
     },
     handleSelectChange(val, row) {
-      let inChecked = this.selectRows.findIndex((item) => row.itemId === item.itemId)
+      let inChecked = this.selectRows.findIndex(item => row.itemId === item.itemId)
       if (inChecked !== -1) {
         this.selectRows.splice(inChecked, 1)
       } else {
@@ -179,14 +179,14 @@ export default {
           this.selectRows = []
           this.selectRows.push(row)
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return
         } else if (this.limitNum && this.selectRows.length >= this.limitNum) {
           this.$message({ message: `最多选择${this.limitNum}件商品`, type: 'warning' })
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return

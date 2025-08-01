@@ -53,7 +53,7 @@
         :data="categoryList"
         row-key="id"
         default-expand-all
-        :height="- 180"
+        :height="-180"
         :tree-props="{ children: 'children' }"
         style="width: 100%"
         size="small"
@@ -165,7 +165,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([ 'login_type'])
+    ...mapGetters(['login_type'])
   },
 
   mounted() {

@@ -70,13 +70,13 @@ export default {
           key: 'region_id',
           component: ({ key }, form) => {
             return (
-              <div class='flex gap-2'>
+              <div class="flex gap-2">
                 <SpRegionSelect
                   v-model={form[key]}
                   onChange={this.handleRegionChange}
-                  style='width: 260px;'
+                  style="width: 260px;"
                 />
-                <el-button type='default' onClick={this.asyncToArticleTitle}>
+                <el-button type="default" onClick={this.asyncToArticleTitle}>
                   点击同步到标题
                 </el-button>
               </div>
@@ -137,7 +137,7 @@ export default {
       const res = await this.$api.article.getArticleCategoryList({
         category_type: 'bring'
       })
-      const options = res.map((item) => {
+      const options = res.map(item => {
         return {
           title: item.category_name,
           value: item.category_id

@@ -76,38 +76,22 @@
       <!-- <button class='listkeybtn' @click="goBack">返回</button> -->
       <div class="top-select">
         时间筛选：
-        <select
-          v-model="timeChoosed.time"
-          class="select-style"
-          @change="timeSelected"
-        >
-          <option
-            v-for="(item, index) in timeList"
-            :key="index"
-            :value="item.record_date"
-          >
+        <select v-model="timeChoosed.time" class="select-style" @change="timeSelected">
+          <option v-for="(item, index) in timeList" :key="index" :value="item.record_date">
             {{ item.record_date_str }}
           </option>
         </select>
       </div>
     </div>
-    <div class="all-title">
-      关键指标
-    </div>
-    <div
-      v-for="(item, index) in labels_num"
-      :key="index"
-      class="canvas-div"
-    >
+    <div class="all-title">关键指标</div>
+    <div v-for="(item, index) in labels_num" :key="index" class="canvas-div">
       <div class="this_labels">
         {{ item.thisweek }}
       </div>
       <canvas :id="item.fieldkey" />
     </div>
     <div>
-      <div class="all-title">
-        全部指标
-      </div>
+      <div class="all-title">全部指标</div>
       <div class="allbtn">
         <button
           v-for="(item, index) in listKeyData"
@@ -278,7 +262,7 @@ export default {
             'x-wxapp-session': session
           }
         })
-        .then((response) => {
+        .then(response => {
           this.timeList = response.data.data.list
           this.total_count = response.data.data.total_count
           console.log(response, 220)
@@ -299,10 +283,10 @@ export default {
             'x-wxapp-session': session
           }
         })
-        .then((response) => {
+        .then(response => {
           // 表格
           this.list = response.data.data.list
-          response.data.data.list.map((item) => {
+          response.data.data.list.map(item => {
             this.listKeyData.push({
               fieldkey: item.fieldkey,
               fieldname: item.fieldname
@@ -317,7 +301,7 @@ export default {
           console.log(this.listKeyData, this.listValueData, 160)
 
           // 动态生成图表的数量
-          response.data.data.keyindex.map((item) => {
+          response.data.data.keyindex.map(item => {
             this.keyIndexData.push({
               label: item.fieldname,
               data: Array.reverse(item.fieldvalue)

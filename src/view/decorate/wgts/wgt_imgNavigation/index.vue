@@ -3,7 +3,7 @@
   <div
     :class="{
       'wgt-img-navigation': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">

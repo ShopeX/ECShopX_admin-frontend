@@ -195,13 +195,13 @@ export default {
 
     _renderImage(item, index = 0) {
       return (
-        <div class='image-item' key={`image-item__${index}`}>
+        <div class="image-item" key={`image-item__${index}`}>
           <i
-            class='iconfont icon-times-circle1'
+            class="iconfont icon-times-circle1"
             on-click={this.handleDeleteItem.bind(this, index)}
           />
-          <video-player class='picker-video-player' options={this.getOptions(item?.url || item)} />
-          <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
+          <video-player class="picker-video-player" options={this.getOptions(item?.url || item)} />
+          <span class="image-meta" on-click={this.onUpdateImage.bind(this, index)}>
             更换视频
           </span>
         </div>
@@ -216,17 +216,17 @@ export default {
       <div class={['sp-video-picker', size]}>
         {max > 1 && value.map((item, index) => this._renderImage(item, index))}
         {max > 1 && value.length < max && (
-          <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-video' />
-            <div class='add-text'>视频({`${value.length}/${max}`})</div>
+          <div class="image-item add-video placeholder" on-click={this.handleSelectImage}>
+            <i class="iconfont icon-video" />
+            <div class="add-text">视频({`${value.length}/${max}`})</div>
           </div>
         )}
 
         {max == 1 && !isEmpty(value) && this._renderImage(value)}
         {max == 1 && isEmpty(value) && (
-          <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-video' />
-            <div class='add-text'>添加视频</div>
+          <div class="image-item add-video placeholder" on-click={this.handleSelectImage}>
+            <i class="iconfont icon-video" />
+            <div class="add-text">添加视频</div>
           </div>
         )}
       </div>

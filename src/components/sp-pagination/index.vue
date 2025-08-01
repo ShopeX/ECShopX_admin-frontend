@@ -52,7 +52,7 @@ export default {
       onBeforeFetch: () => {
         this.loading = true
       },
-      onFetchFinally: (state) => {
+      onFetchFinally: state => {
         this.page.pageIndex = state.page
         this.page.pageSize = state.pageSize
         this.page.total = state.total

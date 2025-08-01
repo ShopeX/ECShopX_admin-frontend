@@ -1,12 +1,9 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
     <div
       class="content"
-      :class="{ 'bold': config.bold, 'italic': config.italic }"
+      :class="{ bold: config.bold, italic: config.italic }"
       :style="{ color: config.color, fontSize: config.size + 'px', textAlign: config.align }"
     >
       {{ data[0].content }}
@@ -26,7 +23,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -34,17 +31,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  created () {
+  created() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

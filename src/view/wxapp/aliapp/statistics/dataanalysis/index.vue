@@ -1,20 +1,11 @@
 <template>
   <div v-if="loaded">
     <div v-if="currentApp">
-      <el-tabs
-        v-model="activeName"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="概况"
-          name="survey"
-        >
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="概况" name="survey">
           <survey :wxapp="currentApp" />
         </el-tab-pane>
-        <el-tab-pane
-          label="用户画像"
-          name="user"
-        >
+        <el-tab-pane label="用户画像" name="user">
           <user :wxapp="currentApp" />
         </el-tab-pane>
       </el-tabs>
@@ -23,21 +14,11 @@
       <div class="section section-white">
         <div class="section-body content-center no-bind">
           <div>
-            <i
-              class="iconfont icon-info-circle"
-              style="font-size: 70px"
-            />
+            <i class="iconfont icon-info-circle" style="font-size: 70px" />
           </div>
-          <div class="content-padded">
-            未绑定小程序
-          </div>
+          <div class="content-padded">未绑定小程序</div>
           <div>
-            <el-button
-              type="primary"
-              @click="toBind"
-            >
-              去绑定
-            </el-button>
+            <el-button type="primary" @click="toBind"> 去绑定 </el-button>
           </div>
         </div>
       </div>
@@ -58,7 +39,7 @@ export default {
   computed: {
     ...mapGetters(['wxapp_id'])
   },
-  data () {
+  data() {
     return {
       activeName: 'survey',
       currentApp: '',
@@ -66,18 +47,18 @@ export default {
       wxapps: []
     }
   },
-  mounted () {
+  mounted() {
     if (this.wxapps) {
       this.currentApp = this.wxapp_id
       this.loaded = true
     }
   },
   methods: {
-    wxaHandle (val) {
+    wxaHandle(val) {
       this.currentApp = val
     },
-    handleClick (tab, event) {},
-    toBind () {
+    handleClick(tab, event) {},
+    toBind() {
       this.$router.push({ path: this.matchInternalRoute('editauthorize') })
     }
   }

@@ -1,66 +1,66 @@
 <template>
-   <SpPage>
-  <div class="custom-tree-container">
-    <div class="action-container">
-      <el-button type="primary" icon="plus" @click="updateCategory"> 保存栏目 </el-button>
-    </div>
+  <SpPage>
+    <div class="custom-tree-container">
+      <div class="action-container">
+        <el-button type="primary" icon="plus" @click="updateCategory"> 保存栏目 </el-button>
+      </div>
 
-    <div class="block">
-      <ul class="custom-tree-node-title">
-        <li>栏目名称</li>
-        <li>栏目排序</li>
-        <li>复制链接</li>
-        <li>创建时间</li>
-        <li>操作</li>
-      </ul>
-    </div>
-    <div class="tree-background block">
-      <el-tree
-        v-loading="loading"
-        :data="categoryList"
-        default-expand-all
-        :expand-on-click-node="false"
-      >
-        <ul slot-scope="{ node, data }" class="custom-tree-node">
-          <li>
-            <i v-if="data.level == 0" /><i v-else>　├─</i>
-            <input v-model="data.category_name" placeholder="栏目名称" />
-            <!-- <span class="add-child-category" v-if="data.level == 0"
+      <div class="block">
+        <ul class="custom-tree-node-title">
+          <li>栏目名称</li>
+          <li>栏目排序</li>
+          <li>复制链接</li>
+          <li>创建时间</li>
+          <li>操作</li>
+        </ul>
+      </div>
+      <div class="tree-background block">
+        <el-tree
+          v-loading="loading"
+          :data="categoryList"
+          default-expand-all
+          :expand-on-click-node="false"
+        >
+          <ul slot-scope="{ node, data }" class="custom-tree-node">
+            <li>
+              <i v-if="data.level == 0" /><i v-else>　├─</i>
+              <input v-model="data.category_name" placeholder="栏目名称">
+              <!-- <span class="add-child-category" v-if="data.level == 0"
                   @click="append(data.children, 1)">
             <i class="el-icon-plus"></i>增加子栏目 
           </span> -->
-          </li>
-          <li>
-            <input v-model="data.sort" placeholder="栏目排序" />
-          </li>
-          <li v-clipboard:copy="data.link" v-clipboard:success="onCopy">
-            <input v-model="data.link" class="copy-link" type="text" />
-            <i class="iconfont icon-copy" /> 复制栏目链接
-          </li>
-          <li v-if="data.created">
-            {{ data.created | datetime }}
-          </li>
-          <li v-else />
-          <li>
-            <span class="remove-category" @click="deleteCategory(node, data)">
-              <i class="iconfont icon-trash-alt" />
-            </span>
-          </li>
-        </ul>
-      </el-tree>
+            </li>
+            <li>
+              <input v-model="data.sort" placeholder="栏目排序">
+            </li>
+            <li v-clipboard:copy="data.link" v-clipboard:success="onCopy">
+              <input v-model="data.link" class="copy-link" type="text">
+              <i class="iconfont icon-copy" /> 复制栏目链接
+            </li>
+            <li v-if="data.created">
+              {{ data.created | datetime }}
+            </li>
+            <li v-else />
+            <li>
+              <span class="remove-category" @click="deleteCategory(node, data)">
+                <i class="iconfont icon-trash-alt" />
+              </span>
+            </li>
+          </ul>
+        </el-tree>
 
-      <div class="add-category">
-        <span @click="append(categoryList)"><i class="el-icon-plus" />增加栏目</span>
+        <div class="add-category">
+          <span @click="append(categoryList)"><i class="el-icon-plus" />增加栏目</span>
+        </div>
       </div>
+      <imgPicker
+        :dialog-visible="imgDialog"
+        :sc-status="isGetImage"
+        @chooseImg="pickImg"
+        @closeImgDialog="closeImgDialog"
+      />
     </div>
-    <imgPicker
-      :dialog-visible="imgDialog"
-      :sc-status="isGetImage"
-      @chooseImg="pickImg"
-      @closeImgDialog="closeImgDialog"
-    />
-  </div>
-</SpPage>
+  </SpPage>
 </template>
 <script>
 import {
@@ -101,7 +101,7 @@ export default {
     },
     getArticleCategory() {
       this.loading = true
-      getArticleCategoryList(this.params).then((response) => {
+      getArticleCategoryList(this.params).then(response => {
         let list = response.data.data
         list.forEach((item, index) => {
           let link = `/pages/recommend/list?id=${item.category_id}&name=${item.category_name}`
@@ -146,7 +146,7 @@ export default {
         }
       }
       let form = JSON.stringify(this.categoryList)
-      saveArticleCategory({ form: form }).then((response) => {
+      saveArticleCategory({ form: form }).then(response => {
         this.$message({
           type: 'success',
           message: '保存栏目成功'
@@ -162,7 +162,7 @@ export default {
       })
         .then(() => {
           if (typeof data.category_id != 'undefined') {
-            deleteArticleCategoryInfo(data.category_id).then((response) => {
+            deleteArticleCategoryInfo(data.category_id).then(response => {
               this.$message({
                 type: 'success',
                 message: '删除栏目成功'
@@ -172,7 +172,7 @@ export default {
           } else {
             const parent = node.parent
             const children = parent.data.children || parent.data
-            const index = children.findIndex((d) => d.id === data.id)
+            const index = children.findIndex(d => d.id === data.id)
             children.splice(index, 1)
           }
         })
@@ -228,11 +228,11 @@ export default {
     },
     pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
+        const index = this.categoryList.findIndex(d => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else {
-        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
+        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       }
       this.imgDialog = false

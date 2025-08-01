@@ -473,7 +473,7 @@ export default {
       }
       const faverite = await getRecommendLikeItemList()
       let data = []
-      faverite.data.data.list.forEach((item) => {
+      faverite.data.data.list.forEach(item => {
         data.push({
           imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,

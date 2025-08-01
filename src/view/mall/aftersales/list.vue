@@ -293,7 +293,12 @@
             </template>
           </el-table-column>
           <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="售后原因" prop="reason" />
-          <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="修改时间" prop="update_time" />
+          <el-table-column
+            v-if="IS_SUPPLIER()"
+            min-width="100"
+            label="修改时间"
+            prop="update_time"
+          />
           <el-table-column width="100" label="售后类型">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.aftersales_type == 'ONLY_REFUND'" type="info" size="mini">

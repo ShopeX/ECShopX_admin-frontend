@@ -1,73 +1,73 @@
 <style lang="scss"></style>
 <template>
   <SpPage>
-  <SpRouterView>
-    <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="queryForm.mobile" placeholder="请输入手机号码" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="account" label="账号:">
-        <el-input v-model="queryForm.account" placeholder="请输入账号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="email" label="邮箱:">
-        <el-input v-model="queryForm.email" placeholder="请输入邮箱" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="member_mobile" label="会员手机号:">
-        <el-input v-model="queryForm.member_mobile" placeholder="请输入会员手机号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="enterprise_id" label="企业:" size="max">
-        <el-select
-          v-model="queryForm.enterprise_id"
-          v-scroll="() => pagesQuery.nextPage()"
-          multiple
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="(item, index) in enterpriseList"
-            :key="`enterprise-item__${index}`"
-            :label="item.name"
-            :value="item.id"
-          />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-        <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
-      </SpFilterFormItem>
-    </SpFilterForm>
+    <SpRouterView>
+      <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input v-model="queryForm.mobile" placeholder="请输入手机号码" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="account" label="账号:">
+          <el-input v-model="queryForm.account" placeholder="请输入账号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="email" label="邮箱:">
+          <el-input v-model="queryForm.email" placeholder="请输入邮箱" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="member_mobile" label="会员手机号:">
+          <el-input v-model="queryForm.member_mobile" placeholder="请输入会员手机号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="enterprise_id" label="企业:" size="max">
+          <el-select
+            v-model="queryForm.enterprise_id"
+            v-scroll="() => pagesQuery.nextPage()"
+            multiple
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="(item, index) in enterpriseList"
+              :key="`enterprise-item__${index}`"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
+          <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addEmployee">
-        添加员工
-      </el-button>
-      <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
-        导入员工
-      </el-button>
-      <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
-    </div>
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addEmployee">
+          添加员工
+        </el-button>
+        <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
+          导入员工
+        </el-button>
+        <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
+      </div>
 
-    <SpFinder
-      ref="finder"
-      no-selection
-      :setting="setting"
-      :row-actions-align="'left'"
-      :hooks="{
-        beforeSearch: beforeSearch
-      }"
-      url="/employees"
-    />
+      <SpFinder
+        ref="finder"
+        no-selection
+        :setting="setting"
+        :row-actions-align="'left'"
+        :hooks="{
+          beforeSearch: beforeSearch
+        }"
+        url="/employees"
+      />
 
-    <SpDialog
-      ref="addDialogRef"
-      v-model="addDialog"
-      :title="employeeForm.id ? '编辑员工' : '添加员工'"
-      :modal="false"
-      :form="employeeForm"
-      :form-list="employeeFormList"
-      :confirm-status="addDialogLoading"
-      @onSubmit="onEmployeeFormSubmit"
-    />
-  </SpRouterView>
-</SpPage>
+      <SpDialog
+        ref="addDialogRef"
+        v-model="addDialog"
+        :title="employeeForm.id ? '编辑员工' : '添加员工'"
+        :modal="false"
+        :form="employeeForm"
+        :form-list="employeeFormList"
+        :confirm-status="addDialogLoading"
+        @onSubmit="onEmployeeFormSubmit"
+      />
+    </SpRouterView>
+  </SpPage>
 </template>
 
 <script>

@@ -192,12 +192,16 @@
               </template>
             </el-table-column>
             <el-table-column width="80" prop="get_num" label="领取量">
-              <!-- <template v-if="scope.row.get_num">{{scope.row.get_num}}</template> -->
-              <!-- <template>0</template> -->
+              <template slot-scope="scope">
+                <template v-if="scope.row.get_num">{{scope.row.get_num}}</template>
+                <template v-else>0</template>
+              </template>
             </el-table-column>
             <el-table-column width="80" prop="use_num" label="使用量">
-              <!-- <template v-if="scope.row.use_num">{{scope.row.use_num}}</template> -->
-              <!-- <template>0</template> -->
+              <template slot-scope="scope">
+                <template v-if="scope.row.use_num">{{scope.row.use_num}}</template>
+                <template v-else>0</template>
+              </template>
             </el-table-column>
             <el-table-column width="200" prop="source_name" label="店铺" />
           </el-table>

@@ -363,8 +363,8 @@ export default {
       }
     ]
     let controlList = []
-    this.control.forEach((item) => {
-      let key = init.find((n) => item === n.name)
+    this.control.forEach(item => {
+      let key = init.find(n => item === n.name)
       if (key) {
         controlList.push(key)
       }
@@ -402,13 +402,13 @@ export default {
     // 删除当前组件
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then((_) => {
+        .then(_ => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 图片选择器绑定事件
     showImgs(index) {

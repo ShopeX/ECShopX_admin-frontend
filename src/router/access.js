@@ -23,11 +23,11 @@ function getAllPermissions(tree, fieldName, childrenKey = 'children', parentPath
     const hasChildren =
       node[childrenKey] && Array.isArray(node[childrenKey]) && node[childrenKey].length > 0
 
-    node.alias_name = node.alias_name.replace(/\//g, '')
+    node.alias_name = node?.alias_name?.replace(/\//g, '')
     if (!hasChildren) {
       // 如果是叶子节点（没有子节点），才添加到结果中
-      node.permission = currentPath.map(item => item.replace(/\//g, '')).join('.')
-      paths.push(currentPath.map(item => item.replace(/\//g, '')).join('.'))
+      node.permission = currentPath.map((item) => item.replace(/\//g, '')).join('.')
+      paths.push(currentPath.map((item) => item.replace(/\//g, '')).join('.'))
     } else {
       // 如果有子节点，递归处理
       const childPaths = getAllPermissions(node[childrenKey], fieldName, childrenKey, currentPath)
@@ -42,7 +42,7 @@ function filterTreeByLeafPermissions(treeData, permissions, childrenKey = 'child
   if (!Array.isArray(treeData) || treeData.length === 0) return []
 
   return treeData
-    .map(node => {
+    .map((node) => {
       // 深拷贝节点避免修改原数据
       const newNode = { ...node }
 
@@ -51,7 +51,7 @@ function filterTreeByLeafPermissions(treeData, permissions, childrenKey = 'child
         // 如果处理后子节点为空数组，且当前节点在权限列表中，则保留该节点
         if (
           // newNode[childrenKey].length === 0 &&
-          newNode.meta?.permissions?.some(item => permissions.includes(item))
+          newNode.meta?.permissions?.some((item) => permissions.includes(item))
         ) {
           return newNode
         }
@@ -66,7 +66,7 @@ function filterTreeByLeafPermissions(treeData, permissions, childrenKey = 'child
         return newNode[childrenKey].length > 0 ? newNode : undefined
       }
       // 如果是叶子节点且在权限列表中，则保留
-      else if (newNode.meta?.permissions?.some(item => permissions.includes(item))) {
+      else if (newNode.meta?.permissions?.some((item) => permissions.includes(item))) {
         return newNode
       }
 
@@ -92,7 +92,7 @@ async function generateAccess(options) {
 
   // 生成路由
   const accessibleRoutes = await generateRoutes(options)
-  accessibleRoutes.forEach(route => {
+  accessibleRoutes.forEach((route) => {
     router.addRoute(route)
   })
 

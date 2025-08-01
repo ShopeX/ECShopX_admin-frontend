@@ -193,6 +193,6 @@ export default {
           component: () => import('@/view/member/promotions/goodslimit/add')
         }
       ]
-    },
+    }
   ]
 }

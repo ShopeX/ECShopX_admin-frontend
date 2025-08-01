@@ -7,29 +7,18 @@
       width="57%"
     >
       <template>
-        <el-form
-          ref="cancelForm"
-          :model="writeoffOrderForm"
-          class=""
-          label-width="100px"
-        >
+        <el-form ref="cancelForm" :model="writeoffOrderForm" class="" label-width="100px">
           <el-form-item label="订单号:">
             <el-col :span="20">
               {{ writeoffOrderData.order_id }}
             </el-col>
           </el-form-item>
           <el-form-item label="商品:">
-            <el-col
-              v-for="item in writeoffOrderData.items"
-              :key="item.item_id"
-            >
+            <el-col v-for="item in writeoffOrderData.items" :key="item.item_id">
               {{ item.item_name }} {{ item.item_spec_desc }} × {{ item.num }}
             </el-col>
           </el-form-item>
-          <el-form-item
-            v-if="writeoffOrderData.pickupcode_status"
-            label="提货码:"
-          >
+          <el-form-item v-if="writeoffOrderData.pickupcode_status" label="提货码:">
             <el-input
               v-model="writeoffOrderForm.pickupcode"
               :maxlength="6"
@@ -40,19 +29,9 @@
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleWriteoffOrder">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitWriteoffOrderConfirmAction"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleWriteoffOrder"> 取消 </el-button>
+        <el-button type="primary" @click="submitWriteoffOrderConfirmAction"> 确定 </el-button>
       </div>
     </el-dialog>
     <!-- 自提订单核销完成 -->
@@ -65,13 +44,8 @@
       <template>
         <span>{{ writeoffOrderSucc.msg }}</span>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleWriteoffOrderSucc">
-          知道了
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleWriteoffOrderSucc"> 知道了 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -81,7 +55,7 @@
 import { doWriteoff } from '@/api/trade'
 export default {
   props: ['visible', 'writeoffOrderData', 'form'],
-  data () {
+  data() {
     return {
       writeoffOrderForm: {
         order_id: '',
@@ -95,7 +69,7 @@ export default {
   },
   watch: {
     form: {
-      handler (val) {
+      handler(val) {
         if (val.pickupcode) {
           this.writeoffOrderForm.pickupcode = val.pickupcode
         }
@@ -107,12 +81,12 @@ export default {
     }
   },
   methods: {
-    handleWriteoffOrder () {
+    handleWriteoffOrder() {
       this.$emit('onChangeData', 'writeoffOrderVisible', false)
       this.writeoffOrderForm.order_id = ''
       this.writeoffOrderForm.pickupcode = ''
     },
-    submitWriteoffOrderConfirmAction () {
+    submitWriteoffOrderConfirmAction() {
       if (
         this.writeoffOrderData.pickupcode_status == 1 &&
         this.writeoffOrderForm.pickupcode == ''
@@ -120,7 +94,7 @@ export default {
         this.$message.error('请输入提货码!')
         return false
       }
-      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
+      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then(response => {
         var writeoffStatus = response.data.data.ziti_status
         var order_id = response.data.data.order_id
         if (writeoffStatus == 'DONE') {
@@ -133,7 +107,7 @@ export default {
         }
       })
     },
-    handleWriteoffOrderSucc () {
+    handleWriteoffOrderSucc() {
       this.writeoffOrderSuccVisible = false
       this.writeoffOrderSucc.msg = ''
       this.$emit('refreshList')

@@ -36,7 +36,7 @@ export default {
     filterDistrictByLevel(data, level) {
       // 递归处理每一层
       function deepFilter(list, currentLevel) {
-        return list.map((item) => {
+        return list.map(item => {
           const node = {
             value: item.value,
             label: item.label

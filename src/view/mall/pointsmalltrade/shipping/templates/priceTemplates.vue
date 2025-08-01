@@ -93,7 +93,7 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.params).then((response) => {
+      getShippingTemplatesList(this.params).then(response => {
         this.priceTemplatesList = []
         var temp = []
         for (var item in response.data.data.list) {
@@ -140,7 +140,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteShippingTemplates(row.template_id).then((response) => {
+          deleteShippingTemplates(row.template_id).then(response => {
             this.priceTemplatesList.splice(index, 1)
             this.$message({
               message: '删除运费模板成功',
@@ -173,7 +173,7 @@ export default {
       }
     },
     getAddress() {
-      getAddress().then((res) => {
+      getAddress().then(res => {
         this.district = res.data.data
       })
     }

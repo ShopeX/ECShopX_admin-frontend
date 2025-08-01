@@ -126,11 +126,11 @@ export default {
       this.skuParams.item_id = this.goods[index].default_item_id
       this.dialogVisible = true
       let checked = this.goods[index].spec_items
-      getItemsList(this.skuParams).then((res) => {
+      getItemsList(this.skuParams).then(res => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach((item) => {
-            let index = checked.findIndex((n) => item.itemId === n.itemId)
+          that.skus.forEach(item => {
+            let index = checked.findIndex(n => item.itemId === n.itemId)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -156,7 +156,7 @@ export default {
       if (data === null || data.length <= 0) return
       this.relItems = data
       let list = []
-      data.forEach((item) => {
+      data.forEach(item => {
         if (!item.nospec) {
           list.push(Object.assign(item, { spec_items: [] }))
         } else {
@@ -164,8 +164,8 @@ export default {
         }
       })
       if (this.goods.length > 0) {
-        list.forEach((item) => {
-          let goodsItem = this.goods.find((n) => item.itemId === n.item_id)
+        list.forEach(item => {
+          let goodsItem = this.goods.find(n => item.itemId === n.item_id)
           if (goodsItem && goodsItem.spec_items && goodsItem.spec_items.length > 0) {
             item.spec_items = goodsItem.spec_items
           }
@@ -178,7 +178,7 @@ export default {
       let noSkuItem = []
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.goods))
-      goodsList.forEach((item) => {
+      goodsList.forEach(item => {
         if (!item.nospec && item.spec_items.length === 0) {
           noSkuItem.push(item.default_item_id)
         }
@@ -186,17 +186,17 @@ export default {
       if (noSkuItem.length > 0) {
         let param = this.skuParams
         param.item_id = noSkuItem
-        getItemsList(this.skuParams).then((res) => {
-          goodsList.forEach((item) => {
+        getItemsList(this.skuParams).then(res => {
+          goodsList.forEach(item => {
             if (!item.nospec) {
-              res.data.data.list.forEach((sku) => {
+              res.data.data.list.forEach(sku => {
                 if (item.item_id === sku.default_item_id) {
                   item.spec_items.push(sku)
                 }
               })
             }
           })
-          goodsList.forEach((item) => {
+          goodsList.forEach(item => {
             if (!item.nospec) {
               response = [...response, ...item.spec_items]
             } else {
@@ -206,7 +206,7 @@ export default {
           this.$emit('change', response)
         })
       } else {
-        goodsList.forEach((item) => {
+        goodsList.forEach(item => {
           if (!item.nospec) {
             response = [...response, ...item.spec_items]
           } else {

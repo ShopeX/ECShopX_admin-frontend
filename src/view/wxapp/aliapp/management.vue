@@ -1,8 +1,5 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
+  <transition name="fade" mode="out-in">
     <!-- <storeDefault v-if="ali_template_name === 'yykmembership'"></storeDefault>
     <storeSport v-if="ali_template_name === 'yykmendian'"></storeSport>
     <storeUniversal v-if="ali_template_name === 'yykuniversal'"></storeUniversal> -->
@@ -47,7 +44,7 @@ export default {
     marketingGroup: marketingGroup,
     appleBaDefault: appleBaDefault
   },
-  data () {
+  data() {
     return {
       activeIndex: '',
       currentCode: '',
@@ -60,12 +57,12 @@ export default {
   },
   methods: {
     // this.template_name = ali_template_name
-    chooseTemp () {
+    chooseTemp() {
       console.log('🚀   this.active', this.active)
 
       this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
     },
-    mounted () {
+    mounted() {
       console.log('🚀   this.active', this.active)
       if (this.active) {
         this.activeIndex = this.active

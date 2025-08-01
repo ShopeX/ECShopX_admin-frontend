@@ -348,7 +348,7 @@ export default {
         AgentID: ''
       },
       uploadUrl: process.env.VUE_APP_BASE_API + '/workwechat/domain/verify',
-      uploadHeader: { 'Authorization': 'bearer ' + store.getters.token }
+      uploadHeader: { Authorization: 'bearer ' + store.getters.token }
     }
   },
   mounted() {

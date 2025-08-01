@@ -10,64 +10,31 @@
 -->
 <template>
   <div>
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="200px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="200px">
       <div class="section-body">
-        <el-form-item
-          label="“积分”点击跳转设置"
-          class="title"
-        />
+        <el-form-item label="“积分”点击跳转设置" class="title" />
         <el-form-item label="外部链接是否开启：">
           <el-switch v-model="form.data.point_url_is_open" />
         </el-form-item>
         <el-form-item label="外部链接小程序appid：">
-          <el-input
-            v-model="form.data.point_app_id"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input v-model="form.data.point_app_id" type="text" style="width: 300px" />
         </el-form-item>
         <el-form-item label="外部链接路径：">
-          <el-input
-            v-model="form.data.point_page"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input v-model="form.data.point_page" type="text" style="width: 300px" />
         </el-form-item>
-        <el-form-item
-          label="“个人信息”点击跳转设置"
-          class="title"
-        />
+        <el-form-item label="“个人信息”点击跳转设置" class="title" />
         <el-form-item label="外部链接是否开启：">
           <el-switch v-model="form.data.info_url_is_open" />
         </el-form-item>
         <el-form-item label="外部链接小程序appid：">
-          <el-input
-            v-model="form.data.info_app_id"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input v-model="form.data.info_app_id" type="text" style="width: 300px" />
         </el-form-item>
         <el-form-item label="外部链接路径：">
-          <el-input
-            v-model="form.data.info_page"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input v-model="form.data.info_page" type="text" style="width: 300px" />
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button
-          v-loading="loading"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
       </div>
     </el-form>
   </div>
@@ -76,7 +43,7 @@
 import { mapGetters } from 'vuex'
 import { savePageParams, getParamByTempName } from '@/api/wxa'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'redirect',
       loading: false,
@@ -102,13 +69,13 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'wwidth', 'template_name'])
   },
-  mounted () {
+  mounted() {
     let filter = {
       template_name: this.template_name,
       version: 'v1.0.1',
       page_name: 'member_center_redirect_setting'
     }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       if (res.data.data.list.length !== 0) {
         if (typeof res.data.data.list[0].params.data != 'undefined') {
           this.form = res.data.data.list[0].params.data
@@ -117,15 +84,15 @@ export default {
     })
   },
   methods: {
-    handleClick (tab, event) {},
+    handleClick(tab, event) {},
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       let param = {
         template_name: this.template_name,
         config: JSON.stringify([this.form]),
         page_name: 'member_center_redirect_setting'
       }
-      savePageParams(param).then((res) => {
+      savePageParams(param).then(res => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

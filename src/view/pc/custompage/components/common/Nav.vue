@@ -2,29 +2,15 @@
   <div :class="['nav-sub', store && 'nav-sub-store']">
     <div :class="['nav-sub-wrapper', 'w']">
       <div class="nav-list1">
-        <div
-          v-if="store"
-          class="title"
-        >
-          店铺首页
-        </div>
-        <div
-          v-else
-          class="title"
-        >
+        <div v-if="store" class="title">店铺首页</div>
+        <div v-else class="title">
           所有商品分类
           <ul class="cate-pop">
-            <template
-              v-for="(item, index) in cateList"
-              v-if="index < 9"
-            >
+            <template v-for="(item, index) in cateList" v-if="index < 9">
               <li>
                 <a @click="selCate(1, item)">{{ item.category_name }}</a>
                 <div class="sub-cate">
-                  <div
-                    v-for="(childItem, childIndex) in item.children"
-                    class="item"
-                  >
+                  <div v-for="(childItem, childIndex) in item.children" class="item">
                     <a @click="selCate(2, childItem, item)">{{ childItem.category_name }}</a>
                   </div>
                 </div>
@@ -34,12 +20,7 @@
         </div>
       </div>
       <ul class="nav-list2">
-        <li
-          v-if="!store"
-          @click="change(-1)"
-        >
-          全部商品
-        </li>
+        <li v-if="!store" @click="change(-1)">全部商品</li>
         <li v-for="v in data.data">
           {{ v.tab }}
         </li>
@@ -50,25 +31,25 @@
 <script>
 export default {
   props: ['cateList', 'usage', 'data'],
-  data () {
+  data() {
     return {
       searchVal: ''
     }
   },
   computed: {
-    store () {
+    store() {
       return this.usage === 'store'
     }
   },
-  mounted () {
+  mounted() {
     console.log('nav', this.data)
   },
   methods: {
-    selCate (position, item, parentItem) {
+    selCate(position, item, parentItem) {
       this.$emit('selCate', position, item, parentItem)
     },
     // 搜索框 获取值
-    onEnterSearch (e) {
+    onEnterSearch(e) {
       console.log('search: ' + this.searchVal)
     }
   }

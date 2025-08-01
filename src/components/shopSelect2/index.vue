@@ -48,10 +48,7 @@
         :value="item.distributor_id"
       />
     </el-select>
-    <span
-      v-else
-      class="input-m content-center muted no-shop"
-    >暂无符合要求的店铺</span>
+    <span v-else class="input-m content-center muted no-shop">暂无符合要求的店铺</span>
     <!-- <el-button @click="init">重置</el-button> -->
   </div>
 </template>
@@ -74,7 +71,7 @@ export default {
       default: 'medium'
     }
   },
-  data () {
+  data() {
     return {
       list: [],
       regions: district,
@@ -99,28 +96,28 @@ export default {
 
   watch: {
     'selected_params.shop_id': {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.$emit('update', this.selected_params)
       },
       deep: true
     },
     shopIdDefault: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.selected_params.shop_id = newVal
       }
     },
     performInit: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         newVal && this.init()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getList(true)
   },
 
   methods: {
-    handleScroll (param) {
+    handleScroll(param) {
       let { pageSize, page } = this.params
       if (param && Math.ceil(this.total / pageSize) > page) {
         this.params.page++
@@ -128,7 +125,7 @@ export default {
       }
     },
 
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       var vals = this.getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.params.province = vals[0].label
@@ -149,7 +146,7 @@ export default {
       this.getList(true)
     },
 
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -161,7 +158,7 @@ export default {
       })
     },
 
-    init () {
+    init() {
       this.params = {
         page: 1,
         pageSize: 30,
@@ -180,7 +177,7 @@ export default {
       this.$emit('init')
     },
 
-    remoteMethod (query) {
+    remoteMethod(query) {
       this.params.name = query
       this.getList(true)
     }

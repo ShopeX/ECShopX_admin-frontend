@@ -7,10 +7,7 @@
       border
       height="580"
     >
-      <el-table-column
-        prop="member_info"
-        label="会员"
-      >
+      <el-table-column prop="member_info" label="会员">
         <template slot-scope="scope">
           {{ scope.row.member_info.nickname }}
         </template>
@@ -50,10 +47,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -69,7 +63,7 @@
 import { getGroupsTeamInfo } from '../../../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       team_id: null,
@@ -84,24 +78,24 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.team_id = this.$route.params.team_id
     this.getGroupsTeamInfo()
   },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
     },
-    getGroupsTeamInfo () {
+    getGroupsTeamInfo() {
       this.loading = true
       getGroupsTeamInfo(this.team_id, this.params)
-        .then((response) => {
+        .then(response => {
           this.groupsTeamMemberList = response.data.data.list
           this.teamInfo = response.data.data.teamInfo
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

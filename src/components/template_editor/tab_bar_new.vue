@@ -58,7 +58,7 @@
             </el-select>
           </div>
           <div v-if="item.pagePath == 'customPage'" class="uploader-setting">
-            <div class="btn-linkpath" @click="()=>handleCustomPageSelect(item)">
+            <div class="btn-linkpath" @click="() => handleCustomPageSelect(item)">
               {{ getCustomPageName(item) }}
             </div>
           </div>
@@ -192,14 +192,13 @@ export default {
       this.current = index
     },
     handleChange(value) {
-      let n = this.pathOptions.find((item) => item.value === value)
+      let n = this.pathOptions.find(item => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
-      if(value != 'customPage' && this.data[this.current]?.customPage){
-        this.$delete(this.data[this.current],'customPage')
+      if (value != 'customPage' && this.data[this.current]?.customPage) {
+        this.$delete(this.data[this.current], 'customPage')
       }
-
     },
     handleIconChange(index) {
       this.$emit('bindImgs', index, 'default')
@@ -208,8 +207,8 @@ export default {
       this.$emit('bindImgs', index, 'selected')
     },
     handleSave() {
-      const emptyIndex = this.data.findIndex(item=>item.name == "customPage" && !item.customPage )
-      if(emptyIndex > -1){
+      const emptyIndex = this.data.findIndex(item => item.name == 'customPage' && !item.customPage)
+      if (emptyIndex > -1) {
         return this.$message({
           message: '请选择自定义页面',
           type: 'error',
@@ -218,14 +217,14 @@ export default {
       }
       this.$emit('saveTab')
     },
-    async handleCustomPageSelect(item){
-      const {data} = await this.$picker.pages({
-        multiple:false,
-        data:[item?.customPage?.id]
+    async handleCustomPageSelect(item) {
+      const { data } = await this.$picker.pages({
+        multiple: false,
+        data: [item?.customPage?.id]
       })
-      this.$set(item,'customPage',data[0])
+      this.$set(item, 'customPage', data[0])
     },
-    getCustomPageName(item){
+    getCustomPageName(item) {
       return item?.customPage?.page_name ?? '请选择自定义页面'
     }
   }
@@ -247,14 +246,13 @@ export default {
   }
 }
 .btn-linkpath {
-    padding: 0 8px;
-    border: 1px solid #d9d9d9;
-    background-color: #fff;
-    height: 36px;
-    line-height: 36px;
-    border-radius: 3px;
-    max-width: 160px;
-    @include text-overflow();
-  }
-
+  padding: 0 8px;
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 3px;
+  max-width: 160px;
+  @include text-overflow();
+}
 </style>

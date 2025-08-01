@@ -91,7 +91,7 @@ export default {
     },
     getConfig() {
       let query = { pay_type: this.payType }
-      getPaymentSetting(query).then((response) => {
+      getPaymentSetting(query).then(response => {
         this.form = response.data.data
       })
     },
@@ -111,14 +111,14 @@ export default {
         is_open: this.form.is_open
       }
       setPaymentSetting(query)
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

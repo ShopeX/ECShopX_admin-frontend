@@ -174,7 +174,7 @@ export default {
       this.cur_index = index
     },
     setLink(data, type) {
-      let obj = Object.assign(data, { 'linkPage': type })
+      let obj = Object.assign(data, { linkPage: type })
       Object.assign(this.data[this.cur_index], obj)
     },
     pickImg(data) {

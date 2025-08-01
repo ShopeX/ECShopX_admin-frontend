@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       tableList: [],
       page: {
@@ -10,19 +10,19 @@ export default {
     }
   },
   methods: {
-    onCurrentChange (pageIndex) {
+    onCurrentChange(pageIndex) {
       this.page.pageIndex = pageIndex
       this.fetchList(this.page)
     },
-    onSizeChange (pageSize) {
+    onSizeChange(pageSize) {
       this.page.pageSize = pageSize
       this.fetchList(this.page)
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.fetchList(this.page)
     },
-    onRefresh () {
+    onRefresh() {
       this.fetchList(this.page)
     }
   }

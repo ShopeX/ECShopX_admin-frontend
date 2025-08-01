@@ -9,23 +9,23 @@
             <CompPickerLink
               :value="scope.data"
               @change="
-                (e) => {
+                e => {
                   handleChangeGoods(e, scope.index)
                 }
               "
             />
           </div>
           <div v-if="isBusinessShow" class="cell-value-tip">
-            商家：   
+            商家：
             <CompButton
-            placeholder="选择店铺签"
-            format="{0}个店铺签"
-            :value="scope.data.seletedTags.length"
-            :view-btn="false"
-            @remove="onRemoveItem(scope.index)"
-            @click="onAddLabel(scope.index)"
-          />
-        </div>
+              placeholder="选择店铺签"
+              format="{0}个店铺签"
+              :value="scope.data.seletedTags.length"
+              :view-btn="false"
+              @remove="onRemoveItem(scope.index)"
+              @click="onAddLabel(scope.index)"
+            />
+          </div>
           <div class="cell-value-tip">建议尺寸:（128px * 128px）</div>
         </div>
       </template>
@@ -40,7 +40,7 @@ import CompTodoList from '../../comps/comp-todoList'
 import CompButton from '../../comps/comp-button'
 export default {
   name: 'AttrNavItem',
-  components: { CompPickerLink, CompTodoList ,CompButton},
+  components: { CompPickerLink, CompTodoList, CompButton },
   props: {
     value: [Object, Array],
     isBusinessShow: Boolean
@@ -49,7 +49,7 @@ export default {
     handleClickAdd() {
       this.value.push({
         content: '导航名称',
-        seletedTags:[],
+        seletedTags: [],
         imgUrl: ''
       })
     },
@@ -59,10 +59,10 @@ export default {
         ...e
       })
     },
-    onRemoveItem(index){
+    onRemoveItem(index) {
       Vue.set(this.value, index, {
         ...this.value[index],
-        seletedTags:[],
+        seletedTags: []
       })
     },
     async onAddLabel(index) {
@@ -72,9 +72,9 @@ export default {
       })
       Vue.set(this.value, index, {
         ...this.value[index],
-        seletedTags:data,
+        seletedTags: data
       })
-    },
+    }
   }
 }
 </script>

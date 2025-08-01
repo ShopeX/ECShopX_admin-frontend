@@ -2,16 +2,16 @@
   <SpPage>
     <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem label="账号" prop="login_name">
-        <el-input v-model="searchParams.login_name" placeholder="请输入账号" clearable/>
+        <el-input v-model="searchParams.login_name" placeholder="请输入账号" clearable />
       </SpFilterFormItem>
       <SpFilterFormItem label="手机号" prop="mobile">
-        <el-input v-model="searchParams.mobile" placeholder="请输入手机号" clearable/>
+        <el-input v-model="searchParams.mobile" placeholder="请输入手机号" clearable />
       </SpFilterFormItem>
       <SpFilterFormItem label="姓名" prop="username">
-        <el-input v-model="searchParams.username" placeholder="请输入姓名" clearable/>
+        <el-input v-model="searchParams.username" placeholder="请输入姓名" clearable />
       </SpFilterFormItem>
       <SpFilterFormItem label="供应商名称" prop="supplier_name">
-        <el-input v-model="searchParams.supplier_name" placeholder="请输入供应商名称" clearable/>
+        <el-input v-model="searchParams.supplier_name" placeholder="请输入供应商名称" clearable />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -65,12 +65,12 @@ export default {
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
-                  'value': row.is_disable,
+                  value: row.is_disable,
                   'active-value': true,
                   'inactive-value': false
                 },
                 on: {
-                  change: async (e) => {
+                  change: async e => {
                     await this.$api.login.changeOperatorStatus({
                       operator_id: row.operator_id,
                       is_disable: e ? 1 : 0
@@ -113,13 +113,13 @@ export default {
         password: ''
       },
       supplierFormList: [
-      // {
-      //     label: '公司',
-      //     key: 'company',
-      //     type: 'input',
-      //     required: true,
-      //     message: '不能为空'
-      //   },
+        // {
+        //     label: '公司',
+        //     key: 'company',
+        //     type: 'input',
+        //     required: true,
+        //     message: '不能为空'
+        //   },
         {
           label: '账号',
           key: 'login_name',
@@ -176,14 +176,16 @@ export default {
       this.supplierDialog = true
       this.supplierFormList[1].disabled = false
       this.supplierFormList[2].disabled = false
-      this.supplierForm = {id: '',
+      this.supplierForm = {
+        id: '',
         operator_type: 'supplier',
         mobile: '',
         login_name: '',
         username: '',
-        password: ''}
+        password: ''
+      }
     },
-    onInputChange () {
+    onInputChange() {
       // this.supplierDialog = false
       // this.supplierForm = {}
     },

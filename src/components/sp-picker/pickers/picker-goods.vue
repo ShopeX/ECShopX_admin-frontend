@@ -268,14 +268,14 @@ export default {
     afterSearch(response) {
       const ids = this.localSelection
       const { list } = response.data.data
-      const selectRow = list.filter(f => ids.includes(f.item_id))
+      const selectRow = list.filter((f) => ids.includes(f.item_id))
       this.$nextTick(() => {
         const finderTable = this.$refs.finder.$refs.finderTable.$refs.finderTable
-        const sids = finderTable.selection.map(m => m.item_id)
+        const sids = finderTable.selection.map((m) => m.item_id)
 
-        finderTable.setSelection(selectRow.filter(f => !sids.includes(f.item_id)))
+        finderTable.setSelection(selectRow.filter((f) => !sids.includes(f.item_id)))
         console.log(
-          selectRow.filter(f => !sids.includes(f.item_id)),
+          selectRow.filter((f) => !sids.includes(f.item_id)),
           '33333333========'
         )
       })

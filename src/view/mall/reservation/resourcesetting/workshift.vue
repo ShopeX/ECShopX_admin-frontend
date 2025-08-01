@@ -3,10 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="12">
         门店：
-        <el-select
-          v-model="shopId"
-          @change="storeChange"
-        >
+        <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
             :key="item.wxShopId"
@@ -15,40 +12,16 @@
           />
         </el-select>
       </el-col>
-      <el-col
-        :span="12"
-        class="content-right"
-      >
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="getDefaultWorkShift"
-        >
+      <el-col :span="12" class="content-right">
+        <el-button type="primary" icon="plus" @click="getDefaultWorkShift">
           配置默认排班
         </el-button>
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="getShiftType"
-        >
-          管理班次类型
-        </el-button>
+        <el-button type="primary" icon="plus" @click="getShiftType"> 管理班次类型 </el-button>
       </el-col>
     </el-row>
-    <div
-      class="content-center"
-      style="margin-bottom: 10px"
-    >
-      <el-button
-        type="default"
-        @click="preWeek"
-      >
-        上一周
-      </el-button>
-      <el-select
-        v-model="currWeek"
-        @change="weekChange"
-      >
+    <div class="content-center" style="margin-bottom: 10px">
+      <el-button type="default" @click="preWeek"> 上一周 </el-button>
+      <el-select v-model="currWeek" @change="weekChange">
         <el-option
           v-for="item in weekData"
           :key="item.value"
@@ -58,31 +31,16 @@
           {{ item.name }}
         </el-option>
       </el-select>
-      <el-button
-        type="default"
-        @click="nextWeek"
-      >
-        下一周
-      </el-button>
+      <el-button type="default" @click="nextWeek"> 下一周 </el-button>
     </div>
-    <el-table
-      v-loading="loading"
-      border
-      :data="manageData"
-      :height="wheight - 220"
-    >
-      <el-table-column
-        prop="name"
-        :label="resourceName"
-        class="content-center"
-      />
+    <el-table v-loading="loading" border :data="manageData" :height="wheight - 220">
+      <el-table-column prop="name" :label="resourceName" class="content-center" />
       <el-table-column :label="sevenDays.monday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.monday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.monday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.monday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -90,10 +48,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.monday.ymd, scope.row.monday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.monday.typeName"
-                >
+                <div class="type-name" :title="scope.row.monday.typeName">
                   {{ scope.row.monday.typeName }}
                 </div>
                 <div>{{ scope.row.monday.beginTime }}~{{ scope.row.monday.endTime }}</div>
@@ -110,10 +65,9 @@
       <el-table-column :label="sevenDays.tuesday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.tuesday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.tuesday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.tuesday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -121,10 +75,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.tuesday.ymd, scope.row.tuesday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.tuesday.typeName"
-                >
+                <div class="type-name" :title="scope.row.tuesday.typeName">
                   {{ scope.row.tuesday.typeName }}
                 </div>
                 <div>{{ scope.row.tuesday.beginTime }}~{{ scope.row.tuesday.endTime }}</div>
@@ -141,10 +92,9 @@
       <el-table-column :label="sevenDays.wednesday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.wednesday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.wednesday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.wednesday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -152,10 +102,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.wednesday.ymd, scope.row.wednesday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.wednesday.typeName"
-                >
+                <div class="type-name" :title="scope.row.wednesday.typeName">
                   {{ scope.row.wednesday.typeName }}
                 </div>
                 <div>{{ scope.row.wednesday.beginTime }}~{{ scope.row.wednesday.endTime }}</div>
@@ -172,10 +119,9 @@
       <el-table-column :label="sevenDays.thursday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.thursday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.thursday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.thursday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -183,10 +129,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.thursday.ymd, scope.row.thursday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.thursday.typeName"
-                >
+                <div class="type-name" :title="scope.row.thursday.typeName">
                   {{ scope.row.thursday.typeName }}
                 </div>
                 <div>{{ scope.row.thursday.beginTime }}~{{ scope.row.thursday.endTime }}</div>
@@ -203,10 +146,9 @@
       <el-table-column :label="sevenDays.friday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.friday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.friday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.friday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -214,10 +156,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.friday.ymd, scope.row.friday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.friday.typeName"
-                >
+                <div class="type-name" :title="scope.row.friday.typeName">
                   {{ scope.row.friday.typeName }}
                 </div>
                 <div>{{ scope.row.friday.beginTime }}~{{ scope.row.friday.endTime }}</div>
@@ -234,10 +173,9 @@
       <el-table-column :label="sevenDays.saturday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.saturday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.saturday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.saturday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -245,10 +183,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.saturday.ymd, scope.row.saturday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.saturday.typeName"
-                >
+                <div class="type-name" :title="scope.row.saturday.typeName">
                   {{ scope.row.saturday.typeName }}
                 </div>
                 <div>{{ scope.row.saturday.beginTime }}~{{ scope.row.saturday.endTime }}</div>
@@ -265,10 +200,9 @@
       <el-table-column :label="sevenDays.sunday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.sunday">
-            <span
-              class="type-add"
-              @click="typeAdd(scope.row, sevenDays.sunday.ymd)"
-            ><i class="el-icon-plus" /></span>
+            <span class="type-add" @click="typeAdd(scope.row, sevenDays.sunday.ymd)"
+              ><i class="el-icon-plus"
+            /></span>
           </template>
           <template v-else>
             <div class="cell-item-box">
@@ -276,10 +210,7 @@
                 class="cell-item"
                 @click="showTypeAdd(scope.row, sevenDays.sunday.ymd, scope.row.sunday)"
               >
-                <div
-                  class="type-name"
-                  :title="scope.row.sunday.typeName"
-                >
+                <div class="type-name" :title="scope.row.sunday.typeName">
                   {{ scope.row.sunday.typeName }}
                 </div>
                 <div>{{ scope.row.sunday.beginTime }}~{{ scope.row.sunday.endTime }}</div>
@@ -301,26 +232,14 @@
       :before-close="cancel"
     >
       <div class="type-list content-center">
-        <el-alert
-          title=""
-          type="warning"
-          :closable="false"
-        >
+        <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12">
-              门店名称： {{ shopName }}
-            </el-col>
-            <el-col :span="12">
-              开店时间： {{ shopHour }}
-            </el-col>
+            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
+            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
         <template>
-          <el-row
-            v-for="weekitem in weekdays"
-            :key="weekitem.name"
-            class="type-item"
-          >
+          <el-row v-for="weekitem in weekdays" :key="weekitem.name" class="type-item">
             <el-col :span="8">
               {{ weekitem.label }}
             </el-col>
@@ -341,16 +260,11 @@
                   :value="item.typeId"
                 >
                   <span style="float: left">{{ item.typeName }}</span>
-                  <span
-                    style="float: right; color: #8492a6; font-size: 13px"
-                  >{{ item.beginTime }} ~ {{ item.endTime }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 13px"
+                    >{{ item.beginTime }} ~ {{ item.endTime }}</span
+                  >
                 </el-option>
-                <el-option
-                  v-else
-                  key="-1"
-                  label="休息"
-                  value="-1"
-                >
+                <el-option v-else key="-1" label="休息" value="-1">
                   <span style="float: left">休息</span>
                   <span style="float: right; color: #8492a6; font-size: 13px">00:00 ~ 23:59</span>
                 </el-option>
@@ -359,20 +273,11 @@
           </el-row>
         </template>
       </div>
-      <div
-        slot="footer"
-        class="footer-dialog content-center"
-      >
-        <el-button
-          type="primary"
-          :disabled="isAdd"
-          @click="addDefaultShift"
-        >
+      <div slot="footer" class="footer-dialog content-center">
+        <el-button type="primary" :disabled="isAdd" @click="addDefaultShift">
           添加默认排班
         </el-button>
-        <el-button @click="cancel">
-          关闭
-        </el-button>
+        <el-button @click="cancel"> 关闭 </el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -382,18 +287,10 @@
       :before-close="cancel"
     >
       <div class="type-list content-center">
-        <el-alert
-          title=""
-          type="warning"
-          :closable="false"
-        >
+        <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12">
-              门店名称： {{ shopName }}
-            </el-col>
-            <el-col :span="12">
-              开店时间： {{ shopHour }}
-            </el-col>
+            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
+            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
         <template v-for="(item, index) in typeList">
@@ -401,9 +298,7 @@
             <el-col :span="8">
               {{ item.typeName }}
             </el-col>
-            <el-col :span="12">
-              {{ item.beginTime }} ~ {{ item.endTime }}
-            </el-col>
+            <el-col :span="12"> {{ item.beginTime }} ~ {{ item.endTime }} </el-col>
             <el-col :span="4">
               <el-button
                 v-if="item.typeId == '-1'"
@@ -413,21 +308,12 @@
               >
                 删除
               </el-button>
-              <el-button
-                v-else
-                type="text"
-                @click="deleteShiftType(item.typeId)"
-              >
-                删除
-              </el-button>
+              <el-button v-else type="text" @click="deleteShiftType(item.typeId)"> 删除 </el-button>
             </el-col>
           </el-row>
         </template>
 
-        <el-row
-          v-if="isAdd"
-          class="type-item"
-        >
+        <el-row v-if="isAdd" class="type-item">
           <el-col :span="8">
             <el-input
               v-model="addItem.typeName"
@@ -455,29 +341,13 @@
               placeholder="结束时间"
               style="width: 120px"
             />
-            &nbsp;&nbsp; <el-button
-              type="text"
-              @click="saveShiftType"
-            >
-              添加
-            </el-button>
+            &nbsp;&nbsp; <el-button type="text" @click="saveShiftType"> 添加 </el-button>
           </el-col>
         </el-row>
       </div>
-      <div
-        slot="footer"
-        class="footer-dialog content-center"
-      >
-        <el-button
-          type="primary"
-          :disabled="isAdd"
-          @click="addShiftType"
-        >
-          添加班次类型
-        </el-button>
-        <el-button @click="cancel">
-          关闭
-        </el-button>
+      <div slot="footer" class="footer-dialog content-center">
+        <el-button type="primary" :disabled="isAdd" @click="addShiftType"> 添加班次类型 </el-button>
+        <el-button @click="cancel"> 关闭 </el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -487,51 +357,27 @@
       :before-close="chooseCancel"
     >
       <div class="type-list type-choose-box content-center">
-        <el-alert
-          title=""
-          type="warning"
-          :closable="false"
-        >
+        <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12">
-              门店名称： {{ shopName }}
-            </el-col>
-            <el-col :span="12">
-              开店时间： {{ shopHour }}
-            </el-col>
+            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
+            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
 
         <template v-for="(item, index) in typeList">
-          <div
-            class="type-item"
-            :class="{ 'checked': i == index }"
-            @click="chooseType(item, index)"
-          >
+          <div class="type-item" :class="{ checked: i == index }" @click="chooseType(item, index)">
             <el-row>
               <el-col :span="8">
                 {{ item.typeName }}
               </el-col>
-              <el-col :span="16">
-                {{ item.beginTime }} ~ {{ item.endTime }}
-              </el-col>
+              <el-col :span="16"> {{ item.beginTime }} ~ {{ item.endTime }} </el-col>
             </el-row>
           </div>
         </template>
       </div>
-      <div
-        slot="footer"
-        class="footer-dialog content-center"
-      >
-        <el-button @click="chooseCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="saveChoose"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="footer-dialog content-center">
+        <el-button @click="chooseCancel"> 取消 </el-button>
+        <el-button type="primary" @click="saveChoose"> 确定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -554,7 +400,7 @@ import {
 import { getWxShopsList } from '../../../../api/shop'
 export default {
   props: ['isLoad', 'resourceName'],
-  data () {
+  data() {
     return {
       loading: false,
       shopListData: [],
@@ -622,7 +468,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    isLoad (newValue, oldValue) {
+    isLoad(newValue, oldValue) {
       if (newValue) {
         //加载数据
         this.manageData = []
@@ -631,16 +477,16 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.manageData = []
     this.getStoreList()
     this.getEveryYearWeek()
   },
   methods: {
-    getStoreList () {
+    getStoreList() {
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
-      getWxShopsList(shopFilter).then((response) => {
+      getWxShopsList(shopFilter).then(response => {
         this.shopListData = response.data.data.list
         if (this.shopId == '' && this.shopListData[0].wxShopId) {
           this.shopId = this.shopListData[0].wxShopId
@@ -651,13 +497,13 @@ export default {
         this.loading = false
       })
     },
-    getDefaultWorkShift () {
+    getDefaultWorkShift() {
       this.defaultDialogVisible = true
-      getListShiftType().then((response) => {
+      getListShiftType().then(response => {
         if (response.data.data.list) {
           this.typeList = response.data.data.list
           var params = { shop_id: this.shopId }
-          getDefaultShift(params).then((res) => {
+          getDefaultShift(params).then(res => {
             var list = res.data.data
             var week = this.weekdays
             if (list.length > 0) {
@@ -681,17 +527,17 @@ export default {
         }
       })
     },
-    getShiftType () {
+    getShiftType() {
       this.manageDialogVisible = true
       this.getShiftTypeList()
     },
-    addShiftType () {
+    addShiftType() {
       this.isAdd = true
     },
-    addDefaultShift () {
+    addDefaultShift() {
       var params = { shop_id: this.shopId, defaultData: this.weekdays }
       console.log(params)
-      createDefautlShift(params).then((res) => {
+      createDefautlShift(params).then(res => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -701,7 +547,7 @@ export default {
         }
       })
     },
-    saveShiftType () {
+    saveShiftType() {
       if (this.addItem.typeName == '') {
         this.$message.error('班次类型名称不能为空')
         return
@@ -714,7 +560,7 @@ export default {
         this.$message.error('班次类型结束时间不能为空')
         return
       }
-      createShiftType(this.addItem).then((res) => {
+      createShiftType(this.addItem).then(res => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -726,8 +572,8 @@ export default {
       //this.isAdd = false
       this.addItem = { typeName: '', beginTime: '', endTime: '' }
     },
-    deleteShiftType (typeId) {
-      deleteShiftType(typeId).then((res) => {
+    deleteShiftType(typeId) {
+      deleteShiftType(typeId).then(res => {
         if (res.data.data.status == false) {
           this.$message.error('该类型不可被删除')
           return
@@ -740,7 +586,7 @@ export default {
         this.getShiftType()
       })
     },
-    typeAdd (resource, dateDay) {
+    typeAdd(resource, dateDay) {
       this.relResource.id = ''
       this.relResource.resourceLevelId = resource.resourceLevelId
       this.relResource.shopId = resource.shopId
@@ -748,7 +594,7 @@ export default {
       this.chooseTypeDialogVisible = true
       this.getShiftTypeList()
     },
-    showTypeAdd (resource, dateDay, cellData) {
+    showTypeAdd(resource, dateDay, cellData) {
       this.relResource.resourceLevelId = resource.resourceLevelId
       this.relResource.shopId = resource.shopId
       this.relResource.dateDay = dateDay
@@ -756,9 +602,9 @@ export default {
       this.chooseTypeDialogVisible = true
       this.getShiftTypeList(cellData.typeId)
     },
-    clearCell (rowIndex, weekdaynum, shiftId) {
+    clearCell(rowIndex, weekdaynum, shiftId) {
       var params = { id: shiftId }
-      deleteWorkShift(params).then((res) => {
+      deleteWorkShift(params).then(res => {
         if (res.data.data.status) {
           this.$message({
             type: 'success',
@@ -791,21 +637,21 @@ export default {
         }
       })
     },
-    cancel () {
+    cancel() {
       this.manageDialogVisible = false
       this.defaultDialogVisible = false
       this.isAdd = false
     },
-    chooseCancel () {
+    chooseCancel() {
       this.i = -1
       this.chooseTypeDialogVisible = false
     },
-    chooseType (item, index) {
+    chooseType(item, index) {
       this.relResource.shiftTypeId = item.typeId
       this.chooseItem = item
       this.i = index
     },
-    saveChoose () {
+    saveChoose() {
       this.i = -1
       if (!this.relResource.shiftTypeId) {
         this.$message({
@@ -815,7 +661,7 @@ export default {
         return
       }
       if (this.relResource.id) {
-        updateWorkShift(this.relResource).then((res) => {
+        updateWorkShift(this.relResource).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -825,7 +671,7 @@ export default {
           this.getWorkShiftList(this.filterSelect)
         })
       } else {
-        createWorkShift(this.relResource).then((res) => {
+        createWorkShift(this.relResource).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -837,9 +683,9 @@ export default {
       }
       this.chooseTypeDialogVisible = false
     },
-    getShiftTypeList (typeId) {
+    getShiftTypeList(typeId) {
       var params = {}
-      getListShiftType(params).then((response) => {
+      getListShiftType(params).then(response => {
         if (response.data.data.list) {
           this.typeList = response.data.data.list
           //console.log(this.typeList, '+++++')
@@ -854,18 +700,18 @@ export default {
         }
       })
     },
-    getWorkShiftList (params) {
+    getWorkShiftList(params) {
       this.loading = true
-      getListWorkShift(params).then((res) => {
+      getListWorkShift(params).then(res => {
         this.manageData = res.data.data.resourceLevel
         this.sevenDays = res.data.data.weekDay
         this.total_count = res.data.data.total_count
         this.loading = false
       })
     },
-    getEveryYearWeek () {
+    getEveryYearWeek() {
       var params = { year: this.currYear }
-      getweekday(params).then((res) => {
+      getweekday(params).then(res => {
         this.weekData = res.data.data.list
         if (this.weekData.length > 0) {
           let currDate = this.weekData[this.weekData.length - 1].label
@@ -882,7 +728,7 @@ export default {
         }
       })
     },
-    storeChange () {
+    storeChange() {
       this.filterSelect.shopId = this.shopId
       var index
       for (index in this.shopListData) {
@@ -894,7 +740,7 @@ export default {
       }
       this.getWorkShiftList(this.filterSelect)
     },
-    weekChange (week) {
+    weekChange(week) {
       this.filterSelect.dateData = week
       if (this.shopId) {
         this.filterSelect.shopId = this.shopId
@@ -907,7 +753,7 @@ export default {
         }
       }
     },
-    preWeek () {
+    preWeek() {
       if (this.currWeekIndex == 0) {
         this.currYear = Number(this.currYear) - 1
         this.getEveryYearWeek()
@@ -920,7 +766,7 @@ export default {
       this.currWeek = preWeek
       this.weekChange(preWeek)
     },
-    nextWeek () {
+    nextWeek() {
       if (this.currWeekIndex >= this.weekData.length - 1) {
         this.currYear = Number(this.currYear) + 1
         this.getEveryYearWeek()
@@ -934,7 +780,7 @@ export default {
       this.currWeek = nextWeek
       this.weekChange(nextWeek)
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -944,7 +790,7 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     }
   }

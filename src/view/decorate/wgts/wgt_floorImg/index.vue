@@ -44,7 +44,7 @@
   <div
     :class="{
       'wgt-floor-img': true,
-      'padded': value.padded
+      padded: value.padded
     }"
     :style="{ backgroundImage: `url(${value.openBackImg && value.backgroundImg})` }"
   >

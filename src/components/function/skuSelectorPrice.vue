@@ -1,23 +1,10 @@
 <template>
   <div>
-    <el-row
-      v-if="goods.length > 0"
-      :gutter="20"
-    >
-      <el-col
-        v-for="(item, index) in goods"
-        :key="index"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="6"
-      >
+    <el-row v-if="goods.length > 0" :gutter="20">
+      <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img
-              :src="item.pics[0]"
-              alt=""
-            >
+            <img :src="item.pics[0]" alt="">
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -26,24 +13,13 @@
             <div class="goods-sku">
               <template v-if="!item.nospec">
                 {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div
-                  class="goods-sku-check"
-                  @click="handleSkuDialogShow(index)"
-                >
-                  选择规格
-                </div>
+                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
               </template>
             </div>
           </div>
-          <div
-            class="goods-remove iconfont icon-trash-alt"
-            @click="handleSkuRemove(index)"
-          />
+          <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)" />
         </div>
-        <div
-          v-if="isInputShow"
-          class="grid-content bg-purple"
-        >
+        <div v-if="isInputShow" class="grid-content bg-purple">
           <el-input
             v-model="item.new_price"
             type="input"
@@ -64,41 +40,21 @@
         选择商品
       </el-button>
     </div>
-    <el-dialog
-      title="选择sku"
-      :visible.sync="dialogVisible"
-      width="50%"
-    >
-      <el-table
-        ref="skuTable"
-        v-loading="loading"
-        :data="skus"
-        @selection-change="handleSkuChange"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+    <el-dialog title="选择sku" :visible.sync="dialogVisible" width="50%">
+      <el-table ref="skuTable" v-loading="loading" :data="skus" @selection-change="handleSkuChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column label="规格名称">
           <template slot-scope="scope">
             {{ scope.row.item_spec_desc }}
           </template>
         </el-table-column>
         <el-table-column label="价格">
-          <template slot-scope="scope">
-            ¥{{ scope.row.price / 100 }}
-          </template>
+          <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
         </el-table-column>
       </el-table>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleSkuSubmit"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleSkuSubmit">确 定</el-button>
       </span>
     </el-dialog>
     <GoodsSelector
@@ -155,7 +111,7 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       goods: [],
@@ -182,29 +138,29 @@ export default {
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       this.goods = val
       this.relItems = JSON.parse(JSON.stringify(val))
       this.generateSku()
     },
-    hiddenData (val) {
+    hiddenData(val) {
       this.hiddenItem = []
       for (var i in val) this.hiddenItem.push(val[i].itemId)
     }
   },
   methods: {
-    handleSkuDialogShow (index) {
+    handleSkuDialogShow(index) {
       const that = this
       this.loading = true
       this.current = index
       this.skuParams.item_id = this.goods[index].default_item_id
       this.dialogVisible = true
       let checked = this.goods[index].spec_items
-      getItemsList(this.skuParams).then((res) => {
+      getItemsList(this.skuParams).then(res => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach((item) => {
-            let index = checked.findIndex((n) => item.itemId === n.itemId)
+          that.skus.forEach(item => {
+            let index = checked.findIndex(n => item.itemId === n.itemId)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -213,19 +169,19 @@ export default {
         this.loading = false
       })
     },
-    handleGoodsDialogShow () {
+    handleGoodsDialogShow() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleSkuChange (val) {
+    handleSkuChange(val) {
       this.checkedSkus = val
     },
-    handleSkuSubmit () {
+    handleSkuSubmit() {
       this.dialogVisible = false
       this.goods[this.current].spec_items = this.checkedSkus
       this.generateSku()
     },
-    handleGoodsSubmit (data) {
+    handleGoodsSubmit(data) {
       if (data.length > 10) {
         this.$message({
           message: '最大选择10个商品',
@@ -237,7 +193,7 @@ export default {
       if (data === null || data.length <= 0) return
       this.relItems = data
       let list = []
-      data.forEach((item) => {
+      data.forEach(item => {
         Object.assign(item, {
           new_price:
             'undefined' == typeof this.itemNewPrice[item.item_id]
@@ -251,8 +207,8 @@ export default {
         }
       })
       if (this.goods.length > 0) {
-        list.forEach((item) => {
-          let goodsItem = this.goods.find((n) => item.itemId === n.item_id)
+        list.forEach(item => {
+          let goodsItem = this.goods.find(n => item.itemId === n.item_id)
           if (goodsItem && goodsItem.spec_items && goodsItem.spec_items.length > 0) {
             item.spec_items = goodsItem.spec_items
           }
@@ -261,13 +217,13 @@ export default {
       this.goods = JSON.parse(JSON.stringify(list))
       this.generateSku()
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem = []
       let response = []
       let newPrice = 0
       let goodsList = JSON.parse(JSON.stringify(this.goods))
       this.itemNewPrice = []
-      goodsList.forEach((item) => {
+      goodsList.forEach(item => {
         if (!item.nospec && item.spec_items.length === 0) {
           noSkuItem.push(item.default_item_id)
         }
@@ -275,21 +231,21 @@ export default {
       if (noSkuItem.length > 0) {
         let param = this.skuParams
         param.item_id = noSkuItem
-        getItemsList(this.skuParams).then((res) => {
-          goodsList.forEach((item) => {
+        getItemsList(this.skuParams).then(res => {
+          goodsList.forEach(item => {
             if (!item.nospec) {
-              res.data.data.list.forEach((sku) => {
+              res.data.data.list.forEach(sku => {
                 if (item.item_id === sku.default_item_id) {
                   item.spec_items.push(sku)
                 }
               })
             }
           })
-          goodsList.forEach((item) => {
+          goodsList.forEach(item => {
             newPrice += item.new_price ? parseFloat(item.new_price) : 0
             this.itemNewPrice[item.item_id] = item.new_price ? parseFloat(item.new_price) : 0
             if (!item.nospec) {
-              item.spec_items = item.spec_items.map((v) => {
+              item.spec_items = item.spec_items.map(v => {
                 return { ...Object.assign({}, v, { new_price: item.new_price }) }
               })
               response = [...response, ...item.spec_items]
@@ -301,11 +257,11 @@ export default {
           this.$emit('newPrice', newPrice)
         })
       } else {
-        goodsList.forEach((item) => {
+        goodsList.forEach(item => {
           newPrice += item.new_price ? parseFloat(item.new_price) : 0
           this.itemNewPrice[item.item_id] = item.new_price ? parseFloat(item.new_price) : 0
           if (!item.nospec) {
-            const spec_items = item.spec_items.map((v) => {
+            const spec_items = item.spec_items.map(v => {
               return { ...Object.assign({}, v, { new_price: v.new_price }) }
             })
             response = [...response, ...spec_items]
@@ -317,10 +273,10 @@ export default {
         this.$emit('newPrice', newPrice)
       }
     },
-    handleGoodsDialogHide () {
+    handleGoodsDialogHide() {
       this.itemVisible = false
     },
-    handleSkuRemove (index) {
+    handleSkuRemove(index) {
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()

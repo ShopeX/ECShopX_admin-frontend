@@ -43,7 +43,7 @@ export default {
     {
       path: 'normalordersupload',
       name: `批量发货`,
-      component: () => import('@/view/mall/trade/normalorders/ordersupload'),
+      component: () => import('@/view/mall/trade/normalorders/ordersupload')
     },
     {
       path: 'aftersaleslist',
@@ -70,7 +70,7 @@ export default {
     {
       path: 'logistics',
       name: `配送管理`,
-      component: () => import('@/view/mall/trade/logistics/index'),
+      component: () => import('@/view/mall/trade/logistics/index')
     },
     {
       path: 'aftersalesrefundlist',
@@ -88,6 +88,5 @@ export default {
       name: `退款失败日志`,
       component: () => import('@/view/mall/trade/refunderrorlogs')
     }
-
   ]
 }

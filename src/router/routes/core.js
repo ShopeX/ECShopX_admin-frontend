@@ -95,11 +95,11 @@ const coreRoutes = [
   {
     meta: {
       layout: 'empty',
-      title:'decorate'
+      title: 'decorate'
     },
     path: '/wxapp/manage/decorate',
     component: () => import('@/view/decorate/index')
-  },
+  }
 ]
 
 export { coreRoutes, fallbackNotFoundRoute }

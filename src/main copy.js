@@ -36,7 +36,7 @@ initFinder(Vue, {
   context: {
     qs: false,
     globalHooks: {
-      beforeQuery: p => {
+      beforeQuery: (p) => {
         let params = {
           ...p,
           pageSize: p.pageSize,
@@ -47,7 +47,7 @@ initFinder(Vue, {
         delete params.pageNum
         return params
       },
-      afterQuery: response => {
+      afterQuery: (response) => {
         const { status_code, message } = response.data.data
         if (status_code == 500) {
           return Vue.prototype.$message.error(message)
@@ -81,34 +81,34 @@ const plugins = {
   SpPickerPlugin
 }
 
-const installComponent = Vue => {
+const installComponent = (Vue) => {
   const baseContext = require.context('./components', true, /index(\.vue|\.js)$/)
   const components = {}
   function resloveModule(mod) {
-    Object.keys(mod).forEach(key => {
+    Object.keys(mod).forEach((key) => {
       mod[key].name && (components[mod[key].name] = mod[key])
     })
   }
 
-  baseContext.keys().forEach(key => {
+  baseContext.keys().forEach((key) => {
     const mod = baseContext(key)
     resloveModule(mod)
   })
 
   console.log('components:', components, plugins)
-  Object.keys(components).forEach(key => {
+  Object.keys(components).forEach((key) => {
     const comp = components[key]
     Vue.component(comp.name, comp)
   })
 
-  Object.keys(plugins).forEach(name => {
+  Object.keys(plugins).forEach((name) => {
     const plugin = plugins[name]
     Vue.use(plugin)
   })
 }
 
-const installPlugin = Vue => {
-  Object.keys(plugins).forEach(name => {
+const installPlugin = (Vue) => {
+  Object.keys(plugins).forEach((name) => {
     const plugin = plugins[name]
     Vue.use(plugin)
   })
@@ -131,5 +131,5 @@ new Vue({
     document.body.style.setProperty('--themeColor', theme)
     document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
   },
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')

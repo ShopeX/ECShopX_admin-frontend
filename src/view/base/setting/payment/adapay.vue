@@ -77,12 +77,12 @@ export default {
             return (
               <div>
                 <el-input
-                  type='textarea'
+                  type="textarea"
                   v-model={value[key]}
-                  placeholder='请输入RSA私钥'
+                  placeholder="请输入RSA私钥"
                   rows={4}
                 />
-                <el-button type='text' onClick={this.createKey}>
+                <el-button type="text" onClick={this.createKey}>
                   生成RSA密钥
                 </el-button>
               </div>
@@ -257,7 +257,7 @@ export default {
       }
     },
     async onSubmit(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           const { status } = await this.$api.adapay.postAdapayPaySetting({
             ...this.form,
@@ -277,7 +277,7 @@ export default {
     },
     async getConfig() {
       const res = await this.$api.trade.getPaymentSetting({ pay_type: 'adapay' })
-      Object.keys(res).forEach((key) => {
+      Object.keys(res).forEach(key => {
         if (typeof this.form[key]) {
           this.form[key] = res[key]
         }

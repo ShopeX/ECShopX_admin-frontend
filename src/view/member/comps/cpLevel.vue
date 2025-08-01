@@ -54,6 +54,11 @@
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
             </div>
+            <!-- TODO:数云是否需要等级背景 -->
+            <div style="display: flex">
+              <span class="txt">等级背景</span>
+              <SpImagePicker v-model="item.grade_background" />
+            </div>
             <div v-if="!VERSION_SHUYUN()" class="clearfix">
               <span class="txt f_l">升级条件</span>
               <span v-if="item.default_grade" class="txt-none">无</span>
@@ -199,6 +204,7 @@ export default {
         {
           grade_id: '',
           grade_name: '',
+          grade_background: '',
           background_pic_url: '',
           promotion_condition: {
             total_consumption: 0
@@ -243,7 +249,7 @@ export default {
       console.log(this.levelData)
       this.params.grade_info = JSON.stringify(this.levelData)
 
-      updateGrade(this.params).then(res => {
+      updateGrade(this.params).then((res) => {
         if (res.data.data.status) {
           this.$message.success('保存成功')
         }
@@ -300,25 +306,21 @@ export default {
       let index = Number(e.target.name)
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
       if (this.levelData[index].discount_checked) {
-        if (value == '') {
+        if (value == '' && this.VERSION_SHUYUN()) {
           this.$message({ message: '请输入会员折扣', type: 'error' })
           return
         }
-        if (!reg.test(value)) {
+        if (!reg.test(value) && this.VERSION_SHUYUN()) {
           this.$message({
             message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
             type: 'error'
           })
           return
         }
-        if (
-          !this.VERSION_SHUYUN() &&
-          index > 0 &&
-          Number(value) >= Number(this.levelData[index - 1].privileges.discount)
-        ) {
-          this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
-          return
-        }
+        // if (index > 0 && Number(value) >= Number(this.levelData[index - 1].privileges.discount)) {
+        //   this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
+        //   return
+        // }
       }
     },
     addGrade() {
@@ -330,6 +332,7 @@ export default {
       this.levelData.push({
         grade_id: '',
         grade_name: '',
+        grade_background: '',
         background_pic_url: '',
         promotion_condition: { total_consumption: 0 },
         privileges: { discount: '' },
@@ -380,25 +383,16 @@ export default {
           }
         }
         if (this.levelData[i].discount_checked) {
-          if (this.levelData[i].privileges.discount == '') {
+          if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
             isflag = true
             this.$message({ message: '请输入会员折扣', type: 'error' })
             break
-          } else if (!discountReg.test(this.levelData[i].privileges.discount)) {
+          } else if (!discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())) {
             isflag = true
             this.$message({
               message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
               type: 'error'
             })
-            break
-          } else if (
-            !this.VERSION_SHUYUN() &&
-            i > 0 &&
-            Number(this.levelData[i].privileges.discount) >=
-              Number(this.levelData[i - 1].privileges.discount)
-          ) {
-            isflag = true
-            this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
             break
           }
         }
@@ -422,7 +416,7 @@ export default {
       this.imgDialog = false
     },
     getGradeList() {
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
           if (result) {
@@ -531,6 +525,7 @@ export default {
   width: 200px;
   margin-top: 15px;
   margin: 15px 20px 0 0;
+  text-align: center;
 }
 .item-content {
   // width: 500px;

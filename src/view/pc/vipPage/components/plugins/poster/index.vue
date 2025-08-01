@@ -1,15 +1,8 @@
 <template>
   <div>
     <slot />
-    <div
-      v-for="item in t_data"
-      class="poster"
-    >
-      <img
-        v-if="item.imgUrl"
-        class="i"
-        :src="item.imgUrl"
-      >
+    <div v-for="item in t_data" class="poster">
+      <img v-if="item.imgUrl" class="i" :src="item.imgUrl">
     </div>
   </div>
 </template>
@@ -24,7 +17,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data.data
     }

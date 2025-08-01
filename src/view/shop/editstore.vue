@@ -308,7 +308,7 @@ export default {
     }
   },
   mounted() {
-    getAuthorizerInfo().then((response) => {
+    getAuthorizerInfo().then(response => {
       this.principal_name = response.data.data.principal_name
     })
 
@@ -316,7 +316,7 @@ export default {
       // 初始化门店数据
       //this.add_flag = 0;
       getWxShopsDetail(this.$route.params.wxShopId)
-        .then((response) => {
+        .then(response => {
           this.wxShopsDetailData = response.data.data
           this.form.pic_list = this.wxShopsDetailData.pic_list
           this.form.contract_phone = this.wxShopsDetailData.contract_phone
@@ -366,7 +366,7 @@ export default {
           // 编辑门店时初始化地图
           this.qqmapinit(this.wxShopsDetailData.lat, this.wxShopsDetailData.lng)
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.go(-1)
         })
     } else {
@@ -415,7 +415,7 @@ export default {
       if (this.wxShopsDetailData.wx_shop_id) {
         // 编辑门店数据提交
         // console.log(params);
-        updateWxShops(this.wxShopsDetailData.wx_shop_id, params).then((response) => {
+        updateWxShops(this.wxShopsDetailData.wx_shop_id, params).then(response => {
           if (response.data.data.wx_shop_id) {
             this.loading = false
             this.$message.success('保存成功')
@@ -428,7 +428,7 @@ export default {
         })
       } else {
         // 添加门店数据提交
-        createWxShops(params).then((response) => {
+        createWxShops(params).then(response => {
           if (response.data.data.wx_shop_id) {
             this.loading = false
             this.refresh()
@@ -595,7 +595,7 @@ export default {
       }
 
       let params = { isUploadFile: true, file: file.raw, type: 'image', is_temp: 'true' }
-      uploadMaterial(params).then((res) => {
+      uploadMaterial(params).then(res => {
         this.form.qpic = res.data.data.media_id
       })
     },
@@ -615,7 +615,7 @@ export default {
         return false
       } else {
         if (arr.length != 0) {
-          arr.forEach((data) => {
+          arr.forEach(data => {
             if (data && data.url !== '') {
               this.picsDialog = false
               this.form.pic_list.push(data.url)

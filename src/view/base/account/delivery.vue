@@ -615,7 +615,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 .flex-box {
   display: flex;
   align-items: center;

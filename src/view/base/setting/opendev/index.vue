@@ -8,20 +8,12 @@
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">KEY</span>
-        <el-input
-          v-model="shopForm.app_key"
-          placeholder="请输入内容"
-          :disabled="true"
-        />
+        <el-input v-model="shopForm.app_key" placeholder="请输入内容" :disabled="true" />
         <!-- <el-button @click="generateKey">随机生成</el-button> -->
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">SECRET</span>
-        <el-input
-          v-model="shopForm.app_secret"
-          placeholder="请输入SECRET"
-          :disabled="true"
-        />
+        <el-input v-model="shopForm.app_secret" placeholder="请输入SECRET" :disabled="true" />
         <!-- <el-button @click="generateSecret">随机生成</el-button> -->
       </div>
       <!-- <div class="content-padded message-autograph">
@@ -37,19 +29,11 @@
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">BASE_URL</span>
-        <el-input
-          v-model="shopForm.external_base_uri"
-          placeholder="请输入内容"
-          :disabled="true"
-        />
+        <el-input v-model="shopForm.external_base_uri" placeholder="请输入内容" :disabled="true" />
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">KEY</span>
-        <el-input
-          v-model="shopForm.external_app_key"
-          placeholder="请输入内容"
-          :disabled="true"
-        />
+        <el-input v-model="shopForm.external_app_key" placeholder="请输入内容" :disabled="true" />
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">SECRET</span>
@@ -72,7 +56,7 @@
 import { getShopSetting, saveShopSetting, saveSalesSetting, getSalesSetting } from '@/api/openapi'
 import { getRandwords } from '@/utils/index'
 export default {
-  data () {
+  data() {
     return {
       detailDialog: false,
       activeName: 'first',
@@ -98,8 +82,8 @@ export default {
       }
     }
   },
-  mounted () {
-    getShopSetting().then((response) => {
+  mounted() {
+    getShopSetting().then(response => {
       this.shopForm = response.data.data
     })
     // getSalesSetting().then((response) => {
@@ -107,35 +91,35 @@ export default {
     // });
   },
   methods: {
-    generateKey () {
+    generateKey() {
       this.shopForm = {
         ...this.shopForm,
         app_key: getRandwords()
       }
     },
-    generateSecret () {
+    generateSecret() {
       this.shopForm = {
         ...this.shopForm,
         app_secret: getRandwords(32)
       }
     },
-    closeDialog () {
+    closeDialog() {
       this.detailDialog = false
     },
-    toDetail (params) {
+    toDetail(params) {
       this.detailDialog = true
       this.currentTemplate = params
     },
-    saveShop () {
-      saveShopSetting(this.shopForm).then((_) => {
+    saveShop() {
+      saveShopSetting(this.shopForm).then(_ => {
         this.$message({
           type: 'success',
           message: '保存销售中心开发设置成功'
         })
       })
     },
-    saveSales () {
-      saveSalesSetting(this.salesForm).then((_) => {
+    saveSales() {
+      saveSalesSetting(this.salesForm).then(_ => {
         this.$message({
           type: 'success',
           message: '保存营销中心开发设置成功'

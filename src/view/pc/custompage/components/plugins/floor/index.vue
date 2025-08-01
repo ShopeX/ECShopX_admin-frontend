@@ -2,18 +2,12 @@
   <div>
     <slot />
     <div class="floor">
-      <div
-        v-if="dataForm.title || dataForm.tabList.length > 0"
-        class="floor-header"
-      >
+      <div v-if="dataForm.title || dataForm.tabList.length > 0" class="floor-header">
         <div class="floor-title">
           {{ dataForm.title }}
         </div>
         <div class="floor-tabs">
-          <el-tabs
-            v-model="dataForm.activeName"
-            type="card"
-          >
+          <el-tabs v-model="dataForm.activeName" type="card">
             <el-tab-pane
               v-for="(item, index) in dataForm.tabList"
               :key="item.id"
@@ -27,20 +21,10 @@
         <!-- 左侧 -->
         <div class="floor-left">
           <!-- 左侧商品类型导航列表 -->
-          <div
-            class="floor-left__top"
-            :style="{ background: dataForm.LeftBackgroundColor }"
-          >
+          <div class="floor-left__top" :style="{ background: dataForm.LeftBackgroundColor }">
             <el-row :gutter="3">
-              <el-col
-                v-for="item in dataForm.leftNavList"
-                :key="item.uuid"
-                :span="8"
-              >
-                <div
-                  class="goods—type__link"
-                  :style="{ color: dataForm.LeftFontColor }"
-                >
+              <el-col v-for="item in dataForm.leftNavList" :key="item.uuid" :span="8">
+                <div class="goods—type__link" :style="{ color: dataForm.LeftFontColor }">
                   {{ item.titleName }}
                 </div>
               </el-col>
@@ -53,10 +37,7 @@
         </div>
         <!-- 商品列表 -->
         <div class="floor-content">
-          <el-row
-            v-for="(items, index) in dataForm.tabList"
-            :key="items.uuid"
-          >
+          <el-row v-for="(items, index) in dataForm.tabList" :key="items.uuid">
             <el-col
               v-for="item in items.children"
               v-if="index + '' === dataForm.activeName"
@@ -64,11 +45,7 @@
               :span="6"
             >
               <div class="floor-content__goods">
-                <el-image
-                  style="width: 100%; height: 170px"
-                  :src="item.pics[0]"
-                  fit="cover"
-                />
+                <el-image style="width: 100%; height: 170px" :src="item.pics[0]" fit="cover" />
                 <p>{{ item.itemName | titlefilter }}</p>
                 <div class="content-goods__footer">
                   <div class="goods-footer__price">
@@ -76,12 +53,7 @@
                     <p>{{ item.price | price }}</p>
                   </div>
                   <div class="goods-footer__submit">
-                    <el-button
-                      size="mini"
-                      type="danger"
-                    >
-                      加入购物车
-                    </el-button>
+                    <el-button size="mini" type="danger"> 加入购物车 </el-button>
                   </div>
                 </div>
               </div>
@@ -105,13 +77,13 @@
 export default {
   name: 'Floor',
   filters: {
-    titlefilter (val) {
+    titlefilter(val) {
       if (val.length > 15) {
         val = val.substring(0, 15) + '...'
       }
       return val
     },
-    price (value, currency = '¥', decimals = 2) {
+    price(value, currency = '¥', decimals = 2) {
       // console.log('filter', value)
       let digitsRE = /(\d{3})(?=\d)/g
       value = parseFloat(value) / 100
@@ -130,7 +102,7 @@ export default {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       dataForm: this.data.data,
 
@@ -138,17 +110,17 @@ export default {
     }
   },
   watch: {
-    dataForm (val) {
+    dataForm(val) {
       console.log('index-watch---')
       console.log(val)
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     // console.log(this.data)
   },
   methods: {
-    handleClick () {}
+    handleClick() {}
   }
 }
 </script>

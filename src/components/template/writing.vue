@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -18,14 +12,8 @@
         <div class="three-dot" />
       </div>
     </div>
-    <div
-      class="content"
-      :style="{ textAlign: config.align }"
-    >
-      <p
-        v-for="item in content"
-        class="paragraph"
-      >
+    <div class="content" :style="{ textAlign: config.align }">
+      <p v-for="item in content" class="paragraph">
         {{ item }}
       </p>
     </div>
@@ -44,7 +32,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -52,7 +40,7 @@ export default {
     }
   },
   computed: {
-    content () {
+    content() {
       {
         if (this.data[0].content) {
           return this.data[0].content.split('\n')
@@ -61,17 +49,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  created () {
+  created() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

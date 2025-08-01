@@ -11,29 +11,12 @@
     />
     <el-divider v-if="form_solo.status == 4" />
     <div class="formClass">
-      <el-form
-        ref="form_solo"
-        :model="form_solo"
-        label-width="150px"
-        :rules="rules"
-      >
+      <el-form ref="form_solo" :model="form_solo" label-width="150px" :rules="rules">
         <el-form-item label="账号认证类型">
-          <el-button
-            type="success"
-            round
-            size="mini"
-          >
-            个体户
-          </el-button>
+          <el-button type="success" round size="mini"> 个体户 </el-button>
         </el-form-item>
-        <el-form-item
-          label="个体户名称"
-          prop="solo_name"
-        >
-          <el-input
-            v-model="form_solo.solo_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户名称" prop="solo_name">
+          <el-input v-model="form_solo.solo_name" :disabled="disabled" />
         </el-form-item>
         <el-row>
           <el-form-item
@@ -41,10 +24,7 @@
             prop="business_code"
             :rules="[{ required: true, message: '请填写营业执照注册号', trigger: 'blur' }]"
           >
-            <el-input
-              v-model="form_solo.business_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form_solo.business_code" :disabled="disabled" />
           </el-form-item>
           <el-form-item
             label="营业执照"
@@ -58,7 +38,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                (ctx) => {
+                ctx => {
                   handleSoloChange(ctx, 'business_code_img')
                 }
               "
@@ -68,17 +48,11 @@
                 :src="fileList.business_code_img"
                 class="avatar"
               >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-row>
-        <el-form-item
-          label="营业执照起始日期"
-          prop="license_start_date"
-        >
+        <el-form-item label="营业执照起始日期" prop="license_start_date">
           <el-date-picker
             v-model="form_solo.license_start_date"
             type="date"
@@ -88,10 +62,7 @@
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item
-          label="营业执照结束日期"
-          prop="license_end_date"
-        >
+        <el-form-item label="营业执照结束日期" prop="license_end_date">
           <el-date-picker
             v-model="form_solo.license_end_date"
             type="date"
@@ -102,60 +73,27 @@
             @change="$forceUpdate()"
           />
         </el-form-item>
-        <el-form-item
-          label="个体户经营地址"
-          prop="solo_business_address"
-        >
-          <el-input
-            v-model="form_solo.solo_business_address"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户经营地址" prop="solo_business_address">
+          <el-input v-model="form_solo.solo_business_address" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="个体户注册地址"
-          prop="solo_reg_address"
-        >
-          <el-input
-            v-model="form_solo.solo_reg_address"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户注册地址" prop="solo_reg_address">
+          <el-input v-model="form_solo.solo_reg_address" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="个体户固定电话"
-          prop="solo_fixed_telephone"
-        >
-          <el-input
-            v-model="form_solo.solo_fixed_telephone"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户固定电话" prop="solo_fixed_telephone">
+          <el-input v-model="form_solo.solo_fixed_telephone" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="经营范围"
-          prop="business_scope"
-        >
-          <el-input
-            v-model="form_solo.business_scope"
-            :disabled="disabled"
-          />
+        <el-form-item label="经营范围" prop="business_scope">
+          <el-input v-model="form_solo.business_scope" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人姓名"
-          prop="legal_name"
-        >
-          <el-input
-            v-model="form_solo.legal_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人姓名" prop="legal_name">
+          <el-input v-model="form_solo.legal_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人证件类型"
-          prop="legal_id_card_type"
-        >
+        <el-form-item label="法人证件类型" prop="legal_id_card_type">
           <el-select
             v-model="form_solo.legal_id_card_type"
             placeholder="选择法人代表证件类"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="bool => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -165,19 +103,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="法人证件号码"
-          prop="legal_id_card"
-        >
-          <el-input
-            v-model="form_solo.legal_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人证件号码" prop="legal_id_card">
+          <el-input v-model="form_solo.legal_id_card" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人证件起始日期"
-          prop="legal_cert_start_date"
-        >
+        <el-form-item label="法人证件起始日期" prop="legal_cert_start_date">
           <el-date-picker
             v-model="form_solo.legal_cert_start_date"
             type="date"
@@ -187,10 +116,7 @@
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item
-          label="法人证件结束日期"
-          prop="legal_cert_end_date"
-        >
+        <el-form-item label="法人证件结束日期" prop="legal_cert_end_date">
           <el-date-picker
             v-model="form_solo.legal_cert_end_date"
             type="date"
@@ -200,10 +126,7 @@
             style="width: 100%"
           />
         </el-form-item>
-        <el-form-item
-          label="法人证件正面"
-          prop="legal_card_imgz"
-        >
+        <el-form-item label="法人证件正面" prop="legal_card_imgz">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -211,26 +134,16 @@
             :auto-upload="true"
             :show-file-list="false"
             :http-request="
-              (ctx) => {
+              ctx => {
                 handleSoloChange(ctx, 'legal_card_imgz')
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgz"
-              :src="fileList.legal_card_imgz"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人证件反面"
-          prop="legal_card_imgf"
-        >
+        <el-form-item label="法人证件反面" prop="legal_card_imgf">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -238,66 +151,29 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              (ctx) => {
+              ctx => {
                 handleSoloChange(ctx, 'legal_card_imgf')
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgf"
-              :src="fileList.legal_card_imgf"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人手机号码"
-          prop="legal_mobile"
-        >
-          <el-input
-            v-model="form_solo.legal_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人手机号码" prop="legal_mobile">
+          <el-input v-model="form_solo.legal_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="企业联系人姓名"
-          prop="contact_name"
-        >
-          <el-input
-            v-model="form_solo.contact_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人姓名" prop="contact_name">
+          <el-input v-model="form_solo.contact_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="企业联系人手机号"
-          prop="contact_mobile"
-        >
-          <el-input
-            v-model="form_solo.contact_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人手机号" prop="contact_mobile">
+          <el-input v-model="form_solo.contact_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="企业联系人邮箱"
-          prop="contact_email"
-        >
-          <el-input
-            v-model="form_solo.contact_email"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人邮箱" prop="contact_email">
+          <el-input v-model="form_solo.contact_email" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="银行卡号"
-          prop="bank_acct_num"
-        >
-          <el-input
-            v-model="form_solo.bank_acct_num"
-            :disabled="disabled"
-          />
+        <el-form-item label="银行卡号" prop="bank_acct_num">
+          <el-input v-model="form_solo.bank_acct_num" :disabled="disabled" />
         </el-form-item>
         <!-- <el-form-item label="银行卡正面" prop="bank_acct_num_imgz">
           <el-upload
@@ -333,15 +209,12 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item> -->
-        <el-form-item
-          label="职业"
-          prop="occupation"
-        >
+        <el-form-item label="职业" prop="occupation">
           <el-select
             v-model="form_solo.occupation"
             placeholder="选择职业"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="bool => (isEdit = bool)"
           >
             <el-option
               v-for="item in occupationList"
@@ -358,13 +231,7 @@
           <el-input v-model="form_solo.open_license_no" :disabled="disabled"></el-input>
         </el-form-item> -->
         <el-form-item>
-          <el-button
-            v-if="!disabled"
-            type="primary"
-            @click="onSoloSubmit"
-          >
-            保存
-          </el-button>
+          <el-button v-if="!disabled" type="primary" @click="onSoloSubmit"> 保存 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -377,7 +244,7 @@ import bankData from '@/common/hfpayBankData.json'
 import UploadUtil from '@/utils/uploadUtil'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
-  data () {
+  data() {
     let vaildIdCard = (rule, value, callback) => {
       if (!vaildateIdCard(value)) {
         callback(new Error('请填写正确的身份证号码'))
@@ -407,74 +274,74 @@ export default {
       isEdit: false,
       cardType: [
         {
-          'card_type': '10',
-          'label': '身份证'
+          card_type: '10',
+          label: '身份证'
         },
         {
-          'card_type': '11',
-          'label': '护照'
+          card_type: '11',
+          label: '护照'
         },
         {
-          'card_type': '14',
-          'label': '回乡证'
+          card_type: '14',
+          label: '回乡证'
         },
         {
-          'card_type': '17',
-          'label': '台胞证'
+          card_type: '17',
+          label: '台胞证'
         }
       ],
       occupationList: [
         {
-          'occupation_key': '01',
-          'label': '国家机关、党群机关、企事业单位负责人'
+          occupation_key: '01',
+          label: '国家机关、党群机关、企事业单位负责人'
         },
         {
-          'occupation_key': '02',
-          'label': '金融业从业人员'
+          occupation_key: '02',
+          label: '金融业从业人员'
         },
         {
-          'occupation_key': '03',
-          'label': '房地产业从业人员'
+          occupation_key: '03',
+          label: '房地产业从业人员'
         },
         {
-          'occupation_key': '04',
-          'label': '商贸从业人员'
+          occupation_key: '04',
+          label: '商贸从业人员'
         },
         {
-          'occupation_key': '05',
-          'label': '自由职业者'
+          occupation_key: '05',
+          label: '自由职业者'
         },
         {
-          'occupation_key': '06',
-          'label': '科教文从业人员 '
+          occupation_key: '06',
+          label: '科教文从业人员 '
         },
         {
-          'occupation_key': '07',
-          'label': '制造业从业人员'
+          occupation_key: '07',
+          label: '制造业从业人员'
         },
         {
-          'occupation_key': '08',
-          'label': '卫生行业从业人员'
+          occupation_key: '08',
+          label: '卫生行业从业人员'
         },
         {
-          'occupation_key': '09',
-          'label': 'IT业从业人员'
+          occupation_key: '09',
+          label: 'IT业从业人员'
         },
         {
-          'occupation_key': '10',
-          'label': '农林牧渔劳动者'
+          occupation_key: '10',
+          label: '农林牧渔劳动者'
         },
         {
-          'occupation_key': '11',
-          'label': '生产工作、运输工作和部分体力劳动者'
+          occupation_key: '11',
+          label: '生产工作、运输工作和部分体力劳动者'
         },
         {
-          'occupation_key': '12',
-          'label': '退休人员'
+          occupation_key: '12',
+          label: '退休人员'
         },
         {
-          'occupation_key': '13',
-          'label': '不便分类的其他劳动者'
+          occupation_key: '13',
+          label: '不便分类的其他劳动者'
         }
       ],
       form_solo: {
@@ -567,7 +434,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let { id, type } = this.$route.query
     this.form_solo.distributor_id = id
     let disabled = type == 0 ? true : false
@@ -576,7 +443,7 @@ export default {
     this.getSoloData()
   },
   methods: {
-    async getSoloData () {
+    async getSoloData() {
       let distributor_id = this.form_solo.distributor_id
       let apply_type = this.form_solo.apply_type
       let res = await getHffile({ distributor_id, apply_type })
@@ -591,18 +458,18 @@ export default {
       delete data.created_at
       delete data.updated_at
       let fileList = JSON.parse(JSON.stringify(this.fileList))
-      Object.keys(fileList).forEach((key) => {
+      Object.keys(fileList).forEach(key => {
         fileList[key] = data[`${key}_full_url`]
       })
       this.fileList = fileList
       this.form_solo = data
     },
-    onSoloSubmit () {
-      this.$refs['form_solo'].validate((valid) => {
+    onSoloSubmit() {
+      this.$refs['form_solo'].validate(valid => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form_solo))
 
-          saveHffile(obj).then((res) => {
+          saveHffile(obj).then(res => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -616,7 +483,7 @@ export default {
         }
       })
     },
-    handleSoloChange (ctx, type) {
+    handleSoloChange(ctx, type) {
       let { file } = ctx
       if (file) {
         if (file.type != 'image/jpeg' && file.type != 'image/png') {
@@ -636,7 +503,7 @@ export default {
       }
       const upload = new UploadUtil()
       // 上传
-      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then((res) => {
+      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then(res => {
         this.fileList[type] = URL.createObjectURL(file)
         let { data } = res[1]
         let { key } = res[0]

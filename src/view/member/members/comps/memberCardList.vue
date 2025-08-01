@@ -148,7 +148,7 @@ export default {
       const { list, is_open } = await this.$api.cardticket.getAllUserVipGrade({ user_id })
       this.vipGradeIsOpen = is_open
       this.userVipGrade = list
-      list.forEach((item) => {
+      list.forEach(item => {
         this.$set(this.formData, item.lv_type, {
           day: 0,
           vip_grade_id: item.vip_grade_id

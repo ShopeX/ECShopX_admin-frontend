@@ -278,7 +278,7 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editItemsSort(index, row) {
-      setItemsSort({ 'sort': row.sort, 'item_id': row.itemId }).then((response) => {
+      setItemsSort({ sort: row.sort, item_id: row.itemId }).then(response => {
         this.getGoodsList()
       })
     },
@@ -288,7 +288,7 @@ export default {
     },
     itemsDetail(index, row) {
       this.ItemsDetailVisible = true
-      getItemsDetail(row.itemId).then((response) => {
+      getItemsDetail(row.itemId).then(response => {
         this.itemsDetailData = response.data.data
         this.start_date = this.getTimeStr(this.itemsDetailData.begin_date)
         this.end_date = this.getTimeStr(this.itemsDetailData.end_date)
@@ -301,7 +301,7 @@ export default {
     },
     getGoodsList() {
       this.loading = true
-      getItemsList(this.params).then((response) => {
+      getItemsList(this.params).then(response => {
         this.ItemsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -314,7 +314,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteItems(row.itemId).then((response) => {
+          deleteItems(row.itemId).then(response => {
             this.ItemsList.splice(index, 1)
             this.$message({
               message: '删除商品成功',
@@ -347,7 +347,7 @@ export default {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

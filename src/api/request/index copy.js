@@ -8,7 +8,7 @@ function createRequestClient() {
   })
 
   client.addRequestInterceptor({
-    fulfilled: async config => {
+    fulfilled: async (config) => {
       const token = store.getters.token
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
@@ -19,7 +19,7 @@ function createRequestClient() {
   })
 
   client.addResponseInterceptor({
-    fulfilled: response => {
+    fulfilled: (response) => {
       const { data: responseData, status } = response
       const {
         data: { status_code, message }
@@ -32,10 +32,10 @@ function createRequestClient() {
   })
 
   client.addResponseInterceptor({
-    fulfilled: response => {
+    fulfilled: (response) => {
       return response
     },
-    rejected: error => {
+    rejected: (error) => {
       const err = error?.toString?.() ?? ''
       let errMsg = ''
       if (err?.includes('Network Error')) {

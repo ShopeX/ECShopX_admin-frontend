@@ -32,7 +32,7 @@ async function refreshToken() {
 
 // 处理请求队列
 function handleRequestQueue(token) {
-  requestQueue.forEach(callback => {
+  requestQueue.forEach((callback) => {
     callback(token)
   })
   requestQueue = []
@@ -44,7 +44,7 @@ function createRequestClient() {
   })
 
   client.addRequestInterceptor({
-    fulfilled: async config => {
+    fulfilled: async (config) => {
       const token = store.getters.token
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
@@ -55,7 +55,7 @@ function createRequestClient() {
           ...config.data
         }
         const params = {}
-        Object.keys(config.params).forEach(key => {
+        Object.keys(config.params).forEach((key) => {
           if (config.params[key] !== '') {
             params[key] = config.params[key]
           }
@@ -68,7 +68,7 @@ function createRequestClient() {
   })
 
   client.addResponseInterceptor({
-    fulfilled: response => {
+    fulfilled: (response) => {
       const { data: responseData, status } = response
       const {
         data: { status_code, message }
@@ -81,10 +81,10 @@ function createRequestClient() {
   })
 
   client.addResponseInterceptor({
-    fulfilled: response => {
+    fulfilled: (response) => {
       return response
     },
-    rejected: async error => {
+    rejected: async (error) => {
       const err = error?.toString?.() ?? ''
       let errMsg = ''
       if (err?.includes('Network Error')) {
@@ -111,7 +111,7 @@ function createRequestClient() {
 
         // 将请求添加到队列
         return new Promise((resolve, reject) => {
-          requestQueue.push(token => {
+          requestQueue.push((token) => {
             // 更新请求头中的token
             config.headers.Authorization = `Bearer ${token}`
             // 重新发起请求
@@ -120,13 +120,13 @@ function createRequestClient() {
         })
           .then(() => {
             // 刷新token成功后，处理队列中的请求
-            refreshTokenPromise.then(token => {
+            refreshTokenPromise.then((token) => {
               handleRequestQueue(token)
               isRefreshing = false
               refreshTokenPromise = null
             })
           })
-          .catch(error => {
+          .catch((error) => {
             // 刷新token失败，清空队列
             requestQueue = []
             isRefreshing = false
@@ -134,7 +134,6 @@ function createRequestClient() {
             return Promise.reject(error)
           })
       }
-
       const responseData = error?.response?.data ?? {}
       Vue.prototype.$message.error(
         (responseData?.data?.error ?? responseData?.data?.message ?? '') || '请求失败'

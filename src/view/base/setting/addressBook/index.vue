@@ -11,30 +11,17 @@
 <template>
   <div class="addressBook">
     <div class="actButton">
-      <el-button
-        type="primary"
-        :loading="isLoading"
-        @click.stop="getAdressBook"
-      >
+      <el-button type="primary" :loading="isLoading" @click.stop="getAdressBook">
         获取企业微信通讯录
       </el-button>
-      <el-button
-        :loading="loading.syncDepart"
-        @click.stop="syncDepartToShop"
-      >
+      <el-button :loading="loading.syncDepart" @click.stop="syncDepartToShop">
         同步选中部门到店铺
       </el-button>
-      <el-button
-        :loading="loading.syncMember"
-        @click.stop="syncMemberToGuide"
-      >
+      <el-button :loading="loading.syncMember" @click.stop="syncMemberToGuide">
         同步选中成员到导购
       </el-button>
     </div>
-    <div
-      v-loading="isLoading"
-      class="main"
-    >
+    <div v-loading="isLoading" class="main">
       <el-tree
         ref="elTree"
         class="elTree"
@@ -48,10 +35,7 @@
         @check="changeChecked"
         @node-click="nodeClick"
       >
-        <span
-          slot-scope="{ node, data }"
-          class="custom-node"
-        >
+        <span slot-scope="{ node, data }" class="custom-node">
           <span>{{ node.label }}</span>
           <span>
             <el-tooltip
@@ -60,21 +44,10 @@
               content="切换直属下级全选状态"
               placement="top-start"
             >
-              <i
-                class="el-icon-sort"
-                @click.stop="() => checkAllChild(data)"
-              />
+              <i class="el-icon-sort" @click.stop="() => checkAllChild(data)" />
             </el-tooltip>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="切换子级全选状态"
-              placement="top-start"
-            >
-              <i
-                class="iconfont icon-qiehuan"
-                @click.stop="() => checkAllChild(data, true)"
-              />
+            <el-tooltip class="item" effect="dark" content="切换子级全选状态" placement="top-start">
+              <i class="iconfont icon-qiehuan" @click.stop="() => checkAllChild(data, true)" />
             </el-tooltip>
             <el-tooltip
               class="item"
@@ -82,18 +55,12 @@
               content="同步当前部门到已有门店"
               placement="top-start"
             >
-              <i
-                class="iconfont icon-tongbu"
-                @click.stop="() => syncAllCheck(node)"
-              />
+              <i class="iconfont icon-tongbu" @click.stop="() => syncAllCheck(node)" />
             </el-tooltip>
           </span>
         </span>
       </el-tree>
-      <div
-        v-loading="tableLoading"
-        class="table"
-      >
+      <div v-loading="tableLoading" class="table">
         <h3 class="title">
           {{ title }}
         </h3>
@@ -104,27 +71,13 @@
           @select="selectMember"
           @select-all="selectAllMember"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-            :selectable="isSelectable"
-          />
-          <el-table-column
-            prop="name"
-            label="姓名"
-          />
-          <el-table-column
-            prop="mobile"
-            label="手机号"
-          />
+          <el-table-column type="selection" width="55" :selectable="isSelectable" />
+          <el-table-column prop="name" label="姓名" />
+          <el-table-column prop="mobile" label="手机号" />
         </el-table>
       </div>
     </div>
-    <el-dialog
-      title="选择门店"
-      custom-class="dialog"
-      :visible.sync="dialogFormVisible"
-    >
+    <el-dialog title="选择门店" custom-class="dialog" :visible.sync="dialogFormVisible">
       <el-input
         v-model="param.name"
         placeholder="请输入店铺名称"
@@ -132,21 +85,11 @@
         class="input-with-select"
         @clear="pageChange(1)"
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click.stop="pageChange(1)"
-        />
+        <el-button slot="append" icon="el-icon-search" @click.stop="pageChange(1)" />
       </el-input>
       <div v-loading="loading.storeList">
-        <el-table
-          :data="storeList"
-          size="small"
-        >
-          <el-table-column
-            prop="name"
-            label="门店名称"
-          />
+        <el-table :data="storeList" size="small">
+          <el-table-column prop="name" label="门店名称" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -184,7 +127,7 @@ import { getDistributorList } from '../../../../api/marketing'
 
 export default {
   name: 'AddressBook',
-  data () {
+  data() {
     return {
       list: [],
       treeProps: {
@@ -215,7 +158,7 @@ export default {
       dialogFormVisible: false
     }
   },
-  mounted () {
+  mounted() {
     this.getAdressBook()
   },
   methods: {
@@ -224,7 +167,7 @@ export default {
       this.isLoading = true
       this.selectNodeKey = []
       this.$refs.elTree.setCheckedKeys([])
-      getWorkwechat().then((res) => {
+      getWorkwechat().then(res => {
         this.list = res.data.data
         this.isLoading = false
         const { id, name } = this.list[0]
@@ -235,7 +178,7 @@ export default {
       this.tableLoading = true
       this.selectMemberList = []
       getMemberByClub(id)
-        .then((res) => {
+        .then(res => {
           this.title = name
           this.tableData = res.data.data
           this.$nextTick(() => {
@@ -250,7 +193,7 @@ export default {
       if (!this.$refs.multipleTable) return
       const data = this.tableData
       for (let i = 0; i < data.length; i++) {
-        const isHave = this.selectMemberList.some((user) => user.userid === data[i].userid)
+        const isHave = this.selectMemberList.some(user => user.userid === data[i].userid)
         this.$refs.multipleTable.toggleRowSelection(data[i], isHave)
       }
     },
@@ -267,7 +210,7 @@ export default {
       const param = {
         department_id: JSON.stringify(this.selectNodeKey)
       }
-      syncClubToStore(param).then((res) => {
+      syncClubToStore(param).then(res => {
         this.$message({
           message: '同步部门成功',
           type: 'success'
@@ -282,7 +225,7 @@ export default {
         distributor_id: id
       }
       // this.loading.syncClub = true
-      syncClubToStore(param).then((res) => {
+      syncClubToStore(param).then(res => {
         // this.loading.syncClub = false
         this.$message({
           message: '同步当前部门成功',
@@ -293,7 +236,7 @@ export default {
     // 获取门店列表
     getStoreList: function () {
       this.loading.storeList = true
-      getDistributorList(this.param).then((res) => {
+      getDistributorList(this.param).then(res => {
         this.storeList = res.data.data.list
         this.total = res.data.data.total_count
         this.loading.storeList = false
@@ -315,20 +258,20 @@ export default {
         return
       } else {
         this.loading.syncMember = true
-        const ids = list.map((item) => item.userid)
+        const ids = list.map(item => item.userid)
         const param = {
           user_ids: JSON.stringify(ids)
         }
 
         syncMemberToGuide(param)
-          .then((res) => {
+          .then(res => {
             this.$message({
               message: '同步会员成功',
               type: 'success'
             })
             this.loading.syncMember = false
           })
-          .catch((e) => {
+          .catch(e => {
             this.loading.syncMember = false
           })
       }
@@ -368,7 +311,7 @@ export default {
       const list = [...this.selectNodeKey]
       if (list.length > 0) {
         for (let i = 0; i < nodeKeys.length; i++) {
-          const haveIndex = list.findIndex((item) => item && item.id === nodeKeys[i].id)
+          const haveIndex = list.findIndex(item => item && item.id === nodeKeys[i].id)
           if (haveIndex !== -1) {
             list.splice(haveIndex, 1)
           } else {
@@ -380,13 +323,13 @@ export default {
       }
       if (!isAllHave) list.push(...nodeKeys)
       this.selectNodeKey = list
-      const ids = list.map((item) => item.id)
+      const ids = list.map(item => item.id)
       this.$refs.elTree.setCheckedKeys(ids)
     },
     // 处理单个变化
     changeChecked: function (data, isChecked) {
       const list = [...this.selectNodeKey]
-      const haveIndex = list.findIndex((item) => item && item.id === data.id)
+      const haveIndex = list.findIndex(item => item && item.id === data.id)
       if (haveIndex !== -1) {
         list.splice(haveIndex, 1)
       } else {
@@ -435,15 +378,15 @@ export default {
     selectAllMember: function (data) {
       let list = this.selectMemberList
       if (data.length > 0) {
-        const arr = data.filter((item) => {
-          const isHave = list.some((user) => user.userid === item.userid)
+        const arr = data.filter(item => {
+          const isHave = list.some(user => user.userid === item.userid)
           return !isHave
         })
         list.push(...arr)
       } else {
         const tableList = this.tableData
-        const arr = list.filter((user) => {
-          const isHave = tableList.some((item) => user.userid === item.userid)
+        const arr = list.filter(user => {
+          const isHave = tableList.some(item => user.userid === item.userid)
           return !isHave
         })
         list = arr
@@ -454,19 +397,19 @@ export default {
     selectMember: function (data) {
       let list = this.selectMemberList
       if (data.length > 0) {
-        list = list.filter((item) => {
-          const isHave = this.tableData.some((user) => user.userid === item.userid)
+        list = list.filter(item => {
+          const isHave = this.tableData.some(user => user.userid === item.userid)
           return !isHave
         })
-        const arr = data.filter((item) => {
-          const isHave = list.some((user) => user.userid === item.userid)
+        const arr = data.filter(item => {
+          const isHave = list.some(user => user.userid === item.userid)
           return !isHave
         })
         list.push(...arr)
       } else {
         const tableList = this.tableData
-        const arr = list.filter((user) => {
-          const isHave = tableList.some((item) => user.userid === item.userid)
+        const arr = list.filter(user => {
+          const isHave = tableList.some(item => user.userid === item.userid)
           return !isHave
         })
         list = arr

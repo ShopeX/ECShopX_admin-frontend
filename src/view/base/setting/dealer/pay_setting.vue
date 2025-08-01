@@ -299,7 +299,7 @@ export default {
       this.mer_type_options = mer_type
     },
     submitForm() {
-      this.$refs['ruleForm'].validate(async (valid) => {
+      this.$refs['ruleForm'].validate(async valid => {
         if (valid) {
           if (this.channelList.indexOf('wx_lite') > -1 && this.wx_lite.appid == '') {
             return this.$message.error('微信小程序APPID不能为空')

@@ -22,27 +22,14 @@
         </div>
       </div>
     </div>
-    <el-table
-      v-loading="loading"
-      :data="dataList"
-      :height="wheight - 240"
-    >
-      <el-table-column
-        prop="timeStart"
-        label="创建时间"
-      >
+    <el-table v-loading="loading" :data="dataList" :height="wheight - 240">
+      <el-table-column prop="timeStart" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="depositTradeId"
-        label="交易流水号"
-      />
-      <el-table-column
-        prop="mobile"
-        label="用户手机号"
-      />
+      <el-table-column prop="depositTradeId" label="交易流水号" />
+      <el-table-column prop="mobile" label="用户手机号" />
       <el-table-column label="类型">
         <template slot-scope="scope">
           <span v-if="scope.row.tradeType == 'consume'">消费记录</span>
@@ -50,18 +37,12 @@
           <span v-else>充值记录</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="money"
-        label="金额"
-      >
+      <el-table-column prop="money" label="金额">
         <template slot-scope="scope">
           <span>{{ scope.row.money / 100 }}元</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="shopName"
-        label="门店"
-      />
+      <el-table-column prop="shopName" label="门店" />
     </el-table>
     <!--
     <el-col :span="7">
@@ -90,7 +71,7 @@ import { mapGetters } from 'vuex'
 import { getDepositTradeList, getDepositCountIndex } from '../../../api/deposit'
 
 export default {
-  data () {
+  data() {
     return {
       icon1: stored1,
       icon2: stored2,
@@ -104,11 +85,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    getDepositTradeList().then((res) => {
+  mounted() {
+    getDepositTradeList().then(res => {
       this.dataList = res.data.data.list
     })
-    getDepositCountIndex().then((res) => {
+    getDepositCountIndex().then(res => {
       this.count = res.data.data
     })
   },

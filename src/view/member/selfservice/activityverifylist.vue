@@ -78,7 +78,7 @@ export default {
         ...initialParams
       },
       loading: false,
-      shopList: [],
+      shopList: []
     }
   },
   mounted() {
@@ -141,7 +141,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -153,13 +153,12 @@ export default {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach((row) => {
-          this.shopList.push({ 'value': row.name, 'distributor_id': row.distributor_id })
+        list.forEach(row => {
+          this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
         })
       }
     }
   }
 }
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

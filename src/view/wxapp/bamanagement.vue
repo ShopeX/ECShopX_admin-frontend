@@ -1,8 +1,5 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
+  <transition name="fade" mode="out-in">
     <storeDefault v-if="template_name === 'yykmembership'" />
     <storeSport v-if="template_name === 'yykmendian'" />
     <storeUniversal v-if="template_name === 'yykuniversal'" />
@@ -48,7 +45,7 @@ export default {
     marketingCard: marketingCard,
     marketingGroup: marketingGroup
   },
-  data () {
+  data() {
     return {
       activeIndex: '',
       currentCode: '',
@@ -58,7 +55,7 @@ export default {
   computed: {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
-  mounted () {
+  mounted() {
     if (this.active) {
       this.activeIndex = this.active
     }
@@ -70,7 +67,7 @@ export default {
     }
   },
   methods: {
-    chooseTemp () {
+    chooseTemp() {
       this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
     }
   }

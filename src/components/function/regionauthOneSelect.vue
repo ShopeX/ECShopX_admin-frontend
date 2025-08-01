@@ -7,16 +7,8 @@
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input
-        v-model="regionauth_name"
-        placeholder="输入区域名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+      <el-input v-model="regionauth_name" placeholder="输入区域名称" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
     <el-table
@@ -33,19 +25,13 @@
             :label="scope.row.regionauth_id"
             @change.native="getTemplateRow(scope.$index, scope.row)"
           >
-&nbsp;
+            &nbsp;
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="regionauth_name"
-        label="区域名称"
-      />
+      <el-table-column prop="regionauth_name" label="区域名称" />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -53,15 +39,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -94,7 +74,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       templateRadio: '',
       dataType: 'regionauth',
@@ -112,45 +92,45 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.storeVisible
     }
   },
   watch: {
-    sourceType (newVal, oldVal) {
+    sourceType(newVal, oldVal) {
       this.dataType = this.sourceType
     },
-    relDataIds (newVal, oldVal) {
+    relDataIds(newVal, oldVal) {
       this.selectRows = newVal
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       this.getRegionauth()
     }
   },
   methods: {
-    getTemplateRow (index, row) {
+    getTemplateRow(index, row) {
       this.multipleSelection = new Array(row)
     },
-    getRegionauth () {
-      getRegionauth(this.params).then((response) => {
+    getRegionauth() {
+      getRegionauth(this.params).then(response => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
         this.loading = false
         this.multipleSelection = []
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getRegionauth()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.regionauth_name = this.regionauth_name
       this.getRegionauth()
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
     }
   }

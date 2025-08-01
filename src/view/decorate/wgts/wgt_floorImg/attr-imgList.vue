@@ -18,7 +18,7 @@
           <el-input v-model="scope.data.ImgTitle" placeholder="图片标题" />
           <div class="img-item--picker">
             <SpImagePicker v-model="scope.data.imgUrl" size="small" />
-            <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
+            <CompPickerLink :value="scope.data" @change="e => onChangeLink(e, scope.index)" />
           </div>
           <div class="cell-value-tip">建议尺寸:（宽度128px，高度自适应）</div>
         </div>
@@ -78,7 +78,7 @@ export default {
         num: 20 - this.localValue.length
       })
       this.localValue = this.localValue.concat(
-        data.map((item) => {
+        data.map(item => {
           return {
             ImgTitle: '',
             imgUrl: item.url

@@ -12,11 +12,7 @@
       </div>
     </div>
     <div class="switch">
-      <el-switch
-        v-model="info.is_enable"
-        :disabled="disabled"
-        @change="setEnable()"
-      />
+      <el-switch v-model="info.is_enable" :disabled="disabled" @change="setEnable()" />
     </div>
   </div>
 </template>
@@ -26,15 +22,15 @@ import { createCompanyLogistics, deleteCompanyLogistics } from '@/api/logistics'
 export default {
   props: ['info', 'disabled'],
   methods: {
-    setEnable () {
+    setEnable() {
       console.log('setEnable', this.info)
       if (this.info.is_enable) {
-        createCompanyLogistics(this.info).then((response) => {
+        createCompanyLogistics(this.info).then(response => {
           this.$message.success(`${this.info.corp_name}已开启`)
           // this.$emit("refreshList");
         })
       } else {
-        deleteCompanyLogistics(this.info.corp_id).then((response) => {
+        deleteCompanyLogistics(this.info.corp_id).then(response => {
           // this.getLogisticsListData();
           // this.$emit("refreshList");
         })

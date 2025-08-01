@@ -1,98 +1,98 @@
 <template>
   <SpPage>
-  <div class="cus-authory-approve">
-    <PersonInfo
-      :info="approvel_info"
-      title="详细信息"
-      :operator-info="operator_info"
-      :distributor-ids="distributorIds"
-      :role-data="roleData"
-    />
-    <el-card v-if="approvel_info.status == '1'">
-      <div class="cus-title">操作日志</div>
-      <el-timeline :reverse="false" class="cus-timeline">
-        <el-timeline-item
-          v-for="(item, index) in logList"
-          :key="index"
-          :timestamp="item.custimestamp"
-        >
-          {{ item.content }}
-        </el-timeline-item>
-      </el-timeline>
-    </el-card>
-    <el-card v-if="approvel_info.status == '2'">
-      <div class="cus-title">驳回原因</div>
-      <el-row>
-        <el-col :span="24" style="margin-left: 20px">
-          <span>{{ approvel_info.remarks || '-' }}</span>
-        </el-col>
-      </el-row>
-    </el-card>
-    <el-row class="cus-btn-box">
-      <el-button
-        v-if="approvel_info.status == '0'"
-        type="success"
-        class="btn"
-        @click="handleDialogOpen(1)"
-      >
-        通过
-      </el-button>
-      <el-button
-        v-if="approvel_info.status == '0'"
-        type="danger"
-        class="btn"
-        @click="handleDialogOpen(2)"
-      >
-        驳回
-      </el-button>
-      <el-button
-        v-if="approvel_info.status == '1' && approvel_info.is_closed == 0"
-        :disabled="disabledBtn"
-        type="primary"
-        class="btn"
-        @click="handleDialogOpen(3)"
-      >
-        关闭权限
-      </el-button>
-      <el-button
-        v-if="approvel_info.status == '1' && approvel_info.is_closed == 1"
-        :disabled="disabledBtn"
-        type="primary"
-        class="btn"
-        @click="handleDialogOpen(4)"
-      >
-        打开权限
-      </el-button>
-    </el-row>
-    <el-dialog
-      title="审批弹框"
-      :visible.sync="visibleModal"
-      width="30%"
-      :close-on-click-modal="false"
-      @close="handleDialogClose"
-    >
-      <el-row>{{ visibleContent }}</el-row>
-      <el-input
-        v-if="approveType === 2"
-        v-model="remarks"
-        type="textarea"
-        :rows="5"
-        :maxlength="100"
-        :show-word-limit="true"
-        placeholder="请填写审批意见"
+    <div class="cus-authory-approve">
+      <PersonInfo
+        :info="approvel_info"
+        title="详细信息"
+        :operator-info="operator_info"
+        :distributor-ids="distributorIds"
+        :role-data="roleData"
       />
-      <div slot="footer" class="dialog-footer">
-        <loading-btn
-          ref="loadingBtn"
-          size="medium"
+      <el-card v-if="approvel_info.status == '1'">
+        <div class="cus-title">操作日志</div>
+        <el-timeline :reverse="false" class="cus-timeline">
+          <el-timeline-item
+            v-for="(item, index) in logList"
+            :key="index"
+            :timestamp="item.custimestamp"
+          >
+            {{ item.content }}
+          </el-timeline-item>
+        </el-timeline>
+      </el-card>
+      <el-card v-if="approvel_info.status == '2'">
+        <div class="cus-title">驳回原因</div>
+        <el-row>
+          <el-col :span="24" style="margin-left: 20px">
+            <span>{{ approvel_info.remarks || '-' }}</span>
+          </el-col>
+        </el-row>
+      </el-card>
+      <el-row class="cus-btn-box">
+        <el-button
+          v-if="approvel_info.status == '0'"
+          type="success"
+          class="btn"
+          @click="handleDialogOpen(1)"
+        >
+          通过
+        </el-button>
+        <el-button
+          v-if="approvel_info.status == '0'"
+          type="danger"
+          class="btn"
+          @click="handleDialogOpen(2)"
+        >
+          驳回
+        </el-button>
+        <el-button
+          v-if="approvel_info.status == '1' && approvel_info.is_closed == 0"
+          :disabled="disabledBtn"
           type="primary"
-          text="确 定"
-          @clickHandle="handleDialogChange('loadingBtn')"
+          class="btn"
+          @click="handleDialogOpen(3)"
+        >
+          关闭权限
+        </el-button>
+        <el-button
+          v-if="approvel_info.status == '1' && approvel_info.is_closed == 1"
+          :disabled="disabledBtn"
+          type="primary"
+          class="btn"
+          @click="handleDialogOpen(4)"
+        >
+          打开权限
+        </el-button>
+      </el-row>
+      <el-dialog
+        title="审批弹框"
+        :visible.sync="visibleModal"
+        width="30%"
+        :close-on-click-modal="false"
+        @close="handleDialogClose"
+      >
+        <el-row>{{ visibleContent }}</el-row>
+        <el-input
+          v-if="approveType === 2"
+          v-model="remarks"
+          type="textarea"
+          :rows="5"
+          :maxlength="100"
+          :show-word-limit="true"
+          placeholder="请填写审批意见"
         />
-      </div>
-    </el-dialog>
-  </div>
-</SpPage>
+        <div slot="footer" class="dialog-footer">
+          <loading-btn
+            ref="loadingBtn"
+            size="medium"
+            type="primary"
+            text="确 定"
+            @clickHandle="handleDialogChange('loadingBtn')"
+          />
+        </div>
+      </el-dialog>
+    </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -142,7 +142,7 @@ export default {
   methods: {
     getDetail(pass_id) {
       encryptDetail(pass_id)
-        .then((response) => {
+        .then(response => {
           let data = response.data.data
           this.approvel_info = data || {}
           this.operator_info = data.operator_info || {}
@@ -154,7 +154,7 @@ export default {
             this.disabledBtn = true
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -164,15 +164,15 @@ export default {
     },
     getLog(operator_id) {
       datapassLog({ operator_id })
-        .then((response) => {
+        .then(response => {
           let data = response.data.data.list
-          data = data.map((el) => {
+          data = data.map(el => {
             el.custimestamp = this.timeFilter(el.create_time)
             return el
           })
           this.logList = data || {}
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -216,7 +216,7 @@ export default {
           is_closed: '0'
         }
       }
-      api(this.pass_id, parmas).then((res) => {
+      api(this.pass_id, parmas).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'

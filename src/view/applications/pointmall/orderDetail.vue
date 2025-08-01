@@ -1001,7 +1001,7 @@ export default {
       this.dialog = false
     },
     getMemberInfo(filter) {
-      getMember(filter).then((response) => {
+      getMember(filter).then(response => {
         this.memberInfo = response.data.data
       })
     },
@@ -1012,17 +1012,17 @@ export default {
         delivery_code: this.orderInfo.delivery_code,
         delivery_corp_source: this.orderInfo.delivery_corp_source
       }
-      getDeliveryDetail(query).then((response) => {
+      getDeliveryDetail(query).then(response => {
         this.activities = response.data.data
       })
     },
     getMemberInfo(filter) {
-      getMember(filter).then((response) => {
+      getMember(filter).then(response => {
         this.memberInfo = response.data.data
       })
     },
     process() {
-      processDrugOrders(this.order_id, this.form).then((res) => {
+      processDrugOrders(this.order_id, this.form).then(res => {
         this.$message({ type: 'success', message: '审核成功' })
         this.getDetail()
       })
@@ -1033,13 +1033,13 @@ export default {
         pageSize: 100,
         name: query,
         distributor_id: this.orderInfo.distributor_id
-      }).then((res) => {
+      }).then(res => {
         this.shopsList = res.data.data.list
       })
     },
     getDetail() {
       this.loading = true
-      getOrderDetail(this.order_id).then((response) => {
+      getOrderDetail(this.order_id).then(response => {
         this.orderInfo = response.data.data.orderInfo
         this.tradeInfo = response.data.data.tradeInfo
         this.tradeList = response.data.data.tradeList
@@ -1047,7 +1047,7 @@ export default {
         this.cancelData = response.data.data.cancelData
         this.profit = response.data.data.profit
         this.loading = false
-        this.getMemberInfo({ 'user_id': this.orderInfo.user_id })
+        this.getMemberInfo({ user_id: this.orderInfo.user_id })
       })
     },
     imagedetail(imgurl) {
@@ -1055,7 +1055,7 @@ export default {
       this.bigImageUrl = imgurl
     },
     getLogisticsList() {
-      getLogisticsList().then((res) => {
+      getLogisticsList().then(res => {
         this.dlycorps = res.data.data.list
       })
     },
@@ -1071,7 +1071,7 @@ export default {
         this.deliveryForm.delivery_corp = ''
         this.deliveryForm.delivery_code = ''
       }
-      updateDelivery(this.order_id, this.deliveryForm).then((response) => {
+      updateDelivery(this.order_id, this.deliveryForm).then(response => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.$message.success('修改物流信息成功!')

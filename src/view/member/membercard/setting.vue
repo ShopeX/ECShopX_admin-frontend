@@ -204,7 +204,7 @@ export default {
     }
   },
   mounted() {
-    getMemberCardDetail().then((res) => {
+    getMemberCardDetail().then(res => {
       if (res.data.data.brand_name) {
         this.form = res.data.data
       }
@@ -212,11 +212,11 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           this.submitDisabled = true
           let params = this.form
-          setMemberCard(params).then((res) => {
+          setMemberCard(params).then(res => {
             if (res.data.data) {
               this.submitDisabled = false
               this.$message.success('设置成功')

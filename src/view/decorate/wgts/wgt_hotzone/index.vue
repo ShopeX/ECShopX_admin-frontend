@@ -35,7 +35,7 @@
   <div
     :class="{
       'wgt-hotzone': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -45,7 +45,7 @@
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced
+        spaced: value.spaced
       }"
     >
       <SpImage :src="value.data.imgUrl" />

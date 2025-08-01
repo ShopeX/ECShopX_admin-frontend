@@ -1,23 +1,10 @@
 <template>
   <div>
-    <el-row
-      v-if="goods.length > 0"
-      :gutter="20"
-    >
-      <el-col
-        v-for="(item, index) in goods"
-        :key="index"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="6"
-      >
+    <el-row v-if="goods.length > 0" :gutter="20">
+      <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img
-              :src="item.pics[0]"
-              alt=""
-            >
+            <img :src="item.pics[0]" alt="">
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -35,20 +22,12 @@
               </template>
             </div> -->
           </div>
-          <div
-            class="goods-remove iconfont icon-trash-alt"
-            @click="handleSkuRemove(index)"
-          />
+          <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)" />
         </div>
       </el-col>
     </el-row>
     <div>
-      <el-button
-        type="primary"
-        @click="handleGoodsDialogShow"
-      >
-        选择商品
-      </el-button>
+      <el-button type="primary" @click="handleGoodsDialogShow"> 选择商品 </el-button>
     </div>
     <!-- <el-dialog
       title="选择sku"
@@ -121,7 +100,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       goods: [],
@@ -146,13 +125,12 @@ export default {
     }
   },
   computed: {
-    singleData () {
+    singleData() {
       return this.single
     }
   },
   watch: {
-    data (val) {
-
+    data(val) {
       // console.log("🚀🚀🚀 ~ file: goodsSelector.vue:156 ~ data ~ val:", val)
 
       this.goods = val
@@ -161,18 +139,18 @@ export default {
     }
   },
   methods: {
-    handleSkuDialogShow (index) {
+    handleSkuDialogShow(index) {
       const that = this
       this.loading = true
       this.current = index
       this.skuParams.item_id = this.goods[index].default_item_id
       this.dialogVisible = true
       let checked = this.goods[index].spec_items
-      getItemsList(this.skuParams).then((res) => {
+      getItemsList(this.skuParams).then(res => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach((item) => {
-            let index = checked.findIndex((n) => item.itemId === n.itemId)
+          that.skus.forEach(item => {
+            let index = checked.findIndex(n => item.itemId === n.itemId)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -181,25 +159,25 @@ export default {
         this.loading = false
       })
     },
-    handleGoodsDialogShow () {
+    handleGoodsDialogShow() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleSkuChange (val) {
+    handleSkuChange(val) {
       this.checkedSkus = val
     },
-    handleSkuSubmit () {
+    handleSkuSubmit() {
       this.dialogVisible = false
       this.goods[this.current].spec_items = this.checkedSkus
       this.generateSku()
     },
-    handleGoodsSubmit (data) {
+    handleGoodsSubmit(data) {
       console.log('handleGoodsSubmit data', data)
       this.itemVisible = false
-      if (data === null ) return
+      if (data === null) return
       this.relItems = data
       let list = []
-      data.forEach((item) => {
+      data.forEach(item => {
         if (!item.nospec) {
           list.push(Object.assign(item, { spec_items: [] }))
         } else {
@@ -207,8 +185,8 @@ export default {
         }
       })
       if (this.goods.length > 0) {
-        list.forEach((item) => {
-          let goodsItem = this.goods.find((n) => item.itemId === n.item_id)
+        list.forEach(item => {
+          let goodsItem = this.goods.find(n => item.itemId === n.item_id)
           if (goodsItem && goodsItem.spec_items && goodsItem.spec_items.length > 0) {
             item.spec_items = goodsItem.spec_items
           }
@@ -216,11 +194,11 @@ export default {
       }
       this.goods = list
 
-      console.log('this.goods', this.goods);
-      
+      console.log('this.goods', this.goods)
+
       this.generateSku()
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem = []
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.goods))
@@ -263,10 +241,10 @@ export default {
       // }
       this.$emit('change', this.goods)
     },
-    handleGoodsDialogHide () {
+    handleGoodsDialogHide() {
       this.itemVisible = false
     },
-    handleSkuRemove (index) {
+    handleSkuRemove(index) {
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()

@@ -39,34 +39,34 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.res,
       goodsVisible: false
     }
   },
   computed: {
-    limit_num () {
+    limit_num() {
       return this.usage == 'store' ? 20 : 0
     }
   },
   watch: {
     t_data: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.$emit('data', newVal)
       },
       deep: true
     }
   },
   methods: {
-    showGoods (index) {
+    showGoods(index) {
       console.log('showGoods', index)
       if (index) {
         this.editorDataIndex = index
       }
       this.goodsVisible = true
     },
-    pickGoods (data) {
+    pickGoods(data) {
       this.t_data.data = [...this.t_data.data, ...data]
       console.log(this.limit_num, this.t_data.data.length, this.limit_num)
       // 限制数量处理（弹框中可选的数量不确定）
@@ -77,7 +77,7 @@ export default {
       console.log('pickGoods', this.t_data.data)
       this.goodsVisible = false
     },
-    closeDialog () {
+    closeDialog() {
       this.goodsVisible = false
     }
   }

@@ -11,76 +11,49 @@
         </div>
       </div>
       <div class="content-right">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save"> 保存 </el-button>
       </div>
     </section>
     <section class="section-white view-warp">
       <div class="pages-view">
         <div class="page active">
-          <img
-            alt=""
-            src="@/assets/img/wxapp_member_sport.jpg"
-            height="569"
-            width="320"
-          >
+          <img alt="" src="@/assets/img/wxapp_member_sport.jpg" height="569" width="320">
         </div>
       </div>
       <div class="template-view">
-        <div
-          class="template"
-          :style="'background:' + theme.bodyColor"
-        >
+        <div class="template" :style="'background:' + theme.bodyColor">
           <div
             class="template-header"
             :style="
               'background:' +
-                theme.bgColor +
-                ' url(' +
-                headerBg +
-                ') no-repeat 0 4px; background-size: 100% auto;'
+              theme.bgColor +
+              ' url(' +
+              headerBg +
+              ') no-repeat 0 4px; background-size: 100% auto;'
             "
           >
-            <div
-              class="template-title"
-              :style="'color:' + theme.fontColor"
-            >
-              标题
-            </div>
+            <div class="template-title" :style="'color:' + theme.fontColor">标题</div>
           </div>
-          <el-carousel
-            height="160px"
-            :autoplay="false"
-          >
+          <el-carousel height="160px" :autoplay="false">
             <el-carousel-item
               v-for="(item, index) in form.bannerPicList"
               v-if="item.url"
               :key="index"
               :style="
                 'background: url(' +
-                  wximageurl +
-                  item.url +
-                  ') no-repeat center; background-size: cover'
+                wximageurl +
+                item.url +
+                ') no-repeat center; background-size: cover'
               "
             />
           </el-carousel>
           <div class="view-flex view-flex-middle nav">
-            <div class="view-flex-item content-center nav-item left-nav">
-              我要买课
-            </div>
-            <div class="view-flex-item content-center nav-item right-nav">
-              我要预约
-            </div>
+            <div class="view-flex-item content-center nav-item left-nav">我要买课</div>
+            <div class="view-flex-item content-center nav-item right-nav">我要预约</div>
           </div>
           <div class="hot">
             <div class="hot-title">
-              <text class="title-txt">
-                热门课程
-              </text>
+              <text class="title-txt"> 热门课程 </text>
             </div>
             <div class="view-flex">
               <div class="hot-item-01">
@@ -88,11 +61,11 @@
                   class="hot-img"
                   :style="
                     'background:' +
-                      theme.bgColor +
-                      ' url(' +
-                      wximageurl +
-                      form.hotGoods[0].url +
-                      ') center / cover no-repeat;'
+                    theme.bgColor +
+                    ' url(' +
+                    wximageurl +
+                    form.hotGoods[0].url +
+                    ') center / cover no-repeat;'
                   "
                 />
                 <div class="hot-item-name">
@@ -105,11 +78,11 @@
                     class="hot-img"
                     :style="
                       'background:' +
-                        theme.bgColor +
-                        ' url(' +
-                        wximageurl +
-                        form.hotGoods[1].url +
-                        ') center / cover no-repeat;'
+                      theme.bgColor +
+                      ' url(' +
+                      wximageurl +
+                      form.hotGoods[1].url +
+                      ') center / cover no-repeat;'
                     "
                   />
                   <div class="hot-item-name">
@@ -117,39 +90,24 @@
                   </div>
                 </div>
                 <div class="hot-more">
-                  更多 <img
-                    class="hot-more-img"
-                    src="@/assets/img/arrow.png"
-                  >
+                  更多 <img class="hot-more-img" src="@/assets/img/arrow.png">
                 </div>
               </div>
             </div>
           </div>
           <div class="store">
-            <div class="store-more store-label">
-              全部门店
-            </div>
+            <div class="store-more store-label">全部门店</div>
             <div class="content-center">
-              <div class="store-name">
-                桂林路店
-              </div>
-              <div class="store-desc">
-                上海市徐汇区桂林路396号2号楼
-              </div>
+              <div class="store-name">桂林路店</div>
+              <div class="store-desc">上海市徐汇区桂林路396号2号楼</div>
             </div>
             <div class="view-flex view-flex-center store-contact">
               <div class="store-contact-item">
-                <img
-                  class="store-icon"
-                  src="@/assets/img/store_location.png"
-                >
+                <img class="store-icon" src="@/assets/img/store_location.png">
                 <div>1220 km</div>
               </div>
               <div class="store-contact-item">
-                <img
-                  class="store-icon"
-                  src="@/assets/img/store_phone.png"
-                >
+                <img class="store-icon" src="@/assets/img/store_phone.png">
                 <div>咨询</div>
               </div>
             </div>
@@ -158,18 +116,10 @@
       </div>
       <div class="setting-view">
         <div class="section">
-          <div class="section-header with-border with-bg">
-            轮播图配置
-          </div>
+          <div class="section-header with-border with-bg">轮播图配置</div>
           <div class="section-body">
-            <div
-              v-for="(item, index) in form.bannerPicList"
-              class="setting-item slider"
-            >
-              <div
-                class="setting-remove"
-                @click="handleDelBanner(index)"
-              >
+            <div v-for="(item, index) in form.bannerPicList" class="setting-item slider">
+              <div class="setting-remove" @click="handleDelBanner(index)">
                 <i class="iconfont icon-trash-alt1" />
               </div>
               <div>
@@ -179,28 +129,18 @@
                   class="banner-uploader"
                   @click="handleImgChange(index, 'banner')"
                 >
-                <div
-                  v-else
-                  class="banner-uploader"
-                  @click="handleImgChange(index, 'banner')"
-                >
+                <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
                     <i class="iconfont icon-camera" /><br>
                     上传图片
                   </div>
                 </div>
               </div>
-              <div
-                class="goods-select"
-                @click="handleGoodsChange(index, 'banner')"
-              >
+              <div class="goods-select" @click="handleGoodsChange(index, 'banner')">
                 <div v-if="item.item_id">
                   {{ item.type === 'goods' ? '商品' : '活动' }}：{{ item.item_name }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
+                <div v-else class="content-center">
                   <i
                     class="iconfont icon-link"
                     @click="handleGoodsChange(index, 'banner')"
@@ -223,14 +163,9 @@
           </div>
         </div>
         <div class="section">
-          <div class="section-header with-border with-bg">
-            热门商品配置
-          </div>
+          <div class="section-header with-border with-bg">热门商品配置</div>
           <div class="section-body">
-            <div
-              v-for="(item, index) in form.hotGoods"
-              class="setting-item hot"
-            >
+            <div v-for="(item, index) in form.hotGoods" class="setting-item hot">
               <div class="view-flex">
                 <div class="content-right-margin">
                   <img
@@ -239,11 +174,7 @@
                     class="banner-uploader"
                     @click="handleImgChange(index, 'hotGoods')"
                   >
-                  <div
-                    v-else
-                    class="banner-uploader"
-                    @click="handleImgChange(index, 'hotGoods')"
-                  >
+                  <div v-else class="banner-uploader" @click="handleImgChange(index, 'hotGoods')">
                     <div class="content-center">
                       <i class="iconfont icon-camera" /><br>
                       上传图片
@@ -252,10 +183,7 @@
                 </div>
                 <div>
                   <div class="layout-tip">
-                    <div
-                      class="layout-left"
-                      :style="index === 0 ? 'background:#fff' : ''"
-                    />
+                    <div class="layout-left" :style="index === 0 ? 'background:#fff' : ''" />
                     <div class="layout-item">
                       <div
                         class="layout-item layout-top"
@@ -269,19 +197,11 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="goods-select"
-                @click="handleGoodsChange(index, 'hotGoods')"
-              >
+              <div class="goods-select" @click="handleGoodsChange(index, 'hotGoods')">
                 <div v-if="item.item_id">
                   {{ item.type === 'goods' ? '商品' : '活动' }}：{{ item.item_name }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
-                  <i class="iconfont icon-link" />绑定商品
-                </div>
+                <div v-else class="content-center"><i class="iconfont icon-link" />绑定商品</div>
               </div>
             </div>
           </div>
@@ -303,22 +223,12 @@
       <template>
         <el-form label-width="70px">
           <el-form-item label="选择路径">
-            <el-radio-group
-              v-model="type"
-              @change="switchType"
-            >
-              <el-radio :label="'goods'">
-                商品
-              </el-radio>
-              <el-radio :label="'marketing'">
-                营销
-              </el-radio>
+            <el-radio-group v-model="type" @change="switchType">
+              <el-radio :label="'goods'"> 商品 </el-radio>
+              <el-radio :label="'marketing'"> 营销 </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            v-if="type === 'goods'"
-            label="配置数据"
-          >
+          <el-form-item v-if="type === 'goods'" label="配置数据">
             <el-transfer
               v-model="selectGoods"
               :titles="['商品列表', '已选中']"
@@ -326,10 +236,7 @@
               :data="goodsList"
               @change="handleSelectChange"
             >
-              <div
-                slot="left-footer"
-                class="transfer-footer"
-              >
+              <div slot="left-footer" class="transfer-footer">
                 <el-pagination
                   v-if="total_count > params.pageSize"
                   small
@@ -341,14 +248,8 @@
               </div>
             </el-transfer>
           </el-form-item>
-          <el-form-item
-            v-if="type === 'marketing'"
-            label="配置数据"
-          >
-            <el-select
-              v-model="selectedMarketing"
-              placeholder="请选择"
-            >
+          <el-form-item v-if="type === 'marketing'" label="配置数据">
+            <el-select v-model="selectedMarketing" placeholder="请选择">
               <el-option
                 v-for="(item, index) in marketingList"
                 :key="index"
@@ -358,16 +259,8 @@
             </el-select>
           </el-form-item>
         </el-form>
-        <div
-          class="section-footer with-border content-center"
-          style="width: 100%"
-        >
-          <el-button
-            type="primary"
-            @click="handleGoodsDialog"
-          >
-            确定
-          </el-button>
+        <div class="section-footer with-border content-center" style="width: 100%">
+          <el-button type="primary" @click="handleGoodsDialog"> 确定 </el-button>
         </div>
       </template>
     </el-dialog>
@@ -387,7 +280,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       demoimg: img,
       logo: logo,
@@ -447,16 +340,16 @@ export default {
       selectedMarketing: ''
     }
   },
-  mounted () {
+  mounted() {
     let filter = { template_name: 'yykmendian', name: 'banner', page_name: 'index' }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       if (res.data.data) {
         this.form.bannerPicList = res.data.data[0].params
         this.bannerPicListSetId = res.data.data[0].id
       }
     })
     let hotGoodsFilter = { template_name: 'yykmendian', name: 'hotGoods', page_name: 'index' }
-    getParamByTempName(hotGoodsFilter).then((res) => {
+    getParamByTempName(hotGoodsFilter).then(res => {
       if (res.data.data) {
         this.form.hotGoods = res.data.data[0].params
         this.hotGoodsSetId = res.data.data[0].id
@@ -464,7 +357,7 @@ export default {
     })
   },
   methods: {
-    handleAddBanner () {
+    handleAddBanner() {
       if (!this.form.bannerPicList) {
         this.form.bannerPicList = []
       }
@@ -479,12 +372,12 @@ export default {
         this.form.bannerPicList.push(item)
       }
     },
-    switchType () {
+    switchType() {
       if (this.type === 'goods' && this.goodsList.length == 0) {
         this.getGoodsList()
       }
     },
-    handleGoodsChange (index, type_name) {
+    handleGoodsChange(index, type_name) {
       this.currentIndex = index
       this.currentType = type_name
       this.selectGoodsVisible = true
@@ -513,16 +406,16 @@ export default {
         }
       }
     },
-    handleDelBanner (index) {
+    handleDelBanner(index) {
       this.form.bannerPicList.splice(index, 1)
     },
-    handleImgChange (index, type_name) {
+    handleImgChange(index, type_name) {
       this.imgDialog = true
       this.isGetImage = true
       this.currentType = type_name
       this.currentIndex = index
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.currentType == 'hotGoods') {
         this.form.hotGoods[this.currentIndex].url = data.url
       } else {
@@ -530,13 +423,13 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //选择商品分页
-    handleSelectGoodsChange (val) {
+    handleSelectGoodsChange(val) {
       this.params.page = val
-      this.goodsList.forEach((row) => {
+      this.goodsList.forEach(row => {
         //如果选中
         let index = this.selectGoods.indexOf(row.key)
         if (index != -1) {
@@ -552,7 +445,7 @@ export default {
       this.getGoodsList()
     },
     //选择商品触发事件
-    handleSelectChange (value, direction, movedKeys) {
+    handleSelectChange(value, direction, movedKeys) {
       if (value.length > 1) {
         this.$message({
           message: '最多选择一个商品',
@@ -563,11 +456,11 @@ export default {
       this.selectGoods.splice(1)
     },
     //选择商品确认
-    handleGoodsDialog () {
+    handleGoodsDialog() {
       this.selectGoodsVisible = false
       if (this.selectGoods.length > 0) {
         if (this.type == 'goods') {
-          this.goodsList.forEach((row) => {
+          this.goodsList.forEach(row => {
             //如果选中
             let index = this.selectGoods.indexOf(row.key)
             if (index != -1) {
@@ -589,9 +482,9 @@ export default {
               title: '',
               value: ''
             }
-            this.marketingList.forEach((item) => {
+            this.marketingList.forEach(item => {
               if (this.selectedMarketing === item.value) {
-                (obj.title = item.title), (obj.value = item.value)
+                ;(obj.title = item.title), (obj.value = item.value)
               }
             })
             if (this.currentType == 'banner') {
@@ -622,10 +515,10 @@ export default {
       }
       this.selectGoods = []
     },
-    getGoodsList () {
-      getItemsList(this.params).then((response) => {
+    getGoodsList() {
+      getItemsList(this.params).then(response => {
         this.goodsList = []
-        response.data.data.list.forEach((row) => {
+        response.data.data.list.forEach(row => {
           let itemid = ''
           if (this.currentType == 'banner') {
             itemid = this.form.bannerPicList[this.currentIndex].item_id
@@ -657,7 +550,7 @@ export default {
         this.total_count = response.data.data.total_count
       })
     },
-    save () {
+    save() {
       if (this.bannerPicListSetId) {
         let bannerParams = {
           params: this.form.bannerPicList,
@@ -666,7 +559,7 @@ export default {
           page_name: 'index',
           id: this.bannerPicListSetId
         }
-        updateParamsById(bannerParams).then((response) => {
+        updateParamsById(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -680,7 +573,7 @@ export default {
           name: 'banner',
           page_name: 'index'
         }
-        setPageParams(bannerParams).then((response) => {
+        setPageParams(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -697,7 +590,7 @@ export default {
           page_name: 'index',
           id: this.hotGoodsSetId
         }
-        updateParamsById(hotGoodsParams).then((response) => {
+        updateParamsById(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -711,7 +604,7 @@ export default {
           name: 'hotGoods',
           page_name: 'index'
         }
-        setPageParams(hotGoodsParams).then((response) => {
+        setPageParams(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',

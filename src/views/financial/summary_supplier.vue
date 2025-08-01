@@ -101,22 +101,22 @@ import { createSetting } from '@shopex/finder'
 import moment from 'moment'
 import daijiesuan from '@/assets/daijiesuan.png'
 import yijiesuan from '@/assets/yijiesuan.png'
-import SpSelectSupplier from "../../components/sp-select-supplier/index";
+import SpSelectSupplier from '../../components/sp-select-supplier/index'
 import { IS_SUPPLIER } from '@/utils'
 export default {
   name: '',
-  components: {SpSelectSupplier},
+  components: { SpSelectSupplier },
   data() {
     return {
       daijiesuan,
-      yijiesuan,      
+      yijiesuan,
       formQuery: {
         merchant_type: 'supplier',
         supplier_id: '',
         merchant_id: '',
         statement_status: '',
         cycleTime: [],
-        distributor_id:""
+        distributor_id: ''
       },
       statusOption: [
         { title: '已结算', value: 'done' },
@@ -175,20 +175,59 @@ export default {
           { name: '结算单号', key: 'statement_no', width: 160 },
           { name: '供应商', key: 'supplier_name', width: 160 },
           { name: '订单数量', key: 'order_num', width: 160 },
-          { name: '实付总金额（¥）', key: 'total_fee', width: 160,render: (h, { row }) => h('span', {}, row.point_fee / 100 + row.total_fee / 100) ,visible: !IS_SUPPLIER()},
+          {
+            name: '实付总金额（¥）',
+            key: 'total_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.point_fee / 100 + row.total_fee / 100),
+            visible: !IS_SUPPLIER()
+          },
           {
             name: '结算金额（¥）',
             key: 'statement_fee',
             width: 120,
             render: (h, { row }) => h('span', {}, row.statement_fee / 100)
           },
-          { name: '现金实付（¥）', key: 'total_fee', width: 160 ,render: (h, { row }) => h('span', {}, row.total_fee / 100),visible: !IS_SUPPLIER() },
-          { name: '积分抵扣', key: 'point_fee', width: 160,render: (h, { row }) => h('span', {}, row.point_fee / 100),visible: !IS_SUPPLIER() },
-          { name: '运费（总）', key: 'freight_fee', width: 160,render: (h, { row }) => h('span', {}, row.freight_fee / 100) },
+          {
+            name: '现金实付（¥）',
+            key: 'total_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.total_fee / 100),
+            visible: !IS_SUPPLIER()
+          },
+          {
+            name: '积分抵扣',
+            key: 'point_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.point_fee / 100),
+            visible: !IS_SUPPLIER()
+          },
+          {
+            name: '运费（总）',
+            key: 'freight_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.freight_fee / 100)
+          },
           { name: '退款数量', key: 'refund_num', width: 160 },
-          { name: '退款金额（¥）', key: 'refund_fee', width: 160,render: (h, { row }) => h('span', {}, row.refund_fee / 100),visible: !IS_SUPPLIER() },
-          { name: '退款积分', key: 'refund_point', width: 160 ,render: (h, { row }) => h('span', {}, row.refund_point / 100)},
-          { name: '退货结算价（¥）', key: 'refund_cost_fee', width: 160 ,render: (h, { row }) => h('span', {}, row.refund_cost_fee / 100)},
+          {
+            name: '退款金额（¥）',
+            key: 'refund_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.refund_fee / 100),
+            visible: !IS_SUPPLIER()
+          },
+          {
+            name: '退款积分',
+            key: 'refund_point',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.refund_point / 100)
+          },
+          {
+            name: '退货结算价（¥）',
+            key: 'refund_cost_fee',
+            width: 160,
+            render: (h, { row }) => h('span', {}, row.refund_cost_fee / 100)
+          },
           {
             name: '结算实付（¥）',
             key: 'cost_fee',
@@ -209,12 +248,13 @@ export default {
               )
             }
           },
-          { name: '确认时间', key: 'confirm_time', width: 160 ,
-          formatter: (row, column) => {
+          {
+            name: '确认时间',
+            key: 'confirm_time',
+            width: 160,
+            formatter: (row, column) => {
               if (column.confirm_time) {
-                return (
-                  <div>{moment(column.confirm_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>
-                )
+                return <div>{moment(column.confirm_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>
               }
             }
           },

@@ -14,7 +14,7 @@
         </SpFilterFormItem> -->
         <shop-select distributors @update="storeChange" @init="initChange" />
       </SpFilterForm>
-      <div class="action-container" style="margin-bottom: 0px;">
+      <div class="action-container" style="margin-bottom: 0px">
         <div>
           <el-button
             type="primary"
@@ -36,7 +36,9 @@
             导出业绩订单统计
           </el-button>
 
-          <el-button type="primary" plain @click="exportPopularizeOrder"> 导出业绩订单详细 </el-button
+          <el-button type="primary" plain @click="exportPopularizeOrder">
+            导出业绩订单详细
+</el-button
           >* 下载订单详细日期
         </div>
 
@@ -265,10 +267,10 @@ export default {
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.fetchList()
     },
-    onReset () {
+    onReset() {
       this.params = {
         mobile: '',
         username: '',

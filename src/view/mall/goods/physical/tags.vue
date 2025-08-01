@@ -2,70 +2,30 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="3">
-        <el-button
-          type="primary"
-          icon="plus"
-          style="width: 100%"
-          size="mini"
-          @click="addTemplate"
-        >
+        <el-button type="primary" icon="plus" style="width: 100%" size="mini" @click="addTemplate">
           添加标签
         </el-button>
       </el-col>
       <el-col :span="5">
-        <el-input
-          v-model="params.tag_name"
-          placeholder="标签名"
-          style="width: 100%"
-          size="mini"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="searchData"
-          />
+        <el-input v-model="params.tag_name" placeholder="标签名" style="width: 100%" size="mini">
+          <el-button slot="append" icon="el-icon-search" @click="searchData" />
         </el-input>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="tagsList"
-      :height="wheight - 130"
-    >
-      <el-table-column
-        prop="tag_id"
-        label="ID"
-        width="100"
-      />
-      <el-table-column
-        prop="tag_name"
-        label="标签名称"
-        width="250"
-      >
+    <el-table v-loading="loading" :data="tagsList" :height="wheight - 130">
+      <el-table-column prop="tag_id" label="ID" width="100" />
+      <el-table-column prop="tag_name" label="标签名称" width="250">
         <template slot-scope="scope">
-          <el-tag
-            :color="scope.row.tag_color"
-            size="mini"
-            style="color: #ffffff"
-          >
-            {{
-              scope.row.tag_name
-            }}
+          <el-tag :color="scope.row.tag_color" size="mini" style="color: #ffffff">
+            {{ scope.row.tag_name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="description"
-        label="标签描述"
-        width="250"
-      />
+      <el-table-column prop="description" label="标签描述" width="250" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i
-              class="iconfont icon-edit1"
-              @click="editAction(scope.$index, scope.row)"
-            />
+            <i class="iconfont icon-edit1" @click="editAction(scope.$index, scope.row)" />
             <i
               class="mark iconfont icon-trash-alt1"
               @click="deleteAction(scope.$index, scope.row)"
@@ -74,10 +34,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.page_size"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.page_size" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -93,21 +50,10 @@
       :before-close="handleCancelLabelsDialog"
     >
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="100px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
           <el-form-item label="预览最终结果">
-            <el-tag
-              :color="form.tag_color"
-              size="mini"
-              :style="'color:' + form.font_color"
-            >
-              {{
-                form.tag_name
-              }}
+            <el-tag :color="form.tag_color" size="mini" :style="'color:' + form.font_color">
+              {{ form.tag_name }}
             </el-tag>
           </el-form-item>
           <el-form-item
@@ -116,15 +62,9 @@
             prop="tag_name"
             :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
           >
-            <el-input
-              v-model="form.tag_name"
-              placeholder="请输入标签名称"
-            />
+            <el-input v-model="form.tag_name" placeholder="请输入标签名称" />
           </el-form-item>
-          <el-form-item
-            class="content-left"
-            label="标签说明"
-          >
+          <el-form-item class="content-left" label="标签说明">
             <el-input
               v-model="form.description"
               type="textarea"
@@ -132,33 +72,14 @@
               placeholder="请输入标签说明"
             />
           </el-form-item>
-          <el-form-item
-            class="content-left"
-            label="标签颜色"
-          >
-            <el-color-picker
-              v-model="form.tag_color"
-              show-alpha
-              :predefine="predefineColors"
-            />
+          <el-form-item class="content-left" label="标签颜色">
+            <el-color-picker v-model="form.tag_color" show-alpha :predefine="predefineColors" />
           </el-form-item>
-          <el-form-item
-            class="content-left"
-            label="字体颜色"
-          >
-            <el-color-picker
-              v-model="form.font_color"
-              show-alpha
-              :predefine="predefineColors"
-            />
+          <el-form-item class="content-left" label="字体颜色">
+            <el-color-picker v-model="form.font_color" show-alpha :predefine="predefineColors" />
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button
-              type="primary"
-              @click="saveTagData"
-            >
-              确定保存
-            </el-button>
+            <el-button type="primary" @click="saveTagData"> 确定保存 </el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -170,7 +91,7 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { saveTag, getTagList, getTagInfo, updateTag, deleteTag } from '../../../api/goods'
 export default {
-  data () {
+  data() {
     return {
       isEdit: false,
       tagsList: [],
@@ -195,42 +116,42 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    addTemplate () {
+    addTemplate() {
       // 添加商品
       this.memberTagDialog = true
       this.form = { tag_id: '', tag_name: '', tag_color: '#ff1939', description: '' }
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑商品弹框
       this.form = row
       this.memberTagDialog = true
     },
-    preview (index, row) {
+    preview(index, row) {
       // 预览弹框
       this.dialogVisible = true
       this.dataInfo = row
     },
-    searchData () {
+    searchData() {
       this.params.page = 1
       this.getDataList()
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       getTagList(this.params)
-        .then((response) => {
+        .then(response => {
           this.tagsList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -238,7 +159,7 @@ export default {
           })
         })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -246,7 +167,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then((response) => {
+            .then(response => {
               this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -268,7 +189,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -278,16 +199,16 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.memberTagDialog = false
     },
-    saveTagData () {
+    saveTagData() {
       this.memberTagDialog = false
       if (this.form.tag_id) {
-        updateTag(this.form).then((res) => {
+        updateTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -297,7 +218,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then((res) => {
+        saveTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',

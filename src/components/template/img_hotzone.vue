@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -19,10 +13,7 @@
       </div> -->
     </div>
     <div class="img-hotzone">
-      <img
-        :src="config.imgUrl"
-        alt=""
-      >
+      <img :src="config.imgUrl" alt="">
       <div
         v-for="(item, index) in data"
         :key="index"
@@ -50,7 +41,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -58,22 +49,22 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    getZoneStyle (val) {
+    getZoneStyle(val) {
       return `${(val || 0) * 100}%`
     }
   }

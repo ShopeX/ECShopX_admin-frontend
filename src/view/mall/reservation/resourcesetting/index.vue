@@ -6,20 +6,14 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane
-        label="排班管理"
-        name="settingMange"
-      >
+      <el-tab-pane label="排班管理" name="settingMange">
         <work-shift
           :is-load="settingMangeLoad"
           :shop-list-data="shopListData"
           :resource-name="resourceName"
         />
       </el-tab-pane>
-      <el-tab-pane
-        :label="resourceName + '列表'"
-        name="reservationModel"
-      >
+      <el-tab-pane :label="resourceName + '列表'" name="reservationModel">
         <resource-list
           ref="resource"
           :is-load="resouceLoad"
@@ -37,7 +31,7 @@ import workShift from './workshift.vue'
 import { getSetting } from '../../../../api/reservation'
 //import { getWxShopsList } from '../../../api/shop'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getList
     }
@@ -46,7 +40,7 @@ export default {
     resourceList,
     workShift
   },
-  data () {
+  data() {
     return {
       activeName: 'settingMange',
       resourceName: '',
@@ -56,8 +50,8 @@ export default {
       settingMangeLoad: true
     }
   },
-  mounted () {
-    getSetting().then((res) => {
+  mounted() {
+    getSetting().then(res => {
       if (res.data.data.resourceName) {
         this.resourceName = res.data.data.resourceName
       } else {
@@ -74,7 +68,7 @@ export default {
     // })
   },
   methods: {
-    handleClick () {
+    handleClick() {
       if (this.activeName == 'reservationModel') {
         this.resouceLoad = true
         this.settingMangeLoad = false
@@ -83,7 +77,7 @@ export default {
         this.settingMangeLoad = true
       }
     },
-    getList () {
+    getList() {
       this.$refs.getLevelList
       this.$refs.getStoreList
     }

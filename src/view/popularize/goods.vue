@@ -8,8 +8,7 @@
             style="width: 100%"
             size="mini"
             placeholder="请输入商品名称"
-          >
-          </el-input>
+          />
         </SpFilterFormItem>
         <SpFilterFormItem prop="status" label="状态">
           <el-select v-model="status" size="mini" clearable placeholder="请选择">
@@ -530,7 +529,7 @@ export default {
       this.params.page = 1
       this.getGoodsList()
     },
-    onReset () {
+    onReset() {
       this.params = {
         item_type: 'normal',
         page: 1,

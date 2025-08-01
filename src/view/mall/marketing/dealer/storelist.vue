@@ -39,7 +39,7 @@
         url="/adapay/dealer/distributors"
         @reset="onFinderReset"
       >
-        <template v-slot:tableTop>
+        <template #tableTop>
           <el-row class="cus-btn">
             <el-col :span="12" :offset="12" style="text-align: right">
               <el-button type="primary" size="small" plain @click="onAddShop">
@@ -48,7 +48,7 @@
             </el-col>
           </el-row>
         </template>
-        <template v-slot:create_time>
+        <template #create_time>
           <el-date-picker
             v-model="create_time"
             class="input-m"
@@ -57,7 +57,7 @@
             value-format="yyyy-MM-dd"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            @change="(val) => dateChange(val)"
+            @change="val => dateChange(val)"
           />
         </template>
       </SpFinder>
@@ -175,11 +175,11 @@ export default {
             key: 'relation',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
+            visible: row => {
               return row.audit_state == 3 || row.audit_state == 1
             },
             action: {
-              handler: (row) => this.handleModalClick('解除关联', row[0])
+              handler: row => this.handleModalClick('解除关联', row[0])
             }
           }
         ]

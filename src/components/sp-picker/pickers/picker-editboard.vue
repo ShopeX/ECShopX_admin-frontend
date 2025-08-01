@@ -133,23 +133,23 @@ export default {
     return (
       <div class={['picker-edit-board', this.value?.class]}>
         <div>
-          <el-button type='primary' on-click={this.onAddItem}>
+          <el-button type="primary" on-click={this.onAddItem}>
             添加
           </el-button>
         </div>
         <draggable
-          class='drag-container'
+          class="drag-container"
           list={localValue}
           options={dragOptions}
-          style='width: 100%'
-          handle='.icon-tuozhuai'
+          style="width: 100%"
+          handle=".icon-tuozhuai"
         >
           {localValue.map((item, index) => (
-            <div key={`item__${index}`} class='board-item'>
+            <div key={`item__${index}`} class="board-item">
               {this.value.template.call(this, item, index)}
-              <div class='btn-tool'>
-                <i class='ecx-icon icon-tuozhuai' />
-                <i class='ecx-icon icon-shanchu' on-click={this.deleteItem.bind(this, index)} />
+              <div class="btn-tool">
+                <i class="ecx-icon icon-tuozhuai" />
+                <i class="ecx-icon icon-shanchu" on-click={this.deleteItem.bind(this, index)} />
               </div>
             </div>
           ))}

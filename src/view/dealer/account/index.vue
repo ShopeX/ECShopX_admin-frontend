@@ -5,18 +5,26 @@
         <el-button type="primary" icon="plus" @click="addLabels">添加账号</el-button>
       </el-col>
       <el-col :span="12">
-        <el-input placeholder="手机号" v-model="mobile"
-          ><el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button
-        ></el-input>
+        <el-input placeholder="手机号" v-model="mobile">
+          <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
+        </el-input>
       </el-col>
     </el-row>
     <el-table :data="accountsList" v-loading="loading">
       <el-table-column prop="mobile" label="手机号（账号名称）">
         <template slot-scope="scope">
-          {{ scope.row.mobile }}<el-tag type="warning" v-if="scope.row.is_dealer_main == 1" size="small" style="margin-left:10px">超级管理员</el-tag>
+          {{ scope.row.mobile
+          }}<el-tag
+            type="warning"
+            v-if="scope.row.is_dealer_main == 1"
+            size="small"
+            style="margin-left: 10px"
+          >
+            超级管理员
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="contact" label="姓名"></el-table-column>
+      <el-table-column prop="contact" label="姓名" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
@@ -32,26 +40,31 @@
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-      >
-      </el-pagination>
+      />
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel" :close-on-click-modal="false" width="700px">
+    <el-dialog
+      :title="editTitle"
+      :visible.sync="editVisible"
+      :before-close="handleCancel"
+      :close-on-click-modal="false"
+      width="700px"
+    >
       <template>
         <el-form ref="form" :rules="rules" :model="form" class="demo-ruleForm" label-width="120px">
-          <el-form-item label="登录账号" prop='mobile'>
+          <el-form-item label="登录账号" prop="mobile">
             <el-col :span="12" style="margin-right: 10px">
               <el-input v-model="form.mobile" v-if="!isEdit" :maxlength="11" />
-              <el-input v-model="edit_mobile" :disabled="true" v-else></el-input>
+              <el-input v-model="edit_mobile" :disabled="true" v-else />
             </el-col>
             <p>只支持用手机号码作为登录账号</p>
           </el-form-item>
-          <el-form-item label="姓名" prop='contact'>
+          <el-form-item label="姓名" prop="contact">
             <el-col :span="12">
               <el-input v-model="form.contact" :disabled="isEdit" />
-              </el-col>
+            </el-col>
           </el-form-item>
-          <el-form-item label="登录密码" prop='password'>
+          <el-form-item label="登录密码" prop="password">
             <el-col :span="12" style="margin-right: 10px">
               <el-input v-model="form.password" />
             </el-col>
@@ -81,7 +94,7 @@ export default {
       form: {
         mobile: '',
         contact: '',
-        password: '',
+        password: ''
       },
       mobile: '',
       accountsList: [],
@@ -89,12 +102,12 @@ export default {
       total_count: 0,
       params: {
         page: 1,
-        pageSize: 20,
+        pageSize: 20
       },
       operator_id: 0,
       dealer_parent_id: 0,
       rules: {
-        contact: [{ required: true, message: '请输入姓名', trigger: "blur" }],
+        contact: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         mobile: [{ required: true, trigger: 'blur', validator: this.validateMobile }],
         password: [{ required: true, trigger: 'blur', validator: this.validateNumber }]
       }
@@ -135,24 +148,26 @@ export default {
       this.edit_mobile = row.mobile
       this.form.password = ''
     },
-     validateMobile (rule, value, callback) {
-       console.log(value);
-      if (value.length<=0 && !isMobile(value)) {
+    validateMobile(rule, value, callback) {
+      console.log(value)
+      if (value.length <= 0 && !isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
       } else {
         callback()
       }
     },
-    validateNumber (rule, value, callback) {
+    validateNumber(rule, value, callback) {
       if (value.length < 6 || value.length > 16) {
         callback(new Error('请输入6-16位密码'))
       } else {
         callback()
       }
     },
-    onGetsOpeationId () {
-      getOpeationId().then((res) => {
-        const { data: { data } } = res
+    onGetsOpeationId() {
+      getOpeationId().then(res => {
+        const {
+          data: { data }
+        } = res
         this.dealer_parent_id = data.dealer_parent_id
       })
     },
@@ -160,13 +175,18 @@ export default {
       this.$refs['form'].validate(async vaild => {
         if (vaild) {
           if (this.operator_id) {
-            editDealer(this.operator_id, { password: this.form.password }).then((response) => {
-              console.log(response);
+            editDealer(this.operator_id, { password: this.form.password }).then(response => {
+              console.log(response)
               this.getAccountListData()
               this.handleCancel()
             })
           } else {
-            addDealer({...this.form, operator_type: 'dealer', is_dealer_main: '0', dealer_parent_id: this.dealer_parent_id}).then((response) => {
+            addDealer({
+              ...this.form,
+              operator_type: 'dealer',
+              is_dealer_main: '0',
+              dealer_parent_id: this.dealer_parent_id
+            }).then(response => {
               this.$message.success('保存成功')
               this.getAccountListData()
               this.handleCancel()
@@ -182,7 +202,7 @@ export default {
     },
     getAccountListData() {
       this.loading = true
-      getDealerAccountList({ params: JSON.stringify(this.params) }).then((response) => {
+      getDealerAccountList({ params: JSON.stringify(this.params) }).then(response => {
         this.accountsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -193,9 +213,10 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
+      })
+        .then(() => {
           deleteDealer(row.operator_id)
-            .then((response) => {
+            .then(response => {
               this.$message({
                 message: '删除成功',
                 type: 'success'

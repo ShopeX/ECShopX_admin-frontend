@@ -3,21 +3,13 @@
     <div class="footer-container">
       <div class="copyright">
         <div>
-          <h4 class="content-c2">
-            Copyright ©2017, ＊＊＊＊＊＊, Ltd. All Rights Reserved.
-          </h4>
+          <h4 class="content-c2">Copyright ©2017, ＊＊＊＊＊＊, Ltd. All Rights Reserved.</h4>
           <ul class="privacy">
             <li class="content-c1">
-              <a
-                class="content-c0"
-                @click="open1"
-              >法律声明</a>
+              <a class="content-c0" @click="open1">法律声明</a>
             </li>
             <li class="content-c1">
-              <a
-                class="content-c0"
-                @click="open2"
-              >隐私条款</a>
+              <a class="content-c0" @click="open2">隐私条款</a>
             </li>
           </ul>
         </div>
@@ -29,14 +21,9 @@
       <ul class="c4">
         <div>
           <li class="tel">
-            <a
-              class="c5"
-              target="_blank"
-            >123456789</a>
+            <a class="c5" target="_blank">123456789</a>
           </li>
-          <li class="time">
-            周一至周日 10:00-23:00
-          </li>
+          <li class="time">周一至周日 10:00-23:00</li>
         </div>
 
         <li class="online">
@@ -52,23 +39,23 @@ export default {
   components: {
     // YButton
   },
-  data () {
+  data() {
     return {}
   },
   methods: {
-    open1 () {
+    open1() {
       this.$notify.info({
         title: '法律声明',
         message: '＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊'
       })
     },
-    open2 () {
+    open2() {
       this.$notify.info({
         title: '隐私条款',
         message: '本网站将不会严格遵守有关法律法规和本隐私政策所载明的内容收集、使用您的信息'
       })
     },
-    open3 () {
+    open3() {
       this.$notify({
         title: '离线帮助',
         message: '没人会帮助你，请自己靠自己',

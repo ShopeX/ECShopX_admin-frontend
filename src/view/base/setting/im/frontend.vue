@@ -1,8 +1,5 @@
 <template>
-  <el-form
-    ref="form"
-    label-width="100px"
-  >
+  <el-form ref="form" label-width="100px">
     <el-form-item label="开启售前客服">
       <el-switch
         v-model="form.is_open"
@@ -26,51 +23,25 @@
       />
     </el-form-item>
     <el-form-item label="企业 ID">
-      <el-input
-        v-model="form.enterprise_id"
-        style="width: 300px"
-        placeholder="请输入内容"
-      />
+      <el-input v-model="form.enterprise_id" style="width: 300px" placeholder="请输入内容" />
       <div class="frm-tips">
-        <a
-          href="https://app.meiqia.com/setting/id-query"
-          target="_blank"
-        >企业ID地址</a>
+        <a href="https://app.meiqia.com/setting/id-query" target="_blank">企业ID地址</a>
       </div>
     </el-form-item>
     <el-form-item label="客服组 ID">
-      <el-input
-        v-model="form.group_id"
-        style="width: 300px"
-        placeholder="请输入内容"
-      />
+      <el-input v-model="form.group_id" style="width: 300px" placeholder="请输入内容" />
       <div class="frm-tips">
-        <a
-          href="https://app.meiqia.com/setting/id-query"
-          target="_blank"
-        >客服组ID地址</a>
+        <a href="https://app.meiqia.com/setting/id-query" target="_blank">客服组ID地址</a>
       </div>
     </el-form-item>
     <el-form-item label="客服 ID">
-      <el-input
-        v-model="form.persion_ids"
-        style="width: 300px"
-        placeholder="请输入内容"
-      />
+      <el-input v-model="form.persion_ids" style="width: 300px" placeholder="请输入内容" />
       <div class="frm-tips">
-        <a
-          href="https://app.meiqia.com/setting/id-query"
-          target="_blank"
-        >客服ID地址</a>
+        <a href="https://app.meiqia.com/setting/id-query" target="_blank">客服ID地址</a>
       </div>
     </el-form-item>
     <div class="section-footer with-border content-center">
-      <el-button
-        type="primary"
-        @click="onSubmit"
-      >
-        售前客服保存
-      </el-button>
+      <el-button type="primary" @click="onSubmit"> 售前客服保存 </el-button>
     </div>
   </el-form>
 </template>
@@ -78,7 +49,7 @@
 import { getMeiqiaInfo, saveMeiqia } from '../../../../api/im'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -91,18 +62,18 @@ export default {
       query: {}
     }
   },
-  mounted () {
+  mounted() {
     this.getInfo()
   },
   methods: {
-    getInfo () {
-      getMeiqiaInfo(this.query).then((response) => {
+    getInfo() {
+      getMeiqiaInfo(this.query).then(response => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       saveMeiqia(this.form)
-        .then((response) => {
+        .then(response => {
           this.$message({ message: '保存成功', type: 'success' })
           this.getInfo()
         })

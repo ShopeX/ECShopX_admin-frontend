@@ -8,11 +8,7 @@
         fullscreen
         lock-scroll
       >
-        <shopDecoration
-          :id="pageForm.id"
-          usage="page"
-          :template_name="template_name"
-        />
+        <shopDecoration :id="pageForm.id" usage="page" :template_name="template_name" />
       </el-dialog>
     </div>
     <router-view />
@@ -28,7 +24,7 @@ export default {
     shopDecoration,
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -43,14 +39,14 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  mounted () {
+  mounted() {
     this.fetchPageData()
   },
   methods: {
-    fetchPageData () {
+    fetchPageData() {
       this.loading = true
       Object.assign(this.params, { template_name: this.template_name })
-      getCustomSalesperson(this.params).then((response) => {
+      getCustomSalesperson(this.params).then(response => {
         if (response.data.data.id) {
           this.pageForm.id = response.data.data.id
           this.template_dialog = true
@@ -59,15 +55,15 @@ export default {
       })
     },
     //上传卡封面
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.pageForm.page_share_imageUrl = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

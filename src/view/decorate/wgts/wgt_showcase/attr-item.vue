@@ -13,7 +13,7 @@
   <div>
     <div v-for="(item, index) in value" :key="`case-item__${index}`" class="case-item">
       <SpImagePicker v-model="item.imgUrl" size="small" />
-      <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
+      <CompPickerLink :value="item" @change="e => onChangeLink(e, index)" />
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
         num: 3
       })
 
-      this.localValue = data.map((item) => {
+      this.localValue = data.map(item => {
         return {
           button: '',
           content: '',

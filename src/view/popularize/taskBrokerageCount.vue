@@ -1,6 +1,6 @@
 <template>
   <SpPage>
-      <SpFilterForm :model="params" @onSearch="handleClick" @onReset="onReset">
+    <SpFilterForm :model="params" @onSearch="handleClick" @onReset="onReset">
       <SpFilterFormItem prop="promoter_mobile" label="推广员">
         <el-input v-model="params.promoter_mobile" size="mini" placeholder="推广员" />
       </SpFilterFormItem>
@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     search() {},
-    onReset () {
+    onReset() {
       this.search_time = []
       this.params.page = 1
       this.params.status = 'wait'

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sp-page p-4 h-full flex flex-col"
+    class="sp-page p-4 flex flex-col"
     :class="{
       'sp-page--no-header': !hasHeader,
       'sp-page--no-footer': !hasFooter,
@@ -70,7 +70,6 @@ export default {
     handleScroll() {
       if (!this.$refs.header) return
       const eleContainer = document.getElementById('page-container')
-      console.log(eleContainer.scrollHeight - eleContainer.scrollTop, eleContainer.clientHeight)
       if (eleContainer.scrollHeight - eleContainer.scrollTop - 60 <= eleContainer.clientHeight) {
         this.isSticky = false
       } else {

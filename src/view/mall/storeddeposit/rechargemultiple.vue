@@ -1,30 +1,11 @@
 <template>
-  <div
-    v-loading="loading"
-    class="section-white content-padded"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="80px"
-    >
-      <el-form-item
-        label="是否开启"
-        prop="content"
-      >
-        <el-switch
-          v-model="form.is_open"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        />
-        <div class="frm-tips">
-          只有储值面额里面配置的是 充值送积分 才翻倍，充值送钱 不翻倍
-        </div>
+  <div v-loading="loading" class="section-white content-padded">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="是否开启" prop="content">
+        <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
+        <div class="frm-tips">只有储值面额里面配置的是 充值送积分 才翻倍，充值送钱 不翻倍</div>
       </el-form-item>
-      <el-form-item
-        label="时间段"
-        prop="content"
-      >
+      <el-form-item label="时间段" prop="content">
         <el-date-picker
           v-model="form.datetimerange"
           type="datetimerange"
@@ -33,24 +14,11 @@
           end-placeholder="结束日期"
         />
       </el-form-item>
-      <el-form-item
-        label="翻倍数"
-        prop="content"
-      >
-        <el-input-number
-          v-model="form.multiple"
-          controls-position="right"
-          :min="1"
-          :max="10"
-        />
+      <el-form-item label="翻倍数" prop="content">
+        <el-input-number v-model="form.multiple" controls-position="right" :min="1" :max="10" />
       </el-form-item>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save"> 保存 </el-button>
       </div>
     </el-form>
   </div>
@@ -61,7 +29,7 @@ import { setRechargeMultiple, getRechargeMultipleByCompanyId } from '../../../ap
 
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -72,21 +40,21 @@ export default {
     }
   },
   watch: {
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getMultiple()
       }
     }
   },
   methods: {
-    save () {
+    save() {
       let form = {
-        'start_time': this.form.datetimerange[0],
-        'end_time': this.form.datetimerange[1],
-        'is_open': this.form.is_open,
-        'multiple': this.form.multiple
+        start_time: this.form.datetimerange[0],
+        end_time: this.form.datetimerange[1],
+        is_open: this.form.is_open,
+        multiple: this.form.multiple
       }
-      setRechargeMultiple(form).then((res) => {
+      setRechargeMultiple(form).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -94,9 +62,9 @@ export default {
         })
       })
     },
-    getMultiple () {
+    getMultiple() {
       this.loading = true
-      getRechargeMultipleByCompanyId().then((res) => {
+      getRechargeMultipleByCompanyId().then(res => {
         this.form.is_open = res.data.data.is_open
         this.form.multiple = res.data.data.multiple
         this.form.datetimerange = [
@@ -107,7 +75,7 @@ export default {
         this.loading = false
       })
     },
-    formatTimeStampToStr (timeStamp) {
+    formatTimeStampToStr(timeStamp) {
       //时间戳转时间字符串
       var date = new Date()
       date.setTime(timeStamp * 1000)

@@ -30,7 +30,7 @@
           </el-col>
           <el-col :span="12">
             <div v-for="(item, index) in value.data" :key="`zone-item__${index}`" class="zone-item">
-              <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
+              <CompPickerLink :value="item" @change="e => onChangeLink(e, index)" />
             </div>
           </el-col>
         </el-row>

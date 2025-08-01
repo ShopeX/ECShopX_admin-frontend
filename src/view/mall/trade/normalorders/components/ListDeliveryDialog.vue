@@ -1,59 +1,32 @@
 <template>
   <div>
     <!-- 发货-开始 -->
-    <el-dialog
-      title="发货"
-      :visible.sync="visible"
-      :before-close="handleCancel"
-      width="65%"
-    >
+    <el-dialog title="发货" :visible.sync="visible" :before-close="handleCancel" width="65%">
       <template>
-        <el-form
-          ref="deliveryForm"
-          :model="deliveryForm"
-          label-width="100px"
-        >
+        <el-form ref="deliveryForm" :model="deliveryForm" label-width="100px">
           <el-form-item label="订单号">
             <el-col :span="20">
               {{ deliveryData.orderInfo.order_id }}
             </el-col>
           </el-form-item>
           <el-form-item label="发货类型">
-            <el-radio-group
-              v-model="deliveryForm.delivery_type"
-              :disabled="IsDisabled"
-            >
-              <el-radio label="batch">
-                整单发货
-              </el-radio>
-              <el-radio label="sep">
-                拆分发货
-              </el-radio>
+            <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
+              <el-radio label="batch"> 整单发货 </el-radio>
+              <el-radio label="sep"> 拆分发货 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="商品信息">
             <el-col :span="30">
               <el-table :data="deliveryData.orderInfo.items">
-                <el-table-column
-                  prop="item_name"
-                  label="商品名"
-                  width="180"
-                />
-                <el-table-column
-                  prop="num"
-                  label="数量"
-                  width="180"
-                />
+                <el-table-column prop="item_name" label="商品名" width="180" />
+                <el-table-column prop="num" label="数量" width="180" />
                 <el-table-column label="总支付价(元)">
                   <template slot-scope="scope">
                     <span>{{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}</span>
                   </template>
                 </el-table-column>
                 <template v-if="deliveryForm.delivery_type == 'sep'">
-                  <el-table-column
-                    label="快递公司"
-                    width="200"
-                  >
+                  <el-table-column label="快递公司" width="200">
                     <template slot-scope="scope">
                       <el-select
                         v-model="scope.row.delivery_corp"
@@ -69,10 +42,7 @@
                       </el-select>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    label="物流单号"
-                    width="200"
-                  >
+                  <el-table-column label="物流单号" width="200">
                     <template slot-scope="scope">
                       <el-input
                         v-model="scope.row.delivery_code"
@@ -103,9 +73,7 @@
               </el-col>
             </el-form-item>
             <el-form-item label="物流单号">
-              <el-col
-                :span="14"
-              >
+              <el-col :span="14">
                 <el-input
                   v-model="deliveryForm.delivery_code"
                   :maxlength="20"
@@ -116,67 +84,30 @@
           </template>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitDeliveryAction"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      title="发货"
-      :visible.sync="newVisible"
-      :before-close="handleCancel"
-      width="65%"
-    >
+    <el-dialog title="发货" :visible.sync="newVisible" :before-close="handleCancel" width="65%">
       <template>
-        <el-form
-          :model="deliveryForm"
-          label-width="100px"
-        >
+        <el-form :model="deliveryForm" label-width="100px">
           <el-form-item label="订单号">
             <el-col :span="20">
               {{ deliveryData.orderInfo.order_id }}
             </el-col>
           </el-form-item>
           <el-form-item label="发货类型">
-            <el-radio-group
-              v-model="deliveryForm.delivery_type"
-              :disabled="IsDisabled"
-            >
-              <el-radio label="batch">
-                整单发货
-              </el-radio>
-              <el-radio label="sep">
-                拆分发货
-              </el-radio>
+            <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
+              <el-radio label="batch"> 整单发货 </el-radio>
+              <el-radio label="sep"> 拆分发货 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="商品信息">
             <el-table :data="deliveryData.orderInfo.items">
-              <el-table-column
-                prop="item_name"
-                label="商品名"
-                width="180"
-              />
-              <el-table-column
-                prop="num"
-                label="数量"
-                width="180"
-              />
-              <el-table-column
-                prop="delivery_item_num"
-                label="已发货数量"
-                width="180"
-              />
+              <el-table-column prop="item_name" label="商品名" width="180" />
+              <el-table-column prop="num" label="数量" width="180" />
+              <el-table-column prop="delivery_item_num" label="已发货数量" width="180" />
 
               <el-table-column label="总支付价(元)">
                 <template slot-scope="scope">
@@ -184,10 +115,7 @@
                 </template>
               </el-table-column>
               <template v-if="deliveryForm.delivery_type == 'sep'">
-                <el-table-column
-                  label="发货数量"
-                  width="200"
-                >
+                <el-table-column label="发货数量" width="200">
                   <template slot-scope="scope">
                     <el-input-number
                       v-if="scope.row.num - scope.row.delivery_item_num != 0"
@@ -222,9 +150,7 @@
             </el-col>
           </el-form-item>
           <el-form-item label="物流单号">
-            <el-col
-              :span="14"
-            >
+            <el-col :span="14">
               <el-input
                 v-model="deliveryForm.delivery_code"
                 :maxlength="20"
@@ -234,19 +160,9 @@
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitDeliveryAction"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -264,7 +180,7 @@ export default {
     'dlycorps',
     'deliveryInfo'
   ],
-  data () {
+  data() {
     return {
       deliveryForm: {
         delivery_type: 'batch',
@@ -277,7 +193,7 @@ export default {
   },
   watch: {
     deliveryInfo: {
-      handler (val) {
+      handler(val) {
         if (val.delivery_type) {
           this.deliveryForm.delivery_type = val.delivery_type
         }
@@ -289,7 +205,7 @@ export default {
     }
   },
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.deliveryForm.order_id = ''
       this.deliveryForm.delivery_corp = ''
       this.deliveryForm.delivery_code = ''
@@ -303,7 +219,7 @@ export default {
       this.$emit('onCancel')
     },
 
-    submitDeliveryAction () {
+    submitDeliveryAction() {
       // 提交物料
       this.deliveryForm.type = this.selectItemType
 
@@ -315,14 +231,14 @@ export default {
         } else {
           this.deliveryForm.sepInfo = JSON.stringify(
             JSON.parse(JSON.stringify(this.deliveryData.orderInfo.items)).filter(
-              (item) => item.delivery_num && item.delivery_num != ''
+              item => item.delivery_num && item.delivery_num != ''
             )
           )
         }
       } else {
         this.deliveryForm.sepInfo = {}
       }
-      delivery(this.deliveryForm).then((response) => {
+      delivery(this.deliveryForm).then(response => {
         let deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()

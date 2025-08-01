@@ -8,38 +8,20 @@
               <el-option v-for="(item, index) in distributorList" :key="index" :label="item.name" :value="item.distributor_id"> </el-option>
             </el-select>
           </el-form-item> -->
-          <el-form-item
-            label="标题"
-            placeholder="请输入标题"
-          >
+          <el-form-item label="标题" placeholder="请输入标题">
             <el-input v-model="base.title" />
           </el-form-item>
-          <el-form-item
-            label="副标题"
-            placeholder="请输入副标题"
-          >
+          <el-form-item label="副标题" placeholder="请输入副标题">
             <el-input v-model="base.subtitle" />
           </el-form-item>
           <el-form-item label="组件间距">
-            <el-switch
-              v-model="base.padded"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <el-form-item label="圆角图片">
-            <el-switch
-              v-model="config.rounded"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="config.rounded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <el-form-item label="图片间隔">
-            <el-switch
-              v-model="config.padded"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <el-form-item label="指示点样式">
             <el-switch
@@ -51,70 +33,38 @@
             />
           </el-form-item>
           <el-form-item label="指示点覆盖">
-            <el-switch
-              v-model="config.dotCover"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="config.dotCover" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <el-form-item label="指示点位置">
             <el-radio-group v-model="config.dotLocation">
-              <el-radio label="left">
-                居左
-              </el-radio>
-              <el-radio label="center">
-                居中
-              </el-radio>
-              <el-radio label="right">
-                居右
-              </el-radio>
+              <el-radio label="left"> 居左 </el-radio>
+              <el-radio label="center"> 居中 </el-radio>
+              <el-radio label="right"> 居右 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="指示点形状">
             <el-radio-group v-model="config.shape">
-              <el-radio label="circle">
-                圆形
-              </el-radio>
-              <el-radio label="rectangle">
-                长方型
-              </el-radio>
+              <el-radio label="circle"> 圆形 </el-radio>
+              <el-radio label="rectangle"> 长方型 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="指示点颜色">
             <el-radio-group v-model="config.dotColor">
-              <el-radio label="dark">
-                深色
-              </el-radio>
-              <el-radio label="light">
-                亮色
-              </el-radio>
+              <el-radio label="dark"> 深色 </el-radio>
+              <el-radio label="light"> 亮色 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="轮播项间距">
-            <el-switch
-              v-model="config.padded"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <el-form-item label="开启图片描述">
-            <el-switch
-              v-model="config.content"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="config.content" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
         </template>
 
         <el-form-item label="轮播项">
-          <div
-            v-for="(item, index) in data"
-            class="setting-item slider"
-          >
-            <div
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
+          <div v-for="(item, index) in data" class="setting-item slider">
+            <div class="setting-remove" @click="removeItem(index)">
               <i class="iconfont icon-trash-alt" />
             </div>
 
@@ -125,11 +75,7 @@
                 class="banner-uploader"
                 @click="handleImgChange(index)"
               >
-              <div
-                v-else
-                class="banner-uploader"
-                @click="handleImgChange(index)"
-              >
+              <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="iconfont icon-camera" />
                 上传图片
               </div>
@@ -140,24 +86,10 @@
                   type="textarea"
                   placeholder="文字描述"
                 />
-                <div
-                  class="goods-select"
-                  @click="handleGoodsChange(index)"
-                >
-                  <div
-                    v-if="item.title"
-                    class="link-content"
-                  >
-                    商品：{{ item.title }}
-                  </div>
-                  <div
-                    v-else
-                    class="content-center"
-                  >
-                    <i
-                      class="iconfont icon-link"
-                      @click="handleGoodsChange(index)"
-                    />设置路径
+                <div class="goods-select" @click="handleGoodsChange(index)">
+                  <div v-if="item.title" class="link-content">商品：{{ item.title }}</div>
+                  <div v-else class="content-center">
+                    <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
                   </div>
                 </div>
               </div>
@@ -166,9 +98,7 @@
         </el-form-item>
       </el-form>
       <div class="content-center">
-        <div class="frm-tips">
-          只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
-        </div>
+        <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
         <el-button
           :disabled="data.length >= 5"
           type="default"
@@ -200,16 +130,8 @@
         }
       "
     />
-    <div
-      class="section-footer with-border content-center"
-      style="width: 100%"
-    >
-      <el-button
-        type="primary"
-        @click="sumbit"
-      >
-        保存
-      </el-button>
+    <div class="section-footer with-border content-center" style="width: 100%">
+      <el-button type="primary" @click="sumbit"> 保存 </el-button>
     </div>
   </section>
 </template>
@@ -243,7 +165,7 @@ export default {
   //     }
   //   }
   // },
-  data () {
+  data() {
     return {
       distributor_id: 0,
       distributorList: [],
@@ -283,22 +205,22 @@ export default {
       editorDataIndex: ''
     }
   },
-  mounted () {
+  mounted() {
     this.getDistributor()
     this.getDefaultSlider()
   },
   methods: {
-    getDistributor () {
+    getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then((response) => {
+      getDistributorList(params).then(response => {
         if (response.data.data.list) {
           this.distributorList = response.data.data.list
         }
       })
     },
-    distributorSelectHandle (val) {
-      this.curStore = this.distributorList.find((item) => item.distributor_id == val)
-      getShopScreenSlider({ distributor_id: this.distributor_id }).then((res) => {
+    distributorSelectHandle(val) {
+      this.curStore = this.distributorList.find(item => item.distributor_id == val)
+      getShopScreenSlider({ distributor_id: this.distributor_id }).then(res => {
         let { data } = res.data
         this.config = data.style_params || {}
         this.base.title = data.title || ''
@@ -307,8 +229,8 @@ export default {
         this.data = data.image_list
       })
     },
-    getDefaultSlider () {
-      getShopScreenSlider({ distributor_id: 0 }).then((res) => {
+    getDefaultSlider() {
+      getShopScreenSlider({ distributor_id: 0 }).then(res => {
         let { data } = res.data
         this.config = data.style_params
         this.base.title = data.title
@@ -317,10 +239,10 @@ export default {
         this.data = data.image_list
       })
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    addItem () {
+    addItem() {
       if (!this.data) {
         this.data = []
       }
@@ -339,7 +261,7 @@ export default {
         this.data.push(item)
       }
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       // 图片选择器绑定事件
       this.imgsVisible = true
       this.isGetImage = true
@@ -347,11 +269,11 @@ export default {
         this.editorDataIndex = index
       }
     },
-    pickImg (data) {
+    pickImg(data) {
       this.data[this.editorDataIndex].url = data.url
       this.imgsVisible = false
     },
-    setLink (data, type) {
+    setLink(data, type) {
       if (this.editorDataIndex !== null) {
         this.data[this.editorDataIndex].id = data.id
         this.data[this.editorDataIndex].title = data.title
@@ -361,11 +283,11 @@ export default {
       this.editorDataIndex = null
     },
 
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.linksVisible = true
       this.editorDataIndex = index
     },
-    sumbit () {
+    sumbit() {
       // if(!this.distributor_id){this.$message({
       //   message: '请选择店铺',
       //   type: 'error',
@@ -379,7 +301,7 @@ export default {
         image_list: this.data,
         desc_status: this.config.content
       }
-      postShopScreenSlider(obj).then((res) => {
+      postShopScreenSlider(obj).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success'

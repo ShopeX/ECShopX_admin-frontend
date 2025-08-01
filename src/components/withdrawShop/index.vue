@@ -11,9 +11,9 @@
     >
       <div class="query">
         <el-select v-model="query.operator_type" placeholder="请选择商户类型" style="width: 200px">
-          <el-option label="全部类型" value="all"></el-option>
-          <el-option label="店铺" value="distributor"></el-option>
-          <el-option label="经销商" value="dealer"></el-option>
+          <el-option label="全部类型" value="all" />
+          <el-option label="店铺" value="distributor" />
+          <el-option label="经销商" value="dealer" />
         </el-select>
         <el-input
           placeholder="请输入商户名称/负责人姓名/地址"
@@ -35,16 +35,16 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column :reserve-selection="true" type="selection" width="55"></el-table-column>
-          <el-table-column prop="user_name" label="商户名称" width="220"> </el-table-column>
+          <el-table-column :reserve-selection="true" type="selection" width="55" />
+          <el-table-column prop="user_name" label="商户名称" width="220" />
           <el-table-column prop="scope" label="商户类型" width="220">
             <template slot-scope="scope">
               <span v-if="scope.row.operator_type == 'distributor'">店铺</span>
               <span v-else>经销商</span>
             </template>
           </el-table-column>
-          <el-table-column prop="legal_person" label="负责人" width="120"> </el-table-column>
-          <el-table-column prop="location" label="地址"> </el-table-column>
+          <el-table-column prop="legal_person" label="负责人" width="120" />
+          <el-table-column prop="location" label="地址" />
         </el-table>
       </div>
       <el-pagination
@@ -57,8 +57,7 @@
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-      >
-      </el-pagination>
+      />
       <div class="btn">
         <el-button @click="cancelHandle(true)">取消</el-button>
         <el-button type="primary" @click="confirm">确定</el-button>
@@ -75,7 +74,7 @@ export default {
       default: false
     },
     seletedBusiness: {
-      type: Array,
+      type: Array
     }
   },
   data() {
@@ -148,7 +147,7 @@ export default {
     },
     toggleSelection(rows) {
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {

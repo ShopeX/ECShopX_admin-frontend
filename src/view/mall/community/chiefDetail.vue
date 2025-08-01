@@ -79,8 +79,8 @@ export default {
       if (type == FORM_COMP.IMAGE) {
         if (isArray(value)) {
           return (
-            <div class='imglist-wrap'>
-              {value.map((item) => (
+            <div class="imglist-wrap">
+              {value.map(item => (
                 <SpImage src={item} />
               ))}
             </div>
@@ -117,38 +117,38 @@ export default {
     console.log('approve_status', approve_status)
     return (
       <SpPage>
-        <el-card class='el-card--normal'>
-          <div slot='header'>团长基本信息</div>
-          <el-row class='card-panel'>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>姓名:</span>
-              <span class='card-panel__value'>{name}</span>
+        <el-card class="el-card--normal">
+          <div slot="header">团长基本信息</div>
+          <el-row class="card-panel">
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">姓名:</span>
+              <span class="card-panel__value">{name}</span>
             </el-col>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>手机:</span>
-              <span class='card-panel__value'>{mobile}</span>
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">手机:</span>
+              <span class="card-panel__value">{mobile}</span>
             </el-col>
           </el-row>
         </el-card>
 
-        <el-card class='el-card--normal'>
-          <div slot='header'>团长其他信息</div>
-          {Object.keys(extraData).map((key) => (
-            <el-row class='card-panel' key={key}>
-              <el-col class='card-panel-item' span={24}>
-                <span class='card-panel__label'>{`${extraData[key].label}:`}</span>
-                <span class='card-panel__value'>{this.renderComp(extraData[key])}</span>
+        <el-card class="el-card--normal">
+          <div slot="header">团长其他信息</div>
+          {Object.keys(extraData).map(key => (
+            <el-row class="card-panel" key={key}>
+              <el-col class="card-panel-item" span={24}>
+                <span class="card-panel__label">{`${extraData[key].label}:`}</span>
+                <span class="card-panel__value">{this.renderComp(extraData[key])}</span>
               </el-col>
             </el-row>
           ))}
         </el-card>
 
         {/*  {this.approve_status == 0 && (*/}
-        <div class='footer-container'>
+        <div class="footer-container">
           {btnActions.map((btn, index) => (
             <el-button
               key={`btn-item__${index}`}
-              type='primary'
+              type="primary"
               plain
               on-click={this.handleAction.bind(this, btn)}
             >
@@ -159,9 +159,9 @@ export default {
         {/* )}*/}
 
         <SpDialog
-          ref='resloveDialogRef'
+          ref="resloveDialogRef"
           v-model={this.resloveDialog}
-          title='审批'
+          title="审批"
           form={this.resloveForm}
           form-list={this.resloveFormList}
           on-onSubmit={this.onResloveSubmit}

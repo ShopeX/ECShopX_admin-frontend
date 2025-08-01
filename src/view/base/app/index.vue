@@ -13,9 +13,7 @@
                   <div class="app-icon">
                     <i class="iconfont icon-calendar-alt" />
                   </div>
-                  <div class="app-txt">
-                    预约
-                  </div>
+                  <div class="app-txt">预约</div>
                 </router-link>
               </div>
             </li>
@@ -25,9 +23,7 @@
                   <div class="app-icon">
                     <i class="icon icon-ticket-alt" />
                   </div>
-                  <div class="app-txt">
-                    派券大师
-                  </div>
+                  <div class="app-txt">派券大师</div>
                 </router-link>
               </div>
             </li>
@@ -36,16 +32,14 @@
       </div>
     </el-col>
     <el-col :span="6">
-      <div class="section-white content-padded">
-        广告栏
-      </div>
+      <div class="section-white content-padded">广告栏</div>
     </el-col>
   </el-row>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   }
 }

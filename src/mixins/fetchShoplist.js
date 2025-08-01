@@ -12,7 +12,7 @@ export var shoplistMixin = {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       list: [],
       exist_shop: true,
@@ -20,7 +20,7 @@ export var shoplistMixin = {
     }
   },
   methods: {
-    async getList (refresh) {
+    async getList(refresh) {
       this.exist_shop = true
       this.desc = this.wxshops ? '请选择门店' : '请选择店铺'
       const data = this.wxshops ? await this.getWxShopsList() : await this.getDistributorList()
@@ -31,11 +31,11 @@ export var shoplistMixin = {
         this.exist_shop = false
       }
     },
-    async getWxShopsList () {
+    async getWxShopsList() {
       const { data } = await getWxShopsList(this.params)
       return data
     },
-    async getDistributorList () {
+    async getDistributorList() {
       const { data } = await getDistributorList({ ...this.params })
       return data
     }

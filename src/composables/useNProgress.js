@@ -16,12 +16,12 @@ function useNProgress() {
     return nProgressInstance
   }
 
-  const startProgress = async fn => {
+  const startProgress = async (fn) => {
     const nprogress = await loadNprogress()
     nprogress?.start()
   }
 
-  const stopProgress = async fn => {
+  const stopProgress = async (fn) => {
     const nprogress = await loadNprogress()
     nprogress?.done()
   }

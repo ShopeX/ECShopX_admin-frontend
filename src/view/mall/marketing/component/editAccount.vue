@@ -20,12 +20,12 @@
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item label="企业名称" prop="name">
-                      <el-input v-model="form.name"></el-input>
+                      <el-input v-model="form.name" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="营业执照号" prop="social_credit_code">
-                      <el-input disabled v-model="form.social_credit_code"></el-input>
+                      <el-input disabled v-model="form.social_credit_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
@@ -36,22 +36,22 @@
                         value-format="yyyyMMdd"
                         placeholder="选择日期"
                         style="width: 100%"
-                      ></el-date-picker>
+                      />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业电话" prop="telphone">
-                      <el-input v-model="form.telphone"></el-input>
+                      <el-input v-model="form.telphone" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业邮箱" prop="email">
-                      <el-input v-model="form.email"></el-input>
+                      <el-input v-model="form.email" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="邮编" prop="zip_code">
-                      <el-input v-model="form.zip_code"></el-input>
+                      <el-input v-model="form.zip_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
@@ -66,13 +66,12 @@
                           label: 'title',
                           children: 'cities'
                         }"
-                      >
-                      </el-cascader>
+                      />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业地址" prop="address">
-                      <el-input v-model="form.address"></el-input>
+                      <el-input v-model="form.address" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
@@ -84,7 +83,7 @@
                         type="textarea"
                         placeholder="请输入内容"
                         rows="7"
-                      ></el-input>
+                      />
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -98,26 +97,26 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="法人姓名" prop="legal_person">
-                    <el-input v-model="form.legal_person"></el-input>
+                    <el-input v-model="form.legal_person" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="法人身份证号码" prop="legal_cert_id">
                     <div class="flex">
-                      <el-input v-model="form.legal_cert_id"></el-input>
+                      <el-input v-model="form.legal_cert_id" />
                       <el-tooltip
                         content="身份证信息字母X需大写"
                         placement="top-end"
                         effect="light"
                       >
-                        <i class="el-icon-warning-outline"></i>
+                        <i class="el-icon-warning-outline" />
                       </el-tooltip>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="法人手机号码" prop="legal_mp">
-                    <el-input v-model="form.legal_mp"></el-input>
+                    <el-input v-model="form.legal_mp" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -128,7 +127,7 @@
                       value-format="yyyyMMdd"
                       placeholder="选择日期"
                       style="width: 100%"
-                    ></el-date-picker>
+                    />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -151,7 +150,7 @@
                       placement="top-end"
                       effect="light"
                     >
-                      <i class="el-icon-warning-outline"></i>
+                      <i class="el-icon-warning-outline" />
                     </el-tooltip>
                   </el-form-item>
                 </el-col>
@@ -166,18 +165,18 @@
                         :fetch-suggestions="querySearch"
                         placeholder="请输入选择内容"
                         @select="handleSelectBank"
-                      ></el-autocomplete>
+                      />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="结算银行卡开户名" prop="card_name">
-                    <el-input disabled v-model="form.card_name"></el-input>
+                    <el-input disabled v-model="form.card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="结算银行卡号" prop="card_no">
-                    <el-input v-model="form.card_no"></el-input>
+                    <el-input v-model="form.card_no" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -198,7 +197,7 @@
                     :http-request="handleUpload"
                     :multiple="false"
                   >
-                    <i class="el-icon-upload"></i>
+                    <i class="el-icon-upload" />
                     <div v-if="form.attach_file_name">{{ form.attach_file_name }}</div>
                     <div v-else class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                   </el-upload>
@@ -224,9 +223,9 @@
                 text="提交审核"
                 @clickHandle="submitForm('ruleForm', 'Y', 'loadingBtn')"
               /> -->
-              <el-button type="primary" size="medium" @click="submitHandle('ruleForm', 'Y')"
-                >提交</el-button
-              >
+              <el-button type="primary" size="medium" @click="submitHandle('ruleForm', 'Y')">
+                提交
+              </el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -247,19 +246,19 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="用户姓名" prop="user_name">
-                    <el-input disabled v-model="personForm.user_name"></el-input>
+                    <el-input disabled v-model="personForm.user_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="用户手机号码" prop="tel_no">
                     <div class="flex">
-                      <el-input disabled v-model="personForm.tel_no"></el-input>
+                      <el-input disabled v-model="personForm.tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="用户身份证号码" prop="cert_id">
-                    <el-input disabled v-model="personForm.cert_id"></el-input>
+                    <el-input disabled v-model="personForm.cert_id" />
                   </el-form-item>
                 </el-col>
                 <!-- <el-col :span="8">
@@ -277,24 +276,24 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="开户人姓名" prop="bank_card_name">
-                    <el-input disabled v-model="personForm.bank_card_name"></el-input>
+                    <el-input disabled v-model="personForm.bank_card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="银行预留手机号" prop="bank_tel_no">
                     <div class="flex">
-                      <el-input v-model="personForm.bank_tel_no"></el-input>
+                      <el-input v-model="personForm.bank_tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="银行账号" prop="bank_card_id">
-                    <el-input v-model="personForm.bank_card_id"></el-input>
+                    <el-input v-model="personForm.bank_card_id" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="开户人证件号码" prop="bank_cert_id">
-                    <el-input disabled v-model="personForm.bank_cert_id"></el-input>
+                    <el-input disabled v-model="personForm.bank_cert_id" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -308,9 +307,9 @@
                 text="提交"
                 @clickHandle="submitFormPerson('personForm', 'Y', 'loadingBtn')"
               /> -->
-              <el-button type="primary" size="medium" @click="submitHandle('personForm', 'Y')"
-                >提交</el-button
-              >
+              <el-button type="primary" size="medium" @click="submitHandle('personForm', 'Y')">
+                提交
+              </el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -431,7 +430,7 @@ export default {
   },
   methods: {
     submitHandle(formName, isSubmit) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           if (formName == 'ruleForm') {
             this.$confirm(
@@ -566,7 +565,7 @@ export default {
       })
       this.AllBank = result.data.data
 
-      var restaurants = this.AllBank.map((item) => {
+      var restaurants = this.AllBank.map(item => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -578,7 +577,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },

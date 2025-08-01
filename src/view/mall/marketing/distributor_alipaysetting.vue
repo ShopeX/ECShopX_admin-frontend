@@ -1,5 +1,5 @@
 <template>
- <SpPage class="alipay-setting">
+  <SpPage class="alipay-setting">
     <el-form ref="form" label-width="100px">
       <el-form-item label="当前店铺名称">
         <span>{{ name }}</span>
@@ -10,7 +10,12 @@
         <span class="frm-tips">APPID</span>
       </el-form-item>
       <el-form-item label="支付宝公钥">
-        <el-input v-model="form.ali_public_key" type="textarea" :rows="5" placeholder="请输入内容" />
+        <el-input
+          v-model="form.ali_public_key"
+          type="textarea"
+          :rows="5"
+          placeholder="请输入内容"
+        />
         <br>
         <span class="frm-tips">RSA2(SHA256)密钥 支付宝公钥</span>
       </el-form-item>
@@ -32,7 +37,7 @@
         <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
       </div>
     </el-form>
- </SpPage>
+  </SpPage>
 </template>
 <script>
 import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
@@ -69,7 +74,7 @@ export default {
       this.form.distributor_id = distributor_id
 
       let query = { pay_type: 'alipay', distributor_id: distributor_id }
-      getPaymentSetting(query).then((response) => {
+      getPaymentSetting(query).then(response => {
         let form =
           Array.isArray(response.data.data) && !response.data.data.length ? {} : response.data.data
         for (let key of Object.keys(form)) {
@@ -89,14 +94,14 @@ export default {
         ali_public_key: this.form.ali_public_key
       }
       setPaymentSetting(query)
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

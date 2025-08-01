@@ -29,7 +29,7 @@ export default {
         value: { imgUrl: '', data: [] }
       }
     ],
-    transformIn: v => {
+    transformIn: (v) => {
       const {
         name,
         base,
@@ -47,11 +47,11 @@ export default {
         }
       }
     },
-    transformOut: v => {
+    transformOut: (v) => {
       return pickBy(v, {
         name: 'name',
         uuid: 'uuid',
-        base: v => {
+        base: (v) => {
           return pickBy(v, {
             title: 'title',
             subtitle: 'subtitle',

@@ -96,19 +96,17 @@
                   type="text"
                   v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()"
                   @click="onLinkChange(scope.row)"
-                  >
-审核
-</el-button
                 >
+                  审核
+                </el-button>
                 <el-button type="text" @click="onLinkChange(scope.row)">详情</el-button>
                 <el-button
                   type="text"
                   v-if="scope.row.status == 'passed'"
                   @click="onShowChange(scope.row)"
-                  >
-核销
-</el-button
                 >
+                  核销
+                </el-button>
               </template>
             </el-table-column>
             <el-table-column prop="record_no" label="报名编号" />

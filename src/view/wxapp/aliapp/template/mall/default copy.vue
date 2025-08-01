@@ -162,7 +162,7 @@
           <div class="template-footer">
             <div
               class="template-tabs"
-              :class="{ 'active': editorIndex === 'tabs' }"
+              :class="{ active: editorIndex === 'tabs' }"
               :style="{ background: tabs.config.backgroundColor, color: tabs.config.color }"
               @click="setCurrent('tabs')"
             >
@@ -746,7 +746,7 @@ export default {
     }
     const faverite = await getRecommendLikeItemList()
     let data = []
-    faverite.data.data.list.forEach((item) => {
+    faverite.data.data.list.forEach(item => {
       data.push({
         imgUrl: item.pics[0],
         title: item.itemName,
@@ -766,7 +766,7 @@ export default {
     } else {
       this.components = [...this.initData]
     }
-    this.components.forEach((item) => {
+    this.components.forEach(item => {
       if (item.name === 'setting') {
         this.isOpenLocation = item.config.location
         this.isOpenFaverite = item.config.faverite
@@ -811,13 +811,13 @@ export default {
     // 删除当前组件
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then((_) => {
+        .then(_ => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 视频选择器绑定事件
     getVideo(data) {
@@ -867,7 +867,7 @@ export default {
         items = this.editorData.data
       }
       if (items.length > 0 && items[0].goodsId) {
-        items.forEach((item) => {
+        items.forEach(item => {
           ids.push(item.key || item.goodsId)
         })
         let itemParams = {
@@ -879,7 +879,7 @@ export default {
         if (index !== undefined) {
           Object(itemParams, { distributor_id: this.relStore.id })
         }
-        getItemsList(itemParams).then((res) => {
+        getItemsList(itemParams).then(res => {
           this.relItemsIds = res.data.data.list
           setTimeout(() => {
             this.setItemStatus = true
@@ -910,7 +910,7 @@ export default {
       this.relStore = store
       let values = []
       if (data.length > 0) {
-        data.forEach((item) => {
+        data.forEach(item => {
           let obj = {
             imgUrl: item.pics[0],
             title: item.itemName,
@@ -992,7 +992,7 @@ export default {
     },
     // 保存配置
     async saveConfig() {
-      let hasLocation = this.components.findIndex((item) => item.name === 'setting')
+      let hasLocation = this.components.findIndex(item => item.name === 'setting')
 
       if (hasLocation == -1) {
         this.components.push({
@@ -1005,7 +1005,7 @@ export default {
           }
         })
       } else {
-        this.components.forEach((item) => {
+        this.components.forEach(item => {
           if (item.name === 'setting') {
             item.config = {
               location: this.isOpenLocation,

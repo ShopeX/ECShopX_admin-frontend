@@ -1,35 +1,15 @@
 <template>
-  <div
-    class="img-box-wrap"
-    :class="{ 'inline': inline }"
-    @click="handleClick"
-  >
-    <div
-      v-if="removeBtn"
-      class="remove-btn iconfont icon-trash-alt"
-      @click="handleRemove"
-    />
+  <div class="img-box-wrap" :class="{ inline: inline }" @click="handleClick">
+    <div v-if="removeBtn" class="remove-btn iconfont icon-trash-alt" @click="handleRemove" />
     <div
       class="img-box"
       :class="{ 'border-dashed': border === 'dashed', 'border-none': border === 'none' }"
-      :style="{ 'width': width + 'px', 'height': height + 'px' }"
+      :style="{ width: width + 'px', height: height + 'px' }"
     >
-      <img
-        v-if="imgUrl"
-        :src="imgUrl"
-        alt=""
-      >
-      <i
-        v-else
-        class="iconfont"
-        :class="icon"
-        :style="'font-size:' + width * 0.3 + 'px'"
-      />
+      <img v-if="imgUrl" :src="imgUrl" alt="">
+      <i v-else class="iconfont" :class="icon" :style="'font-size:' + width * 0.3 + 'px'" />
     </div>
-    <div
-      v-if="bottomInfo"
-      class="bottom-info"
-    >
+    <div v-if="bottomInfo" class="bottom-info">
       {{ bottomInfo }}
     </div>
   </div>
@@ -71,10 +51,10 @@ export default {
     }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.$emit('click')
     },
-    handleRemove () {
+    handleRemove() {
       if (!this.removeBtn) return
       this.$emit('remove')
     }

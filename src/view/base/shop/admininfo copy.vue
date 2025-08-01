@@ -101,7 +101,7 @@ export default {
     }
   },
   mounted() {
-    getAdminInfo().then((res) => {
+    getAdminInfo().then(res => {
       console.log(res.data.data.logintype)
       if (res.data.data.logintype == 'admin') {
         this.change_pwd = false
@@ -118,7 +118,7 @@ export default {
     onSubmit() {
       const that = this
       this.loading = true
-      updateAdminInfo(this.form).then((response) => {
+      updateAdminInfo(this.form).then(response => {
         if (response.data.data) {
           this.$message({
             message: '更新成功',

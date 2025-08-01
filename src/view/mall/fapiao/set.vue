@@ -122,7 +122,7 @@ export default {
     },
     getList(filter) {
       this.loading = true
-      getFapiaoset(filter).then((response) => {
+      getFapiaoset(filter).then(response => {
         console.warn(response)
         this.list = response.data.data.list
         this.total_count = response.data.total_count
@@ -138,7 +138,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          DeleteSettingData(params).then((response) => {
+          DeleteSettingData(params).then(response => {
             this.list.splice(index, 1)
             this.$message({
               message: '操作成功',

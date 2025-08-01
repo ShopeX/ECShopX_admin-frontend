@@ -2,7 +2,6 @@ FROM reg.ishopex.cn/base-images/node-python3:16.16.0-alpine3.16 AS builder
 
 ARG CMD
 ARG VUE_APP_IS_SAAS=false
-ARG VUE_APP_PRODUCT_MODEL=standard
 ARG VUE_APP_BASE_API=/api
 ARG VUE_APP_PUBLIC_PATH=/
 ARG VUE_APP_WXIMG_URL
@@ -22,7 +21,6 @@ ARG VUE_APP_ALIOSS_BUCKET
 ARG VUE_APP_H5_HOST
 
 ENV VUE_APP_IS_SAAS ${VUE_APP_IS_SAAS}
-ENV VUE_APP_PRODUCT_MODEL ${VUE_APP_PRODUCT_MODEL}
 ENV VUE_APP_BASE_API ${VUE_APP_BASE_API}
 ENV VUE_APP_PUBLIC_PATH ${VUE_APP_PUBLIC_PATH}
 ENV VUE_APP_WXIMG_URL ${VUE_APP_WXIMG_URL}
@@ -46,8 +44,8 @@ COPY package*.json ./
 RUN npm config set registry https://registry.npmmirror.com && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm config set python /usr/bin/python && npm ci
 
 COPY . .
-COPY .env ./
-COPY .env.* ./
+# COPY .env ./
+# COPY .env.* ./
 RUN ls -la
 RUN ${CMD}
 RUN ls -l /app/dist

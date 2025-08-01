@@ -124,7 +124,7 @@ export function getRegionsThird() {
 }
 
 // 分账
-export const subAccount = params => {
+export const subAccount = (params) => {
   return fetch({
     url: '/bspay/trade/list',
     method: 'get',
@@ -132,7 +132,7 @@ export const subAccount = params => {
   })
 }
 // 导出分账文件
-export const exportFileList = params => {
+export const exportFileList = (params) => {
   return fetch({
     url: '/bspay/trade/exportdata',
     method: 'get',
@@ -141,7 +141,7 @@ export const exportFileList = params => {
 }
 
 // 查看分账详情
-export const subAccountDetail = id => {
+export const subAccountDetail = (id) => {
   return fetch({
     url: `/bspay/trade/info/${id}`,
     method: 'get'

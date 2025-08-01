@@ -303,15 +303,15 @@ export default {
   },
   methods: {
     getMenuTrees() {
-      let params = { 'version': this.version }
-      getShopMenu(params).then((res) => {
+      let params = { version: this.version }
+      getShopMenu(params).then(res => {
         this.tableData = res.list
         this.shopmenulist = res.list
       })
     },
     uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file: file.raw, version: this.version }
-      uploadMenu(params).then((res) => {
+      uploadMenu(params).then(res => {
         this.getMenuTrees()
       })
     },
@@ -384,7 +384,7 @@ export default {
         return
       }
 
-      saveMenu(true, oldItem).then((res) => {
+      saveMenu(true, oldItem).then(res => {
         this.getMenuTrees()
       })
     },
@@ -404,7 +404,7 @@ export default {
       this.setApisForm.is_menu = row.is_menu
     },
     actionSetMenuApis() {
-      saveMenu(true, this.setApisForm).then((res) => {
+      saveMenu(true, this.setApisForm).then(res => {
         this.editApisVisible = false
         this.getMenuTrees()
       })
@@ -467,7 +467,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteMenu(id).then((res) => {
+        deleteMenu(id).then(res => {
           this.getMenuTrees()
         })
       })
@@ -476,7 +476,7 @@ export default {
       if (this.form.url && this.form.url[0] !== '/') this.form.url = `/${this.form.url}`
       if (this.form.parentUrl) this.form.url = this.form.parentUrl + this.form.url
       console.log(this.form)
-      saveMenu(this.isEdit, this.form).then((res) => {
+      saveMenu(this.isEdit, this.form).then(res => {
         this.editVisible = false
         this.getMenuTrees()
       })

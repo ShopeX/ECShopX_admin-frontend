@@ -8,10 +8,7 @@
         {{ distributor.store_name }}
         <span class="frm-tips">{{ distributor.store_address }}</span>
       </div>
-      <div
-        v-if="orderInfo.receiver_address"
-        class="flex-center"
-      >
+      <div v-if="orderInfo.receiver_address" class="flex-center">
         <div class="content-right">
           <h4>收货人信息：</h4>
         </div>
@@ -41,7 +38,7 @@ export default {
     CustomCard
   },
   props: ['cardConfig', 'orderInfo', 'memberInfo', 'distributor', 'deliveryData', 'update'],
-  data () {
+  data() {
     const self = this
     return {
       columns: [
@@ -54,7 +51,7 @@ export default {
     }
   },
   computed: {
-    isShowLog () {
+    isShowLog() {
       return (
         (this.orderInfo.receipt_type || this.orderInfo.order_type == 'bargain') &&
         this.orderInfo.delivery_type == 'new'
@@ -63,14 +60,14 @@ export default {
   },
   watch: {
     deliveryData: {
-      handler (val) {
+      handler(val) {
         this.dataSource = val
       },
       deep: true
     }
   },
   methods: {
-    getDetail () {
+    getDetail() {
       this.$emit('update')
     }
   }

@@ -5,6 +5,12 @@
       <SpImage :src="logo" height="30" fit="contain" />
     </div>
 
+    <div class="absolute top-4 right-10 px-4 z-20 flex items-center gap-1">
+      <SpLanguage>
+        <span class="text-sm ml-1">{{ currentLang }}</span>
+      </SpLanguage>
+    </div>
+
     <!-- 系统介绍 -->
     <div class="flex-1">
       <div class="login-background" :style="loginBackGroundStyle" />
@@ -17,6 +23,7 @@
 
 <script>
 import DEFAULT_CONFIG from '@/config'
+import i18n from '@/i18n'
 import AuthForm from './auth-form.vue'
 export default {
   name: 'Auth',
@@ -24,7 +31,9 @@ export default {
     AuthForm
   },
   data() {
-    return {}
+    return {
+      currentLang: ''
+    }
   },
   computed: {
     logo: () => {
@@ -41,6 +50,9 @@ export default {
         'background-position': 'center'
       }
     }
+  },
+  mounted() {
+    this.currentLang = i18n[this.$store.state.system.lang]
   }
 }
 </script>

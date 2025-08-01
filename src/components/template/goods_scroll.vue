@@ -1,17 +1,8 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
-      <div
-        class="component-title"
-        :class="{ 'middle': config.type !== 'goods' }"
-      >
+    <div v-if="base.title" class="component-header">
+      <div class="component-title" :class="{ middle: config.type !== 'goods' }">
         <div style="max-width: 80px">
           {{ base.title }}
         </div>
@@ -22,48 +13,31 @@
           :callback="function () {}"
         >
           <template slot-scope="scope">
-            <div
-              v-if="!scope.content"
-              class="activity-timer"
-            >
+            <div v-if="!scope.content" class="activity-timer">
               <div class="time-box">
                 {{ scope.day ? scope.day : '00' }}
               </div>
-              <div class="dot">
-                天
-              </div>
+              <div class="dot">天</div>
               <div class="time-box">
                 {{ scope.hour ? scope.hour : '00' }}
               </div>
-              <div class="dot">
-                时
-              </div>
+              <div class="dot">时</div>
               <div class="time-box">
                 {{ scope.min ? scope.min : '00' }}
               </div>
-              <div class="dot">
-                分
-              </div>
+              <div class="dot">分</div>
               <div class="time-box">
                 {{ scope.sec ? scope.sec : '00' }}
               </div>
-              <div class="dot">
-                秒
-              </div>
+              <div class="dot">秒</div>
               <div>{{ text }}</div>
             </div>
-            <div
-              v-else
-              class="activity-timer"
-            >
+            <div v-else class="activity-timer">
               {{ scope.content }}
             </div>
           </template>
         </countdown>
-        <div
-          v-else
-          class="subtitle"
-        >
+        <div v-else class="subtitle">
           {{ base.subtitle }}
         </div>
       </div>
@@ -71,36 +45,15 @@
         <div class="three-dot" />
       </div>
     </div>
-    <div
-      class="component-body"
-      :class="config.type !== 'goods' ? 'seckill' : 'goods'"
-    >
-      <div
-        v-if="data.length > 0 && data[0].imgUrl"
-        class="scroll-goods"
-      >
-        <div
-          v-for="(item, index) in data.slice(0, 50)"
-          :key="index"
-          class="scroll-item"
-        >
-          <div
-            v-if="config.leaderboard"
-            class="subscript"
-          >
-            <div class="subscript-text">
-              NO.{{ index + 1 }}
-            </div>
-            <img
-              class="subscript-img"
-              :src="subscriptImg"
-            >
+    <div class="component-body" :class="config.type !== 'goods' ? 'seckill' : 'goods'">
+      <div v-if="data.length > 0 && data[0].imgUrl" class="scroll-goods">
+        <div v-for="(item, index) in data.slice(0, 50)" :key="index" class="scroll-item">
+          <div v-if="config.leaderboard" class="subscript">
+            <div class="subscript-text">NO.{{ index + 1 }}</div>
+            <img class="subscript-img" :src="subscriptImg">
           </div>
           <div class="thumbnail">
-            <img
-              class="goods-img"
-              :src="wximageurl + item.imgUrl"
-            >
+            <img class="goods-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="marketing-title">
             {{ item.title }}
@@ -108,10 +61,7 @@
           <div class="marketing-title">
             {{ item.itemEnName }}
           </div>
-          <div
-            v-if="config.showPrice"
-            class="caption"
-          >
+          <div v-if="config.showPrice" class="caption">
             <template v-if="config.type !== 'goods'">
               <span class="cur">¥</span>{{ item.act_price ? item.act_price / 100 : '0.00' }}
               <span class="marketing-price">{{ item.price ? item.price / 100 : '0.00' }}</span>
@@ -135,15 +85,9 @@
             </p>
           </div>
         </div>
-        <div
-          v-if="base.backgroundImg"
-          class="scroll-item"
-        >
+        <div v-if="base.backgroundImg" class="scroll-item">
           <div class="more">
-            <img
-              :src="base.backgroundImg"
-              alt=""
-            >
+            <img :src="base.backgroundImg" alt="">
             <div>查看更多</div>
           </div>
         </div>
@@ -171,7 +115,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: '',
@@ -185,7 +129,7 @@ export default {
   },
   watch: {
     res: {
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
@@ -193,7 +137,7 @@ export default {
       deep: true
     },
     seckillId: {
-      handler (val) {
+      handler(val) {
         this.time = 0
         if (val) {
           getSeckillItemList({
@@ -202,7 +146,7 @@ export default {
             pageSize: 10,
             is_sku: 0,
             seckill_type: this.config.type === 'limitTimeSale' ? 'limited_time_sale' : ''
-          }).then((res) => {
+          }).then(res => {
             let data = res.data.data
             if (data.activity.status === 'in_sale') {
               this.time = data.activity.activity_end_time
@@ -234,12 +178,12 @@ export default {
       deep: true
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
     this.colorPrimary = this.$store.getters.color_theme.primary
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

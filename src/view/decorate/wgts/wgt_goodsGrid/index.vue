@@ -3,7 +3,7 @@
   <div
     :class="{
       'wgt-goods-grid': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -29,8 +29,9 @@
                   type="primary"
                   size="mini"
                   style="background-color: #fff"
-                  >处方药</el-tag
                 >
+                  处方药
+                </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
@@ -62,8 +63,9 @@
                   type="primary"
                   size="mini"
                   style="background-color: #fff"
-                  >处方药</el-tag
                 >
+                  处方药
+                </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
@@ -92,8 +94,9 @@
                 type="primary"
                 size="mini"
                 style="background-color: #fff"
-                >处方药</el-tag
               >
+                处方药
+              </el-tag>
               {{ item.title }}
             </div>
             <div v-if="value.showPrice" class="price">

@@ -392,7 +392,7 @@ export default {
     if (this.$route.params.itemId) {
       // 初始化门店数据
       getItemsDetail(this.$route.params.itemId)
-        .then((response) => {
+        .then(response => {
           let itemsDetailData = response.data.data
           this.form.pics = itemsDetailData.pics
           // 处理图片列表
@@ -435,7 +435,7 @@ export default {
           this.form.type_labels = newItemsDetail
           this.oldLabels = newItemsDetail
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.go(-1)
         })
     }
@@ -494,7 +494,7 @@ export default {
       this.serviceLabelsVisible = false
     },
     getLabelsList: function () {
-      getServiceLabelsList(this.params).then((response) => {
+      getServiceLabelsList(this.params).then(response => {
         this.serviceLabelsList = response.data.data.list
         this.total_count = response.data.data.total_count
       })
@@ -506,11 +506,11 @@ export default {
     addLabel: function () {
       this.serviceLabelsVisible = true
       this.params.service_type = 'timescard'
-      getServiceLabelsList(this.params).then((response) => {
+      getServiceLabelsList(this.params).then(response => {
         this.serviceLabelsList = response.data.data.list
         // 打开列表选中列保留显示
         this.$refs.multipleTable.clearSelection()
-        this.form.type_labels.forEach((row) => {
+        this.form.type_labels.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
         this.total_count = response.data.data.total_count
@@ -555,7 +555,7 @@ export default {
         }
       }
       if (this.form.item_id) {
-        updateItems(this.form.item_id, params).then((response) => {
+        updateItems(this.form.item_id, params).then(response => {
           this.$message({
             message: '更新成功',
             type: 'success',
@@ -567,7 +567,7 @@ export default {
           })
         })
       } else {
-        createItems(params).then((response) => {
+        createItems(params).then(response => {
           this.$message({
             message: '添加成功',
             type: 'success',
@@ -667,7 +667,7 @@ export default {
         return false
       } else {
         if (arr.length != 0) {
-          arr.forEach((data) => {
+          arr.forEach(data => {
             if (data && data.url !== '') {
               this.picsDialog = false
               this.form.pics.push(data.url)

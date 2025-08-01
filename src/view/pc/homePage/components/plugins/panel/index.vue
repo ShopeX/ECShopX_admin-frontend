@@ -2,15 +2,8 @@
   <div>
     <slot />
     <div class="activity-panel">
-      <ul
-        v-if="t_data.length > 0"
-        class="box"
-      >
-        <li
-          v-for="(item, i) in t_data"
-          :key="i"
-          class="content"
-        >
+      <ul v-if="t_data.length > 0" class="box">
+        <li v-for="(item, i) in t_data" :key="i" class="content">
           <img
             class="i"
             :src="item.imgUrl || 'https://fakeimg.pl/250x250/F8F8F8/CCC/?text=Image&font=helvetica'"
@@ -29,7 +22,7 @@ export default {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data.data
     }

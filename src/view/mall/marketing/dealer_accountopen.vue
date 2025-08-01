@@ -100,31 +100,30 @@
               <div slot="header">其他信息</div>
               <div class="body">
                 <el-row class="load-btn">
-                  <el-col :span="4" style="text-align: right; padding-right: 10px"
-                    >
-附件信息：
-</el-col
-                  >
+                  <el-col :span="4" style="text-align: right; padding-right: 10px">
+                    附件信息：
+                  </el-col>
                   <el-col :span="20" class="cus-btn">
                     <el-button
                       v-if="member_type === 'corp'"
                       type="text"
                       @click="dowloadFile(infoList.attach_file)"
-                      >
-附件
-</el-button
                     >
+                      附件
+                    </el-button>
                     <span v-else>-</span>
                   </el-col>
                 </el-row>
               </div>
             </el-card>
             <div class="btn">
-              <el-button v-if="infoList.audit_state != 'A'" type="primary" @click="editHandle(true)"
-                >
-编辑
-</el-button
+              <el-button
+                v-if="infoList.audit_state != 'A'"
+                type="primary"
+                @click="editHandle(true)"
               >
+                编辑
+              </el-button>
               <el-button v-if="infoList.audit_state == 'A'">审核中</el-button>
             </div>
           </el-tab-pane>
@@ -132,11 +131,7 @@
       </el-card>
     </template>
     <template v-else>
-      <editAccount
-        :active-name="infoList.member_type"
-        :info="infoList"
-        @back="editHandle(false)"
-      />
+      <editAccount :active-name="infoList.member_type" :info="infoList" @back="editHandle(false)" />
     </template>
     <!-- <el-row class="cus-dealer-bot">
       <el-button type='primary' @click="handleModalClick(true, '未开户')" size='small' plain>解除关联</el-button>
@@ -222,7 +217,7 @@ export default {
     },
     getDetail() {
       getDealderInfo()
-        .then((response) => {
+        .then(response => {
           this.loading = false
           this.infoList = response.data.data
           this.member_type = response.data.data.member_type
@@ -240,7 +235,7 @@ export default {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

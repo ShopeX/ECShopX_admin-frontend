@@ -138,7 +138,7 @@ export default {
   methods: {
     physicalFirst() {
       this.$nextTick(() => {
-        physicalFirst().then((response) => {
+        physicalFirst().then(response => {
           if (response.data.data.status == 1) {
             this.physicalNormal({
               status: Number(response.data.data.status),
@@ -164,7 +164,7 @@ export default {
     // 模板列表
     getFormworkList() {
       this.loading = true
-      getTemplateList(this.params).then((response) => {
+      getTemplateList(this.params).then(response => {
         this.FormworkList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -184,13 +184,13 @@ export default {
       this.FormworkVisible = false
     },
     physicalNormal(query) {
-      physicalNormal(query).then((response) => {
+      physicalNormal(query).then(response => {
         this.getDataList()
       })
     },
     // 加载列表数据
     getDataList(list_parmas) {
-      allUserList(list_parmas).then((response) => {
+      allUserList(list_parmas).then(response => {
         this.colsTitle = response.data.data.colstitle
         this.ItemsList = response.data.data.list
       })

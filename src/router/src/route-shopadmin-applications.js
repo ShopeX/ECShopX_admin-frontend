@@ -133,6 +133,6 @@ export default {
           component: () => import('@/view/mall/trade/order/logistics')
         }
       ]
-    },
+    }
   ]
 }

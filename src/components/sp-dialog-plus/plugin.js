@@ -5,7 +5,7 @@ export default {
   install(Vue, options = {}) {
     const Ctor = Vue.extend(Main)
 
-    const fn = value => {
+    const fn = (value) => {
       const data = {
         buttonCancel: value.buttonCancel,
         buttonConfirm: value.buttonConfirm,
@@ -30,7 +30,7 @@ export default {
               this.$el.remove()
             }
             this.$once('close', teardown)
-            this.$once('input', val => {
+            this.$once('input', (val) => {
               resolve(val)
               teardown()
             })
@@ -44,7 +44,7 @@ export default {
                   close: () => {
                     this.$emit('close')
                   },
-                  confirm: callback => {
+                  confirm: (callback) => {
                     data
                       .confirmBefore()
                       .then(() => {

@@ -131,7 +131,7 @@ export default {
     },
     save() {
       this.form.promotions_value.membercard = this.membercards
-      saveRegisterPromotions(this.form).then((res) => {
+      saveRegisterPromotions(this.form).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success',

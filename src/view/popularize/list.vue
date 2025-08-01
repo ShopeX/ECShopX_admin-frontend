@@ -369,10 +369,10 @@ export default {
       })
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.fetchList()
     },
-    onReset () {
+    onReset() {
       this.params = {
         mobile: '',
         store_status: ''

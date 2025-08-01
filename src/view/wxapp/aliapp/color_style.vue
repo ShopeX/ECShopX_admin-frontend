@@ -54,21 +54,11 @@
 </style>
 
 <template>
-  <transition
-    name="el-fade-in-linear"
-    mode="out-in"
-  >
+  <transition name="el-fade-in-linear" mode="out-in">
     <div>
-      <section
-        class="color-style-warp"
-        :style="'height: ' + (wheight - 160) + 'px;'"
-      >
+      <section class="color-style-warp" :style="'height: ' + (wheight - 160) + 'px;'">
         <div class="form-header">
-          <el-form
-            class="view-flex-item"
-            :inline="true"
-            label-width="80px"
-          >
+          <el-form class="view-flex-item" :inline="true" label-width="80px">
             <el-form-item label="主色调">
               <el-color-picker v-model="form.data[0].primary" />
             </el-form-item>
@@ -79,13 +69,7 @@
               <el-color-picker v-model="form.data[0].marketing" />
             </el-form-item>
           </el-form>
-          <el-button
-            class="btn-save"
-            type="primary"
-            @click="saveConfig"
-          >
-            保存
-          </el-button>
+          <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
         </div>
         <div class="pages-view-warp">
           <div
@@ -164,7 +148,7 @@ import { mapGetters } from 'vuex'
 // api
 import { saveALiPageParams, getALiParamByTempName } from '@/api/ali'
 export default {
-  data () {
+  data() {
     return {
       listWidth: '820',
       form: {
@@ -292,13 +276,13 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'wwidth', 'ali_template_name'])
   },
-  mounted () {
+  mounted() {
     let filter = {
       template_name: this.ali_template_name,
       version: 'v1.0.1',
       page_name: 'color_style'
     }
-    getALiParamByTempName(filter).then((res) => {
+    getALiParamByTempName(filter).then(res => {
       if (res.data.data.list.length !== 0) {
         this.form = res.data.data.list[0].params
       }
@@ -306,13 +290,13 @@ export default {
   },
   methods: {
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       let param = {
         template_name: this.ali_template_name,
         config: JSON.stringify([this.form]),
         page_name: 'color_style'
       }
-      saveALiPageParams(param).then((res) => {
+      saveALiPageParams(param).then(res => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

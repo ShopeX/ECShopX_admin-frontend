@@ -62,7 +62,7 @@ export default {
             slot: 'header',
             buttonType: 'primary is-plain',
             action: {
-              handler: async (val) => {
+              handler: async val => {
                 const formQuery = JSON.parse(JSON.stringify(this.formQuery))
                 if (formQuery.cycleTime.length > 0) {
                   formQuery['start_time'] = moment(formQuery.cycleTime[0]).unix()

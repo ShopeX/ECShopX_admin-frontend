@@ -102,7 +102,7 @@ export default {
       version: 'v1.0.1',
       page_name: 'member_center_menu_setting'
     }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       console.log('getParamByTempName:', res)
       if (res.data.data.list.length !== 0) {
         try {
@@ -153,7 +153,7 @@ export default {
         config: JSON.stringify([this.form]),
         page_name: 'member_center_menu_setting'
       }
-      savePageParams(param).then((res) => {
+      savePageParams(param).then(res => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

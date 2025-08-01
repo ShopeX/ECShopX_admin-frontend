@@ -21,7 +21,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       regions: [],
       params: {
@@ -35,17 +35,17 @@ export default {
       selected_values: JSON.parse(JSON.stringify(this.defaultAddress))
     }
   },
-  mounted () {
+  mounted() {
     this.getDistrict()
   },
   methods: {
-    getDistrict () {
+    getDistrict() {
       getAddress().then(({ data }) => {
         this.regions = data.data
         this.RegionChangeSearch(this.selected_values)
       })
     },
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       if (this.regions.length == 0) return
       this.params.regions = []
       var vals = this.getCascaderObj(value, this.regions)
@@ -69,7 +69,7 @@ export default {
       this.params.regions_id = value
       this.$emit('change', this.params)
     },
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -80,7 +80,7 @@ export default {
         return null
       })
     },
-    init () {
+    init() {
       this.selected_values = []
     }
   }

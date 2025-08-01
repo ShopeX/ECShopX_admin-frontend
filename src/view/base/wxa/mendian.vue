@@ -1,21 +1,9 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    class="section-white content-padded"
-  >
-    <el-tab-pane
-      label="门店小程序首页配置"
-      name="first"
-    >
-      <el-form
-        ref="form"
-        :model="form"
-        label-width="180px"
-      >
+  <el-tabs v-model="activeName" class="section-white content-padded">
+    <el-tab-pane label="门店小程序首页配置" name="first">
+      <el-form ref="form" :model="form" label-width="180px">
         <el-form-item label="首页轮播图：">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
           <el-button
             type="primary"
             class="el-icon-plus banner-button-uploader"
@@ -23,11 +11,7 @@
           >
             添加轮播图
           </el-button>
-          <el-table
-            :data="form.bannerPicList"
-            border
-            style="width: 100%"
-          >
+          <el-table :data="form.bannerPicList" border style="width: 100%">
             <el-table-column label="轮播图片">
               <template slot-scope="scope">
                 <img
@@ -45,13 +29,11 @@
             </el-table-column>
             <el-table-column label="点击轮播图片跳转的商品">
               <template slot-scope="scope">
-                <span
-                  v-if="scope.row.item_id"
-                >{{ scope.row.item_name }}
-                  <el-button
-                    type="text"
-                    @click="handleGoodsChange(scope.$index, 'banner')"
-                  >修改</el-button>
+                <span v-if="scope.row.item_id"
+                  >{{ scope.row.item_name }}
+                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'banner')"
+                    >修改</el-button
+                  >
                 </span>
                 <i
                   v-else
@@ -62,22 +44,13 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button
-                  icon="delete"
-                  @click="handleDelBanner(scope.$index)"
-                >
-                  删除
-                </el-button>
+                <el-button icon="delete" @click="handleDelBanner(scope.$index)"> 删除 </el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-form-item>
         <el-form-item label="热门商品：">
-          <el-table
-            :data="form.hotGoods"
-            border
-            style="width: 100%"
-          >
+          <el-table :data="form.hotGoods" border style="width: 100%">
             <el-table-column label="热门商品广告图">
               <template slot-scope="scope">
                 <img
@@ -95,13 +68,11 @@
             </el-table-column>
             <el-table-column label="热门商品">
               <template slot-scope="scope">
-                <span
-                  v-if="scope.row.item_id"
-                >{{ scope.row.item_name }}
-                  <el-button
-                    type="text"
-                    @click="handleGoodsChange(scope.$index, 'hotGoods')"
-                  >修改</el-button>
+                <span v-if="scope.row.item_id"
+                  >{{ scope.row.item_name }}
+                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'hotGoods')"
+                    >修改</el-button
+                  >
                 </span>
                 <i
                   v-else
@@ -112,16 +83,8 @@
             </el-table-column>
           </el-table>
         </el-form-item>
-        <div
-          class="section-footer with-border content-center"
-          style="width: 100%"
-        >
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            保 存
-          </el-button>
+        <div class="section-footer with-border content-center" style="width: 100%">
+          <el-button type="primary" @click="save"> 保 存 </el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -131,11 +94,7 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <el-dialog
-      title="选择商品"
-      class="select-goods-box"
-      :visible.sync="selectGoodsVisible"
-    >
+    <el-dialog title="选择商品" class="select-goods-box" :visible.sync="selectGoodsVisible">
       <template>
         <el-transfer
           v-model="selectGoods"
@@ -144,10 +103,7 @@
           :data="goodsList"
           @change="handleSelectChange"
         >
-          <div
-            slot="left-footer"
-            class="page-box"
-          >
+          <div slot="left-footer" class="page-box">
             <el-pagination
               v-if="total_count > params.pageSize"
               layout="prev, next"
@@ -157,16 +113,8 @@
             />
           </div>
         </el-transfer>
-        <div
-          class="section-footer with-border content-center"
-          style="width: 100%"
-        >
-          <el-button
-            type="primary"
-            @click="handleGoodsDialog"
-          >
-            确定
-          </el-button>
+        <div class="section-footer with-border content-center" style="width: 100%">
+          <el-button type="primary" @click="handleGoodsDialog"> 确定 </el-button>
         </div>
       </template>
     </el-dialog>
@@ -180,7 +128,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       selectGoods: [],
       selectItem: {
@@ -211,16 +159,16 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let filter = { template_name: 'yykmendian', name: 'banner', page_name: 'index' }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       if (res.data.data) {
         this.form.bannerPicList = res.data.data[0].params
         this.bannerPicListSetId = res.data.data[0].id
       }
     })
     let hotGoodsFilter = { template_name: 'yykmendian', name: 'hotGoods', page_name: 'index' }
-    getParamByTempName(hotGoodsFilter).then((res) => {
+    getParamByTempName(hotGoodsFilter).then(res => {
       if (res.data.data) {
         this.form.hotGoods = res.data.data[0].params
         this.hotGoodsSetId = res.data.data[0].id
@@ -228,7 +176,7 @@ export default {
     })
   },
   methods: {
-    handleAddBanner () {
+    handleAddBanner() {
       let row = { url: '', item_id: 0, item_name: '' }
       if (this.form.bannerPicList.length > 4) {
         this.$message({
@@ -240,7 +188,7 @@ export default {
         this.form.bannerPicList.push(row)
       }
     },
-    handleGoodsChange (index, type_name) {
+    handleGoodsChange(index, type_name) {
       this.currentIndex = index
       this.currentType = type_name
       this.selectGoodsVisible = true
@@ -256,16 +204,16 @@ export default {
       }
       this.getGoodsList()
     },
-    handleDelBanner (index) {
+    handleDelBanner(index) {
       this.form.bannerPicList.splice(index, 1)
     },
-    handleImgChange (index, type_name) {
+    handleImgChange(index, type_name) {
       this.imgDialog = true
       this.isGetImage = true
       this.currentType = type_name
       this.currentIndex = index
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.currentType == 'hotGoods') {
         this.form.hotGoods[this.currentIndex].url = data.url
       } else {
@@ -273,13 +221,13 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //选择商品分页
-    handleSelectGoodsChange (val) {
+    handleSelectGoodsChange(val) {
       this.params.page = val
-      this.goodsList.forEach((row) => {
+      this.goodsList.forEach(row => {
         //如果选中
         let index = this.selectGoods.indexOf(row.key)
         if (index != -1) {
@@ -295,7 +243,7 @@ export default {
       this.getGoodsList()
     },
     //选择商品触发事件
-    handleSelectChange (value, direction, movedKeys) {
+    handleSelectChange(value, direction, movedKeys) {
       if (value.length > 1) {
         this.$message({
           message: '最多选择一个商品',
@@ -306,10 +254,10 @@ export default {
       this.selectGoods.splice(1)
     },
     //选择商品确认
-    handleGoodsDialog () {
+    handleGoodsDialog() {
       this.selectGoodsVisible = false
       if (this.selectGoods.length > 0) {
-        this.goodsList.forEach((row) => {
+        this.goodsList.forEach(row => {
           //如果选中
           let index = this.selectGoods.indexOf(row.key)
           if (index != -1) {
@@ -333,10 +281,10 @@ export default {
       }
       this.selectGoods = []
     },
-    getGoodsList () {
-      getItemsList(this.params).then((response) => {
+    getGoodsList() {
+      getItemsList(this.params).then(response => {
         this.goodsList = []
-        response.data.data.list.forEach((row) => {
+        response.data.data.list.forEach(row => {
           let itemid = ''
           if (this.currentType == 'banner') {
             itemid = this.form.bannerPicList[this.currentIndex].item_id
@@ -368,7 +316,7 @@ export default {
         this.total_count = response.data.data.total_count
       })
     },
-    save () {
+    save() {
       if (this.bannerPicListSetId) {
         let bannerParams = {
           params: this.form.bannerPicList,
@@ -377,7 +325,7 @@ export default {
           page_name: 'index',
           id: this.bannerPicListSetId
         }
-        updateParamsById(bannerParams).then((response) => {
+        updateParamsById(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -391,7 +339,7 @@ export default {
           name: 'banner',
           page_name: 'index'
         }
-        setPageParams(bannerParams).then((response) => {
+        setPageParams(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -408,7 +356,7 @@ export default {
           page_name: 'index',
           id: this.hotGoodsSetId
         }
-        updateParamsById(hotGoodsParams).then((response) => {
+        updateParamsById(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -422,7 +370,7 @@ export default {
           name: 'hotGoods',
           page_name: 'index'
         }
-        setPageParams(hotGoodsParams).then((response) => {
+        setPageParams(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',

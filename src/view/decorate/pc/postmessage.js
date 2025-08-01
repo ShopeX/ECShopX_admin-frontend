@@ -19,7 +19,7 @@ export default class PostMessage {
     )
   }
   onMessage(callback) {
-    window.addEventListener('message', event => {
+    window.addEventListener('message', (event) => {
       // 确保消息来源是可信的
       //   if (event.origin !== this.url) return
       if (event.data.source == POST_SOURCE) {

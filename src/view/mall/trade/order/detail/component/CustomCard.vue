@@ -1,41 +1,20 @@
 <template>
-  <el-card
-    :shadow="cardConfig.shadow"
-    class="mycard"
-    :class="{ 'base-card': isBase }"
-  >
-    <div
-      v-if="!isBase"
-      slot="header"
-    >
+  <el-card :shadow="cardConfig.shadow" class="mycard" :class="{ 'base-card': isBase }">
+    <div v-if="!isBase" slot="header">
       {{ title }}
     </div>
-    <div
-      v-if="isBase"
-      slot="header"
-      class="baseTitle"
-    >
+    <div v-if="isBase" slot="header" class="baseTitle">
       <div class="title1">
         {{ title }}
       </div>
-      <el-button
-        type="text"
-        @click="clickShowRemark(dataSource, 'orderDetail')"
-      >
+      <el-button type="text" @click="clickShowRemark(dataSource, 'orderDetail')">
         修改商家备注
       </el-button>
     </div>
     <template v-if="isCommon">
       <div class="body">
-        <el-row
-          v-for="(row, index) in info"
-          :key="index"
-        >
-          <el-col
-            v-for="(col, colIndex) in row"
-            :key="colIndex"
-            :span="col.isHidden ? 0 : 6"
-          >
+        <el-row v-for="(row, index) in info" :key="index">
+          <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="col.isHidden ? 0 : 6">
             <div class="flex">
               <div class="left">
                 {{ addSymbol(col.name) }}
@@ -49,28 +28,15 @@
       </div>
     </template>
     <slot />
-    <RemarkModal
-      ref="modalRef"
-      @onDone="handleRemarksDone"
-    />
-    <div
-      v-if="isBase"
-      class="footer"
-    >
-      <div class="footer_title">
-        客户留言：
-      </div>
+    <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
+    <div v-if="isBase" class="footer">
+      <div class="footer_title">客户留言：</div>
       <div class="footer_content">
         {{ dataSource.remark }}
       </div>
     </div>
-    <div
-      v-if="isBase"
-      class="footer"
-    >
-      <div class="footer_title">
-        商家备注：
-      </div>
+    <div v-if="isBase" class="footer">
+      <div class="footer_title">商家备注：</div>
       <div class="footer_content">
         {{ dataSource.distributor_remark }}
       </div>
@@ -87,7 +53,7 @@ export default {
   },
   mixins: [remarkMixin],
   props: ['title', 'info', 'dataSource', 'isCommon', 'isBase'],
-  data () {
+  data() {
     return {
       cardConfig: {
         shadow: 'never'

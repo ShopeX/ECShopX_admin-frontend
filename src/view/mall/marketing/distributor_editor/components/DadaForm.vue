@@ -81,7 +81,7 @@ export default {
     },
     validate() {
       return new Promise((resolve, reject) => {
-        return this.$refs.form.validate((valid) => {
+        return this.$refs.form.validate(valid => {
           if (valid) {
             resolve()
           } else {

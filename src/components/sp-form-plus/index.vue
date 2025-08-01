@@ -112,8 +112,14 @@ export default {
     }
   },
   data() {
+    const formData = {}
+    this.formItems
+      .filter(item => item.component !== 'group')
+      .forEach(item => {
+        formData[item.fieldName] = typeof item.value === 'undefined' ? '' : item.value
+      })
     return {
-      formData: this.initFormData(),
+      formData,
       extend: false
     }
   },
@@ -131,33 +137,25 @@ export default {
           }
     }
   },
-  created() {},
+  watch: {
+    formData: {
+      handler(val) {
+        this.$emit('input', val)
+      },
+      deep: true, // 深度监听对象内部变化
+      immediate: true // 初始化时不触发
+    }
+  },
   methods: {
-    // 初始化表单数据
-    initFormData() {
-      const formData = {}
-      this.formItems.forEach(item => {
-        formData[item.fieldName] = this.value?.[item.fieldName] || item.value || ''
-      })
-      this.$emit('input', formData)
-      return formData
-    },
     // 处理字段值变化
     handleFieldChange(fieldName, value) {
-      console.log('field change:', fieldName, value)
       this.$set(this.formData, fieldName, value)
-      this.$emit('field-change', { fieldName, value })
+      // this.$emit('field-change', { fieldName, value })
     },
     // 提交表单
     async handleSubmit() {
       await this.validate()
       this.$emit('submit', this.formData)
-      // this.$refs.form.validate(valid => {
-      //   debugger
-      //   if (valid) {
-      //     this.$emit('submit', this.formData)
-      //   }
-      // })
     },
     // 重置表单
     handleReset() {
@@ -203,6 +201,9 @@ export default {
         margin-bottom: 0;
       }
     }
+    .sp-form-plus__actions {
+      padding-top: 0;
+    }
   }
   &--search-form {
     background-color: #f6f7f9;
@@ -210,6 +211,7 @@ export default {
     padding: 16px 16px 16px;
   }
   &__actions {
+    padding-top: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-end;

@@ -1,13 +1,8 @@
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">
-      设置
-    </div>
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
-      <el-form
-        label-width="80px"
-        label-position="top"
-      >
+      <el-form label-width="80px" label-position="top">
         <el-form-item label="导航设置">
           <draggable
             v-model="t_data.data"
@@ -20,59 +15,28 @@
               :key="index"
               class="setting-item item-selected"
             >
-              <div
-                class="setting-remove"
-                @click="removeItem(index)"
-              >
+              <div class="setting-remove" @click="removeItem(index)">
                 <i class="iconfont icon-trash-alt" />
               </div>
-              <el-input
-                v-model="item.tab"
-                placeholder="请输入导航名"
-                class="input-m"
-              />
+              <el-input v-model="item.tab" placeholder="请输入导航名" class="input-m" />
               <div class="uploader-setting">
-                <div
-                  class="goods-select"
-                  @click="editLink(index)"
-                >
-                  <div
-                    v-if="item.id"
-                    class="link-content"
-                  >
-                    <template v-if="item.linkPage === 'goods'">
-                      【商品】{{ item.title }}
-                    </template>
-                    <template v-if="item.linkPage === 'store'">
-                      【店铺】{{ item.title }}
-                    </template>
-                    <template
-                      v-if="item.linkPage === 'custom_page'"
-                    >
+                <div class="goods-select" @click="editLink(index)">
+                  <div v-if="item.id" class="link-content">
+                    <template v-if="item.linkPage === 'goods'"> 【商品】{{ item.title }} </template>
+                    <template v-if="item.linkPage === 'store'"> 【店铺】{{ item.title }} </template>
+                    <template v-if="item.linkPage === 'custom_page'">
                       【自定义页面】{{ item.title }}
                     </template>
-                    <template
-                      v-if="item.linkPage === 'category'"
-                    >
+                    <template v-if="item.linkPage === 'category'">
                       【分类】{{ item.title }}
                     </template>
                   </div>
-                  <div
-                    v-else
-                    class="content-center"
-                  >
-                    <i class="iconfont icon-link" />设置路径
-                  </div>
+                  <div v-else class="content-center"><i class="iconfont icon-link" />设置路径</div>
                 </div>
               </div>
             </div>
           </draggable>
-          <el-button
-            type="primary"
-            icon="el-icon el-icon-circle-plus"
-            plain
-            @click="addNav"
-          >
+          <el-button type="primary" icon="el-icon el-icon-circle-plus" plain @click="addNav">
             添加导航
           </el-button>
           <p class="desc">
@@ -121,7 +85,7 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       linksArr: ['goods', 'store', 'custom_page', 'category'],
       t_data: this.res,
@@ -136,20 +100,20 @@ export default {
     }
   },
   computed: {
-    show_store () {
+    show_store() {
       return this.usage !== 'store'
     }
   },
   watch: {
     t_data: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.$emit('data', newVal)
       },
       deep: true
     }
   },
   methods: {
-    addNav () {
+    addNav() {
       const navItem = {
         id: '',
         imgUrl: '',
@@ -169,18 +133,18 @@ export default {
     /**
      * 设置导航
      */
-    editLink (index) {
+    editLink(index) {
       this.linksVisible = true
       this.cur_index = index
     },
-    setNav () {
+    setNav() {
       this.checkAction = true
       this.linksVisible = true
     },
     /**
      * 设置导航和编辑导航
      */
-    setLink (data, type) {
+    setLink(data, type) {
       // 添加导航
       if (this.checkAction) {
         data = Object.assign(data, { linkPage: type })
@@ -196,13 +160,13 @@ export default {
     /**
      * 导航关闭
      */
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
     /**
      * 推拽结束
      */
-    onEnd (evt) {
+    onEnd(evt) {
       this.temp = this.t_data.data[evt.oldIndex]
       this.t_data.data.splice(evt.oldIndex, 1)
       this.t_data.data.splice(evt.newIndex, 0, this.temp)
@@ -210,7 +174,7 @@ export default {
     /**
      * 修改定位要修改的导航
      */
-    editLink (index) {
+    editLink(index) {
       this.checkAction = false
       this.linksVisible = true
       this.cur_index = index
@@ -218,7 +182,7 @@ export default {
     /**
      * 删除指定位置导航
      */
-    removeItem (index) {
+    removeItem(index) {
       this.t_data.data.splice(index, 1)
     }
   }

@@ -95,7 +95,7 @@ export default {
       const { dufCheckFlag } = this.$props
       //console.log('modeal flag',dufCheckFlag)
       that.$data.modalLoad = true
-      getBadge({}).then((res) => {
+      getBadge({}).then(res => {
         var { list, total_count } = res.data.data
         if (list && this.flagList.length < 1) {
           list.unshift({ badge_id: null, badge_name: '无' })
@@ -119,7 +119,7 @@ export default {
     },
     modalHandle() {
       const { checkFlag, flagList } = this.$data
-      var badge = flagList.find((item) => item.badge_id == checkFlag)
+      var badge = flagList.find(item => item.badge_id == checkFlag)
       //console.log('modalHandle',checkFlag,badge)
       this.$emit('modalHandle', badge)
     }

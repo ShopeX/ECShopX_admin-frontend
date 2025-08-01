@@ -1,59 +1,27 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      v-model="form_setting"
-      label-width="250px"
-    >
+    <el-form ref="form" v-model="form_setting" label-width="250px">
       <el-form-item label="限制周期">
         <el-radio-group v-model="form_setting.limit_cycle">
-          <el-radio-button
-            key="month"
-            label="month"
-          >
-            月
-          </el-radio-button>
-          <el-radio-button
-            key="week"
-            label="week"
-          >
-            周
-          </el-radio-button>
+          <el-radio-button key="month" label="month"> 月 </el-radio-button>
+          <el-radio-button key="week" label="week"> 周 </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="导购可发放优惠券总数">
-        <el-input
-          v-model="form_setting.grant_total"
-          class="formInput"
-        />
+        <el-input v-model="form_setting.grant_total" class="formInput" />
       </el-form-item>
       <el-form-item label="导购可发放给单个客户的优惠券数">
-        <el-input
-          v-model="form_setting.grant_per_user_total"
-          class="formInput"
-        />
+        <el-input v-model="form_setting.grant_per_user_total" class="formInput" />
       </el-form-item>
     </el-form>
     <div>
       <el-row :gutter="20">
-        <el-col
-          :md="4"
-          :lg="8"
-        >
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addCoupon"
-          >
-            添加优惠券
-          </el-button>
+        <el-col :md="4" :lg="8">
+          <el-button type="primary" icon="plus" @click="addCoupon"> 添加优惠券 </el-button>
         </el-col>
       </el-row>
       <el-table :data="coupon_list">
-        <el-table-column
-          prop="title"
-          label="卡券名称"
-        />
+        <el-table-column prop="title" label="卡券名称" />
         <el-table-column label="卡券类型">
           <template slot-scope="card_type">
             {{ card_type.row.card_type | formatCardStr }}
@@ -66,12 +34,7 @@
         </el-table-column> -->
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="deleteCoupon(scope.row)"
-            >
-              移除
-            </el-button>
+            <el-button type="text" @click="deleteCoupon(scope.row)"> 移除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -83,12 +46,7 @@
       />
     </div>
     <div style="text-align: center">
-      <el-button
-        type="primary"
-        @click="saveCouponGrantSet"
-      >
-        保存修改
-      </el-button>
+      <el-button type="primary" @click="saveCouponGrantSet"> 保存修改 </el-button>
     </div>
   </div>
 </template>
@@ -105,7 +63,7 @@ export default {
   components: {
     couponSelect
   },
-  data () {
+  data() {
     return {
       coupons: [],
       form_setting: {
@@ -125,16 +83,16 @@ export default {
       coupon_sc_status: false
     }
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   computed: {
     ...mapGetters(['wheight'])
   },
   methods: {
-    getList () {
+    getList() {
       this.loading = true
-      getSalepersonCouponList(this.params).then((response) => {
+      getSalepersonCouponList(this.params).then(response => {
         this.total_count = response.data.data.total_count
         this.form_setting = response.data.data.coupon_setting
         this.coupon_list = response.data.data.list
@@ -149,8 +107,8 @@ export default {
         this.loading = false
       })
     },
-    saveCouponGrantSet () {
-      createSalepersonCoupon(this.form_setting).then((response) => {
+    saveCouponGrantSet() {
+      createSalepersonCoupon(this.form_setting).then(response => {
         if (response.data.data.status) {
           this.$message({
             message: '保存成功',
@@ -167,11 +125,11 @@ export default {
         this.getList()
       })
     },
-    addCoupon () {
+    addCoupon() {
       this.coupon_dialog_visible = true
       this.coupon_sc_status = true
     },
-    deleteCoupon (row) {
+    deleteCoupon(row) {
       let that = this
       this.$confirm('是否移除可发放优惠券, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -179,7 +137,7 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteSalepersonCoupon(row.id)
-          .then((response) => {
+          .then(response => {
             that.$message({
               type: 'success',
               message: '移除可发放优惠券成功'
@@ -194,7 +152,7 @@ export default {
           })
       })
     },
-    changeCouponSendNum () {
+    changeCouponSendNum() {
       this.form_setting.coupons = []
       for (var i in this.coupon_list) {
         let arr = {
@@ -204,7 +162,7 @@ export default {
         this.form_setting.coupons.push(arr)
       }
     },
-    handleChooseKQ (selectedItem) {
+    handleChooseKQ(selectedItem) {
       let table_coupon_data = JSON.parse(JSON.stringify(selectedItem))
       this.coupon_list = Array.from(new Set(this.coupon_list.concat(table_coupon_data)))
       this.form_setting.coupons = []
@@ -217,7 +175,7 @@ export default {
       }
       this.coupon_dialog_visible = false
     },
-    handleCloseKQDialog () {
+    handleCloseKQDialog() {
       this.coupon_dialog_visible = false
     }
   }

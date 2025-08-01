@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     goodsCount() {
-      console.log(this.value.filter((item) => !!item.item_id))
-      return this.value.filter((item) => !!item.item_id).length
+      console.log(this.value.filter(item => !!item.item_id))
+      return this.value.filter(item => !!item.item_id).length
     }
   },
   watch: {
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     async handleClickAdd() {
-      const list = this.value.map((item) => {
+      const list = this.value.map(item => {
         return {
           item_id: item.item_id
         }
@@ -59,7 +59,7 @@ export default {
         multiple: false
       })
       const values = []
-      data.forEach((item) => {
+      data.forEach(item => {
         if (item.itemId) {
           const obj = {
             distributor_id: item.distributor_id,
@@ -85,7 +85,7 @@ export default {
         },
         onAdd: async () => {
           const { data } = await this.$picker.goodsitem()
-          const res = data.map((item) => {
+          const res = data.map(item => {
             return {
               distributor_id: item.distributor_id,
               img_url: item?.pics?.[0],

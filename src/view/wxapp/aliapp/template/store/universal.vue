@@ -567,14 +567,14 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykuniversal', name: 'banner', page_name: 'index' }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       if (res.data.data[0]) {
         this.form.bannerPicList = res.data.data[0].params
         this.bannerPicListSetId = res.data.data[0].id
       }
     })
     let hotGoodsFilter = { template_name: 'yykuniversal', name: 'hotGoods', page_name: 'index' }
-    getParamByTempName(hotGoodsFilter).then((res) => {
+    getParamByTempName(hotGoodsFilter).then(res => {
       if (res.data.data[0]) {
         this.form.hotGoods = res.data.data[0].params
         this.hotGoodsSetId = res.data.data[0].id
@@ -586,7 +586,7 @@ export default {
       name: 'marketing_articles',
       page_name: 'index'
     }
-    getParamByTempName(articalFilter).then((response) => {
+    getParamByTempName(articalFilter).then(response => {
       if (response.data.data.length > 0) {
         var data = response.data.data[0].params
         for (var i = 0; i < data.length; i++) {
@@ -662,7 +662,7 @@ export default {
     //选择商品分页
     handleSelectGoodsChange(val) {
       this.params.page = val
-      this.goodsList.forEach((row) => {
+      this.goodsList.forEach(row => {
         //如果选中
         let index = this.selectGoods.indexOf(row.key)
         if (index != -1) {
@@ -695,7 +695,7 @@ export default {
     handleGoodsDialog() {
       this.selectGoodsVisible = false
       if (this.selectGoods.length > 0) {
-        this.goodsList.forEach((row) => {
+        this.goodsList.forEach(row => {
           //如果选中
           let index = this.selectGoods.indexOf(row.key)
           if (index != -1) {
@@ -799,9 +799,9 @@ export default {
       this.articals[index].viewcontent = data
     },
     getGoodsList() {
-      getItemsList(this.params).then((response) => {
+      getItemsList(this.params).then(response => {
         this.goodsList = []
-        response.data.data.list.forEach((row) => {
+        response.data.data.list.forEach(row => {
           let itemid = ''
           if (this.currentType == 'banner') {
             itemid = this.form.bannerPicList[this.currentIndex].item_id
@@ -849,7 +849,7 @@ export default {
           page_name: 'index',
           id: this.bannerPicListSetId
         }
-        updateParamsById(bannerParams).then((response) => {
+        updateParamsById(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -863,7 +863,7 @@ export default {
           name: 'banner',
           page_name: 'index'
         }
-        setPageParams(bannerParams).then((response) => {
+        setPageParams(bannerParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -880,7 +880,7 @@ export default {
           page_name: 'index',
           id: this.hotGoodsSetId
         }
-        updateParamsById(hotGoodsParams).then((response) => {
+        updateParamsById(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -894,7 +894,7 @@ export default {
           name: 'hotGoods',
           page_name: 'index'
         }
-        setPageParams(hotGoodsParams).then((response) => {
+        setPageParams(hotGoodsParams).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -914,7 +914,7 @@ export default {
       let param = {}
       if (that.articleSetId) {
         param = { params: that.articals, name: 'marketing_articles', id: that.articleSetId }
-        updateParamsById(param).then((response) => {
+        updateParamsById(param).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -928,7 +928,7 @@ export default {
           name: 'marketing_articles',
           page_name: 'index'
         }
-        setPageParams(param).then((response) => {
+        setPageParams(param).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',

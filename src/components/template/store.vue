@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -37,25 +31,15 @@
                 {{ store.name }}
               </p>
               <p class="tags">
-                <span
-                  v-for="item in seletedTags"
-                  :key="item.tag_id"
-                >{{ item.tag_name }}</span>
+                <span v-for="item in seletedTags" :key="item.tag_id">{{ item.tag_name }}</span>
               </p>
             </div>
           </div>
           <div class="picture">
-            <img
-              :src="base.imgUrl"
-              alt=""
-            >
+            <img :src="base.imgUrl" alt="">
           </div>
           <div class="store-items">
-            <div
-              v-for="item in store.items.slice(0, 4)"
-              :key="item.goodsId"
-              class="store-item"
-            >
+            <div v-for="item in store.items.slice(0, 4)" :key="item.goodsId" class="store-item">
               <img
                 class="store-item-thumb"
                 :src="item.imgUrl"
@@ -114,7 +98,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -125,18 +109,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

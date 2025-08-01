@@ -391,7 +391,7 @@ export default {
     },
     getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
-      getGoodsAttr(this.goodsBranchParams).then((response) => {
+      getGoodsAttr(this.goodsBranchParams).then(response => {
         this.goodsBranchList = response.data.data.list
         console.log(111, this.goodsBranchList)
       })

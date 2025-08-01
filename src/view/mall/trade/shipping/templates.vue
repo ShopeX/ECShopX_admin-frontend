@@ -1,32 +1,30 @@
 <template>
-
-<SpRouterView>
-  <SpPage>
-    <div >
-      <div class="action-container">
-        <el-button type="primary" icon="plus" @click="addTemplates"> 新增运费模板 </el-button>
+  <SpRouterView>
+    <SpPage>
+      <div>
+        <div class="action-container">
+          <el-button type="primary" icon="plus" @click="addTemplates"> 新增运费模板 </el-button>
+        </div>
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tab-pane label="卖家承担运费" name="first">
+            <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
+          </el-tab-pane>
+          <el-tab-pane label="按重量运费模板" name="second">
+            <weightTemplates :get-status="weightTemplates" />
+          </el-tab-pane>
+          <el-tab-pane label="按件数运费模板" name="third">
+            <numberTemplates :get-status="numberTemplates" />
+          </el-tab-pane>
+          <el-tab-pane label="按金额运费模板" name="fourth">
+            <priceTemplates :get-status="priceTemplates" />
+          </el-tab-pane>
+          <el-tab-pane label="按体积运费模板" name="fifth">
+            <volumeTemplates :get-status="volumeTemplates" />
+          </el-tab-pane>
+        </el-tabs>
       </div>
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="卖家承担运费" name="first">
-          <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
-        </el-tab-pane>
-        <el-tab-pane label="按重量运费模板" name="second">
-          <weightTemplates :get-status="weightTemplates" />
-        </el-tab-pane>
-        <el-tab-pane label="按件数运费模板" name="third">
-          <numberTemplates :get-status="numberTemplates" />
-        </el-tab-pane>
-        <el-tab-pane label="按金额运费模板" name="fourth">
-          <priceTemplates :get-status="priceTemplates" />
-        </el-tab-pane>
-        <el-tab-pane label="按体积运费模板" name="fifth">
-          <volumeTemplates :get-status="volumeTemplates" />
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-  </SpPage>
-
-</SpRouterView>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

@@ -1,24 +1,11 @@
 <template>
   <div class="section-white">
-    <div
-      v-loading="loading"
-      class="detail-info"
-    >
-      <PayCard
-        :order-info="orderInfo"
-        :member-info="memberInfo"
-        :trade-info="tradeInfo"
-      />
+    <div v-loading="loading" class="detail-info">
+      <PayCard :order-info="orderInfo" :member-info="memberInfo" :trade-info="tradeInfo" />
 
-      <BaseCard
-        :order-info="orderInfo"
-        :member-info="memberInfo"
-      />
+      <BaseCard :order-info="orderInfo" :member-info="memberInfo" />
 
-      <GoodCard
-        :order-info="orderInfo"
-        :member-info="memberInfo"
-      />
+      <GoodCard :order-info="orderInfo" :member-info="memberInfo" />
     </div>
   </div>
 </template>
@@ -46,7 +33,7 @@ export default {
     GoodCard,
     PayCard
   },
-  data () {
+  data() {
     const self = this
     return {
       dialog: false,
@@ -84,7 +71,7 @@ export default {
       deliveryData: {}
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.orderId) {
       this.order_id = this.$route.query.orderId
     }
@@ -98,52 +85,52 @@ export default {
     this.getLogisticsList()
   },
   methods: {
-    retrunClick () {
+    retrunClick() {
       this.$router.go(-1)
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.dialog = false
     },
-    getMemberInfo (filter) {
-      getMember(filter).then((response) => {
+    getMemberInfo(filter) {
+      getMember(filter).then(response => {
         this.memberInfo = response.data.data
       })
     },
-    deliveryDesc () {
+    deliveryDesc() {
       this.dialog = true
       let query = {
         delivery_corp: this.orderInfo.delivery_corp,
         delivery_code: this.orderInfo.delivery_code,
         delivery_corp_source: this.orderInfo.delivery_corp_source
       }
-      getDeliveryDetail(query).then((response) => {
+      getDeliveryDetail(query).then(response => {
         this.activities = response.data.data
       })
     },
-    getMemberInfo (filter) {
-      getMember(filter).then((response) => {
+    getMemberInfo(filter) {
+      getMember(filter).then(response => {
         this.memberInfo = response.data.data
       })
     },
-    process () {
-      processDrugOrders(this.order_id, this.form).then((res) => {
+    process() {
+      processDrugOrders(this.order_id, this.form).then(res => {
         this.$message({ type: 'success', message: '审核成功' })
         this.getDetail()
       })
     },
-    remoteMethod (query) {
+    remoteMethod(query) {
       getWxShopsList({
         page: 1,
         pageSize: 100,
         name: query,
         distributor_id: this.orderInfo.distributor_id
-      }).then((res) => {
+      }).then(res => {
         this.shopsList = res.data.data.list
       })
     },
-    getDetail () {
+    getDetail() {
       this.loading = true
-      getOrderDetail(this.order_id).then((response) => {
+      getOrderDetail(this.order_id).then(response => {
         this.orderInfo = response.data.data.orderInfo
         this.tradeInfo = response.data.data.tradeInfo
         this.distributor = response.data.data.distributor
@@ -155,20 +142,20 @@ export default {
           this.orderInfo.pack = JSON.parse(response.data.data.orderInfo.pack)
         }
       })
-      getDeliveryLists({ order_id: this.order_id }).then((response) => {
+      getDeliveryLists({ order_id: this.order_id }).then(response => {
         this.deliveryData = response.data.data
       })
     },
-    imagedetail (imgurl) {
+    imagedetail(imgurl) {
       this.dialogVisible = true
       this.bigImageUrl = imgurl
     },
-    getLogisticsList () {
-      getLogisticsList().then((res) => {
+    getLogisticsList() {
+      getLogisticsList().then(res => {
         this.dlycorps = res.data.data.list
       })
     },
-    updateDeliveryAction () {
+    updateDeliveryAction() {
       // 修改物流信息
       if (this.orderInfo.delivery_corp) {
         this.deliveryForm.delivery_corp = this.orderInfo.delivery_corp
@@ -180,7 +167,7 @@ export default {
         this.deliveryForm.delivery_corp = ''
         this.deliveryForm.delivery_code = ''
       }
-      updateDelivery(this.order_id, this.deliveryForm).then((response) => {
+      updateDelivery(this.order_id, this.deliveryForm).then(response => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.$message.success('修改物流信息成功!')

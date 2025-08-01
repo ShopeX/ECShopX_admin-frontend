@@ -16,7 +16,7 @@ export default class InjectDomOperations {
     this.doms = {
       // mark:() => $(`<div class='sp-iframe--mark'><div>`),
       down: () =>
-        $(`<div class='button-item'>位置⬇<div>`).on('click', e => {
+        $(`<div class='button-item'>位置⬇<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.DOWN,
@@ -25,7 +25,7 @@ export default class InjectDomOperations {
           callback(options)
         }),
       up: () =>
-        $(`<div class='button-item'>位置⬆<div>`).on('click', e => {
+        $(`<div class='button-item'>位置⬆<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.UP,
@@ -34,7 +34,7 @@ export default class InjectDomOperations {
           callback(options)
         }),
       del: () =>
-        $(`<div class='button-item'>删除<div>`).on('click', e => {
+        $(`<div class='button-item'>删除<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.DELETE,
@@ -43,7 +43,7 @@ export default class InjectDomOperations {
           callback(options)
         }),
       add: (btnCls = 'button-item', text = '添加') =>
-        $(`<div class=${btnCls}>${text}<div>`).on('click', e => {
+        $(`<div class=${btnCls}>${text}<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.ADD,
@@ -70,24 +70,24 @@ export default class InjectDomOperations {
     }
   }
   injectHover() {
-    this.targetDoms.on('mouseenter', e => {
+    this.targetDoms.on('mouseenter', (e) => {
       const current = $(e.currentTarget)
       current.addClass('wgt-hover')
     })
-    this.targetDoms.on('mouseleave', e => {
+    this.targetDoms.on('mouseleave', (e) => {
       const current = $(e.currentTarget)
       current.removeClass('wgt-hover')
     })
   }
   injectCheck() {
-    this.body.on('click', e => {
+    this.body.on('click', (e) => {
       let current = null
       if ($(e.target).hasClass('mark') || $(e.target).parent().hasClass('mark')) return
       else if ($(e.target).hasClass(this.targetClass)) {
         current = $(e.target)
       } else {
         const parents = $(e.target).parents()
-        current = [...parents].find(item => {
+        current = [...parents].find((item) => {
           return $(item).hasClass(this.targetClass)
         })
         current = current ? $(current) : null
@@ -97,7 +97,7 @@ export default class InjectDomOperations {
       current.addClass('template-active')
       if (current.find('.mark').length == 0) {
         const actionDoms = $(`<div class='mark'></div>`)
-        Object.keys(this.doms).forEach(key => actionDoms.append(this.doms[key]()))
+        Object.keys(this.doms).forEach((key) => actionDoms.append(this.doms[key]()))
         current.append(actionDoms)
       }
       this.callback({
@@ -110,7 +110,7 @@ export default class InjectDomOperations {
     const $current = $(current)
     let doms = [...$current.parents(), current]
     return (targetCls, stateName) => {
-      const target = [...doms].find(item => {
+      const target = [...doms].find((item) => {
         return $(item).hasClass(targetCls)
       })
       return $(target).attr(stateName)

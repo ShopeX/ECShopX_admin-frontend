@@ -70,19 +70,19 @@ export default {
           {
             name: '店铺销售状态',
             key: 'is_can_sale',
-            render: (h, { row }) => h('span', {}, row.is_can_sale? '可销售' : '不可销售')
+            render: (h, { row }) => h('span', {}, row.is_can_sale ? '可销售' : '不可销售')
           },
           {
             name: '上下架操作',
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
-                  'value': row.is_can_sale,
+                  value: row.is_can_sale,
                   'active-value': true,
                   'inactive-value': false
                 },
                 on: {
-                  change: async (e) => {
+                  change: async e => {
                     await this.$api.marketing.updateDistributorItem({
                       distributor_id: this.distributorId,
                       item_id: row.item_id,
@@ -111,7 +111,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
 
-      list.forEach((item) => {
+      list.forEach(item => {
         item.price = item.price / 100
       })
       return list

@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     resetText() {
-      return (row) => {
+      return row => {
         var text = '审核'
         if (row.status == '1') {
           text = '下架'

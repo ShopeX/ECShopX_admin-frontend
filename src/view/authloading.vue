@@ -1,18 +1,15 @@
 <template>
-  <div
-    v-loading="fullscreenLoading"
-    element-loading-text="正在绑定授权信息"
-  />
+  <div v-loading="fullscreenLoading" element-loading-text="正在绑定授权信息" />
 </template>
 <script>
 import { getWechatBind } from '../api/wechat'
 export default {
-  data () {
+  data() {
     return {
       fullscreenLoading: false
     }
   },
-  mounted () {
+  mounted() {
     const homePath = '/'
     // 如果不是授权回调，则获取授权链接地址
     if (this.$route.query.auth_code) {
@@ -23,7 +20,7 @@ export default {
       }
       const { template_name } = this.$route.query
       getWechatBind(query)
-        .then((response) => {
+        .then(response => {
           console.log('--response--', response)
           this.$store.dispatch('setAuthorizer', true)
           this.fullscreenLoading = false
@@ -40,7 +37,7 @@ export default {
             // this.$router.push({path: '/wxapp/manage/editauthorize', query: { newBind: true, wxapp_id: response.data.data.authorizer_appid, nick_name:response.data.data.nick_name}})
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error)
           this.fullscreenLoading = false
           this.$message({
@@ -58,7 +55,7 @@ export default {
     }
   },
   methods: {
-    async uploadWeapp (wxapp_id, nick_name, template_name) {
+    async uploadWeapp(wxapp_id, nick_name, template_name) {
       const params = {
         wxaAppId: wxapp_id,
         wxa_name: nick_name,

@@ -8,22 +8,12 @@
     class="fenzhang"
   >
     <el-form-item label="提现方式">
-      <el-radio-group
-        v-model="form.withdraw_method"
-        @change="onChange"
-      >
-        <el-radio :label="1">
-          自动提现
-        </el-radio>
-        <el-radio :label="2">
-          手动提现
-        </el-radio>
+      <el-radio-group v-model="form.withdraw_method" @change="onChange">
+        <el-radio :label="1"> 自动提现 </el-radio>
+        <el-radio :label="2"> 手动提现 </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item
-      label="提现限额"
-      prop="distributor_money"
-    >
+    <el-form-item label="提现限额" prop="distributor_money">
       满
       <el-input
         v-model="form.distributor_money"
@@ -32,14 +22,8 @@
         @input="oninput"
       />元，可提现
     </el-form-item>
-    <el-form-item
-      v-if="withdraw_method === 1"
-      label="提现设置说明"
-    >
-      <div
-        style="width: 40%"
-        class="content-box"
-      >
+    <el-form-item v-if="withdraw_method === 1" label="提现设置说明">
+      <div style="width: 40%" class="content-box">
         <p class="frm-tips">
           1、提现限额为0时，表示不限制提现底限，如提现限额大于0时，表示可提现金额大于或等于该金额才可进行全额提现；
         </p>
@@ -60,14 +44,8 @@
         保存配置
       </el-button>
     </el-form-item>
-    <el-form-item
-      v-else
-      label="提现设置说明"
-    >
-      <div
-        style="width: 40%"
-        class="content-box"
-      >
+    <el-form-item v-else label="提现设置说明">
+      <div style="width: 40%" class="content-box">
         <p class="frm-tips">
           1、提现限额为0时，表示不限制提现底限，如提现限额大于0时，表示可提现金额大于或等于该金额才可进行全额提现；
         </p>
@@ -96,7 +74,7 @@ import { getWithdrawset, saveWithdrawset } from '@/api/fenzhang'
 
 export default {
   name: 'Fenzhang',
-  data () {
+  data() {
     return {
       form: {
         // 费率
@@ -116,19 +94,19 @@ export default {
       withdraw_method: 1
     }
   },
-  created () {
+  created() {
     this.getDetail()
   },
   methods: {
-    oninput (e) {
+    oninput(e) {
       // 过滤小数点后两位
       e.replace(/[^0-9.]/g, '')
     },
-    onChange (val) {
+    onChange(val) {
       this.withdraw_method = val
     },
     // 获取配置数据
-    async getDetail () {
+    async getDetail() {
       const res = await getWithdrawset()
       let data = res.data.data
       this.withdraw_method = data.withdraw_method
@@ -137,7 +115,7 @@ export default {
     },
     // 费率输入
 
-    async onSubmit () {
+    async onSubmit() {
       let { distributor_money, withdraw_method } = this.form
       let params = {
         distributor_money,

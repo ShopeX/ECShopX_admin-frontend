@@ -136,8 +136,8 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
-      val.forEach((item) => {
-        let isInArr = this.selectRows.findIndex((n) => n.itemId == item.itemId)
+      val.forEach(item => {
+        let isInArr = this.selectRows.findIndex(n => n.itemId == item.itemId)
         if (isInArr == -1) {
           this.selectRows.push(item)
         }
@@ -152,13 +152,13 @@ export default {
     getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getItemsList(this.params).then((response) => {
+        getItemsList(this.params).then(response => {
           this.itemsData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false
           this.multipleSelection = []
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
         })
@@ -166,18 +166,18 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.templatesParams).then((response) => {
+      getShippingTemplatesList(this.templatesParams).then(response => {
         this.templatesList = response.data.data.list
       })
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     getCategory() {
-      getCategory([]).then((response) => {
+      getCategory([]).then(response => {
         this.categoryList = response.data.data
       })
     },

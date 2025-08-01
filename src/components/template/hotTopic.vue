@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
     <div class="hotTopic-title">
       {{ base.title }}
@@ -32,7 +29,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -40,17 +37,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.data = val.data

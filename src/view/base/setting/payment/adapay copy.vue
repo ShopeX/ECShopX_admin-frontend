@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async onSubmit(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           const { status } = await this.$api.adapay.postAdapayPaySetting({
             ...this.form,
@@ -75,7 +75,7 @@ export default {
     },
     getConfig() {
       let query = { pay_type: 'adapay' }
-      getPaymentSetting(query).then((response) => {
+      getPaymentSetting(query).then(response => {
         if (response.data.data.length == 0) {
           return
         } else {

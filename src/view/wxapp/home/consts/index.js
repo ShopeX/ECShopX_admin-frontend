@@ -48,5 +48,5 @@ export const NAVS = [
     value: 'purchase',
     name: 'purchase',
     label: '内购'
-  },
+  }
 ]

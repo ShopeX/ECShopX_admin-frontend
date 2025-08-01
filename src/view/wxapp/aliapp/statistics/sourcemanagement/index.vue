@@ -1,19 +1,10 @@
 <template>
   <div class="section-white content-padded">
-    <el-tabs
-      v-model="activeName"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="监控列表"
-        name="monito"
-      >
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="监控列表" name="monito">
         <monito-list />
       </el-tab-pane>
-      <el-tab-pane
-        label="来源列表"
-        name="source"
-      >
+      <el-tab-pane label="来源列表" name="source">
         <source-list />
       </el-tab-pane>
     </el-tabs>
@@ -29,13 +20,13 @@ export default {
     monitoList,
     sourceList
   },
-  data () {
+  data() {
     return {
       activeName: 'monito'
     }
   },
   methods: {
-    handleClick (tab, event) {}
+    handleClick(tab, event) {}
   }
 }
 </script>

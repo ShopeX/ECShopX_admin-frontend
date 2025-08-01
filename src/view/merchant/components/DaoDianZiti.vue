@@ -49,7 +49,7 @@ export default {
                   })
                   this.$refs['finder'].refresh()
                 } else {
-                  const index = this.finderData.findIndex((item) => item.id == row.id)
+                  const index = this.finderData.findIndex(item => item.id == row.id)
                   this.finderData.splice(index, 1)
                   this.zitiList = this.finderData
                   this.$nextTick(() => {
@@ -95,11 +95,11 @@ export default {
     },
     async onSelectZiti() {
       const { data } = await this.$picker.zitiList({
-        data: this.zitiList.map((item) => item.id)
+        data: this.zitiList.map(item => item.id)
       })
 
       if (this.distributor_id) {
-        const ids = data.map((item) => item.id)
+        const ids = data.map(item => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
           id: ids,
           rel_distributor_id: this.distributor_id

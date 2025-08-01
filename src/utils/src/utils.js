@@ -17,24 +17,39 @@ export function formatNumber(price, thousandth = false) {
   return formattedPrice
 }
 
+export function isInSalesCenter() {
+  if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
+    return true
+  } else {
+    false
+  }
+}
+
 export function export_open(tab) {
   setTimeout(() => {
     const login_type = store.getters.login_type
+    let url = ''
     if (login_type == 'distributor') {
-      window.open(`/shopadmin/setting/export/list?tab=${tab}`)
+      url = `/shopadmin/setting/export/list?tab=${tab}`
     } else if (login_type == 'merchant') {
-      window.open(`/merchant/setting/baseexport?tab=${tab}`)
+      url = `/merchant/setting/baseexport?tab=${tab}`
     } else if (login_type == 'supplier') {
-      window.open(`/supplier/setting/baseexport?tab=${tab}`)
+      url = `/supplier/setting/baseexport?tab=${tab}`
     } else {
-      window.open(`/data/report/export-record?tab=${tab}`)
+      url = `/data/report/export-record?tab=${tab}`
+    }
+
+    if (isInSalesCenter()) {
+      this.$router.push(url)
+    } else {
+      window.open(url)
     }
   }, 1000)
 }
 
 export function traverseTreeValues(tree, callback) {
   const paths = []
-  tree.map(item => {
+  tree.map((item) => {
     let tempPath = item.path
     if (item.children) {
       tempPath += (tempPath.endsWith('/') ? '' : '/') + traverseTreeValues(item.children, callback)
@@ -75,4 +90,26 @@ export function downloadFile(url, name) {
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
+}
+
+export function unmountGlobalLoading() {
+  // 查找全局 loading 元素
+  const loadingElement = document.querySelector('#__app-loading__')
+  if (loadingElement) {
+    // 添加隐藏类，触发过渡动画
+    loadingElement.classList.add('hidden')
+
+    // 查找所有需要移除的注入 loading 元素
+    const injectLoadingElements = document.querySelectorAll('[data-app-loading^="inject"]')
+
+    // 当过渡动画结束时，移除 loading 元素和所有注入的 loading 元素
+    loadingElement.addEventListener(
+      'transitionend',
+      () => {
+        loadingElement.remove() // 移除 loading 元素
+        injectLoadingElements.forEach((el) => el.remove()) // 移除所有注入的 loading 元素
+      },
+      { once: true }
+    ) // 确保事件只触发一次
+  }
 }

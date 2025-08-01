@@ -125,6 +125,71 @@ const routes = [
             component: () => import('@/view/mall/trade/examineTransferLogs')
           }
         ]
+      },
+      {
+        name: 'invoiceList',
+        path: 'invoice/invoice-list',
+        meta: {
+          aliasName: 'InvoiceRequest',
+          icon: 'pay-circle',
+          title: '开票申请',
+          permissions: ['financial.invoice.InvoiceRequest']
+        },
+        component: () => import('@/view/financial/invoice/list'),
+        children: [
+          {
+            path: 'detail/:id?',
+            component: () => import('@/view/financial/invoice/detail')
+          },
+          {
+            path: 'process/:itemId?',
+            component: () => import('@/view/financial/invoice/process')
+          }
+        ]
+      },
+      {
+        name: 'invoiceSetting',
+        path: 'invoice/invoice-setting',
+        meta: {
+          aliasName: 'invoiceSetting',
+          icon: 'pay-circle',
+          title: '发票配置',
+          permissions: ['financial.invoice.invoiceSetting']
+        },
+        component: () => import('@/view/financial/invoice/setting')
+      },
+      {
+        name: 'sellerInformation',
+        path: 'invoice/seller-information',
+        meta: {
+          aliasName: 'invoiceInfo',
+          icon: 'pay-circle',
+          title: '销方信息',
+          permissions: ['financial.invoice.invoiceInfo']
+        },
+        component: () => import('@/view/financial/invoice/information')
+      },
+      {
+        name: 'invoiceTax',
+        path: 'invoice/invoice-tax',
+        meta: {
+          aliasName: 'invoiceTax',
+          icon: 'pay-circle',
+          title: '开票税率',
+          permissions: ['financial.invoice.invoiceTax']
+        },
+        component: () => import('@/view/financial/invoice/invoiceTax')
+      },
+      {
+        name: 'invoiceConfirmation',
+        path: 'invoice/invoice-confirmation',
+        meta: {
+          aliasName: 'invoiceConfirmation',
+          icon: 'pay-circle',
+          title: '专票确认书',
+          permissions: ['financial.invoice.invoiceConfirmation']
+        },
+        component: () => import('@/view/financial/invoice/invoiceConfirmation')
       }
     ]
   }

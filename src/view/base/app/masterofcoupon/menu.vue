@@ -1,10 +1,7 @@
 <template>
   <div class="coupon-box">
     <aside :class="collapsed ? 'collapsed' : ''">
-      <template
-        v-for="(item, index) in $router.options.routes"
-        v-if="!item.hidden"
-      >
+      <template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
         <el-menu
           :default-active="subActiveIndex"
           :collapse="collapsed"
@@ -13,19 +10,12 @@
           @close="handleclose"
           @select="handleSubChange"
         >
-          <template
-            v-for="(child, index) in item.children"
-            v-if="child.name == '派券大师'"
-          >
-            <el-submenu
-              v-if="!child.leaf"
-              :index="child.sn"
-            >
+          <template v-for="(child, index) in item.children" v-if="child.name == '派券大师'">
+            <el-submenu v-if="!child.leaf" :index="child.sn">
               <template slot="title">
-                <i
-                  class="iconfont"
-                  :class="'icon-' + child.iconCls"
-                /><span slot="title">{{ child.name }}</span>
+                <i class="iconfont" :class="'icon-' + child.iconCls" /><span slot="title">{{
+                  child.name
+                }}</span>
               </template>
               <el-menu-item
                 v-for="(sub, index) in child.children"
@@ -37,33 +27,19 @@
                 {{ sub.name }}
               </el-menu-item>
             </el-submenu>
-            <el-menu-item
-              v-if="child.leaf"
-              :index="child.sn"
-              @click="toRoute(child.path)"
-            >
-              <i
-                class="iconfont"
-                :class="'icon-' + child.iconCls"
-              /><span slot="title">{{ child.name }}</span>
+            <el-menu-item v-if="child.leaf" :index="child.sn" @click="toRoute(child.path)">
+              <i class="iconfont" :class="'icon-' + child.iconCls" /><span slot="title">{{
+                child.name
+              }}</span>
             </el-menu-item>
           </template>
         </el-menu>
       </template>
     </aside>
-    <section
-      id="container"
-      class="content-container"
-    >
+    <section id="container" class="content-container">
       <div class="grid-content bg-purple-light">
-        <el-col
-          :span="24"
-          class="content-wrapper"
-        >
-          <transition
-            name="fade"
-            mode="out-in"
-          >
+        <el-col :span="24" class="content-wrapper">
+          <transition name="fade" mode="out-in">
             <router-view />
           </transition>
         </el-col>
@@ -74,19 +50,19 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       collapsed: false,
       subActiveIndex: '1'
     }
   },
   methods: {
-    handleopen () {},
-    handleclose () {},
-    handleSubChange (key) {
+    handleopen() {},
+    handleclose() {},
+    handleSubChange(key) {
       this.subActiveIndex = key
     },
-    toRoute (path) {
+    toRoute(path) {
       this.$router.push({
         path: path
       })

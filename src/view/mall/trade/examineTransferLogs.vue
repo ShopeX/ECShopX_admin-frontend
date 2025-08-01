@@ -103,7 +103,7 @@ export default {
     },
     getProcessLogInfo() {
       this.loading = true
-      getProcessLog(this.order_id).then((response) => {
+      getProcessLog(this.order_id).then(response => {
         this.list = response.data.data
         this.loading = false
       })

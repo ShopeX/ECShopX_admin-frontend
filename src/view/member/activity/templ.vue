@@ -5,11 +5,7 @@
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
       </div>
       <div class="content-padded">
-        <el-row
-          v-for="(row, index) in item.itemList"
-          :key="index"
-          :gutter="20"
-        >
+        <el-row v-for="(row, index) in item.itemList" :key="index" :gutter="20">
           <el-col>
             <div class="tip">
               <div class="view-flex">
@@ -17,9 +13,7 @@
                   <p>{{ row.name }}</p>
                   <p>{{ row.desc }}</p>
                 </div>
-                <el-button @click="toForm(row.form)">
-                  选择
-                </el-button>
+                <el-button @click="toForm(row.form)"> 选择 </el-button>
               </div>
             </div>
           </el-col>
@@ -32,7 +26,7 @@
 <script>
 import { isValidActivity } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       list: [
         {
@@ -60,11 +54,11 @@ export default {
     }
   },
   methods: {
-    toForm (type) {
+    toForm(type) {
       var param = {
         activity_type: type
       }
-      isValidActivity(param).then((res) => {
+      isValidActivity(param).then(res => {
         this.$router.push({
           path: this.$route.path.replace('templ', 'editor/') + type
         })
@@ -86,7 +80,7 @@ export default {
     display: flex;
   }
   .view-flex-item {
-    flex:1;
+    flex: 1;
   }
   .templ-title {
     padding: 10px 15px;
@@ -96,6 +90,6 @@ export default {
   }
 }
 .page-activity-templ ::v-deep .el-row {
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 </style>

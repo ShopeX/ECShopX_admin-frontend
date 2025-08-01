@@ -84,8 +84,8 @@ export default {
           navigation_display: 'navigation_display',
           addCart: 'addCart',
           show_nearby_merchants: 'show_nearby_merchants',
-          merchantsNumber:'merchantsNumber',
-          quantityNumber:'quantityNumber'
+          merchantsNumber: 'merchantsNumber',
+          quantityNumber: 'quantityNumber'
         })
       },
       seletedTags: 'seletedTags',

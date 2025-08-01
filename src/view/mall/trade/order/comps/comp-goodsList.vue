@@ -139,8 +139,8 @@ export default {
   methods: {
     onChangeItem() {
       const items = this.items
-        .filter((item) => item.checked)
-        .map((item) => {
+        .filter(item => item.checked)
+        .map(item => {
           return {
             id: item.id,
             num: item.refundNum
@@ -149,7 +149,7 @@ export default {
       this.$emit('onChange', items)
     },
     setSelectAllGoods() {
-      this.items.forEach((item) => {
+      this.items.forEach(item => {
         if (item.left_aftersales_num) {
           item.checked = true
           item.refundNum = item.left_aftersales_num

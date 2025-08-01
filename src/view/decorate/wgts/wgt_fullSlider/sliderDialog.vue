@@ -1,52 +1,88 @@
 <template>
   <div class="wgts-slider-dialog">
-    <div class="wgts-slider-dialog-left" v-if="sliderForm.media_type === 'img'"
-    :style="`height:${h}px;background:#f5f5f7`">
-      <SpImage v-if="!sliderForm.imgUrl" :src="sliderForm.imgUrl" class="sp-image"
-      fit="scale-down" />
-      <hotzone v-if="sliderForm.imgUrl" class="hotzone" :image="sliderForm.imgUrl"
-        :zonesInit="sliderForm.hotData" @add="handleAdd($event)" @change="handleChange($event)"
-        @remove="handleRemove($event)" />
-      <hotzone class="overlay" :image="sliderForm.overlay || ''" :zonesInit="sliderForm.overlayHotData"
-        v-if="sliderForm.overlay" :style="overlayStyle" @add="handleAdd($event, 'overlay')"
-        @change="handleChange($event, 'overlay')" @remove="handleRemove($event, 'overlay')" />
+    <div
+      class="wgts-slider-dialog-left"
+      v-if="sliderForm.media_type === 'img'"
+      :style="`height:${h}px;background:#f5f5f7`"
+    >
+      <SpImage
+        v-if="!sliderForm.imgUrl"
+        :src="sliderForm.imgUrl"
+        class="sp-image"
+        fit="scale-down"
+      />
+      <hotzone
+        v-if="sliderForm.imgUrl"
+        class="hotzone"
+        :image="sliderForm.imgUrl"
+        :zones-init="sliderForm.hotData"
+        @add="handleAdd($event)"
+        @change="handleChange($event)"
+        @remove="handleRemove($event)"
+      />
+      <hotzone
+        class="overlay"
+        :image="sliderForm.overlay || ''"
+        :zones-init="sliderForm.overlayHotData"
+        v-if="sliderForm.overlay"
+        :style="overlayStyle"
+        @add="handleAdd($event, 'overlay')"
+        @change="handleChange($event, 'overlay')"
+        @remove="handleRemove($event, 'overlay')"
+      />
     </div>
 
     <div class="wgts-slider-dialog-left" v-else :style="`height:${h}px;background:#f5f5f7`">
       <SpImage v-if="!sliderForm.videoUrl" class="sp-image" fit="scale-down" />
       <!-- <video v-if="sliderForm.videoUrl" :src="sliderForm.videoUrl" class="image-item-video"
        >您的浏览器不支持 video 标签。</video> -->
-      <video-player v-if="sliderForm.videoUrl" class='image-item-video' :options="{
-        aspectRatio: '16:9',
-        fluid: true,
-        sources: [
-          {
-            type: 'video/mp4',
-            src: sliderForm.videoUrl
-          }
-        ],
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
-        controlBar: false
-      }" />
-      <hotzone class="overlay" :image="sliderForm.overlay || ''" :zonesInit="sliderForm.overlayHotData"
-        v-if="sliderForm.overlay" :style="overlayStyle" @add="handleAdd($event, 'overlay')"
-        @change="handleChange($event, 'overlay')" @remove="handleRemove($event, 'overlay')" />
+      <video-player
+        v-if="sliderForm.videoUrl"
+        class="image-item-video"
+        :options="{
+          aspectRatio: '16:9',
+          fluid: true,
+          sources: [
+            {
+              type: 'video/mp4',
+              src: sliderForm.videoUrl
+            }
+          ],
+          notSupportedMessage: '此视频暂无法播放，请稍后再试',
+          controlBar: false
+        }"
+      />
+      <hotzone
+        class="overlay"
+        :image="sliderForm.overlay || ''"
+        :zones-init="sliderForm.overlayHotData"
+        v-if="sliderForm.overlay"
+        :style="overlayStyle"
+        @add="handleAdd($event, 'overlay')"
+        @change="handleChange($event, 'overlay')"
+        @remove="handleRemove($event, 'overlay')"
+      />
     </div>
-    <SpForm ref='form' v-model="sliderForm" :formList='sliderFormList' :submit='false' labelWidth='100px' />
+    <SpForm
+      ref="form"
+      v-model="sliderForm"
+      :form-list="sliderFormList"
+      :submit="false"
+      label-width="100px"
+    />
   </div>
 </template>
 
 <script>
 import hotzone from 'vue-hotzone'
-import CompPickerLink from "../../comps/comp-pickerLink";
+import CompPickerLink from '../../comps/comp-pickerLink'
 import { cloneDeep } from 'lodash'
-import { getImageAttribute, getVideoAttribute } from "./utils";
+import { getImageAttribute, getVideoAttribute } from './utils'
 import { proportions } from '@/consts'
 import SpForm from '@/components/sp-form'
 export default {
-  name: "sliderDialog",
-  componrnts: {
-  },
+  name: 'SliderDialog',
+  componrnts: {},
   components: {
     SpForm,
     hotzone,
@@ -63,7 +99,7 @@ export default {
   data() {
     return {
       sliderForm: null,
-      h: '0px',
+      h: '0px'
     }
   },
   methods: {
@@ -146,8 +182,8 @@ export default {
     },
     getOptions(src) {
       console.log(src, '-------')
-      return 
-    },
+      return
+    }
   },
   computed: {
     sliderFormList() {
@@ -158,13 +194,16 @@ export default {
           label: '内容类型',
           key: 'media_type',
           type: 'radio',
-          options: [{
-            label: 'img',
-            name: '图片'
-          }, {
-            label: 'video',
-            name: '视频'
-          }],
+          options: [
+            {
+              label: 'img',
+              name: '图片'
+            },
+            {
+              label: 'video',
+              name: '视频'
+            }
+          ],
           onChange: (e) => {
             // this.sliderForm = {
             //   media_type: e,

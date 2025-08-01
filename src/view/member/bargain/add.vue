@@ -347,7 +347,7 @@ export default {
     if (this.$route.params.bargain_id) {
       // 初始化助力活动详情数据
       getBargainsDetail(this.$route.params.bargain_id)
-        .then((response) => {
+        .then(response => {
           let bargainsDetailData = response.data.data
           bargainsDetailData.price = bargainsDetailData.price / 100
           bargainsDetailData.limit_num = +bargainsDetailData.limit_num
@@ -366,7 +366,7 @@ export default {
           this.form = bargainsDetailData
           this.goodsShow(this.form)
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.go(-1)
         })
     }
@@ -393,12 +393,12 @@ export default {
       where.approve_status = ['onsale']
       where.is_gift = false
       getItemsList(where)
-        .then((response) => {
+        .then(response => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch((error) => {
+        .catch(error => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -499,15 +499,15 @@ export default {
     },
     save() {
       const that = this
-      this.$refs['form'].validate((valid) => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           var bargainRange = {
-            'min': this.form.price_min,
-            'max': this.form.price_max
+            min: this.form.price_min,
+            max: this.form.price_max
           }
           var peopleRange = {
-            'min': this.form.people_min,
-            'max': this.form.people_max
+            min: this.form.people_min,
+            max: this.form.people_max
           }
 
           if (this.form.item_id === '') {
@@ -515,30 +515,30 @@ export default {
           }
 
           var params = {
-            'title': this.form.title,
-            'ad_pic': this.form.ad_pic,
-            'item_name': this.form.item_name,
-            'item_pics': this.form.item_pics,
-            'item_intro': this.form.item_intro,
-            'price': this.form.price,
-            'mkt_price': this.form.mkt_price,
-            'limit_num': this.form.limit_num,
-            'bargain_rules': this.form.bargain_rules,
-            'bargain_range': bargainRange,
-            'people_range': peopleRange,
-            'min_price': this.form.min_price,
-            'begin_time': util.formatDate.format(this.form.bargains_datetime_begin, 'y-M-d h:m:s'),
-            'end_time': util.formatDate.format(this.form.bargains_datetime_end, 'y-M-d h:m:s'),
-            'share_msg': this.form.share_msg,
-            'help_pics': this.form.help_pics,
-            'item_id': this.form.item_id
+            title: this.form.title,
+            ad_pic: this.form.ad_pic,
+            item_name: this.form.item_name,
+            item_pics: this.form.item_pics,
+            item_intro: this.form.item_intro,
+            price: this.form.price,
+            mkt_price: this.form.mkt_price,
+            limit_num: this.form.limit_num,
+            bargain_rules: this.form.bargain_rules,
+            bargain_range: bargainRange,
+            people_range: peopleRange,
+            min_price: this.form.min_price,
+            begin_time: util.formatDate.format(this.form.bargains_datetime_begin, 'y-M-d h:m:s'),
+            end_time: util.formatDate.format(this.form.bargains_datetime_end, 'y-M-d h:m:s'),
+            share_msg: this.form.share_msg,
+            help_pics: this.form.help_pics,
+            item_id: this.form.item_id
           }
 
           // console.log('请求参数', params)
           // console.log('请求参数1', params.item_id)
           if (this.form.bargain_id) {
             params.bargain_id = this.form.bargain_id
-            updateBargains(this.form.bargain_id, params).then((response) => {
+            updateBargains(this.form.bargain_id, params).then(response => {
               if (response.data.data.bargain_id) {
                 this.$message({
                   message: '更新成功',
@@ -555,7 +555,7 @@ export default {
               }
             })
           } else {
-            addBargins(params).then((response) => {
+            addBargins(params).then(response => {
               if (response.data.data.bargain_id) {
                 this.$message({
                   message: '添加成功',

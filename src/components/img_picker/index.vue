@@ -25,36 +25,17 @@
             @mouseleave="picsLeave"
           >
             <img :src="wximageurl + item">
-            <div
-              class="goodspic-mask"
-              :class="picsCurrent == index ? 'on' : ''"
-            >
+            <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
               <!-- <div
                 class="iconfont icon-trash-alt"
                 @click="removePicsImg(index)"
               ></div> -->
-              <div class="text">
-                拖动进行排序
-              </div>
-              <div
-                class="button1"
-                @click="replacePicsImg(index)"
-              >
-                替换
-              </div>
-              <div
-                class="button2"
-                @click="removePicsImg(index)"
-              >
-                删除
-              </div>
+              <div class="text">拖动进行排序</div>
+              <div class="button1" @click="replacePicsImg(index)">替换</div>
+              <div class="button2" @click="removePicsImg(index)">删除</div>
             </div>
           </li>
-          <div
-            v-if="pics.length < max"
-            class="upload-box custom_picker"
-            @click="handlePicsChange"
-          >
+          <div v-if="pics.length < max" class="upload-box custom_picker" @click="handlePicsChange">
             <div class="support">
               <div>
                 <i class="iconfont iconadd" />
@@ -81,13 +62,12 @@ import imgSelect from '@/components/imageselect'
 import draggable from 'vuedraggable'
 
 export default {
-
   components: {
     imgSelect,
     draggable
   },
   props: ['max', 'value'],
-  data () {
+  data() {
     const _this = this
     return {
       //图片弹框是否显示
@@ -111,7 +91,7 @@ export default {
     }
   },
   watch: {
-    value (val) {
+    value(val) {
       if (val && Array.isArray(val)) {
         this.pics = val
       }
@@ -135,19 +115,19 @@ export default {
       this.isGetPics = true
     },
     //关闭dialog
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
       this.multiple = false
       this.replaceIndex = -1
     },
-    pickPics (data) {
+    pickPics(data) {
       if (Array.isArray(data)) {
         if (this.picsOldLen + data.length > this.max) {
           this.$message.error(`最多上传${this.max}张图片!`)
           return false
         } else {
           if (data.length != 0) {
-            data.forEach((data) => {
+            data.forEach(data => {
               if (data && data.url !== '') {
                 this.pics.push(data.url)
                 this.picsOldLen = this.pics.length
@@ -165,10 +145,10 @@ export default {
       this.picsDialog = false
       this.replaceIndex = -1
     },
-    picsEnter (index) {
+    picsEnter(index) {
       this.picsCurrent = index
     },
-    picsLeave () {
+    picsLeave() {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {

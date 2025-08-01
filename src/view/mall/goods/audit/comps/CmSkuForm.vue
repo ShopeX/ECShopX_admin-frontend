@@ -607,13 +607,13 @@ export default {
     },
     handleSkuName(val, m, n) {
       const { itemSpecList, specImages, specItems } = this.value
-      const fd = specImages.find((item) => item.spec_value_id == val.attribute_value_id)
+      const fd = specImages.find(item => item.spec_value_id == val.attribute_value_id)
       if (fd) {
         fd.spec_custom_value_name = val.custom_attribute_value
       }
       itemSpecList[m].attribute_values.list[n].custom_attribute_value = val.custom_attribute_value
-      specItems.forEach((item) => {
-        item.item_spec.forEach((k) => {
+      specItems.forEach(item => {
+        item.item_spec.forEach(k => {
           if (k.spec_value_id == val.attribute_value_id) {
             k.spec_custom_value_name = val.custom_attribute_value
           }
@@ -630,7 +630,7 @@ export default {
       //   return false
       // } else {
       if (data.length != 0) {
-        data.forEach((data) => {
+        data.forEach(data => {
           this.value.specImages[this.rowIndex].item_image_url.push(data.url)
         })
       }
@@ -648,7 +648,7 @@ export default {
     },
     fillSku() {
       const obj = { ...this.bulkFilling[0] }
-      this.value.specItems.forEach((item) => {
+      this.value.specItems.forEach(item => {
         Object.assign(item, obj)
       })
     },

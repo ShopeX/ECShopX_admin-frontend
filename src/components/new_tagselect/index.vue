@@ -17,12 +17,7 @@
         style="width: 300px"
         class="input-with-select"
       >
-        <el-button
-          slot="append"
-          @click="queryHandle"
-        >
-          查询
-        </el-button>
+        <el-button slot="append" @click="queryHandle"> 查询 </el-button>
       </el-input>
     </div>
     <div class="list">
@@ -36,21 +31,9 @@
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          :reserve-selection="true"
-          type="selection"
-          width="55"
-        />
-        <el-table-column
-          prop="tag_name"
-          label="标签名称"
-          width="220"
-        />
-        <el-table-column
-          prop="description"
-          label="标签描述"
-          show-overflow-tooltip
-        />
+        <el-table-column :reserve-selection="true" type="selection" width="55" />
+        <el-table-column prop="tag_name" label="标签名称" width="220" />
+        <el-table-column prop="description" label="标签描述" show-overflow-tooltip />
       </el-table>
     </div>
     <el-pagination
@@ -65,15 +48,8 @@
       @current-change="handleCurrentChange"
     />
     <p>已选择：{{ multipleSelection.length }}</p>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button
-        size="small"
-        type="primary"
-        @click="confirm"
-      >确 定</el-button>
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" type="primary" @click="confirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -99,7 +75,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       tableData: [],
       multipleSelection: [],
@@ -117,16 +93,16 @@ export default {
     }
   },
   watch: {
-    multipleSelection () {
+    multipleSelection() {
       this.$emit('seletedTagsHandle', this.multipleSelection)
     }
   },
 
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async getConfig () {
+    async getConfig() {
       this.loading = true
       let type = this.type
 
@@ -144,7 +120,7 @@ export default {
       }
     },
 
-    handle (result) {
+    handle(result) {
       this.loading = false
       const { list, total_count } = result.data.data
       this.tableData = list
@@ -155,7 +131,7 @@ export default {
         this.toggleSelection(this.seletedTags)
       }
     },
-    checkTags (fn) {
+    checkTags(fn) {
       if (this.type == 'store') {
         if (this.multipleSelection.length > 3) {
           return this.$message.error('所选标签数量不得大于3')
@@ -170,47 +146,47 @@ export default {
       fn()
     },
 
-    confirm () {
+    confirm() {
       this.checkTags(() => {
         this.$emit('seletedTagsHandle', this.multipleSelection)
         this.$emit('visibleHandle')
       })
     },
-    queryHandle () {
+    queryHandle() {
       this.getConfig()
     },
 
-    handleClose () {
+    handleClose() {
       this.checkTags(() => {
         this.$emit('visibleHandle')
       })
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       console.log('handleSelectionChange', val)
 
       if (val.length > 0) {
         this.multipleSelection = val
       }
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.pageSize = val
       this.params.page = 1
       this.getConfig()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getConfig()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    getRowKeys (val) {
+    getRowKeys(val) {
       return val.tag_id
     }
   }

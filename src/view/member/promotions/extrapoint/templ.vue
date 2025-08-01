@@ -1,15 +1,11 @@
-<template lang="html">
-  <section class="section section-white">
+<template>
+  <SpPage>
     <div v-for="item in list">
       <div class="section-header with-border">
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
       </div>
       <div class="content-padded">
-        <el-row
-          v-for="(row, index) in item.itemList"
-          :key="index"
-          :gutter="20"
-        >
+        <el-row v-for="(row, index) in item.itemList" :key="index" :gutter="20">
           <el-col>
             <div class="tip">
               <div class="view-flex">
@@ -17,22 +13,19 @@
                   <p>{{ row.name }}</p>
                   <p>{{ row.desc }}</p>
                 </div>
-                <el-button @click="toForm(row.form)">
-                  选择
-                </el-button>
+                <el-button @click="toForm(row.form)"> 选择 </el-button>
               </div>
             </div>
           </el-col>
         </el-row>
       </div>
     </div>
-  </section>
+  </SpPage>
 </template>
 
 <script>
-import { isValidActivity } from '../../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       list: [
         {
@@ -50,7 +43,7 @@ export default {
     }
   },
   methods: {
-    toForm (type) {
+    toForm(type) {
       this.$router.push({
         path: this.$route.path.replace('templ', 'editor')
       })

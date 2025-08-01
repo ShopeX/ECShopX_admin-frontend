@@ -24,20 +24,22 @@
       :row-key="getRowKeys"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column v-if="type != 'show'" :reserve-selection="true" type="selection" width="55" />
+      <el-table-column
+        v-if="type != 'show'"
+        :reserve-selection="true"
+        type="selection"
+        width="55"
+      />
       <el-table-column prop="id" label="企业ID" />
       <el-table-column prop="name" label="企业名称" />
       <el-table-column v-if="type != 'show'" prop="auth_type" label="登录类型">
         <template slot-scope="scope">
-          <div>{{ VALIDATE_TYPES.find((item) => item.value == scope.row.auth_type)?.name }}</div>
+          <div>{{ VALIDATE_TYPES.find(item => item.value == scope.row.auth_type)?.name }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="distributor_name" label="来源店铺" />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -45,10 +47,7 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
       <el-button v-if="type != 'show'" type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
@@ -81,7 +80,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     const VALIDATE_TYPES = [
       { name: '全部', value: '' },
       { name: '手机号', value: 'mobile' },
@@ -112,15 +111,15 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.visible
     }
   },
   watch: {
-    dialogSelect (newVal, oldVal) {
+    dialogSelect(newVal, oldVal) {
       this.selectRows = newVal
     },
-    visible (newVal, oldVal) {
+    visible(newVal, oldVal) {
       if (newVal) {
         this.fetchList()
       }
@@ -130,7 +129,7 @@ export default {
     getRowKeys(val) {
       return val.id
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val) {
         this.multipleSelection = val
       }
@@ -145,10 +144,10 @@ export default {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       let params = {
-        ...this.params,
+        ...this.params
       }
       if (this.data.activity_id) {
         params.activity_id = this.data.activity_id
@@ -159,15 +158,15 @@ export default {
       this.loading = false
       this.multipleSelection = []
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.fetchList()
     },
-    cancelAction () {
+    cancelAction() {
       this.multipleSelection = []
       this.$emit('closeDialog', false)
     },
-    saveStoreAction () {
+    saveStoreAction() {
       if (this.multipleSelection.length === 0) {
         this.$message({
           message: '请选择企业',
@@ -181,6 +180,4 @@ export default {
 }
 </script>
 
-<style type="text/css">
-</style>
-
+<style type="text/css"></style>

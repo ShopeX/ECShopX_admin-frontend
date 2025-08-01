@@ -1,20 +1,10 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
     <div class="component-body with-padding">
       <div class="navigation">
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="nav-item"
-        >
-          <img
-            class="nav-img"
-            :src="wximageurl + item.imgUrl"
-          >
+        <div v-for="(item, index) in data" :key="index" class="nav-item">
+          <img class="nav-img" :src="wximageurl + item.imgUrl">
           <div class="nav-name">
             {{ item.content }}
           </div>
@@ -36,7 +26,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       data: []
@@ -45,18 +35,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.data = val.data
     }

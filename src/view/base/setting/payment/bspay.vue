@@ -241,7 +241,7 @@ export default {
       }
     },
     async onSubmit(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           const { status } = await this.$api.trade.setPaymentSetting({
             ...this.form,
@@ -261,7 +261,7 @@ export default {
     },
     async getConfig() {
       const res = await this.$api.trade.getPaymentSetting({ pay_type: 'bspay' })
-      Object.keys(res).forEach((key) => {
+      Object.keys(res).forEach(key => {
         if (typeof this.form[key]) {
           this.form[key] = res[key]
         }

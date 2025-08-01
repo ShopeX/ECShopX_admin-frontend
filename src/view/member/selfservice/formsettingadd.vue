@@ -1,8 +1,6 @@
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">
-      添加表单元素
-    </div>
+    <div class="section-header with-border">添加表单元素</div>
     <div class="section-body">
       <el-form
         ref="form"
@@ -31,40 +29,17 @@
           :rules="[{ required: true, message: '请选择表单元素', trigger: 'change' }]"
         >
           <el-col :span="15">
-            <el-radio-group
-              v-model="form.form_element"
-              @change="ElementChange"
-            >
-              <el-radio label="text">
-                单文本框
-              </el-radio>
-              <el-radio label="number">
-                数字(纯数字)
-              </el-radio>
-              <el-radio label="checkbox">
-                复选框
-              </el-radio>
-              <el-radio label="select">
-                下拉选择
-              </el-radio>
-              <el-radio label="radio">
-                单选按钮
-              </el-radio>
-              <el-radio label="textarea">
-                多文本域
-              </el-radio>
-              <el-radio label="date">
-                日期选择
-              </el-radio>
-              <el-radio label="area">
-                地区选择
-              </el-radio>
-              <el-radio label="idcard">
-                上传身份证
-              </el-radio>
-              <el-radio label="otherfile">
-                上传其他附件
-              </el-radio>
+            <el-radio-group v-model="form.form_element" @change="ElementChange">
+              <el-radio label="text"> 单文本框 </el-radio>
+              <el-radio label="number"> 数字(纯数字) </el-radio>
+              <el-radio label="checkbox"> 复选框 </el-radio>
+              <el-radio label="select"> 下拉选择 </el-radio>
+              <el-radio label="radio"> 单选按钮 </el-radio>
+              <el-radio label="textarea"> 多文本域 </el-radio>
+              <el-radio label="date"> 日期选择 </el-radio>
+              <el-radio label="area"> 地区选择 </el-radio>
+              <el-radio label="idcard"> 上传身份证 </el-radio>
+              <el-radio label="otherfile"> 上传其他附件 </el-radio>
             </el-radio-group>
           </el-col>
         </el-form-item>
@@ -72,8 +47,8 @@
           v-for="(domain, index) in form.options"
           v-if="
             form.form_element == 'radio' ||
-              form.form_element == 'checkbox' ||
-              form.form_element == 'select'
+            form.form_element == 'checkbox' ||
+            form.form_element == 'select'
           "
           :key="domain.key"
           :label="'选择项' + index"
@@ -87,18 +62,10 @@
         >
           <el-row>
             <el-col :span="15">
-              <el-input
-                v-model="domain.value"
-                width="20"
-              />
+              <el-input v-model="domain.value" width="20" />
             </el-col>
-            <el-col
-              v-if="index > 1"
-              :span="5"
-            >
-              <el-button @click.prevent="removeDomain(domain)">
-                删除
-              </el-button>
+            <el-col v-if="index > 1" :span="5">
+              <el-button @click.prevent="removeDomain(domain)"> 删除 </el-button>
             </el-col>
           </el-row>
           <el-row>
@@ -125,18 +92,12 @@
         <el-form-item
           v-if="
             form.form_element == 'radio' ||
-              form.form_element == 'checkbox' ||
-              form.form_element == 'select'
+            form.form_element == 'checkbox' ||
+            form.form_element == 'select'
           "
         >
           <el-col :span="15">
-            <el-button
-              type="primary"
-              circle
-              @click="addOption"
-            >
-              增
-            </el-button>
+            <el-button type="primary" circle @click="addOption"> 增 </el-button>
           </el-col>
         </el-form-item>
         <!-- field_name：{{form.field_name}} | defalutFileName:{{defalutFileName}} -->
@@ -161,11 +122,14 @@
           </el-col>
         </el-form-item>
         <el-form-item>
-          <div style="line-height: 24px;">英文标识填写说明：</div>
-          <div style="line-height: 24px;">
-            需填写姓名请选择字符username、生日为birthday、 身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address、
-            公司名称为Company name、统一社会信用代码为Unified Social Credit Code、出席人身份证号为Attendance IDCard、帐号为account number、
-            类型为type、提示信息为Reminder information、上传附件为Attachment upload，若都不是，选其他。
+          <div style="line-height: 24px">英文标识填写说明：</div>
+          <div style="line-height: 24px">
+            需填写姓名请选择字符username、生日为birthday、
+            身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address、
+            公司名称为Company name、统一社会信用代码为Unified Social Credit
+            Code、出席人身份证号为Attendance IDCard、帐号为account number、
+            类型为type、提示信息为Reminder information、上传附件为Attachment
+            upload，若都不是，选其他。
           </div>
         </el-form-item>
         <el-form-item
@@ -209,26 +173,21 @@
           label="证照名称"
           prop="pic_name"
           v-if="form.form_element == 'idcard' || form.form_element == 'otherfile'"
-          :rules="[{ required: form.form_element == 'idcard' || form.form_element == 'otherfile', message: '请输入证照名称', trigger: 'blur' }]"
+          :rules="[
+            {
+              required: form.form_element == 'idcard' || form.form_element == 'otherfile',
+              message: '请输入证照名称',
+              trigger: 'blur'
+            }
+          ]"
         >
           <el-col :span="15">
-            <el-input
-              v-model.trim="form.pic_name"
-              :maxlength="30"
-              placeholder="请输入证照名称"
-            />
+            <el-input v-model.trim="form.pic_name" :maxlength="30" placeholder="请输入证照名称" />
           </el-col>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitAction"
-          >
-            保存
-          </el-button>
+          <el-button @click.native="handleCancel"> 取消 </el-button>
+          <el-button type="primary" @click="submitAction"> 保存 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -247,7 +206,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       form: {
         id: '',
@@ -284,14 +243,14 @@ export default {
         { name: 'Attendance IDCard', value: 'Attendance IDCard' },
         { name: 'Company name', value: 'Company name' },
         { name: 'Unified Social Credit Code', value: 'Unified Social Credit Code' },
-        { name: 'Attachment upload', value: 'Attachment upload' },
+        { name: 'Attachment upload', value: 'Attachment upload' }
       ],
       defalutFileName: 'username'
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.id) {
-      getSettingInfo(this.$route.query.id).then((res) => {
+      getSettingInfo(this.$route.query.id).then(res => {
         this.form = res.data.data
         this.defalutFileName = res.data.data.field_name
         if (!this.form.options) {
@@ -304,10 +263,10 @@ export default {
     }
   },
   methods: {
-    handleOnChageCtrlFields (v) {
+    handleOnChageCtrlFields(v) {
       this.form.field_name = v
     },
-    ElementChange (value) {
+    ElementChange(value) {
       if (value == 'text' || value == 'textarea') {
         this.form.options = [
           { value: '', image_url: '' },
@@ -315,37 +274,37 @@ export default {
         ]
       }
     },
-    fieldTitleChange (value) {
+    fieldTitleChange(value) {
       this.formLable = value
     },
-    fieldNameChange (value) {
+    fieldNameChange(value) {
       this.formName = value
     },
-    addOption () {
+    addOption() {
       let cope = {
         value: '',
         key: Date.now()
       }
       this.form.options.push(cope)
     },
-    removeDomain (item) {
+    removeDomain(item) {
       var index = this.form.options.indexOf(item)
       if (index !== -1) {
         this.form.options.splice(index, 1)
       }
     },
-    submitAction () {
+    submitAction() {
       const that = this
-      this.$refs['form'].validate((valid) => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id) {
-            updateSetting(this.form).then((res) => {
+            updateSetting(this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -353,13 +312,13 @@ export default {
               }
             })
           } else {
-            saveSetting(this.form).then((res) => {
+            saveSetting(this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -376,15 +335,15 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.go(-1)
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgIndex = index
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.imgIndex == 'all') {
         this.form.image_url = data.url
       } else {
@@ -392,10 +351,10 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    handleImgBChange () {
+    handleImgBChange() {
       this.imgIndex = 'all'
       this.imgDialog = true
       this.isGetImage = true

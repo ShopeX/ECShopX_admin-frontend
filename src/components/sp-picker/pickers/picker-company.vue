@@ -100,7 +100,7 @@ export default {
         ...params,
         ...this.formData
       }
-      if('distributor_id' in this.value){
+      if ('distributor_id' in this.value) {
         params.distributor_id = this.value.distributor_id
       }
       return params
@@ -108,7 +108,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       const { data = [] } = this.value
-      const selectRow = list.filter((item) => data.includes(item.id))
+      const selectRow = list.filter(item => data.includes(item.id))
       const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
 
       setTimeout(() => {

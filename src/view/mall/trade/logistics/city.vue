@@ -189,7 +189,7 @@ export default {
         city_list: undefined,
         business_list: undefined,
         source_id: this.form.status === '0' ? undefined : this.form.source_id
-      }).then((res) => {
+      }).then(res => {
         console.log('saveCityLogisticsInfo', res)
         if (res.status === 200) {
           this.$message.success('同城配设置成功！')
@@ -198,12 +198,12 @@ export default {
       })
     },
     getDetail: function () {
-      getCityLogisticsInfo().then((res) => {
+      getCityLogisticsInfo().then(res => {
         const {
           data: { data }
         } = res
         //因为有数据重复所以需要进行处理
-        this.cityList = data.city_list.map((item) => ({
+        this.cityList = data.city_list.map(item => ({
           label: item.cityName,
           value: item.cityName
         }))

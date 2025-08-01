@@ -79,12 +79,12 @@ export default {
       this.loading = true
       this.params.purchase_id = this.purchase_id
       getPurchaseDependentsLists(this.params)
-        .then((response) => {
+        .then(response => {
           this.dataList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

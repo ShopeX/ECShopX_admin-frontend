@@ -1,8 +1,5 @@
 <template>
-  <product-map
-    :num="9"
-    :respons="res"
-  />
+  <product-map :num="9" :respons="res" />
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'

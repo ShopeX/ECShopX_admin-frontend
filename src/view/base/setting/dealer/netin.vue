@@ -1,5 +1,5 @@
 <template>
-  <Result-cpn :currentStatus="currentStatus"/>
+  <Result-cpn :current-status="currentStatus" />
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
   components: {
     ResultCpn
   },
-  data () {
+  data() {
     return {
       currentStatus: {
         resultStatus: 'netin',

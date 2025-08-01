@@ -14,7 +14,7 @@
 }
 .form-item {
   &__label {
-    width: 90px;
+    width: 110px;
     padding-right: 8px;
     text-align: right;
     color: #666;

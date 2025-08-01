@@ -1,10 +1,5 @@
 <template>
-  <el-button
-    :type="type"
-    :size="size"
-    :loading="loading"
-    @click="btnHandle"
-  >
+  <el-button :type="type" :size="size" :loading="loading" @click="btnHandle">
     {{ text }}
   </el-button>
 </template>
@@ -23,17 +18,17 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       loading: false
     }
   },
   methods: {
-    btnHandle () {
+    btnHandle() {
       this.loading = true
       this.$emit('clickHandle')
     },
-    closeLoading () {
+    closeLoading() {
       this.loading = false
     }
   }

@@ -1,69 +1,34 @@
 <template>
-  <section
-    v-if="name === 'heading'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'heading'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="加粗">
-          <el-switch
-            v-model="config.bold"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="config.bold" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="颜色">
           <el-color-picker v-model="config.color" />
         </el-form-item>
         <el-form-item label="布局">
           <el-radio-group v-model="config.align">
-            <el-radio label="left">
-              居左
-            </el-radio>
-            <el-radio label="center">
-              居中
-            </el-radio>
-            <el-radio label="right">
-              居右
-            </el-radio>
+            <el-radio label="left"> 居左 </el-radio>
+            <el-radio label="center"> 居中 </el-radio>
+            <el-radio label="right"> 居右 </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="字号">
-          <el-select
-            v-model="config.size"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item"
-              :label="item + '号'"
-              :value="item"
-            />
+          <el-select v-model="config.size" placeholder="请选择">
+            <el-option v-for="item in options" :key="item" :label="item + '号'" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="斜体">
-          <el-switch
-            v-model="config.italic"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="config.italic" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="标题">
-          <el-input
-            v-model="data[0].content"
-            type="text"
-            placeholder="请输入内容"
-          />
+          <el-input v-model="data[0].content" type="text" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
     </div>
@@ -78,7 +43,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -90,18 +55,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config

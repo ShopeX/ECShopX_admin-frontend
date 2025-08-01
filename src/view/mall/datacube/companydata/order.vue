@@ -46,11 +46,13 @@
           <el-statistic :value="total.order_payed_count" title="付款订单数" />
         </el-col>
         <el-col :span="4"><el-statistic :value="total.aftersales_count" title="售后单数" /></el-col>
-        <el-col :span="4"><el-statistic :value="total.gmv_count/100" title="GMV(元)" /></el-col>
+        <el-col :span="4"><el-statistic :value="total.gmv_count / 100" title="GMV(元)" /></el-col>
         <el-col :span="4">
-          <el-statistic :value="total.amount_payed_count/100" title="交易额(元)" />
+          <el-statistic :value="total.amount_payed_count / 100" title="交易额(元)" />
         </el-col>
-        <el-col :span="4"><el-statistic :value="total.refunded_count/100" title="退款额(元)" /></el-col>
+        <el-col :span="4">
+          <el-statistic :value="total.refunded_count / 100" title="退款额(元)" />
+        </el-col>
       </el-row>
 
       <div v-if="tableData.length > 0" id="container" style="height: 400px; margin: 40px 0" />
@@ -103,21 +105,21 @@ export default {
             name: '交易额',
             key: 'amount_payed_count',
             formatter: (value, row, col) => {
-              return value /100
+              return value / 100
             }
           },
           {
             name: 'GMV',
             key: 'gmv_count',
             formatter: (value, row, col) => {
-              return value /100
+              return value / 100
             }
           },
           {
             name: '退款额',
             key: 'refunded_count',
             formatter: (value, row, col) => {
-              return value /100
+              return value / 100
             }
           }
         ]
@@ -158,11 +160,11 @@ export default {
       const params = {
         start: moment(start).format('YYYY-MM-DD'),
         end: moment(end).format('YYYY-MM-DD'),
-        act_id: activity_id.length>0 ? activity_id.toString() : ''
+        act_id: activity_id.length > 0 ? activity_id.toString() : ''
       }
-     if(params.act_id){
-      params.order_class= 'employee_purchase'
-     }
+      if (params.act_id) {
+        params.order_class = 'employee_purchase'
+      }
       this.loading = true
       const { list } = await this.$api.datacube.getCompanyData(params)
       this.loading = false
@@ -190,7 +192,7 @@ export default {
     renderChart(list) {
       let orderData = []
       let amountData = []
-      list.forEach((item) => {
+      list.forEach(item => {
         orderData.push({ time: item.count_date, name: '订单', value: parseInt(item.order_count) })
         orderData.push({
           time: item.count_date,

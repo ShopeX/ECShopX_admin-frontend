@@ -217,7 +217,7 @@ export default {
       this.SmsSignatureList = this.SmsSignatureList.concat(list)
     },
     fnPass(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           await addSceneItem(this.form)
           this.$message.success('添加成功')

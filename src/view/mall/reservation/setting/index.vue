@@ -1,33 +1,15 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :label-position="'left'"
-      :model="form"
-      :rules="rules"
-      label-width="160px"
-    >
+    <el-form ref="form" :label-position="'left'" :model="form" :rules="rules" label-width="160px">
       <div class="section-body">
-        <el-form-item
-          label="预约模式设置"
-          prop="modelSetting"
-        >
+        <el-form-item label="预约模式设置" prop="modelSetting">
           <el-radio-group v-model="form.reservationMode">
-            <el-radio
-              v-for="item in reservationModes"
-              :key="item.value"
-              :label="item.value"
-            >
-              {{
-                item.label
-              }}
+            <el-radio v-for="item in reservationModes" :key="item.value" :label="item.value">
+              {{ item.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          label="预约时间间隔"
-          prop="interval"
-        >
+        <el-form-item label="预约时间间隔" prop="interval">
           <el-select v-model="form.interval">
             <el-option
               v-for="item in timeIntervals"
@@ -39,48 +21,20 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="资源位名称"
-          prop="resourceName"
-        >
-          <el-input
-            v-model="form.resourceName"
-            placeholder="计师"
-            style="width: 240px"
-          />
+        <el-form-item label="资源位名称" prop="resourceName">
+          <el-input v-model="form.resourceName" placeholder="计师" style="width: 240px" />
         </el-form-item>
-        <el-form-item
-          label="预约周期"
-          prop="maxLimitDay"
-        >
-          最多提前 <el-input
-            v-model="form.maxLimitDay"
-            style="width: 80px"
-          /> 天可预约
+        <el-form-item label="预约周期" prop="maxLimitDay">
+          最多提前 <el-input v-model="form.maxLimitDay" style="width: 80px" /> 天可预约
         </el-form-item>
-        <el-form-item
-          label=""
-          prop="minLimitHour"
-        >
-          最少提前 <el-input
-            v-model="form.minLimitHour"
-            style="width: 80px"
-          /> 分钟可预约
+        <el-form-item label="" prop="minLimitHour">
+          最少提前 <el-input v-model="form.minLimitHour" style="width: 80px" /> 分钟可预约
         </el-form-item>
-        <el-form-item
-          label="取消预约条件"
-          prop="cancelMinute"
-        >
-          到店前 <el-input
-            v-model="form.cancelMinute"
-            style="width: 80px"
-          /> 分钟可取消预约
+        <el-form-item label="取消预约条件" prop="cancelMinute">
+          到店前 <el-input v-model="form.cancelMinute" style="width: 80px" /> 分钟可取消预约
           (必须大于最小预约周期)
         </el-form-item>
-        <el-form-item
-          label="预约条件"
-          prop="condition"
-        >
+        <el-form-item label="预约条件" prop="condition">
           <el-select v-model="form.condition">
             <el-option
               v-for="item in conditions"
@@ -90,55 +44,26 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="预约短信提醒"
-          prop="sms_delay"
-        >
-          提前 <el-input
-            v-model="form.sms_delay"
-            style="width: 80px"
-          /> 小时发送短信提醒
+        <el-form-item label="预约短信提醒" prop="sms_delay">
+          提前 <el-input v-model="form.sms_delay" style="width: 80px" /> 小时发送短信提醒
         </el-form-item>
-        <el-form-item
-          label="预约限制"
-          prop="limitType"
-        >
-          <el-radio-group
-            v-model="form.limitType"
-            @change="limitChange"
-          >
-            <el-radio
-              v-for="item in limitType"
-              :key="item.value"
-              :label="item.value"
-            >
-              {{
-                item.label
-              }}
+        <el-form-item label="预约限制" prop="limitType">
+          <el-radio-group v-model="form.limitType" @change="limitChange">
+            <el-radio v-for="item in limitType" :key="item.value" :label="item.value">
+              {{ item.label }}
             </el-radio>
           </el-radio-group>
           <br>
           <span v-if="form.limitType == 'limit_days'">
-            <el-input
-              v-model="form.limit"
-              style="width: 80px"
-            />天内可预约1次(从预约日开始算)
+            <el-input v-model="form.limit" style="width: 80px" />天内可预约1次(从预约日开始算)
           </span>
           <span v-if="form.limitType == 'limit_nums'">
-            1天内可预约 <el-input
-              v-model="form.limit"
-              style="width: 80px"
-            />次
+            1天内可预约 <el-input v-model="form.limit" style="width: 80px" />次
           </span>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save"> 保存 </el-button>
       </div>
     </el-form>
   </div>
@@ -146,7 +71,7 @@
 <script>
 import { getSetting, saveSetting } from '../../../../api/reservation'
 export default {
-  data () {
+  data() {
     var modelChecked = (rule, val, callback) => {
       if (val.length <= 0) {
         return callback(new Error('请选择预约模式'))
@@ -245,12 +170,12 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     this.getData()
   },
   methods: {
-    save () {
-      saveSetting(this.form).then((res) => {
+    save() {
+      saveSetting(this.form).then(res => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -260,9 +185,9 @@ export default {
         this.getData()
       })
     },
-    getData () {
+    getData() {
       this.loading = true
-      getSetting().then((res) => {
+      getSetting().then(res => {
         if (res.data.data) {
           var data = res.data.data
           this.form.reservationMode = data.reservationMode
@@ -288,7 +213,7 @@ export default {
         this.loading = false
       })
     },
-    limitChange () {
+    limitChange() {
       this.form.limit = 0
     }
   }

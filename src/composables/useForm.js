@@ -68,7 +68,7 @@ export function useForm(options = {}) {
       },
       // 设置表单字段值
       setFieldsValue(values) {
-        Object.keys(values).forEach(key => {
+        Object.keys(values).forEach((key) => {
           this.$set(this.formData, key, values[key])
         })
       },
@@ -76,7 +76,7 @@ export function useForm(options = {}) {
       getFieldsValue(fields) {
         if (Array.isArray(fields)) {
           const values = {}
-          fields.forEach(field => {
+          fields.forEach((field) => {
             values[field] = this.formData[field]
           })
           return values
@@ -85,13 +85,13 @@ export function useForm(options = {}) {
       },
       // 设置表单字段验证状态
       setFields(fields) {
-        Object.keys(fields).forEach(key => {
+        Object.keys(fields).forEach((key) => {
           const field = fields[key]
           if (field.value !== undefined) {
             this.$set(this.form, key, field.value)
           }
           if (field.errors) {
-            this.$refs.form.fields.forEach(item => {
+            this.$refs.form.fields.forEach((item) => {
               if (item.prop === key) {
                 item.validateMessage = field.errors[0]
                 item.validateState = 'error'
@@ -101,7 +101,7 @@ export function useForm(options = {}) {
         })
       },
       setFieldComponentProps(fieldName, props) {
-        this.localFormItems.forEach(item => {
+        this.localFormItems.forEach((item) => {
           if (item.fieldName === fieldName) {
             item.componentProps = {
               ...item.componentProps,
@@ -126,13 +126,13 @@ export function useForm(options = {}) {
           value: this.value
         },
         on: {
-          'field-change': ({ fieldName, value }) => {
-            this.$set(this.formData, fieldName, value)
-          },
-          submit: formData => {
+          // 'field-change': ({ fieldName, value }) => {
+          //   this.$set(this.formData, fieldName, value)
+          // },
+          submit: (formData) => {
             this.$emit('submit', formData)
           },
-          input: formData => {
+          input: (formData) => {
             this.formData = formData
           },
           reset: () => {

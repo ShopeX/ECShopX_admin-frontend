@@ -100,10 +100,10 @@ export default {
         class: 'wgt-store-attr-label',
         template({ tag_name }, index) {
           return (
-            <div class='tag-container'>
-              <div class='tag-name'>{tag_name}</div>
-              <i class='ecx-icon icon-tuozhuai' />
-              <i class='ecx-icon icon-shanchu' on-click={this.deleteItem.bind(this, index)} />
+            <div class="tag-container">
+              <div class="tag-name">{tag_name}</div>
+              <i class="ecx-icon icon-tuozhuai" />
+              <i class="ecx-icon icon-shanchu" on-click={this.deleteItem.bind(this, index)} />
             </div>
           )
         },

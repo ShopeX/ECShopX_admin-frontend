@@ -61,6 +61,6 @@ export default {
       path: 'supplymanage/supplier',
       name: `账号管理-供应商账号`,
       component: () => import('@/view/base/account/suppliers')
-    },
+    }
   ]
 }

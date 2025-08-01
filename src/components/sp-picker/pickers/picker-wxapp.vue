@@ -97,9 +97,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) =>
-          this.value.data.includes(item.wx_external_routes_id)
-        )
+        const selectRows = list.filter(item => this.value.data.includes(item.wx_external_routes_id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

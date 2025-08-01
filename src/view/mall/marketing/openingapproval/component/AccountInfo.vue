@@ -3,57 +3,30 @@
     <el-card class="mycard">
       <div slot="header">
         分帐信息
-        <el-popover
-          v-if="subTitle"
-          placement="top-start"
-          width="400"
-          trigger="hover"
-        >
-          <i
-            slot="reference"
-            class="el-icon-question"
-          />
-          <pre
-            slot=""
-            style="white-space: pre-line"
-          >
+        <el-popover v-if="subTitle" placement="top-start" width="400" trigger="hover">
+          <i slot="reference" class="el-icon-question" />
+          <pre slot="" style="white-space: pre-line">
             {{ subTitle }}
           </pre>
         </el-popover>
       </div>
-      <el-form
-        ref="form"
-        :model="form"
-        :rules="rules"
-      >
+      <el-form ref="form" :model="form" :rules="rules">
         <el-row class="cus-row-form">
           <el-col :span="12">
-            <el-form-item
-              label="手续费扣费方式"
-              prop="adapay_fee_mode"
-            >
+            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
               <el-select
                 v-model="form.adapay_fee_mode"
                 :clearable="true"
                 placeholder="请选择"
                 style="width: 100%"
               >
-                <el-option
-                  label="内扣"
-                  value="I"
-                />
-                <el-option
-                  label="外扣"
-                  value="O"
-                />
+                <el-option label="内扣" value="I" />
+                <el-option label="外扣" value="O" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="总部分账占比"
-              prop="headquarters_proportion"
-            >
+            <el-form-item label="总部分账占比" prop="headquarters_proportion">
               <el-input
                 v-model="form.headquarters_proportion"
                 :clearable="true"
@@ -68,10 +41,7 @@
             v-if="info.is_rel_dealer || info.entry_apply_info.apply_type === 'dealer'"
             :span="12"
           >
-            <el-form-item
-              label="经销商分账占比"
-              prop="dealer_proportion"
-            >
+            <el-form-item label="经销商分账占比" prop="dealer_proportion">
               <el-input
                 v-model="form.dealer_proportion"
                 :clearable="true"
@@ -84,18 +54,8 @@
           </el-col>
         </el-row>
         <el-form-item class="cus-el-form">
-          <el-button
-            type="primary"
-            @click="handleDialogOpen('form', 'APPROVED')"
-          >
-            通过
-          </el-button>
-          <el-button
-            type="danger"
-            @click="handleDialogOpen('form', 'REJECT')"
-          >
-            驳回
-          </el-button>
+          <el-button type="primary" @click="handleDialogOpen('form', 'APPROVED')"> 通过 </el-button>
+          <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')"> 驳回 </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -116,10 +76,7 @@
         :show-word-limit="true"
         placeholder="请填写审批意见"
       />
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -139,7 +96,7 @@ import loadingBtn from '@/components/loading-btn'
 export default {
   components: { loadingBtn },
   props: ['info', 'subTitle', 'handleClose'],
-  data () {
+  data() {
     return {
       form: {
         headquarters_proportion: '',
@@ -159,14 +116,14 @@ export default {
       approveType: ''
     }
   },
-  mounted () {
+  mounted() {
     const { entry_apply_info, dealer_info, distributor_info, is_rel_dealer } = this.info
     if (entry_apply_info.apply_type === 'dealer' || is_rel_dealer) {
       this.form = { ...JSON.parse(dealer_info.split_ledger_info) }
     }
   },
   methods: {
-    handleDialogChange (ref) {
+    handleDialogChange(ref) {
       // 点击审批弹框确定按钮
       const { entry_apply_info, dealer_info, distributor_info } = this.info
       setDetailApprove({
@@ -179,7 +136,7 @@ export default {
           entry_apply_info.apply_type === 'dealer'
             ? dealer_info.operator_id
             : distributor_info.distributor_id
-      }).then((res) => {
+      }).then(res => {
         this.dialogFormVisible = false
         this.$emit('handleClose', 'update')
         // 跳转到列表页
@@ -191,7 +148,7 @@ export default {
         this.$refs.form.resetFields()
       })
     },
-    handleDialogOpen (formName, status) {
+    handleDialogOpen(formName, status) {
       // 打开审批弹框
       const {
         entry_apply_info: { user_name }
@@ -199,7 +156,7 @@ export default {
       // 需要判断当时是店铺还是经销商 目前只判断了店铺
       this.approveType = status
       if (status === 'APPROVED') {
-        this.$refs['form'].validate(async (vaild) => {
+        this.$refs['form'].validate(async vaild => {
           if (vaild) {
             this.visibleContent = `请确认是否通过${user_name}的开户申请`
             this.dialogFormVisible = true
@@ -210,13 +167,13 @@ export default {
         this.dialogFormVisible = true
       }
     },
-    handleDialogClose () {
+    handleDialogClose() {
       // 关闭审批弹框
       this.dialogFormVisible = false
       this.comments = ''
       this.visibleContent = ''
     },
-    validateNumber (rule, value, callback) {
+    validateNumber(rule, value, callback) {
       // 经销商分账占比校验
       const { headquarters_proportion, dealer_proportion } = this.form
       const {

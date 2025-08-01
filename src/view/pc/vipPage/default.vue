@@ -8,15 +8,9 @@
         @start="onStart"
         @end="onEnd"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-        >
+        <div v-for="(item, index) in initData" class="component-control">
           <template v-if="item.name === 'poster'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
             图片
@@ -57,10 +51,7 @@
         </div>
       </div>
       <div class="setting-view el-col el-col-8">
-        <div
-          v-if="editorIndex === null"
-          class="view-placeholder"
-        >
+        <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
           请选择左侧挂件
         </div>
@@ -75,13 +66,7 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
     </section>
   </div>
 </template>
@@ -98,7 +83,7 @@ export default {
   components: {
     draggable
   },
-  data () {
+  data() {
     return {
       renderable: true,
       componentHeight: '',
@@ -142,32 +127,32 @@ export default {
   },
   watch: {
     editorData: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.renderable = false
         this.components[this.editorIndex] = newVal
         console.log('outer watch', this.components)
-        this.$nextTick((_) => {
+        this.$nextTick(_ => {
           this.renderable = true
         })
       },
       deep: true
     }
   },
-  created () {
+  created() {
     console.log('plugins', plugins)
-    Object.keys(plugins).forEach((key) => {
+    Object.keys(plugins).forEach(key => {
       let widget = plugins[key].widget
       console.log('widget', widget)
       Vue.component(key, widget)
     })
   },
-  mounted () {
+  mounted() {
     let filter = {
       template_name: 'pc',
       version: 'v1.0.1',
       page_name: 'member'
     }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       if (res.data.data.config.length !== 0) {
         this.components = res.data.data.config
       }
@@ -192,7 +177,7 @@ export default {
   },
   methods: {
     // 拖拽绑定事件
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         let item = this.initData[evt.oldIndex]
         item.uuid = generate(str, 10)
@@ -203,7 +188,7 @@ export default {
       }
       evt.preventDefault()
     },
-    onEnd (evt) {
+    onEnd(evt) {
       console.log('onend')
       this.setCurrent(evt.newIndex)
       if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
@@ -212,24 +197,24 @@ export default {
       evt.preventDefault()
       // console.log('initData', this.initData)
     },
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       // this.editorData = {...this.components[val]}
       this.editorData = this.components[val]
       console.log('setCurrent', this.editorIndex, this.components)
       // console.log('editorData', this.editorData)
     },
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then((_) => {
+        .then(_ => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
-    saveConfig () {
+    saveConfig() {
       let filter = {
         template_name: 'pc',
         version: 'v1.0.1',
@@ -237,7 +222,7 @@ export default {
         page_name: 'member'
       }
       console.log('save', filter)
-      savePageParams(filter).then((res) => {
+      savePageParams(filter).then(res => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

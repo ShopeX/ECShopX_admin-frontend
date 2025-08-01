@@ -1,14 +1,6 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      v-loading="loading"
-      label="被关注自动回复"
-      name="subscribe"
-    >
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane v-loading="loading" label="被关注自动回复" name="subscribe">
       <el-alert
         title="被关注自动回复"
         type="warning"
@@ -18,28 +10,15 @@
       />
       <el-form ref="form">
         <el-form-item>
-          <MsgSender
-            ref="subscribeMsg"
-            v-model="subscribeData"
-            :type="subscribeType"
-          />
+          <MsgSender ref="subscribeMsg" v-model="subscribeData" :type="subscribeType" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
           <el-button>取消</el-button>
         </el-form-item>
       </el-form>
     </el-tab-pane>
-    <el-tab-pane
-      v-loading="loading"
-      label="关键词自动回复"
-      name="keyword"
-    >
+    <el-tab-pane v-loading="loading" label="关键词自动回复" name="keyword">
       <el-alert
         title="接收用户消息最先触发：关键词自动回复"
         type="warning"
@@ -48,39 +27,28 @@
         :closable="false"
       />
       <div class="reply_add">
-        <el-button
-          type="primary"
-          @click="addReplyAction"
-        >
+        <el-button type="primary" @click="addReplyAction">
           <i class="el-icon-plus" />添加关键字规则
         </el-button>
       </div>
 
       <div class="reply_list">
-        <div
-          v-for="(item, index) in keywordReplyData"
-          class="reply_item"
-        >
+        <div v-for="(item, index) in keywordReplyData" class="reply_item">
           <div class="keywords_rule_hd clearfix">
             <div class="info f_l">
               <span>关键字规则: {{ item.rule_name }}</span>
             </div>
             <div class="opr f_r">
-              <a
-                href="javascript:;"
-                @click="itemchange(item, index)"
-              ><i
-                :class="{
-                  'el-icon-caret-top': item.isopen,
-                  'el-icon-caret-bottom': !item.isopen
-                }"
+              <a href="javascript:;" @click="itemchange(item, index)"
+                ><i
+                  :class="{
+                    'el-icon-caret-top': item.isopen,
+                    'el-icon-caret-bottom': !item.isopen
+                  }"
               /></a>
             </div>
           </div>
-          <div
-            v-if="item.isopen"
-            class="keyword_rule_detail"
-          >
+          <div v-if="item.isopen" class="keyword_rule_detail">
             <div class="keywords">
               <div v-if="item.is_new">
                 规则名：<el-input
@@ -89,21 +57,14 @@
                   style="width: 300px"
                 />&nbsp;<span class="frm-tips">{{ item.rule_name.length }}/60</span>
               </div>
-              <div v-else>
-                规则名：{{ item.rule_name }}
-              </div>
+              <div v-else>规则名：{{ item.rule_name }}</div>
             </div>
             <div class="keywords">
               <div>
-                <el-button @click="addNewKeyword(item, index)">
-                  新增关键字
-                </el-button>&nbsp;
+                <el-button @click="addNewKeyword(item, index)"> 新增关键字 </el-button>&nbsp;
                 <span class="frm-tips">开启则启用完全匹配，关闭则启用包含匹配模式</span>
               </div>
-              <div
-                v-for="(rule, i) in item.keywords_rule"
-                class="keywords_rule_item"
-              >
+              <div v-for="(rule, i) in item.keywords_rule" class="keywords_rule_item">
                 关键字{{ i }}：<el-input
                   v-model="rule.keyword"
                   :maxlength="30"
@@ -119,16 +80,8 @@
                   inactive-text="开启包含匹配"
                   active-color="#ff5000"
                 />
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="删除关键字"
-                  placement="top"
-                >
-                  <i
-                    class="el-icon-delete2"
-                    @click="delNewKeyword(item, index, i)"
-                  />
+                <el-tooltip class="item" effect="dark" content="删除关键字" placement="top">
+                  <i class="el-icon-delete2" @click="delNewKeyword(item, index, i)" />
                 </el-tooltip>
               </div>
             </div>
@@ -146,23 +99,13 @@
               </div>
               <div class="keywords_rule_ft">
                 <div class="opr tr">
-                  <el-button
-                    type="primary"
-                    @click="onSubmitKeyword(item, index)"
-                  >
-                    保存
-                  </el-button>
-                  <el-button @click="delAction(item, index)">
-                    删除
-                  </el-button>
+                  <el-button type="primary" @click="onSubmitKeyword(item, index)"> 保存 </el-button>
+                  <el-button @click="delAction(item, index)"> 删除 </el-button>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            v-if="!item.isopen"
-            class="keywords_rule_bd keywords_rule_overview"
-          >
+          <div v-if="!item.isopen" class="keywords_rule_bd keywords_rule_overview">
             <div class="keywords_info keywords clearfix">
               <span class="keywords_info_title f_l">关键词：</span>
               <div class="keywords_info_detail">
@@ -175,10 +118,7 @@
         </div>
       </div>
     </el-tab-pane>
-    <el-tab-pane
-      label="开启多客服回复"
-      name="kfreply"
-    >
+    <el-tab-pane label="开启多客服回复" name="kfreply">
       <el-alert
         title="接收用户消息未触发关键词自动回复：开启多客服回复"
         type="warning"
@@ -212,11 +152,7 @@
         </el-form>
       </div>
     </el-tab-pane>
-    <el-tab-pane
-      v-loading="loading"
-      label="消息自动回复"
-      name="autoreply"
-    >
+    <el-tab-pane v-loading="loading" label="消息自动回复" name="autoreply">
       <el-alert
         title="接收用户消息并且关键词和多客服都未触发：消息自动回复"
         type="warning"
@@ -226,19 +162,10 @@
       />
       <el-form ref="form">
         <el-form-item label="">
-          <MsgSender
-            ref="autoreplyMsg"
-            v-model="autoreplyData"
-            :type="autoreplyType"
-          />
+          <MsgSender ref="autoreplyMsg" v-model="autoreplyData" :type="autoreplyType" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
           <el-button>取消</el-button>
         </el-form-item>
       </el-form>
@@ -264,7 +191,7 @@ export default {
   components: {
     MsgSender
   },
-  data () {
+  data() {
     return {
       loading: true,
       activeName: 'subscribe',
@@ -298,16 +225,16 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     this.getSubscribeSetting()
   },
   methods: {
-    handleClick () {
+    handleClick() {
       // 切换到多客服回复配置
       this.loading = true
       if (this.activeName == 'kfreply' && !this.kfreplyloadData) {
         this.kfreplyload = true
-        getOpenKfReply().then((response) => {
+        getOpenKfReply().then(response => {
           this.isOpenKfReply = response.data.data.isOpenKfReply
           this.kfreplyloadData = true
           this.loading = false
@@ -325,7 +252,7 @@ export default {
       }
 
       if (this.activeName == 'autoreply' && !this.autoreplyloadData) {
-        getDefaultReply().then((response) => {
+        getDefaultReply().then(response => {
           this.autoreplyData = response.data.data.reply_content
           this.autoreplyType = response.data.data.reply_type
           this.autoreplyloadData = true
@@ -336,7 +263,7 @@ export default {
       }
 
       if (this.activeName == 'keyword' && !this.keywordReplyloadData) {
-        getKeywordReply().then((response) => {
+        getKeywordReply().then(response => {
           if (response.data.data.list.length > 0) {
             this.keywordReplyData = response.data.data.list
             this.keywordReplyloadData = true
@@ -348,15 +275,15 @@ export default {
       }
     },
     // 获取被关注自动回复配置
-    getSubscribeSetting () {
-      getSubscribeReply().then((response) => {
+    getSubscribeSetting() {
+      getSubscribeReply().then(response => {
         this.subscribeData = response.data.data.reply_content
         this.subscribeType = response.data.data.reply_type
         this.subscribeReplyloadData = true
         this.loading = false
       })
     },
-    getSubmitFromParams (data, type) {
+    getSubmitFromParams(data, type) {
       let params = {}
       if (type == 'news') {
         if (data.news) {
@@ -374,14 +301,14 @@ export default {
       return params
     },
     // 保存配置
-    onSubmit () {
+    onSubmit() {
       let params = {}
       if (this.activeName == 'subscribe') {
         params = this.getSubmitFromParams(
           this.$refs.subscribeMsg.data,
           this.$refs.subscribeMsg.currentName
         )
-        setSubscribeReply(params).then((response) => {
+        setSubscribeReply(params).then(response => {
           this.messageSuccess()
         })
       } else if (this.activeName == 'autoreply') {
@@ -389,12 +316,12 @@ export default {
           this.$refs.autoreplyMsg.data,
           this.$refs.autoreplyMsg.currentName
         )
-        setDefaultReply(params).then((response) => {
+        setDefaultReply(params).then(response => {
           this.messageSuccess()
         })
       }
     },
-    onSubmitKeyword (item, index) {
+    onSubmitKeyword(item, index) {
       let params = {}
       for (let i = 0; i < this.$refs.keywordsMsg.length; i++) {
         if (this.$refs.keywordsMsg[i].$el.id == index) {
@@ -417,29 +344,29 @@ export default {
         return
       }
       if (this.keywordReplyData[index].is_new) {
-        addKeywordReply(params).then((response) => {
+        addKeywordReply(params).then(response => {
           this.keywordReplyData[index].is_new = false
           this.messageSuccess()
         })
       } else {
-        updateKeywordReply(params).then((response) => {
+        updateKeywordReply(params).then(response => {
           this.messageSuccess()
         })
       }
     },
-    messageSuccess () {
+    messageSuccess() {
       this.$message({
         type: 'success',
         message: '保存配置成功'
       })
     },
     // 开启客服自动回复
-    openKfReplyChange (isOpen) {
+    openKfReplyChange(isOpen) {
       if (!this.isRequest) {
         this.isRequest = true
         let query = { isOpenKfReply: isOpen }
         setOpenKfReply(query)
-          .then((response) => {
+          .then(response => {
             this.isOpenKfReply = isOpen
             this.$message({
               type: 'success',
@@ -447,22 +374,22 @@ export default {
             })
             this.isRequest = false
           })
-          .catch((error) => {
+          .catch(error => {
             this.isRequest = false
           })
       }
     },
-    addNewKeyword (item, index) {
+    addNewKeyword(item, index) {
       if (item.keywords_rule.length > 9) {
         this.$message({ type: 'error', message: '最多添加10个关键字' })
         return
       }
       this.keywordReplyData[index].keywords_rule.push({ keyword: '', reply_mode: '' })
     },
-    delNewKeyword (item, index, i) {
+    delNewKeyword(item, index, i) {
       this.keywordReplyData[index].keywords_rule.splice(i, 1)
     },
-    addReplyAction () {
+    addReplyAction() {
       this.keywordReplyData.push({
         rule_name: '',
         is_new: true,
@@ -472,14 +399,14 @@ export default {
         isopen: true
       })
     },
-    itemchange (item, index) {
+    itemchange(item, index) {
       if (item.isopen) {
         this.keywordReplyData[index].isopen = false
       } else {
         this.keywordReplyData[index].isopen = true
       }
     },
-    delAction (item, index) {
+    delAction(item, index) {
       this.$confirm('确定要删除该关键字规则？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -493,7 +420,7 @@ export default {
             }
           } else {
             let params = { rule_name: item.rule_name }
-            deleteKeywordReply(params).then((response) => {
+            deleteKeywordReply(params).then(response => {
               this.keywordReplyData.splice(index, 1)
               if (this.keywordReplyData.length == 0) {
                 this.addReplyAction()

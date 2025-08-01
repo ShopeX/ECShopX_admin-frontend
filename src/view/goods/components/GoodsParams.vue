@@ -47,11 +47,10 @@ export default {
       })
       if (item.attr_id && paprms.indexOf(item.attr_id) == -1) {
         await this.$api.goods.getItemParams({
-            attribute_id: item.id,
-            attribute_value: item.attr_id
-          })
-          this.$emit('change', item)
-       
+          attribute_id: item.id,
+          attribute_value: item.attr_id
+        })
+        this.$emit('change', item)
       }
     }
   }

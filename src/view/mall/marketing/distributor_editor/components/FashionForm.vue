@@ -6,11 +6,7 @@
     <el-row>
       <el-col :span="8">
         <el-form-item label="是否分账">
-          <el-switch
-            v-model="form.is_open"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          />
+          <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
         </el-form-item>
       </el-col>
     </el-row>
@@ -20,10 +16,7 @@
           <el-input v-model="form.rate" />
         </el-form-item>
       </el-col>
-      <el-col
-        :span="16"
-        class="flex"
-      >
+      <el-col :span="16" class="flex">
         <div>% 平台向商户收取的服务费率(0.00 ~ 30.00)</div>
       </el-col>
     </el-row>
@@ -34,7 +27,7 @@
 import { getSetting } from '@/api/fenzhang'
 export default {
   props: ['externalForm'],
-  data () {
+  data() {
     return {
       form: {
         rate: '0.00',
@@ -45,7 +38,7 @@ export default {
   },
   watch: {
     externalForm: {
-      handler (val) {
+      handler(val) {
         if (val.is_open) {
           this.form.is_open = val.is_open == 'true' ? true : false
         }
@@ -56,8 +49,8 @@ export default {
       deep: true
     }
   },
-  mounted () {
-    getSetting().then((res) => {
+  mounted() {
+    getSetting().then(res => {
       let data = res.data.data
       this.isOpen = data.is_open == 'true'
     })

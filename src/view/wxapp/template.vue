@@ -5,10 +5,7 @@
         <div v-for="(item, index) in type" :class="currentType===index?'nav-item active':'nav-item'" @click="switchTab(index)"><i class="material-icons">{{item.icon}}</i> {{item.name}}</div>
       </div>
     </div> -->
-    <el-row
-      v-if="currentType === 0"
-      :gutter="20"
-    >
+    <el-row v-if="currentType === 0" :gutter="20">
       <el-col
         v-for="item in templateList"
         :key="item.index"
@@ -77,12 +74,7 @@
               </div>
             </div>
             <div class="content-padded">
-              <el-button
-                v-if="item.is_open"
-                type="default"
-                disabled
-                class="template-opend-btn"
-              >
+              <el-button v-if="item.is_open" type="default" disabled class="template-opend-btn">
                 已开通
               </el-button>
               <el-button
@@ -98,14 +90,8 @@
         </div>
       </el-col>
     </el-row>
-    <el-row
-      v-if="currentType === 1"
-      :gutter="20"
-    />
-    <el-row
-      v-if="currentType === 2"
-      :gutter="20"
-    />
+    <el-row v-if="currentType === 1" :gutter="20" />
+    <el-row v-if="currentType === 2" :gutter="20" />
   </div>
 </template>
 
@@ -114,7 +100,7 @@ import { templateList, templateOpen } from '../../api/template'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       templateList: [],
       currentType: 0,
@@ -137,19 +123,19 @@ export default {
   computed: {
     ...mapGetters(['name'])
   },
-  mounted () {
-    templateList().then((response) => {
+  mounted() {
+    templateList().then(response => {
       this.templateList = response.data.data.list
     })
   },
   methods: {
-    switchTab (index) {
+    switchTab(index) {
       this.currentType = +index
     },
-    openTemp (name) {
+    openTemp(name) {
       var filter = { template_name: name }
-      templateOpen(filter).then((response) => {
-        templateList().then((response) => {
+      templateOpen(filter).then(response => {
+        templateList().then(response => {
           this.templateList = response.data.data.list
         })
       })

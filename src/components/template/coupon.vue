@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -26,32 +20,16 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img
-            class="coupon-img"
-            :src="item.imgUrl"
-          >
+          <img class="coupon-img" :src="item.imgUrl">
         </template>
         <template v-else>
           <div class="coupon-amount">
             <div>{{ item.amount }}</div>
-            <div
-              v-if="item.type === 'cash'"
-              class="amount-cur"
-            >
-              RMB
-            </div>
-            <div
-              v-if="item.type === 'discount'"
-              class="amount-cur"
-            >
-              折
-            </div>
+            <div v-if="item.type === 'cash'" class="amount-cur">RMB</div>
+            <div v-if="item.type === 'discount'" class="amount-cur">折</div>
           </div>
           <div class="coupon-brand">
-            <img
-              class="brand-img"
-              :src="wximageurl + item.imgUrl"
-            >
+            <img class="brand-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">
@@ -64,12 +42,7 @@
             </div>
           </div>
         </template>
-        <el-button
-          size="mini"
-          class="coupon-getted-btn"
-        >
-          领取
-        </el-button>
+        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
       </div>
     </div>
     <div class="component-body with-padding">
@@ -80,17 +53,11 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img
-            class="coupon-img"
-            :src="item.imgUrl"
-          >
+          <img class="coupon-img" :src="item.imgUrl">
         </template>
         <template v-else>
           <div class="coupon-brand">
-            <img
-              class="brand-img"
-              :src="wximageurl + item.imgUrl"
-            >
+            <img class="brand-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">
@@ -103,12 +70,7 @@
             </div>
           </div>
         </template>
-        <el-button
-          size="mini"
-          class="coupon-getted-btn"
-        >
-          领取
-        </el-button>
+        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
       </div>
     </div>
   </div>
@@ -126,7 +88,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       data: [],
@@ -136,18 +98,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.data = val.data
       this.voucher_package = val.voucher_package

@@ -6,12 +6,12 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       key: ''
     }
   },
-  mounted () {
+  mounted() {
     let { code } = this.$route.query
     if (code) {
       window.top.location.href = `${window.location.origin}/login?code=${code}`
@@ -20,7 +20,7 @@ export default {
     }
   },
   methods: {
-    name () {}
+    name() {}
   }
 }
 </script>

@@ -1,110 +1,111 @@
 <template>
   <SpPage>
-  <div class="page-body">
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="activity_name" label="活动名称:">
-          <el-input v-model="params.activity_name" placeholder="请输入活动名称" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:" size="max">
-          <el-date-picker
-            v-model="params.create_time"
-            clearable
-            type="datetimerange"
-            align="right"
-            format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            prefix-icon="null"
-            :default-time="defaultTime"
-            :picker-options="pickerOptions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="is_success" label="仅成团订单:">
-          <el-select v-model="params.is_success" clearable placeholder="请选择">
-            <el-option
-              v-for="item in processArr"
-              :key="item.value"
-              size="mini"
-              :label="item.title"
-              :value="item.value"
+    <div class="page-body">
+      <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
+        <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+          <SpFilterFormItem prop="activity_name" label="活动名称:">
+            <el-input v-model="params.activity_name" placeholder="请输入活动名称" />
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="create_time" label="时间:" size="max">
+            <el-date-picker
+              v-model="params.create_time"
+              clearable
+              type="datetimerange"
+              align="right"
+              format="yyyy-MM-dd HH:mm:ss"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              prefix-icon="null"
+              :default-time="defaultTime"
+              :picker-options="pickerOptions"
             />
-          </el-select>
-        </SpFilterFormItem>
-      </SpFilterForm>
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="is_success" label="仅成团订单:">
+            <el-select v-model="params.is_success" clearable placeholder="请选择">
+              <el-option
+                v-for="item in processArr"
+                :key="item.value"
+                size="mini"
+                :label="item.title"
+                :value="item.value"
+              />
+            </el-select>
+          </SpFilterFormItem>
+        </SpFilterForm>
 
-      <div class="action-container">
-        <el-button type="primary" plain icon="el-plus-circle" @click="exportCommunityOrder">
-          导出活动销售数据
-        </el-button>
-      </div>
-
-      <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
-        <el-tab-pane
-          v-for="item in activity_status"
-          :key="item.value"
-          :label="item.title"
-          :name="item.value"
-        />
-        <el-table
-          v-loading="loading"
-          border
-          :data="tableList"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" align="center" label="全选" />
-          <el-table-column width="100" prop="activity_id" label="ID" />
-
-          <el-table-column width="220" prop="activity_name" label="活动名称" />
-          <el-table-column prop="total_fee" width="120" label="实际收入（¥）">
-            <template slot-scope="scope">
-              {{ (scope.row.total_fee / 100).toFixed(2) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="total_fee" min-width="150" label="有效期">
-            <template slot-scope="scope">
-              <div>{{ scope.row.start_time }}</div>
-              <div>~</div>
-              <div>{{ scope.row.end_time }}</div>
-            </template>
-          </el-table-column>
-
-          <el-table-column width="220" prop="activity_process_msg" label="状态" />
-
-          <el-table-column width="200" prop="activity_delivery_status_msg" label="发货状态" />
-
-          <el-table-column label="操作" min-width="150">
-            <template slot-scope="scope">
-              <div class="operating-icons">
-                <el-button
-                  v-if="
-                    scope.row.activity_status == 'success' && scope.row.delivery_status == 'PENDING'
-                  "
-                  type="text"
-                  @click="send(scope.row)"
-                >
-                  发货
-                </el-button>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="mt-4 text-right">
-          <el-pagination
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :current-page.sync="page.pageIndex"
-            :page-sizes="[10, 20, 50]"
-            :total="page.total"
-            :page-size="page.pageSize"
-            @current-change="onCurrentChange"
-            @size-change="onSizeChange"
-          />
+        <div class="action-container">
+          <el-button type="primary" plain icon="el-plus-circle" @click="exportCommunityOrder">
+            导出活动销售数据
+          </el-button>
         </div>
-      </el-tabs>
-    </div>
-    <router-view />
+
+        <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
+          <el-tab-pane
+            v-for="item in activity_status"
+            :key="item.value"
+            :label="item.title"
+            :name="item.value"
+          />
+          <el-table
+            v-loading="loading"
+            border
+            :data="tableList"
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column type="selection" align="center" label="全选" />
+            <el-table-column width="100" prop="activity_id" label="ID" />
+
+            <el-table-column width="220" prop="activity_name" label="活动名称" />
+            <el-table-column prop="total_fee" width="120" label="实际收入（¥）">
+              <template slot-scope="scope">
+                {{ (scope.row.total_fee / 100).toFixed(2) }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="total_fee" min-width="150" label="有效期">
+              <template slot-scope="scope">
+                <div>{{ scope.row.start_time }}</div>
+                <div>~</div>
+                <div>{{ scope.row.end_time }}</div>
+              </template>
+            </el-table-column>
+
+            <el-table-column width="220" prop="activity_process_msg" label="状态" />
+
+            <el-table-column width="200" prop="activity_delivery_status_msg" label="发货状态" />
+
+            <el-table-column label="操作" min-width="150">
+              <template slot-scope="scope">
+                <div class="operating-icons">
+                  <el-button
+                    v-if="
+                      scope.row.activity_status == 'success' &&
+                      scope.row.delivery_status == 'PENDING'
+                    "
+                    type="text"
+                    @click="send(scope.row)"
+                  >
+                    发货
+                  </el-button>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="mt-4 text-right">
+            <el-pagination
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              :current-page.sync="page.pageIndex"
+              :page-sizes="[10, 20, 50]"
+              :total="page.total"
+              :page-size="page.pageSize"
+              @current-change="onCurrentChange"
+              @size-change="onSizeChange"
+            />
+          </div>
+        </el-tabs>
+      </div>
+      <router-view />
     </div>
   </SpPage>
 </template>

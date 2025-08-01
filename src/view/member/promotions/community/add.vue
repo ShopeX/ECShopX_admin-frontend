@@ -1,15 +1,8 @@
 /* eslint-disable */
 <div style="max-width: 403px; max-height: 300px" id="container123"></div>
 <template>
-  <section
-    class="section section-white content-padded"
-    onload="init()"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="110px"
-    >
+  <section class="section section-white content-padded" onload="init()">
+    <el-form ref="form" :model="form" label-width="110px">
       <el-form-item label="地理位置">
         <div>
           <el-col :span="4">
@@ -20,27 +13,11 @@
             />
           </el-col>
           <el-col :span="7">
-            <el-input
-              id="keyword"
-              v-model="form.address"
-              placeholder="请输入具体地址"
-            />
+            <el-input id="keyword" v-model="form.address" placeholder="请输入具体地址" />
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
-          >
-&nbsp;
-          </el-col>
-          <el-col
-            :span="3"
-          >
-            <el-button
-              type="primary"
-              @click="searchKeyword()"
-            >
-              搜索定位
-            </el-button>
+          <el-col :span="1" class="content-center"> &nbsp; </el-col>
+          <el-col :span="3">
+            <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
           </el-col>
         </div>
       </el-form-item>
@@ -57,50 +34,19 @@
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="社区经纬度"
-      >
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lng"
-            readonly
-            placeholder="经度"
-          />
+      <el-form-item inline="true" class="demo-form-inline" label="社区经纬度">
+        <el-col :span="3">
+          <el-input v-model="form.lng" readonly placeholder="经度" />
         </el-col>
-        <el-col
-          :span="1"
-          class="content-center"
-        >
-          -
-        </el-col>
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lat"
-            readonly
-            placeholder="纬度"
-          />
+        <el-col :span="1" class="content-center"> - </el-col>
+        <el-col :span="3">
+          <el-input v-model="form.lat" readonly placeholder="纬度" />
         </el-col>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="社区详细地址"
-      >
+      <el-form-item inline="true" class="demo-form-inline" label="社区详细地址">
         <div>
-          <el-col
-            :span="8"
-          >
-            <el-input
-              id="keyword"
-              v-model="form.address"
-              placeholder="请输入具体提货地址"
-            />
+          <el-col :span="8">
+            <el-input id="keyword" v-model="form.address" placeholder="请输入具体提货地址" />
           </el-col>
         </div>
       </el-form-item>
@@ -189,32 +135,13 @@
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          size="large"
-          @click="onSubmit"
-        >
-          提交
-        </el-button>
-        <el-button
-          size="large"
-          @click.native.prevent
-        >
-          取消
-        </el-button>
+        <el-button type="primary" size="large" @click="onSubmit"> 提交 </el-button>
+        <el-button size="large" @click.native.prevent> 取消 </el-button>
       </el-form-item>
     </el-form>
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
+    <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入社区地址信息
-        </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)"> 导入社区地址信息 </el-button>
       </el-col>
       <el-col>{{ poi_info.address }}</el-col>
     </div>
@@ -225,7 +152,7 @@ import district from '../../../../common/district.json'
 import { communityCreate, communityUpdate, getCommunityDetail } from '../../../../api/community'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -239,7 +166,7 @@ function getCascaderObj (val, opt) {
 
 export default {
   inject: ['refresh'],
-  data () {
+  data() {
     return {
       form: {
         community_id: '',
@@ -272,12 +199,12 @@ export default {
       add_flag: 1
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.params.community_id) {
       // 初始化门店数据
       //this.add_flag = 0;
       getCommunityDetail(this.$route.params.community_id)
-        .then((response) => {
+        .then(response => {
           this.form = response.data.data
           if (this.form.regions.length > 0) {
             this.region = this.form.regions[this.form.regions.length - 1]
@@ -285,7 +212,7 @@ export default {
           // 编辑门店时初始化地图
           this.qqmapinit(this.form.lat, this.form.lng)
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.go(-1)
         })
     } else {
@@ -294,20 +221,20 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       const that = this
       this.loading = true
       if (this.form.community_id) {
         // 编辑门店数据提交
         let community_id = this.form.community_id
-        communityUpdate(community_id, this.form).then((response) => {
+        communityUpdate(community_id, this.form).then(response => {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -319,14 +246,14 @@ export default {
         })
       } else {
         // 添加门店数据提交
-        communityCreate(this.form).then((response) => {
+        communityCreate(this.form).then(response => {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -444,7 +371,7 @@ export default {
       this.form.lat = poi_info.latLng.lat
       this.form.address = poi_info.address
     },
-    isDomesticChange (val) {
+    isDomesticChange(val) {
       if (val == 1) {
         this.qqmapinit(39.916527, 116.397128)
       }

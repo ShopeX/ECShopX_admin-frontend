@@ -1,28 +1,12 @@
 <template>
   <SpPage>
     <div>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="易联云配置"
-          name="first"
-        >
-          <yilianyunTemplates
-            ref="yilianyunTemplates"
-            :get-status="yilianyunTemplates"
-          />
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="易联云配置" name="first">
+          <yilianyunTemplates ref="yilianyunTemplates" :get-status="yilianyunTemplates" />
         </el-tab-pane>
-        <el-tab-pane
-          label="门店配置"
-          name="second"
-        >
-          <shopPosTemplates
-            ref="shopPosTemplates"
-            :get-status="shopPosTemplates"
-          />
+        <el-tab-pane label="门店配置" name="second">
+          <shopPosTemplates ref="shopPosTemplates" :get-status="shopPosTemplates" />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -39,7 +23,7 @@ export default {
     yilianyunTemplates,
     shopPosTemplates
   },
-  data () {
+  data() {
     return {
       loading: false,
       yilianyunTemplates: false,
@@ -48,13 +32,13 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }
   },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'first') {
         this.yilianyunTemplates = true
       } else if (this.activeName === 'second') {

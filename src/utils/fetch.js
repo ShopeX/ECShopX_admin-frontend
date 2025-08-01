@@ -68,7 +68,7 @@ function createAxios(inst, isJson = true) {
   inst.defaults.timeout = process.env.NODE_ENV === 'production' ? 30000 : 30 * 1000
   inst.defaults.baseURL = inst.defaults.baseURL || process.env.VUE_APP_BASE_API || '/'
   inst.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-  inst.interceptors.request.use(config => {
+  inst.interceptors.request.use((config) => {
     const isGetMethod = config.method === 'get'
     const isPutMethod = config.method === 'put'
     const isDeleteMethod = config.method === 'delete'
@@ -77,7 +77,7 @@ function createAxios(inst, isJson = true) {
     if (isGetMethod || isDeleteMethod) {
       if (isObject(config.params)) {
         let params = {}
-        Object.keys(config.params).forEach(key => {
+        Object.keys(config.params).forEach((key) => {
           if (config.params[key] !== '') {
             params[key] = config.params[key]
           }
@@ -118,13 +118,12 @@ function createAxios(inst, isJson = true) {
   // 重试队列，每一项将是一个待执行的函数形式
   let requests = []
   inst.interceptors.response.use(
-    res => {
+    (res) => {
       const {
         data,
         status,
         config: { showError }
       } = res
-      debugger
       if (status >= 200 && status < 300) {
         const resData = data.data
         if (!resData) {
@@ -138,12 +137,12 @@ function createAxios(inst, isJson = true) {
             if (!isRefreshing) {
               isRefreshing = true
               return refresh()
-                .then(data => {
+                .then((data) => {
                   const { token } = data
                   store.commit('user/setToken', { token })
                   config.headers['Authorization'] = 'Bearer ' + token
                   // 已经刷新了token，将所有队列中的请求进行重试
-                  requests.forEach(cb => cb(token))
+                  requests.forEach((cb) => cb(token))
                   // 重试完了清空这个队列
                   requests = []
                   return inst(config)
@@ -156,9 +155,9 @@ function createAxios(inst, isJson = true) {
                 })
             } else {
               // 正在刷新token，返回一个未执行resolve的promise
-              return new Promise(resolve => {
+              return new Promise((resolve) => {
                 // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
-                requests.push(token => {
+                requests.push((token) => {
                   store.commit('user/setToken', { token })
                   config.headers['Authorization'] = 'Bearer ' + token
                   resolve(inst(config))
@@ -175,7 +174,7 @@ function createAxios(inst, isJson = true) {
       return Promise.reject(res)
     },
 
-    err => {
+    (err) => {
       //
       console.log('req-err', err)
       err.response && errorToast(err.response.data.data)

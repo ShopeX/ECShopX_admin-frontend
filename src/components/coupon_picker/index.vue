@@ -17,10 +17,7 @@
         :data="couponList"
         @change="couponsSelector"
       >
-        <div
-          slot="left-footer"
-          class="transfer-footer"
-        >
+        <div slot="left-footer" class="transfer-footer">
           <el-pagination
             v-if="total_count > params.page_size"
             small
@@ -31,15 +28,9 @@
           />
         </div>
       </el-transfer>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="closeDialog">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="couponsComfirm"
-        >确 定</el-button>
+        <el-button type="primary" @click="couponsComfirm">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -55,7 +46,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       couponsVisible: false,
       loading: false,
@@ -72,17 +63,17 @@ export default {
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.couponsVisible = val
         this.getCouponList()
       }
     },
-    selectedCoupons (val) {
+    selectedCoupons(val) {
       if (val.length) {
         let list = []
-        this.couponList.forEach((item) => {
-          val.forEach((key) => {
+        this.couponList.forEach(item => {
+          val.forEach(key => {
             if (item.key == key) {
               list.push(item)
             }
@@ -93,15 +84,15 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
     //选择商品分页
-    pageChange (val) {
+    pageChange(val) {
       this.params.page_no = val
       this.getCouponList()
     },
     //选择商品触发事件
-    couponsSelector (value, direction, movedKeys) {
+    couponsSelector(value, direction, movedKeys) {
       if (value.length > 3) {
         this.$message({
           message: '最多选择三张优惠券',
@@ -112,11 +103,11 @@ export default {
       }
     },
     //选择商品确认
-    couponsComfirm () {
+    couponsComfirm() {
       let values = []
       if (this.selectedCoupons.length > 0) {
-        this.couponList.forEach((item) => {
-          this.selectedCoupons.forEach((key) => {
+        this.couponList.forEach(item => {
+          this.selectedCoupons.forEach(key => {
             if (item.key == key) {
               let obj = {
                 imgUrl: item.imgUrl,
@@ -141,12 +132,12 @@ export default {
       this.couponsVisible = false
       this.$emit('pickCoupon', values)
     },
-    getCouponList () {
+    getCouponList() {
       this.loading = true
       getCardList({ ...this.params, from: 'btn' })
-        .then((res) => {
+        .then(res => {
           let list = []
-          res.data.data.list.forEach((item) => {
+          res.data.data.list.forEach(item => {
             list.push({
               type: item.card_type,
               key: item.card_id,
@@ -158,8 +149,8 @@ export default {
             })
           })
 
-          let arr = list.filter((item) => {
-            let xx = this.selectList.find((row) => {
+          let arr = list.filter(item => {
+            let xx = this.selectList.find(row => {
               return row.key === item.key
             })
             if (!xx) {
@@ -171,11 +162,11 @@ export default {
           this.total_count = res.data.data.pagers.total
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     },
-    closeDialog () {
+    closeDialog() {
       this.couponsVisible = false
       this.$emit('closeDialog', 'coupon')
     }

@@ -17,7 +17,7 @@ export default {
     CustomCard
   },
   props: ['orderInfo', 'memberInfo'],
-  data () {
+  data() {
     const self = this
     return {
       baseInfo: [
@@ -67,13 +67,13 @@ export default {
     }
   },
   methods: {
-    onRefresh () {
+    onRefresh() {
       this.$emit('onRefresh')
     },
-    hiddenPoint (field) {
+    hiddenPoint(field) {
       return this.orderInfo[field] === 0
     },
-    orderClassFilter (item) {
+    orderClassFilter(item) {
       let returnValue = ''
       switch (item) {
         case 'groups':
@@ -106,7 +106,7 @@ export default {
       }
       return returnValue
     },
-    orderStatusFilter () {
+    orderStatusFilter() {
       let returnValue = ''
       const {
         order_class,
@@ -148,7 +148,7 @@ export default {
       }
       return returnValue
     },
-    invoiceFilter (item) {
+    invoiceFilter(item) {
       let returnValue = ''
       if (item) {
         returnValue = '已开票'
@@ -157,7 +157,7 @@ export default {
       }
       return returnValue
     },
-    receiptTypeFilter (item) {
+    receiptTypeFilter(item) {
       let returnValue = ''
       switch (item) {
         case 'logistics':
@@ -175,13 +175,13 @@ export default {
       }
       return returnValue
     },
-    memeberNameFilter () {
+    memeberNameFilter() {
       return this.memberInfo.username
     },
-    memeberPhoneFilter () {
+    memeberPhoneFilter() {
       return this.memberInfo.mobile
     },
-    memeberLevelFilter () {
+    memeberLevelFilter() {
       let returnValue = ''
       if (this.memberInfo.vipgrade && this.memberInfo.vipgrade.is_vip) {
         returnValue = this.memberInfo.vipgrade.grade_name
@@ -190,7 +190,7 @@ export default {
       }
       return returnValue
     },
-    memeberDisCountFilter () {
+    memeberDisCountFilter() {
       let value = null
       if (this.memberInfo.gradeInfo && this.memberInfo.gradeInfo.privileges) {
         return 100 - this.memberInfo.gradeInfo.privileges.discount + '%'

@@ -16,7 +16,7 @@
 <script>
 import setting_ from './setting/detail'
 export default {
-  data () {
+  data() {
     return {
       receive_type: [
         {
@@ -35,12 +35,12 @@ export default {
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
   methods: {
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params, package_id: this.$route.query.package_id }
     }
   }

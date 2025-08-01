@@ -61,10 +61,10 @@ export function getFileBlob(url) {
       responseType: 'arraybuffer',
       headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then(data => {
+      .then((data) => {
         resolve(data.data)
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString())
       })
   })

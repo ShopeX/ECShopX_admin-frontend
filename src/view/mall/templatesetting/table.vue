@@ -15,10 +15,7 @@
     header-row-class-name="header_row_class"
   >
     <el-table-column prop="date">
-      <template
-        slot="header"
-        slot-scope="slot"
-      >
+      <template slot="header" slot-scope="slot">
         <div class="first_header">
           <span>积分区间</span><span>*</span><span>最多添加5个区间</span>
         </div>
@@ -30,7 +27,7 @@
           type="number"
           size="mini"
           :min="0"
-          :class="{ 'haveError': scope.row.isHaveError && scope.row.score1 === '' }"
+          :class="{ haveError: scope.row.isHaveError && scope.row.score1 === '' }"
           @blur="handleBlur(scope.row, scope.$index)"
         />
         <span>～</span>
@@ -40,40 +37,24 @@
           type="number"
           size="mini"
           :min="0"
-          :class="{ 'haveError': scope.row.isHaveError && scope.row.score2 === '' }"
+          :class="{ haveError: scope.row.isHaveError && scope.row.score2 === '' }"
           @blur="handleBlur(scope.row, scope.$index)"
         />
         <span>积分</span>
       </template>
     </el-table-column>
-    <el-table-column
-      prop="name"
-      label="操作"
-      width="200"
-    >
-      <template
-        slot="header"
-        slot-scope="slot"
-      >
+    <el-table-column prop="name" label="操作" width="200">
+      <template slot="header" slot-scope="slot">
         <div class="second_header">
           <span>操作</span>
         </div>
       </template>
       <template slot-scope="scope">
-        <a
-          :class="{ 'disabled': dataSource.length === 1 }"
-          @click="handleDelete(scope)"
-        >删除</a>
+        <a :class="{ disabled: dataSource.length === 1 }" @click="handleDelete(scope)">删除</a>
       </template>
     </el-table-column>
-    <template
-      v-if="dataSource.length < 5"
-      slot="append"
-    >
-      <div
-        class="footer"
-        :class="{ 'noValue': !dataSource.length }"
-      >
+    <template v-if="dataSource.length < 5" slot="append">
+      <div class="footer" :class="{ noValue: !dataSource.length }">
         <span @click="handleAddScore">添加积分筛选区间</span>
       </div>
     </template>
@@ -83,7 +64,7 @@
 <script>
 export default {
   props: ['value'],
-  data () {
+  data() {
     const _this = this
     return {
       dataSource: _this.value || [],

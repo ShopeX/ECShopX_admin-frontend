@@ -1,9 +1,5 @@
 <template>
-  <product-map
-    :respons="res"
-    :num="9"
-    text="新增导航"
-  />
+  <product-map :respons="res" :num="9" text="新增导航" />
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'

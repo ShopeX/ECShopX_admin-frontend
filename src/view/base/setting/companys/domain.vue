@@ -1,20 +1,9 @@
 <template>
   <SpPage>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="域名设置"
-      name="domainSet"
-    >
-      <el-form
-        ref="form"
-        label-width="180px"
-        style="min-height: 200px"
-      >
-        <!-- 
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="域名设置" name="domainSet">
+        <el-form ref="form" label-width="180px" style="min-height: 200px">
+          <!-- 
         <div class="clearfix">
           <h2 class="f_l">
             <span>PC域名设置：</span>
@@ -31,73 +20,61 @@
           <el-switch v-model="form.pc_is_checked" active-color="#13ce66" inactive-color="#ff4949" disabled></el-switch>
         </el-form-item> -->
 
-        <div class="clearfix">
-          <h2 class="f_l view-flex">
-            <div>H5域名：</div>
-            <div class="margin_left-10">
-              {{ form.h5_default_domain }}
-            </div>
-            <div class="margin_left-20">
-              <el-tag
-                v-clipboard:copy="form.h5_default_domain"
-                v-clipboard:success="onCopy"
-              >
-                点我复制
-              </el-tag>
-            </div>
-          </h2>
+          <div class="clearfix">
+            <h2 class="f_l view-flex">
+              <div>H5域名：</div>
+              <div class="margin_left-10">
+                {{ form.h5_default_domain }}
+              </div>
+              <div class="margin_left-20">
+                <el-tag v-clipboard:copy="form.h5_default_domain" v-clipboard:success="onCopy">
+                  点我复制
+                </el-tag>
+              </div>
+            </h2>
+          </div>
+
+          <el-input
+            v-model="form.h5_domain"
+            style="width: 200px"
+            class="margin_left-84"
+            size="small"
+            placeholder="请输入绑定的独立域名"
+          />
+
+          <div class="clearfix">
+            <h2 class="f_l view-flex">
+              <div>PC域名：</div>
+              <div class="margin_left-10">
+                {{ form.pc_default_domain }}
+              </div>
+              <div class="margin_left-20">
+                <el-tag v-clipboard:copy="form.pc_default_domain" v-clipboard:success="onCopy">
+                  点我复制
+                </el-tag>
+              </div>
+            </h2>
+          </div>
+
+          <el-input
+            v-model="form.pc_domain"
+            style="width: 200px"
+            class="margin_left-84"
+            size="small"
+            placeholder="请输入绑定的独立域名"
+          />
+        </el-form>
+        <div class="section-footer content-center">
+          <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
         </div>
-
-        <el-input
-          v-model="form.h5_domain"
-          style="width: 200px"
-          class="margin_left-84"
-          size="small"
-          placeholder="请输入绑定的独立域名"
-        />
-
-        <div class="clearfix">
-          <h2 class="f_l view-flex">
-            <div>PC域名：</div>
-            <div class="margin_left-10">
-              {{ form.pc_default_domain }}
-            </div>
-            <div class="margin_left-20">
-              <el-tag
-                v-clipboard:copy="form.pc_default_domain"
-                v-clipboard:success="onCopy"
-              >
-                点我复制
-              </el-tag>
-            </div>
-          </h2>
-        </div>
-
-        <el-input
-          v-model="form.pc_domain"
-          style="width: 200px"
-          class="margin_left-84"
-          size="small"
-          placeholder="请输入绑定的独立域名"
-        />
-      </el-form>
-      <div class="section-footer content-center">
-        <el-button
-          v-loading="loading"
-          type="primary"
-          @click="onSubmit"
-        >
-          保存
-        </el-button>
-      </div>
-    </el-tab-pane>
-  </el-tabs>
-</SpPage>
+      </el-tab-pane>
+    </el-tabs>
+  </SpPage>
 </template>
 <script>
 import { getDomainH5Setting, setDomainSetting } from '@/api/company'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'domainSet',
       loading: false,
@@ -111,39 +88,39 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
-      getDomainH5Setting().then((response) => {
+    getConfig() {
+      getDomainH5Setting().then(response => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
 
       setDomainSetting({
         pc_domain: this.form.pc_domain,
         h5_domain: this.form.h5_domain
       })
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

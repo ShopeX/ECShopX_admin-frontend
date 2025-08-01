@@ -243,7 +243,7 @@ export default {
     // 关键字查询
     searchkeyWord(list, keyWord) {
       let arr = []
-      list.forEach((v) => {
+      list.forEach(v => {
         if (v.itemName.indexOf(keyWord) >= 0) {
           arr.push(v)
         }
@@ -255,7 +255,7 @@ export default {
     init() {
       const { itemTreeLists = [], distributor_info = [] } = this.listData
       itemTreeLists &&
-        itemTreeLists.forEach((v) => {
+        itemTreeLists.forEach(v => {
           v.limit = v.use_limit || 0
         })
       this.initStoreList(distributor_info)
@@ -271,7 +271,7 @@ export default {
         this.$alert('您还未选择商品，请选择商品后再提交', '警告消息', {
           confirmButtonText: '确定',
           type: 'warning',
-          callback: (action) => {}
+          callback: action => {}
         })
       } else {
         this.$confirm(
@@ -284,9 +284,9 @@ export default {
         )
           .then(async () => {
             // 提交返回列表页
-            const distributor_ids = this.distributorList.map((v) => v.distributor_id)
+            const distributor_ids = this.distributorList.map(v => v.distributor_id)
 
-            const items = this.goodsList.map((v) => {
+            const items = this.goodsList.map(v => {
               return {
                 id: v.itemId,
                 limit: v.limit || 0
@@ -329,7 +329,7 @@ export default {
 
     // 删除门店
     deleteStore(item) {
-      let index = this.distributorList.findIndex((v) => item.distributor_id === v.distributor_id)
+      let index = this.distributorList.findIndex(v => item.distributor_id === v.distributor_id)
       if (index !== -1) {
         this.distributorList.splice(index, 1)
         this.storeCurrentPage = 1
@@ -353,8 +353,8 @@ export default {
     // 上传选择商品后数据处理
     changeGoodsList() {
       let allData = this.selectGoodsList || []
-      this.uploadList.forEach((v) => {
-        let index = allData.findIndex((item) => item.itemId === v.itemId)
+      this.uploadList.forEach(v => {
+        let index = allData.findIndex(item => item.itemId === v.itemId)
         if (index !== -1) {
           allData.splice(index, 1)
         }
@@ -368,7 +368,7 @@ export default {
       this.setItemStatus = true
     },
     handleGoodsSubmit(data) {
-      data.forEach((v) => {
+      data.forEach(v => {
         v.limit = v.store
       })
       this.itemVisible = false
@@ -391,7 +391,7 @@ export default {
 
     // 上传
     uploadFile(uploadList) {
-      uploadList.forEach((v) => {
+      uploadList.forEach(v => {
         v.limit = Number(v.limit_num)
         // let index = this.uploadList.findIndex((item) => item.itemId === v.itemId)
         // if (index !== -1) {
@@ -407,10 +407,10 @@ export default {
     // 变更限制
     changeLimit(value, itemId) {
       // 展示数据和原数据都需要变更
-      let index = this.showGoodsList.findIndex((v) => v.itemId === itemId)
+      let index = this.showGoodsList.findIndex(v => v.itemId === itemId)
       this.showGoodsList[index].limit = Number(value)
 
-      let goodsindex = this.goodsList.findIndex((v) => v.itemId === itemId)
+      let goodsindex = this.goodsList.findIndex(v => v.itemId === itemId)
       this.goodsList[goodsindex].limit = Number(value)
       this.$nextTick(() => {
         let newVal = Math.max(Number(value), 0)

@@ -85,30 +85,32 @@ export default {
     async handleClickAdd() {
       const ids = this.value.data.map(({ goodsId }) => goodsId)
       let list = this.value.data
-      .filter(item => item.goodsId)
-      .map(item => ({
-        pics:[item?.imgUrl],
-        itemName: item.title,
-        itemId: item.goodsId,
-        price: item.price,
-        market_price: item.market_price,
-        item_id: item.goodsId
-      }))
+        .filter(item => item.goodsId)
+        .map(item => ({
+          pics: [item?.imgUrl],
+          itemName: item.title,
+          itemId: item.goodsId,
+          price: item.price,
+          market_price: item.market_price,
+          item_id: item.goodsId
+        }))
       const { data } = await this.$picker.goodsitem({
         data: list,
         multiple: true
       })
       if (data) {
-        this.localValue.data = data.map(({ pics, itemName, itemId, price, market_price,is_prescription }) => {
-          return {
-            imgUrl: pics[0],
-            title: itemName,
-            goodsId: itemId,
-            price,
-            market_price,
-            isPrescription:is_prescription
+        this.localValue.data = data.map(
+          ({ pics, itemName, itemId, price, market_price, is_prescription }) => {
+            return {
+              imgUrl: pics[0],
+              title: itemName,
+              goodsId: itemId,
+              price,
+              market_price,
+              isPrescription: is_prescription
+            }
           }
-        })
+        )
       }
     },
     onRemove() {

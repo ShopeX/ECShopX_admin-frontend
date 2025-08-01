@@ -1,11 +1,11 @@
 const defaultRequestInterceptorConfig = {
-  fulfilled: config => config,
-  rejected: error => Promise.reject(error)
+  fulfilled: (config) => config,
+  rejected: (error) => Promise.reject(error)
 }
 
 const defaultResponseInterceptorConfig = {
-  fulfilled: response => response,
-  rejected: error => Promise.reject(error)
+  fulfilled: (response) => response,
+  rejected: (error) => Promise.reject(error)
 }
 
 class InterceptorManager {

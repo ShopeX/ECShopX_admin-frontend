@@ -73,9 +73,9 @@ export default {
               <div>
                 未付款订单，将在
                 <el-input
-                  type='number'
-                  min='0'
-                  style='width: 100px;margin-left: 10px;'
+                  type="number"
+                  min="0"
+                  style="width: 100px;margin-left: 10px;"
                   v-model={value[key]}
                 />
                 （小时）之后取消

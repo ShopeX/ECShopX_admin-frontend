@@ -101,7 +101,6 @@ export default {
           username: formData.account,
           password: formData.pwd,
           logintype: formData.loginType
-          // product_model: this.VUE_APP_PRODUCT_MODEL,
           // agreement_id
         })
         if (token) {

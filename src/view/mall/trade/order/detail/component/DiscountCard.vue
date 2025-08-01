@@ -8,10 +8,7 @@
       border-collapse="collapse"
     >
       <tr>
-        <th
-          v-for="(header, index) in columns"
-          :key="index"
-        >
+        <th v-for="(header, index) in columns" :key="index">
           <div class="customHeader">
             {{ header.name }}
           </div>
@@ -19,13 +16,10 @@
       </tr>
       <template v-if="dataSource && dataSource.length">
         <tr
-          v-for="(data, index) in dataSource.filter((el) => Number(el.discount_fee) !== 0)"
+          v-for="(data, index) in dataSource.filter(el => Number(el.discount_fee) !== 0)"
           :key="index"
         >
-          <td
-            v-for="(row, index) in columns"
-            :key="index"
-          >
+          <td v-for="(row, index) in columns" :key="index">
             <div class="customDataSource">
               {{
                 row.field === 'discount_fee'
@@ -49,9 +43,7 @@
       <template v-if="!dataSource || !dataSource.length">
         <tr>
           <td :colspan="columns.length">
-            <div class="customEmpty">
-              暂无内容
-            </div>
+            <div class="customEmpty">暂无内容</div>
           </td>
         </tr>
       </template>
@@ -66,7 +58,7 @@ export default {
     CustomCard
   },
   props: ['tradeInfo', 'orderInfo', 'deliveryData'],
-  data () {
+  data() {
     return {
       columns: [
         { name: '优惠名称', field: 'info' },
@@ -78,9 +70,9 @@ export default {
   },
   watch: {
     orderInfo: {
-      handler (val) {
+      handler(val) {
         this.dataSource =
-          val && val.discount_info.filter((el) => el.discount_fee !== 0 && el.discount_fee !== '0')
+          val && val.discount_info.filter(el => el.discount_fee !== 0 && el.discount_fee !== '0')
       },
       deep: true
     }

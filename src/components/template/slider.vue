@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -18,15 +12,12 @@
         <div class="three-dot"></div>
       </div> -->
     </div>
-    <div
-      class="slider-wrap"
-      :class="{ 'padded': config.padded }"
-    >
+    <div class="slider-wrap" :class="{ padded: config.padded }">
       <img
         class="scale-placeholder"
         :src="
           (data[0] && data[0].imgUrl) ||
-            'https://fakeimg.pl/320x240/EFEFEF/CCC/?text=image&font=lobster'
+          'https://fakeimg.pl/320x240/EFEFEF/CCC/?text=image&font=lobster'
         "
       >
 
@@ -42,13 +33,13 @@
           v-for="(item, index) in data"
           :key="index"
           class="slider-item"
-          :class="{ 'rounded': config.rounded }"
+          :class="{ rounded: config.rounded }"
         >
           <div class="img">
             <img
               :src="
                 item.imgUrl ||
-                  'https://fakeimg.pl/320x' + config.height + '/EFEFEF/CCC/?text=image&font=lobster'
+                'https://fakeimg.pl/320x' + config.height + '/EFEFEF/CCC/?text=image&font=lobster'
               "
             >
             <!-- 图片文字配置 -->
@@ -169,7 +160,7 @@
           v-for="(item, index) in data"
           :key="index"
           class="dot"
-          :class="{ 'active': config.current == index }"
+          :class="{ active: config.current == index }"
         />
       </div>
       <div
@@ -201,7 +192,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -214,23 +205,23 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    change (e) {
+    change(e) {
       this.config.current = e
     }
   }

@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -15,17 +9,11 @@
         </div>
       </div>
       <div class="component-more">
-        <div class="goods-more">
-          全部商品
-        </div>
+        <div class="goods-more">全部商品</div>
       </div>
     </div>
     <div class="component-body with-padding">
-      <div
-        v-for="(item, index) in data"
-        :key="index"
-        class="coupon-component"
-      >
+      <div v-for="(item, index) in data" :key="index" class="coupon-component">
         <!--<template v-if="item.imgUrl">-->
         <!--<img class="coupon-img" :src="item.imgUrl"/>-->
         <!--</template>-->
@@ -46,18 +34,8 @@
           >
             <div class="coupon-amount">
               {{ item.amount }}
-              <div
-                v-if="item.type === 'cash'"
-                class="amount-cur"
-              >
-                ¥
-              </div>
-              <div
-                v-if="item.type === 'discount'"
-                class="amount-cur"
-              >
-                折
-              </div>
+              <div v-if="item.type === 'cash'" class="amount-cur">¥</div>
+              <div v-if="item.type === 'discount'" class="amount-cur">折</div>
             </div>
             <!--<div class="coupon-brand">
               <img class="brand-img" :src="wximageurl + item.imgUrl"/>
@@ -78,12 +56,7 @@
             </div>
           </div>
         </template>
-        <el-button
-          size="mini"
-          class="coupon-getted-btn"
-        >
-          领取
-        </el-button>
+        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
       </div>
     </div>
   </div>
@@ -101,7 +74,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       data: []
@@ -110,20 +83,20 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
-      val.data.map((item) => {
+      val.data.map(item => {
         item.background =
           'linear-gradient(169deg' + item.backgroundOne + '0%,' + item.backgroundTwo + '100%'
       })

@@ -7,16 +7,8 @@
     append-to-body
     @close="closeDialog"
   >
-    <StoreFilter
-      v-if="!filter"
-      class="store"
-      :data="store"
-      @change="handleStoreChange"
-    />
-    <el-form
-      label-position="left"
-      label-width="70px"
-    >
+    <StoreFilter v-if="!filter" class="store" :data="store" @change="handleStoreChange" />
+    <el-form label-position="left" label-width="70px">
       <el-form-item label="商品名： ">
         <el-row :gutter="10">
           <el-col :span="10">
@@ -28,11 +20,7 @@
             />
           </el-col>
           <el-col :span="12">
-            <el-button
-              icon="el-icon-search"
-              type="danger"
-              @click="searchByKey"
-            />
+            <el-button icon="el-icon-search" type="danger" @click="searchByKey" />
           </el-col>
         </el-row>
       </el-form-item>
@@ -45,10 +33,7 @@
           :data="goodsList"
           @change="goodsSelector"
         >
-          <div
-            slot="left-footer"
-            class="transfer-footer"
-          >
+          <div slot="left-footer" class="transfer-footer">
             <el-pagination
               v-if="total_count > params.pageSize"
               small
@@ -61,15 +46,9 @@
         </el-transfer>
       </el-form-item>
     </el-form>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="goodsComfirm"
-      >确 定</el-button>
+      <el-button type="primary" @click="goodsComfirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -94,7 +73,7 @@ export default {
     },
     filter: [String, Object]
   },
-  data () {
+  data() {
     return {
       goodsVisible: false,
       loading: false,
@@ -112,35 +91,35 @@ export default {
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.goodsVisible = val
         this.getGoodsList()
       }
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getGoodsList()
     },
     // 选择商品分页
-    pageChange (val) {
+    pageChange(val) {
       this.params.page = val
       this.getGoodsList()
     },
-    handleStoreChange (val) {
+    handleStoreChange(val) {
       this.store = val
       this.goodsList = []
       this.params.distributor_id = val.id
       this.getGoodsList()
     },
     // 选择商品触发事件
-    goodsSelector (value, direction, movedKeys) {
+    goodsSelector(value, direction, movedKeys) {
       let list = []
-      this.goodsList.forEach((item) => {
-        this.selectedGoods.forEach((itemKey) => {
+      this.goodsList.forEach(item => {
+        this.selectedGoods.forEach(itemKey => {
           if (item.key === itemKey) {
             list.push(item)
           }
@@ -157,11 +136,11 @@ export default {
       }
     },
     // 选择商品确认
-    goodsComfirm () {
+    goodsComfirm() {
       let values = []
       if (this.selectedGoods.length > 0) {
-        this.goodsList.forEach((item) => {
-          this.selectedGoods.forEach((key) => {
+        this.goodsList.forEach(item => {
+          this.selectedGoods.forEach(key => {
             if (item.key == key) {
               let obj = {
                 imgUrl: item.imgUrl,
@@ -188,7 +167,7 @@ export default {
       this.goodsVisible = false
       this.$emit('pickGoods', values)
     },
-    getGoodsList () {
+    getGoodsList() {
       this.loading = true
       if (this.usage === 'wxapp') {
         this._getItemsList()
@@ -196,10 +175,10 @@ export default {
         this._getPcItemsList()
       }
     },
-    _getItemsList () {
-      getItemsList(this.params).then((response) => {
+    _getItemsList() {
+      getItemsList(this.params).then(response => {
         let list = []
-        response.data.data.list.forEach((item) => {
+        response.data.data.list.forEach(item => {
           list.push({
             key: item.itemId,
             label: item.itemName,
@@ -214,10 +193,10 @@ export default {
         this.loading = false
       })
     },
-    _getPcItemsList () {
-      getPcItemsList(Object.assign({}, this.params, { item_type: 'normal' })).then((response) => {
+    _getPcItemsList() {
+      getPcItemsList(Object.assign({}, this.params, { item_type: 'normal' })).then(response => {
         let list = []
-        response.data.data.list.forEach((item) => {
+        response.data.data.list.forEach(item => {
           let imgUrl = ''
           if (typeof item.pics === 'string' && item.pics !== '') {
             imgUrl = JSON.parse(item.pics)[0]
@@ -242,7 +221,7 @@ export default {
         this.loading = false
       })
     },
-    closeDialog () {
+    closeDialog() {
       this.goodsVisible = false
       this.$emit('closeDialog', 'goods')
     }

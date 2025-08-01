@@ -3,7 +3,7 @@
   <div
     :class="{
       'wgt-slider': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -13,8 +13,8 @@
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced,
-        'padded': value.itemPadded
+        spaced: value.spaced,
+        padded: value.itemPadded
       }"
     >
       <!-- 挂件自定义部分 -->
@@ -30,7 +30,7 @@
         indicator-position="none"
         :interval="value.interval"
         @change="
-          (e) => {
+          e => {
             this.currentIndex = e
           }
         "
@@ -40,8 +40,8 @@
           :key="index"
           class="slider-item"
           :class="{
-            'rounded': value.rounded,
-            'padded': value.itemPadded
+            rounded: value.rounded,
+            padded: value.itemPadded
           }"
         >
           <!-- <SpImage
@@ -61,7 +61,7 @@
           value.shape,
           value.dotColor,
           {
-            'cover': value.dotCover,
+            cover: value.dotCover,
             'cover-padded': value.itemPadded
           }
         ]"
@@ -70,7 +70,7 @@
           <div
             v-for="(item, index) in value.data.length > 0 ? value.data : [1]"
             :key="`dot-item__${index}`"
-            :class="['dot-item', { 'active': currentIndex == index }]"
+            :class="['dot-item', { active: currentIndex == index }]"
           />
         </template>
         <template v-else>

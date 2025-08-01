@@ -12,7 +12,7 @@
       <template slot="body" slot-scope="scope">
         <div class="slider-item">
           <SpImagePicker v-model="scope.data.imgUrl" size="small" />
-          <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
+          <CompPickerLink :value="scope.data" @change="e => onChangeLink(e, scope.index)" />
         </div>
         <div class="cell-value-tip">建议尺寸:（宽度640px，高度自适应）</div>
       </template>
@@ -57,7 +57,7 @@ export default {
       })
 
       this.localValue = this.localValue.concat(
-        data.map((item) => {
+        data.map(item => {
           return {
             button: '',
             content: '',

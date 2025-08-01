@@ -282,13 +282,13 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + activity_id + '?is_new=true' })
     },
     exportActivityItemList(activity_id) {
-      exportActivityItemList({ activity_id: activity_id }).then((res) => {
+      exportActivityItemList({ activity_id: activity_id }).then(res => {
         window.open(res.data.data.url, '_blank')
       })
     },
     communityDetail(index, row) {
       this.communityDetailVisible = true
-      CommunityActivityInfo(row.activity_id).then((response) => {
+      CommunityActivityInfo(row.activity_id).then(response => {
         this.communityDetailData = response.data.data
       })
     },
@@ -303,7 +303,7 @@ export default {
       } else {
         this.params.status = ''
       }
-      CommunityActivityList(params).then((response) => {
+      CommunityActivityList(params).then(response => {
         this.activityLists = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -324,7 +324,7 @@ export default {
             CommunityActivityStatusUpdate({
               activity_id: row.activity_id,
               delete_type: status
-            }).then((response) => {
+            }).then(response => {
               this.getActivityLists(this.params)
               this.$message({
                 message: '修改活动状态成功',
@@ -353,8 +353,8 @@ export default {
     },
     viewCommunityList(ids) {
       this.communityVisible = true
-      var params = { 'community_id': ids }
-      getCommunityList(params).then((res) => {
+      var params = { community_id: ids }
+      getCommunityList(params).then(res => {
         if (res.data.data.total_count > 0) {
           this.communityLists = res.data.data.list
         }
@@ -366,7 +366,7 @@ export default {
       communityActivityItemList(activityId, {
         page: this.goodsPage,
         pageSize: this.goodsPageSize
-      }).then((res) => {
+      }).then(res => {
         this.goodsList = res.data.data.list
         this.goodsCount = res.data.data.total_count
       })
@@ -380,23 +380,23 @@ export default {
       this.goodsVisible = false
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     updateActivityData(params) {
-      updateActivityItemData(params).then((res) => {})
+      updateActivityItemData(params).then(res => {})
     },
     editItemPrice(row) {
       let form = {
-        'id': row.id,
-        'item_id': row.item_id,
-        'activity_price': row.activity_price,
-        'vip_price': row.vip_price,
-        'svip_price': row.svip_price,
-        'activity_store': row.activity_store,
-        'points': row.points
+        id: row.id,
+        item_id: row.item_id,
+        activity_price: row.activity_price,
+        vip_price: row.vip_price,
+        svip_price: row.svip_price,
+        activity_store: row.activity_store,
+        points: row.points
       }
       this.updateActivityData(form)
     }

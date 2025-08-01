@@ -84,12 +84,12 @@ export default {
       const { comment_id } = this.$props
       //console.log('comment_id',comment_id)
       getCommentDetail({ comment_id }).then(
-        (res) => {
+        res => {
           var commentInfo = res.data.data.comment_info
           that.$data.commentInfo = commentInfo
           //console.log('getNotesDetail',commentInfo)
         },
-        (err) => {
+        err => {
           //console.log('err',err);
           that.$data.post_info = {}
           that.$data.errInfo = err

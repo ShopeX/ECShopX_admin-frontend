@@ -9,17 +9,8 @@
 <template>
   <div>
     <el-row>
-      <el-col
-        :span="4"
-        :offset="20"
-      >
-        <el-button
-          size="medium"
-          type="primary"
-          @click="onShowTimeList"
-        >
-          时间
-        </el-button>
+      <el-col :span="4" :offset="20">
+        <el-button size="medium" type="primary" @click="onShowTimeList"> 时间 </el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -29,63 +20,30 @@
         :span="4"
         style="position: relative; max-height: 150px"
       >
-        <div
-          :span="24"
-          class="this_labels"
-        >
+        <div :span="24" class="this_labels">
           {{ item.thisweek }}
         </div>
         <canvas :id="item.fieldkey" />
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="list"
-      :height="wheight - 280"
-    >
-      <el-table-column
-        prop="fieldname"
-        label="指标"
-      />
-      <el-table-column
-        prop="thisweek"
-        label="本周"
-      />
-      <el-table-column
-        prop="lastweek"
-        label="上周"
-      />
+    <el-table v-loading="loading" :data="list" :height="wheight - 280">
+      <el-table-column prop="fieldname" label="指标" />
+      <el-table-column prop="thisweek" label="本周" />
+      <el-table-column prop="lastweek" label="上周" />
       <!-- <el-table-column prop="username" label="变化百分比" width="120"></el-table-column> -->
-      <el-table-column
-        prop="fieldvalue"
-        label="5周趋势"
-        width="450"
-      >
+      <el-table-column prop="fieldvalue" label="5周趋势" width="450">
         <template slot-scope="scope">
           <canvas :id="scope.row.fieldkey + 'list'" />
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      title="时间列表"
-      class="right-dialog"
-      :visible.sync="timeVisible"
-    >
+    <el-dialog title="时间列表" class="right-dialog" :visible.sync="timeVisible">
       <template>
-        <el-form
-          ref="formwork"
-          :model="timeChoosed"
-        >
+        <el-form ref="formwork" :model="timeChoosed">
           <el-form-item>
             <el-radio-group v-model="timeChoosed.time">
-              <el-radio
-                v-for="(item, index) in timeList"
-                :key="index"
-                :label="item.record_date"
-              >
-                {{
-                  item.record_date_str
-                }}
+              <el-radio v-for="(item, index) in timeList" :key="index" :label="item.record_date">
+                {{ item.record_date_str }}
               </el-radio>
             </el-radio-group>
           </el-form-item>
@@ -99,12 +57,7 @@
             />
           </div>
           <el-form-item class="content-center marginTop">
-            <el-button
-              type="primary"
-              @click="onSubmitTimeChoosed"
-            >
-              确定筛选
-            </el-button>
+            <el-button type="primary" @click="onSubmitTimeChoosed"> 确定筛选 </el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -117,7 +70,7 @@ import { Message } from 'element-ui'
 import { allUserData, timeData } from '../../../api/selfhelpform'
 import chart from 'chart.js'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       labels_num: [],
@@ -143,23 +96,23 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {},
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    onShowTimeList () {
+    onShowTimeList() {
       this.timeVisible = true
       this.getTimeData()
     },
     // 时间列表
-    getTimeData () {
+    getTimeData() {
       this.params.user_id = this.$route.query.user_id
-      timeData(this.params).then((response) => {
+      timeData(this.params).then(response => {
         this.timeList = response.data.data.list
         this.total_count = response.data.data.total_count
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getTimeData()
     },
@@ -169,7 +122,7 @@ export default {
     //   this.getTimeData()
     // },
     // 提交筛选
-    onSubmitTimeChoosed () {
+    onSubmitTimeChoosed() {
       this.labels_num = []
       this.keyIndex = []
       this.keyIndexData = []
@@ -178,7 +131,7 @@ export default {
       this.getDataList(this.timeChoosed.time)
       this.timeVisible = false
     },
-    chartInit (datas, key, num, flag) {
+    chartInit(datas, key, num, flag) {
       window.chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -249,22 +202,22 @@ export default {
         window.myLine = new Chart(ctx, config)
       }
     },
-    getDataList (time) {
+    getDataList(time) {
       allUserData({
         timeChoosed: time ? time : '',
         user_id: this.$route.query.user_id,
         form_type: 'physical'
-      }).then((response) => {
+      }).then(response => {
         // 表格
         this.list = response.data.data.list
-        response.data.data.list.map((item) => {
+        response.data.data.list.map(item => {
           this.listData.push({
             label: item.fieldname,
             data: Array.reverse(item.fieldvalue)
           })
         })
         // 动态生成图表的数量
-        response.data.data.keyindex.map((item) => {
+        response.data.data.keyindex.map(item => {
           this.keyIndexData.push({
             label: item.fieldname,
             data: Array.reverse(item.fieldvalue)

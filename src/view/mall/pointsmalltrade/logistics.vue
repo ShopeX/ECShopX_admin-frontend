@@ -1,30 +1,14 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="logisticsList"
-      :height="wheight - 160"
-    >
-      <el-table-column
-        prop="corp_name"
-        label="物流公司简称"
-      />
-      <el-table-column
-        prop="is_default"
-        label="是否启用"
-      >
+    <el-table v-loading="loading" :data="logisticsList" :height="wheight - 160">
+      <el-table-column prop="corp_name" label="物流公司简称" />
+      <el-table-column prop="is_default" label="是否启用">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.is_enable"
-            @change="setEnable(scope.row)"
-          />
+          <el-switch v-model="scope.row.is_enable" @change="setEnable(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -44,7 +28,7 @@ import {
   deleteCompanyLogistics
 } from '../../../api/logistics'
 export default {
-  data () {
+  data() {
     return {
       logisticsList: [],
       loading: false,
@@ -58,33 +42,33 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getLogisticsListData()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getLogisticsListData()
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getLogisticsListData()
     },
-    getLogisticsListData () {
+    getLogisticsListData() {
       this.loading = true
-      getLogisticsLists(this.params).then((response) => {
+      getLogisticsLists(this.params).then(response => {
         this.logisticsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
-    setEnable (row) {
+    setEnable(row) {
       if (row.is_enable) {
-        createCompanyLogistics(row).then((response) => {
+        createCompanyLogistics(row).then(response => {
           this.getLogisticsListData()
         })
       } else {
-        deleteCompanyLogistics(row.corp_id).then((response) => {
+        deleteCompanyLogistics(row.corp_id).then(response => {
           this.getLogisticsListData()
         })
       }

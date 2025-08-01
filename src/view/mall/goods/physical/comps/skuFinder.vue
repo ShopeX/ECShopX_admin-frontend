@@ -73,31 +73,31 @@ export default {
                 return (
                   <div>
                     <span>{row.store}</span>
-                    {this.itemShowSkuStore &&
+                    {this.itemShowSkuStore && (
                       <el-popover
-                        placement='top'
-                        trigger='hover'
+                        placement="top"
+                        trigger="hover"
                         on-show={() => this.onShowPopover(row, 'store')}
                       >
-                        <div class='popover-edit'>
+                        <div class="popover-edit">
                           <el-input
                             v-model={this.skuEditInput}
-                            class='edit-input'
-                            placeholder='请输入库存'
+                            class="edit-input"
+                            placeholder="请输入库存"
                           />
                           <el-button
-                            type='primary'
-                            size='mini'
+                            type="primary"
+                            size="mini"
                             on-click={this.onModifyItemSku.bind(this, row)}
                           >
                             确定
                           </el-button>
                         </div>
-                        <el-button slot='reference' type='text'>
-                          <i class='el-icon-edit' />
+                        <el-button slot="reference" type="text">
+                          <i class="el-icon-edit" />
                         </el-button>
                       </el-popover>
-                    }
+                    )}
                   </div>
                 )
               }
@@ -111,37 +111,37 @@ export default {
               // if (row.is_total_store) {
               //   return <span>{row.price / 100}</span>
               // } else {
-                return (
-                  <div>
-                    <span>{row.price / 100}</span>
-                    {this.itemShowSkuPrice &&
-                      <el-popover
-                        placement='top'
-                        trigger='hover'
-                        on-show={() => this.onShowPopover(row, 'price')}
-                      >
-                        <div class='popover-edit'>
-                          <el-input
-                            v-model={this.skuPriceEditInput}
-                            class='edit-input'
-                            placeholder='请输入金额'
-                          />
-                          <el-button
-                            type='primary'
-                            size='mini'
-                            on-click={this.onModifyItemPrice.bind(this, row)}
-                          >
-                            确定
-                          </el-button>
-                        </div>
-  
-                        <el-button slot='reference' type='text'>
-                          <i class='el-icon-edit' />
+              return (
+                <div>
+                  <span>{row.price / 100}</span>
+                  {this.itemShowSkuPrice && (
+                    <el-popover
+                      placement="top"
+                      trigger="hover"
+                      on-show={() => this.onShowPopover(row, 'price')}
+                    >
+                      <div class="popover-edit">
+                        <el-input
+                          v-model={this.skuPriceEditInput}
+                          class="edit-input"
+                          placeholder="请输入金额"
+                        />
+                        <el-button
+                          type="primary"
+                          size="mini"
+                          on-click={this.onModifyItemPrice.bind(this, row)}
+                        >
+                          确定
                         </el-button>
-                      </el-popover>
-                    }
-                  </div>
-                )
+                      </div>
+
+                      <el-button slot="reference" type="text">
+                        <i class="el-icon-edit" />
+                      </el-button>
+                    </el-popover>
+                  )}
+                </div>
+              )
               // }
             }
           },

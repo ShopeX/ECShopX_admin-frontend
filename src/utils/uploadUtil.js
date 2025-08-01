@@ -38,12 +38,12 @@ class UploadUtil {
 
   // 阿里云
   aliInit(tokenRes) {
-    this.client.upload = file => AliUpload(tokenRes, file)
+    this.client.upload = (file) => AliUpload(tokenRes, file)
   }
 
   // 本地
   local(tokenRes) {
-    this.client.upload = file => LocalUpload(tokenRes, file, this.fileType)
+    this.client.upload = (file) => LocalUpload(tokenRes, file, this.fileType)
   }
 
   // 亚马逊
@@ -57,7 +57,7 @@ class UploadUtil {
       secretAccessKey: SecretAccessKey,
       sessionToken: SessionToken
     })
-    this.client.upload = file => {
+    this.client.upload = (file) => {
       return new Promise((resolve, reject) => {
         s3.upload(
           {
@@ -89,7 +89,7 @@ class UploadUtil {
       }
     })
     try {
-      this.client.upload = file => {
+      this.client.upload = (file) => {
         return new Promise((resolve, reject) => {
           console.log(file)
           cos.uploadFile(
@@ -131,8 +131,8 @@ class UploadUtil {
         const observable = QiNiu.upload(flie, key, tokenRes.token)
         observable.subscribe({
           next: () => {},
-          error: err => reject(err),
-          complete: res => resolve(res)
+          error: (err) => reject(err),
+          complete: (res) => resolve(res)
         })
       })
     }
@@ -160,7 +160,7 @@ class UploadUtil {
       // console.log(data)
       // 生成文件名~
       // const fileName = this.setFileName()
-      const res = await this.client.upload(file, data.key).catch(e => console.error(e))
+      const res = await this.client.upload(file, data.key).catch((e) => console.error(e))
       if (res.data || res.key) {
         if (res.data && res.data.data) {
           return {

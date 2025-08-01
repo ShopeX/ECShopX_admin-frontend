@@ -174,11 +174,7 @@
         >
           <el-col :span="20">
             <div>
-              <imgBox
-                :img-url="wximageurl + form.header_bg_pic"
-                inline
-                @click="handleImgBChange"
-              />
+              <imgBox :img-url="wximageurl + form.header_bg_pic" inline @click="handleImgBChange" />
             </div>
             <div class="frm-tips">
               只能上传jpg/png文件，且不超过2M （建议尺寸：640px，高度自适应）
@@ -197,7 +193,11 @@
           v-if="form.tem_type == 'ask_answer_paper'"
         >
           <el-col :span="20">
-            <el-input v-model.trim="form.header_height" placeholder="请输入数字" style="width:50%" />
+            <el-input
+              v-model.trim="form.header_height"
+              placeholder="请输入数字"
+              style="width: 50%"
+            />
           </el-col>
         </el-form-item>
         <el-form-item>
@@ -324,18 +324,18 @@ export default {
         { name: '地区地址选择', value: 'area' },
         { name: '数字', value: 'number' },
         { name: '上传身份证', value: 'idcard' },
-        { name: '上传其他附件', value: 'otherfile' },
+        { name: '上传其他附件', value: 'otherfile' }
       ],
       templateRadio: '',
       formcontentindex: 0,
       selectdata: [],
       imgDialog: false,
-      isGetImage: false,
+      isGetImage: false
     }
   },
   mounted() {
     if (this.$route.query.id) {
-      getTemplateInfo(this.$route.query.id).then((res) => {
+      getTemplateInfo(this.$route.query.id).then(res => {
         this.form = res.data.data
         if (this.form.tem_type === 'basic_entry') {
           this.keyIndexIsShow = true
@@ -348,11 +348,11 @@ export default {
   methods: {
     getDataList() {
       this.loading = true
-      getSettingList(this.params).then((response) => {
+      getSettingList(this.params).then(response => {
         this.ItemsList = response.data.data.list
         this.$refs.multipleTable.clearSelection()
-        this.selectdata.forEach((item) => {
-          let checked = this.ItemsList.find((n) => n.id === item.id)
+        this.selectdata.forEach(item => {
+          let checked = this.ItemsList.find(n => n.id === item.id)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -363,7 +363,7 @@ export default {
     },
     submitAction() {
       const that = this
-      this.$refs['form'].validate((valid) => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.tem_type == 'basic_entry' && this.form.key_index.length <= 0) {
             this.$message({
@@ -377,7 +377,7 @@ export default {
           postparams.key_index = JSON.stringify(postparams.key_index)
           postparams.content = JSON.stringify(postparams.content)
           if (this.form.id) {
-            updateTemplate(postparams).then((res) => {
+            updateTemplate(postparams).then(res => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -392,7 +392,7 @@ export default {
             })
           } else {
             saveTemplate(postparams)
-              .then((res) => {
+              .then(res => {
                 if (res.data.data) {
                   this.$message({
                     message: '添加成功',
@@ -405,7 +405,7 @@ export default {
                   })
                 }
               })
-              .catch((error) => {
+              .catch(error => {
                 this.$message({
                   type: 'error',
                   message: '保存出错'
@@ -446,7 +446,7 @@ export default {
         return false
       }
       if (this.form.key_index.length > 0) {
-        let inChecked = this.form.key_index.findIndex((n) => val.id === n.id)
+        let inChecked = this.form.key_index.findIndex(n => val.id === n.id)
         if (inChecked !== -1) {
           this.form.key_index.splice(inChecked, 1)
         } else if (val.key_index) {
@@ -472,7 +472,7 @@ export default {
           { name: '地区地址选择', value: 'area' },
           { name: '数字', value: 'number' },
           { name: '上传身份证', value: 'idcard' },
-          { name: '上传其他附件', value: 'otherfile' },
+          { name: '上传其他附件', value: 'otherfile' }
         ]
       }
       this.showElementList = true
@@ -504,7 +504,7 @@ export default {
       let index = this.formcontentindex
       this.showElementList = false
       let newselectrows = JSON.parse(JSON.stringify(this.form.content[index].formdata))
-      newselectrows.forEach((item) => {
+      newselectrows.forEach(item => {
         item.is_required = false
       })
       this.form.content[index].formdata = newselectrows
@@ -513,15 +513,15 @@ export default {
       let index = this.formcontentindex
       if (val.length > 0) {
         this.form.content[index].formdata = []
-        val.forEach((item) => {
-          let inChecked = this.form.content[index].formdata.findIndex((n) => item.id === n.id)
+        val.forEach(item => {
+          let inChecked = this.form.content[index].formdata.findIndex(n => item.id === n.id)
           if (inChecked === -1) {
             this.form.content[index].formdata.push(item)
           }
         })
       } else {
         this.ItemsList.forEach((item, index) => {
-          let inChecked = this.form.content[index].formdata.findIndex((n) => item.id === n.id)
+          let inChecked = this.form.content[index].formdata.findIndex(n => item.id === n.id)
           if (inChecked !== -1) {
             this.form.content[index].formdata.splice(inChecked, 1)
           }
@@ -530,7 +530,7 @@ export default {
     },
     handleSelectChange(val, row) {
       let index = this.formcontentindex
-      let inChecked = this.form.content[index].formdata.findIndex((item) => row.id === item.id)
+      let inChecked = this.form.content[index].formdata.findIndex(item => row.id === item.id)
       if (inChecked !== -1) {
         this.form.content[index].formdata.splice(inChecked, 1)
       } else {
@@ -548,17 +548,17 @@ export default {
     delCard(index) {
       this.form.content.splice(index, 1)
     },
-    handleImgBChange () {
+    handleImgBChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.header_bg_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
-    },
+    }
   }
 }
 </script>

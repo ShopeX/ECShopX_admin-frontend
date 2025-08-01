@@ -1,33 +1,15 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-  >
-    <el-tab-pane
-      label="顺丰BSP"
-      name="sfbsp"
-    >
-      <el-form
-        ref="form"
-        label-width="100px"
-      >
+  <el-tabs v-model="activeName" type="border-card">
+    <el-tab-pane label="顺丰BSP" name="sfbsp">
+      <el-form ref="form" label-width="100px">
         <el-form-item label="接入地址">
-          <el-input
-            v-model="sfbsp_form.config.url"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.url" style="width: 300px" />
         </el-form-item>
         <el-form-item label="接入编码">
-          <el-input
-            v-model="sfbsp_form.config.accesscode"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.accesscode" style="width: 300px" />
         </el-form-item>
         <el-form-item label="Checkword">
-          <el-input
-            v-model="sfbsp_form.config.checkword"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.checkword" style="width: 300px" />
         </el-form-item>
         <el-form-item label="是否启用">
           <el-switch
@@ -37,13 +19,7 @@
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -52,7 +28,7 @@
 <script>
 import { getSfbspSetting, seSfbspSetting } from '../../../api/trade'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'sfbsp',
       loading: false,
@@ -66,18 +42,18 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
     // handleClick () {
     //   this.getConfig()
     // },
-    getConfig () {
+    getConfig() {
       let query = {}
       if (this.activeName === 'sfbsp') {
         // query = {kuaidi_type: 'kdniao'}
-        getSfbspSetting(query).then((response) => {
+        getSfbspSetting(query).then(response => {
           const data = response.data.data
           if (!Array.isArray(data)) {
             if (data.is_open == 'true') {
@@ -90,7 +66,7 @@ export default {
         })
       }
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       let query = {}
       if (this.activeName === 'sfbsp') {
@@ -99,14 +75,14 @@ export default {
         query = this.form
       }
       seSfbspSetting(query)
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

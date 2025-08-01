@@ -91,7 +91,7 @@ export default {
   created() {},
   mounted() {
     if (this.value.data) {
-      const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
+      const selectRows = this.list.filter(item => this.value.data.includes(item.id))
       const { finderTable } = this.$refs.finder.$refs
       setTimeout(() => {
         finderTable.$refs.finderTable.setSelection(selectRows)

@@ -3,7 +3,7 @@ import HoverDelete from '@/components/hover_delete'
 
 const exportTip = {
   install: function (Vue) {
-    Vue.component('exportTip', exportTipCpn)
+    Vue.component('ExportTip', exportTipCpn)
     Vue.component('HoverDelete', HoverDelete)
   }
 }

@@ -56,10 +56,10 @@ export default {
           isUploadFile: true
         })
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => {
+        .catch(err => {
           console.error(err)
           this.loading = false
           this.$message.error('请重新上传')

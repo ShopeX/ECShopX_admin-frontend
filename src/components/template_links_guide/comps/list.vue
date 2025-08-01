@@ -118,7 +118,7 @@ export default {
           if (this.VERSION_PLATFORM() || query.distributor_id == '0' || !query.distributor_id) {
             api.goods.getItemsList(query).then(({ list, total_count }) => {
               let _list = []
-              list.map((item) => {
+              list.map(item => {
                 _list.push({
                   id: item.itemId,
                   title: item.itemName,
@@ -132,7 +132,7 @@ export default {
           } else {
             api.marketing.getDistributorItems(query).then(({ list, total_count }) => {
               let _list = []
-              list.map((item) => {
+              list.map(item => {
                 _list.push({
                   id: item.itemId,
                   title: item.itemName,
@@ -151,7 +151,7 @@ export default {
           })
           api.selfhelpform.regActivityEasylist(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.activity_id,
                 title: item.activity_name
@@ -169,7 +169,7 @@ export default {
           })
           api.marketing.getDistributorList(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.distributor_id,
                 title: item.name
@@ -181,23 +181,23 @@ export default {
           })
           break
         case 'category':
-          api.goods.getCategory(this.params).then((res) => {
+          api.goods.getCategory(this.params).then(res => {
             let items = []
-            res.map((item) => {
+            res.map(item => {
               let itemObj = {
                 id: item.category_id,
                 title: item.category_name
               }
               if (item.children.length) {
                 let childs = []
-                item.children.map((child) => {
+                item.children.map(child => {
                   let childObj = {
                     id: child.category_id,
                     title: child.category_name
                   }
                   if (child.children.length) {
                     let grands = []
-                    child.children.map((grand) => {
+                    child.children.map(grand => {
                       const grandObj = {
                         id: grand.category_id,
                         title: grand.category_name
@@ -222,7 +222,7 @@ export default {
           })
           api.goods.getTagList(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.tag_id,
                 title: item.tag_name
@@ -239,7 +239,7 @@ export default {
           })
           api.article.getArticleList(this.params).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.article_id,
                 title: item.title
@@ -260,7 +260,7 @@ export default {
           console.log(query)
           api.article.getArticleList(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.article_id,
                 title: item.title
@@ -309,7 +309,7 @@ export default {
           })
           api.promotions.seckillActivityGetList(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.seckill_id,
                 title: item.activity_name
@@ -327,7 +327,7 @@ export default {
           })
           api.wxa.getCustomPageList(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.id,
                 title: item.page_name
@@ -344,7 +344,7 @@ export default {
           })
           api.promotions.getLiverooms(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.roomid,
                 title: item.name
@@ -363,7 +363,7 @@ export default {
           })
           api.wxa.getWxConfigLink(query).then(({ list, total_count }) => {
             let _list = []
-            list.map((item) => {
+            list.map(item => {
               _list.push({
                 id: item.app_id,
                 title: item.route_info

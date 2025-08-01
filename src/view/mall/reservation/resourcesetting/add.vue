@@ -1,19 +1,11 @@
 <template>
   <div class="section-white content-padded">
-    <el-form
-      ref="form"
-      :rules="rules"
-      :model="form"
-      label-width="80px"
-    >
+    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
       <div class="section-header with-border">
         <h3>{{ resourceName }}添加</h3>
       </div>
       <div class="section-body">
-        <el-form-item
-          label="名称"
-          prop="name"
-        >
+        <el-form-item label="名称" prop="name">
           <el-input
             v-model="form.name"
             :maxlength="10"
@@ -21,15 +13,8 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item
-          label="所属门店"
-          prop="shopId"
-        >
-          <el-select
-            v-if="form.resourceLevelId"
-            v-model="form.shopId"
-            disabled
-          >
+        <el-form-item label="所属门店" prop="shopId">
+          <el-select v-if="form.resourceLevelId" v-model="form.shopId" disabled>
             <el-option
               v-for="item in storeData"
               :key="item.value"
@@ -37,10 +22,7 @@
               :value="item.value"
             />
           </el-select>
-          <el-select
-            v-else
-            v-model="form.shopId"
-          >
+          <el-select v-else v-model="form.shopId">
             <el-option
               v-for="item in storeData"
               :key="item.value"
@@ -49,10 +31,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="服务项目"
-          prop="materialIds"
-        >
+        <el-form-item label="服务项目" prop="materialIds">
           <!-- <el-button type="info" @click="addServer">添加服务项</el-button> -->
           <div class="server-box">
             <div class="server-head clearfix">
@@ -79,10 +58,7 @@
                   :span="6"
                   :title="item.label"
                 >
-                  <el-checkbox
-                    :key="item.value"
-                    :label="item.value"
-                  >
+                  <el-checkbox :key="item.value" :label="item.value">
                     {{ item.label }}
                   </el-checkbox>
                 </el-col>
@@ -90,10 +66,7 @@
             </el-checkbox-group>
           </div>
         </el-form-item>
-        <el-form-item
-          label="简介"
-          prop="description"
-        >
+        <el-form-item label="简介" prop="description">
           <el-input
             v-model="form.description"
             type="textarea"
@@ -115,19 +88,9 @@
 
         <el-form-item label="展示图">
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.imageUrl"
-                :src="wximageurl + form.imageUrl"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div class="upload-box" @click="handleImgChange">
+              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
           <imgPicker
@@ -139,15 +102,8 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button @click="cancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="saveResource"
-        >
-          保存
-        </el-button>
+        <el-button @click="cancel"> 取消 </el-button>
+        <el-button type="primary" @click="saveResource"> 保存 </el-button>
       </div>
     </el-form>
 
@@ -182,7 +138,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     var storeChecked = (rule, value, callback) => {
       if (value == '' || value <= 0) {
         return callback(new Error('所属门店不能为空'))
@@ -246,7 +202,7 @@ export default {
       isGetImage: false
     }
   },
-  mounted () {
+  mounted() {
     this.resourceId = this.$route.query.id
     this.getLabelsList()
     this.getResourceName()
@@ -256,8 +212,8 @@ export default {
     }
   },
   methods: {
-    handleCheckedCitiesChange (val) {},
-    checkAllChange (event) {
+    handleCheckedCitiesChange(val) {},
+    checkAllChange(event) {
       this.form.materialIds = event ? this.serverList : []
       if (event) {
         for (var i = 0; i < this.serverList.length; i++) {
@@ -269,7 +225,7 @@ export default {
       }
       this.isIndeterminate = false
     },
-    handleCheckedChange (value) {
+    handleCheckedChange(value) {
       let checkedCount = value.length
       this.checkAll = checkedCount === this.serverList.length
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.serverList.length
@@ -277,7 +233,7 @@ export default {
     //addServer () {
     //this.dialogVisible = true
     //},
-    saveServer () {
+    saveServer() {
       if (this.addForm.server_name == '') {
         this.$message.error('服务名称不能为空')
         return
@@ -306,9 +262,9 @@ export default {
     // removeImg () {
     //   this.form.imageUrl = ''
     // },
-    saveResource () {
+    saveResource() {
       const that = this
-      this.$refs['form'].validate((valid) => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           var storeList = this.storeData
           var index
@@ -318,13 +274,13 @@ export default {
             }
           }
           if (this.form.resourceLevelId) {
-            updateResourceLevel(this.form).then((res) => {
+            updateResourceLevel(this.form).then(res => {
               if (res.data.data.status) {
                 this.$message({
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -332,13 +288,13 @@ export default {
               }
             })
           } else {
-            createResourceLevel(this.form).then((res) => {
+            createResourceLevel(this.form).then(res => {
               if (res.data.data.status) {
                 this.$message({
                   message: '添加成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -349,15 +305,15 @@ export default {
         }
       })
     },
-    cancel () {
+    cancel() {
       this.$router.go(-1)
     },
-    cancelAdd () {
+    cancelAdd() {
       this.dialogVisible = false
     },
-    getStoreList () {
+    getStoreList() {
       let params = { page: 1, pageSize: 500, isValid: 'true' }
-      getWxShopsList(params).then((response) => {
+      getWxShopsList(params).then(response => {
         var shopList = response.data.data.list
         for (var i = 0; i < shopList.length; i++) {
           this.storeData.push({ value: shopList[i].wxShopId, label: shopList[i].storeName })
@@ -365,11 +321,11 @@ export default {
         this.loading = false
       })
     },
-    getLabelsList () {
+    getLabelsList() {
       this.loading = true
       var params = { page: 1, pageSize: 100 }
       params.service_type = 'timescard'
-      getServiceLabelsList(params).then((response) => {
+      getServiceLabelsList(params).then(response => {
         var labelsList = response.data.data.list
         var index
         for (index in labelsList) {
@@ -381,26 +337,26 @@ export default {
         this.loading = false
       })
     },
-    getResourceLevel () {
-      getResourceLevel(this.resourceId).then((res) => {
+    getResourceLevel() {
+      getResourceLevel(this.resourceId).then(res => {
         this.form = res.data.data
       })
     },
-    getResourceName () {
-      getSetting().then((res) => {
+    getResourceName() {
+      getSetting().then(res => {
         this.resourceName = res.data.data.resourceName
       })
     },
     //展示图
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.imageUrl = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

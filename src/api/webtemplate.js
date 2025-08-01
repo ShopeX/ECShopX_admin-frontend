@@ -1,6 +1,6 @@
 import { fetch } from './request'
 
-export const fetchTemplateList = params => {
+export const fetchTemplateList = (params) => {
   return fetch({
     url: '/pctemplate/lists',
     method: 'get',
@@ -8,7 +8,7 @@ export const fetchTemplateList = params => {
   })
 }
 
-export const addPageTemplate = data => {
+export const addPageTemplate = (data) => {
   return fetch({
     url: '/pctemplate/add',
     method: 'post',
@@ -16,7 +16,7 @@ export const addPageTemplate = data => {
   })
 }
 
-export const editPageTemplate = data => {
+export const editPageTemplate = (data) => {
   return fetch({
     url: '/pctemplate/edit',
     method: 'put',
@@ -24,14 +24,14 @@ export const editPageTemplate = data => {
   })
 }
 
-export const deletePageTemplate = id => {
+export const deletePageTemplate = (id) => {
   return fetch({
     url: `/pctemplate/delete/${id}`,
     method: 'delete'
   })
 }
 
-export const getTemplateContent = params => {
+export const getTemplateContent = (params) => {
   return fetch({
     url: '/pctemplate/getTemplateContent',
     method: 'get',
@@ -40,7 +40,7 @@ export const getTemplateContent = params => {
 }
 
 // 保存页面模版装修内容
-export const saveTemplateContent = params => {
+export const saveTemplateContent = (params) => {
   return fetch({
     url: '/pctemplate/saveTemplateContent',
     method: 'post',
@@ -49,7 +49,7 @@ export const saveTemplateContent = params => {
 }
 
 // 保存头部或尾部
-export const saveHeaderOrFooter = params => {
+export const saveHeaderOrFooter = (params) => {
   return fetch({
     url: '/pctemplate/saveHeaderOrFooter',
     method: 'post',
@@ -57,7 +57,7 @@ export const saveHeaderOrFooter = params => {
   })
 }
 
-export const getLoginPageSetting = params => {
+export const getLoginPageSetting = (params) => {
   return fetch({
     url: '/pctemplate/loginPage/setting',
     method: 'get',
@@ -65,7 +65,7 @@ export const getLoginPageSetting = params => {
   })
 }
 
-export const saveLoginPageSetting = params => {
+export const saveLoginPageSetting = (params) => {
   return fetch({
     url: '/pctemplate/loginPage/setting',
     method: 'post',

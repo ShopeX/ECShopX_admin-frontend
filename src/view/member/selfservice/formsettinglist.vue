@@ -44,11 +44,15 @@
                   class="el-icon-edit"
                   :to="{ path: matchRoutePath('editor'), query: { id: scope.row.id } }"
                 />
-                <i class="el-icon-zoom-in" style="margin: 0px 10px;" @click="preview(scope.$index, scope.row)" />
+                <i
+                  class="el-icon-zoom-in"
+                  style="margin: 0px 10px"
+                  @click="preview(scope.$index, scope.row)"
+                />
                 <i
                   v-if="scope.row.status == 1"
                   class="mark el-icon-delete"
-                  style="color: #ff5000;"
+                  style="color: #ff5000"
                   @click="deleteAction(scope.$index, scope.row)"
                 />
               </template>

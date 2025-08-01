@@ -1,17 +1,7 @@
 <template>
-  <el-dialog
-    title="取消订单"
-    :visible.sync="visible"
-    :before-close="handleCancelOrder"
-    width="57%"
-  >
+  <el-dialog title="取消订单" :visible.sync="visible" :before-close="handleCancelOrder" width="57%">
     <template>
-      <el-form
-        ref="cancelForm"
-        :model="cancelOrderForm"
-        class=""
-        label-width="100px"
-      >
+      <el-form ref="cancelForm" :model="cancelOrderForm" class="" label-width="100px">
         <el-form-item label="订单号:">
           <!-- <el-col :span="20">{{ cancelOrderData.orderInfo.order_id }}</el-col> -->
           <el-col :span="20">
@@ -50,19 +40,9 @@
         </el-form-item>
       </el-form>
     </template>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button @click.native="handleCancelOrder">
-        取消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitCancelOrderConfirmAction"
-      >
-        确定
-      </el-button>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click.native="handleCancelOrder"> 取消 </el-button>
+      <el-button type="primary" @click="submitCancelOrderConfirmAction"> 确定 </el-button>
     </div>
   </el-dialog>
 </template>
@@ -71,7 +51,7 @@
 import { cancelOrderConfirm } from '@/api/trade'
 export default {
   props: ['visible', 'cancelOrderData', 'info'],
-  data () {
+  data() {
     return {
       order_cancel_reason: [
         { name: '客户现在不想购买', value: 1 },
@@ -98,7 +78,7 @@ export default {
   },
   watch: {
     info: {
-      handler (val) {
+      handler(val) {
         console.log('cancelDialog', val)
         if (val.order_id) {
           this.cancelOrderForm.order_id = val.order_id
@@ -108,7 +88,7 @@ export default {
     }
   },
   methods: {
-    handleCancelOrder () {
+    handleCancelOrder() {
       this.cancel_order = ''
       this.$emit('onChangeData', 'cancelOrderVisible', false)
       this.$emit('refreshList')
@@ -116,7 +96,7 @@ export default {
       this.cancelOrderForm.other_reason = ''
       this.cancelOrderInput = false
     },
-    cancelReasonSelect (val) {
+    cancelReasonSelect(val) {
       if (val == 12) {
         this.cancelOrderInput = true
       } else {
@@ -125,7 +105,7 @@ export default {
       }
       this.cancelOrderForm.cancel_reason = val
     },
-    submitCancelOrderConfirmAction () {
+    submitCancelOrderConfirmAction() {
       if (this.cancelOrderForm.cancel_reason == 0) {
         this.$message.error('请选择取消原因!')
         return false
@@ -136,7 +116,7 @@ export default {
         return false
       }
       this.cancelOrderForm.order_id = this.info.order_id
-      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
+      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then(response => {
         var cancelOrderStatus = response.data.data.refund_status
         // debugger
         if (cancelOrderStatus == 'WAIT_CHECK') {

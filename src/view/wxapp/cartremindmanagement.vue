@@ -1,8 +1,5 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
+  <transition name="fade" mode="out-in">
     <storeDefault v-if="template_name === 'yykweishop'" />
     <marketingGroup v-if="template_name !== 'yykweishop'" />
   </transition>
@@ -18,7 +15,7 @@ export default {
     storeDefault: storeDefault,
     marketingGroup: marketingGroup
   },
-  data () {
+  data() {
     return {
       activeIndex: '',
       currentCode: '',

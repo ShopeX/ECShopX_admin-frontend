@@ -1,9 +1,5 @@
 <template>
-  <el-dialog
-    title="群发短信"
-    :visible="visible"
-    :before-close="handleClose"
-  >
+  <el-dialog title="群发短信" :visible="visible" :before-close="handleClose">
     <tips v-if="exterior">
       <p>
         推广短信由 [签名+模板] 组成，当前场景仅支持「推广短信」类型的模板，如需添加模板：点这里。
@@ -12,17 +8,8 @@
       <p>发送结果可在「设置-短信服务-短信发送记录-推广短信」查看。</p>
     </tips>
     <div class="sms_signatures_edit">
-      <el-form
-        ref="form"
-        :model="form"
-        :rules="rules"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-form-item
-          label="任务名称"
-          prop="task_name"
-        >
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="任务名称" prop="task_name">
           <el-input
             v-model="form.task_name"
             :disabled="disabled"
@@ -32,10 +19,7 @@
             placeholder="长度限1-30个字符"
           />
         </el-form-item>
-        <el-form-item
-          label="短信签名"
-          prop="sign_id"
-        >
+        <el-form-item label="短信签名" prop="sign_id">
           <el-select
             v-model="form.sign_id"
             placeholder="请选择签名"
@@ -51,17 +35,12 @@
           </el-select>
           <div class="subtitle">
             没有需要的签名，马上
-            <router-link
-              to="/setting/systemsetting/datamessage/ali_sms/sms_signatures/edit"
-            >
+            <router-link to="/setting/systemsetting/datamessage/ali_sms/sms_signatures/edit">
               添加签名
             </router-link>
           </div>
         </el-form-item>
-        <el-form-item
-          label="短信模板"
-          prop="template_id"
-        >
+        <el-form-item label="短信模板" prop="template_id">
           <el-select
             v-model="form.template_id"
             placeholder="请选择模板"
@@ -91,11 +70,7 @@
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item
-          v-if="form.timing"
-          label=""
-          prop="send_at"
-        >
+        <el-form-item v-if="form.timing" label="" prop="send_at">
           <el-date-picker
             v-model="form.send_at"
             :disabled="disabled"
@@ -128,15 +103,8 @@
         </el-result>
       </el-dialog> -->
     </div>
-    <span
-      v-if="info.type !== 'detail'"
-      slot="footer"
-      class="dialog-footer"
-    >
-      <loadingBtn
-        ref="loadingBtn"
-        @clickHandle="submitForm('form')"
-      />
+    <span v-if="info.type !== 'detail'" slot="footer" class="dialog-footer">
+      <loadingBtn ref="loadingBtn" @clickHandle="submitForm('form')" />
       <el-button @click="fnBack">取消</el-button>
     </span>
   </el-dialog>
@@ -171,7 +139,7 @@ export default {
       default: []
     }
   },
-  data () {
+  data() {
     return {
       // 页面状态
       disabled: false,
@@ -197,12 +165,12 @@ export default {
       template_options: []
     }
   },
-  mounted () {
+  mounted() {
     this.init()
     this.getSmsList()
   },
   methods: {
-    async init () {
+    async init() {
       const { type, id } = this.info
       console.log(type, id)
 
@@ -214,7 +182,7 @@ export default {
         }
       }
     },
-    resultHandler (result) {
+    resultHandler(result) {
       console.log(result)
       const { task_name, sign_id, template_id, send_at, user_id } = result.data.data
       this.form = {
@@ -228,9 +196,9 @@ export default {
 
       console.log(this.form)
     },
-    submitForm (formName) {
+    submitForm(formName) {
       const { type, id } = this.info
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           try {
             if (type == 'edit') {
@@ -267,7 +235,7 @@ export default {
         }
       })
     },
-    submitFormResult (result) {
+    submitFormResult(result) {
       if (result.data.data.status) {
         this.$message.success('成功')
         this.handleClose()
@@ -275,25 +243,25 @@ export default {
       this.$refs['loadingBtn'].closeLoading()
       console.log(result)
     },
-    fnBack () {
+    fnBack() {
       this.handleClose()
     },
     // 获取短信签名下拉列表
-    getSmsList () {
-      getSmsSignatureList({ params: { status: '1' } }).then((res) => {
+    getSmsList() {
+      getSmsSignatureList({ params: { status: '1' } }).then(res => {
         this.sign_options = res.data.data.list
       })
 
-      getSmsTemplateList({ params: { status: '1', template_type: '2' } }).then((res) => {
+      getSmsTemplateList({ params: { status: '1', template_type: '2' } }).then(res => {
         this.template_options = res.data.data.list
       })
     },
-    dateTimeChange (val) {
+    dateTimeChange(val) {
       this.form.send_at = val + ''
     },
 
     /* 群发短信弹框 */
-    handleClose () {
+    handleClose() {
       this.$emit('smsMassLogEditHandler')
     }
   }

@@ -223,7 +223,7 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykmembership', name: 'marketing_articles', page_name: 'index' }
-    getParamByTempName(filter).then((response) => {
+    getParamByTempName(filter).then(response => {
       if (response.data.data.length > 0) {
         this.articals = response.data.data[0].params
         this.pageSettingId = response.data.data[0].id
@@ -326,7 +326,7 @@ export default {
       let param = {}
       if (that.pageSettingId) {
         param = { params: that.articals, name: 'marketing_articles', id: that.pageSettingId }
-        updateParamsById(param).then((response) => {
+        updateParamsById(param).then(response => {
           this.$message({
             message: '修改文章成功',
             type: 'success',
@@ -340,7 +340,7 @@ export default {
           name: 'marketing_articles',
           page_name: 'index'
         }
-        setPageParams(param).then((response) => {
+        setPageParams(param).then(response => {
           this.$message({
             message: '添加文章成功',
             type: 'success',

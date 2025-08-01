@@ -48,36 +48,18 @@
         </el-col>
       </el-row>
       <el-divider />
-      <el-form
-        ref="cancelForm"
-        :model="cancelForm"
-        class=""
-        label-width="100px"
-      >
+      <el-form ref="cancelForm" :model="cancelForm" class="" label-width="100px">
         <el-form-item label="处理结果:">
           <el-row>
             <el-col :span="20">
               <template>
-                <el-radio
-                  v-model="cancelForm.check_cancel"
-                  label="0"
-                >
-                  不同意
-                </el-radio>
-                <el-radio
-                  v-model="cancelForm.check_cancel"
-                  label="1"
-                >
-                  同意
-                </el-radio>
+                <el-radio v-model="cancelForm.check_cancel" label="0"> 不同意 </el-radio>
+                <el-radio v-model="cancelForm.check_cancel" label="1"> 同意 </el-radio>
               </template>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item
-          v-if="cancelForm.check_cancel == '0'"
-          label="拒绝原因:"
-        >
+        <el-form-item v-if="cancelForm.check_cancel == '0'" label="拒绝原因:">
           <el-row>
             <el-col :span="24">
               <el-input
@@ -91,19 +73,9 @@
         </el-form-item>
       </el-form>
     </template>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button @click.native="handleCancelOrderCancel">
-        取消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitCancelConfirmAction"
-      >
-        确定
-      </el-button>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click.native="handleCancelOrderCancel"> 取消 </el-button>
+      <el-button type="primary" @click="submitCancelConfirmAction"> 确定 </el-button>
     </div>
   </el-dialog>
 </template>
@@ -112,7 +84,7 @@
 import { cancelConfirm } from '@/api/trade'
 export default {
   props: ['visible', 'cancelData', 'info'],
-  data () {
+  data() {
     return {
       cancelForm: {
         order_id: '',
@@ -123,7 +95,7 @@ export default {
   },
   watch: {
     info: {
-      handler (val) {
+      handler(val) {
         if (val.order_id) {
           this.cancelForm.order_id = val.order_id
         }
@@ -132,7 +104,7 @@ export default {
     }
   },
   methods: {
-    handleCancelOrderCancel () {
+    handleCancelOrderCancel() {
       this.$emit('onChangeData', 'cancelVisible', false)
       this.$emit('refreshList')
       this.$emit('onChangeData', 'cancelForm', {
@@ -140,9 +112,9 @@ export default {
         shop_reject_reason: ''
       })
     },
-    submitCancelConfirmAction () {
+    submitCancelConfirmAction() {
       // 提交取消订单审核结果
-      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then((response) => {
+      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then(response => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()

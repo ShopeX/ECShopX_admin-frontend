@@ -1,21 +1,13 @@
 <template>
   <div class="">
     <div class="view-flex view-flex-middle content-bottom-padded">
-      <div class="view-flex-item">
-        当前共 {{ total_count }} 款商品
-      </div>
+      <div class="view-flex-item">当前共 {{ total_count }} 款商品</div>
       <div>
-        <el-button @click="addCodeThings">
-          创建商品
-        </el-button>
+        <el-button @click="addCodeThings"> 创建商品 </el-button>
       </div>
     </div>
     <el-row :gutter="20">
-      <el-col
-        v-for="(item, index) in list"
-        :key="index"
-        :span="12"
-      >
+      <el-col v-for="(item, index) in list" :key="index" :span="12">
         <div class="list-item view-flex">
           <div class="view-flex view-flex-item">
             <div class="thumbnail">
@@ -40,45 +32,26 @@
                 query: { thing_id: item.thing_id }
               }"
             >
-              <el-tooltip
-                effect="light"
-                content="批次信息"
-                placement="top"
-              >
+              <el-tooltip effect="light" content="批次信息" placement="top">
                 <i class="iconfont icon-eye" />
               </el-tooltip>
             </router-link>
             <router-link
               :to="{ path: '/brand/onecode/things', query: { thing_id: item.thing_id } }"
             >
-              <el-tooltip
-                effect="light"
-                content="物品编辑"
-                placement="top"
-              >
+              <el-tooltip effect="light" content="物品编辑" placement="top">
                 <i class="iconfont icon-pen" />
               </el-tooltip>
             </router-link>
             <router-link
               :to="{ path: '/brand/onecode/batchs', query: { thing_id: item.thing_id } }"
             >
-              <el-tooltip
-                effect="light"
-                content="新建批次，下载码"
-                placement="top"
-              >
+              <el-tooltip effect="light" content="新建批次，下载码" placement="top">
                 <i class="iconfont icon-download" />
               </el-tooltip>
             </router-link>
-            <el-tooltip
-              effect="light"
-              content="删除物品"
-              placement="top"
-            >
-              <i
-                class="iconfont icon-trash-alt1"
-                @click="deleteThingsAction(item.thing_id)"
-              />
+            <el-tooltip effect="light" content="删除物品" placement="top">
+              <i class="iconfont icon-trash-alt1" @click="deleteThingsAction(item.thing_id)" />
             </el-tooltip>
           </div>
         </div>
@@ -90,7 +63,7 @@
 <script>
 import { getThingsList, getThingsDetail, deleteThings } from '../../../api/onecode'
 export default {
-  data () {
+  data() {
     return {
       total_count: 0,
       params: {
@@ -100,28 +73,28 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this.getCodeThingsList()
   },
   methods: {
-    addCodeThings () {
+    addCodeThings() {
       this.$router.push({ path: '/brand/onecode/things' })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()
     },
-    editThingsAction (index, row) {
+    editThingsAction(index, row) {
       // 编辑商品弹框
       this.$router.push({ path: '/brand/onecode/things/' + row.thing_id })
     },
-    thingsDetail (index, row) {
+    thingsDetail(index, row) {
       this.ItemsDetailVisible = true
       getThingsDetail(row.thing_id)
-        .then((response) => {
+        .then(response => {
           this.itemsDetailData = response.data.data
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -129,15 +102,15 @@ export default {
           })
         })
     },
-    getCodeThingsList () {
+    getCodeThingsList() {
       this.loading = true
       getThingsList(this.params)
-        .then((response) => {
+        .then(response => {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -145,7 +118,7 @@ export default {
           })
         })
     },
-    deleteThingsAction (thing_id) {
+    deleteThingsAction(thing_id) {
       this.$confirm('此操作将删除该物品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -153,7 +126,7 @@ export default {
       })
         .then(() => {
           deleteThings(thing_id)
-            .then((response) => {
+            .then(response => {
               this.$message({
                 message: '删除物品成功',
                 type: 'success',
@@ -175,7 +148,7 @@ export default {
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return '￥' + row.price / 100
     }
   }

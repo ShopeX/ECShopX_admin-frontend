@@ -45,9 +45,7 @@
                         >
                           <div
                             class="frm_checkbox_label img_item_bd"
-                            :class="
-                              isMost ? { selected: item.selected } : { 'selected': i == index }
-                            "
+                            :class="isMost ? { selected: item.selected } : { selected: i == index }"
                           >
                             <div class="pic_box">
                               <img :src="wximageurl + item.url" class="pic">
@@ -113,7 +111,7 @@
                           <div
                             class="frm_checkbox_label img_item_bd"
                             :class="
-                              isMost ? { selected: item.selected } : { 'selected': locali == index }
+                              isMost ? { selected: item.selected } : { selected: locali == index }
                             "
                           >
                             <div class="pic_box">
@@ -247,7 +245,7 @@ export default {
         return
       }
       let params = { isUploadFile: true, file: file.raw, type: 'image' }
-      uploadMaterial(params).then((res) => {
+      uploadMaterial(params).then(res => {
         this.getImageList()
       })
     },
@@ -255,7 +253,7 @@ export default {
       this.$emit('chooseImg', this.checkedItem)
       if (this.isMost) {
         this.checkedItem = []
-        this.imgList.forEach((v) => {
+        this.imgList.forEach(v => {
           v.selected = false
         })
       }
@@ -267,11 +265,11 @@ export default {
       let that = this
       that.loading = true
       getWechatMaterial(this.params)
-        .then((response) => {
+        .then(response => {
           that.imgData = response.data.data
           that.imgList = response.data.data.item
           if (that.isMost) {
-            that.imgList.forEach((v) => {
+            that.imgList.forEach(v => {
               that.$set(v, 'selected', false)
             })
           }
@@ -322,12 +320,12 @@ export default {
         storage: 'image' //图片id必填
       }
       // if (res.key) {
-      uploadQiniuPic(uploadParams).then((res) => {
+      uploadQiniuPic(uploadParams).then(res => {
         const obj = {
           file_type: this.pickerImgType,
           file_url: res.data.data.image_full_url
         }
-        this.$api.adapay.uploadPic(obj).then((res) => {
+        this.$api.adapay.uploadPic(obj).then(res => {
           // console.log(res);
           // debugger
           this.$message({
@@ -347,11 +345,11 @@ export default {
       if (!this.localisLoadData) {
         that.localloading = true
         getQiniuPicList(that.localparams)
-          .then((response) => {
+          .then(response => {
             that.localimgData = response.data.data
             this.localimgList = response.data.data.list
             if (that.isMost) {
-              that.localimgList.forEach((v) => {
+              that.localimgList.forEach(v => {
                 that.$set(v, 'selected', false)
               })
             }
@@ -379,7 +377,7 @@ export default {
       this.$emit('chooseImg', this.localcheckedItem)
       if (this.isMost) {
         this.localcheckedItem = []
-        this.localimgList.forEach((v) => {
+        this.localimgList.forEach(v => {
           v.selected = false
         })
       }
@@ -391,10 +389,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {

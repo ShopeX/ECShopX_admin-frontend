@@ -213,7 +213,7 @@ export default {
     saveMonitor: function () {
       // 保存监控链接
       var that = this
-      this.$refs['monitorForm'].validate((valid) => {
+      this.$refs['monitorForm'].validate(valid => {
         if (valid) {
           that.wxaList.forEach(function (item) {
             if (item.authorizer_appid == that.monitorForm.wxappid) {
@@ -229,11 +229,11 @@ export default {
           }
 
           addMonitors(params)
-            .then((response) => {
+            .then(response => {
               that.dialogVisibleMonitors = false
               that.getMonitorsList()
             })
-            .catch((error) => {
+            .catch(error => {
               this.$message({
                 type: 'error',
                 message: '保存监控监控错误'
@@ -249,10 +249,10 @@ export default {
       this.sourcesForm.monitor_id = monitorId
       this.sourcesParams.page = 1
       this.dialogVisibleSources = true
-      getRelSources(monitorId).then((response) => {
+      getRelSources(monitorId).then(response => {
         that.selectSourceList = []
         that.sourcesForm.sourceIds = []
-        response.data.data.forEach((row) => {
+        response.data.data.forEach(row => {
           that.sourcesForm.sourceIds.push(row.source_id)
           that.selectSourceList.push({
             sourceId: row.source_id,
@@ -264,12 +264,12 @@ export default {
     },
     saveSources: function () {
       saveSources(this.sourcesForm)
-        .then((response) => {
+        .then(response => {
           this.dialogVisibleSources = false
           this.cancelSourcesDialog()
           this.getMonitorsList()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message({
             type: 'error',
             message: '关联来源保存错误'
@@ -278,7 +278,7 @@ export default {
     },
     getWxaList: function () {
       // 获取授权的小程序列表
-      getWxaAuthList().then((response) => {
+      getWxaAuthList().then(response => {
         this.wxaList = response.data.data.list
       })
     },
@@ -318,9 +318,9 @@ export default {
     getSourcesLists: function () {
       let params = { page: this.sourcesParams.page, pageSize: this.sourcesParams.pageSize }
       getSourcesList(params)
-        .then((response) => {
+        .then(response => {
           let list = []
-          response.data.data.list.forEach((row) => {
+          response.data.data.list.forEach(row => {
             let index = -1
             if (this.sourcesForm.sourceIds) {
               index = this.sourcesForm.sourceIds.indexOf(row.sourceId)
@@ -337,7 +337,7 @@ export default {
           }
           this.sourcesParams.total_count = response.data.data.total_count
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message({
             type: 'error',
             message: '获取来源信息出错'
@@ -349,7 +349,7 @@ export default {
       let wxappid = this.wxappid
       if (wxappid) {
         let params = { wxappid }
-        getWxappPages(params).then((response) => {
+        getWxappPages(params).then(response => {
           this.weappPagesList = response.data.data
         })
       }
@@ -368,7 +368,7 @@ export default {
       var that = this
       that.monitorForm.monitor_path_params.forEach(function (item) {
         if (item.option && item.option.length > 0) {
-          item.option.forEach((item) => {
+          item.option.forEach(item => {
             if (item.value == val) {
               that.monitorForm = Object.assign({}, that.monitorForm, { page_name: item.label })
             }
@@ -384,7 +384,7 @@ export default {
       })
         .then(() => {
           deleteMonitors(row.monitorId)
-            .then((response) => {
+            .then(response => {
               this.$message({
                 message: '删除监控页面成功',
                 type: 'success',
@@ -413,7 +413,7 @@ export default {
     handleCurrentSourceChange: function (page_num) {
       this.sourcesParams.page = page_num
       this.selectSourceList = []
-      this.sourceList.forEach((row) => {
+      this.sourceList.forEach(row => {
         let index = this.sourcesForm.sourceIds.indexOf(row.sourceId)
         if (index != -1) {
           this.selectSourceList.push(row)
@@ -429,12 +429,12 @@ export default {
         wxappid: this.wxappid
       }
       listMonitors(params)
-        .then((response) => {
+        .then(response => {
           this.monitorsList = response.data.data.list
           this.monitorsParams.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

@@ -1,31 +1,31 @@
 <template>
   <SpPage>
-  <el-card class="box-card">
-    <div slot="header" class="clearfix">
-      <span>充值</span>
-    </div>
-    <div class="content">
-      <div class="account">
-        <p>
-          <span>账户可用余额</span> <span>{{ account }} 元</span>
-        </p>
-        <el-form
-          ref="numberValidateForm"
-          :rules="rules"
-          :model="numberValidateForm"
-          label-width="100px"
-          class="demo-ruleForm"
-        >
-          <el-form-item class="item" label="充值金额" prop="money">
-            <el-input v-model="numberValidateForm.money" type="money" autocomplete="off" />
-          </el-form-item>
-          <el-form-item class="formItem">
-            <el-button type="primary" @click="submitForm('numberValidateForm')">
-              确定充值
-            </el-button>
-          </el-form-item>
-        </el-form>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>充值</span>
       </div>
+      <div class="content">
+        <div class="account">
+          <p>
+            <span>账户可用余额</span> <span>{{ account }} 元</span>
+          </p>
+          <el-form
+            ref="numberValidateForm"
+            :rules="rules"
+            :model="numberValidateForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item class="item" label="充值金额" prop="money">
+              <el-input v-model="numberValidateForm.money" type="money" autocomplete="off" />
+            </el-form-item>
+            <el-form-item class="formItem">
+              <el-button type="primary" @click="submitForm('numberValidateForm')">
+                确定充值
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </el-card>
   </SpPage>

@@ -511,10 +511,7 @@ $txt-placeholder: #f5f5f7;
         @change="switchChange"
         inactive-text="是否开启自定义分类">
       </el-switch> -->
-      <section
-        class="section section-white category-view-warp"
-        :style="'height: ' + (160) + 'px;'"
-      >
+      <section class="section section-white category-view-warp" :style="'height: ' + 160 + 'px;'">
         <!-- 模板分类微缩展示 -->
         <div class="category-type-view">
           <div class="category-type-scroll">

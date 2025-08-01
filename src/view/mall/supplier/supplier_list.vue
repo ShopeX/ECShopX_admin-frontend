@@ -159,7 +159,7 @@ export default {
           { name: '供应商名称', key: 'supplier_name' },
           { name: '负责人', key: 'contact' },
           { name: '手机号', key: 'mobile' },
-          { name: '登录账号', key: 'login_name' },
+          { name: '登录账号', key: 'login_name' }
         ],
         actions: [
           {

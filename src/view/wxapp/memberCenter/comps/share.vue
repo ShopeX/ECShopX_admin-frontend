@@ -169,7 +169,7 @@ export default {
         type: this.template_name
         // type: this.app_type === 'wechat' ? this.template_name : this.ali_template_name
       }
-      setShareInfo(info).then((res) => {
+      setShareInfo(info).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success',

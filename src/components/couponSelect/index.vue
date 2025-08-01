@@ -171,7 +171,7 @@ export default {
       })
       this.loading = false
 
-      list.forEach((element) => {
+      list.forEach(element => {
         element.give_num = 0
       })
 
@@ -179,12 +179,12 @@ export default {
       this.total = total_count
       this.$refs.multipleTable.clearSelection()
       if (this.seletedCoupon.length > 0) {
-        this.seletedCoupon.forEach((item) => {
+        this.seletedCoupon.forEach(item => {
           console.log('this.seletedCoupon', this.seletedCoupon)
           this.$refs.multipleTable.toggleRowSelection(item)
         })
 
-        this.seletedCoupon.forEach((itemX) => {
+        this.seletedCoupon.forEach(itemX => {
           this.tableData.forEach((itemY, indexY) => {
             if (itemX.card_id == itemY.card_id) {
               this.tableData.splice(indexY, 1, itemX)

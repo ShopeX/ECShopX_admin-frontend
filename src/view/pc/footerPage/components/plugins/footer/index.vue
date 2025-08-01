@@ -5,12 +5,7 @@
         v-for="item in t_data"
         :style="{ textAlign: item.position, color: item.color, fontSize: item.fontsize + 'px' }"
       >
-        <a
-          v-if="item.url"
-          :href="item.url"
-          :style="{ color: item.color }"
-          target="_blank"
-        >{{
+        <a v-if="item.url" :href="item.url" :style="{ color: item.color }" target="_blank">{{
           item.content
         }}</a>
         <span v-else>{{ item.content }}</span>
@@ -21,7 +16,7 @@
 <script>
 export default {
   props: ['info'],
-  data () {
+  data() {
     return {
       t_data: this.info
     }

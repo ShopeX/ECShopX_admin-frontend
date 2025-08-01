@@ -48,13 +48,13 @@ export default {
   },
   render() {
     const { title, key, type, disabled = false, option } = this.info
-    const renderComp = (type) => {
+    const renderComp = type => {
       switch (type) {
         case 'text':
           return (
             <el-input
               clearable
-              type='text'
+              type="text"
               v-model={this.compValue}
               on-change={this.onCompChange}
             />
@@ -64,11 +64,11 @@ export default {
           return (
             <el-radio-group
               v-model={this.compValue}
-              size='small'
+              size="small"
               disabled={disabled(this.scope)}
               on-change={this.onCompChange}
             >
-              {option.map((item) => (
+              {option.map(item => (
                 <el-radio-button label={item.value}>{item.label}</el-radio-button>
               ))}
             </el-radio-group>
@@ -77,9 +77,9 @@ export default {
     }
 
     return (
-      <div class='comp-cell'>
-        <div class='cell-label'>{title}</div>
-        <div class='cell-value'>{renderComp(type)}</div>
+      <div class="comp-cell">
+        <div class="cell-label">{title}</div>
+        <div class="cell-value">{renderComp(type)}</div>
       </div>
     )
   }

@@ -35,9 +35,7 @@
 </style>
 <template>
   <div class="page-wxapp-policy">
-    <div class="hd">
-      用户隐私保护指引
-    </div>
+    <div class="hd">用户隐私保护指引</div>
     <div class="bd">
       <h3>《{{ weappName }}小程序隐私保护指引》</h3>
       <p>
@@ -50,11 +48,7 @@
       <p>根据法律规定，开发者仅处理实现小程序功能所必要的信息。</p>
       <div class="policy-container mtp-10">
         <!-- {{policyObject}} -->
-        <div
-          v-for="(key, index) in privacyList"
-          :key="`policy-item__${index}`"
-          class="policy-item"
-        >
+        <div v-for="(key, index) in privacyList" :key="`policy-item__${index}`" class="policy-item">
           为了
           <el-input
             v-model="policyObject[key]"
@@ -95,11 +89,7 @@
           class="input-with-select"
           style="width: 300px"
         >
-          <el-select
-            slot="prepend"
-            v-model="contact"
-            placeholder="请选择"
-          >
+          <el-select slot="prepend" v-model="contact" placeholder="请选择">
             <el-option
               v-for="(value, key) in contactOptions"
               :key="`option-item__${key}`"
@@ -114,12 +104,7 @@
       <!-- <p>{{weappName}}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。</p> -->
       <div class="mtp-10">
         <div>
-          <el-radio
-            v-model="storeType"
-            label="1"
-          >
-            固定存储期限
-          </el-radio>
+          <el-radio v-model="storeType" label="1"> 固定存储期限 </el-radio>
           <el-date-picker
             v-model="ownerSetting.store_expire_timestamp"
             type="date"
@@ -128,10 +113,7 @@
           />
         </div>
         <div class="mtp-10">
-          <el-radio
-            v-model="storeType"
-            label="2"
-          >
+          <el-radio v-model="storeType" label="2">
             开发者承诺，除法律法规另有规定外，开发者对你的信息的保存期限应当为实现处理目的所必要的最短时间。
           </el-radio>
         </div>
@@ -172,20 +154,13 @@
           :show-file-list="false"
           style="display: inline-block; margin-right: 20px"
         >
-          <el-button type="primary">
-            点击上传
-          </el-button>
+          <el-button type="primary"> 点击上传 </el-button>
         </el-upload>
         <span>{{ fileName }}</span>
       </div>
     </div>
     <div class="ft">
-      <el-button
-        type="primary"
-        @click="savePolicyConfig"
-      >
-        确定并生成协议
-      </el-button>
+      <el-button type="primary" @click="savePolicyConfig"> 确定并生成协议 </el-button>
     </div>
   </div>
 </template>
@@ -195,7 +170,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: '',
   props: ['wxappId', 'templateName', 'weappName', 'isLoad'],
-  data () {
+  data() {
     return {
       applet_detail: false,
       privacyList: [],
@@ -207,27 +182,27 @@ export default {
       storeType: '1',
       fileName: '',
       contactOptions: {
-        'contact_phone': '手机号',
-        'contact_email': '邮箱',
-        'contact_qq': 'QQ号',
-        'contact_weixin': '微信号'
+        contact_phone: '手机号',
+        contact_email: '邮箱',
+        contact_qq: 'QQ号',
+        contact_weixin: '微信号'
       },
       ownerSetting: {
-        'contact_phone': '',
-        'contact_email': '',
-        'contact_qq': '',
-        'contact_weixin': '',
-        'store_expire_timestamp': '',
-        'ext_file_media_id': '',
-        'notice_method': ''
+        contact_phone: '',
+        contact_email: '',
+        contact_qq: '',
+        contact_weixin: '',
+        store_expire_timestamp: '',
+        ext_file_media_id: '',
+        notice_method: ''
       }
     }
   },
-  created () {
+  created() {
     this.getPolicyConfig()
   },
   methods: {
-    async getPolicyConfig () {
+    async getPolicyConfig() {
       const { privacy_desc, setting_list, owner_setting, privacy_list } =
         await this.$api.policy.getPolicyConfig({
           wxaAppId: this.wxappId
@@ -278,12 +253,12 @@ export default {
       //   "CalendarWriteOnly",
       //   "MessageFile"
       // ]
-      this.privacyList.forEach((key) => {
-        const fd = this.settingList.find((item) => item.privacy_key == key)
+      this.privacyList.forEach(key => {
+        const fd = this.settingList.find(item => item.privacy_key == key)
         this.$set(this.policyObject, key, fd ? fd.privacy_text : '')
       })
     },
-    async onChangeUpload (file) {
+    async onChangeUpload(file) {
       const { ext_file_media_id } = await this.$api.policy.uploadPolicyFile({
         wxaAppId: this.wxappId,
         isUploadFile: true,
@@ -293,7 +268,7 @@ export default {
       this.$message.success('文件上传成功')
       this.ownerSetting.ext_file_media_id = ext_file_media_id
     },
-    async savePolicyConfig () {
+    async savePolicyConfig() {
       if (this.storeType == '2') {
         this.ownerSetting.store_expire_timestamp = ''
       }
@@ -334,14 +309,14 @@ export default {
         }
       }
       let settingList = []
-      Object.keys(this.policyObject).forEach((key) => {
+      Object.keys(this.policyObject).forEach(key => {
         settingList.push({
           privacy_key: key,
           privacy_text: this.policyObject[key]
         })
       })
 
-      const fd = settingList.find((item) => item.privacy_text == '')
+      const fd = settingList.find(item => item.privacy_text == '')
       if (fd) {
         this.$message.error(`请填写收集${this.getPrivacyDesc(fd.privacy_key)}的原因`)
         return
@@ -359,8 +334,8 @@ export default {
       this.$message.success('保存成功')
       this.$router.go(-1)
     },
-    getPrivacyDesc (key) {
-      const fd = this.privacyDescList.find((item) => item.privacy_key == key)
+    getPrivacyDesc(key) {
+      const fd = this.privacyDescList.find(item => item.privacy_key == key)
       return fd ? fd.privacy_desc : ''
     }
   }

@@ -14,7 +14,7 @@
           url="/adapay/dealer/distributors"
           @reset="onFinderReset"
         >
-          <template v-slot:create_time>
+          <template #create_time>
             <el-date-picker
               v-model="create_time"
               class="input-m"
@@ -23,7 +23,7 @@
               value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              @change="(val) => dateChange(val)"
+              @change="val => dateChange(val)"
             />
           </template>
         </SpFinder>
@@ -104,7 +104,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             action: {
-              handler: (row) => this.handleModalClick(true, '未入网', row[0])
+              handler: row => this.handleModalClick(true, '未入网', row[0])
             }
           }
         ]

@@ -9,42 +9,24 @@
       border-collapse="collapse"
     >
       <tr>
-        <th
-          v-for="(header, index) in columns"
-          :key="index"
-        >
+        <th v-for="(header, index) in columns" :key="index">
           <div class="customHeader">
             {{ header.name }}
           </div>
         </th>
         <th v-if="orderInfo.receipt_type === 'logistics'">
-          <div class="customHeader">
-            操作
-          </div>
+          <div class="customHeader">操作</div>
         </th>
       </tr>
       <template v-if="dataSource && dataSource.length">
-        <tr
-          v-for="(data, index) in dataSource"
-          :key="index"
-        >
-          <td
-            v-for="(row, index) in columns"
-            :key="index"
-          >
+        <tr v-for="(data, index) in dataSource" :key="index">
+          <td v-for="(row, index) in columns" :key="index">
             <div class="customDataSource">
               {{ data[row.field] }}
             </div>
           </td>
-          <td
-            v-if="orderInfo.receipt_type === 'logistics'"
-            style="text-align: center"
-          >
-            <el-button
-              type="text"
-              size="small"
-              @click="openDialog(dataSource[index])"
-            >
+          <td v-if="orderInfo.receipt_type === 'logistics'" style="text-align: center">
+            <el-button type="text" size="small" @click="openDialog(dataSource[index])">
               编辑
             </el-button>
           </td>
@@ -53,9 +35,7 @@
       <template v-if="!dataSource || !dataSource.length">
         <tr>
           <td :colspan="columns.length">
-            <div class="customEmpty">
-              暂无内容
-            </div>
+            <div class="customEmpty">暂无内容</div>
           </td>
         </tr>
       </template>
@@ -67,10 +47,7 @@
       width="30%"
       @closed="closeAddDialog"
     >
-      <el-form
-        ref="form"
-        :model="form"
-      >
+      <el-form ref="form" :model="form">
         <el-form-item
           prop="delivery_corp_name"
           label="物流公司"
@@ -96,26 +73,12 @@
           :label-width="formLabelWidth"
           :rules="{ required: true, message: '请输入物流单号', trigger: 'blur' }"
         >
-          <el-input
-            v-model="form.delivery_code"
-            placeholder="请输入物流单号"
-            style="width: 90%"
-          />
+          <el-input v-model="form.delivery_code" placeholder="请输入物流单号" style="width: 90%" />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="closeAddDialog()">
-          取 消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="addFormSumbit('form')"
-        >
-          确 定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeAddDialog()"> 取 消 </el-button>
+        <el-button type="primary" @click="addFormSumbit('form')"> 确 定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -126,7 +89,7 @@ import { getLogisticsLists } from '@/api/logistics'
 import { editLogisticsList } from '@/api/trade'
 export default {
   props: ['columns', 'dataSource', 'show', 'orderInfo'],
-  data () {
+  data() {
     return {
       logisticsList: [],
       dialogFormVisible: false, // 表单弹框的显示隐藏
@@ -137,11 +100,11 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getLogisticsListData()
   },
   methods: {
-    openDialog (row) {
+    openDialog(row) {
       // 弹框打开事件
       this.form = row
       this.form.delivery_corp_name = row.delivery_corp
@@ -149,31 +112,31 @@ export default {
       this.dialogFormVisible = true
       this.getLogisticsListData()
     },
-    getLogisticsListData () {
-      getLogisticsLists({ status: 1 }).then((response) => {
+    getLogisticsListData() {
+      getLogisticsLists({ status: 1 }).then(response => {
         this.logisticsList = response.data.data.list
       })
     },
-    closeAddDialog () {
+    closeAddDialog() {
       // 弹框关闭事件
       this.resetForm('form')
     },
-    addFormSumbit (formName) {
+    addFormSumbit(formName) {
       // 表单提交
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           let params = {
             delivery_corp: this.form.delivery_corp_name,
             delivery_code: this.form.delivery_code
           }
-          editLogisticsList(this.form.orders_delivery_id, params).then((res) => {
+          editLogisticsList(this.form.orders_delivery_id, params).then(res => {
             this.$emit('update')
             this.resetForm(formName)
           })
         }
       })
     },
-    resetForm (formName) {
+    resetForm(formName) {
       this.dialogFormVisible = false
       this.$refs[formName].resetFields()
     }

@@ -117,7 +117,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.page_size" class="content-center content-top-padded" style="text-align: right">
+    <div
+      v-if="total_count > params.page_size"
+      class="content-center content-top-padded"
+      style="text-align: right"
+    >
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"

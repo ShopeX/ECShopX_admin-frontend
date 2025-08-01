@@ -986,6 +986,6 @@ export default {
 
 <style lang="scss" scoped>
 .page-fulldiscount ::v-deep .el-card {
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 </style>

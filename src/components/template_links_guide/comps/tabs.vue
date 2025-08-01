@@ -100,14 +100,14 @@ export default {
   },
   created() {
     if (this.showlinks.length) {
-      this.links = this.links.filter((item) => {
+      this.links = this.links.filter(item => {
         return this.showlinks.includes(item.value)
       })
     }
   },
   mounted() {
     if (this.$route.path === '/store/storemanager/marketingdistributor') {
-      let index = this.links.findIndex((n) => n.value == 'custom_page')
+      let index = this.links.findIndex(n => n.value == 'custom_page')
       this.links.splice(index, 1)
     }
     this.current = this.type

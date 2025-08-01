@@ -7,25 +7,19 @@
     :before-close="cancelAction"
   >
     <div class="menu_link_weapp">
-      <div class="link_weapp_desc">
-        请选择已绑定的小程序
-      </div>
+      <div class="link_weapp_desc">请选择已绑定的小程序</div>
       <div class="link_weapp_wrp">
         <div class="link_weapp_box weapplinks_box">
           <ul class="wechat_list weapplink_list clearfix">
             <li
               v-for="(item, index) in dataList"
               class="weapplink_item"
-              :class="{ 'selected': i === index }"
+              :class="{ selected: i === index }"
               @click="selectItemAction(item, index)"
             >
               <div class="weapplink_item_inner">
                 <div class="weapplink_info clearfix">
-                  <img
-                    class="weapplink_avatar f_l"
-                    :src="wechatImg"
-                    alt="img"
-                  >
+                  <img class="weapplink_avatar f_l" :src="wechatImg" alt="img">
                   <strong class="f_l">商派小店</strong>
                 </div>
                 <div class="weapplink_select_mask">
@@ -37,19 +31,9 @@
         </div>
       </div>
     </div>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button @click="cancelAction">
-        取 消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="saveAction"
-      >
-        确 定
-      </el-button>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="cancelAction"> 取 消 </el-button>
+      <el-button type="primary" @click="saveAction"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>
@@ -58,7 +42,7 @@
 var wimg = require('@/assets/img/webchat.png')
 export default {
   props: ['appVisible'],
-  data () {
+  data() {
     return {
       wechatImg: wimg,
       i: -1,
@@ -70,19 +54,19 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.appVisible
     }
   },
   methods: {
-    selectItemAction (item, index) {
+    selectItemAction(item, index) {
       this.selectedItem = item
       this.i = index
     },
-    saveAction () {
+    saveAction() {
       this.$emit('chooseApp', this.selectedItem)
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeAppDialog')
     }
   }

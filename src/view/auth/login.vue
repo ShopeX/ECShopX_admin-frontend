@@ -154,7 +154,6 @@ export default {
   mounted() {
     window.addEventListener('resize', this.fnSize())
     this.SET_VERSION_MODE(this.VUE_APP_PRODUCT_MODEL)
-    console.log(this.VUE_APP_PRODUCT_MODEL, '----version----')
     this.init()
     this.$api.login.getAuthorizeLeve().then(res => {
       this.level = res.level

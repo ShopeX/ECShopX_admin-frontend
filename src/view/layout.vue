@@ -145,7 +145,6 @@
           >
           <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image">
           <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image">
-          <!-- {{ VUE_APP_SYSTEM_NAME }} -->
         </div>
         <div id="design-view" />
       </el-main>
@@ -247,7 +246,6 @@ export default {
     micrApp.init()
 
     console.log(this.$route)
-    console.log(this.VUE_APP_PRODUCT_MODEL, '----version----')
     // window.init = () => {}
     // const script = document.createElement('script')
     // script.type = 'text/javascript'

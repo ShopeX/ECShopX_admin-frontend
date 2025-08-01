@@ -15,11 +15,7 @@
           style="width: 240px"
           @clear="handleClear"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleKeySearch"
-          />
+          <el-button slot="append" icon="el-icon-search" @click="handleKeySearch" />
         </el-input>
         <el-cascader
           v-model="checkedRegions"
@@ -32,23 +28,19 @@
         />
       </div>
       <div class="infinite-list-wrapper">
-        <ul
-          v-infinite-scroll="fetch"
-          class="store-list"
-          infinite-scroll-disabled="disabled"
-        >
+        <ul v-infinite-scroll="fetch" class="store-list" infinite-scroll-disabled="disabled">
           <li
             v-for="item in list"
             :key="item.id"
             class="store-list-item"
             :class="
               multiple
-                ? current && current.findIndex((cur) => cur.id === item.id) !== -1
+                ? current && current.findIndex(cur => cur.id === item.id) !== -1
                   ? 'active'
                   : ''
                 : current.id === item.id
-                  ? 'active'
-                  : ''
+                ? 'active'
+                : ''
             "
             @click="handleItemClick(item)"
           >
@@ -60,28 +52,14 @@
             </div>
           </li>
         </ul>
-        <div
-          v-if="loading"
-          class="content-padded content-center"
-        >
+        <div v-if="loading" class="content-padded content-center">
           <i class="el-icon-loading" /> 加载中...
         </div>
-        <div
-          v-if="noMore"
-          class="content-padded content-center muted"
-        >
-          没有更多了
-        </div>
+        <div v-if="noMore" class="content-padded content-center muted">没有更多了</div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleConfirm"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleConfirm">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -103,7 +81,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       showModal: false,
       loading: false,
@@ -125,22 +103,22 @@ export default {
     }
   },
   computed: {
-    noMore () {
+    noMore() {
       return this.params.page >= Math.ceil(this.total / this.params.pageSize)
     },
-    disabled () {
+    disabled() {
       return this.loading || this.noMore
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       if (val.id) {
         this.checked = val
       } else {
         this.checked = ''
       }
     },
-    visible (val) {
+    visible(val) {
       if (val) {
         this.showModal = val
         this.resetFilter()
@@ -151,16 +129,16 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.handleKeySearch()
   },
   methods: {
-    handleKeySearch () {
+    handleKeySearch() {
       this.params.page = 0
       this.fetch()
       this.list = []
     },
-    handleRegionSearch (value) {
+    handleRegionSearch(value) {
       var vals = this.getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.params.province = vals[0].label
@@ -182,11 +160,11 @@ export default {
       this.params.page = 0
       this.fetch()
     },
-    handleClear () {
+    handleClear() {
       this.params.page = 0
       this.fetch()
     },
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -197,9 +175,9 @@ export default {
         return null
       })
     },
-    handleItemClick (val) {
+    handleItemClick(val) {
       if (this.multiple) {
-        const checkedIdx = this.current.findIndex((item) => item.id === val.id)
+        const checkedIdx = this.current.findIndex(item => item.id === val.id)
         if (checkedIdx === -1) {
           this.current.push(val)
         } else {
@@ -209,22 +187,22 @@ export default {
         this.current = val
       }
     },
-    handleConfirm () {
+    handleConfirm() {
       this.$emit('change', this.current)
       this.showModal = false
     },
-    handleClose () {
+    handleClose() {
       this.showModal = false
       this.$emit('onClose')
     },
-    async fetch () {
+    async fetch() {
       this.loading = true
       this.params.page += 1
       const { list, total_count } = await api.marketing.getDistributorList(this.params)
       let _list = []
-      list.map((item) => {
+      list.map(item => {
         let tags = []
-        item.tagList.map((tag) => {
+        item.tagList.map(tag => {
           tags.push({
             id: tag.tag_id,
             name: tag.tag_name
@@ -243,7 +221,7 @@ export default {
       this.total = total_count
       this.loading = false
     },
-    resetFilter () {
+    resetFilter() {
       this.params.page = 0
       this.params.name = ''
       this.params.province = ''

@@ -1,15 +1,9 @@
 <template>
   <el-card class="cus-card">
-    <div class="cus-title">
-      详细信息
-    </div>
+    <div class="cus-title">详细信息</div>
     <div class="avater-box">
       <div class="flex-avater-box">
-        <img
-          class="avater-img"
-          src="@/assets/img/adapay/authory_avater.png"
-          alt=""
-        >
+        <img class="avater-img" src="@/assets/img/adapay/authory_avater.png" alt="">
         <span class="cus-username">{{ operatorInfo.login_name }}</span>
         <el-tag
           :type="operatorInfo.operator_type === 'staff' ? 'success' : 'warning'"
@@ -57,10 +51,7 @@
           {{ item.name }}
         </el-tag>
       </el-col>
-      <el-col
-        v-if="operatorInfo.operator_type === 'staff'"
-        :span="24"
-      >
+      <el-col v-if="operatorInfo.operator_type === 'staff'" :span="24">
         <span class="cus-label">角色：</span>
         <el-tag
           v-for="item in roleData"
@@ -76,10 +67,7 @@
         <span class="cus-label">申请说明：</span>
         <span>{{ info.reason || '-' }}</span>
       </el-col>
-      <el-col
-        :span="24"
-        class="cus-time"
-      >
+      <el-col :span="24" class="cus-time">
         <span class="cus-label">申请开通时间：</span>
         <span>{{ info.range ? '每个工作日' + info.range : '全天' }}</span>
         <span class="cus-label">生效时间：</span>
@@ -96,7 +84,7 @@ import moment from 'moment'
 export default {
   props: ['info', 'title', 'roleData', 'distributorIds', 'operatorInfo'],
   methods: {
-    timeFilter (time, format = 'YYYY-MM-DD HH:mm:ss') {
+    timeFilter(time, format = 'YYYY-MM-DD HH:mm:ss') {
       return time ? moment(time * 1000).format(format) : '-'
     }
   }

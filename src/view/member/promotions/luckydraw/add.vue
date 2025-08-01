@@ -1,18 +1,10 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      class="box-set"
-      label-width="120px"
-    >
+    <el-form ref="form" :model="form" class="box-set" label-width="120px">
       <div class="section-header with-border">
         <div>活动商品信息</div>
       </div>
-      <div
-        class="clearfix"
-        style="min-width: 1222px"
-      >
+      <div class="clearfix" style="min-width: 1222px">
         <div class="form-view clearfix">
           <section class="section section-white">
             <el-form-item label="抽奖商品">
@@ -21,35 +13,19 @@
                   <p class="frm-tips" />
                   <div class="logo-box">
                     <div class="bran-img">
-                      <div
-                        v-if="goods.pics"
-                        class="groups-addgoods"
-                      >
-                        <img
-                          :src="wximageurl + goods.pics[0]"
-                          class="groups-goodspic"
-                        >
+                      <div v-if="goods.pics" class="groups-addgoods">
+                        <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
                         <div class="gooups-goodsmsg">
                           <div>{{ goods.itemName }}</div>
                           <div>原价：{{ cursymbol }} {{ goods.price / 100 }}</div>
-                          <div v-if="goods.item_type == 'normal'">
-                            库存：{{ goods.store }}
-                          </div>
+                          <div v-if="goods.item_type == 'normal'">库存：{{ goods.store }}</div>
                         </div>
                       </div>
-                      <div
-                        v-else
-                        tabindex="0"
-                        class="el-upload el-upload--picture-card"
-                      >
+                      <div v-else tabindex="0" class="el-upload el-upload--picture-card">
                         <i class="el-icon-plus" />
                       </div>
                     </div>
-                    <el-button
-                      size="small"
-                      type="primary"
-                      @click="changeItem"
-                    >
+                    <el-button size="small" type="primary" @click="changeItem">
                       选择商品
                     </el-button>
                   </div>
@@ -59,24 +35,12 @@
           </section>
         </div>
         <div class="form-wrapper clearfix">
-          <el-form-item
-            label="活动名称"
-            prop="luckydraw_name"
-            :rules="rules.luckydraw_name"
-          >
+          <el-form-item label="活动名称" prop="luckydraw_name" :rules="rules.luckydraw_name">
             <el-col :span="9">
-              <el-input
-                v-model="form.luckydraw_name"
-                :maxlength="30"
-                placeholder="抽奖活动名称"
-              />
+              <el-input v-model="form.luckydraw_name" :maxlength="30" placeholder="抽奖活动名称" />
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="活动时间"
-            prop="date"
-            :rules="rules.date"
-          >
+          <el-form-item label="活动时间" prop="date" :rules="rules.date">
             <el-col :span="12">
               <el-date-picker
                 v-model="form.date"
@@ -89,11 +53,7 @@
               />
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="抽奖方式"
-            prop="luckydraw_payment"
-            :rules="rules.luckydraw_payment"
-          >
+          <el-form-item label="抽奖方式" prop="luckydraw_payment" :rules="rules.luckydraw_payment">
             <el-col :span="2">
               <el-select
                 v-model="form.luckydraw_payment"
@@ -123,9 +83,7 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1">
-              元
-            </el-col>
+            <el-col :span="1"> 元 </el-col>
           </el-form-item>
           <el-form-item
             v-if="form.luckydraw_payment == 'point'"
@@ -140,15 +98,9 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1">
-              积分
-            </el-col>
+            <el-col :span="1"> 积分 </el-col>
           </el-form-item>
-          <el-form-item
-            label="总需人次"
-            prop="luckydraw_store"
-            :rules="rules.luckydraw_store"
-          >
+          <el-form-item label="总需人次" prop="luckydraw_store" :rules="rules.luckydraw_store">
             <el-col :span="2">
               <el-input
                 v-model="form.luckydraw_store"
@@ -159,58 +111,25 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1">
-              件
-            </el-col>
+            <el-col :span="1"> 件 </el-col>
           </el-form-item>
-          <el-form-item
-            label="总投奖额"
-            prop="payment_total"
-          >
+          <el-form-item label="总投奖额" prop="payment_total">
             <el-col :span="2">
-              <el-input
-                v-model="form.payment_total"
-                readonly
-                placeholder=""
-              />
+              <el-input v-model="form.payment_total" readonly placeholder="" />
             </el-col>
-            <el-col
-              v-if="form.luckydraw_payment == 'point'"
-              :span="1"
-            >
-              积分,
-            </el-col>
-            <el-col
-              v-else-if="form.luckydraw_payment == 'cash'"
-              :span="1"
-            >
-              元,
-            </el-col>
+            <el-col v-if="form.luckydraw_payment == 'point'" :span="1"> 积分, </el-col>
+            <el-col v-else-if="form.luckydraw_payment == 'cash'" :span="1"> 元, </el-col>
             自动计算
           </el-form-item>
-          <el-form-item
-            label="会员限购数"
-            prop="limit_num"
-            :rules="rules.limit_num"
-          >
+          <el-form-item label="会员限购数" prop="limit_num" :rules="rules.limit_num">
             <el-col :span="4">
-              <el-input-number
-                v-model="form.limit_num"
-                :min="0"
-                placeholder=""
-              />
+              <el-input-number v-model="form.limit_num" :min="0" placeholder="" />
             </el-col>
-            <el-col :span="4">
-              填 0 则代表不限购
-            </el-col>
+            <el-col :span="4"> 填 0 则代表不限购 </el-col>
           </el-form-item>
           <el-form-item label="开奖固定值">
             <el-col :span="4">
-              <el-select
-                v-model="form.lucky_fixed_number"
-                placeholder=""
-                style="width: 100%"
-              >
+              <el-select v-model="form.lucky_fixed_number" placeholder="" style="width: 100%">
                 <el-option
                   v-for="(item, index) in fixed_numbers"
                   :key="index"
@@ -220,102 +139,50 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="描述"
-            prop="description"
-            :rules="rules.description"
-          >
+          <el-form-item label="描述" prop="description" :rules="rules.description">
             <el-col :span="12">
-              <el-input
-                v-model="form.description"
-                :maxlength="25"
-                placeholder="请输入活动描述"
-              />
+              <el-input v-model="form.description" :maxlength="25" placeholder="请输入活动描述" />
             </el-col>
           </el-form-item>
           <el-form-item label=" ">
-            <el-button @click.native="handleCancel">
-              返回
-            </el-button>
-            <el-button
-              v-if="true == show"
-              type="primary"
-              @click="submitItemsAction('form')"
-            >
+            <el-button @click.native="handleCancel"> 返回 </el-button>
+            <el-button v-if="true == show" type="primary" @click="submitItemsAction('form')">
               保存
             </el-button>
           </el-form-item>
         </div>
       </div>
     </el-form>
-    <el-dialog
-      title="选择商品"
-      :visible.sync="goodsDialogVisible"
-      center
-    >
+    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
       <!-- <el-button-group class="tab-group">
         <el-button class="tab-btn" @click="changeGoods('normal')" :class="goodsTypeTitle==='实体类商品' ? 'on' : ''" >实体类商品</el-button>
         <el-button class="tab-btn" @click="changeGoods('every')" :class="goodsTypeTitle==='服务类商品' ? 'on' : ''">服务类商品</el-button>
       </el-button-group> -->
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input
-            v-model="itemsParams.keywords"
-            placeholder="商品名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
+          <el-input v-model="itemsParams.keywords" placeholder="商品名称">
+            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="itemsLoading"
-        :data="itemsList"
-        style="width: 100%"
-        border
-        height="500"
-      >
-        <el-table-column
-          prop="itemName"
-          label="商品名称"
-        />
+      <el-table v-loading="itemsLoading" :data="itemsList" style="width: 100%" border height="500">
+        <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img
-              width="20"
-              :src="wximageurl + scope.row.pics[0]"
-            >
+            <img width="20" :src="wximageurl + scope.row.pics[0]">
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="销售价"
-          :formatter="priceformatter"
-        />
-        <el-table-column
-          prop="itemName"
-          label="状态"
-        >
+        <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
+        <el-table-column prop="itemName" label="状态">
           <template slot-scope="scope">
-            <a
-              v-if="form.item_Id != scope.row.itemId"
-              href="#"
-              @click="chooseItem(scope.row)"
-            >选择</a>
+            <a v-if="form.item_Id != scope.row.itemId" href="#" @click="chooseItem(scope.row)"
+              >选择</a
+            >
             <span v-else>已选择</span>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="itemsTotalCount > itemsParams.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="itemsTotalCount > itemsParams.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="itemsParams.page"
@@ -324,15 +191,9 @@
           @current-change="goodsHandleCurrentChange"
         />
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">关 闭</el-button>
-        <el-button
-          type="primary"
-          @click="centerDialogVisible = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -347,7 +208,7 @@ import {
 } from '../../../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       luckydrawPayments: [
         { name: '积分', value: 'point' }
@@ -403,7 +264,7 @@ export default {
       goodsTypeTitle: '实体类商品'
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.show) {
       this.show = false
     }
@@ -414,15 +275,15 @@ export default {
     this.getCurrencyInfo()
   },
   methods: {
-    submitItemsAction (formName) {
-      this.$refs[formName].validate((valid) => {
+    submitItemsAction(formName) {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           if (!this.form.item_id) {
             this.$message.error('请选择商品')
             return false
           }
           if (this.luckydraw_id) {
-            updateLuckyDrawActivity(this.luckydraw_id, this.form).then((res) => {
+            updateLuckyDrawActivity(this.luckydraw_id, this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
@@ -432,7 +293,7 @@ export default {
               }
             })
           } else {
-            createLuckyDrawActivity(this.form).then((res) => {
+            createLuckyDrawActivity(this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
@@ -447,36 +308,36 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.push({ path: '/member/marketing/luckydraw/index' })
     },
-    changeItem () {
+    changeItem() {
       this.goodsDialogVisible = true
       this.getGoodsList()
     },
-    chooseItem (row) {
+    chooseItem(row) {
       this.goodsDialogVisible = false
       this.goods = row
       this.form.item_id = row.itemId
       this.form.luckydraw_store = Math.ceil(row.price / 100)
       this.paymentTotalChange()
     },
-    goodsHandleCurrentChange (val) {
+    goodsHandleCurrentChange(val) {
       this.itemsParams.page = val
       this.getGoodsList()
     },
-    goodsSearch () {
+    goodsSearch() {
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.itemsLoading = true
       getItemsList(this.itemsParams)
-        .then((response) => {
+        .then(response => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch((error) => {
+        .catch(error => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -484,9 +345,9 @@ export default {
           })
         })
     },
-    getLuckyDrawInfo () {
+    getLuckyDrawInfo() {
       getLuckyDrawInfo(this.luckydraw_id)
-        .then((response) => {
+        .then(response => {
           this.form = response.data.data
           this.form.luckydraw_price = this.form.luckydraw_price / 100
           this.paymentTotalChange()
@@ -496,23 +357,23 @@ export default {
           ]
           this.goods = response.data.data.goods
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message({
             type: 'error',
             message: '获取活动详情失败'
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    getCurrencyInfo () {
-      getDefaultCurrency().then((res) => {
+    getCurrencyInfo() {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
@@ -527,11 +388,11 @@ export default {
       }
       this.getGoodsList()
     },
-    changePayment (value) {
+    changePayment(value) {
       this.luckydraw_payment = value
       this.paymentTotalChange()
     },
-    paymentTotalChange () {
+    paymentTotalChange() {
       if (this.form.luckydraw_payment == 'point') {
         this.form.payment_total = this.form.luckydraw_point * this.form.luckydraw_store
       } else if (this.form.luckydraw_payment == 'cash') {

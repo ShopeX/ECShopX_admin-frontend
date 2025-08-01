@@ -55,7 +55,7 @@ export default {
             name: '商品状态',
             key: 'approve_status',
             formatter: (value, row, col) => {
-              return SALES_STATUS.find((item) => item.value == value).title
+              return SALES_STATUS.find(item => item.value == value).title
             }
           }
         ]
@@ -76,7 +76,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       const { data = [] } = this.value
-      const selectRow = list.filter((item) => data.includes(item.item_id))
+      const selectRow = list.filter(item => data.includes(item.item_id))
       const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
 
       setTimeout(() => {

@@ -1,14 +1,11 @@
 <template>
   <div
     class="component-wrap"
-    :class="{ 'component-padded': base.padded && !config.fixTop, 'active': active }"
+    :class="{ 'component-padded': base.padded && !config.fixTop, active: active }"
     :style="config.fixTop ? 'height: 63px' : ''"
   >
     <div class="current-active" />
-    <div
-      class="search"
-      :class="{ 'fixed': config.fixTop }"
-    >
+    <div class="search" :class="{ fixed: config.fixTop }">
       <div class="view-flex view-flex-middle">
         <div class="view-flex-item view-flex view-flex-middle view-flex-center search-box">
           <i class="search-icon" /> 搜索想要的商品
@@ -36,24 +33,24 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {}
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.nama = val.name
       this.base = val.base
       this.config = val.config

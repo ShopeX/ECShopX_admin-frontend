@@ -1,11 +1,11 @@
 export default {
-  data () {
+  data() {
     return {
       iframeTimeOut: null
     }
   },
   methods: {
-    createInterval (_this, func) {
+    createInterval(_this, func) {
       let IS_NOT_IFRAME = sessionStorage.getItem('IS_NOT_IFRAME')
       setTimeout(
         () => {

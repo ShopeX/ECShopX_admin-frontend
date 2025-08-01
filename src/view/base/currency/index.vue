@@ -2,52 +2,20 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="addCurrency"
-        >
-          添加货币
-        </el-button>
+        <el-button type="primary" icon="plus" @click="addCurrency"> 添加货币 </el-button>
       </el-col>
       <el-col :span="12">
-        <el-input
-          v-model="params.currency"
-          placeholder="货币名称，例子：RMB"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="dataSearch"
-          />
+        <el-input v-model="params.currency" placeholder="货币名称，例子：RMB">
+          <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="currencyList"
-      :height="wheight - 160"
-    >
-      <el-table-column
-        prop="title"
-        label="货币名称(全名)"
-      />
-      <el-table-column
-        prop="currency"
-        label="货币名称(缩写)"
-      />
-      <el-table-column
-        prop="symbol"
-        label="货币符号"
-      />
-      <el-table-column
-        prop="rate"
-        label="货币汇率"
-      />
-      <el-table-column
-        prop="is_default"
-        label="是否为默认"
-      >
+    <el-table v-loading="loading" :data="currencyList" :height="wheight - 160">
+      <el-table-column prop="title" label="货币名称(全名)" />
+      <el-table-column prop="currency" label="货币名称(缩写)" />
+      <el-table-column prop="symbol" label="货币符号" />
+      <el-table-column prop="rate" label="货币汇率" />
+      <el-table-column prop="is_default" label="是否为默认">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.is_default"
@@ -58,12 +26,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="editAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
           <el-button
             v-if="!scope.row.is_default"
             size="mini"
@@ -74,10 +37,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -87,26 +47,11 @@
       />
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog
-      :title="editTitle"
-      :visible.sync="editVisible"
-      :before-close="handleCancel"
-    >
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          :rules="rules"
-          class="demo-ruleForm"
-          label-width="220px"
-        >
-          <el-form-item
-            label="货币名称（中文全名）"
-            prop="title"
-          >
-            <el-col
-              :span="10"
-            >
+        <el-form ref="form" :model="form" :rules="rules" class="demo-ruleForm" label-width="220px">
+          <el-form-item label="货币名称（中文全名）" prop="title">
+            <el-col :span="10">
               <el-input
                 v-model="form.title"
                 required
@@ -114,13 +59,8 @@
               />
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="货币名称（英文缩写）"
-            prop="currency"
-          >
-            <el-col
-              :span="10"
-            >
+          <el-form-item label="货币名称（英文缩写）" prop="currency">
+            <el-col :span="10">
               <el-input
                 v-model="form.currency"
                 required
@@ -128,78 +68,35 @@
               />
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="货币符号"
-            prop="symbol"
-          >
-            <el-col
-              :span="10"
-            >
-              <el-input
-                v-model="form.symbol"
-                required
-                placeholder="￥"
-              />
+          <el-form-item label="货币符号" prop="symbol">
+            <el-col :span="10">
+              <el-input v-model="form.symbol" required placeholder="￥" />
             </el-col>
           </el-form-item>
-          <el-form-item
-            label="货币汇率"
-            prop="rate"
-          >
-            <el-col
-              :span="10"
-            >
-              <el-input
-                v-model="form.rate"
-                required
-                placeholder="1"
-              />
+          <el-form-item label="货币汇率" prop="rate">
+            <el-col :span="10">
+              <el-input v-model="form.rate" required placeholder="1" />
             </el-col>
-            <el-col
-              v-if="form.rate && form.title"
-              :span="10"
-            >
+            <el-col v-if="form.rate && form.title" :span="10">
               1 {{ form.title }}({{ form.symbol }}) = {{ form.rate }} 人民币(￥)
             </el-col>
-            <el-col
-              v-else-if="form.rate && form.currency"
-              :span="10"
-            >
+            <el-col v-else-if="form.rate && form.currency" :span="10">
               1 {{ form.currency }} = {{ form.rate }} RMB
             </el-col>
           </el-form-item>
 
-          <el-form-item
-            label="适用端"
-            prop="rate"
-          >
-            <el-col
-              :span="10"
-            >
-              <el-radio
-                v-model="form.use_platform"
-                label="normal"
-                value="normal"
-              >
+          <el-form-item label="适用端" prop="rate">
+            <el-col :span="10">
+              <el-radio v-model="form.use_platform" label="normal" value="normal">
                 实体类商城
               </el-radio>
             </el-col>
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitAction"> 保存 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -215,7 +112,7 @@ import {
   setDefaultCurrency
 } from '../../../api/company'
 export default {
-  data () {
+  data() {
     return {
       dynamicShopName: [],
       dynamicStoreName: [],
@@ -254,11 +151,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getCurrencytListData()
   },
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.form.symbol = ''
       this.form.currency = ''
@@ -267,11 +164,11 @@ export default {
       this.form.is_default = false
       this.id = ''
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getCurrencytListData()
     },
-    addCurrency () {
+    addCurrency() {
       // 添加物料弹框
       this.editTitle = '添加货币信息'
       this.editVisible = true
@@ -282,7 +179,7 @@ export default {
       this.form.is_default = false
       this.id = ''
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.editTitle = '编辑货币信息'
       this.editVisible = true
@@ -294,7 +191,7 @@ export default {
       this.form.use_platform = 'normal'
       this.id = row.id
     },
-    submitAction () {
+    submitAction() {
       // 提交物料
       if (!this.form.currency || !this.form.title || !this.form.symbol || !this.form.rate) {
         this.$message({
@@ -313,14 +210,14 @@ export default {
         return
       }
       if (this.id) {
-        updateCurrencyInfo(this.id, this.form).then((response) => {
+        updateCurrencyInfo(this.id, this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getCurrencytListData()
           this.handleCancel()
         })
       } else {
-        createCurrencyInfo(this.form).then((response) => {
+        createCurrencyInfo(this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getCurrencytListData()
@@ -328,26 +225,26 @@ export default {
         })
       }
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getCurrencytListData()
     },
-    getCurrencytListData () {
+    getCurrencytListData() {
       this.loading = true
-      getCurrencytLists(this.params).then((response) => {
+      getCurrencytLists(this.params).then(response => {
         this.currencyList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          deleteCurrencyInfo(row.id).then((response) => {
+          deleteCurrencyInfo(row.id).then(response => {
             this.currencyList.splice(index, 1)
             this.$message({
               message: '删除成功',
@@ -363,8 +260,8 @@ export default {
           })
         })
     },
-    setDefault (row) {
-      setDefaultCurrency(row.id).then((response) => {
+    setDefault(row) {
+      setDefaultCurrency(row.id).then(response => {
         this.getCurrencytListData()
       })
     }

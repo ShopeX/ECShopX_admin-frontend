@@ -3,7 +3,7 @@
   <div
     :class="{
       'wgt-goods-grid-tab': true,
-      'padded': data.padded
+      padded: data.padded
     }"
   >
     <div v-if="data.title || data.subtitle" class="wgt-hd">
@@ -20,7 +20,7 @@
           :class="[
             'tab-item',
             {
-              'checked': checked == index
+              checked: checked == index
             }
           ]"
           @click="handleClick(index)"
@@ -38,7 +38,14 @@
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="item.medicine_data?.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                >
+                  处方药
+                </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
@@ -65,7 +72,14 @@
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="item.medicine_data?.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                >
+                  处方药
+                </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">

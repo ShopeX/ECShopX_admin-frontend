@@ -1,24 +1,12 @@
 <template>
   <SpPage>
     <el-card>
-      <el-table
-        v-loading="loading"
-        :data="vipGradeList"
-        :height="wheight - 80"
-      >
-        <el-table-column
-          prop="order_id"
-          label="订单号"
-          min-width="200"
-        >
+      <el-table v-loading="loading" :data="vipGradeList" :height="wheight - 80">
+        <el-table-column prop="order_id" label="订单号" min-width="200">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.order_id }}
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopy"
@@ -27,47 +15,27 @@
               </el-tooltip>
             </div>
             <div class="order-time">
-              <el-tooltip
-                effect="dark"
-                content="下单时间"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="下单时间" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="lv_type"
-          label="等级"
-          width="60"
-        >
+        <el-table-column prop="lv_type" label="等级" width="60">
           <template slot-scope="scope">
-            <el-tag
-              :type="scope.row.lv_type === 'vip' ? 'warning' : 'danger'"
-              size="mini"
-            >
+            <el-tag :type="scope.row.lv_type === 'vip' ? 'warning' : 'danger'" size="mini">
               {{ scope.row.lv_type }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="title"
-          label="卡名称"
-        />
-        <el-table-column
-          prop="card_type"
-          label="卡类型"
-        >
+        <el-table-column prop="title" label="卡名称" />
+        <el-table-column prop="card_type" label="卡类型">
           <template slot-scope="scope">
             {{ scope.row.card_type.desc }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="160"
-          label="会员手机号"
-        >
+        <el-table-column width="160" label="会员手机号">
           <template slot-scope="scope">
             <i class="el-icon-mobile" />{{ scope.row.mobile }}
             <el-tooltip
@@ -84,25 +52,16 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="购买金额"
-          width="100"
-        >
+        <el-table-column prop="price" label="购买金额" width="100">
           <template slot-scope="scope">
             <div class="mark">
-              <span class="cur">{{ scope.row.fee_symbol }}</span>{{ scope.row.price / 100 }}
+              <span class="cur">{{ scope.row.fee_symbol }}</span
+              >{{ scope.row.price / 100 }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="discount"
-          label="折扣值"
-          width="100"
-        >
-          <template slot-scope="scope">
-            {{ (100 - scope.row.discount) / 100 }}折
-          </template>
+        <el-table-column prop="discount" label="折扣值" width="100">
+          <template slot-scope="scope"> {{ (100 - scope.row.discount) / 100 }}折 </template>
         </el-table-column>
 
         <!-- <el-table-column label="操作">
@@ -111,10 +70,7 @@
           </template>
         </el-table-column> -->
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="params.page"
@@ -155,7 +111,7 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { listVipGrade } from '../../../api/member'
 export default {
-  data () {
+  data() {
     return {
       isEdit: false,
       vipGradeList: [],
@@ -188,49 +144,49 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    addTemplate () {
+    addTemplate() {
       // 添加商品
       this.memberTagDialog = true
       this.form = { tag_id: '', tag_name: '', tag_color: '#ff1939', description: '' }
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑商品弹框
       this.form = row
       this.memberTagDialog = true
     },
-    preview (index, row) {
+    preview(index, row) {
       // 预览弹框
       this.dialogVisible = true
       this.dataInfo = row
     },
-    searchData () {
+    searchData() {
       this.params.page = 1
       this.getDataList()
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       listVipGrade(this.params)
-        .then((response) => {
+        .then(response => {
           this.vipGradeList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.datapass_block = response.data.data.datapass_block
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -238,7 +194,7 @@ export default {
           })
         })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -246,7 +202,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then((response) => {
+            .then(response => {
               this.vipGradeList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -268,7 +224,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -278,16 +234,16 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.memberTagDialog = false
     },
-    saveTagData () {
+    saveTagData() {
       this.memberTagDialog = false
       if (this.form.tag_id) {
-        updateTag(this.form).then((res) => {
+        updateTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -297,7 +253,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then((res) => {
+        saveTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',

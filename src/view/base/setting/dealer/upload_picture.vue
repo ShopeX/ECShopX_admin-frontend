@@ -471,7 +471,7 @@ export default {
       this.$message.success('上传成功')
     },
     submitForm() {
-      this.$refs['ruleForm'].validate(async (valid) => {
+      this.$refs['ruleForm'].validate(async valid => {
         if (valid) {
           this.checkBoxVisibleHandle()
         } else {

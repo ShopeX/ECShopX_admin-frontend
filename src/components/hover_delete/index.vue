@@ -1,26 +1,15 @@
 <template>
-  <div
-    class="hover-delete"
-    @mouseenter="hovering = true"
-    @mouseleave="hovering = false"
-  >
+  <div class="hover-delete" @mouseenter="hovering = true" @mouseleave="hovering = false">
     <slot />
-    <div
-      v-if="hovering"
-      class="hover-cover"
-      @click="handleClick"
-    >
-      <i
-        class="el-icon-delete-solid"
-        @click="$emit('delete')"
-      />
+    <div v-if="hovering" class="hover-cover" @click="handleClick">
+      <i class="el-icon-delete-solid" @click="$emit('delete')" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       hovering: false
     }

@@ -11,44 +11,17 @@
     />
     <el-divider v-if="form.status == 4" />
     <div class="formClass">
-      <el-form
-        ref="form"
-        :model="form"
-        label-width="150px"
-        :rules="rules"
-      >
+      <el-form ref="form" :model="form" label-width="150px" :rules="rules">
         <el-form-item label="账号认证类型">
-          <el-button
-            type="success"
-            round
-            size="mini"
-          >
-            企业
-          </el-button>
+          <el-button type="success" round size="mini"> 企业 </el-button>
         </el-form-item>
-        <el-form-item
-          label="企业名称"
-          prop="corp_name"
-        >
-          <el-input
-            v-model="form.corp_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业名称" prop="corp_name">
+          <el-input v-model="form.corp_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="证照类型"
-          prop="corp_license_type"
-        >
-          <el-radio-group
-            v-model="form.corp_license_type"
-            :disabled="disabled"
-          >
-            <el-radio label="2">
-              三证合一
-            </el-radio>
-            <el-radio label="1">
-              普通证照
-            </el-radio>
+        <el-form-item label="证照类型" prop="corp_license_type">
+          <el-radio-group v-model="form.corp_license_type" :disabled="disabled">
+            <el-radio label="2"> 三证合一 </el-radio>
+            <el-radio label="1"> 普通证照 </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-row v-show="form.corp_license_type == 1">
@@ -61,10 +34,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.business_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.business_code" :disabled="disabled" />
           </el-form-item>
           <el-form-item
             label="营业执照注册"
@@ -82,7 +52,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                (ctx) => {
+                ctx => {
                   handleChange(ctx, 'business_code_img')
                 }
               "
@@ -92,10 +62,7 @@
                 :src="fileList.business_code_img"
                 class="avatar"
               >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
           <el-form-item
@@ -107,10 +74,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.institution_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.institution_code" :disabled="disabled" />
           </el-form-item>
           <el-form-item
             label="组织机构代码"
@@ -128,7 +92,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                (ctx) => {
+                ctx => {
                   handleChange(ctx, 'institution_code_img')
                 }
               "
@@ -138,10 +102,7 @@
                 :src="fileList.institution_code_img"
                 class="avatar"
               >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
           <el-form-item
@@ -153,10 +114,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.tax_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.tax_code" :disabled="disabled" />
           </el-form-item>
           <el-form-item
             label="税务登记证号"
@@ -174,20 +132,13 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                (ctx) => {
+                ctx => {
                   handleChange(ctx, 'tax_code_img')
                 }
               "
             >
-              <img
-                v-if="fileList.tax_code_img"
-                :src="fileList.tax_code_img"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-row>
@@ -201,10 +152,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.social_credit_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.social_credit_code" :disabled="disabled" />
           </el-form-item>
           <el-form-item
             label="统一社会信用代码"
@@ -222,7 +170,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                (ctx) => {
+                ctx => {
                   handleChange(ctx, 'social_credit_code_img')
                 }
               "
@@ -232,17 +180,11 @@
                 :src="fileList.social_credit_code_img"
                 class="avatar"
               >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-row>
-        <el-form-item
-          label="营业执照起始日期"
-          prop="license_start_date"
-        >
+        <el-form-item label="营业执照起始日期" prop="license_start_date">
           <el-date-picker
             v-model="form.license_start_date"
             type="date"
@@ -252,10 +194,7 @@
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item
-          label="营业执照到期日期"
-          prop="license_end_date"
-        >
+        <el-form-item label="营业执照到期日期" prop="license_end_date">
           <el-date-picker
             v-model="form.license_end_date"
             type="date"
@@ -266,24 +205,15 @@
             @change="$forceUpdate()"
           />
         </el-form-item>
-        <el-form-item
-          label="股东名称"
-          prop="controlling_shareholder_cust_name"
-        >
-          <el-input
-            v-model="form.controlling_shareholder_cust_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="股东名称" prop="controlling_shareholder_cust_name">
+          <el-input v-model="form.controlling_shareholder_cust_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="股东证件类型"
-          prop="controlling_shareholder_id_card_type"
-        >
+        <el-form-item label="股东证件类型" prop="controlling_shareholder_id_card_type">
           <el-select
             v-model="form.controlling_shareholder_id_card_type"
             placeholder="选择股东证件类型"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="bool => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -293,33 +223,18 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="股东证件号码"
-          prop="controlling_shareholder_id_card"
-        >
-          <el-input
-            v-model="form.controlling_shareholder_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="股东证件号码" prop="controlling_shareholder_id_card">
+          <el-input v-model="form.controlling_shareholder_id_card" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人代表姓名"
-          prop="legal_name"
-        >
-          <el-input
-            v-model="form.legal_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表姓名" prop="legal_name">
+          <el-input v-model="form.legal_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人代表证件类型"
-          prop="legal_id_card_type"
-        >
+        <el-form-item label="法人代表证件类型" prop="legal_id_card_type">
           <el-select
             v-model="form.legal_id_card_type"
             placeholder="选择法人代表证件类"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="bool => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -329,19 +244,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="法人代表证件号码"
-          prop="legal_id_card"
-        >
-          <el-input
-            v-model="form.legal_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表证件号码" prop="legal_id_card">
+          <el-input v-model="form.legal_id_card" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人证件起始日期"
-          prop="legal_cert_start_date"
-        >
+        <el-form-item label="法人证件起始日期" prop="legal_cert_start_date">
           <el-date-picker
             v-model="form.legal_cert_start_date"
             type="date"
@@ -351,10 +257,7 @@
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item
-          label="法人证件结束日期"
-          prop="legal_cert_end_date"
-        >
+        <el-form-item label="法人证件结束日期" prop="legal_cert_end_date">
           <el-date-picker
             v-model="form.legal_cert_end_date"
             type="date"
@@ -364,19 +267,10 @@
             style="width: 100%"
           />
         </el-form-item>
-        <el-form-item
-          label="法人代表手机号码"
-          prop="legal_mobile"
-        >
-          <el-input
-            v-model="form.legal_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表手机号码" prop="legal_mobile">
+          <el-input v-model="form.legal_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="法人证件正面"
-          prop="legal_card_imgz"
-        >
+        <el-form-item label="法人证件正面" prop="legal_card_imgz">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -384,26 +278,16 @@
             :auto-upload="true"
             :show-file-list="false"
             :http-request="
-              (ctx) => {
+              ctx => {
                 handleChange(ctx, 'legal_card_imgz')
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgz"
-              :src="fileList.legal_card_imgz"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人证件反面"
-          prop="legal_card_imgf"
-        >
+        <el-form-item label="法人证件反面" prop="legal_card_imgf">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -411,54 +295,26 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              (ctx) => {
+              ctx => {
                 handleChange(ctx, 'legal_card_imgf')
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgf"
-              :src="fileList.legal_card_imgf"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="企业联系人姓名"
-          prop="contact_name"
-        >
-          <el-input
-            v-model="form.contact_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人姓名" prop="contact_name">
+          <el-input v-model="form.contact_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="企业联系人手机"
-          prop="contact_mobile"
-        >
-          <el-input
-            v-model="form.contact_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人手机" prop="contact_mobile">
+          <el-input v-model="form.contact_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="企业联系人邮箱"
-          prop="contact_email"
-        >
-          <el-input
-            v-model="form.contact_email"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人邮箱" prop="contact_email">
+          <el-input v-model="form.contact_email" :disabled="disabled" />
         </el-form-item>
 
-        <el-form-item
-          label="开户银行"
-          prop="bank_id"
-        >
+        <el-form-item label="开户银行" prop="bank_id">
           <el-select
             v-model="form.bank_id"
             placeholder="请选择开户银行"
@@ -474,21 +330,12 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="开户银行支行名称"
-          prop="bank_branch"
-        >
-          <el-input
-            v-model="form.bank_branch"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行支行名称" prop="bank_branch">
+          <el-input v-model="form.bank_branch" :disabled="disabled" />
         </el-form-item>
         <el-row>
           <el-col :span="24">
-            <el-form-item
-              label="开户行省市信息"
-              prop="area"
-            >
+            <el-form-item label="开户行省市信息" prop="area">
               <el-cascader
                 v-model="form.area"
                 :disabled="disabled"
@@ -539,29 +386,14 @@
           </el-col> -->
         </el-row>
 
-        <el-form-item
-          label="开户银行账号名称"
-          prop="bank_acct_name"
-        >
-          <el-input
-            v-model="form.bank_acct_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行账号名称" prop="bank_acct_name">
+          <el-input v-model="form.bank_acct_name" :disabled="disabled" />
         </el-form-item>
 
-        <el-form-item
-          label="开户银行账号"
-          prop="bank_acct_num"
-        >
-          <el-input
-            v-model="form.bank_acct_num"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行账号" prop="bank_acct_num">
+          <el-input v-model="form.bank_acct_num" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="开户银行许可证"
-          prop="bank_acct_img"
-        >
+        <el-form-item label="开户银行许可证" prop="bank_acct_img">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -569,30 +401,17 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              (ctx) => {
+              ctx => {
                 handleChange(ctx, 'bank_acct_img')
               }
             "
           >
-            <img
-              v-if="fileList.bank_acct_img"
-              :src="fileList.bank_acct_img"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
         <el-form-item>
-          <el-button
-            v-if="!disabled"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button v-if="!disabled" type="primary" @click="onSubmit"> 保存 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -605,7 +424,7 @@ import bankData from '@/common/hfpayBankData.json'
 import UploadUtil from '@/utils/uploadUtil'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
-  data () {
+  data() {
     let vaildIdCard = (rule, value, callback) => {
       if (!vaildateIdCard(value)) {
         callback(new Error('请填写正确的身份证号码'))
@@ -635,20 +454,20 @@ export default {
       isEdit: false,
       cardType: [
         {
-          'card_type': '10',
-          'label': '身份证'
+          card_type: '10',
+          label: '身份证'
         },
         {
-          'card_type': '11',
-          'label': '护照'
+          card_type: '11',
+          label: '护照'
         },
         {
-          'card_type': '14',
-          'label': '回乡证'
+          card_type: '14',
+          label: '回乡证'
         },
         {
-          'card_type': '17',
-          'label': '台胞证'
+          card_type: '17',
+          label: '台胞证'
         }
       ],
       form: {
@@ -761,7 +580,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let { id, type } = this.$route.query
     this.form.distributor_id = id
     let disabled = type == 0 ? true : false
@@ -770,7 +589,7 @@ export default {
     this.getData()
   },
   methods: {
-    async getData () {
+    async getData() {
       let distributor_id = this.form.distributor_id
       let apply_type = this.form.apply_type
       let res = await getHffile({ distributor_id, apply_type })
@@ -785,7 +604,7 @@ export default {
       delete data.created_at
       delete data.updated_at
       let fileList = JSON.parse(JSON.stringify(this.fileList))
-      Object.keys(fileList).forEach((key) => {
+      Object.keys(fileList).forEach(key => {
         fileList[key] = data[`${key}_full_url`]
       })
       this.fileList = fileList
@@ -795,11 +614,11 @@ export default {
       this.form.bank_area = data.bank_area
       this.form.area = [this.form.bank_prov, this.form.bank_area]
     },
-    onSubmit () {
-      this.$refs.form.validate((valid) => {
+    onSubmit() {
+      this.$refs.form.validate(valid => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form))
-          saveHffile(obj).then((res) => {
+          saveHffile(obj).then(res => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -814,7 +633,7 @@ export default {
       })
     },
 
-    handleChange (ctx, type) {
+    handleChange(ctx, type) {
       let { file } = ctx
       if (file) {
         if (file.type != 'image/jpeg' && file.type != 'image/png') {
@@ -834,7 +653,7 @@ export default {
       }
       const upload = new UploadUtil()
       // 上传
-      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then((res) => {
+      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then(res => {
         this.fileList[type] = URL.createObjectURL(file)
         let { data } = res[1]
         let { key } = res[0]
@@ -843,7 +662,7 @@ export default {
         ctx.onSuccess()
       })
     },
-    areaChange (value) {
+    areaChange(value) {
       // console.log(value);
       // this.form.area = value
       this.form.bank_prov = value[0]

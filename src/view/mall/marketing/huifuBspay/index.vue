@@ -3,7 +3,6 @@
     <div v-if="$route.path.indexOf('approve') === -1">
       <el-card class="cus-card">
         <el-form ref="myForm" :model="params" label-width="80px">
-         
           <el-row>
             <el-col :span="8">
               <el-form-item label="审批状态">
@@ -30,9 +29,7 @@
             <el-col :span="10">
               <el-form-item label="申请日期">
                 <el-date-picker
-                
                   v-model="created"
-              
                   type="daterange"
                   format="yyyy-MM-dd"
                   value-format="yyyy-MM-dd"
@@ -42,9 +39,8 @@
                 />
               </el-form-item>
             </el-col>
-           
           </el-row>
-           <el-row>
+          <el-row>
             <el-col :span="12" :offset="12" style="text-align: right">
               <el-form-item>
                 <el-button type="primary" @click="searchData"> 搜索 </el-button>

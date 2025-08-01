@@ -21,11 +21,9 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">编辑</el-button>
-            <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)"
-              >
-删除
-</el-button
-            >
+            <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)">
+              删除
+            </el-button>
           </div>
         </template>
       </el-table-column>

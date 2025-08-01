@@ -141,7 +141,7 @@ export default {
     // 获取列表
     getInfo() {
       this.loading = true
-      getTemplateSetting().then((res) => {
+      getTemplateSetting().then(res => {
         const {
           pc_banner,
           screen: { brand_openstatus, cat_openstatus, point_openstatus, point_section }
@@ -170,7 +170,7 @@ export default {
 
       const isEmptyPoint = point_section.some((item, index) => item.score1 == 0 && item.score2 == 0)
 
-      let numberList = point_section.map((item) => ({
+      let numberList = point_section.map(item => ({
         score1: Number(item.score1),
         score2: Number(item.score2)
       }))
@@ -202,7 +202,7 @@ export default {
           point_openstatus,
           point_section: point_section.map((item, index) => [item.score1, item.score2])
         }
-      }).then((res) => {
+      }).then(res => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

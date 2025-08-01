@@ -6,7 +6,7 @@
         <img
           :src="
             t_data.config.imgUrl ||
-              'https://fakeimg.pl/1000x240/F8F8F8/CCC/?text=Image&font=helvetica'
+            'https://fakeimg.pl/1000x240/F8F8F8/CCC/?text=Image&font=helvetica'
           "
           alt=""
         >
@@ -22,7 +22,7 @@ export default {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data
     }

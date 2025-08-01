@@ -5,7 +5,7 @@ import { accessRoutes, routes as coreRoutes } from './routes'
 import { IS_ADMIN, IS_DISTRIBUTOR, IS_MERCHANT, IS_SUPPLIER, traverseTreeValues } from '@/utils'
 import { actions } from '@/utils/micr-app'
 
-const coreRoutesNames = traverseTreeValues(coreRoutes, item => item.path)
+const coreRoutesNames = traverseTreeValues(coreRoutes, (item) => item.path)
 
 const { startProgress, stopProgress } = useNProgress()
 
@@ -78,7 +78,7 @@ function setupAccessGuard(router) {
 
     // 检查目标路径是否在可访问路由中
     const isPathAccessible = (path, routes, parentPath = '') => {
-      return routes.some(route => route.regex.test(path) && route.path !== '')
+      return routes.some((route) => route.regex.test(path) && route.path !== '')
       // return routes.some(route => route.path === path)
     }
 
@@ -87,7 +87,7 @@ function setupAccessGuard(router) {
       const routes = router.getRoutes()
       const [firstPermission] = store.state.access.permissions
 
-      const firstRoute = routes.find(route => route?.meta?.permissions?.includes(firstPermission))
+      const firstRoute = routes.find((route) => route?.meta?.permissions?.includes(firstPermission))
       if (firstRoute) {
         return firstRoute.path
       }

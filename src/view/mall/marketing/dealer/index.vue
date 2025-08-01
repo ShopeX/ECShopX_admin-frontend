@@ -53,7 +53,7 @@
               value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              @change="(val) => dateChange('create', val)"
+              @change="val => dateChange('create', val)"
             />
           </template>
           <template #open_time>
@@ -65,7 +65,7 @@
               value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              @change="(val) => dateChange('open', val)"
+              @change="val => dateChange('open', val)"
             />
           </template>
         </SpFinder>
@@ -144,7 +144,7 @@ export default {
             // slot: 'header',
             action: {
               type: 'link',
-              handler: (row) => {
+              handler: row => {
                 this.$router.push({
                   path: this.matchRoutePath('detail'),
                   query: { operator_id: row[0].operator_id }
@@ -157,11 +157,11 @@ export default {
             key: 'show',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
+            visible: row => {
               return row.adapay_open_account_time
             },
             action: {
-              handler: (row) => {
+              handler: row => {
                 this.$router.push({
                   path: this.matchRoutePath('storelist'),
                   query: { dealer_id: row[0].operator_id, username: row[0].username }
@@ -174,11 +174,11 @@ export default {
             key: 'on',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
+            visible: row => {
               return row.is_disable === 1
             },
             action: {
-              handler: (row) => this.handleOpenOpeartion(true, '开启', row[0])
+              handler: row => this.handleOpenOpeartion(true, '开启', row[0])
             }
           },
           {
@@ -186,11 +186,11 @@ export default {
             key: 'off',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
+            visible: row => {
               return row.is_disable === 0
             },
             action: {
-              handler: (row) => this.handleOpenOpeartion(true, '禁用', row[0])
+              handler: row => this.handleOpenOpeartion(true, '禁用', row[0])
             }
           },
           {
@@ -199,7 +199,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             action: {
-              handler: (row) => this.handleeResertPass(true, row[0])
+              handler: row => this.handleeResertPass(true, row[0])
             }
           }
         ]
@@ -257,7 +257,7 @@ export default {
         let parmas = this.subTitle
           ? operator_id
           : { is_disable: is_disable === 0 ? 1 : 0, operator_id: operator_id }
-        url(parmas).then((res) => {
+        url(parmas).then(res => {
           this.visibleModal = false
           this.modalType = ''
           this.modalContent = ''

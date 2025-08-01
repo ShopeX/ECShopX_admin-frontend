@@ -237,7 +237,7 @@ export default {
     },
     communityDetail(index, row) {
       this.communityDetailVisible = true
-      getcommunityDetail(row.community_id).then((response) => {
+      getcommunityDetail(row.community_id).then(response => {
         this.communityDetailData = response.data.data
       })
     },
@@ -247,7 +247,7 @@ export default {
     },
     getCommunitysList() {
       this.loading = true
-      getCommunityList(this.params).then((response) => {
+      getCommunityList(this.params).then(response => {
         this.communityList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -260,7 +260,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          communityDelete(row.community_id).then((response) => {
+          communityDelete(row.community_id).then(response => {
             this.communityList.splice(index, 1)
             this.$message({
               message: '删除社区成功',
@@ -277,7 +277,7 @@ export default {
         })
     },
     updateStatusCommunity(params) {
-      CommunityStatusUpdate(params).then((res) => {
+      CommunityStatusUpdate(params).then(res => {
         this.$message({ message: '操作成功', type: 'success' })
         this.checkVisible = false
       })

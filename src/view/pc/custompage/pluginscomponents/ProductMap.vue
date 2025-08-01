@@ -1,59 +1,28 @@
 <template>
   <section class="section">
-    <div class="section-header with-border">
-      设置
-    </div>
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form>
         <el-form-item label="展示图">
-          <div
-            v-for="(item, index) in t_data.data"
-            class="setting-item slider"
-          >
-            <div
-              v-if="!num"
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
+          <div v-for="(item, index) in t_data.data" class="setting-item slider">
+            <div v-if="!num" class="setting-remove" @click="removeItem(index)">
               <i class="iconfont icon-trash-alt" />
             </div>
             <div @click="handleImgChange(index)">
-              <img
-                v-if="item.imgUrl"
-                :src="item.imgUrl"
-                class="banner-uploader"
-              >
-              <div
-                v-else
-                class="banner-uploader"
-              >
+              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader">
+              <div v-else class="banner-uploader">
                 <i class="iconfont icon-camera" />
                 上传图片
               </div>
             </div>
-            <div
-              v-if="show_goods"
-              class="uploader-setting"
-            >
-              <div
-                class="goods-select"
-                @click="handleGoodsChange(index)"
-              >
-                <div
-                  v-if="item.goodsId"
-                  class="link-content"
-                >
+            <div v-if="show_goods" class="uploader-setting">
+              <div class="goods-select" @click="handleGoodsChange(index)">
+                <div v-if="item.goodsId" class="link-content">
                   <template>商品：</template>
                   {{ item.title }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
-                  <i
-                    class="iconfont icon-link"
-                    @click="handleGoodsChange(index)"
-                  />设置路径
+                <div v-else class="content-center">
+                  <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
                 </div>
               </div>
             </div>
@@ -73,13 +42,8 @@
         @closeDialog="closeDialog"
       />
     </div>
-    <div
-      v-if="!num || (num && t_data.data.length < 4)"
-      class="content-center"
-    >
-      <div class="frm-tips">
-        只能上传jpg/png文件（建议尺寸：1220px * 500px）
-      </div>
+    <div v-if="!num || (num && t_data.data.length < 4)" class="content-center">
+      <div class="frm-tips">只能上传jpg/png文件（建议尺寸：1220px * 500px）</div>
       <!-- <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div> -->
       <el-button
         :disabled="data.length >= 5"
@@ -125,7 +89,7 @@ export default {
       default: '添加轮播图'
     }
   },
-  data () {
+  data() {
     return {
       goodsVisible: false,
       t_data: this.data,
@@ -136,7 +100,7 @@ export default {
   },
   watch: {
     t_data: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         console.log('inner watch', newVal)
         this.$emit('update:data', newVal)
       },
@@ -145,10 +109,10 @@ export default {
     }
   },
   methods: {
-    removeItem (index) {
+    removeItem(index) {
       this.t_data.data.splice(index, 1)
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgsVisible = true
       this.isGetImage = true
       if (typeof index !== undefined) {
@@ -156,11 +120,11 @@ export default {
         this.current_index = index
       }
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.current_index = index
       this.goodsVisible = true
     },
-    pickImg (data) {
+    pickImg(data) {
       console.log('pickImg', data)
       let tmp = [...this.t_data.data] // 利用索引直接修改数组值，vue无法监听数组变化的解决方案
       tmp[this.current_index].imgUrl = data.url
@@ -168,10 +132,10 @@ export default {
       console.log('pickImg end', this.t_data.data[this.current_index])
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
-    pickGoods (data) {
+    pickGoods(data) {
       data[0].imgUrl && delete data[0].imgUrl
       console.log('pickgoods', data)
       let tmp = [...this.t_data.data]
@@ -179,10 +143,10 @@ export default {
       this.t_data.data = tmp
       this.goodsVisible = false
     },
-    closeDialog () {
+    closeDialog() {
       this.goodsVisible = false
     },
-    addItem () {
+    addItem() {
       if (!this.t_data.data) {
         this.t_data.data = []
       }

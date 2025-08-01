@@ -1,18 +1,9 @@
 <template>
   <CustomCard title="分润信息">
-    <el-row
-      v-for="(row, index) in baseInfo"
-      :key="index"
-    >
-      <el-col
-        v-for="(col, colIndex) in row"
-        :key="colIndex"
-        :span="6"
-      >
+    <el-row v-for="(row, index) in baseInfo" :key="index">
+      <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="6">
         <div class="flex">
-          <div class="left">
-            {{ col.name }}：
-          </div>
+          <div class="left">{{ col.name }}：</div>
           <div class="right">
             {{ col.filter ? col.filter(profit[col.field]) : profit[col.field] }}
           </div>
@@ -29,7 +20,7 @@ export default {
     CustomCard
   },
   props: ['orderInfo', 'memberInfo', 'profit'],
-  data () {
+  data() {
     const self = this
     return {
       baseInfo: [

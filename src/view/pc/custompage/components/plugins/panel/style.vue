@@ -1,9 +1,5 @@
 <template>
-  <product-map
-    :data="data"
-    :num="4"
-    text="新增"
-  />
+  <product-map :data="data" :num="4" text="新增" />
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'

@@ -1,15 +1,7 @@
 <template>
   <section class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="100px"
-      label-position="left"
-      size="mini"
-    >
-      <div class="section-header with-border">
-        批次管理
-      </div>
+    <el-form ref="form" :model="form" label-width="100px" label-position="left" size="mini">
+      <div class="section-header with-border">批次管理</div>
       <div class="section-body">
         <el-form-item label="物品名称">
           <el-row :gutter="20">
@@ -20,16 +12,10 @@
         </el-form-item>
         <el-form-item label="批次编号">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_number }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col v-else :span="6">
               <el-input
                 v-model="form.batch_number"
                 type="text"
@@ -40,16 +26,10 @@
         </el-form-item>
         <el-form-item label="批次名称">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_name }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col v-else :span="6">
               <el-input
                 v-model="form.batch_name"
                 type="text"
@@ -60,16 +40,10 @@
         </el-form-item>
         <el-form-item label="批次件数">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_quantity }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col v-else :span="6">
               <el-input
                 v-model="form.batch_quantity"
                 type="number"
@@ -84,16 +58,8 @@
           </el-row>
           <el-row :gutter="20">
             <template>
-              <el-table
-                :data="traceData"
-                border
-                style="width: 100%"
-              >
-                <el-table-column
-                  prop="date"
-                  label="日期"
-                  width="250"
-                >
+              <el-table :data="traceData" border style="width: 100%">
+                <el-table-column prop="date" label="日期" width="250">
                   <template slot-scope="scope">
                     <span>
                       <el-date-picker
@@ -106,25 +72,14 @@
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="info"
-                  label="信息"
-                  width="300"
-                >
+                <el-table-column prop="info" label="信息" width="300">
                   <template slot-scope="scope">
                     <span>
-                      <el-input
-                        v-model="scope.row.info"
-                        placeholder="请输入信息"
-                      />
+                      <el-input v-model="scope.row.info" placeholder="请输入信息" />
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  fixed="right"
-                  label="操作"
-                  width="300"
-                >
+                <el-table-column fixed="right" label="操作" width="300">
                   <template slot-scope="scope">
                     <el-button
                       type="danger"
@@ -136,31 +91,14 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <el-button
-                size="mini"
-                type="success"
-                circle
-                @click="addTraceInfo"
-              >
-                添加
-              </el-button>
+              <el-button size="mini" type="success" circle @click="addTraceInfo"> 添加 </el-button>
             </template>
           </el-row>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="default"
-          @click.native="handleCancel"
-        >
-          返回
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitThingsAction"
-        >
-          生成并下载二维码
-        </el-button>
+        <el-button type="default" @click.native="handleCancel"> 返回 </el-button>
+        <el-button type="primary" @click="submitThingsAction"> 生成并下载二维码 </el-button>
       </div>
     </el-form>
     <el-dialog
@@ -174,18 +112,16 @@
         <div
           v-for="(item, index) in dataSpan"
           class="code-span"
-          :class="{ 'cur': index === codespanIndex }"
+          :class="{ cur: index === codespanIndex }"
           @click="codeSpanChoose(index)"
         >
           <span>{{ item.start }} ~ {{ item.end }}</span>
-          <span
-            v-if="index === codespanIndex && !isdownloadOk"
-            class="bg-waiting"
-          ><i class="el-icon-loading" /></span>
-          <span
-            v-if="index === codespanIndex && isdownloadOk"
-            class="download-ok"
-          ><i class="el-icon-circle-check" /></span>
+          <span v-if="index === codespanIndex && !isdownloadOk" class="bg-waiting"
+            ><i class="el-icon-loading"
+          /></span>
+          <span v-if="index === codespanIndex && isdownloadOk" class="download-ok"
+            ><i class="el-icon-circle-check"
+          /></span>
         </div>
       </template>
     </el-dialog>
@@ -200,24 +136,24 @@ import store from '../../../store'
 import { Message } from 'element-ui'
 import { getThingsDetail, getBatchsDetail, createBatchs, updateBatchs } from '../../../api/onecode'
 import { uploadMaterial } from '../../../api/wechat'
-const getWxaCodeImg = (url) => {
+const getWxaCodeImg = url => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
       url,
       responseType: 'arraybuffer',
-      headers: { 'Authorization': 'bearer ' + store.getters.token }
+      headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then((data) => {
+      .then(data => {
         resolve(data.data)
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error.toString())
       })
   })
 }
 export default {
-  data () {
+  data() {
     return {
       things: {},
       form: {
@@ -252,15 +188,15 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.thing_id) {
       this.form.thing_id = this.$route.query.thing_id
       // 获取物品信息
       getThingsDetail(this.$route.query.thing_id)
-        .then((response) => {
+        .then(response => {
           this.things = response.data.data
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -268,11 +204,11 @@ export default {
       this.form.batch_id = this.$route.query.batch_id
       // 获取物品信息
       getBatchsDetail(this.$route.query.batch_id)
-        .then((response) => {
+        .then(response => {
           this.form = response.data.data
           this.traceData = response.data.data.trace_info
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -287,7 +223,7 @@ export default {
       }
       if (this.form.batch_id) {
         updateBatchs(this.form.batch_id, this.form)
-          .then((response) => {
+          .then(response => {
             this.$message({
               type: 'success',
               message: '更新批次信息成功'
@@ -295,7 +231,7 @@ export default {
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
           })
-          .catch((error) => {
+          .catch(error => {
             this.$message({
               type: 'error',
               message: '更新批次信息出错'
@@ -303,7 +239,7 @@ export default {
           })
       } else {
         createBatchs(this.form)
-          .then((response) => {
+          .then(response => {
             this.$message({
               type: 'success',
               message: '添加批次信息成功'
@@ -311,7 +247,7 @@ export default {
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
           })
-          .catch((error) => {
+          .catch(error => {
             this.$message({
               type: 'error',
               message: '添加批次信息出错'
@@ -355,18 +291,18 @@ export default {
       }
       var preNumber = 0
       if (totalSpan == 0) {
-        this.dataSpan.push({ 'start': 0, 'end': batch_number })
+        this.dataSpan.push({ start: 0, end: batch_number })
       }
       for (var i = 0; i < totalSpan; i++) {
         if (i === 0) {
-          this.dataSpan.push({ 'start': i + 1, 'end': (i + 1) * this.codeInterval })
+          this.dataSpan.push({ start: i + 1, end: (i + 1) * this.codeInterval })
         } else {
-          this.dataSpan.push({ 'start': preNumber + 1, 'end': (i + 1) * this.codeInterval })
+          this.dataSpan.push({ start: preNumber + 1, end: (i + 1) * this.codeInterval })
         }
         preNumber = (i + 1) * this.codeInterval
       }
       if (totalSpan > 0 && this.codeLeft) {
-        this.dataSpan.push({ 'start': totalSpan * this.codeInterval + 1, 'end': batch_number })
+        this.dataSpan.push({ start: totalSpan * this.codeInterval + 1, end: batch_number })
       }
     },
     codeSpanChoose: function (index) {
@@ -391,7 +327,7 @@ export default {
           '&num=' +
           i
         const num = i
-        const promise = getWxaCodeImg(url).then((result_file) => {
+        const promise = getWxaCodeImg(url).then(result_file => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = that.downParams.batch_number + '(' + num + ')' + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -400,7 +336,7 @@ export default {
         promises.push(promise)
       }
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then((content) => {
+        zip.generateAsync({ type: 'blob' }).then(content => {
           // 生成二进制流
           FileSaver.saveAs(content, '一物一码小程序码(批量).zip') // 利用file-saver保存文件
           that.isdownloadOk = true

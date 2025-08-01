@@ -1,9 +1,5 @@
 <template>
-  <el-dialog
-    title="编辑备注信息"
-    :visible.sync="show"
-    :width="width"
-  >
+  <el-dialog title="编辑备注信息" :visible.sync="show" :width="width">
     <div class="custom_textarea">
       <el-input
         v-model="value"
@@ -11,33 +7,20 @@
         placeholder="请输入对此订单需要备注的内容…"
         :rows="rowLength"
       />
-      <div
-        class="statics"
-        :class="{ 'error': maxValueLength() }"
-      >
+      <div class="statics" :class="{ error: maxValueLength() }">
         {{ value.length }}/{{ maxLength }}
       </div>
     </div>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button @click="handleCancel">
-        取 消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="handleSubmit"
-      >
-        确 定
-      </el-button>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="handleCancel"> 取 消 </el-button>
+      <el-button type="primary" @click="handleSubmit"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>
 <script>
 import { remarks, afterRemarks } from '@/api/order'
 export default {
-  data () {
+  data() {
     return {
       show: false,
       currentType: '',
@@ -49,13 +32,13 @@ export default {
     }
   },
   methods: {
-    maxValueLength () {
+    maxValueLength() {
       return this.value.length > this.maxLength
     },
-    handleCancel () {
+    handleCancel() {
       this.show = false
     },
-    getParams () {
+    getParams() {
       let params = {}
       if (
         this.currentType === 'normalList' ||
@@ -71,14 +54,14 @@ export default {
       }
       return params
     },
-    handleValidate () {
+    handleValidate() {
       if (this.maxValueLength()) {
         this.$message.error('字数请不要超过150字')
         return
       }
       return true
     },
-    handleSubmit () {
+    handleSubmit() {
       const returnValue = this.handleValidate()
 
       if (!returnValue) return
@@ -90,20 +73,20 @@ export default {
         this.currentType === 'normalList2' ||
         this.currentType === 'orderDetail'
       ) {
-        remarks(params).then((res) => {
+        remarks(params).then(res => {
           this.$emit('onDone', res)
           this.$message.success('订单备注修改成功!')
           this.show = false
         })
       } else if (this.currentType === 'afterList' || this.currentType === 'afterDetail') {
-        afterRemarks(params).then((res) => {
+        afterRemarks(params).then(res => {
           this.$emit('onDone', this.value)
           this.$message.success('订单备注修改成功!')
           this.show = false
         })
       }
     },
-    showRemark (current, type) {
+    showRemark(current, type) {
       this.show = true
       this.current = current
       this.currentType = type

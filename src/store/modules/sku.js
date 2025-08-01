@@ -49,23 +49,23 @@ const sku = {
   },
 
   actions: {
-    setSku ({ commit }, sku) {
+    setSku({ commit }, sku) {
       commit('setSku', sku)
     },
-    setPage ({ commit }, sku) {
+    setPage({ commit }, sku) {
       commit('setPage', sku)
     },
-    removeSku ({ commit }, sku) {
+    removeSku({ commit }, sku) {
       commit('removeSku', sku)
     },
-    clearSkus ({ commit }) {
+    clearSkus({ commit }) {
       commit('clearSkus')
       commit('clearPage')
     }
   },
 
   getters: {
-    editingSkus (state) {
+    editingSkus(state) {
       return state.editingSkus
     }
   }

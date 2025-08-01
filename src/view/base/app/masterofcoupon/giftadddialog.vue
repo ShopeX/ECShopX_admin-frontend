@@ -11,98 +11,56 @@
       <template v-if="dialog_step == 1">
         <div class="gift-type">
           <div class="gift-type-flex">
-            <div
-              class="gift-type-item"
-              @click="giftTypeChoose('coupon')"
-            >
+            <div class="gift-type-item" @click="giftTypeChoose('coupon')">
               <div class="gift-type-icon">
                 <i class="iconfont icon-ticket-alt" />
               </div>
-              <div class="gift-type-tips">
-                优惠券
-              </div>
+              <div class="gift-type-tips">优惠券</div>
             </div>
-            <div
-              class="gift-type-item"
-              @click="giftTypeChoose('exchange')"
-            >
+            <div class="gift-type-item" @click="giftTypeChoose('exchange')">
               <div class="gift-type-icon">
                 <i class="iconfont icon-receipt" />
               </div>
-              <div class="gift-type-tips">
-                兑换券
-              </div>
+              <div class="gift-type-tips">兑换券</div>
             </div>
-            <div
-              class="gift-type-item"
-              @click="giftTypeChoose('goods')"
-            >
+            <div class="gift-type-item" @click="giftTypeChoose('goods')">
               <div class="gift-type-icon">
                 <i class="iconfont icon-shopping-bag" />
               </div>
-              <div class="gift-type-tips">
-                商品
-              </div>
+              <div class="gift-type-tips">商品</div>
             </div>
-            <div
-              class="gift-type-item"
-              @click="giftTypeChoose('integral')"
-            >
+            <div class="gift-type-item" @click="giftTypeChoose('integral')">
               <div class="gift-type-icon">
                 <i class="iconfont icon-coins" />
               </div>
-              <div class="gift-type-tips">
-                积分
-              </div>
+              <div class="gift-type-tips">积分</div>
             </div>
           </div>
         </div>
       </template>
       <template v-else>
         <template v-if="gift_type == 'coupon'">
-          <el-form
-            :ref="couponForm"
-            v-model="couponForm"
-            label-width="120px"
-          >
+          <el-form :ref="couponForm" v-model="couponForm" label-width="120px">
             <el-form-item label="优惠券名称">
-              <el-input
-                v-model="couponForm.name"
-                placeholder="请输入优惠券名称"
-              />
+              <el-input v-model="couponForm.name" placeholder="请输入优惠券名称" />
             </el-form-item>
             <el-form-item label="发放数量">
-              <el-input-number
-                v-model="couponForm.num"
-                :min="1"
-              />
+              <el-input-number v-model="couponForm.num" :min="1" />
             </el-form-item>
             <el-form-item label="优惠金额">
               <el-radio-group v-model="couponForm.money">
                 <div>
-                  <el-radio
-                    label="fixedMoney"
-                  >
-                    指定金额&nbsp;<el-input
-                      v-model="fixedMoney"
-                      placeholder="金额"
-                    />&nbsp;元
+                  <el-radio label="fixedMoney">
+                    指定金额&nbsp;<el-input v-model="fixedMoney" placeholder="金额" />&nbsp;元
                   </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="fixedDiscount"
-                  >
-                    指定折扣&nbsp;<el-input
-                      v-model="fixedDiscount"
-                      placeholder="折扣"
-                    />&nbsp;折
+                  <el-radio label="fixedDiscount">
+                    指定折扣&nbsp;<el-input v-model="fixedDiscount" placeholder="折扣" />&nbsp;折
                   </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="randomMoney"
-                  >
+                  <el-radio label="randomMoney">
                     随机&nbsp;<el-input
                       v-model="randomMoneyMin"
                       placeholder="最小金额"
@@ -119,18 +77,11 @@
             <el-form-item label="使用条件">
               <el-radio-group v-model="couponForm.use_condition">
                 <div>
-                  <el-radio label="none">
-                    无条件
-                  </el-radio>
+                  <el-radio label="none"> 无条件 </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="conditionMoney"
-                  >
-                    满&nbsp;<el-input
-                      v-model="conditionMoney"
-                      placeholder="指定金额"
-                    />&nbsp;元使用
+                  <el-radio label="conditionMoney">
+                    满&nbsp;<el-input v-model="conditionMoney" placeholder="指定金额" />&nbsp;元使用
                   </el-radio>
                 </div>
               </el-radio-group>
@@ -138,9 +89,7 @@
             <el-form-item label="有效期">
               <el-radio-group v-model="couponForm.effective_day">
                 <div>
-                  <el-radio
-                    label="containToday"
-                  >
+                  <el-radio label="containToday">
                     &nbsp;&nbsp;&nbsp;&nbsp;领取后&nbsp;&nbsp;&nbsp;&nbsp;<el-input
                       v-model="containToday"
                       placeholder="有效天数"
@@ -149,9 +98,7 @@
                   </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="notContainToday"
-                  >
+                  <el-radio label="notContainToday">
                     领取次日后&nbsp;<el-input
                       v-model="notContainToday"
                       placeholder="有效天数"
@@ -163,43 +110,25 @@
             </el-form-item>
             <el-form-item label="使用途径">
               <el-radio-group v-model="couponForm.use_channel">
-                <el-radio label="online">
-                  线上购买
-                </el-radio>
-                <el-radio label="offline">
-                  线下购买
-                </el-radio>
+                <el-radio label="online"> 线上购买 </el-radio>
+                <el-radio label="offline"> 线下购买 </el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="适用门店">
               <el-radio-group v-model="couponForm.store">
-                <el-radio label="all">
-                  全部门店
-                </el-radio>
-                <el-radio label="designate">
-                  指定门店
-                </el-radio>
+                <el-radio label="all"> 全部门店 </el-radio>
+                <el-radio label="designate"> 指定门店 </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-form>
         </template>
         <template v-else-if="gift_type == 'exchange'">
-          <el-form
-            :ref="exchangeForm"
-            v-model="exchangeForm"
-            label-width="120px"
-          >
+          <el-form :ref="exchangeForm" v-model="exchangeForm" label-width="120px">
             <el-form-item label="兑换券名称">
-              <el-input
-                v-model="exchangeForm.name"
-                placeholder="请输入优惠券名称"
-              />
+              <el-input v-model="exchangeForm.name" placeholder="请输入优惠券名称" />
             </el-form-item>
             <el-form-item label="发放数量">
-              <el-input-number
-                v-model="exchangeForm.num"
-                :min="1"
-              />
+              <el-input-number v-model="exchangeForm.num" :min="1" />
             </el-form-item>
             <el-form-item label="兑换内容">
               <el-input
@@ -213,9 +142,7 @@
             <el-form-item label="有效期">
               <el-radio-group v-model="exchangeForm.effective_day">
                 <div>
-                  <el-radio
-                    label="containToday"
-                  >
+                  <el-radio label="containToday">
                     &nbsp;&nbsp;&nbsp;&nbsp;领取后&nbsp;&nbsp;&nbsp;&nbsp;<el-input
                       v-model="containToday"
                       placeholder="有效天数"
@@ -224,9 +151,7 @@
                   </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="notContainToday"
-                  >
+                  <el-radio label="notContainToday">
                     领取次日后&nbsp;<el-input
                       v-model="notContainToday"
                       placeholder="有效天数"
@@ -239,65 +164,36 @@
           </el-form>
         </template>
         <template v-else-if="gift_type == 'goods'">
-          <el-form
-            :ref="goodsForm"
-            v-model="goodsForm"
-            label-width="120px"
-          >
+          <el-form :ref="goodsForm" v-model="goodsForm" label-width="120px">
             <el-form-item label="礼品名称">
-              <el-input
-                v-model="goodsForm.name"
-                placeholder="请输入优惠券名称"
-              />
+              <el-input v-model="goodsForm.name" placeholder="请输入优惠券名称" />
             </el-form-item>
             <el-form-item label="发放数量">
-              <el-input-number
-                v-model="goodsForm.num"
-                :min="1"
-              />
+              <el-input-number v-model="goodsForm.num" :min="1" />
             </el-form-item>
             <el-form-item label="选择基础商品">
               <el-card class="box-card">
-                <div
-                  slot="header"
-                  class="clearfix"
-                >
-                  <span style="line-height: 36px">商品列表</span>&nbsp;<span
-                    class="setting-remind"
-                  >(设置商品的可使用次数)</span>
-                  <el-button
-                    type="primary"
-                    style="float: right"
-                    @click="addGoods"
+                <div slot="header" class="clearfix">
+                  <span style="line-height: 36px">商品列表</span>&nbsp;<span class="setting-remind"
+                    >(设置商品的可使用次数)</span
                   >
+                  <el-button type="primary" style="float: right" @click="addGoods">
                     添加商品
                   </el-button>
                 </div>
-                <el-row
-                  v-for="(item, index) in goodsForm.goods_list"
-                  :key="index"
-                >
+                <el-row v-for="(item, index) in goodsForm.goods_list" :key="index">
                   <el-col :span="8">
                     {{ item.name }}
                   </el-col>
-                  <el-col
-                    :span="14"
-                  >
+                  <el-col :span="14">
                     <el-input
                       v-model="item.count"
                       style="width: 120px"
                       placeholder="可使用次数"
                     />&nbsp;次
                   </el-col>
-                  <el-col
-                    :span="2"
-                  >
-                    <el-button
-                      type="text"
-                      @click="removeGoods(item, index)"
-                    >
-                      删除
-                    </el-button>
+                  <el-col :span="2">
+                    <el-button type="text" @click="removeGoods(item, index)"> 删除 </el-button>
                   </el-col>
                 </el-row>
               </el-card>
@@ -305,9 +201,7 @@
             <el-form-item label="有效期">
               <el-radio-group v-model="goodsForm.effective_day">
                 <div>
-                  <el-radio
-                    label="containToday"
-                  >
+                  <el-radio label="containToday">
                     &nbsp;&nbsp;&nbsp;&nbsp;领取后&nbsp;&nbsp;&nbsp;&nbsp;<el-input
                       v-model="containToday"
                       placeholder="有效天数"
@@ -316,9 +210,7 @@
                   </el-radio>
                 </div>
                 <div>
-                  <el-radio
-                    label="notContainToday"
-                  >
+                  <el-radio label="notContainToday">
                     领取次日后&nbsp;<el-input
                       v-model="notContainToday"
                       placeholder="有效天数"
@@ -330,19 +222,9 @@
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer content-center"
-        >
-          <el-button @click="closeDialog">
-            取 消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="chooseGift"
-          >
-            确 定
-          </el-button>
+        <div slot="footer" class="dialog-footer content-center">
+          <el-button @click="closeDialog"> 取 消 </el-button>
+          <el-button type="primary" @click="chooseGift"> 确 定 </el-button>
         </div>
       </template>
     </el-dialog>
@@ -373,15 +255,8 @@
           />
         </div>
       </div>
-      <el-table
-        v-loading="loading"
-        :data="goodsList"
-        style="width: 100%"
-      >
-        <el-table-column
-          label="商品名称"
-          class="goods-img"
-        >
+      <el-table v-loading="loading" :data="goodsList" style="width: 100%">
+        <el-table-column label="商品名称" class="goods-img">
           <template slot-scope="scope">
             <img :src="scope.row.img_url"><span>{{ scope.row.name }}</span>
           </template>
@@ -391,16 +266,9 @@
             <span>¥{{ scope.row.price }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="120"
-        >
+        <el-table-column label="操作" width="120">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="small"
-              @click="chooseGoods(scope.row)"
-            >
+            <el-button type="primary" size="small" @click="chooseGoods(scope.row)">
               选择
             </el-button>
           </template>
@@ -412,7 +280,7 @@
 <script>
 export default {
   props: ['switchOn'],
-  data () {
+  data() {
     return {
       couponForm: {
         name: '',
@@ -457,21 +325,21 @@ export default {
       pageSize: 20
     }
   },
-  mounted () {
+  mounted() {
     this.dialog_step = 1
   },
   methods: {
-    closeDialog () {
+    closeDialog() {
       // this.dialogVisible = false
       this.$emit('closeDialog')
       this.dialog_step = 1
     },
-    chooseGift () {
+    chooseGift() {
       // this.dialogVisible = false
       this.$emit('closeDialog')
       this.dialog_step = 1
     },
-    giftTypeChoose (type) {
+    giftTypeChoose(type) {
       switch (type) {
         case 'coupon':
           this.gift_type = 'coupon'
@@ -488,17 +356,17 @@ export default {
       }
       this.dialog_step = 2
     },
-    removeGoods (item, index) {
+    removeGoods(item, index) {
       this.goodsForm.goods_list.splice(index, 1)
     },
-    addGoods () {
+    addGoods() {
       this.goodsSelectDialog = true
     },
-    chooseGoods (row) {
+    chooseGoods(row) {
       this.goodsForm.goods_list.push({ goods_id: row.goods_id, name: row.name, count: '' })
       this.goodsSelectDialog = false
     },
-    handleCurrentChange (val) {}
+    handleCurrentChange(val) {}
   }
 }
 </script>

@@ -3,7 +3,7 @@
   <div
     :class="{
       'wgt-showcase': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">

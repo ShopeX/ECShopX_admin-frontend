@@ -19,37 +19,15 @@
       label-position="top"
       label-width="140px"
     >
-      <el-form-item
-        label="总部分账占比"
-        prop="headquarters_proportion"
-      >
-        <el-input
-          v-model="form.headquarters_proportion"
-          style="width: 70%"
-        >
+      <el-form-item label="总部分账占比" prop="headquarters_proportion">
+        <el-input v-model="form.headquarters_proportion" style="width: 70%">
           <i slot="suffix">%</i>
         </el-input>
       </el-form-item>
     </el-form>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button
-        type="primary"
-        size="small"
-        plain
-        @click="handleDialogClose"
-      >
-        取 消
-      </el-button>
-      <el-button
-        type="primary"
-        size="small"
-        @click="handleDialogChange"
-      >
-        确 定
-      </el-button>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" size="small" plain @click="handleDialogClose"> 取 消 </el-button>
+      <el-button type="primary" size="small" @click="handleDialogChange"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>
@@ -58,7 +36,7 @@
 import { dealerRelStore } from '@/api/marketing'
 export default {
   props: ['content', 'handleClick', 'visible', 'info'],
-  data () {
+  data() {
     return {
       form: {
         headquarters_proportion: ''
@@ -71,10 +49,10 @@ export default {
     }
   },
   methods: {
-    handleDialogChange () {
+    handleDialogChange() {
       const { audit_state } = this.info
       if (audit_state == '3') {
-        this.$refs.form.validate((valid) => {
+        this.$refs.form.validate(valid => {
           if (valid) {
             this.onPush()
           }
@@ -83,7 +61,7 @@ export default {
         this.onPush()
       }
     },
-    onPush () {
+    onPush() {
       const { operator_id, distributor_id, name } = this.info
       dealerRelStore({
         ...this.form,
@@ -91,7 +69,7 @@ export default {
         distributor_id,
         name,
         is_rel: 0
-      }).then((res) => {
+      }).then(res => {
         this.$emit('handleClick', false)
         this.form = {}
         this.$message({
@@ -100,11 +78,11 @@ export default {
         })
       })
     },
-    handleDialogClose () {
+    handleDialogClose() {
       this.form = {}
       this.$emit('handleClick', false)
     },
-    validateNumber (rule, value, callback) {
+    validateNumber(rule, value, callback) {
       // 分账占比校验
       const reg = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!value) {

@@ -101,7 +101,7 @@ export default {
     save: function () {
       saveShansongInfo({
         ...this.form
-      }).then((res) => {
+      }).then(res => {
         console.log('saveShansongInfo', res)
         if (res.status === 200) {
           this.$message.success('同城配设置成功！')
@@ -110,7 +110,7 @@ export default {
       })
     },
     getDetail: function () {
-      getShansongInfo().then((res) => {
+      getShansongInfo().then(res => {
         const {
           data: { data }
         } = res

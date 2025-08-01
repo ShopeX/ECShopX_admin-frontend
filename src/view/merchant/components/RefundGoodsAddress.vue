@@ -109,12 +109,12 @@ export default {
           width: 'auto',
           component: ({ key }, value) => {
             return (
-              <div class='refund-address'>
+              <div class="refund-address">
                 <el-cascader v-model={value['regions_id']} options={district} />
                 <el-input
                   v-model={value['address']}
-                  class='address'
-                  placeholder='请填写退货点的具体地址'
+                  class="address"
+                  placeholder="请填写退货点的具体地址"
                 />
               </div>
             )
@@ -125,13 +125,13 @@ export default {
           width: 'auto',
           component: ({ key }, value) => {
             return (
-              <div class='concat-mobile'>
-                <el-input v-model={value['area_code']} class='input-area-code' placeholder='区号' />
-                <span class='separator'>~</span>
+              <div class="concat-mobile">
+                <el-input v-model={value['area_code']} class="input-area-code" placeholder="区号" />
+                <span class="separator">~</span>
                 <el-input
                   v-model={value['mobile']}
-                  class='input-mobile'
-                  placeholder='请填写准确的联系电话，便于买家联系（手机号时，区号可为空）'
+                  class="input-mobile"
+                  placeholder="请填写准确的联系电话，便于买家联系（手机号时，区号可为空）"
                 />
               </div>
             )
@@ -142,22 +142,22 @@ export default {
           width: 'auto',
           component: ({ key }, value) => {
             return (
-              <div class='time-block'>
+              <div class="time-block">
                 <el-time-select
                   v-model={value['startTime']}
-                  class='input-start'
-                  placeholder='起始时间'
+                  class="input-start"
+                  placeholder="起始时间"
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
                     end: '23:59'
                   }}
                 />
-                <span class='separator'>~</span>
+                <span class="separator">~</span>
                 <el-time-select
                   v-model={value['endTime']}
-                  class='input-end'
-                  placeholder='结束时间'
+                  class="input-end"
+                  placeholder="结束时间"
                   picker-options={{
                     start: '00:00',
                     step: '00:30',

@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     goodsCount() {
-      console.log(this.value.filter((item) => !!item.goodsId))
-      return this.value.filter((item) => !!item.goodsId).length
+      console.log(this.value.filter(item => !!item.goodsId))
+      return this.value.filter(item => !!item.goodsId).length
     }
   },
   watch: {
@@ -49,28 +49,28 @@ export default {
   },
   methods: {
     async handleClickAdd() {
-      const list =this.value.map(item=>{
+      const list = this.value.map(item => {
         return {
-          item_id:item.goodsId,
-          pics:[item.imgUrl],
-          itemName:item.title,
-          itemId:item.goodsId,
-          brand_logo:item.brand,
-          price:item.price,
-          market_price:item.market_price,
-          distributor_id:item.distributor_id,
-          item_en_name:item.itemEnName,
-          promotion_activity:item.promotionActivity,
-          medicine_data:item.medicine_data
+          item_id: item.goodsId,
+          pics: [item.imgUrl],
+          itemName: item.title,
+          itemId: item.goodsId,
+          brand_logo: item.brand,
+          price: item.price,
+          market_price: item.market_price,
+          distributor_id: item.distributor_id,
+          item_en_name: item.itemEnName,
+          promotion_activity: item.promotionActivity,
+          medicine_data: item.medicine_data
         }
       })
-      console.log(list,'ids')
+      console.log(list, 'ids')
       const { data } = await this.$picker.goodsitem({
-        data:list
+        data: list
       })
       console.log(data)
       const values = []
-      data.forEach((item) => {
+      data.forEach(item => {
         if (item.itemId) {
           const obj = {
             imgUrl: item.pics[0],
@@ -83,7 +83,7 @@ export default {
             distributor_id: item.distributor_id,
             itemEnName: item.item_en_name,
             promotionActivity: item.promotion_activity,
-            medicine_data:item.medicine_data
+            medicine_data: item.medicine_data
           }
           values.push(obj)
         }
@@ -101,7 +101,7 @@ export default {
         },
         onAdd: async () => {
           const { data } = await this.$picker.goods()
-          const res = data.map((item) => {
+          const res = data.map(item => {
             return {
               imgUrl: item.pics[0],
               linkPage: '',

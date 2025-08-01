@@ -4,7 +4,7 @@
 }
 </style>
 <template>
-  <SpPage >
+  <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="employee_mobile" label="员工手机号:">
         <el-input v-model="queryForm.employee_mobile" placeholder="员工手机号" />

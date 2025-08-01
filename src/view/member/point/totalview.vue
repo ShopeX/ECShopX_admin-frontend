@@ -21,23 +21,13 @@
         </div>
       </div>
     </div>
-    <el-table
-      v-loading="loading"
-      :data="dataList"
-      :height="wheight - 240"
-    >
-      <el-table-column
-        prop="timeStart"
-        label="创建时间"
-      >
+    <el-table v-loading="loading" :data="dataList" :height="wheight - 240">
+      <el-table-column prop="timeStart" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="point"
-        label="积分变动"
-      >
+      <el-table-column prop="point" label="积分变动">
         <template slot-scope="scope">
           <span v-if="scope.row.point == 0">{{ scope.row.point }}</span>
           <span
@@ -48,14 +38,8 @@
           >-{{ scope.row.outcome }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="point_desc"
-        label="记录"
-      />
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-      />
+      <el-table-column prop="point_desc" label="记录" />
+      <el-table-column prop="order_id" label="订单号" />
     </el-table>
   </div>
 </template>
@@ -65,7 +49,7 @@ import { mapGetters } from 'vuex'
 import { getMemberPoint, getPointCountIndex } from '../../../api/point'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       pageSize: 20,
@@ -76,12 +60,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     let query = { pageSize: this.pageSize, page: 1 }
-    getMemberPoint(query).then((res) => {
+    getMemberPoint(query).then(res => {
       this.dataList = res.data.data.list
     })
-    getPointCountIndex().then((res) => {
+    getPointCountIndex().then(res => {
       this.count = res.data.data
     })
   },
@@ -96,7 +80,7 @@ export default {
   .i-icon {
     margin-bottom: 10px;
   }
-  .view-flex-item{
+  .view-flex-item {
     display: flex;
     flex-direction: column;
     justify-content: center;

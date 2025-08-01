@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     getFetch() {
-      getUGCSetting({ type: 'official' }).then((res) => {
+      getUGCSetting({ type: 'official' }).then(res => {
         var { data } = res.data
         var ruleForm = {
           nickname: data['official.nickname'],
@@ -121,7 +121,7 @@ export default {
       const that = this
       const { ruleForm } = this.$data
 
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           //console.log('confirmHandle submit!!',ruleForm);
           const { video_enable } = this.$data
@@ -133,7 +133,7 @@ export default {
             }
           }
           params.setting = JSON.stringify(params.setting)
-          setUGCSetting(params).then((res) => {
+          setUGCSetting(params).then(res => {
             var { message } = res.data.data
             this.$message({
               type: 'success',

@@ -110,7 +110,7 @@ export default {
         this.total_count = res.data.data.total_count
       })
     },
-    onReset () {
+    onReset() {
       this.search_time = []
       this.params.page = 1
       this.params.status = 'wait'

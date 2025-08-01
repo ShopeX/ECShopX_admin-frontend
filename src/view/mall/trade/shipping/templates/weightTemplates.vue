@@ -33,11 +33,8 @@
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i class="iconfont icon-edit1" @click="editTemplatesAction(scope.$index, scope.row)" />
-            <i
-              class="mark iconfont icon-trash-alt1"
-              @click="deleteTemplatesAction(scope.$index, scope.row)"
-            />
+            <el-button type="text" @click="editTemplatesAction(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="text" @click="deleteTemplatesAction(scope.$index, scope.row)">删除</el-button>
           </div>
         </template>
       </el-table-column>
@@ -91,7 +88,7 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.params).then((response) => {
+      getShippingTemplatesList(this.params).then(response => {
         this.weightTemplatesList = []
         for (var item in response.data.data.list) {
           response.data.data.list[item].fee_conf = JSON.parse(
@@ -130,7 +127,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteShippingTemplates(row.template_id).then((response) => {
+          deleteShippingTemplates(row.template_id).then(response => {
             this.weightTemplatesList.splice(index, 1)
             this.$message({
               message: '删除运费模板成功',
@@ -163,7 +160,7 @@ export default {
       }
     },
     getAddress() {
-      getAddress().then((res) => {
+      getAddress().then(res => {
         this.district = res.data.data
       })
     }

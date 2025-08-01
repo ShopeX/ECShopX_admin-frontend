@@ -1,191 +1,200 @@
 <template>
-  <el-form ref="form" :model="form" class="box-set" label-width="120px">
-    <el-card header="指定日期额外积分" shadow="naver">
-      <el-form-item
-        label="活动名称"
-        prop="title"
-        :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
-      >
-        <el-col :span="8">
-          <el-input
-            v-model="form.title"
-            :disabled="hasSaveButton ? false : true"
-            :maxlength="30"
-            placeholder="请输入活动名称"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="活动时间">
-        <el-date-picker
-          v-model="activity_date"
-          type="datetimerange"
-          align="right"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :disabled="!hasSaveButton || form.is_forever ? true : false"
-          :default-time="['00:00:00', '23:59:59']"
-          :picker-options="pickerOptions2"
-        />
-        &nbsp;&nbsp;&nbsp;
-        <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
-      </el-form-item>
-      <el-form-item label="日期">
-        <el-radio-group v-model="condition" :disabled="hasSaveButton ? false : true">
-          <el-radio label="every_year"> 每年 </el-radio>
-          <el-radio label="every_month"> 每月 </el-radio>
-          <el-radio label="every_week"> 每周 </el-radio>
-          <el-radio label="date"> 指定日期 </el-radio>
-        </el-radio-group>
-        <transition name="el-fade-in-linear">
-          <div v-if="condition === 'every_year'">
-            <el-select v-model="memberDay.month" placeholder="请选择月份">
-              <el-option
-                v-for="item in monthOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-select v-model="memberDay.day" placeholder="请选择日期">
-              <el-option
-                v-for="item in dayOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </div>
-          <div v-if="condition === 'every_month'">
-            <el-select v-model="memberDay.day" placeholder="请选择日期">
-              <el-option
-                v-for="item in dayOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </div>
-          <div v-if="condition === 'every_week'">
-            <el-select v-model="memberDay.week" placeholder="请选择星期">
-              <el-option
-                v-for="item in weekOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </div>
-          <div v-if="condition === 'date'" style="width: 350px">
-            <el-date-picker
-              v-model="memberDay.date"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              style="width: 100%"
-              value-format="yyyy-MM-dd"
-              @change="dateChange"
+  <SpPage>
+    <el-form ref="form" :model="form" class="box-set" label-width="120px">
+      <el-card header="指定日期额外积分" shadow="naver">
+        <el-form-item
+          label="活动名称"
+          prop="title"
+          :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
+        >
+          <el-col :span="8">
+            <el-input
+              v-model="form.title"
+              :disabled="hasSaveButton ? false : true"
+              :maxlength="30"
+              placeholder="请输入活动名称"
             />
-          </div>
-        </transition>
-      </el-form-item>
-      <el-form-item
-        label="积分倍数"
-        prop="condition_value"
-        :rules="{ required: true, message: '升值倍数必填', trigger: 'blur' }"
-      >
-        活动期内，到账积分为获得基础积分的
-        <el-input
-          v-model="form.condition_value"
-          type="number"
-          :maxlength="30"
-          placeholder="请输入升值倍数"
-          style="width: 150px"
-          :min="1"
-          :disabled="hasSaveButton ? false : true"
-        />
-        倍
-        <!-- （基础积分+（N-1）倍基础积分） -->
-      </el-form-item>
-
-      <el-form-item label="类型">
-        <el-radio-group v-model="condition_type">
-          <el-radio label="multiple"> 倍数 </el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="满足条件">
-        <el-radio-group v-model="has_trigger_amount" :disabled="hasSaveButton ? false : true">
-          <el-radio label="1"> 是 </el-radio>
-          <el-radio label="0"> 否 </el-radio>
-        </el-radio-group>
-        <p v-if="has_trigger_amount == '1'" class="frm-tips">
-          订单金额满
+          </el-col>
+        </el-form-item>
+        <el-form-item label="活动时间">
+          <el-date-picker
+            v-model="activity_date"
+            type="datetimerange"
+            align="right"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :disabled="!hasSaveButton || form.is_forever ? true : false"
+            :default-time="['00:00:00', '23:59:59']"
+            :picker-options="pickerOptions2"
+          />
+          &nbsp;&nbsp;&nbsp;
+          <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
+        </el-form-item>
+        <el-form-item label="日期">
+          <el-radio-group v-model="condition" :disabled="hasSaveButton ? false : true">
+            <el-radio label="every_year"> 每年 </el-radio>
+            <el-radio label="every_month"> 每月 </el-radio>
+            <el-radio label="every_week"> 每周 </el-radio>
+            <el-radio label="date"> 指定日期 </el-radio>
+          </el-radio-group>
+          <transition name="el-fade-in-linear">
+            <div v-if="condition === 'every_year'">
+              <el-select v-model="memberDay.month" placeholder="请选择月份">
+                <el-option
+                  v-for="item in monthOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+              <el-select v-model="memberDay.day" placeholder="请选择日期">
+                <el-option
+                  v-for="item in dayOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+            <div v-if="condition === 'every_month'">
+              <el-select v-model="memberDay.day" placeholder="请选择日期">
+                <el-option
+                  v-for="item in dayOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+            <div v-if="condition === 'every_week'">
+              <el-select v-model="memberDay.week" placeholder="请选择星期">
+                <el-option
+                  v-for="item in weekOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+            <div v-if="condition === 'date'" style="width: 350px">
+              <el-date-picker
+                v-model="memberDay.date"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width: 100%"
+                value-format="yyyy-MM-dd"
+                @change="dateChange"
+              />
+            </div>
+          </transition>
+        </el-form-item>
+        <el-form-item
+          label="积分倍数"
+          prop="condition_value"
+          :rules="{ required: true, message: '升值倍数必填', trigger: 'blur' }"
+        >
+          活动期内，到账积分为获得基础积分的
           <el-input
-            v-model="form.trigger_amount"
+            v-model="form.condition_value"
             type="number"
             :maxlength="30"
+            placeholder="请输入升值倍数"
             style="width: 150px"
-            :min="0"
+            :min="1"
             :disabled="hasSaveButton ? false : true"
           />
-          元时，可享受该活动（不含运费）
-        </p>
-      </el-form-item>
+          倍
+          <!-- （基础积分+（N-1）倍基础积分） -->
+        </el-form-item>
 
-      <el-form-item label="适用会员">
-        <el-checkbox-group v-model="form.valid_grade" :disabled="hasSaveButton ? false : true">
-          <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
-            {{ grade.grade_name }}
-          </el-checkbox>
-          <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type">
-            付费{{ vipdata.grade_name }}
-          </el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="店铺选择">
-        <el-radio-group v-model="form.use_shop" :disabled="hasSaveButton ? false : true">
-          <el-radio label="0"> 全店铺适用 </el-radio>
-          <el-radio label="1"> 指定店铺适用 </el-radio>
-        </el-radio-group>
-        <el-card v-if="form.use_shop == '1'" header="绑定店铺" shadow="naver">
-          <el-button type="primary" @click="relStoresClick"> 选择店铺 </el-button>
-          <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
-            <el-table-column label="ID" prop="distributor_id" width="60" />
-            <el-table-column label="名称" prop="name" />
-            <el-table-column prop="address" label="地址" show-overflow-tooltip />
-            <el-table-column label="操作" width="50">
-              <template slot-scope="scope">
-                <i
-                  class="iconfont icon-trash-alt"
-                  @click="deleteStoreRow(scope.$index, form.items)"
-                />
-              </template>
-            </el-table-column>
-          </el-table>
-          <StoreSelect
-            :store-visible="storeVisible"
-            :is-valid="true"
-            :rel-shop-ids="relStores"
-            :get-status="setStatus"
-            @chooseStore="chooseStoreAction"
-            @closeStoreDialog="closeStoreDialogAction"
-          />
-        </el-card>
-      </el-form-item>
-    </el-card>
-    <div class="content-center">
-      <el-button @click.native="handleCancel"> 返回 </el-button>
-      <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
-        保存
-      </el-button>
-    </div>
-  </el-form>
+        <el-form-item label="类型">
+          <el-radio-group v-model="condition_type">
+            <el-radio label="multiple"> 倍数 </el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="满足条件">
+          <el-radio-group v-model="has_trigger_amount" :disabled="hasSaveButton ? false : true">
+            <el-radio label="1"> 是 </el-radio>
+            <el-radio label="0"> 否 </el-radio>
+          </el-radio-group>
+          <p v-if="has_trigger_amount == '1'" class="frm-tips">
+            订单金额满
+            <el-input
+              v-model="form.trigger_amount"
+              type="number"
+              :maxlength="30"
+              style="width: 150px"
+              :min="0"
+              :disabled="hasSaveButton ? false : true"
+            />
+            元时，可享受该活动（不含运费）
+          </p>
+        </el-form-item>
+
+        <el-form-item label="适用会员">
+          <el-checkbox-group v-model="form.valid_grade" :disabled="hasSaveButton ? false : true">
+            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
+              {{ grade.grade_name }}
+            </el-checkbox>
+            <el-checkbox
+              v-for="vipdata in vipGrade"
+              :key="vipdata.lv_type"
+              :label="vipdata.lv_type"
+            >
+              付费{{ vipdata.grade_name }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="店铺选择">
+          <el-radio-group v-model="form.use_shop" :disabled="hasSaveButton ? false : true">
+            <el-radio label="0"> 全店铺适用 </el-radio>
+            <el-radio label="1"> 指定店铺适用 </el-radio>
+          </el-radio-group>
+          <el-card v-if="form.use_shop == '1'" header="绑定店铺" shadow="naver">
+            <el-button type="primary" @click="relStoresClick"> 选择店铺 </el-button>
+            <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
+              <el-table-column label="ID" prop="distributor_id" width="60" />
+              <el-table-column label="名称" prop="name" />
+              <el-table-column prop="address" label="地址" show-overflow-tooltip />
+              <el-table-column label="操作" width="50">
+                <template slot-scope="scope">
+                  <i
+                    class="iconfont icon-trash-alt"
+                    @click="deleteStoreRow(scope.$index, form.items)"
+                  />
+                </template>
+              </el-table-column>
+            </el-table>
+            <StoreSelect
+              :store-visible="storeVisible"
+              :is-valid="true"
+              :rel-shop-ids="relStores"
+              :get-status="setStatus"
+              @chooseStore="chooseStoreAction"
+              @closeStoreDialog="closeStoreDialogAction"
+            />
+          </el-card>
+        </el-form-item>
+      </el-card>
+    </el-form>
+
+    <template slot="page-footer">
+      <div class="text-center">
+        <el-button @click.native="handleCancel"> 返回 </el-button>
+        <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
+          保存
+        </el-button>
+      </div>
+    </template>
+  </SpPage>
 </template>
 
 <script>
@@ -242,7 +251,7 @@ export default {
         ]
       },
       used_scene: {
-        '1': '订单抵扣'
+        1: '订单抵扣'
       },
       level: 0,
       levelData: [],

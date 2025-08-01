@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="$route.path.indexOf('templ') === -1 && $route.path.indexOf('editor') === -1">
+  <SpRouterView>
+    <SpPage>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-input v-model="params.title" placeholder="活动名称">
@@ -24,7 +24,7 @@
       <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
         <el-table-column prop="activity_id" label="ID" width="50" />
         <el-table-column label="活动名称" width="150">
-          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
+          <template slot-scope="scope"> {{ scope.row.title }}<br /> </template>
         </el-table-column>
         <el-table-column label="活动时间">
           <template slot-scope="scope">
@@ -74,9 +74,8 @@
           @current-change="handleCurrentChange"
         />
       </div>
-    </div>
-    <router-view />
-  </div>
+    </SpPage>
+  </SpRouterView>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -216,13 +215,13 @@ export default {
     },
     editItemPrice(row) {
       let form = {
-        'id': row.id,
-        'item_id': row.item_id,
-        'activity_price': row.activity_price,
-        'vip_price': row.vip_price,
-        'svip_price': row.svip_price,
-        'activity_store': row.activity_store,
-        'points': row.points
+        id: row.id,
+        item_id: row.item_id,
+        activity_price: row.activity_price,
+        vip_price: row.vip_price,
+        svip_price: row.svip_price,
+        activity_store: row.activity_store,
+        points: row.points
       }
       this.updateActivityData(form)
     },

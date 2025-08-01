@@ -25,27 +25,27 @@
     <SpRouterView>
       <el-row v-if="!VERSION_IN_PURCHASE()" :gutter="20">
         <el-col v-for="(item, index) in appList" :key="`app-item__${index}`" :span="8">
-        <div class="app-item">
-          <div class="app-logo">
-            <el-image :src="require(`@/assets/img/ectapp/${item.key}.png`)" />
-          </div>
-          <div>
-            <div class="app-name">{{ item.title }}</div>
-            <div class="app-desc">{{ item.desc }}</div>
-            <div class="app-action">
-              <el-button
-                v-if="!appStatus[item.key]"
-                type="primary"
-                plain
-                @click="onClickItem(item)"
-              >
-                {{ item.button }}
-              </el-button>
-              <el-button v-else type="primary">已开通</el-button>
+          <div class="app-item">
+            <div class="app-logo">
+              <el-image :src="require(`@/assets/img/ectapp/${item.key}.png`)" />
+            </div>
+            <div>
+              <div class="app-name">{{ item.title }}</div>
+              <div class="app-desc">{{ item.desc }}</div>
+              <div class="app-action">
+                <el-button
+                  v-if="!appStatus[item.key]"
+                  type="primary"
+                  plain
+                  @click="onClickItem(item)"
+                >
+                  {{ item.button }}
+                </el-button>
+                <el-button v-else type="primary">已开通</el-button>
+              </div>
             </div>
           </div>
-        </div>
-      </el-col>
+        </el-col>
       </el-row>
     </SpRouterView>
   </SpPage>

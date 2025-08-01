@@ -46,11 +46,7 @@ export default {
     }
   ],
   transformIn: (v) => {
-    const {
-      name,
-      base,
-      data
-    } = v
+    const { name, base, data } = v
     let _data = data.flat()[0] || {}
     return {
       name,

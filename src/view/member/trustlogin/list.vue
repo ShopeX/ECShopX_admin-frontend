@@ -1,42 +1,20 @@
 <template>
   <SpPage>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="标准版"
-        name="standard"
-      >
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="标准版" name="standard">
         <el-card>
           <el-table :data="list.standard">
-            <el-table-column
-              label="操作"
-              width="150"
-            >
+            <el-table-column label="操作" width="150">
               <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  @click="handleEdit(scope.row, 'standard')"
-                >
-                  配置
-                </el-button>
+                <el-button type="text" @click="handleEdit(scope.row, 'standard')"> 配置 </el-button>
               </template>
             </el-table-column>
-            <el-table-column
-              label="名称"
-              width="150"
-            >
+            <el-table-column label="名称" width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.name }}</div>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="300"
-            >
+            <el-table-column prop="status" label="状态" width="300">
               <template slot-scope="scope">
                 <div>
                   <el-tag
@@ -57,39 +35,20 @@
           </el-table>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane
-        label="触屏版"
-        name="touch"
-        @tab-click="handleClick"
-      >
+      <el-tab-pane label="触屏版" name="touch" @tab-click="handleClick">
         <el-card>
           <el-table :data="list.touch">
-            <el-table-column
-              label="操作"
-              width="150"
-            >
+            <el-table-column label="操作" width="150">
               <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  @click="handleEdit(scope.row, 'touch')"
-                >
-                  配置
-                </el-button>
+                <el-button type="text" @click="handleEdit(scope.row, 'touch')"> 配置 </el-button>
               </template>
             </el-table-column>
-            <el-table-column
-              label="名称"
-              width="150"
-            >
+            <el-table-column label="名称" width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.name }}</div>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="300"
-            >
+            <el-table-column prop="status" label="状态" width="300">
               <template slot-scope="scope">
                 <div>
                   <el-tag
@@ -111,10 +70,7 @@
         </el-card>
       </el-tab-pane>
       <!--修改-->
-      <sideBar
-        :visible.sync="show_sideBar"
-        :title="'配置'"
-      >
+      <sideBar :visible.sync="show_sideBar" :title="'配置'">
         <el-form>
           <el-form-item label="名称">
             <el-input v-model="form.name" />
@@ -129,12 +85,7 @@
             <el-switch v-model="form.status" />
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              @click="statusChange(form)"
-            >
-              提交
-            </el-button>
+            <el-button type="primary" @click="statusChange(form)"> 提交 </el-button>
           </el-form-item>
         </el-form>
       </sideBar>
@@ -148,7 +99,7 @@ export default {
   components: {
     sideBar
   },
-  data () {
+  data() {
     return {
       loading: false,
       show_sideBar: false,
@@ -164,16 +115,16 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
+    getConfig() {
       this.loading = true
-      getTrustLoginList().then((res) => {
+      getTrustLoginList().then(res => {
         this.list = res.data.data
         for (var i = res.data.data.length - 1; i >= 0; i--) {
           if (this.list[i].status == 'true') {
@@ -188,7 +139,7 @@ export default {
       })
     },
     // 编辑
-    handleEdit (data, loginversion) {
+    handleEdit(data, loginversion) {
       this.show_sideBar = true
       this.form.name = data.name
       if (data.status == 'true') {
@@ -202,11 +153,11 @@ export default {
       this.form.type = data.type
       this.form.loginversion = loginversion
     },
-    statusChange (data) {
+    statusChange(data) {
       console.log(data)
 
       saveStatusSetting(data)
-        .then((res) => {
+        .then(res => {
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -220,7 +171,7 @@ export default {
           })
         })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       let query = {}
       if (this.activeName === 'standard') {
@@ -229,14 +180,14 @@ export default {
         query = this.form
       }
       setstandardSetting(query)
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

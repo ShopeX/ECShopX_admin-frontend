@@ -31,7 +31,7 @@ export default {
       const { items = [] } = this.value || {}
 
       const leftFee = items
-        .filter((item) => item.checked)
+        .filter(item => item.checked)
         .reduce(
           (total, current) => total + (current.total_fee / current.num) * current.refundNum,
           0

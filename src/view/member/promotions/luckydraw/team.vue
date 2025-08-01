@@ -1,19 +1,10 @@
 <template>
   <div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="全部"
-        name="first"
-      >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="全部" name="first">
         <teamList :view="0" />
       </el-tab-pane>
-      <el-tab-pane
-        label="已中奖"
-        name="second"
-      >
+      <el-tab-pane label="已中奖" name="second">
         <teamList :view="1" />
       </el-tab-pane>
     </el-tabs>
@@ -27,7 +18,7 @@ export default {
   components: {
     teamList
   },
-  data () {
+  data() {
     return {
       loading: false,
       view: 0,
@@ -35,7 +26,7 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }

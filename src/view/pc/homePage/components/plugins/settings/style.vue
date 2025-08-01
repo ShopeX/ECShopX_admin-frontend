@@ -1,21 +1,12 @@
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">
-      基础设置
-    </div>
+    <div class="section-header with-border">基础设置</div>
     <div class="section-body">
-      <el-form
-        label-width="80px"
-        label-position="top"
-      >
+      <el-form label-width="80px" label-position="top">
         <el-form-item label="分类样式">
           <el-radio-group v-model="config.category">
-            <el-radio :label="'collapse'">
-              收起
-            </el-radio>
-            <el-radio :label="'expand'">
-              展开
-            </el-radio>
+            <el-radio :label="'collapse'"> 收起 </el-radio>
+            <el-radio :label="'expand'"> 展开 </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -30,14 +21,14 @@ export default {
   props: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -48,18 +39,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config

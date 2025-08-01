@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="name === 'hotTopic' || name === 'banner'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'hotTopic' || name === 'banner'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
@@ -14,23 +9,12 @@
           </el-form-item>
 
           <el-form-item label="组件间距">
-            <el-switch
-              v-model="base.padded"
-              active-color="#27cc6a"
-              inactive-color="#efefef"
-            />
+            <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
         </template>
 
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="setting-item slider"
-        >
-          <div
-            class="setting-remove"
-            @click="removeItem(index)"
-          >
+        <div v-for="(item, index) in data" :key="index" class="setting-item slider">
+          <div class="setting-remove" @click="removeItem(index)">
             <i class="iconfont icon-trash-alt" />
           </div>
           <template v-if="type === 'wxapp'">
@@ -40,42 +24,18 @@
               </el-form-item>
 
               <el-form-item>
-                <div
-                  class="goods-select"
-                  @click="handleGoodsChange(index)"
-                >
-                  <div
-                    v-if="item.id"
-                    class="link-content"
-                  >
-                    <template v-if="item.linkPage === 'goods'">
-                      商品：
-                    </template>
-                    <template v-if="item.linkPage === 'category'">
-                      分类：
-                    </template>
-                    <template v-if="item.linkPage === 'article'">
-                      文章：
-                    </template>
-                    <template v-if="item.linkPage === 'planting'">
-                      软文：
-                    </template>
-                    <template v-if="item.linkPage === 'link'">
-                      页面：
-                    </template>
-                    <template v-if="item.linkPage === 'marketing'">
-                      营销：
-                    </template>
+                <div class="goods-select" @click="handleGoodsChange(index)">
+                  <div v-if="item.id" class="link-content">
+                    <template v-if="item.linkPage === 'goods'"> 商品： </template>
+                    <template v-if="item.linkPage === 'category'"> 分类： </template>
+                    <template v-if="item.linkPage === 'article'"> 文章： </template>
+                    <template v-if="item.linkPage === 'planting'"> 软文： </template>
+                    <template v-if="item.linkPage === 'link'"> 页面： </template>
+                    <template v-if="item.linkPage === 'marketing'"> 营销： </template>
                     {{ item.title }}
                   </div>
-                  <div
-                    v-else
-                    class="content-center"
-                  >
-                    <i
-                      class="iconfont icon-link"
-                      @click="handleGoodsChange(index)"
-                    />设置路径
+                  <div v-else class="content-center">
+                    <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
                   </div>
                 </div>
               </el-form-item>
@@ -108,7 +68,7 @@ export default {
       default: 'wxapp'
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -118,26 +78,26 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.data = val.data
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     },
-    addItem () {
+    addItem() {
       let item = {
         imgUrl: '',
         title: '',
@@ -145,10 +105,10 @@ export default {
       }
       this.data.push(item)
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.$emit('bindLinks', index)
     }
   }

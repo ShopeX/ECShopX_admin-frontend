@@ -103,9 +103,8 @@
               :disabled="messageAutographDis"
               placeholder="请输入短信签名"
             />
-            <el-button @click="editSmsSignAction"
-              >
-{{ messageAutographDis ? '编辑' : '取消' }}
+            <el-button @click="editSmsSignAction">
+              {{ messageAutographDis ? '编辑' : '取消' }}
             </el-button>
             <el-button v-if="!messageAutographDis" type="primary" @click="saveSmsSignAction">
               确定
@@ -164,9 +163,8 @@
         <div class="section-body">
           <div class="message-tip">
             1.“通知类”短信无发送时间限制；“营销类”短信可发送时间为每天08:00-22:00，超出可发送时间提交的短信任务将在下一个可发送时间发送。<br>
-            2.关于短信长度：<el-button type="text" @click="handleInquireVariable"
-              >
-变量预估长度
+            2.关于短信长度：<el-button type="text" @click="handleInquireVariable">
+              变量预估长度
 </el-button
             ><br>
             1）预估长度：是系统评估当前模板可能产生的计费条数和字数，可用于评估充值短信条数；预估长度=短信签名+退订文案+短信正文+变量预估长度。<br>
@@ -215,10 +213,9 @@
                   v-if="currentTemplate.sms_type != 'notice'"
                   :value="currentTemplate.sms_type != 'notice'"
                   disabled
-                  >
-拒收请回复R
-</el-checkbox
                 >
+                  拒收请回复R
+                </el-checkbox>
               </el-form-item>
               <el-form-item label="短信签名：">
                 <template v-if="messageAutograph">{{ messageAutograph }}</template>
@@ -233,11 +230,9 @@
                     <el-input v-model="testMobile" placeholder="不同的测试手机以','隔开'" />
                   </el-col>
                   <el-col :span="4">
-                    <el-button type="primary" :loading="messgeLoading" @click="handleMessageTest"
-                      >
-测试发送
-</el-button
-                    >
+                    <el-button type="primary" :loading="messgeLoading" @click="handleMessageTest">
+                      测试发送
+                    </el-button>
                   </el-col>
                 </el-row>
               </el-form-item>

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <section
-      v-if="renderable"
-      class="section section-white view-warp el-row"
-    >
+    <section v-if="renderable" class="section section-white view-warp el-row">
       <div class="template-view">
         <div class="template">
           <div class="components-wrap">
@@ -16,12 +13,7 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="saveConfig"> 保存 </el-button>
     </section>
   </div>
 </template>
@@ -32,7 +24,7 @@ import { savePageParams, getParamByTempName } from '@/api/pctemplate'
 import { Footers, FooterStyle } from './components/plugins'
 export default {
   components: { Footers, FooterStyle },
-  data () {
+  data() {
     return {
       renderable: true,
       componentHeight: '',
@@ -41,17 +33,17 @@ export default {
   },
   watch: {
     info: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         console.log('watch info----->', newVal)
       }
     },
     deep: true,
     immediate: true
   },
-  mounted () {
+  mounted() {
     this.renderable = false
     let filter = { template_name: 'pc', version: 'v1.0.1', page_name: 'footer' }
-    getParamByTempName(filter).then((res) => {
+    getParamByTempName(filter).then(res => {
       const data = res.data.data.config
       if (data.length !== 0) {
         this.info = data[0].data
@@ -61,13 +53,13 @@ export default {
           }
         })
       }
-      this.$nextTick((_) => {
+      this.$nextTick(_ => {
         this.renderable = true
       })
     })
   },
   methods: {
-    saveConfig () {
+    saveConfig() {
       const params = [
         {
           name: 'footer',
@@ -82,7 +74,7 @@ export default {
         config: JSON.stringify(params),
         page_name: 'footer'
       }
-      savePageParams(filter).then((res) => {
+      savePageParams(filter).then(res => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

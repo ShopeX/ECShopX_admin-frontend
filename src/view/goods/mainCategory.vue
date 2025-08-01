@@ -18,23 +18,42 @@
         <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
       </div>
 
-      <el-table
-        ref="tableTree"
-        :data="categoryList"
-        row-key="category_id"
-        border
-        lazy
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        :load="load"
-      >
-        <el-table-column label="分类名称" width="480">
-          <template slot-scope="scope">
-            <span
-              v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-              style="display: inline-block; width: 24px"
+    <el-table
+      ref="tableTree"
+      :data="categoryList"
+      row-key="category_id"
+      border
+      lazy
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      :load="load"
+    >
+      <el-table-column label="分类名称" width="480">
+        <template slot-scope="scope">
+          <span
+            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
+            style="display: inline-block; width: 24px"
+          />
+          <span>{{ scope.row.category_name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="分类编号" prop="category_id" width="120" />
+      <el-table-column prop="sort" label="分类排序" width="140">
+        <template slot-scope="scope">
+          <div>{{ scope.row.sort }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="分类图片" width="200">
+        <template slot-scope="scope">
+          <div class="img-container">
+            <SpImage
+              v-if="scope.row.image_url"
+              :src="scope.row.image_url"
+              :width="48"
+              :height="48"
             />
             <span>{{ scope.row.category_name }}</span>
-          </template>
+          </div>
+        </template>
         </el-table-column>
         <el-table-column prop="sort" label="分类排序" width="140">
           <template slot-scope="scope">

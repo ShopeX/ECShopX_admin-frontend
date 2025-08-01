@@ -53,12 +53,17 @@ export default {
     alipay: {
       type: Boolean,
       default: false
+    },
+    textVal: {
+      type: String,
+      default:''
     }
   },
   methods: {
     getTipText() {
+      if(this.textVal)return this.textVal
       const tips = []
-      platformList.forEach((item) => {
+      platformList.forEach(item => {
         if (this[item.value]) {
           tips.push(`${item.title}商城`)
         }

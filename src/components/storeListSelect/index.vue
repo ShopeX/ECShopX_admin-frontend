@@ -7,16 +7,8 @@
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+      <el-input v-model="name" placeholder="输入店铺名称" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
       <!-- <el-switch v-model="is_distributor" active-text="店铺" inactive-text="门店" @change="handleIconClick"></el-switch> -->
     </div>
@@ -31,30 +23,13 @@
       @select="handleSelectionChange"
       @select-all="selectAll"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="name"
-        label="名称"
-      />
-      <el-table-column
-        prop="contact"
-        label="联系人"
-      />
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="name" label="名称" />
+      <el-table-column prop="contact" label="联系人" />
       <!-- <el-table-column prop="store_name" label="门店"></el-table-column> -->
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="address" label="地址" show-overflow-tooltip />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -62,15 +37,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -106,7 +75,7 @@ export default {
       default: 'selectRow'
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       storeData: [],
@@ -124,7 +93,7 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.storeVisible
     }
   },
@@ -141,46 +110,46 @@ export default {
       immediate: true,
       deep: true
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.params.is_valid = this.isValid ? this.isValid : 'true'
         this.getNewsList()
       }
     },
-    sourceType (newVal, oldVal) {
+    sourceType(newVal, oldVal) {
       console.log(newVal)
       if (newVal) {
       }
     }
   },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.distributor_id
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.params.is_distributor = this.is_distributor
       console.log(this.params)
       this.getNewsList()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        const newVal = this.selectRows.filter((item) => {
-          const isHaveRow = this.storeData.some((row) => {
+        const newVal = this.selectRows.filter(item => {
+          const isHaveRow = this.storeData.some(row => {
             if (item.distributor_id) {
               return item.distributor_id == row.distributor_id
             } else {
@@ -191,8 +160,8 @@ export default {
         })
         this.selectRows = [...newVal, ...val]
       } else {
-        const list = this.selectRows.filter((row) => {
-          const isHave = this.storeData.some((item) => {
+        const list = this.selectRows.filter(row => {
+          const isHave = this.storeData.some(item => {
             if (row.distributor_id) {
               return item.distributor_id == row.distributor_id
             } else {
@@ -205,13 +174,13 @@ export default {
       }
     },
     // 全选事件
-    selectAll (val) {
+    selectAll(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        val.forEach((item) => {
+        val.forEach(item => {
           let isInArr = -1
           if (this.selectRows.length > 0) {
-            isInArr = this.selectRows.findIndex((n) => {
+            isInArr = this.selectRows.findIndex(n => {
               if (n.distributor_id) {
                 return n.distributor_id == item.distributor_id
               } else {
@@ -224,35 +193,35 @@ export default {
           }
         })
       } else {
-        const list = this.selectRows.filter((item) => {
-          const isHave = this.storeData.some((n) => item.distributor_id === n.distributor_id)
+        const list = this.selectRows.filter(item => {
+          const isHave = this.storeData.some(n => item.distributor_id === n.distributor_id)
           return !isHave
         })
         this.selectRows = list
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       if (this.returnType === 'selectRow') {
         this.$emit('chooseStore', this.selectRows)
       } else {
         this.$emit('chooseStore', this.multipleSelection)
       }
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getDistributorEasyList(this.params).then((response) => {
+        getDistributorEasyList(this.params).then(response => {
           this.storeData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false
           this.multipleSelection = []
           this.$refs.multipleTable.clearSelection()
           if (this.selectRows) {
-            this.storeData.forEach((item) => {
-              const isHave = this.selectRows.findIndex((n) => {
+            this.storeData.forEach(item => {
+              const isHave = this.selectRows.findIndex(n => {
                 if (n.distributor_id) {
                   return n.distributor_id && n.distributor_id == item.distributor_id
                 } else {

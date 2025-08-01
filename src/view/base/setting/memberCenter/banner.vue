@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="160px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="160px">
       <div class="section-body">
         <el-form-item label="未登录BANNER：">
           <imgBox
@@ -15,11 +10,7 @@
           />
         </el-form-item>
         <el-form-item label="已登录BANNER：">
-          <imgBox
-            :img-url="form.data.login_banner"
-            inline
-            @click="handleImgChange('login')"
-          />
+          <imgBox :img-url="form.data.login_banner" inline @click="handleImgChange('login')" />
         </el-form-item>
         <el-form-item label="会员中心是否展示：">
           <el-switch v-model="form.data.is_show" />
@@ -29,29 +20,15 @@
             <el-switch v-model="form.data.url_is_open" />
           </el-form-item>
           <el-form-item label="外部链接小程序appid：">
-            <el-input
-              v-model="form.data.app_id"
-              type="text"
-              style="width: 300px"
-            />
+            <el-input v-model="form.data.app_id" type="text" style="width: 300px" />
           </el-form-item>
           <el-form-item label="外部链接路径：">
-            <el-input
-              v-model="form.data.page"
-              type="text"
-              style="width: 300px"
-            />
+            <el-input v-model="form.data.page" type="text" style="width: 300px" />
           </el-form-item>
         </div>
       </div>
       <div class="section-footer content-center">
-        <el-button
-          v-loading="loading"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
       </div>
     </el-form>
     <imgPicker
@@ -73,7 +50,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       activeName: 'banner',
       loading: false,
@@ -100,7 +77,7 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'wwidth', 'template_name', 'ali_template_name'])
   },
-  mounted () {
+  mounted() {
     let filter = {
       template_name:
         this.$route.path.indexOf('aliapp') === -1 ? this.template_name : this.ali_template_name,
@@ -108,7 +85,7 @@ export default {
       page_name: 'member_center_setting'
     }
     if (this.$route.path.indexOf('aliapp') === -1) {
-      getParamByTempName(filter).then((res) => {
+      getParamByTempName(filter).then(res => {
         if (res.data.data.list.length !== 0) {
           if (typeof res.data.data.list[0].params.data != 'undefined') {
             this.form = res.data.data.list[0].params
@@ -116,7 +93,7 @@ export default {
         }
       })
     } else {
-      getALiParamByTempName(filter).then((res) => {
+      getALiParamByTempName(filter).then(res => {
         if (res.data.data.list.length !== 0) {
           if (typeof res.data.data.list[0].params.data != 'undefined') {
             this.form = res.data.data.list[0].params
@@ -126,9 +103,9 @@ export default {
     }
   },
   methods: {
-    handleClick (tab, event) {},
+    handleClick(tab, event) {},
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       let param = {
         template_name:
           this.$route.path.indexOf('aliapp') === -1 ? this.template_name : this.ali_template_name,
@@ -136,7 +113,7 @@ export default {
         page_name: 'member_center_setting'
       }
       if (this.$route.path.indexOf('aliapp') === -1) {
-        savePageParams(param).then((res) => {
+        savePageParams(param).then(res => {
           if (res.data.data.status) {
             this.$message({
               message: '保存成功',
@@ -145,7 +122,7 @@ export default {
           }
         })
       } else {
-        saveALiPageParams(param).then((res) => {
+        saveALiPageParams(param).then(res => {
           if (res.data.data.status) {
             this.$message({
               message: '保存成功',
@@ -155,16 +132,16 @@ export default {
         })
       }
     },
-    countInput () {
+    countInput() {
       this.remnant = this.form.intro.length
     },
     //门店LOGO
-    handleImgChange (pickerImgType) {
+    handleImgChange(pickerImgType) {
       this.pickerImgType = pickerImgType
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.pickerImgType == 'no_login') {
         this.form.data.no_login_banner = data.url
       } else {
@@ -172,7 +149,7 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

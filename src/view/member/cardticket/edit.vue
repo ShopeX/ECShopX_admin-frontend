@@ -330,7 +330,12 @@
                 placeholder="请选择"
                 clearable
                 :options="categoryList"
-                :props="{ value: 'category_id', label: 'category_name', checkStrictly: false, multiple: true }"
+                :props="{
+                  value: 'category_id',
+                  label: 'category_name',
+                  checkStrictly: false,
+                  multiple: true
+                }"
               />
             </div>
           </el-col>
@@ -990,7 +995,9 @@ export default {
       params.tag_ids = JSON.stringify(this.form.tag_ids)
       params.rel_item_ids = JSON.stringify(this.form.rel_item_ids)
       params.brand_ids = JSON.stringify(this.form.brand_ids)
-      params.item_category = JSON.stringify(this.form.item_category.map(item=>item[item.length - 1]))
+      params.item_category = JSON.stringify(
+        this.form.item_category.map(item => item[item.length - 1])
+      )
       params.itemTreeLists = []
       params.rel_distributor_ids = JSON.stringify(this.form.rel_distributor_ids)
       params.rel_shops_ids = JSON.stringify(this.form.rel_shops_ids)
@@ -1175,34 +1182,34 @@ export default {
       this.categoryList = res
       this.getCategoryVal()
     },
-     getCategoryPaths(categories, targetIds) {
-        // 存储每个目标ID的路径
-        const paths = {};
-        
-        // 递归查找路径
-        function findPath(node, currentPath) {
-            const newPath = [...currentPath, node.category_id];
-            
-            // 如果当前节点是目标ID，记录路径
-            if (targetIds.includes(node.category_id)) {
-                paths[node.category_id] = newPath;
-            }
-            
-            // 继续遍历子节点
-            if (node.children && node.children.length > 0) {
-                node.children.forEach(child => findPath(child, newPath));
-            }
+    getCategoryPaths(categories, targetIds) {
+      // 存储每个目标ID的路径
+      const paths = {}
+
+      // 递归查找路径
+      function findPath(node, currentPath) {
+        const newPath = [...currentPath, node.category_id]
+
+        // 如果当前节点是目标ID，记录路径
+        if (targetIds.includes(node.category_id)) {
+          paths[node.category_id] = newPath
         }
-        
-        // 从根节点开始遍历
-        categories.forEach(root => findPath(root, []));
-        
-        // 构建结果数组，按目标ID的顺序排列
-        return targetIds.map(id => paths[id] || []);
+
+        // 继续遍历子节点
+        if (node.children && node.children.length > 0) {
+          node.children.forEach(child => findPath(child, newPath))
+        }
+      }
+
+      // 从根节点开始遍历
+      categories.forEach(root => findPath(root, []))
+
+      // 构建结果数组，按目标ID的顺序排列
+      return targetIds.map(id => paths[id] || [])
     },
-    getCategoryVal(){
-      if(this.form.card_id){
-        this.form.item_category =  this.getCategoryPaths(this.categoryList, this.form.item_category)
+    getCategoryVal() {
+      if (this.form.card_id) {
+        this.form.item_category = this.getCategoryPaths(this.categoryList, this.form.item_category)
       }
     },
     addItemTag() {

@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      class="floorImg-title"
-      :style="'text-align:' + base.float"
-    >
+    <div class="floorImg-title" :style="'text-align:' + base.float">
       {{ base.title }}
     </div>
   </div>
@@ -25,24 +19,24 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {}
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
     }

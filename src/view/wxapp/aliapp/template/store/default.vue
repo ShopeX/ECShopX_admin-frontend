@@ -420,7 +420,7 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykmembership', name: 'marketing_articles', page_name: 'index' }
-    getParamByTempName(filter).then((response) => {
+    getParamByTempName(filter).then(response => {
       if (response.data.data.length > 0) {
         var data = response.data.data[0].params
         for (var i = 0; i < data.length; i++) {
@@ -441,7 +441,7 @@ export default {
       name: 'common_setting',
       page_name: 'index'
     }
-    getParamByTempName(settingFilter).then((response) => {
+    getParamByTempName(settingFilter).then(response => {
       if (response.data.data.length > 0) {
         var data = response.data.data[0].params
         this.settings.recharge = data.recharge === 'true'
@@ -539,7 +539,7 @@ export default {
       let param = {}
       if (that.pageSettingId) {
         param = { params: that.articals, name: 'marketing_articles', id: that.pageSettingId }
-        updateParamsById(param).then((response) => {
+        updateParamsById(param).then(response => {
           this.$message({
             message: '修改文章成功',
             type: 'success',
@@ -553,7 +553,7 @@ export default {
           name: 'marketing_articles',
           page_name: 'index'
         }
-        setPageParams(param).then((response) => {
+        setPageParams(param).then(response => {
           this.$message({
             message: '添加文章成功',
             type: 'success',
@@ -565,7 +565,7 @@ export default {
       let settingParam = {}
       if (that.commonSettingId) {
         settingParam = { params: that.settings, name: 'common_setting', id: that.commonSettingId }
-        updateParamsById(settingParam).then((response) => {
+        updateParamsById(settingParam).then(response => {
           this.$message({
             message: '修改配置成功',
             type: 'success',
@@ -579,7 +579,7 @@ export default {
           name: 'common_setting',
           page_name: 'index'
         }
-        setPageParams(settingParam).then((response) => {
+        setPageParams(settingParam).then(response => {
           this.$message({
             message: '添加配置成功',
             type: 'success',

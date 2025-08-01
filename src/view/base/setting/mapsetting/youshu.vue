@@ -1,8 +1,5 @@
 <template>
-  <el-form
-    ref="form"
-    label-width="100px"
-  >
+  <el-form ref="form" label-width="100px">
     <div class="tips">
       腾讯有数秘钥获取路径：
       <el-link
@@ -15,30 +12,16 @@
       平台，进入 「数据接入」-「 接入工具 」-「 密钥管理 」。
     </div>
     <el-form-item label="merchantID">
-      <el-input
-        v-model="form.merchant_id"
-        style="width: 300px"
-      />
-      <div class="tip">
-        merchantId不区分环境。
-      </div>
+      <el-input v-model="form.merchant_id" style="width: 300px" />
+      <div class="tip">merchantId不区分环境。</div>
     </el-form-item>
 
     <el-form-item label="APP ID">
-      <el-form-item
-        label="沙盒"
-        style="margin-bottom: 10px"
-      >
-        <el-input
-          v-model="form.sandbox_app_id"
-          style="width: 300px"
-        />
+      <el-form-item label="沙盒" style="margin-bottom: 10px">
+        <el-input v-model="form.sandbox_app_id" style="width: 300px" />
       </el-form-item>
       <el-form-item label="正式">
-        <el-input
-          v-model="form.app_id"
-          style="width: 300px"
-        />
+        <el-input v-model="form.app_id" style="width: 300px" />
       </el-form-item>
       <el-form-item label="  ">
         <div class="tip">
@@ -48,20 +31,11 @@
     </el-form-item>
 
     <el-form-item label="APP Secret">
-      <el-form-item
-        label="沙盒"
-        style="margin-bottom: 10px"
-      >
-        <el-input
-          v-model="form.sandbox_app_secret"
-          style="width: 300px"
-        />
+      <el-form-item label="沙盒" style="margin-bottom: 10px">
+        <el-input v-model="form.sandbox_app_secret" style="width: 300px" />
       </el-form-item>
       <el-form-item label="正式">
-        <el-input
-          v-model="form.app_secret"
-          style="width: 300px"
-        />
+        <el-input v-model="form.app_secret" style="width: 300px" />
       </el-form-item>
       <el-form-item label="  ">
         <div class="tip">
@@ -72,20 +46,11 @@
     </el-form-item>
 
     <el-form-item label="后端 API URL">
-      <el-form-item
-        label="沙盒"
-        style="margin-bottom: 10px"
-      >
-        <el-input
-          v-model="form.sandbox_api_url"
-          style="width: 300px"
-        />
+      <el-form-item label="沙盒" style="margin-bottom: 10px">
+        <el-input v-model="form.sandbox_api_url" style="width: 300px" />
       </el-form-item>
       <el-form-item label="正式">
-        <el-input
-          v-model="form.api_url"
-          style="width: 300px"
-        />
+        <el-input v-model="form.api_url" style="width: 300px" />
       </el-form-item>
       <el-form-item label="  ">
         <div class="tip">
@@ -96,14 +61,8 @@
     </el-form-item>
 
     <el-form-item label="小程序">
-      <el-form-item
-        label="名称"
-        style="margin-bottom: 10px"
-      >
-        <el-input
-          v-model="form.weapp_name"
-          style="width: 300px"
-        />
+      <el-form-item label="名称" style="margin-bottom: 10px">
+        <el-input v-model="form.weapp_name" style="width: 300px" />
       </el-form-item>
       <el-form-item label="AppId">
         <el-input
@@ -113,32 +72,21 @@
         />
       </el-form-item>
       <el-form-item label="  ">
-        <div class="tip">
-          小程序AppID不填写或填写错误将导致该功能无法使用，请确保填写正确。
-        </div>
+        <div class="tip">小程序AppID不填写或填写错误将导致该功能无法使用，请确保填写正确。</div>
       </el-form-item>
     </el-form-item>
 
-    <el-input
-      v-model="form.id"
-      type="hidden"
-    />
+    <el-input v-model="form.id" type="hidden" />
 
     <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit"
-      >
-        保存
-      </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
     </div>
   </el-form>
 </template>
 <script>
 import { setSetting, getSetting } from '../../../../api/dataAnalysis'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'youshu',
       loading: false,
@@ -158,27 +106,27 @@ export default {
       back_API_URL_zhengshi: 'https://zhls.qq.com/'
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
-      getSetting().then((response) => {
+    getConfig() {
+      getSetting().then(response => {
         if (response.status == 200) {
           this.form = response.data.data
         }
       })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       let query = {
         ...this.form
       }
       setSetting(query)
-        .then((response) => {
+        .then(response => {
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -186,7 +134,7 @@ export default {
           this.getConfig()
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

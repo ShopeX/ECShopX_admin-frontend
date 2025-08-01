@@ -81,14 +81,14 @@ export default {
     // 获取信息
     getInfo() {
       this.loading = true
-      getAliMiniAppSetting(this.params).then((res) => {
+      getAliMiniAppSetting(this.params).then(res => {
         this.form = res.data.data
         this.loading = false
       })
     },
     // 保存数据
     save() {
-      saveAliMiniAppSetting(this.form).then((res) => {
+      saveAliMiniAppSetting(this.form).then(res => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

@@ -534,7 +534,7 @@ export default {
      * 选择商品组建回调
      * */
     pickGoods(row) {
-      let data = row.map((v) => {
+      let data = row.map(v => {
         return { ...v, item_name: v.title, item_id: v.goodsId, pics: [v.imgUrl] }
       })
       let i = Number(this.data.activeName)

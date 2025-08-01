@@ -1,65 +1,39 @@
 <template>
   <SpPage>
-  <div class="ali-sms-page">
-    <div class="btn">
-      <router-link
-        class="link"
-        to="/setting/system-config/sms-service"
-      >
-        切换短信商
-      </router-link>
-    </div>
-    <el-tabs
-      v-model="activeName"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="基础配置"
-        name="base_config"
-      />
-      <el-tab-pane
-        label="发送短信"
-        name="send_sms"
-      />
-      <el-tab-pane
-        label="短信签名"
-        name="sms_signatures"
-      />
-      <el-tab-pane
-        label="短信模板"
-        name="sms_template"
-      />
-      <el-tab-pane
-        label="短信发送记录"
-        name="sms_sendLog"
-      />
-      <el-tab-pane
-        label="短信群发记录"
-        name="sms_MassLog"
-      />
-    </el-tabs>
+    <div class="ali-sms-page">
+      <div class="btn">
+        <router-link class="link" to="/setting/system-config/sms-service"> 切换短信商 </router-link>
+      </div>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="基础配置" name="base_config" />
+        <el-tab-pane label="发送短信" name="send_sms" />
+        <el-tab-pane label="短信签名" name="sms_signatures" />
+        <el-tab-pane label="短信模板" name="sms_template" />
+        <el-tab-pane label="短信发送记录" name="sms_sendLog" />
+        <el-tab-pane label="短信群发记录" name="sms_MassLog" />
+      </el-tabs>
 
-    <router-view />
-  </div>
-</SpPage>
+      <router-view />
+    </div>
+  </SpPage>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       activeName: 'base_config'
     }
   },
-  mounted () {
+  mounted() {
     this.activeName = this.$route.meta
     this.routePath = this.$route.path
   },
-  updated () {
+  updated() {
     this.activeName = this.$route.meta
   },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       if (tab.name == 'base_config') {
         this.$router.push({ path: `/setting/system-config/sms-service/ali_sms` })
@@ -67,7 +41,7 @@ export default {
         this.$router.push({ path: `${this.routePath}/${tab.name}` })
       }
     },
-    switchSMS () {
+    switchSMS() {
       console.log(1)
     }
   }

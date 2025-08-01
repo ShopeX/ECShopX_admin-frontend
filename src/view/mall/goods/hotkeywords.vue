@@ -1,11 +1,6 @@
 <template>
-  <el-col
-    class="section section-white"
-    :span="24"
-  >
-    <div class="section-header with-border">
-      热门关键词配置
-    </div>
+  <el-col class="section section-white" :span="24">
+    <div class="section-header with-border">热门关键词配置</div>
     <div class="section-white content-padded">
       <el-tag
         v-for="tag in form_content"
@@ -25,22 +20,12 @@
         @keyup.enter.native="handleInputConfirm"
         @blur="handleInputConfirm"
       />
-      <el-button
-        v-else
-        class="button-new-tag"
-        size="small"
-        @click="showInput"
-      >
+      <el-button v-else class="button-new-tag" size="small" @click="showInput">
         + New Tag
       </el-button>
     </div>
     <div class="section-footer content-center">
-      <el-button
-        type="primary"
-        @click="saveContent"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="saveContent"> 保存 </el-button>
     </div>
     <br>
   </el-col>
@@ -51,7 +36,7 @@ import { setHotKeywords, getHotKeywords } from '../../../api/goods'
 // 组件
 import imgPicker from '@/components/imageselect'
 export default {
-  data () {
+  data() {
     return {
       form_content: [],
       form_content1: [],
@@ -59,22 +44,22 @@ export default {
       inputValue: ''
     }
   },
-  mounted () {
+  mounted() {
     this.getContent()
   },
   methods: {
-    handleClose (tag) {
+    handleClose(tag) {
       this.form_content.splice(this.form_content.indexOf(tag), 1)
     },
 
-    showInput () {
+    showInput() {
       this.inputVisible = true
-      this.$nextTick((_) => {
+      this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
     },
 
-    handleInputConfirm () {
+    handleInputConfirm() {
       let inputValue = this.inputValue
       if (inputValue) {
         this.form_content.push(inputValue)
@@ -82,8 +67,8 @@ export default {
       this.inputVisible = false
       this.inputValue = ''
     },
-    saveContent () {
-      setHotKeywords({ content: this.form_content }).then((res) => {
+    saveContent() {
+      setHotKeywords({ content: this.form_content }).then(res => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -91,8 +76,8 @@ export default {
         })
       })
     },
-    getContent () {
-      getHotKeywords().then((res) => {
+    getContent() {
+      getHotKeywords().then(res => {
         this.form_content = res.data.data.content || []
       })
     }

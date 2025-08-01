@@ -68,12 +68,12 @@ export default {
   methods: {
     getRegisterData() {
       var params = { type: 'point' }
-      getRegisterPoint(params).then((response) => {
+      getRegisterPoint(params).then(response => {
         this.form = response.data.data
       })
     },
     save() {
-      saveRegisterPoint(this.form).then((response) => {
+      saveRegisterPoint(this.form).then(response => {
         this.getRegisterData()
         this.$message({
           message: '添加成功',

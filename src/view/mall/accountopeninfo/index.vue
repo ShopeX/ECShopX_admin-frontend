@@ -1,12 +1,11 @@
-
 <template>
   <div class="cus-openaccount" v-loading="loading">
     <el-card>
       <el-row>
-        <el-col :span='3'>
+        <el-col :span="3">
           <img class="cus-openaccount-img" src="@/assets/img/adapay/qiye.png" alt="">
         </el-col>
-        <el-col :span='20'>
+        <el-col :span="20">
           <div class="cus-openaccount-flex">
             <p class="cus-openaccount-row">{{ MerchantEntry.mer_name || '-' }}</p>
             <div class="cus-openaccount-pfonts cus-margin-40">
@@ -37,7 +36,12 @@
             <div slot="header">企业信息</div>
             <div class="body">
               <el-row>
-                <el-col v-for="(col, colIndex) in enterPriseInfo" :key="colIndex" :span="7" :offset='1'>
+                <el-col
+                  v-for="(col, colIndex) in enterPriseInfo"
+                  :key="colIndex"
+                  :span="7"
+                  :offset="1"
+                >
                   <el-row class="cus-row-mb">
                     <el-col :span="9" class="cus-row-flex">{{ addSymbol(col.name) }}</el-col>
                     <el-col :span="15" class="word-warp">
@@ -51,7 +55,7 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">三证合一码：</el-col>
                     <el-image
@@ -64,7 +68,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="12" class="cus-row-flex">法人/小微负责人身份证正面：</el-col>
                     <el-image
@@ -77,7 +81,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">门店：</el-col>
                     <el-image
@@ -90,7 +94,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="12" class="cus-row-flex">法人/小微负责人身份证反面：</el-col>
                     <el-image
@@ -103,7 +107,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">股东身份证正面：</el-col>
                     <el-image
@@ -116,7 +120,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="12" class="cus-row-flex">股东身份证反面：</el-col>
                     <el-image
@@ -136,14 +140,19 @@
             <div slot="header">联系人信息</div>
             <div class="body">
               <el-row>
-                <el-col v-for="(col, colIndex) in enterContractInfo" :key="colIndex" :span="7" :offset='1'>
+                <el-col
+                  v-for="(col, colIndex) in enterContractInfo"
+                  :key="colIndex"
+                  :span="7"
+                  :offset="1"
+                >
                   <el-row class="cus-row-mb">
                     <el-col :span="11" class="cus-row-flex">{{ addSymbol(col.name) }}</el-col>
                     <el-col :span="13" class="word-warp">
                       {{
                         col.filter
-                          ? (col.filter(MerchantEntry[col.field]) || '-')
-                          : (MerchantEntry[col.field] || '-')
+                          ? col.filter(MerchantEntry[col.field]) || '-'
+                          : MerchantEntry[col.field] || '-'
                       }}
                     </el-col>
                   </el-row>
@@ -155,21 +164,26 @@
             <div slot="header">结算账户信息</div>
             <div class="body">
               <el-row>
-                <el-col v-for="(col, colIndex) in enterAccountInfo" :key="colIndex" :span="7" :offset='1'>
+                <el-col
+                  v-for="(col, colIndex) in enterAccountInfo"
+                  :key="colIndex"
+                  :span="7"
+                  :offset="1"
+                >
                   <el-row class="cus-row-mb">
                     <el-col :span="11" class="cus-row-flex">{{ addSymbol(col.name) }}</el-col>
                     <el-col :span="13" class="word-warp">
                       {{
                         col.filter
-                          ? (col.filter(MerchantEntry[col.field]) || '-')
-                          : (MerchantEntry[col.field] || '-')
+                          ? col.filter(MerchantEntry[col.field]) || '-'
+                          : MerchantEntry[col.field] || '-'
                       }}
                     </el-col>
                   </el-row>
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">结算账号开户证明：</el-col>
                     <el-image
@@ -182,9 +196,11 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
-                    <el-col :span="12" class="cus-row-flex">开户许可证/小微负责人银行卡正面照：</el-col>
+                    <el-col :span="12" class="cus-row-flex">
+                      开户许可证/小微负责人银行卡正面照：
+                    </el-col>
                     <el-image
                       v-if="SubmitLicense.account_opening_permit_url"
                       style="height: 100px; vertical-align: middle"
@@ -202,14 +218,19 @@
             <div slot="header">其他信息</div>
             <div class="body">
               <el-row>
-                <el-col v-for="(col, colIndex) in enterOtherInfo" :key="colIndex" :span="7" :offset='1'>
+                <el-col
+                  v-for="(col, colIndex) in enterOtherInfo"
+                  :key="colIndex"
+                  :span="7"
+                  :offset="1"
+                >
                   <el-row class="cus-row-mb">
                     <el-col :span="11" class="cus-row-flex">{{ addSymbol(col.name) }}</el-col>
                     <el-col :span="13" class="word-warp">
                       {{
                         col.filter
-                          ? (col.filter(SubmitLicense[col.field]) || '-')
-                          : (SubmitLicense[col.field] || '-')
+                          ? col.filter(SubmitLicense[col.field]) || '-'
+                          : SubmitLicense[col.field] || '-'
                       }}
                     </el-col>
                   </el-row>
@@ -242,7 +263,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">租赁合同：</el-col>
                     <el-image
@@ -255,7 +276,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="12" class="cus-row-flex">icp备案许可证明/许可证编码：</el-col>
                     <el-image
@@ -268,7 +289,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="10" style="margin-top:20px">
+                <el-col :span="10" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="10" class="cus-row-flex">交易测试记录：</el-col>
                     <el-image
@@ -281,7 +302,7 @@
                     <span v-else>-</span>
                   </el-row>
                 </el-col>
-                <el-col :span="11" :offset="2" style="margin-top:20px">
+                <el-col :span="11" :offset="2" style="margin-top: 20px">
                   <el-row class="cus-row-dis">
                     <el-col :span="12" class="cus-row-flex">业务场景证明材料：</el-col>
                     <el-image
@@ -303,8 +324,9 @@
             <el-timeline-item
               v-for="(item, index) in logList"
               :key="index"
-              :timestamp="item.create_date">
-              {{item.content}}
+              :timestamp="item.create_date"
+            >
+              {{ item.content }}
             </el-timeline-item>
           </el-timeline>
           <el-pagination
@@ -315,8 +337,7 @@
             :total="total_count"
             @current-change="handleCurrentChange"
             @size-change="handleSizeChange"
-          >
-          </el-pagination>
+          />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -331,64 +352,70 @@ export default {
       loading: true,
       MerchantEntry: {},
       SubmitLicense: {},
-      enterPriseInfo: [ // 企业信息
-        { name: "法人姓名", field: "legal_name" },
-        { name: "法人身份证号码", field: "legal_idno" },
-        { name: "法人证件有效期", field: "legal_id_expires" },
-        { name: "法人电话号码", field: "legal_mp" },
-        { name: "营业执照号", field: "license_code" },
-        { name: "商户有效日期", field: "mer_valid_date" },
-        { name: "经营地址", field: "cust_addr" },
-        { name: "注册手机号", field: "usr_phone" }
+      enterPriseInfo: [
+        // 企业信息
+        { name: '法人姓名', field: 'legal_name' },
+        { name: '法人身份证号码', field: 'legal_idno' },
+        { name: '法人证件有效期', field: 'legal_id_expires' },
+        { name: '法人电话号码', field: 'legal_mp' },
+        { name: '营业执照号', field: 'license_code' },
+        { name: '商户有效日期', field: 'mer_valid_date' },
+        { name: '经营地址', field: 'cust_addr' },
+        { name: '注册手机号', field: 'usr_phone' }
       ],
-      enterContractInfo: [ // 联系人信息
-        { name: "联系人姓名", field: "cont_name" },
-        { name: "联系人手机号码", field: "cont_phone" },
-        { name: "电子邮箱", field: "customer_email" }
+      enterContractInfo: [
+        // 联系人信息
+        { name: '联系人姓名', field: 'cont_name' },
+        { name: '联系人手机号码', field: 'cont_phone' },
+        { name: '电子邮箱', field: 'customer_email' }
       ],
-      enterAccountInfo: [ // 结算账户信息
-        { name: "结算银行卡号", field: "card_id_mask" },
-        { name: "结算银行卡开户姓名", field: "card_name" },
-        { name: "结算银行卡所属银行", field: "bank_name" },
-        { name: "结算银行卡开户省市", field: "", filter: this.areaFilter },
-        { name: "结算银行账户类型", field: "", filter: this.bankAcctType }
+      enterAccountInfo: [
+        // 结算账户信息
+        { name: '结算银行卡号', field: 'card_id_mask' },
+        { name: '结算银行卡开户姓名', field: 'card_name' },
+        { name: '结算银行卡所属银行', field: 'bank_name' },
+        { name: '结算银行卡开户省市', field: '', filter: this.areaFilter },
+        { name: '结算银行账户类型', field: '', filter: this.bankAcctType }
       ],
-      enterOtherInfo: [ // 其他信息
-        { name: "商城地址", field: "business_add" },
-        { name: "股东身份证姓名", field: "cert_name" },
-        { name: "股东身份证号", field: "cert_id" },
-        { name: "行业资质文件类型", field: "", filter: this.docTypeFilter }
+      enterOtherInfo: [
+        // 其他信息
+        { name: '商城地址', field: 'business_add' },
+        { name: '股东身份证姓名', field: 'cert_name' },
+        { name: '股东身份证号', field: 'cert_id' },
+        { name: '行业资质文件类型', field: '', filter: this.docTypeFilter }
       ],
       logList: [],
       total_count: 0,
       params: {
         page: 1,
         page_size: 10
-      },
+      }
     }
   },
   methods: {
-    getDetail () {
-      getOpenDetail().then((response) => {
-        const { info } = response.data.data || {}
-        this.MerchantEntry = info.MerchantEntry || {}
-        this.SubmitLicense = info.SubmitLicense || {}
-        this.loading = false
-      }).catch((error) => {
-        this.loading = false
-        this.$message({
-          type: 'error',
-          message: '获取详情出错'
+    getDetail() {
+      getOpenDetail()
+        .then(response => {
+          const { info } = response.data.data || {}
+          this.MerchantEntry = info.MerchantEntry || {}
+          this.SubmitLicense = info.SubmitLicense || {}
+          this.loading = false
         })
-      })
+        .catch(error => {
+          this.loading = false
+          this.$message({
+            type: 'error',
+            message: '获取详情出错'
+          })
+        })
     },
-    getLogList () {
+    getLogList() {
       getAdapayLogList({ log_type: 'merchant', ...this.params })
-        .then((response) => {
+        .then(response => {
           this.logList = response.data.data.list || {}
           this.total_count = response.data.data.total_count || 0
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -396,20 +423,26 @@ export default {
           })
         })
     },
-    bankAcctType () {
+    bankAcctType() {
       let { bank_acct_type } = this.MerchantEntry
       return (bank_acct_type === '1' && '对公') || (bank_acct_type === '2' && '对私') || '-'
     },
-    areaFilter () {
+    areaFilter() {
       let { prov_code, area_code } = this.MerchantEntry
-      return (prov_code + '-' + area_code) || '-'
+      return prov_code + '-' + area_code || '-'
     },
-    docTypeFilter () {
+    docTypeFilter() {
       let { industry_qualify_doc_type } = this.SubmitLicense
-      return (industry_qualify_doc_type === '1' && '游戏类') || (industry_qualify_doc_type === '2' && '直播类') || (industry_qualify_doc_type === '3' && '小说图书类') || (industry_qualify_doc_type === '4' && '其他') || '-'
+      return (
+        (industry_qualify_doc_type === '1' && '游戏类') ||
+        (industry_qualify_doc_type === '2' && '直播类') ||
+        (industry_qualify_doc_type === '3' && '小说图书类') ||
+        (industry_qualify_doc_type === '4' && '其他') ||
+        '-'
+      )
     },
-    addSymbol (symbol) {
-      if (symbol.indexOf("：") > -1) {
+    addSymbol(symbol) {
+      if (symbol.indexOf('：') > -1) {
         return symbol
       }
       return `${symbol}：`
@@ -418,7 +451,7 @@ export default {
       this.params.page = page_num
       this.getLogList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.page_size = pageSize
       this.getLogList()
@@ -429,9 +462,9 @@ export default {
         this.params.page = 1
         this.getLogList()
       }
-    },
+    }
   },
-  mounted () {
+  mounted() {
     this.getDetail()
   }
 }
@@ -461,7 +494,7 @@ export default {
     }
     :nth-child(3) {
       color: #ccc;
-      margin-left: 50px
+      margin-left: 50px;
     }
   }
   &-flex {

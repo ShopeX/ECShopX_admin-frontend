@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import { status_map, prize_types } from './constants'
 
-export const tableSchema = vm =>
+export const tableSchema = (vm) =>
   createSetting({
     search: [
       // { name: '', placeholder: '请选择选择区域', key: 'regionauth_id', type: 'select', options: vm?.areas },
@@ -137,7 +137,7 @@ export const tableSchema = vm =>
     ]
   })
 
-export const statisticsFormSchema = vm =>
+export const statisticsFormSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
@@ -147,14 +147,14 @@ export const statisticsFormSchema = vm =>
           if (!vm.lotteryDialogShow) return null
           return (
             <SpFinder
-              ref="finder"
+              ref='finder'
               url={'promotions/getturntable_log/byid?activity_id=' + vm.editRow?.id}
               fixed-row-action
-              row-actions-width="200px"
+              row-actions-width='200px'
               no-selection
               attrs={{
                 hooks: {
-                  beforeSearch: params => {
+                  beforeSearch: (params) => {
                     return {
                       ...params,
                       page_size: params.pageSize
@@ -164,7 +164,7 @@ export const statisticsFormSchema = vm =>
               }}
               setting={outputSchema}
             >
-              <div slot="tableTop">
+              <div slot='tableTop'>
                 <div
                   style={{
                     display: 'flex',
@@ -178,7 +178,7 @@ export const statisticsFormSchema = vm =>
                   <div>总抽奖人数:{vm?.dialogData?.totalGet}</div>
                   <div>中奖次数:{vm?.dialogData?.totalGetUser}</div>
                   <div>中奖人数:{vm?.dialogData?.totalUser}</div>
-                  <el-button type="primary" onClick={() => vm.exportReport()}>
+                  <el-button type='primary' onClick={() => vm.exportReport()}>
                     导出报表
                   </el-button>
                 </div>

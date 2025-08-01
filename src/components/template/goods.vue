@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -20,17 +14,14 @@
     </div>
     <div>
       <div class="goods-card">
-        <div
-          class="goods"
-          :class="config.style"
-        >
+        <div class="goods" :class="config.style">
           <img
             class="thumbnail"
             :src="
               data[0].img_url ||
-                (config.style === 'card'
-                  ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
-                  : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
+              (config.style === 'card'
+                ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
+                : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
             "
           >
           <div class="caption">
@@ -38,27 +29,19 @@
               {{ data[0].item_name || '商品标题' }}
             </div>
             <template v-if="config.style === 'card'">
-              <div class="tips">
-                点击查看产品详情
-              </div>
+              <div class="tips">点击查看产品详情</div>
               <div class="sales-num">
                 <i class="iconfont icon-user-friends" />{{ data[0].sales || 0 }}
               </div>
             </template>
             <template v-else>
-              <div class="price">
-                价格： ¥{{ data[0].price / 100 }}
-              </div>
+              <div class="price">价格： ¥{{ data[0].price / 100 }}</div>
             </template>
           </div>
         </div>
         <div class="card-footer">
-          <div class="footer-btn">
-            加入心愿
-          </div>
-          <div class="footer-btn">
-            加入购买
-          </div>
+          <div class="footer-btn">加入心愿</div>
+          <div class="footer-btn">加入购买</div>
         </div>
       </div>
     </div>
@@ -77,7 +60,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -85,17 +68,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  created () {
+  created() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data

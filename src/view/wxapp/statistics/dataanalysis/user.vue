@@ -2,16 +2,10 @@
   <div>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">
-          性别及年龄分布
-        </div>
+        <div class="section-title">性别及年龄分布</div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="gender.currentUserType"
-          placeholder="请选择"
-          @change="handleGenderUser"
-        >
+        <el-select v-model="gender.currentUserType" placeholder="请选择" @change="handleGenderUser">
           <el-option
             v-for="item in user"
             :key="item.value"
@@ -19,11 +13,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
-          v-model="gender.date"
-          placeholder="请选择"
-          @change="handleGenderDate"
-        >
+        <el-select v-model="gender.date" placeholder="请选择" @change="handleGenderDate">
           <el-option
             v-for="item in date"
             :key="item.value"
@@ -47,16 +37,10 @@
     </section>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">
-          地区分布
-        </div>
+        <div class="section-title">地区分布</div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="area.currentUserType"
-          placeholder="请选择"
-          @change="handleAreaUser"
-        >
+        <el-select v-model="area.currentUserType" placeholder="请选择" @change="handleAreaUser">
           <el-option
             v-for="item in user"
             :key="item.value"
@@ -64,11 +48,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
-          v-model="area.date"
-          placeholder="请选择"
-          @change="handleAreaDate"
-        >
+        <el-select v-model="area.date" placeholder="请选择" @change="handleAreaDate">
           <el-option
             v-for="item in date"
             :key="item.value"
@@ -83,9 +63,7 @@
     </section>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">
-          终端及机型分布
-        </div>
+        <div class="section-title">终端及机型分布</div>
       </div>
       <div class="section-header">
         <el-select
@@ -100,11 +78,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
-          v-model="terminal.date"
-          placeholder="请选择"
-          @change="handleTerminalDate"
-        >
+        <el-select v-model="terminal.date" placeholder="请选择" @change="handleTerminalDate">
           <el-option
             v-for="item in date"
             :key="item.value"
@@ -143,7 +117,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       user: [
         {
@@ -196,7 +170,7 @@ export default {
     }
   },
   watch: {
-    wxapp (value) {
+    wxapp(value) {
       if (value) {
         this.setAppId(value)
         if (this.wxAppId) {
@@ -205,14 +179,14 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setAppId(this.wxapp)
     if (this.wxAppId) {
       this.fetchUserData()
     }
   },
   methods: {
-    initGenderChart () {
+    initGenderChart() {
       if (!this.gender.data) return
       var gender_label = [],
         gender_value = [],
@@ -292,7 +266,7 @@ export default {
         }
       })
     },
-    initAreaChart () {
+    initAreaChart() {
       if (!this.area.data) return
       var area_label = [],
         area_value = []
@@ -331,7 +305,7 @@ export default {
         }
       })
     },
-    initTerminal () {
+    initTerminal() {
       if (!this.terminal.data) return
       var terminal_label = [],
         terminal_value = [],
@@ -424,31 +398,31 @@ export default {
       this.terminal.chart.terminal = new Chart(terminalDoughnut, terminalConfig)
       this.terminal.chart.model = new Chart(modelDoughnut, modelConfig)
     },
-    handleGenderUser (val) {
+    handleGenderUser(val) {
       this.gender.currentUserType = val
       this.updateGender()
     },
-    handleGenderDate (val) {
+    handleGenderDate(val) {
       this.gender.date = val
       this.fetchUserData(val, 'gender')
     },
-    handleAreaUser (val) {
+    handleAreaUser(val) {
       this.area.currentUserType = val
       this.updateArea()
     },
-    handleAreaDate (val) {
+    handleAreaDate(val) {
       this.area.date = val
       this.fetchUserData(val, 'area')
     },
-    handleTerminalUser (val) {
+    handleTerminalUser(val) {
       this.terminal.currentUserType = val
       this.updateTerminal()
     },
-    handleTerminalDate (val) {
+    handleTerminalDate(val) {
       this.terminal.date = val
       this.fetchUserData(val, 'terminal')
     },
-    updateGender () {
+    updateGender() {
       var gender_label = [],
         gender_value = [],
         age_label = [],
@@ -474,7 +448,7 @@ export default {
       this.gender.chart.age.data.datasets[0].data = age_value
       this.gender.chart.age.update()
     },
-    updateArea () {
+    updateArea() {
       var area_label = [],
         area_value = []
       var area = this.area.data[this.area.currentUserType].city
@@ -488,7 +462,7 @@ export default {
       this.area.chart.data.datasets[0].data = area_value
       this.area.chart.update()
     },
-    updateTerminal () {
+    updateTerminal() {
       var terminal_label = [],
         terminal_value = [],
         model_label = [],
@@ -514,11 +488,11 @@ export default {
       this.terminal.chart.model.data.datasets[0].data = model_value
       this.terminal.chart.model.update()
     },
-    fetchUserData (date, chart) {
+    fetchUserData(date, chart) {
       getUserPortrait({
         wxaAppId: this.wxAppId,
         queryType: date || 'weekly'
-      }).then((res) => {
+      }).then(res => {
         if (chart) {
           this[chart].data = res.data.data
           if (chart === 'gender') {
@@ -556,7 +530,7 @@ export default {
         }
       })
     },
-    setAppId (val) {
+    setAppId(val) {
       this.wxAppId = val
     }
   }

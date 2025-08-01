@@ -1,42 +1,18 @@
 <template>
   <div class="checkBoxDialog">
-    <el-dialog
-      :visible.sync="visible"
-      :before-close="handleClose"
-      :modal-append-to-body="false"
-    >
-      <div
-        slot="title"
-        class="title"
-      >
-        <i class="el-icon-info" /> 提交审批
-      </div>
-      <p
-        class="message"
-        v-html="message"
-      />
+    <el-dialog :visible.sync="visible" :before-close="handleClose" :modal-append-to-body="false">
+      <div slot="title" class="title"><i class="el-icon-info" /> 提交审批</div>
+      <p class="message" v-html="message" />
 
-      <el-form
-        ref="form"
-        :model="form"
-      >
-        <el-form-item
-          v-if="is_sms"
-          style="justify-content: center"
-        >
+      <el-form ref="form" :model="form">
+        <el-form-item v-if="is_sms" style="justify-content: center">
           <el-checkbox-group v-model="form.is_sms">
-            <el-checkbox
-              :key="info[0].value"
-              value="1"
-            >
+            <el-checkbox :key="info[0].value" value="1">
               {{ info[0].value }}<br>(短信费用将在短信余额中扣除)
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item
-          v-if="is_idea"
-          style="justify-content: center"
-        >
+        <el-form-item v-if="is_idea" style="justify-content: center">
           <el-input
             v-model="form.comments"
             style="width: 350px"
@@ -49,10 +25,7 @@
         </el-form-item>
       </el-form>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <!-- <el-button type="primary" size="mini" @click="confirm">确 定</el-button> -->
         <loading-btn
           ref="loadingBtn"
@@ -95,7 +68,7 @@ export default {
   //   debugger
   //   this.form.is_sms = this.isNote=='1'?true:false
   // },
-  data () {
+  data() {
     return {
       form: {
         is_sms: '',
@@ -104,7 +77,7 @@ export default {
     }
   },
   methods: {
-    confirm () {
+    confirm() {
       this.$refs['loadingBtn'].loading = true
       if (this.form.is_sms) {
         this.form.is_sms = '1'
@@ -114,15 +87,15 @@ export default {
       this.$emit('checkBoxConfirmHandle', this.form)
       this.closeLoading()
     },
-    handleClose () {
+    handleClose() {
       this.$emit('checkBoxVisibleHandle')
       this.clearForm()
     },
-    closeLoading () {
+    closeLoading() {
       this.clearForm()
       this.$refs['loadingBtn'].closeLoading()
     },
-    clearForm () {
+    clearForm() {
       this.form.is_sms = ''
       this.form.comments = ''
     }

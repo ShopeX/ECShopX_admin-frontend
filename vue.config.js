@@ -6,6 +6,31 @@ const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const bodyParser = require('body-parser')
+const webpackPluginsAutoI18n = require('webpack-auto-i18n-plugin')
+const { YoudaoTranslator, EmptyTranslator, Translator } = require('webpack-auto-i18n-plugin')
+const axios = require('axios')
+const { generateId } = require('./build/utils')
+
+
+const AutoI18nOptions = {
+  excludedPath: ['/src/i18n/index.js'],
+  globalPath: path.resolve(__dirname, './src/i18n/lang'),
+  targetLangList: ['en', 'zh-tw'],
+  includePath: [
+    /src\//,
+    /node_modules\/element-ui\//,
+  ],
+}
+
+if (process.env.NODE_ENV === 'development') {
+  AutoI18nOptions['translator'] = new YoudaoTranslator({
+    appId: process.env.VUE_YOUDAO_APPID,
+    appKey: process.env.VUE_YOUDAO_APPKEY
+  })
+}
+
+const i18nPlugin = new webpackPluginsAutoI18n.default(AutoI18nOptions)
 
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env
@@ -231,6 +256,7 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
+    config.plugin('i18n').use(i18nPlugin)
 
     config.plugin('define').tap(args => {
       args[0]['process.env'] = {
@@ -313,6 +339,13 @@ module.exports = {
     open: true,
     compress: true, // 启用 gzip 压缩
     historyApiFallback: true, // 支持 HTML5 History API
+    // 添加中间件来解析请求体
+    setupMiddlewares: (middlewares, devServer) => {
+      // 添加body-parser中间件来解析请求体
+      devServer.app.use(bodyParser.json())
+      devServer.app.use(bodyParser.urlencoded({ extended: true }))
+      return middlewares
+    },
     // 性能优化
     client: {
       logging: 'warn', // 只显示警告和错误
@@ -322,30 +355,65 @@ module.exports = {
         warnings: false
       }
     },
-    // 代理配置示例
-    proxy: {
-      '/website/decorate': {
-        target: process.env.VUE_APP_TEMPLATE_URL,
-        changeOrigin: true,
-        // pathRewrite:{
-        //   '^/website/decorate': '/template'
-        // }
-      },
-      '/_nuxt': {
-        target: process.env.VUE_APP_TEMPLATE_URL,
-        changeOrigin: true,
-        // pathRewrite:{
-        //   '^/post_template': ''
-        // }
-      }
-      // '/api': {
-      //   target: 'http://localhost:3000',
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api': ''
-      //   }
-      // }
-    }
+    // 代理配置 - 支持所有HTTP方法 (GET, POST, PUT, DELETE, PATCH等)
+    // proxy: {
+    //   '/website/decorate': {
+    //     target: process.env.VUE_APP_TEMPLATE_URL,
+    //     changeOrigin: true,
+    //     secure: false, // 支持https
+    //     // pathRewrite:{
+    //     //   '^/website/decorate': '/template'
+    //     // }
+    //   },
+    //   '/_nuxt': {
+    //     target: process.env.VUE_APP_TEMPLATE_URL,
+    //     changeOrigin: true,
+    //     secure: false, // 支持https
+    //     // pathRewrite:{
+    //     //   '^/post_template': ''
+    //     // }
+    //   },
+    //   '/api': {
+    //     target: 'https://test-dtc-sit.amandax.com.cn',
+    //     changeOrigin: true,
+    //     // secure: false, // 支持https
+    //     // 支持所有HTTP方法
+    //     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+    //     // 处理请求体
+    //     onProxyReq: (proxyReq, req, res) => {
+    //       // 记录详细的请求信息
+    //       console.log('🔍 代理请求详情:')
+    //       console.log('  Method:', req.method)
+    //       console.log('  URL:', req.url)
+    //       // 处理POST/PUT/PATCH请求的请求体
+    //       if (req.body && ['POST', 'PUT', 'PATCH'].includes(req.method)) {
+    //         const bodyData = JSON.stringify(req.body);
+    //         proxyReq.setHeader('Content-Type', 'application/json');
+    //         proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+    //         proxyReq.write(bodyData);
+    //         console.log('  ✅ 请求体已设置:', bodyData)
+    //       } else {
+    //         console.log('  ⚠️  没有请求体或不是POST/PUT/PATCH请求')
+    //       }
+    //     },
+    //     // 处理响应
+    //     onProxyRes: (proxyRes, req, res) => {
+    //       // 可以在这里添加响应处理逻辑
+    //       console.log(`代理请求: ${req.method} ${req.url} -> ${proxyRes.statusCode}`);
+    //     },
+    //     // 错误处理
+    //     onError: (err, req, res) => {
+    //       console.error('代理错误:', err);
+    //       res.writeHead(500, {
+    //         'Content-Type': 'application/json'
+    //       });
+    //       res.end(JSON.stringify({ error: '代理请求失败' }));
+    //     },
+    //     pathRewrite: {
+    //       // '^/api': ''
+    //     }
+    //   }
+    // }
   },
 
   // 并行处理

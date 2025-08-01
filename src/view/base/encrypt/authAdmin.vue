@@ -1,91 +1,91 @@
 <template>
   <!-- 申请脱敏 -->
-   <SpPage>
-  <div class="zyk_authAdmin">
-    <el-row>
-      <el-col :span="24">
-        <el-input
-          v-model="form.reason"
-          type="textarea"
-          :autosize="{ minRows: 5, maxRows: 7 }"
-          placeholder="请填写申请理由（非必填）"
-          maxlength="100"
-          show-word-limit
-        />
-      </el-col>
-    </el-row>
-    <el-row :gutter="20" class="form">
-      <el-col :span="24">
-        <i class="el-icon-alarm-clock icon-time" /> 重复时间：
-        <el-select v-model="form.date_type" placeholder="请选择">
-          <el-option label="每天" value="0" />
-          <el-option label="周一到周五" value="1" />
-        </el-select>
-        <el-checkbox v-model="form.isDay" style="margin: 0 20px"> 全天 </el-checkbox>
-        <el-col :span="24" style="margin-top: 20px; padding-left: 20px">
-          <el-date-picker
-            v-model="form.time"
-            style="width: 384px"
-            type="daterange"
-            range-separator="至"
-            value-format="yyyy-MM-dd"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions"
-            @change="timeChange"
+  <SpPage>
+    <div class="zyk_authAdmin">
+      <el-row>
+        <el-col :span="24">
+          <el-input
+            v-model="form.reason"
+            type="textarea"
+            :autosize="{ minRows: 5, maxRows: 7 }"
+            placeholder="请填写申请理由（非必填）"
+            maxlength="100"
+            show-word-limit
           />
         </el-col>
-      </el-col>
-      <el-col v-if="!form.isDay" :span="24" style="margin-top: 20px; padding-left: 30px">
-        <el-time-picker
-          v-model="form.range"
-          is-range
-          :clearable="false"
-          style="width: 384px"
-          format="HH:mm"
-          value-format="HH:mm"
-          range-separator="至"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
-          placeholder="选择时间范围"
-        />
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col v-if="!form.isDay" :span="16">
-        每{{ form.date_type == 0 ? '天' : '周一到周五' }} {{ form.range[0] }} 至
-        {{ form.range[1] }} 有权限，生效时间：{{ form.start_time }} 结束时间：{{ form.end_time }}
-      </el-col>
+      </el-row>
+      <el-row :gutter="20" class="form">
+        <el-col :span="24">
+          <i class="el-icon-alarm-clock icon-time" /> 重复时间：
+          <el-select v-model="form.date_type" placeholder="请选择">
+            <el-option label="每天" value="0" />
+            <el-option label="周一到周五" value="1" />
+          </el-select>
+          <el-checkbox v-model="form.isDay" style="margin: 0 20px"> 全天 </el-checkbox>
+          <el-col :span="24" style="margin-top: 20px; padding-left: 20px">
+            <el-date-picker
+              v-model="form.time"
+              style="width: 384px"
+              type="daterange"
+              range-separator="至"
+              value-format="yyyy-MM-dd"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions"
+              @change="timeChange"
+            />
+          </el-col>
+        </el-col>
+        <el-col v-if="!form.isDay" :span="24" style="margin-top: 20px; padding-left: 30px">
+          <el-time-picker
+            v-model="form.range"
+            is-range
+            :clearable="false"
+            style="width: 384px"
+            format="HH:mm"
+            value-format="HH:mm"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            placeholder="选择时间范围"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col v-if="!form.isDay" :span="16">
+          每{{ form.date_type == 0 ? '天' : '周一到周五' }} {{ form.range[0] }} 至
+          {{ form.range[1] }} 有权限，生效时间：{{ form.start_time }} 结束时间：{{ form.end_time }}
+        </el-col>
 
-      <el-col v-else :span="16" class="tips">
-        每{{ form.date_type == 0 ? '天' : '周一到周五' }} 有权限，生效时间：{{
-          form.start_time
-        }}
-        结束时间：{{ form.end_time }}
-      </el-col>
-      <el-col :span="24" style="text-align: left">
-        <el-button type="primary" style="margin-top: 20px" size="small" @click="submit">
-          提 交
-        </el-button>
-      </el-col>
-      <!-- <div style="text-align: right; width: 80%"> -->
+        <el-col v-else :span="16" class="tips">
+          每{{ form.date_type == 0 ? '天' : '周一到周五' }} 有权限，生效时间：{{
+            form.start_time
+          }}
+          结束时间：{{ form.end_time }}
+        </el-col>
+        <el-col :span="24" style="text-align: left">
+          <el-button type="primary" style="margin-top: 20px" size="small" @click="submit">
+            提 交
+          </el-button>
+        </el-col>
+        <!-- <div style="text-align: right; width: 80%"> -->
 
-      <!-- </div> -->
-    </el-row>
+        <!-- </div> -->
+      </el-row>
 
-    <el-divider />
+      <el-divider />
 
-    <SpFinder
-      ref="finder"
-      :split-count="4"
-      :search-row-count="2"
-      :fixed-row-action="true"
-      :setting="setting"
-      no-selection
-      url="/datapass"
-    />
-  </div>
-</SpPage>
+      <SpFinder
+        ref="finder"
+        :split-count="4"
+        :search-row-count="2"
+        :fixed-row-action="true"
+        :setting="setting"
+        no-selection
+        url="/datapass"
+      />
+    </div>
+  </SpPage>
 </template>
 
 <script>

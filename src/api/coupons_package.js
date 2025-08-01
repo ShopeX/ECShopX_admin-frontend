@@ -1,6 +1,6 @@
 import { fetch } from './request'
 // 获取卡券包列表
-export const packageList = params => {
+export const packageList = (params) => {
   return fetch({
     url: '/voucher/package/list',
     method: 'get',
@@ -9,7 +9,7 @@ export const packageList = params => {
 }
 
 // 获取优惠券列表
-export const couponList = params => {
+export const couponList = (params) => {
   return fetch({
     url: '/discountcard/list',
     method: 'get',
@@ -18,7 +18,7 @@ export const couponList = params => {
 }
 
 // 创建劵包
-export const createdCoupons = params => {
+export const createdCoupons = (params) => {
   return fetch({
     url: '/voucher/package',
     method: 'post',
@@ -26,7 +26,7 @@ export const createdCoupons = params => {
   })
 }
 // 查看卡劵包
-export const couponDetail = params => {
+export const couponDetail = (params) => {
   return fetch({
     url: '/voucher/package/details',
     method: 'get',
@@ -35,7 +35,7 @@ export const couponDetail = params => {
 }
 
 // 编辑卡劵包
-export const editCouponPackage = params => {
+export const editCouponPackage = (params) => {
   return fetch({
     url: '/voucher/package',
     method: 'patch',
@@ -44,7 +44,7 @@ export const editCouponPackage = params => {
 }
 
 // 删除劵包
-export const deleteCoupon = params => {
+export const deleteCoupon = (params) => {
   return fetch({
     url: '/voucher/package',
     method: 'delete',
@@ -53,7 +53,7 @@ export const deleteCoupon = params => {
 }
 
 // 卡劵包领取日志
-export const couponLog = params => {
+export const couponLog = (params) => {
   return fetch({
     url: '/voucher/package/get_receives_log',
     method: 'get',
@@ -63,7 +63,7 @@ export const couponLog = params => {
 
 // 检测包内优惠券等级限制，获取不可领用的等级
 
-export const checkCouponPackage = params => {
+export const checkCouponPackage = (params) => {
   return fetch({
     url: '/voucher/package/check_grade_limit',
     method: 'post',

@@ -1,75 +1,31 @@
 <template>
-  <section
-    v-if="name === 'goodsScroll'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'goodsScroll'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
-      <el-form
-        label-width="150px"
-        label-position="left"
-      >
+      <el-form label-width="150px" label-position="left">
         <el-form-item label="标题">
-          <el-input
-            v-model="base.title"
-            type="text"
-            maxlength="20"
-            show-word-limit
-          />
+          <el-input v-model="base.title" type="text" maxlength="20" show-word-limit />
         </el-form-item>
         <el-form-item label="副标题">
-          <el-input
-            v-model="base.subtitle"
-            maxlength="20"
-            show-word-limit
-          />
+          <el-input v-model="base.subtitle" maxlength="20" show-word-limit />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="商品类型">
-          <el-radio-group
-            v-model="config.type"
-            @change="changeType"
-          >
-            <el-radio :label="'goods'">
-              单商品
-            </el-radio>
-            <el-radio :label="'seckill'">
-              秒杀活动
-            </el-radio>
-            <el-radio :label="'limitTimeSale'">
-              限时特惠
-            </el-radio>
+          <el-radio-group v-model="config.type" @change="changeType">
+            <el-radio :label="'goods'"> 单商品 </el-radio>
+            <el-radio :label="'seckill'"> 秒杀活动 </el-radio>
+            <el-radio :label="'limitTimeSale'"> 限时特惠 </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="config.type === 'goods'"
-          label="开启排行榜"
-        >
-          <el-switch
-            v-model="config.leaderboard"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+        <el-form-item v-if="config.type === 'goods'" label="开启排行榜">
+          <el-switch v-model="config.leaderboard" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="显示价格">
-          <el-switch
-            v-model="config.showPrice"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="config.showPrice" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item
-          v-if="config.type === 'goods'"
-          label="选择商品"
-        >
+        <el-form-item v-if="config.type === 'goods'" label="选择商品">
           <el-button
             type="default"
             class="iconfont icon-cog banner-button-uploader"
@@ -77,9 +33,9 @@
           >
             编辑商品
           </el-button>
-          <span
-            style="font-size: 12px; margin-left: 20px"
-          >最多可选择100件商品；左侧实时预览内仅展示前50件；下方商品拖动以排序。</span>
+          <span style="font-size: 12px; margin-left: 20px"
+            >最多可选择100件商品；左侧实时预览内仅展示前50件；下方商品拖动以排序。</span
+          >
           <el-row
             v-if="items.length > 0 && items[0].imgUrl"
             :gutter="20"
@@ -101,11 +57,7 @@
                 @mouseover.native="mouseoverHandle(index)"
                 @mouseleave.native="mouseleaveHandle()"
               >
-                <img
-                  class="thumbnail"
-                  :src="wximageurl + item.imgUrl"
-                  alt=""
-                >
+                <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="">
                 <div class="title">
                   {{ item.title }}
                 </div>
@@ -119,15 +71,8 @@
             </draggable>
           </el-row>
         </el-form-item>
-        <el-form-item
-          v-if="config.type === 'seckill'"
-          label="选择活动"
-        >
-          <el-select
-            v-model="config.seckillId"
-            placeholder="请选择"
-            @change="selectSeckill"
-          >
+        <el-form-item v-if="config.type === 'seckill'" label="选择活动">
+          <el-select v-model="config.seckillId" placeholder="请选择" @change="selectSeckill">
             <el-option
               v-for="(item, index) in seckill"
               :key="item.seckill_id"
@@ -136,15 +81,8 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          v-if="config.type === 'limitTimeSale'"
-          label="选择活动"
-        >
-          <el-select
-            v-model="config.seckillId"
-            placeholder="请选择"
-            @change="selectLimitTimeSale"
-          >
+        <el-form-item v-if="config.type === 'limitTimeSale'" label="选择活动">
+          <el-select v-model="config.seckillId" placeholder="请选择" @change="selectLimitTimeSale">
             <el-option
               v-for="(item, index) in limitTimeSale"
               :key="item.seckill_id"
@@ -153,48 +91,19 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          v-if="config.moreLink"
-          label="设置「更多」链接"
-          label-width="150px"
-        >
-          <div
-            class="goods-select"
-            @click="handleMoreLink"
-          >
-            <div
-              v-if="config.moreLink.title"
-              class="link-content"
-            >
-              <template v-if="config.moreLink.linkPage === 'goods'">
-                商品：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'category'">
-                分类：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'article'">
-                文章：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'planting'">
-                软文：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'link'">
-                页面：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'marketing'">
-                营销：
-              </template>
-              <template v-if="config.moreLink.linkPage === 'custom_page'">
-                自定义页面：
-              </template>
+        <el-form-item v-if="config.moreLink" label="设置「更多」链接" label-width="150px">
+          <div class="goods-select" @click="handleMoreLink">
+            <div v-if="config.moreLink.title" class="link-content">
+              <template v-if="config.moreLink.linkPage === 'goods'"> 商品： </template>
+              <template v-if="config.moreLink.linkPage === 'category'"> 分类： </template>
+              <template v-if="config.moreLink.linkPage === 'article'"> 文章： </template>
+              <template v-if="config.moreLink.linkPage === 'planting'"> 软文： </template>
+              <template v-if="config.moreLink.linkPage === 'link'"> 页面： </template>
+              <template v-if="config.moreLink.linkPage === 'marketing'"> 营销： </template>
+              <template v-if="config.moreLink.linkPage === 'custom_page'"> 自定义页面： </template>
               {{ config.moreLink.title }}
             </div>
-            <div
-              v-else
-              class="content-center"
-            >
-              <i class="iconfont icon-link" />设置路径
-            </div>
+            <div v-else class="content-center"><i class="iconfont icon-link" />设置路径</div>
           </div>
         </el-form-item>
         <el-form-item label="设置「更多」图片">
@@ -204,11 +113,7 @@
             class="banner-uploader"
             @click="handleImgChange('backImg')"
           >
-          <div
-            v-else
-            class="banner-uploader"
-            @click="handleImgChange('backImg')"
-          >
+          <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
             <i class="iconfont icon-camera" />
             上传图片
           </div>
@@ -232,7 +137,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -253,7 +158,7 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value, oldValue) {
+      handler(value, oldValue) {
         console.log('--value--', value, oldValue)
         if (value || value.name === 'navigation') {
           this.setData(value)
@@ -263,10 +168,10 @@ export default {
               page: 1,
               pageSize: 20,
               status: 'not_end'
-            }).then((response) => {
+            }).then(response => {
               this.seckill = response.data.data.list
               const id = this.res.config.seckillId
-              const isHaveSeckill = this.seckill.findIndex((item) => item.seckill_id == id) > -1
+              const isHaveSeckill = this.seckill.findIndex(item => item.seckill_id == id) > -1
               console.log('--seckill-', this.seckill, id, isHaveSeckill)
               if (!isHaveSeckill) {
                 this.config.seckillId = ''
@@ -279,7 +184,7 @@ export default {
               pageSize: 20,
               status: 'valid',
               seckill_type: 'limited_time_sale'
-            }).then((response) => {
+            }).then(response => {
               this.limitTimeSale = response.data.data.list
             })
           }
@@ -289,28 +194,28 @@ export default {
     },
     seckill: {
       deep: true,
-      handler (value) {},
+      handler(value) {},
       immediate: true
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    mouseoverHandle (index) {
+    mouseoverHandle(index) {
       this.activeIndex = index
     },
-    mouseleaveHandle () {
+    mouseleaveHandle() {
       this.activeIndex = null
     },
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
       this.data = val.data
       this.items = val.data
     },
-    changeType (data) {
+    changeType(data) {
       if (data !== 'goods') {
         this.config.leaderboard = false
       } else {
@@ -321,27 +226,27 @@ export default {
       this.config.seckillId = ''
       this.config.type = data
     },
-    selectLimitTimeSale (data) {
+    selectLimitTimeSale(data) {
       this.config.seckillId = data
     },
-    selectSeckill (data) {
+    selectSeckill(data) {
       this.config.seckillId = data
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    setGoods () {
+    setGoods() {
       this.$emit('bindGoods')
     },
-    onEnd (evt) {
+    onEnd(evt) {
       this.temp = this.data[evt.oldIndex]
       this.data.splice(evt.oldIndex, 1)
       this.data.splice(evt.newIndex, 0, this.temp)
     },
-    handleMoreLink () {
+    handleMoreLink() {
       this.$emit('bindLinks')
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     }
   }

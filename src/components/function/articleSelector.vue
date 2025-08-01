@@ -15,11 +15,7 @@
             clearable
             class="input-with-select"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="searchByKey"
-            />
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
           </el-input>
         </el-col>
       </el-row>
@@ -35,25 +31,11 @@
       @select="handleSelectChange"
       @select-all="handleSelectAll"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="article_id"
-        label="软文ID"
-        width="70"
-      />
-      <el-table-column
-        prop="title"
-        label="软文标题"
-      />
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="article_id" label="软文ID" width="70" />
+      <el-table-column prop="title" label="软文标题" />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -61,15 +43,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -96,7 +72,7 @@ export default {
       default: 0
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       show: false,
@@ -114,23 +90,23 @@ export default {
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.show = true
         let ids = []
         this.loading = true
-        this.multipleSelection.forEach((item) => {
+        this.multipleSelection.forEach(item => {
           ids.push(item.article_id)
         })
         if (ids.length > 0) {
           let param = JSON.parse(JSON.stringify(this.params))
           param.article_id = ids
           this.selectRows = []
-          getArticleList(param).then((res) => {
+          getArticleList(param).then(res => {
             this.selectRows = res.data.data.list
             this.$refs.multipleTable.clearSelection()
-            this.itemsData.forEach((item) => {
-              let checked = this.selectRows.find((n) => n.itemId === item.itemId)
+            this.itemsData.forEach(item => {
+              let checked = this.selectRows.find(n => n.itemId === item.itemId)
               if (checked) {
                 this.$refs.multipleTable.toggleRowSelection(item)
               }
@@ -146,51 +122,51 @@ export default {
         }
       }
     },
-    relItemsIds (newVal, oldVal) {
+    relItemsIds(newVal, oldVal) {
       if (newVal.length > 0) {
         this.multipleSelection = newVal
       }
     },
-    itemsData (val) {
+    itemsData(val) {
       if (this.selectRows.length > 0) {
-        this.itemsData.forEach((item) => {
-          let checked = this.selectRows.find((n) => n.itemId === item.itemId)
+        this.itemsData.forEach(item => {
+          let checked = this.selectRows.find(n => n.itemId === item.itemId)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
         })
       }
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getNewsList()
       }
     },
-    itemType (newVal, oldVal) {
+    itemType(newVal, oldVal) {
       if (newVal) {
         this.params.item_type = newVal
       }
     }
   },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.itemId
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = page_num
       this.getNewsList()
     },
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getNewsList()
     },
-    handleSelectAll (val) {
+    handleSelectAll(val) {
       if (this.limitNum) {
         this.$message({ message: '当前组件不支持全选', type: 'warning' })
         this.$refs.multipleTable.clearSelection()
-        this.itemsData.forEach((item) => {
-          let checked = this.selectRows.find((n) => n.article_id === item.article_id)
+        this.itemsData.forEach(item => {
+          let checked = this.selectRows.find(n => n.article_id === item.article_id)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -198,30 +174,30 @@ export default {
         return
       }
       if (val.length > 0) {
-        val.forEach((item) => {
-          let inChecked = this.selectRows.findIndex((n) => item.article_id === n.article_id)
+        val.forEach(item => {
+          let inChecked = this.selectRows.findIndex(n => item.article_id === n.article_id)
           if (inChecked === -1) {
             this.selectRows.push(item)
           }
         })
       } else {
         this.itemsData.forEach((item, index) => {
-          let inChecked = this.selectRows.findIndex((n) => item.article_id === n.article_id)
+          let inChecked = this.selectRows.findIndex(n => item.article_id === n.article_id)
           if (inChecked !== -1) {
             this.selectRows.splice(inChecked, 1)
           }
         })
       }
     },
-    handleSelectChange (val, row) {
-      let inChecked = this.selectRows.findIndex((item) => row.article_id === item.article_id)
+    handleSelectChange(val, row) {
+      let inChecked = this.selectRows.findIndex(item => row.article_id === item.article_id)
       if (inChecked !== -1) {
         this.selectRows.splice(inChecked, 1)
       } else {
         if (this.limitNum && this.selectRows.length >= this.limitNum) {
           this.$message({ message: `最多选择${this.limitNum}件商品`, type: 'warning' })
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return
@@ -229,19 +205,19 @@ export default {
         this.selectRows.push(row)
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.show = false
       this.$emit('update:visible', false)
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.show = false
       this.$emit('update:visible', false)
       this.$emit('change', this.selectRows)
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getArticleList(this.params).then((response) => {
+        getArticleList(this.params).then(response => {
           this.itemsData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false

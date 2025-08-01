@@ -1,10 +1,6 @@
 <template>
   <el-card>
-    <el-form
-      :inline="true"
-      :model="orderForm"
-      label-width="120px"
-    >
+    <el-form :inline="true" :model="orderForm" label-width="120px">
       <el-row :gutter="20">
         <el-col :span="8">
           <el-form-item label="手机号/订单号:">
@@ -15,10 +11,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col
-          v-if="$store.getters.login_type != 'merchant'"
-          :span="8"
-        >
+        <el-col v-if="$store.getters.login_type != 'merchant'" :span="8">
           <el-form-item label="导购手机号:">
             <el-input
               v-model="orderForm.salesman_mobile"
@@ -27,10 +20,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col
-          v-if="!isMicorMall"
-          :span="8"
-        >
+        <el-col v-if="!isMicorMall" :span="8">
           <el-form-item label="配送类型:">
             <el-select
               v-model="orderForm.receipt_type"
@@ -75,10 +65,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col
-          v-if="$store.getters.login_type != 'merchant'"
-          :span="8"
-        >
+        <el-col v-if="$store.getters.login_type != 'merchant'" :span="8">
           <el-form-item label="订单类型:">
             <el-select
               v-model="orderForm.order_class"
@@ -95,10 +82,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col
-          v-if="!isMicorMall"
-          :span="8"
-        >
+        <el-col v-if="!isMicorMall" :span="8">
           <el-form-item label="开票状态:">
             <el-select
               v-model="orderForm.is_invoiced"
@@ -152,34 +136,15 @@
       <el-row v-if="!isMicorMall || loginType != 'distributor'">
         <el-col :span="12">
           <el-form-item label="选择店铺:">
-            <shop-select
-              ref="shopSelect"
-              :size="size"
-              distributors
-              @update="storeSearch"
-            />
+            <shop-select ref="shopSelect" :size="size" distributors @update="storeSearch" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col
-          :span="6"
-          :push="17"
-        >
+        <el-col :span="6" :push="17">
           <div class="flex-right">
-            <el-button
-              type="primary"
-              :size="size"
-              @click="handleSubmit"
-            >
-              搜索
-            </el-button>
-            <el-button
-              :size="size"
-              @click="handleReset"
-            >
-              重置
-            </el-button>
+            <el-button type="primary" :size="size" @click="handleSubmit"> 搜索 </el-button>
+            <el-button :size="size" @click="handleReset"> 重置 </el-button>
           </div>
         </el-col>
       </el-row>
@@ -196,7 +161,7 @@ export default {
     shopSelect
   },
   props: ['loginType'],
-  data () {
+  data() {
     return {
       orderForm: {
         ordernumber: '',
@@ -263,7 +228,7 @@ export default {
       source_list: []
     }
   },
-  mounted () {
+  mounted() {
     this.getAllSourcesList()
     console.log(this.$store.getters.login_type)
   },
@@ -271,7 +236,7 @@ export default {
     ...mapGetters(['isMicorMall'])
   },
   methods: {
-    handleReset () {
+    handleReset() {
       this.orderForm = {
         ordernumber: '',
         salesman_mobile: '',
@@ -289,7 +254,7 @@ export default {
       }
       this.$refs.shopSelect.init()
     },
-    handleSubmit () {
+    handleSubmit() {
       const {
         ordernumber,
         salesman_mobile,
@@ -321,21 +286,21 @@ export default {
       }
       this.$emit('onFilter', { ...this.filterFormValues })
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    storeSearch (val) {
+    storeSearch(val) {
       this.orderForm.distributor_id = val.shop_id
       this.handleSubmit()
     },
-    sourceSearch (item) {
+    sourceSearch(item) {
       this.orderForm.source_id = item.source_id
     },
-    getAllSourcesList () {
+    getAllSourcesList() {
       const params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then((response) => {
+      getSourcesList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
+          response.data.data.list.forEach(row => {
             this.source_list.push({
               value: row.sourceName,
               source_id: row.sourceId
@@ -344,8 +309,8 @@ export default {
         }
       })
     },
-    TypeHandle (val) {},
-    querySearch (queryString, cb) {
+    TypeHandle(val) {},
+    querySearch(queryString, cb) {
       const restaurants = this.source_list
       const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
@@ -355,7 +320,7 @@ export default {
         cb([])
       }
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.orderForm.time_start_begin = this.dateStrToTimeStamp(val[0])
         this.orderForm.time_start_end = this.dateStrToTimeStamp(val[1])
@@ -364,8 +329,8 @@ export default {
         this.orderForm.time_start_end = ''
       }
     },
-    createFilter (queryString) {
-      return (restaurant) => {
+    createFilter(queryString) {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     }

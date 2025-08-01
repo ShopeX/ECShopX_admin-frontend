@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="name === 'tabs'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'tabs'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="背景色">
@@ -18,15 +13,8 @@
           <el-color-picker v-model="config.selectedColor" />
         </el-form-item>
         <el-form-item label="设置tabBar">
-          <div
-            v-for="(item, index) in data"
-            class="setting-item"
-          >
-            <div
-              v-if="index > 1"
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
+          <div v-for="(item, index) in data" class="setting-item">
+            <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
               <i class="iconfont icon-trash-alt" />
             </div>
             <img
@@ -35,11 +23,7 @@
               class="icon-setter"
               @click="handleIconChange(index)"
             >
-            <div
-              v-else
-              class="icon-setter"
-              @click="handleIconChange(index)"
-            >
+            <div v-else class="icon-setter" @click="handleIconChange(index)">
               <i class="iconfont icon-image muted" />
             </div>
             <img
@@ -48,19 +32,11 @@
               class="icon-setter"
               @click="handleSelectedIconChange(index)"
             >
-            <div
-              v-else
-              class="icon-setter"
-              @click="handleSelectedIconChange(index)"
-            >
+            <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
               <i class="iconfont icon-image muted" />
             </div>
             <div class="uploader-setting">
-              <el-input
-                v-model="item.text"
-                placeholder="tab名称"
-                maxlength=""
-              />
+              <el-input v-model="item.text" placeholder="tab名称" maxlength="" />
             </div>
             <div class="uploader-setting">
               <el-select
@@ -78,9 +54,7 @@
               </el-select>
             </div>
           </div>
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）</div>
           <el-button
             :disabled="data.length >= 5"
             type="default"
@@ -103,7 +77,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       config: {},
@@ -153,23 +127,23 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.config = val.config
       this.data = val.data
     },
-    addItem () {
+    addItem() {
       if (!this.data) {
         this.data = []
       }
@@ -190,22 +164,22 @@ export default {
         this.data.push(item)
       }
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    handleClick (index) {
+    handleClick(index) {
       this.current = index
     },
-    handleChange (value) {
-      let n = this.pathOptions.find((item) => item.value === value)
+    handleChange(value) {
+      let n = this.pathOptions.find(item => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
     },
-    handleIconChange (index) {
+    handleIconChange(index) {
       this.$emit('bindImgs', index, 'default')
     },
-    handleSelectedIconChange (index) {
+    handleSelectedIconChange(index) {
       this.$emit('bindImgs', index, 'selected')
     }
   }

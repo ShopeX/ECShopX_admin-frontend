@@ -141,7 +141,7 @@
         </el-row>
       </el-form-item>
     </el-card>
-    <div style="margin-top: 10px;">
+    <div style="margin-top: 10px">
       <el-button @click.native="handleCancel"> 返回 </el-button>
       <el-button v-if="true == show" type="primary" @click.prevent="submitItemsAction('form')">
         保存
@@ -300,7 +300,7 @@ export default {
   methods: {
     submitItemsAction(formName) {
       const that = this
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           if (!this.form.pics) {
             this.$message.error('请上传活动封面')
@@ -311,7 +311,7 @@ export default {
             return false
           }
           if (this.groups_activity_id) {
-            updateGroupActivity(this.groups_activity_id, this.form).then((res) => {
+            updateGroupActivity(this.groups_activity_id, this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -325,7 +325,7 @@ export default {
               }
             })
           } else {
-            createGroupActivity(this.form).then((res) => {
+            createGroupActivity(this.form).then(res => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',
@@ -391,12 +391,12 @@ export default {
       where.approve_status = ['onsale', 'offline_sale']
       where.is_gift = false
       getItemsList(where)
-        .then((response) => {
+        .then(response => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch((error) => {
+        .catch(error => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -406,7 +406,7 @@ export default {
     },
     getGroupsInfo() {
       getGroupsInfo(this.groups_activity_id)
-        .then((response) => {
+        .then(response => {
           this.form = response.data.data
           this.form.act_price = this.form.act_price / 100
           this.form.goods.price = this.form.goods.price / 100
@@ -421,7 +421,7 @@ export default {
           this.logo_url = this.wximageurl + response.data.data.pics
           this.goods = response.data.data.goods
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message({
             type: 'error',
             message: '获取拼团活动详情失败'
@@ -432,7 +432,7 @@ export default {
       return this.cursymbol + row.price / 100
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

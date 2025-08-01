@@ -48,21 +48,13 @@ export const IS_SUPPLIER = () => {
 }
 
 // 平台端、店铺端、经销商端路由跳转封装
-export const getUrlPathByLoginType = path => {
+export const getUrlPathByLoginType = (path) => {
   if (IS_ADMIN()) {
     return path
   } else if (IS_DISTRIBUTOR()) {
     return `/shopadmin${path}`
   } else if (IS_SUPPLIER()) {
     return `/supplier${path}`
-  }
-}
-
-export function isInSalesCenter() {
-  if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
-    return true
-  } else {
-    false
   }
 }
 
@@ -76,8 +68,8 @@ export function importAll(r, fn = (key, r) => r(key)) {
   //   r.keys().filter(key => key.startsWith('./'))
   // )
   r.keys()
-    .filter(key => key.startsWith('./'))
-    .forEach(key => fn(key, r))
+    .filter((key) => key.startsWith('./'))
+    .forEach((key) => fn(key, r))
 }
 
 export function rand(max) {
@@ -193,7 +185,7 @@ export function camelToShortline(camelStr) {
 export function getRegionNameById(region, district) {
   let result = []
   function getRegionName(_district, index) {
-    const res = _district.find(item => item.value == region[index])
+    const res = _district.find((item) => item.value == region[index])
     if (res) {
       result.push(res.label)
       if (res.children) {
@@ -210,7 +202,7 @@ export function getRegionNameById(region, district) {
 export function getRegionIdByName(region, district) {
   let result = []
   function getRegionValue(_district, index) {
-    const res = _district.find(item => item.label == region[index])
+    const res = _district.find((item) => item.label == region[index])
     if (res) {
       result.push(res.value)
       if (res.children) {
@@ -225,9 +217,9 @@ export function getRegionIdByName(region, district) {
 }
 
 export function pickBy(arr = [], keyMaps = {}) {
-  const picker = item => {
+  const picker = (item) => {
     const ret = {}
-    Object.keys(keyMaps).forEach(key => {
+    Object.keys(keyMaps).forEach((key) => {
       const val = keyMaps[key]
       if (isString(val)) {
         ret[key] = _get(item, val)
@@ -259,7 +251,7 @@ export function hex2rgb(hex) {
   if (result.length === 3) {
     result = result
       .split('')
-      .map(a => `${a}${a}`)
+      .map((a) => `${a}${a}`)
       .join('')
   }
   const rgb = []
@@ -301,7 +293,7 @@ export function hex2rgb(hex) {
 
 export function getSourceFromNameByValue(list, value) {
   let sourceFromName = '-'
-  list.forEach(item => {
+  list.forEach((item) => {
     if (item.value === value) {
       sourceFromName = item.name
     }

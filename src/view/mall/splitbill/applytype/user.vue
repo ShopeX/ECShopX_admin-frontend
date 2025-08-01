@@ -11,48 +11,22 @@
     />
     <el-divider v-if="form_user.status == 4" />
     <div class="formClass">
-      <el-form
-        ref="form_user"
-        :model="form_user"
-        label-width="150px"
-        :rules="solo_rules"
-      >
+      <el-form ref="form_user" :model="form_user" label-width="150px" :rules="solo_rules">
         <el-form-item label="账号认证类型">
-          <el-button
-            type="success"
-            round
-            size="mini"
-          >
-            个人
-          </el-button>
+          <el-button type="success" round size="mini"> 个人 </el-button>
         </el-form-item>
-        <el-form-item
-          label="用户姓名"
-          prop="user_name"
-        >
-          <el-input
-            v-model="form_user.user_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="用户姓名" prop="user_name">
+          <el-input v-model="form_user.user_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="手机号"
-          prop="user_mobile"
-        >
-          <el-input
-            v-model="form_user.user_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="手机号" prop="user_mobile">
+          <el-input v-model="form_user.user_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="证件类型"
-          prop="id_card_type"
-        >
+        <el-form-item label="证件类型" prop="id_card_type">
           <el-select
             v-model="form_user.id_card_type"
             placeholder="选择证件类型"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="bool => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -62,32 +36,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="身份证号码"
-          prop="id_card"
-        >
-          <el-input
-            v-model="form_user.id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="身份证号码" prop="id_card">
+          <el-input v-model="form_user.id_card" :disabled="disabled" />
         </el-form-item>
-        <el-form-item
-          label="结算银行卡号"
-          prop="bank_acct_num"
-        >
-          <el-input
-            v-model="form_user.bank_acct_num"
-            :disabled="disabled"
-          />
+        <el-form-item label="结算银行卡号" prop="bank_acct_num">
+          <el-input v-model="form_user.bank_acct_num" :disabled="disabled" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            v-if="!disabled"
-            type="primary"
-            @click="onUserSubmit"
-          >
-            保存
-          </el-button>
+          <el-button v-if="!disabled" type="primary" @click="onUserSubmit"> 保存 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -97,7 +53,7 @@
 import { saveHffile, getHffile } from '@/api/fenzhang'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
-  data () {
+  data() {
     let vaildMobile = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请填写正确的手机号码'))
@@ -110,8 +66,8 @@ export default {
       isEdit: false,
       cardType: [
         {
-          'card_type': '10',
-          'label': '身份证'
+          card_type: '10',
+          label: '身份证'
         }
       ],
       form_user: {
@@ -135,7 +91,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let { id, type } = this.$route.query
     this.form_user.distributor_id = id
     let disabled = type == 0 ? true : false
@@ -144,7 +100,7 @@ export default {
     this.getUserData()
   },
   methods: {
-    async getUserData () {
+    async getUserData() {
       let distributor_id = this.form_user.distributor_id
       let apply_type = this.form_user.apply_type
       let res = await getHffile({ distributor_id, apply_type })
@@ -166,12 +122,12 @@ export default {
       }
       console.log(this.form_user)
     },
-    onUserSubmit () {
-      this.$refs.form_user.validate((valid) => {
+    onUserSubmit() {
+      this.$refs.form_user.validate(valid => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form_user))
           console.log(obj)
-          saveHffile(obj).then((res) => {
+          saveHffile(obj).then(res => {
             this.$message({
               message: '保存成功',
               type: 'success'

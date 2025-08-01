@@ -1,9 +1,6 @@
 <!-- * @description 分账统计详情-退款信息 -->
 <template>
-  <el-card
-    v-if="data.length > 0"
-    class="refund_info_card"
-  >
+  <el-card v-if="data.length > 0" class="refund_info_card">
     <h3>退款信息</h3>
     <el-table
       :data="data"
@@ -11,41 +8,24 @@
       :span-method="objectSpanMethod"
       style="width: 100%; margin-top: 20px"
     >
-      <el-table-column
-        prop="refund_bn"
-        label="退款单号"
-      />
-      <el-table-column
-        prop="refund_id"
-        label="汇付退款单号"
-      />
-      <el-table-column
-        prop="distributor_name"
-        label="退款客户名称"
-      />
+      <el-table-column prop="refund_bn" label="退款单号" />
+      <el-table-column prop="refund_id" label="汇付退款单号" />
+      <el-table-column prop="distributor_name" label="退款客户名称" />
 
-      <el-table-column
-        prop="refund_fee"
-        label="退款金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ (scope.row.refund_fee / 100).toFixed(2) }}
-        </template>
+      <el-table-column prop="refund_fee" label="退款金额">
+        <template slot-scope="scope"> ￥{{ (scope.row.refund_fee / 100).toFixed(2) }} </template>
       </el-table-column>
-      <el-table-column
-        prop="refund_status"
-        label="退款状态"
-      >
+      <el-table-column prop="refund_status" label="退款状态">
         <template slot-scope="scope">
           {{
             (scope.row.refund_status === 'READY' && '未审核') ||
-              (scope.row.refund_status === 'SUCCESS' && '退款成功  ') ||
-              (scope.row.refund_status === 'CANCEL' && '撤销退款') ||
-              (scope.row.refund_status === 'CHANGE' && '退款异常') ||
-              (scope.row.refund_status === 'REFUNDCLOSE' && '退款关闭') ||
-              (scope.row.refund_status === 'PROCESSING' && '退款处理中') ||
-              (scope.row.refund_status === 'AUDIT_SUCCESS' && '退款中') ||
-              (scope.row.refund_status === 'REFUSE' && '退款失败')
+            (scope.row.refund_status === 'SUCCESS' && '退款成功  ') ||
+            (scope.row.refund_status === 'CANCEL' && '撤销退款') ||
+            (scope.row.refund_status === 'CHANGE' && '退款异常') ||
+            (scope.row.refund_status === 'REFUNDCLOSE' && '退款关闭') ||
+            (scope.row.refund_status === 'PROCESSING' && '退款处理中') ||
+            (scope.row.refund_status === 'AUDIT_SUCCESS' && '退款中') ||
+            (scope.row.refund_status === 'REFUSE' && '退款失败')
           }}
         </template>
       </el-table-column>
@@ -55,11 +35,11 @@
 <script>
 export default {
   props: ['data', 'arr'],
-  data () {
+  data() {
     return {}
   },
   methods: {
-    objectSpanMethod ({ row, column, rowIndex, columnIndex }) {
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0) {
         const _row = this.arr[rowIndex]
         const _col = _row > 0 ? 1 : 0

@@ -1,51 +1,18 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="cardList"
-      style="width: 100%"
-      border
-      height="600"
-    >
+    <el-table v-loading="loading" :data="cardList" style="width: 100%" border height="600">
       <!-- <el-table-column prop="title" label="优惠券名称" width="200"></el-table-column> -->
-      <el-table-column
-        prop="code"
-        label="优惠券码"
-        width="120"
-      />
-      <el-table-column
-        prop="username"
-        label="用户名字"
-        width="150"
-      />
-      <el-table-column
-        prop="mobile"
-        label="手机号"
-        width="120"
-      />
-      <el-table-column
-        prop="used_status"
-        label="操作途径"
-        width="100"
-      >
+      <el-table-column prop="code" label="优惠券码" width="120" />
+      <el-table-column prop="username" label="用户名字" width="150" />
+      <el-table-column prop="mobile" label="手机号" width="120" />
+      <el-table-column prop="used_status" label="操作途径" width="100">
         <template slot-scope="scope">
-          <template v-if="scope.row.used_status == 'callback'">
-            回退
-          </template>
-          <template v-else>
-            核销
-          </template>
+          <template v-if="scope.row.used_status == 'callback'"> 回退 </template>
+          <template v-else> 核销 </template>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="used_time"
-        label="记录时间"
-        width="170"
-      />
-      <el-table-column
-        prop="shop_name"
-        label="核销门店"
-      />
+      <el-table-column prop="used_time" label="记录时间" width="170" />
+      <el-table-column prop="shop_name" label="核销门店" />
     </el-table>
     <el-pagination
       background
@@ -65,7 +32,7 @@ import { getCardUserList } from '../../../../api/cardticket'
 
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       loading: false,
       total_count: 0,
@@ -79,31 +46,31 @@ export default {
     }
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getCardUserList()
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.cardId) {
       this.params.card_id = this.$route.query.cardId
     }
   },
   methods: {
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getCardUserList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getCardUserList()
     },
-    getCardUserList () {
+    getCardUserList() {
       this.loading = true
       getCardUserList(this.params)
-        .then((res) => {
+        .then(res => {
           if (res.data.data.list.length > 0) {
             this.cardList = res.data.data.list
             this.total_count = res.data.data.total_count
@@ -113,7 +80,7 @@ export default {
             this.loading = false
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

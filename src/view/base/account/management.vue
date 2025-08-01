@@ -1,19 +1,9 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="普通员工管理"
-      name="staff"
-    >
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="普通员工管理" name="staff">
       <normalstaffManager :is-load="normalStaff" />
     </el-tab-pane>
-    <el-tab-pane
-      label="店铺员工管理"
-      name="store"
-    >
+    <el-tab-pane label="店铺员工管理" name="store">
       <storestaffManager :is-load="storeStaff" />
     </el-tab-pane>
   </el-tabs>
@@ -165,7 +155,7 @@ import StoreSelect from '@/components/storeselect'
 export default {
   components: {},
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       dynamicShopName: [],
       dynamicStoreName: [],
@@ -206,18 +196,18 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getAccountListData()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getAccountListData()
     this.getRolesListData()
   },
   methods: {
-    shopNameSearch (item) {
+    shopNameSearch(item) {
       if (this.dynamicShopName.indexOf(item.name) != -1) {
         this.$message({
           type: 'error',
@@ -230,22 +220,22 @@ export default {
         this.inputVisible = false
       }
     },
-    queryShopNameSearch (queryString, cb) {
+    queryShopNameSearch(queryString, cb) {
       var restaurants = []
-      getDistributorList({ name: queryString, page: 1, pageSize: 500 }).then((res) => {
+      getDistributorList({ name: queryString, page: 1, pageSize: 500 }).then(res => {
         restaurants = res.data.data.list
         // 调用 callback 返回建议列表的数据
         cb(restaurants)
       })
     },
-    handleClose (item) {
+    handleClose(item) {
       this.dynamicShopName.splice(this.dynamicShopName.indexOf(item), 1)
       this.form.distributor_ids.splice(this.dynamicShopName.indexOf(item), 1)
     },
-    showInput () {
+    showInput() {
       this.inputVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.operator_id = ''
       this.form.login_name = ''
@@ -257,18 +247,18 @@ export default {
       this.dynamicStoreName = []
       this.dynamicShopName = []
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getAccountListData()
     },
-    addLabels () {
+    addLabels() {
       // 添加物料弹框
       this.handleCancel()
       this.editTitle = '添加账号信息'
       this.editVisible = true
       this.isEdit = false
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
       this.editTitle = '编辑账号信息'
@@ -282,26 +272,26 @@ export default {
 
       this.form.distributor_ids = row.distributor_ids ? row.distributor_ids : []
       if (this.form.distributor_ids.length > 0) {
-        this.form.distributor_ids.forEach((item) => {
+        this.form.distributor_ids.forEach(item => {
           this.dynamicShopName.push(item.name)
         })
       }
 
       this.form.secret = ''
-      row.role_data.forEach((item) => {
+      row.role_data.forEach(item => {
         this.form.role_id.push(item.role_id)
       })
     },
-    submitAction () {
+    submitAction() {
       // 提交物料
       if (this.operator_id) {
-        updateAccountInfo(this.operator_id, this.form).then((response) => {
+        updateAccountInfo(this.operator_id, this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getAccountListData()
         })
       } else {
-        createAccount(this.form).then((response) => {
+        createAccount(this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getAccountListData()
@@ -309,27 +299,27 @@ export default {
         })
       }
     },
-    dataSearch () {
+    dataSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getAccountListData()
     },
-    getAccountListData () {
+    getAccountListData() {
       this.loading = true
-      getAccountList(this.params).then((response) => {
+      getAccountList(this.params).then(response => {
         this.accountsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
-    deleteAccountAction (index, row) {
+    deleteAccountAction(index, row) {
       this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          deleteAccountInfo(row.operator_id).then((response) => {
+          deleteAccountInfo(row.operator_id).then(response => {
             this.accountsList.splice(index, 1)
             this.$message({
               message: '删除成功',
@@ -345,9 +335,9 @@ export default {
           })
         })
     },
-    getRolesListData () {
+    getRolesListData() {
       var params = { page: 1, pageSize: 100 }
-      getRolesList(params).then((res) => {
+      getRolesList(params).then(res => {
         this.rolesListData = res.data.data.list
       })
     }

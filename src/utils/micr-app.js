@@ -31,17 +31,17 @@ const micrApp = {
       ],
       {
         beforeLoad: [
-          app => {
+          (app) => {
             console.log('before load', app)
           }
         ], // 挂载前回调
         beforeMount: [
-          app => {
+          (app) => {
             console.log('before mount', app)
           }
         ], // 挂载后回调
         afterUnmount: [
-          app => {
+          (app) => {
             console.log('after unload', app)
           }
         ] // 卸载后回调

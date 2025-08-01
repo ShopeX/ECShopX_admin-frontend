@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    btnClick (event) {
+    btnClick(event) {
       this.$emit('btnClick', event)
     }
   }

@@ -292,7 +292,7 @@ export default {
     },
     getTabDetail() {
       getDistributorInfo({ distributor_id: this.distributor_id })
-        .then((response) => {
+        .then(response => {
           console.log(response)
           const { is_openAccount, is_rel_dealer, adapayMemberInfo, dealer, datapass_block } =
             response.data.data || {}
@@ -320,7 +320,7 @@ export default {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -334,11 +334,11 @@ export default {
         ...this.params,
         distributor_id: this.distributor_id
       })
-        .then((response) => {
+        .then(response => {
           this.logList = response.data.data.list || {}
           this.total_count = response.data.data.total_count || 0
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

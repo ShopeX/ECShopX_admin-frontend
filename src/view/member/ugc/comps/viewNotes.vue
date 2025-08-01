@@ -248,7 +248,7 @@ export default {
       // console.log('post_id',post_id)
       this.$data.formLoad = true
       getNotesDetail({ post_id }).then(
-        (res) => {
+        res => {
           var post_info = res.data.data.post_info
           var taglist = []
           var relFlag = {}
@@ -257,7 +257,7 @@ export default {
             is_top: post_info.is_top
           }
           const imageList = JSON.parse(post_info.images)
-          imageList.forEach((item) => {
+          imageList.forEach(item => {
             if (item.tags) {
               taglist = [...taglist, ...item.tags]
             }
@@ -276,7 +276,7 @@ export default {
           that.$data.formLoad = false
           //console.log('getNotesDetail',ruleForm)
         },
-        (err) => {
+        err => {
           //console.log('err',err);
           that.$data.post_info = {}
           that.$data.errInfo = err
@@ -296,7 +296,7 @@ export default {
         option: ruleForm
       }
 
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           //  console.log('handleAudit',params)
           this.handleCancelLabelsDialog()
@@ -323,7 +323,7 @@ export default {
       ruleForm.post_id = post_info.post_id
       //console.log('ruleForm',ruleForm)
       notesSimpleEdit(ruleForm).then(
-        (res) => {
+        res => {
           var msg = res.data.data.message
           //console.log('notesSimpleEdit res',res);
           this.$message({
@@ -335,7 +335,7 @@ export default {
             }
           })
         },
-        (err) => {
+        err => {
           console.log('notesSimpleEdit err', err)
         }
       )

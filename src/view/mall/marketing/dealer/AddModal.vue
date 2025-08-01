@@ -7,77 +7,25 @@
     :show-close="false"
     class="cus-dialog-css"
   >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="100px"
-      :rules="rules"
-    >
-      <el-form-item
-        label="企业名称"
-        prop="username"
-      >
-        <el-input
-          v-model="form.username"
-          class="input-m"
-          placeholder="请输入"
-        />
+    <el-form ref="form" :model="form" label-width="100px" :rules="rules">
+      <el-form-item label="企业名称" prop="username">
+        <el-input v-model="form.username" class="input-m" placeholder="请输入" />
       </el-form-item>
-      <el-form-item
-        label="联系人"
-        prop="contact"
-      >
-        <el-input
-          v-model="form.contact"
-          class="input-m"
-          placeholder="请输入"
-        />
+      <el-form-item label="联系人" prop="contact">
+        <el-input v-model="form.contact" class="input-m" placeholder="请输入" />
       </el-form-item>
-      <el-form-item
-        label="手机号"
-        prop="mobile"
-      >
-        <el-input
-          v-model="form.mobile"
-          class="input-m"
-          :maxlength="11"
-          placeholder="请输入"
-        />
+      <el-form-item label="手机号" prop="mobile">
+        <el-input v-model="form.mobile" class="input-m" :maxlength="11" placeholder="请输入" />
       </el-form-item>
-      <el-form-item
-        label="登录账号"
-        prop="login_name"
-      >
-        <el-input
-          v-model="form.login_name"
-          class="input-m"
-          placeholder="请输入"
-        />
+      <el-form-item label="登录账号" prop="login_name">
+        <el-input v-model="form.login_name" class="input-m" placeholder="请输入" />
       </el-form-item>
-      <el-form-item
-        label="默认密码"
-        prop="password"
-      >
-        <el-input
-          v-model="form.password"
-          class="input-m"
-          placeholder="请输入"
-        />
+      <el-form-item label="默认密码" prop="password">
+        <el-input v-model="form.password" class="input-m" placeholder="请输入" />
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="handleModalConfirm(true)"
-        >
-          确认
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="handleModalConfirm(false)"
-        >
-          取消
-        </el-button>
+        <el-button type="primary" @click="handleModalConfirm(true)"> 确认 </el-button>
+        <el-button type="primary" plain @click="handleModalConfirm(false)"> 取消 </el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -87,7 +35,7 @@
 import { addDealer } from '@/api/marketing'
 export default {
   props: ['handleClose', 'visible'],
-  data () {
+  data() {
     return {
       form: {
         username: '',
@@ -108,9 +56,9 @@ export default {
     }
   },
   methods: {
-    handleModalConfirm (visible) {
+    handleModalConfirm(visible) {
       if (visible) {
-        this.$refs['form'].validate(async (vaild) => {
+        this.$refs['form'].validate(async vaild => {
           if (vaild) {
             const { form } = this
             addDealer({ ...form, operator_type: 'dealer' })
@@ -127,7 +75,7 @@ export default {
         this.$emit('handleClose', false)
       }
     },
-    validateNumber (rule, value, callback) {
+    validateNumber(rule, value, callback) {
       if (value.length < 6 || value.length > 12) {
         callback(new Error('请输入6-12位密码'))
       } else {

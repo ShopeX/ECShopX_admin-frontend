@@ -7,16 +7,8 @@
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+      <el-input v-model="name" placeholder="输入店铺名称" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
     <el-table
@@ -33,32 +25,16 @@
             :label="scope.row.distributor_id"
             @change.native="getTemplateRow(scope.$index, scope.row)"
           >
-&nbsp;
+            &nbsp;
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="name"
-        label="店铺名称"
-      />
-      <el-table-column
-        prop="contact"
-        label="联系人"
-      />
-      <el-table-column
-        prop="store_name"
-        label="门店"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="name" label="店铺名称" />
+      <el-table-column prop="contact" label="联系人" />
+      <el-table-column prop="store_name" label="门店" />
+      <el-table-column prop="address" label="地址" show-overflow-tooltip />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -66,15 +42,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -107,7 +77,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       templateRadio: '',
       dataType: 'distributor',
@@ -125,45 +95,45 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.storeVisible
     }
   },
   watch: {
-    sourceType (newVal, oldVal) {
+    sourceType(newVal, oldVal) {
       this.dataType = this.sourceType
     },
-    relDataIds (newVal, oldVal) {
+    relDataIds(newVal, oldVal) {
       this.selectRows = newVal
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       this.getDistributor()
     }
   },
   methods: {
-    getTemplateRow (index, row) {
+    getTemplateRow(index, row) {
       this.multipleSelection = new Array(row)
     },
-    getDistributor () {
-      getDistributorList(this.params).then((response) => {
+    getDistributor() {
+      getDistributorList(this.params).then(response => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
         this.loading = false
         this.multipleSelection = []
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDistributor()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.getDistributor()
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
     }
   }

@@ -101,7 +101,7 @@ export default {
     // 获取列表
     getInfo() {
       this.loading = true
-      getSetting().then((res) => {
+      getSetting().then(res => {
         this.form.freight_type = res.data.data.freight_type
         this.form.proportion = res.data.data.proportion
         this.form.rounding_mode = res.data.data.rounding_mode
@@ -119,7 +119,7 @@ export default {
         entrance: {
           mobile_openstatus: this.entrance.mobile_openstatus
         }
-      }).then((res) => {
+      }).then(res => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

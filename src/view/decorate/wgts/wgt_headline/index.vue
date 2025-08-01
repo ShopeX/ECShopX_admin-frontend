@@ -20,13 +20,13 @@
   <div
     :class="{
       'wgt-headline': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced
+        spaced: value.spaced
       }"
     >
       <!-- 挂件自定义部分 -->
@@ -34,8 +34,8 @@
         :class="[
           'wgt-content',
           {
-            'center': value.float === 'center',
-            'left': value.float === 'left'
+            center: value.float === 'center',
+            left: value.float === 'left'
           }
         ]"
       >

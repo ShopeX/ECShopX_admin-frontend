@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="name === 'headline' || name === 'banner'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'headline' || name === 'banner'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
@@ -14,12 +9,8 @@
           </el-form-item>
           <el-form-item label="文字位置">
             <el-radio-group v-model="base.float">
-              <el-radio label="center">
-                居中
-              </el-radio>
-              <el-radio label="left">
-                居左
-              </el-radio>
+              <el-radio label="center"> 居中 </el-radio>
+              <el-radio label="left"> 居左 </el-radio>
             </el-radio-group>
           </el-form-item>
         </template>
@@ -40,7 +31,7 @@ export default {
       default: 'wxapp'
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {}
@@ -49,18 +40,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
     }

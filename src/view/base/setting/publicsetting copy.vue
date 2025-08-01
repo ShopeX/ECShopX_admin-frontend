@@ -278,56 +278,56 @@ export default {
     ...mapGetters(['wheight', 'isMicorMall'])
   },
   mounted() {
-    getRateSetting().then((res) => {
+    getRateSetting().then(res => {
       this.form.rate_status = Boolean(res.data.data.rate_status)
     })
 
-    getShareParams().then((res) => {
+    getShareParams().then(res => {
       this.form.distributor_param_status = Boolean(res.data.data.distributor_param_status)
     })
 
-    getWhitelistSetting().then((res) => {
+    getWhitelistSetting().then(res => {
       this.form.whitelist_status = Boolean(res.data.data.whitelist_status)
     })
 
-    getPickupcodeSetting().then((res) => {
+    getPickupcodeSetting().then(res => {
       this.form.pickupcode_status = Boolean(res.data.data.pickupcode_status)
     })
 
-    getGiftSetting().then((res) => {
+    getGiftSetting().then(res => {
       this.form.minus_shop_gift_store = Boolean(res.data.data.minus_shop_gift_store)
       this.form.check_gift_store = Boolean(res.data.data.check_gift_store)
     })
 
-    getSendOmsSetting().then((res) => {
+    getSendOmsSetting().then(res => {
       this.form.ziti_send_oms = Boolean(res.data.data.ziti_send_oms)
     })
 
-    getNoStores().then((res) => {
+    getNoStores().then(res => {
       this.form.nostores_status = Boolean(res.data.data.nostores_status)
     })
 
-    getRechargeSetting().then((res) => {
+    getRechargeSetting().then(res => {
       this.form.recharge_status = Boolean(res.data.data.recharge_status)
     })
 
-    getRepeatCancelSetting().then((res) => {
+    getRepeatCancelSetting().then(res => {
       this.form.repeat_cancel = Boolean(res.data.data.repeat_cancel)
     })
 
-    getItemStoreSetting().then((res) => {
+    getItemStoreSetting().then(res => {
       this.form.item_store_status = Boolean(res.data.data.item_store_status)
     })
 
-    getItemSalesSetting().then((res) => {
+    getItemSalesSetting().then(res => {
       this.form.item_sales_status = Boolean(res.data.data.item_sales_status)
     })
 
-    getInvoiceStatus().then((res) => {
+    getInvoiceStatus().then(res => {
       this.form.invoice_status = Boolean(res.data.data.invoice_status)
     })
 
-    getDianwuShowStatus().then((res) => {
+    getDianwuShowStatus().then(res => {
       this.form.dianwu_show_status = Boolean(res.data.data.dianwu_show_status)
     })
   },
@@ -346,7 +346,7 @@ export default {
       })
         .then(() => {
           setRateSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -385,7 +385,7 @@ export default {
       })
         .then(() => {
           saveShareParams(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -398,7 +398,7 @@ export default {
               })
             })
         })
-        .catch((e) => {
+        .catch(e => {
           console.log('e', e)
           if (this.form.distributor_param_status === true) {
             this.form.distributor_param_status = false
@@ -425,7 +425,7 @@ export default {
       })
         .then(() => {
           setWhitelistSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -464,7 +464,7 @@ export default {
       })
         .then(() => {
           setPickupcodeSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -513,7 +513,7 @@ export default {
       })
         .then(() => {
           setGiftSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -559,7 +559,7 @@ export default {
       })
         .then(() => {
           setSendOmsSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -597,9 +597,9 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          let params = { 'nostores_status': this.form.nostores_status }
+          let params = { nostores_status: this.form.nostores_status }
           setNoStores(params)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -638,7 +638,7 @@ export default {
       })
         .then(() => {
           setRechargeSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -677,7 +677,7 @@ export default {
       })
         .then(() => {
           setRepeatCancelSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -717,7 +717,7 @@ export default {
       })
         .then(() => {
           setItemStoreSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -757,7 +757,7 @@ export default {
       })
         .then(() => {
           setItemSalesSetting(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -797,7 +797,7 @@ export default {
       })
         .then(() => {
           setInvoiceStatus(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -837,7 +837,7 @@ export default {
       })
         .then(() => {
           setDianwuShowStatus(this.form)
-            .then((res) => {
+            .then(res => {
               this.$message({
                 type: 'success',
                 message: '保存成功'

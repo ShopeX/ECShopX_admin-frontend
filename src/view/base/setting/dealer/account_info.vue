@@ -405,7 +405,7 @@ export default {
             const { id } = node.data
             const res = await this.getProHandle(id)
             const nodes = res
-            nodes.forEach((item) => {
+            nodes.forEach(item => {
               item.leaf = level >= 1
             })
             console.log(nodes)
@@ -590,7 +590,7 @@ export default {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      var restaurants = this.AllBank.map((item) => {
+      var restaurants = this.AllBank.map(item => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -602,7 +602,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -619,7 +619,7 @@ export default {
     },
 
     submitForm() {
-      this.$refs['ruleForm'].validate((valid) => {
+      this.$refs['ruleForm'].validate(valid => {
         if (valid) {
           if (this.form.bank_acct_type == '2') {
             const res = this.form.legal_name == this.form.card_name

@@ -1,26 +1,12 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col
-        :md="8"
-        :lg="7"
-      >
-        <el-input
-          v-model="mobile"
-          placeholder="手机号"
-          clearable
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
+      <el-col :md="8" :lg="7">
+        <el-input v-model="mobile" placeholder="手机号" clearable>
+          <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
-      <el-col
-        :md="8"
-        :lg="7"
-      >
+      <el-col :md="8" :lg="7">
         <el-date-picker
           v-model="datetime"
           type="daterange"
@@ -31,26 +17,11 @@
         />
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="checkInList"
-      :height="wheight - 80"
-    >
-      <el-table-column
-        prop="user_name"
-        label="会员"
-        width="170"
-      />
-      <el-table-column
-        prop="create_time"
-        label="签到时间"
-        width="100"
-      />
+    <el-table v-loading="loading" :data="checkInList" :height="wheight - 80">
+      <el-table-column prop="user_name" label="会员" width="170" />
+      <el-table-column prop="create_time" label="签到时间" width="100" />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -66,7 +37,7 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { listCheckInList } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       checkInList: [],
       loading: false,
@@ -85,20 +56,20 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    numberSearch () {
+    numberSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getDataList()
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.start_date = val[0]
         this.params.end_date = val[1]
@@ -109,12 +80,12 @@ export default {
       this.params.page = 1
       this.getDataList(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
-      listCheckInList(this.params).then((response) => {
+      listCheckInList(this.params).then(response => {
         this.checkInList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

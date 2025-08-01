@@ -1,259 +1,253 @@
 <template>
   <SpRouterView>
-  <SpPage>
-  <div class="zyk_bspay_account">
-    <el-form
-     
-      ref="ruleForm"
-      :model="form"
-      class="demo-ruleForm"
-      label-width="100px"
-    >
-      <el-card class="box-card" shadow="never">
-        <div slot="header" class="clearfix">
-          <span>交易单</span>
-        </div>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-form-item label="订单号" prop="order_id">
-              <el-input v-model="form.order_id" />
+    <SpPage>
+      <div class="zyk_bspay_account">
+        <el-form ref="ruleForm" :model="form" class="demo-ruleForm" label-width="100px">
+          <el-card class="box-card" shadow="never">
+            <div slot="header" class="clearfix">
+              <span>交易单</span>
+            </div>
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="订单号" prop="order_id">
+                  <el-input v-model="form.order_id" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="交易流水号" prop="trade_id">
+                  <el-input v-model="form.trade_id" />
+                </el-form-item>
+              </el-col>
+              <el-col v-if="$store.getters.login_type != 'distributor'" :span="8">
+                <el-form-item label="店铺名称" prop="distributor_name">
+                  <el-input v-model="form.distributor_name" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="支付方式" prop="pay_channel">
+                  <el-select v-model="form.pay_channel" style="width: 100%">
+                    <el-option label="微信小程序支付" value="wx_lite" />
+                    <el-option label="支付宝H5支付" value="alipay_wap" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="交易状态" prop="status">
+                  <el-select v-model="form.status" style="width: 100%">
+                    <el-option label="支付完成" value="SUCCESS" />
+                    <el-option label="部分退款" value="PARTIAL_REFUND" />
+                    <el-option label="全额退款" value="FULL_REFUND" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="是否分账" prop="bspay_div_status">
+                  <el-select v-model="form.bspay_div_status" style="width: 100%">
+                    <el-option label="未分账" value="NOTDIV" />
+                    <el-option label="已分账" value="DIVED" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col v-if="$store.getters.login_type == 'admin'" :span="8">
+                <el-form-item label="手续费扣费方式" prop="bspay_fee_mode">
+                  <el-select v-model="form.bspay_fee_mode" style="width: 100%">
+                    <el-option label="外扣" value="1" />
+                    <el-option label="内扣" value="2" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="时间范围" prop="time">
+                  <el-date-picker
+                    v-model="form.time"
+                    value-format="timestamp"
+                    style="width: 100%"
+                    type="daterange"
+                    :default-time="['00:00:00', '23:59:59']"
+                    range-separator="-"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    @change="timeHandle"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="分账状态" prop="can_div">
+                  <el-select v-model="form.can_div" style="width: 100%">
+                    <el-option label="可分账" value="true" />
+                    <el-option label="不可分账" value="false" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-form-item style="text-align: right">
+              <el-button type="primary" size="medium" @click="queryHandle"> 查询 </el-button>
+              <el-button type="info" size="medium" @click="resetForm('ruleForm')"> 清空 </el-button>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="交易流水号" prop="trade_id">
-              <el-input v-model="form.trade_id" />
-            </el-form-item>
-          </el-col>
-          <el-col v-if="$store.getters.login_type != 'distributor'" :span="8">
-            <el-form-item label="店铺名称" prop="distributor_name">
-              <el-input v-model="form.distributor_name" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="支付方式" prop="pay_channel">
-              <el-select v-model="form.pay_channel" style="width: 100%">
-                <el-option label="微信小程序支付" value="wx_lite" />
-                <el-option label="支付宝H5支付" value="alipay_wap" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="交易状态" prop="status">
-              <el-select v-model="form.status" style="width: 100%">
-                <el-option label="支付完成" value="SUCCESS" />
-                <el-option label="部分退款" value="PARTIAL_REFUND" />
-                <el-option label="全额退款" value="FULL_REFUND" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="是否分账" prop="bspay_div_status">
-              <el-select v-model="form.bspay_div_status" style="width: 100%">
-                <el-option label="未分账" value="NOTDIV" />
-                <el-option label="已分账" value="DIVED" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col v-if="$store.getters.login_type == 'admin'" :span="8">
-            <el-form-item label="手续费扣费方式" prop="bspay_fee_mode">
-              <el-select v-model="form.bspay_fee_mode" style="width: 100%">
-                <el-option label="外扣" value="1" />
-                <el-option label="内扣" value="2" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="时间范围" prop="time">
-              <el-date-picker
-                v-model="form.time"
-                value-format="timestamp"
-                style="width: 100%"
-                type="daterange"
-                :default-time="['00:00:00', '23:59:59']"
-                range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                @change="timeHandle"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="分账状态" prop="can_div">
-              <el-select v-model="form.can_div" style="width: 100%">
-                <el-option label="可分账" value="true" />
-                <el-option label="不可分账" value="false" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item style="text-align: right">
-          <el-button type="primary" size="medium" @click="queryHandle"> 查询 </el-button>
-          <el-button type="info" size="medium" @click="resetForm('ruleForm')"> 清空 </el-button>
-        </el-form-item>
-        <el-row :gutter="20" class="group">
-          <el-col v-if="$store.getters.login_type != 'distributor'" :span="6" class="item">
-            <p class="title">订单总额</p>
-            <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
-          </el-col>
-          <el-col :span="6" class="item">
-            <p class="title">交易总额</p>
-            <p class="money">￥ {{ (total.payFee / 100) | formatNumMoney }}</p>
-          </el-col>
-          <el-col v-if="$store.getters.login_type == 'distributor'" :span="6" class="item">
-            <p class="title">支付总额</p>
-            <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
-          </el-col>
-          <el-col :span="6" class="item">
-            <p class="title">分账总额</p>
-            <p class="money">￥ {{ (total.divFee / 100) | formatNumMoney }}</p>
-          </el-col>
-          <el-col v-if="$store.getters.login_type == 'admin'" :span="6" class="item">
-            <p class="title">手续费总额</p>
-            <p class="money">￥ {{ (total.bspayFee / 100) | formatNumMoney }}</p>
-          </el-col>
-        </el-row>
-        <!-- tablelist -->
-        <div class="tablelist">
-          <el-row style="text-align: right">
-            <el-upload
-              style="margin-right: 10px; display: inline-block"
-              action=""
-              :on-change="uploadHandleChange"
-              :auto-upload="false"
-              :show-file-list="false"
-            >
-              <!-- <el-button type="primary">
+            <el-row :gutter="20" class="group">
+              <el-col v-if="$store.getters.login_type != 'distributor'" :span="6" class="item">
+                <p class="title">订单总额</p>
+                <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
+              </el-col>
+              <el-col :span="6" class="item">
+                <p class="title">交易总额</p>
+                <p class="money">￥ {{ (total.payFee / 100) | formatNumMoney }}</p>
+              </el-col>
+              <el-col v-if="$store.getters.login_type == 'distributor'" :span="6" class="item">
+                <p class="title">支付总额</p>
+                <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
+              </el-col>
+              <el-col :span="6" class="item">
+                <p class="title">分账总额</p>
+                <p class="money">￥ {{ (total.divFee / 100) | formatNumMoney }}</p>
+              </el-col>
+              <el-col v-if="$store.getters.login_type == 'admin'" :span="6" class="item">
+                <p class="title">手续费总额</p>
+                <p class="money">￥ {{ (total.bspayFee / 100) | formatNumMoney }}</p>
+              </el-col>
+            </el-row>
+            <!-- tablelist -->
+            <div class="tablelist">
+              <el-row style="text-align: right">
+                <el-upload
+                  style="margin-right: 10px; display: inline-block"
+                  action=""
+                  :on-change="uploadHandleChange"
+                  :auto-upload="false"
+                  :show-file-list="false"
+                >
+                  <!-- <el-button type="primary">
                 导入<i class="el-icon-upload el-icon--right" />
               </el-button> -->
-            </el-upload>
-            <el-button type="primary" size="medium" @click="exportFile"> 导出文件 </el-button>
-          </el-row>
-          <el-table v-loading="loading" :data="list" style="width: 100%">
-            <el-table-column label="订单号" prop="orderId" />
-            <template v-if="$store.getters.login_type != 'distributor'">
-              <el-table-column label="商铺名称" prop="distributor_name" />
-            </template>
-            <template>
-              <el-table-column label="交易流水号" prop="tradeId" />
-              <el-table-column label="支付方式">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.payType == 'wxpay'">微信支付</span>
-                  <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
-                  <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
-                  <span v-if="scope.row.payType == 'wxpaypc'">微信PC支付</span>
-                  <span v-if="scope.row.payType == 'wxpaypos'">微信POS支付</span>
-                  <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
-                  <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
-                  <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-                  <span v-if="scope.row.payType == 'alipaypos'">支付宝POS支付</span>
-                  <span v-if="scope.row.payType == 'deposit'">余额支付</span>
-                  <span v-if="scope.row.payType == 'point'">积分支付</span>
-                  <span v-if="scope.row.payType == 'pos'">POS银行卡支付</span>
-                  <span
-                    v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
-                    v-if="scope.row.payType == 'bspay' && scope.row.payChannel == 'wx_lite'"
-                    v-if="scope.row.payType == 'bspay' && scope.row.payChannel == 'alipay_wap'"
-                    <span
-                    <span
-                    >支付宝支付</span
-                  >
+                </el-upload>
+                <el-button type="primary" size="medium" @click="exportFile"> 导出文件 </el-button>
+              </el-row>
+              <el-table v-loading="loading" :data="list" style="width: 100%">
+                <el-table-column label="订单号" prop="orderId" />
+                <template v-if="$store.getters.login_type != 'distributor'">
+                  <el-table-column label="商铺名称" prop="distributor_name" />
                 </template>
-              </el-table-column>
-            </template>
+                <template>
+                  <el-table-column label="交易流水号" prop="tradeId" />
+                  <el-table-column label="支付方式">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.payType == 'wxpay'">微信支付</span>
+                      <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
+                      <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
+                      <span v-if="scope.row.payType == 'wxpaypc'">微信PC支付</span>
+                      <span v-if="scope.row.payType == 'wxpaypos'">微信POS支付</span>
+                      <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
+                      <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
+                      <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
+                      <span v-if="scope.row.payType == 'alipaypos'">支付宝POS支付</span>
+                      <span v-if="scope.row.payType == 'deposit'">余额支付</span>
+                      <span v-if="scope.row.payType == 'point'">积分支付</span>
+                      <span v-if="scope.row.payType == 'pos'">POS银行卡支付</span>
+                      <span
+                        v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
+                        v-if="scope.row.payType == 'bspay' && scope.row.payChannel == 'wx_lite'"
+                        v-if="scope.row.payType == 'bspay' && scope.row.payChannel == 'alipay_wap'"
+                        <span
+                        <span
+                        >支付宝支付</span
+                      >
+                    </template>
+                  </el-table-column>
+                </template>
 
-            <el-table-column v-if="$store.getters.login_type != 'distributor'" label="订单金额">
-              <template slot-scope="scope">
-                <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column v-if="$store.getters.login_type == 'distributor'" label="交易金额">
-              <template slot-scope="scope">
-                <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="交易状态" prop="tradeState">
-              <template slot-scope="scope">
-                <span v-if="scope.row.tradeState == 'SUCCESS'">支付完成</span>
-                <span v-else-if="scope.row.tradeState == 'PARTIAL_REFUND'">部分退款</span>
-                <span v-else-if="scope.row.tradeState == 'FULL_REFUND'">全额退款</span>
-                <!-- <span v-else-if="scope.row.tradeState =='CLOSED'">已关闭</span>
+                <el-table-column v-if="$store.getters.login_type != 'distributor'" label="订单金额">
+                  <template slot-scope="scope">
+                    <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column v-if="$store.getters.login_type == 'distributor'" label="交易金额">
+                  <template slot-scope="scope">
+                    <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易状态" prop="tradeState">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.tradeState == 'SUCCESS'">支付完成</span>
+                    <span v-else-if="scope.row.tradeState == 'PARTIAL_REFUND'">部分退款</span>
+                    <span v-else-if="scope.row.tradeState == 'FULL_REFUND'">全额退款</span>
+                    <!-- <span v-else-if="scope.row.tradeState =='CLOSED'">已关闭</span>
                   <span v-else-if="scope.row.tradeState =='REVOKED'">已撤销</span>
                   <span v-else-if="scope.row.tradeState =='PAYERROR'">支付失败</span> -->
-              </template>
-            </el-table-column>
-            <el-table-column label="退款金额">
-              <template slot-scope="scope">
-                <span>{{ (scope.row.refundedFee / 100) | formatNumMoney }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="分账类型">
-              <template slot-scope="scope">
-                <span v-if="scope.row.payType == 'bspay'">线上</span>
-                <span v-else>线下</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="分账状态">
-              <template slot-scope="scope">
-                <span v-if="scope.row.canDiv === true">可分账</span>
-                <span v-else>不可分账</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="是否分账">
-              <template slot-scope="scope">
-                <span v-if="scope.row.bspayDivStatus == 'NOTDIV'">未分账</span>
-                <span v-else-if="scope.row.bspayDivStatus == 'DIVED'">已分账</span>
-              </template>
-            </el-table-column>
-            <template v-if="$store.getters.login_type == 'admin'">
-              <el-table-column label="手续费扣费方式" prop="bspayFeeMode">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.bspayFeeMode == '2'">内扣</span>
-                  <span v-else-if="scope.row.bspayFeeMode == '1'">外扣</span>
-                  <span v-else>-</span>
-                </template>
-              </el-table-column>
+                  </template>
+                </el-table-column>
+                <el-table-column label="退款金额">
+                  <template slot-scope="scope">
+                    <span>{{ (scope.row.refundedFee / 100) | formatNumMoney }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="分账类型">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.payType == 'bspay'">线上</span>
+                    <span v-else>线下</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="分账状态">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.canDiv === true">可分账</span>
+                    <span v-else>不可分账</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="是否分账">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.bspayDivStatus == 'NOTDIV'">未分账</span>
+                    <span v-else-if="scope.row.bspayDivStatus == 'DIVED'">已分账</span>
+                  </template>
+                </el-table-column>
+                <template v-if="$store.getters.login_type == 'admin'">
+                  <el-table-column label="手续费扣费方式" prop="bspayFeeMode">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.bspayFeeMode == '2'">内扣</span>
+                      <span v-else-if="scope.row.bspayFeeMode == '1'">外扣</span>
+                      <span v-else>-</span>
+                    </template>
+                  </el-table-column>
 
-              <el-table-column label="手续费">
-                <template slot-scope="scope">
-                  <span>{{ (scope.row.bspayFee / 100) | formatNumMoney }}</span>
+                  <el-table-column label="手续费">
+                    <template slot-scope="scope">
+                      <span>{{ (scope.row.bspayFee / 100) | formatNumMoney }}</span>
+                    </template>
+                  </el-table-column>
                 </template>
-              </el-table-column>
-            </template>
-            <el-table-column label="分账金额">
-              <template slot-scope="scope">
-                <span>{{ (scope.row.divFee / 100) | formatNumMoney }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="创建日期" prop="timeStart">
-              <template slot-scope="scope">
-                <span>{{ scope.row.timeStart | formatTimestamp }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
-              <template slot-scope="scope">
-                <el-button type="text" size="small" @click="goDetail(scope.row.tradeId)">
-                  查看
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div class="pagination">
-            <el-pagination
-              background
-              :current-page="params.page"
-              :page-sizes="[10, 20, 30]"
-              :page-size="100"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="total_count"
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-            />
-          </div>
-        </div>
-      </el-card>
-    </el-form>
-  </div>
-  </SpPage>
+                <el-table-column label="分账金额">
+                  <template slot-scope="scope">
+                    <span>{{ (scope.row.divFee / 100) | formatNumMoney }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="创建日期" prop="timeStart">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.timeStart | formatTimestamp }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" width="100">
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="goDetail(scope.row.tradeId)">
+                      查看
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="pagination">
+                <el-pagination
+                  background
+                  :current-page="params.page"
+                  :page-sizes="[10, 20, 30]"
+                  :page-size="100"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="total_count"
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                />
+              </div>
+            </div>
+          </el-card>
+        </el-form>
+      </div>
+    </SpPage>
   </SpRouterView>
 </template>
 

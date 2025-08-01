@@ -1,26 +1,13 @@
 <template>
-  <section
-    v-if="name === 'search'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'search'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="钉在顶部">
-          <el-switch
-            v-model="config.fixTop"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="config.fixTop" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <!-- <el-form-item label="开启扫码" v-if="pageType !== 'salesindex'">
           <el-switch
@@ -50,7 +37,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -59,13 +46,13 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
@@ -73,7 +60,7 @@ export default {
     //   //let a = val.split('\n')
     //   this.config.hotword = val
     // },
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config

@@ -125,8 +125,8 @@ export default {
       const { list } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),
         end: moment(display_time_end).format('YYYY-MM-DD'),
-        order_class: activity_id.length>0 ?'employee_purchase':'',
-        act_id: activity_id.length>0 ? activity_id.toString() : ''
+        order_class: activity_id.length > 0 ? 'employee_purchase' : '',
+        act_id: activity_id.length > 0 ? activity_id.toString() : ''
       })
       this.tableData = list
       this.$nextTick(() => {

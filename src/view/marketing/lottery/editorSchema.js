@@ -1,7 +1,7 @@
 import { bindThisForFormSchema } from '@/utils/schemaHelper'
 import { createSetting } from '@shopex/finder'
 
-export const formList = vm =>
+export const formList = (vm) =>
   bindThisForFormSchema(
     [
       {
@@ -35,12 +35,12 @@ export const formList = vm =>
           return (
             <el-date-picker
               v-model={vm.form['start_time']}
-              type="datetimerange"
-              on-change={val => vm.handleDateInput(val)}
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              value-format="yyyy-MM-dd HH:mm:ss"
+              type='datetimerange'
+              on-change={(val) => vm.handleDateInput(val)}
+              range-separator='至'
+              start-placeholder='开始时间'
+              end-placeholder='结束时间'
+              value-format='yyyy-MM-dd HH:mm:ss'
               default-time={['00:00:00', '23:59:59']}
             />
           )
@@ -58,14 +58,14 @@ export const formList = vm =>
             <div>
               <el-radio-group v-model={vm.form['cost_type']}>
                 {/* <el-radio-button label='1'>互动分</el-radio-button> */}
-                <el-radio-button label="2">积分</el-radio-button>
+                <el-radio-button label='2'>积分</el-radio-button>
               </el-radio-group>
               <el-input
                 v-model={vm.form['cost_value']}
-                placeholder="请输入分值"
-                type="number"
+                placeholder='请输入分值'
+                type='number'
                 style={{ width: '120px', marginLeft: '20px' }}
-                onBlur={val => {
+                onBlur={(val) => {
                   console.log(val.target.value)
                   const _val = val.target.value
                   let _num = 0
@@ -97,8 +97,8 @@ export const formList = vm =>
               <el-input
                 v-model={vm.form['limit_total']}
                 style={{ width: '120px' }}
-                type="number"
-                onBlur={val => {
+                type='number'
+                onBlur={(val) => {
                   console.log(val.target.value)
                   const _val = val.target.value
                   let _num = 1
@@ -118,8 +118,8 @@ export const formList = vm =>
                 <el-input
                   v-model={vm.form['limit_day']}
                   style={{ width: '120px' }}
-                  type="number"
-                  onBlur={val => {
+                  type='number'
+                  onBlur={(val) => {
                     console.log(val.target.value)
                     const _val = val.target.value
                     let _num = 1
@@ -163,7 +163,7 @@ export const formList = vm =>
         component(_) {
           return (
             <el-radio-group v-model={vm.form['activity_type']}>
-              <el-radio-button label="wheel">大转盘</el-radio-button>
+              <el-radio-button label='wheel'>大转盘</el-radio-button>
               {/* <el-radio-button label='slotMachine'>老虎机</el-radio-button>
               <el-radio-button label='grid'>九宫格</el-radio-button> */}
             </el-radio-group>
@@ -178,15 +178,15 @@ export const formList = vm =>
         component() {
           return (
             <SpFinder
-              ref="finder"
+              ref='finder'
               data={vm.form['prize_data']}
               no-selection
               setting={innerSchema(vm)}
-              row-actions-width="50px"
+              row-actions-width='50px'
               show-pager={false}
-              class="prize_data"
+              class='prize_data'
             >
-              <div slot="tableTop">
+              <div slot='tableTop'>
                 <el-button plain onClick={() => vm.addHandle()}>
                   添加奖项
                 </el-button>
@@ -202,7 +202,7 @@ export const formList = vm =>
           console.log('🚀 ~ validator ~ total:', total)
           if (total > 100 || total <= 0) {
             callback(new Error('中奖概率必须在100%到1%之间'))
-          } else if (value?.filter(item => item.prize_type).length <= 0) {
+          } else if (value?.filter((item) => item.prize_type).length <= 0) {
             callback(new Error('请设置奖品'))
           } else {
             callback()
@@ -236,7 +236,7 @@ export const formList = vm =>
                 <div>
                   <el-color-picker
                     value={vm.form['backgroundColor']}
-                    onChange={val => {
+                    onChange={(val) => {
                       console.log('🚀 ~ onChange ~ val:', val)
                       vm.form = {
                         ...vm.form,
@@ -259,7 +259,7 @@ export const formList = vm =>
         defaultValue: null,
         component({ key }, value) {
           return (
-            <div class="inputWrap">
+            <div class='inputWrap'>
               <div>{vm['hasSetHotArea'] ? '已设置' : '未设置'}</div>
               <div style={{ display: 'flex', fontSize: '14px' }}>
                 <div onClick={() => (vm.hotAreasDialogShow = true)}>设置&nbsp;</div>
@@ -312,7 +312,7 @@ export const formList = vm =>
         defaultValue: '',
         component({ key }, value) {
           return (
-            <div class="inputWrap">
+            <div class='inputWrap'>
               <div>{vm['hasSetRecord'] ? '已设置' : '未设置'}</div>
               <div style={{ display: 'flex' }}>
                 <div onClick={() => (vm.recordDialogShow = true)}>设置&nbsp;</div>
@@ -338,7 +338,7 @@ export const formList = vm =>
   )
 
 // 抽奖奖品配置
-export const innerSchema = vm =>
+export const innerSchema = (vm) =>
   createSetting({
     actions: [
       {
@@ -365,9 +365,9 @@ export const innerSchema = vm =>
                 value={row['text']}
                 style={{ width: '220px' }}
                 maxLength={5}
-                on-input={val => vm.handleInput(val, row, $index, 'text')}
+                on-input={(val) => vm.handleInput(val, row, $index, 'text')}
                 show-word-limit
-                placeholder="请输入奖项名称,长度为5"
+                placeholder='请输入奖项名称,长度为5'
               />
             </div>
           )
@@ -382,9 +382,9 @@ export const innerSchema = vm =>
             <div>
               <el-input
                 value={row['prize_probability']}
-                type="number"
-                placeholder="请输入0-100的整数"
-                on-input={val => {
+                type='number'
+                placeholder='请输入0-100的整数'
+                on-input={(val) => {
                   if (val > 100) {
                     vm.handleInput(99, row, $index, 'prize_probability')
                   } else if (val <= 0) {
@@ -407,11 +407,11 @@ export const innerSchema = vm =>
             <div style={{ display: 'flex', alignItems: 'center' }} key={row['prize_type']}>
               <el-select
                 value={row['prize_type']}
-                placeholder="请选择"
+                placeholder='请选择'
                 style={{ width: '100px' }}
-                on-change={val => vm.handleInput(val, row, $index, 'prize_type')}
+                on-change={(val) => vm.handleInput(val, row, $index, 'prize_type')}
               >
-                {vm?.options?.map(item => {
+                {vm?.options?.map((item) => {
                   return (
                     <el-option label={item.label} value={item.value} key={item.value}></el-option>
                   )
@@ -444,7 +444,7 @@ export const innerSchema = vm =>
               {row['prize_type'] == 'points' && (
                 <el-input
                   value={row['prize_value']}
-                  on-input={val => vm.handleInput(val, row, $index, 'prize_value')}
+                  on-input={(val) => vm.handleInput(val, row, $index, 'prize_value')}
                   style={{ width: '80px', marginLeft: '4px' }}
                 />
               )}
@@ -462,8 +462,8 @@ export const innerSchema = vm =>
               <div>
                 <el-input
                   value={row['stock']}
-                  placeholder="请输入正整数"
-                  on-input={val => {
+                  placeholder='请输入正整数'
+                  on-input={(val) => {
                     // 必须是正整数
                     if (val <= 0) {
                       vm.handleInput(0, row, $index, 'stock')
@@ -476,7 +476,7 @@ export const innerSchema = vm =>
                       vm.handleInput(Number(val)?.toFixed(0), row, $index, 'stock')
                     }
                   }}
-                  type="number"
+                  type='number'
                 />
               </div>
             )
@@ -492,7 +492,7 @@ export const innerSchema = vm =>
             <div>
               <el-color-picker
                 value={row['background']}
-                on-change={val => vm.handleInput(val, row, $index, 'background')}
+                on-change={(val) => vm.handleInput(val, row, $index, 'background')}
               />
             </div>
           )
@@ -504,11 +504,11 @@ export const innerSchema = vm =>
         width: '80px',
         render(_, { row, $index }) {
           return (
-            <div class="imgWrap">
+            <div class='imgWrap'>
               <SpImagePicker
-                size="mini"
+                size='mini'
                 value={row['img'] || ''}
-                on-input={val => vm.handleInput(val, row, $index, 'img')}
+                on-input={(val) => vm.handleInput(val, row, $index, 'img')}
               />
             </div>
           )
@@ -518,7 +518,7 @@ export const innerSchema = vm =>
   })
 
 // 抽奖区域
-export const lotteryAreaSchema = vm =>
+export const lotteryAreaSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
@@ -528,7 +528,7 @@ export const lotteryAreaSchema = vm =>
         defaultValue: '',
         component(_) {
           return (
-            <div key="backImg">
+            <div key='backImg'>
               <SpImagePicker v-model={vm.hotArea['backImg']} />
             </div>
           )
@@ -541,8 +541,8 @@ export const lotteryAreaSchema = vm =>
         defaultValue: 0,
         component(_) {
           return (
-            <div key="padding">
-              <el-input v-model={vm.hotArea['padding']} type="number" />
+            <div key='padding'>
+              <el-input v-model={vm.hotArea['padding']} type='number' />
               <div>最大不可超过50</div>
             </div>
           )
@@ -570,7 +570,7 @@ export const lotteryAreaSchema = vm =>
           console.log(vm.hotArea)
           return (
             <div>
-              <SpImagePicker v-model={vm.hotArea['img']} key="img" />
+              <SpImagePicker v-model={vm.hotArea['img']} key='img' />
               <div>建议尺寸 160px * 160px 像素</div>
             </div>
           )
@@ -593,7 +593,7 @@ export const lotteryAreaSchema = vm =>
   )
 
 // 抽奖规则按钮
-export const ruleFormSchema = vm =>
+export const ruleFormSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
@@ -629,7 +629,7 @@ export const ruleFormSchema = vm =>
   )
 
 // 抽奖记录按钮
-export const recordFormSchema = vm =>
+export const recordFormSchema = (vm) =>
   bindThisForFormSchema(
     [
       {

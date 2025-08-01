@@ -36,7 +36,7 @@
   <div
     :class="{
       'wgt-hotTopic': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -46,7 +46,7 @@
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced
+        spaced: value.spaced
       }"
     >
       <!-- 挂件自定义部分 -->

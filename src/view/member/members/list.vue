@@ -1089,7 +1089,7 @@ export default {
     this.getGradeList()
     // this.getVipList()
     this.getShopsList()
-    getMemberRegisterSetting().then(response => {
+    getMemberRegisterSetting().then((response) => {
       delete response.data.data.content_agreement
       this.membersSetting = response.data.data.setting
     })
@@ -1130,7 +1130,7 @@ export default {
       this.basicInfo.income = value.income
       this.basicInfo.edu_background = value.edu_background
       let habbit = []
-      value.habbit.forEach(data => {
+      value.habbit.forEach((data) => {
         if (data) {
           if (data.ischecked == 'true') {
             habbit.push(data.name)
@@ -1150,7 +1150,7 @@ export default {
       }
     },
     infoUpdateSubmit() {
-      updateMemberBasicInfo(this.basicInfo).then(res => {
+      updateMemberBasicInfo(this.basicInfo).then((res) => {
         this.$message({ type: 'success', message: '修改成功' })
         this.getMembers()
         this.dialogIsShow = false
@@ -1165,7 +1165,7 @@ export default {
         return
       }
       if (this.is_batch === false) {
-        updateMemberGrade(this.gradeForm).then(res => {
+        updateMemberGrade(this.gradeForm).then((res) => {
           this.$message({ type: 'success', message: '修改成功' })
           this.getMembers()
           this.dialogIsShow = false
@@ -1184,7 +1184,7 @@ export default {
       } else {
         params.name = this.remarksForm.input
       }
-      updateMemberInfo({ ...params }).then(res => {
+      updateMemberInfo({ ...params }).then((res) => {
         this.$message({ type: 'success', message: '更新成功' })
         this.isEditRemarks = false
         this.getMembers()
@@ -1241,7 +1241,7 @@ export default {
     handleSelectionChange(rows) {
       this.user_id = []
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           if (row) {
             this.user_id.push(row.user_id)
           }
@@ -1343,10 +1343,10 @@ export default {
     },
     showGrade(grade_id, vip_grade) {
       if (vip_grade) {
-        const filterList = this.levelData.find(item => item.grade_id == vip_grade)
+        const filterList = this.levelData.find((item) => item.grade_id == vip_grade)
         return filterList && filterList.grade_name
       } else {
-        const filterList = this.levelData.find(item => item.grade_id == grade_id)
+        const filterList = this.levelData.find((item) => item.grade_id == grade_id)
         return filterList && filterList.grade_name
       }
     },
@@ -1372,7 +1372,7 @@ export default {
         page_no: this.staffCoupons.page.currentPage,
         page_size: this.staffCoupons.page.pageSize,
         card_type: this.card_type
-      }).then(res => {
+      }).then((res) => {
         var data = res.data.data.list
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < this.staffCoupons.temp.length; j++) {
@@ -1393,7 +1393,7 @@ export default {
         mobile: this.salesmanPaging.mobile,
         page: this.salesmanPaging.page,
         pageSize: this.salesmanPaging.pageSize
-      }).then(res => {
+      }).then((res) => {
         this.salesman = res.data.data.list
         this.salesperson_id = ''
         this.salesmanPaging.total_count = res.data.data.total_count
@@ -1476,7 +1476,7 @@ export default {
       this.tag.currentTags.splice(index, 1)
     },
     tagAdd(item, index) {
-      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
@@ -1485,7 +1485,7 @@ export default {
     submitMemberTag() {
       this.params.tag_ids = []
       this.params.user_id = []
-      this.tag.currentTags.forEach(item => {
+      this.tag.currentTags.forEach((item) => {
         this.params.tag_ids.push(item.tag_id)
       })
       if (this.params.tag_ids.length <= 0) {
@@ -1509,7 +1509,7 @@ export default {
         this.params.user_id = this.user_id
         let params = JSON.parse(JSON.stringify(this.params))
         console.log(this.params)
-        batchOperating(params).then(res => {
+        batchOperating(params).then((res) => {
           if (res.data.data.status) {
             this.dialogIsShow = false
             this.$message({
@@ -1529,7 +1529,7 @@ export default {
         })
           .then(() => {
             let params = JSON.parse(JSON.stringify(this.params))
-            batchOperating(params).then(res => {
+            batchOperating(params).then((res) => {
               if (res.data.data.status) {
                 this.dialogIsShow = false
                 this.$message({
@@ -1580,7 +1580,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            updateMemberMobile(this.form).then(res => {
+            updateMemberMobile(this.form).then((res) => {
               this.$message({
                 type: 'success',
                 message: '修改手机号成功'
@@ -1597,7 +1597,7 @@ export default {
       var params = {
         user_id: userId
       }
-      getMemberOperateLog(params).then(res => {
+      getMemberOperateLog(params).then((res) => {
         this.operateLog = res.data.data.list
       })
     },
@@ -1633,7 +1633,7 @@ export default {
 
     exportData() {
       this.currentPage = 1
-      memberExport(this.params).then(response => {
+      memberExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -1681,7 +1681,7 @@ export default {
             user_id: row.user_id,
             disabled: row.disabled
           }
-          updateMemberInfo(params).then(res => {
+          updateMemberInfo(params).then((res) => {
             this.getMembers()
           })
         })
@@ -1690,7 +1690,7 @@ export default {
           user_id: row.user_id,
           disabled: row.disabled
         }
-        updateMemberInfo(params).then(res => {
+        updateMemberInfo(params).then((res) => {
           this.getMembers()
         })
       }
@@ -1708,7 +1708,7 @@ export default {
             user_id: row.user_id,
             distributor_ids: [this.$store.getters.shopId]
           }
-          setCheif(params).then(res => {
+          setCheif(params).then((res) => {
             this.getMembers()
           })
         })
@@ -1779,7 +1779,7 @@ export default {
     },
     getPopularizeListModalFun(filter) {
       this.modalLoading = true
-      getPopularizeList(filter).then(res => {
+      getPopularizeList(filter).then((res) => {
         this.modalList = res.data.data.list
         this.modal_total_count = Number(res.data.data.total_count)
         this.modalLoading = false
@@ -1793,7 +1793,7 @@ export default {
     },
     editPopularizeRemoveFun() {
       editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
-        res => {
+        (res) => {
           this.message = '上下级'
           this.loading = false
           this.$message({
@@ -1826,7 +1826,7 @@ export default {
         this.tag.currentTags = []
         this.tag.tags = [...this.tag.list]
         this.tag.tags.forEach((item, index) => {
-          let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+          let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
           if (isInArr != -1) this.tag.tags.splice(index, 1)
         })
         this.tag.dialog = true

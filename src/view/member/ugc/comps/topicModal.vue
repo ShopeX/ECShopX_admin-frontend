@@ -152,7 +152,7 @@ export default {
       console.log('modal params', params)
       this.$data.topicList = []
       this.$data.modalLoad = true
-      getTopics(params).then((res) => {
+      getTopics(params).then(res => {
         var { list, total_count } = res.data.data
         that.$data.pagers = { total: total_count }
         // console.log('list',list)
@@ -172,7 +172,7 @@ export default {
       //console.log('defCheckStatus',dufCheckTopic)
       //传入的默认选中
       if (dufCheckTopic) {
-        dufCheckTopic.forEach((item) => {
+        dufCheckTopic.forEach(item => {
           check_id.push(item.topic_id)
         })
         this.$data.def_check_id = check_id
@@ -186,7 +186,7 @@ export default {
       var check_id = []
       var dufCheckTopic = []
       //默认置顶选中状态
-      topicList.forEach((item) => {
+      topicList.forEach(item => {
         if (item.is_top == '1') {
           check_id.push(item.topic_id)
           dufCheckTopic.push(item)

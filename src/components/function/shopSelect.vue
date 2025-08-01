@@ -7,16 +7,8 @@
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+      <el-input v-model="name" placeholder="输入店铺名称" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
     <el-table
@@ -29,25 +21,11 @@
       @select="handleSelectionChange"
       @select-all="selectAll"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="storeName"
-        label="门店名称"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="storeName" label="门店名称" />
+      <el-table-column prop="address" label="地址" show-overflow-tooltip />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -55,15 +33,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -95,7 +67,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       dataType: 'distributor',
       loading: false,
@@ -113,33 +85,33 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.storeVisible
     }
   },
   watch: {
-    sourceType (newVal, oldVal) {
+    sourceType(newVal, oldVal) {
       this.dataType = this.sourceType
     },
-    relDataIds (newVal, oldVal) {
+    relDataIds(newVal, oldVal) {
       this.selectRows = newVal
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       this.getWxshop()
     }
   },
   methods: {
-    getWxshop () {
+    getWxshop() {
       //let param = {}
-      getWxShopsList(this.params).then((response) => {
+      getWxShopsList(this.params).then(response => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
         this.loading = false
         this.multipleSelection = []
         this.$refs.multipleTable.clearSelection()
         if (this.selectRows) {
-          this.storeData.forEach((item) => {
-            const isHave = this.selectRows.findIndex((n) => {
+          this.storeData.forEach(item => {
+            const isHave = this.selectRows.findIndex(n => {
               if (n.wxShopId) {
                 return n.wxShopId && n.wxShopId == item.wxShopId
               } else {
@@ -155,31 +127,31 @@ export default {
         }
       })
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.wxShopId
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getWxshop()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.getWxshop()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        const newVal = this.selectRows.filter((item) => {
-          const isHaveRow = this.storeData.some((row) => {
+        const newVal = this.selectRows.filter(item => {
+          const isHaveRow = this.storeData.some(row => {
             if (item.wxShopId) {
               return item.wxShopId == row.wxShopId
             } else {
@@ -190,8 +162,8 @@ export default {
         })
         this.selectRows = [...newVal, ...val]
       } else {
-        const list = this.selectRows.filter((row) => {
-          const isHave = this.storeData.some((item) => {
+        const list = this.selectRows.filter(row => {
+          const isHave = this.storeData.some(item => {
             if (row.wxShopId) {
               return item.wxShopId == row.wxShopId
             } else {
@@ -204,13 +176,13 @@ export default {
       }
     },
     // 全选事件
-    selectAll (val) {
+    selectAll(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        val.forEach((item) => {
+        val.forEach(item => {
           let isInArr = -1
           if (this.selectRows.length > 0) {
-            isInArr = this.selectRows.findIndex((n) => {
+            isInArr = this.selectRows.findIndex(n => {
               if (n.wxShopId) {
                 return n.wxShopId == item.wxShopId
               } else {
@@ -223,17 +195,17 @@ export default {
           }
         })
       } else {
-        const list = this.selectRows.filter((item) => {
-          const isHave = this.storeData.some((n) => item.wxShopId === n.wxShopId)
+        const list = this.selectRows.filter(item => {
+          const isHave = this.storeData.some(n => item.wxShopId === n.wxShopId)
           return !isHave
         })
         this.selectRows = list
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.selectRows)
     }
   }

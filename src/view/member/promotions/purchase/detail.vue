@@ -71,14 +71,14 @@ export default {
   mounted() {
     if (this.$route.query.id) {
       let filter = { purchase_id: this.$route.query.id }
-      getPurchaseInfo(filter).then((res) => {
+      getPurchaseInfo(filter).then(res => {
         this.detail = res.data.data
         const { dependents_limitfee, employee_limitfee, item_limit, minimum_amount } = this.detail
         this.detail.dependents_limitfee = (dependents_limitfee / 100).toFixed(2)
         this.detail.employee_limitfee = (employee_limitfee / 100).toFixed(2)
         this.detail.minimum_amount = (minimum_amount / 100).toFixed(2)
         if (Array.isArray(item_limit) && item_limit.length > 0) {
-          this.detail.item_limit = item_limit.map((item) => {
+          this.detail.item_limit = item_limit.map(item => {
             item.limit_fee = (item.limit_fee / 100).toFixed(2)
             return item
           })

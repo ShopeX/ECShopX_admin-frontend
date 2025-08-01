@@ -45,7 +45,7 @@
               <el-radio-group
                 v-model="item.linkType"
                 @change="
-                  (val) => {
+                  val => {
                     onChangeLinkType(val, index)
                   }
                 "
@@ -127,7 +127,7 @@ export default {
       this.base = val.base
       this.config = val.config
       if (isArray(val.data)) {
-        this.data = val.data.map((item) => {
+        this.data = val.data.map(item => {
           if (typeof item.linkType == 'undefined') {
             return {
               ...item,

@@ -8,10 +8,7 @@
     :before-close="cancelAction"
     append-to-body
   >
-    <div
-      style="margin-bottom: 15px"
-      class="promotionSearch"
-    >
+    <div style="margin-bottom: 15px" class="promotionSearch">
       <el-row :gutter="10">
         <el-col :span="6">
           <el-input
@@ -30,13 +27,7 @@
           />
         </el-col>
         <el-col :span="2">
-          <el-button
-            class="fl"
-            type="primary"
-            @click="searchByKey"
-          >
-            搜索
-          </el-button>
+          <el-button class="fl" type="primary" @click="searchByKey"> 搜索 </el-button>
         </el-col>
       </el-row>
     </div>
@@ -57,18 +48,9 @@
         :reserve-selection="true"
         width="80"
       />
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="itemBn"
-        label="商品编码"
-      />
+      <el-table-column prop="itemId" label="商品ID" />
+      <el-table-column prop="itemName" label="商品名称" />
+      <el-table-column prop="itemBn" label="商品编码" />
       <el-table-column
         prop="price"
         label="价格"
@@ -77,10 +59,7 @@
         show-overflow-tooltip
       />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="pager"
-    >
+    <div v-if="total_count > params.pageSize" class="pager">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -88,15 +67,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveGoodsAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveGoodsAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -112,7 +85,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       itemsData: [],
@@ -129,52 +102,52 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.itemsVisible
     }
   },
   watch: {
-    async itemsVisible (val) {
+    async itemsVisible(val) {
       if (val) {
         this.getNewsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getCurrencyInfo()
   },
   methods: {
-    disabledItem (row, index) {
+    disabledItem(row, index) {
       if (this.hiddenItem.indexOf(row.itemId) > -1) {
         return false
       } else {
         return true
       }
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.itemId
     },
-    getCurrencyInfo () {
-      getDefaultCurrency().then((res) => {
+    getCurrencyInfo() {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = page_num
       this.getNewsList()
     },
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getNewsList()
     },
-    handleSelectAll (val) {
+    handleSelectAll(val) {
       if (this.limitNum) {
         this.$message({ message: '当前组件不支持全选', type: 'warning' })
         this.$refs.multipleTable.clearSelection()
-        this.itemsData.forEach((item) => {
-          let checked = this.selectRows.find((n) => n.itemId === item.itemId)
+        this.itemsData.forEach(item => {
+          let checked = this.selectRows.find(n => n.itemId === item.itemId)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -182,23 +155,23 @@ export default {
         return
       }
       if (val.length > 0) {
-        val.forEach((item) => {
-          let inChecked = this.selectRows.findIndex((n) => item.itemId === n.itemId)
+        val.forEach(item => {
+          let inChecked = this.selectRows.findIndex(n => item.itemId === n.itemId)
           if (inChecked === -1) {
             this.selectRows.push(item)
           }
         })
       } else {
         this.itemsData.forEach((item, index) => {
-          let inChecked = this.selectRows.findIndex((n) => item.itemId === n.itemId)
+          let inChecked = this.selectRows.findIndex(n => item.itemId === n.itemId)
           if (inChecked !== -1) {
             this.selectRows.splice(inChecked, 1)
           }
         })
       }
     },
-    handleSelectChange (val, row) {
-      let inChecked = this.selectRows.findIndex((item) => row.itemId === item.itemId)
+    handleSelectChange(val, row) {
+      let inChecked = this.selectRows.findIndex(item => row.itemId === item.itemId)
       if (inChecked !== -1) {
         this.selectRows.splice(inChecked, 1)
       } else {
@@ -206,14 +179,14 @@ export default {
           this.selectRows = []
           this.selectRows.push(row)
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return
         } else if (this.limitNum && this.selectRows.length >= this.limitNum) {
           this.$message({ message: `最多选择${this.limitNum}件商品`, type: 'warning' })
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach((item) => {
+          this.selectRows.forEach(item => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return
@@ -221,14 +194,14 @@ export default {
         this.selectRows.push(row)
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.selectRows = []
       this.$emit('closeGoodsDialog')
     },
-    saveGoodsAction () {
+    saveGoodsAction() {
       this.$emit('chooseGoods', this.selectRows)
     },
-    async getNewsList () {
+    async getNewsList() {
       this.loading = true
       let param = JSON.parse(JSON.stringify(this.params))
       try {
@@ -242,7 +215,7 @@ export default {
       }
       this.loading = false
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     }
   }

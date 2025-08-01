@@ -37,7 +37,7 @@ export default {
             { label: 1, name: '同意' },
             { label: 2, name: '不同意' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == 2) {
               this.resloveFormList[1].isShow = true
             } else {
@@ -88,8 +88,8 @@ export default {
       if (type == FORM_COMP.IMAGE) {
         if (isArray(value)) {
           return (
-            <div class='imglist-wrap'>
-              {value.map((item) => (
+            <div class="imglist-wrap">
+              {value.map(item => (
                 <SpImage src={item} />
               ))}
             </div>
@@ -107,40 +107,40 @@ export default {
     console.log('approve_status', name)
     return (
       <SpPage>
-        <el-card class='el-card--normal'>
-          <div slot='header'>团长基本信息</div>
-          <el-row class='card-panel'>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>姓名:</span>
-              <span class='card-panel__value'>{name}</span>
+        <el-card class="el-card--normal">
+          <div slot="header">团长基本信息</div>
+          <el-row class="card-panel">
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">姓名:</span>
+              <span class="card-panel__value">{name}</span>
             </el-col>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>手机:</span>
-              <span class='card-panel__value'>{mobile}</span>
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">手机:</span>
+              <span class="card-panel__value">{mobile}</span>
             </el-col>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>来源:</span>
-              <span class='card-panel__value'>{source}</span>
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">来源:</span>
+              <span class="card-panel__value">{source}</span>
             </el-col>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>申请时间:</span>
-              <span class='card-panel__value'>{applyTime}</span>
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">申请时间:</span>
+              <span class="card-panel__value">{applyTime}</span>
             </el-col>
-            <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>审批时间:</span>
-              <span class='card-panel__value'>{approveTime}</span>
+            <el-col class="card-panel-item" span={24}>
+              <span class="card-panel__label">审批时间:</span>
+              <span class="card-panel__value">{approveTime}</span>
             </el-col>
           </el-row>
         </el-card>
 
-        <el-card class='el-card--normal'>
-          <div slot='header'>团长其他信息</div>
+        <el-card class="el-card--normal">
+          <div slot="header">团长其他信息</div>
           {extraData &&
-            Object.keys(extraData).map((key) => (
-              <el-row class='card-panel' key={key}>
-                <el-col class='card-panel-item' span={24}>
-                  <span class='card-panel__label'>{`${extraData[key].label}:`}</span>
-                  <span class='card-panel__value'>{this.renderComp(extraData[key])}</span>
+            Object.keys(extraData).map(key => (
+              <el-row class="card-panel" key={key}>
+                <el-col class="card-panel-item" span={24}>
+                  <span class="card-panel__label">{`${extraData[key].label}:`}</span>
+                  <span class="card-panel__value">{this.renderComp(extraData[key])}</span>
                 </el-col>
               </el-row>
             ))}

@@ -11,14 +11,8 @@
 <template>
   <div class="wxalink">
     <div class="line">
-      <div class="name">
-        小程序名称
-      </div>
-      <el-select
-        v-model="app_id"
-        placeholder="请选择"
-        @change="selectChange"
-      >
+      <div class="name">小程序名称</div>
+      <el-select v-model="app_id" placeholder="请选择" @change="selectChange">
         <el-option
           v-for="(item, index) in options"
           :key="`${item.value}${index}`"
@@ -28,17 +22,10 @@
       </el-select>
     </div>
     <div class="line">
-      <div class="name">
-        页面名称
-      </div>
+      <div class="name">页面名称</div>
       <el-input v-model="route_name" />
     </div>
-    <el-button
-      type="primary"
-      @click="search"
-    >
-      搜 索
-    </el-button>
+    <el-button type="primary" @click="search"> 搜 索 </el-button>
   </div>
 </template>
 
@@ -46,18 +33,18 @@
 import api from '@/api'
 
 export default {
-  data () {
+  data() {
     return {
       options: [],
       app_id: '',
       route_name: ''
     }
   },
-  async mounted () {
+  async mounted() {
     const { list } = await api.wxa.getWxLinkListSetting({
       page: 1
     })
-    this.options = list.map((item) => {
+    this.options = list.map(item => {
       return {
         label: item.app_name,
         value: item.app_id
@@ -67,10 +54,10 @@ export default {
     this.$emit('selectChange', this.app_id)
   },
   methods: {
-    selectChange (val) {
+    selectChange(val) {
       this.$emit('selectChange', val)
     },
-    search () {
+    search() {
       this.$emit('onsearch', this.route_name)
     }
   }

@@ -1,6 +1,6 @@
 <template>
-  <SpPage>
-    <div v-if="$route.path.indexOf('editor') === -1">
+  <SpRouterView>
+    <SpPage>
       <el-row>
         <el-col :span="2">
           <div class="p-title">社区笔记管理</div>
@@ -168,9 +168,8 @@
         :dialog-is-show="settingshow"
         @cancelLabelsDialog="officialModalHide"
       />
-    </div>
-    <router-view />
-  </SpPage>
+    </SpPage>
+  </SpRouterView>
 </template>
 <script>
 import { Message } from 'element-ui'

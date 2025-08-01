@@ -1,112 +1,114 @@
 <template>
   <SpPage>
-  <div class="zyk_adapay_withdraw">
-    <el-card class="box-card" shadow="never">
-      <div slot="header" class="clearfix">
-        <span>分账提现</span>
-      </div>
-      <div class="content">
-        <div class="part1">
-          <div style="margin-right: 50px">
-            <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
-              <span>可提现金额：￥{{ (cash_balance / 100) | formatNumMoney }}</span>
-              <span v-if="$store.getters.login_type != 'admin'" style="margin-left: 30px"
-                >暂冻金额：￥{{ (cash_limit / 100) | formatNumMoney }}</span
+    <div class="zyk_adapay_withdraw">
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          <span>分账提现</span>
+        </div>
+        <div class="content">
+          <div class="part1">
+            <div style="margin-right: 50px">
+              <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
+                <span>可提现金额：￥{{ (cash_balance / 100) | formatNumMoney }}</span>
+                <span v-if="$store.getters.login_type != 'admin'" style="margin-left: 30px"
+                  >暂冻金额：￥{{ (cash_limit / 100) | formatNumMoney }}</span
+                >
+              </div>
+              <el-form
+                v-if="auto_draw_cash == 'N'"
+                ref="ruleForm"
+                :model="form"
+                class="demo-ruleForm"
+                label-width="100px"
+                :rules="rules"
               >
+                <el-form-item label="提现金额" prop="cash_amt">
+                  <el-input
+                    v-model="form.cash_amt"
+                    placeholder="请输入"
+                    style="width: 300px"
+                    type="number"
+                    min="0"
+                  >
+                    <template slot="append">元</template>
+                  </el-input>
+                  <span
+                    style="margin-left: 12px; color: #0079fe; cursor: pointer"
+                    @click="allHandle"
+                    >全部提现</span
+                  >
+                </el-form-item>
+                <el-form-item label="提现类型" prop="cash_type">
+                  <el-select
+                    v-model="form.cash_type"
+                    placeholder="请选择提现类型"
+                    style="width: 300px"
+                  >
+                    <el-option value="D0" />
+                    <el-option value="D1" />
+                    <el-option value="T1" />
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <loading-btn
+                    ref="loadingBtn"
+                    size="medium"
+                    type="primary"
+                    text="确认提现"
+                    @clickHandle="btnClick('ruleForm', 'loadingBtn')"
+                  />
+                  <!-- <el-button  type="primary" size="medium" @click="btnClick('ruleForm')">确认提现</el-button> -->
+                </el-form-item>
+              </el-form>
             </div>
-            <el-form
-              v-if="auto_draw_cash == 'N'"
-              ref="ruleForm"
-              :model="form"
-              class="demo-ruleForm"
-              label-width="100px"
-              :rules="rules"
+            <div v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'" class="tips">
+              <p v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
+                *
+                分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金；
+              </p>
+              <template v-if="$store.getters.login_type != 'admin' && auto_draw_cash == 'Y'">
+                <p>提现规则：</p>
+                <p>提现将在每月10号进行；</p>
+                <p>当余额大于10000元时可提现;</p>
+                <p>提现类型为 T1 。</p>
+              </template>
+              <p v-if="auto_draw_cash == 'N'">
+                * 提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。
+              </p>
+            </div>
+          </div>
+          <div class="list">
+            <SpFinder
+              ref="finder"
+              :no-selection="true"
+              :setting="setting"
+              url="/adapay/drawcash/getList"
+              :hooks="{
+                beforeSearch: beforeSearch,
+                afterSearch: afterSearch
+              }"
+              @reset="reset"
             >
-              <el-form-item label="提现金额" prop="cash_amt">
-                <el-input
-                  v-model="form.cash_amt"
-                  placeholder="请输入"
-                  style="width: 300px"
-                  type="number"
-                  min="0"
-                >
-                  <template slot="append">元</template>
-                </el-input>
-                <span style="margin-left: 12px; color: #0079fe; cursor: pointer" @click="allHandle"
-                  >全部提现</span
-                >
-              </el-form-item>
-              <el-form-item label="提现类型" prop="cash_type">
-                <el-select
-                  v-model="form.cash_type"
-                  placeholder="请选择提现类型"
-                  style="width: 300px"
-                >
-                  <el-option value="D0" />
-                  <el-option value="D1" />
-                  <el-option value="T1" />
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <loading-btn
-                  ref="loadingBtn"
-                  size="medium"
-                  type="primary"
-                  text="确认提现"
-                  @clickHandle="btnClick('ruleForm', 'loadingBtn')"
+              <template #date>
+                <el-date-picker
+                  v-model="time"
+                  style="width: 100%"
+                  type="daterange"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :default-time="['00:00:00', '23:59:59']"
+                  range-separator="-"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  :clearable="false"
+                  @change="timeHandle"
                 />
-                <!-- <el-button  type="primary" size="medium" @click="btnClick('ruleForm')">确认提现</el-button> -->
-              </el-form-item>
-            </el-form>
-          </div>
-          <div v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'" class="tips">
-            <p v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
-              *
-              分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金；
-            </p>
-            <template v-if="$store.getters.login_type != 'admin' && auto_draw_cash == 'Y'">
-              <p>提现规则：</p>
-              <p>提现将在每月10号进行；</p>
-              <p>当余额大于10000元时可提现;</p>
-              <p>提现类型为 T1 。</p>
-            </template>
-            <p v-if="auto_draw_cash == 'N'">
-              * 提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。
-            </p>
+              </template>
+            </SpFinder>
           </div>
         </div>
-        <div class="list">
-          <SpFinder
-            ref="finder"
-            :no-selection="true"
-            :setting="setting"
-            url="/adapay/drawcash/getList"
-            :hooks="{
-              beforeSearch: beforeSearch,
-              afterSearch: afterSearch
-            }"
-            @reset="reset"
-          >
-            <template v-slot:date>
-              <el-date-picker
-                v-model="time"
-                style="width: 100%"
-                type="daterange"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                :default-time="['00:00:00', '23:59:59']"
-                range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                :clearable="false"
-                @change="timeHandle"
-              />
-            </template>
-          </SpFinder>
-        </div>
-      </div>
-    </el-card>
-  </div>
-</SpPage>
+      </el-card>
+    </div>
+  </SpPage>
 </template>
 
 <script>
@@ -155,7 +157,7 @@ export default {
       this.end_time = val[1]
     },
     btnClick(formName, ref) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           try {
             const { status } = await this.$api.adapay.applyForWithdrawal(this.form)

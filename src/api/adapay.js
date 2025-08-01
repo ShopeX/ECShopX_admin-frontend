@@ -11,7 +11,7 @@ export const getStep = () => {
 }
 
 // 商户结算银行
-export const getBank = params => {
+export const getBank = (params) => {
   return fetch({
     url: '/adapay/bank/list',
     method: 'get',
@@ -20,7 +20,7 @@ export const getBank = params => {
 }
 
 // 获取地区（4位）
-export const getPro = id => {
+export const getPro = (id) => {
   return fetch({
     url: '/adapay/regions/list',
     method: 'get',
@@ -29,7 +29,7 @@ export const getPro = id => {
 }
 
 // 获取地区（6位）
-export const getCity = id => {
+export const getCity = (id) => {
   return fetch({
     url: `/adapay/regions_third/list/`,
     method: 'get',
@@ -38,7 +38,7 @@ export const getCity = id => {
 }
 
 // 开户企业
-export const accountCreate = params => {
+export const accountCreate = (params) => {
   return fetch({
     url: '/adapay/merchant_entry/create',
     method: 'post',
@@ -46,7 +46,7 @@ export const accountCreate = params => {
   })
 }
 // 开户个人
-export const accountCreatePerson = params => {
+export const accountCreatePerson = (params) => {
   return fetch({
     url: '/adapay/member/create',
     method: 'post',
@@ -61,14 +61,14 @@ export const accountQueryCorp = () => {
   })
 }
 // 更新开户企业
-export const accountUpdate = params => {
+export const accountUpdate = (params) => {
   return fetch({
     url: '/adapay/corp_member/update',
     method: 'post',
     params
   })
 }
-export const accountUpdateCorp = params => {
+export const accountUpdateCorp = (params) => {
   return fetch({
     url: 'adapay/corp_member/modify',
     method: 'post',
@@ -76,7 +76,7 @@ export const accountUpdateCorp = params => {
   })
 }
 // 更新开户个人
-export const accountUpdatePerson = params => {
+export const accountUpdatePerson = (params) => {
   return fetch({
     url: '/adapay/member/update',
     method: 'post',
@@ -85,7 +85,7 @@ export const accountUpdatePerson = params => {
 }
 
 // 店铺、经销商开户更新
-export const accountPersonUpdate = params => {
+export const accountPersonUpdate = (params) => {
   return fetch({
     url: 'adapay/member/modify',
     method: 'post',
@@ -102,7 +102,7 @@ export const pay_options = () => {
 }
 
 // 获取经营类目
-export const getCategoryList = params => {
+export const getCategoryList = (params) => {
   return fetch({
     url: '/adapay/wx_business_cat/list',
     method: 'get',
@@ -111,7 +111,7 @@ export const getCategoryList = params => {
 }
 
 // 获取商户种类
-export const getMerTypeOption = params => {
+export const getMerTypeOption = (params) => {
   return fetch({
     url: '/adapay/other/cat',
     method: 'get',
@@ -120,7 +120,7 @@ export const getMerTypeOption = params => {
 }
 
 // 提交支付渠道入驻
-export const submitPay = params => {
+export const submitPay = (params) => {
   return fetch({
     url: '/adapay/merchant_resident/create',
     method: 'post',
@@ -129,7 +129,7 @@ export const submitPay = params => {
 }
 
 // 上传图片
-export const uploadPic = params => {
+export const uploadPic = (params) => {
   return fetch({
     url: '/adapay/license/upload',
     method: 'post',
@@ -138,7 +138,7 @@ export const uploadPic = params => {
 }
 
 // 提交photo审核
-export const submitPhoto = params => {
+export const submitPhoto = (params) => {
   return fetch({
     url: '/adapay/license_submit/create',
     method: 'post',
@@ -147,7 +147,7 @@ export const submitPhoto = params => {
 }
 
 // 分账
-export const subAccount = params => {
+export const subAccount = (params) => {
   return fetch({
     url: '/adapay/trade/list',
     method: 'get',
@@ -155,7 +155,7 @@ export const subAccount = params => {
   })
 }
 // 导出分账文件
-export const exportFileList = params => {
+export const exportFileList = (params) => {
   return fetch({
     url: '/adapay/trade/exportdata',
     method: 'get',
@@ -164,7 +164,7 @@ export const exportFileList = params => {
 }
 
 // 查看分账详情
-export const subAccountDetail = id => {
+export const subAccountDetail = (id) => {
   return fetch({
     url: `/adapay/trade/info/${id}`,
     method: 'get'
@@ -172,7 +172,7 @@ export const subAccountDetail = id => {
 }
 
 // 获取提现记录
-export const withdrawList = params => {
+export const withdrawList = (params) => {
   return fetch({
     url: '/adapay/drawcash/getList',
     method: 'get',
@@ -181,7 +181,7 @@ export const withdrawList = params => {
 }
 
 // 申请提现
-export const applyForWithdrawal = params => {
+export const applyForWithdrawal = (params) => {
   return fetch({
     url: '/adapay/withdraw',
     method: 'post',
@@ -202,7 +202,7 @@ export const getAdapayPaySetting = () => {
     method: 'get'
   })
 }
-export const postAdapayPaySetting = params => {
+export const postAdapayPaySetting = (params) => {
   return fetch({
     url: '/trade/payment/setting',
     method: 'post',
@@ -211,7 +211,7 @@ export const postAdapayPaySetting = params => {
 }
 
 // 设置子商户每日提现额度
-export const setChildWithdraw = params => {
+export const setChildWithdraw = (params) => {
   return fetch({
     url: '/adapay/sub_approve/draw_limit',
     method: 'post',
@@ -238,7 +238,7 @@ export const withDrawSetting = () => {
 }
 
 // 选择商户
-export const seleteBusiness = params => {
+export const seleteBusiness = (params) => {
   return fetch({
     url: '/adapay/member/list',
     method: 'get',
@@ -247,7 +247,7 @@ export const seleteBusiness = params => {
 }
 
 // 保存提现设置
-export const saveDrawSetting = params => {
+export const saveDrawSetting = (params) => {
   return fetch({
     url: '/adapay/sub_approve/draw_cash_config',
     method: 'post',

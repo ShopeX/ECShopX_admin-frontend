@@ -18,7 +18,14 @@
     "dev:b2c": "PLATFORM=b2c vue-cli-service serve",
     "sh": "node ./cli.js",
     "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'",
-    "preinstall": "mkdir -p .npm-cache && cp .npm-cache/* ~/.npm/_cacache/content-v2/sha512/ || true"
+    "eslint:comment": "使用EsLint检查并自动修复src目录下所有扩展名为.js和.jsx",
+    "eslint": "eslint --ext .js,.jsx --ignore-path .eslintignore --fix src",
+    "prettier:comment": "自动格式化当前目录下的所有文件",
+    "prettier": "prettier --write 'src/**/*.{js,jsx}'",
+    "commit:comment": "引导设置规范化的提交信息",
+    "commit": "git-cz",
+    "husky": "npx husky install",
+    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",
@@ -57,11 +64,14 @@
     "vue-video-player": "^5.0.2",
     "vuedraggable": "^2.17.0",
     "vuex": "^3.5.1",
-    "vuex-persist": "^3.1.3"
+    "vuex-persist": "^3.1.3",
+    "webpack-auto-i18n-plugin": "^1.1.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/cli-plugin-babel": "^5.0.0",
     "@vue/cli-plugin-eslint": "^5.0.0",
@@ -75,6 +85,10 @@
     "compression-webpack-plugin": "^11.1.0",
     "core-js": "^3.9.1",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "commitizen": "^4.3.0",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.0.0",
     "dotenv-flow": "^3.2.0",
     "eslint": "^7.5.0",
     "eslint-plugin-import": "^2.20.2",
@@ -83,6 +97,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-vue": "^7.0.0",
     "exec-sh": "^0.4.0",
+    "husky": "^7.0.4",
     "image-minimizer-webpack-plugin": "^4.1.3",
     "lint-staged": "^12.1.5",
     "mini-css-extract-plugin": "^2.9.2",
@@ -111,9 +126,15 @@
     "not dead",
     "not ie 11"
   ],
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
   "lint-staged": {
-    "src/**/*.{js,vue,scss}": [
-      "prettier-eslint --write"
+    "*.{js,jsx,scss}": [
+      "npm run eslint",
+      "npm run prettier"
     ]
   }
 }

@@ -68,20 +68,16 @@
             <el-radio :label="false"> 仅用于商品详情展示 </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="参数值"></el-form-item>
-        <div
-            v-for="(item, index) in form.attribute_values"
-            :key="index"
-            class="key-item"
-          >
-            <div class="key-item-input">
-              <el-input v-model="item.attribute_value" placeholder="参数值名称" />
-            </div>
-            <div @click="removeItem(index)">
-              <SpIcon name="delete" :size="22" />
-            </div>
+        <el-form-item label="参数值" />
+        <div v-for="(item, index) in form.attribute_values" :key="index" class="key-item">
+          <div class="key-item-input">
+            <el-input v-model="item.attribute_value" placeholder="参数值名称" />
           </div>
-          <el-button type="default" size="small" @click="addItem"> 添加参数值 </el-button>
+          <div @click="removeItem(index)">
+            <SpIcon name="delete" :size="22" />
+          </div>
+        </div>
+        <el-button type="default" size="small" @click="addItem"> 添加参数值 </el-button>
       </el-form>
       <div slot="footer">
         <el-button type="primary" @click="save"> 提交 </el-button>
@@ -242,7 +238,7 @@ export default {
   display: flex;
   align-items: center;
 
-  &-input{
+  &-input {
     flex: 1;
     margin-right: 10px;
   }

@@ -9,29 +9,13 @@
  * @LastEditTime: 2020-09-22 11:46:35
 -->
 <template>
-  <el-form
-    label-width="200px"
-    label-suffix="："
-    class="fenzhang"
-  >
+  <el-form label-width="200px" label-suffix="：" class="fenzhang">
     <el-form-item label="是否开启分账">
-      <el-switch
-        v-model="form.is_open"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-      />
+      <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
     </el-form-item>
     <el-form-item label="分账业务模式">
-      <el-radio-group
-        v-model="form.business_type"
-        class="businessType"
-      >
-        <el-radio
-          class="radio"
-          label="1"
-        >
-          平台/总部统一收款后分账
-        </el-radio>
+      <el-radio-group v-model="form.business_type" class="businessType">
+        <el-radio class="radio" label="1"> 平台/总部统一收款后分账 </el-radio>
         <!-- <el-radio class="radio" label="2">店铺独立收款后分账（店铺未开通商户号则无法交易）</el-radio>
         <el-radio class="radio" label="3">混合模式（默认店铺收款，未开通则由平台统一收款）</el-radio> -->
       </el-radio-group>
@@ -77,13 +61,7 @@
       </el-form-item> 
     </div> -->
     <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit"
-      >
-        保存
-      </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
     </div>
   </el-form>
 </template>
@@ -93,7 +71,7 @@ import { getSetting, saveSetting } from '@/api/fenzhang'
 
 export default {
   name: 'Fenzhang',
-  data () {
+  data() {
     1
     return {
       form: {
@@ -115,12 +93,12 @@ export default {
       loading: false
     }
   },
-  created () {
+  created() {
     this.getDetail()
   },
   methods: {
     // 获取配置数据
-    async getDetail () {
+    async getDetail() {
       const res = await getSetting()
       let data = res.data.data
       data.is_open_distributor = data.is_open_distributor == 'true' ? true : false
@@ -129,7 +107,7 @@ export default {
     },
     // 费率输入
 
-    async onSubmit () {
+    async onSubmit() {
       let { is_open, business_type, rate, is_open_distributor } = this.form
       let params = {
         is_open,

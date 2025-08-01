@@ -234,9 +234,9 @@ export default {
         return
       }
 
-      const provice = district.find((item) => item.value == regions_id[0])
-      const city = provice.children.find((item) => item.value == regions_id[1])
-      const country = city.children.find((item) => item.value == regions_id[2])
+      const provice = district.find(item => item.value == regions_id[0])
+      const city = provice.children.find(item => item.value == regions_id[1])
+      const country = city.children.find(item => item.value == regions_id[2])
 
       let region = ''
       let newRegion = ''

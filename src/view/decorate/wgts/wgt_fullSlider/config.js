@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { pickBy, isObject } from "@/utils";
-import { getImageAttribute, getVideoAttribute } from "./utils";
-import AttrItem from "./attr-item.vue";
+import AttrItem from './attr-item.vue'
 
 export default {
   name: 'fullSlider',

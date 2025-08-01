@@ -1,4 +1,4 @@
-function broadcast (componentName, eventName, params) {
+function broadcast(componentName, eventName, params) {
   this.$children.forEach((child) => {
     var name = child.$options.componentName
 
@@ -11,7 +11,7 @@ function broadcast (componentName, eventName, params) {
 }
 export default {
   methods: {
-    dispatch (componentName, eventName, params) {
+    dispatch(componentName, eventName, params) {
       var parent = this.$parent || this.$root
       var name = parent.$options.name
 
@@ -26,7 +26,7 @@ export default {
         parent.$emit.apply(parent, [eventName].concat(params))
       }
     },
-    broadcast (componentName, eventName, params) {
+    broadcast(componentName, eventName, params) {
       broadcast.call(this, componentName, eventName, params)
     }
   }

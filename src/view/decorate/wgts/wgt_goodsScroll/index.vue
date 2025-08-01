@@ -1,6 +1,6 @@
 <style lang="scss" src="./index.scss"></style>
 <template>
-  <div :class="{ 'wgt-goods-scroll': true, 'padded': value.padded }">
+  <div :class="{ 'wgt-goods-scroll': true, padded: value.padded }">
     <!-- moreLink: {{ value.goodsSetting }} -->
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -18,7 +18,7 @@
         value.subtitle
       }}</span>
     </div>
-    <div class="wgt-bd" :class="{ 'spaced': value.spaced }">
+    <div class="wgt-bd" :class="{ spaced: value.spaced }">
       <!-- 挂件自定义部分 -->
       <div class="scroll-goods">
         <div v-for="(item, index) in goodsList" :key="`scroll-item__${index}`" class="scroll-item">
@@ -33,8 +33,16 @@
             <SpImage :src="item.imgUrl" :width="130" :height="130" />
           </div>
           <div class="goods-title">
-            <el-tag v-if="item.isPrescription" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
-            {{ item.title }}</div>
+            <el-tag
+              v-if="item.isPrescription"
+              type="primary"
+              size="mini"
+              style="background-color: #fff"
+            >
+              处方药
+            </el-tag>
+            {{ item.title }}
+          </div>
           <div v-if="value.showPrice" class="goods-caption">
             <template v-if="value.goodsSetting.type == 'goods'">
               <SpPrice class="item-price" :size="15" :value="item.price / 100" />
@@ -100,9 +108,9 @@ export default {
     }
   },
   watch: {
-    'value': {
+    value: {
       handler(newVal) {
-        console.log(newVal,'llllkkkkkkk');
+        console.log(newVal, 'llllkkkkkkk')
 
         const { type, data, secKillGoods, limitTimeSaleGoods } = newVal.goodsSetting
         if (type == 'goods') {

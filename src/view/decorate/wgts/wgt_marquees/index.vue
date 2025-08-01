@@ -36,7 +36,7 @@
   <div
     :class="{
       'wgt-marquees': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -46,10 +46,10 @@
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced
+        spaced: value.spaced
       }"
       :style="{
-        'background': value.bgcolor
+        background: value.bgcolor
       }"
     >
       <!-- 挂件自定义部分 -->
@@ -58,7 +58,7 @@
           <el-carousel-item v-for="(item, index) in value.dataContent" :key="index">
             <div
               :style="{
-                'color': value.fontcolor
+                color: value.fontcolor
               }"
               class="medium"
             >
@@ -74,7 +74,7 @@
             v-for="(item, index) in value.dataText"
             :key="index"
             :style="{
-              'color': value.fontcolor
+              color: value.fontcolor
             }"
             >{{ item.title }}</span
           >

@@ -1,15 +1,7 @@
 <template>
   <div class="cpn_drawer">
-    <div
-      ref="box"
-      class="box"
-    >
-      <div
-        class="title"
-        @click="switchHandle"
-      >
-        {{ title }}<i class="el-icon-d-arrow-right" />
-      </div>
+    <div ref="box" class="box">
+      <div class="title" @click="switchHandle">{{ title }}<i class="el-icon-d-arrow-right" /></div>
       <div class="content">
         <slot />
       </div>
@@ -21,7 +13,7 @@
 export default {
   props: ['visibleDrawer', 'title'],
   methods: {
-    switchHandle () {
+    switchHandle() {
       // debugger
       if (this.visibleDrawer) {
         this.$refs.box.classList.remove('hide')

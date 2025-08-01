@@ -202,7 +202,7 @@ export default {
                   })
                   this.$refs['finder'].refresh()
                 } else {
-                  const index = this.finderData.findIndex((item) => item.id == row.id)
+                  const index = this.finderData.findIndex(item => item.id == row.id)
                   this.finderData.splice(index, 1)
                   this.zitiList = this.finderData
                   this.$nextTick(() => {
@@ -287,7 +287,7 @@ export default {
           res.offline_aftersales_address.mobile &&
           res.offline_aftersales_address.mobile.indexOf('-') > -1
         ) {
-          [area_code, mobile] = res.offline_aftersales_address.mobile
+          ;[area_code, mobile] = res.offline_aftersales_address.mobile
             ? res.offline_aftersales_address.mobile.split('-')
             : ['', '']
         } else {
@@ -352,14 +352,14 @@ export default {
     },
     async onSelectZiti() {
       const { data } = await this.$picker.zitiList({
-        data: this.zitiList.map((item) => item.id)
+        data: this.zitiList.map(item => item.id)
       })
 
-      console.log(this.zitiList.map((item) => item.id))
+      console.log(this.zitiList.map(item => item.id))
       console.log(data)
 
       if (this.distributor_id) {
-        const ids = data.map((item) => item.id)
+        const ids = data.map(item => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
           id: ids,
           rel_distributor_id: this.distributor_id
@@ -378,7 +378,7 @@ export default {
     },
     formValidate() {
       return new Promise((resolve, reject) => {
-        return this.$refs.form.validate((valid) => {
+        return this.$refs.form.validate(valid => {
           if (valid) {
             resolve()
           } else {
@@ -418,7 +418,7 @@ export default {
           area: aftersales_regions[2]
         },
         offline_aftersales_distributor_id: this.$refs['returnGoodsFormRef'].finderData.map(
-          (item) => item.distributor_id
+          item => item.distributor_id
         )
       }
       if (this.baseForm.distribution_type == 0) {
@@ -436,7 +436,7 @@ export default {
           this.submitLoading = false
           this.$message.success('修改店铺成功')
         } else {
-          const ids = this.finderData.map((item) => item.id)
+          const ids = this.finderData.map(item => item.id)
           await this.$api.marketing.saveDistributorInfo({
             ...params,
             pickup_location: ids
@@ -458,7 +458,7 @@ export default {
         page: 1,
         merchant_name: name
       })
-      this.merchantList = list.map((item) => ({ value: item.id, label: item.merchant_name }))
+      this.merchantList = list.map(item => ({ value: item.id, label: item.merchant_name }))
       this.merchantLoading = false
     }
   }

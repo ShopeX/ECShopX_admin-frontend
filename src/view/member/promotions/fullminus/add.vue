@@ -1010,6 +1010,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-fullminus ::v-deep .el-card {
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 </style>

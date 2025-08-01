@@ -239,7 +239,7 @@ export function shopLoginSelectShopId(query) {
 
 export function getCompanysLogs(query) {
   var object = fetch({ url: '/company/operatorlogs', method: 'get', params: query })
-  return object.then(res => {
+  return object.then((res) => {
     return res.data.data
   })
 }

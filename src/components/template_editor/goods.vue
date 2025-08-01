@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="name === 'goods'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'goods'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
@@ -15,11 +10,7 @@
           <el-input v-model="base.subtitle" />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <!-- <el-form-item label="展示样式">
           <el-radio-group v-model="config.style">
@@ -28,21 +19,15 @@
           </el-radio-group>
         </el-form-item> -->
         <el-form-item label="选择商品">
-          <div
-            v-if="data[0].item_id"
-            class="goods-card"
-          >
-            <div
-              class="goods"
-              :class="config.style"
-            >
+          <div v-if="data[0].item_id" class="goods-card">
+            <div class="goods" :class="config.style">
               <img
                 class="thumbnail"
                 :src="
                   data[0].img_url ||
-                    (config.style === 'card'
-                      ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
-                      : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
+                  (config.style === 'card'
+                    ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
+                    : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
                 "
               >
               <div class="caption">
@@ -52,20 +37,11 @@
                 <div class="sales-num">
                   <i class="iconfont icon-user-friends" />{{ data[0].sales || 0 }}
                 </div>
-                <div class="price">
-                  价格： ¥{{ data[0].price / 100 }}
-                </div>
+                <div class="price">价格： ¥{{ data[0].price / 100 }}</div>
               </div>
             </div>
           </div>
-          <el-button
-            type="primary"
-            plain
-            round
-            @click="showGoods"
-          >
-            选择商品
-          </el-button>
+          <el-button type="primary" plain round @click="showGoods"> 选择商品 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -93,7 +69,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -109,28 +85,28 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    showGoods () {
+    showGoods() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    pickItem (data) {
+    pickItem(data) {
       this.itemVisible = false
       this.relItemsIds = data
       if (data === null || data.length <= 0) return
@@ -141,7 +117,7 @@ export default {
       this.data[0].img_url = data[0].pics[0] || ''
       this.data[0].price = data[0].price
     },
-    hideGoods () {
+    hideGoods() {
       this.itemVisible = false
     }
   }

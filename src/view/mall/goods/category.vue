@@ -206,7 +206,7 @@ export default {
         page,
         cat_id
       }
-      getPageCode(params).then((response) => {
+      getPageCode(params).then(response => {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
@@ -273,7 +273,7 @@ export default {
             image_url: cat_img,
             parent_id: is_hassuperior ? superior_cat_id : undefined
           })
-            .then((res) => {
+            .then(res => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -287,7 +287,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch((err) => {
+            .catch(err => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -299,7 +299,7 @@ export default {
             image_url: cat_img,
             category_id: current_id
           })
-            .then((res) => {
+            .then(res => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -313,7 +313,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch((err) => {
+            .catch(err => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -328,7 +328,7 @@ export default {
     },
     getCategory() {
       this.loading = true
-      getCategory(this.params).then((response) => {
+      getCategory(this.params).then(response => {
         this.categoryList = response.data.data
         this.loading = false
         this.spaceInput = false
@@ -378,7 +378,7 @@ export default {
       }, 1000)
 
       let form = JSON.stringify(this.categoryList)
-      saveCategory({ form: form }).then((response) => {
+      saveCategory({ form: form }).then(response => {
         this.$message({
           type: 'success',
           message: '保存分类成功'
@@ -394,7 +394,7 @@ export default {
       })
         .then(() => {
           if (typeof data.category_id != 'undefined') {
-            deleteCategory(data.category_id).then((response) => {
+            deleteCategory(data.category_id).then(response => {
               this.$message({
                 type: 'success',
                 message: '删除分类成功'
@@ -409,7 +409,7 @@ export default {
             const { level, id, parent_id } = data
             let key = level === 0 ? id : parent_id
             const categoryList = this.categoryList
-            const parentIndex = categoryList.findIndex((item) => item.id === key)
+            const parentIndex = categoryList.findIndex(item => item.id === key)
             const deleteList = function (children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
@@ -429,7 +429,7 @@ export default {
             this.categoryList = categoryList
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e)
           this.$message({
             type: 'info',
@@ -498,24 +498,22 @@ export default {
       }
 
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
+        const index = this.categoryList.findIndex(d => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else if (this.current.parent_id && this.current.level == 1) {
-        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
+        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       } else {
         let findex
         let cindex
         for (var item in this.categoryList) {
-          cindex = this.categoryList[item].children.findIndex(
-            (d) => d.id === this.current.parent_id
-          )
+          cindex = this.categoryList[item].children.findIndex(d => d.id === this.current.parent_id)
           findex = item
           if (cindex > -1) break
         }
         const tindex = this.categoryList[findex].children[cindex].children.findIndex(
-          (d) => d.id === this.current.id
+          d => d.id === this.current.id
         )
         this.categoryList[findex].children[cindex].children[tindex].image_url = data.url
       }

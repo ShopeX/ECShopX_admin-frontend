@@ -1,0 +1,53 @@
+.wgt-order-navigation {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+    .icon-qianjin {
+      font-size: 12px;
+    }
+    .morelink {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .wgt-bd {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    .nav-item {
+      padding: 0 4px;
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-item--content {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 30px;
+    }
+  }
+}

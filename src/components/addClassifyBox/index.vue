@@ -1,14 +1,8 @@
 /* 新增分类弹框 */
 <template>
   <div class="addClassifyBox">
-    <el-dialog
-      :visible.sync="visible"
-      :before-close="handleClose"
-    >
-      <div
-        slot="title"
-        class="top"
-      >
+    <el-dialog :visible.sync="visible" :before-close="handleClose">
+      <div slot="title" class="top">
         <template v-if="editInfo && editInfo.type == 'edit'">
           <span class="title">编辑分类</span>
         </template>
@@ -24,45 +18,14 @@
         </template>
       </div>
       <div class="content">
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="80px"
-          class="form"
-          :rules="rules"
-        >
-          <el-form-item
-            :label="!parent_name ? '分类名称' : '子类名称'"
-            prop="name"
-          >
-            <el-input
-              v-model="form.name"
-              class="input1"
-              size="small"
-            />
+        <el-form ref="form" :model="form" label-width="80px" class="form" :rules="rules">
+          <el-form-item :label="!parent_name ? '分类名称' : '子类名称'" prop="name">
+            <el-input v-model="form.name" class="input1" size="small" />
           </el-form-item>
-          <el-form-item
-            label="是否可见"
-            prop="is_show"
-          >
-            <el-select
-              v-model="form.is_show"
-              class="input"
-              placeholder="请选择"
-              size="small"
-            >
-              <el-option
-                label="是"
-                value="1"
-              >
-                是
-              </el-option>
-              <el-option
-                label="否"
-                value="0"
-              >
-                否
-              </el-option>
+          <el-form-item label="是否可见" prop="is_show">
+            <el-select v-model="form.is_show" class="input" placeholder="请选择" size="small">
+              <el-option label="是" value="1"> 是 </el-option>
+              <el-option label="否" value="0"> 否 </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="分类排序">
@@ -74,32 +37,14 @@
               :min="0"
             />
           </el-form-item>
-          <el-form-item
-            v-if="parent_name"
-            label="父类名称"
-          >
-            <el-input
-              v-model="parent_name"
-              class="input1"
-              disabled
-              size="small"
-            />
+          <el-form-item v-if="parent_name" label="父类名称">
+            <el-input v-model="parent_name" class="input1" disabled size="small" />
           </el-form-item>
         </el-form>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          size="small"
-          @click="handleClose"
-        >取 消</el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="fnConfirm('form')"
-        >确 定</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="handleClose">取 消</el-button>
+        <el-button size="small" type="primary" @click="fnConfirm('form')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -122,7 +67,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       form: {
         name: '',
@@ -135,7 +80,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.editInfo && this.editInfo.type == 'edit') {
       const { name, is_show, sort } = this.editInfo
       this.form.name = name
@@ -144,8 +89,8 @@ export default {
     }
   },
   methods: {
-    fnConfirm (formName) {
-      this.$refs[formName].validate(async (valid) => {
+    fnConfirm(formName) {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           this.$emit(
             'callbackConfirm',
@@ -155,7 +100,7 @@ export default {
         }
       })
     },
-    handleClose () {
+    handleClose() {
       this.$emit('switchBoxHandle', true)
     }
   }

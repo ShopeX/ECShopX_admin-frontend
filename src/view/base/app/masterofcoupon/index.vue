@@ -1,44 +1,23 @@
 <template>
   <div>
     <el-row class="section-white content-padded coupon-header">
-      <el-col
-        :span="6"
-        class="coupon-img"
-      >
-        <img
-          src="@/assets/img/webchat.png"
-          alt="图片"
-        >
+      <el-col :span="6" class="coupon-img">
+        <img src="@/assets/img/webchat.png" alt="图片">
       </el-col>
-      <el-col
-        :span="18"
-        class="coupon-desc"
-      >
+      <el-col :span="18" class="coupon-desc">
         <h3>派券大师<span>(2018年9月30日到期)</span></h3>
         <p>
-          <span
-            class="coupon-desc-content"
-            :class="isHidden ? 'content-hidden' : ''"
-          >如果你无法简洁的描述你的想法，那只能说明你不够了解它</span><span
-            v-if="isHidden"
-            class="more"
-            @click="showAll"
-          >更多<i class="iconfont icon-chevron-down" /></span><span
-            v-if="!isHidden"
-            class="more"
-            @click="contentHidden"
-          >收起<i class="iconfont icon-chevron-up" /></span>
+          <span class="coupon-desc-content" :class="isHidden ? 'content-hidden' : ''"
+            >如果你无法简洁的描述你的想法，那只能说明你不够了解它</span
+          ><span v-if="isHidden" class="more" @click="showAll"
+            >更多<i class="iconfont icon-chevron-down" /></span
+          ><span v-if="!isHidden" class="more" @click="contentHidden"
+            >收起<i class="iconfont icon-chevron-up"
+          /></span>
         </p>
         <div class="coupon-opr">
-          <el-button
-            type="primary"
-            size="small"
-          >
-            立即选购
-          </el-button>
-          <el-button size="small">
-            查看教程
-          </el-button>
+          <el-button type="primary" size="small"> 立即选购 </el-button>
+          <el-button size="small"> 查看教程 </el-button>
         </div>
       </el-col>
     </el-row>
@@ -48,9 +27,7 @@
           <h3>场景满足</h3>
         </div>
         <div class="section-body">
-          <div class="scene-item">
-            [吸引注册]：满足门店通过优惠券快速获客。
-          </div>
+          <div class="scene-item">[吸引注册]：满足门店通过优惠券快速获客。</div>
           <div class="scene-item">
             [尾随交易]：通过消费者的一次交易，让消费者获得其他促销信息，进一步提升消费者粘性。
           </div>
@@ -60,24 +37,16 @@
         <div class="section-header with-border">
           <h3 class="clearfix">
             版本1.1.1中的新功能
-            <span
-              v-if="functionOpen"
-              class="f_r open"
-              @click="open"
-            >展开<i class="iconfont icon-chevron-down" /></span><span
-              v-if="!functionOpen"
-              class="f_r open"
-              @click="close"
-            >收起<i class="iconfont icon-chevron-up" /></span>
+            <span v-if="functionOpen" class="f_r open" @click="open"
+              >展开<i class="iconfont icon-chevron-down" /></span
+            ><span v-if="!functionOpen" class="f_r open" @click="close"
+              >收起<i class="iconfont icon-chevron-up"
+            /></span>
           </h3>
         </div>
         <div class="section-body">
-          <div class="scene-item">
-            [新增]：新增注册送礼功能
-          </div>
-          <div class="scene-item">
-            [新增]：新增注册送礼功能
-          </div>
+          <div class="scene-item">[新增]：新增注册送礼功能</div>
+          <div class="scene-item">[新增]：新增注册送礼功能</div>
         </div>
       </div>
       <div class="app-exhibition-box">
@@ -85,16 +54,8 @@
           <h3>注册送礼小程序展示</h3>
         </div>
         <div class="section-body">
-          <el-carousel
-            :interval="4000"
-            type="card"
-            height="400px"
-            width="800px"
-          >
-            <el-carousel-item
-              v-for="item in 6"
-              :key="item"
-            >
+          <el-carousel :interval="4000" type="card" height="400px" width="800px">
+            <el-carousel-item v-for="item in 6" :key="item">
               <h3 />
             </el-carousel-item>
           </el-carousel>
@@ -106,23 +67,23 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       isHidden: true,
       functionOpen: true
     }
   },
   methods: {
-    showAll () {
+    showAll() {
       this.isHidden = false
     },
-    contentHidden () {
+    contentHidden() {
       this.isHidden = true
     },
-    open () {
+    open() {
       this.functionOpen = false
     },
-    close () {
+    close() {
       this.functionOpen = true
     }
   }

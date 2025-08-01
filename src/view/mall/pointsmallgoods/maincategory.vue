@@ -280,8 +280,8 @@ export default {
     },
     saveTaxRate() {
       console.log('保存税率')
-      updateCategory(this.category_id, { 'crossborder_tax_rate': this.crossborder_tax_rate }).then(
-        (res) => {
+      updateCategory(this.category_id, { crossborder_tax_rate: this.crossborder_tax_rate }).then(
+        res => {
           this.$message({ type: 'success', message: '保存成功' })
           this.show_sideBar = false
           this.category_id = 0
@@ -322,11 +322,11 @@ export default {
       this.$refs.multipleTable.clearSelection()
 
       var checkids = []
-      this.checkGoodsAttr.forEach((item) => {
+      this.checkGoodsAttr.forEach(item => {
         checkids.push(item.attribute_id)
       })
 
-      this.goodsAttr.forEach((item) => {
+      this.goodsAttr.forEach(item => {
         if (checkids && checkids.indexOf(item.attribute_id) !== -1) {
           this.$refs.multipleTable.toggleRowSelection(item)
         }
@@ -375,7 +375,7 @@ export default {
     },
     async getGoodsAttr(checkids = []) {
       if (checkids.length === 0) {
-        this.checkGoodsAttr.forEach((item) => {
+        this.checkGoodsAttr.forEach(item => {
           checkids.push(item.attribute_id)
         })
       }
@@ -386,7 +386,7 @@ export default {
           pageSize: 100,
           attribute_type: this.currentAttrType,
           attribute_ids: checkids
-        }).then((info) => {
+        }).then(info => {
           this.checkGoodsAttr = info.data.data.list
         })
       }
@@ -395,12 +395,12 @@ export default {
         page: this.attrParams.page,
         pageSize: this.attrParams.pageSize,
         attribute_type: this.currentAttrType
-      }).then((res) => {
+      }).then(res => {
         this.goodsAttr = res.data.data.list
         this.goodsAttrTotal = res.data.data.total_count
       })
 
-      this.goodsAttr.forEach((item) => {
+      this.goodsAttr.forEach(item => {
         const isHave = Array.isArray(checkids)
           ? checkids.indexOf(item.attribute_id) !== -1
           : checkids === item.attribute_id
@@ -412,7 +412,7 @@ export default {
     },
     saveCategoryAttr() {
       var checkids = []
-      this.checkGoodsAttr.forEach((item) => {
+      this.checkGoodsAttr.forEach(item => {
         checkids.push(item.attribute_id)
       })
 
@@ -425,7 +425,7 @@ export default {
       }
 
       if (this.currentCategory.category_id) {
-        updateCategory(this.currentCategory.category_id, selectionData).then((res) => {
+        updateCategory(this.currentCategory.category_id, selectionData).then(res => {
           this.$message({ type: 'success', message: '保存成功' })
           this.handleCancel()
           this.getCategory()
@@ -447,7 +447,7 @@ export default {
     getCategory() {
       this.loading = true
       this.params.is_main_category = true
-      getCategory(this.params).then((response) => {
+      getCategory(this.params).then(response => {
         this.categoryList = response.data.data
         this.loading = false
         this.spaceInput = false
@@ -492,7 +492,7 @@ export default {
         this.isDisable = false
       }, 1000)
       let form = JSON.stringify(this.categoryList)
-      saveCategory({ form: form }).then((response) => {
+      saveCategory({ form: form }).then(response => {
         this.$message({
           type: 'success',
           message: '保存类目成功'
@@ -508,7 +508,7 @@ export default {
       })
         .then(() => {
           if (typeof data.category_id != 'undefined') {
-            deleteCategory(data.category_id).then((response) => {
+            deleteCategory(data.category_id).then(response => {
               this.$message({
                 type: 'success',
                 message: '删除类目成功'
@@ -519,7 +519,7 @@ export default {
             const { category_level, id, parent_id } = data
             let key = category_level === 1 ? id : parent_id
             const categoryList = this.categoryList
-            const parentIndex = categoryList.findIndex((item) => item.id === key)
+            const parentIndex = categoryList.findIndex(item => item.id === key)
             const deleteList = function (children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
@@ -539,7 +539,7 @@ export default {
             this.categoryList = categoryList
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e)
           this.$message({
             type: 'info',
@@ -559,7 +559,7 @@ export default {
         children: [],
         created: -1,
         image_url: '',
-        'is_main_category': true,
+        is_main_category: true,
         goods_params: [],
         goods_params: [],
         parent_id: newParentId
@@ -581,7 +581,7 @@ export default {
         children: [],
         created: -1,
         image_url: '',
-        'is_main_category': true,
+        is_main_category: true,
         goods_params: []
       }
       data.push(newChild)
@@ -623,11 +623,11 @@ export default {
     },
     pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
+        const index = this.categoryList.findIndex(d => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else {
-        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
+        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       }
       this.imgDialog = false

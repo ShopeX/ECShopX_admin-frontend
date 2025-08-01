@@ -80,7 +80,7 @@ export default {
     // 获取信息
     getInfo() {
       this.loading = true
-      getCrossborderSet(this.params).then((res) => {
+      getCrossborderSet(this.params).then(res => {
         this.form.tax_rate = res.data.data.tax_rate
         this.form.quota_tip = res.data.data.quota_tip
         this.form.crossborder_show = res.data.data.crossborder_show
@@ -94,7 +94,7 @@ export default {
     },
     // 保存数据
     save() {
-      saveCrossborderSet(this.form).then((res) => {
+      saveCrossborderSet(this.form).then(res => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

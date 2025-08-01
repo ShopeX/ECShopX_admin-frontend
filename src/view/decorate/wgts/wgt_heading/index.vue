@@ -11,13 +11,13 @@
   <div
     :class="{
       'wgt-heading': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div
       class="wgt-bd"
       :class="{
-        'spaced': value.spaced
+        spaced: value.spaced
       }"
     >
       <!-- 挂件自定义部分 -->
@@ -43,7 +43,7 @@ export default {
       return {
         'text-align': this.value.align,
         'font-size': `${this.value.fontSize}px`,
-        'color': this.value.color,
+        color: this.value.color,
         'line-height': this.value.lineHeight,
         'font-weight': this.value.weight ? 'bold' : 'normal',
         'font-style': this.value.italic ? 'italic' : 'normal'

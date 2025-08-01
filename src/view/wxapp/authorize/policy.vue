@@ -182,19 +182,19 @@ export default {
       storeType: '1',
       fileName: '',
       contactOptions: {
-        'contact_phone': '手机号',
-        'contact_email': '邮箱',
-        'contact_qq': 'QQ号',
-        'contact_weixin': '微信号'
+        contact_phone: '手机号',
+        contact_email: '邮箱',
+        contact_qq: 'QQ号',
+        contact_weixin: '微信号'
       },
       ownerSetting: {
-        'contact_phone': '',
-        'contact_email': '',
-        'contact_qq': '',
-        'contact_weixin': '',
-        'store_expire_timestamp': '',
-        'ext_file_media_id': '',
-        'notice_method': ''
+        contact_phone: '',
+        contact_email: '',
+        contact_qq: '',
+        contact_weixin: '',
+        store_expire_timestamp: '',
+        ext_file_media_id: '',
+        notice_method: ''
       }
     }
   },
@@ -279,8 +279,8 @@ export default {
         'ChooseLocation',
         'Clipboard'
       ]
-      this.privacyList.forEach((key) => {
-        const fd = this.settingList.find((item) => item.privacy_key == key)
+      this.privacyList.forEach(key => {
+        const fd = this.settingList.find(item => item.privacy_key == key)
         this.$set(this.policyObject, key, fd ? fd.privacy_text : '')
       })
     },
@@ -335,14 +335,14 @@ export default {
         }
       }
       let settingList = []
-      Object.keys(this.policyObject).forEach((key) => {
+      Object.keys(this.policyObject).forEach(key => {
         settingList.push({
           privacy_key: key,
           privacy_text: this.policyObject[key]
         })
       })
 
-      const fd = settingList.find((item) => item.privacy_text == '')
+      const fd = settingList.find(item => item.privacy_text == '')
       if (fd) {
         this.$message.error(`请填写收集${this.getPrivacyDesc(fd.privacy_key)}的原因`)
         return
@@ -361,7 +361,7 @@ export default {
       this.$router.go(-1)
     },
     getPrivacyDesc(key) {
-      const fd = this.privacyDescList.find((item) => item.privacy_key == key)
+      const fd = this.privacyDescList.find(item => item.privacy_key == key)
       return fd ? fd.privacy_desc : ''
     }
   }

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, active: active }">
     <div class="current-active" />
     <div class="hotTopic-list">
       <div class="slider-wrap">
@@ -13,10 +10,7 @@
           :src="item.imgUrl"
           alt=""
         /> -->
-        <img
-          :src="data[0].imgUrl || data[1].imgUrl"
-          alt=""
-        >
+        <img :src="data[0].imgUrl || data[1].imgUrl" alt="">
 
         <!-- <img class="png" :src="data[0].imgUrl" alt="">
         <img class="gif" :src="data[1].imgUrl" alt=""> -->
@@ -37,7 +31,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -47,17 +41,17 @@ export default {
     }
   },
   watch: {
-    res (value) {
+    res(value) {
       if (value) {
         this.setData(value)
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.data = val.data

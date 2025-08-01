@@ -7,7 +7,7 @@ function install(Vue) {
     context: {
       qs: false,
       globalHooks: {
-        beforeQuery: p => {
+        beforeQuery: (p) => {
           let params = {
             ...p,
             pageSize: p.pageSize,
@@ -18,7 +18,7 @@ function install(Vue) {
           delete params.pageNum
           return params
         },
-        afterQuery: response => {
+        afterQuery: (response) => {
           const { status_code, message } = response.data.data
           if (status_code == 500) {
             return Vue.prototype.$message.error(message)
@@ -29,6 +29,19 @@ function install(Vue) {
             }
           }
         }
+      },
+      locale: {
+        search: '搜索',
+        reset: '重置',
+        open: '展开',
+        retract: '收起',
+        operation: '操作',
+        enter: '请输入',
+        choose: '请选择',
+        more: '更多',
+        empty: '不能为空',
+        return: '返回',
+        save: '保存'
       }
     }
   })

@@ -1,22 +1,9 @@
 <template lang="html">
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="表单模板"
-      name="first"
-    >
-      <formTemplate
-        ref="formTemplate"
-        :get-status="formTemplate"
-      />
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="表单模板" name="first">
+      <formTemplate ref="formTemplate" :get-status="formTemplate" />
     </el-tab-pane>
-    <el-tab-pane
-      label="表单配置项"
-      name="second"
-    >
+    <el-tab-pane label="表单配置项" name="second">
       <formSetting :get-status="formSetting" />
     </el-tab-pane>
   </el-tabs>
@@ -27,7 +14,7 @@ import formTemplate from './formtemplatelist.vue'
 import formSetting from './formsettinglist.vue'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
@@ -36,14 +23,14 @@ export default {
     formTemplate,
     formSetting
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       formSetting: false,
       formTemplate: false
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.name) {
       this.activeName = this.$route.query.name
     }
@@ -55,14 +42,14 @@ export default {
   },
   methods: {
     //充值送钱
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'first') {
         this.formSetting = true
       } else if (this.activeName === 'second') {
         this.formTemplate = true
       }
     },
-    refresh () {
+    refresh() {
       this.$refs.getDataList
     }
   }

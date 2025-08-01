@@ -2,7 +2,8 @@ const systemStore = {
   namespaced: true,
   state: {
     logo: '',
-    versionMode: ''
+    versionMode: '',
+    lang: 'zhcn'
   },
   mutations: {
     setSystemLogo(state, { logo }) {
@@ -14,6 +15,9 @@ const systemStore = {
     logout(state) {
       state.logo = ''
       state.versionMode = ''
+    },
+    updateLang(state, { lang }) {
+      state.lang = lang
     }
   }
 }

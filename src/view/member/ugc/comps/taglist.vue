@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     resetText() {
-      return (row) => {
+      return row => {
         var text = '审核'
         if (row.status == '1') {
           text = '拒绝'
@@ -75,7 +75,7 @@ export default {
       var checkList = []
       var auditdiff = false
       var status = null
-      val.forEach((item) => {
+      val.forEach(item => {
         checkList.push(item.tag_id)
         if (status == null) {
           status = item.status

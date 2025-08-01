@@ -36,7 +36,7 @@
   <div
     :class="{
       'wgt-film': true,
-      'padded': value.padded
+      padded: value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
@@ -82,7 +82,7 @@ export default {
   computed: {
     aspectRatio() {
       const { proportion } = this.value
-      return proportions.find((item) => item.label == proportion).name
+      return proportions.find(item => item.label == proportion).name
     },
     sourceUrl() {
       const { data } = this.value

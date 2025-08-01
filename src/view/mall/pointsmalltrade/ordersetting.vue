@@ -1,11 +1,6 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="150px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="150px">
       <div class="section-body">
         <template>
           <el-form-item label="订单自动取消:">
@@ -58,12 +53,7 @@
         </template>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
   </div>
@@ -71,7 +61,7 @@
 <script>
 import { getOrderSetting, setOrderSetting } from '@/api/trade'
 export default {
-  data () {
+  data() {
     return {
       form: {
         order_cancel_time: 15,
@@ -81,8 +71,8 @@ export default {
       }
     }
   },
-  mounted () {
-    getOrderSetting().then((res) => {
+  mounted() {
+    getOrderSetting().then(res => {
       let setting = res.data.data
       if (setting.order_cancel_time) {
         this.form.order_cancel_time = setting.order_cancel_time
@@ -99,9 +89,9 @@ export default {
     })
   },
   methods: {
-    save () {
+    save() {
       console.log(this.form)
-      setOrderSetting(this.form).then((res) => {
+      setOrderSetting(this.form).then(res => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     }

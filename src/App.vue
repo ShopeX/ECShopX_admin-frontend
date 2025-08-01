@@ -1,39 +1,66 @@
 <template>
   <div id="app">
-    <!-- SVG Sprite 容器 -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      style="position: absolute; width: 0; height: 0"
-    >
-      <defs />
-    </svg>
-    <router-view />
+    <!-- <Transition name="fade" appear mode="out-in" @before-enter="beforeEnter"
+    @after-enter="afterEnter">
+      <router-view />
+    </Transition> -->
+
+    <router-view v-slot="{ Component }">
+      <Transition
+        name="fade"
+        appear
+        mode="out-in"
+        @before-enter="beforeEnter"
+        @after-enter="afterEnter"
+      >
+        <component :is="Component" />
+      </Transition>
+    </router-view>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { useTheme } from '@/composables'
 import Config from '@/config'
 import { getSystemTitle } from '@/utils'
 export default {
   data() {
-    return {
-      throttleTimer: null
-    }
+    return {}
   },
-  computed: {
-    ...mapGetters(['isInFrame'])
-  },
+  computed: {},
+  watch: {},
   mounted() {
-    const { updateThemeColor } = useTheme()
-    updateThemeColor()
-
     document.title = getSystemTitle()
   },
-  methods: {}
+  methods: {
+    beforeEnter(el) {
+      console.log('beforeEnter', el)
+    },
+    afterEnter(el) {
+      console.log('afterEnter', el)
+    }
+  }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+// .fade-transition-enter-active,
+// .fade-transition-leave-active {
+//   transition: opacity 0.2s ease-in-out;
+// }
+
+// .fade-transition-enter-from,
+// .fade-transition-leave-to {
+//   opacity: 0;
+// }
+
+// .fade-enter-active,
+// .fade-leave-active {
+//   // transition: opacity 1s ease-in-out;
+// }
+
+// .fade-enter-from,
+// .fade-leave-to {
+//   opacity: 0;
+// }
+</style>

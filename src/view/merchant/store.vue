@@ -195,8 +195,8 @@ export default {
                 filterable
                 loading={this.remoteLoading}
                 remote
-                remote-method={(e) => this.onRemoteGetMerchant(e)}
-                placeholder='输入商户名称搜索'
+                remote-method={e => this.onRemoteGetMerchant(e)}
+                placeholder="输入商户名称搜索"
               >
                 {this.merchantList.map((item, index) => (
                   <el-option
@@ -285,19 +285,19 @@ export default {
               <div>
                 <el-time-select
                   v-model={value['startTime']}
-                  class='start-time'
-                  placeholder='起始时间'
+                  class="start-time"
+                  placeholder="起始时间"
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
                     end: '23:59'
                   }}
                 />
-                <span class='separator'>-</span>
+                <span class="separator">-</span>
                 <el-time-select
                   v-model={value['endTime']}
-                  class='end-time'
-                  placeholder='结束时间'
+                  class="end-time"
+                  placeholder="结束时间"
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
@@ -377,10 +377,10 @@ export default {
           label: '店铺经纬度',
           component: ({ key }, value) => {
             return (
-              <div class='lng-lat-block'>
-                <el-input v-model={value.lng} readonly placeholder='经度' />
-                <span class='separator'>-</span>
-                <el-input v-model={value.lat} readonly placeholder='纬度' />
+              <div class="lng-lat-block">
+                <el-input v-model={value.lng} readonly placeholder="经度" />
+                <span class="separator">-</span>
+                <el-input v-model={value.lat} readonly placeholder="纬度" />
               </div>
             )
           }
@@ -391,8 +391,8 @@ export default {
           width: '1000px',
           component: ({ key }, value) => {
             return (
-              <div class='address-block'>
-                <el-cascader v-model={value['regions_id']} class='regions' options={district} />
+              <div class="address-block">
+                <el-cascader v-model={value['regions_id']} class="regions" options={district} />
                 <el-input
                   v-model={value['address']}
                   class={[
@@ -401,10 +401,10 @@ export default {
                       'is-error': !value['address']
                     }
                   ]}
-                  placeholder='请输入详细地址（去除省市县）'
+                  placeholder="请输入详细地址（去除省市县）"
                 />
-                <el-input v-model={value['house_number']} placeholder='门牌号' />
-                <el-button type='primary' on-click={this.searchKeyword}>
+                <el-input v-model={value['house_number']} placeholder="门牌号" />
+                <el-button type="primary" on-click={this.searchKeyword}>
                   搜索定位
                 </el-button>
               </div>
@@ -420,7 +420,7 @@ export default {
         },
         {
           label: '',
-          component: ({ key }, value) => <div id='qqmap_container' />
+          component: ({ key }, value) => <div id="qqmap_container" />
         },
         {
           label: '送货上门',
@@ -448,7 +448,7 @@ export default {
           isShow: ({ key }, value) => value.is_dada,
           component: ({ key }, value) => {
             return (
-              <div style='margin-top: 14px;display:flex'>
+              <div style="margin-top: 14px;display:flex">
                 <el-radio v-model={value[key]} label={true}>
                   商家自配送
                 </el-radio>
@@ -464,9 +464,9 @@ export default {
           isShow: ({ key }, value) => value.is_self_delivery && value.is_dada,
           component: ({ key }, value) => {
             return (
-              <div style='margin-left: 27px;display:flex'>
+              <div style="margin-left: 27px;display:flex">
                 立即配送，预计
-                <el-input-number v-model={value[key]} placeholder='请输入内容' step={1} min={1} />
+                <el-input-number v-model={value[key]} placeholder="请输入内容" step={1} min={1} />
                 小时后送达（下单时间往后延多少小时）
               </div>
             )
@@ -505,7 +505,7 @@ export default {
         {
           label: '',
           width: '1000px',
-          component: ({ key }, value) => <DaoDianZiti ref='daoDianZiti' />,
+          component: ({ key }, value) => <DaoDianZiti ref="daoDianZiti" />,
           isShow: ({ key }, value) => value.is_ziti
         },
         {
@@ -532,7 +532,7 @@ export default {
           component: ({ key }, value) => (
             <RefundGoodsStore
               v-model={value['offline_aftersales_address']}
-              ref='refundGoodsStore'
+              ref="refundGoodsStore"
             />
           )
         },
@@ -678,7 +678,7 @@ export default {
           title: business_list[current]
         })
       }, [])
-      this.formList.forEach((item) => {
+      this.formList.forEach(item => {
         if (item.key == 'business') {
           item.options = typeList
         }
@@ -693,7 +693,7 @@ export default {
           title: business_list[current]
         })
       }, [])
-      this.formList.forEach((item) => {
+      this.formList.forEach(item => {
         if (item.key == 'business') {
           item.options = typeList
         }
@@ -821,7 +821,7 @@ export default {
           area
         },
         offline_aftersales_distributor_id: this.$refs['refundGoodsStore'].finderData.map(
-          (item) => item.distributor_id
+          item => item.distributor_id
         )
       }
       if (this.form.distribution_type == 0) {
@@ -849,7 +849,7 @@ export default {
           this.submitLoading = false
           this.$message.success('修改店铺成功')
         } else {
-          const ids = this.$refs['daoDianZiti'].finderData.map((item) => item.id)
+          const ids = this.$refs['daoDianZiti'].finderData.map(item => item.id)
           await this.$api.marketing.saveDistributorInfo({
             ...params,
             pickup_location: ids

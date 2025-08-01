@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="tips"
-    :style="{ 'background': bgColor }"
-  >
+  <div class="tips" :style="{ background: bgColor }">
     <slot />
   </div>
 </template>

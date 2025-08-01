@@ -1,51 +1,50 @@
 <template>
-    <div>
-        <div class="pics-box">
-            <ul class="goodspic-wrap">
-                <li
-                v-for="(item, index) in list"
-                :key="index"
-                class="goodspic"
-                @mouseenter="picsEnter(index)"
-                @mouseleave="picsLeave"
-                >
-                <img :src="wximageurl + item">
-                <div
-                    class="goodspic-mask"
-                    :class="picsCurrent == index ? 'on' : ''"
-                    @click="removePicsImg(index)"
-                >
-                    
-                    <i class="iconfont icon-trash-alt1 icon1" />
-                </div>
-                </li>
-            </ul>
-            <div v-if="list < 1" class="upload-box" @click="handlePicsChange">
-                <i class="el-icon-plus avatar-uploader-icon" />
-                <span class="placeholder">请上传图片</span>
-            </div>
-            <span v-if="hasLabel" class="label-note">客服企业微信二维码，用户长按可加企微好友沟通</span>
-        </div>
-        <imgPicker
-            :dialog-visible="picsDialog"
-            :sc-status="isGetPics"
-            :is-most="true"
-            @chooseImg="pickPics"
-            @closeImgDialog="closePicsDialog"
-        />
+  <div>
+    <div class="pics-box">
+      <ul class="goodspic-wrap">
+        <li
+          v-for="(item, index) in list"
+          :key="index"
+          class="goodspic"
+          @mouseenter="picsEnter(index)"
+          @mouseleave="picsLeave"
+        >
+          <img :src="wximageurl + item">
+          <div
+            class="goodspic-mask"
+            :class="picsCurrent == index ? 'on' : ''"
+            @click="removePicsImg(index)"
+          >
+            <i class="iconfont icon-trash-alt1 icon1" />
+          </div>
+        </li>
+      </ul>
+      <div v-if="list < 1" class="upload-box" @click="handlePicsChange">
+        <i class="el-icon-plus avatar-uploader-icon" />
+        <span class="placeholder">请上传图片</span>
+      </div>
+      <span v-if="hasLabel" class="label-note">客服企业微信二维码，用户长按可加企微好友沟通</span>
     </div>
+    <imgPicker
+      :dialog-visible="picsDialog"
+      :sc-status="isGetPics"
+      :is-most="true"
+      @chooseImg="pickPics"
+      @closeImgDialog="closePicsDialog"
+    />
+  </div>
 </template>
 <script>
 import imgPicker from '@/components/imageselect'
 export default {
   props: {
     list: {
-        type: Array,
-        default: () => []
+      type: Array,
+      default: () => []
     },
     hasLabel: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -60,7 +59,7 @@ export default {
     }
   },
   methods: {
-        //上传门店图片（1张）
+    //上传门店图片（1张）
     handlePicsChange: function () {
       this.picsDialog = true
       this.isGetPics = true
@@ -71,7 +70,7 @@ export default {
         return false
       } else {
         if (arr.length != 0) {
-          arr.forEach((data) => {
+          arr.forEach(data => {
             if (data && data.url !== '') {
               this.picsDialog = false
               this.list.push(data.url)
@@ -92,24 +91,23 @@ export default {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {
-    this.list.splice(index, 1)
+      this.list.splice(index, 1)
       this.changeImg(this.list)
       this.picsOldLen = this.list.length
     },
     changeImg(list) {
-        this.$emit('changeImg', list)
+      this.$emit('changeImg', list)
     }
-
   }
 }
 </script>
 <style lang="scss" scoped>
 .label-note {
-    color: #FF5D00;
-    font-size: 10px;
-    line-height: 40px;
-    margin-left: 20px;
-  }
+  color: #ff5d00;
+  font-size: 10px;
+  line-height: 40px;
+  margin-left: 20px;
+}
 .pics-box {
   overflow: hidden;
   .goodspic-wrap {
@@ -171,7 +169,7 @@ export default {
   position: relative;
   .placeholder {
     font-size: 12px;
-    color:#8c939d;
+    color: #8c939d;
     position: absolute;
     /* bottom: 100px; */
     left: 0;

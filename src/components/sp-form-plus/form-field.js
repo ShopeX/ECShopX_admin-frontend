@@ -1,6 +1,7 @@
 import { isString } from '@/utils'
 import { h } from 'vue'
 import { PICKER_DATE_OPTIONS } from '@/consts'
+import { isFunction } from '@/utils/src/type-helper'
 import './form-field.scss'
 
 export default {
@@ -16,8 +17,7 @@ export default {
       default: () => ({})
     },
     fieldName: {
-      type: String,
-      required: true
+      type: String
     },
     formItemClass: {
       type: String,
@@ -40,7 +40,7 @@ export default {
       default: '' // medium, small, mini
     },
     tip: {
-      type: String,
+      type: [String, Function],
       default: ''
     },
     value: {
@@ -58,6 +58,8 @@ export default {
       this.modelValue = val
       this.$emit('input', val)
       this.$emit('change', val)
+
+      this.componentProps.onChange?.(val, this.formData)
     },
     // 渲染 input 组件
     renderInput() {
@@ -76,7 +78,7 @@ export default {
     },
     // 渲染 select 组件
     renderSelect(props = {}) {
-      const options = (props.options || []).map(option =>
+      const options = (props.options || []).map((option) =>
         h('el-option', {
           props: {
             key: option.value,
@@ -107,7 +109,7 @@ export default {
     },
     // 渲染 radio 组件
     renderRadio(props = {}) {
-      const radios = (props.options || []).map(option =>
+      const radios = (props.options || []).map((option) =>
         h(
           'el-radio',
           {
@@ -136,7 +138,7 @@ export default {
     },
     // 渲染 checkbox 组件
     renderCheckbox(props = {}) {
-      const checkboxes = (props.options || []).map(option =>
+      const checkboxes = (props.options || []).map((option) =>
         h(
           'el-checkbox',
           {
@@ -177,7 +179,7 @@ export default {
           },
           class: props.class || '',
           on: {
-            click: event => {
+            click: (event) => {
               this.$emit('click', event)
               if (props.onClick) {
                 props.onClick(event)
@@ -191,11 +193,11 @@ export default {
     // 渲染 datetime-range 组件
     renderDateTimePicker(props = {}) {
       return (
-        <div class="el-date-picker__wrapper">
+        <div class='el-date-picker__wrapper'>
           <el-date-picker
-            style="width: 100%"
+            style='width: 100%'
             type={this.componentProps.type}
-            startPlaceholder="开始日期/结束时间"
+            startPlaceholder='开始日期/结束时间'
             default-time={['00:00:00', '23:59:59']}
             // endPlaceholder="结束日期"
             rangeSeparator={`${this.modelValue.length > 1 ? '至' : ''}`}
@@ -209,18 +211,30 @@ export default {
     renderImagePicker(props = {}) {
       return <SpImagePicker value={this.modelValue} {...props} on-onChange={this.handleInput} />
     },
+
+    renderSwitch() {
+      const props = {
+        ...this.componentProps,
+        disabled: isFunction(this.componentProps.disabled)
+          ? this.componentProps.disabled(this.formData)
+          : this.componentProps.disabled
+      }
+      return <el-switch value={this.modelValue} props={props} on-change={this.handleInput} />
+    },
+
     // 获取组件渲染函数
     getComponentRender() {
       if (isString(this.component)) {
         const type = this.component.toLowerCase()
         const renderMap = {
-          input: this.renderInput,
-          select: this.renderSelect,
-          radio: this.renderRadio,
-          checkbox: this.renderCheckbox,
           button: this.renderButton,
+          checkbox: this.renderCheckbox,
           datetimepicker: this.renderDateTimePicker,
-          imagepicker: this.renderImagePicker
+          input: this.renderInput,
+          imagepicker: this.renderImagePicker,
+          radio: this.renderRadio,
+          select: this.renderSelect,
+          switch: this.renderSwitch
         }
         return renderMap[type] || this.renderInput
       }
@@ -248,8 +262,13 @@ export default {
     }
   },
   render(h) {
+    if (this.component === 'group') {
+      return <div class='form-field-group'>{this.label}</div>
+    }
+
     // 获取对应的渲染函数
     const renderComponent = this.getComponentRender()
+
     // 渲染表单项
     return h('div', { class: ['form-field', this.formItemClass] }, [
       h(
@@ -270,7 +289,11 @@ export default {
         },
         [
           renderComponent(this.componentProps),
-          this.tip ? h('div', { class: 'text-sm text-gray-500 mt-0.5' }, this.tip) : null
+          this.tip
+            ? h('div', { class: 'text-sm text-gray-500 mt-0.5' }, [
+                isFunction(this.tip) ? this.tip() : this.tip
+              ])
+            : null
         ]
       )
     ])

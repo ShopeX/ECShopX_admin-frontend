@@ -57,6 +57,6 @@ export default {
           component: () => import('@/view/brand/wechat/artical/new_artical')
         }
       ]
-    },
+    }
   ]
 }

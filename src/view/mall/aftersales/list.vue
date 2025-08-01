@@ -339,8 +339,9 @@
             >
               详情
             </router-link>
+            <!-- scope.row.distributor_id == '0' ||  -->
+            <!-- v-if="$store.getters.login_type == 'distributor'" -->
             <template
-              v-if="scope.row.distributor_id == '0' || $store.getters.login_type == 'distributor'"
             >
               <el-button type="text" @click="clickShowRemark(scope.row, 'afterList')">
                 备注

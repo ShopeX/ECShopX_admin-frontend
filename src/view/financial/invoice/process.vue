@@ -12,7 +12,13 @@
             <h2>{{ key.operator_content?.title }}</h2>
             <p>操作人员：{{ key.operator_id ?? key.user_id }}</p>
             <p>
-              人员类型：{{ key.operator_id > 0 ? '管理员' : '-' }}
+              人员类型：
+              <!-- {{ key.operator_id > 0 ? '管理员' : '-' }} -->
+              <span v-if="'user' == key.operator_type"> 用户 </span>
+              <span v-else-if="'salesperson' == key.operator_type"> 导购员 </span>
+              <span v-else-if="'admin' == key.operator_type"> 管理员 </span>
+              <span v-else-if="'system' == key.operator_type"> 系统 </span>
+              <span v-else-if="'distributor' == key.operator_type"> 店铺管理员 </span>
             </p>
             <p>操作详情：{{ key.operator_content?.remark }}</p>
           </el-card>

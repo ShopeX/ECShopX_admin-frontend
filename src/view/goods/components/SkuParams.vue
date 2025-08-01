@@ -26,6 +26,11 @@
       margin-right: 4px;
     }
   }
+  .sku-item-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
 }
 </style>
 <template>
@@ -37,6 +42,7 @@
         :label="`${item.skuName}:`"
       >
         <el-checkbox-group v-model="item.checkedSku" @change="onSkuChange">
+          <div class="sku-item-group">
           <span v-for="sku in item.skuValue" :key="sku.attribute_value_id" class="sku-item">
             <el-checkbox :label="sku.attribute_value_id">{{
               sku.custom_attribute_value || sku.attribute_value
@@ -47,7 +53,8 @@
               </div>
               <el-link class="leading-none mx-3" slot="reference" icon="el-icon-edit" />
             </el-popover>
-          </span>
+            </span>
+          </div>
         </el-checkbox-group>
       </el-form-item>
     </el-form>
@@ -178,6 +185,11 @@
           />
         </template>
       </el-table-column>
+      <el-table-column label="发货时间">  
+        <template slot-scope="scope"> 
+          <el-input v-model="scope.row.delivery_time" :maxlength="60" size="mini" placeholder="发货时间" />
+        </template>
+      </el-table-column>
       <el-table-column label="条形码">
         <template slot-scope="scope">
           <el-input
@@ -285,6 +297,11 @@
           <el-input v-model="scope.row.start_num" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
+      <el-table-column prop="delivery_time" label="发货时间"> 
+        <template slot-scope="scope"> 
+          <el-input v-model="scope.row.delivery_time" :maxlength="60" size="mini" placeholder="发货时间" />
+        </template>
+      </el-table-column>
       <el-table-column prop="barcode" label="条形码">
         <template slot-scope="scope">
           <el-input v-model="scope.row.barcode" size="mini" />
@@ -373,7 +390,8 @@ export default {
           weight: '',
           volume: '',
           supplier_goods_bn: '',
-          tax_rate: ''
+          tax_rate: '',
+          delivery_time:"",
         }
       ],
       statusOption,
@@ -502,7 +520,8 @@ export default {
             point_num,
             item_spec,
             supplier_goods_bn,
-            tax_rate
+            tax_rate,
+            delivery_time
           }) => {
             const vKey = item_spec.map(({ spec_value_id }) => spec_value_id).join('_')
             const specName = item_spec.map(
@@ -519,6 +538,7 @@ export default {
               max_num,
               item_bn,
               weight,
+              delivery_time,
               volume,
               price: isNaN(price / 100) ? '' : price / 100,
               cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
@@ -550,7 +570,8 @@ export default {
             barcode,
             point_num,
             supplier_goods_bn,
-            tax_rate
+            tax_rate,
+            delivery_time,
           } = item
           _specItems.push({
             sku_id: key,
@@ -569,7 +590,8 @@ export default {
             barcode,
             point_num,
             supplier_goods_bn,
-            tax_rate
+            tax_rate,
+            delivery_time
           })
         }
       })
@@ -591,9 +613,9 @@ export default {
       const { skus } = this.value
       const specNames = []
       keys.forEach((key, index) => {
-        const { attribute_value, custom_attribute_value } = skus[index].skuValue.find(
-          s => s.attribute_value_id == key
-        )
+        const { attribute_value, custom_attribute_value } = skus[index]?.skuValue?.find(
+          (s) => s?.attribute_value_id == key
+        ) || {}
         specNames.push(custom_attribute_value || attribute_value)
       })
       return specNames.join(' ')
@@ -614,7 +636,8 @@ export default {
         barcode,
         point_num,
         supplier_goods_bn,
-        tax_rate
+        tax_rate,
+            delivery_time
       } = this.bulkFilling[0]
 
       this.value.specItems.forEach(item => {
@@ -632,6 +655,7 @@ export default {
         item.point_num = point_num
         item.supplier_goods_bn = supplier_goods_bn
         item.tax_rate = tax_rate
+        item.delivery_time = delivery_time
       })
     },
     // 清除
@@ -655,7 +679,8 @@ export default {
         barcode: '',
         point_num: '',
         supplier_goods_bn: '',
-        tax_rate: ''
+        tax_rate: '',
+        delivery_time: ''
       })
     }
   }

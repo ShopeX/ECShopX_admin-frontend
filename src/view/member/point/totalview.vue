@@ -30,12 +30,12 @@
       <el-table-column prop="point" label="积分变动">
         <template slot-scope="scope">
           <span v-if="scope.row.point == 0">{{ scope.row.point }}</span>
-          <span v-else-if="scope.row.point > 0 && scope.row.outin_type == 'in'"
-            >+{{ scope.row.point }}</span
-          >
-          <span v-else-if="scope.row.point > 0 && scope.row.outin_type == 'out'"
-            >-{{ scope.row.point }}</span
-          >
+          <span
+            v-else-if="scope.row.income > 0"
+          >+{{ scope.row.income }}</span>
+          <span
+            v-else-if="scope.row.outcome > 0"
+          >-{{ scope.row.outcome }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="point_desc" label="记录" />

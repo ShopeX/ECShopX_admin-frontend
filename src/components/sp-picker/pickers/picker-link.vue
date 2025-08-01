@@ -91,7 +91,8 @@ export default {
         { id: 'groups_list', title: '限时团购' },
         { id: 'hottopic', title: '种草列表' },
         { id: 'zitiOrder', title: '自提订单' },
-        { id: 'customerService', title: '客服' }
+        { id: 'customerService', title: '客服' },
+        { id: 'homeSearch', title: '搜索' }
       ],
       multiple: this.value?.multiple ?? true
     }

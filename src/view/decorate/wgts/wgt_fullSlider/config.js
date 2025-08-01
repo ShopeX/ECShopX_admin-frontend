@@ -1,12 +1,11 @@
-import Vue from 'vue'
-import { pickBy, isObject } from '@/utils'
-import { getImageAttribute, getVideoAttribute } from './utils'
+import Vue from "vue";
+import { pickBy, isObject } from "@/utils";
 import AttrItem from './attr-item.vue'
 
 export default {
   name: 'fullSlider',
   setting: [
-    { label: '埋点参数', key: 'track', component: 'input' },
+    { label: "埋点参数", key: "track", component: "input" },
     // {
     //   label: "组件间距",
     //   key: "padded",
@@ -36,7 +35,7 @@ export default {
       label: '指示器字体颜色',
       key: 'indicatorColor',
       component: 'color',
-      value: '#f5f5f5'
+      value: '#f5f5f5',
     },
     {
       label: '指示器字体大小',
@@ -46,7 +45,7 @@ export default {
       min: 10,
       max: 100,
       step: 1,
-      tip: '单位为 px'
+      tip: '单位为 px',
     },
     {
       label: '指示器下边距',
@@ -56,9 +55,9 @@ export default {
       min: 0,
       max: 1000,
       step: 1,
-      tip: '单位为 px'
+      tip: '单位为 px',
     },
-    { label: '指示器下文案', key: 'indicatorText', component: 'input' },
+    { label: "指示器下文案", key: "indicatorText", component: "input" },
     {
       label: '轮播时间',
       key: 'interval',
@@ -80,14 +79,14 @@ export default {
       module: 'slidersetting'
     },
     {
-      label: '',
-      key: 'height',
-      component: 'input',
+      label: "",
+      key: "height",
+      component: "input",
       value: 667,
       isShow: function () {
-        return false
-      }
-    }
+        return false;
+      },
+    },
   ],
   transformIn: (v) => {
     const {
@@ -144,8 +143,8 @@ export default {
       name: 'name',
       base: (v) => {
         return pickBy(v, {
-          track: 'track',
-          padded: 'padded'
+          track: "track",
+          padded: 'padded',
         })
       },
       config: (v) => {
@@ -157,7 +156,7 @@ export default {
           autoplay: 'autoplay',
           indicatorColor: 'indicatorColor',
           indicatorFontSize: 'indicatorFontSize',
-          indicatorText: 'indicatorText'
+          indicatorText: 'indicatorText',
         })
       },
       data: ({ data }) => {
@@ -180,7 +179,8 @@ export default {
           overlayWidth: 'overlayWidth',
           overlaybuttom: 'overlaybuttom',
           overlayLeft: 'overlayLeft',
-          overlayHotData: 'overlayHotData'
+          overlayHotData: 'overlayHotData',
+          moreLink: 'moreLink',
           // loop: 'loop',
         })
       }

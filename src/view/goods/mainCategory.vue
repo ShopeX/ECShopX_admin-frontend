@@ -356,7 +356,7 @@ export default {
         queryParams: {
           attribute_type: 'item_params'
         },
-        num: 5
+        num: 99
       })
       await this.$api.goods.updateCategory(category_id, {
         goods_params: JSON.stringify(data.map(item => item.attribute_id))

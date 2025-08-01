@@ -115,7 +115,8 @@ export default {
         goods_id: '',
         rule_id: '0',
         CopyUrl: '',
-        CopyTitle: ''
+        CopyTitle: '',
+        moreLink: ''
       }
       if (type === 'overlay') {
         this.sliderForm.overlayHotData.push(item)
@@ -224,47 +225,42 @@ export default {
           }
         },
         {
-          label: media_type == 'video' ? '视频' : '图片',
+          label: media_type == "video" ? '视频' : '图片',
           key: 'videoUrl',
           component: ({ key }) => {
             return (
-              <div class='video-list'>
-                {media_type == 'video' && (
-                  <SpVideoPicker v-model={this.sliderForm[key]} size='small' class='video-link' />
-                )}
-                {media_type == 'img' && (
-                  <div class='zone-list'>
-                    <SpImagePicker
-                      v-model={this.sliderForm.imgUrl}
-                      size='small'
-                      class='video-link'
-                      text={media_type == 'video' ? '封面' : '图片'}
-                    />
+              <div class="video-list">
+                {media_type == "video" && <SpVideoPicker v-model={this.sliderForm[key]} size='small' class="video-link" />}
+                {media_type == 'img' &&
+                  <div class="zone-list">
+                    <SpImagePicker v-model={this.sliderForm.imgUrl} size="small" class="video-link" text={media_type == 'video' ? '封面' : '图片'} />
                     {hotData?.map((item, index) => {
                       return (
-                        <div class='zone-item'>
+                        <div class="zone-item">
                           <p class='zone-item-label'>热区{index + 1}</p>
                           <CompPickerLink
                             isShowH5Link={false}
                             value={item}
-                            wgtType='hotzone'
+                            wgtType="hotzone"
                             class='zone-item-picker'
                             on-change={(e) => this.onChangeLink(e, index)}
                           />
+                          <el-button type="text" size="small" onClick={() => {
+                            this.sliderForm.hotData.splice(index, 1)
+                          }}>删除</el-button>
                         </div>
                       )
                     })}
-                  </div>
-                )}
+                  </div>}
               </div>
             )
-          }
+          },
         },
         {
           label: '入场自动播放',
           key: 'autoplay',
           type: 'switch',
-          isShow: media_type == 'video'
+          isShow: media_type == "video",
         },
         // {
         //   label: '循环播放',
@@ -276,44 +272,37 @@ export default {
           label: '离场视频交互',
           key: 'interact',
           type: 'radio',
-          options: [
-            {
-              label: 'reset',
-              name: '重置'
-            },
-            {
-              label: 'pause',
-              name: '暂停'
-            }
-          ],
-          isShow: media_type == 'video'
+          options: [{
+            label: 'reset',
+            name: '重置'
+          }, {
+            label: 'pause',
+            name: '暂停'
+          }],
+          isShow: media_type == "video",
         },
         {
-          label: media_type == 'video' ? '视频叠层' : '图片叠层',
+          label: media_type == "video" ? '视频叠层' : '图片叠层',
           key: 'overlay',
           component: ({ key }) => {
             return (
-              <div class='overlay-list'>
-                <SpImagePicker
-                  v-model={this.sliderForm[key]}
-                  size='small'
-                  class='video-link'
-                  ononChange={(e) => {
-                    this.changeOverlay(e)
-                  }}
-                />
-                <div class='zone-list'>
+              <div class="overlay-list">
+                <SpImagePicker v-model={this.sliderForm[key]} size="small" class="video-link" ononChange={(e) => { this.changeOverlay(e) }} />
+                <div class="zone-list">
                   {overlayHotData?.map((item, index) => {
                     return (
-                      <div class='zone-item'>
+                      <div class="zone-item">
                         <p class='zone-item-label'>热区{index + 1}</p>
                         <CompPickerLink
                           isShowH5Link={false}
                           value={item}
-                          wgtType='hotzone'
+                          wgtType="hotzone"
                           class='zone-item-picker'
                           on-change={(e) => this.onChangeHotDataLink(e, index)}
                         />
+                        <el-button type="text" size="small" onClick={() => {
+                          this.sliderForm.overlayHotData.splice(index, 1)
+                        }}>重置地址</el-button>
                       </div>
                     )
                   })}
@@ -330,7 +319,7 @@ export default {
           type: 'slider',
           maxlength: 10,
           showInput: true,
-          placeholder: '请输入宽度'
+          placeholder: '请输入宽度',
         },
         {
           label: '叠层下边距离',
@@ -340,7 +329,7 @@ export default {
           tip: '单位为 %',
           showInput: true,
           maxlength: 10,
-          placeholder: '请输入上边距离'
+          placeholder: '请输入上边距离',
         },
         {
           label: '叠层左边距离',
@@ -349,7 +338,31 @@ export default {
           showInput: true,
           tip: '单位为 %',
           type: 'slider',
-          maxlength: 10
+          maxlength: 10,
+        },
+        {
+          label: '查看更多跳转地址',
+          key: 'moreLink',
+          component: ({ key }) => {
+            return <div style={{display: 'flex'}}>
+              <CompPickerLink v-model={this.sliderForm[key]} size="small" class="video-link" />
+             {this.sliderForm.moreLink?.linkPage && <el-button type="text" size="small" onClick={() => {
+                this.sliderForm = {
+                  ...this.sliderForm,
+                  moreLink: {
+                    linkPage: '',
+                    linkTitle: '',
+                    linkAppid: '',
+                  }
+                }
+              }}
+              style={{
+                alignSelf: 'flex-end',
+                fontSize: '25px'
+              }}
+              ><i class="el-icon-delete"></i></el-button>}
+            </div>
+          }
         }
       ]
     },
@@ -358,9 +371,9 @@ export default {
       return {
         bottom: `${overlaybuttom}%`,
         left: `${overlayLeft}%`,
-        width: `${overlayWidth}%`
+        width: `${overlayWidth}%`,
       }
-    }
+    },
   },
   watch: {
     sliderItem: {
@@ -420,8 +433,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    .sp-image {
-    }
+    .sp-image {}
 
     .overlay {
       position: absolute;
@@ -444,6 +456,8 @@ export default {
 </style>
 <style lang="scss">
 .wgts-slider-dialog {
+
+
   .sp-form .el-form-item {
     margin-bottom: 6px;
   }
@@ -479,7 +493,7 @@ export default {
       .zone-item-label {
         width: 40px;
         height: 32px;
-        line-height: 32px;
+        line-height: 32px
       }
 
       .zone-item-picker {
@@ -487,5 +501,6 @@ export default {
       }
     }
   }
+
 }
 </style>

@@ -10,12 +10,12 @@
       <div class="action-container">
         <el-button type="primary" icon="plus" @click="showEditModal('')"> 新增 </el-button>
       </div>
-      <el-table v-loading="tableLoading" border :data="tableList">
-        <el-table-column prop="created_at" label="创建日期" width="180" />
-        <el-table-column prop="app_id" label="小程序APPID" />
-        <el-table-column prop="app_name" label="小程序名称" />
-        <el-table-column prop="app_desc" label="描述" />
-        <el-table-column label="操作" width="200">
+      <el-table v-loading="tableLoading" class="table" border :data="tableList">
+        <el-table-column prop="created_at" label="创建日期" width="220" />
+        <el-table-column prop="app_id" label="小程序APPID" width="220" />
+        <el-table-column prop="app_name" label="小程序名称" width="320" />
+        <el-table-column prop="app_desc" label="描述" width="520" />
+        <el-table-column label="操作" width="320">
           <template slot-scope="scope">
             <el-button class="actBtn" type="text" @click="showEditModal(scope.row)">
               编辑

@@ -39,6 +39,11 @@ export default {
       ]
     },
     {
+      path: 'goods/taobaoSyncLog',
+      name: `淘宝同步日志`,
+      component: () => import('@/view/mall/goods/physical/taobaoSyncLog')
+    },
+    {
       path: 'goods/storeshopitemanagement',
       name: `店铺商品`,
       // component: () => import('@/view/mall/storeshop/itemlist')

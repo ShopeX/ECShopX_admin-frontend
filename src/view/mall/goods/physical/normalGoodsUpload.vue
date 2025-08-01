@@ -102,7 +102,8 @@ export default {
       pane_list: [
       { name: 'upload_tb_items', label: '上传淘宝链接' },
         { name: 'supplier_goods', label: '上传实体类商品' },
-        { name: 'employee_purchase_activity_items', label: '上传内购活动商品' }
+        { name: 'employee_purchase_activity_items', label: '上传内购活动商品' },
+        { name: 'physical_store_upload', label: '商品上下架' }
       ],
       loading: false,
       total_count: 0,

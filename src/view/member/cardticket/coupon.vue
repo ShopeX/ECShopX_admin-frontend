@@ -2,7 +2,10 @@
   <div>
     <SpRouterView>
       <SpPlatformTip h5 app pc alipay />
-      <SpPlatformTip class="damo-crm-tip" text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示" />
+      <SpPlatformTip
+        class="damo-crm-tip"
+        text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示"
+      />
 
       <!-- <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
@@ -133,7 +136,7 @@
             <el-table-column width="240" label="操作">
               <template slot-scope="scope">
                 <div class="operating-icons">
-                  <!-- <el-button type="text">
+                  <el-button type="text">
                     <router-link
                       :to="{
                         path: matchRoutePath('detail'),
@@ -157,7 +160,7 @@
                       详情
                     </router-link>
                   </el-button>
-                  <!-- <el-button
+                  <!--  <el-button
                     v-if="
                       scope.row.edit_btn == 'Y' &&
                       (!isShopadmin
@@ -177,7 +180,7 @@
                   </el-button> -->
                   <el-popover v-if="appID" placement="top" width="200" trigger="click">
                     <div>
-                      <img class="page-code" :src="appCodeUrl">
+                      <img class="page-code" :src="appCodeUrl" />
                       <div class="page-btns">
                         <el-button
                           type="primary"
@@ -717,8 +720,8 @@ export default {
 .page-btns {
   text-align: center;
 }
-.damo-crm-tip{
-  background: #FEF5EA !important;
+.damo-crm-tip {
+  background: #fef5ea !important;
 }
 </style>
 <style>

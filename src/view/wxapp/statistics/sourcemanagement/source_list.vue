@@ -377,16 +377,26 @@ export default {
         params.page = 1
         params.source_name = this.searchTxt
       }
-      // console.log(params)
       getSourcesList(params)
         .then((response) => {
-          this.dataList = response.data.data.list
-          // console.log(this.dataList)
+          const checkTags = response.data.data.checkTags
+          this.dataList = response.data.data.list?.map(item => {
+            return {
+              ...item,
+              checkTags: Object.entries(checkTags)?.filter(([key, value]) => item.tagsId.includes(key))?.map(([key, value]) => {
+                return {
+                  tag_id: key,
+                  tag_name: value
+                }
+              })
+            }
+          })
           this.total_count = response.data.data.total_count
           this.AllcheckTags = response.data.data.checkTags
           this.loading = false
         })
         .catch((error) => {
+          console.log(error)
           this.loading = false
           this.$message({
             type: 'error',

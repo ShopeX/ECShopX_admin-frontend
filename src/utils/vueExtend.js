@@ -114,6 +114,15 @@ Vue.filter('formatNumMoney', function formatNum(number) {
   return number.toFixed(2).toLocaleString()
 })
 
+
+Vue.prototype.matchHidePage = function (name) {
+  // let componentName = this.$route.path.split( '/' )
+  // debugger
+  // componentName = componentName[componentName.length-1]
+  // return `${this.$route.path}/${componentName}_${name}`
+  return `${this.$route.path}/${name}`
+}
+
 // 格式化时间
 Vue.filter('formatTimestamp', function formatTimestamp(timestamp) {
   if (timestamp) {

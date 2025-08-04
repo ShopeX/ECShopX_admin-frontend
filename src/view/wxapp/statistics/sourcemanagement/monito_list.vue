@@ -3,11 +3,11 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <div class="content-bottom-padded">
         <el-form ref="listForm" :inline="true" :model="listForm" label-width="80px">
-          <el-form-item label="区域">
+          <!-- <el-form-item label="区域">
             <el-select v-model="listForm.regionauth_id" placeholder="请选择区域">
               <el-option v-for="(item) in areas" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="页面路径">
             <el-input v-model="listForm.monitorPath" placeholder="请输入" />
           </el-form-item>
@@ -37,7 +37,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="pageName" label="页面描述" />
-        <el-table-column prop="regionauth_name" label="区域" />
+        <!-- <el-table-column prop="regionauth_name" label="区域" /> -->
         <el-table-column prop="nickName" label="小程序" />
         <el-table-column prop="created" label="创建时间">
           <template slot-scope="scope">
@@ -170,7 +170,7 @@ export default {
       dialogVisibleMonitors: false,
       dialogVisibleSources: false,
       listForm: {
-        regionauth_id: '',
+        // regionauth_id: '',
         monitorPath: ''
       },
       monitorForm: {
@@ -179,7 +179,7 @@ export default {
         monitor_path: '',
         monitor_path_params: [],
         link_type: 0,
-        regionauth_id: '',
+        // regionauth_id: '',
         page_name: '',
         page_title: '选择页面',
         page_type: ''
@@ -270,7 +270,7 @@ export default {
           info = { url: 'subpage/pages/vip/vipgrades', page_name: '活动页' }
           break
         case 'applyChief':
-          info = { url: 'subpages/community/apply-chief?distributor_id=' + this.monitorForm.regionauth_id, page_name: '活动页' }
+          info = { url: 'subpages/community/apply-chief', page_name: '活动页' }
           break
         case 'recharge':
           info = { url: 'others/pages/recharge/index', page_name: '活动页' }
@@ -318,7 +318,7 @@ export default {
           info = { url: 'subpages/member/address-list', page_name: '活动页' }
           break
         case 'shopRanking':
-          info = { url: 'subpages/store/shop-ranking?distributor_id=' + this.monitorForm.regionauth_id, page_name: '活动页' }
+          info = { url: 'subpages/store/shop-ranking', page_name: '活动页' }
           break
         case 'pageIndex':
           info = { url: 'pages/index', page_name: '首页' }
@@ -345,13 +345,11 @@ export default {
         // { label: '管理分类', name: 'category' },
         // { label: '店铺', name: 'store' },
       ]
-      console.log(this.pagesData, 'pagesData---')
       const res = await this.$picker.path({
         multiple: false,
         data: this.pagesData.map((el) => el.rel_id),
         guide: 'share_page' 
       })
-      console.log(res, 'res---')
       this.pagesData = [{
         ...res,
         page_type: tabs?.find((el) => el.name == res.linkPage)?.label,
@@ -374,7 +372,6 @@ export default {
       var that = this
       this.$refs['monitorForm'].validate((valid) => {
         if (valid) {
-          console.log(that.monitorForm, 'monitorForm---')
           if (!that.monitorForm.page_type) {
             return this.$message.error("请选择页面");
           }

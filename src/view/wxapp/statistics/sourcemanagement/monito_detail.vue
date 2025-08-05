@@ -129,7 +129,7 @@
         />
         <el-table-column
           prop="monitor_id"
-          label="跟踪ID"
+          label="监控ID"
         />
         <el-table-column
           prop="source_name"
@@ -190,6 +190,14 @@
               href="#"
               @click="viewOrder(scope.row)"
             >查看订单</a>
+            <a
+              href="#"
+              v-clipboard:copy="getLinkPath(scope.row)"
+              v-clipboard:success="onCopySuccess"
+            >
+            复制链接
+            </a>
+            
           </template>
         </el-table-column>
       </el-table>
@@ -453,6 +461,9 @@ export default {
       })
       that.linkPathStr = this.detail?.monitor_path_params ? this.detail?.monitor_path + '?' + this.detail?.monitor_path_params + '&m=' + row?.monitor_id + '&s=' + row?.source_id : this.detail?.monitor_path + '?m=' + row?.monitor_id + '&s=' + row?.source_id
       that.dialogVisible = true
+    },
+    getLinkPath(row){
+      return  this.detail?.monitor_path_params ? this.detail?.monitor_path + '?' + this.detail?.monitor_path_params + '&m=' + row?.monitor_id + '&s=' + row?.source_id : this.detail?.monitor_path + '?m=' + row?.monitor_id + '&s=' + row?.source_id
     },
     cancelDialog () {
       this.dialogVisible = false

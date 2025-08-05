@@ -3,28 +3,17 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <div class="content-bottom-padded">
         <el-form ref="listForm" :inline="true" :model="listForm" label-width="80px">
-          <!-- <el-form-item label="区域">
-            <el-select v-model="listForm.regionauth_id" placeholder="请选择区域">
-              <el-option v-for="(item) in areas" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item> -->
           <el-form-item label="页面路径">
             <el-input v-model="listForm.monitorPath" placeholder="请输入" />
           </el-form-item>
           <div class="flex-right">
-            <el-button size="small" @click="handleReset">
-              重置
-            </el-button>
-            <el-button size="small" type="primary" @click="getSearchDataList()">
-              搜索
-            </el-button>
+            <el-button size="small" @click="handleReset"> 重置 </el-button>
+            <el-button size="small" type="primary" @click="getSearchDataList()"> 搜索 </el-button>
           </div>
         </el-form>
         <el-row>
           <el-col :span="12">
-            <el-button type="primary" @click="addMonitors">
-              新增监控链接
-            </el-button>
+            <el-button type="primary" @click="addMonitors"> 新增监控链接 </el-button>
           </el-col>
         </el-row>
       </div>
@@ -32,12 +21,13 @@
         <el-table-column prop="monitorId" label="监控ID" />
         <el-table-column prop="monitorPath" label="监控页面">
           <template slot-scope="scope">
-            <span>{{ scope.row.monitorPath }}</span><span v-show="scope.row.monitorPathParams != ''">?{{
-              scope.row.monitorPathParams }}</span>
+            <span>{{ scope.row.monitorPath }}</span
+            ><span v-show="scope.row.monitorPathParams != ''"
+              >?{{ scope.row.monitorPathParams }}</span
+            >
           </template>
         </el-table-column>
         <el-table-column prop="pageName" label="页面描述" />
-        <!-- <el-table-column prop="regionauth_name" label="区域" /> -->
         <el-table-column prop="nickName" label="小程序" />
         <el-table-column prop="created" label="创建时间">
           <template slot-scope="scope">
@@ -48,25 +38,33 @@
           <template slot-scope="scope">
             <a @click="removeMinotor(scope.$index, scope.row)">删除</a> &nbsp;
             <a @click="manageSources(scope.row.monitorId)">管理来源</a> &nbsp;
-            <router-link :to="{ path: matchHidePage('detail'), query: { monitorId: scope.row.monitorId } }">
+            <router-link
+              :to="{ path: matchHidePage('detail'), query: { monitorId: scope.row.monitorId } }"
+            >
               监控详情
             </router-link>
           </template>
         </el-table-column>
       </el-table>
       <div class="content-center content-top-padded">
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-          :current-page.sync="monitorsParams.page" :page-sizes="[10, 20, 50]" :total="monitorsParams.total_count"
-          :page-size="monitorsParams.pageSize" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="monitorsParams.page"
+          :page-sizes="[10, 20, 50]"
+          :total="monitorsParams.total_count"
+          :page-size="monitorsParams.pageSize"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        />
       </div>
-      <el-dialog title="新增跟踪链接" :visible="dialogVisibleMonitors" :close-on-click-modal="false"
-        :before-close="cancelMonitorsDialog">
+      <el-dialog
+        title="新增跟踪链接"
+        :visible="dialogVisibleMonitors"
+        :close-on-click-modal="false"
+        :before-close="cancelMonitorsDialog"
+      >
         <el-form ref="monitorForm" :model="monitorForm" :rules="monitorFormRules">
-          <!-- <el-form-item label="区域" prop="regionauth_id" :label-width="formLabelWidth">
-            <el-select v-model="monitorForm.regionauth_id" placeholder="请选择区域">
-              <el-option v-for="(item) in areas" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item> -->
           <!-- <el-form-item prop="monitor_path" label="页面" :label-width="formLabelWidth">
             <el-select v-model="monitorForm.monitor_path" filterable placeholder="选择页面" style="width: 233px"
               @change="pathParamsChange">
@@ -82,7 +80,8 @@
           <el-form-item v-if="monitorForm.link_type == 0" :label-width="formLabelWidth">
             <el-col :span="10">
               <el-button class="monito_select_btn" @click="handleSelectPage">
-                <span v-if="monitorForm.page_type">{{ monitorForm.page_type + ':' }}</span>{{ monitorForm.page_title }}
+                <span v-if="monitorForm.page_type">{{ monitorForm.page_type + ':' }}</span
+                >{{ monitorForm.page_title }}
               </el-button>
             </el-col>
           </el-form-item>
@@ -91,13 +90,23 @@
               <el-input v-model="monitorForm.page_name" />
             </el-col>
           </el-form-item>
-          <el-form-item v-for="(item, index) in monitorForm.monitor_path_params" :key="item.param_name"
-            :label="item.param_label" :prop="'monitor_path_params.' + index + '.value'" :label-width="formLabelWidth">
+          <el-form-item
+            v-for="(item, index) in monitorForm.monitor_path_params"
+            :key="item.param_name"
+            :label="item.param_label"
+            :prop="'monitor_path_params.' + index + '.value'"
+            :label-width="formLabelWidth"
+          >
             <el-col :span="10">
               <span v-if="item.option && item.option.length > 0">
                 <el-radio-group v-model="item.value" @change="optionChange">
-                  <el-radio v-for="item in item.option" :key="item.value" :label="item.value" :value="item.value">{{
-                    item.label }}</el-radio>
+                  <el-radio
+                    v-for="item in item.option"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value"
+                    >{{ item.label }}</el-radio
+                  >
                 </el-radio-group>
               </span>
               <span v-else>
@@ -107,34 +116,40 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="resetMonitorsForm">
-            重 置
-          </el-button>
-          <el-button type="primary" @click="saveMonitor">
-            确 定
-          </el-button>
+          <el-button @click="resetMonitorsForm"> 重 置 </el-button>
+          <el-button type="primary" @click="saveMonitor"> 确 定 </el-button>
         </div>
       </el-dialog>
 
-      <el-dialog title="管理跟踪来源" :visible="dialogVisibleSources" class="sources-dialog" :close-on-click-modal="false"
-        :before-close="cancelSourcesDialog">
+      <el-dialog
+        title="管理跟踪来源"
+        :visible="dialogVisibleSources"
+        class="sources-dialog"
+        :close-on-click-modal="false"
+        :before-close="cancelSourcesDialog"
+      >
         <template>
-          <el-transfer v-model="sourcesForm.sourceIds" :titles="['来源名称列表', '已选中']"
-            :props="{ key: 'sourceId', label: 'sourceName' }" :data="sourceList">
+          <el-transfer
+            v-model="sourcesForm.sourceIds"
+            :titles="['来源名称列表', '已选中']"
+            :props="{ key: 'sourceId', label: 'sourceName' }"
+            :data="sourceList"
+          >
             <div slot="left-footer" class="transfer-footer view-flex view-flex-center">
-              <el-pagination v-if="sourcesParams.total_count > sourcesParams.pageSize" small layout="prev, pager, next"
-                :total="sourcesParams.total_count" :page-size="sourcesParams.pageSize"
-                @current-change="handleCurrentSourceChange" />
+              <el-pagination
+                v-if="sourcesParams.total_count > sourcesParams.pageSize"
+                small
+                layout="prev, pager, next"
+                :total="sourcesParams.total_count"
+                :page-size="sourcesParams.pageSize"
+                @current-change="handleCurrentSourceChange"
+              />
             </div>
             <div slot="right-footer" class="transfer-footer" />
           </el-transfer>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleSources = false">
-              取 消
-            </el-button>
-            <el-button v-debounce="saveSources" type="primary">
-              确 定
-            </el-button>
+            <el-button @click="dialogVisibleSources = false"> 取 消 </el-button>
+            <el-button v-debounce="saveSources" type="primary"> 确 定 </el-button>
           </div>
         </template>
       </el-dialog>
@@ -170,7 +185,7 @@ export default {
       dialogVisibleMonitors: false,
       dialogVisibleSources: false,
       listForm: {
-        // regionauth_id: '',
+        regionauth_id: '',
         monitorPath: ''
       },
       monitorForm: {
@@ -179,7 +194,7 @@ export default {
         monitor_path: '',
         monitor_path_params: [],
         link_type: 0,
-        // regionauth_id: '',
+        regionauth_id: '',
         page_name: '',
         page_title: '选择页面',
         page_type: ''
@@ -187,8 +202,7 @@ export default {
       monitorFormRules: {
         wxappid: [{ required: true, message: '请选择小程序', trigger: 'change' }],
         link_type: [{ required: true, message: '请选择页面', trigger: 'change' }],
-        // regionauth_id: [{ required: true, message: '请选择区域', trigger: 'change' }],
-        page_name: [{ required: true, message: '请输入页面描述', trigger: 'change' }],
+        page_name: [{ required: true, message: '请输入页面描述', trigger: 'change' }]
       },
       sourcesForm: {
         monitor_id: '',
@@ -211,7 +225,7 @@ export default {
       selectSourceList: [],
       wxappid: '',
       areas: [],
-      pagesData: [],
+      pagesData: []
     }
   },
   computed: {
@@ -221,26 +235,15 @@ export default {
     if (this.$route.query && this.$route.query.app_id) {
       this.wxappid = this.$route.query.app_id
     }
-    this.getMonitorsList();
-    // this.getRegionList();
+    this.getMonitorsList()
   },
   methods: {
     handleReset() {
       this.listForm = {}
-      this.getMonitorsList();
+      this.getMonitorsList()
     },
     getSearchDataList() {
-      this.getMonitorsList(this.listForm);
-    },
-    // 获取区域
-    getRegionList() {
-      getRegionauth().then((res) => {
-        this.areas = res?.data?.data?.list?.map((el) => ({
-          value: el.regionauth_id,
-          label: el.regionauth_name,
-          title: el.regionauth_name
-        }))
-      })
+      this.getMonitorsList(this.listForm)
     },
     handleLink(type, id) {
       let info = {}
@@ -264,7 +267,10 @@ export default {
           info = { url: 'subpages/store/index?id=' + id, page_name: '店铺首页' }
           break
         case 'activity_collection':
-          info = { url: 'subpages/marketing/limited-sale?kid=' + id, page_name: '活动集合页限时特惠' }
+          info = {
+            url: 'subpages/marketing/limited-sale?kid=' + id,
+            page_name: '活动集合页限时特惠'
+          }
           break
         case 'vipgrades':
           info = { url: 'subpage/pages/vip/vipgrades', page_name: '活动页' }
@@ -330,10 +336,6 @@ export default {
     },
     //选择页面
     async handleSelectPage() {
-      // if (!this.monitorForm.regionauth_id) {
-      //   this.$message.error("请选择区域");
-      //   return
-      // }
       const tabs = [
         { label: '商品详情', name: 'goods' },
         // { label: '自定义页面', name: 'custom_page' },
@@ -343,12 +345,12 @@ export default {
         // { label: '活动集合页', name: 'activity_collection' },
         // { label: '销售分类', name: 'sale_category' },
         // { label: '管理分类', name: 'category' },
-        // { label: '店铺', name: 'store' },
+        // { label: '店铺', name: 'store' }
       ]
       const res = await this.$picker.path({
         multiple: false,
         data: this.pagesData.map((el) => el.rel_id),
-        guide: 'share_page' 
+        guide: 'share_page'
       })
       this.pagesData = [{
         ...res,
@@ -365,7 +367,6 @@ export default {
       const { page_name, url } = this.handleLink(type, res.id)
       this.monitorForm.page_name = res?.description || page_name
       this.monitorForm.monitor_path = url || ''
-
     },
     saveMonitor: function () {
       // 保存监控链接
@@ -373,7 +374,7 @@ export default {
       this.$refs['monitorForm'].validate((valid) => {
         if (valid) {
           if (!that.monitorForm.page_type) {
-            return this.$message.error("请选择页面");
+            return this.$message.error('请选择页面')
           }
           that.wxaList.forEach(function (item) {
             if (item.authorizer_appid == that.monitorForm.wxappid) {
@@ -381,10 +382,16 @@ export default {
             }
           })
           let dataParams = []
-          const pathName = that.monitorForm.monitor_path && that.monitorForm.monitor_path.indexOf('?') > -1 && that.monitorForm.monitor_path.split('?')[0]
-          const pathParams = that.monitorForm.monitor_path && that.monitorForm.monitor_path.indexOf('?') > -1 && (that.monitorForm.monitor_path.split('?')[1]).split('=');
+          const pathName =
+            that.monitorForm.monitor_path &&
+            that.monitorForm.monitor_path.indexOf('?') > -1 &&
+            that.monitorForm.monitor_path.split('?')[0]
+          const pathParams =
+            that.monitorForm.monitor_path &&
+            that.monitorForm.monitor_path.indexOf('?') > -1 &&
+            that.monitorForm.monitor_path.split('?')[1].split('=')
           if (pathParams) {
-            dataParams = [{ param_name: pathParams[0], value: pathParams[1] } ]
+            dataParams = [{ param_name: pathParams[0], value: pathParams[1] }]
           } else {
             // dataParams = [{ param_name: 'r', value: that.monitorForm.regionauth_id }]
           }
@@ -396,8 +403,7 @@ export default {
             wxappid: that.wxappid,
             monitor_path: pathName || that.monitorForm.monitor_path,
             monitor_path_params: dataParams || [],
-            page_name: that.monitorForm.page_name,
-            // regionauth_id: this.monitorForm.regionauth_id
+            page_name: that.monitorForm.page_name
           }
           addMonitors(params)
             .then((response) => {
@@ -435,7 +441,7 @@ export default {
     },
     saveSources: function () {
       if (this.sourcesForm.sourceIds.length == 0) {
-        return this.$message.error("请选择来源");
+        return this.$message.error('请选择来源')
       }
       saveSources(this.sourcesForm)
         .then((response) => {
@@ -603,7 +609,6 @@ export default {
       this.getSourcesLists()
     },
     getMonitorsList: function (info) {
-
       this.loading = true
       let params = {
         page: this.monitorsParams.page,
@@ -654,11 +659,9 @@ export default {
     }
   }
 }
-
 .flex-right {
-  float: right
+  float: right;
 }
-
 .monito_select_btn {
   width: 100%;
   background-color: #fff;

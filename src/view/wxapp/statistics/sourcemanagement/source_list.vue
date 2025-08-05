@@ -11,21 +11,21 @@
               >
                 新增来源
               </el-button>
-              <el-button
+              <!-- <el-button
                 type="primary"
                 @click="checkMemberTags"
               >
                 选择会员标签
-              </el-button>
+              </el-button> -->
             </el-button-group>
           </div>
-          <div style="float: left">
+          <!-- <div style="float: left">
             <el-alert
               title="批量打标签会替换所有标签，不会做合并，请慎重操作"
               type="warning"
               :closable="false"
             />
-          </div>
+          </div> -->
         </el-col>
         <el-col
           :span="6"
@@ -59,10 +59,14 @@
         label="全选"
       />
       <el-table-column
+        prop="sourceId"
+        label="来源ID"
+      />
+      <el-table-column
         prop="sourceName"
         label="来源名称"
       />
-      <el-table-column
+      <!-- <el-table-column
         prop="sourceName"
         label="标签"
       >
@@ -78,7 +82,7 @@
             </el-tag>
           </template>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="创建时间">
         <template slot-scope="scope">
           <template>
@@ -136,7 +140,7 @@
               建议将来源名称命名为要使用的推广渠道的名称，方便理解与跟踪，例如：微信朋友圈广告
             </p>
           </el-form-item>
-          <el-form-item
+          <!-- <el-form-item
             v-if="!tagdialogVisible"
             label="会员标签"
             prop="source_name"
@@ -149,8 +153,8 @@
                 item.tag_name
               }}
             </el-tag>
-          </el-form-item>
-          <el-form-item
+          </el-form-item> -->
+          <!-- <el-form-item
             v-if="tagdialogVisible"
             label="选中的来源"
             prop="source_name"
@@ -163,8 +167,8 @@
                 item.sourceName
               }}
             </el-tag>
-          </el-form-item>
-          <el-form-item
+          </el-form-item> -->
+          <!-- <el-form-item
             label="标签列表"
             prop="source_name"
           >
@@ -208,7 +212,7 @@
                 />
               </div>
             </template>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </div>
       <div
@@ -377,26 +381,16 @@ export default {
         params.page = 1
         params.source_name = this.searchTxt
       }
+      // console.log(params)
       getSourcesList(params)
         .then((response) => {
-          const checkTags = response.data.data.checkTags
-          this.dataList = response.data.data.list?.map(item => {
-            return {
-              ...item,
-              checkTags: Object.entries(checkTags)?.filter(([key, value]) => item.tagsId.includes(key))?.map(([key, value]) => {
-                return {
-                  tag_id: key,
-                  tag_name: value
-                }
-              })
-            }
-          })
+          this.dataList = response.data.data.list
+          // console.log(this.dataList)
           this.total_count = response.data.data.total_count
           this.AllcheckTags = response.data.data.checkTags
           this.loading = false
         })
         .catch((error) => {
-          console.log(error)
           this.loading = false
           this.$message({
             type: 'error',

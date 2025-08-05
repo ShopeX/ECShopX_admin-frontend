@@ -22,6 +22,10 @@ export const status = [
   {
     value: 'waste',
     label: '已红冲'
+  },
+  {
+    value: 'cancel',
+    label: '取消'
   }
 ]
 
@@ -30,7 +34,8 @@ export const open_status_map = {
   success: '开票成功',
   waste: '已红冲',
   failed: '开票失败',
-  pending: '待开票'
+  pending: '待开票',
+  cancel:'取消'
 };
 
 
@@ -69,6 +74,11 @@ export const open_status_arr = [
     value: 'failed',
     label: '开票失败',
     title: '开票失败'
+  },
+  {
+    value: 'cancel',
+    label: '取消',
+    title: '取消'
   }
 ];
 

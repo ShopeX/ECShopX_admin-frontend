@@ -39223,5 +39223,1075 @@
 		"zh-cn": " 【自定义页】",
 		"en": "Custom Page",
 		"zh-tw": "【自定義頁】"
+	},
+	"3pnyzj6": {
+		"zh-cn": "进件管理详情",
+		"en": "Details of inbound management",
+		"zh-tw": "進件管理詳情"
+	},
+	"chpsi44": {
+		"zh-cn": "开票申请",
+		"en": "Application for invoicing",
+		"zh-tw": "開票申請"
+	},
+	"b32ens4": {
+		"zh-cn": "发票配置",
+		"en": "Invoice configuration",
+		"zh-tw": "發票配置"
+	},
+	"j7udk74": {
+		"zh-cn": "销方信息",
+		"en": "Seller information",
+		"zh-tw": "銷方信息"
+	},
+	"chqhep4": {
+		"zh-cn": "开票税率",
+		"en": "Invoicing tax rate",
+		"zh-tw": "開票稅率"
+	},
+	"y2bulh5": {
+		"zh-cn": "专票确认书",
+		"en": "Special Ticket Confirmation Letter",
+		"zh-tw": "專票確認書"
+	},
+	"fq2nm44": {
+		"zh-cn": "积分升值",
+		"en": "Points appreciation",
+		"zh-tw": "積分升值"
+	},
+	"jmlgb44": {
+		"zh-cn": "额外积分",
+		"en": "Extra points",
+		"zh-tw": "額外積分"
+	},
+	"x82ynb6": {
+		"zh-cn": "同步淘宝商品",
+		"en": "Synchronize Taobao products",
+		"zh-tw": "同步淘寶商品"
+	},
+	"79hljq8": {
+		"zh-cn": "个人中心模版装修",
+		"en": "Personal center template decoration",
+		"zh-tw": "個人中心模版裝修"
+	},
+	"4x2u4o6": {
+		"zh-cn": "导购模板装修",
+		"en": "Salesperson template decoration",
+		"zh-tw": "導購模板裝修"
+	},
+	"tgh7585": {
+		"zh-cn": "微信昵称:",
+		"en": "Wechat nickname",
+		"zh-tw": "微信暱稱:"
+	},
+	"l4fr0p7": {
+		"zh-cn": "请输入微信昵称",
+		"en": "Please enter your wechat nickname",
+		"zh-tw": "請輸入微信暱稱"
+	},
+	"jkx6f26": {
+		"zh-cn": "上传淘宝链接",
+		"en": "Upload the Taobao link",
+		"zh-tw": "上傳淘寶鏈接"
+	},
+	"yfnfuv8": {
+		"zh-cn": " 同步淘宝商品 ",
+		"en": "Synchronize Taobao products",
+		"zh-tw": "同步淘寶商品"
+	},
+	"e8lcqo4": {
+		"zh-cn": "淘宝商品",
+		"en": "Taobao products",
+		"zh-tw": "淘寶商品"
+	},
+	"c703ei4": {
+		"zh-cn": "导购装修",
+		"en": "Salesperson decoration",
+		"zh-tw": "導購裝修"
+	},
+	"cvdun44": {
+		"zh-cn": "我的页面",
+		"en": "My page",
+		"zh-tw": "我的頁面"
+	},
+	"vdheh87": {
+		"zh-cn": "请选择页面类型",
+		"en": "Please select the page type",
+		"zh-tw": "請選擇頁面類型"
+	},
+	"hcznwo4": {
+		"zh-cn": "虚拟店铺",
+		"en": "Virtual store",
+		"zh-tw": "虛擬店鋪"
+	},
+	"eduj23": {
+		"zh-cn": "引导页",
+		"en": "Guide page",
+		"zh-tw": "引導頁"
+	},
+	"eouqto5": {
+		"zh-cn": "添加新配置",
+		"en": "Add new configuration",
+		"zh-tw": "添加新配置"
+	},
+	"2loov66": {
+		"zh-cn": "编辑销方信息",
+		"en": "Edit the seller's information",
+		"zh-tw": "編輯銷方信息"
+	},
+	"z018do6": {
+		"zh-cn": "添加销方信息",
+		"en": "Add the seller's information",
+		"zh-tw": "添加銷方信息"
+	},
+	"h0v5hta": {
+		"zh-cn": "编辑管理分类税率配置",
+		"en": "Edit and manage the classification tax rate configuration",
+		"zh-tw": "編輯管理分類稅率配置"
+	},
+	"5tds82a": {
+		"zh-cn": "新增管理分类税率配置",
+		"en": "New management classification tax rate configuration has been added",
+		"zh-tw": "新增管理分類稅率配置"
+	},
+	"ac2wh44": {
+		"zh-cn": "会员特权",
+		"en": "Membership privileges",
+		"zh-tw": "會員特權"
+	},
+	"3jpbb4f": {
+		"zh-cn": "会员福利，增加用户活跃度及粘性",
+		"en": "Member benefits increase user activity and stickiness",
+		"zh-tw": "會員福利，增加用戶活躍度及粘性"
+	},
+	"t6wv6l8": {
+		"zh-cn": "指定日期额外积分",
+		"en": "Extra points for specified dates",
+		"zh-tw": "指定日期額外積分"
+	},
+	"f84dspk": {
+		"zh-cn": "如会员日关怀，指定日期会员可获取额外积分",
+		"en": "For member Day care, members can earn additional points on the designated date",
+		"zh-tw": "如會員日關懷，指定日期會員可獲取額外積分"
+	},
+	"ik95emp": {
+		"zh-cn": "电子发票需要一定时间才能发送到您的邮箱,请耐心等待",
+		"en": "The electronic invoice will take some time to be sent to your email. Please wait patiently",
+		"zh-tw": "電子發票需要一定時間才能發送到您的郵箱,請耐心等待"
+	},
+	"ac2vho4": {
+		"zh-cn": "专用发票",
+		"en": "Special invoice",
+		"zh-tw": "專用發票"
+	},
+	"fsjjvi6": {
+		"zh-cn": "电子普通发票",
+		"en": "Electronic ordinary invoice",
+		"zh-tw": "電子普通發票"
+	},
+	"mdt4sb7": {
+		"zh-cn": "开票申请流水:",
+		"en": "Invoice application flow",
+		"zh-tw": "開票申請流水:"
+	},
+	"qbeszs9": {
+		"zh-cn": "请输入开票申请流水",
+		"en": "Please enter the invoice application transaction flow",
+		"zh-tw": "請輸入開票申請流水"
+	},
+	"mg8ra07": {
+		"zh-cn": "请输入发票抬头",
+		"en": "Please enter the invoice title",
+		"zh-tw": "請輸入發票擡頭"
+	},
+	"w1hh7r5": {
+		"zh-cn": "开票来源:",
+		"en": "Invoice source:",
+		"zh-tw": "開票來源:"
+	},
+	"ht54g28": {
+		"zh-cn": "开票申请手机号:",
+		"en": "Invoicing application mobile phone number:",
+		"zh-tw": "開票申請手機號:"
+	},
+	"yfw6iba": {
+		"zh-cn": "请输入开票申请手机号",
+		"en": "Please enter the mobile phone number for invoicing application",
+		"zh-tw": "請輸入開票申請手機號"
+	},
+	"mj2kej7": {
+		"zh-cn": "开票申请邮箱:",
+		"en": "Invoice application email",
+		"zh-tw": "開票申請郵箱:"
+	},
+	"qbkwzc9": {
+		"zh-cn": "请输入开票申请邮箱",
+		"en": "Please enter the email address for invoicing application",
+		"zh-tw": "請輸入開票申請郵箱"
+	},
+	"blq7v15": {
+		"zh-cn": "发票类型:",
+		"en": "Invoice type",
+		"zh-tw": "發票類型:"
+	},
+	"gmhp9u4": {
+		"zh-cn": "编辑发票",
+		"en": "Edit the invoice",
+		"zh-tw": "編輯發票"
+	},
+	"z9bdv07": {
+		"zh-cn": "请确认重发邮箱",
+		"en": "Please confirm and resend to the email address",
+		"zh-tw": "請確認重發郵箱"
+	},
+	"o18mi07": {
+		"zh-cn": "邮箱正确并发送",
+		"en": "The email address is correct and it has been sent",
+		"zh-tw": "郵箱正確併發送"
+	},
+	"b2uumh4": {
+		"zh-cn": "发票日志",
+		"en": "Invoice Log",
+		"zh-tw": "發票日誌"
+	},
+	"ijkaav6": {
+		"zh-cn": "积分升值活动",
+		"en": "Points appreciation activity",
+		"zh-tw": "積分升值活動"
+	},
+	"buvwml6": {
+		"zh-cn": " 指定日期 ",
+		"en": "Specified date",
+		"zh-tw": "指定日期"
+	},
+	"au9y8o4": {
+		"zh-cn": "升值倍数",
+		"en": "Appreciation multiple",
+		"zh-tw": "升值倍數"
+	},
+	"nbg9426": {
+		"zh-cn": "升值倍数必填",
+		"en": "The appreciation multiple must be filled in",
+		"zh-tw": "升值倍數必填"
+	},
+	"4lx36ie": {
+		"zh-cn": " 活动期内，每个积分升值为 ",
+		"en": "During the event period, each point will increase in value by",
+		"zh-tw": "活動期內，每個積分升值爲"
+	},
+	"mot2m77": {
+		"zh-cn": "请输入升值倍数",
+		"en": "Please enter the appreciation multiple",
+		"zh-tw": "請輸入升值倍數"
+	},
+	"e9xv3": {
+		"zh-cn": " 倍 ",
+		"en": "times",
+		"zh-tw": "倍"
+	},
+	"e1146l4": {
+		"zh-cn": "每日积分",
+		"en": "Daily points",
+		"zh-tw": "每日積分"
+	},
+	"ro6gsli": {
+		"zh-cn": " 活动期内，每个客户每天最多可使用 ",
+		"en": "During the event period, each customer can use it at most per day",
+		"zh-tw": "活動期內，每個客戶每天最多可使用"
+	},
+	"7nx81ic": {
+		"zh-cn": " 积分用于积分升值活动 ",
+		"en": "Points are used for points appreciation activities",
+		"zh-tw": "積分用於積分升值活動"
+	},
+	"sy3kdg1o": {
+		"zh-cn": " 活动期内，每个客户每天升值后积分 = 每日积分 × 升值倍数，积分抵扣订单金额=（升值后积分+普通积分）× 抵扣比例 ",
+		"en": "During the event period, each customer's daily points after appreciation = daily points × appreciation multiple, and the amount of points deducted from orders = (increased points + regular points) × deduction ratio",
+		"zh-tw": "活動期內，每個客戶每天升值後積分 = 每日積分 × 升值倍數，積分抵扣訂單金額=（升值後積分+普通積分）× 抵扣比例"
+	},
+	"cf147d4": {
+		"zh-cn": "应用场景",
+		"en": "Application scenarios",
+		"zh-tw": "應用場景"
+	},
+	"hypfnl4": {
+		"zh-cn": "订单抵扣",
+		"en": "Order deduction",
+		"zh-tw": "訂單抵扣"
+	},
+	"fq281m4": {
+		"zh-cn": "积分倍数",
+		"en": "Integral multiple",
+		"zh-tw": "積分倍數"
+	},
+	"onw5arj": {
+		"zh-cn": " 活动期内，到账积分为获得基础积分的 ",
+		"en": "During the event period, the points credited to the account are for obtaining the basic points",
+		"zh-tw": "活動期內，到賬積分爲獲得基礎積分的"
+	},
+	"crskd4": {
+		"zh-cn": " 倍数 ",
+		"en": "Multiple",
+		"zh-tw": "倍數"
+	},
+	"ie4boi7": {
+		"zh-cn": " 订单金额满 ",
+		"en": "The order amount is full.",
+		"zh-tw": "訂單金額滿"
+	},
+	"rbgb12h": {
+		"zh-cn": " 元时，可享受该活动（不含运费） ",
+		"en": "For yuan, you can enjoy this promotion (excluding shipping fees).",
+		"zh-tw": "元時，可享受該活動（不含運費）"
+	},
+	"ck0goz4": {
+		"zh-cn": "店铺选择",
+		"en": "Store selection",
+		"zh-tw": "店鋪選擇"
+	},
+	"g5xxr7": {
+		"zh-cn": " 全店铺适用 ",
+		"en": "Applicable to all stores",
+		"zh-tw": "全店鋪適用"
+	},
+	"fcphm69": {
+		"zh-cn": "需要开启店铺白名单",
+		"en": "The store whitelist needs to be enabled",
+		"zh-tw": "需要開啓店鋪白名單"
+	},
+	"1lm9r0c": {
+		"zh-cn": "进入用户绑定白名单的店铺",
+		"en": "Enter the store on the user binding whitelist",
+		"zh-tw": "進入用戶綁定白名單的店鋪"
+	},
+	"763e748": {
+		"zh-cn": "需要开通导购应用",
+		"en": "The shopping guide application needs to be activated",
+		"zh-tw": "需要開通導購應用"
+	},
+	"ava74m4": {
+		"zh-cn": "分类编号",
+		"en": "Classification number",
+		"zh-tw": "分類編號"
+	},
+	"v6d3o37": {
+		"zh-cn": "商品sku编码",
+		"en": "Product sku code",
+		"zh-tw": "商品sku編碼"
+	},
+	"v69wqg7": {
+		"zh-cn": "商品spu编码",
+		"en": "Product spu code",
+		"zh-tw": "商品spu編碼"
+	},
+	"b3zogu4": {
+		"zh-cn": "商品主图",
+		"en": "Main image of the product",
+		"zh-tw": "商品主圖"
+	},
+	"ei0g53": {
+		"zh-cn": "开票中",
+		"en": "Invoicing in progress",
+		"zh-tw": "開票中"
+	},
+	"chm7zr4": {
+		"zh-cn": "开票成功",
+		"en": "Invoice issuance successful",
+		"zh-tw": "開票成功"
+	},
+	"chl18c4": {
+		"zh-cn": "开票失败",
+		"en": "Failed invoicing",
+		"zh-tw": "開票失敗"
+	},
+	"edcxu3": {
+		"zh-cn": "已红冲",
+		"en": "\"Already red Chong",
+		"zh-tw": "已紅衝"
+	},
+	"eilsr46": {
+		"zh-cn": "线上百望开票",
+		"en": "The line is over 100. Please issue the invoice",
+		"zh-tw": "線上百望開票"
+	},
+	"gbejro4": {
+		"zh-cn": "线下开票",
+		"en": "Offline invoicing",
+		"zh-tw": "線下開票"
+	},
+	"a6cxum4": {
+		"zh-cn": "专业发票",
+		"en": "Professional invoice",
+		"zh-tw": "專業發票"
+	},
+	"hn54w3": {
+		"zh-cn": "用户端",
+		"en": "User end",
+		"zh-tw": "用戶端"
+	},
+	"1grbu4": {
+		"zh-cn": "OMS端",
+		"en": "OMS end",
+		"zh-tw": "OMS端"
+	},
+	"i2ik2": {
+		"zh-cn": "更新",
+		"en": "Update",
+		"zh-tw": "更新"
+	},
+	"desvzx4": {
+		"zh-cn": "更新备注",
+		"en": "Update Remarks",
+		"zh-tw": "更新備註"
+	},
+	"ehj32": {
+		"zh-cn": "创建",
+		"en": "\"Create",
+		"zh-tw": "創建"
+	},
+	"iqzxkc4": {
+		"zh-cn": "重发邮件",
+		"en": "Resend the email",
+		"zh-tw": "重發郵件"
+	},
+	"w14tjo5": {
+		"zh-cn": "开票方名称",
+		"en": "Name of the invoicing party",
+		"zh-tw": "開票方名稱"
+	},
+	"w1b2re5": {
+		"zh-cn": "开票方税号",
+		"en": "Tax number of the invoicing party",
+		"zh-tw": "開票方稅號"
+	},
+	"w1ak495": {
+		"zh-cn": "开票方电话",
+		"en": "The invoicing party's phone number",
+		"zh-tw": "開票方電話"
+	},
+	"ei0k23": {
+		"zh-cn": "开票人",
+		"en": "Invoice issuer",
+		"zh-tw": "開票人"
+	},
+	"fcctu3": {
+		"zh-cn": "收款人",
+		"en": "Payee",
+		"zh-tw": "收款人"
+	},
+	"djpzj3": {
+		"zh-cn": "复核人",
+		"en": "Reviewer",
+		"zh-tw": "複覈人"
+	},
+	"w155wh5": {
+		"zh-cn": "开票方地址",
+		"en": "The address of the invoice issuer",
+		"zh-tw": "開票方地址"
+	},
+	"e7zi4j4": {
+		"zh-cn": "添加时间",
+		"en": "Add time",
+		"zh-tw": "添加時間"
+	},
+	"w1fxuv5": {
+		"zh-cn": "开票方银行",
+		"en": "The bank that issues the invoice",
+		"zh-tw": "開票方銀行"
+	},
+	"y5fiew7": {
+		"zh-cn": "开票方银行账号",
+		"en": "The bank account number of the invoice issuer",
+		"zh-tw": "開票方銀行賬號"
+	},
+	"vhzdz47": {
+		"zh-cn": "开票方联系电话",
+		"en": "Contact number of the invoice issuer",
+		"zh-tw": "開票方聯繫電話"
+	},
+	"vhtzrc7": {
+		"zh-cn": "开票方联系地址",
+		"en": "Contact address of the invoice issuer",
+		"zh-tw": "開票方聯繫地址"
+	},
+	"xoz3ioj": {
+		"zh-cn": "联系地址文字长度，请不要超过255个字",
+		"en": "The text length of the contact address should not exceed 255 characters",
+		"zh-tw": "聯繫地址文字長度，請不要超過255個字"
+	},
+	"av9kmt4": {
+		"zh-cn": "全部分类",
+		"en": "All categories",
+		"zh-tw": "全部分類"
+	},
+	"jz2exec": {
+		"zh-cn": "下拉选择配置销方开票信息",
+		"en": "Scroll down to select the configuration of the seller's invoicing information",
+		"zh-tw": "下拉選擇配置銷方開票信息"
+	},
+	"d1penj6": {
+		"zh-cn": "配置税率分类",
+		"en": "Configure tax rate classification",
+		"zh-tw": "配置稅率分類"
+	},
+	"w42rk88": {
+		"zh-cn": "指定分类不能为空",
+		"en": "The specified category cannot be empty",
+		"zh-tw": "指定分類不能爲空"
+	},
+	"b2ydyo4": {
+		"zh-cn": "发票税率",
+		"en": "Invoice tax rate",
+		"zh-tw": "發票稅率"
+	},
+	"mazclx9": {
+		"zh-cn": "企业专用发票确认书",
+		"en": "Confirmation of Enterprise Special Invoice",
+		"zh-tw": "企業專用發票確認書"
+	},
+	"chom1n4": {
+		"zh-cn": "开票渠道",
+		"en": "Invoicing channel",
+		"zh-tw": "開票渠道"
+	},
+	"w1bibl5": {
+		"zh-cn": "开票方类型",
+		"en": "Type of invoice issuer",
+		"zh-tw": "開票方類型"
+	},
+	"pyfb66": {
+		"zh-cn": "开票申请方式",
+		"en": "Application method for invoicing",
+		"zh-tw": "開票申請方式"
+	},
+	"ioydai8": {
+		"zh-cn": "结算页可申请开票",
+		"en": "An invoice can be applied for on the settlement page",
+		"zh-tw": "結算頁可申請開票"
+	},
+	"s2guwja": {
+		"zh-cn": "已支付订单可申请开票",
+		"en": "Paid orders can apply for invoicing",
+		"zh-tw": "已支付訂單可申請開票"
+	},
+	"q0hlk86": {
+		"zh-cn": "运费是否开票",
+		"en": "Will the freight be invoiced",
+		"zh-tw": "運費是否開票"
+	},
+	"py4gw36": {
+		"zh-cn": "运费支持开票",
+		"en": "Freight charges are supported by invoicing",
+		"zh-tw": "運費支持開票"
+	},
+	"3wxyzi7": {
+		"zh-cn": "运费不支持开票",
+		"en": "The freight does not support invoicing",
+		"zh-tw": "運費不支持開票"
+	},
+	"p99yac6": {
+		"zh-cn": "运费开票名称",
+		"en": "Invoice name for freight charges",
+		"zh-tw": "運費開票名稱"
+	},
+	"byujvbt": {
+		"zh-cn": "为空时默认运费开票名称，如果填写名称按填写名称展示在发票上",
+		"en": "When it is empty, the default freight invoicing name is provided. If a name is filled in, it will be displayed on the invoice according to the filled name",
+		"zh-tw": "爲空時默認運費開票名稱，如果填寫名稱按填寫名稱展示在發票上"
+	},
+	"iq9z6q4": {
+		"zh-cn": "运费税率",
+		"en": "Freight rate",
+		"zh-tw": "運費稅率"
+	},
+	"chr7a24": {
+		"zh-cn": "开票维度",
+		"en": "Invoicing dimension",
+		"zh-tw": "開票維度"
+	},
+	"kzvisc5": {
+		"zh-cn": "按订单开票",
+		"en": "Issue invoices according to orders",
+		"zh-tw": "按訂單開票"
+	},
+	"ehhjx45": {
+		"zh-cn": "可开票期限",
+		"en": "Invoice issuance period",
+		"zh-tw": "可開票期限"
+	},
+	"jt70pig": {
+		"zh-cn": "订单商品签收后，且在订单创建  ",
+		"en": "After the ordered goods are signed for and during the order creation process",
+		"zh-tw": "訂單商品簽收後，且在訂單創建"
+	},
+	"ooq3muc": {
+		"zh-cn": "  (月)内支持申请开票",
+		"en": "Applications for invoicing are supported within (month)",
+		"zh-tw": "(月)內支持申請開票"
+	},
+	"bukolr6": {
+		"zh-cn": "专用发票展示",
+		"en": "Special invoice display",
+		"zh-tw": "專用發票展示"
+	},
+	"3jl85ib": {
+		"zh-cn": "企业抬头可选择专用发票",
+		"en": "Enterprises can choose special invoices for their business names",
+		"zh-tw": "企業擡頭可選擇專用發票"
+	},
+	"kzo6zuv": {
+		"zh-cn": "企业抬头不可以选择专用发票（前端此选项不展示，默认为普通发票）",
+		"en": "The enterprise name cannot be selected as a special invoice (this option is not displayed on the front end and defaults to a regular invoice).",
+		"zh-tw": "企業擡頭不可以選擇專用發票（前端此選項不展示，默認爲普通發票）"
+	},
+	"91glj16": {
+		"zh-cn": "申请开票节点",
+		"en": "Apply for the invoicing node",
+		"zh-tw": "申請開票節點"
+	},
+	"i948lv7": {
+		"zh-cn": "订单过了售后期",
+		"en": "The order has passed the late sale period",
+		"zh-tw": "訂單過了售後期"
+	},
+	"5vrxcq6": {
+		"zh-cn": "订单确认收货",
+		"en": "Order confirmation and receipt",
+		"zh-tw": "訂單確認收貨"
+	},
+	"b714d46": {
+		"zh-cn": "是否启用开票",
+		"en": "Whether to enable invoicing",
+		"zh-tw": "是否啓用開票"
+	},
+	"pyrm26": {
+		"zh-cn": "开票申请时间",
+		"en": "Application time for invoice issuance",
+		"zh-tw": "開票申請時間"
+	},
+	"chp4kz4": {
+		"zh-cn": "开票状态",
+		"en": "Invoice status",
+		"zh-tw": "開票狀態"
+	},
+	"ac4xwf4": {
+		"zh-cn": "会员编号",
+		"en": "Membership number",
+		"zh-tw": "會員編號"
+	},
+	"ac05e54": {
+		"zh-cn": "会员手机",
+		"en": "Member mobile phone",
+		"zh-tw": "會員手機"
+	},
+	"b32msj4": {
+		"zh-cn": "发票金额",
+		"en": "Invoice amount",
+		"zh-tw": "發票金額"
+	},
+	"chj7di4": {
+		"zh-cn": "开票信息",
+		"en": "Invoicing information",
+		"zh-tw": "開票信息"
+	},
+	"ctp5dk4": {
+		"zh-cn": "抬头类型",
+		"en": "Head type",
+		"zh-tw": "擡頭類型"
+	},
+	"b2u9kv4": {
+		"zh-cn": "发票抬头",
+		"en": "Invoice title",
+		"zh-tw": "發票擡頭"
+	},
+	"chqqqg4": {
+		"zh-cn": "开票类型",
+		"en": "Invoice type",
+		"zh-tw": "開票類型"
+	},
+	"w0psf45": {
+		"zh-cn": "开票手机号",
+		"en": "Invoicing mobile phone number",
+		"zh-tw": "開票手機號"
+	},
+	"chudkb4": {
+		"zh-cn": "开票邮箱",
+		"en": "Invoicing email",
+		"zh-tw": "開票郵箱"
+	},
+	"4yz4qb6": {
+		"zh-cn": "纳税人识别号",
+		"en": "Taxpayer Identification Number",
+		"zh-tw": "納稅人識別號"
+	},
+	"amfh984": {
+		"zh-cn": "公司地址",
+		"en": "Company Address",
+		"zh-tw": "公司地址"
+	},
+	"amkvh04": {
+		"zh-cn": "公司电话",
+		"en": "Company telephone number",
+		"zh-tw": "公司電話"
+	},
+	"jd0qcn4": {
+		"zh-cn": "银行账户",
+		"en": "Bank account",
+		"zh-tw": "銀行賬戶"
+	},
+	"3j34px6": {
+		"zh-cn": "开票商品明细",
+		"en": "Details of invoiced goods",
+		"zh-tw": "開票商品明細"
+	},
+	"b31biu4": {
+		"zh-cn": "发票详情",
+		"en": "Invoice details",
+		"zh-tw": "發票詳情"
+	},
+	"5o1b2j7": {
+		"zh-cn": "查看发票PDF",
+		"en": "View the invoice PDF",
+		"zh-tw": "查看發票PDF"
+	},
+	"cy7nbm5": {
+		"zh-cn": "重发至邮箱",
+		"en": "Resend to the email address",
+		"zh-tw": "重發至郵箱"
+	},
+	"b2rxlt4": {
+		"zh-cn": "发票号码",
+		"en": "Invoice number",
+		"zh-tw": "發票號碼"
+	},
+	"b2r2id4": {
+		"zh-cn": "发票代码",
+		"en": "Invoice code",
+		"zh-tw": "發票代碼"
+	},
+	"n9kb2": {
+		"zh-cn": "蓝票",
+		"en": "Blue ticket",
+		"zh-tw": "藍票"
+	},
+	"m7eu2": {
+		"zh-cn": "红票",
+		"en": "Red ticket",
+		"zh-tw": "紅票"
+	},
+	"chmzia4": {
+		"zh-cn": "开票日期",
+		"en": "Invoice date",
+		"zh-tw": "開票日期"
+	},
+	"chuq8k4": {
+		"zh-cn": "开票金额",
+		"en": "Invoice amount",
+		"zh-tw": "開票金額"
+	},
+	"pzs0v6": {
+		"zh-cn": "开票申请流水",
+		"en": "Invoice application flow",
+		"zh-tw": "開票申請流水"
+	},
+	"5lywg87": {
+		"zh-cn": "开票金额（¥）",
+		"en": "Invoice amount (¥",
+		"zh-tw": "開票金額（¥）"
+	},
+	"b2ynaf4": {
+		"zh-cn": "发票类型",
+		"en": "Invoice type",
+		"zh-tw": "發票類型"
+	},
+	"b2x14y4": {
+		"zh-cn": "发票状态",
+		"en": "Invoice status",
+		"zh-tw": "發票狀態"
+	},
+	"a6x9so4": {
+		"zh-cn": "个人抬头",
+		"en": "Personal heads-up",
+		"zh-tw": "個人擡頭"
+	},
+	"amhfys4": {
+		"zh-cn": "公司抬头",
+		"en": "\"Company Name\"",
+		"zh-tw": "公司擡頭"
+	},
+	"estanp5": {
+		"zh-cn": "收票人邮箱",
+		"en": "The ticket recipient's email address",
+		"zh-tw": "收票人郵箱"
+	},
+	"et1aqx5": {
+		"zh-cn": "收票人手机",
+		"en": "The mobile phone of the ticket collector",
+		"zh-tw": "收票人手機"
+	},
+	"t95shy5": {
+		"zh-cn": "开户行账户",
+		"en": "The account of the opening bank",
+		"zh-tw": "開戶行賬戶"
+	},
+	"d1x8m74": {
+		"zh-cn": "操作类型",
+		"en": "Operation type",
+		"zh-tw": "操作類型"
+	},
+	"c74wy3": {
+		"zh-cn": "修改前",
+		"en": "Before modification",
+		"zh-tw": "修改前"
+	},
+	"c759f3": {
+		"zh-cn": "修改后",
+		"en": "After modification",
+		"zh-tw": "修改後"
+	},
+	"g2yrz54": {
+		"zh-cn": "等级背景",
+		"en": "Hierarchical background",
+		"zh-tw": "等級背景"
+	},
+	"hyogrl4": {
+		"zh-cn": "订单导航",
+		"en": "Order Navigation",
+		"zh-tw": "訂單導航"
+	},
+	"d6pswi4": {
+		"zh-cn": "整屏滑动",
+		"en": "Swipe across the entire screen",
+		"zh-tw": "整屏滑動"
+	},
+	"cecv275": {
+		"zh-cn": "沉浸式页头",
+		"en": "Immersive header",
+		"zh-tw": "沉浸式頁頭"
+	},
+	"jlxt4y4": {
+		"zh-cn": "页头背景",
+		"en": "Header background",
+		"zh-tw": "頁頭背景"
+	},
+	"vha0uu5": {
+		"zh-cn": "页头标题区",
+		"en": "Header title area",
+		"zh-tw": "頁頭標題區"
+	},
+	"j9pd55g": {
+		"zh-cn": "建议尺寸：340 * 70 像素",
+		"en": "Suggested size: 340 * 70 pixels",
+		"zh-tw": "建議尺寸：340 * 70 像素"
+	},
+	"vkiww35": {
+		"zh-cn": "页头功能区",
+		"en": "Header function area",
+		"zh-tw": "頁頭功能區"
+	},
+	"f4pj06g": {
+		"zh-cn": "建议尺寸：138 * 65 像素",
+		"en": "Suggested size: 138 * 65 pixels",
+		"zh-tw": "建議尺寸：138 * 65 像素"
+	},
+	"kem00zg": {
+		"zh-cn": "建议尺寸：174 * 64 像素",
+		"en": "Suggested size: 174 * 64 pixels",
+		"zh-tw": "建議尺寸：174 * 64 像素"
+	},
+	"u5ev6cg": {
+		"zh-cn": "背景图宽度为100%，高度自适应",
+		"en": "The width of the background image is 100%, and the height is adaptive",
+		"zh-tw": "背景圖寬度爲100%，高度自適應"
+	},
+	"cv4egp4": {
+		"zh-cn": "我的拼团",
+		"en": "My group buying",
+		"zh-tw": "我的拼團"
+	},
+	"cv51d84": {
+		"zh-cn": "我的收藏",
+		"en": "My collection",
+		"zh-tw": "我的收藏"
+	},
+	"bd9llh4": {
+		"zh-cn": "地址管理",
+		"en": "Address management",
+		"zh-tw": "地址管理"
+	},
+	"fwot3h4": {
+		"zh-cn": "种草列表",
+		"en": "\"Recommendation list\"",
+		"zh-tw": "種草列表"
+	},
+	"gt6kd54": {
+		"zh-cn": "自提订单",
+		"en": "Self-pickup order",
+		"zh-tw": "自提訂單"
+	},
+	"aryfdr4": {
+		"zh-cn": "助力活动",
+		"en": "Support the event",
+		"zh-tw": "助力活動"
+	},
+	"b519t24": {
+		"zh-cn": "商家入驻",
+		"en": "Merchant entry",
+		"zh-tw": "商家入駐"
+	},
+	"6zrb94b": {
+		"zh-cn": "社区团购（H5不支持）",
+		"en": "Community group buying (H5 not supported)",
+		"zh-tw": "社區團購（H5不支持）"
+	},
+	"bjk0xo4": {
+		"zh-cn": "埋点参数",
+		"en": "Burial point parameters",
+		"zh-tw": "埋點參數"
+	},
+	"pb9w9x8": {
+		"zh-cn": "我的在线商城订单",
+		"en": "My online mall order",
+		"zh-tw": "我的在線商城訂單"
+	},
+	"drfudj4": {
+		"zh-cn": "标题颜色",
+		"en": "Title color",
+		"zh-tw": "標題顏色"
+	},
+	"c55p134": {
+		"zh-cn": "导航图标",
+		"en": "Navigation icon",
+		"zh-tw": "導航圖標"
+	},
+	"edo6j3": {
+		"zh-cn": "待付款",
+		"en": "Pending payment",
+		"zh-tw": "待付款"
+	},
+	"envnc3": {
+		"zh-cn": "待评价",
+		"en": "To be evaluated",
+		"zh-tw": "待評價"
+	},
+	"j4pnqf7": {
+		"zh-cn": "指示器字体颜色",
+		"en": "Font color of the indicator",
+		"zh-tw": "指示器字體顏色"
+	},
+	"j4enkp7": {
+		"zh-cn": "指示器字体大小",
+		"en": "Font size of the indicator",
+		"zh-tw": "指示器字體大小"
+	},
+	"kztha26": {
+		"zh-cn": "单位为 px",
+		"en": "The unit is px",
+		"zh-tw": "單位爲 px"
+	},
+	"d6cqx26": {
+		"zh-cn": "指示器下边距",
+		"en": "Lower margin of the indicator",
+		"zh-tw": "指示器下邊距"
+	},
+	"d6k4q16": {
+		"zh-cn": "指示器下文案",
+		"en": "Copy under the indicator",
+		"zh-tw": "指示器下文案"
+	},
+	"gqee2h4": {
+		"zh-cn": "自动切换",
+		"en": "Automatic switching",
+		"zh-tw": "自動切換"
+	},
+	"rsnpkfk": {
+		"zh-cn": "建议尺寸:（110px * 110px）",
+		"en": "Suggested size: (110px * 110px)",
+		"zh-tw": "建議尺寸:（110px * 110px）"
+	},
+	"eureb95": {
+		"zh-cn": "添加轮播项",
+		"en": "Add carousel items",
+		"zh-tw": "添加輪播項"
+	},
+	"fq30qa4": {
+		"zh-cn": "积分商品",
+		"en": "Points-based goods",
+		"zh-tw": "積分商品"
+	},
+	"w3q25u6": {
+		"zh-cn": "选择积分商品",
+		"en": "Select points-based products",
+		"zh-tw": "選擇積分商品"
+	},
+	"ao6o904": {
+		"zh-cn": "内容类型",
+		"en": "Content type",
+		"zh-tw": "內容類型"
+	},
+	"gha92": {
+		"zh-cn": "封面",
+		"en": "Cover",
+		"zh-tw": "封面"
+	},
+	"4vxk646": {
+		"zh-cn": "入场自动播放",
+		"en": "Automatic playback upon entry",
+		"zh-tw": "入場自動播放"
+	},
+	"fnmfzc6": {
+		"zh-cn": "离场视频交互",
+		"en": "Exit video interaction",
+		"zh-tw": "離場視頻交互"
+	},
+	"i0c0fh4": {
+		"zh-cn": "视频叠层",
+		"en": "Video overlay",
+		"zh-tw": "視頻疊層"
+	},
+	"bg5anf4": {
+		"zh-cn": "图片叠层",
+		"en": "Image overlay",
+		"zh-tw": "圖片疊層"
+	},
+	"ix464x4": {
+		"zh-cn": "重置地址",
+		"en": "Reset the address",
+		"zh-tw": "重置地址"
+	},
+	"ayszu34": {
+		"zh-cn": "叠层宽度",
+		"en": "Stack width",
+		"zh-tw": "疊層寬度"
+	},
+	"j0a4m15": {
+		"zh-cn": "单位为 %",
+		"en": "The unit is %",
+		"zh-tw": "單位爲 %"
+	},
+	"2ja0r25": {
+		"zh-cn": "请输入宽度",
+		"en": "Please enter the width",
+		"zh-tw": "請輸入寬度"
+	},
+	"p11e266": {
+		"zh-cn": "叠层下边距离",
+		"en": "The distance below the superimposition",
+		"zh-tw": "疊層下邊距離"
+	},
+	"n2zxpm7": {
+		"zh-cn": "请输入上边距离",
+		"en": "Please enter the distance above",
+		"zh-tw": "請輸入上邊距離"
+	},
+	"r115tf6": {
+		"zh-cn": "叠层左边距离",
+		"en": "The distance to the left of the superimposition",
+		"zh-tw": "疊層左邊距離"
+	},
+	"nwbs6j8": {
+		"zh-cn": "查看更多跳转地址",
+		"en": "View more jump addresses",
+		"zh-tw": "查看更多跳轉地址"
 	}
 }

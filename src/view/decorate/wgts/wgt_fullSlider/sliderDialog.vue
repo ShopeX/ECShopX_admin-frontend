@@ -195,6 +195,7 @@ export default {
                 {media_type == 'img' &&
                   <div class="zone-list">
                     <SpImagePicker v-model={this.sliderForm.imgUrl} size="small" class="video-link" text={media_type == 'video' ? '封面' : '图片'} />
+                    <div>建议尺寸：（宽度640px，高度自适应）</div>
                     {hotData?.map((item, index) => {
                       return (
                         <div class="zone-item">
@@ -249,6 +250,7 @@ export default {
             return (
               <div class="overlay-list">
                 <SpImagePicker v-model={this.sliderForm[key]} size="small" class="video-link" ononChange={(e) => { this.changeOverlay(e) }} />
+                <div>建议尺寸：（宽度640px，高度自适应）</div>
                 <div class="zone-list">
                   {overlayHotData?.map((item, index) => {
                     return (

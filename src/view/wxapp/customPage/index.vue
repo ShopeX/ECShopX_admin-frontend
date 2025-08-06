@@ -120,12 +120,12 @@
               >
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
-            <imgPicker
+            <!-- <imgPicker
               :dialog-visible="imgDialog"
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
+            /> -->
           </el-form-item>
           <el-form-item label="是否启用">
             <el-switch v-model="pageForm.is_open" />
@@ -342,9 +342,13 @@ export default {
       this.page_dialog = false
     },
     //上传卡封面
-    handleImgChange() {
-      this.imgDialog = true
-      this.isGetImage = true
+    async handleImgChange() {
+      const {
+        data: { url }
+      } = await this.$picker.image({
+        data: { url: this.pageForm.page_share_imageUrl }
+      })
+      this.pageForm.page_share_imageUrl = url
     },
     pickImg(data) {
       this.pageForm.page_share_imageUrl = data.url

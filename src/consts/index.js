@@ -13,6 +13,45 @@ export const ICON_MAP = {
   'cog': 'shezhi'
 }
 
+export const open_status_arr = [
+  {
+    value: 'pending',
+    label: '待开票',
+    title: '待开票'
+  },
+  {
+    value: 'inProgress',
+    label: '开票中',
+    title: '开票中'
+  },
+  {
+    value: 'success',
+    label: '开票成功',
+    title: '开票成功'
+  },
+  {
+    value: 'waste',
+    label: '已红冲',
+    title: '已红冲'
+  },
+  {
+    value: 'failed',
+    label: '开票失败',
+    title: '开票失败'
+  },
+  {
+    value: 'cancel',
+    label: '取消',
+    title: '取消'
+  },
+  {
+    value: 'waitProgress',
+    label: '排队',
+    title: '排队'
+  },
+];
+
+
 export const SALES_STATUS = [
   { title: '前台可销售', value: 'onsale' },
   { title: '前台不展示', value: 'offline_sale' },

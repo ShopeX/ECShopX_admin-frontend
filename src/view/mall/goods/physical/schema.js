@@ -8,7 +8,7 @@ export const createTbAddForm = (vm) =>
         component() {
           return (
             <div>
-              <div style={{ marginBottom: '10px' }}>
+              <div style={{ marginBottom: '10px', display: 'flex', gap: '10px' }}>
                 <el-button
                   type='primary'
                   plain
@@ -17,6 +17,24 @@ export const createTbAddForm = (vm) =>
                   }}
                 >
                   淘宝增量同步
+                </el-button>
+                <el-button
+                  type='primary'
+                  plain
+                  onClick={() => {
+                    vm.setCategory()
+                  }}
+                >
+                  设置管理分类 
+                </el-button>
+                <el-button
+                  type='primary'
+                  plain
+                  onClick={() => {
+                    vm.syncGoodsPool()
+                  }}
+                >
+                  同步商品池 
                 </el-button>
               </div>
               <SpFinder

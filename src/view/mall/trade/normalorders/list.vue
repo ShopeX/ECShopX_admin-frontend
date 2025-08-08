@@ -188,7 +188,7 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
-            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
+            <export-tip @exportHandle="exportInvoice"> 发票订单 </export-tip>
           </el-dropdown-item>
           <el-dropdown-item>
             <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
@@ -2122,7 +2122,8 @@ export default {
       exportInvoice({
         ...this.params,
         type,
-        order_type: 'normal'
+        order_type: 'normal',
+        invoice_status : 'ALL'
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
@@ -2135,6 +2136,8 @@ export default {
           this.$message.error('无内容可导出或执行失败，请检查重试')
           return
         }
+      }).catch((err) => {
+        console.log(err)
       })
     },
     exportDataNormal() {

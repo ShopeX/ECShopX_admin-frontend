@@ -100,7 +100,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
     ]
   },
   {
-    label: '申请开票节点',
+    label: '开票节点',
     key: 'apply_node',
     type: 'radio',
     defaultValue: '2',

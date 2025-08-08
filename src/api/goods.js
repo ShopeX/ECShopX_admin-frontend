@@ -682,3 +682,18 @@ export function syncSpuToLocal(query) {
     params: query
   })
 }
+
+/**
+ * 同步商品池
+ * @param {Array} query.items 商品列表
+ * @param {string} query.items[0].outer_id 商品外部 ID
+ * @param {string} query.items[0].category_id 商品分类 ID
+ * @returns {Promise}
+ */
+export function syncGoodsPool(query) {
+  return fetch({
+    url: '/spulists/syncGoodsPool',
+    method: 'post',
+    params: query
+  })
+}

@@ -23,23 +23,22 @@
   width: 200px;
   height: 200px;
 }
-</style>
-<style lang="scss">
 .physical-cell-reason {
   @include text-overflow();
   width: 180px;
 }
+</style>
 
-:deep(.tb-add-dialog) {
+<style lang="scss">
+/* 全局样式 */
+.tb-add-dialog {
   .el-form-item__content {
-    margin-left: 0px !important;
+    margin-left: 0 !important;
   }
   .el-dialog__body .el-form {
-    margin-right: 0px !important;
+    margin-right: 0 !important;
   }
 }
-
-
 </style>
 <template>
   <div class="page-body">
@@ -60,6 +59,9 @@
               商品导入
             </el-dropdown-item>
             <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+            <el-dropdown-item command="physicalupload?file_type=physical_store_upload">
+              上下架导入
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -245,7 +247,31 @@
         >
           开售
         </el-button>
-        <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
+        <el-dropdown>
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            同步淘宝商品<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
+              <export-tip
+                @exportHandle="
+                  () => {
+                    showTbAddDialog()
+                  }
+                "
+              >
+                淘宝增量同步
+              </export-tip>
+            </el-dropdown-item>
+            <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
+              <export-tip
+                @exportHandle="() => handleImport('physicalupload?file_type=upload_tb_items')"
+              >
+                链接导入同步
+              </export-tip>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
 
         <el-dropdown>
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
@@ -502,7 +528,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -559,9 +585,9 @@
     />
 
     <SpDialog
+      ref="setCategoryDialogRef"
       v-model="setCategoryDialog"
       title="设置管理分类"
-      class="set-category-dialog"
       :width="'800px'"
       :form="setCategoryForm"
       :form-list="setCategoryFormList"
@@ -575,6 +601,7 @@ import { exportItemsData, exportItemsTagData, saveIsGifts, uploadWdtErpItems } f
 import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import { createTbAddForm } from './schema'
 
 export default {
   data() {
@@ -620,6 +647,8 @@ export default {
     // }
 
     return {
+      tbAddDialog: false,
+      tbAddForm: {},
       formLoading: false,
       commissionDialog: false,
       commissionForm: { goods_id: 0, commission_ratio: '' },
@@ -766,14 +795,20 @@ export default {
                 props: {
                   value: 'category_id',
                   label: 'category_name',
-                  multiple: true,
                   checkStrictly: true,
                   children: 'children'
                 }
               }}
               options={this.itemCategoryList}
             />
-          )
+          ),
+          validator(rule, value, callback) { 
+            if(value.length === 0){
+              callback(new Error('请选择管理分类'))
+            }else{
+              callback()
+            }
+          }
         }
       ],
       labelFormList: [
@@ -1215,12 +1250,12 @@ export default {
               )
             }
           },
-          {
-            name: '是否处方',
-            key: 'item_bn',
-            width: 150,
-            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
-          },
+          // {
+          //   name: '是否处方',
+          //   key: 'item_bn',
+          //   width: 150,
+          //   render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+          // },
           {
             name: 'sku编码',
             key: 'item_bn',
@@ -1252,28 +1287,28 @@ export default {
               </div>
             )
           },
-          {
-            name: '审核结果',
-            key: 'audit_status',
-            width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
-          },
-          {
-            name: '错误信息',
-            key: 'audit_reason',
-            width: 150,
-            render: (h, { row }) => (
-              <div>
-                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
-                    {this.handleAuditReason(row.medicine_data)}
-                    <i class='el-icon-info'></i>
-                  </div>
-                )}
-              </div>
-            )
-          },
+          // {
+          //   name: '审核结果',
+          //   key: 'audit_status',
+          //   width: 150,
+          //   render: (h, { row }) =>
+          //     row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          // },
+          // {
+          //   name: '错误信息',
+          //   key: 'audit_reason',
+          //   width: 150,
+          //   render: (h, { row }) => (
+          //     <div>
+          //       {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+          //         <div onClick={() => this.handleErrDetail(row.medicine_data)}>
+          //           {this.handleAuditReason(row.medicine_data)}
+          //           <i class='el-icon-info'></i>
+          //         </div>
+          //       )}
+          //     </div>
+          //   )
+          // },
           // {
           //   name: '供应商货号',
           //   key: 'supplier_goods_bn',
@@ -1377,14 +1412,16 @@ export default {
             name: '是否处方',
             key: 'item_bn',
             width: 150,
-            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否'),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '审核结果',
             key: 'audit_status',
             width: 150,
             render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : '',
+            visible: !!this.is_pharma_industry
           },
           {
             name: '错误信息',
@@ -1399,7 +1436,8 @@ export default {
                   </div>
                 )}
               </div>
-            )
+            ),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '排序编号',
@@ -1471,7 +1509,12 @@ export default {
         tabList.splice(1, 0, { name: '医药商品', value: 'is_medicine', activeName: 'third' })
       }
 
+      tabList.splice(1, 0, { name: '淘宝商品', value: 'taobao', activeName: 'taobao' })
+
       return tabList
+    },
+    tbAddFormList() {
+      return createTbAddForm(this)
     }
   },
   mounted() {
@@ -1663,6 +1706,13 @@ export default {
       } else {
         this.searchParams.is_medicine = ''
       }
+
+      //淘宝商品
+      if (this.activeName == 'taobao') {
+        this.searchParams.audit_status = ''
+      }
+      this.searchParams.is_taobao = this.activeName == 'taobao' ? 1 : ''
+
       this.$refs['finder'].refresh()
     },
     onSelectionChange(selection) {
@@ -2112,6 +2162,30 @@ export default {
       this.selectedSpu = []
     },
     onTbAddSubmit() {
+      this.tbAddDialog = false
+     
+    },
+    setCategory() {
+      this.setCategoryDialog = true
+    },
+    onSetCategorySubmit() {
+      if(this.setCategoryForm.category_id.length === 0){
+        this.$message.warning('请选择管理分类')
+        return
+      }
+      const _after = this.setCategoryForm.category_id.map((item) => {
+        return {
+          outer_id: this.selectedSpu[0].outer_id,
+          category_id: item
+        }
+      })
+      this.$api.goods.syncGoodsPool( _after ).then((res) => {
+        this.$message.success('操作成功')
+        this.$refs['finder'].refresh(true)
+      })
+      this.setCategoryDialog = false
+    },
+    syncSpuToLocal() {
       this.$api.goods
         .syncSpuToLocal({
           spu_ids: this.selectedSpu.map((item) => item.outer_id)
@@ -2121,18 +2195,7 @@ export default {
           this.tbAddDialog = false
           this.$refs['finder'].refresh(true)
         })
-    },
-    setCategory() {
-      this.setCategoryDialog = true
-    },
-    onSetCategorySubmit() {
-      this.setCategoryDialog = false
-    },
-    syncSpuToLocal() {
-      this.$api.goods.setSpuToLocal().then((res) => {
-        this.$message.success('操作成功')
-        this.$refs['finderDialog'].refresh()
-      })
+       
     }
   }
 }

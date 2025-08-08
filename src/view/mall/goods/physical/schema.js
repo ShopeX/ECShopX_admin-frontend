@@ -22,7 +22,11 @@ export const createTbAddForm = (vm) =>
                   type='primary'
                   plain
                   onClick={() => {
-                    vm.setCategory()
+                    if(vm.selectedSpu.length > 0){
+                      vm.setCategory()
+                    }else{
+                      vm.$message.warning('请先选择商品')
+                    }
                   }}
                 >
                   设置管理分类 
@@ -42,7 +46,7 @@ export const createTbAddForm = (vm) =>
                 url='/spulists'
                 setting={{
                   search: [
-                    { key: 'spu_code', name: '请输入SPU编号' },
+                    { key: 'spu_code', name: 'SPU编号' },
                     { key: 'goods_name', name: '商品名称' },
                     {
                       key: 'list_time',
@@ -57,9 +61,10 @@ export const createTbAddForm = (vm) =>
                   columns: [
                     { name: 'SPU编码', key: 'outer_id', width: 100 },
                     { name: '商品名称', key: 'title' },
-                    { name: '销售价', key: 'price' },
-                    { name: '库存', key: 'num', width: 60 },
-                    { name: '淘宝上架时间', key: 'list_time' }
+                    { name: '管理分类', key: 'category_name', width: 180 },
+                    { name: '销售价', key: 'price' ,width: 100},
+                    { name: '库存', key: 'num', width: 120 },
+                    { name: '淘宝上架时间', key: 'list_time', width: 180 }
                   ]
                 }}
                 attrs={{
@@ -76,7 +81,6 @@ export const createTbAddForm = (vm) =>
                   }
                 }}
                 onSelect={(row) => {
-                  console.log(row)
                   vm.selectedSpu = row
                 }}
               ></SpFinder>

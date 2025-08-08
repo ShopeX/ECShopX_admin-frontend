@@ -110,11 +110,16 @@ export default {
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: formData.loginType })
           this.$message.success('登录成功')
-          await this.$store.dispatch('user/fetchAccessMenus')
+          const accessMenus = await this.$store.dispatch('user/fetchAccessMenus')
+          console.log('accessMenus', accessMenus)
           await this.$store.dispatch('user/fetchAccountInfo')
           // this.$router.push('/')
           setTimeout(() => {
-            window.location.href = '/'
+            if (accessMenus.length == 1 && accessMenus[0].url == '/activelicense') {
+              window.location.href = '/activelicense'
+            } else {
+              window.location.href = '/'
+            }
             // this.$router.push('/')
           }, 700)
         }

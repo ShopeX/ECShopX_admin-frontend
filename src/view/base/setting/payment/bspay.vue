@@ -79,6 +79,14 @@ export default {
           width: '960px'
         },
         {
+          label: '绑卡序列号',
+          key: 'admin_token_no',
+          type: 'input',
+          inline: true,
+          width: '480px',
+          placeholder: '请输入绑卡序列号'
+        },
+        {
           label: '支付渠道设置',
           type: 'group'
         },
@@ -87,11 +95,12 @@ export default {
           key: 'pay_channel',
           type: 'checkbox',
           options: [
-              { name: '微信小程序支付', label: 'wx_lite' },
+            { name: '微信支付', label: 'wx_lite' },
             { name: '微信公众号支付', label: 'wx_pub' },
-            { name: '支付宝H5支付', label: 'alipay_wap' },
-            { name: '支付宝app支付', label: 'alipay' },
-            { name: '支付宝扫码', label: 'alipay_qr' }
+            { name: '微信扫码支付', label: 'wx_qr' },
+
+            { name: '支付宝支付', label: 'alipay_wap' },
+            { name: '支付宝扫码支付', label: 'alipay_qr' }
           ]
         },
         {
@@ -104,33 +113,26 @@ export default {
           type: 'radio',
           options: [
             { name: '标准费率线上', label: 'online' }
-            // { name: '标准费率线下', label: 'offline' }
           ]
         },
         {
-          label: '微信公众号线上费率',
+          label: '微信小程序支付费率',
+          key: 'wx_lite_online',
+          type: 'input',
+          inline: true,
+          width: '480px',
+          placeholder: '请输入费率，如：0.26'
+        },
+        {
+          label: '微信公众号支付费率',
           key: 'wx_pub_online',
           type: 'input',
           inline: true,
           width: '480px',
           placeholder: '请输入费率，如：0.26'
         },
-        // {
-        //   label: '微信公众号支付（线下）',
-        //   key: 'wx_pub_offline',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
         {
-          label: '微信小程序支付（线上）',
-          key: 'wx_lite_online',
-          type: 'input',
-          inline: true,
-          width: '480px'
-        },
-        {
-          label: '微信PC扫码线上费率',
+          label: '微信扫码支付费率',
           key: 'wx_qr_online',
           type: 'input',
           inline: true,
@@ -157,74 +159,24 @@ export default {
           type: 'radio',
           options: [
             { name: '标准费率线上', label: 'online' }
-            // { name: '标准费率线下', label: 'offline' }
           ]
         },
         {
-          label: '支付宝PC扫码线上费率',
+          label: '支付宝支付费率',
+          key: 'alipay_call',
+          type: 'input',
+          inline: true,
+          width: '480px',
+          placeholder: '请输入费率，如：0.26'
+        },
+        {
+          label: '支付宝扫码支付费率',
           key: 'alipay_qr_online',
           type: 'input',
           inline: true,
           width: '480px',
           placeholder: '请输入费率，如：0.26'
         },
-        // {
-        //   label: '支付宝扫码支付（主扫-线下）',
-        //   key: 'alipay_qr_offline',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        // {
-        //   label: '支付宝扫码支付（被扫-线下）',
-        //   key: 'alipay_scan',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        // {
-        //   label: '支付宝小程序支付（线上）',
-        //   key: 'alipay_lite_online',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        // {
-        //   label: '支付宝小程序支付（线下）',
-        //   key: 'alipay_lite_offline',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        {
-          label: '支付宝唤起支付（线上）',
-          key: 'alipay_call',
-          type: 'input',
-          inline: true,
-          width: '480px'
-        },
-        {
-          label: '绑卡序列号',
-          key: 'admin_token_no',
-          type: 'input',
-          inline: true,
-          width: '480px',
-          placeholder: '请输入绑卡序列号'
-        },
-        // {
-        //   label: '支付宝生活号（线下）',
-        //   key: 'ali_pub_off_b2b',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        // {
-        //   label: '支付宝生活号（线上）',
-        //   key: 'ali_pub_online_b2b',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
         {
           label: '是否启用',
           key: 'is_open',

@@ -162,12 +162,20 @@ const userStore = {
     async fetchAccessMenus({ commit }) {
       const accessMenus = await api.auth.getPermission()
       commit('setAccessMenus', { accessMenus })
+      return accessMenus
     },
     async fetchAccountInfo({ commit }) {
       const accountInfo = await api.login.getAdminInfo()
       commit('setAccountInfo', { accountInfo })
     },
-
+    // 删除token
+    async unsetToken({ commit }, token) {
+      commit('setToken', '')
+      commit('setTokenExp', '')
+      commit('setUserName', '')
+      commit('setAuthorizer', '')
+      commit('setLicenseAuthorize', '')
+    },
     setIsFrame({ commit }, isInFrame) {
       commit('setIsFrame', isInFrame)
     },
@@ -190,14 +198,7 @@ const userStore = {
       commit('setAuthorizer', user.is_authorizer)
       commit('setLicenseAuthorize', user.license_authorize)
     },
-    // 删除token
-    unsetToken({ commit }, token) {
-      commit('setToken', '')
-      commit('setTokenExp', '')
-      commit('setUserName', '')
-      commit('setAuthorizer', '')
-      commit('setLicenseAuthorize', '')
-    },
+
     setUser({ commit }, userInfo) {
       commit('setNickName', userInfo.username)
       commit('setAvatar', userInfo.head_portrait)

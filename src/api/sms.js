@@ -28,6 +28,12 @@ export function setSmsConfig(params = {}) {
 
 // 修改阿里短信状态
 export function setAlisms(params = {}) {
+  const { status } = params
+  if (status) {
+    params.status = 'true'
+  } else {
+    params.status = 'false'
+  }
   return fetch({
     url: `/aliyunsms/status`,
     method: 'post',

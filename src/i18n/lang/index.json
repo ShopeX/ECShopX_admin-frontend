@@ -39233,5 +39233,95 @@
 		"zh-cn": "1分账提现",
 		"en": "",
 		"zh-tw": ""
+	},
+	"4l0o5q9": {
+		"zh-cn": "微信公众号线上费率",
+		"en": "Wechat official account online rate",
+		"zh-tw": "微信公衆號線上費率"
+	},
+	"di3iq3a": {
+		"zh-cn": "微信PC扫码线上费率",
+		"en": "Wechat PC scanning code online rate",
+		"zh-tw": "微信PC掃碼線上費率"
+	},
+	"sexw3ab": {
+		"zh-cn": "支付宝PC扫码线上费率",
+		"en": "Alipay PC scanning code online rate",
+		"zh-tw": "支付寶PC掃碼線上費率"
+	},
+	"9jmlsv5": {
+		"zh-cn": "绑卡序列号",
+		"en": "Card binding serial number",
+		"zh-tw": "綁卡序列號"
+	},
+	"zged4a8": {
+		"zh-cn": "请输入绑卡序列号",
+		"en": "Please enter the card binding serial number",
+		"zh-tw": "請輸入綁卡序列號"
+	},
+	"5arcj36": {
+		"zh-cn": "微信费率设置",
+		"en": "Wechat rate Settings",
+		"zh-tw": "微信費率設置"
+	},
+	"ahxgwm6": {
+		"zh-cn": "微信支付费率",
+		"en": "Wechat Pay rate",
+		"zh-tw": "微信支付費率"
+	},
+	"7syxkg9": {
+		"zh-cn": "微信公众号支付费率",
+		"en": "Wechat official account payment rate",
+		"zh-tw": "微信公衆號支付費率"
+	},
+	"ve5pi88": {
+		"zh-cn": "微信扫码支付费率",
+		"en": "Wechat QR code payment rate",
+		"zh-tw": "微信掃碼支付費率"
+	},
+	"rit47m7": {
+		"zh-cn": "支付宝费率设置",
+		"en": "Alipay rate Settings",
+		"zh-tw": "支付寶費率設置"
+	},
+	"mbmzu37": {
+		"zh-cn": "支付宝支付费率",
+		"en": "Alipay payment rate",
+		"zh-tw": "支付寶支付費率"
+	},
+	"yzg9299": {
+		"zh-cn": "支付宝扫码支付费率",
+		"en": "Alipay QR code payment rate",
+		"zh-tw": "支付寶掃碼支付費率"
+	},
+	"vmfo5z9": {
+		"zh-cn": "微信小程序支付费率",
+		"en": "Wechat Mini Program payment rate",
+		"zh-tw": "微信小程序支付費率"
+	},
+	"liycqg5": {
+		"zh-cn": "登录成功1",
+		"en": "Login successful",
+		"zh-tw": "登錄成功1"
+	},
+	"ava74m4": {
+		"zh-cn": "分类编号",
+		"en": "Classification number",
+		"zh-tw": "分類編號"
+	},
+	"tgh7585": {
+		"zh-cn": "微信昵称:",
+		"en": "Wechat nickname",
+		"zh-tw": "微信暱稱:"
+	},
+	"l4fr0p7": {
+		"zh-cn": "请输入微信昵称",
+		"en": "Please enter your wechat nickname",
+		"zh-tw": "請輸入微信暱稱"
+	},
+	"vdheh87": {
+		"zh-cn": "请选择页面类型",
+		"en": "Please select the page type",
+		"zh-tw": "請選擇頁面類型"
 	}
 }

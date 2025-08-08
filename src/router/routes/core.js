@@ -27,6 +27,7 @@ const coreRoutes = [
     meta: {
       title: 'Authentication'
     },
+    
     name: 'authentication',
     path: '/',
     children: [
@@ -99,6 +100,10 @@ const coreRoutes = [
     },
     path: '/wxapp/manage/decorate',
     component: () => import('@/view/decorate/index')
+  },
+  {
+    path: '/activelicense',
+    component: () => import('@/views/core/account-activation.vue')
   }
 ]
 

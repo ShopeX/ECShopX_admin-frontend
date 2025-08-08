@@ -27,7 +27,7 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :load="load"
     >
-      <el-table-column label="分类名称" width="480">
+      <el-table-column label="分类名称" width="180">
         <template slot-scope="scope">
           <span
             v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
@@ -60,18 +60,7 @@
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="分类图片" width="200">
-          <template slot-scope="scope">
-            <div class="img-container">
-              <SpImage
-                v-if="scope.row.image_url"
-                :src="scope.row.image_url"
-                :width="48"
-                :height="48"
-              />
-            </div>
-          </template>
-        </el-table-column>
+
         <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
         <el-table-column label="操作">
           <template slot-scope="scope">

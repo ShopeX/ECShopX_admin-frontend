@@ -64,7 +64,7 @@ function createRequestClient() {
         delete config.data
       }
       if (config.method === 'post') {
-        const { isUploadFile } = config.data
+        const { isUploadFile } = config.data || {}
         if (isUploadFile) {
           let formParams = new FormData()
           for (var key in config.data) {

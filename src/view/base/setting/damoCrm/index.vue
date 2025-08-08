@@ -68,18 +68,18 @@ export default {
   methods: {
     async getConfig() {
       this.loading = true
-      const resp = await getDmcrmSetting()
+      // const resp = await getDmcrmSetting()
       // if (resp.data.data.is_open) {
       //   this.form.app_key = resp.data.data.app_key
       //   this.form.app_secret = resp.data.data.app_secret
       //   this.form.ent_sign = resp.data.data.ent_sign
       //   this.form.is_open = true
       // }
-      this.form.app_key = resp.data.data.app_key
-      this.form.app_secret = resp.data.data.app_secret
-      this.form.ent_sign = resp.data.data.ent_sign
-      this.form.is_open = resp.data.data.is_open
-      this.loading = false
+      // this.form.app_key = resp.data.data.app_key
+      // this.form.app_secret = resp.data.data.app_secret
+      // this.form.ent_sign = resp.data.data.ent_sign
+      // this.form.is_open = resp.data.data.is_open
+      // this.loading = false
     },
     onSubmit() {
       this.$refs.form.validate((valid) => {

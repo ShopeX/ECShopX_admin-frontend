@@ -8,11 +8,21 @@ function install(Vue) {
       qs: false,
       globalHooks: {
         beforeQuery: (p) => {
+          const lang = window.localStorage.getItem('lang')
+          const langMap = {
+            zhcn: 'zh-CN',
+            en: 'en-CN',
+            zhtw: 'zh-TW'
+          }
+       
           let params = {
             ...p,
             pageSize: p.pageSize,
             page: p.pageNum,
             finderId: 100
+          }
+          if (lang) {
+            params.country_code = langMap[lang]
           }
           // delete params.pageSize
           delete params.pageNum

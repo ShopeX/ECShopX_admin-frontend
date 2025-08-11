@@ -286,7 +286,7 @@
             {{ getOrderCategoryName(scope.row.order_holder) }}
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="total_fee"
           width="120"
           label="订单金额（¥）"
@@ -296,7 +296,7 @@
           <template slot-scope="scope">
             {{ (scope.row.total_fee / 100).toFixed(2) }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="point_fee"
           width="120"

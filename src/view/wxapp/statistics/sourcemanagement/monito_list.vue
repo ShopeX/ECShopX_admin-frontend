@@ -74,7 +74,7 @@
           <el-form-item prop="link_type" label="页面" :label-width="formLabelWidth">
             <el-radio-group v-model="monitorForm.link_type" class="linktype-radio">
               <el-radio :label="0"> 选择路径 </el-radio>
-              <el-radio :label="1" disabled>自定义路径</el-radio>
+              <!-- <el-radio :label="1" disabled>自定义路径</el-radio> -->
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="monitorForm.link_type == 0" :label-width="formLabelWidth">
@@ -252,7 +252,7 @@ export default {
           info = { url: 'pages/item/espier-detail?id=' + id, page_name: '商品详情页' }
           break
         case 'custom_page':
-          info = { url: 'pages/custom/custom-page?id=' + id, page_name: '商品详情页' }
+          info = { url: 'pages/custom/custom-page?id=' + id, page_name: '自定义页面' }
           break
         case 'coupon':
           info = { url: 'subpages/marketing/coupon-detail?c=' + id, page_name: '券详情' }
@@ -338,9 +338,9 @@ export default {
     async handleSelectPage() {
       const tabs = [
         { label: '商品详情', name: 'goods' },
-        // { label: '自定义页面', name: 'custom_page' },
+        { label: '自定义页面', name: 'custom_page' },
         { label: '券详情', name: 'coupon' },
-        // { label: '页面', name: 'link' },
+        { label: '页面', name: 'link' },
         // { label: '秒杀', name: 'seckill' },
         // { label: '活动集合页', name: 'activity_collection' },
         // { label: '销售分类', name: 'sale_category' },
@@ -352,6 +352,7 @@ export default {
         data: this.pagesData.map((el) => el.rel_id),
         guide: 'share_page'
       })
+      console.log(res)
       this.pagesData = [{
         ...res,
         page_type: tabs?.find((el) => el.name == res.linkPage)?.label,

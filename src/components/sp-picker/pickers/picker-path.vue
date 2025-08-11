@@ -16,8 +16,14 @@
         <el-tab-pane label="商品详情" name="goods">
           <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="优惠券详情" name="coupon">
+        <el-tab-pane label="自定义页面" name="custom_page">
+          <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="券详情" name="coupon">
           <PickerCoupon v-if="tabValue == 'coupon'" ref="coupon" :value="value" />
+        </el-tab-pane>
+        <el-tab-pane label="页面" name="link">
+          <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
         </el-tab-pane>
       </template>
       <template v-else>

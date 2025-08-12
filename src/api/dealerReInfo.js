@@ -46,7 +46,7 @@ export function createPerson(query) {
   return fetch({
     url: '/adapay/member/create',
     method: 'post',
-    data: query
+    params: query
   })
 }
 // 更新个人用户对象
@@ -54,7 +54,7 @@ export function updatePerson(id, query) {
   return fetch({
     url: '/adapay/member/update/' + id,
     method: 'post',
-    data: query
+    params: query
   })
 }
 

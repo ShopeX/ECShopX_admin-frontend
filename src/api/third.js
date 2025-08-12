@@ -72,7 +72,7 @@ export function setJstErpSetting(query) {
   return fetch({
     url: '/third/jushuitan/setting',
     method: 'post',
-    data: query
+    params: query
   })
 }
 

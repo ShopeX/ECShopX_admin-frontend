@@ -13,13 +13,21 @@ export default (vm) => {
     return YY + MM + DD + ' ' + hh + mm + ss
   }
   const formatStatus = (val) => {
-    if (val == 'pending') {
-      return '提现处理中'
-    } else if (val == 'succeeded') {
-      return '提现成功'
-    } else if (val == 'failed') {
-      return '提现失败'
+    // status: 0=审核中 1=审核通过 2=已拒绝 3=处理中 4=处理成功 5=处理失败
+    if (val === '0') {
+      return '审核中'
+    } else if (val === '1') {
+      return '审核通过'
+    } else if (val === '2') {
+      return '已拒绝'
+    } else if (val === '3') {
+      return '处理中'
+    } else if (val === '4') {
+      return '处理成功'
+    } else if (val === '5') {
+      return '处理失败'
     }
+  
   }
   const formatMoney = (money) => {
     return (money / 100).toFixed(2).toLocaleString()

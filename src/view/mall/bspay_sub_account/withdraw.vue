@@ -13,6 +13,9 @@
                   <span style="margin-left: 30px"
                     >审核中提现余额：￥{{ (pending_balance / 100) | formatNumMoney }}</span
                   >
+                  <span style="margin-left: 30px; color: #0079fe; font-weight: bold;"
+                    >实际可提现：￥{{ Math.max(0, (available_balance - pending_balance) / 100) | formatNumMoney }}</span
+                  >
                 </div>
                 <div>
                   <SpForm
@@ -122,7 +125,8 @@
             placeholder: '请输入',
             append: '元',
             component: ({ key }, value) => {
-              const maxAmount = this.available_balance / 100
+              // 可提现金额 = 可申请提现余额 - 审核中提现余额
+              const maxAmount = Math.max(0, (this.available_balance - this.pending_balance) / 100)
               return (
                 <div style="display: flex; align-items: center; white-space: nowrap;">
                   <el-input
@@ -133,7 +137,7 @@
                     min="0"
                     max={maxAmount}
                     onInput={(val) => {
-                      // 限制输入金额不能超过可申请提现余额
+                      // 限制输入金额不能超过实际可提现金额
                       const numVal = parseFloat(val) || 0
                       if (numVal > maxAmount) {
                         value[key] = maxAmount.toFixed(2)
@@ -166,7 +170,7 @@
             ]
           },
           {
-            label: '发票',
+            label: ' 发票',
             key: 'invoice_url',
             type: 'input',
             required: true,
@@ -240,7 +244,8 @@
         }
       },
       allHandle() {
-        const maxAmount = this.available_balance / 100
+        // 可提现金额 = 可申请提现余额 - 审核中提现余额
+        const maxAmount = Math.max(0, (this.available_balance - this.pending_balance) / 100)
         this.form.cash_amt = maxAmount.toFixed(2)
       },
       beforeSearch(params) {

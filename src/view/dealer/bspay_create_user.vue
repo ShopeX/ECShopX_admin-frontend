@@ -635,6 +635,7 @@ export default {
               this.$message.error('失败')
             }
           } else {
+            console.log('this.form:', this.form)
             // 创建
             try {
               const { status } = await this.$api.bspay.createUserEnt(this.form)

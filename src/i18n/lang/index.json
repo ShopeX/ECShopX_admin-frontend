@@ -39343,5 +39343,50 @@
 		"zh-cn": " 审核中提现余额：¥ ",
 		"en": "Balance under review for withdrawal: ¥",
 		"zh-tw": "審覈中提現餘額：¥"
+	},
+	"k1763x7": {
+		"zh-cn": "实际可提现：￥",
+		"en": "Actual cash available: ￥",
+		"zh-tw": "實際可提現：￥"
+	},
+	"fd2q514": {
+		"zh-cn": "申请商户",
+		"en": "Apply for merchant",
+		"zh-tw": "申請商戶"
+	},
+	"b5ky304": {
+		"zh-cn": "商户id",
+		"en": "Merchant id",
+		"zh-tw": "商戶id"
+	},
+	"kz6ms95": {
+		"zh-cn": "申请人账号",
+		"en": "Applicant's account number",
+		"zh-tw": "申請人賬號"
+	},
+	"dllgxp4": {
+		"zh-cn": "查看发票",
+		"en": "View the invoice",
+		"zh-tw": "查看發票"
+	},
+	"bzq42g4": {
+		"zh-cn": "审核原因",
+		"en": "Review reasons",
+		"zh-tw": "審覈原因"
+	},
+	"glh41g5": {
+		"zh-cn": "审核人账号",
+		"en": "Reviewer's account",
+		"zh-tw": "審覈人賬號"
+	},
+	"fd4l7r4": {
+		"zh-cn": "申请店铺",
+		"en": "Apply for a store",
+		"zh-tw": "申請店鋪"
+	},
+	"fkyf3": {
+		"zh-cn": " 发票",
+		"en": "Invoice",
+		"zh-tw": "發票"
 	}
 }

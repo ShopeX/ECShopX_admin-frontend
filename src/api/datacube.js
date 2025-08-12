@@ -197,7 +197,7 @@ export function onSumbitsData(query) {
   return fetch({
     url: '/hfpay/withdraw',
     method: 'post',
-    data: query
+    params: query
   })
 }
 

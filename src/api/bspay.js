@@ -14,7 +14,7 @@ export function createUserEnt(query) {
   return fetch({
     url: '/bspay/user_ent/create',
     method: 'post',
-    data: query
+    params: query
   })
 }
 // 更新企业用户(未开户)
@@ -46,7 +46,7 @@ export function createUserIndv(query) {
   return fetch({
     url: '/bspay/user_indv/create',
     method: 'post',
-    data: query
+    params: query
   })
 }
 // 更新个人用户对象(未开户)
@@ -54,7 +54,7 @@ export function modifyUserIndv(query) {
   return fetch({
     url: '/bspay/user_indv/modify',
     method: 'post',
-    data: query
+    params: query
   })
 }
 // 更新个人用户对象(已开户)
@@ -62,7 +62,7 @@ export function updateUserIndv(query) {
   return fetch({
     url: '/bspay/user_indv/update',
     method: 'post',
-    data: query
+    params: query
   })
 }
 // 查看  账户类型（个人）

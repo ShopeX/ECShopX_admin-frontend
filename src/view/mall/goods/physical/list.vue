@@ -39,6 +39,11 @@
     margin-right: 0 !important;
   }
 }
+.set-category-dialog {
+  .el-cascader {
+    width: 100%;
+  }
+}
 </style>
 <template>
   <div class="page-body">
@@ -581,12 +586,13 @@
       :width="'1200px'"
       :form="tbAddForm"
       :form-list="tbAddFormList"
-      @onSubmit="onTbAddSubmit"
+      :is-show-footer="false"
     />
 
     <SpDialog
       ref="setCategoryDialogRef"
       v-model="setCategoryDialog"
+      class="set-category-dialog"
       title="设置管理分类"
       :width="'800px'"
       :form="setCategoryForm"
@@ -795,7 +801,7 @@ export default {
                 props: {
                   value: 'category_id',
                   label: 'category_name',
-                  checkStrictly: true,
+                  checkStrictly: false,
                   children: 'children'
                 }
               }}
@@ -2162,6 +2168,23 @@ export default {
       this.selectedSpu = []
     },
     onTbAddSubmit() {
+      if(this.selectedSpu.length === 0){
+        this.$message.warning('请选择需要同步的商品')
+        return
+      }
+      console.log(this.selectedSpu)
+      const _error = this.selectedSpu.filter((item) => !item.category_name)
+      if(_error.length > 0){
+        const _title = _error.map((item) => item?.spu_code).join(',')
+        this.$confirm(`以下商品未关联管理分类,无法进行同步:${_title}`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          showCancelButton: false
+        }).then(() => {
+          this.tbAddDialog = false
+        })
+        return
+      }
       this.tbAddDialog = false
       this.$api.goods
         .syncSpuToLocal({

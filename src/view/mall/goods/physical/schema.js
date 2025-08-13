@@ -31,19 +31,12 @@ export const createTbAddForm = (vm) =>
                 >
                   设置管理分类
                 </el-button>
-                <el-button
-                  type='primary'
-                  plain
-                  onClick={() => {
-                    vm.syncGoodsPool()
-                  }}
-                >
-                  同步商品池
-                </el-button>
               </div>
               <SpFinder
                 ref='finderDialog'
                 url='/spulists'
+                reserveSelection={true}
+                rowKey='outer_id'
                 setting={{
                   search: [
                     { key: 'spu_code', name: 'SPU编号' },
@@ -99,6 +92,17 @@ export const createTbAddForm = (vm) =>
                   vm.selectedSpu = row
                 }}
               ></SpFinder>
+              <div style={{ display:'flex', justifyContent:'flex-end' }}>
+                <el-button
+                  type='primary'
+                  plain
+                  onClick={() => {
+                    vm.onTbAddSubmit()
+                  }}
+                >
+                  同步商品池
+                </el-button>
+              </div>
             </div>
           )
         }

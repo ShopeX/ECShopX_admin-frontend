@@ -1,9 +1,10 @@
 import { AuthPageLayout } from '@/layout'
-import { BasicLayout } from '@/layout/basic'
+import { BasicLayout ,FullLayout} from '@/layout/basic'
+
 
 /** 全局404页面 */
 const fallbackNotFoundRoute = {
-  component: BasicLayout,
+  component: FullLayout,
   meta: {
     hideInBreadcrumb: true,
     hideInMenu: true,
@@ -11,11 +12,11 @@ const fallbackNotFoundRoute = {
     title: '404'
   },
   // name: 'FallbackNotFound',
-  path: '/',
+  path: '/not-found',
   children: [
     {
       name: 'FallbackNotFound',
-      path: 'not-found',
+      path: '',
       component: () => import('@/views/core/fallback/not-found.vue')
     }
   ]
@@ -23,21 +24,41 @@ const fallbackNotFoundRoute = {
 
 const coreRoutes = [
   {
-    component: AuthPageLayout,
+    component: BasicLayout,
     meta: {
       title: 'Authentication'
     },
     name: 'authentication',
+    redirect: '/dashboard', 
     path: '/',
     children: [
       {
-        name: 'Login',
-        path: 'login',
+        name: 'dashboard',
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index.vue')
+      }
+    ]
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: AuthPageLayout,
+    children: [
+      {
+        name: '/login',
+        path: '',
         component: () => import('@/views/core/authentication/login.vue')
-      },
+      }
+    ]
+  },
+  {
+    name: 'shuyunLogin',
+    path: '/shuyunLogin',
+    component: AuthPageLayout,
+    children: [
       {
         name: 'shuyunLogin',
-        path: 'shuyunLogin',
+        path: '',
         component: () => import('@/views/core/authentication/shuyun-login.vue')
       }
     ]

@@ -110,6 +110,14 @@ export default {
       this.mainMenus.find(item => item.alias_name === mainRoute?.meta?.aliasName)?.children || []
   },
   methods: {
+    toNotFound() {
+      const basePath = getBasePath()
+      if (!this.$route.path.includes('not-found')) {
+        this.$router.push({ path: basePath ? `/${basePath}/not-found` : '/not-found' })?.catch(err => {
+          console.log('err', err)
+        })
+      }
+    },
     computedMenuIcon(item) {
       const allRoutes = this.$router.getRoutes()
       const route = allRoutes.find(route => route.meta?.aliasName === item.alias_name)
@@ -148,8 +156,7 @@ export default {
       if (route) {
         this.$router.push({ path: route.path })
       } else {
-        const basePath = getBasePath()
-        this.$router.push({ path: basePath ? `/${basePath}/not-found` : '/not-found' })
+        this.toNotFound()
       }
     },
     handleSubMenuClick(item) {
@@ -163,8 +170,7 @@ export default {
         }
         this.$router.push({ path: route.path })
       } else {
-        const basePath = getBasePath()
-        this.$router.push({ path: basePath ? `/${basePath}/not-found` : '/not-found' })
+        this.toNotFound()
       }
     }
   }

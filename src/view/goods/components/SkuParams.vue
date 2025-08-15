@@ -411,7 +411,9 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    this.isFirstRender = true
+  },
   methods: {
     renderRequire(h, { column }) {
       return h(
@@ -591,8 +593,11 @@ export default {
           })
         }
       })
+      if(this.isFirstRender) {
+        _specItems = _specItems?.filter(el => !!el.item_id)
+      }
       // 与前一次编辑的缓存数据合并
-      this.value.specItems = _specItems?.filter(el => !!el.item_id).map((item) => {
+      this.value.specItems = _specItems.map((item) => {
         const fd = this.value.specItems.find(({ sku_id }) => sku_id == item.sku_id)
         if (fd) {
           return {
@@ -603,6 +608,10 @@ export default {
           return item
         }
       })
+
+      if(this.isFirstRender) {
+        this.isFirstRender = false
+      }
     },
     // 获取规格名称
     getSpecName(keys) {

@@ -35,6 +35,7 @@
           <span>{{ scope.row.category_name }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="分类编号" prop="category_id" width="120" />
       <el-table-column prop="sort" label="分类排序" width="140">
         <template slot-scope="scope">
           <div>{{ scope.row.sort }}</div>

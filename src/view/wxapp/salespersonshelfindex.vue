@@ -1,21 +1,10 @@
 <template>
   <div>
-    <div v-if="$route.path.indexOf('_detail') === -1">
-      <el-dialog
-        :visible.sync="template_dialog"
-        width="80%"
-        title="编辑页面"
-        fullscreen
-        lock-scroll
-      >
-        <shopDecoration
-          :id="pageForm.id"
-          usage="page"
-          :template_name="template_name"
-        />
-      </el-dialog>
+    <div class="px-5">
+      <SpIphone>
+        <SpDecorate ref="decorateRef" v-model="content" scene="1009" title="导购装修" @change="onSaveTemplate" />
+      </SpIphone>
     </div>
-    <router-view />
   </div>
 </template>
 <script>
@@ -37,7 +26,9 @@ export default {
       params: {},
       pageForm: {
         id: ''
-      }
+      },
+      content: [],
+      templteid: 0
     }
   },
   computed: {
@@ -47,28 +38,31 @@ export default {
     this.fetchPageData()
   },
   methods: {
-    fetchPageData () {
+    async fetchPageData () {
       this.loading = true
       Object.assign(this.params, { template_name: this.template_name })
       getCustomSalesperson(this.params).then((response) => {
-        if (response.data.data.id) {
-          this.pageForm.id = response.data.data.id
-          this.template_dialog = true
-        }
+        this.templteid = response.data.data.id
+        this.onGetTemp(this.templteid)
         this.loading = false
       })
     },
-    //上传卡封面
-    handleImgChange () {
-      this.imgDialog = true
-      this.isGetImage = true
+    async onGetTemp (id) {
+      const resTemplate = await this.$api.wxa.getParamByTempName({
+        template_name: 'yykweishop',
+        page_name: `custom_${id}`,
+        version: 'v1.0.1'
+      })
+      console.log(resTemplate?.config)
+      this.content = resTemplate?.config
     },
-    pickImg (data) {
-      this.pageForm.page_share_imageUrl = data.url
-      this.imgDialog = false
-    },
-    closeImgDialog () {
-      this.imgDialog = false
+    async onSaveTemplate (content) {
+      await this.$api.wxa.savePageParams({
+        template_name: 'yykweishop',
+        page_name: `custom_${this.templteid}`,
+        version: 'v1.0.1',
+        config: JSON.stringify(content)
+      })
     }
   }
 }

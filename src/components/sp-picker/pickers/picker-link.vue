@@ -84,6 +84,13 @@ export default {
         { id: 'purchase', title: '内购' },
         { id: 'pointShop', title: '积分商城' },
         { id: 'registActivity', title: '报名活动' },
+        { id: 'group', title: '我的拼团' },
+        { id: 'coupon_list', title: '优惠券' },
+        { id: 'my_collect', title: '我的收藏' },
+        { id: 'address', title: '地址管理' },
+        { id: 'groups_list', title: '限时团购' },
+        { id: 'hottopic', title: '种草列表' },
+        { id: 'zitiOrder', title: '自提订单' },
         { id: 'customerService', title: '客服' },
         { id: 'homeSearch', title: '搜索' },
       ],
@@ -92,6 +99,22 @@ export default {
   },
   created() {},
   mounted() {
+    if (!this.VERSION_PLATFORM && !this.VERSION_B2C) { // 平台版&b2c隐藏助力活动和助力订单
+      this.list.push(
+        { id: 'boost_activity', title: '助力活动' },
+        { id: 'boost_order', title: '助力订单' },
+      )
+    }
+    if (!this.VERSION_STANDARD) {
+      this.list.push(
+        { id: 'tenants', title: '商家入驻' },
+      )
+    }
+    if (!this.VERSION_IN_PURCHASE) {
+      this.list.push(
+        { id: 'community_group_enable', title: '社区团购（H5不支持）' },
+      )
+    }
     if (this.value.data) {
       const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
       const { finderTable } = this.$refs.finder.$refs

@@ -1,53 +1,46 @@
 import { pickBy, isObject } from '@/utils'
+import AttrItem from './attr-item'
+import AttrHotSetting from './attr-hotsetting'
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const scene = urlParams.get('scene') || '1001';
 
 export default {
   name: 'page',
   setting: [
     {
-      label: '导航背景',
-      key: 'navigateStyle',
-      component: 'radio',
-      options: [
-        { name: '颜色背景', label: '1' },
-        { name: '图片背景', label: '2' }
-      ],
-      value: '1'
+      label: '沉浸式页头',
+      key: 'isImmersive',
+      component: 'switch',
+      value: false
     },
     {
-      label: '',
-      key: 'navigateBackgroundColor',
-      component: 'color',
-      value: '#333',
-      isShow: function () {
-        return this.value.navigateStyle == '1'
-      }
-    },
-    {
-      label: '',
-      key: 'navigateBackgroundImage',
+      label: '页头背景',
+      key: 'newNavigateStyle',
       component: function (h, { key }) {
-        return <SpImagePicker v-model={this.value[key]} size='small' />
+        return <AttrItem v-model={this.value[key]}/>
       },
-      value: '',
-      isShow: function () {
-        return this.value.navigateStyle == '2'
+      value: {
+        color: '#fff',
+        image: ''
       }
     },
     {
-      label: '页面标题',
+      label: '页头标题区',
       key: 'titleStyle',
-      component: 'radio',
+      component: 'radiobutton',
       options: [
-        { name: '文字', label: '1' },
+        { name: '名称', label: '1' },
         { name: '图片', label: '2' }
       ],
-      value: '1'
+      value: '1',
     },
     {
       label: '',
       key: 'titleColor',
       component: 'color',
-      value: '#fff',
+      value: '#000',
       isShow: function () {
         return this.value.titleStyle == '1'
       },
@@ -62,48 +55,54 @@ export default {
       value: '',
       isShow: function () {
         return this.value.titleStyle == '2'
-      }
+      },
+      tip: '建议尺寸：340 * 70 像素'
     },
     {
-      label: '标题位置',
-      key: 'titlePosition',
-      component: 'radio',
-      options: [
-        { name: '居左', label: 'left' },
-        { name: '居中', label: 'center' }
-      ],
-      value: 'center'
+      label: '页头功能区',
+      key: 'pTitleHotSetting',
+      component: function (h, { key }) {
+        return <AttrHotSetting v-model={this.value[key]} />
+      },
+      value: { imgUrl: '', data: [] },
+      tip: scene != '1001' ? '建议尺寸：138 * 65 像素' : '建议尺寸：174 * 64 像素',
+      // isShow: function () {
+      // return scene == '1001'
+      // }
     },
     {
       label: '页面背景',
-      key: 'pageBackgroundStyle',
+      key: 'newPageBackgroundStyle',
       component: 'radio',
-      options: [
-        { name: '颜色背景', label: '1' },
-        { name: '图片背景', label: '2' }
-      ],
-      value: '1'
-    },
-    {
-      label: '',
-      key: 'pageBackgroundColor',
-      component: 'color',
-      value: '#f5f5f5',
-      isShow: function () {
-        return this.value.pageBackgroundStyle == '1'
-      }
-    },
-    {
-      label: '',
-      key: 'pageBackgroundImage',
       component: function (h, { key }) {
-        return <SpImagePicker v-model={this.value[key]} size='small' />
+        return <AttrItem v-model={this.value[key]}/>
       },
-      value: '',
-      isShow: function () {
-        return this.value.pageBackgroundStyle == '2'
-      }
-    }
+      value: {
+        color: '#f5f5f5',
+        image: ''
+      },
+      tip: '背景图宽度为100%，高度自适应'
+    },
+    // {
+    //   label: '',
+    //   key: 'pageBackgroundColor',
+    //   component: 'color',
+    //   value: '#f5f5f5',
+    //   isShow: function () {
+    //     return this.value.pageBackgroundStyle == '1'
+    //   }
+    // },
+    // {
+    //   label: '',
+    //   key: 'pageBackgroundImage',
+    //   component: function (h, { key }) {
+    //     return <SpImagePicker v-model={this.value[key]} size='small' />
+    //   },
+    //   value: '',
+    //   isShow: function () {
+    //     return this.value.pageBackgroundStyle == '2'
+    //   }
+    // },
   ],
   transformIn: (v) => {
     const { name, base } = v
@@ -117,36 +116,48 @@ export default {
       titlePosition,
       pageBackgroundStyle,
       pageBackgroundColor,
-      pageBackgroundImage
+      pageBackgroundImage,
+      pTitleHotSetting = { imgUrl: '', data: [] },
+      isImmersive
     } = base || {}
     if (isObject(navigateBackgroundImage)) {
-      const { url } = navigateBackgroundImage
+      const { url } = newNavigateStyle?.image
       navigateBackgroundImage = url
     }
     if (isObject(titleBackgroundImage)) {
       const { url } = titleBackgroundImage
       titleBackgroundImage = url
-    }else if(!titleBackgroundImage){
+    } else if(!titleBackgroundImage){
       titleBackgroundImage = ''
     }
 
     if (isObject(pageBackgroundImage)) {
-      const { url } = pageBackgroundImage
+      const { url } = newPageBackgroundStyle?.image
       pageBackgroundImage = url
+    }
+
+    const newNavigateStyle = {
+      color: navigateBackgroundColor,
+      image: navigateBackgroundImage
+    }
+    const newPageBackgroundStyle = {
+      color: pageBackgroundColor,
+      image: pageBackgroundImage
     }
     return {
       name,
       ...base,
-      navigateStyle,
-      navigateBackgroundColor,
-      navigateBackgroundImage,
+      navigateStyle,  // 兼容旧版本
       titleStyle,
       titleColor,
       titleBackgroundImage,
-      titlePosition,
-      pageBackgroundStyle,
-      pageBackgroundColor,
-      pageBackgroundImage
+      titlePosition, // 兼容旧版本
+      pageBackgroundStyle, // 兼容旧版本
+      pageBackgroundImage,
+      newNavigateStyle,
+      newPageBackgroundStyle,
+      pTitleHotSetting,
+      isImmersive
     }
   },
   transformOut: (v) => {
@@ -155,15 +166,17 @@ export default {
       base: (v) => {
         return pickBy(v, {
           navigateStyle: 'navigateStyle',
-          navigateBackgroundColor: 'navigateBackgroundColor',
-          navigateBackgroundImage: 'navigateBackgroundImage',
+          navigateBackgroundColor: 'newNavigateStyle.color',
+          navigateBackgroundImage: 'newNavigateStyle.image',
           titleStyle: 'titleStyle',
           titleColor: 'titleColor',
           titleBackgroundImage: 'titleBackgroundImage',
           titlePosition: 'titlePosition',
           pageBackgroundStyle: 'pageBackgroundStyle',
-          pageBackgroundColor: 'pageBackgroundColor',
-          pageBackgroundImage: 'pageBackgroundImage'
+          pageBackgroundColor: 'newPageBackgroundStyle.color',
+          pageBackgroundImage: 'newPageBackgroundStyle.image',
+          isImmersive: 'isImmersive',
+          pTitleHotSetting: 'pTitleHotSetting'
         })
       }
     })

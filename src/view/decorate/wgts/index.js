@@ -18,6 +18,8 @@ import WgtImageNavigation from './wgt_imgNavigation'
 import WgtGoodsCard from './wgt_goodsCard'
 import WgtWriting from './wgt_writing'
 import WgtHeading from './wgt_heading'
+import WgtFullSlider from './wgt_fullSlider'
+import wgtOrderNavigation from './wgt_orderNavigation'
 
 // 首页装修
 let SCENE_1001 = {
@@ -34,7 +36,9 @@ let SCENE_1001 = {
   WgtGoodsScroll,
   WgtMarquees,
   WgtFloorImg,
-  WgtImageNavigation
+  WgtImageNavigation,
+  WgtFullSlider,
+  wgtOrderNavigation
 }
 
 if (VERSION_PLATFORM) {
@@ -49,7 +53,8 @@ if (VERSION_PLATFORM) {
 const SCENE_1002 = {
   WgtSlider,
   WgtFilm,
-  WgtHeadline
+  WgtHeadline,
+  WgtHotZone
 }
 
 // 店铺装修
@@ -95,11 +100,30 @@ const SCENE_1006 = {
   WgtHeadline
 }
 
+// 个人中心
+const SCENE_1008 = {
+  WgtSlider,
+  WgtHotZone,
+  WgtFilm,
+  WgtMarquees,
+  wgtOrderNavigation
+}
+
+const SCENE_1009 = {
+  WgtSearch,
+  WgtSlider,
+  WgtHotZone,
+  WgtGoodsGrid,
+}
+
+
 export default {
   1001: SCENE_1001,
   1002: SCENE_1002,
   1003: SCENE_1003,
   1004: SCENE_1004,
   1005: SCENE_1005,
-  1006: SCENE_1006
+  1006: SCENE_1006,
+  1008: SCENE_1008,
+  1009: SCENE_1009
 }

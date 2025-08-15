@@ -1,5 +1,11 @@
 <style lang="scss">
 .wgt-page {
+  .title-function {
+    position: absolute;
+    left: 15px;
+    width: 90px;
+    height: 32px;
+  }
   &-content {
     // background-image: url('../../../../assets/imgs/weapp-header.png');
     height: 64px;
@@ -14,6 +20,9 @@
     margin-top: 26px;
     padding: 0 30px;
     line-height: 32px;
+    position: relative;
+    display: flex;
+    justify-content: center;
     .title-image {
       height: 100%;
       display: inline-block;
@@ -25,6 +34,7 @@
   <div class="wgt-page" :style="headerStyle" @click="handleClickHeader">
     <div class="wgt-page-content" :style="contentStyle">
       <div v-if="value" class="header-container" :style="containerStyle">
+        <sp-image v-if="value.pTitleHotSetting.imgUrl" class="title-function" :src="value.pTitleHotSetting.imgUrl" />
         <span v-if="value.titleStyle == '1'">{{ value.wgtName }}</span>
         <sp-image v-else class="title-image" :src="value.titleBackgroundImage" />
       </div>
@@ -50,22 +60,17 @@ export default {
   },
   computed: {
     headerStyle() {
-      console.log('headerStyle:', this)
-      const { navigateStyle, navigateBackgroundColor, navigateBackgroundImage } = this.value || {}
-      if (navigateStyle == '1') {
-        return {
-          'background-color': navigateBackgroundColor
-        }
-      } else {
-        return {
-          'background-image': `url(${navigateBackgroundImage})`,
-          'background-size': 'cover',
-          'background-position': 'center'
-        }
+      console.log('headerStyle:', this.value)
+      const { newNavigateStyle, isImmersive } = this.value || {}
+      return {
+        'background-color': isImmersive ? 'none' : newNavigateStyle?.color,
+        'background-image': `url(${newNavigateStyle?.image})`,
+        'background-size': 'cover',
+        'background-position': 'center'
       }
     },
     contentStyle() {
-      const { navigateStyle, navigateBackgroundColor } = this.value || {}
+      const { newNavigateStyle, navigateBackgroundColor } = this.value || {}
       return {
         'background-image': `url(${
           this.isLight(this.get16ToRgb(navigateBackgroundColor))

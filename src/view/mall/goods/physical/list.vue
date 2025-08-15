@@ -23,11 +23,26 @@
   width: 200px;
   height: 200px;
 }
-</style>
-<style lang="scss">
 .physical-cell-reason {
   @include text-overflow();
   width: 180px;
+}
+</style>
+
+<style lang="scss">
+/* 全局样式 */
+.tb-add-dialog {
+  .el-form-item__content {
+    margin-left: 0 !important;
+  }
+  .el-dialog__body .el-form {
+    margin-right: 0 !important;
+  }
+}
+.set-category-dialog {
+  .el-cascader {
+    width: 100%;
+  }
 }
 </style>
 <template>
@@ -49,6 +64,9 @@
               商品导入
             </el-dropdown-item>
             <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+            <el-dropdown-item command="physicalupload?file_type=physical_store_upload">
+              上下架导入
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -234,7 +252,31 @@
         >
           开售
         </el-button>
-        <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
+        <el-dropdown>
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            同步淘宝商品<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
+              <export-tip
+                @exportHandle="
+                  () => {
+                    showTbAddDialog()
+                  }
+                "
+              >
+                淘宝增量同步
+              </export-tip>
+            </el-dropdown-item>
+            <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
+              <export-tip
+                @exportHandle="() => handleImport('physicalupload?file_type=upload_tb_items')"
+              >
+                链接导入同步
+              </export-tip>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
 
         <el-dropdown>
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
@@ -491,7 +533,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -536,6 +578,27 @@
         </el-table>
       </SpDrawer>
     </SpRouterView>
+
+    <SpDialog
+      v-model="tbAddDialog"
+      title="淘宝增量同步"
+      class="tb-add-dialog"
+      :width="'1200px'"
+      :form="tbAddForm"
+      :form-list="tbAddFormList"
+      :is-show-footer="false"
+    />
+
+    <SpDialog
+      ref="setCategoryDialogRef"
+      v-model="setCategoryDialog"
+      class="set-category-dialog"
+      title="设置管理分类"
+      :width="'800px'"
+      :form="setCategoryForm"
+      :form-list="setCategoryFormList"
+      @onSubmit="onSetCategorySubmit"
+    />
   </div>
 </template>
 <script>
@@ -544,6 +607,7 @@ import { exportItemsData, exportItemsTagData, saveIsGifts, uploadWdtErpItems } f
 import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import { createTbAddForm } from './schema'
 
 export default {
   data() {
@@ -589,6 +653,8 @@ export default {
     // }
 
     return {
+      tbAddDialog: false,
+      tbAddForm: {},
       formLoading: false,
       commissionDialog: false,
       commissionForm: { goods_id: 0, commission_ratio: '' },
@@ -720,6 +786,37 @@ export default {
       labelForm: {
         item_id: []
       },
+      setCategoryDialog: false,
+      setCategoryForm: {
+        category_id: []
+      },
+      setCategoryFormList: [
+        {
+          label: '管理分类',
+          key: 'category_id',
+          component: ({ key }, value) => (
+            <el-cascader
+              v-model={value[key]}
+              props={{
+                props: {
+                  value: 'category_id',
+                  label: 'category_name',
+                  checkStrictly: false,
+                  children: 'children'
+                }
+              }}
+              options={this.itemCategoryList}
+            />
+          ),
+          validator(rule, value, callback) { 
+            if(value.length === 0){
+              callback(new Error('请选择管理分类'))
+            }else{
+              callback()
+            }
+          }
+        }
+      ],
       labelFormList: [
         {
           label: '已选标签',
@@ -1418,7 +1515,12 @@ export default {
         tabList.splice(1, 0, { name: '医药商品', value: 'is_medicine', activeName: 'third' })
       }
 
+      tabList.splice(1, 0, { name: '淘宝商品', value: 'taobao', activeName: 'taobao' })
+
       return tabList
+    },
+    tbAddFormList() {
+      return createTbAddForm(this)
     }
   },
   mounted() {
@@ -1610,6 +1712,13 @@ export default {
       } else {
         this.searchParams.is_medicine = ''
       }
+
+      //淘宝商品
+      if (this.activeName == 'taobao') {
+        this.searchParams.audit_status = ''
+      }
+      this.searchParams.is_taobao = this.activeName == 'taobao' ? 1 : ''
+
       this.$refs['finder'].refresh()
     },
     onSelectionChange(selection) {
@@ -2053,6 +2162,67 @@ export default {
           })
         }
       })
+    },
+    showTbAddDialog() {
+      this.tbAddDialog = true
+      this.selectedSpu = []
+    },
+    onTbAddSubmit() {
+      if(this.selectedSpu.length === 0){
+        this.$message.warning('请选择需要同步的商品')
+        return
+      }
+      console.log(this.selectedSpu)
+      const _error = this.selectedSpu.filter((item) => !item.category_name)
+      if(_error.length > 0){
+        const _title = _error.map((item) => item?.outer_id).join(',')
+        this.$confirm(`以下商品未关联管理分类,无法进行同步:${_title}`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          showCancelButton: false
+        })
+        return
+      }
+      this.tbAddDialog = false
+      this.$api.goods
+        .syncSpuToLocal({
+          spu_ids: this.selectedSpu.map((item) => item.outer_id)
+        })
+        .then((res) => {
+          this.$message.success('操作成功')
+          this.$refs['finder'].refresh(true)
+          this.tbAddDialog = false
+        })
+    },
+    setCategory() {
+      this.setCategoryDialog = true
+      this.setCategoryForm = {
+        category_id: []
+      }
+    },
+    onSetCategorySubmit() {
+      if(this.setCategoryForm.category_id.length === 0){
+        this.$message.warning('请选择管理分类')
+        return
+      }
+      const category_id = this.setCategoryForm.category_id?.pop()
+      const _after = this.selectedSpu.map((item) => {
+        return {
+          outer_id: item.outer_id,
+          category_id: category_id
+        }
+      })
+      this.$api.goods.updateSpuCategory( {items:_after} ).then((res) => {
+        this.$message.success('操作成功')
+        this.$refs['finderDialog'].refresh(true)
+        this.setCategoryDialog = false
+      })
+    },
+    syncSpuToLocal() {
+       this.$api.goods.setSpuToLocal().then((res) => {
+        this.$message.success('操作成功')
+        this.$refs['finderDialog'].refresh(true)
+      })  
     }
   }
 }

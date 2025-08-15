@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getMemberPoint (query) {
+export function getMemberPoint(query) {
   return fetch({
     url: '/point/member',
     method: 'get',
@@ -8,7 +8,7 @@ export function getMemberPoint (query) {
   })
 }
 
-export function getPointCountIndex (query) {
+export function getPointCountIndex(query) {
   return fetch({
     url: '/member/pointcount/index',
     method: 'get',
@@ -16,10 +16,18 @@ export function getPointCountIndex (query) {
   })
 }
 
-export function adjustmentPoint (query) {
+export function adjustmentPoint(query) {
   return fetch({
     url: '/point/adjustment',
     method: 'post',
+    params: query
+  })
+}
+
+export function pointMemberExport(query) {
+  return fetch({
+    url: '/point/member/export',
+    method: 'get',
     params: query
   })
 }

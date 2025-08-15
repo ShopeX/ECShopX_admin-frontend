@@ -75,10 +75,10 @@ export default {
           label: '页面',
           value: 'link'
         },
-        {
-          label: '营销',
-          value: 'marketing'
-        },
+        // {
+        //   label: '营销',
+        //   value: 'marketing'
+        // },
         {
           label: '活动报名',
           value: 'regactivity'

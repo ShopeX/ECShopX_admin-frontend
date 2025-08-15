@@ -55,6 +55,17 @@
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
             </div>
+            <div style="display: flex;">
+              <span class="txt">等级背景</span>
+              <SpImagePicker v-model="item.grade_background" />
+            </div>
+            <div>
+              <span class="txt">等级编码</span
+              ><el-input
+                v-model="item.dm_grade_code"
+                placeholder="请输入内容"
+              />
+            </div>
             <div class="clearfix">
               <span class="txt f_l">升级条件</span>
               <span v-if="item.default_grade" class="txt-none">无</span>
@@ -189,6 +200,12 @@ export default {
           return '七'
         case 7:
           return '八'
+        case 8:
+          return '九'
+        case 9:
+          return '十'
+        case 10:
+          return '十一'
       }
     }
   },
@@ -203,6 +220,7 @@ export default {
         {
           grade_id: '',
           grade_name: '',
+          grade_background: '',
           background_pic_url: '',
           promotion_condition: {
             total_consumption: 0
@@ -211,6 +229,7 @@ export default {
             discount: ''
           },
           default_grade: true,
+          dm_grade_code:'',
           discount_checked: true,
           member_count: 0,
           third_data: '',
@@ -322,18 +341,20 @@ export default {
       }
     },
     addGrade() {
-      if (this.levelData.length >= 5) {
-        this.$message({ message: '最多添加5个等级', type: 'error' })
+      if (this.levelData.length >= 10) {
+        this.$message({ message: '最多添加10个等级', type: 'error' })
         return
       }
       let crmopen = this.levelData[0].crm_open
       this.levelData.push({
         grade_id: '',
         grade_name: '',
+        grade_background: '',
         background_pic_url: '',
         promotion_condition: { total_consumption: 0 },
         privileges: { discount: '' },
         default_grade: false,
+        dm_grade_code:'',
         member_count: 0,
         discount_checked: true,
         crm_open: crmopen,
@@ -384,7 +405,7 @@ export default {
           //   isflag = true
           //   this.$message({ message: '请输入会员折扣', type: 'error' })
           //   break
-          // } else 
+          // } else
           // if (!discountReg.test(this.levelData[i].privileges.discount)) {
           //   isflag = true
           //   this.$message({
@@ -513,6 +534,7 @@ export default {
   width: 200px;
   margin-top: 15px;
   margin: 15px 20px 0 0;
+  text-align: center;
 }
 .item-content {
   // width: 500px;

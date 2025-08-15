@@ -3,9 +3,10 @@
     <div class="section-header with-border">
       <div class="section-title">积分配置</div>
     </div>
+    <SpPlatformTip class="damo-crm-tip" text-val="积分规则已被达摩CRM接管，维护请前往达摩CRM后台进行维护。" />
     <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item label="积分：">
+        <!-- <el-form-item label="积分：">
           <el-switch
             v-model="form.isOpenMemberPoint"
             :width="60"
@@ -28,8 +29,8 @@
           >
             <i class="el-icon-question" />
           </el-tooltip>
-        </el-form-item>
-        <div v-if="form.isOpenMemberPoint == 'true'">
+        </el-form-item> -->
+        <div v-if=" false && form.isOpenMemberPoint == 'true'">
           <el-form-item label="获取方式：">
             <el-radio-group v-model="form.access" @change="changeAccess">
               <el-radio label="order"> 订单 </el-radio>
@@ -324,5 +325,8 @@ export default {
 <style lang="scss" scoped>
 .point-rule {
   height: auto !important;
+}
+.damo-crm-tip{
+  margin-top:20px;
 }
 </style>

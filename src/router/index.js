@@ -46,6 +46,7 @@ router.beforeEach((to, from, next) => {
     const { token } = qs.parse(self.location.search.replace(/\?/, ''))
     if (token) {
       store.commit('SET_TOKEN', { token })
+      store.commit('SET_VERSION_MODE', process.env.VUE_APP_PRODUCT_MODEL)
     }
   }
 

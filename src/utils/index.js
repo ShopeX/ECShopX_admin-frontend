@@ -175,19 +175,31 @@ export function getPropByPath(obj, path, strict) {
   }
 }
 
+/**
+ * 导出跳转/打开方法
+ * @param {string} tab 导出tab参数
+ */
 function export_open(tab) {
-  setTimeout(() => {
-    const login_type = store.getters.login_type
-    if (login_type == 'distributor') {
-      window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
-    } else if (login_type == 'merchant') {
-      window.open(`/merchant/setting/baseexport?tab=${tab}`)
-    } else if (login_type == 'supplier') {
-      window.open(`/supplier/setting/baseexport?tab=${tab}`)
+  const login_type = store.getters.login_type
+  let basePath = '/companydata/report/baseexport'
+  if (login_type === 'distributor') {
+    basePath = '/shopadmin/shopsetting/baseexport'
+  } else if (login_type === 'merchant') {
+    basePath = '/merchant/setting/baseexport'
+  } else if (login_type === 'supplier') {
+    basePath = '/supplier/setting/baseexport'
+  }
+  const url = `${basePath}?tab=${tab}`
+
+  const openFn = () => {
+    // 判断是否在销售中心iframe
+    if (isInSalesCenter()) {
+      this.$router.push(url)
     } else {
-      window.open(`/companydata/report/baseexport?tab=${tab}`)
+      window.open(url)
     }
-  }, 1000)
+  }
+  setTimeout(openFn, 1000)
 }
 
 export function unescape(html) {

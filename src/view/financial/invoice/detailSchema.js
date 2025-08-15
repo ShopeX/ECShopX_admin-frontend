@@ -306,6 +306,19 @@ const infoTable = {
       }
     },
     {
+      key: 'invoice_tax_rate',
+      name: '税率',
+      width: 100,
+      render(_, { row }) {
+        return <span> { row.invoice_tax_rate }% </span>
+      }
+    },
+    {
+      key: 'item_spec_desc',
+      name: '规格',
+      width: 180
+    },
+    {
       key: 'order_id',
       name: '订单编号',
       width: 220

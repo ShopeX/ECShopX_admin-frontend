@@ -7,6 +7,7 @@
     :close-on-press-escape="false"
     :before-close="cancelAction"
     append-to-body
+    :width="'850px'"
   >
     <div class="img_pick_panel inner_container_box">
       <el-row>
@@ -35,28 +36,26 @@
                   </div>
 
                   <div class="img_pick_area_inner">
-                    <div class="img_pick">
-                      <div class="img_list">
+                    <div class="img_list">
+                      <div
+                        v-for="(item, index) in localimgList"
+                        :key="index"
+                        class="img_item"
+                        @click="localcheckedImg(item, index)"
+                      >
                         <div
-                          v-for="(item, index) in localimgList"
-                          :key="index"
-                          class="img_item"
-                          @click="localcheckedImg(item, index)"
+                          class="frm_checkbox_label img_item_bd"
+                          :class="
+                            isMost ? { selected: item.selected } : { 'selected': locali == index }
+                          "
                         >
-                          <div
-                            class="frm_checkbox_label img_item_bd"
-                            :class="
-                              isMost ? { selected: item.selected } : { 'selected': locali == index }
-                            "
-                          >
-                            <div class="pic_box">
-                              <img :src="item.image_full_url" class="pic">
-                            </div>
-                            <span class="lbl_content">{{ item.image_name }}</span>
-                            <div class="selected_mask">
-                              <div class="selected_mask_inner" />
-                              <div class="selected_mask_icon el-icon-check" />
-                            </div>
+                          <div class="pic_box">
+                            <img :src="item.image_full_url" class="pic" />
+                          </div>
+                          <span class="lbl_content">{{ item.image_name }}</span>
+                          <div class="selected_mask">
+                            <div class="selected_mask_inner" />
+                            <div class="selected_mask_icon el-icon-check" />
                           </div>
                         </div>
                       </div>
@@ -111,7 +110,7 @@ export default {
       params: {
         type: 'image',
         page: 1,
-        pageSize: 20
+        pageSize: 18
       },
       showDialog: false,
       frontItem: [],
@@ -129,7 +128,7 @@ export default {
       localparams: {
         type: 'image',
         page: 1,
-        pageSize: 20
+        pageSize: 18
       },
       localcheckedItem: [],
       localimgData: {},
@@ -410,84 +409,81 @@ export default {
     padding: 0 0 15px;
   }
 }
-.img_pick {
-  padding: 20px 0 5px;
-  .img_list {
-    display: flex;
-    // justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .img_item {
+.img_list {
+  display: flex;
+  // justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.img_item {
+  position: relative;
+  text-align: center;
+  flex-grow: 0;
+  .pic_box {
+    width: 117px;
+    height: 117px;
     position: relative;
-    text-align: center;
-    flex: 33.3%;
-    flex-grow: 0;
-    .pic_box {
+    overflow: hidden;
+    background: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pic {
+    width: 100%;
+    max-height: 117px;
+  }
+}
+.frm_checkbox_label {
+  display: inline-block;
+  text-align: left;
+  cursor: pointer;
+  margin-right: 1em;
+}
+.img_item_bd {
+  position: relative;
+  margin: 0;
+  width: 117px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  .selected_mask {
+    display: none;
+  }
+  &.selected {
+    .selected_mask,
+    .selected_mask_icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .selected_mask {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .selected_mask_inner {
       width: 117px;
       height: 117px;
-      position: relative;
-      overflow: hidden;
-      background: #f8f8f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: rgba(0, 0, 0, 0.6);
     }
-    .pic {
-      width: 100%;
-      max-height: 117px;
-    }
-  }
-  .frm_checkbox_label {
-    display: inline-block;
-    text-align: left;
-    cursor: pointer;
-    margin-right: 1em;
-  }
-  .img_item_bd {
-    position: relative;
-    margin: 0;
-    width: 117px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    .selected_mask {
-      display: none;
-    }
-    &.selected {
-      .selected_mask,
-      .selected_mask_icon {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      .selected_mask {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .selected_mask_inner {
-        width: 117px;
-        height: 117px;
-        background-color: rgba(0, 0, 0, 0.6);
-      }
-      .selected_mask_icon {
-        /*width: 117px;
+    .selected_mask_icon {
+      /*width: 117px;
           height: 117px;*/
-        color: #fff;
-        font-size: 32px;
-        top: 26%;
-        left: 34%;
-      }
+      color: #fff;
+      font-size: 32px;
+      top: 26%;
+      left: 34%;
     }
   }
-  .lbl_content {
-    display: block;
-    padding: 0 10px;
-    height: 36px;
-    line-height: 36px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+}
+.lbl_content {
+  display: block;
+  padding: 0 10px;
+  height: 36px;
+  line-height: 36px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .dialog-footer {
   border-top: 1px solid #e7e7eb;

@@ -26,20 +26,22 @@
               <i v-else class="iconfont icon-upload avatar-uploader-icon"></i>
             </el-upload> -->
 
-            <div>
+            <!-- <div>
               <div class="upload-box" @click="handleImgChange(item, index)">
                 <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
                   <img :src="wximageurl + item.background_pic_url" class="avatar">
                 </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
-            </div>
-            <imgPicker
+            </div> -->
+            <!-- <imgPicker
               :dialog-visible="imgDialog"
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
+            /> -->
+            <SpImagePicker v-model="item.background_pic_url" size="big" />
+
             <p class="content-center">卡封面（建议尺寸：600px * 375px）</p>
           </div>
           <div class="item-content f_l">

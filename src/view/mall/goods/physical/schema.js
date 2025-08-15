@@ -91,6 +91,9 @@ export const createTbAddForm = (vm) =>
                 onSelect={(row) => {
                   vm.selectedSpu = row
                 }}
+                onReset = {() => {
+                  vm?.$refs?.finderDialog?.refresh(true)
+                }}
               ></SpFinder>
               <div style={{ display:'flex', justifyContent:'flex-end' }}>
                 <el-button

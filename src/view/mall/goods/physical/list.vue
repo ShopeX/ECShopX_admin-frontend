@@ -2175,13 +2175,11 @@ export default {
       console.log(this.selectedSpu)
       const _error = this.selectedSpu.filter((item) => !item.category_name)
       if(_error.length > 0){
-        const _title = _error.map((item) => item?.spu_code).join(',')
+        const _title = _error.map((item) => item?.outer_id).join(',')
         this.$confirm(`以下商品未关联管理分类,无法进行同步:${_title}`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           showCancelButton: false
-        }).then(() => {
-          this.tbAddDialog = false
         })
         return
       }

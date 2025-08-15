@@ -57,13 +57,15 @@ module.exports = {
       }
     },
     // 生产环境提取 CSS
-    extract: isProd ? {
-      ignoreOrder: true // 忽略 CSS 顺序警告
-    } : false
+    extract: isProd
+      ? {
+          ignoreOrder: true // 忽略 CSS 顺序警告
+        }
+      : false
   },
 
   // Webpack 配置
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     // 开发环境配置
     if (isDev) {
       config.devtool = 'eval-cheap-module-source-map' // 更快的 source map
@@ -84,21 +86,26 @@ module.exports = {
         minimize: true,
         minimizer: [
           new TerserPlugin({
+            parallel: 4, // 限制并行进程数，避免内存爆炸
+            extractComments: false,
             terserOptions: {
               compress: {
                 drop_console: true,
                 drop_debugger: true,
-                pure_funcs: ['console.log', 'console.info', 'console.warn']
+                pure_funcs: ['console.log'],
+                passes: 2 // 减少压缩轮次
+              },
+              mangle: {
+                properties: false // 禁用属性混淆减少内存
               },
               output: {
-                comments: false
+                comments: false,
+                beautify: false
               }
-            },
-            extractComments: false,
-            parallel: true
+            }
           }),
           new CssMinimizerPlugin({
-            parallel: true,
+            parallel: 2,
             minimizerOptions: {
               preset: [
                 'default',
@@ -226,7 +233,7 @@ module.exports = {
   },
 
   // Webpack 链式配置
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     // 删除预加载和预获取
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
@@ -235,29 +242,30 @@ module.exports = {
     if (isProd) {
       // 启用 gzip 压缩
       const CompressionPlugin = require('compression-webpack-plugin')
-      config.plugin('compressionPlugin')
-        .use(new CompressionPlugin({
+      config.plugin('compressionPlugin').use(
+        new CompressionPlugin({
           filename: '[path][base].gz',
           algorithm: 'gzip',
           test: /\.(js|css|html|svg)$/,
           threshold: 10240, // 只压缩大于10kb的文件
           minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
           deleteOriginalAssets: false // 保留原文件
-        }))
+        })
+      )
 
       // 优化CSS提取
-      config.plugin('mini-css-extract')
-        .use(MiniCssExtractPlugin, [{
+      config.plugin('mini-css-extract').use(MiniCssExtractPlugin, [
+        {
           filename: 'css/[name].[contenthash:8].css',
           chunkFilename: 'css/[name].[contenthash:8].css',
-          ignoreOrder: true  // 忽略 CSS 顺序警告
-        }])
+          ignoreOrder: true // 忽略 CSS 顺序警告
+        }
+      ])
 
       // Bundle 分析（可选）
       if (process.env.ANALYZE) {
         const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-        config.plugin('bundle-analyzer')
-          .use(BundleAnalyzerPlugin)
+        config.plugin('bundle-analyzer').use(BundleAnalyzerPlugin)
       }
     }
 
@@ -325,7 +333,8 @@ module.exports = {
   },
 
   // 并行处理
-  parallel: require('os').cpus().length > 1,
+  // parallel: require('os').cpus().length > 1,
+  parallel: Math.min(4, require('os').cpus().length)
 
   // PWA 配置（如果需要）
   // pwa: {

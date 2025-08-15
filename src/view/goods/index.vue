@@ -978,6 +978,8 @@ export default {
       this.saleCategoryList = saleCategoryList
     },
     async fetchDetail() {
+
+
       const { itemId } = this.$route.params
       const { is_new, supplier, islist } = this.$route.query
       this.routerParams = this.$route.query || {}
@@ -1471,7 +1473,7 @@ export default {
         pics,
         pics_create_qrcode: _picsQrcode,
         videos: videos,
-        nospec: !isSpecs,
+        nospec: String(!isSpecs),
         is_show_specimg: isShowSpecimg,
         audit_reason: this.applyForm.audit_reason,
         item_params: paramsData.map(({ id, attr_id, children }) => {

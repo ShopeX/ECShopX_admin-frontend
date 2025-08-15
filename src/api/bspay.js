@@ -174,3 +174,12 @@ export const withdrawApply = (params) => {
     params: params
   })
 }
+
+// 导出提现数据
+export const exportWithdrawData = (params) => {
+  return fetch({
+    url: '/bspay/withdraw/exportdata',
+    method: 'get',
+    params: params
+  })
+}

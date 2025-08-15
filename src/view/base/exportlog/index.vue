@@ -27,8 +27,11 @@
         <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
         <el-tab-pane label="业绩订单" name="popularizeOrder" />
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
+
       </template>
+      
       <template v-else>
+        <el-tab-pane label="提现记录导出" name="bspay_withdraw" />
         <el-tab-pane label="会员导出" name="member" />
         <!-- <el-tab-pane
           label="服务订单导出"
@@ -166,7 +169,6 @@ export default {
   },
   mounted() {
     this.activeTabHandler()
-    this.getExportLogLists(this.params)
   },
   computed: {
     ...mapGetters(['wheight'])
@@ -175,18 +177,22 @@ export default {
     activeTabHandler() {
       const active = this.$store.getters.login_type
       const { tab } = this.$route.query
-      this.$nextTick(() => {
-        if (tab) {
-          this.activeName = tab
+      
+      if (tab) {
+        this.activeName = tab
+      } else {
+        if (active == 'dealer') {
+          this.activeName = 'adapay_tradedata'
+        } else if (active == 'merchant') {
+          this.activeName = 'normal_master_order'
         } else {
-          if (active == 'dealer') {
-            this.activeName = 'adapay_tradedata'
-          } else if (active == 'merchant') {
-            this.activeName = 'normal_master_order'
-          } else {
-            this.activeName = 'member'
-          }
+          this.activeName = 'member'
         }
+      }
+      
+      // 设置完 activeName 后立即获取导出列表
+      this.$nextTick(() => {
+        this.getExportLogLists(this.params)
       })
     },
     // 切换tab

@@ -67,7 +67,7 @@ export default (vm) => {
         },
         { name: '审批时间', key: 'audit_time', width: 200, formatter: formatDate },
         { name: '审核原因', key: 'audit_remark', width: 150 },
-        { name: '审核人账号', key: 'auditor', width: 120 },
+
         { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
         { name: '失败原因', key: 'failure_reason', width: 150 }
       ]
@@ -97,10 +97,10 @@ export default (vm) => {
           }
         },
         { name: '审批时间', key: 'audit_time', width: 200, formatter: formatDate },
-        { name: '审核原因', key: 'audit_remark', width: 150 },
+        { name: '审核备注', key: 'audit_remark', width: 150 },
         { name: '审核人账号', key: 'auditor', width: 120 },
         { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
-        { name: '失败原因', key: 'failure_reason', width: 150 }
+        { name: '提现进度', key: 'failure_reason', width: 150 }
       ]
     }
   }

@@ -65,9 +65,19 @@ function createRequestClient() {
       }
       if (config.method === 'post') {
         const { isUploadFile } = config.data || {}
+        for (var key in config.data) {
+          if (typeof config.data[key] === 'boolean') {
+            console.log('config.data[key]', key, config.data[key])
+            config.data[key] = config.data[key] ? 'true' : 'false'
+          }
+        }
         if (isUploadFile) {
           let formParams = new FormData()
           for (var key in config.data) {
+            if (typeof config.data[key] === 'boolean') {
+              console.log('config.data[key]', key, config.data[key])
+              config.data[key] = config.data[key] ? 'true' : 'false'
+            }
             if (key !== 'isUploadFile') {
               formParams.append(key, config.data[key])
             }

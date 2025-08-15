@@ -16,10 +16,10 @@ const routes = [
         name: 'adapayWithdrawalAudit',
         path: 'dougong/withdrawal-audit',
         meta: {
-          aliasName: 'adapay_cash_audit',
+          aliasName: 'bspay_cash_audit',
           icon: 'pay-circle',
           title: '提现审核',
-          permissions: ['applications.bspay.adapay_cash_audit']
+          permissions: ['applications.bspay.bspay_cash_audit']
         },
         component: () => import('@/view/mall/bspay_sub_account/withdraw_audit')
       },

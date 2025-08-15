@@ -6,6 +6,16 @@
           <span>提现审核</span>
         </div>
         <div class="content">
+          <div class="toolbar">
+            <el-button 
+              type="primary" 
+              icon="el-icon-download"
+              @click="handleExport"
+              :loading="exportLoading"
+            >
+              导出数据
+            </el-button>
+          </div>
           <div class="list">
             <SpFinder
               ref="finder"
@@ -13,6 +23,7 @@
               :setting="setting"
               url="/bspay/withdraw/lists"
               :hooks="{
+                beforeSearch: beforeSearch,
                 afterSearch: afterSearch
               }"
             />
@@ -33,7 +44,8 @@ export default {
   },
   data() {
     return {
-      search_options: []
+      search_options: [],
+      exportLoading: false
     }
   },
   computed: {
@@ -42,6 +54,14 @@ export default {
     }
   },
   methods: {
+    beforeSearch(params) {
+      // 添加固定的 type 参数
+      return {
+        ...params,
+        type: 'audit'
+      }
+    },
+    
     afterSearch({ data }) {
       const { search_options = {} } = data.data
       this.search_options = search_options.status
@@ -89,6 +109,50 @@ export default {
           this.$message.error('审核失败')
         }
       }
+    },
+    
+    async handleExport() {
+      try {
+        this.exportLoading = true
+        
+        // 构建导出参数，包含固定的 type 参数
+        const exportParams = {
+          type: 'audit',
+          export_type: 'bspay_withdraw'
+        }
+        
+        // 调用导出接口
+        const response = await this.$api.bspay.exportWithdrawData(exportParams)
+        if (response.status) {
+          // 如果返回了文件URL，直接下载
+          if (response.data && response.data.file_url) {
+            this.downloadFile(response.data.file_url, response.data.file_name || '提现数据.xlsx')
+            this.$message.success('导出成功')
+          } else {
+            // 否则提示用户去导出列表下载
+            this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+            // 打开导出列表弹窗
+            this.$export_open('bspay_withdraw')
+          }
+        } else {
+          this.$message.error(response.message || '导出失败')
+        }
+      } catch (error) {
+        console.error('导出失败:', error)
+        this.$message.error('导出失败')
+      } finally {
+        this.exportLoading = false
+      }
+    },
+    
+    // 下载文件方法
+    downloadFile(url, filename) {
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
     }
   }
 }
@@ -98,6 +162,10 @@ export default {
 .zyk_withdraw_audit {
   .clearfix span {
     font-weight: 700;
+  }
+  
+  .toolbar {
+    margin-bottom: 16px;
   }
 }
 </style> 

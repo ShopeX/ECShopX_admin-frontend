@@ -279,6 +279,8 @@
         </el-dropdown>
       </div>
 
+      <SpPageUpload />
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
@@ -546,8 +548,12 @@ import { exportItemsData, exportItemsTagData, saveIsGifts, uploadWdtErpItems } f
 import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import SpPageUpload from '@/components/sp-page-upload'
 
 export default {
+  components: {
+    SpPageUpload
+  },
   data() {
     const loginType = this.$store.getters.login_type
     let statusOption

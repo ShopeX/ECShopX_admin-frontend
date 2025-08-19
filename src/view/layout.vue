@@ -96,7 +96,7 @@
         <div class="header-left">
           <!-- activeIndex: {{activeIndex}}
           activeSubIndex: {{activeSubIndex}} -->
-          <SpPageUpload />
+          <!-- <SpPageUpload /> -->
         </div>
         <div class="header-right">
           <div class="icon-nav">

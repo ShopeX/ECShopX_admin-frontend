@@ -1,7 +1,7 @@
 <template>
   <div
       v-if="start"
-      style="padding-top: 5px; clear: both; display:flex"
+      style="padding-top: 5px; clear: both; display:flex;margin-bottom:20px;"
   >
       <el-progress
           style="margin-right:10px"

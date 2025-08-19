@@ -19,6 +19,8 @@ const getters = {
   color_theme: (state) => state.user.color_theme,
   versionMode: (state) => state.user.versionMode,
   sys_logo: (state) => state.user.sys_logo,
-  readLicense: (state) => state.user.readLicense
+  readLicense: (state) => state.user.readLicense,
+  exportKey: (state) => state.user.exportKey,
+  exportTotal: (state) => state.user.exportTotal
 }
 export default getters

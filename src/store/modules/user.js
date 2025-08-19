@@ -22,7 +22,9 @@ const user = {
     color_theme: '',
     versionMode: 'platform',
     sys_logo: '',
-    readLicense: 0
+    readLicense: 0,
+    exportKey: '',
+    exportTotal: 0
   },
 
   mutations: {
@@ -138,7 +140,11 @@ const user = {
     },
     setSysLogo: (state, sys_logo) => {
       state.sys_logo = sys_logo
-    }
+    },
+    setExportKeyAndTotal: (state, {exportKey, exportTotal}) => {
+      state.exportKey = exportKey
+      state.exportTotal = exportTotal
+    },
   },
 
   actions: {
@@ -207,7 +213,10 @@ const user = {
     },
     setSysLogo: ({ commit }, sys_logo) => {
       commit('setSysLogo', sys_logo)
-    }
+    },
+    setExportKeyAndTotal: ({ commit }, params) => {
+      commit('setExportKeyAndTotal', params)
+    },
   }
 }
 

@@ -535,6 +535,8 @@ export default {
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
         { label: '用户身份:', field: 'purchaseRole', is_show: true },
+        { label: '销售门店:', field: 'sale_salesman_distributor_id', is_show: true },
+        { label: '销售导购:', field: 'salesman_mobile', is_show: true },
         { label: '姓名:', field: 'employee_name', is_show: true },
         { label: '所属企业:', field: 'enterprise_name', is_show: true },
         { label: '来源店铺:', field: 'distributor_name', is_show: true },

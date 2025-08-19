@@ -411,7 +411,9 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    this.isFirstRender = true
+  },
   methods: {
     renderRequire(h, { column }) {
       return h(
@@ -498,8 +500,9 @@ export default {
       const specItems = this.cartesianProductOf(...skuMartix)
       // console.log('getSkuItems:', JSON.stringify(specItems))
       let _specItems = []
-      if (value) {
-        _specItems = value.map(
+      if (value || this.isFirstRender) {
+        const _value = value || this.value.specItems
+        _specItems = _value.map(
           ({
             item_id,
             approve_status,
@@ -549,7 +552,7 @@ export default {
         )
       }
       // 新生成的sku
-      specItems.forEach((item) => {
+      specItems?.filter(el => !this.noDefaultSpecItems?.includes(el.join('_')))?.forEach((item) => {
         const key = item.join('_')
         if (!_specItems.find(({ sku_id }) => sku_id == key)) {
           const {
@@ -591,6 +594,11 @@ export default {
           })
         }
       })
+      if(this.isFirstRender) {
+        this.noDefaultSpecItems = _specItems?.filter(el => !el.item_id)?.map(el => el.sku_id)
+        _specItems = _specItems?.filter(el => !!el.item_id)
+        this.isFirstRender = _specItems
+      }
       // 与前一次编辑的缓存数据合并
       this.value.specItems = _specItems.map((item) => {
         const fd = this.value.specItems.find(({ sku_id }) => sku_id == item.sku_id)
@@ -603,6 +611,10 @@ export default {
           return item
         }
       })
+
+      if(this.isFirstRender) {
+        this.isFirstRender = false
+      }
     },
     // 获取规格名称
     getSpecName(keys) {

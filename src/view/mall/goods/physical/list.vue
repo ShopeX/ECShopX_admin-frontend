@@ -814,7 +814,7 @@ export default {
               options={this.itemCategoryList}
             />
           ),
-          validator(rule, value, callback) { 
+          validator(rule, value, callback) {
             if(value.length === 0){
               callback(new Error('请选择管理分类'))
             }else{
@@ -2230,7 +2230,7 @@ export default {
        this.$api.goods.setSpuToLocal().then((res) => {
         this.$message.success('操作成功')
         this.$refs['finderDialog'].refresh(true)
-      })  
+      })
     }
   }
 }

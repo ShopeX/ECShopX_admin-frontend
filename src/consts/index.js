@@ -147,6 +147,39 @@ export const INVOICE_STATUS = [
   { title: '已开票', value: 1 }
 ]
 
+export const INVOICE_STATUS_ARR = [
+  {
+    value: 'all',
+    label: '全部',
+    title: '全部'
+  },
+  {
+    value: 'pending',
+    label: '待开票',
+    title: '待开票'
+  },
+  {
+    value: 'inProgress',
+    label: '开票中',
+    title: '开票中'
+  },
+  {
+    value: 'success',
+    label: '开票成功',
+    title: '开票成功'
+  },
+  {
+    value: 'failed',
+    label: '开票失败',
+    title: '开票失败'
+  },
+  {
+    value: 'waste',
+    label: '已红冲',
+    title: '已红冲'
+  }
+]
+
 export const GOOD_CATEGORY = [
   { title: '自营', value: 'self' },
   { title: '商户商品', value: 'distributor' },

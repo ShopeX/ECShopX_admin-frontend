@@ -110,12 +110,12 @@
       </SpFilterFormItem>
       <SpFilterFormItem
         v-if="!isMicorMall && !VERSION_IN_PURCHASE"
-        prop="is_invoiced"
+        prop="invoice_status"
         label="开票状态:"
       >
-        <el-select v-model="params.is_invoiced" clearable placeholder="请选择">
+        <el-select v-model="params.invoice_status" clearable placeholder="请选择">
           <el-option
-            v-for="item in invoiceStatus"
+            v-for="item in invoiceStatusArr"
             :key="item.value"
             size="mini"
             :label="item.title"
@@ -644,7 +644,8 @@ import {
   REFUND_PROCESS,
   PAY_TYPE,
   GOOD_CATEGORY_MAP,
-  open_status_arr
+  open_status_arr,
+  INVOICE_STATUS_ARR
 } from '@/consts'
 import { IS_MERCHANT, IS_SUPPLIER } from '../../../../utils'
 
@@ -675,7 +676,7 @@ export default {
         is_prescription_order: '',
         serial_no: '',
         user_family_name: '',
-        is_invoiced: '', // 开票状态
+        invoice_status: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
         order_holder: '', // 订单分类
@@ -698,6 +699,7 @@ export default {
         : ORDER_STATUS,
       orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
+      invoiceStatusArr: INVOICE_STATUS_ARR,
       orderCategory: this.VERSION_STANDARD
         ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
         : ORDER_CATEGORY,

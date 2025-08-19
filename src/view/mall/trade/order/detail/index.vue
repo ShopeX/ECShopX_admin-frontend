@@ -995,7 +995,9 @@ export default {
         serial_no:prescription_data.serial_no,
         audit_time:prescription_data.audit_time ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
         : '',
-        dst_file_path:prescription_data.dst_file_path
+        dst_file_path:prescription_data.dst_file_path,
+        sale_salesman_distributor_id:orderInfo?.sale_salesman_distributor_info?.name,
+        salesman_mobile:orderInfo?.salespersonInfo?.work_userid,
       }
 
 

@@ -96,6 +96,7 @@
         <div class="header-left">
           <!-- activeIndex: {{activeIndex}}
           activeSubIndex: {{activeSubIndex}} -->
+          <!-- <SpPageUpload /> -->
         </div>
         <div class="header-right">
           <div class="icon-nav">
@@ -162,7 +163,11 @@ import { ICON_MAP } from '@/consts'
 import { VERSION_STANDARD, isInSalesCenter } from '@/utils'
 import { micrApp } from '@/utils/micr-app'
 import store from '@/store'
+import SpPageUpload from '@/components/sp-page-upload'
 export default {
+  components: {
+    SpPageUpload
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.activeIndex = to.matched[0].path || '/'

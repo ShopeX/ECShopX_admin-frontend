@@ -319,6 +319,8 @@
         </el-dropdown>
       </div>
 
+      <SpPageUpload />
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
@@ -608,8 +610,12 @@ import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
 import { createTbAddForm } from './schema'
+import SpPageUpload from '@/components/sp-page-upload'
 
 export default {
+  components: {
+    SpPageUpload
+  },
   data() {
     const loginType = this.$store.getters.login_type
     let statusOption
@@ -2003,13 +2009,15 @@ export default {
       if (this.selectionItems.length > 0) {
         exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
-      const { status } = await this.$api.goods.exportItemsData(exportParams)
-      if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-        this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
-      } else {
-        this.$message.error('导出失败')
-      }
+      const { url:exportKey } = await this.$api.goods.exportApiFileName(exportParams)
+
+      this.$store.dispatch('setExportKeyAndTotal', {exportKey, exportTotal:0})
+      // if (status) {
+      //   this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+      //   this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
+      // } else {
+      //   this.$message.error('导出失败')
+      // }
     },
     async exportItemsTagData() {
       const exportParams = {

@@ -19,10 +19,10 @@
                 :min="1"
                 :max="10"
                 class="mr-2"
-                style="width: 80px"
+                style="width: 100px"
               />
             </div>
-            <el-button type="text" @click="addCoupon(scope.row)">删除</el-button>
+            <el-button type="text" @click="deleteCoupon(scope.row, index)">删除</el-button>
           </div>
           <div class="add-coupon">
             <el-button type="text" @click="addCoupon(scope.row)">添加优惠券</el-button>
@@ -85,6 +85,9 @@ export default {
           }))
         )
       }
+    },
+    deleteCoupon(row, index) {
+      row.coupons.splice(index, 1)
     }
   }
 }

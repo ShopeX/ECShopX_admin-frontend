@@ -189,12 +189,15 @@ export default {
         begin_time: this.formData.activity_time.date[0]?.getTime() / 1000,
         end_time: this.formData.activity_time.date[1]?.getTime() / 1000
       }
-      console.log('formData:', params)
-      await this.$api.promotions.createActivity(params)
-      this.submitLoading = false
-      this.$message.success('创建成功')
-      this.$parent.onActivated()
-      this.$router.go(-2)
+      try {
+        await this.$api.promotions.createActivity(params)
+        this.submitLoading = false
+        this.$message.success('创建成功')
+        this.$parent.onActivated()
+        this.$router.go(-2)
+      } catch (error) {
+        this.submitLoading = false
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
-<template lang="html">
-  <section class="section section-white page-activity-templ">
-    <div v-for="item in list">
+<template>
+  <SpPage class="section section-white page-activity-templ">
+    <div v-for="item in list" :key="item.name">
       <div class="templ-title">
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
       </div>
@@ -20,7 +20,7 @@
         </el-row>
       </div>
     </div>
-  </section>
+  </SpPage>
 </template>
 
 <script>
@@ -58,7 +58,7 @@ export default {
       var param = {
         activity_type: type
       }
-      isValidActivity(param).then(res => {
+      isValidActivity(param).then((res) => {
         this.$router.push({
           path: this.$route.path.replace('templ', 'editor/') + type
         })
@@ -72,9 +72,9 @@ export default {
 .page-activity-templ {
   .tip {
     padding: 16px;
-    background-color: #ecf8ff;
+    background-color: color-mix(in srgb, #ffffff 90%, var(--primary));
     border-radius: 4px;
-    border-left: 5px solid #50bfff;
+    border-left: 5px solid var(--primary);
   }
   .view-flex {
     display: flex;

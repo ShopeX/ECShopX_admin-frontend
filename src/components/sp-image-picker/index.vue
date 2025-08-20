@@ -152,7 +152,7 @@ export default {
         forceFallback: false,
         scroll: true
       },
-      showViewer: ''
+      showViewer: []
     }
   },
   watch: {

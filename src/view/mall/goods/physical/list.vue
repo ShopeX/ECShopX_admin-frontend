@@ -112,58 +112,68 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" @click="addItems"> 添加商品 </el-button>
+        <el-button type="primary" plain @click="addItems"> 添加商品 </el-button>
 
-        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="changeCategory">
+        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="changeGoodsLabel">
+        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeGoodsLabel">
           打标签
         </el-button>
-        <el-button type="primary" @click="changeFreightTemplate"> 更改运费模板 </el-button>
+        <el-button type="primary" plain @click="changeFreightTemplate"> 更改运费模板 </el-button>
         <el-button
           v-if="!IS_ADMIN() && !IS_DISTRIBUTOR()"
           type="primary"
+          plain
           @click="onBatchSubmitItems"
         >
           批量提交审核
         </el-button>
-        <el-button type="primary" @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="batchChangeStore">
+        <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
+        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="batchChangeStore">
           更改状态
         </el-button>
-        <el-button type="primary" @click="batchGifts('true')"> 设为赠品 </el-button>
-        <el-button type="primary" @click="batchGifts('false')"> 设为非赠品 </el-button>
+        <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
+        <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
-        <el-button v-if="IS_SUPPLIER()" type="primary" @click="() => changeHaltTheSales('stop')">
+        <el-button
+          v-if="IS_SUPPLIER()"
+          type="primary"
+          plain
+          @click="() => changeHaltTheSales('stop')"
+        >
           停售
         </el-button>
-        <el-button v-if="IS_SUPPLIER()" type="primary" @click="() => changeHaltTheSales('start')">
+        <el-button
+          v-if="IS_SUPPLIER()"
+          type="primary"
+          plain
+          @click="() => changeHaltTheSales('start')"
+        >
           开售
         </el-button>
-        <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
         <el-button
           type="primary"
-          @click="() => handleImport('physicalupload?file_type=upload_tb_items')"
+          plain
+          @click="() => syncGoodsFromTaoBao('physicalupload?file_type=upload_tb_items')"
         >
           同步淘宝商品
         </el-button>
-        <el-dropdown>
+
+        <el-dropdown @command="handleImport">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导出<i class="el-icon-arrow-down el-icon--right" />
+            导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-if="$store.getters.login_type != 'merchant'"
-              command="product-import"
-            >
+            <el-dropdown-item v-if="!IS_MERCHANT()" command="product-import">
               商品导入
             </el-dropdown-item>
             <el-dropdown-item command="stock-import"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+
         <el-dropdown @command="handleExport">
-          <el-button type="primary">
+          <el-button type="primary" plain>
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -1762,7 +1772,7 @@ export default {
         a.click()
       }
     },
-    handleImport(command) {
+    syncGoodsFromTaoBao(command) {
       this.$router.push({ path: `${this.$route.path}/${command}` })
     },
     async init() {
@@ -1784,8 +1794,14 @@ export default {
       this.getAllTagLists()
       this.getGoodsBranchList()
     },
+    handleImport(command) {
+      if (command === 'product-import') {
+        this.$router.push({ path: `${this.$route.path}/product-import` })
+      } else if (command === 'stock-import') {
+        this.$router.push({ path: `${this.$route.path}/stock-import` })
+      }
+    },
     handleExport(command) {
-      debugger
       if (command === 'product-info') {
         this.exportItemsData()
       } else if (command === 'product-tag') {

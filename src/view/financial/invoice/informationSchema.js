@@ -87,7 +87,7 @@ export const formSchema = (vm) =>
       {
         label: '开票人',
         key: 'seller_name',
-        type: 'input',
+        type: 'input'
       },
       {
         label: '收款人',
@@ -134,7 +134,7 @@ export const formSchema = (vm) =>
         key: 'seller_address',
         type: 'input',
         required: true,
-        maxlength:'255',
+        maxlength: '255',
         tip: '联系地址文字长度，请不要超过255个字'
       }
     ],

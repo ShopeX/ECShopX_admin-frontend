@@ -307,7 +307,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane v-if="false" label="微信服务号" name="offiaccount">
+        <el-tab-pane v-if="!VERSION_SHUYUN()" label="微信服务号" name="offiaccount">
           <el-table v-loading="loading" :data="authorizerData" style="width: 100%" :height="-200">
             <el-table-column prop="nick_name" label="公众号昵称" width="180" />
             <el-table-column prop="authorizer_appid" label="公众号APPID" width="180" />

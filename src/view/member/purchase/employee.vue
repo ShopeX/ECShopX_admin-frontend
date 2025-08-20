@@ -95,13 +95,13 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               //平台：来源店铺是非平台则隐藏
               return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
-                Object.keys(this.employeeForm).forEach(key => (this.employeeForm[key] = row[key]))
+                Object.keys(this.employeeForm).forEach((key) => (this.employeeForm[key] = row[key]))
                 this.addDialog = true
               }
             }
@@ -112,7 +112,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             //平台：来源店铺是非平台则隐藏
-            visible: row => {
+            visible: (row) => {
               return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
@@ -137,7 +137,7 @@ export default {
             name: '登录类型',
             key: 'auth_type',
             formatter: (value, { auth_type }, col) => {
-              const authType = VALIDATE_TYPES.find(item => item.value == auth_type)?.name
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
               return authType
             }
           },
@@ -299,7 +299,7 @@ export default {
   computed: {
     authType() {
       const { auth_type } =
-        this.companyList.find(item => item.id == this.employeeForm.enterprise_id) || {}
+        this.companyList.find((item) => item.id == this.employeeForm.enterprise_id) || {}
       return auth_type
     }
   },
@@ -313,7 +313,7 @@ export default {
     }).nextPage()
 
     if (this.$route.query.company_id) {
-      this.queryForm.enterprise_id = [Number(this.$route.query.company_id)]
+      this.queryForm.enterprise_id = [this.$route.query.company_id]
     }
   },
   methods: {

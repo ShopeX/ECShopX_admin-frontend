@@ -59,7 +59,7 @@ export default {
               market_price: 0
             }
           ],
-          pointGoods:[
+          pointGoods: [
             {
               imgUrl: '',
               linkPage: '',

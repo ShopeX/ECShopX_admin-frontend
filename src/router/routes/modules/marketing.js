@@ -246,11 +246,13 @@ const routes = [
           title: '自动化营销',
           permissions: ['marketing.membermarket.marketingactivity']
         },
-        component: () => import('@/view/member/activity/index'),
+        // component: () => import('@/view/member/activity/index'),
+        component: () => import('@/views/marketing/autoMarketing/activity-list'),
         children: [
           {
             path: 'editor/:type?',
-            component: () => import('@/view/member/activity/add')
+            // component: () => import('@/view/member/activity/add')
+            component: () => import('@/views/marketing/autoMarketing/_id')
           },
           {
             path: 'templ',

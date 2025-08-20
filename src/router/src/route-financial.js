@@ -138,8 +138,6 @@ export default {
       path: 'invoice/invoiceConfirmation',
       name: '专票确认书',
       component: () => import('@/view/financial/invoice/invoiceConfirmation')
-    },
-
-
+    }
   ]
 }

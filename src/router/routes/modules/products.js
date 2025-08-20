@@ -88,8 +88,9 @@ const routes = [
         },
         children: [
           {
-            path: 'edtior:itemId?',
-            component: () => import('@/view/mall/goods/audit/add'),
+            path: 'editor/:itemId?',
+            // component: () => import('@/view/mall/goods/audit/add'),
+            component: () => import('@/view/goods/index'),
             meta: {
               icon: 'icon-products',
               title: '商品编辑',

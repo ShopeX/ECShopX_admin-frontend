@@ -27,8 +27,8 @@
     }
   }
   .sku-item-group {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
 }
@@ -43,16 +43,16 @@
       >
         <el-checkbox-group v-model="item.checkedSku" @change="onSkuChange">
           <div class="sku-item-group">
-          <span v-for="sku in item.skuValue" :key="sku.attribute_value_id" class="sku-item">
-            <el-checkbox :label="sku.attribute_value_id">{{
-              sku.custom_attribute_value || sku.attribute_value
-            }}</el-checkbox>
-            <el-popover placement="top" trigger="click">
-              <div class="popover-edit">
-                <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
-              </div>
-              <el-link class="leading-none mx-3" slot="reference" icon="el-icon-edit" />
-            </el-popover>
+            <span v-for="sku in item.skuValue" :key="sku.attribute_value_id" class="sku-item">
+              <el-checkbox :label="sku.attribute_value_id">{{
+                sku.custom_attribute_value || sku.attribute_value
+              }}</el-checkbox>
+              <el-popover placement="top" trigger="click">
+                <div class="popover-edit">
+                  <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
+                </div>
+                <el-link class="leading-none mx-3" slot="reference" icon="el-icon-edit" />
+              </el-popover>
             </span>
           </div>
         </el-checkbox-group>
@@ -185,9 +185,14 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="发货时间">  
-        <template slot-scope="scope"> 
-          <el-input v-model="scope.row.delivery_time" :maxlength="60" size="mini" placeholder="发货时间" />
+      <el-table-column label="发货时间">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.delivery_time"
+            :maxlength="60"
+            size="mini"
+            placeholder="发货时间"
+          />
         </template>
       </el-table-column>
       <el-table-column label="条形码">
@@ -297,9 +302,14 @@
           <el-input v-model="scope.row.start_num" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="delivery_time" label="发货时间"> 
-        <template slot-scope="scope"> 
-          <el-input v-model="scope.row.delivery_time" :maxlength="60" size="mini" placeholder="发货时间" />
+      <el-table-column prop="delivery_time" label="发货时间">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.delivery_time"
+            :maxlength="60"
+            size="mini"
+            placeholder="发货时间"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="barcode" label="条形码">
@@ -391,7 +401,7 @@ export default {
           volume: '',
           supplier_goods_bn: '',
           tax_rate: '',
-          delivery_time:"",
+          delivery_time: ''
         }
       ],
       statusOption,
@@ -407,10 +417,10 @@ export default {
           //解决第一次渲染改数据时触发组件的验证报错
           this.isFirst = false
         } else {
-          this.bulkFilling.forEach(item => (item.approve_status = 'instock'))
+          this.bulkFilling.forEach((item) => (item.approve_status = 'instock'))
         }
         if (this.value.specItems.length) {
-          this.value.specItems.forEach(item => (item.approve_status = 'instock'))
+          this.value.specItems.forEach((item) => (item.approve_status = 'instock'))
         }
       }
     }
@@ -463,13 +473,13 @@ export default {
       const { skuValue = [], checkedSku = [] } =
         JSON.parse(JSON.stringify(this.value.skus))
           .reverse()
-          .find(item => item.isImage) || {}
+          .find((item) => item.isImage) || {}
       if (!skuValue) {
         return
       }
       this.value.skuItemImages = skuValue
         .filter(({ attribute_value_id }) => checkedSku.includes(attribute_value_id))
-        .map(item => {
+        .map((item) => {
           if (!value) {
             // 与前一次编辑的缓存数据合并
             const fd = this.value.skuItemImages.find(
@@ -553,7 +563,7 @@ export default {
         )
       }
       // 新生成的sku
-      specItems.forEach(item => {
+      specItems.forEach((item) => {
         const key = item.join('_')
         if (!_specItems.find(({ sku_id }) => sku_id == key)) {
           const {
@@ -571,7 +581,7 @@ export default {
             point_num,
             supplier_goods_bn,
             tax_rate,
-            delivery_time,
+            delivery_time
           } = item
           _specItems.push({
             sku_id: key,
@@ -596,7 +606,7 @@ export default {
         }
       })
       // 与前一次编辑的缓存数据合并
-      this.value.specItems = _specItems.map(item => {
+      this.value.specItems = _specItems.map((item) => {
         const fd = this.value.specItems.find(({ sku_id }) => sku_id == item.sku_id)
         if (fd) {
           return {
@@ -613,9 +623,8 @@ export default {
       const { skus } = this.value
       const specNames = []
       keys.forEach((key, index) => {
-        const { attribute_value, custom_attribute_value } = skus[index]?.skuValue?.find(
-          (s) => s?.attribute_value_id == key
-        ) || {}
+        const { attribute_value, custom_attribute_value } =
+          skus[index]?.skuValue?.find((s) => s?.attribute_value_id == key) || {}
         specNames.push(custom_attribute_value || attribute_value)
       })
       return specNames.join(' ')
@@ -637,10 +646,10 @@ export default {
         point_num,
         supplier_goods_bn,
         tax_rate,
-            delivery_time
+        delivery_time
       } = this.bulkFilling[0]
 
-      this.value.specItems.forEach(item => {
+      this.value.specItems.forEach((item) => {
         item.approve_status = approve_status
         item.store = store
         item.max_num = max_num

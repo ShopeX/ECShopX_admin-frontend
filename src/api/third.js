@@ -53,14 +53,14 @@ export function setWdtErpSetting(query) {
   })
 }
 
-export function getDmcrmSetting () {
+export function getDmcrmSetting() {
   return fetch({
     url: '/third/dmcrm/setting',
     method: 'get'
   })
 }
 
-export function setDmcrmSetting (query) {
+export function setDmcrmSetting(query) {
   return fetch({
     url: '/third/dmcrm/setting',
     method: 'post',

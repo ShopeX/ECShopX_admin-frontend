@@ -55,6 +55,8 @@ export const getUrlPathByLoginType = (path) => {
     return `/shopadmin${path}`
   } else if (IS_SUPPLIER()) {
     return `/supplier${path}`
+  } else if (IS_MERCHANT()) {
+    return `/merchant${path}`
   }
 }
 

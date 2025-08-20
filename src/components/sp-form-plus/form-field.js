@@ -238,7 +238,6 @@ export default {
         }
         return renderMap[type] || this.renderInput
       }
-
       if (typeof this.component === 'function') {
         return () =>
           this.component({

@@ -76,7 +76,10 @@ export const tableSchema = (vm) =>
         },
         visible: (val) => {
           //开票成功的线上  开票失败的线下 展示
-          return (val.invoice_status == 'success' && val.invoice_method == 'online') || (val.invoice_status == 'failed' && val.invoice_method != 'online')
+          return (
+            (val.invoice_status == 'success' && val.invoice_method == 'online') ||
+            (val.invoice_status == 'failed' && val.invoice_method != 'online')
+          )
         }
       },
       {
@@ -132,7 +135,7 @@ export const tableSchema = (vm) =>
                 <el-tooltip effect='dark' content='复制' placement='top-start'>
                   <i
                     class='el-icon-document-copy'
-                    style={{marginLeft:'6px'}}
+                    style={{ marginLeft: '6px' }}
                     onClick={() => {
                       vm.$copyText(row.order_id).then((res) => {
                         vm.onCopySuccess()
@@ -149,7 +152,7 @@ export const tableSchema = (vm) =>
               </div>
               <div class='order-time'>
                 <el-tooltip effect='dark' content='下单时间' placement='top-start'>
-                  <i class='el-icon-time' style={{marginRight:'6px'}} />
+                  <i class='el-icon-time' style={{ marginRight: '6px' }} />
                 </el-tooltip>
                 {moment(row.create_time * 1000).format('YYYY-MM-DD HH:mm:ss')}
               </div>
@@ -162,7 +165,7 @@ export const tableSchema = (vm) =>
         key: 'order_holder',
         width: '120',
         render(_, { row }) {
-          return <span> { vm.getOrderCategoryName(row.order_holder) } </span>
+          return <span> {vm.getOrderCategoryName(row.order_holder)} </span>
         }
       },
       {
@@ -170,7 +173,7 @@ export const tableSchema = (vm) =>
         key: 'invoice_amount',
         width: '120',
         render(_, { row }) {
-          return <span> { row.invoice_amount / 100 } </span>
+          return <span> {row.invoice_amount / 100} </span>
         }
       },
       {
@@ -206,7 +209,7 @@ export const tableSchema = (vm) =>
         key: 'invoice_type_code',
         width: '120',
         render(h, { row }) {
-          return <span> { invoice_type_code_map[row.invoice_type_code] } </span>
+          return <span> {invoice_type_code_map[row.invoice_type_code]} </span>
         }
       },
       {
@@ -403,9 +406,9 @@ export const confirmSchema = (vm) =>
         label: '邮箱',
         type: 'input',
         defaultValue: '',
-        required:true,
-        message:'请输入邮箱',
-        tip:'电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
+        required: true,
+        message: '请输入邮箱',
+        tip: '电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
       }
     ],
     vm

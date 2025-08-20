@@ -18,50 +18,44 @@
         <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
       </div>
 
-    <el-table
-      ref="tableTree"
-      :data="categoryList"
-      row-key="category_id"
-      border
-      lazy
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      :load="load"
-    >
-      <el-table-column label="分类名称" width="480">
-        <template slot-scope="scope">
-          <span
-            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-            style="display: inline-block; width: 24px"
-          />
-          <span>{{ scope.row.category_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类编号" prop="category_id" width="120" />
-      <el-table-column prop="sort" label="分类排序" width="140">
-        <template slot-scope="scope">
-          <div>{{ scope.row.sort }}</div>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类图片" width="200">
-        <template slot-scope="scope">
-          <div class="img-container">
-            <SpImage
-              v-if="scope.row.image_url"
-              :src="scope.row.image_url"
-              :width="48"
-              :height="48"
-            />
-            <span>{{ scope.row.category_name }}</span>
-          </div>
-        </template>
+      <el-table
+        ref="tableTree"
+        :data="categoryList"
+        row-key="category_id"
+        border
+        lazy
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :load="load"
+        width="100%"
+      >
+        <el-table-column label="" width="60"></el-table-column>
+        <el-table-column label="分类名称" prop="category_name">
+          <template slot-scope="scope">
+            <div class="whitespace-nowrap">
+              {{ scope.row.category_name }}
+            </div>
+          </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" width="140">
+        <el-table-column label="分类编号" prop="category_id" width="120" />
+        <el-table-column prop="sort" label="分类排序" width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
+        <el-table-column label="分类图片" width="200">
+          <template slot-scope="scope">
+            <div class="img-container">
+              <SpImage
+                v-if="scope.row.image_url"
+                :src="scope.row.image_url"
+                :width="48"
+                :height="48"
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="320">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -211,12 +205,12 @@ export default {
         {
           component: () => (
             <div>
-              <div style="margin-left: 8px; line-height: initial;">导购分润计算方式: </div>
-              <div class="form-item-tip">
+              <div style='margin-left: 8px; line-height: initial;'>导购分润计算方式: </div>
+              <div class='form-item-tip'>
                 【按比例分佣】商品最终金额 ×
                 百分比（其中商品最终金额为【支付金额-运费-商品优惠金额】）
               </div>
-              <div class="form-item-tip">【按金额分佣】固定金额分佣</div>
+              <div class='form-item-tip'>【按金额分佣】固定金额分佣</div>
             </div>
           )
         },
@@ -254,8 +248,7 @@ export default {
         template_name: 'yykweishop'
       }
       let { list } = await this.$api.wxa.getCustomPageList(params)
-      console.log(list, 'src/view/goods/saleCategory.vue-第197行')
-      list.forEach(element => {
+      list.forEach((element) => {
         ;(element.title = element.page_name), (element.value = element.id)
       })
       this.categoryFormList[4].options = list
@@ -347,7 +340,7 @@ export default {
         num: 99
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_params: JSON.stringify(data.map(item => item.attribute_id))
+        goods_params: JSON.stringify(data.map((item) => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -362,7 +355,7 @@ export default {
         islimitImgType: true
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_spec: JSON.stringify(data.map(item => item.attribute_id))
+        goods_spec: JSON.stringify(data.map((item) => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -371,7 +364,7 @@ export default {
         parent_id: pid,
         is_main_category: true
       })
-      const list = res.map(item => {
+      const list = res.map((item) => {
         return {
           ...item,
           image_url: item.image_url || '',

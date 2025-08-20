@@ -88,12 +88,17 @@ import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
 
 export default {
   data() {
-    return {
-      pane_list: [
+    const paneList = [
       { name: 'upload_tb_items', label: '上传淘宝链接' },
-        { name: 'supplier_goods', label: '上传实体类商品' },
-        { name: 'employee_purchase_activity_items', label: '上传内购活动商品' }
-      ],
+      { name: 'supplier_goods', label: '上传实体类商品' }
+    ]
+
+    if (!IS_SUPPLIER()) {
+      paneList.push({ name: 'employee_purchase_activity_items', label: '上传内购活动商品' })
+    }
+
+    return {
+      pane_list: paneList,
       loading: false,
       total_count: 0,
       pageSize: 20,
@@ -126,7 +131,7 @@ export default {
         ...this.getDistributorId(),
         file_type: IS_SUPPLIER() ? 'supplier_goods' : 'normal_goods'
       }
-      if(this.activeName == 'upload_tb_items'){
+      if (this.activeName == 'upload_tb_items') {
         params.file_type = 'upload_tb_items'
       }
       handleUploadFile(params).then((response) => {
@@ -146,7 +151,7 @@ export default {
         file_type: IS_SUPPLIER() ? 'supplier_goods' : 'normal_goods',
         file_name: fileName
       }
-      if(this.activeName == 'upload_tb_items'){
+      if (this.activeName == 'upload_tb_items') {
         params.file_type = 'upload_tb_items'
       }
       exportUploadTemplate(params).then((response) => {
@@ -167,7 +172,7 @@ export default {
     },
     exportErrorFile(id, fileType) {
       let params = { file_type: fileType }
-      exportUploadErrorFile(id, params).then(response => {
+      exportUploadErrorFile(id, params).then((response) => {
         if (response.data.data.file) {
           var a = document.createElement('a')
           a.href = response.data.data.file
@@ -195,7 +200,7 @@ export default {
         pageSize: this.pageSize,
         ...this.getDistributorId()
       }
-      getUploadLists(params).then(response => {
+      getUploadLists(params).then((response) => {
         this.uploadList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

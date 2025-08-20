@@ -529,7 +529,7 @@ export default {
       getItemsList({
         page: current,
         pageSize: 20
-      }).then(res => {
+      }).then((res) => {
         let data = res.data.data.list
         if (data.length <= 0) {
           for (let j = 0; j < this.goods.length; j++) {
@@ -559,7 +559,7 @@ export default {
       getCardList({
         page_no: current,
         page_size: 20
-      }).then(res => {
+      }).then((res) => {
         var data = res.data.data.list
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < this.coupons.length; j++) {
@@ -728,12 +728,12 @@ export default {
       this.$router.back(-1)
     },
     getGradeList() {
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var params = { is_disabled: 'false' }
-          listVipGrade(params).then(res => {
+          listVipGrade(params).then((res) => {
             let vipData = res.data.data
-            vipData.forEach(item => {
+            vipData.forEach((item) => {
               item.grade_id = item.lv_type
             })
 

@@ -2,16 +2,17 @@
   <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
+
       <el-tabs v-model="activeTab" type="card" @tab-click="fetchPageList">
         <el-tab-pane label="自定义页面" name="normal" />
         <el-tab-pane label="我的页面" name="my" />
       </el-tabs>
-      <el-row :gutter="20">
-        <el-col :span="4">
-          <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
-        </el-col>
-      </el-row>
-      <el-table v-loading="loading" :data="list">
+
+      <div class="action-container">
+        <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
+      </div>
+
+      <el-table border v-loading="loading" :data="list">
         <el-table-column prop="id" label="页面id" />
         <el-table-column prop="page_name" label="页面名称" />
         <el-table-column label="是否启用">
@@ -30,7 +31,7 @@
             </el-button>
             <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl">
+                <img class="page-code" :src="appCodeUrl" />
                 <div class="page-btns">
                   <el-button
                     type="primary"
@@ -80,7 +81,7 @@
           <el-form-item label="页面名称">
             <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
           </el-form-item>
-          <el-form-item label="页面类型">
+          <!-- <el-form-item label="页面类型">
             <el-select v-model="pageForm.page_type" placeholder="请选择页面类型" style="width: 55%">
               <el-option
                 v-for="item in pageOption"
@@ -89,7 +90,7 @@
                 :value="item.value"
               />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="页面描述">
             <el-input
               v-model="pageForm.page_description"
@@ -113,7 +114,7 @@
                 v-if="pageForm.page_share_imageUrl"
                 :src="wximageurl + pageForm.page_share_imageUrl"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
             <imgPicker
@@ -277,7 +278,7 @@ export default {
           page_share_desc: '',
           page_share_imageUrl: '',
           is_open: true,
-          page_type: 'normal'
+          page_type: this.activeTab
         }
       }
     },

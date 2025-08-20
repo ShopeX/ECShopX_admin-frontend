@@ -315,7 +315,7 @@ export default {
           key: 'is_medicine',
           type: 'radio',
           isShow: () => this.is_pharma_industry,
-          disabled: () => !this.is_pharma_industry || this.$route.params.itemId,
+          disabled: () => !this.is_pharma_industry || !!this.$route.params.itemId,
           options: [
             {
               label: '0',
@@ -437,7 +437,7 @@ export default {
           label: '是否处方药',
           key: 'is_prescription',
           isShow: () => this.form.is_medicine == '1',
-          disabled: () => this.$route.params.itemId,
+          disabled: () => !!this.$route.params.itemId,
           type: 'switch',
           // options: [
           //   { label: '1', name: '是' },
@@ -1298,7 +1298,7 @@ export default {
           let t = {
             skuId: attribute_id,
             skuName: attribute_name,
-            isImage: JSON.parse(is_image),
+            isImage: Boolean(is_image),
             skuValue: list.map(({ attribute_value_id, attribute_value }) => {
               if (specValueIds.find(({ spec_value_id }) => spec_value_id == attribute_value_id)) {
                 checkedSku.push(attribute_value_id)

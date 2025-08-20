@@ -24,7 +24,7 @@
         :size="formType === 'searchForm' ? 'small' : ''"
         :tip="item.tip"
         :value="formData[item.fieldName]"
-        @input="val => handleFieldChange(item.fieldName, val)"
+        @input="(val) => handleFieldChange(item.fieldName, val)"
       />
 
       <template v-if="showDefaultActions">
@@ -114,9 +114,10 @@ export default {
   data() {
     const formData = {}
     this.formItems
-      .filter(item => item.component !== 'group')
-      .forEach(item => {
-        formData[item.fieldName] = typeof item.value === 'undefined' ? '' : item.value
+      .filter((item) => item.component !== 'group')
+      .forEach((item) => {
+        formData[item.fieldName] =
+          typeof item.value === 'undefined' ? this.value?.[item.fieldName] || '' : item.value
       })
     return {
       formData,
@@ -144,6 +145,15 @@ export default {
       },
       deep: true, // 深度监听对象内部变化
       immediate: true // 初始化时不触发
+    },
+    value: {
+      handler(val) {
+        Object.keys(val).forEach((key) => {
+          this.formData[key] = val[key]
+        })
+      },
+      deep: true,
+      immediate: false
     }
   },
   methods: {

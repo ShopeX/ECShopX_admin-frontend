@@ -40294,9 +40294,394 @@
 		"en": "View more jump addresses",
 		"zh-tw": "查看更多跳轉地址"
 	},
-	"iijhd54": {
-		"zh-cn": "返回首页",
-		"en": "",
-		"zh-tw": ""
+	"2xhryif": {
+		"zh-cn": "订单商品签收后，且在订单创建 ",
+		"en": "After the order product is signed and created",
+		"zh-tw": "訂單商品簽收後，且在訂單創建"
+	},
+	"83isxt7": {
+		"zh-cn": " 添加页面1 ",
+		"en": "Add Page 1",
+		"zh-tw": "添加頁面1"
+	},
+	"ojpt2": {
+		"zh-cn": "账户",
+		"en": "Account",
+		"zh-tw": "賬戶"
+	},
+	"fkq673": {
+		"zh-cn": "李学南",
+		"en": "Li Xuenan",
+		"zh-tw": "李學南"
+	},
+	"n89wi9g": {
+		"zh-cn": "昵称长度在 2 到 20 个字符",
+		"en": "The nickname length is between 2 and 20 characters",
+		"zh-tw": "暱稱長度在 2 到 20 個字符"
+	},
+	"fm6z2": {
+		"zh-cn": "头像",
+		"en": "Avatar",
+		"zh-tw": "頭像"
+	},
+	"bi2a3814": {
+		"zh-cn": "建议尺寸：200x200像素，支持 jpg、png 格式，文件大小不超过 2MB",
+		"en": "Suggested size: 200x200 pixels, supports jpg and png formats, file size should not exceed 2MB",
+		"zh-tw": "建議尺寸：200x200像素，支持 jpg、png 格式，文件大小不超過 2MB"
+	},
+	"c2of9i4": {
+		"zh-cn": "密码修改",
+		"en": "Password modification",
+		"zh-tw": "密碼修改"
+	},
+	"ai7i2u4": {
+		"zh-cn": "修改密码",
+		"en": "Change password",
+		"zh-tw": "修改密碼"
+	},
+	"7j1yla6": {
+		"zh-cn": "请输入新密码",
+		"en": "Please enter the new password",
+		"zh-tw": "請輸入新密碼"
+	},
+	"sua2rea": {
+		"zh-cn": "密码长度不能少于6位",
+		"en": "The password length must not be less than 6 characters",
+		"zh-tw": "密碼長度不能少於6位"
+	},
+	"x0wazqb": {
+		"zh-cn": "密码必须包含字母和数字",
+		"en": "The password must contain letters and numbers",
+		"zh-tw": "密碼必須包含字母和數字"
+	},
+	"gg3yt0i": {
+		"zh-cn": "密码长度至少6位，必须包含字母和数字",
+		"en": "The password must be at least 6 characters long and include both letters and numbers",
+		"zh-tw": "密碼長度至少6位，必須包含字母和數字"
+	},
+	"frqaup4": {
+		"zh-cn": "确认密码",
+		"en": "Confirm password",
+		"zh-tw": "確認密碼"
+	},
+	"hrcq067": {
+		"zh-cn": "请输入确认密码",
+		"en": "Please enter the confirmation password",
+		"zh-tw": "請輸入確認密碼"
+	},
+	"785btda": {
+		"zh-cn": "两次输入的密码不一致",
+		"en": "The passwords entered twice are inconsistent",
+		"zh-tw": "兩次輸入的密碼不一致"
+	},
+	"vvnqko8": {
+		"zh-cn": "用户信息更新成功",
+		"en": "The user information has been updated successfully",
+		"zh-tw": "用戶信息更新成功"
+	},
+	"vp92t26": {
+		"zh-cn": "更新失败: ",
+		"en": "Update failed",
+		"zh-tw": "更新失敗:"
+	},
+	"wgqi829": {
+		"zh-cn": "更新成功,重新登录",
+		"en": "Update successful. Log in again",
+		"zh-tw": "更新成功,重新登錄"
+	},
+	"hihfp5c": {
+		"zh-cn": "更新成功，重新登录后生效",
+		"en": "The update was successful. It will take effect after you log in again",
+		"zh-tw": "更新成功，重新登錄後生效"
+	},
+	"ar13stc": {
+		"zh-cn": "密码修改成功，请重新登录",
+		"en": "Your password has been modified successfully. Please log in again",
+		"zh-tw": "密碼修改成功，請重新登錄"
+	},
+	"ph2gnu6": {
+		"zh-cn": "密码修改失败",
+		"en": "Password modification failed.",
+		"zh-tw": "密碼修改失敗"
+	},
+	"det3dc4": {
+		"zh-cn": "更新失败",
+		"en": "Update failed",
+		"zh-tw": "更新失敗"
+	},
+	"e4h9wh4": {
+		"zh-cn": "活动内容",
+		"en": "Event content",
+		"zh-tw": "活動內容"
+	},
+	"u4qbeb7": {
+		"zh-cn": "请选择会员等级",
+		"en": "Please select the membership level",
+		"zh-tw": "請選擇會員等級"
+	},
+	"dzch7w4": {
+		"zh-cn": "永久有效",
+		"en": "Permanently valid",
+		"zh-tw": "永久有效"
+	},
+	"f7ous111": {
+		"zh-cn": "恭喜您成为 {品牌} 的 {付费会员等级名称}，特此为您奉上 {赠送内容}",
+		"en": "Congratulations on becoming a {paid membership level name} of {brand}. We hereby present you with {complimentary content}.",
+		"zh-tw": "恭喜您成爲 {品牌} 的 {付費會員等級名稱}，特此爲您奉上 {贈送內容}"
+	},
+	"7axpjxc": {
+		"zh-cn": " 请确保短信账户余额充足",
+		"en": "Please ensure that the balance in your SMS account is sufficient",
+		"zh-tw": "請確保短信賬戶餘額充足"
+	},
+	"fgg803": {
+		"zh-cn": "星期一",
+		"en": "Monday",
+		"zh-tw": "星期一"
+	},
+	"fggbw3": {
+		"zh-cn": "星期二",
+		"en": "Tuesday",
+		"zh-tw": "星期二"
+	},
+	"fgg893": {
+		"zh-cn": "星期三",
+		"en": "Wednesday",
+		"zh-tw": "星期三"
+	},
+	"fghyz3": {
+		"zh-cn": "星期四",
+		"en": "Thursday",
+		"zh-tw": "星期四"
+	},
+	"fggc43": {
+		"zh-cn": "星期五",
+		"en": "Friday",
+		"zh-tw": "星期五"
+	},
+	"fggwd3": {
+		"zh-cn": "星期六",
+		"en": "Saturday",
+		"zh-tw": "星期六"
+	},
+	"fgkxx3": {
+		"zh-cn": "星期日",
+		"en": "Sunday",
+		"zh-tw": "星期日"
+	},
+	"liv2": {
+		"zh-cn": "1月",
+		"en": "\"January",
+		"zh-tw": "1月"
+	},
+	"ljq2": {
+		"zh-cn": "2月",
+		"en": "\"February",
+		"zh-tw": "2月"
+	},
+	"lkl2": {
+		"zh-cn": "3月",
+		"en": "March",
+		"zh-tw": "3月"
+	},
+	"llg2": {
+		"zh-cn": "4月",
+		"en": "April",
+		"zh-tw": "4月"
+	},
+	"lmb2": {
+		"zh-cn": "5月",
+		"en": "May",
+		"zh-tw": "5月"
+	},
+	"ln62": {
+		"zh-cn": "6月",
+		"en": "June",
+		"zh-tw": "6月"
+	},
+	"lo12": {
+		"zh-cn": "7月",
+		"en": "July",
+		"zh-tw": "7月"
+	},
+	"low2": {
+		"zh-cn": "8月",
+		"en": "August",
+		"zh-tw": "8月"
+	},
+	"lpr2": {
+		"zh-cn": "9月",
+		"en": "September",
+		"zh-tw": "9月"
+	},
+	"1lu13": {
+		"zh-cn": "10月",
+		"en": "October",
+		"zh-tw": "10月"
+	},
+	"1luw3": {
+		"zh-cn": "11月",
+		"en": "November",
+		"zh-tw": "11月"
+	},
+	"1lvr3": {
+		"zh-cn": "12月",
+		"en": "December",
+		"zh-tw": "12月"
+	},
+	"las2": {
+		"zh-cn": "1日",
+		"en": "On the 1st",
+		"zh-tw": "1日"
+	},
+	"lbn2": {
+		"zh-cn": "2日",
+		"en": "On the 2nd",
+		"zh-tw": "2日"
+	},
+	"lci2": {
+		"zh-cn": "3日",
+		"en": "On the 3rd",
+		"zh-tw": "3日"
+	},
+	"ldd2": {
+		"zh-cn": "4日",
+		"en": "On the 4th",
+		"zh-tw": "4日"
+	},
+	"le82": {
+		"zh-cn": "5日",
+		"en": "The 5th",
+		"zh-tw": "5日"
+	},
+	"lf32": {
+		"zh-cn": "6日",
+		"en": "\"6th",
+		"zh-tw": "6日"
+	},
+	"lfy2": {
+		"zh-cn": "7日",
+		"en": "\"7th",
+		"zh-tw": "7日"
+	},
+	"lgt2": {
+		"zh-cn": "8日",
+		"en": "On the 8th",
+		"zh-tw": "8日"
+	},
+	"lho2": {
+		"zh-cn": "9日",
+		"en": "On the 9th",
+		"zh-tw": "9日"
+	},
+	"1lly3": {
+		"zh-cn": "10日",
+		"en": "On the 10th",
+		"zh-tw": "10日"
+	},
+	"1lmt3": {
+		"zh-cn": "11日",
+		"en": "On the 11th",
+		"zh-tw": "11日"
+	},
+	"1lno3": {
+		"zh-cn": "12日",
+		"en": "On the 12th",
+		"zh-tw": "12日"
+	},
+	"1loj3": {
+		"zh-cn": "13日",
+		"en": "On the 13th",
+		"zh-tw": "13日"
+	},
+	"1lpe3": {
+		"zh-cn": "14日",
+		"en": "On the 14th",
+		"zh-tw": "14日"
+	},
+	"1lq93": {
+		"zh-cn": "15日",
+		"en": "On the 15th",
+		"zh-tw": "15日"
+	},
+	"1lr43": {
+		"zh-cn": "16日",
+		"en": "On the 16th",
+		"zh-tw": "16日"
+	},
+	"1lrz3": {
+		"zh-cn": "17日",
+		"en": "On the 17th",
+		"zh-tw": "17日"
+	},
+	"1lsu3": {
+		"zh-cn": "18日",
+		"en": "On the 18th",
+		"zh-tw": "18日"
+	},
+	"1ltp3": {
+		"zh-cn": "19日",
+		"en": "\"19th",
+		"zh-tw": "19日"
+	},
+	"1mcn3": {
+		"zh-cn": "20日",
+		"en": "The 20th",
+		"zh-tw": "20日"
+	},
+	"1mdi3": {
+		"zh-cn": "21日",
+		"en": "On the 21st",
+		"zh-tw": "21日"
+	},
+	"1med3": {
+		"zh-cn": "22日",
+		"en": "The 22nd",
+		"zh-tw": "22日"
+	},
+	"1mf83": {
+		"zh-cn": "23日",
+		"en": "On the 23rd",
+		"zh-tw": "23日"
+	},
+	"1mg33": {
+		"zh-cn": "24日",
+		"en": "On the 24th",
+		"zh-tw": "24日"
+	},
+	"1mgy3": {
+		"zh-cn": "25日",
+		"en": "The 25th",
+		"zh-tw": "25日"
+	},
+	"1mht3": {
+		"zh-cn": "26日",
+		"en": "On the 26th",
+		"zh-tw": "26日"
+	},
+	"1mio3": {
+		"zh-cn": "27日",
+		"en": "On the 27th",
+		"zh-tw": "27日"
+	},
+	"1mjj3": {
+		"zh-cn": "28日",
+		"en": "On the 28th",
+		"zh-tw": "28日"
+	},
+	"1mke3": {
+		"zh-cn": "29日",
+		"en": "On the 29th",
+		"zh-tw": "29日"
+	},
+	"1n3c3": {
+		"zh-cn": "30日",
+		"en": "The 30th",
+		"zh-tw": "30日"
+	},
+	"1n473": {
+		"zh-cn": "31日",
+		"en": "On the 31st",
+		"zh-tw": "31日"
 	}
 }

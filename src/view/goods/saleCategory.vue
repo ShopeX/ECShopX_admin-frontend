@@ -26,17 +26,17 @@
         lazy
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :load="load"
+        width="100%"
       >
-        <el-table-column label="分类名称" width="480">
+        <el-table-column label="" width="60"></el-table-column>
+        <el-table-column label="分类名称" prop="category_name">
           <template slot-scope="scope">
-            <span
-              v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-              style="display: inline-block; width: 24px"
-            />
-            <span>{{ scope.row.category_name }}</span>
+            <div class="whitespace-nowrap">
+              {{ scope.row.category_name }}
+            </div>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" width="140">
+        <el-table-column prop="sort" label="分类排序" width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
@@ -53,8 +53,7 @@
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="一级分类模版" width="200" prop="customize_page_name" /> -->
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="320">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link

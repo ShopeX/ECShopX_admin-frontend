@@ -34,10 +34,16 @@
           <el-avatar :size="32" :src="accountAvatar" />
         </div>
         <el-dropdown-menu slot="dropdown" style="width: 200px">
-          <el-dropdown-item>
+          <el-dropdown-item command="user-center">
             <div class="flex items-center gap-2">
               <SpIcon name="user" :size="16" />
               <span>个人中心</span>
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item command="password">
+            <div class="flex items-center gap-2">
+              <SpIcon name="key" :size="16" />
+              <span>修改密码</span>
             </div>
           </el-dropdown-item>
           <el-dropdown-item divided command="logout">
@@ -70,6 +76,8 @@
 import moment from 'moment'
 import { getBasePath, IS_DISTRIBUTOR } from '@/utils'
 import DEFAULT_USER from '@/assets/images/default-user.png'
+import UserInfo from './components/user-info.vue'
+import ChangePassword from './components/change-password.vue'
 import config from '../../../package.json'
 
 export default {
@@ -80,8 +88,11 @@ export default {
     }
   },
   computed: {
+    accountInfo() {
+      return this.$store.state.user.accountInfo
+    },
     accountAvatar() {
-      return this.$store.state.user?.accountInfo?.head_portrait || DEFAULT_USER
+      return this.$store.state.user.accountInfo?.head_portrait || DEFAULT_USER
     }
   },
   async mounted() {
@@ -105,13 +116,61 @@ export default {
     async handleCommand(command) {
       if (command === 'logout') {
         await this.$confirm('确定退出登录吗？', '提示')
-        await this.$api.login.getAuthorizelogout()
-        await this.$api.login.invalidateToken()
-        this.$store.commit('user/logout')
-        this.$store.commit('system/logout')
-        const basePath = getBasePath()
-        this.$router.push(basePath ? `/${basePath}/login` : '/login')
+        this.handleLogout()
+      } else if (command === 'user-center') {
+        const userInfo = {
+          account: this.accountInfo.mobile,
+          nickname: this.accountInfo.username,
+          avatar: this.accountInfo.head_portrait || ''
+        }
+        console.log('accountInfo', userInfo)
+        await this.$dialog.open({
+          buttonConfirm: {
+            text: '保存'
+          },
+          title: '个人信息',
+          content: <UserInfo ref='userInfoForm' value={userInfo} />,
+          size: 'mini',
+          confirmBefore: async () => {
+            try {
+              await this.$refs.userInfoForm.onSubmit()
+              setTimeout(async () => {
+                this.handleLogout()
+              }, 1000)
+            } catch (error) {
+              throw new Error(error)
+            }
+          }
+        })
+      } else if (command === 'password') {
+        if (this.accountInfo.logintype === 'admin') {
+          window.location.href = 'https://account.shopex.cn/account/security'
+        } else {
+          await this.$dialog.open({
+            title: '修改密码',
+            content: <ChangePassword ref='changePasswordForm' />,
+            size: 'mini',
+            confirmBefore: async () => {
+              try {
+                await this.$refs.changePasswordForm.onSubmit()
+                setTimeout(async () => {
+                  this.handleLogout()
+                }, 1000)
+              } catch (error) {
+                throw new Error(error)
+              }
+            }
+          })
+        }
       }
+    },
+    async handleLogout() {
+      const basePath = getBasePath()
+      await this.$api.login.getAuthorizelogout()
+      await this.$api.login.invalidateToken()
+      this.$store.commit('user/logout')
+      this.$store.commit('system/logout')
+      this.$router.push(basePath ? `/${basePath}/login` : '/login')
     },
     handleShopList() {
       this.$router.push('/shopadmin/shoplist')
@@ -124,10 +183,10 @@ export default {
         title: '系统信息',
         content: (
           <div>
-            <el-descriptions column={3} border size="medium">
-              {this.systemInfo.map(item => (
+            <el-descriptions column={3} border size='medium'>
+              {this.systemInfo.map((item) => (
                 <el-descriptions-item>
-                  <template slot="label">{item.label}</template>
+                  <template slot='label'>{item.label}</template>
                   <span>{item.value}</span>
                 </el-descriptions-item>
               ))}

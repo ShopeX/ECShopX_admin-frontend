@@ -101,6 +101,7 @@
 
 <script>
 import { createSetting } from '@shopex/finder'
+import { getUrlPathByLoginType } from '@/utils'
 import { VALIDATE_TYPES } from './consts'
 
 export default {
@@ -140,8 +141,8 @@ export default {
           component: () => {
             return (
               <el-alert
-                title="请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。"
-                type="warning"
+                title='请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。'
+                type='warning'
                 closable={false}
               ></el-alert>
             )
@@ -163,12 +164,12 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
-                Object.keys(this.companyForm).forEach(key => (this.companyForm[key] = row[key]))
+                Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
                 this.companyForm.is_employee_check_enabled =
                   this.companyForm.is_employee_check_enabled == 'true'
                 this.isShowFooter = true
@@ -181,12 +182,12 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return this.IS_ADMIN() && row.distributor_id != '0'
             },
             action: {
               handler: async ([row]) => {
-                Object.keys(this.companyForm).forEach(key => (this.companyForm[key] = row[key]))
+                Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
                 this.companyForm.is_employee_check_enabled =
                   this.companyForm.is_employee_check_enabled == 'true'
                 this.isShowFooter = false
@@ -199,7 +200,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
@@ -244,12 +245,7 @@ export default {
             // },
             action: {
               handler: async ([row]) => {
-                window.open(
-                  `${
-                    this.IS_DISTRIBUTOR() ? '/shopadmin' : ''
-                  }/applications/ec/employee?company_id=${row.id}`,
-                  '_blank'
-                )
+                window.open(`${getUrlPathByLoginType(`/applications/enterprise-purchase/staff-management?company_id=${row.id}`)}`, '_blank')
               }
             }
           }
@@ -306,7 +302,7 @@ export default {
             name: '登录类型',
             key: 'auth_type',
             formatter: (value, { auth_type }, col) => {
-              const authType = VALIDATE_TYPES.find(item => item.value == auth_type)?.name
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
               return authType
             }
           },
@@ -321,7 +317,7 @@ export default {
                   'inactive-value': '1'
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.member.updateCompanyStatus({
                       enterprise_id: row.id,
                       disabled: e
@@ -380,9 +376,9 @@ export default {
           component: () => (
             <SpInput
               v-model={this.companyForm.sort}
-              class="sort-input"
-              width="100px"
-              suffix="选择器中的企业展示顺序，数字越小越靠前"
+              class='sort-input'
+              width='100px'
+              suffix='选择器中的企业展示顺序，数字越小越靠前'
             />
           )
         },
@@ -583,7 +579,7 @@ export default {
           link.download = this.qrcodeName + '.png'
           link.click()
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('图片加载失败:', error)
         })
     },

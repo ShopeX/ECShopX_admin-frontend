@@ -89,7 +89,6 @@ function generateRoutes(options) {
 
 async function generateAccess(options) {
   const { router, routes } = options
-
   // 生成路由
   const accessibleRoutes = await generateRoutes(options)
   accessibleRoutes.forEach((route) => {

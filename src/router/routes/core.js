@@ -1,6 +1,5 @@
 import { AuthPageLayout } from '@/layout'
-import { BasicLayout ,FullLayout} from '@/layout/basic'
-
+import { BasicLayout, FullLayout } from '@/layout/basic'
 
 /** 全局404页面 */
 const fallbackNotFoundRoute = {
@@ -23,22 +22,6 @@ const fallbackNotFoundRoute = {
 }
 
 const coreRoutes = [
-  {
-    component: BasicLayout,
-    meta: {
-      title: 'Authentication'
-    },
-    name: 'authentication',
-    redirect: '/dashboard', 
-    path: '/',
-    children: [
-      {
-        name: 'dashboard',
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index.vue')
-      }
-    ]
-  },
   {
     name: 'Login',
     path: '/login',

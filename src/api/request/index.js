@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '@/store'
 import router from '@/router'
 import { isObject } from '@/utils'
+import { langMap } from '@/i18n'
 import { RequestClient } from './request'
 
 // 请求队列
@@ -49,6 +50,12 @@ function createRequestClient() {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
+      // 多语言处理
+      const lang = window.localStorage.getItem('lang')
+      if (lang) {
+        config.headers['Accept-Language'] = langMap[lang]
+      }
+
       if (config.method === 'get') {
         config.params = {
           ...config.params,
@@ -63,6 +70,7 @@ function createRequestClient() {
         config.params = params
         delete config.data
       }
+
       return config
     }
   })

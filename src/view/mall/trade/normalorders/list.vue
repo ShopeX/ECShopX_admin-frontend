@@ -1311,7 +1311,8 @@ export default {
         }
       ],
       selectList: [],
-      is_pharma_industry: false
+      is_pharma_industry: false,
+      jstErpSetting: {}
     }
   },
 
@@ -1349,7 +1350,7 @@ export default {
     const { result } = await this.$api.trade.isBindOMS()
     this.isBindOMS = result
   },
-  mounted() {
+  async mounted() {
     this.origin = window.location.origin
     const { tab, order_id } = this.$route.query
     if (tab) {
@@ -1359,6 +1360,7 @@ export default {
       this.params.order_id = order_id
     }
     this.getBaseSetting()
+    await this.getJstErpSetting()
     this.fetchList()
     this.getOrderSourceList()
     this.getLogisticsList()
@@ -1370,6 +1372,11 @@ export default {
     })
   },
   methods: {
+    async getJstErpSetting() {
+      const res = await this.$api.third.getJstErpSetting()
+      console.log(`getJstErpSetting:`, res)
+      this.jstErpSetting = res
+    },
     async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
       this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
@@ -1568,7 +1575,10 @@ export default {
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
             receipt_type != 'ziti' &&
-            cancel_status != 'WAIT_PROCESS' //待退款不展示发货按钮
+            cancel_status != 'WAIT_PROCESS' &&
+            !this.jstErpSetting?.is_open 
+            //待退款不展示发货按钮
+            // 打开了聚水潭不显示
             // && this.login_type == 'supplier'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })

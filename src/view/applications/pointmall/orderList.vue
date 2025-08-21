@@ -266,7 +266,8 @@
                   v-if="
                     scope.row.receipt_type == 'logistics' &&
                     scope.row.order_status == 'PAYED' &&
-                    scope.row.delivery_status != 'DONE'
+                    scope.row.delivery_status != 'DONE' &&
+                    !jstErpSetting?.is_open
                   "
                   type="text"
                   @click="deliveryAction(scope.row)"
@@ -799,7 +800,8 @@ export default {
       downloadName: '',
       deliveryVisibleNew: false,
       datapass_block: 1,
-      exportTab: ''
+      exportTab: '',
+      jstErpSetting: {}
     }
   },
   computed: {
@@ -819,8 +821,14 @@ export default {
     this.getStatus()
     this.getOrders(this.params)
     this.getAllSourcesList()
+    this.getJstErpSetting()
   },
   methods: {
+    getJstErpSetting() {
+      this.$api.third.getJstErpSetting().then((res) => {
+        this.jstErpSetting = res
+      })
+    },
     onCopy() {
       this.$notify({
         message: '复制成功',

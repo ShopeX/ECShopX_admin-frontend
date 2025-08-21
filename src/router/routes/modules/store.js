@@ -104,7 +104,7 @@ const routes = [
           title: '进店规则',
           permissions: ['store.storemanager.storerules']
         },
-        component: () => import('@/views/store/store-rules')
+        component: () => import('@/views/store/storeRules/store-rules')
       },
       {
         name: 'storeManageRefundAddress',

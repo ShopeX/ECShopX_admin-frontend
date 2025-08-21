@@ -197,7 +197,7 @@
           上传商品到旺店通
         </el-button>
         <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
-          <el-button type="primary">
+          <el-button type="primary" plain>
             同步商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">

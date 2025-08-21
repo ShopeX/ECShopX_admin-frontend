@@ -142,6 +142,7 @@
       </svg>
       <div class="text-center absolute bottom-[120px] left-1/2 -translate-x-1/2">
         <h1 class="text-[26px] text-gray-900">404 : 未找到访问页面</h1>
+        <el-button type="primary" @click="goBack">返回</el-button>
       </div>
     </div>
   </SpPage>
@@ -149,7 +150,12 @@
 
 <script>
 export default {
-  name: 'FallbackNotFound'
+  name: 'FallbackNotFound',
+  methods: {
+    goBack() {
+      this.$router.back()
+    }
+  }
 }
 </script>
 

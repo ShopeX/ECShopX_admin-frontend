@@ -98,8 +98,7 @@ async function generateAccess(options) {
 
   const basePath = getBasePath()
 
-  fallbackNotFoundRoute.path = basePath ? `/${basePath}` : '/'
-  console.log('fallbackNotFoundRoute', fallbackNotFoundRoute)
+  fallbackNotFoundRoute.path = `${basePath ? `/${basePath}` : ''}${fallbackNotFoundRoute.path}`
   router.addRoute(fallbackNotFoundRoute)
 
   const accessibleMenus = () => {}

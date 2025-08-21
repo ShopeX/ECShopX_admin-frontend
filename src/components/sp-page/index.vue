@@ -65,7 +65,12 @@ export default {
   },
   methods: {
     initStickyHeader() {
-      document.getElementById('page-container').addEventListener('scroll', this.handleScroll)
+      this.$nextTick(() => {
+        const pageContainer = document.getElementById('page-container')
+        if (pageContainer) {
+          pageContainer.addEventListener('scroll', this.handleScroll)
+        }
+      })
     },
     handleScroll() {
       if (!this.$refs.header) return

@@ -32816,7 +32816,7 @@
 	},
 	"juz394": {
 		"zh-cn": " 编辑 ",
-		"en": "\"Editor",
+		"en": "Editor",
 		"zh-tw": "編輯"
 	},
 	"ao6x3c5": {
@@ -32946,7 +32946,7 @@
 	},
 	"d7exy4": {
 		"zh-cn": " 关闭 ",
-		"en": "\"Close",
+		"en": "Close",
 		"zh-tw": "關閉"
 	},
 	"cp35x4": {
@@ -32976,7 +32976,7 @@
 	},
 	"d4rgte5": {
 		"zh-cn": " 搜 索 ",
-		"en": "\"Search\"",
+		"en": "Search",
 		"zh-tw": "搜 索"
 	},
 	"flzk9x1f": {
@@ -33116,7 +33116,7 @@
 	},
 	"fhh3r4": {
 		"zh-cn": " 投放 ",
-		"en": "\"Release\"",
+		"en": "Release",
 		"zh-tw": "投放"
 	},
 	"hy1k3": {
@@ -33161,7 +33161,7 @@
 	},
 	"4tu6mn7": {
 		"zh-cn": " 赠送优惠券 ",
-		"en": "\"Gift coupon",
+		"en": "Gift coupon",
 		"zh-tw": "贈送優惠券"
 	},
 	"s2rjfj6": {
@@ -33251,7 +33251,7 @@
 	},
 	"euf53": {
 		"zh-cn": " 付费",
-		"en": "\"Pay",
+		"en": "Pay",
 		"zh-tw": "付費"
 	},
 	"cx85385": {
@@ -33331,7 +33331,7 @@
 	},
 	"mvv65j6": {
 		"zh-cn": " 选择企业 ",
-		"en": "\"Choose an enterprise",
+		"en": "Choose an enterprise",
 		"zh-tw": "選擇企業"
 	},
 	"59roon8": {
@@ -40683,5 +40683,60 @@
 		"zh-cn": "31日",
 		"en": "On the 31st",
 		"zh-tw": "31日"
+	},
+	"hq9snq4": {
+		"zh-cn": "规则配置",
+		"en": "Rule configuration",
+		"zh-tw": "規則配置"
+	},
+	"a5gsvwp": {
+		"zh-cn": "从上到下权重由大到小，拖拽蓝色部分可进行优先级排序",
+		"en": "From top to bottom, the weights are from large to small. Drag the blue part to sort the priority",
+		"zh-tw": "從上到下權重由大到小，拖拽藍色部分可進行優先級排序"
+	},
+	"qso623f": {
+		"zh-cn": "导购物料进店（需开通导购应用）",
+		"en": "Shopping guide materials entering the store (the shopping guide application needs to be activated)",
+		"zh-tw": "導購物料進店（需開通導購應用）"
+	},
+	"b2qlnwh": {
+		"zh-cn": "进入白名单店铺（需开启店铺白名单）",
+		"en": "Enter the whitelist store (the store whitelist needs to be enabled)",
+		"zh-tw": "進入白名單店鋪（需開啓店鋪白名單）"
+	},
+	"ph8ugxi": {
+		"zh-cn": "进入专属导购所属店（需开通导购应用）",
+		"en": "Enter the store where the dedicated shopping assistant belongs (the shopping assistant application needs to be activated)",
+		"zh-tw": "進入專屬導購所屬店（需開通導購應用）"
+	},
+	"l2ymjid": {
+		"zh-cn": "进入用户专属导购的归属店铺",
+		"en": "Enter the store where the user's exclusive shopping guide belongs",
+		"zh-tw": "進入用戶專屬導購的歸屬店鋪"
+	},
+	"th98enl": {
+		"zh-cn": "从上到下权重由大到小，拖拽可进行优先级排序",
+		"en": "From top to bottom, the weights are from large to small. Dragging can be used for priority sorting",
+		"zh-tw": "從上到下權重由大到小，拖拽可進行優先級排序"
+	},
+	"x1pwp0a": {
+		"zh-cn": " 导购参数保留时长 ",
+		"en": "Retention duration of sales assistant parameters",
+		"zh-tw": "導購參數保留時長"
+	},
+	"4ev2ow7": {
+		"zh-cn": " ×24小时 ",
+		"en": "×24 hours",
+		"zh-tw": "×24小時"
+	},
+	"pffdgy8": {
+		"zh-cn": " × 24小时 ",
+		"en": "× 24 hours",
+		"zh-tw": "× 24小時"
+	},
+	"c8q1uig": {
+		"zh-cn": "根据用户LBS定位，进入附近店铺",
+		"en": "Based on the user's LBS positioning, enter nearby stores",
+		"zh-tw": "根據用戶LBS定位，進入附近店鋪"
 	}
 }

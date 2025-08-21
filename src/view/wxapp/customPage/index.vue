@@ -296,7 +296,7 @@ export default {
       const params = {
         page_name,
         page_description,
-        is_open,
+        is_open: is_open,
         page_share_title,
         page_share_desc,
         page_share_imageUrl,

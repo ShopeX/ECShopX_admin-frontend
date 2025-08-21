@@ -33,7 +33,6 @@ function setupAccessGuard(router) {
       })
     }
 
-
     const hasToken = store.state.user.token
     if (!hasToken) {
       if (/\/login$/.test(to.path)) {
@@ -48,7 +47,6 @@ function setupAccessGuard(router) {
       }
       return
     }
-
     // 如果路径在核心路由中，直接放行
     if (coreRoutesNames.includes(to.path) || to.name === 'FallbackNotFound') {
       next()

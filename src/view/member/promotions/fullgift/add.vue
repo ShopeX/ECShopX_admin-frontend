@@ -352,6 +352,7 @@ import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     GoodsSelect,
@@ -360,6 +361,9 @@ export default {
     Treeselect
   },
   inject: ['refresh'],
+  computed: {
+    ...mapGetters(['shopId'])
+  },
   data() {
     return {
       is_distributor: false,
@@ -739,7 +743,9 @@ export default {
       this.relGifts = []
       this.addNum = key
       const ids = this.conditionValue[key].relGifts.map(({ item_id }) => item_id)
-      const { data } = await this.$picker.goods()
+      const { data } = await this.$picker.goods({
+        queryParams:{distributor_id: this.shopId}
+      })
       let list = [...this.conditionValue[key].relGifts, ...data]
 
       //去重

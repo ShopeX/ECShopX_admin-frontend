@@ -427,12 +427,12 @@
         <el-table-column prop="distributor_name" label="来源店铺" />
         <el-table-column prop="work_userid" label="导购">
           <template slot-scope="scope">
-            {{ scope.row.salespersonInfo?.work_userid }}
+            {{ scope.row.salesman_info?.work_userid }}
           </template>
         </el-table-column>
         <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
       </el-table-column> -->
-        <!-- <el-table-column prop="receiver_name" label="收货人" /> -->
+        <!-- <el-table-column prop="receiver_name" label="work_userid收货人" /> -->
         <template v-if="login_type != 'merchant'">
           <el-table-column v-if="!isMicorMall" label="订单类型">
             <template slot-scope="scope">

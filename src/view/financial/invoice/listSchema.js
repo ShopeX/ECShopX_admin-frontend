@@ -112,6 +112,26 @@ export const tableSchema = (vm) =>
             }
           )
         }
+      },
+      {
+        name: '重推开票',
+        key: 'reInvoice',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          handler: debounce(
+            ([row]) => {
+              vm.reInvoiceHandle(row)
+            },
+            2000,
+            {
+              leading: true
+            }
+          )
+        },
+        visible: (val) => {
+          return val.invoice_status == 'failed'
+        }
       }
     ],
     columns: [

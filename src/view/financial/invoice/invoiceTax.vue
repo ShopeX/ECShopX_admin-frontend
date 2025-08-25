@@ -4,7 +4,7 @@
         ref="finder"
         url="/order/category-taxrate/list"
         fixed-row-action
-        row-actions-width="80px"
+        row-actions-width="100px"
         :setting="tableSchema"
         :hooks="{
           beforeSearch
@@ -207,6 +207,17 @@ export default {
         category_ids:[],
         invoice_tax_rate:''
       }
+    },
+    deleteRowHandle(row) {
+      this.$confirm('确定删除该配置吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await api.trade.deleteCategoryTaxRate({ id: row.id })
+          this.$message.success('删除成功')
+          this.refresh()
+        })
     }
   }
 }

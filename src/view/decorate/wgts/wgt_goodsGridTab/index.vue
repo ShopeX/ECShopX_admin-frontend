@@ -42,7 +42,12 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                <template v-if="item.point">
+                  <span class="item-price">{{ item.point }}积分</span>
+                </template>
+                <template>
+                  <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                </template>
                 <SpPrice
                   class="line-price"
                   :value="item.market_price / 100"
@@ -69,7 +74,12 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                <template v-if="item.point">
+                  <span class="item-price">{{ item.point }}积分</span>
+                </template>
+                <template>
+                  <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                </template>
                 <SpPrice
                   class="line-price"
                   :value="item.market_price / 100"
@@ -147,7 +157,9 @@ export default {
       deep: true
     }
   },
-  mounted() {},
+  mounted() {
+    console.log(this.value, 'value-tab')
+  },
   methods: {
     handleClick(i) {
       this.checked = i

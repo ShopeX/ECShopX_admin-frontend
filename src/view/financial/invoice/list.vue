@@ -325,6 +325,17 @@ export default {
         this.dialogShow = false
         this.refresh()
       })
+    },
+    reInvoiceHandle(row) {
+      this.$confirm('确定重推开票', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          await this.$api.trade.retryFailedInvoice({  invoice_id: row.id })
+          this.$message.success('重推开票成功')
+          this.refresh()
+        })
     }
   }
 }

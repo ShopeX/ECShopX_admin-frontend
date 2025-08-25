@@ -307,7 +307,7 @@ export const formSchema = (vm) =>
             <div>
               <el-radio-group v-model={value['invoice_type_code']}>
                 <el-radio label='02'>电子普通发票</el-radio>
-                <el-radio label='01'>专业发票</el-radio>
+                <el-radio label='01'>专用发票</el-radio>
               </el-radio-group>
             </div>
           )

@@ -45,7 +45,7 @@ export const open_status_step_map = {
 }
 
 export  const invoice_type_code_map = {
-  '01':'专业发票',
+  '01':'专用发票',
   '02':'电子普通发票'
 }
 

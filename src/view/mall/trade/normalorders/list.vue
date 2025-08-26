@@ -331,7 +331,7 @@
         </el-table-column>
         <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
           <template slot-scope="scope">
-            {{ (scope.row.freight_fee || 0) / 100 }}
+            {{ (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
 

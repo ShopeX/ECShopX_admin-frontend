@@ -101,7 +101,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column v-if="orderInfo.prescription_status" prop="medicine_symptom_set" label="症状" width="160" >
+          <el-table-column v-if="orderInfo?.prescription_status" prop="medicine_symptom_set" label="症状" width="160" >
             <template slot-scope="scope">
               <div v-for="item in scope.row.medicine_symptom_set" :key="item.id">
                 {{ item }}
@@ -299,7 +299,7 @@
     </el-card>
 
     <!-- 处方药 -->
-    <template v-if="orderInfo.prescription_status">
+    <template v-if="orderInfo?.prescription_status">
       <el-card v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length" class="el-card--normal">
         <div slot="header">问诊信息</div>
         <div class="card-panel">
@@ -906,8 +906,8 @@ export default {
             : orderInfo.item_price
             ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
             : '￥0.00',
-        freightFee: orderInfo.freight_fee
-          ? `¥${(orderInfo.freight_fee / 100).toFixed(2)}`
+        freightFee: orderInfo.freight_fee || orderInfo.freight_point_fee
+          ? `¥${((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0) / 100).toFixed(2)}`
           : '￥0.00',
         memberDiscountPrice: orderInfo.member_discount
           ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`

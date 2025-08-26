@@ -52,7 +52,7 @@
       <SpFilterFormItem prop="supplier_name" label="所属供应商:">
         <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status" label="商品状态:">
+      <SpFilterFormItem prop="approve_status" label="总部销售状态:">
         <el-select v-model="formData.approve_status" clearable placeholder="请选择">
           <el-option
             v-for="item in statusOption"
@@ -292,7 +292,7 @@ export default {
             render: (h, { row }) => h('span', {}, row.is_can_sale ? '可销售' : '不可销售')
           },
           {
-            name: '商品状态',
+            name: '总部销售状态',
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {

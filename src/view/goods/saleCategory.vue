@@ -96,7 +96,7 @@
                 slot="reference"
                 style="width: 45px"
                 type="text"
-                @click="handleClick(scope.row.id)"
+                @click="handleClick(scope.row.category_id)"
               >
                 投放
               </el-button>
@@ -209,7 +209,7 @@ export default {
     },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
-      const { authorizer = {} } = list.find(item => item.name == 'yykweishop') || {}
+      const { authorizer = {} } = list.find(item => item.key_name == 'yykweishop') || {}
       const { authorizer_appid } = authorizer
       this.appID = authorizer_appid
     },

@@ -104,6 +104,7 @@
     </el-tabs>
     <SpFinder
       ref="finder"
+      v-loading="loading"
       fixed-row-action
       :setting="setting"
       :hooks="{
@@ -186,6 +187,7 @@ export default {
         itemName: '',
         itemId: ''
       },
+      loading: false,
       itemSkuFormList: [
         {
           key: 'invitation_code',
@@ -473,19 +475,35 @@ export default {
         return this.$message.error('请至少选择一个商品')
       }
       if (command == '1' || command == '2') {
-        await this.$api.marketing.updateDistributorItem({
-          'distributor_id': this.formData.distributor_id,
-          'goods_id': JSON.stringify(this.selectItems.map((item) => item.goods_id)),
-          'is_can_sale': command == '1'
-        })
-        this.$refs.finder.refresh()
+        this.loading = true
+        try {
+          await this.$api.marketing.updateDistributorItem({
+            'distributor_id': this.formData.distributor_id,
+            'goods_id': JSON.stringify(this.selectItems.map((item) => item.goods_id)),
+            'is_can_sale': command == '1'
+          })
+          this.$message.success('操作成功')
+          this.$refs.finder.refresh()
+        } catch (error) {
+          this.$message.error('操作失败')
+        } finally {
+          this.loading = false
+        }
       } else if (command == '3' || command == '4') {
-        await this.$api.marketing.updateDistributorItem({
-          distributor_id: this.formData.distributor_id,
-          goods_id: JSON.stringify(this.selectItems.map((item) => item.goods_id)),
-          is_total_store: command == '3'
-        })
-        this.$refs.finder.refresh(true)
+        this.loading = true
+        try {
+          await this.$api.marketing.updateDistributorItem({
+            'distributor_id': this.formData.distributor_id,
+            'goods_id': JSON.stringify(this.selectItems.map((item) => item.goods_id)),
+            'is_total_store': command == '3'
+          })
+          this.$message.success('操作成功')
+          this.$refs.finder.refresh()
+        } catch (error) {
+          this.$message.error('操作失败')
+        } finally {
+          this.loading = false
+        }
       }
     }
   }

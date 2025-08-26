@@ -35,6 +35,10 @@
           <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
+           
+          <el-select v-model="invoice_status" class="input-m" placeholder="开票状态" @change="invoiceStatusChange" clearable>
+            <el-option v-for="item in open_status_arr" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-col>
       </el-row>
       <el-row>
@@ -209,6 +213,17 @@
                   >待发货</span
                 >
               </template>
+            </template>
+          </el-table-column>
+          <el-table-column prop="invoice_status" label="开票状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.invoice_status === 'success'" style="color: green">
+                {{ open_status_map[scope.row.invoice_status] }}
+              </span>
+              <span v-else-if="scope.row.invoice_status === 'failed'" style="color: red">
+                {{ open_status_map[scope.row.invoice_status] }}
+              </span>
+              <span v-else> {{ open_status_map[scope.row.invoice_status] }} </span>
             </template>
           </el-table-column>
           <!-- <el-table-column prop="source_name" label="来源"></el-table-column>
@@ -701,6 +716,13 @@ import {
   doWriteoff,
   getPickupcode
 } from '@/api/trade'
+
+import {
+  open_status_map,
+  open_status_arr
+} from '@/view/financial/invoice/constants'
+
+
 import { getSourcesList } from '@/api/datacube'
 import { handleUploadFile } from '@/api/common'
 import shopSelect from '@/components/shopSelect'
@@ -739,6 +761,8 @@ export default {
         { name: '客户长时间未付款', value: 11 },
         { name: '客户其他原因', value: 12 }
       ],
+      open_status_map,
+      open_status_arr,
       order_status: '',
       time_start_begin: '',
       time_start_end: '',
@@ -801,7 +825,8 @@ export default {
       deliveryVisibleNew: false,
       datapass_block: 1,
       exportTab: '',
-      jstErpSetting: {}
+      jstErpSetting: {},
+      invoice_status:""
     }
   },
   computed: {
@@ -856,6 +881,12 @@ export default {
       this.getOrders(this.params)
     },
     numberSearch(e) {
+      this.params.page = 1
+      this.getParams()
+      this.getOrders(this.params)
+    },
+    invoiceStatusChange(val) {
+      this.params.invoice_status = val
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)

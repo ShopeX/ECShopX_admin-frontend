@@ -771,6 +771,16 @@ export default {
     if (user_id) {
       this.user_id = user_id
     }
+    this.$api.third.getDmcrmSetting().then((response) => {
+      if(response?.is_open){
+        this.infoList = this.infoList.map(el =>{
+          if(el.label == '订单获取积分'){ 
+            el.is_show = false
+          }
+          return el
+        })
+      }
+    })
     this.getDetail()
     this.getLogisticsList()
   },

@@ -7,19 +7,15 @@
       show-icon
       :closable="false"
     />
-    <draggable :list="localValue.list" group="easyview" class="rules-list">
-      <div
-        v-for="(item, index) in localValue.list"
-        :key="`wgt-render-item__${index}`"
-        class="rule-item"
-      >
+    <draggable :list="list" group="easyview" class="rules-list">
+      <div v-for="(item, index) in list" :key="`wgt-render-item__${index}`" class="rule-item">
         <div class="h-full bg-primary-foreground flex items-center justify-center w-[24px]">
           <SpIcon class="cursor-pointer" name="align-text-both" :size="14" />
         </div>
 
         <template v-if="item.key === 'distributor_code'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.value" />
+            <el-switch v-model="item.status" />
             <div class="ml-4">
               <div>店铺码进店</div>
               <div class="text-sm text-[#999] mt-2">
@@ -31,7 +27,7 @@
         </template>
         <template v-if="item.key === 'shop_assistant'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.value" />
+            <el-switch v-model="item.status" />
             <div class="ml-4">
               <div>导购物料进店（需开通导购应用）</div>
               <div class="text-sm text-[#999] mt-2">
@@ -54,7 +50,7 @@
         </template>
         <template v-if="item.key === 'shop_white'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.value" />
+            <el-switch v-model="item.status" />
             <div class="ml-4">
               <div>进入白名单店铺（需开启店铺白名单）</div>
               <div class="text-sm text-[#999] mt-2">
@@ -65,7 +61,7 @@
         </template>
         <template v-if="item.key === 'shop_assistant_pro'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.value" />
+            <el-switch v-model="item.status" />
             <div class="ml-4">
               <div>进入专属导购所属店（需开通导购应用）</div>
               <div class="text-sm text-[#999] mt-2">
@@ -79,7 +75,7 @@
     <div class="rule-item">
       <div class="holder"></div>
       <div class="flex leading-normal p-3">
-        <el-switch v-model="localValue.shop_lbs" />
+        <el-switch v-model="shop_lbs" />
         <div class="ml-4">
           <div>LBS就近进店</div>
           <div class="text-sm text-[#999] mt-2">
@@ -105,26 +101,34 @@ export default {
   },
   data() {
     return {
-      localValue: {
-        list: this.value.list,
-        shop_lbs: this.value.shop_lbs
-      }
+      list: this.value.list,
+      shop_lbs: this.value.shop_lbs
     }
   },
   watch: {
-    localValue: {
+    list: {
       handler(newVal) {
-        this.$emit('change', newVal)
+        this.$emit('change', {
+          list: newVal,
+          shop_lbs: this.shop_lbs
+        })
       },
       deep: true
     },
+    shop_lbs: {
+      handler(newVal) {
+        this.$emit('change', {
+          list: this.list,
+          shop_lbs: newVal
+        })
+      }
+    },
     value: {
       handler(newVal) {
-        this.localValue.list = newVal.list
-        this.localValue.shop_lbs = newVal.shop_lbs
+        this.list = newVal.list
+        this.shop_lbs = newVal.shop_lbs
       },
       deep: true,
-      immediate: true
     }
   }
 }

@@ -14,7 +14,7 @@ function install(Vue) {
             en: 'en-CN',
             zhtw: 'zh-TW'
           }
-       
+
           let params = {
             ...p,
             pageSize: p.pageSize,

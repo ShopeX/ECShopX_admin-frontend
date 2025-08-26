@@ -19,23 +19,10 @@ export default {
       formData: {
         ruleList: {
           list: [
-            {
-              key: 'distributor_code',
-              value: false
-            },
-            {
-              key: 'shop_assistant',
-              value: false,
-              express_time: 0
-            },
-            {
-              key: 'shop_white',
-              value: false
-            },
-            {
-              key: 'shop_assistant_pro',
-              value: false
-            }
+            { key: 'distributor_code', status: false },
+            { key: 'shop_assistant', status: false, express_time: 0 },
+            { key: 'shop_white', status: false },
+            { key: 'shop_assistant_pro', status: false }
           ],
           shop_lbs: false
         },
@@ -124,26 +111,20 @@ export default {
     }
     const { distributor_code, shop_assistant, shop_white, shop_assistant_pro } = res
 
-    this.$set(this.formData.ruleList.list, distributor_code.sort - 1, {
-      key: 'distributor_code',
-      value: distributor_code.status
-    })
-    this.$set(this.formData.ruleList.list, shop_assistant.sort - 1, {
-      key: 'shop_assistant',
-      value: shop_assistant.status,
-      express_time: shop_assistant.express_time
-    })
-    this.$set(this.formData.ruleList.list, shop_white.sort - 1, {
-      key: 'shop_white',
-      value: shop_white.status
-    })
-    this.$set(this.formData.ruleList.list, shop_assistant_pro.sort - 1, {
-      key: 'shop_assistant_pro',
-      value: shop_assistant_pro.status
-    })
-
-
-    this.formData.ruleList.shop_lbs = res.shop_lbs
+    this.formData.ruleList = {
+      list: Object.entries({
+        distributor_code: distributor_code,
+        shop_assistant: shop_assistant,
+        shop_white: shop_white,
+        shop_assistant_pro: shop_assistant_pro
+      })
+        .map(([key, value]) => ({
+          key,
+          ...value
+        }))
+        .sort((a, b) => a.sort - b.sort),
+      shop_lbs: res.shop_lbs
+    }
 
     this.formData.safetyStrategy = {
       type: res.radio_type,
@@ -190,7 +171,7 @@ export default {
         }
       }
       formData.ruleList.list.forEach((item, index) => {
-        params[item.key].status = item.value
+        params[item.key].status = item.status
         params[item.key].sort = index + 1
         if (item.key === 'shop_assistant') {
           params[item.key].express_time = item.express_time

@@ -207,7 +207,7 @@
           label="全选"
         />
         <el-table-column width="50" prop="distributor_id" label="ID" />
-        <el-table-column label="店铺" width="180">
+        <el-table-column label="店铺" min-width="180">
           <template slot-scope="scope">
             <div class="store-name">
               {{ scope.row.name }}
@@ -346,6 +346,7 @@
             <span v-else-if="scope.row.distribution_type == '0'">自营</span>
           </template>
         </el-table-column>
+
         <el-table-column v-if="$store.getters.login_type == 'admin'" width="80" label="是否默认">
           <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
             <el-tooltip effect="dark" content="请先启用店铺" placement="top-start">
@@ -359,6 +360,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
+
         <el-table-column v-if="VERSION_PLATFORM()" prop="tagList" label="标签" class="tab">
           <template slot-scope="scope">
             <el-tag
@@ -375,6 +377,7 @@
             </el-tag>
           </template>
         </el-table-column>
+
         <el-table-column
           v-if="!VERSION_STANDARD() && $store.getters.login_type != 'merchant'"
           label="所属商家"
@@ -384,6 +387,7 @@
             <span>{{ scope.row.merchant_name || '-' }}</span>
           </template>
         </el-table-column>
+
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
             <el-button type="text">

@@ -1,11 +1,9 @@
 <style lang="scss" src="./index.scss"></style>
 <template>
-  <div
-    :class="{
-      'wgt-goods-grid': true,
-      padded: value.padded
-    }"
-  >
+  <div :class="{
+    'wgt-goods-grid': true,
+    padded: value.padded
+  }">
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <div>
         <span class="title">{{ value.title }}</span>
@@ -24,58 +22,36 @@
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag
-                  v-if="item.medicine_data?.is_prescription == 1"
-                  type="primary"
-                  size="mini"
-                  style="background-color: #fff"
-                >
+                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini"
+                  style="background-color: #fff">
                   处方药
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
-                <SpPrice
-                  class="line-price"
-                  :value="item.market_price / 100"
-                  :size="13"
-                  line-through
-                />
+                <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
               </div>
             </div>
           </div>
         </div>
         <div class="rg-box">
-          <div
-            v-for="(item, index) in rightGoodsList"
-            :key="`right-item__${index}`"
-            class="item-box"
-          >
+          <div v-for="(item, index) in rightGoodsList" :key="`right-item__${index}`" class="item-box">
             <SpImage :src="item.imgUrl" />
             <div class="item-info" :style="{ 'padding-top': value.brand ? '30px' : '4px' }">
               <div v-if="value.brand" class="brand-logo">
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
               <div class="name">
-                <el-tag
-                  v-if="item.medicine_data?.is_prescription == 1"
-                  type="primary"
-                  size="mini"
-                  style="background-color: #fff"
-                >
+                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini"
+                  style="background-color: #fff">
                   处方药
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
-                <SpPrice
-                  class="line-price"
-                  :value="item.market_price / 100"
-                  :size="13"
-                  line-through
-                />
+                <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
               </div>
             </div>
           </div>
@@ -89,24 +65,15 @@
               <SpImage :src="item.brand" :width="60" :height="60" circle />
             </div>
             <div class="name">
-              <el-tag
-                v-if="item.medicine_data?.is_prescription == 1"
-                type="primary"
-                size="mini"
-                style="background-color: #fff"
-              >
+              <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini"
+                style="background-color: #fff">
                 处方药
               </el-tag>
               {{ item.title }}
             </div>
             <div v-if="value.showPrice" class="price">
               <SpPrice class="item-price" :value="item.price / 100" :size="15" />
-              <SpPrice
-                class="line-price"
-                :value="item.market_price / 100"
-                :size="13"
-                line-through
-              />
+              <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
             </div>
           </div>
         </div>
@@ -205,13 +172,12 @@ export default {
     value: {
       handler(newVal) {
         console.log(newVal, 'newVal')
-        const { goodsSetting = {} } = newVal || {}
-        const { type, data = [], pointGoods = [] } = goodsSetting
+        const { data = [], pointGoods = [], type } = newVal || {}
         const list = type === 'point' ? pointGoods : data
-        if(newVal.style === 'grid'){
+        if (newVal.style === 'grid') {
           this.leftGoodsList = list.filter((_, index) => index % 2 === 0)
           this.rightGoodsList = list.filter((_, index) => index % 2 === 1)
-        }else{
+        } else {
           this.goodsList = list
         }
       },

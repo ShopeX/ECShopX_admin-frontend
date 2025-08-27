@@ -907,7 +907,7 @@ export default {
             ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
             : '￥0.00',
         freightFee: orderInfo.freight_fee || orderInfo.freight_point_fee
-          ? `¥${((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0) / 100).toFixed(2)}`
+          ? `¥${(((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0))/ 100).toFixed(2)}`
           : '￥0.00',
         memberDiscountPrice: orderInfo.member_discount
           ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`

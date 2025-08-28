@@ -309,7 +309,9 @@
             </router-link>
             <el-button
               v-if="
-                scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'
+                scope.row.refund_status == 'AUDIT_SUCCESS' &&
+                scope.row.refund_channel == 'offline' &&
+                (jstErpSetting?.is_open ? scope?.row?.progress != '8' : true)
               "
               style="color: #459ae9"
               type="text"
@@ -407,6 +409,7 @@ export default {
         order_id: '',
         refund_fee: ''
       },
+      jstErpSetting: {},
       refundFormList: [
         {
           label: '退款方式',
@@ -487,8 +490,14 @@ export default {
     //获取店铺
     this.getDistributorList()
     this.fetchList()
+    this.getJstErpSetting()
   },
   methods: {
+    getJstErpSetting() {
+      this.$api.third.getJstErpSetting().then((res) => {
+        this.jstErpSetting = res
+      })
+    },
     handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
     },

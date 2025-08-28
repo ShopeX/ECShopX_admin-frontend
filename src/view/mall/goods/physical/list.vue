@@ -1162,6 +1162,28 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
+          {
+            name: '供应状态',
+            key: 'is_market',
+            formatter: (value, row, col) => {
+              return value == '1' ? '可售' : '不可售'
+            },
+            visible: IS_SUPPLIER()
+          },
+          {
+            name: '总部审核状态',
+            key: 'audit_status',
+            width: 110,
+            visible: !IS_ADMIN(),
+            render: (h, scope) => (
+              <div>
+                <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
+                {scope.row.audit_status == 'rejected' && loginType == 'supplier' && (
+                  <div class='physical-cell-reason'>拒绝原因：{scope.row.audit_reason}</div>
+                )}
+              </div>
+            )
+          },
 
           // {
           //   name: '商品税率',
@@ -1209,20 +1231,14 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
+          
           // {
           //   name: '来源供应商',
           //   key: 'operator_name',
           //   width: 100,
           //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM())
           // },
-          {
-            name: '供应状态',
-            key: 'is_market',
-            formatter: (value, row, col) => {
-              return value == '1' ? '可售' : '不可售'
-            },
-            visible: IS_SUPPLIER()
-          },
+          
           {
             name: '商品状态',
             width: 120,
@@ -1231,20 +1247,6 @@ export default {
             formatter: (value, row, col) => {
               return this.statusOption.find((item) => item.value === value)?.title
             }
-          },
-          {
-            name: '审核状态',
-            key: 'audit_status',
-            width: 200,
-            visible: !IS_ADMIN(),
-            render: (h, scope) => (
-              <div>
-                <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
-                {scope.row.audit_status == 'rejected' && loginType == 'supplier' && (
-                  <div class='physical-cell-reason'>拒绝原因：{scope.row.audit_reason}</div>
-                )}
-              </div>
-            )
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
           { name: '起订量', key: 'start_num', minWidth: 120 },

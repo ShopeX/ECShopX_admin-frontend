@@ -280,7 +280,7 @@ export default {
                       goods_id: row.goods_id,
                       is_total_store: !e
                     })
-                    this.$refs.finder.refresh(true)
+                    this.$refs.finder.refresh()
                   }
                 }
               })
@@ -469,7 +469,7 @@ export default {
     },
     onItemSkuFormSubmit() {
       this.itemSkuDialog = false
-      this.$refs.finder.refresh(true)
+      this.$refs.finder.refresh()
     },
     async onPatchAction(command) {
       if (this.selectItems.length == 0) {

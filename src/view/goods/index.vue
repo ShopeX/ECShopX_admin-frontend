@@ -1100,7 +1100,7 @@ export default {
       this.form.pics = pics
 
       //处方药
-      if(medicine_data.audit_status == 2){
+      if(medicine_data?.audit_status == 2){
         //审核成功
         this.isPrescriptionApproved = true
       }

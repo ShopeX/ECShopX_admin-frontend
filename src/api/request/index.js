@@ -71,6 +71,20 @@ function createRequestClient() {
         delete config.data
       }
 
+      if(config.method === 'post'){
+        const {data = {}} = config
+        if(data.isUploadFile){
+          //表单提交
+          let formParams = new FormData()
+          for (var key in data) {
+            if (key !== 'isUploadFile') {
+              formParams.append(key, data[key])
+            }
+          }
+          config.data = formParams
+        }
+      }
+
       return config
     }
   })

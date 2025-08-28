@@ -1131,25 +1131,25 @@ export default {
               </div>
             )
           },
-          {
-            name: '审核结果',
-            key: 'audit_status',
-            width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
-          },
-          {
-            name: '错误信息',
-            key: 'audit_reason',
-            width: 150,
-            render: (h, { row }) => (
-              <div>
-                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div>{row.medicine_data.audit_reason}</div>
-                )}
-              </div>
-            )
-          },
+          // {
+          //   name: '审核结果',
+          //   key: 'audit_status',
+          //   width: 150,
+          //   render: (h, { row }) =>
+          //     row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          // },
+          // {
+          //   name: '错误信息',
+          //   key: 'audit_reason',
+          //   width: 150,
+          //   render: (h, { row }) => (
+          //     <div>
+          //       {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+          //         <div>{row.medicine_data.audit_reason}</div>
+          //       )}
+          //     </div>
+          //   )
+          // },
           // {
           //   name: '供应商货号',
           //   key: 'supplier_goods_bn',
@@ -1161,6 +1161,28 @@ export default {
             key: 'store',
             align: 'right',
             headerAlign: 'center'
+          },
+          {
+            name: '供应状态',
+            key: 'is_market',
+            formatter: (value, row, col) => {
+              return value == '1' ? '可售' : '不可售'
+            },
+            visible: IS_SUPPLIER()
+          },
+          {
+            name: '总部审核状态',
+            key: 'audit_status',
+            width: 110,
+            visible: !IS_ADMIN(),
+            render: (h, scope) => (
+              <div>
+                <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
+                {scope.row.audit_status == 'rejected' && loginType == 'supplier' && (
+                  <div class='physical-cell-reason'>拒绝原因：{scope.row.audit_reason}</div>
+                )}
+              </div>
+            )
           },
 
           // {
@@ -1209,20 +1231,14 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
+          
           // {
           //   name: '来源供应商',
           //   key: 'operator_name',
           //   width: 100,
           //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM())
           // },
-          {
-            name: '供应状态',
-            key: 'is_market',
-            formatter: (value, row, col) => {
-              return value == '1' ? '可售' : '不可售'
-            },
-            visible: IS_SUPPLIER()
-          },
+          
           {
             name: '商品状态',
             width: 120,
@@ -1231,20 +1247,6 @@ export default {
             formatter: (value, row, col) => {
               return this.statusOption.find((item) => item.value === value)?.title
             }
-          },
-          {
-            name: '审核状态',
-            key: 'audit_status',
-            width: 200,
-            visible: !IS_ADMIN(),
-            render: (h, scope) => (
-              <div>
-                <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
-                {scope.row.audit_status == 'rejected' && loginType == 'supplier' && (
-                  <div class='physical-cell-reason'>拒绝原因：{scope.row.audit_reason}</div>
-                )}
-              </div>
-            )
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
           { name: '起订量', key: 'start_num', minWidth: 120 },
@@ -1267,6 +1269,17 @@ export default {
             }
           },
           { name: '商品ID', key: 'goods_id', width: 80 },
+          { name: '是否处方药', key: 'is_prescription', width: 100,
+            formatter: (value, row, col) => {
+              return value == '1' ? '是' : '否'
+            }
+           },
+          { name: '审核结果', key: 'audit_status' ,
+            formatter: (value, row, col) => {
+                return GOODS_APPLY_STATUS[value]
+              }
+          },
+          { name: '错误信息', key: 'audit_reason' },
           {
             name: '创建时间',
             key: 'created',

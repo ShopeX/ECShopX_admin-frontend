@@ -40748,5 +40748,10 @@
 		"zh-cn": "总部销售状态",
 		"en": "Sales status at the headquarters",
 		"zh-tw": "總部銷售狀態"
+	},
+	"padf9r6": {
+		"zh-cn": "总部审核状态",
+		"en": "",
+		"zh-tw": ""
 	}
 }

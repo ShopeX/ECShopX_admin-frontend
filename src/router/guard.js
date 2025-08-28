@@ -4,6 +4,7 @@ import { generateAccess } from './access'
 import { accessRoutes, routes as coreRoutes } from './routes'
 import { IS_ADMIN, IS_DISTRIBUTOR, IS_MERCHANT, IS_SUPPLIER, traverseTreeValues } from '@/utils'
 import { actions } from '@/utils/micr-app'
+import { langMap } from '@/i18n/index'
 
 const coreRoutesNames = traverseTreeValues(coreRoutes, (item) => item.path)
 
@@ -29,7 +30,8 @@ function setupAccessGuard(router) {
         mode: 'pc',
         token: store.state.user.token,
         pageid: id,
-        baseUrl: process.env.VUE_APP_BASE_API
+        baseUrl: process.env.VUE_APP_BASE_API,
+        language: langMap[window.localStorage.getItem('lang') || 'zhcn']
       })
     }
 

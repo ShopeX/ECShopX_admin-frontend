@@ -1021,6 +1021,7 @@ import draggable from 'vuedraggable'
 // api
 import { getCategory } from '@/api/goods'
 import { savePageParams, getParamByTempName, getCustomPageList } from '@/api/wxa'
+import { isArray } from '@/utils'
 export default {
   components: {
     imgPicker,

@@ -1131,25 +1131,25 @@ export default {
               </div>
             )
           },
-          {
-            name: '审核结果',
-            key: 'audit_status',
-            width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
-          },
-          {
-            name: '错误信息',
-            key: 'audit_reason',
-            width: 150,
-            render: (h, { row }) => (
-              <div>
-                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div>{row.medicine_data.audit_reason}</div>
-                )}
-              </div>
-            )
-          },
+          // {
+          //   name: '审核结果',
+          //   key: 'audit_status',
+          //   width: 150,
+          //   render: (h, { row }) =>
+          //     row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          // },
+          // {
+          //   name: '错误信息',
+          //   key: 'audit_reason',
+          //   width: 150,
+          //   render: (h, { row }) => (
+          //     <div>
+          //       {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+          //         <div>{row.medicine_data.audit_reason}</div>
+          //       )}
+          //     </div>
+          //   )
+          // },
           // {
           //   name: '供应商货号',
           //   key: 'supplier_goods_bn',

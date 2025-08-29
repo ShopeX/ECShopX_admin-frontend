@@ -168,7 +168,7 @@
           :options="subDistrictList"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="self_delivery_status" label="配送状态:">
+      <!-- <SpFilterFormItem prop="self_delivery_status" label="配送状态:">
         <el-select v-model="params.self_delivery_status" clearable placeholder="请选择">
           <el-option
             v-for="item in distributionStatus"
@@ -178,7 +178,7 @@
             :value="item.value"
           />
         </el-select>
-      </SpFilterFormItem>
+      </SpFilterFormItem> -->
     </SpFilterForm>
 
     <div class="action-container">
@@ -452,23 +452,23 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="配送状态">
+        <!-- <el-table-column label="配送状态">
           <template slot-scope="scope">
             {{ getDistributionStatus(scope.row) }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
         <!-- <el-table-column label="配送员">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_name }}
           </template>
         </el-table-column> -->
-
+<!-- 
         <el-table-column label="配送费">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元' }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
 <!--
         <el-table-column label="配送员电话">
           <template slot-scope="scope">

@@ -811,7 +811,7 @@ export default {
             visible: row => {
               const isShow =
                 IS_SUPPLIER() &&
-                (row.audit_status == 'submitting' || row.audit_status == 'rejected')
+                (row.audit_status == 'submitting' || row.audit_status == 'rejected' || row.approve_status == 'instock')
               return isShow
             },
             action: {

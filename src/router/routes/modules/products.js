@@ -161,7 +161,16 @@ const routes = [
           title: '商品参数',
           permissions: ['entity.goodsbase.goodsparams']
         }
-      }
+      },
+      {
+        name: 'exportstoreitems',
+        path: 'product-manage/exportstoreitems',
+        component: () => import('@/view/mall/marketing/productUpdate'),
+        meta: {
+          title: '店铺商品更新',
+          permissions: ['entity.goods.exportstoreitems']
+        }
+      },
     ]
   }
 ]

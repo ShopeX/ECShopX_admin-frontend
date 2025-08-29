@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <div class="tip-info">
         <p>
@@ -10,7 +10,7 @@
       <div v-for="item in pane_list" :key="item.label">
         <el-tab-pane :label="item.label" :name="item.name">
           <el-form ref="form" label-width="100px">
-            <div class="content-bottom-padded">
+            <div class="content-bottom-padded flex">
               <el-upload
                 class="fl"
                 style="margin-right: 10px"
@@ -76,7 +76,7 @@
         </el-tab-pane>
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

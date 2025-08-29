@@ -869,7 +869,7 @@ export default {
                 IS_ADMIN() ||
                 IS_DISTRIBUTOR() ||
                 (IS_SUPPLIER() &&
-                  (row.audit_status == 'submitting' || row.audit_status == 'rejected'))
+                  (row.audit_status == 'submitting' || row.audit_status == 'rejected' || row.approve_status == 'instock' ))
               return isShow
             },
             action: {
@@ -1231,14 +1231,14 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
-          
+
           // {
           //   name: '来源供应商',
           //   key: 'operator_name',
           //   width: 100,
           //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM())
           // },
-          
+
           {
             name: '商品状态',
             width: 120,

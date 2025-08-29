@@ -333,7 +333,7 @@ export default {
             render: (h, { row }) => (
               <div>
                 {row.price}
-                {this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id != '0' && (
+                {this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id == '0' && (
                       <el-popover
                         placement="top"
                         trigger="hover"

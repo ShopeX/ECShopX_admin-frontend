@@ -76,11 +76,11 @@ export default {
         reason: '1',
         goods_returned: false,
         items: [],
-        refund_point: '0',
-        refund_fee: '',
+        refund_point: 0,
+        refund_fee: 0,
         description: '',
         pic: '',
-        freight: ''
+        freight: 0
       },
       formList: [
         {
@@ -148,7 +148,7 @@ export default {
           validator: (rule, value, callback) => {
             if (this.form.refund_point > this.orderInfo?.refund_point_amount /100) {
               callback('退积分超过可退积分')
-            } else if (this.form.refund_point < 0) {
+            } else if (this.form.refund_point === '' || this.form.refund_point === null || this.form.refund_point === undefined) {
               callback('退积分不能为空')
             } else {
               callback()
@@ -174,7 +174,7 @@ export default {
             />
           ),
           validator: (rule, value, callback) => {
-            if (!this.form.refund_fee) {
+            if (this.form.refund_fee === '' || this.form.refund_fee === null || this.form.refund_fee === undefined) {
               callback('退款金额不能为空')
             } else if (
               parseFloat(this.form.refund_fee) > parseFloat(this.$refs['compRefundRef'].refundFee)
@@ -199,7 +199,8 @@ export default {
             )
           },
           validator: (rule, value, callback) => {
-            if (!this.form.freight) {
+            console.log(this.form.freight)
+            if (this.form.freight === '' || this.form.freight === null || this.form.freight === undefined) {
               callback('退运费不能为空')
             } else if (parseFloat(this.form.freight) > parseFloat(this.orderInfo?.refund_freight_amount /100)) {
               callback('退运费超过可退运费')

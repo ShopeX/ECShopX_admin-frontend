@@ -26,7 +26,7 @@
 
     <addCartas v-if="classify" />
     <index v-if="!classify && addCar" ref="indexTile" />
-    <section v-if="!classify && !addCar" style="margin-top: 20%;text-align: center;">
+    <section v-if="(!classify && !addCar) || classify" style="text-align: center;">
       <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
     </section>
   </SpPage>

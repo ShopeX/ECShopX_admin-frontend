@@ -755,11 +755,16 @@ export default {
           // showMessage: false,
           validator: async (rule, value, callback) => {
             if (this.form.isSpecs) {
-              const { specItems } = value
+              const { specItems, skus } = value
               const approveStatus = specItems.find(({ approve_status }) => !!approve_status)
               const store = specItems.find(({ store }) => !!store)
               const price = specItems.find(({ price }) => !!price)
               const max_num = specItems.find(({ max_num }) => !!max_num)
+
+              const isSkusUnChecked = skus?.some(item=>!item.checkedSku.length)
+              if(isSkusUnChecked){
+                callback('请勾选规格项')
+              }
 
               if (!IS_SUPPLIER() && !this.routerParams.isSupplierGoods && !approveStatus) {
                 callback('请选择商品状态')

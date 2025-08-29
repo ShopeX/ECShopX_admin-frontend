@@ -182,6 +182,8 @@ export default {
       activeTab: 'all',
       selectItems: [],
       itemSkuDialog: false,
+      editPrice:null,
+      editRow:{},
       itemSkuForm: {
         itemName: '',
         itemId: '',
@@ -193,6 +195,7 @@ export default {
           component: () => (
             <skuFinder
               itemId={this.itemSkuForm.itemId}
+              isSuplier={this.editRow.supplier_id != '0'}
               isTotalStore={this.itemSkuForm.is_total_store}
               distributorId={this.formData.distributor_id}
             />
@@ -216,6 +219,7 @@ export default {
                 this.itemSkuForm.itemName = row.itemName
                 this.itemSkuForm.itemId = row.itemId
                 this.itemSkuForm.is_total_store = row.is_total_store
+                this.editRow = row
                 this.itemSkuDialog = true
               }
             }
@@ -271,7 +275,8 @@ export default {
                 props: {
                   value: !row.is_total_store,
                   'active-value': true,
-                  'inactive-value': false
+                  'inactive-value': false,
+                  disabled: this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id != '0'
                 },
                 on: {
                   change: async e => {
@@ -305,21 +310,57 @@ export default {
             width: 120,
             render: (h, { row }) => h('span', {}, row.market_price / 100)
           },
+          // {
+          //   name: '销售价（¥）',
+          //   key: 'price',
+          //   width: 120,
+          //   showType: this.login_type == 'admin'  ? 'editable' : '',
+          //   componentProps: {
+          //     change: async (v, row) => {
+          //       await this.$api.marketing.updateDistributorItem({
+          //         distributor_id: row.distributor_id,
+          //         item_id: row.item_id,
+          //         price: v * 100
+          //       })
+          //       this.$refs.finder.refresh()
+          //     }
+          //   }
+          // },
           {
             name: '销售价（¥）',
             key: 'price',
             width: 120,
-            showType: this.login_type == 'admin' ? 'editable' : '',
-            componentProps: {
-              change: async (v, row) => {
-                await this.$api.marketing.updateDistributorItem({
-                  distributor_id: row.distributor_id,
-                  item_id: row.item_id,
-                  price: v * 100
-                })
-                this.$refs.finder.refresh()
-              }
-            }
+            render: (h, { row }) => (
+              <div>
+                {row.price}
+                {this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id != '0' && (
+                      <el-popover
+                        placement="top"
+                        trigger="hover"
+                        on-show={() => this.editPrice = row.price}
+                      >
+                        <div class="popover-edit flex">
+                          <el-input
+                            v-model={this.editPrice}
+                            class="edit-input"
+                            placeholder="请输入价格"
+                          />
+                          <el-button
+                            type="primary"
+                            size="mini"
+                            class="ml-1"
+                            on-click={this.onModifyItemPrice.bind(this, row)}
+                          >
+                            确定
+                          </el-button>
+                        </div>
+                        <el-button slot="reference" type="text">
+                          <i class="el-icon-edit" />
+                        </el-button>
+                      </el-popover>
+                    )}
+              </div>
+            )
           },
           {
             name: '成本价（¥）',
@@ -467,6 +508,14 @@ export default {
         this.$export_open('distributor_items')
       }
     },
+    async onModifyItemPrice(row){
+      await this.$api.marketing.updateDistributorItem({
+        distributor_id: row.distributor_id,
+        item_id: row.item_id,
+        price: this.editPrice * 100
+      })
+      this.$refs.finder.refresh()
+    },
     onItemSkuFormSubmit() {
       this.itemSkuDialog = false
       this.$refs.finder.refresh()
@@ -483,9 +532,18 @@ export default {
         })
         this.$refs.finder.refresh()
       } else if (command == '3' || command == '4') {
+        let remainItems = []
+        if(this.IS_ADMIN() && this.VERSION_STANDARD()){
+          //云店需要过滤供应商商品的
+          remainItems = this.selectItems.filter(item=>item.supplier_id == '0')
+        }
+        if(!remainItems.length){
+          this.$refs.finder.refresh(true)
+          return
+        }
         await this.$api.marketing.updateDistributorItem({
           distributor_id: this.formData.distributor_id,
-          goods_id: JSON.stringify(this.selectItems.map(item => item.goods_id)),
+          goods_id: JSON.stringify(remainItems.map(item => item.goods_id)),
           is_total_store: command == '3'
         })
         this.$refs.finder.refresh(true)

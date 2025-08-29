@@ -357,34 +357,36 @@
             <el-table-column prop="price" label="销售价（¥）" width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.price }}</span>
-                <el-popover
-                  v-if="scope.row.nospec"
-                  placement="top"
-                  trigger="hover"
-                  @show="() => onShowPopover(scope.row, 'price')"
-                >
-                  <div class="popover-edit">
-                    <el-input
-                      v-model="skuPriceEditInput"
-                      class="edit-input"
-                      placeholder="请输入金额"
-                    />
-                    <el-button type="primary" size="mini" @click="onModifyItemPrice(scope.row)">
-                      确定
-                    </el-button>
-                  </div>
+                <template v-if="scope.row.item_holder != 'supplier'">
+                  <el-popover
+                    v-if="scope.row.nospec"
+                    placement="top"
+                    trigger="hover"
+                    @show="() => onShowPopover(scope.row, 'price')"
+                  >
+                    <div class="popover-edit">
+                      <el-input
+                        v-model="skuPriceEditInput"
+                        class="edit-input"
+                        placeholder="请输入金额"
+                      />
+                      <el-button type="primary" size="mini" @click="onModifyItemPrice(scope.row)">
+                        确定
+                      </el-button>
+                    </div>
 
-                  <el-button slot="reference" type="text">
+                    <el-button slot="reference" type="text">
+                      <i class="el-icon-edit" />
+                    </el-button>
+                  </el-popover>
+                  <el-button
+                    v-if="!scope.row.nospec"
+                    type="text"
+                    @click="onModifyItemPrice(scope.row)"
+                  >
                     <i class="el-icon-edit" />
                   </el-button>
-                </el-popover>
-                <el-button
-                  v-if="!scope.row.nospec"
-                  type="text"
-                  @click="onModifyItemPrice(scope.row)"
-                >
-                  <i class="el-icon-edit" />
-                </el-button>
+                </template>
               </template>
             </el-table-column>
             <el-table-column

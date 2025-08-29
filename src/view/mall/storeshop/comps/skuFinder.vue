@@ -20,7 +20,8 @@ export default {
   props: {
     itemId: String,
     distributorId: String,
-    isTotalStore:Boolean
+    isTotalStore:Boolean,
+    isSuplier:Boolean
   },
   data() {
     return {
@@ -80,7 +81,8 @@ export default {
                 props: {
                   value: row.is_can_sale,
                   'active-value': true,
-                  'inactive-value': false
+                  'inactive-value': false,
+                  'disabled':this.IS_ADMIN() && this.VERSION_STANDARD() && this.isSuplier
                 },
                 on: {
                   change: async e => {

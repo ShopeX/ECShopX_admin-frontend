@@ -520,7 +520,6 @@ const routes = [
         },
         component: () => import('@/view/base/setting/mapsetting')
       },
-
       {
         name: `ERP`,
         path: 'ShangPai/ERP',
@@ -531,6 +530,46 @@ const routes = [
           permissions: ['setting.systemsetting.certificate']
         },
         component: () => import('@/view/base/setting/certificate/index')
+      },
+      {
+        name: `shopmenus`,
+        path: 'menumanage/shopmenus',
+        meta: {
+          icon: 'icon-products',
+          title: '商城菜单',
+          permissions: ['setting.menumanage.shopmenus']
+        },
+        component: () => import('@/view/menus/shopmenu')
+      },
+      {
+        name: `distributormenu`,
+        path: 'menumanage/distributormenu',
+        meta: {
+          icon: 'icon-products',
+          title: '店铺菜单',
+          permissions: ['setting.menumanage.distributormenu']
+        },
+        component: () => import('@/view/menus/distributormenu')
+      },
+      {
+        name: `suppliermenus`,
+        path: 'menumanage/suppliermenus',
+        meta: {
+          icon: 'icon-products',
+          title: '供应商菜单',
+          permissions: ['setting.menumanage.suppliermenus']
+        },
+        component: () => import('@/view/menus/supplier')
+      },
+      {
+        name: `merchantmenu`,
+        path: 'menumanage/merchantmenu',
+        meta: {
+          icon: 'icon-products',
+          title: '商户菜单',
+          permissions: ['setting.menumanage.merchantmenu']
+        },
+        component: () => import('@/view/menus/merchantmenu')
       }
     ]
   }

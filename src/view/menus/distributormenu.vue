@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <SpPage class="table">
     <div class="container">
       <div class="handle-box">
         <el-button type="primary" @click="handleAddMenu"> 添加顶级菜单 </el-button>
@@ -257,7 +257,7 @@
         </span>
       </el-dialog>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

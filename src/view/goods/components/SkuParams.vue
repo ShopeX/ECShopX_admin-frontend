@@ -500,7 +500,7 @@ export default {
       const specItems = this.cartesianProductOf(...skuMartix)
       // console.log('getSkuItems:', JSON.stringify(specItems))
       let _specItems = []
-      if (value || this.isFirstRender) {
+      if (value || this.value.specItems) {
         const _value = value || this.value.specItems
         _specItems = _value.map(
           ({
@@ -537,6 +537,7 @@ export default {
               max_num,
               item_bn,
               weight,
+              item_spec,
               delivery_time,
               volume,
               price: isNaN(price / 100) ? '' : price / 100,
@@ -571,6 +572,7 @@ export default {
             supplier_goods_bn,
             tax_rate,
             delivery_time,
+            item_spec,
           } = item
           _specItems.push({
             sku_id: key,
@@ -590,14 +592,15 @@ export default {
             point_num,
             supplier_goods_bn,
             tax_rate,
-            delivery_time
+            delivery_time,
+            item_spec,
           })
         }
       })
       if(this.isFirstRender) {
         this.noDefaultSpecItems = _specItems?.filter(el => !el.item_id)?.map(el => el.sku_id)
         _specItems = _specItems?.filter(el => !!el.item_id)
-        this.isFirstRender = _specItems
+        this.isFirstRender = false
       }
       // 与前一次编辑的缓存数据合并
       this.value.specItems = _specItems.map((item) => {
@@ -611,10 +614,6 @@ export default {
           return item
         }
       })
-
-      if(this.isFirstRender) {
-        this.isFirstRender = false
-      }
     },
     // 获取规格名称
     getSpecName(keys) {

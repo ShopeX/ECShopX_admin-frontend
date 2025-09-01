@@ -18,6 +18,11 @@ export default {
       ]
     },
     {
+      path: 'storemanager/storeRules',
+      name: `进店规则配置`,
+      component: () => import('@/view/store/storeRules/store-rules.vue'),
+    },
+    {
       path: 'storemanager/marketingdistributor',
       name: `店铺列表`,
       component: () => import('@/view/mall/marketing/distributor'),

@@ -7,6 +7,11 @@ export default {
   component: Layout,
   children: [
     {
+      path: 'storeRules',
+      name: `进店规则配置`,
+      component: () => import('@/view/store/storeRules/store-rules.vue'),
+    },
+    {
       path: 'marketingdistributor',
       name: `店铺信息`,
       component: () => import('@/view/mall/marketing/distributor'),

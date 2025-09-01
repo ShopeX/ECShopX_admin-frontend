@@ -1,5 +1,29 @@
 import fetch from '../utils/fetch'
 
+export function fetchEntryStoreRules(query) {
+  return fetch({
+    url: '/distributor/config/inRule',
+    method: 'get',
+    params: query
+  })
+}
+
+export function saveEntryStoreRules(params) {
+  return fetch({
+    url: '/distributor/config/inRule',
+    method: 'post',
+    params
+  })
+}
+
+export const fetchCustomPageInfo = (id) => {
+  return fetch({
+    url: `/wxa/customizepage/${id}`,
+    method: 'get'
+  })
+}
+
+
 export function saveDistributor(query) {
   if (query.distributor_id) {
     return fetch({

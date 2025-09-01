@@ -140,6 +140,11 @@ export default {
       component: () => import('@/view/financial/invoice/baiSetting')
     },
     {
+      path: 'systemsetting/storeRules',
+      name: `进店规则配置`,
+      component: () => import('@/view/store/storeRules/store-rules.vue'),
+    },
+    {
       path: 'GoodsShareSetting',
       name: `商品分享设置`,
       component: () => import('@/view/base/setting/goodsShareSetting')

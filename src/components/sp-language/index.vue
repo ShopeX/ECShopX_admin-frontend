@@ -22,7 +22,7 @@ import i18n from '@/i18n'
 export default {
   name: 'SpLanguage',
   data() {
-    const languageList = Object.keys(i18n).map(key => ({
+    const languageList = Object.keys(i18n).map((key) => ({
       label: i18n[key],
       value: key
     }))
@@ -36,9 +36,11 @@ export default {
     }
   },
   methods: {
-    handleCommand(command) {
+    async handleCommand(command) {
       window.localStorage.setItem('lang', command)
-      this.$store.commit('system/updateLang', { lang: command })
+      await this.$store.commit('system/updateLang', { lang: command })
+      await this.$store.dispatch('user/fetchAccessMenus')
+      await this.$store.dispatch('user/fetchAccountInfo')
       window.location.reload()
     }
   }

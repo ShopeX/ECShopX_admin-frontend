@@ -40753,5 +40753,215 @@
 		"zh-cn": "总部审核状态",
 		"en": "",
 		"zh-tw": ""
+	},
+	"gh5ll26": {
+		"zh-cn": "店铺商品更新",
+		"en": "Store product update",
+		"zh-tw": "店鋪商品更新"
+	},
+	"b4ov9d4": {
+		"zh-cn": "商城菜单",
+		"en": "Mall menu",
+		"zh-tw": "商城菜單"
+	},
+	"cjyb244": {
+		"zh-cn": "店铺菜单",
+		"en": "Shop menu",
+		"zh-tw": "店鋪菜單"
+	},
+	"vlsk6y5": {
+		"zh-cn": "供应商菜单",
+		"en": "Supplier Menu",
+		"zh-tw": "供應商菜單"
+	},
+	"b67re24": {
+		"zh-cn": "商户菜单",
+		"en": "Merchant menu",
+		"zh-tw": "商戶菜單"
+	},
+	"n9f2696": {
+		"zh-cn": "请勾选规格项",
+		"en": "Please check the specification items",
+		"zh-tw": "請勾選規格項"
+	},
+	"2jc52q5": {
+		"zh-cn": "请输入价格",
+		"en": "Please enter the price",
+		"zh-tw": "請輸入價格"
+	},
+	"b3vvaj4": {
+		"zh-cn": "启用拖动",
+		"en": "Enable dragging",
+		"zh-tw": "啓用拖動"
+	},
+	"ftcbyx4": {
+		"zh-cn": "禁用拖动",
+		"en": "Disable dragging",
+		"zh-tw": "禁用拖動"
+	},
+	"nnyk89j": {
+		"zh-cn": "功能页面不可移动，只能跟着上级菜单移动",
+		"en": "The function page cannot be moved; it can only be moved following the upper-level menu",
+		"zh-tw": "功能頁面不可移動，只能跟着上級菜單移動"
+	},
+	"6l62k5c": {
+		"zh-cn": "只能移动到相同级别的菜单",
+		"en": "You can only move to menus of the same level",
+		"zh-tw": "只能移動到相同級別的菜單"
+	},
+	"hzagx09": {
+		"zh-cn": "解锁更新URL成功",
+		"en": "The update URL has been unlocked successfully",
+		"zh-tw": "解鎖更新URL成功"
+	},
+	"7nqvtii": {
+		"zh-cn": "此操作将=删 除该菜单, 是否继续?",
+		"en": "This operation will = delete this menu. Do you want to continue?",
+		"zh-tw": "此操作將=刪 除該菜單, 是否繼續?"
+	},
+	"zdship8": {
+		"zh-cn": " 添加顶级菜单 ",
+		"en": "Add top-level menu",
+		"zh-tw": "添加頂級菜單"
+	},
+	"x0o2ysb": {
+		"zh-cn": " 解锁更新菜单URL ",
+		"en": "Unlock the update menu URL",
+		"zh-tw": "解鎖更新菜單URL"
+	},
+	"7gr5nt7": {
+		"zh-cn": " 下载版本配置",
+		"en": "Download version configuration",
+		"zh-tw": "下載版本配置"
+	},
+	"gzcenw4": {
+		"zh-cn": "菜单名称",
+		"en": "Menu name",
+		"zh-tw": "菜單名稱"
+	},
+	"sv23zq5": {
+		"zh-cn": "菜单URL",
+		"en": "Menu URL",
+		"zh-tw": "菜單URL"
+	},
+	"d8sxjn4": {
+		"zh-cn": "是否显示",
+		"en": "Whether to display",
+		"zh-tw": "是否顯示"
+	},
+	"qgd12": {
+		"zh-cn": "顺序",
+		"en": "Sequence",
+		"zh-tw": "順序"
+	},
+	"fp7t6s5": {
+		"zh-cn": "是否为菜单",
+		"en": "Is it a menu?",
+		"zh-tw": "是否爲菜單"
+	},
+	"gzj3ft4": {
+		"zh-cn": "菜单类型",
+		"en": "Menu type",
+		"zh-tw": "菜單類型"
+	},
+	"mvw92": {
+		"zh-cn": "菜单",
+		"en": "Menu",
+		"zh-tw": "菜單"
+	},
+	"jutz0r4": {
+		"zh-cn": "页面功能",
+		"en": "Page function",
+		"zh-tw": "頁面功能"
+	},
+	"66rjrw6": {
+		"zh-cn": " 品牌官网 ",
+		"en": "Brand official website",
+		"zh-tw": "品牌官網"
+	},
+	"cisuy4": {
+		"zh-cn": " 云店 ",
+		"en": "\"Cloud Store",
+		"zh-tw": "雲店"
+	},
+	"bcyn285": {
+		"zh-cn": " 内购版 ",
+		"en": "In-app purchase version",
+		"zh-tw": "內購版"
+	},
+	"m87ea4": {
+		"zh-cn": " 通用 ",
+		"en": "General",
+		"zh-tw": "通用"
+	},
+	"bf6ak7": {
+		"zh-cn": " 添加子菜单 ",
+		"en": "Add submenus",
+		"zh-tw": "添加子菜單"
+	},
+	"xhr4zw6": {
+		"zh-cn": " 编辑菜单 ",
+		"en": "Edit menu",
+		"zh-tw": "編輯菜單"
+	},
+	"4xycs97": {
+		"zh-cn": " API权限 ",
+		"en": "API permission",
+		"zh-tw": "API權限"
+	},
+	"fnrzca": {
+		"zh-cn": "设置菜单API权限集",
+		"en": "Set the menu API permission set",
+		"zh-tw": "設置菜單API權限集"
+	},
+	"66l29bm": {
+		"zh-cn": "设置菜单API权限集，请添加每个API后回车",
+		"en": "Set the menu API permission set. Please add each API and press Enter",
+		"zh-tw": "設置菜單API權限集，請添加每個API後回車"
+	},
+	"620dbq7": {
+		"zh-cn": "添加&更新菜单",
+		"en": "Add & Update the menu",
+		"zh-tw": "添加&更新菜單"
+	},
+	"adj5w64": {
+		"zh-cn": "上级菜单",
+		"en": "\"Superior menu\"",
+		"zh-tw": "上級菜單"
+	},
+	"p5ji2": {
+		"zh-cn": "通用",
+		"en": "General",
+		"zh-tw": "通用"
+	},
+	"b6112c4": {
+		"zh-cn": "品牌官网",
+		"en": "Brand official website",
+		"zh-tw": "品牌官網"
+	},
+	"cmhog3": {
+		"zh-cn": "内购版",
+		"en": "In-app purchase version",
+		"zh-tw": "內購版"
+	},
+	"hmh8c76": {
+		"zh-cn": "菜单唯一标识",
+		"en": "Unique menu identifier",
+		"zh-tw": "菜單唯一標識"
+	},
+	"gzct4y4": {
+		"zh-cn": "菜单图标",
+		"en": "Menu icon",
+		"zh-tw": "菜單圖標"
+	},
+	"gzewae4": {
+		"zh-cn": "菜单排序",
+		"en": "Menu sorting",
+		"zh-tw": "菜單排序"
+	},
+	"wfbqwq6": {
+		"zh-cn": "更新店铺商品",
+		"en": "Update store products",
+		"zh-tw": "更新店鋪商品"
 	}
 }

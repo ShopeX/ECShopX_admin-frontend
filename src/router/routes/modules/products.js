@@ -170,7 +170,7 @@ const routes = [
           title: '店铺商品更新',
           permissions: ['entity.goods.exportstoreitems']
         }
-      },
+      }
     ]
   }
 ]

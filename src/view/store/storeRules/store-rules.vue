@@ -66,9 +66,9 @@ export default {
                 <el-radio-group
                   v-model={this.formData.safetyStrategy.type}
                   onInput={(e) => {
-                    this.formData.safetyStrategy.type = {
+                    this.formData.safetyStrategy = {
                       ...this.formData.safetyStrategy,
-                      type: e.target.value
+                      type: e
                     }
                   }}
                 >
@@ -78,7 +78,7 @@ export default {
 
                 {this.formData.safetyStrategy.type == 2 && (
                   <div class='mt-2 flex items-center'>
-                    <el-button onClick={() => this.onSelectPage(this.formData.safetyStrategy)}>
+                    <el-button onClick={() => this.onSelectPage(this.formData)}>
                       {this.formData.safetyStrategy.template_id
                         ? `引导页名称：${this.formData.safetyStrategy.template_name}`
                         : '选择页面'}
@@ -158,7 +158,7 @@ export default {
         data: [page]
       } = await this.$picker.pages({
         multiple: false,
-        data: [formData.safetyStrategy.template_id]
+        data: [formData.safetyStrategy?.template_id]
       })
 
       formData.safetyStrategy.template_id = page.id

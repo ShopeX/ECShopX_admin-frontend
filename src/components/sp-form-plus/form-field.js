@@ -190,10 +190,22 @@ export default {
         props.text || this.label || '按钮'
       )
     },
+    renderDatePicker(props = {}) {
+      return (
+        <div class='el-date-picker__wrapper'>
+          <el-date-picker
+            type='date'
+            value={this.modelValue}
+            {...props}
+            on-input={this.handleInput}
+          />
+        </div>
+      )
+    },
     // 渲染 datetime-range 组件
     renderDateTimePicker(props = {}) {
       return (
-        <div class='el-date-picker__wrapper'>
+        <div class='el-datetime-picker__wrapper'>
           <el-date-picker
             style='width: 100%'
             type={this.componentProps.type}
@@ -229,6 +241,7 @@ export default {
         const renderMap = {
           button: this.renderButton,
           checkbox: this.renderCheckbox,
+          datepicker: this.renderDatePicker,
           datetimepicker: this.renderDateTimePicker,
           input: this.renderInput,
           imagepicker: this.renderImagePicker,
@@ -268,7 +281,6 @@ export default {
 
     // 获取对应的渲染函数
     const renderComponent = this.getComponentRender()
-
     // 渲染表单项
     return h('div', { class: ['form-field', this.formItemClass] }, [
       h(

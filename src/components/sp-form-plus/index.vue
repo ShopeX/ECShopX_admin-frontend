@@ -9,6 +9,7 @@
     :model="formData"
     :label-width="labelWidth"
   >
+  <!-- formData: {{ formData }} -->
     <div ref="wapperRef" class="sp-form-plus__wapper">
       <FormField
         v-for="item in formItems"
@@ -142,6 +143,9 @@ export default {
     formData: {
       handler(val) {
         this.$emit('input', val)
+        this.formItems.forEach((item) => {
+          item.isShow?.(val[item.fieldName], val)
+        })
       },
       deep: true, // 深度监听对象内部变化
       immediate: true // 初始化时不触发

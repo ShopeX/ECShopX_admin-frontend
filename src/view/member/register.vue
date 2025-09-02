@@ -4,8 +4,14 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="注册项配置" name="first">
         <el-card class="box-card">
-          <!-- <label>初次授权时强制填写</label>
-              <el-switch v-model="isMustAuth" @change="onChangeMustAuth" /> -->
+          <div slot="header" class="between">
+            <span>会员中心个人信息录入项配置</span>
+            <div>
+              <el-button v-if="!VERSION_SHUYUN()" type="primary" @click="showAddDialog()">
+                新增配置
+              </el-button>
+            </div>
+          </div>
           <el-table v-loading="isLoading" :data="tableData">
             <el-table-column label="信息" prop="label" />
             <el-table-column label="是否启用">
@@ -25,39 +31,6 @@
                 />
               </template>
             </el-table-column>
-            <!-- <el-table-column label="必填">
-              <template slot-scope="scope">
-                <el-switch
-                  :value="!!scope.row.is_required"
-                  :disabled="!!scope.row.is_must_start_required"
-                  @change="
-                    toggleStatus(
-                      {
-                        id: scope.row.id,
-                        status: scope.row.is_required
-                      },
-                      2
-                    )
-                  "
-                />
-              </template>
-            </el-table-column>
-            <el-table-column label="可修改">
-              <template slot-scope="scope">
-                <el-switch
-                  :value="!!scope.row.is_edit"
-                  @change="
-                    toggleStatus(
-                      {
-                        id: scope.row.id,
-                        status: scope.row.is_edit
-                      },
-                      3
-                    )
-                  "
-                />
-              </template>
-            </el-table-column> -->
             <el-table-column label="信息格式">
               <template slot-scope="scope">
                 {{ scope.row.field_type | filterType }}
@@ -130,6 +103,9 @@
               </el-card>
             </div>
           </el-form>
+          <div class="section-footer with-border content-center">
+            <el-button type="primary" @click="saveContent"> 保存 </el-button>
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="互联网诊疗风险告知及知情同意书配置" class="paneSecond" name="third">
@@ -152,6 +128,9 @@
               </el-card>
             </div>
           </el-form>
+          <div class="section-footer with-border content-center">
+            <el-button type="primary" @click="saveMedicineContent"> 保存 </el-button>
+          </div>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -279,7 +258,7 @@ const typeList = [
 export default {
   filters: {
     filterType(val) {
-      const data = typeList.find(item => item.type === val)
+      const data = typeList.find((item) => item.type === val)
       return data.name
     }
   },
@@ -415,7 +394,7 @@ export default {
     },
     // 保存编辑
     saveForm() {
-      this.$refs.editform.validate(async valid => {
+      this.$refs.editform.validate(async (valid) => {
         if (valid) {
           if (!this.editform.id) {
             await createRegForm(this.editform)
@@ -477,7 +456,7 @@ export default {
     handleRmoveTag(tag) {
       const { editform } = this
       const { key } = tag
-      const findIndex = editform.radio_list.findIndex(item => item.key === key)
+      const findIndex = editform.radio_list.findIndex((item) => item.key === key)
       editform.radio_list.splice(findIndex, 1)
     },
     // 显示添加
@@ -558,7 +537,7 @@ export default {
     },
     async saveMedicineContent() {
       console.log(this.medicineForm)
-      this.$refs['medicine'].validate(valid => {
+      this.$refs['medicine'].validate((valid) => {
         if (valid) {
           putRulesInfo({
             data: [
@@ -567,7 +546,7 @@ export default {
                 ...this.medicineForm
               }
             ]
-          }).then(response => {
+          }).then((response) => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -578,7 +557,7 @@ export default {
       })
     },
     saveContent(type) {
-      this.$refs['privacy'].validate(valid => {
+      this.$refs['privacy'].validate((valid) => {
         if (valid) {
           putRulesInfo({
             data: [
@@ -591,7 +570,7 @@ export default {
                 ...this.privacyForm.member_register
               }
             ]
-          }).then(response => {
+          }).then((response) => {
             this.$message({
               message: '保存成功',
               type: 'success'

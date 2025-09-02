@@ -19,6 +19,7 @@
 
 <script>
 import i18n from '@/i18n'
+import { getBasePath } from '@/utils'
 export default {
   name: 'SpLanguage',
   data() {
@@ -37,10 +38,14 @@ export default {
   },
   methods: {
     async handleCommand(command) {
+      const basePath = getBasePath()
       window.localStorage.setItem('lang', command)
       await this.$store.commit('system/updateLang', { lang: command })
-      await this.$store.dispatch('user/fetchAccessMenus')
-      await this.$store.dispatch('user/fetchAccountInfo')
+      console.log('command', this.$route.path)
+      if (this.$route.path != (basePath ? `/${basePath}/login` : '/login')) {
+        await this.$store.dispatch('user/fetchAccessMenus')
+        await this.$store.dispatch('user/fetchAccountInfo')
+      }
       window.location.reload()
     }
   }

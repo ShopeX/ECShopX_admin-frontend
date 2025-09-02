@@ -5,7 +5,7 @@
 
       <el-tabs v-model="activeTab" type="card" @tab-click="fetchPageList">
         <el-tab-pane label="自定义页面" name="normal" />
-        <!-- <el-tab-pane label="我的页面" name="my" /> -->
+        <el-tab-pane label="我的页面" name="my" />
       </el-tabs>
 
       <div class="action-container">

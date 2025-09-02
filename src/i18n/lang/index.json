@@ -39281,8 +39281,8 @@
 	},
 	"e8lcqo4": {
 		"zh-cn": "淘宝商品",
-		"en": "",
-		"zh-tw": ""
+		"en": "Taobao products",
+		"zh-tw": "淘寶商品"
 	},
 	"bojjht5": {
 		"zh-cn": "1分账提现",
@@ -39383,11 +39383,6 @@
 		"zh-cn": " 同步淘宝商品 ",
 		"en": "Synchronize Taobao products",
 		"zh-tw": "同步淘寶商品"
-	},
-	"e8lcqo4": {
-		"zh-cn": "淘宝商品",
-		"en": "Taobao products",
-		"zh-tw": "淘寶商品"
 	},
 	"c703ei4": {
 		"zh-cn": "导购装修",
@@ -41173,5 +41168,65 @@
 		"zh-cn": "店铺id",
 		"en": "Shop id",
 		"zh-tw": "店鋪id"
+	},
+	"g4xe3n6": {
+		"zh-cn": "注销提示文案",
+		"en": "Cancellation prompt copy",
+		"zh-tw": "註銷提示文案"
+	},
+	"nfpjqfi": {
+		"zh-cn": "有未完成的订单用户点击注销会员时提示",
+		"en": "When users click to cancel their membership with unfinished orders, a prompt will be given",
+		"zh-tw": "有未完成的訂單用戶點擊註銷會員時提示"
+	},
+	"kvxvp97": {
+		"zh-cn": "享受新人权益：",
+		"en": "Enjoy new employee benefits",
+		"zh-tw": "享受新人權益："
+	},
+	"idwirgj": {
+		"zh-cn": "用户注销会员后重新注册是否享受新人权益",
+		"en": "Can users enjoy the benefits for new members when they re-register after canceling their membership",
+		"zh-tw": "用戶註銷會員後重新註冊是否享受新人權益"
+	},
+	"2yqq656": {
+		"zh-cn": "享受新人权益",
+		"en": "Enjoy the rights and interests of new employees",
+		"zh-tw": "享受新人權益"
+	},
+	"1nitzj6": {
+		"zh-cn": " 新增配置 ",
+		"en": "New configuration",
+		"zh-tw": "新增配置"
+	},
+	"tewdqd8": {
+		"zh-cn": " 保存协议配置 ",
+		"en": "Save protocol configuration",
+		"zh-tw": "保存協議配置"
+	},
+	"fj7rh3": {
+		"zh-cn": "最小值",
+		"en": "Minimum value",
+		"zh-tw": "最小值"
+	},
+	"fipyt3": {
+		"zh-cn": "最大值",
+		"en": "Maximum value",
+		"zh-tw": "最大值"
+	},
+	"e13twv7": {
+		"zh-cn": "请输入隐私政策",
+		"en": "Please enter the privacy policy",
+		"zh-tw": "請輸入隱私政策"
+	},
+	"vz8oolf": {
+		"zh-cn": "互联网诊疗风险告知及知情同意书",
+		"en": "Risk Notification and Informed Consent Form for Internet-based Medical Treatment",
+		"zh-tw": "互聯網診療風險告知及知情同意書"
+	},
+	"jhw8c04": {
+		"zh-cn": "隐私协议",
+		"en": "Privacy Policy",
+		"zh-tw": "隱私協議"
 	}
 }

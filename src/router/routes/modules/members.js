@@ -139,6 +139,7 @@ const routes = [
           permissions: ['member.membersetting.manageinfomation']
         },
         component: () => import('@/view/member/register')
+        // component: () => import('@/view/members/register-member')
       },
       {
         name: 'logoutSetting',
@@ -149,7 +150,7 @@ const routes = [
           title: '注销配置',
           permissions: ['member.membersetting.closeAccount']
         },
-        component: () => import('@/view/member/logout')
+        component: () => import('@/views/members/logout-member')
       },
       {
         name: 'trustLogin',

@@ -1,8 +1,12 @@
 <style lang="scss">
 .sp-rich-text {
-  width: 750px;
   .vue-html5-editor {
     width: 100%;
+
+    .content {
+      min-height: initial;
+      max-height: 500px;
+    }
   }
   .ecx-icon {
     font-size: 18px;

@@ -26,8 +26,8 @@ class RequestClient {
     this.addResponseInterceptor = interceptorManager.addResponseInterceptor.bind(interceptorManager)
   }
 
-  get(url, config) {
-    return this.request(url, { ...config, method: 'GET' })
+  get(url, data, config) {
+    return this.request(url, { ...config, method: 'GET', data })
   }
 
   post(url, data, config) {

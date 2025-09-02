@@ -27,7 +27,6 @@ export default (vm) => {
     } else if (val === '5') {
       return '处理失败'
     }
-  
   }
   const formatMoney = (money) => {
     return (money / 100).toFixed(2).toLocaleString()
@@ -49,7 +48,9 @@ export default (vm) => {
         { name: '提现类型', key: 'withdraw_type', width: 100 },
         { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
         {
-          name: '查看发票', key: 'invoice_file', width: 100,
+          name: '查看发票',
+          key: 'invoice_file',
+          width: 100,
           render: (h, { row }) => {
             if (!row.invoice_file) return h('span', '-')
             return h('el-image', {
@@ -80,7 +81,9 @@ export default (vm) => {
         { name: '提现类型', key: 'withdraw_type', width: 100 },
         { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
         {
-          name: '查看发票', key: 'invoice_file', width: 100,
+          name: '查看发票',
+          key: 'invoice_file',
+          width: 100,
           render: (h, { row }) => {
             if (!row.invoice_file) return h('span', '-')
             return h('el-image', {

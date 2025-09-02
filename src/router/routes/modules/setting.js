@@ -61,7 +61,7 @@ const routes = [
 
       {
         name: `menumanageShopmenus`,
-        path: "menumanage/shopmenus",
+        path: 'menumanage/shopmenus',
         meta: {
           aliasName: 'shopmenus',
           icon: 'icon-products',
@@ -72,7 +72,7 @@ const routes = [
       },
       {
         name: `menumanageDistributormenu`,
-        path: "menumanage/distributormenu",
+        path: 'menumanage/distributormenu',
         meta: {
           aliasName: 'distributormenu',
           icon: 'icon-products',
@@ -83,7 +83,7 @@ const routes = [
       },
       {
         name: `menumanageMerchantmenu`,
-        path: "menumanage/merchantmenu",
+        path: 'menumanage/merchantmenu',
         meta: {
           aliasName: 'merchantmenu',
           icon: 'icon-products',
@@ -94,7 +94,7 @@ const routes = [
       },
       {
         name: `menumanageSuppliermenus`,
-        path: "menumanage/suppliermenus",
+        path: 'menumanage/suppliermenus',
         meta: {
           aliasName: 'suppliermenus',
           icon: 'icon-products',

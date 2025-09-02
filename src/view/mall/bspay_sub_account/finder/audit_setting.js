@@ -34,7 +34,7 @@ export default (vm) => {
   const formatWithdrawType = (type) => {
     const typeMap = {
       'D0': 'D0',
-      'D1': 'D1', 
+      'D1': 'D1',
       'T1': 'T1'
     }
     return typeMap[type] || type
@@ -50,7 +50,10 @@ export default (vm) => {
       { name: '商户id', key: 'merchant_id', width: 100 },
       { name: '提现类型', key: 'withdraw_type', width: 100, formatter: formatWithdrawType },
       { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
-      { name: '查看发票', key: 'invoice_file', width: 100, 
+      {
+        name: '查看发票',
+        key: 'invoice_file',
+        width: 100,
         render: (h, { row }) => {
           if (!row.invoice_file) return h('span', '-')
           return h('el-image', {
@@ -71,32 +74,44 @@ export default (vm) => {
       { name: '审核人账号', key: 'auditor', width: 120 },
       { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
       { name: '提现进度', key: 'failure_reason', width: 150 },
-      { name: '操作', key: 'action', width: 150, fixed: 'right',
+      {
+        name: '操作',
+        key: 'action',
+        width: 150,
+        fixed: 'right',
         render: (h, { row }) => {
           // 只有在审核中状态时才显示审核按钮
           if (row.status === '0') {
             return h('div', [
-              h('el-button', {
-                props: {
-                  type: 'primary',
-                  size: 'mini'
+              h(
+                'el-button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'mini'
+                  },
+                  on: {
+                    click: () => vm.handleAudit(row, 'approve')
+                  }
                 },
-                on: {
-                  click: () => vm.handleAudit(row, 'approve')
-                }
-              }, '通过'),
-              h('el-button', {
-                props: {
-                  type: 'danger',
-                  size: 'mini'
+                '通过'
+              ),
+              h(
+                'el-button',
+                {
+                  props: {
+                    type: 'danger',
+                    size: 'mini'
+                  },
+                  style: {
+                    marginLeft: '8px'
+                  },
+                  on: {
+                    click: () => vm.handleAudit(row, 'reject')
+                  }
                 },
-                style: {
-                  marginLeft: '8px'
-                },
-                on: {
-                  click: () => vm.handleAudit(row, 'reject')
-                }
-              }, '拒绝')
+                '拒绝'
+              )
             ])
           }
           return h('span', '-')
@@ -104,4 +119,4 @@ export default (vm) => {
       }
     ]
   })
-} 
+}

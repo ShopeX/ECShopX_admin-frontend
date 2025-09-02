@@ -158,11 +158,11 @@ export const getWithdrawBalance = () => {
 
 // 提现审核
 export const withdrawAudit = (params) => {
-  console.log('withdrawAudit----params',params)
+  console.log('withdrawAudit----params', params)
   return fetch({
     url: '/bspay/withdraw/audit',
     method: 'post',
-    params:params
+    params: params
   })
 }
 

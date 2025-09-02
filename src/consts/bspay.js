@@ -14,7 +14,7 @@ export const BSPAY_PAYMENT_DISPLAY_NAMES = BSPAY_PAYMENT_CHANNELS.reduce((acc, i
 }, {})
 
 // 自动生成下拉选择选项
-export const BSPAY_PAYMENT_OPTIONS = BSPAY_PAYMENT_CHANNELS.map(item => ({
+export const BSPAY_PAYMENT_OPTIONS = BSPAY_PAYMENT_CHANNELS.map((item) => ({
   label: item.name,
   value: item.label
-})) 
+}))

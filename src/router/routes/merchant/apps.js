@@ -25,15 +25,15 @@ const routes = [
         component: () => import('@/view/mall/bspay_sub_account/withdraw_audit')
       },
       {
-        name:'dougongWithdraw',
-        path:'dougong/withdraw',
-        meta:{
-          aliasName:'dougong_withdraw',
-          title:'提现',
-          icon:'pay-circle',
-          permissions:['applications.bspay.bspay_withdraw']
+        name: 'dougongWithdraw',
+        path: 'dougong/withdraw',
+        meta: {
+          aliasName: 'dougong_withdraw',
+          title: '提现',
+          icon: 'pay-circle',
+          permissions: ['applications.bspay.bspay_withdraw']
         },
-        component:()=>import('@/view/mall/bspay_sub_account/withdraw')
+        component: () => import('@/view/mall/bspay_sub_account/withdraw')
       },
       {
         name: 'bspayUser',

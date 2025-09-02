@@ -154,7 +154,7 @@ class UploadUtil {
         filetype: this.fileType,
         filename: `${file.uid}.${file.name}`
       })
-      console.log('tokenRes',tokenRes)
+      console.log('tokenRes', tokenRes)
       const data = { ...tokenRes.data.data.token }
       // 初始化
       this.init(data, tokenRes.data.data.driver)

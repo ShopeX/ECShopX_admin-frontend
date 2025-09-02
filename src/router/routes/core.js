@@ -27,7 +27,7 @@ const coreRoutes = [
     meta: {
       title: 'Authentication'
     },
-    
+
     name: 'authentication',
     path: '/',
     children: [

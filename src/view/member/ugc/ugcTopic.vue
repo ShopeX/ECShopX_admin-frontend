@@ -124,7 +124,7 @@
           <el-input
             v-model="topicForm.topic_name"
             placeholder="话题名称"
-            maxlength="15"
+            maxlength="32"
             :show-word-limit="true"
           />
         </el-form-item>

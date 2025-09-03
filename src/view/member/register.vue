@@ -176,7 +176,6 @@
             v-model="selectValue.label"
             placeholder="内容"
             type="text"
-            maxlength="10"
             show-word-limit
           >
             <template slot="append">
@@ -188,8 +187,8 @@
           <!-- <div class="tip">最多添加10条选项，注意添加顺序</div> -->
           <div class="tags">
             <el-tag
-              v-for="item in editform.radio_list"
-              :key="item.key"
+              v-for="(item, index) in editform.radio_list"
+              :key="index"
               class="item"
               closable
               @close="handleRmoveTag(item)"
@@ -455,8 +454,8 @@ export default {
     // 移除tag
     handleRmoveTag(tag) {
       const { editform } = this
-      const { key } = tag
-      const findIndex = editform.radio_list.findIndex((item) => item.key === key)
+      const { label } = tag
+      const findIndex = editform.radio_list.findIndex((item) => item.label === label)
       editform.radio_list.splice(findIndex, 1)
     },
     // 显示添加

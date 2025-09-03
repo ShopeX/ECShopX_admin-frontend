@@ -41231,7 +41231,7 @@
 	},
 	"uj1lto1k": {
 		"zh-cn": "<div><el-button @click=\"onUpload\">图片上传</el-button></div>",
-		"en": "",
-		"zh-tw": ""
+		"en": "<div><el-button @click=\"onUpload\">Upload image</el-button></div>",
+		"zh-tw": "<div><el-button @click=\"onUpload\">圖片上傳</el-button></div>"
 	}
 }

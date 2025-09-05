@@ -58,7 +58,7 @@
               }}</el-checkbox>
               <el-popover placement="top" trigger="click">
                 <div class="popover-edit">
-                  <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
+                  <el-input v-model="sku.custom_attribute_value" @change="onInputSkuChange" />
                 </div>
                 <el-button slot="reference" type="text">
                   <i class="iconfont icon-edit1" />
@@ -489,9 +489,13 @@ export default {
       this.getSkuItemImages()
       this.getSkuItems()
     },
-    onSkuChange() {
+    onInputSkuChange(){
       this.getSkuItemImages()
       this.getSkuItems()
+    },
+    onSkuChange({ spec_images, spec_items }) {
+      this.getSkuItemImages(spec_images)
+      this.getSkuItems(spec_items)
     },
     getSkuItemImages(value) {
       const { skuValue = [], checkedSku = [] } =

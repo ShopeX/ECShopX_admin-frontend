@@ -28,7 +28,7 @@ export default {
   },
   render() {
     const { src, width, height, circle } = this
-    console.log('sp-image render src:', src, src || dImage)
+    // console.log('sp-image render src:', src, src || dImage)
     const styleNames = {}
     if (width) {
       styleNames['width'] = `${width}px`

@@ -43,9 +43,10 @@
     </SpFilterForm> -->
     <SpFinder
       ref="finder"
+      :show-pager="false"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': '580px'
       }"
       :data="list"
       :fixed-row-action="true"

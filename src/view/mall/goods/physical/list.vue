@@ -1027,6 +1027,7 @@ export default {
           }
         ],
         columns: [
+          { name: '商品ID', key: 'goods_id', width: 80 },
           {
             name: '商品标题',
             key: 'itemName',
@@ -1119,28 +1120,6 @@ export default {
               </div>
             )
           },
-          {
-            name: '审核结果',
-            key: 'audit_status',
-            width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
-          },
-          {
-            name: '错误信息',
-            key: 'audit_reason',
-            width: 150,
-            render: (h, { row }) => (
-              <div>
-                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
-                    {this.handleAuditReason(row.medicine_data)}
-                    <i class='el-icon-info'></i>
-                  </div>
-                )}
-              </div>
-            )
-          },
           // {
           //   name: '供应商货号',
           //   key: 'supplier_goods_bn',
@@ -1164,8 +1143,8 @@ export default {
           //   headerAlign: 'center'
           // },
           {
-            name: '市场价（¥）',
-            key: 'market_price',
+            name: '销售价（¥）',
+            key: 'price',
             width: 120,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
@@ -1174,8 +1153,8 @@ export default {
             headerAlign: 'center'
           },
           {
-            name: '销售价（¥）',
-            key: 'price',
+            name: '市场价（¥）',
+            key: 'market_price',
             width: 120,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
@@ -1257,7 +1236,28 @@ export default {
               }
             }
           },
-          { name: '商品ID', key: 'goods_id', width: 80 },
+          {
+            name: '医药审核结果',
+            key: 'audit_status',
+            width: 150,
+            render: (h, { row }) =>
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          },
+          {
+            name: '医药错误信息',
+            key: 'audit_reason',
+            width: 150,
+            render: (h, { row }) => (
+              <div>
+                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
+                    {this.handleAuditReason(row.medicine_data)}
+                    <i class='el-icon-info'></i>
+                  </div>
+                )}
+              </div>
+            )
+          },
           {
             name: '创建时间',
             key: 'created',

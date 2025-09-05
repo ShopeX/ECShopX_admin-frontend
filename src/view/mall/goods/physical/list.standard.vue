@@ -353,7 +353,6 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="market_price" label="市场价（¥）" width="100" />
             <el-table-column prop="price" label="销售价（¥）" width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.price }}</span>
@@ -389,6 +388,7 @@
                 </template>
               </template>
             </el-table-column>
+            <el-table-column prop="market_price" label="市场价（¥）" width="100" />
             <el-table-column
               v-if="IS_DISTRIBUTOR()"
               prop="gross_profit_rate"

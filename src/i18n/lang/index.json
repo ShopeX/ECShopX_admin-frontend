@@ -41233,5 +41233,15 @@
 		"zh-cn": "<div><el-button @click=\"onUpload\">图片上传</el-button></div>",
 		"en": "<div><el-button @click=\"onUpload\">Upload image</el-button></div>",
 		"zh-tw": "<div><el-button @click=\"onUpload\">圖片上傳</el-button></div>"
+	},
+	"ulo5o46": {
+		"zh-cn": "医药审核结果",
+		"en": "Medical review result",
+		"zh-tw": "醫藥審覈結果"
+	},
+	"x1hmiw6": {
+		"zh-cn": "医药错误信息",
+		"en": "Medical error information",
+		"zh-tw": "醫藥錯誤信息"
 	}
 }

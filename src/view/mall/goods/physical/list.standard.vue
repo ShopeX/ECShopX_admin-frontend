@@ -1895,12 +1895,16 @@ export default {
         distributor_id: this.shopId,
         operate_source: 'platform'
       }
-      const { status } = await this.$api.marketing.updateDistributorItem(params)
-      if (status) {
-        this.$message.success('操作成功')
-        this.getGoodsList()
+      try {
+        const { status } = await this.$api.marketing.updateDistributorItem(params)
+        if (status) {
+          this.$message.success('操作成功')
+          this.getGoodsList()
+        }
+        this.loading = false
+      } catch (error) {
+        this.loading = false
       }
-      this.loading = false
     },
     updateItemsStore(items) {
       this.skuLoading = true

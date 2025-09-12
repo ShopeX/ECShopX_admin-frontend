@@ -257,7 +257,7 @@
             同步淘宝商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
+            <!-- <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
               <export-tip
                 @exportHandle="
                   () => {
@@ -267,7 +267,7 @@
               >
                 淘宝增量同步
               </export-tip>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
             <el-dropdown-item command="physicalupload?file_type=upload_tb_items">
               <export-tip
                 @exportHandle="() => handleImport('physicalupload?file_type=upload_tb_items')"

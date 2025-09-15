@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",
+    "@icon-park/vue": "^1.4.2",
     "@riophae/vue-treeselect": "0.0.38",
     "@shopex/finder": "^1.0.66",
     "ali-oss": "^6.5.1",

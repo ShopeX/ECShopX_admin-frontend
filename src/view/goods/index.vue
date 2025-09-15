@@ -1064,7 +1064,6 @@ export default {
         max_num,
         symptom
       } = medicine_data || {}
-      console.log(666, buy_limit_area)
       this.loading = false
       let mainCategory = []
       this.deepMainCategory(item_category_main[0], mainCategory)

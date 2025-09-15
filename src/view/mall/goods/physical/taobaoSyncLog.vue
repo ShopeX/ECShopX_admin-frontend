@@ -51,17 +51,19 @@ export default {
     retrunClick() {
       this.$router.go(-1)
     },
-    getProcessLogInfo() {
+    async getProcessLogInfo() {
       this.loading = true
-      this.$api.goods
-        .getSyncTbSpuLogs({
-          page: 1,
-          pageSize: 1000
-        })
-        .then((response) => {
-          this.list = response.list
-          this.loading = false
-        })
+      const { list } = await this.$api.goods.getSyncTbSpuLogs({
+        page: 1,
+        pageSize: 1000
+      })
+      if(list.length > 0){
+        this.list = list
+      } else {
+        this.$message.info('暂无同步日志')
+      }
+
+      this.loading = false
     }
   }
 }

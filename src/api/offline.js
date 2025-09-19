@@ -29,3 +29,10 @@ export function deleteOfflineAccount(id) {
     method: 'delete'
   })
 }
+
+export function getOfflineList() {
+  return fetch({
+    url: '/espier/offline/backaccount/lists',
+    method: 'get'
+  })
+}

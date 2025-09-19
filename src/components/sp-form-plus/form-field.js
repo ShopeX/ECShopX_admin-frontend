@@ -234,6 +234,32 @@ export default {
       return <el-switch value={this.modelValue} props={props} on-change={this.handleInput} />
     },
 
+    // 渲染 upload 组件
+    renderUpload(props = {}) {
+      const uploadProps = {
+        action: props.action || '',
+        'auto-upload': props.autoUpload,
+        'on-change': props.onChange || this.handleInput,
+        'file-list': this.modelValue || [],
+        ...props
+      }
+
+      return h('div', {}, [
+        h('span', { style: {} }, props.title),
+        h('el-upload', {
+          class: props.class || '',
+          props: uploadProps
+        }, [
+          h('el-button', {
+            props: {
+              size: props.buttonSize || 'small',
+              type: props.buttonType || 'primary'
+            }
+          }, props.buttonText || '点击上传')
+        ])
+      ])
+    },
+
     // 获取组件渲染函数
     getComponentRender() {
       if (isString(this.component)) {
@@ -247,7 +273,8 @@ export default {
           imagepicker: this.renderImagePicker,
           radio: this.renderRadio,
           select: this.renderSelect,
-          switch: this.renderSwitch
+          switch: this.renderSwitch,
+          upload: this.renderUpload
         }
         return renderMap[type] || this.renderInput
       }

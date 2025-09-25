@@ -40,7 +40,7 @@ export const createTbAddForm = (vm) =>
                 setting={{
                   search: [
                     { key: 'spu_code', name: 'SPU编号' },
-                    { key: 'goods_name', name: '商品名称' },
+                    { key: 'title', name: '商品名称' },
                     {
                       key: 'is_set_cid',
                       name: '配置管理分类',
@@ -59,10 +59,10 @@ export const createTbAddForm = (vm) =>
                     {
                       key: 'list_time',
                       name: '上架时间',
-                      type: 'date-range',
-                      defaultTime: [],
+                      type: 'date-time-picker',
                       startPlaceholder: '开始日期',
                       endPlaceholder: '结束日期',
+                      name: '添加时间',
                       format: 'yyyy-MM-dd HH:mm:ss'
                     }
                   ],
@@ -79,12 +79,14 @@ export const createTbAddForm = (vm) =>
                   hooks: {
                     beforeSearch: (params) => {
                       console.log(params)
-                      if (params.list_time) {
-                        params.list_time_start = params.list_time[0]
-                        params.list_time_end = params.list_time[1]
-                        delete params.list_time
+                      const list_time_start = params.list_time && params.list_time[0]
+                      const list_time_end = params.list_time && params.list_time[1]
+                      delete params.importTime
+                      return {
+                        ...params,
+                        list_time_start,
+                        list_time_end
                       }
-                      return params
                     }
                   }
                 }}

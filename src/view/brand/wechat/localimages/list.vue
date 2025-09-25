@@ -21,15 +21,19 @@
       margin-right: 8px;
       padding: 8px;
       overflow: auto;
-      .icon-edit {
+      .i-icon-folder-plus {
+        display: inline-block;
+        margin-right: 6px;
+        margin-top: 3px;
+      }
+      .i-icon-editor {
         font-size: 13px;
         float: right;
         display: none;
       }
-      .icon-trash-alt1 {
+      .i-icon-delete {
         font-size: 13px;
         float: right;
-        margin-top: 1px;
         margin-right: 6px;
         display: none;
       }
@@ -45,10 +49,10 @@
     &:hover {
       color: rgb(255, 255, 255);
       background-color: rgba(0, 0, 0, 0.4);
-      .icon-edit {
+      .i-icon-editor {
         display: block;
       }
-      .icon-trash-alt1 {
+      .i-icon-delete {
         display: block;
       }
     }
@@ -58,6 +62,7 @@
     }
   }
   .image-item {
+    position: relative;
     &-wrap {
       display: inline-block;
       position: relative;
@@ -77,10 +82,10 @@
       .image-meta {
         display: block;
       }
-      .icon-link {
+      .i-icon-link-two {
         display: block;
       }
-      .icon-trash-alt1 {
+      .i-icon-delete {
         display: block;
       }
     }
@@ -93,16 +98,16 @@
       background-color: rgba(0, 0, 0, 0.4);
       display: none;
     }
-    .icon-link {
+    .i-icon-link-two {
       position: absolute;
-      top: 2px;
+      top: 8px;
       left: 4px;
       display: none;
       color: #666;
     }
-    .icon-trash-alt1 {
+    .i-icon-delete {
       position: absolute;
-      bottom: 22px;
+      bottom: 8px;
       left: 4px;
       display: none;
       color: #666;
@@ -203,16 +208,22 @@
         <div
           v-for="(item, index) in catgoryList"
           :key="`catgory-item__${index}`"
-          class="catgory-item"
+          class="catgory-item flex justify-between items-center"
           :class="{
             active: selectCatgory == item.image_cat_id
           }"
           @click="handleClickCatgory(item)"
         >
-          <i class="iconfont icon-folder1" />
-          {{ item.image_cat_name }}
-          <i v-if="index > 0" class="iconfont icon-edit" @click.stop="onEditGroup(item)" />
-          <i v-if="index > 0" class="iconfont icon-trash-alt1" @click.stop="onDeleteGroup(item)" />
+          <div class="flex items-center justify-between w-full">
+            <div>
+              <SpIcon name="folder-plus" />
+              {{ item.image_cat_name }}
+            </div>
+            <div>
+              <SpIcon v-if="index > 0" name="editor" @click.stop="onEditGroup(item)" />
+              <SpIcon v-if="index > 0" name="delete" @click.stop="onDeleteGroup(item)" />
+            </div>
+          </div>
         </div>
       </div>
       <div class="rg-container">
@@ -227,8 +238,8 @@
               class="image-item"
               :style="{ color: '#fff', backgroundImage: `url('${item.url}')` }"
             >
-              <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
-              <i class="iconfont icon-trash-alt1" @click.stop="removeItem(item, index)" />
+              <SpIcon name="link-two" size="20" @click.stop="handleCopy(item.url)" />
+              <SpIcon name="delete" size="18" @click.stop="removeItem(item, index)" />
               <!-- <span class="image-meta">800*800</span> -->
             </div>
             <div class="image-title-wrap" :title="item.image_name">

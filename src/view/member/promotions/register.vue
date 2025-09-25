@@ -192,7 +192,7 @@
           兑换券
         </el-radio-button>
       </el-radio-group>
-      <ul v-loading="coupons.loading" class="dialog-list clearfix">
+      <ul v-loading="coupons.loading" class="dialog-list">
         <template v-for="(item, index) in coupons.list">
           <li :key="index" :class="item.checked ? 'checked' : ''" @click="selectItems(item)">
             <i v-if="item.checked" class="el-icon-check" /> {{ item.title }}
@@ -224,7 +224,7 @@
     <el-dialog
       title="选择优惠券"
       :visible.sync="staffCoupons.dialog"
-      width="30%"
+      width="50%"
       @open="onshowStaffModal"
       @close="oncloseModal"
     >
@@ -239,7 +239,7 @@
           兑换券
         </el-radio-button> -->
       </el-radio-group>
-      <ul v-loading="staffCoupons.loading" class="dialog-list clearfix">
+      <ul v-loading="staffCoupons.loading" class="dialog-list">
         <template v-for="item in staffCoupons.list">
           <li :key="item" :class="item.checked ? 'checked' : ''" @click="selectStaffItems(item)">
             <i v-if="item.checked" class="el-icon-check" /> {{ item.title }}
@@ -703,6 +703,19 @@ export default {
     right: 15px;
     font-size: 14px;
   }
+}
+.dialog-list {
+  margin: 20px 0px;
+  *zoom: 1;
+}
+.dialog-list:before,
+.dialog-list:after {
+  display: table;
+  line-height: 0;
+  content: '';
+}
+.dialog-list:after {
+  clear: both;
 }
 .dialog-list li {
   width: 50%;

@@ -79,12 +79,14 @@ export const createTbAddForm = (vm) =>
                   hooks: {
                     beforeSearch: (params) => {
                       console.log(params)
-                      if (params.list_time) {
-                        params.list_time_start = params.list_time[0]
-                        params.list_time_end = params.list_time[1]
-                        delete params.list_time
+                      const list_time_start = params.list_time && params.list_time[0]
+                      const list_time_end = params.list_time && params.list_time[1]
+                      delete params.importTime
+                      return {
+                        ...params,
+                        list_time_start,
+                        list_time_end
                       }
-                      return params
                     }
                   }
                 }}

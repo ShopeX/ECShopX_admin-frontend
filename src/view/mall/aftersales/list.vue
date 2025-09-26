@@ -412,19 +412,6 @@ export default {
             }
           },
           {
-            name: '订单分类',
-            key: 'order_holder',
-            width: 120,
-            render: (h, { row }) => h('span', {}, this.getOrderCategoryName(row.order_holder)),
-            visible: this.VERSION_STANDARD || this.IS_ADMIN()
-          },
-          {
-            name: '来源供应商',
-            key: 'supplier_name',
-            minWidth: 100,
-            visible: this.VERSION_STANDARD || this.IS_ADMIN()
-          },
-          {
             name: '退款金额（¥）',
             key: 'refund_fee',
             width: 120,
@@ -463,32 +450,27 @@ export default {
               return h('span', {}, `${points}`)
             }
           },
-          {
-            name: '配送员',
-            key: 'self_delivery_operator_name',
-            visible: !this.IS_SUPPLIER()
-          },
-          {
-            name: '业务员',
-            key: 'salesman_mobile',
-            visible: !this.IS_SUPPLIER(),
-            render: (h, { row }) => {
-              return h('div', [
-                row.salesman_mobile,
-                this.datapass_block == 0 && h('el-tooltip', {
-                  props: { effect: 'dark', content: '复制', placement: 'top-start' }
-                }, [
-                  h('i', {
-                    class: 'el-icon-document-copy',
-                    style: { cursor: 'pointer' },
-                    on: {
-                      click: () => this.copyToClipboard(row.salesman_mobile)
-                    }
-                  })
-                ])
-              ])
-            }
-          },
+          // {
+          //   name: '业务员',
+          //   key: 'salesman_mobile',
+          //   visible: !this.IS_SUPPLIER(),
+          //   render: (h, { row }) => {
+          //     return h('div', [
+          //       row.salesman_mobile,
+          //       this.datapass_block == 0 && h('el-tooltip', {
+          //         props: { effect: 'dark', content: '复制', placement: 'top-start' }
+          //       }, [
+          //         h('i', {
+          //           class: 'el-icon-document-copy',
+          //           style: { cursor: 'pointer' },
+          //           on: {
+          //             click: () => this.copyToClipboard(row.salesman_mobile)
+          //           }
+          //         })
+          //       ])
+          //     ])
+          //   }
+          // },
           {
             name: '手机号',
             key: 'mobile',
@@ -522,6 +504,24 @@ export default {
             name: '导购',
             key: 'salesman_name',
             width: 100
+          },
+          {
+            name: '订单分类',
+            key: 'order_holder',
+            width: 120,
+            render: (h, { row }) => h('span', {}, this.getOrderCategoryName(row.order_holder)),
+            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+          },
+          {
+            name: '来源供应商',
+            key: 'supplier_name',
+            minWidth: 100,
+            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+          },
+          {
+            name: '配送员',
+            key: 'self_delivery_operator_name',
+            visible: !this.IS_SUPPLIER()
           },
           {
             name: '姓名',

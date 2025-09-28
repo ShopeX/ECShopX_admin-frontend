@@ -133,8 +133,11 @@
             <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
               售后提醒内容
             </el-button>
-            <el-button type="primary" plain @click="aftersalesAction">
+            <el-button type="primary" plain @click="aftersalesAction('approved')">
               批量审核
+            </el-button>
+            <el-button type="primary" plain @click="aftersalesAction('refund')">
+              批量退款
             </el-button>
           </div>
         </template>
@@ -265,6 +268,7 @@ export default {
       orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       multipleSelection: [],
       // 批量审核相关
+      batchReviewType: 'approved',
       batchReviewDialog: false,
       batchReviewForm: {
         is_approved: '1', // 默认通过
@@ -847,7 +851,8 @@ export default {
       }
       document.body.removeChild(textArea)
     },
-    async aftersalesAction() {
+    async aftersalesAction(type) {
+      this.batchReviewType = type
       const selection = this.$refs.finder.$refs.finderTable.getSelection()
       if (selection.length === 0) {
         return this.$message.error('请选择需要审核的数据')
@@ -870,14 +875,23 @@ export default {
         }
 
         const aftersalesBns = selection.map((row) => row.aftersales_bn)
-        const params = {
+        let params = {
           aftersales_bn: aftersalesBns,
-          is_approved: this.batchReviewForm.is_approved,
-          refuse_reason: this.batchReviewForm.refuse_reason
+        }
+        if (this.batchReviewType == 'refund') {
+          params.check_refund = this.batchReviewForm.is_approved
+          params.refunds_memo = this.batchReviewForm.refuse_reason
+        } else {
+          params.is_approved = this.batchReviewForm.is_approved
+          params.refuse_reason = this.batchReviewForm.refuse_reason
         }
         console.log('批量审核参数:', params)
-        await this.$api.aftersales.reviewAftersales(params)
-        this.$message.success(`审核成功`)
+        if (this.batchReviewType == 'refund') {
+          await this.$api.aftersales.refundCheck(params)
+        } else {
+          await this.$api.aftersales.reviewAftersales(params)
+        }
+        this.$message.success(`操作成功`)
         this.batchReviewDialog = false
         this.$refs.finder.refresh()
       } catch (error) {

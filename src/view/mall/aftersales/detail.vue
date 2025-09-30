@@ -524,7 +524,7 @@
     <template
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-        aftersalesInfo.progress != '0' &&
+        aftersalesInfo.progress == '0' &&
         aftersalesInfo.return_type == 'logistics' &&
         (this.check_refund == '1' || this.is_approved == '1')
       "

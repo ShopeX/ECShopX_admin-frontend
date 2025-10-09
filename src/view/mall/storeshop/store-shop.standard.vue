@@ -444,7 +444,7 @@ export default {
       params = {
         ...params,
         ...formData,
-        is_can_sale: this.activeName == 'second' ? true : this.activeName == 'third' ? false : '_all'
+        is_can_sale: this.activeTab == 'second' ? true : this.activeTab == 'third' ? false : '_all'
       }
       return params
     },

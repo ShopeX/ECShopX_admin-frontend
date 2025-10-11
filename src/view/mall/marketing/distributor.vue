@@ -141,7 +141,7 @@
             添加店铺
           </el-button>
 
-          <el-button type="primary" icon="el-icon-circle-plus" @click="uploadHandleChange()">
+          <el-button v-if="VERSION_STANDARD()" type="primary" icon="el-icon-circle-plus" @click="uploadHandleChange()">
             导入店铺
           </el-button>
         </div>

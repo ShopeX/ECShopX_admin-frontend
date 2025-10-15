@@ -257,74 +257,35 @@ export default {
         case 'coupon':
           info = { url: 'subpages/marketing/coupon-detail?c=' + id, page_name: '券详情' }
           break
-        case 'sale_category':
-          info = { url: 'pages/item/list?cid=' + id, page_name: '销售分类' }
-          break
-        case 'category':
-          info = { url: 'pages/category/index', page_name: '分类页' }
-          break
-        case 'store':
-          info = { url: 'subpages/store/index?id=' + id, page_name: '店铺首页' }
-          break
-        case 'activity_collection':
-          info = {
-            url: 'subpages/marketing/limited-sale?kid=' + id,
-            page_name: '活动集合页限时特惠'
-          }
-          break
         case 'vipgrades':
-          info = { url: 'subpage/pages/vip/vipgrades', page_name: '活动页' }
+          info = { url: 'subpage/pages/vip/vipgrades', page_name: '会员开通' }
           break
         case 'applyChief':
-          info = { url: 'subpages/community/apply-chief', page_name: '活动页' }
+          info = { url: 'subpages/community/apply-chief', page_name: '社区团长申请' }
           break
         case 'recharge':
-          info = { url: 'others/pages/recharge/index', page_name: '活动页' }
+          info = { url: 'others/pages/recharge/index', page_name: '储值卡' }
           break
         case 'purchase':
-          info = { url: 'subpages/purchase/select-identity', page_name: '活动页' }
+          info = { url: 'subpages/purchase/select-identity', page_name: '内购' }
           break
         case 'pointShop':
-          info = { url: 'subpages/pointshop/list', page_name: '活动页' }
+          info = { url: 'subpages/pointshop/list', page_name: '积分商城' }
           break
         case 'registActivity':
-          info = { url: 'marketing/pages/member/activity-list', page_name: '活动页' }
-          break
-        case 'liveList':
-          info = { url: 'subpages/live/list', page_name: '活动页' }
+          info = { url: 'marketing/pages/member/activity-list', page_name: '报名活动' }
           break
         case 'zitiOrder':
-          info = { url: 'subpages/store/ziti-list', page_name: '活动页' }
+          info = { url: 'subpages/store/ziti-list', page_name: '自提订单' }
           break
         case 'group':
           info = { url: 'subpages/marketing/group-list', page_name: '活动页' }
           break
-        case 'appointment':
-          info = { url: 'subpages/marketing/group-list', page_name: '活动页' }
+        case 'coupon_list':
+          info = { url: 'subpages/marketing/coupon-center', page_name: '优惠券' }
           break
-        case 'shequGroup':
-          info = { url: 'subpages/marketing/group-list', page_name: '活动页' }
-          break
-        case 'completeInfo':
-          info = { url: 'subpages/member/complete-profile', page_name: '活动页' }
-          break
-        case 'couponCenter':
-          info = { url: 'subpages/marketing/coupon-center', page_name: '活动页' }
-          break
-        case 'myCollect':
-          info = { url: 'pages/member/item-fav', page_name: '活动页' }
-          break
-        case 'myInvoice':
-          info = { url: 'subpages/trade/invoice-list', page_name: '活动页' }
-          break
-        case 'onlineService':
-          info = { url: 'pages/chat/index', page_name: '活动页' }
-          break
-        case 'addressManage':
-          info = { url: 'subpages/member/address-list', page_name: '活动页' }
-          break
-        case 'shopRanking':
-          info = { url: 'subpages/store/shop-ranking', page_name: '活动页' }
+        case 'my_collect':
+          info = { url: 'pages/member/item-fav', page_name: '我的收藏' }
           break
         case 'pageIndex':
           info = { url: 'pages/index', page_name: '首页' }

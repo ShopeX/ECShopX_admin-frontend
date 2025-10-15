@@ -1,6 +1,7 @@
 <template>
   <div class="section-white content-padded">
     <div>
+      <el-button size="small" type="text" @click="handleBack"> < 返回 </el-button>
       页面路径：<a
         href="#"
         class="page-name"
@@ -448,7 +449,7 @@ export default {
         })
     },
     viewOrder(row){
-       window.open(`/order/entitytrade/orders?source=${row?.source_id}&monitorId=${row?.monitor_id}`, '_blank')
+       window.open(`/order/entitytrade/tradenormalorders?source=${row?.source_id}&monitorId=${row?.monitor_id}`, '_blank')
     },
     showlink (row) {
       var that = this
@@ -665,6 +666,9 @@ export default {
         }
       }
       this.handleBatchDownload()
+    },
+    handleBack () {
+      this.$router.back()
     }
   }
 }

@@ -1352,9 +1352,12 @@ export default {
   },
   async mounted() {
     this.origin = window.location.origin
-    const { tab, order_id } = this.$route.query
+    const { tab, order_id, source } = this.$route.query
     if (tab) {
       this.params.order_status = tab
+    }
+    if (source) {
+      this.params.source = source
     }
     if (order_id) {
       this.params.order_id = order_id

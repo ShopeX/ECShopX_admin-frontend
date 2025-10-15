@@ -1378,6 +1378,12 @@ export default {
     })
   },
   methods: {
+    onSearch () {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
+    },
     async getJstErpSetting() {
       const res = await this.$api.third.getJstErpSetting()
       console.log(`getJstErpSetting:`, res)

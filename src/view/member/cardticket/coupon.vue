@@ -4,14 +4,15 @@
       <SpPlatformTip h5 app pc alipay />
       <SpPlatformTip
         class="damo-crm-tip"
+        v-if="dmcrmSetting.is_open"
         text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示"
       />
 
-      <!-- <div class="action-container">
+      <div class="action-container" v-if="!dmcrmSetting.is_open">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
           创建优惠券
         </el-button>
-      </div> -->
+      </div>
 
       <el-tabs v-model="params.date_status" type="card" @tab-click="handleClick">
         <el-tab-pane
@@ -349,7 +350,8 @@ export default {
             }
           }
         }
-      ]
+      ],
+      dmcrmSetting: {},
     }
   },
   mounted() {
@@ -359,8 +361,13 @@ export default {
     }
     this.fetchList()
     this.fetchWechatList()
+    this.getDmcrmSetting()
   },
   methods: {
+    async getDmcrmSetting() {
+      const data = await this.$api.third.getDmcrmSetting()
+      this.dmcrmSetting = data
+    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {

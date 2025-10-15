@@ -293,8 +293,8 @@ export default {
         },
         coupon: () => {
           return pickBy(data, {
-            id: 'id',
-            title: 'name'
+            id: 'card_id',
+            title: 'title'
           })
         }
       }

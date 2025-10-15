@@ -329,6 +329,9 @@ export default {
         case 'pageIndex':
           info = { url: 'pages/index', page_name: '首页' }
           break
+        case 'hottopic':
+          info = { url: 'pages/recommend/list', page_name: '种草列表' }
+          break
         default:
       }
 

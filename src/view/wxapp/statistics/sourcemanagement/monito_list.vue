@@ -257,42 +257,45 @@ export default {
         case 'coupon':
           info = { url: 'subpages/marketing/coupon-detail?c=' + id, page_name: '券详情' }
           break
-        case 'vipgrades':
-          info = { url: 'subpage/pages/vip/vipgrades', page_name: '会员开通' }
-          break
-        case 'applyChief':
-          info = { url: 'subpages/community/apply-chief', page_name: '社区团长申请' }
-          break
-        case 'recharge':
-          info = { url: 'others/pages/recharge/index', page_name: '储值卡' }
-          break
-        case 'purchase':
-          info = { url: 'subpages/purchase/select-identity', page_name: '内购' }
-          break
-        case 'pointShop':
-          info = { url: 'subpages/pointshop/list', page_name: '积分商城' }
-          break
-        case 'registActivity':
-          info = { url: 'marketing/pages/member/activity-list', page_name: '报名活动' }
-          break
-        case 'zitiOrder':
-          info = { url: 'subpages/store/ziti-list', page_name: '自提订单' }
-          break
-        case 'group':
-          info = { url: 'subpages/marketing/group-list', page_name: '活动页' }
-          break
+        // case 'vipgrades':
+        //   info = { url: 'subpage/pages/vip/vipgrades', page_name: '会员开通' }
+        //   break
+        // case 'applyChief':
+        //   info = { url: 'subpages/community/apply-chief', page_name: '社区团长申请' }
+        //   break
+        // case 'recharge':
+        //   info = { url: 'others/pages/recharge/index', page_name: '储值卡' }
+        //   break
+        // case 'purchase':
+        //   info = { url: 'subpages/purchase/select-identity', page_name: '内购' }
+        //   break
+        // case 'pointShop':
+        //   info = { url: 'subpages/pointshop/list', page_name: '积分商城' }
+        //   break
+        // case 'registActivity':
+        //   info = { url: 'marketing/pages/member/activity-list', page_name: '报名活动' }
+        //   break
+        // case 'zitiOrder':
+        //   info = { url: 'subpages/store/ziti-list', page_name: '自提订单' }
+        //   break
+        // case 'group':
+        //   info = { url: 'subpages/marketing/group-list', page_name: '活动页' }
+        //   break
+        // case 'my_collect':
+        //   info = { url: 'pages/member/item-fav', page_name: '我的收藏' }
+        //   break
         case 'coupon_list':
           info = { url: 'subpages/marketing/coupon-center', page_name: '优惠券' }
           break
-        case 'my_collect':
-          info = { url: 'pages/member/item-fav', page_name: '我的收藏' }
-          break
-        case 'pageIndex':
+        case 'page_index':
           info = { url: 'pages/index', page_name: '首页' }
           break
         case 'hottopic':
           info = { url: 'pages/recommend/list', page_name: '种草列表' }
           break
+        case 'category':
+          info = {url: 'pages/category/index',page_name:'分类页'}
+          break   
         default:
       }
 

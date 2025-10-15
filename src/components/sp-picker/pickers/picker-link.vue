@@ -117,8 +117,8 @@ export default {
     }
     if (this.value.guide == 'share_page') {
       this.list = [
-        { id: 'couponCenter', title: '领券中心' },
-        { id: 'pageIndex', title: '首页' },
+        { id: 'coupon_list', title: '领券中心' },
+        { id: 'page_index', title: '首页' },
         { id: 'category', title: '分类' },
         { id: 'hottopic', title: '种草列表' }
       ]

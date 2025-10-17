@@ -233,22 +233,6 @@ export default {
           enabled: false,
           isShow: !this.isHfpay && !this.VERSION_IN_PURCHASE() && !this.VERSION_SHUYUN()
         },
-        // {
-        //   name: 'hfpay',
-        //   title: '汇付天下支付配置',
-        //   icon: require('@/assets/img/ectapp/adapay.png'),
-        //   description: '支持客户端:移动商城(微信小程序、H5)、PC商城,可配置',
-        //   enabled: false,
-        //   isShow: this.isHfpay && !this.VERSION_IN_PURCHASE() && !this.VERSION_SHUYUN()
-        // },
-        // {
-        //   name: 'adapay',
-        //   title: 'Adapay支付配置',
-        //   icon: require('@/assets/img/ectapp/adapay.png'),
-        //   description: '支持客户端:移动商城(微信小程序、H5)、PC商城',
-        //   enabled: false,
-        //   isShow: !this.isHfpay && !this.VERSION_IN_PURCHASE() && !this.VERSION_SHUYUN()
-        // },
         {
           name: 'chinaumspay',
           title: '银联商务支付配置',
@@ -291,8 +275,6 @@ export default {
       paymentForms: {
         wxpay: {},
         alipay: {},
-        hfpay: {},
-        adapay: {},
         chinaumspay: {},
         offline_pay: {},
         bspay: {},
@@ -390,33 +372,24 @@ export default {
     },
     
     // 动态生成表单配置，确保数据回显
-    wxpayFormItems() {
+    wxpayFormItems() { // 微信
       return this.getWxpayFormItems()
     },
-    alipayFormItems() {
+    alipayFormItems() { // 支付宝
       return this.getAlipayFormItems()
     },
-    adapayFormItems() {
-      return this.getAdapayFormItems()
-    },
-    hfpayFormItems() {
-      return this.getHfpayFormItems()
-    },
-    chinaumspayFormItems() {
+    chinaumspayFormItems() { // 银联商务
       return this.getChinaumspayFormItems()
     },
-    offlineFormItems() {
+    offlineFormItems() { // 线下转账
       return this.getOfflineFormItems()
     },
-    bspayFormItems() {
+    bspayFormItems() { // 汇付斗拱
       return this.getBspayFormItems()
     },
-    paypalFormItems() {
+    paypalFormItems() { // PayPal
       return this.getPaypalFormItems()
     },
-    stripeFormItems() {
-      return this.getStripeFormItems()
-    }
   },
   
   methods: {
@@ -492,8 +465,6 @@ export default {
       const formConfigs = {
         wxpay: this.getWxpayFormItems(),
         alipay: this.getAlipayFormItems(),
-        adapay: this.getAdapayFormItems(),
-        hfpay: this.getHfpayFormItems(),
         chinaumspay: this.getChinaumspayFormItems(),
         offline_pay: this.getOfflineFormItems(),
         bspay: this.getBspayFormItems(),
@@ -710,362 +681,6 @@ export default {
         }
       ]
     },
-
-    // 汇付天下表单配置
-    getHfpayFormItems() {
-      const formData = this.paymentForms.hfpay || {}
-      return [
-        {
-          fieldName: 'group1',
-          label: '基础配置',
-          component: 'group'
-        },
-        {
-          fieldName: 'mer_cust_id',
-          label: '商户客户号',
-          component: 'input',
-          value: formData.mer_cust_id || '',
-          componentProps: {
-            placeholder: '请输入商户客户号',
-            style: 'width: 300px'
-          },
-          tip: '汇付生成的商户唯一标志：mer_cust_id'
-        },
-        {
-          fieldName: 'acct_id',
-          label: '商户账户号',
-          component: 'input',
-          value: formData.acct_id || '',
-          componentProps: {
-            placeholder: '请输入商户账户号',
-            style: 'width: 300px'
-          },
-          tip: '汇付生成的唯一标志：acct_id'
-        },
-        {
-          fieldName: 'pfx_password',
-          label: '证书密钥',
-          component: 'input',
-          value: formData.pfx_password || '',
-          componentProps: {
-            placeholder: '请输入证书密钥',
-            style: 'width: 300px'
-          }
-        },
-        {
-          label: '商户证书',
-          component: 'upload',
-          componentProps: {
-            title: formData.pfx_file_name,
-            buttonSize: '点击上传',
-            size: 'middle',
-            autoUpload: false,
-            onChange: (file, fileList) => {
-              console.log('上传:', file, fileList)
-              this.paymentForms.hfpay.pfx_file = file.raw
-            }
-          },
-          tip: '汇付下发的证书，此处换成商户自己的证书 .pfx 格式 加签使用'
-        },
-        {
-          label: 'CA证书',
-          component: 'upload',
-          componentProps: {
-            title: formData.ca_pfx_file_name,
-            buttonSize: '点击上传',
-            size: 'middle',
-            autoUpload: false,
-            onChange: (file, fileList) => {
-              console.log('上传:', file, fileList)
-              this.paymentForms.hfpay.ca_pfx_file = file.raw
-            }
-          },
-          tip: '汇付下发的.cer证书 ，需要一对证书 解签使用'
-        },
-        {
-          label: 'OCA31证书',
-          component: 'upload',
-          componentProps: {
-            title: formData.oca31_pfx_file_name,
-            buttonSize: '点击上传',
-            size: 'middle',
-            autoUpload: false,
-            onChange: (file, fileList) => {
-              console.log('上传:', file, fileList)
-              this.paymentForms.hfpay.oca31_pfx_file = file.raw
-            }
-          },
-          tip: '汇付下发的.cer证书 ，需要一对证书 解签使用'
-        }
-        // {
-        //   fieldName: 'is_open',
-        //   label: '是否启用',
-        //   component: 'switch',
-        //   value: formData.is_open || false,
-        //   componentProps: {
-        //     activeColor: '#13ce66',
-        //     inactiveColor: '#ff4949'
-        //   }
-        // }
-      ]
-    },
-
-    // Adapay表单配置
-    getAdapayFormItems() {
-      const formData = this.paymentForms.adapay || {}
-      return [
-        {
-          fieldName: 'group1',
-          label: '基础配置',
-          component: 'group'
-        },
-        {
-          fieldName: 'app_id',
-          label: 'App_ID',
-          component: 'input',
-          value: formData.app_id || '',
-          componentProps: {
-            placeholder: '请输入App_ID',
-            style: 'width: 300px'
-          },
-          rules: [
-            { required: true, message: '请输入App_ID', trigger: 'blur' }
-          ]
-        },
-        {
-          fieldName: 'test_api_key',
-          label: 'mock模式API_KEY',
-          component: 'input',
-          value: formData.test_api_key || '',
-          componentProps: {
-            placeholder: '请输入mock模式API_KEY',
-            style: 'width: 300px'
-          },
-          rules: [
-            { required: true, message: '请输入mock模式API_KEY', trigger: 'blur' }
-          ]
-        },
-        {
-          fieldName: 'live_api_key',
-          label: 'prod模式API_KEY',
-          component: 'input',
-          value: formData.live_api_key || '',
-          componentProps: {
-            placeholder: '请输入prod模式API_KEY',
-            style: 'width: 300px'
-          },
-          rules: [
-            { required: true, message: '请输入prod模式API_KEY', trigger: 'blur' }
-          ]
-        },
-        {
-          fieldName: 'rsa_private_key',
-          label: '商户RSA私钥',
-          component: ({ value, props, onInput, h, formData }) => {
-            return (
-              <div>
-                <el-input
-                  type="textarea"
-                  v-model={value}
-                  placeholder="请输入RSA私钥"
-                  rows={4}
-                  style="width: 880px"
-                />
-                <div>
-                  <el-button type="text" onClick={this.createKey}>
-                    生成RSA密钥
-                  </el-button>
-                </div>
-              </div>
-            )
-          },
-          rules: [
-            { required: true, message: '请输入商户RSA私钥', trigger: 'blur' }
-          ],
-          width: '960px'
-        },
-        {
-          fieldName: 'group2',
-          label: '支付渠道设置',
-          component: 'group'
-        },
-        {
-          fieldName: 'pay_channel',
-          label: '支付渠道',
-          component: 'checkbox',
-          value: formData.pay_channel || [],
-          componentProps: {
-            options: [
-              { label: '微信小程序支付', value: 'wx_lite' },
-              { label: '微信公众号支付', value: 'wx_pub' },
-              { label: '支付宝H5支付', value: 'alipay_wap' },
-              { label: '支付宝app支付', value: 'alipay' },
-              { label: '支付宝扫码', value: 'alipay_qr' }
-            ]
-          }
-        },
-        {
-          fieldName: 'group3',
-          label: '费率设置',
-          component: 'group'
-        },
-        {
-          fieldName: 'wxpay_fee_type',
-          label: '微信渠道费率类型',
-          component: 'radio',
-          value: formData.wxpay_fee_type || 'online',
-          componentProps: {
-            options: [
-              { label: '标准费率线上', value: 'online' },
-              { label: '标准费率线下', value: 'offline' }
-            ]
-          }
-        },
-        {
-          fieldName: 'wx_pub_online',
-          label: '微信公众号支付（线上）',
-          component: 'input',
-          value: formData.wx_pub_online || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'wx_pub_offline',
-          label: '微信公众号支付（线下）',
-          component: 'input',
-          value: formData.wx_pub_offline || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'wx_lite_online',
-          label: '微信小程序支付（线上）',
-          component: 'input',
-          value: formData.wx_lite_online || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'wx_lite_offline',
-          label: '微信小程序支付（线下）',
-          component: 'input',
-          value: formData.wx_lite_offline || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'wx_scan',
-          label: '微信扫码支付（被扫-线下）',
-          component: 'input',
-          value: formData.wx_scan || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_fee_type',
-          label: '支付宝渠道费率类型',
-          component: 'radio',
-          value: formData.alipay_fee_type || 'online',
-          componentProps: {
-            options: [
-              { label: '标准费率线上', value: 'online' },
-              { label: '标准费率线下', value: 'offline' }
-            ]
-          }
-        },
-        {
-          fieldName: 'alipay_qr_online',
-          label: '支付宝扫码支付（主扫-线上）',
-          component: 'input',
-          value: formData.alipay_qr_online || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_qr_offline',
-          label: '支付宝扫码支付（主扫-线下）',
-          component: 'input',
-          value: formData.alipay_qr_offline || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_scan',
-          label: '支付宝扫码支付（被扫-线下）',
-          component: 'input',
-          value: formData.alipay_scan || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_lite_online',
-          label: '支付宝小程序支付（线上）',
-          component: 'input',
-          value: formData.alipay_lite_online || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_lite_offline',
-          label: '支付宝小程序支付（线下）',
-          component: 'input',
-          value: formData.alipay_lite_offline || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'alipay_call',
-          label: '支付宝唤起支付（线上）',
-          component: 'input',
-          value: formData.alipay_call || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'ali_pub_off_b2b',
-          label: '支付宝生活号（线下）',
-          component: 'input',
-          value: formData.ali_pub_off_b2b || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        },
-        {
-          fieldName: 'ali_pub_online_b2b',
-          label: '支付宝生活号（线上）',
-          component: 'input',
-          value: formData.ali_pub_online_b2b || '',
-          componentProps: {
-            placeholder: '请输入内容',
-            style: 'width: 300px'
-          }
-        }
-      ]
-    },
-    
     // 银联商务支付表单配置
     getChinaumspayFormItems() {
       const formData = this.paymentForms.chinaumspay || {}

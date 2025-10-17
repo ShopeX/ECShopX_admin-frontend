@@ -13,8 +13,8 @@
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <!-- <img :src="item.icon" :alt="item.title" class="payment-icon" /> -->
-                <span class="payment-title">{{ item.title }}</span>
+                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon" />
+                <span class="payment-title" v-else>{{ item.title }}</span>
                 <el-switch
                   v-model="item.enabled"
                   active-color="#13ce66"
@@ -52,8 +52,8 @@
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <!-- <img :src="item.icon" :alt="item.title" class="payment-icon" /> -->
-                <span class="payment-title">{{ item.title }}</span>
+                <img :src="item.icon" :alt="item.title" class="payment-icon" />
+                <!-- <span class="payment-title">{{ item.title }}</span> -->
                 <el-switch
                   v-model="item.enabled"
                   active-color="#13ce66"
@@ -220,7 +220,7 @@ export default {
         {
           name: 'wxpay',
           title: '微信支付配置',
-          icon: require('@/assets/img/webchat.png'),
+          icon: require('@/assets/pay_logo/wepay.png'),
           description: '支持客户端:移动商城(微信小程序、H5)、PC商城',
           enabled: false,
           isShow: true
@@ -228,7 +228,7 @@ export default {
         {
           name: 'alipay',
           title: '支付宝支付配置',
-          icon: require('@/assets/img/zfb_logo.png'),
+          icon: require('@/assets/pay_logo/alipay.png'),
           description: '支持客户端:移动商城(H5)、PC商城',
           enabled: false,
           isShow: !this.isHfpay && !this.VERSION_IN_PURCHASE() && !this.VERSION_SHUYUN()
@@ -252,7 +252,7 @@ export default {
         {
           name: 'chinaumspay',
           title: '银联商务支付配置',
-          icon: require('@/assets/img/ectapp/yinlian.png'),
+          icon: require('@/assets/pay_logo/unionpay.png'),
           description: '支持客户端:移动商城(微信小程序、H5)',
           enabled: false,
           isShow: !this.VERSION_SHUYUN()
@@ -260,7 +260,7 @@ export default {
         {
           name: 'offline_pay',
           title: '线下转账',
-          icon: require('@/assets/img/ectapp/yinlian.png'),
+          icon: '',
           description: '支持客户端:移动商城(H5)、PC商城',
           enabled: false,
           isShow: !this.VERSION_SHUYUN() && !this.VERSION_B2C()
@@ -268,7 +268,7 @@ export default {
         {
           name: 'bspay',
           title: '汇付斗拱支付配置',
-          icon: require('@/assets/img/ectapp/adapay.png'),
+          icon: require('@/assets/pay_logo/huifu.png'),
           description: '支持客户端:移动商城(微信小程序、H5)、PC商城',
           enabled: false,
           isShow: true
@@ -280,7 +280,7 @@ export default {
         {
           name: 'paypal',
           title: 'PayPal',
-          icon: require('@/assets/img/ectapp/adapay.png'),
+          icon: require('@/assets/pay_logo/paypal.png'),
           description: '支持客户端:移动商城(H5)、PC商城',
           enabled: false,
           isShow: true
@@ -1577,19 +1577,20 @@ export default {
   .payment-info {
     display: flex;
     align-items: center;
-    margin: 0px 30px 0px 30px;
+    margin: 0px 10px;
     
     .payment-icon {
-      width: 24px;
-      height: 24px;
+      width: 110px;
+      height: 100%;
       margin-right: 12px;
       border-radius: 4px;
     }
     
     .payment-title {
+      min-width: 110px;
       font-size: 16px;
       color: #1d1d1d;
-      margin-right: 30px;
+      margin-left: 13px;
     }
   }
   

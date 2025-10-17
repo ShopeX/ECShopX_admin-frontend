@@ -126,9 +126,9 @@
         </el-col>
       </el-row>
     </el-form>
-    <GlobalFooter>
+    <div class="footer-container">
       <el-button type="primary" @click="save"> 保存配置 </el-button>
-    </GlobalFooter>
+    </div>
   </el-card>
 </template>
 

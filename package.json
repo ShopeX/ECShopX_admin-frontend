@@ -138,6 +138,7 @@
     ]
   },
   "overrides": {
+    "resource": "0.8.1",
     "xmlhttprequest": "1.8.0"
   }
 }

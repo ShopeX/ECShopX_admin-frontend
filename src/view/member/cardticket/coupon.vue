@@ -354,9 +354,8 @@ export default {
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       console.log(list, 'src/view/member/cardticket/coupon.vue-第355行')
-      debugger
       list.forEach((item, i) => {
-        if (item.name == 'yykweishop') {
+        if (item.key_name == 'yykweishop') {
           this.appID = item.authorizer.authorizer_appid
         }
       })

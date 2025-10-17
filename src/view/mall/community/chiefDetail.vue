@@ -143,7 +143,7 @@ export default {
           ))}
         </el-card>
 
-        {/*  {this.approve_status == 0 && (*/}
+      {this.approve_status == 0 && (
         <div class="footer-container">
           {btnActions.map((btn, index) => (
             <el-button
@@ -156,7 +156,7 @@ export default {
             </el-button>
           ))}
         </div>
-        {/* )}*/}
+      )}
 
         <SpDialog
           ref="resloveDialogRef"

@@ -270,7 +270,7 @@ export default {
       this.form.auto_cancel_time = res.auto_cancel_time
       this.form.pay_tips = res.pay_tips
       this.form.pay_desc = res.pay_desc
-      this.form.is_open = res.is_open == 'true'
+      this.form.is_open = (res.is_open == 'true' || res.is_open == true) ? true : false
       this.form.is_need_finance_audit = res.is_need_finance_audit
     },
     async onSaveConfig() {

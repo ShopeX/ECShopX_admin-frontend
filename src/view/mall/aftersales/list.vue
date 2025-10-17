@@ -397,7 +397,7 @@ import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER, getUrlPathByLoginType } from '@/utils'
-import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
+import { ORDER_CATEGORY, ORDER_TYPE } from '@/consts'
 export default {
   components: {
     RemarkModal
@@ -433,7 +433,6 @@ export default {
         ...initialParams
       },
       is_pharma_industry: false,
-      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
@@ -457,7 +456,7 @@ export default {
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: '售后提醒内容',
-      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      orderType: ORDER_TYPE
     }
   },
   computed: {

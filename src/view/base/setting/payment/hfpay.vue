@@ -92,7 +92,7 @@ export default {
         query = { pay_type: 'hfpay' }
         getPaymentSetting(query).then(response => {
           this.form = response.data.data
-          this.form.is_open = response.data.data.is_open == 'true' ? true : false
+          this.form.is_open = (response.data.data.is_open == 'true' || response.data.data.is_open == true) ? true : false
         })
       }
     },

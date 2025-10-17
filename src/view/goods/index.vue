@@ -1608,8 +1608,9 @@ export default {
         this.submitLoading = false
         this.isLeave = true
         this.$parent.onActivated()
+        const _this = this
         setTimeout(() => {
-          this.$router.go(-1)
+          _this.$router.go(-1)
         }, 200)
       } catch (e) {
         this.submitLoading = false

@@ -451,7 +451,6 @@ import {
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
-  ORDER_TYPE_STANDARD,
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -506,7 +505,7 @@ export default {
         : VERSION_IN_PURCHASE()
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
-      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,

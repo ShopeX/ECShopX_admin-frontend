@@ -187,7 +187,7 @@ export default {
                 this.$router.push({
                   path: `${
                     IS_DISTRIBUTOR() ? '/shopadmin' : ''
-                  }/applications/ec/purchaseorder?activity_id=${row.id}`
+                  }/applications/enterprise-purchase/activity-order?activity_id=${row.id}`
                 })
               }
             }

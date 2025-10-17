@@ -93,7 +93,7 @@
       </el-dropdown>
     </div>
 
-    <el-tabs v-model="activeTab" type="card">
+    <el-tabs v-model="activeTab" type="card" @tab-click="handleTabClick">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="`tab-pane__${index}`"
@@ -178,8 +178,12 @@ export default {
       statusOption: statusOption,
       finderData: [],
       finderUrl: '',
-      tabList: [{ name: '全部商品', value: 'all' }],
-      activeTab: 'all',
+      tabList: [
+        { name: '全部商品', value: 'first' },
+        { name: '已上架', value: 'second' },
+        { name: '未上架', value: 'third' }
+      ],
+      activeTab: 'first',
       selectItems: [],
       itemSkuDialog: false,
       editPrice:null,
@@ -440,7 +444,7 @@ export default {
       params = {
         ...params,
         ...formData,
-        is_can_sale: '_all'
+        is_can_sale: this.activeTab == 'second' ? true : this.activeTab == 'third' ? false : '_all'
       }
       return params
     },
@@ -550,6 +554,9 @@ export default {
         })
         this.$refs.finder.refresh(true)
       }
+    },
+    handleTabClick() {
+      this.$refs.finder.refresh()
     }
   }
 }

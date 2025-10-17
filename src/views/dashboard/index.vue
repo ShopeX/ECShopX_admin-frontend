@@ -137,6 +137,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.user.accessMenus, '权限列表')
     this.getCompanyStatistics()
   },
   methods: {

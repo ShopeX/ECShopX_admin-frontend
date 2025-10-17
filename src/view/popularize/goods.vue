@@ -137,7 +137,6 @@
       </el-tab-pane>
     </el-tabs>
     <SideBar :visible.sync="show_task_sideBar" title="任务制配置" width="67">
-      <slot>
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="title">{{ current.item_name }}</span>
@@ -221,10 +220,8 @@
             保存
           </el-button>
         </div>
-      </slot>
     </SideBar>
     <SideBar :visible.sync="show_sideBar" title="分销参数配置" width="67">
-      <slot>
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="title">{{ current.item_name }}</span>
@@ -347,7 +344,6 @@
             保存
           </el-button>
         </div>
-      </slot>
     </SideBar>
     <el-dialog title="更改商品返佣任务制支持" :visible.sync="changeRebateTypeVisible" width="30%">
       <el-radio-group v-model="changeRebateType">

@@ -61,6 +61,10 @@ const routes = [
           {
             path: 'alipaysetting',
             component: () => import('@/view/mall/marketing/distributor_alipaysetting')
+          },
+          {
+            path: 'storeupload',
+            component: () => import('@/view/mall/marketing/shopUpload')
           }
         ]
       },

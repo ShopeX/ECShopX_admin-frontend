@@ -21,7 +21,10 @@ function getAllPermissions(tree, fieldName, childrenKey = 'children', parentPath
 
     // 判断是否有子节点
     const hasChildren =
-      node[childrenKey] && Array.isArray(node[childrenKey]) && node[childrenKey].length > 0
+      node[childrenKey] &&
+      Array.isArray(node[childrenKey]) &&
+      node[childrenKey].length > 0 &&
+      node?.isChildrenMenu == true
 
     node.alias_name = node?.alias_name?.replace(/\//g, '')
     if (!hasChildren) {

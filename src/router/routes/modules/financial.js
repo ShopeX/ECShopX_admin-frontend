@@ -130,10 +130,10 @@ const routes = [
         name: 'invoiceList',
         path: 'invoice/invoice-list',
         meta: {
-          aliasName: 'InvoiceRequest',
+          aliasName: 'invoiceList',
           icon: 'pay-circle',
           title: '开票申请',
-          permissions: ['financial.invoice.InvoiceRequest']
+          permissions: ['financial.invoice.invoice-list']
         },
         component: () => import('@/view/financial/invoice/list'),
         children: [

@@ -645,7 +645,6 @@ import {
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
-  ORDER_TYPE_STANDARD,
   ROLE_LIST,
   INVOICE_STATUS,
   ORDER_CATEGORY,
@@ -701,7 +700,7 @@ export default {
         : VERSION_IN_PURCHASE()
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
-      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: this.VERSION_STANDARD()
         ? ORDER_CATEGORY.filter(item => item.value != 'distributor')
@@ -1639,8 +1638,7 @@ export default {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
-      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      const fd = _orderType.find(item => item.value == order_class)
+      const fd = ORDER_TYPE.find(item => item.value == order_class)
       if (fd) {
         return fd.title
       }

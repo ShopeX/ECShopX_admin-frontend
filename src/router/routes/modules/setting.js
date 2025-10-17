@@ -627,7 +627,7 @@ const routes = [
           permissions: ['setting.systemsetting.damoCrm']
         },
         component: () => import('@/view/base/setting/damoCrm/index')
-      },
+      }
     ]
   }
 ]

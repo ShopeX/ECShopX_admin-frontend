@@ -195,7 +195,6 @@
         </el-dialog>
 
         <SideBar :visible.sync="show_commission_sideBar" title="总部结算佣金配置" width="60">
-          <slot>
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>
@@ -272,7 +271,6 @@
                 </el-table-column>
               </el-table>
             </el-card>
-          </slot>
           <div slot="footer">
             <el-button type="primary" :loading="submitLoading" @click="saveCommissionConf">
               保存

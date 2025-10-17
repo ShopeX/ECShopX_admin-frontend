@@ -286,7 +286,6 @@
       </el-dialog>
       <!-- 选择商品分类-结束 -->
       <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
-        <slot>
           <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
             <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
             <el-table-column label="库存">
@@ -295,7 +294,6 @@
               </template>
             </el-table-column>
           </el-table>
-        </slot>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
             保存

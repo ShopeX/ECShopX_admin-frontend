@@ -59,9 +59,11 @@
       </div>
     </el-card>
 
-    <GlobalFooter>
-      <el-button type="primary" @click="save"> 保存 </el-button>
-    </GlobalFooter>
+    <template slot="page-footer">
+      <div class="text-center">
+        <el-button type="primary" @click="save"> 保存 </el-button>
+      </div>
+    </template>
   </SpPage>
 </template>
 <script>

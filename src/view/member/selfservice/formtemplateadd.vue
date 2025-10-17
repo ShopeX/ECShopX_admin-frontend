@@ -207,7 +207,6 @@
       </el-form>
     </div>
     <SideBar :visible.sync="showElementList" title="选择表单元素" width="40">
-      <slot>
         <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
             <el-select
@@ -263,7 +262,6 @@
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="saveStoreAction">确 定</el-button>
         </span>
-      </slot>
     </SideBar>
   </div>
 </template>

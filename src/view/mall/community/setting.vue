@@ -126,7 +126,12 @@ export default {
             buttonType: 'primary is-plain',
             action: {
               handler: async val => {
-                this.registerForm.id = ''
+                this.registerForm = {
+                  id: '',
+                  label: '',
+                  field_type: 1,
+                  alert_required_message: ''
+                }
                 this.$refs.registerDialogRef.resetForm()
                 this.registerDialog = true
               }

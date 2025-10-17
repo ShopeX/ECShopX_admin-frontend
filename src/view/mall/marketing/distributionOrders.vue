@@ -31,7 +31,6 @@ import _map from 'lodash/map'
 import moment from 'moment'
 import {
   ORDER_TYPE,
-  ORDER_TYPE_STANDARD,
   ORDER_ZITI_STATUS_MAP,
   ORDER_DELIVERY_STATUS_MAP,
   GLOBAL_ORDER_STATUS_MAP
@@ -40,9 +39,7 @@ import { IS_ADMIN, VERSION_STANDARD, formatPrice } from '@/utils'
 import { useForm } from '@/composables'
 import hqbdlycorp from '@/common/hqbdlycorp.json'
 
-const LOCAL_ORDER_TYPE = VERSION_STANDARD()
-  ? _map(ORDER_TYPE_STANDARD, item => ({ label: item.title, value: item.value }))
-  : _map(ORDER_TYPE, item => ({ label: item.title, value: item.value }))
+const LOCAL_ORDER_TYPE = _map(ORDER_TYPE, item => ({ label: item.title, value: item.value }))
 
 const [SearchForm, SearchFormApi] = useForm({
   formType: 'searchForm',

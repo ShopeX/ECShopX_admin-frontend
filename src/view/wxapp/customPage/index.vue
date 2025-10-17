@@ -210,7 +210,7 @@ export default {
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
-        if (item.name == 'yykweishop') {
+        if (item.key_name == 'yykweishop') {
           this.appID = item.authorizer.authorizer_appid
         }
       })

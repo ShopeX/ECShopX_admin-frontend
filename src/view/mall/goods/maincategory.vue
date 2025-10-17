@@ -242,7 +242,6 @@
       title="商品分销配置"
       width="60"
     >
-      <slot>
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>
@@ -295,7 +294,6 @@
             </el-table-column>
           </el-table>
         </el-card>
-      </slot>
       <div slot="footer">
         <el-button type="primary" :loading="submitLoading" @click="saveProfitConf">
           保存

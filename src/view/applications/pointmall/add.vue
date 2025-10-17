@@ -823,8 +823,8 @@
             </el-radio-group>
           </el-form-item>
           <template v-if="mode === 'richText'">
-            <SpRichText v-model="form.intro" class="rich-text-editor" />
-            <span class="tpl_item img" style="" @click="addImgPreview">
+            <SpRichText ref="editor" v-model="form.intro" class="rich-text-editor" />
+            <!-- <span class="tpl_item img" style="" @click="addImgPreview">
               <i class="iconfont icon-image" />图片
             </span> -->
           </template>
@@ -1396,29 +1396,22 @@ export default {
     },
     pickThumb: function (arr) {
       if (arr.length != 0) {
+        this.thumbDialog = false
+        
+        // 直接将图片插入到富文本内容中
+        let imgHtml = ''
         arr.forEach(data => {
           if (data && data.url !== '') {
-            this.thumbDialog = false
-            var index = this.$refs.editor.$el.id
-            var loc = this.$refs.editor
-            var img = new Image()
-            img.src = this.wximageurl + data.url
-            if (loc.range) {
-              loc.range.insertNode(img)
-              var referenceNode = loc.range.endContainer
-              if (referenceNode.className !== 'content') {
-                loc.range.setStartAfter(referenceNode)
-              } else {
-                loc.range.setStart(loc.range.endContainer, loc.range.endOffset)
-              }
-            } else {
-              loc.$refs.content.appendChild(img)
-              loc.focus()
-              loc.restoreSelection()
-            }
-            this.form.intro = loc.$refs.content.innerHTML
+            const imageUrl = this.wximageurl + data.url
+            imgHtml += `<img src="${imageUrl}" style="max-width: 100%; height: auto; display: block; margin: 10px 0;" />`
           }
         })
+        
+        if (imgHtml) {
+          // 将图片HTML追加到现有内容中
+          this.form.intro = this.form.intro + imgHtml
+          this.$message.success('图片插入成功')
+        }
       }
     },
     closeThumbDialog: function () {

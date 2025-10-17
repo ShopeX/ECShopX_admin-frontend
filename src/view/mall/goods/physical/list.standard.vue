@@ -527,7 +527,6 @@
         </span>
       </el-dialog>
       <SideBar :visible.sync="show_rebate_sideBar" title="商品分销配置" width="60">
-        <slot>
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span v-if="popularizeSetting.popularize_ratio.type == 'profit'">
@@ -601,7 +600,6 @@
               </el-table-column>
             </el-table>
           </el-card>
-        </slot>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveRebateConf">
             保存
@@ -614,7 +612,6 @@
         title="商品分销配置"
         width="60"
       >
-        <slot>
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>
@@ -696,7 +693,6 @@
               </el-table-column>
             </el-table>
           </el-card>
-        </slot>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveProfitConf">
             保存
@@ -704,7 +700,6 @@
         </div>
       </SideBar>
       <SideBar :visible.sync="show_sideBar" title="设置会员价" width="60">
-        <slot>
           <el-table v-loading="skuLoading" :data="specItems" height="100%">
             <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
             <el-table-column label="原价" prop="market_price" width="100">
@@ -747,14 +742,12 @@
               </el-table-column>
             </el-table-column>
           </el-table>
-        </slot>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="savePrice"> 保存 </el-button>
         </div>
       </SideBar>
       <!-- 选择商品分类-结束 -->
       <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
-        <slot>
           <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
             <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
             <el-table-column label="库存">
@@ -763,7 +756,6 @@
               </template>
             </el-table-column>
           </el-table>
-        </slot>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
             保存
@@ -1162,7 +1154,7 @@ export default {
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
-        if (item.name == 'yykweishop') {
+        if (item.key_name == 'yykweishop') {
           this.appID = item.authorizer.authorizer_appid
         }
       })
@@ -1191,9 +1183,9 @@ export default {
     handleImport(command) {
       if (command == 'physicalupload') {
         if (this.login_type == 'distributor') {
-          this.$router.push({ path: `/shopadmin/entity/goodsphysical/physicalupload` })
+          this.$router.push({ path: `/shopadmin/products/product-import` })
         } else {
-          this.$router.push({ path: `/entity/goods/goodsphysical/physicalupload` })
+          this.$router.push({ path: `/products/product-manage/self-products/product-import` })
         }
       } else if (command == 'physicalstoreupload') {
         if (this.login_type == 'distributor') {

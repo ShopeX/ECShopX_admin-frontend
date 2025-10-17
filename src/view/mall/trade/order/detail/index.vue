@@ -526,7 +526,6 @@
 import { mapGetters } from 'vuex'
 import {
   ORDER_TYPE,
-  ORDER_TYPE_STANDARD,
   DISTRIBUTION_TYPE,
   PROFIT_TYPE,
   PAY_TYPE,
@@ -872,8 +871,7 @@ export default {
         }
         this.is_community = true
       }
-      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      let fd = _orderType.find(k => k.value == order_class)
+      const fd = ORDER_TYPE.find(k => k.value == order_class)
 
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {

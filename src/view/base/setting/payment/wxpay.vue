@@ -117,7 +117,7 @@ export default {
               ? {}
               : response.data.data
           form.is_servicer = response.data.data.is_servicer == 'true' ? true : false
-          form.is_open = response.data.data.is_open == 'true' ? true : false
+          form.is_open = (response.data.data.is_open == 'true' || response.data.data.is_open == true) ? true : false
 
           for (let key of Object.keys(form)) {
             this.$set(this.form, key, form[key])

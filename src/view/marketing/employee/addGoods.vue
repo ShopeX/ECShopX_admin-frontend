@@ -467,10 +467,10 @@ export default {
       let path
       if (this.IS_DISTRIBUTOR()) {
         path =
-          '/shopadmin/entity/storeshopproductanagement/physicalupload?file_type=employee_purchase_activity_items'
+          '/shopadmin/products/product-import?file_type=employee_purchase_activity_items'
       } else {
         path =
-          '/entity/goods/goodsphysical/physicalupload?file_type=employee_purchase_activity_items'
+          '/products/product-manage/self-products/product-import?file_type=employee_purchase_activity_items'
       }
       this.$router.push({ path })
     },

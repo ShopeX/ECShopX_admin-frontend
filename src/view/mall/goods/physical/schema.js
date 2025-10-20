@@ -59,11 +59,7 @@ export const createTbAddForm = (vm) =>
                     {
                       key: 'list_time',
                       name: '上架时间',
-                      type: 'date-time-picker',
-                      startPlaceholder: '开始日期',
-                      endPlaceholder: '结束日期',
-                      name: '添加时间',
-                      format: 'yyyy-MM-dd HH:mm:ss'
+                      slot: 'list_time'
                     }
                   ],
                   columns: [
@@ -79,9 +75,8 @@ export const createTbAddForm = (vm) =>
                   hooks: {
                     beforeSearch: (params) => {
                       console.log(params)
-                      const list_time_start = params.list_time && params.list_time[0]
-                      const list_time_end = params.list_time && params.list_time[1]
-                      delete params.importTime
+                      const list_time_start = vm.list_time && vm.list_time[0]
+                      const list_time_end = vm.list_time && vm.list_time[1]
                       return {
                         ...params,
                         list_time_start,
@@ -99,7 +94,18 @@ export const createTbAddForm = (vm) =>
                 on-select-all={(row) => {
                   vm.selectedSpu = row
                 }}
-              ></SpFinder>
+              >
+                <el-date-picker
+                  v-model={vm.list_time}
+                  slot="list_time"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  default-time={['00:00:00', '23:59:59']}
+                />
+              </SpFinder>
               <div style={{ display:'flex', justifyContent:'flex-end' }}>
                 <el-button
                   type='primary'

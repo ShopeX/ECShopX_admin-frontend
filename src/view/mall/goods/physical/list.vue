@@ -934,7 +934,7 @@ export default {
       changePriceDialog: false,
       changePriceForm: {},
       changePriceFormList: [],
-
+      list_time: [],
       tableList: {
         actions: [
           {

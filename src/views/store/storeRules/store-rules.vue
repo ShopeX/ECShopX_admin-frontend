@@ -62,7 +62,7 @@ export default {
                     })
                   }}
                 >
-                  <el-radio-button label='1'>默认店</el-radio-button>
+                  <el-radio-button label='1'>虚拟店</el-radio-button>
                   <el-radio-button label='2'>介绍页</el-radio-button>
                 </el-radio-group>
 

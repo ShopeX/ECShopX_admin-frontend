@@ -51,7 +51,7 @@
     </div>
 
     <sideBar :visible.sync="show_sideBar" title="选择商品" width="60">
-      <slot v-if="editItemSortVisible">
+      <div v-if="editItemSortVisible">
         <el-row>
           <el-col :span="4">
             <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
@@ -68,8 +68,8 @@
             </template>
           </el-table-column>
         </el-table>
-      </slot>
-      <slot v-else>
+      </div>
+      <div v-else>
         <el-row>
           <el-col :span="8">
             <el-button type="primary" class="el-icon-plus" size="mini" @click="relItems">
@@ -78,8 +78,6 @@
           </el-col>
           <el-col :span="4">
             <el-button size="mini" @click.native="handleCancel"> 返回 </el-button>
-          </el-col>
-          <el-col :span="4">
             <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
               保存
             </el-button>
@@ -99,7 +97,7 @@
             </template>
           </el-table-column>
         </el-table>
-      </slot>
+      </div>
     </sideBar>
     <GoodsSelect
       :items-visible="itemVisible"
@@ -200,6 +198,7 @@ export default {
       })
     },
     DelItemData(isAll, row) {
+      this.show_sideBar = false
       let title = '将删除该商品推荐，是否继续?'
       let param = ''
       if (row) {
@@ -253,10 +252,14 @@ export default {
         })
         this.show_sideBar = false
         this.itemVisible = false
+        this.form.items = []
+        this.relItemsIds = []
+        this.setItemStatus = false
       })
     },
     chooseItemsAction(data) {
       this.itemVisible = false
+      this.setItemStatus = false
       this.relItemsIds = data
       if (data === null || data.length <= 0) return
       let arr = []

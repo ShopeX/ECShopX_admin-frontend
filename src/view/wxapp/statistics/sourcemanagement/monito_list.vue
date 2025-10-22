@@ -255,7 +255,7 @@ export default {
           info = { url: 'pages/custom/custom-page?id=' + id, page_name: '自定义页面' }
           break
         case 'coupon':
-          info = { url: 'subpages/marketing/coupon-center?c=' + id, page_name: '优惠券' }
+          info = { url: 'subpages/marketing/coupon-center?card_id=' + id, page_name: '优惠券' }
           break
         // case 'vipgrades':
         //   info = { url: 'subpage/pages/vip/vipgrades', page_name: '会员开通' }

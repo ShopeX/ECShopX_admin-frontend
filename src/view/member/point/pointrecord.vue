@@ -22,7 +22,7 @@
         </el-input>
       </el-col>
     </el-row> -->
-    <SpFilterForm :model="params" @onSearch="getList(params)" @onReset="onSearch">
+    <SpFilterForm :model="params" @onSearch="getList(params)" @onReset="getList(params)">
       <SpFilterFormItem prop="created" label="日期范围:">
         <el-date-picker
           v-model="params.created"
@@ -56,6 +56,7 @@
         </el-table-column>
 
         <el-table-column prop="username" label="昵称" />
+        <el-table-column prop="name" label="用户名" />
         <el-table-column prop="mobile" label="手机号" />
         <el-table-column prop="point" label="积分变动">
           <template slot-scope="scope">

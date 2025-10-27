@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column type="selection" width="55" />
       <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
-      <el-table-column prop="itemName" label="商品名称" width="300" />
+      <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="price" label="商品价格" width="120">
         <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
       </el-table-column>
@@ -37,7 +37,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="page.page > page.pageSize" class="mt-4 text-right">
+    <div class="mt-4 text-right" v-if="page.total > page.pageSize">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
@@ -186,7 +186,7 @@ export default {
       }
       const { list, total_count } = await this.$api.promotions.getRecommendLikeItemList(params)
       this.tableList = list
-      this.page.total = total_count
+      this.page.total = Number(total_count)
       this.loading = false
     },
     AddRecommendLikeItem() {
@@ -325,6 +325,15 @@ export default {
       if (distributor) {
         this.params.distributor_id = distributor.distributor_id
       }
+    },
+    onCurrentChange(val) {
+      this.page.pageIndex = val
+      this.fetchList()
+    },
+    onSizeChange(val) {
+      this.page.pageIndex = 1
+      this.page.pageSize = val
+      this.fetchList()
     }
   }
 }

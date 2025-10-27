@@ -698,9 +698,10 @@ export default {
           : ORDER_STATUS,
       orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
-      orderCategory: this.VERSION_STANDARD()
-        ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
-        : ORDER_CATEGORY,
+      // orderCategory: this.VERSION_STANDARD()
+      //   ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
+      //   : ORDER_CATEGORY,
+      orderCategory: ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,
       orderSourceList: [],
       remarkDialog: false,

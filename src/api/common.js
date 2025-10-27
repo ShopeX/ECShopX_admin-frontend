@@ -1,6 +1,5 @@
-import axios from 'axios'
+import fetch, { axios } from '@/utils/fetch'
 import store from '@/store'
-import { fetch } from './request'
 
 export function handleUploadFile(query) {
   return fetch({

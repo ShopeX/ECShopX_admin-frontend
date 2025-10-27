@@ -90,7 +90,7 @@ export default {
   data() {
     const paneList = [
       { name: 'upload_tb_items', label: '上传淘宝链接' },
-      { name: 'supplier_goods', label: '上传实体类商品' }
+      { name: 'normal_goods', label: '上传实体类商品' }
     ]
 
     if (!IS_SUPPLIER()) {
@@ -111,7 +111,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
-    const { file_type = 'supplier_goods' } = this.$route.query
+    const { file_type = 'normal_goods' } = this.$route.query
     this.activeName = file_type
     this.getUploadList()
   },

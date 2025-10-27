@@ -158,7 +158,7 @@ export default {
   watch: {
     value: {
       handler(nVal) {
-        this.localValue = nVal
+        this.localValue = nVal || ''
       },
       deep: true,
       immediate: true

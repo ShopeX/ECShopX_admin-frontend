@@ -1,4 +1,4 @@
-import { fetch } from './request'
+import fetch from '@/utils/fetch'
 
 // 获取模板
 export function getTemplate(query) {

@@ -109,7 +109,7 @@
                       placeholder="注册协议标题"
                       style="width: 500px"
                       show-word-limit
-                      maxlength="15"
+                      maxlength="30"
                     />
                   </el-form-item>
                   <el-form-item label="注册协议" prop="member_register.content">
@@ -127,7 +127,7 @@
                       placeholder="隐私政策标题"
                       style="width: 500px"
                       show-word-limit
-                      maxlength="15"
+                      maxlength="30"
                     />
                   </el-form-item>
                   <el-form-item label="隐私政策" prop="privacy.content">
@@ -363,13 +363,13 @@ export default {
         'member_register.content': [{ required: true, message: '请输入注册协议', trigger: 'blur' }]
       },
       rules2: {
-        'title': [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        'content': [{ required: true, message: '请输入意向书', trigger: 'blur' }],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+        content: [{ required: true, message: '请输入意向书', trigger: 'blur' }]
       },
       modalTitle: '',
-      medicineForm:{
-        title:'',
-        content:''
+      medicineForm: {
+        title: '',
+        content: ''
       }
     }
   },
@@ -424,7 +424,6 @@ export default {
         title: '',
         content: ''
       }
-
     },
     // 保存编辑
     saveForm() {
@@ -489,8 +488,8 @@ export default {
     // 移除tag
     handleRmoveTag(tag) {
       const { editform } = this
-      const { key } = tag
-      const findIndex = editform.radio_list.findIndex((item) => item.key === key)
+      const { label } = tag
+      const findIndex = editform.radio_list.findIndex((item) => item.label === label)
       editform.radio_list.splice(findIndex, 1)
     },
     // 显示添加

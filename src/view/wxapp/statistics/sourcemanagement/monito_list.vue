@@ -255,7 +255,7 @@ export default {
           info = { url: 'pages/custom/custom-page?id=' + id, page_name: '自定义页面' }
           break
         case 'coupon':
-          info = { url: 'subpages/marketing/coupon-detail?c=' + id, page_name: '券详情' }
+          info = { url: 'subpages/marketing/coupon-center?card_id=' + id, page_name: '优惠券' }
           break
         // case 'vipgrades':
         //   info = { url: 'subpage/pages/vip/vipgrades', page_name: '会员开通' }
@@ -306,7 +306,7 @@ export default {
       const tabs = [
         { label: '商品详情', name: 'goods' },
         { label: '自定义页面', name: 'custom_page' },
-        { label: '券详情', name: 'coupon' },
+        { label: '优惠券', name: 'coupon' },
         { label: '页面', name: 'link' },
         // { label: '秒杀', name: 'seckill' },
         // { label: '活动集合页', name: 'activity_collection' },
@@ -363,7 +363,7 @@ export default {
           } else {
             // dataParams = [{ param_name: 'r', value: that.monitorForm.regionauth_id }]
           }
-          if (that.monitorForm.page_type == '券详情') {
+          if (that.monitorForm.page_type == '优惠券') {
             dataParams.push({ param_name: 't', value: '1' })
           }
           let params = {

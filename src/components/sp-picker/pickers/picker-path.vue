@@ -19,7 +19,7 @@
         <el-tab-pane label="自定义页面" name="custom_page">
           <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="券详情" name="coupon">
+        <el-tab-pane label="优惠券" name="coupon">
           <PickerCoupon v-if="tabValue == 'coupon'" ref="coupon" :value="value" />
         </el-tab-pane>
         <el-tab-pane label="页面" name="link">

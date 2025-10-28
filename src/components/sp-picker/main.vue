@@ -37,7 +37,7 @@ export default {
     type: String,
     width: {
       type: String,
-      default: '1008px'
+      default: '1020px'
     },
     isShow: Boolean,
     extra: Object

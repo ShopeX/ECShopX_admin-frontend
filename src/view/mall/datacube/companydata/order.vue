@@ -12,7 +12,6 @@
       <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
           v-model="queryForm.datetime"
-          clearable
           type="daterange"
           align="right"
           format="yyyy-MM-dd"

@@ -49,6 +49,7 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
+                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"
@@ -83,6 +84,7 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
+                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"

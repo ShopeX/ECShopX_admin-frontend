@@ -10,6 +10,15 @@
       height: 64px;
     }
   }
+  &.big {
+    .image-item {
+      width: 120px;
+      height: 120px;
+    }
+    .placeholder {
+      height: 120px;
+    }
+  }
   .image-list-wrap {
     @include clearfix();
   }
@@ -143,7 +152,7 @@ export default {
     drag: {
       type: Boolean,
       default: false
-    }
+    },
   },
   data() {
     return {

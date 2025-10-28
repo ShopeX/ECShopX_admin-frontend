@@ -1,3 +1,9 @@
+<style scoped lang="scss">
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+</style>
+
 <template>
   <SpPage>
     <div class="page-body">
@@ -24,6 +30,9 @@
           </SpFilterFormItem>
           <SpFilterFormItem prop="aftersales_bn" label="售后单号:">
             <el-input v-model="params.aftersales_bn" placeholder="请填写售后单号" />
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="item_name" label="商品名称:">
+            <el-input v-model="params.item_name" placeholder="请填写商品名称" />
           </SpFilterFormItem>
           <SpFilterFormItem prop="mobile" label="手机号:">
             <el-input v-model="params.mobile" placeholder="手机号" />
@@ -105,246 +114,35 @@
           <el-input v-model="params.user_family_name" placeholder="请输入用药人姓名" />
         </SpFilterFormItem> -->
         </SpFilterForm>
-
-        <div class="action-container">
-          <el-button type="primary" @click="exportData"> 导出 </el-button>
-          <el-button v-if="showAftersale" type="primary" @click="aftersalesRemindAction">
-            售后提醒内容
-          </el-button>
-        </div>
-
-        <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
-          <el-table-column prop="create_time" width="200" label="售后单">
-            <template slot-scope="scope">
-              <div class="order-num">
-                <el-button type="text">
-                  <router-link
-                    target="_blank"
-                    :to="{ path: getUrlPathByLoginType(`/order/order-manage/aftersales-list/detail?aftersales_bn=${scope.row.aftersales_bn}`) }"
-                  >
-                  {{ scope.row.aftersales_bn }}
-                </router-link>
+        <SpFinder
+          ref="finder"
+          url='/aftersales'
+          :setting="finderSetting"
+          :hooks="{
+            beforeSearch: beforeSearch
+          }"
+          reserve-selection
+          row-key="aftersales_bn"
+          fixed-row-action
+          @selection-change="handleSelectionChange"
+        >
+          <template slot="tableTop">
+            <div class="action-container">
+              <export-tip @exportHandle="exportData">
+                <el-button type="primary" plain> 导出 </el-button>
+              </export-tip>
+              <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
+                售后提醒内容
               </el-button>
-                <el-tooltip effect="dark" content="复制" placement="top-start">
-                  <i
-                    v-clipboard:copy="scope.row.aftersales_bn"
-                    v-clipboard:success="onCopySuccess"
-                    class="el-icon-document-copy"
-                  />
-                </el-tooltip>
-              </div>
-              <div v-if="scope.row.distributor_id !== '0'" class="order-store">
-                <el-tooltip effect="dark" content="店铺名" placement="top-start">
-                  <i class="el-icon-office-building" />
-                </el-tooltip>
-                {{ scope.row.distributor_info.name }}
-              </div>
-              <div class="order-time">
-                <el-tooltip effect="dark" content="申请时间" placement="top-start">
-                  <i class="el-icon-time" />
-                </el-tooltip>
-                {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column min-width="180" label="订单号">
-            <template slot-scope="scope">
-              <div class="order-num">
-                <el-button type="text">
-                  <router-link
-                    target="_blank"
-                    :to="{ path: getUrlPathByLoginType(`/order/order-manage/order-list/detail?orderId=${scope.row.order_id}`) }"
-                  >
-                    {{ scope.row.order_id }}
-                  </router-link>
-                </el-button>
-                <el-tooltip effect="dark" content="复制" placement="top-start">
-                  <i
-                    v-clipboard:copy="scope.row.order_id"
-                    v-clipboard:success="onCopySuccess"
-                    class="el-icon-document-copy"
-                  />
-                </el-tooltip>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-if="VERSION_STANDARD() || IS_ADMIN()"
-            width="120"
-            label="订单分类"
-            header-align="center"
-            prop="order_holder"
-          >
-            <template slot-scope="scope">
-              {{ getOrderCategoryName(scope.row.order_holder) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-if="VERSION_STANDARD() || IS_ADMIN()"
-            min-width="100"
-            prop="supplier_name"
-            label="来源供应商"
-          />
-          <el-table-column
-            width="120"
-            label="退款金额（¥）"
-            header-align="center"
-            prop="refund_fee"
-          />
-          <el-table-column width="120" label="退款运费（¥）" header-align="center">
-            <template slot-scope="scope">
-              {{ scope.row.freight / 100 }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            width="160"
-            label="退款抵扣积分（¥）"
-            header-align="center"
-            prop="refund_point"
-          />
-          <el-table-column v-if="!IS_SUPPLIER()" label="配送员">
-            <template slot-scope="scope">
-              {{ scope.row.self_delivery_operator_name }}
-            </template>
-          </el-table-column>
-          <el-table-column v-if="!IS_SUPPLIER()" prop="mobile" label="业务员">
-            <template slot-scope="scope">
-              {{ scope.row.salesman_mobile }}
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
-                <i
-                  v-clipboard:copy="scope.row.salesman_mobile"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
-                  v-if="scope.row.salesman_mobile"
-                />
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="!IS_SUPPLIER()" min-width="150" label="手机号">
-            <template slot-scope="scope">
-              <div
-                v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
-                class="order-num"
-              >
-                <router-link
-                  v-if="
-                    $store.getters.login_type != 'supplier' &&
-                    $store.getters.login_type != 'distributor'
-                  "
-                  target="_blank"
-                  :to="{
-                    path:
-                      `${$store.getters.login_type != 'distributor' ? '' : '/shopadmin'}` +
-                      '/member/member/memberlist/detail',
-                    query: { user_id: scope.row.user_id }
-                  }"
-                >
-                  {{ scope.row.mobile }}
-                </router-link>
-              </div>
-              <template v-else>
-                {{ scope.row.mobile }}
-              </template>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="IS_SUPPLIER()" min-width="100" prop="contact" label="姓名" />
-          <el-table-column v-if="IS_SUPPLIER()" min-width="150" label="SKU编号">
-            <template slot-scope="scope">
-              <span>{{ scope.row.detail[0].item_bn }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="商品名称">
-            <template slot-scope="scope">
-              <span>{{ scope.row.detail[0].item_name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="IS_SUPPLIER()" min-width="120" label="售后商品数量">
-            <template slot-scope="scope">
-              <span>{{ scope.row.detail[0].num }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="金额">
-            <template slot-scope="scope">
-              <span>{{ scope.row.detail[0].refund_fee / 100 }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="售后原因" prop="reason" />
-          <el-table-column
-            v-if="IS_SUPPLIER()"
-            min-width="100"
-            label="修改时间"
-            prop="update_time"
-          />
-          <el-table-column width="100" label="售后类型">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.aftersales_type == 'ONLY_REFUND'" type="info" size="mini">
-                仅退款
-              </el-tag>
-              <el-tag v-if="scope.row.aftersales_type == 'REFUND_GOODS'" type="warning" size="mini">
-                退货退款
-              </el-tag>
-              <el-tag
-                v-if="scope.row.aftersales_type == 'EXCHANGING_GOODS'"
-                type="danger"
-                size="mini"
-              >
-                换货
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column width="100" label="售后状态">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.aftersales_status == '0'" size="mini"> 待处理 </el-tag>
-              <el-tag v-if="scope.row.aftersales_status == '1'" size="mini"> 处理中 </el-tag>
-              <el-tag v-if="scope.row.aftersales_status == '2'" type="success" size="mini">
-                已处理
-              </el-tag>
-              <el-tag v-if="scope.row.aftersales_status == '3'" type="success" size="mini">
-                已驳回
-              </el-tag>
-              <el-tag v-if="scope.row.aftersales_status == '4'" type="success" size="mini">
-                已关闭
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column width="100" label="操作" fixed="left">
-            <template slot-scope="scope">
-              <el-button type="text">
-                <router-link
-                  :to="{
-                    path: matchRoutePath('detail'),
-                    query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
-                  }"
-                >
-                  详情
-                </router-link>
+              <el-button type="primary" plain @click="aftersalesAction('approved')">
+                批量审核
               </el-button>
-              <template
-                v-if="scope.row.distributor_id == '0' || $store.getters.login_type == 'distributor'"
-              >
-                <el-button type="text" @click="clickShowRemark(scope.row, 'afterList')">
-                  备注
-                </el-button>
-              </template>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="mt-4 text-right">
-          <el-pagination
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :current-page.sync="page.pageIndex"
-            :page-sizes="[10, 20, 50]"
-            :total="page.total"
-            :page-size="page.pageSize"
-            @current-change="onCurrentChange"
-            @size-change="onSizeChange"
-          />
-        </div>
+              <el-button type="primary" plain @click="aftersalesAction('refund')">
+                批量退款
+              </el-button>
+            </div>
+          </template>
+        </SpFinder>
 
         <!-- 售后提醒内容 -开始 -->
         <el-dialog
@@ -387,6 +185,16 @@
           </div>
         </el-dialog>
         <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
+        
+        <!-- 批量审核弹框 -->
+        <SpDialog
+          ref="batchReviewDialogRef"
+          v-model="batchReviewDialog"
+          title="批量审核（售后申请）"
+          :form="batchReviewForm"
+          :form-list="batchReviewFormList"
+          @onSubmit="onBatchReviewSubmit"
+        />
       </template>
       <router-view />
     </div>
@@ -395,12 +203,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
+import SpDialog from '@/components/sp-dialog'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
-import { VERSION_B2C, IS_SUPPLIER, getUrlPathByLoginType } from '@/utils'
-import { ORDER_CATEGORY, ORDER_TYPE } from '@/consts'
+import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
+import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
 export default {
   components: {
-    RemarkModal
+    RemarkModal,
+    SpDialog
   },
   mixins: [mixin, remarkMixin, pageMixin],
   data() {
@@ -424,15 +234,16 @@ export default {
       order_class: undefined,
       yyrname: undefined,
       is_prescription_order: undefined,
-      user_family_name: undefined
+      user_family_name: undefined,
+      item_name: undefined
     }
     return {
-      loading: false,
       initialParams,
       params: {
         ...initialParams
       },
       is_pharma_industry: false,
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
@@ -456,7 +267,377 @@ export default {
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: '售后提醒内容',
-      orderType: ORDER_TYPE
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      multipleSelection: [],
+      // 批量审核相关
+      batchReviewType: 'approved',
+      batchReviewDialog: false,
+      batchReviewForm: {
+        is_approved: '1', // 默认通过
+        refuse_reason: ''
+      },
+      batchReviewFormList: [
+        {
+          label: '审核状态',
+          key: 'is_approved',
+          type: 'radio',
+          required: true,
+          options: [
+            { label: '1', name: '通过' },
+            { label: '0', name: '拒绝' }
+          ]
+        },
+        {
+          label: '拒绝原因',
+          key: 'refuse_reason',
+          type: 'textarea',
+          placeholder: '拒绝原因',
+          width: '100%',
+          isShow: ({ key }, value) => {
+            console.log(key, value, '--')
+            return value.is_approved == '0'
+          },
+          validator: (rule, value, callback) => {
+            if (value.is_approved == 0 && !value.refuse_reason) {
+              callback(new Error('请填写拒绝原因'))
+            } else {
+              callback()
+            }
+          }
+        }
+      ],
+      finderSetting: {
+        columns: [
+          {
+            name: '售后单',
+            key: 'aftersales_bn',
+            width: 200,
+            render: (h, { row }) => {
+              const linkPath = 
+                (`${this.$store.getters.login_type}` == 'distributor' && '/shopadmin/order/aftersaleslist/detail') ||
+                (`${this.$store.getters.login_type}` == 'supplier' && '/supplier/order/aftersaleslist/detail') ||
+                (`${this.$store.getters.login_type}` == 'merchant' && '/merchant/order/aftersaleslist/detail') ||
+                '/order/aftersales/aftersaleslist/detail'
+              return h('div', [
+                h('div', { class: 'order-num' }, [
+                  h('el-button', {
+                    props: { type: 'text' },
+                    on: {
+                      click: () => {
+                        const routeData = this.$router.resolve({
+                          path: linkPath,
+                          query: { aftersales_bn: row.aftersales_bn }
+                        });
+                        window.open(routeData.href, '_blank');
+                        // this.$router.push({
+                        //   path: linkPath,
+                        //   query: { aftersales_bn: row.aftersales_bn }
+                        // })
+                      }
+                    }
+                  }, row.aftersales_bn),
+                  h('el-tooltip', {
+                    props: { effect: 'dark', content: '复制', placement: 'top-start' }
+                  }, [
+                    h('i', {
+                      class: 'el-icon-document-copy',
+                      style: { cursor: 'pointer' },
+                      on: {
+                        click: () => this.copyToClipboard(row.aftersales_bn)
+                      }
+                    })
+                  ])
+                ]),
+                row.distributor_id !== '0' && h('div', { class: 'order-store' }, [
+                  h('el-tooltip', {
+                    props: { effect: 'dark', content: '店铺名', placement: 'top-start' }
+                  }, [h('i', { class: 'el-icon-office-building' })]),
+                  row.distributor_info.name
+                ]),
+                h('div', { class: 'order-time' }, [
+                  h('el-tooltip', {
+                    props: { effect: 'dark', content: '申请时间', placement: 'top-start' }
+                  }, [h('i', { class: 'el-icon-time' })]),
+                  this.$options.filters.datetime(row.create_time, 'YYYY-MM-DD HH:mm:ss')
+                ])
+              ])
+            }
+          },
+          {
+            name: '订单号',
+            key: 'order_id',
+            minWidth: 180,
+            render: (h, { row }) => {
+              const linkPath = 
+                (`${this.$store.getters.login_type}` == 'distributor' && '/shopadmin/order/tradenormalorders/detail') ||
+                (`${this.$store.getters.login_type}` == 'supplier' && '/supplier/order/tradenormalorders/detail') ||
+                (`${this.$store.getters.login_type}` == 'merchant' && '/merchant/order/tradenormalorders/detail') ||
+                '/order/entitytrade/tradenormalorders/detail'
+              
+              return h('div', { class: 'order-num' }, [
+                h('el-button', {
+                    props: { type: 'text' },
+                    on: {
+                      click: () => {
+                        const routeData = this.$router.resolve({
+                          path: linkPath,
+                          query: { orderId: row.order_id },
+                        });
+                        window.open(routeData.href, '_blank');
+                      }
+                    }
+                  }, row.order_id),
+                h('el-tooltip', {
+                  props: { effect: 'dark', content: '复制', placement: 'top-start' }
+                }, [
+                  h('i', {
+                    class: 'el-icon-document-copy',
+                    style: { cursor: 'pointer' },
+                    on: {
+                      click: () => this.copyToClipboard(row.order_id)
+                    }
+                  })
+                ])
+              ])
+            }
+          },
+          {
+            name: '子单商品',
+            key: 'sub_order_items',
+            minWidth: 220,
+            render: (h, { row }) => {
+              if (row.detail && row.detail.length > 0) {
+                return h('div', row.detail.map(item => 
+                  h('div', { style: { marginBottom: '4px' } }, [
+                    h('div', { style: {} }, item.item_name),
+                    h('div', { style: {} }, `货号: ${item.item_bn}`)
+                  ])
+                ))
+              }
+              return h('span', {}, '-')
+            }
+          },
+          {
+            name: '退款金额（¥）',
+            key: 'refund_fee',
+            width: 120,
+            align: 'center'
+          },
+          {
+            name: '退款运费（¥）',
+            key: 'freight',
+            width: 120,
+            align: 'center',
+            render: (h, { row }) => h('span', {}, row.freight / 100)
+          },
+          {
+            name: '退款抵扣积分（¥）',
+            key: 'refund_point',
+            width: 160,
+            align: 'center'
+          },
+          {
+            name: '实退金额（¥）',
+            key: 'refunded_fee',
+            width: 120,
+            align: 'center',
+            render: (h, { row }) => {
+              const amount = row.refunded_fee || 0
+              return h('span', {}, `${(amount / 100).toFixed(2)}`)
+            }
+          },
+          {
+            name: '实退积分（¥）',
+            key: 'refunded_point',
+            width: 120,
+            align: 'center',
+            render: (h, { row }) => {
+              const points = row.refunded_point || 0
+              return h('span', {}, `${points}`)
+            }
+          },
+          // {
+          //   name: '业务员',
+          //   key: 'salesman_mobile',
+          //   visible: !this.IS_SUPPLIER(),
+          //   render: (h, { row }) => {
+          //     return h('div', [
+          //       row.salesman_mobile,
+          //       this.datapass_block == 0 && h('el-tooltip', {
+          //         props: { effect: 'dark', content: '复制', placement: 'top-start' }
+          //       }, [
+          //         h('i', {
+          //           class: 'el-icon-document-copy',
+          //           style: { cursor: 'pointer' },
+          //           on: {
+          //             click: () => this.copyToClipboard(row.salesman_mobile)
+          //           }
+          //         })
+          //       ])
+          //     ])
+          //   }
+          // },
+          {
+            name: '手机号',
+            key: 'mobile',
+            minWidth: 150,
+            visible: !this.IS_SUPPLIER(),
+            render: (h, { row }) => {
+              if (!row.user_delete && this.$store.getters.login_type !== 'merchant') {
+                const linkPath = this.$store.getters.login_type != 'distributor' ? 
+                  '/member/member/memberlist/detail' : 
+                  '/shopadmin/member/member/memberlist/detail'
+                
+                return h('div', { class: 'order-num' }, [
+                  h('el-button', {
+                    props: { type: 'text' },
+                    on: {
+                      click: () => {
+                        const routeData = this.$router.resolve({
+                          path: linkPath,
+                          query: { user_id: row.user_id }
+                        });
+                        window.open(routeData.href, '_blank');
+                      }
+                    }
+                  }, row.mobile),
+                ])
+              }
+              return h('span', {}, row.mobile)
+            }
+          },
+          {
+            name: '导购',
+            key: 'salesman_name',
+            width: 100
+          },
+          {
+            name: '订单分类',
+            key: 'order_holder',
+            width: 120,
+            render: (h, { row }) => h('span', {}, this.getOrderCategoryName(row.order_holder)),
+            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+          },
+          {
+            name: '来源供应商',
+            key: 'supplier_name',
+            minWidth: 100,
+            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+          },
+          {
+            name: '配送员',
+            key: 'self_delivery_operator_name',
+            visible: !this.IS_SUPPLIER()
+          },
+          {
+            name: '姓名',
+            key: 'contact',
+            minWidth: 100,
+            visible: this.IS_SUPPLIER()
+          },
+          {
+            name: 'SKU编号',
+            key: '',
+            minWidth: 150,
+            visible: this.IS_SUPPLIER(),
+            render: (h, { row }) => h('span', {}, row.detail[0].item_bn)
+          },
+          {
+            name: '商品名称',
+            key: '',
+            minWidth: 100,
+            visible: this.IS_SUPPLIER(),
+            render: (h, { row }) => h('span', {}, row.detail[0].item_name),
+          },
+          {
+            name: '售后商品数量',
+            key: '',
+            minWidth: 120,
+            visible: this.IS_SUPPLIER(),
+            render: (h, { row }) => h('span', {}, row.detail[0].num),
+          },
+          {
+            name: '金额',
+            key: 'detail.0.refund_fee',
+            minWidth: 100,
+            visible: this.IS_SUPPLIER(),
+            render: (h, { row }) => h('span', {}, `${(row.detail[0].refund_fee / 100).toFixed(2)}`)
+          },
+          {
+            name: '售后原因',
+            key: 'reason',
+            minWidth: 100,
+            visible: this.IS_SUPPLIER()
+          },
+          {
+            name: '修改时间',
+            key: 'update_time',
+            minWidth: 100,
+            visible: this.IS_SUPPLIER()
+          },
+          {
+            name: '售后类型',
+            key: 'aftersales_type',
+            width: 100,
+            render: (h, { row }) => {
+              const typeMap = {
+                'ONLY_REFUND': { text: '仅退款', type: 'info' },
+                'REFUND_GOODS': { text: '退货退款', type: 'warning' },
+                'EXCHANGING_GOODS': { text: '换货', type: 'danger' }
+              }
+              const type = typeMap[row.aftersales_type]
+              return type ? h('el-tag', {
+                props: { type: type.type, size: 'mini' }
+              }, type.text) : h('span', {}, row.aftersales_type)
+            }
+          },
+          {
+            name: '售后状态',
+            key: 'aftersales_status',
+            width: 100,
+            render: (h, { row }) => {
+              const statusMap = {
+                '0': { text: '待处理', type: '' },
+                '1': { text: '处理中', type: '' },
+                '2': { text: '已处理', type: 'success' },
+                '3': { text: '已驳回', type: 'success' },
+                '4': { text: '已关闭', type: 'success' }
+              }
+              const status = statusMap[row.aftersales_status]
+              return status ? h('el-tag', {
+                props: { type: status.type, size: 'mini' }
+              }, status.text) : h('span', {}, row.aftersales_status)
+            }
+          },
+          {
+            name: '操作',
+            key: 'actions',
+            width: 100,
+            fixed: 'left',
+            render: (h, { row }) => {
+              return h('div', [
+                h('el-button', {
+                  props: { type: 'text' },
+                  on: {
+                    click: () => {
+                      this.$router.push({
+                        path: this.matchRoutePath('detail'),
+                        query: { aftersales_bn: row.aftersales_bn, resource: this.$route.path }
+                      })
+                    }
+                  }
+                }, '详情'),
+                h('el-button', {
+                  props: { type: 'text' },
+                  on: {
+                    click: () => this.clickShowRemark(row, 'afterList')
+                  }
+                }, '备注')
+              ])
+            }
+          }
+        ]
+      },
     }
   },
   computed: {
@@ -489,12 +670,11 @@ export default {
     this.getBaseSetting()
     //获取所有店铺
     this.getStoreList()
-    this.fetchList()
   },
   methods: {
     async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
-      this.is_pharma_industry = res.medicine_setting?.is_pharma_industry == '1'
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
     },
     handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
@@ -542,35 +722,16 @@ export default {
           name: undefined
         }
       }
-      this.onSearch()
+      this.$refs.finder.refresh()
     },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
-        this.fetchList()
+        this.$refs.finder.refresh()
       })
     },
-    async fetchList() {
-      this.loading = true
-      const { pageIndex: page, pageSize } = this.page
-      let params = {
-        page,
-        pageSize,
-        ...this.getParams()
-      }
-      const { list, total_count } = await this.$api.aftersales.getAftersalesList(params)
-      this.tableList = list
-      this.page.total = total_count
-      this.loading = false
-    },
-    querySearch(queryString, cb) {
-      var restaurants = this.source_list
-      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
-      // 调用 callback 返回建议列表的数据
-      cb(results)
-    },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -578,8 +739,8 @@ export default {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach(row => {
-          this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
+        list.forEach((row) => {
+          this.shopList.push({ 'value': row.name, 'distributor_id': row.distributor_id })
         })
       }
     },
@@ -590,7 +751,8 @@ export default {
       cb(results)
     },
     getOrderCategoryName(order_holder) {
-      return this.orderCategory.find(item => item.value == order_holder)?.title ?? ''
+      const item = this.orderCategory.find((item) => item.value == order_holder)
+      return item ? item.title : ''
     },
     async exportData() {
       const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams())
@@ -615,11 +777,9 @@ export default {
     async aftersalesRemindAction() {
       // 请求提醒数据
       const data = await this.$api.aftersales.getAftersalesRemind()
-
       if (data) {
         this.aftersalesRemindForm = data
       }
-
       this.aftersalesRemindVisible = true
     },
     updateContent: function (data) {
@@ -641,7 +801,106 @@ export default {
         message: '保存成功'
       })
       this.aftersalesRemindVisible = false
-    }
+    },
+    handleSelectionChange(val) {
+      console.log('handleSelectionChange', val)
+      if (val) {
+        this.multipleSelection = val
+      }
+    },
+    getRowKeys(val) {
+      return val.aftersales_bn
+    },
+    beforeSearch(params) {
+      const searchParams = {
+        ...params,
+        ...this.params,
+        ...this.dateTransfer(this.params.create_time || []),
+      }
+      return searchParams
+    },
+    copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        // 使用现代 Clipboard API
+        navigator.clipboard.writeText(text).then(() => {
+          this.$message.success('复制成功')
+        }).catch(() => {
+          this.fallbackCopyTextToClipboard(text)
+        })
+      } else {
+        // 降级到传统方法
+        this.fallbackCopyTextToClipboard(text)
+      }
+    },
+    fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      textArea.style.top = '0'
+      textArea.style.left = '0'
+      textArea.style.position = 'fixed'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      try {
+        const successful = document.execCommand('copy')
+        if (successful) {
+          this.$message.success('复制成功')
+        } else {
+          this.$message.error('复制失败')
+        }
+      } catch (err) {
+        this.$message.error('复制失败')
+      }
+      document.body.removeChild(textArea)
+    },
+    async aftersalesAction(type) {
+      this.batchReviewType = type
+      const selection = this.$refs.finder.$refs.finderTable.getSelection()
+      if (selection.length === 0) {
+        return this.$message.error('请选择需要审核的数据')
+      }
+      
+      // 重置表单
+      this.batchReviewForm = {
+        is_approved: '1',
+        refuse_reason: ''
+      }
+      // 打开弹框
+      this.batchReviewDialog = true
+    },
+    async onBatchReviewSubmit() {
+      try {
+        const selection = this.$refs.finder.$refs.finderTable.getSelection()
+        if (this.batchReviewForm.is_approved == 0 && !this.batchReviewForm.refuse_reason) {
+          this.$message.error('请填写拒绝原因')
+          return
+        }
+
+        const aftersalesBns = selection.map((row) => row.aftersales_bn)
+        let params = {
+          aftersales_bn: aftersalesBns,
+        }
+        if (this.batchReviewType == 'refund') {
+          params.check_refund = this.batchReviewForm.is_approved
+          params.refunds_memo = this.batchReviewForm.refuse_reason
+        } else {
+          params.is_approved = this.batchReviewForm.is_approved
+          params.refuse_reason = this.batchReviewForm.refuse_reason
+        }
+        console.log('批量审核参数:', params)
+        if (this.batchReviewType == 'refund') {
+          await this.$api.aftersales.refundCheck(params)
+        } else {
+          await this.$api.aftersales.reviewAftersales(params)
+        }
+        this.$message.success(`操作成功`)
+        this.batchReviewDialog = false
+        this.$refs.finder.refresh()
+      } catch (error) {
+        console.error('批量审核失败:', error)
+        this.$message.error('批量审核失败，请重试')
+      }
+    },
   }
 }
 </script>

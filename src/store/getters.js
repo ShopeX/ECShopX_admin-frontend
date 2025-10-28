@@ -20,6 +20,8 @@ const getters = {
   ali_template_name: (state) => state.user.ali_template_name,
   app_type: (state) => state.user.app_type,
   color_theme: (state) => state.user.color_theme,
-  readLicense: (state) => state.user.readLicense
+  readLicense: (state) => state.user.readLicense,
+  exportKey: (state) => state.user.exportKey,
+  exportTotal: (state) => state.user.exportTotal
 }
 export default getters

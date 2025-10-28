@@ -498,6 +498,33 @@
         </div>
       </el-card>
 
+      <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM()" class="el-card--normal">
+        <div slot="header">分润信息</div>
+        <el-row class="card-panel">
+          <el-col
+            v-for="(item, index) in profitList"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+          </el-col>
+        </el-row>
+      </el-card> -->
+
+      <div v-if="btnActions.length > 0" class="footer-container">
+        <el-button
+          v-for="(btn, index) in btnActions"
+          :key="`btn-item__${index}`"
+          type="primary"
+          plain
+          @click="handleAction(btn)"
+        >
+          {{ btn.name }}
+        </el-button>
+      </div>
+
       <!-- 修改物流 -->
       <SpDialog
         ref="expressRef"
@@ -555,6 +582,8 @@ export default {
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '用户身份:', field: 'purchaseRole', is_show: true },
+        { label: '销售门店:', field: 'sale_salesman_distributor_id', is_show: true },
+        { label: '销售导购:', field: 'salesman_mobile', is_show: true },
         { label: '姓名:', field: 'employee_name', is_show: true },
         { label: '所属企业:', field: 'enterprise_name', is_show: true },
         { label: '来源店铺:', field: 'distributor_name', is_show: true }
@@ -798,6 +827,16 @@ export default {
     if (user_id) {
       this.user_id = user_id
     }
+    this.$api.third.getDmcrmSetting().then((response) => {
+      if(response?.is_open){
+        this.infoList = this.infoList.map(el =>{
+          if(el.label == '订单获取积分'){ 
+            el.is_show = false
+          }
+          return el
+        })
+      }
+    })
     this.getDetail()
     this.getLogisticsList()
   },
@@ -932,8 +971,8 @@ export default {
             : orderInfo.item_price
             ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
             : '￥0.00',
-        freightFee: orderInfo.freight_fee
-          ? `¥${(orderInfo.freight_fee / 100).toFixed(2)}`
+        freightFee: orderInfo.freight_fee || orderInfo.freight_point_fee
+          ? `¥${(((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0))/ 100).toFixed(2)}`
           : '￥0.00',
         memberDiscountPrice: orderInfo.member_discount
           ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`
@@ -1032,7 +1071,9 @@ export default {
         audit_time: prescription_data.audit_time
           ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        dst_file_path: prescription_data.dst_file_path
+        dst_file_path: prescription_data.dst_file_path,
+        sale_salesman_distributor_id: orderInfo?.sale_salesman_distributor_info?.name,
+        salesman_mobile: orderInfo?.salespersonInfo?.work_userid,
       }
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log

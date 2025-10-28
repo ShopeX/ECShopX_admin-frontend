@@ -3,7 +3,6 @@
     <div class="">
       <div v-if="$route.path.indexOf('detail') === -1">
         <el-row class="filter-header" :gutter="20">
-          <el-col :span="12">
             <!-- <shop-select v-if="$store.getters.login_type != 'distributor'" distributors  @update="storeSearch"></shop-select> -->
             <el-date-picker
               v-model="create_time"
@@ -33,12 +32,14 @@
             <!-- <el-input class="input-m" placeholder="导购员手机号" v-model="salesman_mobile">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
           </el-input> -->
-          </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
+          <el-select v-model="invoice_status" placeholder="开票状态" @change="invoiceStatusChange" clearable>
+            <el-option v-for="item in open_status_arr" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </el-row>
         <el-row>
           <el-col>
@@ -77,7 +78,7 @@
           <el-tab-pane label="已取消/已关闭" name="cancel" />
           <el-tab-pane label="已完成" name="finish" />
           <!-- <el-tab-pane label="已完成未开票" name="done_noinvoice"></el-tab-pane>
-        <el-tab-pane label="已完成已开票" name="done_invoice"></el-tab-pane> -->
+          <el-tab-pane label="已完成已开票" name="done_invoice"></el-tab-pane> -->
           <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
             <el-table-column width="280" prop="order_id" label="订单信息">
               <template slot-scope="scope">
@@ -131,7 +132,7 @@
                 {{ scope.row.item_point }}积分
                 <span v-if="scope.row.item_fee > 0"
                   >+<span class="cur">{{ scope.row.fee_symbol }}</span
-                  >{{ scope.row.total_fee / 100 }}</span
+                  >{{ scope.row.item_fee / 100 }}</span
                 >
               </template>
             </el-table-column>
@@ -203,8 +204,7 @@
                   <!-- 发货状态 -->
                   <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
                   <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
-                  <span
-                    v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
+                  <span v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
                     >待自提</span
                   >
                   <span
@@ -216,6 +216,17 @@
                     >待发货</span
                   >
                 </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="invoice_status" label="开票状态">
+              <template slot-scope="scope">
+                <span v-if="scope.row.invoice_status === 'success'" style="color: green">
+                  {{ open_status_map[scope.row.invoice_status] }}
+                </span>
+                <span v-else-if="scope.row.invoice_status === 'failed'" style="color: red">
+                  {{ open_status_map[scope.row.invoice_status] }}
+                </span>
+                <span v-else> {{ open_status_map[scope.row.invoice_status] }} </span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="source_name" label="来源"></el-table-column>
@@ -274,7 +285,8 @@
                     v-if="
                       scope.row.receipt_type == 'logistics' &&
                       scope.row.order_status == 'PAYED' &&
-                      scope.row.delivery_status != 'DONE'
+                      scope.row.delivery_status != 'DONE' &&
+                      !jstErpSetting?.is_open
                     "
                     type="text"
                     @click="deliveryAction(scope.row)"
@@ -709,6 +721,8 @@ import {
   doWriteoff,
   getPickupcode
 } from '@/api/trade'
+
+import { open_status_map, open_status_arr } from '@/view/financial/invoice/constants'
 import { getSourcesList } from '@/api/datacube'
 import { handleUploadFile } from '@/api/common'
 import shopSelect from '@/components/shopSelect'
@@ -747,6 +761,8 @@ export default {
         { name: '客户长时间未付款', value: 11 },
         { name: '客户其他原因', value: 12 }
       ],
+      open_status_map,
+      open_status_arr,
       order_status: '',
       time_start_begin: '',
       time_start_end: '',
@@ -808,10 +824,14 @@ export default {
       downloadName: '',
       deliveryVisibleNew: false,
       datapass_block: 1,
-      exportTab: ''
+      exportTab: '',
+      jstErpSetting: {},
+      invoice_status: ""
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['wheight'])
+  },
   mounted() {
     if (store.getters.login_type === 'distributor') {
       this.is_distributor = true
@@ -826,8 +846,14 @@ export default {
     this.getStatus()
     this.getOrders(this.params)
     this.getAllSourcesList()
+    this.getJstErpSetting()
   },
   methods: {
+    getJstErpSetting() {
+      this.$api.third.getJstErpSetting().then((res) => {
+        this.jstErpSetting = res
+      })
+    },
     onCopy() {
       this.$notify({
         message: '复制成功',
@@ -855,6 +881,12 @@ export default {
       this.getOrders(this.params)
     },
     numberSearch(e) {
+      this.params.page = 1
+      this.getParams()
+      this.getOrders(this.params)
+    },
+    invoiceStatusChange(val) {
+      this.params.invoice_status = val
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)

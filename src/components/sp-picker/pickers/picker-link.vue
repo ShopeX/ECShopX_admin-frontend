@@ -114,6 +114,14 @@ export default {
     if (!this.VERSION_IN_PURCHASE()) {
       this.list.push({ id: 'community_group_enable', title: '社区团购（H5不支持）' })
     }
+    if (this.value.guide == 'share_page') {
+      this.list = [
+        { id: 'coupon_list', title: '领券中心' },
+        { id: 'page_index', title: '首页' },
+        { id: 'category', title: '分类' },
+        { id: 'hottopic', title: '种草列表' }
+      ]
+    }
     if (this.value.data) {
       const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
       const { finderTable } = this.$refs.finder.$refs

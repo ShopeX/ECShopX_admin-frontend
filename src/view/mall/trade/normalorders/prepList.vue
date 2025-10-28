@@ -243,7 +243,7 @@
         :auto-upload="false"
         :show-file-list="false"
       > -->
-      <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN" -->
+      <!-- v-if="IS_DISTRIBUTOR() || IS_ADMIN()" -->
       <el-button type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
       <!-- </el-upload> -->
     </div>

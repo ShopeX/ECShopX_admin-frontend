@@ -650,3 +650,29 @@ export function getBankList(params) {
     params
   })
 }
+
+/**
+ * 重推开票
+ * @param {*} params
+ * @param {string} params.order_id 订单ID
+ * @returns
+ */
+export function retryFailedInvoice(params) {
+  return fetch({
+    url: '/order/invoice/retryFailedInvoice',
+    method: 'post',
+    params
+  })
+}
+/**
+ *  删除税率配置
+ * @param {*} params
+ * @param {string} params.id 税率配置ID
+ * @returns
+ */
+export function deleteCategoryTaxRate(params) {
+  return fetch({
+    url: '/order/category-taxrate/delete/' + params.id,
+    method: 'post'
+  })
+}

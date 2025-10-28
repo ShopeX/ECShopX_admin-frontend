@@ -1,8 +1,14 @@
 <template>
   <SpPage>
     <SpRouterView>
-      <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
-      <div class="action-container">
+      <SpPlatformTip h5 app pc alipay />
+      <SpPlatformTip
+        class="damo-crm-tip"
+        v-if="dmcrmSetting.is_open"
+        text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示"
+      />
+
+      <div class="action-container" v-if="!dmcrmSetting.is_open">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
           创建优惠券
         </el-button>
@@ -192,16 +198,96 @@
                 </el-popover> -->
               </template>
             </el-table-column>
-            <el-table-column width="80" prop="get_num" label="领取量">
+            <!-- <el-table-column width="80" prop="get_num" label="领取量">
+              <template v-if="scope.row.get_num">{{scope.row.get_num}}</template>
+              <template>0</template>
+            </el-table-column> -->
+            <!-- <el-table-column width="80" prop="use_num" label="使用量">
+              <template v-if="scope.row.use_num">{{scope.row.use_num}}</template>
+              <template>0</template>
+            </el-table-column> -->
+            <el-table-column width="200" prop="source_name" label="店铺" />
+            <el-table-column width="240" label="操作">
               <template slot-scope="scope">
-                <template v-if="scope.row.get_num">{{scope.row.get_num}}</template>
-                <template v-else>0</template>
-              </template>
-            </el-table-column>
-            <el-table-column width="80" prop="use_num" label="使用量">
-              <template slot-scope="scope">
-                <template v-if="scope.row.use_num">{{scope.row.use_num}}</template>
-                <template v-else>0</template>
+                <div class="operating-icons">
+                  <el-button type="text">
+                    <router-link
+                      :to="{
+                        path: matchRoutePath('detail'),
+                        query: {
+                          chooseCardtype: scope.row.card_type,
+                          cardId: scope.row.card_id,
+                          title: scope.row.title
+                        }
+                      }"
+                    >
+                      查看
+                    </router-link>
+                  </el-button>
+                  <el-button type="text">
+                    <router-link
+                      :to="{
+                        path: matchRoutePath('info'),
+                        query: { cardId: scope.row.card_id, onlyShow: true }
+                      }"
+                    >
+                      详情
+                    </router-link>
+                  </el-button>
+                   <el-button
+                    v-if="
+                      scope.row.edit_btn == 'Y' &&
+                      (!isShopadmin
+                        ? parseInt(scope.row.source_id) <= 0
+                        : parseInt(scope.row.source_id) > 0)
+                      && !dmcrmSetting.is_open
+                    "
+                    type="text"
+                  >
+                    <router-link
+                      :to="{
+                        path: matchRoutePath('editor'),
+                        query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
+                      }"
+                    >
+                      编辑
+                    </router-link>
+                  </el-button>
+                  <el-popover v-if="appID" placement="top" width="200" trigger="click">
+                    <div>
+                      <img class="page-code" :src="appCodeUrl" />
+                      <div class="page-btns">
+                        <el-button
+                          type="primary"
+                          plain
+                          size="mini"
+                          @click="handleDownload(scope.row.title)"
+                        >
+                          下载码
+                        </el-button>
+                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                          复制链接
+                        </el-button>
+                      </div>
+                    </div>
+                    <el-button
+                      slot="reference"
+                      style="width: 45px"
+                      type="text"
+                      @click="handleShow(scope.row.card_id)"
+                    >
+                      投放
+                    </el-button>
+                  </el-popover>
+                  <el-button
+                    v-if="scope.row.status != 'CARD_STATUS_DISPATCH' && !dmcrmSetting.is_open"
+                    type="text"
+                    @click="deleteCard(scope.row.card_id, scope.$index)"
+                  >
+                    删除
+                  </el-button>
+                </div>
+                <!-- <a v-if="!scope.row.ifpass" href="#" @click="sendoutShowAction(scope.row.card_id, scope.$index)">投放</a> -->
               </template>
             </el-table-column>
             <el-table-column width="200" prop="source_name" label="店铺" />
@@ -339,7 +425,8 @@ export default {
             }
           }
         }
-      ]
+      ],
+      dmcrmSetting: {},
     }
   },
   mounted() {
@@ -349,8 +436,13 @@ export default {
     }
     this.fetchList()
     this.fetchWechatList()
+    this.getDmcrmSetting()
   },
   methods: {
+    async getDmcrmSetting() {
+      const data = await this.$api.third.getDmcrmSetting()
+      this.dmcrmSetting = data
+    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       console.log(list, 'src/view/member/cardticket/coupon.vue-第355行')
@@ -710,6 +802,9 @@ export default {
 }
 .page-btns {
   text-align: center;
+}
+.damo-crm-tip {
+  background: #fef5ea !important;
 }
 </style>
 <style>

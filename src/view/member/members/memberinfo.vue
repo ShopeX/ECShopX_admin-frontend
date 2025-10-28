@@ -26,6 +26,15 @@
               <span v-else>--</span>
             </div>
           </template>
+
+          <div v-if="member.salesperson_info?.employee_number" class="info-item">
+            <span class="txt">绑定导购</span>
+            <span>{{ member.salesperson_info?.employee_number }}</span>
+          </div>
+          <div v-if="member.salesperson_info?.store_name" class="info-item">
+            <span class="txt">绑定门店</span>
+            <span>{{ member.salesperson_info?.store_name }}</span>
+          </div>
         </div>
       </div>
     </div>

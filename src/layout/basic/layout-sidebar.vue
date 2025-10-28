@@ -1,3 +1,22 @@
+<!--
++----------------------------------------------------------------------
+| ECShopX open source E-commerce
+| ECShopX 开源商城系统 
++----------------------------------------------------------------------
+| Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
++----------------------------------------------------------------------
+| Corporate Website:  https://www.shopex.cn 
++----------------------------------------------------------------------
+| Licensed under the Apache License, Version 2.0
+| http://www.apache.org/licenses/LICENSE-2.0
++----------------------------------------------------------------------
+| The removal of shopeX copyright information without authorization is prohibited.
+| 未经授权不可去除shopeX商派相关版权
++----------------------------------------------------------------------
+| Author: shopeX Team <mkt@shopex.cn>
+| Contact: 400-821-3106
++----------------------------------------------------------------------
+-->
 <template>
   <div class="flex h-full">
     <div class="w-[70px] bg-[#353439] h-screen overflow-auto">
@@ -22,6 +41,7 @@
           <SpIcon class="menu-icon" :name="computedMenuIcon(item)" :size="16" fill="#fff" />
           <span class="text-sm mt-1 text-white">{{ item.name }}</span>
         </li>
+        <li @click="handleMainMenuClick({ alias_name: 'license' })" class="text-center text-gray-500 text-sm mt-2 cursor-pointer">License</li>
       </ul>
     </div>
 
@@ -156,6 +176,8 @@ export default {
       const route = allRoutes.find(route => route.meta?.permissions?.includes(permission))
       if (route) {
         this.$router.push({ path: route.path })
+      } else if (item.alias_name == 'license') {
+        this.$router.push({ path: '/license' })
       } else {
         this.toNotFound()
       }

@@ -1,3 +1,22 @@
+<!--
++----------------------------------------------------------------------
+| ECShopX open source E-commerce
+| ECShopX 开源商城系统 
++----------------------------------------------------------------------
+| Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
++----------------------------------------------------------------------
+| Corporate Website:  https://www.shopex.cn 
++----------------------------------------------------------------------
+| Licensed under the Apache License, Version 2.0
+| http://www.apache.org/licenses/LICENSE-2.0
++----------------------------------------------------------------------
+| The removal of shopeX copyright information without authorization is prohibited.
+| 未经授权不可去除shopeX商派相关版权
++----------------------------------------------------------------------
+| Author: shopeX Team <mkt@shopex.cn>
+| Contact: 400-821-3106
++----------------------------------------------------------------------
+-->
 <template>
   <div class="relative flex min-h-full w-full">
     <el-container>
@@ -39,7 +58,8 @@
         </el-main>
 
         <el-footer class="flex justify-center items-center" height="50px">
-          <SpImage :src="footerBackground" height="18" fit="contain" />
+          <div class="bottom-text"> ECShopX © Licensed under <span class="cursor-pointer" @click="openLicense">Apache 2.0</span> · Powered by </div>
+          <SpImage :src="footerBackground" height="15" fit="contain" style="margin-top: 3px;cursor: pointer;" @click="openShopex" />
         </el-footer>
       </el-container>
     </el-container>
@@ -72,7 +92,7 @@ export default {
   },
   computed: {
     footerBackground: () => {
-      return require(`@/assets/images/${DEFAULT_CONFIG.footerBackground}`)
+      return require(`@/assets/svgs/logo.svg`)
     },
     systemTitle: () => {
       return getSystemTitle()
@@ -89,6 +109,12 @@ export default {
     },
     handleSidebarChange(val) {
       this.showSubMenu = val
+    },
+    openShopex() {
+      window.open('https://www.shopex.cn', '_blank')
+    },
+    openLicense() {
+      this.$router.push({ path: '/license' })
     }
   }
 }
@@ -98,5 +124,12 @@ export default {
 .el-header {
   padding-left: 8px;
   padding-right: 0;
+}
+.bottom-text {
+  font-size: 13px;
+  color: #B3B3B3;
+  // font-weight: 500;
+  margin-right: 10px;
+  font-style: medium;
 }
 </style>

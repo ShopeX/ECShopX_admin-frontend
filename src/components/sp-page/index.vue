@@ -1,3 +1,22 @@
+<!--
++----------------------------------------------------------------------
+| ECShopX open source E-commerce
+| ECShopX 开源商城系统 
++----------------------------------------------------------------------
+| Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
++----------------------------------------------------------------------
+| Corporate Website:  https://www.shopex.cn 
++----------------------------------------------------------------------
+| Licensed under the Apache License, Version 2.0
+| http://www.apache.org/licenses/LICENSE-2.0
++----------------------------------------------------------------------
+| The removal of shopeX copyright information without authorization is prohibited.
+| 未经授权不可去除shopeX商派相关版权
++----------------------------------------------------------------------
+| Author: shopeX Team <mkt@shopex.cn>
+| Contact: 400-821-3106
++----------------------------------------------------------------------
+-->
 <template>
   <div
     class="sp-page p-4 flex flex-col"
@@ -8,7 +27,7 @@
     }"
     ref="pageContainer"
   >
-    <div class="bg-white rounded-[6px]">
+    <div :style="{ background: bgColor }" class="rounded-[6px]">
       <div class="sp-page__header py-4 pl-5 pr-4 flex items-center" ref="header">
         <div class="sp-page__header-title">{{ title }}</div>
         <div class="sp-page__header-toolbar flex-1">
@@ -38,6 +57,10 @@ export default {
     noSticky: {
       type: Boolean,
       default: false
+    },
+    bgColor: {
+      type: String,
+      default: '#fff'
     }
   },
   data() {

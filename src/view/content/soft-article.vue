@@ -200,7 +200,9 @@ export default {
     }
   },
   methods: {
-    onSearch() {},
+    onSearch() {
+      this.$refs['paginationRef'].refresh(true)
+    },
     async getArticleCategory() {
       const res = await this.$api.article.getArticleCategoryList({
         category_type: 'bring'

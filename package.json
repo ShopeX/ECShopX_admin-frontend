@@ -140,6 +140,7 @@
   "overrides": {
     "resource": "0.8.1",
     "xmlhttprequest": "1.8.0",
-    "jugglingdb-nano": "0.0.1"
+    "jugglingdb-nano": "0.0.1",
+    "global": "2.0.1"
   }
 }

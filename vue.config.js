@@ -12,15 +12,12 @@ const { YoudaoTranslator, EmptyTranslator, Translator } = require('webpack-auto-
 const axios = require('axios')
 const { generateId } = require('./build/utils')
 
-
 const AutoI18nOptions = {
   excludedPath: ['/src/i18n/index.js'],
   globalPath: path.resolve(__dirname, './src/i18n/lang'),
   targetLangList: ['en', 'zh-tw'],
-  includePath: [
-    /src\//,
-    /node_modules\/element-ui\//,
-  ],
+  rewriteConfig: false,
+  includePath: [/src\//, /node_modules\/element-ui\//]
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -82,13 +79,15 @@ module.exports = {
       }
     },
     // 生产环境提取 CSS
-    extract: isProd ? {
-      ignoreOrder: true // 忽略 CSS 顺序警告
-    } : false
+    extract: isProd
+      ? {
+          ignoreOrder: true // 忽略 CSS 顺序警告
+        }
+      : false
   },
 
   // Webpack 配置
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     // 开发环境配置
     if (isDev) {
       config.devtool = 'eval-cheap-module-source-map' // 更快的 source map
@@ -251,14 +250,14 @@ module.exports = {
   },
 
   // Webpack 链式配置
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     // 删除预加载和预获取
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
     config.plugin('i18n').use(i18nPlugin)
 
-    config.plugin('define').tap(args => {
+    config.plugin('define').tap((args) => {
       args[0]['process.env'] = {
         ...args[0]['process.env'],
         // 添加自定义环境变量
@@ -271,29 +270,30 @@ module.exports = {
     if (isProd) {
       // 启用 gzip 压缩
       const CompressionPlugin = require('compression-webpack-plugin')
-      config.plugin('compressionPlugin')
-        .use(new CompressionPlugin({
+      config.plugin('compressionPlugin').use(
+        new CompressionPlugin({
           filename: '[path][base].gz',
           algorithm: 'gzip',
           test: /\.(js|css|html|svg)$/,
           threshold: 10240, // 只压缩大于10kb的文件
           minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
           deleteOriginalAssets: false // 保留原文件
-        }))
+        })
+      )
 
       // 优化CSS提取
-      config.plugin('mini-css-extract')
-        .use(MiniCssExtractPlugin, [{
+      config.plugin('mini-css-extract').use(MiniCssExtractPlugin, [
+        {
           filename: 'css/[name].[contenthash:8].css',
           chunkFilename: 'css/[name].[contenthash:8].css',
-          ignoreOrder: true  // 忽略 CSS 顺序警告
-        }])
+          ignoreOrder: true // 忽略 CSS 顺序警告
+        }
+      ])
 
       // Bundle 分析（可选）
       if (process.env.ANALYZE) {
         const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-        config.plugin('bundle-analyzer')
-          .use(BundleAnalyzerPlugin)
+        config.plugin('bundle-analyzer').use(BundleAnalyzerPlugin)
       }
     }
 
@@ -354,7 +354,7 @@ module.exports = {
         errors: true,
         warnings: false
       }
-    },
+    }
     // 代理配置 - 支持所有HTTP方法 (GET, POST, PUT, DELETE, PATCH等)
     // proxy: {
     //   '/website/decorate': {
@@ -417,7 +417,7 @@ module.exports = {
   },
 
   // 并行处理
-  parallel: require('os').cpus().length > 1,
+  parallel: require('os').cpus().length > 1
 
   // PWA 配置（如果需要）
   // pwa: {

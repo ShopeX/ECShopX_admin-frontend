@@ -70,19 +70,18 @@
     const isFunction = (fn) => {
         return typeof fn === 'function';
     };
-    
-    const withStorageLang = isFunction && globalThis && globalThis.localStorage && 
+
+    const withStorageLang = isFunction && globalThis && globalThis.localStorage &&
     isFunction(globalThis.localStorage.getItem) && globalThis.localStorage.getItem('lang');
-    const withStorageCommonLang = isFunction && globalThis && globalThis.localStorage && 
+    const withStorageCommonLang = isFunction && globalThis && globalThis.localStorage &&
     isFunction(globalThis.localStorage.getItem) && globalThis.localStorage.getItem('');
     // 从本地存储中获取通用语言，如果不存在则使用空字符串
     const commonLang = withStorageCommonLang ? globalThis.localStorage.getItem('') : '';
     // 从本地存储中获取当前语言，如果不存在则使用源语言
-    const baseLang = withStorageLang ? globalThis.localStorage.getItem('lang') : 'zhcn';
+    const baseLang = withStorageLang ? globalThis.localStorage.getItem('lang') : process.env.VUE_APP_DEFAULT_LANG;
     const lang = commonLang ? commonLang : baseLang;
     // 根据当前语言设置翻译函数的语言包
     globalThis.$t.locale(globalThis.langMap[lang], 'lang');
     globalThis.$changeLang = (lang) => {
         globalThis.$t.locale(globalThis.langMap[lang], 'lang');
     };
-  

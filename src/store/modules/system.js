@@ -3,7 +3,7 @@ const systemStore = {
   state: {
     logo: '',
     versionMode: '',
-    lang: 'zhcn'
+    lang: process.env.VUE_APP_DEFAULT_LANG
   },
   mutations: {
     setSystemLogo(state, { logo }) {

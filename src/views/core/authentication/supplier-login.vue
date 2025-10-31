@@ -35,9 +35,9 @@
       </el-button>
     </div>
 
-    <div class="absolute -bottom-0.5 left-0 w-full text-center text-sm text-muted-foreground">
+    <!-- <div class="absolute -bottom-0.5 left-0 w-full text-center text-sm text-muted-foreground">
       <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">{{ recoderNumber }}</a>
-    </div>
+    </div> -->
   </div>
 </template>
 

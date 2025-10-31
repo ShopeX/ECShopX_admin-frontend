@@ -57,9 +57,9 @@
           <div id="design-view" v-else class="relative h-full" />
         </el-main>
 
-        <el-footer class="flex justify-center items-center" height="50px">
-          <div class="bottom-text"> ECShopX © Licensed under <span class="cursor-pointer" @click="openLicense">Apache 2.0</span> · Powered by </div>
-          <SpImage :src="footerBackground" height="15" fit="contain" style="margin-top: 3px;cursor: pointer;" @click="openShopex" />
+        <el-footer class="flex justify-center items-center gap-2" height="50px">
+          <div class="style-medium size-13 text-[#B3B3B3]"> ECShopX © Licensed under <span class="cursor-pointer" @click="openLicense">Apache 2.0</span> · Powered by </div>
+          <SpImage :src="footerBackground" class="cursor-pointer mt-1" height="15" fit="contain" @click="openShopex" />
         </el-footer>
       </el-container>
     </el-container>
@@ -124,12 +124,5 @@ export default {
 .el-header {
   padding-left: 8px;
   padding-right: 0;
-}
-.bottom-text {
-  font-size: 13px;
-  color: #B3B3B3;
-  // font-weight: 500;
-  margin-right: 10px;
-  font-style: medium;
 }
 </style>

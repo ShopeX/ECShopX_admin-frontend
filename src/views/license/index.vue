@@ -98,9 +98,9 @@
               <h4>2. 移除品牌标识需获取商业许可</h4>
               <ul>
                 <li>
-                  若需移除或修改 EcshopX 品牌标识，必须从 Shopex 获取商业许可证。请联系：**
+                  若需移除或修改 EcshopX 品牌标识，必须从 Shopex 获取商业许可证。请联系：
                   <a href="http://www.shopex.cn" target="_blank" class="link">http://www.shopex.cn</a> 
-                  ** 购买商业许可证。
+                  购买商业许可证。
                 </li>
               </ul>
             </div>          

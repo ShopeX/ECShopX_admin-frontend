@@ -37,6 +37,11 @@
 
     <!-- 登录 -->
     <AuthForm class="w-[34%]" />
+
+    <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-2">
+      <div class="style-medium size-13 text-[#B3B3B3]"> ECShopX © Licensed under <span @click="openLicense">Apache 2.0</span> · Powered by </div>
+      <SpImage :src="footerBackground" class="cursor-pointer mt-1" height="15" fit="contain" @click="openShopex" />
+    </div>
   </div>
 </template>
 
@@ -54,7 +59,18 @@ export default {
       currentLang: ''
     }
   },
+  methods: {
+    openLicense() {
+      // this.$router.push({ path: '/license' })
+    },
+    openShopex() {
+      window.open('https://www.shopex.cn', '_blank')
+    }
+  },
   computed: {
+    footerBackground: () => {
+      return require(`@/assets/svgs/logo.svg`)
+    },
     logo: () => {
       return require(`@/assets/images/${DEFAULT_CONFIG.logo}`)
     },

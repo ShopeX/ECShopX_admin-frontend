@@ -161,9 +161,6 @@
           开售
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
-        <!-- <el-button type="primary" @click="()=>handleImport('physicalupload?file_type=upload_tb_items')">
-          同步淘宝商品
-        </el-button> -->
         <el-dropdown @command="handleImport">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             导入<i class="el-icon-arrow-down el-icon--right" />
@@ -217,6 +214,8 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+
+      <SpPageUpload />
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
@@ -433,7 +432,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -486,8 +485,13 @@ import { exportItemsData, exportItemsTagData, saveIsGifts, uploadWdtErpItems } f
 import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import { createTbAddForm } from './schema'
+import SpPageUpload from '@/components/sp-page-upload'
 
 export default {
+  components: {
+    SpPageUpload
+  },
   data() {
     const loginType = this.$store.getters.login_type
     let statusOption
@@ -772,7 +776,7 @@ export default {
       changePriceDialog: false,
       changePriceForm: {},
       changePriceFormList: [],
-
+      list_time: [],
       tableList: {
         actions: [
           {
@@ -1256,11 +1260,11 @@ export default {
             }
           },
           {
-            name: '医药审核结果',
-            key: 'audit_status',
+            name: '是否处方',
+            key: 'is_prescription',
             width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否'),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '医药错误信息',
@@ -1275,7 +1279,8 @@ export default {
                   </div>
                 )}
               </div>
-            )
+            ),
+            visible: !!this.is_pharma_industry
           },
           {
             name: '创建时间',
@@ -1329,9 +1334,10 @@ export default {
         tabList.splice(1, 0, { name: '医药商品', value: 'is_medicine', activeName: 'third' })
       }
 
-      // tabList.splice(1, 0, { name: '淘宝商品', value: 'taobao', activeName: 'taobao' })
-
       return tabList
+    },
+    tbAddFormList() {
+      return createTbAddForm(this)
     }
   },
   mounted() {
@@ -1527,7 +1533,7 @@ export default {
       }
 
       //淘宝商品
-      if(this.activeName == 'taobao'){
+      if (this.activeName == 'taobao') {
         this.searchParams.audit_status = ''
       }
       this.searchParams.is_taobao = this.activeName == 'taobao' ? 1 : ''
@@ -1829,13 +1835,15 @@ export default {
       if (this.selectionItems.length > 0) {
         exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
-      const { status } = await this.$api.goods.exportItemsData(exportParams)
-      if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-        this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
-      } else {
-        this.$message.error('导出失败')
-      }
+      const { url:exportKey } = await this.$api.goods.exportApiFileName(exportParams)
+
+      this.$store.dispatch('setExportKeyAndTotal', {exportKey, exportTotal:0})
+      // if (status) {
+      //   this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+      //   this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
+      // } else {
+      //   this.$message.error('导出失败')
+      // }
     },
     async exportItemsTagData() {
       const exportParams = {

@@ -114,9 +114,9 @@ export default {
     }
   },
   created() {
-    // this.$api.third.getDmcrmSetting().then((response) => {
-    //   this.dmcrmIsOpen = response.is_open
-    // })
+    this.$api.third.getDmcrmSetting().then((response) => {
+      this.dmcrmIsOpen = response.is_open
+    })
   },
   methods: {
     beforeSearch(params) {

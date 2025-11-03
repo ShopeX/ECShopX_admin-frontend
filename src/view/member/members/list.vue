@@ -1115,9 +1115,9 @@ export default {
 
     // 获取短信type
     this.getAliSMS()
-    // this.$api.third.getDmcrmSetting().then((response) => {
-    //   this.dmcrmIsOpen = response.is_open
-    // })
+    this.$api.third.getDmcrmSetting().then((response) => {
+      this.dmcrmIsOpen = response.is_open
+    })
   },
   methods: {
     async getAliSMS() {

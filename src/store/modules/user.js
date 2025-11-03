@@ -26,6 +26,8 @@ const userStore = {
     login_type: '',
     shopid: '',
     token: '',
+    exportKey: '',
+    exportTotal: 0,
 
     //TODO: 以下删除?
     exp: '',
@@ -173,7 +175,11 @@ const userStore = {
     },
     setThemeColor: (state, color_theme) => {
       state.color_theme = color_theme
-    }
+    },
+    setExportKeyAndTotal: (state, {exportKey, exportTotal}) => {
+      state.exportKey = exportKey
+      state.exportTotal = exportTotal
+    },
   },
 
   actions: {
@@ -249,7 +255,10 @@ const userStore = {
     },
     setThemeColor: ({ commit }, color_theme) => {
       commit('setThemeColor', color_theme)
-    }
+    },
+    setExportKeyAndTotal: ({ commit }, params) => {
+      commit('setExportKeyAndTotal', params)
+    },
   }
 }
 

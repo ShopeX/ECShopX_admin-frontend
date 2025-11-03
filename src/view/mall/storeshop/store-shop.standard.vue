@@ -123,6 +123,7 @@
 
     <SpFinder
       ref="finder"
+      v-loading="loading"
       fixed-row-action
       :setting="setting"
       :hooks="{
@@ -212,6 +213,7 @@ export default {
         itemId: '',
         is_total_store:false
       },
+      loading: false,
       itemSkuFormList: [
         {
           key: 'invitation_code',
@@ -550,13 +552,22 @@ export default {
         return this.$message.error('请至少选择一个商品')
       }
       if (command == '1' || command == '2') {
-        await this.$api.marketing.updateDistributorItem({
-          distributor_id: this.formData.distributor_id,
-          goods_id: JSON.stringify(this.selectItems.map(item => item.goods_id)),
-          is_can_sale: command == '1'
-        })
-        this.$refs.finder.refresh()
+        this.loading = true
+        try {
+          await this.$api.marketing.updateDistributorItem({
+            distributor_id: this.formData.distributor_id,
+            goods_id: JSON.stringify(this.selectItems.map((item) => item.goods_id)),
+            is_can_sale: command == '1'
+          })
+          this.$message.success('操作成功')
+          this.$refs.finder.refresh()
+        } catch (error) {
+          this.$message.error('操作失败')
+        } finally {
+          this.loading = false
+        }
       } else if (command == '3' || command == '4') {
+        this.loading = true
         let remainItems = []
         if(this.IS_ADMIN() && this.VERSION_STANDARD()){
           //云店需要过滤供应商商品的
@@ -566,12 +577,19 @@ export default {
           this.$refs.finder.refresh(true)
           return
         }
-        await this.$api.marketing.updateDistributorItem({
-          distributor_id: this.formData.distributor_id,
-          goods_id: JSON.stringify(remainItems.map(item => item.goods_id)),
-          is_total_store: command == '3'
-        })
-        this.$refs.finder.refresh(true)
+        try {
+          await this.$api.marketing.updateDistributorItem({
+            distributor_id: this.formData.distributor_id,
+            goods_id: JSON.stringify(remainItems.map(item => item.goods_id)),
+            is_total_store: command == '3'
+          })
+          this.$message.success('操作成功')
+          this.$refs.finder.refresh(true)
+        } catch (error) {
+          this.$message.error('操作失败')
+        } finally {
+          this.loading = false
+        }
       }
     },
     handleTabClick() {

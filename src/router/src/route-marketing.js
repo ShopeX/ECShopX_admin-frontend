@@ -64,6 +64,10 @@ export default {
         {
           path: 'detail',
           component: () => import('@/view/member/cardticket/detail')
+        },
+        {
+          path: 'info',
+          component: () => import('@/view/member/cardticket/info')
         }
       ]
     },

@@ -46,7 +46,7 @@
         </template>
         <template v-if="item.key === 'shop_assistant'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.status" />
+            <el-switch v-model="item.status" disabled />
             <div class="ml-4">
               <div>导购物料进店（需开通导购应用）</div>
               <div class="text-sm text-[#999] mt-2">
@@ -80,7 +80,7 @@
         </template>
         <template v-if="item.key === 'shop_assistant_pro'">
           <div class="flex leading-normal p-3">
-            <el-switch v-model="item.status" />
+            <el-switch v-model="item.status" disabled />
             <div class="ml-4">
               <div>进入专属导购所属店（需开通导购应用）</div>
               <div class="text-sm text-[#999] mt-2">

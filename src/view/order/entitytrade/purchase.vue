@@ -776,7 +776,8 @@ export default {
       origin: '',
       isBindOMS: false,
       purchaseActivityList: [],
-      enterpriseList: []
+      enterpriseList: [],
+      jstErpSetting: {}
     }
   },
   computed: {
@@ -794,7 +795,9 @@ export default {
       fetch: this.getEnterpriseList
     }).nextPage()
   },
-  mounted() {
+  async mounted() {
+    await this.getJstErpSetting()
+
     this.origin = window.location.origin
     const { tab, activity_id } = this.$route.query
     if (tab) {
@@ -815,6 +818,11 @@ export default {
     })
   },
   methods: {
+    getJstErpSetting() {
+      this.$api.third.getJstErpSetting().then((res) => {
+        this.jstErpSetting = res
+      })
+    },
     async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
@@ -900,7 +908,8 @@ export default {
             !isDada &&
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
-            receipt_type != 'ziti'
+            receipt_type != 'ziti' &&
+            !this.jstErpSetting?.is_open
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }

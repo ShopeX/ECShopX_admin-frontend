@@ -29,7 +29,7 @@
       <div v-for="(item, idx) in pane_list" :key="idx">
         <el-tab-pane :label="item.label" :name="item.name">
           <el-form ref="form" label-width="100px">
-            <div class="content-bottom-padded">
+            <div class="content-bottom-padded flex items-center">
               <el-upload
                 class="fl"
                 style="margin-right: 10px"
@@ -44,7 +44,6 @@
                 size="small"
                 type="primary"
                 @click="uploadHandleTemplate()"
-                style="margin-top: 10px"
               >
                 下载模版
               </el-button>

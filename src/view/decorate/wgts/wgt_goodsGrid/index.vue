@@ -48,6 +48,7 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
+                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
               </div>
@@ -69,6 +70,7 @@
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
+                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
               </div>
@@ -91,6 +93,7 @@
               {{ item.title }}
             </div>
             <div v-if="value.showPrice" class="price">
+              <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
               <SpPrice class="item-price" :value="item.price / 100" :size="15" />
               <SpPrice class="line-price" :value="item.market_price / 100" :size="13" line-through />
             </div>
@@ -191,7 +194,8 @@ export default {
     value: {
       handler(newVal) {
         console.log(newVal, 'newVal')
-        const { data = [], pointGoods = [], type } = newVal || {}
+        const { goodsSetting = {} } = newVal || {}
+        const { type, data = [], pointGoods = [] } = goodsSetting
         const list = type === 'point' ? pointGoods : data
         if (newVal.style === 'grid') {
           this.leftGoodsList = list.filter((_, index) => index % 2 === 0)

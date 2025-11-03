@@ -60,7 +60,7 @@
         :key="`sku-item__${index}`"
         :label="`${item.skuName}:`"
       >
-        <el-checkbox-group v-model="item.checkedSku" @change="onSkuChange">
+        <el-checkbox-group v-model="item.checkedSku" @change="onCheckSkuChange">
           <div class="sku-item-group">
             <span v-for="sku in item.skuValue" :key="sku.attribute_value_id" class="sku-item">
               <el-checkbox :label="sku.attribute_value_id">{{
@@ -68,9 +68,11 @@
               }}</el-checkbox>
               <el-popover placement="top" trigger="click">
                 <div class="popover-edit">
-                  <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
+                  <el-input v-model="sku.custom_attribute_value" @change="onInputSkuChange" />
                 </div>
-                <el-link class="leading-none mx-3" slot="reference" icon="el-icon-edit" />
+                <el-button slot="reference" type="text">
+                  <i class="iconfont icon-edit1" />
+                </el-button>
               </el-popover>
             </span>
           </div>
@@ -247,9 +249,9 @@
     <el-table :data="value.specItems" border style="line-height: initial; width: 100%">
       <el-table-column prop="spec_name" label="规格" />
       <el-table-column
-        v-if="!IS_SUPPLIER() && !isSupplierGoods"
         label="状态"
         :render-header="renderRequire"
+        v-if="!IS_SUPPLIER() && !isSupplierGoods"
       >
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
@@ -440,17 +442,17 @@ export default {
           //解决第一次渲染改数据时触发组件的验证报错
           this.isFirst = false
         } else {
-          if(!this.isPrescriptionApproved){
-            this.bulkFilling.forEach((item) => (item.approve_status = 'instock'))
-          }
+          this.bulkFilling.forEach((item) => (item.approve_status = 'instock'))
         }
-        if (this.value.specItems.length && !this.isPrescriptionApproved) {
+        if (this.value.specItems.length) {
           this.value.specItems.forEach((item) => (item.approve_status = 'instock'))
         }
       }
     }
   },
-  created() {},
+  created() {
+    this.isFirstRender = true
+  },
   methods: {
     renderRequire(h, { column }) {
       return h(
@@ -486,12 +488,27 @@ export default {
     },
     statusDisabled({ value }) {
       //处方药审核通过
-      if(this.isPrescriptionApproved)return false
+      if(this.isPrescriptionApproved) return false
 
       if ((this.medicinePrescription && value == 'instock') || !this.medicinePrescription) {
         return false
       }
       return true
+    },
+    onCheckSkuChange(value) {
+      console.log('onCheckSkuChange:', value)
+      //noDefaultSpecItems 记录的是没有默认规格的数据
+      // 这个数据存的sku_id  格式 xx-xxx,但是这个skuchange的到是支持xx和xxx
+      // 规格选择操作时,如果选择后的规格不在noDefaultSpecItems中,则需要把noDefaultSpecItems中的数据删除
+      // 如果说 现在同步过来的商品 有 白色 黑色 尺码有 x s m,但是黑色只有 x s
+      console.log(this.noDefaultSpecItems, '222')
+
+      this.getSkuItemImages()
+      this.getSkuItems()
+    },
+    onInputSkuChange(){
+      this.getSkuItemImages()
+      this.getSkuItems()
     },
     onSkuChange({ spec_images, spec_items }) {
       this.getSkuItemImages(spec_images)
@@ -536,103 +553,111 @@ export default {
       // console.log('this.value.skuItemImages', this.value.skuItemImages)
     },
     getSkuItems(value) {
+      /**
+       * 1. 获取商品默认规格后后,空的数据要过滤
+       * 2. 新增规格后,不能把插入老的规格数据没有的规格
+       * 3. 取消老的规格后,新增的算新的规格
+       * 实现
+       * 1. 拿到同步过来的规格数据,过滤调空数据保存后后续继续操作
+       * 2. 编辑规格时按需插入规格数据
+       */
+      // 获取选择的规格值
       const skuMartix = this.value.skus.map(({ checkedSku }) => checkedSku)
-      const specItems = this.cartesianProductOf(...skuMartix)
+      // 计算规格组合
+      let specItems = this.cartesianProductOf(...skuMartix)
       // console.log('getSkuItems:', JSON.stringify(specItems))
       let _specItems = []
-      if (value) {
-        _specItems = value.map(
-          ({
-            item_id,
-            approve_status,
-            store,
-            max_num,
-            item_bn,
-            weight,
-            volume,
-            price,
-            cost_price,
-            market_price,
-            start_num,
-            barcode,
-            point_num,
-            item_spec,
-            supplier_goods_bn,
-            tax_rate,
-            delivery_time
-          }) => {
-            const vKey = item_spec.map(({ spec_value_id }) => spec_value_id).join('_')
-            const specName = item_spec.map(
-              ({ spec_custom_value_name, spec_value_name }) =>
-                spec_custom_value_name || spec_value_name
-            )
-            return {
-              item_id,
-              sku_id: vKey,
-              spec_name: specName.join(' '),
-              is_default: false,
-              approve_status,
-              store,
-              max_num,
-              item_bn,
-              weight,
-              delivery_time,
-              volume,
-              price: isNaN(price / 100) ? '' : price / 100,
-              cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
-              market_price: isNaN(market_price / 100) ? '' : market_price / 100,
-              start_num,
-              barcode,
-              point_num,
-              supplier_goods_bn,
-              tax_rate
-            }
+      // 拿到同步过来的规格数据,过滤空数据,保存后后续继续操作
+      // 初始化 也是 格式化
+      if (value || this.value.specItems) {
+        const _value = value || this.value.specItems
+        _specItems = _value.map((item) => {
+          const vKey =
+            item.item_spec?.map(({ spec_value_id }) => spec_value_id)?.sort((a, b) => a - b) || []
+          const specName =
+            item.item_spec?.map((el) => el.spec_custom_value_name || el.spec_value_name) || []
+          return {
+            sku_id: vKey.join('_') || '',
+            spec_name: specName?.join(' ') || '',
+            item_id: item.item_id || '',
+            is_default: false,
+            approve_status: item.approve_status || '',
+            store: item.store || '',
+            max_num: item.max_num || '',
+            item_bn: item.item_bn || '',
+            weight: item.weight || '',
+            item_spec: item.item_spec || [],
+            delivery_time: item.delivery_time || '',
+            volume: item.volume || '',
+            price: isNaN(item.price / 100) ? '' : item.price / 100,
+            cost_price: isNaN(item.cost_price / 100) ? '' : item.cost_price / 100,
+            market_price: isNaN(item.market_price / 100) ? '' : item.market_price / 100,
+            start_num: item.start_num || '',
+            barcode: item.barcode || '',
+            point_num: item.point_num || '',
+            supplier_goods_bn: item.supplier_goods_bn || '',
+            tax_rate: item.tax_rate || ''
           }
-        )
+        })
       }
-      // 新生成的sku
-      specItems.forEach((item) => {
-        const key = item.join('_')
-        if (!_specItems.find(({ sku_id }) => sku_id == key)) {
-          const {
-            approve_status,
-            store,
-            max_num,
-            item_bn,
-            weight,
-            volume,
-            price,
-            cost_price,
-            market_price,
-            start_num,
-            barcode,
-            point_num,
-            supplier_goods_bn,
-            tax_rate,
-            delivery_time
-          } = item
+      if (this.isFirstRender) {
+        // 记录当前为空的数据
+        this.noDefaultSpecItems = _specItems?.filter((el) => !el.item_id)?.map((el) => el.sku_id)
+        _specItems = _specItems?.filter((el) => !!el.item_id)
+        this.isFirstRender = false
+      }
+      // 过滤掉老的规格无法使用的数据
+      specItems = specItems?.filter((el) => !this.noDefaultSpecItems?.includes(el.join('_')))
+      console.log('specItems:', specItems)
+      // 会用规格组合生成规格数据
+      // 新增规格的情况下，需要新增规格数据
+      // 编辑规格的情况下，需要编辑规格数据
+      // 删除规格的情况下，需要删除规格数据
+      specItems?.forEach((item) => {
+        const key = item.sort((a, b) => a - b).join('_')
+        // 那当前选择的规格组合和原来的规格组合进行对比
+        // 以选择的规格组合为基准，有的话才取原来的规格数据
+        const oldItem = _specItems.find(({ sku_id }) => sku_id == key)
+        // 编辑规格的情况下，需要编辑规格数据
+        // if (oldItem) {
+        //   _specItems.splice(oldItem, 1, {
+        //     ...oldItem,
+        //   })
+        // }
+        // 删除规格的情况下，需要删除规格数据
+        // if (oldItem) {
+        //   _specItems.splice(oldItem, 1)
+        // }
+        // 新增规格的情况下，需要新增规格数据
+        if (!oldItem) {
           _specItems.push({
             sku_id: key,
             spec_name: this.getSpecName(item),
             is_default: false,
-            approve_status,
-            store,
-            max_num,
-            item_bn,
-            weight,
-            volume,
-            price: isNaN(price / 100) ? '' : price / 100,
-            cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
-            market_price: isNaN(market_price / 100) ? '' : market_price / 100,
-            start_num,
-            barcode,
-            point_num,
-            supplier_goods_bn,
-            tax_rate,
-            delivery_time
+            approve_status: item.approve_status || '',
+            store: item.store || '',
+            max_num: item.max_num || '',
+            item_bn: item.item_bn || '',
+            weight: item.weight || '',
+            volume: item.volume || '',
+            price: isNaN(item.price / 100) ? '' : item.price / 100,
+            cost_price: isNaN(item.cost_price / 100) ? '' : item.cost_price / 100,
+            market_price: isNaN(item.market_price / 100) ? '' : item.market_price / 100,
+            start_num: item.start_num || '',
+            barcode: item.barcode || '',
+            point_num: item.point_num || '',
+            supplier_goods_bn: item.supplier_goods_bn || '',
+            tax_rate: item.tax_rate || '',
+            delivery_time: item.delivery_time || '',
+            item_spec: item.item_spec || []
           })
         }
       })
+      if (_specItems?.length >= specItems?.length) {
+        const _temp = specItems.map((el) => el.join('_'))
+        _specItems = _specItems.filter((el) => _temp.includes(el.sku_id))
+      }
+      // _specItems = _specItems.filter((el) => el.item_name)
       // 与前一次编辑的缓存数据合并
       this.value.specItems = _specItems.map((item) => {
         const fd = this.value.specItems.find(({ sku_id }) => sku_id == item.sku_id)
@@ -650,10 +675,13 @@ export default {
     getSpecName(keys) {
       const { skus } = this.value
       const specNames = []
-      keys.forEach((key, index) => {
-        const { attribute_value, custom_attribute_value } =
-          skus[index]?.skuValue?.find((s) => s?.attribute_value_id == key) || {}
-        specNames.push(custom_attribute_value || attribute_value)
+      const all = []
+      skus?.forEach((item) => {
+        all.push(...item.skuValue)
+      })
+      keys?.forEach((key) => {
+        const item = all.find((s) => s?.attribute_value_id == key) || {}
+        specNames.push(item.custom_attribute_value || item.attribute_value)
       })
       return specNames.join(' ')
     },

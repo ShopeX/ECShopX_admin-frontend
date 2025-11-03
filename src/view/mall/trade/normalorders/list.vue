@@ -38,8 +38,8 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source" label="订单来源:">
-          <el-select v-model="params.source" clearable placeholder="请选择">
+        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source_id" label="订单来源:">
+          <el-select v-model="params.source_id" clearable placeholder="请选择">
             <el-option
               v-for="item in orderSourceList"
               :key="item.value"
@@ -96,9 +96,9 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="salespersonname" label="业务员:">
+        <!-- <SpFilterFormItem prop="salespersonname" label="业务员:">
           <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
-        </SpFilterFormItem>
+        </SpFilterFormItem> -->
         <SpFilterFormItem prop="role" label="角色:">
           <el-select v-model="params.role" placeholder="请选择" clearable>
             <el-option
@@ -126,12 +126,12 @@
         </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
-          prop="is_invoiced"
+          prop="invoice_status"
           label="开票状态:"
         >
-          <el-select v-model="params.is_invoiced" clearable placeholder="请选择">
+          <el-select v-model="params.invoice_status" clearable placeholder="请选择">
             <el-option
-              v-for="item in invoiceStatus"
+              v-for="item in invoiceStatusArr"
               :key="item.value"
               size="mini"
               :label="item.title"
@@ -214,7 +214,7 @@
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="exportInvoice">未开票订单 </el-dropdown-item>
+            <el-dropdown-item command="exportInvoice"> 发票订单 </el-dropdown-item>
             <el-dropdown-item command="exportDataMaster">主订单 </el-dropdown-item>
             <el-dropdown-item command="exportDataNormal">子订单 </el-dropdown-item>
           </el-dropdown-menu>
@@ -253,7 +253,7 @@
         :auto-upload="false"
         :show-file-list="false"
       > -->
-        <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN" -->
+        <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN()" -->
         <el-button type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
         <!-- </el-upload> -->
       </div>
@@ -271,7 +271,7 @@
           :data="tableList"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column width="220" prop="order_id" label="订单号">
+          <el-table-column width="180" prop="order_id" label="订单号">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
@@ -352,11 +352,11 @@
           </el-table-column>
           <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
             <template slot-scope="scope">
-              {{ (scope.row.freight_fee || 0) / 100 }}
+              {{ (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="mobile" label="业务员">
+          <!-- <el-table-column prop="mobile" label="业务员">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.salesman_mobile }}
@@ -388,6 +388,11 @@
                   />
                 </el-tooltip>
               </div>
+            </template>
+          </el-table-column> -->
+          <el-table-column prop="invoice_status" label="发票状态">
+            <template slot-scope="scope">
+              {{ openStatus?.find(item => item.value === scope.row.invoice_status)?.title }}
             </template>
           </el-table-column>
           <el-table-column prop="mobile" label="客户手机号">
@@ -441,7 +446,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="distributor_name" label="来源店铺" />
-          <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
+          <el-table-column prop="work_userid" label="导购">
+            <template slot-scope="scope">
+              {{ scope.row.salesman_info?.work_userid }}
+            </template>
+          </el-table-column>
+          <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD() || IS_ADMIN()" label="来源供应商" >
       </el-table-column> -->
           <!-- <el-table-column prop="receiver_name" label="收货人" /> -->
           <template v-if="login_type != 'merchant'">
@@ -463,34 +473,32 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="配送状态">
+          <!-- <el-table-column label="配送状态">
             <template slot-scope="scope">
               {{ getDistributionStatus(scope.row) }}
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
-          <el-table-column label="配送员">
+          <!-- <el-table-column label="配送员">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_name }}
             </template>
-          </el-table-column>
-
+          </el-table-column> -->
+  <!-- 
           <el-table-column label="配送费">
             <template slot-scope="scope">
-              {{
-                scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元'
-              }}
+              {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元' }}
             </template>
-          </el-table-column>
-
-          <el-table-column label="配送员电话" width="120px">
+          </el-table-column> -->
+  <!--
+          <el-table-column label="配送员电话">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_mobile }}
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column type="selection" width="55" fixed="left" />
           <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-          <el-table-column label="操作" fixed="left" width="120">
+          <el-table-column label="操作" fixed="left">
             <template slot-scope="scope">
               <el-button type="text" style="margin-right: 8px">
                 <router-link
@@ -656,6 +664,7 @@ import {
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
+  ORDER_TYPE_STANDARD,
   ROLE_LIST,
   INVOICE_STATUS,
   ORDER_CATEGORY,
@@ -663,7 +672,9 @@ import {
   REFUND_STATUS,
   REFUND_PROCESS,
   PAY_TYPE,
-  GOOD_CATEGORY_MAP
+  GOOD_CATEGORY_MAP,
+  OPEN_STATUS_ARR,
+  INVOICE_STATUS_ARR
 } from '@/consts'
 import { IS_MERCHANT, IS_SUPPLIER } from '../../../../utils'
 
@@ -687,14 +698,14 @@ export default {
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         self_delivery_status: '', //配送状态
-        source: '', // 订单来源
+        source_id: '', // 订单来源
         order_status: '', // 订单状态
         order_class: '', // 订单类型
         delivery_staff_id: '', //配送员
         is_prescription_order: '',
         serial_no: '',
         user_family_name: '',
-        is_invoiced: '', // 开票状态
+        invoice_status: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
         order_holder: '', // 订单分类
@@ -715,8 +726,10 @@ export default {
           : VERSION_IN_PURCHASE()
           ? IN_PURCHASE_STATUS
           : ORDER_STATUS,
+      openStatus: OPEN_STATUS_ARR,
       orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
+      invoiceStatusArr: INVOICE_STATUS_ARR,
       // orderCategory: this.VERSION_STANDARD()
       //   ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
       //   : ORDER_CATEGORY,
@@ -880,7 +893,7 @@ export default {
               key: 'supplier_name',
               width: 100,
               isShow: ({ key }, value) => {
-                return this.VERSION_STANDARD || this.IS_ADMIN()
+                return this.VERSION_STANDARD() || this.IS_ADMIN()
               }
             },
             { title: '数量', key: 'num', width: 60 },
@@ -1324,7 +1337,8 @@ export default {
         }
       ],
       selectList: [],
-      is_pharma_industry: false
+      is_pharma_industry: false,
+      jstErpSetting: {}
     }
   },
 
@@ -1362,16 +1376,23 @@ export default {
     const { result } = await this.$api.trade.isBindOMS()
     this.isBindOMS = result
   },
-  mounted() {
+  async mounted() {
     this.origin = window.location.origin
-    const { tab, order_id } = this.$route.query
+    const { tab, order_id, sourceId, monitorId } = this.$route.query
     if (tab) {
       this.params.order_status = tab
+    }
+    if (monitorId) { // 千人千码跳过来
+      this.params.monitor_id = monitorId
+    }
+    if (sourceId) { // 千人千码跳过来
+      this.params.source_id = sourceId
     }
     if (order_id) {
       this.params.order_id = order_id
     }
     this.getBaseSetting()
+    await this.getJstErpSetting()
     this.fetchList()
     this.getOrderSourceList()
     this.getLogisticsList()
@@ -1383,9 +1404,20 @@ export default {
     })
   },
   methods: {
+    onSearch () {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
+    },
+    async getJstErpSetting() {
+      const res = await this.$api.third.getJstErpSetting()
+      console.log(`getJstErpSetting:`, res)
+      this.jstErpSetting = res
+    },
     async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
-      this.is_pharma_industry = res.medicine_setting?.is_pharma_industry == '1'
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
     },
     async accountManagement(distributor_id) {
       let params = {
@@ -1403,7 +1435,7 @@ export default {
 
       let res = await this.$api.trade.accountManagement(params)
       res.list.forEach((ele) => {
-        ;(ele.value = ele.operator_id), (ele.title = ele.username)
+        (ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.personnelFormList[1].options = res.list
       this.deliverGoodsFormList[5].options = res.list
@@ -1472,7 +1504,7 @@ export default {
       }
       let { list } = await this.$api.company.getAccountList(params)
       list.forEach((ele) => {
-        ;(ele.value = ele.operator_id), (ele.title = ele.username)
+        (ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.deliveryPersonnel = list
     },
@@ -1582,6 +1614,8 @@ export default {
             delivery_status != 'DONE' &&
             receipt_type != 'ziti' &&
             cancel_status != 'WAIT_PROCESS' //待退款不展示发货按钮
+            // 打开了聚水潭不显示
+            && !this.jstErpSetting?.is_open 
             // && this.login_type == 'supplier'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
@@ -1671,6 +1705,7 @@ export default {
         return type == '1' ? '跨境订单' : '普通订单'
       }
       const fd = ORDER_TYPE.find((item) => item.value == order_class)
+
       if (fd) {
         return fd.title
       }
@@ -2156,7 +2191,8 @@ export default {
       exportInvoice({
         ...this.params,
         type,
-        order_type: 'normal'
+        order_type: 'normal',
+        invoice_status : 'ALL'
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
@@ -2169,6 +2205,8 @@ export default {
           this.$message.error('无内容可导出或执行失败，请检查重试')
           return
         }
+      }).catch((err) => {
+        console.log(err)
       })
     },
     exportDataNormal() {

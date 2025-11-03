@@ -45,20 +45,22 @@
               <i v-else class="iconfont icon-upload avatar-uploader-icon"></i>
             </el-upload> -->
 
-            <div>
+            <!-- <div>
               <div class="upload-box" @click="handleImgChange(item, index)">
                 <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
                   <img :src="wximageurl + item.background_pic_url" class="avatar">
                 </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
-            </div>
-            <imgPicker
+            </div> -->
+            <!-- <imgPicker
               :dialog-visible="imgDialog"
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
+            /> -->
+            <SpImagePicker v-model="item.background_pic_url" size="big" />
+
             <p class="content-center">卡封面（建议尺寸：600px * 375px）</p>
           </div>
           <div class="item-content f_l">
@@ -77,6 +79,13 @@
             <div style="display: flex">
               <span class="txt">等级背景</span>
               <SpImagePicker v-model="item.grade_background" />
+            </div>
+            <div>
+              <span class="txt">等级编码</span
+              ><el-input
+                v-model="item.dm_grade_code"
+                placeholder="请输入内容"
+              />
             </div>
             <div v-if="!VERSION_SHUYUN()" class="clearfix">
               <span class="txt f_l">升级条件</span>
@@ -209,6 +218,12 @@ export default {
           return '七'
         case 7:
           return '八'
+        case 8:
+          return '九'
+        case 9:
+          return '十'
+        case 10:
+          return '十一'
       }
     }
   },
@@ -325,17 +340,17 @@ export default {
       let index = Number(e.target.name)
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
       if (this.levelData[index].discount_checked) {
-        if (value == '' && this.VERSION_SHUYUN()) {
-          this.$message({ message: '请输入会员折扣', type: 'error' })
-          return
-        }
-        if (!reg.test(value) && this.VERSION_SHUYUN()) {
-          this.$message({
-            message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
-            type: 'error'
-          })
-          return
-        }
+        // if (value == '' && this.VERSION_SHUYUN()) {
+        //   this.$message({ message: '请输入会员折扣', type: 'error' })
+        //   return
+        // }
+        // if (!reg.test(value) && this.VERSION_SHUYUN()) {
+        //   this.$message({
+        //     message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
+        //     type: 'error'
+        //   })
+        //   return
+        // }
         // if (index > 0 && Number(value) >= Number(this.levelData[index - 1].privileges.discount)) {
         //   this.$message({ message: '会员折扣不能大于等于上一级折扣', type: 'error' })
         //   return
@@ -343,8 +358,8 @@ export default {
       }
     },
     addGrade() {
-      if (this.levelData.length >= 5) {
-        this.$message({ message: '最多添加5个等级', type: 'error' })
+      if (this.levelData.length >= 10) {
+        this.$message({ message: '最多添加10个等级', type: 'error' })
         return
       }
       let crmopen = this.levelData[0].crm_open
@@ -402,18 +417,18 @@ export default {
           }
         }
         if (this.levelData[i].discount_checked) {
-          if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
-            isflag = true
-            this.$message({ message: '请输入会员折扣', type: 'error' })
-            break
-          } else if (!discountReg.test(this.levelData[i].privileges.discount) && this.VERSION_SHUYUN()) {
-            isflag = true
-            this.$message({
-              message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
-              type: 'error'
-            })
-            break
-          }
+          // if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
+          //   isflag = true
+          //   this.$message({ message: '请输入会员折扣', type: 'error' })
+          //   break
+          // } else if (!discountReg.test(this.levelData[i].privileges.discount) && this.VERSION_SHUYUN()) {
+          //   isflag = true
+          //   this.$message({
+          //     message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
+          //     type: 'error'
+          //   })
+          //   break
+          // }
         }
       }
       return isflag

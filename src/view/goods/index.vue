@@ -236,13 +236,13 @@ export default {
         {
           label: '管理分类',
           key: 'mainCategory',
-          width: '360px',
           required: true,
           disabled,
           message: '请选择管理分类',
           component: ({ key }, value) => {
             return (
               <el-cascader
+                style={{ maxWidth: '500px' }}
                 v-model={value[key]}
                 disabled={this.mainCategoryDisabled}
                 options={this.categoryList}
@@ -1094,7 +1094,6 @@ export default {
         max_num,
         symptom
       } = medicine_data || {}
-      console.log(666, buy_limit_area)
       this.loading = false
       let mainCategory = []
       this.deepMainCategory(item_category_main[0], mainCategory)

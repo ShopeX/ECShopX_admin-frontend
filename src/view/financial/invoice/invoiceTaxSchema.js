@@ -40,6 +40,23 @@ export const tableSchema = (vm) =>
             }
           )
         }
+      },
+      {
+        name: '删除',
+        key: 'delete',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          handler: debounce(
+            ([row]) => {
+              vm.deleteRowHandle(row)
+            },
+            2000,
+            {
+              leading: true
+            }
+          )
+        }
       }
     ],
     columns: [

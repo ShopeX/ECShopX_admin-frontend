@@ -177,25 +177,40 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="item_bn" label="sku编码" width="180" />
-            <el-table-column prop="orderItem.item_spec_desc" label="规格" width="180" />
-            <el-table-column prop="supplier_name" label="来源供应商" width="180">
+            <el-table-column prop="item_bn" label="sku编码" width="150" />
+            <el-table-column prop="orderItem.item_spec_desc" label="规格" width="150" />
+            <el-table-column prop="supplier_name" label="来源供应商" width="150" >
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
               </template>
             </el-table-column>
-            <el-table-column prop="num" label="申请数量" width="180" />
-            <el-table-column label="应退总金额(元)">
+            <el-table-column prop="num" label="申请数量" width="100" />
+            <el-table-column label="应退总金额(元)" width="130">
               <template slot-scope="scope">
                 <span>￥{{ scope.row.refund_fee / 100 }}</span>
               </template>
             </el-table-column>
-            <el-table-column v-if="!IS_SUPPLIER()" label="应退总积分">
+            <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()" width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.refund_point }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="cost_price" label="成本价">
+            <el-table-column label="入库数量" width="100">
+              <template slot-scope="scope">
+                <span>{{ scope.row.refunded_num }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实退金额（元）" width="120">
+              <template slot-scope="scope">
+                {{ scope.row.refund_info?.refunded_fee && (scope.row.refund_info?.refunded_fee / 100 ) }}
+              </template>
+            </el-table-column>
+            <el-table-column label="实退总积分" width="100">
+              <template slot-scope="scope">
+                <span>{{ scope.row.refund_info?.refund_point }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="cost_price" label="成本价" >
               <template slot-scope="scope">
                 {{ scope.row.cost_price && scope.row.cost_price / 100 }}
               </template>
@@ -424,6 +439,7 @@
                     type="number"
                     min="0"
                     :max="orderInfo.total_fee / 100"
+                    :disabled="aftersalesInfo.progress == 8"
                   />&nbsp;&nbsp;&nbsp;&nbsp;<span v-if="aftersalesInfo.share_points > 0"
                     >返还积分：{{ aftersalesInfo.share_points }}</span
                   >
@@ -432,7 +448,7 @@
               <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款积分: </el-col>
                 <el-col :span="8">
-                  <el-input v-model="refund_point" type="number" min="0" :max="orderInfo.point" />
+                  <el-input v-model="refund_point" type="number" min="0" :max="orderInfo.point" :disabled="aftersalesInfo.progress == 8" />
                 </el-col>
               </el-row>
               <el-row>
@@ -544,8 +560,9 @@
     <template
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-        ((aftersalesInfo.progress == '0' && is_approved == '1') || !isArray(aftersales_address)) &&
-        aftersalesInfo.return_type == 'logistics'
+        aftersalesInfo.progress == '0' &&
+        aftersalesInfo.return_type == 'logistics' &&
+        (this.check_refund == '1' || this.is_approved == '1')
       "
     >
       <div class="section-header with-border">
@@ -559,7 +576,7 @@
                   选择售后地址
                 </el-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <el-button icon="el-icon-circle" @click="dialogVisible = true">
+                <el-button icon="el-icon-circle" @click="onAddAddress">
                   新增售后地址
                 </el-button>
               </el-col>
@@ -666,6 +683,11 @@
               {{ scope.row.contact + ' ' + scope.row.mobile }}
             </template>
           </el-table-column>
+          <el-table-column prop="is_default" label="是否默认">
+            <template slot-scope="scope">
+              {{ scope.row.is_default == 1 ? '是' : '否' }}
+            </template>
+          </el-table-column>
           <el-table-column prop="address_id" label="选择">
             <template slot-scope="scope">
               <el-radio v-model="aftersales_select" :label="scope.row.address_id" />
@@ -698,7 +720,7 @@
       :before-close="handleClose"
       width="45%"
     >
-      <el-form ref="dataForm" :model="dataForm" label-width="100px">
+      <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="店铺">
           <template>
             <span>{{ aftersalesInfo.distributor_id }}</span>
@@ -720,6 +742,12 @@
         </el-form-item>
         <el-form-item label="联系方式">
           <el-input v-model="aftersales_mobile" placeholder="" />
+        </el-form-item>
+        <el-form-item label="是否默认">
+          <el-select v-model="is_default" placeholder="请选择">
+            <el-option label="是" value="1" />
+            <el-option label="否" value="2" />
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -847,8 +875,6 @@ export default {
       freight: 0,
       corp_code: '', // 物流公司
       logi_no: '', // 快递单号
-      reviewData: {},
-      refundData: {},
       exchangeSendBack: {},
       submitDisabled: false,
 
@@ -866,12 +892,12 @@ export default {
       aftersales_address_id: '',
       aftersales_contact: '',
       aftersales_mobile: '',
+      is_default: 2,
       aftersales_address: '',
       aftersales_select: null,
       regionList: [],
-      dataForm: {},
       form: {
-        regions_id: []
+        regions_id: [],
       },
       regions: district,
       sendbackInfo: {
@@ -928,6 +954,8 @@ export default {
           this.aftersales_address = data.aftersales_address.aftersales_address
           this.aftersales_contact = data.aftersales_address.aftersales_contact
           this.aftersales_mobile = data.aftersales_address.aftersales_mobile
+          this.aftersales_address_id = data.aftersales_address.aftersales_address_id
+          this.is_default = data.aftersales_address.is_default
         }
         if (data.sendback_data.length == 0) {
           this.aftersalesInfo.sendback_data = null
@@ -954,6 +982,8 @@ export default {
           this.aftersales_address = data.aftersales_address.aftersales_address
           this.aftersales_contact = data.aftersales_address.aftersales_contact
           this.aftersales_mobile = data.aftersales_address.aftersales_mobile
+          this.aftersales_address_id = data.aftersales_address.aftersales_address_id
+          this.is_default = data.aftersales_address.is_default
         }
         if (data.sendback_data.length == 0) {
           this.aftersalesInfo.sendback_data = null
@@ -967,8 +997,10 @@ export default {
       window.open(`${getUrlPathByLoginType(`/order/order-manage/order-list/detail?orderId=${order_id}`)}`, '_blank')
     },
     reviewSubmit() {
-      this.reviewData.aftersales_bn = this.aftersales_bn
-      this.reviewData.is_approved = this.is_approved
+      let params = {
+        aftersales_bn: this.aftersales_bn,
+        is_approved: this.is_approved
+      }
       if (this.is_approved == 1) {
         if (this.refund_fee < 0) {
           this.$message.error('退款金额必填！')
@@ -977,24 +1009,25 @@ export default {
           this.$message.error('退款金额不能大于订单金额！')
           return false
         }
-        this.reviewData.refund_fee = accMul(this.refund_fee, 100)
+        params['refund_fee'] = accMul(this.refund_fee, 100)
         //parseInt(this.refund_fee * 100)
-        this.reviewData.refund_point = this.refund_point
-        this.reviewData.freight = accMul(this.freight, 100)
+        params['refund_point'] = this.refund_point
+        params['freight'] = accMul(this.freight, 100)
         //售后地址
         console.log(this.aftersalesInfo.aftersales_type)
         if (
           this.aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
           this.aftersales_address_id == '' &&
-          this.aftersalesInfo.return_type != 'offline'
+          this.aftersalesInfo.return_type != 'offline' &&
+          (this.check_refund == 1 || this.is_approved == 1)
         ) {
           this.$message.error('请选择售后地址！')
           return false
         }
-        this.reviewData.aftersales_address_id = this.aftersales_address_id
+        params['aftersales_address_id'] = this.aftersales_address_id
       } else {
         if (this.refuse_reason) {
-          this.reviewData.refuse_reason = this.refuse_reason
+          params['refuse_reason'] = this.refuse_reason
         } else {
           this.$message.error('拒绝原因必填！')
           return false
@@ -1004,7 +1037,7 @@ export default {
       setTimeout(() => {
         this.submitDisabled = false
       }, 1000)
-      reviewAftersales(this.reviewData).then(response => {
+      reviewAftersales(params).then((response) => {
         if (response.data.data) {
           this.$message({
             message: '提交审核成功！',
@@ -1021,7 +1054,7 @@ export default {
       this.exchangeSendBack.aftersales_bn = this.aftersales_bn
       this.exchangeSendBack.corp_code = this.corp_code
       this.exchangeSendBack.logi_no = this.logi_no
-      sendConfirm(this.reviewData).then(response => {
+      sendConfirm(this.exchangeSendBack).then((response) => {
         if (response.data.data) {
           this.$message({
             message: '重新发货成功！',
@@ -1035,21 +1068,23 @@ export default {
       })
     },
     refundAction() {
-      this.refundData.aftersales_bn = this.aftersales_bn
-      this.refundData.check_refund = this.check_refund
-      this.refundData.refunds_memo = this.refuse_reason
-      this.refundData.refund_fee = accMul(this.refund_fee, 100)
-      this.refundData.refund_point = this.refund_point
-      this.refundData.freight = accMul(this.freight, 100)
-      if (this.refundData.check_refund == '0' && !this.refundData.refunds_memo) {
+      const params = {
+        aftersales_bn: this.aftersales_bn,
+        check_refund: this.check_refund,
+        refunds_memo: this.refuse_reason,
+        refund_fee: accMul(this.refund_fee, 100),
+        refund_point: this.refund_point,
+        freight: accMul(this.freight, 100)
+      }
+      if (params.check_refund == '0' && !params.refunds_memo) {
         this.$message.error('拒绝原因必填！')
         return false
       }
-      if (this.refundData.check_refund == '1' && isNaN(this.refundData.refund_fee)) {
+      if (params.check_refund == '1' && isNaN(params.refund_fee)) {
         this.$message.error('退款金额必填！')
         return false
       }
-      refundCheck(this.refundData).then(response => {
+      refundCheck(params).then((response) => {
         if (response.data.data) {
           this.$message({
             message: '操作成功！',
@@ -1070,18 +1105,21 @@ export default {
     },
 
     handleChangeAddress(val) {
+      this.aftersales_select = this.aftersales_address_id
       this.relShop.relShopVisible = true
-      const queryData = {}
-      queryData['page'] = this.relShop.params.page
-      queryData['page_size'] = this.relShop.params.page_size
-      queryData['distributor_id'] = this.distributor_id
+      const queryData = {
+        page: this.relShop.params.page,
+        page_size: this.relShop.params.page_size,
+        distributor_id: this.distributor_id
+      }
       this.getAftersalesaddressList(queryData)
     },
     handleCurrentChange(val) {
-      const queryData = {}
-      queryData['page'] = val
-      queryData['page_size'] = this.relShop.params.page_size
-      queryData['distributor_id'] = this.distributor_id
+      const queryData = {
+        page: val,
+        page_size: this.relShop.params.page_size,
+        distributor_id: this.distributor_id
+      }
       this.getAftersalesaddressList(queryData)
     },
     getAftersalesaddressList(queryData) {
@@ -1102,6 +1140,7 @@ export default {
         this.aftersales_contact = fd.contact
         this.aftersales_mobile = fd.mobile
         this.aftersales_address = fd.province + fd.city + fd.area + fd.address
+        this.is_default = fd.is_default
       }
       this.relShop.relShopVisible = false
     },
@@ -1146,7 +1185,8 @@ export default {
       queryData['address'] = this.aftersales_address
       queryData['contact'] = this.aftersales_contact
       queryData['mobile'] = this.aftersales_mobile
-      createAftersalesAddress(queryData).then(response => {
+      queryData['is_default'] = this.is_default
+      createAftersalesAddress(queryData).then((response) => {
         if (response.data.data.status) {
           this.$message({
             message: '添加成功',
@@ -1158,6 +1198,7 @@ export default {
           this.aftersales_contact = fd.contact
           this.aftersales_mobile = fd.mobile
           this.aftersales_address = fd.province + fd.city + fd.area + fd.address
+          this.is_default = fd.is_default
         } else {
           this.$message({
             message: '添加失败',
@@ -1166,6 +1207,9 @@ export default {
         }
         this.dialogVisible = false
       })
+    },
+    onAddAddress () {
+      this.dialogVisible = true
     }
   }
 }

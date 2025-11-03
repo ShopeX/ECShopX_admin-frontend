@@ -26,6 +26,7 @@
     :close-on-press-escape="false"
     :before-close="cancelAction"
     append-to-body
+    :width="'850px'"
   >
     <div class="img_pick_panel inner_container_box">
       <el-row>
@@ -54,13 +55,18 @@
                   </div>
 
                   <div class="img_pick_area_inner">
-                    <div class="img_pick">
-                      <div class="img_list">
+                    <div class="img_list">
+                      <div
+                        v-for="(item, index) in localimgList"
+                        :key="index"
+                        class="img_item"
+                        @click="localcheckedImg(item, index)"
+                      >
                         <div
-                          v-for="(item, index) in localimgList"
-                          :key="index"
-                          class="img_item"
-                          @click="localcheckedImg(item, index)"
+                          class="frm_checkbox_label img_item_bd"
+                          :class="
+                            isMost ? { selected: item.selected } : { 'selected': locali == index }
+                          "
                         >
                           <div
                             class="frm_checkbox_label img_item_bd"
@@ -130,7 +136,7 @@ export default {
       params: {
         type: 'image',
         page: 1,
-        pageSize: 20
+        pageSize: 18
       },
       showDialog: false,
       frontItem: [],
@@ -148,7 +154,7 @@ export default {
       localparams: {
         type: 'image',
         page: 1,
-        pageSize: 20
+        pageSize: 18
       },
       localcheckedItem: [],
       localimgData: {},
@@ -429,17 +435,17 @@ export default {
     padding: 0 0 15px;
   }
 }
-.img_pick {
-  padding: 20px 0 5px;
+// .img_pick {
+//   padding: 20px 0 5px;
   .img_list {
     display: flex;
     // justify-content: space-between;
     flex-wrap: wrap;
+    gap: 20px;
   }
   .img_item {
     position: relative;
     text-align: center;
-    flex: 33.3%;
     flex-grow: 0;
     .pic_box {
       width: 117px;
@@ -506,7 +512,7 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
+  // }
 }
 .dialog-footer {
   border-top: 1px solid #e7e7eb;

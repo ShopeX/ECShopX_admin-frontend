@@ -480,6 +480,14 @@ export function exportItemsData(data) {
   })
 }
 
+export function exportApiFileName(data) {
+  return fetch({
+    url: '/goods/exportApiFileName',
+    method: 'post',
+    params: data
+  })
+}
+
 export function exportItemsTagData(data) {
   return fetch({
     url: '/goods/tag/export',
@@ -642,5 +650,85 @@ export function medicineItemsSync(data) {
     url: '/goods/medicineItems/sync',
     method: 'post',
     data
+  })
+}
+
+// 获取商品列表
+/**
+ * @param {Object} query
+ * @param {number} query.page 页码
+ * @param {number} query.pageSize 每页数量
+ * @param {string} query.spu_code spu 编码
+ * @param {string} query.goods_name 商品名称
+ * @param {string} query.list_time_start 上架时间开始
+ * @param {string} query.list_time_end 上架时间结束
+ * @returns {Promise}
+ */
+export function getSpuLists(query) {
+  return fetch({
+    url: '/spulists',
+    method: 'get',
+    params: query
+  })
+}
+
+// 获取同步商品日志
+/**
+ * @param {Object} query
+ * @param {number} query.page 页码
+ * @param {number} query.pageSize 每页数量
+ * @returns {Promise}
+ */
+export function getSyncTbSpuLogs(query) {
+  return fetch({
+    url: '/spulists/getSyncTbSpuLogs',
+    method: 'get',
+    params: query
+  })
+}
+
+// 设置商品到本地
+export function setSpuToLocal() {
+  return fetch({
+    url: '/spulists/setSpuToLocal',
+    method: 'get'
+  })
+}
+
+// 同步商品到本地
+/**
+ * @param {Object} query
+ * @param {string} query.spu_ids 商品 spu_id 列表，多个 spu_id 用逗号分隔
+ * @returns {Promise}
+ */
+export function syncSpuToLocal(query) {
+  return fetch({
+    url: '/spulists/syncSpuToLocal',
+    method: 'post',
+    params: query
+  })
+}
+
+/**
+ * 同步商品池
+ * @param {Array} query.items 商品列表
+ * @param {string} query.items[0].outer_id 商品外部 ID
+ * @param {string} query.items[0].category_id 商品分类 ID
+ * @returns {Promise}
+ */
+export function updateSpuCategory(query) {
+  return fetch({
+    url: '/spulists/updateSpuCategory',
+    method: 'post',
+    params: query
+  })
+}
+
+
+export function exportCsvData(query) {
+  return fetch({
+    url: '/espier/exportCsvData',
+    method: 'get',
+    params: query
   })
 }

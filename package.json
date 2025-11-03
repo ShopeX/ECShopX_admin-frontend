@@ -25,7 +25,8 @@
     "commit:comment": "引导设置规范化的提交信息",
     "commit": "git-cz",
     "husky": "npx husky install",
-    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'"
+    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
+    "add-license": "node build/addlicense.js"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",

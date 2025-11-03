@@ -213,7 +213,7 @@ export default {
       },
       invoiceSourceList:invoice_source_arr,
       typeList:[{value:'01',title:'专用发票'},{value:'02',title:'电子普通发票'}],
-      orderCategory: this.VERSION_STANDARD
+      orderCategory: this.VERSION_STANDARD()
         ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
         : ORDER_CATEGORY,
     }
@@ -345,6 +345,17 @@ export default {
         this.dialogShow = false
         this.refresh()
       })
+    },
+    reInvoiceHandle(row) {
+      this.$confirm('确定重推开票', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          await this.$api.trade.retryFailedInvoice({  invoice_id: row.id })
+          this.$message.success('重推开票成功')
+          this.refresh()
+        })
     }
   }
 }

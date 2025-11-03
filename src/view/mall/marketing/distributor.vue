@@ -97,7 +97,7 @@
   <SpPage>
     <SpRouterView>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
-      <!-- <div v-if="VERSION_STANDARD" class="content-bottom-padded">
+      <!-- <div v-if="VERSION_STANDARD()" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
           <div>
             自动同步：开启自动同步后，总部添加编辑商品会自动同步上架到到店铺，保留开启前的商品状态。关闭同步后将保留已同步的商品数据

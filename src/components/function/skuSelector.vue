@@ -43,7 +43,7 @@
       </el-col>
     </el-row>
     <div>
-      <el-button type="primary" @click="handleGoodsDialogShow"> 选择商品 </el-button>
+      <el-button type="primary" @click="handleGoodsDialogShow" :disabled="disabled"> 选择商品 </el-button>
     </div>
     <el-dialog title="选择sku" :visible.sync="dialogVisible" width="50%">
       <el-table ref="skuTable" v-loading="loading" :data="skus" @selection-change="handleSkuChange">
@@ -97,6 +97,10 @@ export default {
       default: false
     },
     isHidenSku: {
+      type: Boolean,
+      default:false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }
@@ -239,6 +243,7 @@ export default {
       this.itemVisible = false
     },
     handleSkuRemove(index) {
+      if (this.disabled) return
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()

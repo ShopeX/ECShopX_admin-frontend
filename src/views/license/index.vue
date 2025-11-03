@@ -139,110 +139,109 @@ export default {
 .license-page {
   background: #f5f5f5;
   min-height: 100vh;
-}
-
-.license-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  padding: 30px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.6;
-  color: #262626;
-  border-radius: 6px;
-}
-
-.license-title {
-  font-size: 36px;
-  margin: 0 0 8px 0;
-  color: #262626;
-}
-
-.license-subtitle {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #262626;
-}
-
-.license-main {
-  h3 {
-    font-size: 16px;
-    color: #262626;
-    margin-bottom: 10px;
-  }
-  .license-description {
-    font-size: 16px;
-    color: #262626;
-  }
-  .license-border {
-    margin: 30px 0px;
-    border-top: 1px dashed #e1e4e8;
-  }
-}
-
-.term-section {
-  margin-bottom: 24px;
-  
-  h4 {
-    font-size: 15px;
-    margin: 0 0 8px 0;
-    color: #262626;
-  }
-  
-  p {
-    font-size: 14px;
+  .license-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.6;
+    color: #262626;
+    border-radius: 6px;
+  }
+
+  .license-title {
+    font-size: 36px;
     margin: 0 0 8px 0;
     color: #262626;
   }
-  
-  ul {
-    margin: 8px 0 16px 0;
-    padding-left: 20px;
-    
-    li {
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 4px;
+
+  .license-subtitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #262626;
+  }
+
+  .license-main {
+    h3 {
+      font-size: 16px;
+      color: #262626;
+      margin-bottom: 10px;
+    }
+    .license-description {
+      font-size: 16px;
       color: #262626;
     }
+    .license-border {
+      margin: 30px 0px;
+      border-top: 1px dashed #e1e4e8;
+    }
   }
-}
 
-.apache-license {
-  margin-bottom: 50px;
-  font-size: 14px;
-  p {
-    line-height: 1.6;
-    color: #262626;
-    margin-bottom: 5px;
-  }
-}
-
-.license-chinese {
-  margin-bottom: 30px;
-}
-
-.copyright {
-  margin-top: 30px;
-  p {
-    font-size: 14px;
-    margin: 0;
-    color: #262626;
+  .term-section {
+    margin-bottom: 24px;
     
-    strong {
-      font-weight: 600;
+    h4 {
+      font-size: 15px;
+      margin: 0 0 8px 0;
+      color: #262626;
+    }
+    
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 8px 0;
+      color: #262626;
+    }
+    
+    ul {
+      margin: 8px 0 16px 0;
+      padding-left: 20px;
+      
+      li {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 4px;
+        color: #262626;
+      }
+    }
+  }
+
+  .apache-license {
+    margin-bottom: 50px;
+    font-size: 14px;
+    p {
+      line-height: 1.6;
+      color: #262626;
+      margin-bottom: 5px;
+    }
+  }
+
+  .license-chinese {
+    margin-bottom: 30px;
+  }
+
+  .copyright {
+    margin-top: 30px;
+    p {
+      font-size: 14px;
+      margin: 0;
+      color: #262626;
+      
+      strong {
+        font-weight: 600;
+      }
+    }
+  }
+  .link {
+    color: #0366d6;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
 
-.link {
-  color: #0366d6;
-  text-decoration: none;
-  
-  &:hover {
-    text-decoration: underline;
-  }
-}
 
 </style>

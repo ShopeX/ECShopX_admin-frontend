@@ -58,8 +58,7 @@
         </el-main>
 
         <el-footer class="flex justify-center items-center gap-2" height="50px">
-          <div class="style-medium size-13 text-[#B3B3B3]"> ECShopX © Licensed under <span class="cursor-pointer border-b border-gray-300" @click="openLicense">Apache 2.0</span> · Powered by </div>
-          <SpImage :src="footerBackground" class="cursor-pointer mt-1" height="15" fit="contain" @click="openShopex" />
+          <LicenseLogo />
         </el-footer>
       </el-container>
     </el-container>
@@ -68,21 +67,22 @@
 
 <script>
 import DEFAULT_CONFIG from '@/config'
-import { getSystemTitle, getBasePath } from '@/utils'
+import { getSystemTitle } from '@/utils'
 import { micrApp } from '@/utils/micr-app'
 import LayoutSidebar from './layout-sidebar.vue'
 import LayoutContent from './layout-content.vue'
 import LayoutHeader from './layout-header.vue'
 import BasicToolbar from './layout-toolbar.vue'
 import EmptyLayout from './layout-empty.vue'
-
+import LicenseLogo from '@/layout/basic/components/license-logo'
 export default {
   components: {
     LayoutSidebar,
     LayoutContent,
     LayoutHeader,
     BasicToolbar,
-    EmptyLayout
+    EmptyLayout,
+    LicenseLogo
   },
   data() {
     return {
@@ -91,9 +91,6 @@ export default {
     }
   },
   computed: {
-    footerBackground: () => {
-      return require(`@/assets/svgs/logo.svg`)
-    },
     systemTitle: () => {
       return getSystemTitle()
     }
@@ -109,13 +106,6 @@ export default {
     },
     handleSidebarChange(val) {
       this.showSubMenu = val
-    },
-    openShopex() {
-      window.open('https://www.shopex.cn', '_blank')
-    },
-    openLicense() {
-      const basePath = getBasePath()
-      window.open(`${basePath ? `/${basePath}` : ''}/license`, '_blank')
     }
   }
 }

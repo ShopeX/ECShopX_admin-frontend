@@ -16,7 +16,7 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-import { AuthPageLayout } from '@/layout'
+import { AuthPageLayout, LicenseLayout } from '@/layout'
 import { BasicLayout } from '@/layout/basic'
 
 /** 全局404页面 */
@@ -122,6 +122,10 @@ const coreRoutes = [
   {
     path: '/activelicense',
     component: () => import('@/views/core/account-activation.vue')
+  },
+  {
+    path: '/license',
+    component: () => import('@/views/license/index')
   }
 ]
 

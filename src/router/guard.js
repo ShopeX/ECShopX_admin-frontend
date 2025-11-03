@@ -62,6 +62,8 @@ function setupAccessGuard(router) {
       ) {
         const basePath = to.path.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
         next(`/${basePath}/login`)
+      } else if (/\/license$/.test(to.path)) {
+        next()
       } else {
         next('/login')
       }

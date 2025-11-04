@@ -134,6 +134,17 @@ const routes = [
         component: () => import('@/view/base/setting/publicsetting')
       },
       {
+        name: `systemConfigInvoinceConfiguration`,
+        path: 'system-config/invoince-configuration',
+        meta: {
+          aliasName: 'invoinceConfiguration',
+          icon: 'icon-products',
+          title: '开票配置',
+          permissions: ['setting.systemsetting.invoinceConfiguration']
+        },
+        component: () => import('@/view/financial/invoice/baiSetting')
+      },
+      {
         name: `systemConfigPaymentConfiguration`,
         path: 'system-config/payment-configuration',
         meta: {

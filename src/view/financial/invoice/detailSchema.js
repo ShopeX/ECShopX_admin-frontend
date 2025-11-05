@@ -1,10 +1,10 @@
 // +----------------------------------------------------------------------
 // | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
+// | ECShopX 开源商城系统
 // +----------------------------------------------------------------------
 // | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
 // +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
+// | Corporate Website:  https://www.shopex.cn
 // +----------------------------------------------------------------------
 // | Licensed under the Apache License, Version 2.0
 // | http://www.apache.org/licenses/LICENSE-2.0
@@ -334,7 +334,7 @@ const infoTable = {
       name: '税率',
       width: 100,
       render(_, { row }) {
-        return <span> { row.invoice_tax_rate }% </span>
+        return <span> {row.invoice_tax_rate}% </span>
       }
     },
     {

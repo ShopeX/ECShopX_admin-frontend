@@ -1,10 +1,10 @@
 // +----------------------------------------------------------------------
 // | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
+// | ECShopX 开源商城系统
 // +----------------------------------------------------------------------
 // | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
 // +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
+// | Corporate Website:  https://www.shopex.cn
 // +----------------------------------------------------------------------
 // | Licensed under the Apache License, Version 2.0
 // | http://www.apache.org/licenses/LICENSE-2.0
@@ -106,7 +106,7 @@ export const createTbAddForm = (vm) =>
                 onSelect={(row) => {
                   vm.selectedSpu = row
                 }}
-                onReset = {() => {
+                onReset={() => {
                   vm?.$refs?.finderDialog?.refresh(true)
                 }}
                 on-select-all={(row) => {
@@ -115,16 +115,16 @@ export const createTbAddForm = (vm) =>
               >
                 <el-date-picker
                   v-model={vm.list_time}
-                  slot="list_time"
-                  type="datetimerange"
-                  range-separator="至"
-                  start-placeholder="开始时间"
-                  end-placeholder="结束时间"
-                  value-format="yyyy-MM-dd HH:mm:ss"
+                  slot='list_time'
+                  type='datetimerange'
+                  range-separator='至'
+                  start-placeholder='开始时间'
+                  end-placeholder='结束时间'
+                  value-format='yyyy-MM-dd HH:mm:ss'
                   default-time={['00:00:00', '23:59:59']}
                 />
               </SpFinder>
-              <div style={{ display:'flex', justifyContent:'flex-end' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <el-button
                   type='primary'
                   plain

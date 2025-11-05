@@ -1,10 +1,10 @@
 // +----------------------------------------------------------------------
 // | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
+// | ECShopX 开源商城系统
 // +----------------------------------------------------------------------
 // | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
 // +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
+// | Corporate Website:  https://www.shopex.cn
 // +----------------------------------------------------------------------
 // | Licensed under the Apache License, Version 2.0
 // | http://www.apache.org/licenses/LICENSE-2.0
@@ -264,17 +264,25 @@ export default {
 
       return h('div', {}, [
         h('span', { style: {} }, props.title),
-        h('el-upload', {
-          class: props.class || '',
-          props: uploadProps
-        }, [
-          h('el-button', {
-            props: {
-              size: props.buttonSize || 'small',
-              type: props.buttonType || 'primary'
-            }
-          }, props.buttonText || '点击上传')
-        ])
+        h(
+          'el-upload',
+          {
+            class: props.class || '',
+            props: uploadProps
+          },
+          [
+            h(
+              'el-button',
+              {
+                props: {
+                  size: props.buttonSize || 'small',
+                  type: props.buttonType || 'primary'
+                }
+              },
+              props.buttonText || '点击上传'
+            )
+          ]
+        )
       ])
     },
 

@@ -1,10 +1,10 @@
 // +----------------------------------------------------------------------
 // | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
+// | ECShopX 开源商城系统
 // +----------------------------------------------------------------------
 // | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
 // +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
+// | Corporate Website:  https://www.shopex.cn
 // +----------------------------------------------------------------------
 // | Licensed under the Apache License, Version 2.0
 // | http://www.apache.org/licenses/LICENSE-2.0
@@ -176,10 +176,10 @@ const userStore = {
     setThemeColor: (state, color_theme) => {
       state.color_theme = color_theme
     },
-    setExportKeyAndTotal: (state, {exportKey, exportTotal}) => {
+    setExportKeyAndTotal: (state, { exportKey, exportTotal }) => {
       state.exportKey = exportKey
       state.exportTotal = exportTotal
-    },
+    }
   },
 
   actions: {
@@ -258,7 +258,7 @@ const userStore = {
     },
     setExportKeyAndTotal: ({ commit }, params) => {
       commit('setExportKeyAndTotal', params)
-    },
+    }
   }
 }
 

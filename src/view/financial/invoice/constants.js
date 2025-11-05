@@ -1,10 +1,10 @@
 // +----------------------------------------------------------------------
 // | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
+// | ECShopX 开源商城系统
 // +----------------------------------------------------------------------
 // | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
 // +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
+// | Corporate Website:  https://www.shopex.cn
 // +----------------------------------------------------------------------
 // | Licensed under the Apache License, Version 2.0
 // | http://www.apache.org/licenses/LICENSE-2.0
@@ -53,7 +53,7 @@ export const open_status_map = {
   waste: '已红冲',
   failed: '开票失败',
   pending: '待开票',
-  cancel:'取消',
+  cancel: '取消'
 }
 
 export const open_status_step_map = {

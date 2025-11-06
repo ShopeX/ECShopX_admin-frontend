@@ -11,7 +11,6 @@ const webpackPluginsAutoI18n = require('webpack-auto-i18n-plugin')
 const { YoudaoTranslator, EmptyTranslator, Translator } = require('webpack-auto-i18n-plugin')
 const axios = require('axios')
 const { generateId } = require('./build/utils')
-const { main: addLicenseHeaders } = require('./build/addlicense')
 
 const AutoI18nOptions = {
   excludedPath: ['/src/i18n/index.js'],

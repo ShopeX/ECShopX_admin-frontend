@@ -41278,5 +41278,625 @@
 		"zh-cn": "图片插入成功",
 		"en": "The picture was inserted successfully.",
 		"zh-tw": "圖片插入成功"
+	},
+	"x0guj0o": {
+		"zh-cn": "已经存在进行中的导出任务，请等待上个任务执行完毕",
+		"en": "There is already an export task in progress. Please wait until the previous task is completed.",
+		"zh-tw": "已經存在進行中的導出任務，請等待上個任務執行完畢"
+	},
+	"mgfcayd": {
+		"zh-cn": "确定要取消当前文件导出吗?",
+		"en": "Are you sure you want to cancel the current file export?",
+		"zh-tw": "確定要取消當前文件導出嗎?"
+	},
+	"jqbpjqk": {
+		"zh-cn": "正在导出数据,请耐心等待，不要关闭窗口！",
+		"en": "Exporting data, please wait patiently and do not close the window!",
+		"zh-tw": "正在導出數據,請耐心等待，不要關閉窗口！"
+	},
+	"q2h1rgc": {
+		"zh-cn": "导出完成,数据导出成功！",
+		"en": "The export is completed and the data is exported successfully!",
+		"zh-tw": "導出完成,數據導出成功！"
+	},
+	"b13mpw4": {
+		"zh-cn": "取消下载",
+		"en": "Cancel download",
+		"zh-tw": "取消下載"
+	},
+	"hrd92": {
+		"zh-cn": "排队",
+		"en": "queue",
+		"zh-tw": "排隊"
+	},
+	"chui3t4": {
+		"zh-cn": "开票配置",
+		"en": "Invoicing configuration",
+		"zh-tw": "開票配置"
+	},
+	"ceq403": {
+		"zh-cn": "分享页",
+		"en": "share page",
+		"zh-tw": "分享頁"
+	},
+	"unukozc": {
+		"zh-cn": "ECShopX 开源许可",
+		"en": "ECShopX Open Source License",
+		"zh-tw": "ECShopX 開源許可"
+	},
+	"35yaled": {
+		"zh-cn": "EcshopX 开源许可证",
+		"en": "EcshopX Open Source License",
+		"zh-tw": "EcshopX 開源許可證"
+	},
+	"qs0qum10": {
+		"zh-cn": "EcshopX 遵循 Apache 许可证 2.0 版，并附加以下条款：",
+		"en": "EcshopX is licensed under the Apache License version 2.0 with the following additional terms:",
+		"zh-tw": "EcshopX 遵循 Apache 許可證 2.0 版，並附加以下條款："
+	},
+	"uybjcdv": {
+		"zh-cn": "依据 Apache 许可证 2.0 第 7 节规定的附加条款：",
+		"en": "Subject to additional terms set forth in Section 7 of the Apache License 2.0:",
+		"zh-tw": "依據 Apache 許可證 2.0 第 7 節規定的附加條款："
+	},
+	"k4q5eeb": {
+		"zh-cn": "1. 品牌标识保留要求",
+		"en": "1. Brand identity retention requirements",
+		"zh-tw": "1. 品牌標識保留要求"
+	},
+	"6r8jztv": {
+		"zh-cn": "您必须保留所有可见的 EcshopX 品牌标识，包括但不限于：",
+		"en": "You must retain all visible EcshopX branding, including but not limited to:",
+		"zh-tw": "您必須保留所有可見的 EcshopX 品牌標識，包括但不限於："
+	},
+	"f6n0mfp": {
+		"zh-cn": "用户界面（例如：前端界面、管理控制台、登录页面）；",
+		"en": "User interface (e.g. front-end interface, management console, login page);",
+		"zh-tw": "用戶界面（例如：前端界面、管理控制台、登錄頁面）；"
+	},
+	"qwr0ai12": {
+		"zh-cn": "具体涵盖LOGO、版权声明及“Powered by EcshopX”标识等。",
+		"en": "Specifically covering LOGO, copyright statement and \"Powered by EcshopX\" logo, etc.",
+		"zh-tw": "具體涵蓋LOGO、版權聲明及“Powered by EcshopX”標識等。"
+	},
+	"q6cczxg": {
+		"zh-cn": "2. 移除品牌标识需获取商业许可",
+		"en": "2. Removal of brand logos requires a commercial license",
+		"zh-tw": "2. 移除品牌標識需獲取商業許可"
+	},
+	"aauv8z1a": {
+		"zh-cn": " 若需移除或修改 EcshopX 品牌标识，必须从 Shopex 获取商业许可证。请联系： ",
+		"en": "If you need to remove or modify the EcshopX branding, you must obtain a commercial license from Shopex. Please contact:",
+		"zh-tw": "若需移除或修改 EcshopX 品牌標識，必須從 Shopex 獲取商業許可證。請聯繫："
+	},
+	"qtdya9a": {
+		"zh-cn": " 购买商业许可证。 ",
+		"en": "Purchase a commercial license.",
+		"zh-tw": "購買商業許可證。"
+	},
+	"b7rr3713": {
+		"zh-cn": "3. 以任何方式违反任何适用的国家或国际法律或法规或侵犯任何第三方的合法权益；",
+		"en": "3. Violate in any way any applicable national or international laws or regulations or infringe upon the legitimate rights and interests of any third party;",
+		"zh-tw": "3. 以任何方式違反任何適用的國家或國際法律或法規或侵犯任何第三方的合法權益；"
+	},
+	"h5c4mg7": {
+		"zh-cn": "4. 执行条款",
+		"en": "4. Execution clauses",
+		"zh-tw": "4. 執行條款"
+	},
+	"5kso2ls": {
+		"zh-cn": "若未能遵守上述附加条款，您在本许可证下的权利将自动终止。",
+		"en": "Your rights under this License will automatically terminate if you fail to comply with the above additional terms.",
+		"zh-tw": "若未能遵守上述附加條款，您在本許可證下的權利將自動終止。"
+	},
+	"36jxp6k": {
+		"zh-cn": "版权所有 (c) 2025 Shopex",
+		"en": "Copyright (c) 2025 Shopex",
+		"zh-tw": "版權所有 (c) 2025 Shopex"
+	},
+	"jkz6so4": {
+		"zh-cn": "领券中心",
+		"en": "Voucher Collection Center",
+		"zh-tw": "領券中心"
+	},
+	"r2ccs26": {
+		"zh-cn": "选择分享页面",
+		"en": "Select sharing page",
+		"zh-tw": "選擇分享頁面"
+	},
+	"anxodp4": {
+		"zh-cn": "入库数量",
+		"en": "Inbound quantity",
+		"zh-tw": "入庫數量"
+	},
+	"xktesg7": {
+		"zh-cn": "实退金额（元）",
+		"en": "Actual refund amount (yuan)",
+		"zh-tw": "實退金額（元）"
+	},
+	"lmxhcg5": {
+		"zh-cn": "实退总积分",
+		"en": "Total points refunded",
+		"zh-tw": "實退總積分"
+	},
+	"u638ot7": {
+		"zh-cn": "请填写商品名称",
+		"en": "Please fill in the product name",
+		"zh-tw": "請填寫商品名稱"
+	},
+	"70n5x06": {
+		"zh-cn": " 批量退款 ",
+		"en": "Batch refund",
+		"zh-tw": "批量退款"
+	},
+	"ibelp2a": {
+		"zh-cn": "批量审核（售后申请）",
+		"en": "Batch review (after-sales application)",
+		"zh-tw": "批量審核（售後申請）"
+	},
+	"saf28f7": {
+		"zh-cn": "请填写拒绝原因",
+		"en": "Please fill in the reason for rejection",
+		"zh-tw": "請填寫拒絕原因"
+	},
+	"bv8iyo4": {
+		"zh-cn": "子单商品",
+		"en": "Sub-item",
+		"zh-tw": "子單商品"
+	},
+	"i57v864": {
+		"zh-cn": "货号: ",
+		"en": "Item number:",
+		"zh-tw": "貨號:"
+	},
+	"xl74g27": {
+		"zh-cn": "实退金额（¥）",
+		"en": "Actual refund amount (¥)",
+		"zh-tw": "實退金額（¥）"
+	},
+	"66s3pv7": {
+		"zh-cn": "实退积分（¥）",
+		"en": "Actual points refund (¥)",
+		"zh-tw": "實退積分（¥）"
+	},
+	"bktvvh4": {
+		"zh-cn": "复制失败",
+		"en": "Copy failed",
+		"zh-tw": "複製失敗"
+	},
+	"kwswb1a": {
+		"zh-cn": "请选择需要审核的数据",
+		"en": "Please select the data to be reviewed",
+		"zh-tw": "請選擇需要審核的數據"
+	},
+	"9hjl90a": {
+		"zh-cn": "批量审核失败，请重试",
+		"en": "Batch review failed, please try again",
+		"zh-tw": "批量審核失敗，請重試"
+	},
+	"3lwv9y6": {
+		"zh-cn": " 发票订单 ",
+		"en": "Invoice order",
+		"zh-tw": "發票訂單"
+	},
+	"ppe0zh5": {
+		"zh-cn": "销售门店:",
+		"en": "Sales store:",
+		"zh-tw": "銷售門店:"
+	},
+	"ph4j3v5": {
+		"zh-cn": "销售导购:",
+		"en": "Sales guide:",
+		"zh-tw": "銷售導購:"
+	},
+	"72xkfd6": {
+		"zh-cn": "订单获取积分",
+		"en": "Earn points for orders",
+		"zh-tw": "訂單獲取積分"
+	},
+	"wfvubl9": {
+		"zh-cn": "退积分超过可退积分",
+		"en": "Refund points exceeding the points that can be refunded",
+		"zh-tw": "退積分超過可退積分"
+	},
+	"gvjslj7": {
+		"zh-cn": "退积分不能为空",
+		"en": "Points refund cannot be empty",
+		"zh-tw": "退積分不能為空"
+	},
+	"bzv9jb7": {
+		"zh-cn": "退运费不能为空",
+		"en": "Return shipping fee cannot be empty",
+		"zh-tw": "退運費不能為空"
+	},
+	"c72onv9": {
+		"zh-cn": "退运费超过可退运费",
+		"en": "The return shipping fee exceeds the refundable shipping fee",
+		"zh-tw": "退運費超過可退運費"
+	},
+	"gdp4re4": {
+		"zh-cn": "绑定导购",
+		"en": "Bind shopping guide",
+		"zh-tw": "綁定導購"
+	},
+	"gdyq8o4": {
+		"zh-cn": "绑定门店",
+		"en": "Bind store",
+		"zh-tw": "綁定門店"
+	},
+	"jk8kny9": {
+		"zh-cn": "确定删除该配置吗？",
+		"en": "Are you sure you want to delete this configuration?",
+		"zh-tw": "確定刪除該配置嗎？"
+	},
+	"dcspv56": {
+		"zh-cn": "确定重推开票",
+		"en": "Confirm re-invoicing",
+		"zh-tw": "確定重推開票"
+	},
+	"wpaz1u6": {
+		"zh-cn": "重推开票成功",
+		"en": "Re-invoicing successful",
+		"zh-tw": "重推開票成功"
+	},
+	"fjqnq210": {
+		"zh-cn": "优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示",
+		"en": "The coupon has been taken over by Damo CRM. For maintenance, please go to the Damo CRM backend for maintenance. This is for display only.",
+		"zh-tw": "優惠券已被達摩CRM接管，維護請前往達摩CRM後台進行維護，此處僅作展示"
+	},
+	"kjju606": {
+		"zh-cn": "境内支付平台",
+		"en": "Domestic payment platform",
+		"zh-tw": "境內支付平台"
+	},
+	"91hn6h6": {
+		"zh-cn": "境外支付平台",
+		"en": "Overseas payment platform",
+		"zh-tw": "境外支付平台"
+	},
+	"x1og4a7": {
+		"zh-cn": "请选择是否默认",
+		"en": "Please select whether to default",
+		"zh-tw": "請選擇是否默認"
+	},
+	"li8lxap": {
+		"zh-cn": "支持客户端:移动商城(微信小程序、H5)、PC商城",
+		"en": "Supported clients: mobile mall (WeChat applet, H5), PC mall",
+		"zh-tw": "支持客戶端:移動商城(微信小程序、H5)、PC商城"
+	},
+	"m64rfjj": {
+		"zh-cn": "支持客户端:移动商城(H5)、PC商城",
+		"en": "Supported clients: mobile mall (H5), PC mall",
+		"zh-tw": "支持客戶端:移動商城(H5)、PC商城"
+	},
+	"3sto3ek": {
+		"zh-cn": "支持客户端:移动商城(微信小程序、H5)",
+		"en": "Supported clients: mobile mall (WeChat applet, H5)",
+		"zh-tw": "支持客戶端:移動商城(微信小程序、H5)"
+	},
+	"6dsyf49": {
+		"zh-cn": "请输入公众账号ID",
+		"en": "Please enter the public account ID",
+		"zh-tw": "請輸入公眾賬號ID"
+	},
+	"n83ztza": {
+		"zh-cn": "请输入APP应用ID",
+		"en": "Please enter the APP application ID",
+		"zh-tw": "請輸入APP應用ID"
+	},
+	"7lfm3n6": {
+		"zh-cn": "请输入商户号",
+		"en": "Please enter merchant number",
+		"zh-tw": "請輸入商戶號"
+	},
+	"r2qq1c8": {
+		"zh-cn": "请输入API密钥",
+		"en": "Please enter API key",
+		"zh-tw": "請輸入API密鑰"
+	},
+	"lhj1fxb": {
+		"zh-cn": "请输入服务商APPID",
+		"en": "Please enter the service provider APPID",
+		"zh-tw": "請輸入服務商APPID"
+	},
+	"63dghv9": {
+		"zh-cn": "请输入服务商商户号",
+		"en": "Please enter the service provider’s merchant number",
+		"zh-tw": "請輸入服務商商戶號"
+	},
+	"otwzlv9": {
+		"zh-cn": "请输入合作者PID",
+		"en": "Please enter the collaborator PID",
+		"zh-tw": "請輸入合作者PID"
+	},
+	"5sr6zo8": {
+		"zh-cn": "请输入支付宝公钥",
+		"en": "Please enter Alipay public key",
+		"zh-tw": "請輸入支付寶公鑰"
+	},
+	"l3vs3j7": {
+		"zh-cn": "请输入应用私钥",
+		"en": "Please enter the application private key",
+		"zh-tw": "請輸入應用私鑰"
+	},
+	"jwwehs8": {
+		"zh-cn": "请输入平台商户号",
+		"en": "Please enter the platform merchant number",
+		"zh-tw": "請輸入平台商戶號"
+	},
+	"jqpbti8": {
+		"zh-cn": "请输入平台终端号",
+		"en": "Please enter the platform terminal number",
+		"zh-tw": "請輸入平台終端號"
+	},
+	"kfu05mb": {
+		"zh-cn": "收单手续费（单位：%）",
+		"en": "Acquisition handling fee (unit: %)",
+		"zh-tw": "收單手續費（單位：%）"
+	},
+	"w0b1zp9": {
+		"zh-cn": "请输入支付方式名称",
+		"en": "Please enter payment method name",
+		"zh-tw": "請輸入支付方式名稱"
+	},
+	"kb50397": {
+		"zh-cn": "请输入收款说明",
+		"en": "Please enter payment instructions",
+		"zh-tw": "請輸入收款說明"
+	},
+	"n4p6zb7": {
+		"zh-cn": "请输入付款说明",
+		"en": "Please enter payment instructions",
+		"zh-tw": "請輸入付款說明"
+	},
+	"s5orz38": {
+		"zh-cn": "订单自动取消时间",
+		"en": "Order automatic cancellation time",
+		"zh-tw": "訂單自動取消時間"
+	},
+	"fqnfu9d": {
+		"zh-cn": "请输入自动取消时间（小时）",
+		"en": "Please enter the automatic cancellation time (hours)",
+		"zh-tw": "請輸入自動取消時間（小時）"
+	},
+	"kg1cfqc": {
+		"zh-cn": "未付款订单将在指定时间 ",
+		"en": "Unpaid orders will be processed within the specified time",
+		"zh-tw": "未付款訂單將在指定時間"
+	},
+	"wuz9b09": {
+		"zh-cn": "（小时）后自动取消",
+		"en": "Automatically cancel after (hours)",
+		"zh-tw": "（小時）後自動取消"
+	},
+	"hesk2x9": {
+		"zh-cn": "请输入自动取消时间",
+		"en": "Please enter the automatic cancellation time",
+		"zh-tw": "請輸入自動取消時間"
+	},
+	"lpluuua": {
+		"zh-cn": "请输入商户RSA私钥",
+		"en": "Please enter the merchant RSA private key",
+		"zh-tw": "請輸入商戶RSA私鑰"
+	},
+	"ax42nq9": {
+		"zh-cn": "请输入sys_id",
+		"en": "Please enter sys_id",
+		"zh-tw": "請輸入sys_id"
+	},
+	"uou2s4d": {
+		"zh-cn": "请输入product_id",
+		"en": "Please enter product_id",
+		"zh-tw": "請輸入product_id"
+	},
+	"mcwmg27": {
+		"zh-cn": "请输入商户私钥",
+		"en": "Please enter the merchant private key",
+		"zh-tw": "請輸入商戶私鑰"
+	},
+	"jjhctp7": {
+		"zh-cn": "请输入汇付公钥",
+		"en": "Please enter the remittance public key",
+		"zh-tw": "請輸入匯付公鑰"
+	},
+	"2a0vgj": {
+		"zh-cn": "请输入PayPal Client ID",
+		"en": "Please enter PayPal Client ID",
+		"zh-tw": "請輸入PayPal Client ID"
+	},
+	"378zq7n": {
+		"zh-cn": "请输入PayPal Client Secret",
+		"en": "Please enter PayPal Client Secret",
+		"zh-tw": "請輸入PayPal Client Secret"
+	},
+	"ea80f86": {
+		"zh-cn": "是否沙盒环境",
+		"en": "Whether it is a sandbox environment",
+		"zh-tw": "是否沙盒環境"
+	},
+	"6utki4d": {
+		"zh-cn": "请输入webhook_id",
+		"en": "Please enter webhook_id",
+		"zh-tw": "請輸入webhook_id"
+	},
+	"goh68i6": {
+		"zh-cn": " < 返回 ",
+		"en": "< return",
+		"zh-tw": "< 返回"
+	},
+	"dwpmb88": {
+		"zh-cn": " 会员访客量: ",
+		"en": "Number of member visitors:",
+		"zh-tw": "會員訪客量:"
+	},
+	"d1n6dg8": {
+		"zh-cn": " 游客访问量: ",
+		"en": "Number of visitors:",
+		"zh-tw": "遊客訪問量:"
+	},
+	"gzlltn7": {
+		"zh-cn": " 支付人数: ",
+		"en": "Number of people paying:",
+		"zh-tw": "支付人數:"
+	},
+	"geosae7": {
+		"zh-cn": " 支付单数: ",
+		"en": "Number of payment orders:",
+		"zh-tw": "支付單數:"
+	},
+	"evevit7": {
+		"zh-cn": " 支付总价: ",
+		"en": "Total price paid:",
+		"zh-tw": "支付總價:"
+	},
+	"imo5ib6": {
+		"zh-cn": " 转化率: ",
+		"en": "Conversion rate:",
+		"zh-tw": "轉化率:"
+	},
+	"fe3ij54": {
+		"zh-cn": "监控ID",
+		"en": "Monitoring ID",
+		"zh-tw": "監控ID"
+	},
+	"ynegq95": {
+		"zh-cn": "会员访客数",
+		"en": "Number of member visitors",
+		"zh-tw": "會員訪客數"
+	},
+	"gww7au5": {
+		"zh-cn": "游客访问量",
+		"en": "visitor visits",
+		"zh-tw": "遊客訪問量"
+	},
+	"d3de0v4": {
+		"zh-cn": "支付人数",
+		"en": "Number of people paying",
+		"zh-tw": "支付人數"
+	},
+	"d3e6844": {
+		"zh-cn": "支付单数",
+		"en": "Number of payment orders",
+		"zh-tw": "支付單數"
+	},
+	"d3g8rp4": {
+		"zh-cn": "支付总价",
+		"en": "Total price paid",
+		"zh-tw": "支付總價"
+	},
+	"dlur7d4": {
+		"zh-cn": "查看订单",
+		"en": "View order",
+		"zh-tw": "查看訂單"
+	},
+	"bvnzdz7": {
+		"zh-cn": " 下载二维码 ",
+		"en": "Download QR code",
+		"zh-tw": "下載二維碼"
+	},
+	"ow62wh6": {
+		"zh-cn": "淘宝增量同步",
+		"en": "Taobao incremental synchronization",
+		"zh-tw": "淘寶增量同步"
+	},
+	"u41fdg6": {
+		"zh-cn": "请先选择商品",
+		"en": "Please select the product first",
+		"zh-tw": "請先選擇商品"
+	},
+	"l86cra6": {
+		"zh-cn": "设置管理分类",
+		"en": "Set management categories",
+		"zh-tw": "設置管理分類"
+	},
+	"1bpu0p5": {
+		"zh-cn": "SPU编号",
+		"en": "SPU number",
+		"zh-tw": "SPU編號"
+	},
+	"d8xcjf6": {
+		"zh-cn": "配置管理分类",
+		"en": "Configuration management classification",
+		"zh-tw": "配置管理分類"
+	},
+	"egsab3": {
+		"zh-cn": "已配置",
+		"en": "configured",
+		"zh-tw": "已配置"
+	},
+	"fte973": {
+		"zh-cn": "未配置",
+		"en": "Not configured",
+		"zh-tw": "未配置"
+	},
+	"aa1h2i4": {
+		"zh-cn": "上架时间",
+		"en": "Shelf time",
+		"zh-tw": "上架時間"
+	},
+	"qe9wk16": {
+		"zh-cn": "淘宝上架时间",
+		"en": "Taobao shelf time",
+		"zh-tw": "淘寶上架時間"
+	},
+	"cmnd2s5": {
+		"zh-cn": "同步商品池",
+		"en": "Synchronized product pool",
+		"zh-tw": "同步商品池"
+	},
+	"it38kj4": {
+		"zh-cn": "重推开票",
+		"en": "Re-invoicing",
+		"zh-tw": "重推開票"
+	},
+	"kku8ol5": {
+		"zh-cn": "百望云发票",
+		"en": "Baiwang cloud invoice",
+		"zh-tw": "百望雲發票"
+	},
+	"f6x5tn4": {
+		"zh-cn": "用户盐值",
+		"en": "User salt value",
+		"zh-tw": "用戶鹽值"
+	},
+	"dggpf74": {
+		"zh-cn": "机构税号",
+		"en": "Institutional Tax ID Number",
+		"zh-tw": "機構稅號"
+	},
+	"ecz93b7": {
+		"zh-cn": "实际可退运费：",
+		"en": "Actual refundable shipping costs:",
+		"zh-tw": "實際可退運費："
+	},
+	"g2ykyx4": {
+		"zh-cn": "等级编码",
+		"en": "level coding",
+		"zh-tw": "等級編碼"
+	},
+	"fh91": {
+		"zh-cn": "九",
+		"en": "nine",
+		"zh-tw": "九"
+	},
+	"gg11": {
+		"zh-cn": "十",
+		"en": "ten",
+		"zh-tw": "十"
+	},
+	"el7j2": {
+		"zh-cn": "十一",
+		"en": "eleven",
+		"zh-tw": "十一"
+	},
+	"ja7ey29": {
+		"zh-cn": "最多添加10个等级",
+		"en": "Add up to 10 levels",
+		"zh-tw": "最多添加10個等級"
+	},
+	"55pw46k": {
+		"zh-cn": "建议尺寸：（宽度640px，高度自适应）",
+		"en": "Recommended size: (width 640px, height adaptive)",
+		"zh-tw": "建議尺寸：（寬度640px，高度自適應）"
 	}
 }

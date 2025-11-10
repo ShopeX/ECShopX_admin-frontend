@@ -116,6 +116,11 @@
 <script>
 import { INDUSTRY } from './consts'
 export default {
+  provide() {
+    return {
+      refresh: () => this.$refs['paginationRef'].refresh()
+    }
+  },
   data() {
     return {
       activeTab: 'all',

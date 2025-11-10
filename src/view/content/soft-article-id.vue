@@ -42,6 +42,7 @@
 
 <script>
 export default {
+  inject: ['refresh'],
   data() {
     return {
       articleForm: {
@@ -180,12 +181,12 @@ export default {
       if (this.$route.query.id) {
         await this.$api.article.updateArticle(this.$route.query.id, params)
         this.$message.success('修改文章成功')
-        this.$parent.onActivated()
+        this.refresh()
         this.$router.go(-1)
       } else {
         await this.$api.article.createArticle(params)
         this.$message.success('添加文章成功')
-        this.$parent.onActivated()
+        this.refresh()
         this.$router.go(-1)
       }
     }

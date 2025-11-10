@@ -200,9 +200,9 @@
           <el-radio label="brand"> 指定品牌适用 </el-radio>
         </el-radio-group>
       </el-form-item>
-      <div v-if="!zdItemHidden" style="position: relative">
+      <div v-if="!zdItemHidden" class="flex gap-5">
         <SkuSelector :data="relItems" @change="getItems" />
-        <div style="position: absolute; bottom: 0px; left: 112px">
+        <div class="flex gap-5">
           <el-upload
             style="display: inline-block; height: 0"
             action=""
@@ -212,7 +212,7 @@
           >
             <el-button type="primary"> 批量上传 </el-button>
           </el-upload>
-          <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
+          <el-button type="primary" @click="uploadHandleTemplate()">
             下载模板
           </el-button>
         </div>

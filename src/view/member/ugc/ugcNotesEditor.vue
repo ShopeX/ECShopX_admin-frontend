@@ -84,7 +84,7 @@
       </el-form-item>
 
       <el-form-item label="笔记标题" prop="title">
-        <el-input v-model="ruleForm.title" maxlength="30" :show-word-limit="true" />
+        <el-input v-model="ruleForm.title" maxlength="50" :show-word-limit="true" />
       </el-form-item>
       <el-form-item label="笔记描述" prop="content">
         <el-input

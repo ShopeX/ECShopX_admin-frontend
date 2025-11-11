@@ -288,7 +288,7 @@
           </transition>
         </el-card>
         <el-card v-loading="loader" shadow="never">
-          <div slot="header" class="view-flex">
+          <div slot="header" class="flex">
             <div class="view-flex-item">商品规格</div>
             <template v-if="!isEditor">
               <span v-if="skus.length === 0" class="small mark"

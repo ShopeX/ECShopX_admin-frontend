@@ -87,15 +87,33 @@ export default {
   data() {
     return {
       refresh: true,
-      showSubMenu: false
+      showSubMenu: false,
+      mainMenus: [],
+      subMenus: []
     }
   },
   computed: {
-    systemTitle: () => {
+    activeMainMenu() {
+      return this.$route.matched[0]?.meta?.aliasName
+    },
+    systemTitle() {
+      // 如果有选中的一级菜单，返回该菜单的title
+      if (this.activeMainMenu) {
+        const activeMenu = this.mainMenus?.find(item => item.alias_name === this.activeMainMenu)
+        if (activeMenu) {
+          return activeMenu.name
+        }
+      }
+      // 否则返回默认系统标题
       return getSystemTitle()
-    }
+    },
   },
+
   mounted() {
+    this.mainMenus = this.$store.state.user.accessMenus || []
+    const [mainRoute] = this.$route.matched
+    this.subMenus =
+      this.mainMenus.find(item => item.alias_name === mainRoute?.meta?.aliasName)?.children || []
     this.getSystemSetting()
     micrApp.init()
   },

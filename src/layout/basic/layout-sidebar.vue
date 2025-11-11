@@ -105,11 +105,19 @@ export default {
     }
   },
   computed: {
-    systemTitle: () => {
-      return getSystemTitle()
-    },
     activeMainMenu() {
       return this.$route.matched[0]?.meta?.aliasName
+    },
+    systemTitle() {
+      // 如果有选中的一级菜单，返回该菜单的title
+      if (this.activeMainMenu) {
+        const activeMenu = this.mainMenus.find(item => item.alias_name === this.activeMainMenu)
+        if (activeMenu) {
+          return activeMenu.name
+        }
+      }
+      // 否则返回默认系统标题
+      return getSystemTitle()
     },
     activeSubIndex() {
       return this.$route.matched[1]?.meta?.aliasName

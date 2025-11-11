@@ -52,6 +52,9 @@ async function bootstrap() {
 
   Vue.use(VueVideoPlayer)
 
+  // 将 store 挂载到 globalThis，以便全局访问
+  globalThis.$store = store
+
   new Vue({
     router,
     store,

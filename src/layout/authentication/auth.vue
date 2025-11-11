@@ -21,7 +21,7 @@
   <div class="h-full flex w-full relative">
     <!-- 头部logo和应用名称 -->
     <div class="absolute top-0 left-0 flex items-center gap-2 px-4 py-4">
-      <SpImage :src="logo" height="30" fit="contain" />
+      <SpImage v-if="!isYD" :src="logo" height="30" fit="contain" />
     </div>
 
     <div class="absolute top-4 right-10 px-4 z-20 flex items-center gap-1">
@@ -57,7 +57,8 @@ export default {
   },
   data() {
     return {
-      currentLang: ''
+      currentLang: '',
+      isYD:process.env.VUE_APP_PLATFORM == 'yd'
     }
   },
   methods: {

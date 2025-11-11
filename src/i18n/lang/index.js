@@ -100,6 +100,26 @@
     const lang = commonLang ? commonLang : baseLang;
     // 根据当前语言设置翻译函数的语言包
     globalThis.$t.locale(globalThis.langMap[lang], 'lang');
+    // 初始化时在全局 DOM 下增加 class 类名
+    if (typeof document !== 'undefined') {
+        const htmlElement = document.documentElement;
+        // 移除所有语言相关的 class
+        htmlElement.classList.remove('lang-en', 'lang-zhcn', 'lang-zhtw');
+        // 添加当前语言的 class
+        htmlElement.classList.add(`lang-${lang}`);
+    }
     globalThis.$changeLang = (lang) => {
         globalThis.$t.locale(globalThis.langMap[lang], 'lang');
+        // 更新全局 store 的 lang 标识
+        if (globalThis.$store && globalThis.$store.commit) {
+            globalThis.$store.commit('system/updateLang', { lang });
+        }
+        // 在全局 DOM 下增加 class 类名
+        if (typeof document !== 'undefined') {
+            const htmlElement = document.documentElement;
+            // 移除所有语言相关的 class
+            htmlElement.classList.remove('lang-en', 'lang-zhcn', 'lang-zhtw');
+            // 添加当前语言的 class
+            htmlElement.classList.add(`lang-${lang}`);
+        }
     };

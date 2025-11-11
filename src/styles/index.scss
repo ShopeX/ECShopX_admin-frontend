@@ -56,8 +56,19 @@ body {
     white-space: normal;
     padding: 5px 0;
     line-height: 1.2;
-   
+   width: 100%;
   }
+
+ .sub-menu-list .el-submenu__title{
+  box-sizing: border-box;
+  span{
+    display: inline-block;
+    width: 80%;
+  }
+  margin-bottom: 15px !important;
+  padding-left:9px !important
+  }
+
   .sub-menu-list .el-menu-item{
     font-size: 12px;
     margin-bottom: 5px;

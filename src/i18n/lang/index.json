@@ -216,7 +216,7 @@
 	},
 	"av9wor4": {
 		"zh-cn": "全部商品",
-		"en": "All goods",
+		"en": "All Products",
 		"zh-tw": "全部商品"
 	},
 	"l2v02": {
@@ -726,17 +726,17 @@
 	},
 	"j5fnxf4": {
 		"zh-cn": "销售分类",
-		"en": "Sales classification",
+		"en": "Sales Category",
 		"zh-tw": "銷售分類"
 	},
 	"g2r33u4": {
 		"zh-cn": "管理分类",
-		"en": "Management classification",
+		"en": "Management Category",
 		"zh-tw": "管理分類"
 	},
 	"b449n64": {
 		"zh-cn": "商品标签",
-		"en": "Product label",
+		"en": "Tag",
 		"zh-tw": "商品標籤"
 	},
 	"hxyx2": {
@@ -2271,7 +2271,7 @@
 	},
 	"iq77af4": {
 		"zh-cn": "运费模板",
-		"en": "Freight template",
+		"en": "Freight Template",
 		"zh-tw": "運費模板"
 	},
 	"241ile6": {
@@ -3221,7 +3221,7 @@
 	},
 	"lehpg3": {
 		"zh-cn": "起订量",
-		"en": "Minimum order quantity",
+		"en": "Minimum Order Quantity",
 		"zh-tw": "起訂量"
 	},
 	"b40xt24": {
@@ -3541,7 +3541,7 @@
 	},
 	"e7wb284": {
 		"zh-cn": "添加商品",
-		"en": "Add products",
+		"en": "Add Products",
 		"zh-tw": "添加商品"
 	},
 	"byjzsd4": {
@@ -3961,27 +3961,27 @@
 	},
 	"1bmu7c5": {
 		"zh-cn": "SKU编码",
-		"en": "SKU code",
+		"en": "SKU Code",
 		"zh-tw": "SKU編碼"
 	},
 	"qknewd6": {
 		"zh-cn": "市场价（¥）",
-		"en": "Market price (¥",
+		"en": "Market Price (¥",
 		"zh-tw": "市場價（¥）"
 	},
 	"789h436": {
 		"zh-cn": "销售价（¥）",
-		"en": "Selling price (¥",
+		"en": "Sale Price (¥",
 		"zh-tw": "銷售價（¥）"
 	},
 	"c4yuhd6": {
 		"zh-cn": "成本价（¥）",
-		"en": "Cost price (¥",
+		"en": "Cost Price (¥",
 		"zh-tw": "成本價（¥）"
 	},
 	"fnrs655": {
 		"zh-cn": "是否处方药",
-		"en": "Is it a prescription drug?",
+		"en": "Prescription Required or Not",
 		"zh-tw": "是否處方藥"
 	},
 	"cg2pes4": {
@@ -4031,7 +4031,7 @@
 	},
 	"b45xmu4": {
 		"zh-cn": "商品状态",
-		"en": "Product status",
+		"en": "Status",
 		"zh-tw": "商品狀態"
 	},
 	"2ecf6i5": {
@@ -4051,12 +4051,12 @@
 	},
 	"sap54z7": {
 		"zh-cn": "按管理分类选择",
-		"en": "Select by management classification",
+		"en": "Select by management category",
 		"zh-tw": "按管理分類選擇"
 	},
 	"dxc447": {
 		"zh-cn": "按销售分类选择",
-		"en": "Select by sales category",
+		"en": "Select by Sales Category",
 		"zh-tw": "按銷售分類選擇"
 	},
 	"2j1o9z5": {
@@ -4471,12 +4471,12 @@
 	},
 	"b44fe44": {
 		"zh-cn": "商品标题",
-		"en": "Product Title",
+		"en": "Name",
 		"zh-tw": "商品標題"
 	},
 	"meylgr7": {
 		"zh-cn": "请输入商品标题",
-		"en": "Please enter the product title",
+		"en": "Please enter the product name",
 		"zh-tw": "請輸入商品標題"
 	},
 	"cl7a83": {
@@ -4501,7 +4501,7 @@
 	},
 	"cyko7y4": {
 		"zh-cn": "排序编号",
-		"en": "Sorting number",
+		"en": "Sort Number",
 		"zh-tw": "排序編號"
 	},
 	"duuh2": {
@@ -4511,7 +4511,7 @@
 	},
 	"1bq14z5": {
 		"zh-cn": "SPU编码",
-		"en": "SPU encoding",
+		"en": "SPU Code",
 		"zh-tw": "SPU編碼"
 	},
 	"c167eu4": {
@@ -4521,7 +4521,7 @@
 	},
 	"b1l2334": {
 		"zh-cn": "医药商品",
-		"en": "Pharmaceutical products",
+		"en": "Pharmaceutical Products",
 		"zh-tw": "醫藥商品"
 	},
 	"bwynb9": {
@@ -4661,7 +4661,7 @@
 	},
 	"w32lpi7": {
 		"zh-cn": "请选择销售分类",
-		"en": "Please select the sales category",
+		"en": "Please select the Sales Category",
 		"zh-tw": "請選擇銷售分類"
 	},
 	"cwjdv3": {
@@ -4696,7 +4696,7 @@
 	},
 	"uwrpz17": {
 		"zh-cn": "请选择商品状态",
-		"en": "Please select the product status",
+		"en": "Please select the status",
 		"zh-tw": "請選擇商品狀態"
 	},
 	"mf0jg77": {
@@ -6006,7 +6006,7 @@
 	},
 	"usv0d47": {
 		"zh-cn": "库存预警商品：",
-		"en": "Inventory warning items: ",
+		"en": "Low-Stock Alert: ",
 		"zh-tw": "庫存預警商品："
 	},
 	"haf03a4": {
@@ -8796,7 +8796,7 @@
 	},
 	"bqv4l36": {
 		"zh-cn": "是否处方药:",
-		"en": "Is it a prescription drug",
+		"en": "Prescription Required or Not",
 		"zh-tw": "是否處方藥:"
 	},
 	"bs0wxi6": {
@@ -9011,12 +9011,12 @@
 	},
 	"djefu3": {
 		"zh-cn": "处方药",
-		"en": "Prescription drugs",
+		"en": "Prescription Drugs",
 		"zh-tw": "處方藥"
 	},
 	"1ttci05": {
 		"zh-cn": "sku编码",
-		"en": "sku code",
+		"en": "SKU Code",
 		"zh-tw": "sku編碼"
 	},
 	"fd5qir4": {
@@ -11341,7 +11341,7 @@
 	},
 	"b1rr2s4": {
 		"zh-cn": "同步商品",
-		"en": "Synchronized products",
+		"en": "Sync Products",
 		"zh-tw": "同步商品"
 	},
 	"vlnmn89": {
@@ -12411,7 +12411,7 @@
 	},
 	"akgb645": {
 		"zh-cn": "商品状态:",
-		"en": "Product status",
+		"en": "Status",
 		"zh-tw": "商品狀態:"
 	},
 	"cycj33": {
@@ -12631,12 +12631,12 @@
 	},
 	"15jaio5": {
 		"zh-cn": "管理分类:",
-		"en": "Management Classification",
+		"en": "Management Category",
 		"zh-tw": "管理分類:"
 	},
 	"pfl60n5": {
 		"zh-cn": "销售分类:",
-		"en": "Sales category",
+		"en": "Sales Category",
 		"zh-tw": "銷售分類:"
 	},
 	"l2kqy3": {
@@ -13411,12 +13411,12 @@
 	},
 	"alr0oi5": {
 		"zh-cn": "商品标题:",
-		"en": "Product Title",
+		"en": "Name",
 		"zh-tw": "商品標題:"
 	},
 	"zdpct8b": {
 		"zh-cn": "商品标题或副标题关键词",
-		"en": "Keywords for the product title or subtitle",
+		"en": "Keywords for the product name or subtitle",
 		"zh-tw": "商品標題或副標題關鍵詞"
 	},
 	"vhnw4q5": {
@@ -13426,7 +13426,7 @@
 	},
 	"cbau7n5": {
 		"zh-cn": "运费模板:",
-		"en": "Freight template",
+		"en": "Freight Template",
 		"zh-tw": "運費模板:"
 	},
 	"eqebqb8": {
@@ -13436,32 +13436,32 @@
 	},
 	"u0g1m66": {
 		"zh-cn": "SKU编码:",
-		"en": "SKU code",
+		"en": "SKU Code",
 		"zh-tw": "SKU編碼:"
 	},
 	"rcpx9b8": {
 		"zh-cn": "请输入SKU编码",
-		"en": "Please enter the SKU code",
+		"en": "Please enter the SKU Code",
 		"zh-tw": "請輸入SKU編碼"
 	},
 	"txp2nd6": {
 		"zh-cn": "SPU编码:",
-		"en": "SPU code",
+		"en": "SPU Code",
 		"zh-tw": "SPU編碼:"
 	},
 	"rct46y8": {
 		"zh-cn": "请输入SPU编码",
-		"en": "Please enter the SPU code",
+		"en": "Please enter the SPU Code",
 		"zh-tw": "請輸入SPU編碼"
 	},
 	"apry225": {
 		"zh-cn": "商品产地:",
-		"en": "Origin of the product",
+		"en": "Origin",
 		"zh-tw": "商品產地:"
 	},
 	"alvyvs5": {
 		"zh-cn": "商品标签:",
-		"en": "Product label",
+		"en": "Tag",
 		"zh-tw": "商品標籤:"
 	},
 	"l3vuh3": {
@@ -13471,7 +13471,7 @@
 	},
 	"bnpfog4": {
 		"zh-cn": "处方药:",
-		"en": "Prescription drugs",
+		"en": "Prescription Drugs",
 		"zh-tw": "處方藥:"
 	},
 	"jgu8584": {
@@ -13481,12 +13481,12 @@
 	},
 	"xtijtk6": {
 		"zh-cn": "更改销售分类",
-		"en": "Change the sales category",
+		"en": "Sales Category",
 		"zh-tw": "更改銷售分類"
 	},
 	"y8r0gk6": {
 		"zh-cn": "更改运费模板",
-		"en": "Change the freight template",
+		"en": "Freight Template",
 		"zh-tw": "更改運費模板"
 	},
 	"he3p4x6": {
@@ -13496,22 +13496,22 @@
 	},
 	"gbyina4": {
 		"zh-cn": "统一库存",
-		"en": "Unified inventory",
+		"en": "Unified Inventory",
 		"zh-tw": "統一庫存"
 	},
 	"deuqhc4": {
 		"zh-cn": "更改状态",
-		"en": "Change the status",
+		"en": "Change Status",
 		"zh-tw": "更改狀態"
 	},
 	"hynkpp4": {
 		"zh-cn": "设为赠品",
-		"en": "Set it as a gift",
+		"en": "Set as Gift",
 		"zh-tw": "設爲贈品"
 	},
 	"bcutfh5": {
 		"zh-cn": "设为非赠品",
-		"en": "Set it as a non-complimentary item",
+		"en": "Non-Gift",
 		"zh-tw": "設爲非贈品"
 	},
 	"e4wi2": {
@@ -13546,7 +13546,7 @@
 	},
 	"o9mn7w8": {
 		"zh-cn": "上传商品到聚水潭",
-		"en": "Upload the goods to Jushuitan",
+		"en": "Upload to Jushuitan ERP",
 		"zh-tw": "上傳商品到聚水潭"
 	},
 	"odjute8": {
@@ -13736,12 +13736,12 @@
 	},
 	"txnoax6": {
 		"zh-cn": "SPU编码：",
-		"en": "SPU code",
+		"en": "SPU Code",
 		"zh-tw": "SPU編碼："
 	},
 	"d8qkp84": {
 		"zh-cn": "是否处方",
-		"en": "Is it a prescription",
+		"en": "Prescription Required or Not",
 		"zh-tw": "是否處方"
 	},
 	"bzxjxc4": {
@@ -13751,7 +13751,7 @@
 	},
 	"ewhqj16": {
 		"zh-cn": "毛利率（%)",
-		"en": "Gross profit margin (%)",
+		"en": "Gross Margin (%)",
 		"zh-tw": "毛利率（%)"
 	},
 	"bzvg8y4": {
@@ -13776,7 +13776,7 @@
 	},
 	"lx3u4e6": {
 		"zh-cn": "库存预警商品",
-		"en": "Inventory warning goods",
+		"en": "Low-Stock Alert",
 		"zh-tw": "庫存預警商品"
 	},
 	"kp3kxc8": {
@@ -15566,17 +15566,17 @@
 	},
 	"15kov45": {
 		"zh-cn": "管理分类：",
-		"en": "Management Classification",
+		"en": "Management Category",
 		"zh-tw": "管理分類："
 	},
 	"br7sba5": {
 		"zh-cn": "*商品标题",
-		"en": "Product Title",
+		"en": "Name",
 		"zh-tw": "*商品標題"
 	},
 	"jdak7l5": {
 		"zh-cn": "*运费模板",
-		"en": "Freight template",
+		"en": "Freight Template",
 		"zh-tw": "*運費模板"
 	},
 	"fwph3": {
@@ -15996,7 +15996,7 @@
 	},
 	"92z2lw5": {
 		"zh-cn": "统一库存：",
-		"en": "Unified inventory",
+		"en": "Unified Inventory",
 		"zh-tw": "統一庫存："
 	},
 	"2j83985": {
@@ -19071,7 +19071,7 @@
 	},
 	"e6g4eb6": {
 		"zh-cn": "清除所有商品",
-		"en": "Clear all goods",
+		"en": "Clear all products",
 		"zh-tw": "清除所有商品"
 	},
 	"azbwjp4": {
@@ -19091,7 +19091,7 @@
 	},
 	"adjan5d": {
 		"zh-cn": "将清除所有商品，是否继续?",
-		"en": "All goods will be cleared. Do you want to continue?",
+		"en": "All products will be cleared. Do you want to continue?",
 		"zh-tw": "將清除所有商品，是否繼續?"
 	},
 	"uz0dsd6": {
@@ -23926,7 +23926,7 @@
 	},
 	"srckdx6": {
 		"zh-cn": "商品管理分类",
-		"en": "Commodity Management Classification",
+		"en": "Commodity Management Category",
 		"zh-tw": "商品管理分類"
 	},
 	"l833o3": {
@@ -26766,7 +26766,7 @@
 	},
 	"ewgc6l6": {
 		"zh-cn": "毛利率（%）",
-		"en": "Gross profit margin (%)",
+		"en": "Gross Margin (%)",
 		"zh-tw": "毛利率（%）"
 	},
 	"vadhsw5": {
@@ -26856,7 +26856,7 @@
 	},
 	"zi1cm56": {
 		"zh-cn": "选择销售分类",
-		"en": "Select the sales category",
+		"en": "Select the Sales Category",
 		"zh-tw": "選擇銷售分類"
 	},
 	"ikzt4p4": {
@@ -28811,7 +28811,7 @@
 	},
 	"b3lhxt6": {
 		"zh-cn": "成本价(¥)",
-		"en": "Cost price (¥",
+		"en": "Cost Price (¥",
 		"zh-tw": "成本價(¥)"
 	},
 	"d29lkl5": {
@@ -28971,7 +28971,7 @@
 	},
 	"1awhzt8": {
 		"zh-cn": "当前类目商品标题",
-		"en": "Current category product title",
+		"en": "Current category product name",
 		"zh-tw": "當前類目商品標題"
 	},
 	"1avqg98": {
@@ -31186,7 +31186,7 @@
 	},
 	"3326xq8": {
 		"zh-cn": "选择商品销售分类",
-		"en": "Select the product sales category",
+		"en": "Select the product Sales Category",
 		"zh-tw": "選擇商品銷售分類"
 	},
 	"dnjsn06": {
@@ -33826,7 +33826,7 @@
 	},
 	"c5auna5": {
 		"zh-cn": " 处方药 ",
-		"en": "Prescription drugs",
+		"en": "Prescription Drugs",
 		"zh-tw": "處方藥"
 	},
 	"msvlso7": {
@@ -34056,7 +34056,7 @@
 	},
 	"4r8dps6": {
 		"zh-cn": " 更改状态 ",
-		"en": "Change the status",
+		"en": "Change Status",
 		"zh-tw": "更改狀態"
 	},
 	"apjwmh5": {
@@ -34066,7 +34066,7 @@
 	},
 	"4jjxpq6": {
 		"zh-cn": " 商品标签 ",
-		"en": "Product label",
+		"en": "Tag",
 		"zh-tw": "商品標籤"
 	},
 	"ht3vec7": {
@@ -34081,7 +34081,7 @@
 	},
 	"3x49dga": {
 		"zh-cn": " 上传商品到聚水潭 ",
-		"en": "Upload the goods to Jushuitan",
+		"en": "Upload to Jushuitan ERP",
 		"zh-tw": "上傳商品到聚水潭"
 	},
 	"ftd23": {
@@ -34091,7 +34091,7 @@
 	},
 	"dkd2zb7": {
 		"zh-cn": " SPU编码：",
-		"en": "SPU code",
+		"en": "SPU Code",
 		"zh-tw": "SPU編碼："
 	},
 	"4gnqgs6": {
@@ -34101,7 +34101,7 @@
 	},
 	"o8ez846": {
 		"zh-cn": " 统一库存：",
-		"en": "Unified inventory",
+		"en": "Unified Inventory",
 		"zh-tw": "統一庫存："
 	},
 	"gt7ccj5": {
@@ -34261,7 +34261,7 @@
 	},
 	"32l7x76": {
 		"zh-cn": " 全部商品 ",
-		"en": "All goods",
+		"en": "All Products",
 		"zh-tw": "全部商品"
 	},
 	"q7xfmc8": {
@@ -34301,17 +34301,17 @@
 	},
 	"trl3pc6": {
 		"zh-cn": " 添加商品 ",
-		"en": "Add products",
+		"en": "Add Products",
 		"zh-tw": "添加商品"
 	},
 	"fz87h48": {
 		"zh-cn": " 更改销售分类 ",
-		"en": "Change the sales category",
+		"en": "Sales Category",
 		"zh-tw": "更改銷售分類"
 	},
 	"2uxvo48": {
 		"zh-cn": " 更改运费模板 ",
-		"en": "Change the freight template",
+		"en": "Freight Template",
 		"zh-tw": "更改運費模板"
 	},
 	"u67c9t8": {
@@ -34321,17 +34321,17 @@
 	},
 	"o8dkuy6": {
 		"zh-cn": " 统一库存 ",
-		"en": "Unified inventory",
+		"en": "Unified Inventory",
 		"zh-tw": "統一庫存"
 	},
 	"3quayr6": {
 		"zh-cn": " 设为赠品 ",
-		"en": "Set it as a gift",
+		"en": "Set as Gift",
 		"zh-tw": "設爲贈品"
 	},
 	"og2d437": {
 		"zh-cn": " 设为非赠品 ",
-		"en": "Set it as a non-complimentary item",
+		"en": "Non-Gift",
 		"zh-tw": "設爲非贈品"
 	},
 	"cqnla4": {
@@ -34366,7 +34366,7 @@
 	},
 	"bjd62c5": {
 		"zh-cn": " 同步商品",
-		"en": "Synchronized products",
+		"en": "Sync Products",
 		"zh-tw": "同步商品"
 	},
 	"iukbnq9": {
@@ -36016,7 +36016,7 @@
 	},
 	"capwrh8": {
 		"zh-cn": " 清除所有商品 ",
-		"en": "Clear all goods",
+		"en": "Clear all products",
 		"zh-tw": "清除所有商品"
 	},
 	"f4nq36": {
@@ -38681,7 +38681,7 @@
 	},
 	"gaz7466": {
 		"zh-cn": " 管理分类 ",
-		"en": "Management classification",
+		"en": "Management Category",
 		"zh-tw": "管理分類"
 	},
 	"qtt46dm": {
@@ -39431,7 +39431,7 @@
 	},
 	"5tds82a": {
 		"zh-cn": "新增管理分类税率配置",
-		"en": "New management classification tax rate configuration has been added",
+		"en": "New management category tax rate configuration has been added",
 		"zh-tw": "新增管理分類稅率配置"
 	},
 	"ac2wh44": {
@@ -39651,12 +39651,12 @@
 	},
 	"v6d3o37": {
 		"zh-cn": "商品sku编码",
-		"en": "Product sku code",
+		"en": "Product SKU Code",
 		"zh-tw": "商品sku編碼"
 	},
 	"v69wqg7": {
 		"zh-cn": "商品spu编码",
-		"en": "Product spu code",
+		"en": "Product SPU Code",
 		"zh-tw": "商品spu編碼"
 	},
 	"b3zogu4": {
@@ -41241,7 +41241,7 @@
 	},
 	"x1hmiw6": {
 		"zh-cn": "医药错误信息",
-		"en": "Medical error information",
+		"en": "Pharmaceutical Error Message",
 		"zh-tw": "醫藥錯誤信息"
 	},
 	"6g3gc35": {
@@ -41816,7 +41816,7 @@
 	},
 	"d8xcjf6": {
 		"zh-cn": "配置管理分类",
-		"en": "Configuration management classification",
+		"en": "Configuration management category",
 		"zh-tw": "配置管理分類"
 	},
 	"egsab3": {

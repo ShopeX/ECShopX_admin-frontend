@@ -1835,15 +1835,16 @@ export default {
       if (this.selectionItems.length > 0) {
         exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
-      const { url:exportKey } = await this.$api.goods.exportApiFileName(exportParams)
+      // const { url:exportKey } = await this.$api.goods.exportApiFileName(exportParams)
 
-      this.$store.dispatch('setExportKeyAndTotal', {exportKey, exportTotal:0})
-      // if (status) {
-      //   this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-      //   this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
-      // } else {
-      //   this.$message.error('导出失败')
-      // }
+      // this.$store.dispatch('setExportKeyAndTotal', {exportKey, exportTotal:0})
+      const { status } = await this.$api.goods.exportItemsData(exportParams)
+      if (status) {
+        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
+      } else {
+        this.$message.error('导出失败')
+      }
     },
     async exportItemsTagData() {
       const exportParams = {

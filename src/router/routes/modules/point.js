@@ -23,7 +23,7 @@ const routes = [
     component: BasicLayout,
     meta: {
       aliasName: 'rewardsStore',
-      icon: 'app-store',
+      icon: 'funds',
       keepAlive: true,
       title: '积分商城'
     },

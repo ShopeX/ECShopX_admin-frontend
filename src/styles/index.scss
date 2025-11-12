@@ -40,6 +40,13 @@ body {
 
 // 英文语言下所有元素的 line-height 设置为 1（排除 el-tabs__item,el-pager>.number,el-menu-item）
 .lang-en{
+  .sp-form{
+    .el-form-item {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+  }
   &*:not(.el-tabs__item,.el-pager>.number,.el-menu-item,.el-submenu__title,.el-tag,.el-select-dropdown__item,.el-range-separator,.btn-linkpath,.el-input__inner,.el-input,.el-input-number * ,.el-input-number) {
     line-height: 1.2;
   }
@@ -49,29 +56,34 @@ body {
   .cell{
     line-height: 1.2;
   }
-  
- .sub-menu-list .el-menu-item,.sub-menu-list .el-submenu__title{
-    word-break: normal;
-    height: auto;
-    white-space: normal;
-    padding: 5px 0;
-    line-height: 1.2;
-   width: 100%;
-  }
-
- .sub-menu-list .el-submenu__title{
-  box-sizing: border-box;
-  span{
-    display: inline-block;
-    width: 80%;
-  }
-  margin-bottom: 15px !important;
-  padding-left:9px !important
-  }
-
-  .sub-menu-list .el-menu-item{
-    font-size: 12px;
-    margin-bottom: 5px;
+ 
+  .sub-menu-list{
+    .third-menu-item{
+      padding-left: 20px !important;
+    }
+    .el-submenu {
+      margin-bottom: 15px;
+    }
+    .el-menu-item,.el-submenu__title{
+      word-break: normal;
+      height: auto;
+      white-space: normal;
+      padding: 5px 0;
+      line-height: 1.2;
+     width: 100%;
+    }
+    .el-menu-item{
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .el-submenu__title{
+      box-sizing: border-box;
+      span{
+        display: inline-block;
+        width: 80%;
+      }
+      padding-left:9px !important
+      }
   }
   
    .attr-panel-cell {

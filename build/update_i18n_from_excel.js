@@ -29,15 +29,17 @@ function isEnglishText(text) {
 }
 
 /**
- * 建立索引：zh-cn -> [keys]，支持一个中文对应多个 key
+ * 建立索引：zh-cn -> [keys] 和 en -> [keys]，支持一个中文/英文对应多个 key
  */
 function buildIndex(data) {
     const zhCnToKeys = new Map();
+    const enToKeys = new Map();
     const keyToEntry = new Map();
     
     for (const [key, entry] of Object.entries(data)) {
         keyToEntry.set(key, entry);
         const zhCnValue = (entry['zh-cn'] || '').trim();
+        const enValue = (entry.en || '').trim();
         
         // 如果 key 本身就是中文，也加入索引
         if (!zhCnValue && isChineseText(key)) {
@@ -51,15 +53,24 @@ function buildIndex(data) {
             }
             zhCnToKeys.get(zhCnValue).push(key);
         }
+        
+        // 建立英文索引（忽略大小写和空格）
+        if (enValue && isEnglishText(enValue)) {
+            const enNormalized = enValue.toLowerCase().trim();
+            if (!enToKeys.has(enNormalized)) {
+                enToKeys.set(enNormalized, []);
+            }
+            enToKeys.get(enNormalized).push(key);
+        }
     }
     
-    return zhCnToKeys;
+    return { zhCnToKeys, enToKeys };
 }
 
 /**
- * 查找匹配的 key
+ * 通过中文查找匹配的 key
  */
-function findMatchingKeys(zhCn, zhCnToKeys, data) {
+function findMatchingKeysByZhCn(zhCn, zhCnToKeys, data) {
     const matchedKeys = [];
     
     // 首先检查 key 本身是否就是中文文本
@@ -74,6 +85,59 @@ function findMatchingKeys(zhCn, zhCnToKeys, data) {
                 matchedKeys.push(key);
             }
         }
+    }
+    
+    return matchedKeys;
+}
+
+/**
+ * 通过英文查找匹配的 key（忽略大小写和空格）
+ */
+function findMatchingKeysByEn(enText, enToKeys, data) {
+    const matchedKeys = [];
+    
+    if (!enText || !isEnglishText(enText)) {
+        return matchedKeys;
+    }
+    
+    const enNormalized = enText.toLowerCase().trim();
+    
+    // 完全匹配（忽略大小写）
+    if (enToKeys.has(enNormalized)) {
+        for (const key of enToKeys.get(enNormalized)) {
+            if (!matchedKeys.includes(key)) {
+                matchedKeys.push(key);
+            }
+        }
+    }
+    
+    // 如果完全匹配失败，尝试部分匹配（忽略大小写）
+    if (matchedKeys.length === 0) {
+        for (const [enKey, keys] of enToKeys.entries()) {
+            // 检查是否包含或包含于
+            if (enNormalized.includes(enKey) || enKey.includes(enNormalized)) {
+                for (const key of keys) {
+                    if (!matchedKeys.includes(key)) {
+                        matchedKeys.push(key);
+                    }
+                }
+            }
+        }
+    }
+    
+    return matchedKeys;
+}
+
+/**
+ * 查找匹配的 key（优先中文，如果失败则尝试英文）
+ */
+function findMatchingKeys(zhCn, oldEn, zhCnToKeys, enToKeys, data) {
+    // 首先尝试通过中文匹配
+    let matchedKeys = findMatchingKeysByZhCn(zhCn, zhCnToKeys, data);
+    
+    // 如果中文匹配失败，且原文是英文，则尝试通过英文匹配
+    if (matchedKeys.length === 0 && oldEn && isEnglishText(oldEn)) {
+        matchedKeys = findMatchingKeysByEn(oldEn, enToKeys, data);
     }
     
     return matchedKeys;
@@ -200,8 +264,9 @@ function updateJsonFromExcel(excelPath, jsonPath) {
     console.log(`当前 JSON 文件包含 ${Object.keys(data).length} 个条目\n`);
     
     // 建立索引
-    const zhCnToKeys = buildIndex(data);
-    console.log(`已建立 ${zhCnToKeys.size} 个中文文本索引\n`);
+    const { zhCnToKeys, enToKeys } = buildIndex(data);
+    console.log(`已建立 ${zhCnToKeys.size} 个中文文本索引`);
+    console.log(`已建立 ${enToKeys.size} 个英文文本索引\n`);
     
     // 统计信息
     const stats = {
@@ -277,8 +342,8 @@ function updateJsonFromExcel(excelPath, jsonPath) {
                 continue;
             }
             
-            // 查找匹配的条目
-            const matchedKeys = findMatchingKeys(zhCn, zhCnToKeys, data);
+            // 查找匹配的条目（优先中文，如果失败则尝试英文）
+            const matchedKeys = findMatchingKeys(zhCn, oldEn, zhCnToKeys, enToKeys, data);
             
             if (matchedKeys.length === 0) {
                 // 尝试查找相似的中文文本
@@ -290,7 +355,7 @@ function updateJsonFromExcel(excelPath, jsonPath) {
                     zhCn: zhCn,
                     oldEn: oldEn || '(空)',
                     targetEn: targetEn,
-                    reason: '未找到匹配的中文条目',
+                    reason: '未找到匹配的中文或英文条目',
                     similarMatches: similarKeys.slice(0, 5) // 保存前5个相似匹配
                 });
                 continue;

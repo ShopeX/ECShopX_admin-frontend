@@ -291,7 +291,7 @@
 	},
 	"lz3a13": {
 		"zh-cn": "配送中",
-		"en": "In delivery",
+		"en": "Out for Delivery",
 		"zh-tw": "配送中"
 	},
 	"egnkf3": {
@@ -301,7 +301,7 @@
 	},
 	"ehbda3": {
 		"zh-cn": "待支付",
-		"en": "To be paid",
+		"en": "Pending Payment",
 		"zh-tw": "待支付"
 	},
 	"eepbv3": {
@@ -311,7 +311,7 @@
 	},
 	"ehnue3": {
 		"zh-cn": "待收货",
-		"en": "Pending Receipt",
+		"en": "In Transit",
 		"zh-tw": "待收貨"
 	},
 	"eor5v3": {
@@ -321,7 +321,7 @@
 	},
 	"embfv3": {
 		"zh-cn": "待自提",
-		"en": "To be picked up by oneself",
+		"en": "Ready for Self Pickup",
 		"zh-tw": "待自提"
 	},
 	"e68dg3": {
@@ -336,27 +336,27 @@
 	},
 	"eh2tx3": {
 		"zh-cn": "待接单",
-		"en": "Pending orders",
+		"en": "Pending Acceptance",
 		"zh-tw": "待接單"
 	},
 	"wu38oh5": {
 		"zh-cn": "待骑士接单",
-		"en": "Wait for the rider to accept the order",
+		"en": "Pending Rider Acceptance",
 		"zh-tw": "待騎士接單"
 	},
 	"eepg63": {
 		"zh-cn": "待取货",
-		"en": "Pending collection",
+		"en": "Ready for Pickup",
 		"zh-tw": "待取貨"
 	},
 	"jv94yp4": {
 		"zh-cn": "骑士到店",
-		"en": "The knight arrives at the store.",
+		"en": "Rider at Store",
 		"zh-tw": "騎士到店"
 	},
 	"fjrqy3": {
 		"zh-cn": "未妥投",
-		"en": "Not successfully submitted",
+		"en": "Delivery Attempt Failed",
 		"zh-tw": "未妥投"
 	},
 	"ee0m03": {
@@ -506,22 +506,22 @@
 	},
 	"gxx1v24": {
 		"zh-cn": "自营订单",
-		"en": "Self-operated orders",
+		"en": "Self-operated Orders",
 		"zh-tw": "自營訂單"
 	},
 	"b5asdf4": {
 		"zh-cn": "商家订单",
-		"en": "Merchant order",
+		"en": "Merchant Orders",
 		"zh-tw": "商家訂單"
 	},
 	"vlr8lc5": {
 		"zh-cn": "供应商订单",
-		"en": "Supplier order",
+		"en": "Supplier Orders",
 		"zh-tw": "供應商訂單"
 	},
 	"qzjkuo8": {
 		"zh-cn": "自营+供应商订单",
-		"en": "Self-operated + supplier orders",
+		"en": "Self-operated + Supplier Orders",
 		"zh-tw": "自營+供應商訂單"
 	},
 	"eftvg3": {
@@ -996,7 +996,7 @@
 	},
 	"l72nr3": {
 		"zh-cn": "请选择",
-		"en": "Please select",
+		"en": "Please Select",
 		"zh-tw": "請選擇"
 	},
 	"mo17q57": {
@@ -1246,7 +1246,7 @@
 	},
 	"u1k8gh5": {
 		"zh-cn": "所属供应商",
-		"en": "Affiliated supplier",
+		"en": "Supplier",
 		"zh-tw": "所屬供應商"
 	},
 	"b47jsb4": {
@@ -1616,7 +1616,7 @@
 	},
 	"g85n2": {
 		"zh-cn": "展开",
-		"en": "Unfold",
+		"en": "Expand",
 		"zh-tw": "展開"
 	},
 	"eod62": {
@@ -3125,8 +3125,8 @@
 		"zh-tw": "打標籤"
 	},
 	"o7hv2": {
-		"zh-cn": "订单",
-		"en": "Order",
+		"zh-cn": "订单来源",
+		"en": "Order Source",
 		"zh-tw": "訂單"
 	},
 	"hymtes4": {
@@ -4106,7 +4106,7 @@
 	},
 	"ekkk43": {
 		"zh-cn": "店铺号",
-		"en": "Shop number",
+		"en": "Store Number",
 		"zh-tw": "店鋪號"
 	},
 	"cjqqab4": {
@@ -4801,12 +4801,12 @@
 	},
 	"im9oyy4": {
 		"zh-cn": "退款金额",
-		"en": "Refund amount",
+		"en": "Refund Amount",
 		"zh-tw": "退款金額"
 	},
 	"bw9c2u4": {
-		"zh-cn": "实付金额",
-		"en": "Actual payment amount",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "實付金額"
 	},
 	"dl9ajn5": {
@@ -4876,7 +4876,7 @@
 	},
 	"ewbd43": {
 		"zh-cn": "手机号",
-		"en": "Mobile phone number",
+		"en": "Phone Number",
 		"zh-tw": "手機號"
 	},
 	"aarn1l4": {
@@ -5136,12 +5136,12 @@
 	},
 	"cd0k3t4": {
 		"zh-cn": "开始时间",
-		"en": "Start time",
+		"en": "Start Date",
 		"zh-tw": "開始時間"
 	},
 	"gfi7qi4": {
 		"zh-cn": "结束时间",
-		"en": "End time",
+		"en": "End Date",
 		"zh-tw": "結束時間"
 	},
 	"tv79n36": {
@@ -5556,7 +5556,7 @@
 	},
 	"ytf6465": {
 		"zh-cn": "会员手机号",
-		"en": "Member mobile phone number",
+		"en": "Member Phone Number",
 		"zh-tw": "會員手機號"
 	},
 	"c6r76u4": {
@@ -6141,7 +6141,7 @@
 	},
 	"cs44ip4": {
 		"zh-cn": "所属店铺",
-		"en": "The affiliated store",
+		"en": "Store",
 		"zh-tw": "所屬店鋪"
 	},
 	"iekw2x5": {
@@ -6305,8 +6305,8 @@
 		"zh-tw": "津貼"
 	},
 	"b3zwdc4": {
-		"zh-cn": "商品价格",
-		"en": "Price",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "商品價格"
 	},
 	"iheptn4": {
@@ -7000,8 +7000,8 @@
 		"zh-tw": "滿足條件"
 	},
 	"pn1o2": {
-		"zh-cn": "金额",
-		"en": "Amount",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "金額"
 	},
 	"azvj8v4": {
@@ -8105,18 +8105,18 @@
 		"zh-tw": "商品："
 	},
 	"g0l62": {
-		"zh-cn": "实付",
-		"en": "Actual payment",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "實付"
 	},
 	"dtwm83": {
-		"zh-cn": "实付：",
-		"en": "Actual payment",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "實付："
 	},
 	"d3h9kv4": {
 		"zh-cn": "支付方式",
-		"en": "Payment method",
+		"en": "Payment Method",
 		"zh-tw": "支付方式"
 	},
 	"hyxqu74": {
@@ -8126,7 +8126,7 @@
 	},
 	"ixcclm4": {
 		"zh-cn": "配送方式",
-		"en": "Delivery method",
+		"en": "Shipping Method",
 		"zh-tw": "配送方式"
 	},
 	"lzfqd3": {
@@ -8521,7 +8521,7 @@
 	},
 	"c4pri3": {
 		"zh-cn": "主订单",
-		"en": "Main order",
+		"en": "Master Order",
 		"zh-tw": "主訂單"
 	},
 	"e1p373": {
@@ -8531,7 +8531,7 @@
 	},
 	"a72nl44": {
 		"zh-cn": "下单时间",
-		"en": "Order placement time",
+		"en": "Order Placed Time",
 		"zh-tw": "下單時間"
 	},
 	"qm3ye16": {
@@ -8566,12 +8566,12 @@
 	},
 	"di507i4": {
 		"zh-cn": "来源店铺",
-		"en": "Source: Store",
+		"en": "Source Store",
 		"zh-tw": "來源店鋪"
 	},
 	"hys56m4": {
 		"zh-cn": "订单状态",
-		"en": "Order status",
+		"en": "Order Status",
 		"zh-tw": "訂單狀態"
 	},
 	"huvm2": {
@@ -8651,12 +8651,12 @@
 	},
 	"d3hlvr4": {
 		"zh-cn": "支付时间",
-		"en": "Payment time",
+		"en": "Payment Time",
 		"zh-tw": "支付時間"
 	},
 	"d3p2yd4": {
-		"zh-cn": "支付金额",
-		"en": "Payment amount",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "支付金額"
 	},
 	"pfaqf7": {
@@ -8751,7 +8751,7 @@
 	},
 	"b3mx7v4": {
 		"zh-cn": "售后状态",
-		"en": "After-sales status",
+		"en": "After-sales Status",
 		"zh-tw": "售後狀態"
 	},
 	"azflcm5": {
@@ -8811,12 +8811,12 @@
 	},
 	"hymqnc4": {
 		"zh-cn": "订单分类",
-		"en": "Order classification",
+		"en": "Order Category",
 		"zh-tw": "訂單分類"
 	},
 	"7msy3i5": {
 		"zh-cn": "来源供应商",
-		"en": "Source supplier",
+		"en": "Source Supplier",
 		"zh-tw": "來源供應商"
 	},
 	"cvf9i67": {
@@ -9751,7 +9751,7 @@
 	},
 	"cp0yj74": {
 		"zh-cn": "快递公司",
-		"en": "Express delivery company",
+		"en": "Logistics Company",
 		"zh-tw": "快遞公司"
 	},
 	"whmqve7": {
@@ -10041,7 +10041,7 @@
 	},
 	"gf5d2": {
 		"zh-cn": "导购",
-		"en": "Shopping guide",
+		"en": "Shopping Guide",
 		"zh-tw": "導購"
 	},
 	"lkvt43": {
@@ -10625,8 +10625,8 @@
 		"zh-tw": "銷售額"
 	},
 	"dtcdf3": {
-		"zh-cn": "实付额",
-		"en": "Actual payment amount",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "實付額"
 	},
 	"80vxpn5": {
@@ -10845,8 +10845,8 @@
 		"zh-tw": "請輸入客戶手機號碼"
 	},
 	"bc962s5": {
-		"zh-cn": "订单来源:",
-		"en": "Order source:",
+		"zh-cn": "订单来源",
+		"en": "Order Source",
 		"zh-tw": "訂單來源:"
 	},
 	"693jok5": {
@@ -10860,13 +10860,13 @@
 		"zh-tw": "請輸入處方編號"
 	},
 	"c7gbax4": {
-		"zh-cn": "就诊人:",
-		"en": "Patient:",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "就診人:"
 	},
 	"7k83c86": {
-		"zh-cn": "请输入就诊人",
-		"en": "Please enter the patient",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "請輸入就診人"
 	},
 	"ix8vg64": {
@@ -10900,8 +10900,8 @@
 		"zh-tw": "發貨時間:"
 	},
 	"7z4uzi5": {
-		"zh-cn": "选择街道:",
-		"en": "Select a street",
+		"zh-cn": "选择街道",
+		"en": "Select Street",
 		"zh-tw": "選擇街道:"
 	},
 	"iin2635": {
@@ -10911,17 +10911,17 @@
 	},
 	"d0w9rc4": {
 		"zh-cn": "批量取消",
-		"en": "Batch cancellation",
+		"en": "Batch Cancel",
 		"zh-tw": "批量取消"
 	},
 	"fia2ub5": {
 		"zh-cn": "分配配送员",
-		"en": "Assign delivery personnel",
+		"en": "Assign Deliveryman",
 		"zh-tw": "分配配送員"
 	},
 	"b1f2o64": {
 		"zh-cn": "取消配送",
-		"en": "Cancel delivery",
+		"en": "Cancel Delivery",
 		"zh-tw": "取消配送"
 	},
 	"j1mex48": {
@@ -10936,17 +10936,17 @@
 	},
 	"fq5dol4": {
 		"zh-cn": "积分抵扣",
-		"en": "Points deduction",
+		"en": "Points Deduction",
 		"zh-tw": "積分抵扣"
 	},
 	"fxg7tf5": {
 		"zh-cn": "客户手机号",
-		"en": "Customer's mobile phone number",
+		"en": "Customer Phone Number",
 		"zh-tw": "客戶手機號"
 	},
 	"hytrc34": {
 		"zh-cn": "订单类型",
-		"en": "Order type",
+		"en": "Order Type",
 		"zh-tw": "訂單類型"
 	},
 	"ixekbj4": {
@@ -11630,8 +11630,8 @@
 		"zh-tw": "查看明細"
 	},
 	"m90k2": {
-		"zh-cn": "结算",
-		"en": "Settlement",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "結算"
 	},
 	"elo38q5": {
@@ -12000,8 +12000,8 @@
 		"zh-tw": "團長審批"
 	},
 	"i6yz2": {
-		"zh-cn": "来源",
-		"en": "Source",
+		"zh-cn": "订单来源",
+		"en": "Order Source",
 		"zh-tw": "來源"
 	},
 	"cai6u15": {
@@ -12496,7 +12496,7 @@
 	},
 	"b5t5hd4": {
 		"zh-cn": "发货状态",
-		"en": "Shipping status",
+		"en": "Shipping Status",
 		"zh-tw": "發貨狀態"
 	},
 	"fkmt13": {
@@ -14130,8 +14130,8 @@
 		"zh-tw": "用藥人是否孕婦:"
 	},
 	"w1nn4u9": {
-		"zh-cn": "用药人是否哺乳期:",
-		"en": "Is the medication patient breastfeeding?",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "用藥人是否哺乳期:"
 	},
 	"ugin8ea": {
@@ -14300,8 +14300,8 @@
 		"zh-tw": "公司地址:"
 	},
 	"hzbi2": {
-		"zh-cn": "本人",
-		"en": "I",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "本人"
 	},
 	"k0nr2": {
@@ -14406,7 +14406,7 @@
 	},
 	"efdok97": {
 		"zh-cn": "积分抵扣（¥）",
-		"en": "Points Deduction (¥",
+		"en": "Points Deduction (¥)",
 		"zh-tw": "積分抵扣（¥）"
 	},
 	"holv6f6": {
@@ -14466,7 +14466,7 @@
 	},
 	"gsxnzq4": {
 		"zh-cn": "自提地址",
-		"en": "Self-pickup address",
+		"en": "Pickup Address",
 		"zh-tw": "自提地址"
 	},
 	"cbgq5l5": {
@@ -14496,7 +14496,7 @@
 	},
 	"b5ra2c4": {
 		"zh-cn": "发货时间",
-		"en": "Delivery time",
+		"en": "Shipment Time",
 		"zh-tw": "發貨時間"
 	},
 	"ew442r4": {
@@ -15255,8 +15255,8 @@
 		"zh-tw": "店鋪名稱："
 	},
 	"bc7rqc5": {
-		"zh-cn": "订单来源：",
-		"en": "Order source:",
+		"zh-cn": "订单来源",
+		"en": "Order Source",
 		"zh-tw": "訂單來源："
 	},
 	"gpqad74": {
@@ -15431,7 +15431,7 @@
 	},
 	"cp1a894": {
 		"zh-cn": "快递单号",
-		"en": "Express delivery tracking number",
+		"en": "Logistics Tracking Number",
 		"zh-tw": "快遞單號"
 	},
 	"m899dr5": {
@@ -15636,7 +15636,7 @@
 	},
 	"b4ad634": {
 		"zh-cn": "商品货号",
-		"en": "Commodity item number",
+		"en": "SKU Code",
 		"zh-tw": "商品貨號"
 	},
 	"flzwg3": {
@@ -16705,8 +16705,8 @@
 		"zh-tw": "軟文："
 	},
 	"n31v13": {
-		"zh-cn": "页面：",
-		"en": "Page",
+		"zh-cn": "前往  页",
+		"en": "Go to Page",
 		"zh-tw": "頁面："
 	},
 	"k3jen3": {
@@ -16780,8 +16780,8 @@
 		"zh-tw": "配置"
 	},
 	"e04l2": {
-		"zh-cn": "价格",
-		"en": "Price",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "價格"
 	},
 	"lft72": {
@@ -17951,7 +17951,7 @@
 	},
 	"x9pmjl5": {
 		"zh-cn": "优惠总金额",
-		"en": "Total amount of discount",
+		"en": "Total Discount Amount",
 		"zh-tw": "優惠總金額"
 	},
 	"ginsgf6": {
@@ -18460,8 +18460,8 @@
 		"zh-tw": "適用會員"
 	},
 	"e6ox2": {
-		"zh-cn": "付费",
-		"en": "Pay",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "付費"
 	},
 	"a02w415": {
@@ -19420,8 +19420,8 @@
 		"zh-tw": "拼團庫存"
 	},
 	"fli1": {
-		"zh-cn": "件",
-		"en": "a",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "件"
 	},
 	"cukcgb4": {
@@ -20271,7 +20271,7 @@
 	},
 	"ae1ayc4": {
 		"zh-cn": "优惠金额",
-		"en": "Discount amount",
+		"en": "Discount Amount",
 		"zh-tw": "優惠金額"
 	},
 	"czr8e3": {
@@ -20661,7 +20661,7 @@
 	},
 	"hmxge3": {
 		"zh-cn": "用户名",
-		"en": "User name",
+		"en": "Username",
 		"zh-tw": "用戶名"
 	},
 	"c1jpfk5": {
@@ -22755,13 +22755,13 @@
 		"zh-tw": "請輸入身份證號"
 	},
 	"5qmfn17": {
-		"zh-cn": "就诊人手机号:",
-		"en": "Patient's mobile phone number",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "就診人手機號:"
 	},
 	"y5x85s9": {
-		"zh-cn": "请输入就诊人手机号",
-		"en": "Please enter the mobile phone number of the patient",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "請輸入就診人手機號"
 	},
 	"l4excq7": {
@@ -22786,7 +22786,7 @@
 	},
 	"bnp5li4": {
 		"zh-cn": "处方编号",
-		"en": "Prescription number",
+		"en": "Prescription Number",
 		"zh-tw": "處方編號"
 	},
 	"nn4gso6": {
@@ -28040,8 +28040,8 @@
 		"zh-tw": "您的入網環節順利完成"
 	},
 	"hnd4u1c": {
-		"zh-cn": "已提交审核，请耐心等待～",
-		"en": "It has been submitted for review. Please wait patiently",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "已提交審覈，請耐心等待～"
 	},
 	"c6z6kcf": {
@@ -28811,7 +28811,7 @@
 	},
 	"b3lhxt6": {
 		"zh-cn": "成本价(¥)",
-		"en": "Cost Price (¥",
+		"en": "Cost Price (¥)",
 		"zh-tw": "成本價(¥)"
 	},
 	"d29lkl5": {
@@ -30350,8 +30350,8 @@
 		"zh-tw": "組合商品價格"
 	},
 	"c23zp3": {
-		"zh-cn": "价格:",
-		"en": "Price",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "價格:"
 	},
 	"2pxthy7": {
@@ -32250,13 +32250,13 @@
 		"zh-tw": "無數據"
 	},
 	"eitv2": {
-		"zh-cn": "前往",
-		"en": "Go",
+		"zh-cn": "前往  页",
+		"en": "Go to Page",
 		"zh-tw": "前往"
 	},
 	"f5zd33": {
 		"zh-cn": "条/页",
-		"en": "Article/page",
+		"en": "Rows per Page",
 		"zh-tw": "條/頁"
 	},
 	"o5vr22b": {
@@ -32265,8 +32265,8 @@
 		"zh-tw": "共 {total} 條"
 	},
 	"u451": {
-		"zh-cn": "页",
-		"en": "page",
+		"zh-cn": "前往  页",
+		"en": "Go to Page",
 		"zh-tw": "頁"
 	},
 	"kulgkp9": {
@@ -32551,7 +32551,7 @@
 	},
 	"d2orsf7": {
 		"zh-cn": "现金实付（¥）",
-		"en": "Cash payment (¥",
+		"en": "Cash Payment (¥)",
 		"zh-tw": "現金實付（¥）"
 	},
 	"cx45rh5": {
@@ -32566,7 +32566,7 @@
 	},
 	"im58s54": {
 		"zh-cn": "退款积分",
-		"en": "Refund points",
+		"en": "Refunded Points",
 		"zh-tw": "退款積分"
 	},
 	"6z0sw08": {
@@ -32586,17 +32586,17 @@
 	},
 	"i50kg24": {
 		"zh-cn": "购买数量",
-		"en": "Purchase quantity",
+		"en": "Quantity",
 		"zh-tw": "購買數量"
 	},
 	"ir0wxy4": {
 		"zh-cn": "退货数量",
-		"en": "Quantity of returns",
+		"en": "Return Quantity",
 		"zh-tw": "退貨數量"
 	},
 	"22jm0l6": {
 		"zh-cn": "订单完成时间",
-		"en": "Order completion time",
+		"en": "Order Completion Time",
 		"zh-tw": "訂單完成時間"
 	},
 	"afppe54": {
@@ -33250,8 +33250,8 @@
 		"zh-tw": "保存並審覈"
 	},
 	"euf53": {
-		"zh-cn": " 付费",
-		"en": "Pay",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "付費"
 	},
 	"cx85385": {
@@ -33375,8 +33375,8 @@
 		"zh-tw": "元"
 	},
 	"eec744": {
-		"zh-cn": " 实付：",
-		"en": "Actual payment",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "實付："
 	},
 	"lul33": {
@@ -34010,8 +34010,8 @@
 		"zh-tw": "未開票訂單"
 	},
 	"ag26pe4": {
-		"zh-cn": "主订单 ",
-		"en": "Main order",
+		"zh-cn": "主订单",
+		"en": "Master Order",
 		"zh-tw": "主訂單"
 	},
 	"c3glrx4": {
@@ -34025,18 +34025,18 @@
 		"zh-tw": "批量發貨"
 	},
 	"79g0o86": {
-		"zh-cn": " 批量取消 ",
-		"en": "Batch cancellation",
+		"zh-cn": "批量取消",
+		"en": "Batch Cancel",
 		"zh-tw": "批量取消"
 	},
 	"b1zcxp7": {
-		"zh-cn": " 分配配送员 ",
-		"en": "Assign delivery personnel",
+		"zh-cn": "分配配送员",
+		"en": "Assign Deliveryman",
 		"zh-tw": "分配配送員"
 	},
 	"27uxkq6": {
-		"zh-cn": " 取消配送 ",
-		"en": "Cancel delivery",
+		"zh-cn": "取消配送",
+		"en": "Cancel Delivery",
 		"zh-tw": "取消配送"
 	},
 	"fy0tq4": {
@@ -34285,8 +34285,8 @@
 		"zh-tw": "指定品牌適用"
 	},
 	"e39m3": {
-		"zh-cn": " 件 ",
-		"en": "a",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "件"
 	},
 	"7afr9o6": {
@@ -34910,8 +34910,8 @@
 		"zh-tw": "滿足條件"
 	},
 	"mna1g4": {
-		"zh-cn": " 金额 ",
-		"en": "Amount",
+		"zh-cn": "实付金额(¥)",
+		"en": "Amount Paid (¥)",
 		"zh-tw": "金額"
 	},
 	"p0lgrg11": {
@@ -35570,8 +35570,8 @@
 		"zh-tw": "賬號信息"
 	},
 	"cttsbc4": {
-		"zh-cn": "手机号 ",
-		"en": "Mobile phone number",
+		"zh-cn": "手机号",
+		"en": "Phone Number",
 		"zh-tw": "手機號"
 	},
 	"cvduo4": {
@@ -36950,8 +36950,8 @@
 		"zh-tw": "代客預約"
 	},
 	"levzh4": {
-		"zh-cn": " 订单 ",
-		"en": "Order",
+		"zh-cn": "订单来源",
+		"en": "Order Source",
 		"zh-tw": "訂單"
 	},
 	"dght14": {
@@ -38045,8 +38045,8 @@
 		"zh-tw": "聯繫人"
 	},
 	"dbf7aw5": {
-		"zh-cn": " 手机号 ",
-		"en": "Mobile phone number",
+		"zh-cn": "手机号",
+		"en": "Phone Number",
 		"zh-tw": "手機號"
 	},
 	"vrs4dp6": {
@@ -38120,8 +38120,8 @@
 		"zh-tw": "查看更多"
 	},
 	"f6qt4b4": {
-		"zh-cn": "用户名\t",
-		"en": "User name",
+		"zh-cn": "用户名",
+		"en": "Username",
 		"zh-tw": "用戶名"
 	},
 	"mrlmwl5": {
@@ -38545,8 +38545,8 @@
 		"zh-tw": "退款成功"
 	},
 	"aveuqz5": {
-		"zh-cn": " 价格: ",
-		"en": "Price",
+		"zh-cn": "结算价",
+		"en": "Settlement Price",
 		"zh-tw": "價格:"
 	},
 	"dersh85": {
@@ -39005,8 +39005,8 @@
 		"zh-tw": "軟文："
 	},
 	"kd80qb5": {
-		"zh-cn": " 页面： ",
-		"en": "Page",
+		"zh-cn": "前往  页",
+		"en": "Go to Page",
 		"zh-tw": "頁面："
 	},
 	"hsn4m95": {
@@ -39210,8 +39210,8 @@
 		"zh-tw": "收起"
 	},
 	"ejggl4": {
-		"zh-cn": " 展开 ",
-		"en": "Unfold",
+		"zh-cn": "展开",
+		"en": "Expand",
 		"zh-tw": "展開"
 	},
 	"17fg2v8": {
@@ -39455,8 +39455,8 @@
 		"zh-tw": "如會員日關懷，指定日期會員可獲取額外積分"
 	},
 	"ik95emp": {
-		"zh-cn": "电子发票需要一定时间才能发送到您的邮箱,请耐心等待",
-		"en": "The electronic invoice will take some time to be sent to your email. Please wait patiently",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "電子發票需要一定時間才能發送到您的郵箱,請耐心等待"
 	},
 	"ac2vho4": {
@@ -40081,7 +40081,7 @@
 	},
 	"b2x14y4": {
 		"zh-cn": "发票状态",
-		"en": "Invoice status",
+		"en": "Invoice Status",
 		"zh-tw": "發票狀態"
 	},
 	"a6x9so4": {
@@ -41290,8 +41290,8 @@
 		"zh-tw": "確定要取消當前文件導出嗎?"
 	},
 	"jqbpjqk": {
-		"zh-cn": "正在导出数据,请耐心等待，不要关闭窗口！",
-		"en": "Exporting data, please wait patiently and do not close the window!",
+		"zh-cn": "就诊人",
+		"en": "Patient",
 		"zh-tw": "正在導出數據,請耐心等待，不要關閉窗口！"
 	},
 	"q2h1rgc": {
@@ -41475,8 +41475,8 @@
 		"zh-tw": "批量審核失敗，請重試"
 	},
 	"3lwv9y6": {
-		"zh-cn": " 发票订单 ",
-		"en": "Invoice order",
+		"zh-cn": "发票订单",
+		"en": "Invoice Order",
 		"zh-tw": "發票訂單"
 	},
 	"ppe0zh5": {

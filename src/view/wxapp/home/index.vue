@@ -55,7 +55,6 @@
         </div>
         <div class="section-white mini-setting">
           <el-button
-            type="text"
             style="margin-right: 10px"
             @click="
               () => {
@@ -65,7 +64,7 @@
           >
             <i class="iconfont icon-cog" /> 小程序配置
           </el-button>
-          <el-button type="text" @click="handleShowTabConfig">
+          <el-button @click="handleShowTabConfig">
             <i class="iconfont icon-cog" /> 小程序导航配置
           </el-button>
         </div>
@@ -80,7 +79,7 @@
             }"
             @click="addTemplate"
           >
-            <div class="template-wrap">
+            <div class="template-wrap flex-col items-center justify-center flex">
               <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
               <div class="add-text">添加模板</div>
             </div>

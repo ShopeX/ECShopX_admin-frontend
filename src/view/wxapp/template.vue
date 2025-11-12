@@ -35,7 +35,7 @@
         :xl="4"
       >
         <div class="template-item">
-          <div class="template-wrap">
+          <div class="template-wrap items-center flex-col flex">
             <div class="template-img">
               <img
                 v-if="item.template_name === 'yykmendian'"
@@ -201,6 +201,7 @@ export default {
   }
   .template-wrap {
     display: flex;
+    align-items: center;
     flex-direction: column;
     position: absolute;
     height: 100%;

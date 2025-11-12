@@ -36,7 +36,7 @@
 	},
 	"c1zlc3": {
 		"zh-cn": "优惠券",
-		"en": "Coupon",
+		"en": "Coupons",
 		"zh-tw": "優惠券"
 	},
 	"bzwkj3": {
@@ -186,22 +186,22 @@
 	},
 	"qylb2": {
 		"zh-cn": "首页",
-		"en": "Home Page",
+		"en": "Homepage",
 		"zh-tw": "首頁"
 	},
 	"l8nwq3": {
 		"zh-cn": "购物车",
-		"en": "Shopping cart",
+		"en": "Cart",
 		"zh-tw": "購物車"
 	},
 	"emut2": {
 		"zh-cn": "分类",
-		"en": "Category",
+		"en": "Categories",
 		"zh-tw": "分類"
 	},
 	"hbwz2": {
 		"zh-cn": "我的",
-		"en": "Mine",
+		"en": "My Account",
 		"zh-tw": "我的"
 	},
 	"oyd42": {
@@ -231,17 +231,17 @@
 	},
 	"meu01y5": {
 		"zh-cn": "前台可销售",
-		"en": "Available for sale at the front desk",
+		"en": "Display and Available for Sales",
 		"zh-tw": "前臺可銷售"
 	},
 	"mfygnl5": {
 		"zh-cn": "前台不展示",
-		"en": "The front desk does not display",
+		"en": "Hide from Front Desk",
 		"zh-tw": "前臺不展示"
 	},
 	"mfuo7t5": {
 		"zh-cn": "前台仅展示",
-		"en": "The front desk only displays",
+		"en": "Not for Sale",
 		"zh-tw": "前臺僅展示"
 	},
 	"a7er004": {
@@ -311,7 +311,7 @@
 	},
 	"ehnue3": {
 		"zh-cn": "待收货",
-		"en": "In Transit",
+		"en": "DELIVERING",
 		"zh-tw": "待收貨"
 	},
 	"eor5v3": {
@@ -716,7 +716,7 @@
 	},
 	"eywr2": {
 		"zh-cn": "商品",
-		"en": "Products",
+		"en": "Product Name",
 		"zh-tw": "商品"
 	},
 	"gwn72": {
@@ -726,7 +726,7 @@
 	},
 	"j5fnxf4": {
 		"zh-cn": "销售分类",
-		"en": "Sales Category",
+		"en": "​Sales Category",
 		"zh-tw": "銷售分類"
 	},
 	"g2r33u4": {
@@ -736,7 +736,7 @@
 	},
 	"b449n64": {
 		"zh-cn": "商品标签",
-		"en": "Product Tags",
+		"en": "Tag",
 		"zh-tw": "商品標籤"
 	},
 	"hxyx2": {
@@ -756,7 +756,7 @@
 	},
 	"e4k5914": {
 		"zh-cn": "活动报名",
-		"en": "​Event Registration",
+		"en": "Event Sign-up",
 		"zh-tw": "活動報名"
 	},
 	"avctg54": {
@@ -1291,7 +1291,7 @@
 	},
 	"m8lft3": {
 		"zh-cn": "销售价",
-		"en": "Selling price",
+		"en": "Sale Price​",
 		"zh-tw": "銷售價"
 	},
 	"ev2aj3": {
@@ -1506,7 +1506,7 @@
 	},
 	"ff9l2": {
 		"zh-cn": "图片",
-		"en": "Images",
+		"en": "Image",
 		"zh-tw": "圖片"
 	},
 	"5c65iy9": {
@@ -1866,7 +1866,7 @@
 	},
 	"cjqdxi4": {
 		"zh-cn": "店铺名称",
-		"en": "Shop name",
+		"en": "Store Name",
 		"zh-tw": "店鋪名稱"
 	},
 	"uznajn9": {
@@ -1921,7 +1921,7 @@
 	},
 	"jed0z3": {
 		"zh-cn": "联系人",
-		"en": "Contact person",
+		"en": "Contact Person",
 		"zh-tw": "聯繫人"
 	},
 	"fb4g2": {
@@ -2211,7 +2211,7 @@
 	},
 	"lckeu3": {
 		"zh-cn": "负责人",
-		"en": "Person in charge",
+		"en": "Person in Charge",
 		"zh-tw": "負責人"
 	},
 	"kkyi645": {
@@ -2241,7 +2241,7 @@
 	},
 	"avj59v4": {
 		"zh-cn": "全部订单",
-		"en": "All orders",
+		"en": "All Orders",
 		"zh-tw": "全部訂單"
 	},
 	"hywfki4": {
@@ -2906,7 +2906,7 @@
 	},
 	"je02b14": {
 		"zh-cn": "限时特惠",
-		"en": "Limited-time special offer",
+		"en": "Limited Time Offer",
 		"zh-tw": "限時特惠"
 	},
 	"chvw63": {
@@ -3056,7 +3056,7 @@
 	},
 	"ac4j244": {
 		"zh-cn": "会员等级",
-		"en": "Membership level",
+		"en": "Membership Level",
 		"zh-tw": "會員等級"
 	},
 	"ajcxc64": {
@@ -3566,7 +3566,7 @@
 	},
 	"lz4hw3": {
 		"zh-cn": "配送员",
-		"en": "Delivery person",
+		"en": "Delivery Person",
 		"zh-tw": "配送員"
 	},
 	"cjqe2m4": {
@@ -3961,12 +3961,12 @@
 	},
 	"1bmu7c5": {
 		"zh-cn": "SKU编码",
-		"en": "SKU Code",
+		"en": "SKU code",
 		"zh-tw": "SKU編碼"
 	},
 	"qknewd6": {
 		"zh-cn": "市场价（¥）",
-		"en": "Market Price (¥",
+		"en": "Market Price (¥)",
 		"zh-tw": "市場價（¥）"
 	},
 	"789h436": {
@@ -4031,7 +4031,7 @@
 	},
 	"b45xmu4": {
 		"zh-cn": "商品状态",
-		"en": "Status",
+		"en": "Product Status",
 		"zh-tw": "商品狀態"
 	},
 	"2ecf6i5": {
@@ -4501,7 +4501,7 @@
 	},
 	"cyko7y4": {
 		"zh-cn": "排序编号",
-		"en": "Sort Number​",
+		"en": "Sort Number",
 		"zh-tw": "排序編號"
 	},
 	"duuh2": {
@@ -4511,7 +4511,7 @@
 	},
 	"1bq14z5": {
 		"zh-cn": "SPU编码",
-		"en": "SPU Code",
+		"en": "SPU code",
 		"zh-tw": "SPU編碼"
 	},
 	"c167eu4": {
@@ -4636,7 +4636,7 @@
 	},
 	"afv8kk4": {
 		"zh-cn": "供应状态",
-		"en": "Supply status",
+		"en": "Supply Status",
 		"zh-tw": "供應狀態"
 	},
 	"eqsf2": {
@@ -5036,7 +5036,7 @@
 	},
 	"gzxu0l4": {
 		"zh-cn": "营业执照",
-		"en": "Business license",
+		"en": "Business License",
 		"zh-tw": "營業執照"
 	},
 	"bzvb1o4": {
@@ -5056,7 +5056,7 @@
 	},
 	"bzqlgz4": {
 		"zh-cn": "客服电话",
-		"en": "Customer service phone number",
+		"en": "Customer Service Hotline",
 		"zh-tw": "客服電話"
 	},
 	"msovhde": {
@@ -5076,7 +5076,7 @@
 	},
 	"d7zqou4": {
 		"zh-cn": "收款银行",
-		"en": "Receiving bank",
+		"en": "Receiving Bank",
 		"zh-tw": "收款銀行"
 	},
 	"cx6emj4": {
@@ -5726,7 +5726,7 @@
 	},
 	"e5fv2": {
 		"zh-cn": "修改",
-		"en": "Modify",
+		"en": "Edit",
 		"zh-tw": "修改"
 	},
 	"h4sv2": {
@@ -6501,12 +6501,12 @@
 	},
 	"fkny0s4": {
 		"zh-cn": "登陆账号",
-		"en": "Log in to the account",
+		"en": "Login Account",
 		"zh-tw": "登陸賬號"
 	},
 	"fcm8nf4": {
 		"zh-cn": "登录账号",
-		"en": "Log in to the account",
+		"en": "Login Account",
 		"zh-tw": "登錄賬號"
 	},
 	"nbgqgv9": {
@@ -6976,7 +6976,7 @@
 	},
 	"bzsx1e4": {
 		"zh-cn": "审核拒绝",
-		"en": "Review rejection",
+		"en": "Rejected",
 		"zh-tw": "審覈拒絕"
 	},
 	"b41bic4": {
@@ -7766,7 +7766,7 @@
 	},
 	"ey742": {
 		"zh-cn": "售后",
-		"en": "After-sales service",
+		"en": "AFTERSALES",
 		"zh-tw": "售後"
 	},
 	"exun2": {
@@ -8741,7 +8741,7 @@
 	},
 	"u6ml097": {
 		"zh-cn": "请填写售后单号",
-		"en": "Please fill in the after-sales order number",
+		"en": "Please enter the After-sales Order No.",
 		"zh-tw": "請填寫售後單號"
 	},
 	"b0to295": {
@@ -8771,7 +8771,7 @@
 	},
 	"1bmn325": {
 		"zh-cn": "SKU编号",
-		"en": "SKU number",
+		"en": "SKU Code",
 		"zh-tw": "SKU編號"
 	},
 	"njl71k6": {
@@ -8801,12 +8801,12 @@
 	},
 	"bs0wxi6": {
 		"zh-cn": "售后提醒内容",
-		"en": "After-sales reminder content",
+		"en": "After-sales Reminder",
 		"zh-tw": "售後提醒內容"
 	},
 	"cvwl13": {
 		"zh-cn": "售后单",
-		"en": "After-sales order",
+		"en": "After-sales Order",
 		"zh-tw": "售後單"
 	},
 	"hymqnc4": {
@@ -8816,7 +8816,7 @@
 	},
 	"7msy3i5": {
 		"zh-cn": "来源供应商",
-		"en": "Source Supplier",
+		"en": "Supplier",
 		"zh-tw": "來源供應商"
 	},
 	"cvf9i67": {
@@ -8846,7 +8846,7 @@
 	},
 	"b3ojdc4": {
 		"zh-cn": "售后类型",
-		"en": "After-sales service type",
+		"en": "After-sales Type",
 		"zh-tw": "售後類型"
 	},
 	"c8fk33": {
@@ -9196,7 +9196,7 @@
 	},
 	"arqle64": {
 		"zh-cn": "到店退货",
-		"en": "Return in store",
+		"en": "In-store Return",
 		"zh-tw": "到店退貨"
 	},
 	"d0osu55": {
@@ -10126,7 +10126,7 @@
 	},
 	"daeffv4": {
 		"zh-cn": "日期范围",
-		"en": "Date range",
+		"en": "Date Range",
 		"zh-tw": "日期範圍"
 	},
 	"kqzxq45": {
@@ -10860,13 +10860,13 @@
 		"zh-tw": "請輸入處方編號"
 	},
 	"c7gbax4": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "就诊人:",
+		"en": "Patient:",
 		"zh-tw": "就診人:"
 	},
 	"7k83c86": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "请输入就诊人",
+		"en": "Please enter the patient",
 		"zh-tw": "請輸入就診人"
 	},
 	"ix8vg64": {
@@ -13611,7 +13611,7 @@
 	},
 	"t6bruz6": {
 		"zh-cn": "更改商品状态",
-		"en": "Change the status of the product",
+		"en": "Change Product Status",
 		"zh-tw": "更改商品狀態"
 	},
 	"c4l0v3": {
@@ -13746,7 +13746,7 @@
 	},
 	"bzxjxc4": {
 		"zh-cn": "审核结果",
-		"en": "Review result",
+		"en": "Review Result",
 		"zh-tw": "審覈結果"
 	},
 	"ewhqj16": {
@@ -13756,7 +13756,7 @@
 	},
 	"bzvg8y4": {
 		"zh-cn": "审核状态",
-		"en": "Review status",
+		"en": "Review Status",
 		"zh-tw": "審覈狀態"
 	},
 	"ng2o0i5": {
@@ -13766,7 +13766,7 @@
 	},
 	"devbay4": {
 		"zh-cn": "更新时间",
-		"en": "Update time",
+		"en": "Updated Time",
 		"zh-tw": "更新時間"
 	},
 	"ego673": {
@@ -14130,8 +14130,8 @@
 		"zh-tw": "用藥人是否孕婦:"
 	},
 	"w1nn4u9": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "用药人是否哺乳期:",
+		"en": "Is the medication patient breastfeeding?",
 		"zh-tw": "用藥人是否哺乳期:"
 	},
 	"ugin8ea": {
@@ -14496,7 +14496,7 @@
 	},
 	"b5ra2c4": {
 		"zh-cn": "发货时间",
-		"en": "Shipment Time",
+		"en": "Shipping Time​",
 		"zh-tw": "發貨時間"
 	},
 	"ew442r4": {
@@ -15641,7 +15641,7 @@
 	},
 	"flzwg3": {
 		"zh-cn": "条形码",
-		"en": "Barcode",
+		"en": "Barcode​",
 		"zh-tw": "條形碼"
 	},
 	"fq21y44": {
@@ -15656,7 +15656,7 @@
 	},
 	"kon463": {
 		"zh-cn": "规格图",
-		"en": "Specification drawing",
+		"en": "Specification Images",
 		"zh-tw": "規格圖"
 	},
 	"i5uijs4": {
@@ -17916,7 +17916,7 @@
 	},
 	"bztktx4": {
 		"zh-cn": "审核时间",
-		"en": "Review time",
+		"en": "Review Time",
 		"zh-tw": "審覈時間"
 	},
 	"iohl804": {
@@ -22755,13 +22755,13 @@
 		"zh-tw": "請輸入身份證號"
 	},
 	"5qmfn17": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "就诊人手机号:",
+		"en": "Patient's mobile phone number",
 		"zh-tw": "就診人手機號:"
 	},
 	"y5x85s9": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "请输入就诊人手机号",
+		"en": "Please enter the mobile phone number of the patient",
 		"zh-tw": "請輸入就診人手機號"
 	},
 	"l4excq7": {
@@ -23356,12 +23356,12 @@
 	},
 	"cyqv7b4": {
 		"zh-cn": "推广分润",
-		"en": "Promotion revenue sharing",
+		"en": "Promotion Commission",
 		"zh-tw": "推廣分潤"
 	},
 	"cvue934": {
 		"zh-cn": "拉新分润",
-		"en": "New user acquisition revenue sharing",
+		"en": "Referral Commission",
 		"zh-tw": "拉新分潤"
 	},
 	"at1ckv4": {
@@ -23531,32 +23531,32 @@
 	},
 	"sykoe16": {
 		"zh-cn": "自动审批同意",
-		"en": "Automatic approval and consent",
+		"en": "Auto-approval",
 		"zh-tw": "自動審批同意"
 	},
 	"uhsjcrh": {
 		"zh-cn": "未发货订单申请退款是否自动审批同意",
-		"en": "Will the refund application for unshipped orders be automatically approved",
+		"en": "Auto-approve Unshipped Refunds",
 		"zh-tw": "未發貨訂單申請退款是否自動審批同意"
 	},
 	"buism3": {
 		"zh-cn": "不启用",
-		"en": "Not enabled",
+		"en": "Disabled",
 		"zh-tw": "不啓用"
 	},
 	"je304413": {
 		"zh-cn": "启用后，请前往店铺管理中设置到店退货信息，消费者申请退货退款时可选择到店退货。",
-		"en": "After activation, please go to the store management to set up the in-store return information. When consumers apply for a return or refund, they can choose to return the goods in-store.",
+		"en": "Once enabled, please set in-store return options in Store Management module. Customers will then be able to choose in-store return when applying for a return.",
 		"zh-tw": "啓用後，請前往店鋪管理中設置到店退貨信息，消費者申請退貨退款時可選擇到店退貨。"
 	},
 	"r4496d9": {
 		"zh-cn": "退货退款时可退运费",
-		"en": "The shipping fee can be refunded when returning goods and getting a refund",
+		"en": "Refund Shipping Fee",
 		"zh-tw": "退貨退款時可退運費"
 	},
 	"kgdm4dr": {
 		"zh-cn": "启用后，请前往店铺管理中设置退货退款时消费者可退运费。",
-		"en": "After activation, please go to the store management to set up the option for consumers to refund the shipping fee when returning goods and getting a refund.",
+		"en": "Once enabled, please set if the shipping fee can be refunded upon return in Store Management module.",
 		"zh-tw": "啓用後，請前往店鋪管理中設置退貨退款時消費者可退運費。"
 	},
 	"bxm6h3": {
@@ -26626,17 +26626,17 @@
 	},
 	"gldtyu5": {
 		"zh-cn": "审核供应商",
-		"en": "Review suppliers",
+		"en": "Review Supplier",
 		"zh-tw": "審覈供應商"
 	},
 	"ggmtn25": {
 		"zh-cn": "客服二维码",
-		"en": "Customer service QR code",
+		"en": "Customer Service QR Code",
 		"zh-tw": "客服二維碼"
 	},
 	"d7y4ih4": {
 		"zh-cn": "收款账号",
-		"en": "Receiving account number",
+		"en": "Recipient Account No.",
 		"zh-tw": "收款賬號"
 	},
 	"vsjc9j7": {
@@ -26736,12 +26736,12 @@
 	},
 	"egovan6": {
 		"zh-cn": "供应商品ID",
-		"en": "Supply Commodity ID",
+		"en": "Supplier Product ID",
 		"zh-tw": "供應商品ID"
 	},
 	"3po83x6": {
 		"zh-cn": "平台商品ID",
-		"en": "Platform product ID",
+		"en": "Product ID",
 		"zh-tw": "平臺商品ID"
 	},
 	"aqef1e4": {
@@ -26826,7 +26826,7 @@
 	},
 	"at3kcw4": {
 		"zh-cn": "分润类型",
-		"en": "Profit-sharing type",
+		"en": "Profit Sharing Type",
 		"zh-tw": "分潤類型"
 	},
 	"rs982": {
@@ -27106,7 +27106,7 @@
 	},
 	"fq31bz4": {
 		"zh-cn": "积分商城",
-		"en": "Points Mall",
+		"en": "Rewards Mall",
 		"zh-tw": "積分商城"
 	},
 	"csqw2d4": {
@@ -28040,8 +28040,8 @@
 		"zh-tw": "您的入網環節順利完成"
 	},
 	"hnd4u1c": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "已提交审核，请耐心等待～",
+		"en": "It has been submitted for review. Please wait patiently",
 		"zh-tw": "已提交審覈，請耐心等待～"
 	},
 	"c6z6kcf": {
@@ -28911,7 +28911,7 @@
 	},
 	"b3hioy4": {
 		"zh-cn": "售后单号",
-		"en": "After-sales order number",
+		"en": "After-sales Order No.",
 		"zh-tw": "售後單號"
 	},
 	"dzon964": {
@@ -32965,8 +32965,8 @@
 		"zh-tw": "內"
 	},
 	"avb2ds5": {
-		"zh-cn": " 优惠券 ",
-		"en": "Coupon",
+		"zh-cn": "优惠券",
+		"en": "Coupons",
 		"zh-tw": "優惠券"
 	},
 	"nlwrma6": {
@@ -33190,8 +33190,8 @@
 		"zh-tw": "基礎信息"
 	},
 	"jk7yf06": {
-		"zh-cn": " 会员等级 ",
-		"en": "Membership level",
+		"zh-cn": "会员等级",
+		"en": "Membership Level",
 		"zh-tw": "會員等級"
 	},
 	"7h5xle6": {
@@ -33605,8 +33605,8 @@
 		"zh-tw": "退款類型:"
 	},
 	"dfvq84": {
-		"zh-cn": " 售后 ",
-		"en": "After-sales service",
+		"zh-cn": "售后",
+		"en": "AFTERSALES",
 		"zh-tw": "售後"
 	},
 	"dfkzl4": {
@@ -33680,8 +33680,8 @@
 		"zh-tw": "商家處理申請說明:"
 	},
 	"8wqj9m8": {
-		"zh-cn": " 售后提醒内容 ",
-		"en": "After-sales reminder content",
+		"zh-cn": "售后提醒内容",
+		"en": "After-sales Reminder",
 		"zh-tw": "售後提醒內容"
 	},
 	"b0utb15": {
@@ -34066,7 +34066,7 @@
 	},
 	"4jjxpq6": {
 		"zh-cn": "商品标签",
-		"en": "Product Tags",
+		"en": "Tag",
 		"zh-tw": "商品標籤"
 	},
 	"ht3vec7": {
@@ -34416,7 +34416,7 @@
 	},
 	"da59z3": {
 		"zh-cn": "图片",
-		"en": "Images",
+		"en": "Image",
 		"zh-tw": "圖片"
 	},
 	"99iynda": {
@@ -34445,8 +34445,8 @@
 		"zh-tw": "審覈駁回"
 	},
 	"ekg7gx6": {
-		"zh-cn": "前台不展示 ",
-		"en": "The front desk does not display",
+		"zh-cn": "前台不展示",
+		"en": "Hide from Front Desk",
 		"zh-tw": "前臺不展示"
 	},
 	"on7m3v7": {
@@ -34885,18 +34885,18 @@
 		"zh-tw": "等待審覈"
 	},
 	"vts2ym6": {
-		"zh-cn": " 审核拒绝 ",
-		"en": "Review rejection",
+		"zh-cn": "审核拒绝",
+		"en": "Rejected",
 		"zh-tw": "審覈拒絕"
 	},
 	"bzssl67": {
-		"zh-cn": " 前台可销售 ",
-		"en": "Available for sale at the front desk",
+		"zh-cn": "前台可销售",
+		"en": "Display and Available for Sales",
 		"zh-tw": "前臺可銷售"
 	},
 	"cyn37z7": {
-		"zh-cn": " 前台不展示 ",
-		"en": "The front desk does not display",
+		"zh-cn": "前台不展示",
+		"en": "Hide from Front Desk",
 		"zh-tw": "前臺不展示"
 	},
 	"nmf48g6": {
@@ -35550,8 +35550,8 @@
 		"zh-tw": "證照信息"
 	},
 	"hhj9055": {
-		"zh-cn": " 营业执照",
-		"en": "Business license",
+		"zh-cn": "营业执照",
+		"en": "Business License",
 		"zh-tw": "營業執照"
 	},
 	"f3idpw9": {
@@ -36756,7 +36756,7 @@
 	},
 	"dukuv4": {
 		"zh-cn": "图片",
-		"en": "Images",
+		"en": "Image",
 		"zh-tw": "圖片"
 	},
 	"evooh4": {
@@ -36956,7 +36956,7 @@
 	},
 	"dght14": {
 		"zh-cn": "商品",
-		"en": "Products",
+		"en": "Product Name",
 		"zh-tw": "商品"
 	},
 	"p4c4efd": {
@@ -38035,13 +38035,13 @@
 		"zh-tw": "添加供應商"
 	},
 	"d1xfyo7": {
-		"zh-cn": " 供应商名称 ",
+		"zh-cn": "供应商名称",
 		"en": "Supplier Name",
 		"zh-tw": "供應商名稱"
 	},
 	"h6ymul5": {
-		"zh-cn": " 联系人 ",
-		"en": "Contact person",
+		"zh-cn": "联系人",
+		"en": "Contact Person",
 		"zh-tw": "聯繫人"
 	},
 	"dbf7aw5": {
@@ -38050,28 +38050,28 @@
 		"zh-tw": "手機號"
 	},
 	"vrs4dp6": {
-		"zh-cn": " 客服电话 ",
-		"en": "Customer service phone number",
+		"zh-cn": "客服电话",
+		"en": "Customer Service Hotline",
 		"zh-tw": "客服電話"
 	},
 	"q5bonp6": {
-		"zh-cn": " 营业执照 ",
-		"en": "Business license",
+		"zh-cn": "营业执照",
+		"en": "Business License",
 		"zh-tw": "營業執照"
 	},
 	"ef85n27": {
-		"zh-cn": " 客服二维码 ",
-		"en": "Customer service QR code",
+		"zh-cn": "客服二维码",
+		"en": "Customer Service QR Code",
 		"zh-tw": "客服二維碼"
 	},
 	"15gftq6": {
-		"zh-cn": " 收款银行 ",
-		"en": "Receiving bank",
+		"zh-cn": "收款银行",
+		"en": "Receiving Bank",
 		"zh-tw": "收款銀行"
 	},
 	"16ujax6": {
-		"zh-cn": " 收款账号 ",
-		"en": "Receiving account number",
+		"zh-cn": "收款账号",
+		"en": "Recipient Account No.",
 		"zh-tw": "收款賬號"
 	},
 	"lwra3": {
@@ -39070,8 +39070,8 @@
 		"zh-tw": "秒殺活動"
 	},
 	"n2iln16": {
-		"zh-cn": " 限时特惠 ",
-		"en": "Limited-time special offer",
+		"zh-cn": "限时特惠",
+		"en": "Limited Time Offer",
 		"zh-tw": "限時特惠"
 	},
 	"vctlwh5": {
@@ -39455,8 +39455,8 @@
 		"zh-tw": "如會員日關懷，指定日期會員可獲取額外積分"
 	},
 	"ik95emp": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "电子发票需要一定时间才能发送到您的邮箱,请耐心等待",
+		"en": "The electronic invoice will take some time to be sent to your email. Please wait patiently",
 		"zh-tw": "電子發票需要一定時間才能發送到您的郵箱,請耐心等待"
 	},
 	"ac2vho4": {
@@ -40181,17 +40181,17 @@
 	},
 	"cv4egp4": {
 		"zh-cn": "我的拼团",
-		"en": "My group buying",
+		"en": "My Group Buying",
 		"zh-tw": "我的拼團"
 	},
 	"cv51d84": {
 		"zh-cn": "我的收藏",
-		"en": "My collection",
+		"en": "My Favorites",
 		"zh-tw": "我的收藏"
 	},
 	"bd9llh4": {
 		"zh-cn": "地址管理",
-		"en": "Address management",
+		"en": "Address Management",
 		"zh-tw": "地址管理"
 	},
 	"fwot3h4": {
@@ -40226,7 +40226,7 @@
 	},
 	"pb9w9x8": {
 		"zh-cn": "我的在线商城订单",
-		"en": "My online mall order",
+		"en": "My Orders",
 		"zh-tw": "我的在線商城訂單"
 	},
 	"drfudj4": {
@@ -40241,12 +40241,12 @@
 	},
 	"edo6j3": {
 		"zh-cn": "待付款",
-		"en": "Pending payment",
+		"en": "ORDERED",
 		"zh-tw": "待付款"
 	},
 	"envnc3": {
 		"zh-cn": "待评价",
-		"en": "To be evaluated",
+		"en": "FINISHED",
 		"zh-tw": "待評價"
 	},
 	"j4pnqf7": {
@@ -41290,8 +41290,8 @@
 		"zh-tw": "確定要取消當前文件導出嗎?"
 	},
 	"jqbpjqk": {
-		"zh-cn": "就诊人",
-		"en": "Patient",
+		"zh-cn": "正在导出数据,请耐心等待，不要关闭窗口！",
+		"en": "Exporting data, please wait patiently and do not close the window!",
 		"zh-tw": "正在導出數據,請耐心等待，不要關閉窗口！"
 	},
 	"q2h1rgc": {
@@ -41425,8 +41425,8 @@
 		"zh-tw": "請填寫商品名稱"
 	},
 	"70n5x06": {
-		"zh-cn": " 批量退款 ",
-		"en": "Batch refund",
+		"zh-cn": "批量退款",
+		"en": "Batch Refund",
 		"zh-tw": "批量退款"
 	},
 	"ibelp2a": {
@@ -41441,7 +41441,7 @@
 	},
 	"bv8iyo4": {
 		"zh-cn": "子单商品",
-		"en": "Sub-item",
+		"en": "Sub-order Products",
 		"zh-tw": "子單商品"
 	},
 	"i57v864": {

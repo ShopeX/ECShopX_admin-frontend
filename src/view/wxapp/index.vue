@@ -26,7 +26,7 @@
     <el-row v-if="$route.path.indexOf('templ') === -1" :gutter="20">
       <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
         <div class="template-item add-btn" @click="chooseTemp">
-          <div class="template-wrap add-btn">
+          <div class="template-wrap items-center flex-col flex add-btn">
             <i class="iconfont icon-weixin" />
             <div>添加小程序模板</div>
           </div>
@@ -47,7 +47,7 @@
             <div class="iconfont icon-times" @click="closeWxcode(index)" />
             <img :src="item.wxaCodeImage" alt="">
           </div>
-          <div class="template-wrap">
+          <div class="template-wrap items-center flex-col flex" >
             <div class="template-img">
               <img
                 v-if="item.template_name === 'yykmembership'"
@@ -231,6 +231,7 @@ export default {
   .template-wrap {
     display: flex;
     flex-direction: column;
+    align-items: center;
     position: absolute;
     height: 100%;
     left: 0;

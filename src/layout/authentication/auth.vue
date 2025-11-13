@@ -22,7 +22,7 @@
     <!-- 头部logo和应用名称 -->
 
     <div
-      class="w-[480px] mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      class="w-[530px] mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     >
       <div class="mb-4 flex items-center justify-end">
         <SpLanguage>

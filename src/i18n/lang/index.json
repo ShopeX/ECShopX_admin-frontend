@@ -20661,7 +20661,7 @@
 	},
 	"hmxge3": {
 		"zh-cn": "用户名",
-		"en": "User name",
+		"en": "Username",
 		"zh-tw": "用戶名"
 	},
 	"c1jpfk5": {
@@ -41906,7 +41906,12 @@
 	},
 	"l2pgx3": {
 		"zh-cn": "请登录",
-		"en": "Please log in",
+		"en": "Welcome, Please Log in",
 		"zh-tw": "請登錄"
+	},
+	"i5bxls4": {
+		"zh-cn": "请登录1",
+		"en": "",
+		"zh-tw": ""
 	}
 }

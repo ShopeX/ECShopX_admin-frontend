@@ -18,7 +18,7 @@
 +----------------------------------------------------------------------
 -->
 <template>
-  <div class="bg-white px-10 py-12 rounded-[16px]">
+  <div class="bg-white px-20 py-16 shadow-lg rounded-[16px]">
     <!-- <slot></slot> -->
     <router-view v-slot="{ Component, route }">
       <Transition>
@@ -36,4 +36,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .page-login {
+    .bg-white {
+      box-shadow: 0 0 30px 20px rgba(0, 0, 0, .2);
+    }
+    ::v-deep .el-form-item__label {
+      font-weight: 500;
+    }
+  } 
+</style>

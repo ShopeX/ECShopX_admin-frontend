@@ -18,10 +18,10 @@
 +----------------------------------------------------------------------
 -->
 <template>
-  <div class="bg-white relative flex flex-col justify-center">
+  <div class="page-login bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="140" />
-      <div class="text-[18px] mt-8 text-[#333]">请登录</div>
+      <img src="/images/logo.png" alt="logo" width="220" />
+      <div class="text-[28px] font-helvca mt-8 text-[#333] ">请登录</div>
     </div>
 
     <div class="mt-8">
@@ -31,7 +31,7 @@
     <div class="mt-8 text-right">
       <el-button
         round
-        class="h-[40px] rounded-[16px] !bg-black !text-white"
+        class="h-[50px] !bg-black !text-white"
         :loading="loading"
         @click="handleLogin"
       >
@@ -166,4 +166,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .page-login {
+    ::v-deep .el-button {
+      padding-left: 30px;
+      padding-right: 30px;
+      border-radius: 50px;
+      font-size: 18px;
+    }
+    ::v-deep .el-input {
+      border-radius: 0;
+      border: 1px solid #333;
+      input {
+        border: none;
+        border-radius: none;
+      }
+    }
+    .font-helvca {
+      font-family: helvitca;
+    }
+  }
+</style>

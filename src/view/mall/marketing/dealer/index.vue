@@ -116,7 +116,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { setDealerStatus, resertPassword } from '@/api/marketing'
 import AddModal from './AddModal.vue'
 import moment from 'moment'

@@ -61,7 +61,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 export default {
   data() {
     return {

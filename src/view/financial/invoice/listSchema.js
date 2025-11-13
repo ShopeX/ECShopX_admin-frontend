@@ -16,7 +16,7 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import { debounce } from 'lodash-es'
 import { bindThisForFormSchema } from '@/utils/schemaHelper'

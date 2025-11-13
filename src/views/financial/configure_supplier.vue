@@ -71,7 +71,7 @@
 
 <script>
 import SettlementCycle from './components/SettlementCycle.vue'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import SpSelectSupplier from "../../components/sp-select-supplier/index";
 export default {
   name: '',

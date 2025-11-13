@@ -431,7 +431,7 @@ import { listVipGrade } from '@/api/cardticket'
 import { getGradeList } from '@/api/membercard'
 import richTextEditor from '@/components/function/richTextEditor'
 import EnterpriseDialog from './components/enterpriseDialog'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import DistributorSelect from '@/components/storeListSelect'
 import draggable from 'vuedraggable'
 

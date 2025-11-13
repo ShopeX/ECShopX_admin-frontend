@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import _map from 'lodash/map'
 import moment from 'moment'
 import {

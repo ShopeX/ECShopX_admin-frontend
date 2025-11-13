@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {

@@ -31,7 +31,7 @@
 
 <script>
 import moment from 'moment'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { LayoutHeader } from '@/layout/basic'
 import DEFAULT_CONFIG from '@/config'
 

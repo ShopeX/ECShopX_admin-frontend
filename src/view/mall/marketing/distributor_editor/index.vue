@@ -130,7 +130,7 @@
   </div>
 </template>
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { IS_DISTRIBUTOR, getRegionNameById } from '@/utils'
 import district from '@/common/district.json'
 import DadaForm from './components/DadaForm'

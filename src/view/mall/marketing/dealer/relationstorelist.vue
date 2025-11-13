@@ -59,7 +59,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import AddShipModal from '@/view/mall/marketing/component/AddShipModal'
 export default {
   components: { AddShipModal },

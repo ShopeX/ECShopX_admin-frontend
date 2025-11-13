@@ -70,7 +70,7 @@
 <script>
 import { setCommodityAudit, setMerchantsState } from '@/api/mall/marketing'
 import { PICKER_DATE_OPTIONS } from '@/consts'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 export default {
   data() {

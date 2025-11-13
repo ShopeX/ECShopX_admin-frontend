@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 export default {
   name: 'DaoDianZiti',
   data() {

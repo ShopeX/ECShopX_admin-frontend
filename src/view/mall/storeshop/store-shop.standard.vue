@@ -155,7 +155,7 @@
 <script>
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { getFileBlob } from '@/api/common'
 import skuFinder from './comps/skuFinder'
 import { mapGetters } from 'vuex'

@@ -16,7 +16,7 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { Divider, Message, MessageBox } from 'element-ui'
 export default (vm) => {
   const formatDate = (timestamp) => {

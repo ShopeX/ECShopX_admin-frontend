@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { createRegForm, updateRegForm, deleteRegForm } from '@/api/member'
 import { useForm } from '@/composables'
 

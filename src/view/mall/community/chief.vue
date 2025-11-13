@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 export default {

@@ -55,7 +55,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import invitationCode from './comps/invitationCode'
 export default {
   components: {

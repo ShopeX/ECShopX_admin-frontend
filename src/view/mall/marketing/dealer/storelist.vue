@@ -92,7 +92,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
 
 export default {

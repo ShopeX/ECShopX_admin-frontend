@@ -48,7 +48,7 @@
 import { SALES_STATUS } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 export default {
   name: 'PickerGoods',
   extends: BasePicker,

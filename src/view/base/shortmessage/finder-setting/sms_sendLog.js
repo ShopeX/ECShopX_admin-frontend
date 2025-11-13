@@ -16,7 +16,7 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 export default (vm) => {
   const formatDate = (timestamp) => {
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000

@@ -17,7 +17,7 @@
 // +----------------------------------------------------------------------
 
 import { bindThisForFormSchema } from '@/utils/schemaHelper'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { debounce } from 'lodash-es'
 import moment from 'moment'
 

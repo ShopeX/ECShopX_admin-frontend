@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import Pages from '@/utils/pages'
 import { VALIDATE_TYPES } from './consts'
 

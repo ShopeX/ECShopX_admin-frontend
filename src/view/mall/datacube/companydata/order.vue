@@ -90,7 +90,7 @@
 <script>
 import Pages from '@/utils/pages'
 import moment from 'moment'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { DualAxes } from '@antv/g2plot'
 export default {
   data() {

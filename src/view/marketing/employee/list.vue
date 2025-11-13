@@ -108,7 +108,7 @@
 <script>
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import Pages from '@/utils/pages'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { IS_DISTRIBUTOR } from '@/utils'
 import moment from 'moment'
 export default {

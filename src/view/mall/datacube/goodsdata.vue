@@ -72,7 +72,7 @@
   </SpPage>
 </template>
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import Pages from '@/utils/pages'
 import { VERSION_IN_PURCHASE } from '@/utils'

@@ -115,7 +115,7 @@
 
 <script>
 import { PICKER_DATE_OPTIONS } from '@/consts'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import daijiesuan from '@/assets/daijiesuan.png'
 import yijiesuan from '@/assets/yijiesuan.png'

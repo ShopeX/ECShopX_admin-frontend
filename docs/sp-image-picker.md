@@ -22,8 +22,8 @@ export default {
 ### 3. 在模板中使用
 ```vue
 <template>
-  <SpImagePicker 
-    v-model="imageUrl" 
+  <SpImagePicker
+    v-model="imageUrl"
     :max="1"
     size="small"
   />
@@ -60,7 +60,7 @@ export default {
 ## 尺寸规格
 
 - **small**: 64px × 64px
-- **normal**: 80px × 80px  
+- **normal**: 80px × 80px
 - **large**: 100px × 100px
 
 ## 使用示例
@@ -69,8 +69,8 @@ export default {
 ```vue
 <template>
   <div>
-    <SpImagePicker 
-      v-model="singleImage" 
+    <SpImagePicker
+      v-model="singleImage"
       :max="1"
       size="normal"
     />
@@ -92,8 +92,8 @@ export default {
 ```vue
 <template>
   <div>
-    <SpImagePicker 
-      v-model="multipleImages" 
+    <SpImagePicker
+      v-model="multipleImages"
       :max="5"
       size="small"
       :drag="true"
@@ -123,8 +123,8 @@ formList: [
     component: ({ key }, value) => {
       return (
         <div>
-          <SpImagePicker 
-            v-model={value[key]} 
+          <SpImagePicker
+            v-model={value[key]}
             max={9}
             size="small"
             drag
@@ -148,7 +148,7 @@ formList: [
 
 ## 注意事项
 
-1. 组件依赖 `@shopex/finder` 的图片选择器
+1. 组件依赖 `@shopex-ui/finder` 的图片选择器
 2. 需要配置相应的图片上传接口
 3. 图片数据格式需要与后端接口保持一致
-4. 建议在生产环境中添加图片格式和大小限制 
+4. 建议在生产环境中添加图片格式和大小限制

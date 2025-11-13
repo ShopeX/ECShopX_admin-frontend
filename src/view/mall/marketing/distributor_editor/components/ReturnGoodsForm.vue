@@ -109,7 +109,7 @@
 
 <script>
 import district from '@/common/district.json'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 export default {
   inject: ['content'],
   data() {

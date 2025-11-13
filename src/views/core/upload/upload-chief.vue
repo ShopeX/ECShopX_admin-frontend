@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { downloadFile } from '@/utils'
 import { getUploadLists, exportUploadErrorFile, exportUploadTemplate } from '../../../api/common'
 

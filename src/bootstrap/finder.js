@@ -16,7 +16,7 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-import { initFinder } from '@shopex/finder'
+import { initFinder } from '@shopex-ui/finder'
 import { requestClient } from '@/api/request'
 
 function install(Vue) {

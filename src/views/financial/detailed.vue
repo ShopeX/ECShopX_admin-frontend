@@ -66,7 +66,7 @@
 
 <script>
 import { PICKER_DATE_OPTIONS, PAY_TYPE } from '@/consts'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import { IS_SUPPLIER } from '@/utils'
 export default {

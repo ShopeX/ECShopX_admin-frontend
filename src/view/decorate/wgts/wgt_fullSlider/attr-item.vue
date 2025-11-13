@@ -214,7 +214,7 @@ import CompButton from '../../comps/comp-button'
 import CompPickerLink from '../../comps/comp-pickerLink'
 import SliderDialog from './sliderDialog.vue'
 import { getImageAttribute, getVideoAttribute } from './utils'
-import { useDialog } from '@shopex/finder'
+import { useDialog } from '@shopex-ui/finder'
 
 export default {
   name: 'AttrItem',

@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'

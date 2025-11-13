@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import district from '@/common/district.json'
 import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN, IS_DISTRIBUTOR } from '@/utils'
 export default {

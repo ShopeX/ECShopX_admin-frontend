@@ -189,7 +189,7 @@
 <script>
 import { Message } from 'element-ui'
 import { regActivityRecordinfo, registrationReview, regActivityGet } from '@/api/selfhelpform'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 import { getGradeList } from '@/api/membercard'
 import { listVipGrade } from '@/api/cardticket'
 

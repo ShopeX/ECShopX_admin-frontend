@@ -17,7 +17,7 @@
 // +----------------------------------------------------------------------
 
 import { bindThisForFormSchema } from '@/utils/schemaHelper'
-import { createSetting } from '@shopex/finder'
+import { createSetting } from '@shopex-ui/finder'
 
 export const formList = (vm) =>
   bindThisForFormSchema(

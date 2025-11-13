@@ -828,7 +828,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: row => {
-              const isShow = IS_SUPPLIER() && row.audit_status != 'processing' && row.audit_status != 'approved' && row.approve_status != 'onsale'
+              const isShow = IS_SUPPLIER() && !(row.audit_status == 'processing' || row.audit_status == 'approved' || row.approve_status == 'onsale')
               return isShow
             },
             action: {

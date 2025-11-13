@@ -879,7 +879,7 @@ export default {
               const isShow =
                 IS_ADMIN() ||
                 IS_DISTRIBUTOR() ||
-                (IS_SUPPLIER() && row.audit_status != 'processing' && row.audit_status != 'approved' && row.approve_status != 'onsale')
+                (IS_SUPPLIER() && !(row.audit_status == 'processing' || row.audit_status == 'approved' || row.approve_status == 'onsale'))
               return isShow
             },
             action: {

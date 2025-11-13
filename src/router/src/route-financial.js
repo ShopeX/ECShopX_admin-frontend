@@ -149,7 +149,7 @@ export default {
     },
     {
       path: 'invoice/invoiceTax',
-      name: `发票配置`,
+      name: `开票税率`,
       component: () => import('@/view/financial/invoice/invoiceTax')
     },
     {

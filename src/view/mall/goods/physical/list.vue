@@ -879,7 +879,7 @@ export default {
               const isShow =
                 IS_ADMIN() ||
                 IS_DISTRIBUTOR() ||
-                (IS_SUPPLIER() && !(row.audit_status == 'processing' || row.audit_status == 'approved' || row.is_market == 1))
+                (IS_SUPPLIER() && row.is_market == 0 && row.audit_status != 'processing') // 供应商端：不可售&非审核中状态可删除
               return isShow
             },
             action: {

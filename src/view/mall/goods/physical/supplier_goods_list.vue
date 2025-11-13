@@ -828,7 +828,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: row => {
-              const isShow = IS_SUPPLIER() && !(row.audit_status == 'processing' || row.audit_status == 'approved' || row.is_market == 1)
+              const isShow = IS_SUPPLIER() && row.is_market == 0 && row.audit_status != 'processing' // 供应商端：不可售&非审核中状态可删除
               return isShow
             },
             action: {

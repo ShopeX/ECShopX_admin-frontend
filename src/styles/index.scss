@@ -40,6 +40,11 @@ body {
 
 // 英文语言下所有元素的 line-height 设置为 1（排除 el-tabs__item,el-pager>.number,el-menu-item）
 .lang-en{
+  .shop-left{
+    .option-item{
+      margin-right: 10px;
+    }
+  }
   .sp-form{
     .el-form-item {
       padding-left: 5px;
@@ -50,10 +55,10 @@ body {
   &*:not(.el-tabs__item,.el-pager>.number,.el-menu-item,.el-submenu__title,.el-tag,.el-select-dropdown__item,.el-range-separator,.btn-linkpath,.el-input__inner,.el-input,.el-input-number * ,.el-input-number) {
     line-height: 1.2;
   }
-   .el-table__cell .cell,.lang-en .el-dialog__body{
+   .el-table__cell .cell, .el-dialog__body{
     word-break: normal !important;
   } 
-  .cell{
+  .el-table__cell .cell{
     line-height: 1.2;
   }
  

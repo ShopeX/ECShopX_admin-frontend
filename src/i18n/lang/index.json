@@ -196,7 +196,7 @@
 	},
 	"emut2": {
 		"zh-cn": "分类",
-		"en": "Categories",
+		"en": "Category",
 		"zh-tw": "分類"
 	},
 	"hbwz2": {
@@ -726,7 +726,7 @@
 	},
 	"j5fnxf4": {
 		"zh-cn": "销售分类",
-		"en": "​Sales Category",
+		"en": "Sales Category",
 		"zh-tw": "銷售分類"
 	},
 	"g2r33u4": {
@@ -1291,7 +1291,7 @@
 	},
 	"m8lft3": {
 		"zh-cn": "销售价",
-		"en": "Sale Price​",
+		"en": "Sale Price",
 		"zh-tw": "銷售價"
 	},
 	"ev2aj3": {
@@ -3961,7 +3961,7 @@
 	},
 	"1bmu7c5": {
 		"zh-cn": "SKU编码",
-		"en": "SKU code",
+		"en": "SKU Code",
 		"zh-tw": "SKU編碼"
 	},
 	"qknewd6": {
@@ -4471,7 +4471,7 @@
 	},
 	"b44fe44": {
 		"zh-cn": "商品标题",
-		"en": "Name",
+		"en": "Product Name",
 		"zh-tw": "商品標題"
 	},
 	"meylgr7": {
@@ -4511,7 +4511,7 @@
 	},
 	"1bq14z5": {
 		"zh-cn": "SPU编码",
-		"en": "SPU code",
+		"en": "SPU Code",
 		"zh-tw": "SPU編碼"
 	},
 	"c167eu4": {
@@ -4651,7 +4651,7 @@
 	},
 	"oig12": {
 		"zh-cn": "赠品",
-		"en": "Free gift",
+		"en": "Gift",
 		"zh-tw": "贈品"
 	},
 	"d5w499": {
@@ -5481,12 +5481,12 @@
 	},
 	"w8vqkk6": {
 		"zh-cn": "处理完成时间",
-		"en": "Process Completion Time",
+		"en": "Processed Time",
 		"zh-tw": "處理完成時間"
 	},
 	"bpqivh4": {
 		"zh-cn": "处理状态",
-		"en": "Process Status",
+		"en": "Status",
 		"zh-tw": "處理狀態"
 	},
 	"fy7x7i4": {
@@ -10766,12 +10766,12 @@
 	},
 	"a6fdb94": {
 		"zh-cn": "上传文件",
-		"en": "Upload File",
+		"en": "Upload Files",
 		"zh-tw": "上傳文件"
 	},
 	"a6ftzo4": {
 		"zh-cn": "上传时间",
-		"en": "Uploaded Time",
+		"en": "Upload Time",
 		"zh-tw": "上傳時間"
 	},
 	"d4zx3r4": {
@@ -10796,7 +10796,7 @@
 	},
 	"udjz637": {
 		"zh-cn": "上传实体类商品",
-		"en": "Upload physical goods",
+		"en": "Upload Physical Products",
 		"zh-tw": "上傳實體類商品"
 	},
 	"hs6m2": {
@@ -11581,7 +11581,7 @@
 	},
 	"afwdcp4": {
 		"zh-cn": "下载模版",
-		"en": "Download Template",
+		"en": "Download Templates",
 		"zh-tw": "下載模版"
 	},
 	"cx8ui3": {
@@ -11966,7 +11966,7 @@
 	},
 	"soekme8": {
 		"zh-cn": "上传内购活动商品",
-		"en": "Upload the in-app purchase event items",
+		"en": "Upload Employee Purchase Products",
 		"zh-tw": "上傳內購活動商品"
 	},
 	"8tncla8": {
@@ -14496,7 +14496,7 @@
 	},
 	"b5ra2c4": {
 		"zh-cn": "发货时间",
-		"en": "Shipping Time​",
+		"en": "Shipping Date",
 		"zh-tw": "發貨時間"
 	},
 	"ew442r4": {
@@ -15641,7 +15641,7 @@
 	},
 	"flzwg3": {
 		"zh-cn": "条形码",
-		"en": "Barcode​",
+		"en": "Barcode",
 		"zh-tw": "條形碼"
 	},
 	"fq21y44": {
@@ -32986,7 +32986,7 @@
 	},
 	"gb8vax6": {
 		"zh-cn": "下载模版",
-		"en": "Download Template",
+		"en": "Download Templates",
 		"zh-tw": "下載模版"
 	},
 	"cowk0a5": {
@@ -34720,8 +34720,8 @@
 		"zh-tw": "件，給予"
 	},
 	"loben4": {
-		"zh-cn": " 赠品 ",
-		"en": "Free gift",
+		"zh-cn": "赠品",
+		"en": "Gift",
 		"zh-tw": "贈品"
 	},
 	"to04ti6": {
@@ -39376,7 +39376,7 @@
 	},
 	"jkx6f26": {
 		"zh-cn": "上传淘宝链接",
-		"en": "Upload the Taobao link",
+		"en": "Upload Taobao Link",
 		"zh-tw": "上傳淘寶鏈接"
 	},
 	"yfnfuv8": {

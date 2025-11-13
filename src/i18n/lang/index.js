@@ -19,6 +19,8 @@
 
     // 导入国际化JSON文件
     import langJSON from './index.json'
+    // 导入语言映射对象
+    import { langMap as langAttrMap } from '../index.js'
     (function () {
     // 定义翻译函数
     let $t = function (key, val, nameSpace) {
@@ -100,13 +102,13 @@
     const lang = commonLang ? commonLang : baseLang;
     // 根据当前语言设置翻译函数的语言包
     globalThis.$t.locale(globalThis.langMap[lang], 'lang');
-    // 初始化时在全局 DOM 下增加 class 类名
+    // 初始化时在 HTML 根节点设置 lang 属性
     if (typeof document !== 'undefined') {
         const htmlElement = document.documentElement;
-        // 移除所有语言相关的 class
-        htmlElement.classList.remove('lang-en', 'lang-zhcn', 'lang-zhtw');
-        // 添加当前语言的 class
-        htmlElement.classList.add(`lang-${lang}`);
+        // 获取当前语言对应的 lang 属性值
+        const langAttr = langAttrMap[lang] || langAttrMap.zhcn;
+        // 设置 HTML lang 属性
+        htmlElement.setAttribute('lang', langAttr);
     }
     globalThis.$changeLang = (lang) => {
         globalThis.$t.locale(globalThis.langMap[lang], 'lang');
@@ -114,12 +116,12 @@
         if (globalThis.$store && globalThis.$store.commit) {
             globalThis.$store.commit('system/updateLang', { lang });
         }
-        // 在全局 DOM 下增加 class 类名
+        // 在 HTML 根节点设置 lang 属性
         if (typeof document !== 'undefined') {
             const htmlElement = document.documentElement;
-            // 移除所有语言相关的 class
-            htmlElement.classList.remove('lang-en', 'lang-zhcn', 'lang-zhtw');
-            // 添加当前语言的 class
-            htmlElement.classList.add(`lang-${lang}`);
+            // 获取当前语言对应的 lang 属性值
+            const langAttr = langAttrMap[lang] || langAttrMap.zhcn;
+            // 设置 HTML lang 属性
+            htmlElement.setAttribute('lang', langAttr);
         }
     };

@@ -1,0 +1,82 @@
+// +----------------------------------------------------------------------
+// | ECShopX open source E-commerce
+// | ECShopX 开源商城系统 
+// +----------------------------------------------------------------------
+// | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
+// +----------------------------------------------------------------------
+// | Corporate Website:  https://www.shopex.cn 
+// +----------------------------------------------------------------------
+// | Licensed under the Apache License, Version 2.0
+// | http://www.apache.org/licenses/LICENSE-2.0
+// +----------------------------------------------------------------------
+// | The removal of shopeX copyright information without authorization is prohibited.
+// | 未经授权不可去除shopeX商派相关版权
+// +----------------------------------------------------------------------
+// | Author: shopeX Team <mkt@shopex.cn>
+// | Contact: 400-821-3106
+// +----------------------------------------------------------------------
+
+// 英文语言下所有元素的 line-height 设置为 1（排除 el-tabs__item,el-pager>.number,el-menu-item）
+html[lang="en-CN"] {
+  .shop-left{
+    .option-item{
+      margin-right: 10px;
+    }
+  }
+  .sp-form{
+    .el-form-item {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+  }
+  *:not(.el-tabs__item,.el-pager>.number,.el-menu-item,.el-submenu__title,.el-tag,.el-select-dropdown__item,.el-range-separator,.btn-linkpath,.el-input__inner,.el-input,.el-input-number * ,.el-input-number) {
+    line-height: 1.2;
+  }
+   .el-table__cell .cell, .el-dialog__body{
+    word-break: normal !important;
+  } 
+  .el-table__cell .cell{
+    line-height: 1.2;
+  }
+ 
+  .sub-menu-list{
+    .third-menu-item{
+      padding-left: 20px !important;
+    }
+    .el-submenu {
+      margin-bottom: 15px;
+    }
+    .el-menu-item,.el-submenu__title{
+      word-break: normal;
+      height: auto;
+      white-space: normal;
+      padding: 5px 0;
+      line-height: 1.2;
+     width: 100%;
+    }
+    .el-menu-item{
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .el-submenu__title{
+      box-sizing: border-box;
+      span{
+        display: inline-block;
+        width: 80%;
+      }
+      padding-left:9px !important
+      }
+  }
+  
+   .attr-panel-cell {
+    display: block !important;
+    padding-bottom: 10px;
+  }
+ .cell-label{
+    line-height: 1.2 !important;
+    padding-bottom: 5px;
+    width: auto !important;
+  }
+}
+

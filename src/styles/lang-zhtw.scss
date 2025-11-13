@@ -16,29 +16,8 @@
 // | Contact: 400-821-3106
 // +----------------------------------------------------------------------
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@import './tokens-default.scss';
-@import './element-ui.scss';
-@import './common.scss';
-
-// 导入语言样式文件
-@import './lang-en.scss';
-@import './lang-zhcn.scss';
-@import './lang-zhtw.scss';
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  color: #666;
-  font-size: 14px;
+// 繁体中文语言样式
+html[lang="zh-TW"] {
+  // 可以在这里添加繁体中文特定的样式
 }
 
-#app {
-  height: 100%;
-  width: 100%;
-}

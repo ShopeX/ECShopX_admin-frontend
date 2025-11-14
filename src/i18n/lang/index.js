@@ -1,23 +1,5 @@
-// +----------------------------------------------------------------------
-// | ECShopX open source E-commerce
-// | ECShopX 开源商城系统 
-// +----------------------------------------------------------------------
-// | Copyright (c) 2003-2025 ShopeX,Inc.All rights reserved.
-// +----------------------------------------------------------------------
-// | Corporate Website:  https://www.shopex.cn 
-// +----------------------------------------------------------------------
-// | Licensed under the Apache License, Version 2.0
-// | http://www.apache.org/licenses/LICENSE-2.0
-// +----------------------------------------------------------------------
-// | The removal of shopeX copyright information without authorization is prohibited.
-// | 未经授权不可去除shopeX商派相关版权
-// +----------------------------------------------------------------------
-// | Author: shopeX Team <mkt@shopex.cn>
-// | Contact: 400-821-3106
-// +----------------------------------------------------------------------
 
-
-    // 导入国际化JSON文件
+    // 导入国际化JSON文件（合并模式）
     import langJSON from './index.json'
     (function () {
     // 定义翻译函数
@@ -61,7 +43,7 @@
     globalThis.$t = globalThis.$t || $t;
     // 将简单翻译函数挂载到globalThis对象上
     globalThis.$$t = $$t;
-    // 定义从JSON文件中获取指定键的语言对象的方法
+    // 定义从JSON文件中获取指定键的语言对象的方法（合并模式）
     globalThis._getJSONKey = function (key, insertJSONObj = undefined) {
         // 获取JSON对象
         const JSONObj = insertJSONObj;
@@ -88,18 +70,19 @@
     const isFunction = (fn) => {
         return typeof fn === 'function';
     };
-
-    const withStorageLang = isFunction && globalThis && globalThis.localStorage &&
+    
+    const withStorageLang = isFunction && globalThis && globalThis.localStorage && 
     isFunction(globalThis.localStorage.getItem) && globalThis.localStorage.getItem('lang');
-    const withStorageCommonLang = isFunction && globalThis && globalThis.localStorage &&
+    const withStorageCommonLang = isFunction && globalThis && globalThis.localStorage && 
     isFunction(globalThis.localStorage.getItem) && globalThis.localStorage.getItem('');
     // 从本地存储中获取通用语言，如果不存在则使用空字符串
     const commonLang = withStorageCommonLang ? globalThis.localStorage.getItem('') : '';
     // 从本地存储中获取当前语言，如果不存在则使用源语言
-    const baseLang = withStorageLang ? globalThis.localStorage.getItem('lang') : process.env.VUE_APP_DEFAULT_LANG;
+    const baseLang = withStorageLang ? globalThis.localStorage.getItem('lang') : 'zhcn';
     const lang = commonLang ? commonLang : baseLang;
     // 根据当前语言设置翻译函数的语言包
     globalThis.$t.locale(globalThis.langMap[lang], 'lang');
     globalThis.$changeLang = (lang) => {
         globalThis.$t.locale(globalThis.langMap[lang], 'lang');
     };
+  

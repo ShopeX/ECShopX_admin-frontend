@@ -1,4 +1,4 @@
-# <p align="center">Admin Frontend</p>
+<h1 align="center">Admin Frontend</h1>
 <p align="center">Demo | Document</p>
 
 # Getting started

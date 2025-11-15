@@ -93,6 +93,7 @@ import { getBasePath, IS_DISTRIBUTOR } from '@/utils'
 import DEFAULT_USER from '@/assets/images/default-user.png'
 import i18n from '@/i18n'
 import UserInfo from './components/user-info.vue'
+import SYSTEM_CONFIG from '@/config'
 import ChangePassword from './components/change-password.vue'
 import config from '../../../package.json'
 
@@ -100,7 +101,8 @@ export default {
   name: 'LayoutHeader',
   data() {
     return {
-      systemInfo: []
+      systemInfo: [],
+      currentLang: ''
     }
   },
   computed: {
@@ -125,7 +127,8 @@ export default {
       { label: 'REDIS版本', value: res.redis_version },
       // { label: 'API域名', value: res.app_url },
       { label: '存储驱动', value: res.disk_driver },
-      { label: 'Lumen框架', value: res.lumen_version }
+      { label: 'Lumen框架', value: res.lumen_version },
+      { label: '产品名称', value: SYSTEM_CONFIG.productName }
     ]
 
     this.currentLang = i18n[this.$store.state.system.lang]

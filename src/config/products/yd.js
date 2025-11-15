@@ -20,7 +20,7 @@
  * 云店产品配置
  */
 export default {
-  productName: '云店',
+  productName: 'B2C多店',
   systemTitle: '云店管理中心',
   systemTitleShopadmin: '店铺管理中心',
   systemTitleMerchant: '商户管理中心',

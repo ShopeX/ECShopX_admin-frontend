@@ -20,7 +20,7 @@
  * 内购产品配置
  */
 export default {
-  productName: 'ng',
+  productName: '内购',
   systemTitle: '内购管理中心',
   systemTitleShopadmin: '店铺管理中心',
   systemTitleMerchant: '商户管理中心',

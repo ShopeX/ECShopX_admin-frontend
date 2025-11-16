@@ -12,7 +12,11 @@ npm i
 ```
 
 ### Run project 
-`npm run build:yd`
+```
+npm run dev:b2c
+```
 
 ### Build packages 
-`npm run dev:yd`
+```
+npm run build:b2c
+```

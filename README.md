@@ -8,10 +8,13 @@ Node.js (current LTS) and npm are required to run the project. To be sure about 
 ### Installation
 
 Install dependencies  
-`npm i`
+```
+cd ecshopx-admin
+npm i
+```
 
-Build packages  
+### Run project 
 `npm run build:yd`
 
-Run project base  
+### Build packages 
 `npm run dev:yd`

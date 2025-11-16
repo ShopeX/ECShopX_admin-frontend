@@ -5,7 +5,7 @@
 # Getting started
 Node.js (current LTS) and npm are required to run the project. To be sure about the version compatibility you can enable Node's corepack.
 
-<h1 style="border-bottom: none;">Installation</h1>
+### Installation
 
 Install dependencies  
 `npm i`

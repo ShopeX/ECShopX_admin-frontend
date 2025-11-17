@@ -1,5 +1,10 @@
 
-    // 导入国际化JSON文件（合并模式）
+    /**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+// 导入国际化JSON文件（合并模式）
     import langJSON from './index.json'
     (function () {
     // 定义翻译函数

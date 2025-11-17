@@ -164,7 +164,6 @@ export default {
     computedMenuIcon(item) {
       const allRoutes = this.$router.getRoutes()
       const route = allRoutes.find((route) => route.meta?.aliasName === item.alias_name)
-      console.log('computedMenuIcon:', route, item)
       return route?.meta?.icon || ''
     },
     resolveChildren(children) {

@@ -68,7 +68,6 @@ class RequestClient {
         en: 'en-CN',
         zhtw: 'zh-TW'
       }
-      console.log('config', config, url)
       if (lang) {
         if (config.data) {
           config.data.country_code = langMap[lang]

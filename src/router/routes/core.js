@@ -108,10 +108,6 @@ const coreRoutes = [
   {
     path: '/activelicense',
     component: () => import('@/views/core/account-activation.vue')
-  },
-  {
-    path: '/license',
-    component: () => import('@/views/license/index')
   }
 ]
 

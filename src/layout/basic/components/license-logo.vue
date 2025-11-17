@@ -6,8 +6,6 @@
 <template>
   <div class="flex items-center justify-center gap-2">
     <div class="style-medium size-13 text-[#B3B3B3]">
-      <!-- ECShopX © Licensed under
-      <span class="cursor-pointer border-b border-gray-300" @click="openLicense">Apache 2.0</span> · -->
       Powered by
     </div>
     <SpImage
@@ -21,8 +19,6 @@
 </template>
 
 <script>
-import { getBasePath } from '@/utils'
-
 export default {
   name: 'LicenseLogo',
   data() {
@@ -36,10 +32,6 @@ export default {
     }
   },
   methods: {
-    openLicense() {
-      const basePath = getBasePath()
-      window.open(`${basePath ? `/${basePath}` : ''}/license`, '_blank')
-    },
     openShopex() {
       window.open('https://www.shopex.cn', '_blank')
     }

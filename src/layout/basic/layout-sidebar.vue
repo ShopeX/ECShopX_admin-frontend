@@ -184,8 +184,6 @@ export default {
       const route = allRoutes.find((route) => route.meta?.permissions?.includes(permission))
       if (route) {
         this.$router.push({ path: route.path })
-      } else if (item.alias_name == 'license') {
-        this.$router.push({ path: '/license' })
       } else {
         this.toNotFound()
       }

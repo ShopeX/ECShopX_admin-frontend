@@ -49,7 +49,6 @@ import Vue from 'vue'
 import draggable from 'vuedraggable'
 import { cloneDeep } from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
-import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
 import { hex2rgb } from '@/utils'
 import CompPanel from '@/view/decorate/attr_panel'
@@ -60,7 +59,6 @@ import InjectDomOperations from './injectDomOperate'
 
 export default {
   async beforeRouteLeave(to, from, next) {
-    this.resetDecorateTheme()
     next()
   },
   components: {
@@ -248,14 +246,6 @@ export default {
         { ...cloneDeep(example), uuid: uuidv4() }
       )
     },
-    resetDecorateTheme() {
-      const { theme } = SYSTEM_CONFIG[store.getters.versionMode]
-      const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
-      const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
-      const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)
-      document.body.style.setProperty('--primary', theme)
-      document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
-    },
     getComponentAttr(item, pick) {
       const { wgtName, config, example } = this.widgets.find(wgt => {
         return wgt.config.name.toLowerCase() == item.name.toLowerCase()
@@ -286,7 +276,6 @@ export default {
       this.$router.go(-1)
     },
     onClose() {
-      this.resetDecorateTheme()
       this.$emit('close')
     }
   }

@@ -100,7 +100,6 @@
 import Vue from 'vue'
 import draggable from 'vuedraggable'
 import { cloneDeep } from 'lodash'
-import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
 import { hex2rgb } from '@/utils'
 import gWgts from './wgts'
@@ -113,7 +112,6 @@ export default {
     Header
   },
   async beforeRouteLeave(to, from, next) {
-    this.resetDecorateTheme()
     next()
   },
   props: {
@@ -192,11 +190,7 @@ export default {
     }
   },
   mounted() {
-    // document.body.style.setProperty('--themeColor', '#155bd4')
-    // document.body.style.setProperty('--themeColorRgb', [21, 91, 212].join(','))
-    // const { primary } = this.$store.getters?.color_theme || {}
-    // document.body.style.setProperty('--appThemeColor', primary)
-    // document.body.style.setProperty('--appThemeColorRgb', hex2rgb(primary))
+
   },
   methods: {
     regsiterWgts() {
@@ -208,12 +202,7 @@ export default {
       })
     },
     resetDecorateTheme() {
-      // const { theme } = SYSTEM_CONFIG[store.getters.versionMode]
-      // const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
-      // const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
-      // const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)
-      // document.body.style.setProperty('--themeColor', theme)
-      // document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
+
     },
     getComponentAttr(item) {
       const { wgtName, config } = this.widgets.find((wgt) => {
@@ -337,7 +326,6 @@ export default {
     async onSaveTemplate() {
       // console.log('onSaveTemplate:', JSON.stringify(data))
       if (this.mode == 'dialog') {
-        this.resetDecorateTheme()
         this.$emit('change', this.contentComps)
         return
       }
@@ -372,7 +360,6 @@ export default {
       this.$router.go(-1)
     },
     onClose() {
-      this.resetDecorateTheme()
       this.$emit('close')
     }
   }

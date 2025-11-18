@@ -351,14 +351,6 @@ export const FORM_COMP = {
   IMAGE: 7
 }
 
-// export const SYSTEM_CONFIG = {
-//   platform: { name: 'Powered By ShopeX', theme: '#CB060F' },
-//   standard: { name: '新零售云店', theme: '#FF9D00' },
-//   b2c: { name: '官方商城', theme: '#157FE3' },
-//   in_purchase: { name: '商派Onex内购', theme: '#EC442E' },
-//   shuyun: { name: '数云官方商城', theme: '#157FE3' }
-// }
-
 export const LINK_PATH = {
   'goods': '商品',
   'store': '店铺',

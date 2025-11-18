@@ -3,14 +3,14 @@
  * See LICENSE file for license details.
  */
 export default {
-  productName: 'B2C',
-  systemTitle: '官方商城管理中心',
+  productName: 'B2C多店',
+  systemTitle: '云店管理中心',
   systemTitleShopadmin: '店铺管理中心',
   systemTitleMerchant: '商户管理中心',
   systemTitleSupplier: '供应商管理中心',
-  logo: 'logo-b2c.png',
+  logo: 'logo-yd.png',
   loginBackground: 'ecxbg.jpg',
-  footerBackground: 'footer-b2c.png',
+  footerBackground: 'footer-yd.png',
 
   // 主题配置
   themeConfig: {

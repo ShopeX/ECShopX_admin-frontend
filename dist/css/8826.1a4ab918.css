@@ -1,0 +1,33 @@
+
+.point-form[data-v-41d949b0]{
+  width:700px;
+}
+.p-title[data-v-41d949b0]{
+  color:#000;
+  font-size:14px;
+  font-weight:700;
+  line-height:20px;
+}
+.mipt[data-v-41d949b0]{
+  width:300px;
+}
+.unit[data-v-41d949b0]{
+  margin-left:10px;
+}
+.tips[data-v-41d949b0]{
+  color:#999;
+  display:inline-block;
+  font-size:12px;
+  line-height:1.5;
+  vertical-align:middle;
+}
+.el-form-item[data-v-41d949b0]{
+  margin-bottom:10px;
+}
+.btn-bar[data-v-41d949b0]{
+  margin-top:20px;
+}
+.point-form[data-v-41d949b0] .el-form-item__error{
+  padding-top:0;
+}
+

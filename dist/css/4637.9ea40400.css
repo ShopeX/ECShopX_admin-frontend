@@ -1,7 +1,0 @@
-.recharge-overview[data-v-2fcf69be]{display:flex;font-size:20px;justify-content:space-around}.recharge-overview .i-icon[data-v-2fcf69be]{margin-bottom:10px}.recharge-overview .view-flex-item[data-v-2fcf69be]{align-items:center;display:flex;flex-direction:column;justify-content:center}.recharge-overview .money[data-v-2fcf69be]{color:#ff5000;margin-top:18px}.deposit-des[data-v-2fcf69be]{align-items:center;border:1px solid #dfe6ec;box-shadow:0 0 10px rgba(0,0,0,.2);display:flex;height:100px;justify-content:center;margin-bottom:20px;text-align:center}.deposit-des>div[data-v-2fcf69be]{color:#666;float:left;margin-left:5%;width:33%}.deposit-des>div img[data-v-2fcf69be]{float:left;margin-right:10px}.deposit-des>div>div>span[data-v-2fcf69be]{display:block;text-align:left}.deposit-des img[data-v-2fcf69be]{height:55px;width:55px}.ranking[data-v-2fcf69be]{border:1px solid #dfe6ec}.ranking-header[data-v-2fcf69be]{background:#f8f8f8;border-bottom:1px solid #efefef;cursor:pointer;padding:10px 15px}.ranking-body[data-v-2fcf69be]{padding:10px}.ranking-list[data-v-2fcf69be]{margin-bottom:10px;padding:0 10px}.ranking-list li .cost-money[data-v-2fcf69be],.ranking-list li .store-name[data-v-2fcf69be]{display:inline-block;text-overflow:ellipsis;vertical-align:middle;white-space:nowrap;width:46%}.ranking-list li[data-v-2fcf69be]:hover{color:#ff5000}.more[data-v-2fcf69be]{cursor:pointer;font-size:12px;padding-right:10px}.more[data-v-2fcf69be]:hover{color:#333}
-
-.record-list .el-table .cell,.record-list .el-table th>div{
-  padding-left:10px;
-  padding-right:10px;
-}
-

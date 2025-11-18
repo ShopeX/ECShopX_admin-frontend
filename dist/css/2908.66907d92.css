@@ -1,0 +1,33 @@
+
+.point-form[data-v-cf601126]{
+  width:700px;
+}
+.p-title[data-v-cf601126]{
+  color:#000;
+  font-size:14px;
+  font-weight:700;
+  line-height:20px;
+}
+.unit[data-v-cf601126]{
+  margin-left:10px;
+}
+.tips[data-v-cf601126]{
+  color:#999;
+  display:inline-block;
+  font-size:12px;
+  line-height:1.5;
+  vertical-align:middle;
+}
+.el-form-item[data-v-cf601126]{
+  margin-bottom:10px;
+}
+.btn-bar[data-v-cf601126]{
+  margin-top:20px;
+}
+.point-form[data-v-cf601126] .el-form-item__error{
+  padding-top:0;
+}
+[data-v-cf601126] .el-card{
+  border:none;
+}
+

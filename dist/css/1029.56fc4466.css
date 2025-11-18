@@ -1,0 +1,37 @@
+
+.comps-flaglist .f-info[data-v-29d69824]{
+  display:flex;
+  width:900px;
+}
+.comps-flaglist .f-info .el-button[data-v-29d69824]{
+  margin-left:20px;
+}
+
+
+.tips[data-v-a2b5ff54]{
+  color:#999;
+  font-size:12px;
+}
+.barSelect[data-v-a2b5ff54]{
+  width:120px;
+}
+.searSelect[data-v-a2b5ff54]{
+  margin-right:5px;
+  width:120px;
+}
+.marbor[data-v-a2b5ff54]{
+  border-left:1px solid #eee;
+  display:inline-block;
+  height:30px;
+  margin:auto 15px;
+  vertical-align:middle;
+}
+.dialog-tips[data-v-a2b5ff54]{
+  color:#999;
+  font-size:12px;
+  position:absolute;
+  right:15px;
+  text-align:right;
+  top:20px;
+}
+

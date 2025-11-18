@@ -15,7 +15,7 @@ import VueVideoPlayer from 'vue-video-player'
 import { install as API } from '@/api'
 import { install as Filter } from '@/filters'
 import { install as Directives } from '@/directives'
-import { VuePrototype, unmountGlobalLoading } from '@/utils'
+import { VuePrototype } from '@/utils'
 import { install as Finder } from './finder'
 import { install as Component } from './component'
 
@@ -47,8 +47,6 @@ async function bootstrap() {
     mounted() {},
     render: (h) => h(App)
   }).$mount('#app')
-
-  unmountGlobalLoading()
 }
 
 export { bootstrap }

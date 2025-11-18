@@ -705,7 +705,5 @@ export default {
   font-size: 24px;
 }
 
-.hidden {
-  display: none;
-}
+
 </style>

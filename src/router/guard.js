@@ -6,7 +6,14 @@ import { useNProgress } from '@/composables'
 import store from '@/store'
 import { generateAccess } from './access'
 import { accessRoutes, routes as coreRoutes } from './routes'
-import { IS_ADMIN, IS_DISTRIBUTOR, IS_MERCHANT, IS_SUPPLIER, traverseTreeValues } from '@/utils'
+import {
+  IS_ADMIN,
+  IS_DISTRIBUTOR,
+  IS_MERCHANT,
+  IS_SUPPLIER,
+  traverseTreeValues,
+  unmountGlobalLoading
+} from '@/utils'
 import { actions } from '@/utils/micr-app'
 import { langMap } from '@/i18n/index'
 
@@ -22,6 +29,7 @@ function setupCommonGuard(router) {
 
   router.afterEach((to, from, next) => {
     stopProgress()
+    unmountGlobalLoading()
   })
 }
 

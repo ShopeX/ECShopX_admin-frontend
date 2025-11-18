@@ -37,6 +37,7 @@ VUE_APP_OSS_CDN=
 # Map Service API Key，Used to configure offline store locations and retrieve store coordinates based on geographic information.
 VUE_APP_MAP_KEY=
 
+# Configurations for Hourly Delivery
 VUE_APP_LOCAL_DELIVERY_DIRVER=
 
 # Default Language Version（Chinese:zhcn/English:en)

@@ -11,6 +11,37 @@ Required Node.js Version: 16.16.0. If your current version differs, follow the s
 nvm install 16.16.0 
 nvm use 16.16.0
 ```
+### Configure the .env file
+```shell
+# The system’s default settings do not require any changes.
+VUE_APP_IS_SAAS=false
+
+# Backend API Base URL
+VUE_APP_BASE_API=
+
+# The system’s default settings do not require any changes.
+VUE_APP_PUBLIC_PATH=/
+  
+# The system’s default settings do not require any changes.
+VUE_APP_WXIMG_URL=
+
+# The system’s default settings do not require any changes.
+VUE_APP_WXAUTHCALL_Url=
+
+# The system’s default settings do not require any changes.
+VUE_APP_QIANKUN_ENTRY=/newpc
+
+# Media files OSS Server URL
+VUE_APP_OSS_CDN=
+  
+# Map Service API Key，Used to configure offline store locations and retrieve store coordinates based on geographic information.
+VUE_APP_MAP_KEY=
+
+VUE_APP_LOCAL_DELIVERY_DIRVER=
+
+# Default Language Version（Chinese:zhcn/English:en)
+VUE_APP_DEFAULT_LANG=en
+```
   
 ### Installation
 ```

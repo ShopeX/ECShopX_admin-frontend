@@ -51,7 +51,7 @@ npm i
 ```
 
 ### Run project
-```
+```shell
 # B2C Business Model
 npm run dev:b2c
   
@@ -60,7 +60,7 @@ npm run dev:bbc
 ```
 
 ### Build packages
-```
+```shell
 # B2C Business Model
 npm run build:b2c
   

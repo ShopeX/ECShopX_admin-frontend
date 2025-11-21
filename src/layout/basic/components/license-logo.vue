@@ -10,7 +10,7 @@
       Powered by
     </div>
     <SpImage
-      :src="footerBackground"
+      src="/images/logo-powerby.png"
       class="cursor-pointer mt-1"
       height="15"
       fit="contain"
@@ -28,9 +28,7 @@ export default {
     }
   },
   computed: {
-    footerBackground: () => {
-      return require(`@/assets/svgs/logo.svg`)
-    }
+
   },
   methods: {
     openShopex() {

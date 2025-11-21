@@ -76,7 +76,6 @@ export default {
       }
     })
 
-    // this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo.svg')
   },
   methods: {
     selectDistributor(data) {

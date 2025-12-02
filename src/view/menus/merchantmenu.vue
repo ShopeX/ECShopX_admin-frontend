@@ -7,7 +7,6 @@
   <SpPage class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" @click="handleAddMenu"> 添加顶级菜单 </el-button>
         <el-button type="info" @click="handleUrlDisabled"> 解锁更新菜单URL </el-button>
         <el-button v-if="dragOptions.disabled" type="danger" @click="handleDraggableDisabled">
           {{ draggableDisabled }}
@@ -161,27 +160,11 @@
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_37 is-leaf">
                         <div class="cell">
-                          <el-button
-                            v-if="item.is_menu && item.level <= 3"
-                            type="text"
-                            size="small"
-                            @click="handleAddSubMenu(item)"
-                          >
-                            添加子菜单
-                          </el-button>
                           <el-button type="text" size="small" @click="handleUpdateMenu(item)">
                             编辑菜单
                           </el-button>
                           <el-button type="text" size="small" @click="handleSetApis(item)">
                             API权限
-                          </el-button>
-                          <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="acitonDeleteMenu(item.shopmenu_id)"
-                          >
-                            删除
                           </el-button>
                         </div>
                       </td>
@@ -222,32 +205,8 @@
           <el-form-item label="菜单名称">
             <el-input v-model="form.name" />
           </el-form-item>
-          <el-form-item label="菜单类型">
-            <el-checkbox-group v-model="form.menu_type">
-              <el-checkbox label="all">通用</el-checkbox>
-              <el-checkbox label="b2c">品牌官网</el-checkbox>
-              <el-checkbox label="platform">ECX</el-checkbox>
-              <el-checkbox label="standard">云店</el-checkbox>
-              <el-checkbox label="in_purchase">内购版</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="菜单唯一标识">
-            <el-input v-model="form.alias_name" />
-          </el-form-item>
-          <el-form-item label="菜单图标">
-            <el-input v-model="form.icon" />
-          </el-form-item>
           <el-form-item label="菜单排序">
             <el-input v-model="form.sort" />
-          </el-form-item>
-          <el-form-item label="菜单URL">
-            <div class="view-flex">
-              <div class="parent-path">
-                {{ form.parentUrl }}
-              </div>
-              <el-input v-if="isEdit" v-model="form.url" :disabled="isDisabledUpdateUrl" />
-              <el-input v-else v-model="form.url" />
-            </div>
           </el-form-item>
           <el-form-item v-if="!disabledIsMenu" label="是否为菜单">
             <el-switch v-model="form.is_menu" />
@@ -266,7 +225,7 @@
 </template>
 
 <script>
-import { getShopMenu, saveMenu, deleteMenu, downMenu, uploadMenu } from '../../api/shopmenu'
+import { getShopMenu, saveMenu, downMenu, uploadMenu } from '../../api/shopmenu'
 import { Message } from 'element-ui'
 import draggable from 'vuedraggable'
 
@@ -425,58 +384,6 @@ export default {
       }
       this.isEdit = true
       this.form = row
-    },
-    handleAddSubMenu(row) {
-      this.isEdit = false
-      this.form = {
-        version: this.version,
-        is_menu: true,
-        is_show: true,
-        pid: 0,
-        name: '',
-        alias_name: '',
-        menu_type: row.menu_type,
-        parentUrl: row.url,
-        url: '',
-        sort: 1
-      }
-      if (row.level >= 3) {
-        this.form.is_menu = false
-        this.disabledIsMenu = true
-      } else {
-        this.form.is_menu = true
-        this.disabledIsMenu = false
-      }
-      this.editVisible = true
-      this.parent_name = row.name
-      this.form.pid = row.shopmenu_id
-    },
-    handleAddMenu() {
-      this.isEdit = false
-      this.form = {
-        version: this.version,
-        is_menu: true,
-        is_show: true,
-        pid: 0,
-        name: '',
-        alias_name: '',
-        menu_type: ['all'],
-        url: '',
-        sort: 1
-      }
-      this.disabledIsMenu = true
-      this.editVisible = true
-    },
-    acitonDeleteMenu(id) {
-      this.$confirm('此操作将=删 除该菜单, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteMenu(id).then(res => {
-          this.getMenuTrees()
-        })
-      })
     },
     actionSaveMenu() {
       if (this.form.url && this.form.url[0] !== '/') this.form.url = `/${this.form.url}`

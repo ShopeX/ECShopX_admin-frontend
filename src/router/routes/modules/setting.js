@@ -523,28 +523,6 @@ const routes = [
         component: () => import('@/view/mall/distribution/account')
       },
       {
-        name: 'systemInfoRenewalActivation',
-        path: 'system-info/renewal-activation',
-        component: () => import('@/view/base/asset/accountactivation/index'),
-        meta: {
-          aliasName: 'assetaccountactivation',
-          icon: 'icon-products',
-          title: '续费激活',
-          permissions: ['setting.systeminfo.assetaccountactivation']
-        }
-      },
-      {
-        name: 'systemInfoSoftwareProtocol',
-        path: 'system-info/software-protocol',
-        component: () => import('@/view/base/setting/agreement'),
-        meta: {
-          aliasName: 'agreement',
-          icon: 'icon-products',
-          title: '软件协议',
-          permissions: ['setting.systeminfo.agreement']
-        }
-      },
-      {
         name: 'systemInfoOperatorLogs',
         path: 'system-info/operator-logs',
         component: () => import('@/view/base/setting/companys/logs'),

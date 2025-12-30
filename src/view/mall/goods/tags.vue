@@ -30,7 +30,7 @@
     </div>
 
     <el-table v-loading="loading" border :data="tagsList" element-loading-text="数据加载中">
-      <el-table-column prop="tag_id" label="操作" width="100">
+      <el-table-column prop="tag_id" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
           <el-button type="text" @click="deleteAction(scope.$index, scope.row)"> 删除 </el-button>

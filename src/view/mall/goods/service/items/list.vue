@@ -39,9 +39,9 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="iconfont icon-search-plus" @click="itemsDetail(scope.$index, scope.row)" />
-            <i class="iconfont icon-edit1" @click="editItemsAction(scope.$index, scope.row)" />
+            <i class="el-icon-edit-outline" @click="editItemsAction(scope.$index, scope.row)" />
             <i
-              class="mark iconfont icon-trash-alt1"
+              class="mark el-icon-delete-solid"
               @click="deleteItemsAction(scope.$index, scope.row)"
             />
           </div>

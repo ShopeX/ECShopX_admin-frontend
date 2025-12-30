@@ -132,9 +132,7 @@
         >
           <template slot="tableTop">
             <div class="action-container">
-              <export-tip @exportHandle="exportData">
-                <el-button type="primary" plain> 导出 </el-button>
-              </export-tip>
+              <el-button @click="exportData" type="primary" plain> 导出 </el-button>
               <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
                 售后提醒内容
               </el-button>
@@ -317,34 +315,11 @@ export default {
             key: 'aftersales_bn',
             width: 200,
             render: (h, { row }) => {
-              const linkPath =
-                (`${this.$store.getters.login_type}` == 'distributor' &&
-                  '/shopadmin/order/aftersaleslist/detail') ||
-                (`${this.$store.getters.login_type}` == 'supplier' &&
-                  '/supplier/order/aftersaleslist/detail') ||
-                (`${this.$store.getters.login_type}` == 'merchant' &&
-                  '/merchant/order/aftersaleslist/detail') ||
-                '/order/aftersales/aftersaleslist/detail'
               return h('div', [
                 h('div', { class: 'order-num' }, [
                   h(
-                    'el-button',
-                    {
-                      props: { type: 'text' },
-                      on: {
-                        click: () => {
-                          const routeData = this.$router.resolve({
-                            path: linkPath,
-                            query: { aftersales_bn: row.aftersales_bn }
-                          })
-                          window.open(routeData.href, '_blank')
-                          // this.$router.push({
-                          //   path: linkPath,
-                          //   query: { aftersales_bn: row.aftersales_bn }
-                          // })
-                        }
-                      }
-                    },
+                    'span',
+                    {},
                     row.aftersales_bn
                   ),
                   h(
@@ -392,30 +367,10 @@ export default {
             key: 'order_id',
             minWidth: 180,
             render: (h, { row }) => {
-              const linkPath =
-                (`${this.$store.getters.login_type}` == 'distributor' &&
-                  '/shopadmin/order/tradenormalorders/detail') ||
-                (`${this.$store.getters.login_type}` == 'supplier' &&
-                  '/supplier/order/tradenormalorders/detail') ||
-                (`${this.$store.getters.login_type}` == 'merchant' &&
-                  '/merchant/order/tradenormalorders/detail') ||
-                '/order/entitytrade/tradenormalorders/detail'
-
               return h('div', { class: 'order-num' }, [
                 h(
-                  'el-button',
-                  {
-                    props: { type: 'text' },
-                    on: {
-                      click: () => {
-                        const routeData = this.$router.resolve({
-                          path: linkPath,
-                          query: { orderId: row.order_id }
-                        })
-                        window.open(routeData.href, '_blank')
-                      }
-                    }
-                  },
+                  'span',
+                  {},
                   row.order_id
                 ),
                 h(
@@ -456,40 +411,55 @@ export default {
             }
           },
           {
-            name: '退款金额（¥）',
+            name: '退款商品金额（¥）',
             key: 'refund_fee',
-            width: 120,
+            width: 160,
             align: 'center'
           },
           {
-            name: '退款运费（¥）',
-            key: 'freight',
-            width: 120,
-            align: 'center',
-            render: (h, { row }) => h('span', {}, row.freight / 100)
-          },
-          {
-            name: '退款抵扣积分（¥）',
+            name: '退款抵扣积分',
             key: 'refund_point',
             width: 160,
             align: 'center'
           },
           {
-            name: '实退金额（¥）',
-            key: 'refunded_fee',
-            width: 120,
+            name: '退款运费金额（¥）',
+            key: 'freight',
+            width: 150,
             align: 'center',
             render: (h, { row }) => {
+              if (row.freight_type == 'point') return null
+              return h('span', {}, (row.freight / 100).toFixed(2))
+            },
+          },
+          {
+            name: '退款运费（积分）',
+            key: 'freight',
+            width: 160,
+            align: 'center',
+            render: (h, { row }) => {
+              if (row.freight_type == 'cash') return null
+              return h('span', {}, row.freight)
+            },
+          },
+          {
+            name: '实退金额（¥）',
+            key: 'refunded_fee',
+            width: 150,
+            align: 'center',
+            render: (h, { row }) => {
+              if (row.freight_type == 'point') return null
               const amount = row.refunded_fee || 0
               return h('span', {}, `${(amount / 100).toFixed(2)}`)
             }
           },
           {
-            name: '实退积分（¥）',
+            name: '实退积分',
             key: 'refunded_point',
             width: 120,
             align: 'center',
             render: (h, { row }) => {
+              if (row.freight_type == 'cash') return null
               const points = row.refunded_point || 0
               return h('span', {}, `${points}`)
             }
@@ -528,22 +498,7 @@ export default {
                     : '/shopadmin/member/member/memberlist/detail'
 
                 return h('div', { class: 'order-num' }, [
-                  h(
-                    'el-button',
-                    {
-                      props: { type: 'text' },
-                      on: {
-                        click: () => {
-                          const routeData = this.$router.resolve({
-                            path: linkPath,
-                            query: { user_id: row.user_id }
-                          })
-                          window.open(routeData.href, '_blank')
-                        }
-                      }
-                    },
-                    row.mobile
-                  )
+                  h('span', {}, row.mobile)
                 ])
               }
               return h('span', {}, row.mobile)

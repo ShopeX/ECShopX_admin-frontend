@@ -15,9 +15,9 @@
           <span class="coupon-desc-content" :class="isHidden ? 'content-hidden' : ''"
             >如果你无法简洁的描述你的想法，那只能说明你不够了解它</span
           ><span v-if="isHidden" class="more" @click="showAll"
-            >更多<i class="iconfont icon-chevron-down" /></span
+            >更多<i class="el-icon-arrow-down" /></span
           ><span v-if="!isHidden" class="more" @click="contentHidden"
-            >收起<i class="iconfont icon-chevron-up"
+            >收起<i class="el-icon-arrow-up"
           /></span>
         </p>
         <div class="coupon-opr">
@@ -43,9 +43,9 @@
           <h3 class="clearfix">
             版本1.1.1中的新功能
             <span v-if="functionOpen" class="f_r open" @click="open"
-              >展开<i class="iconfont icon-chevron-down" /></span
+              >展开<i class="el-icon-arrow-down" /></span
             ><span v-if="!functionOpen" class="f_r open" @click="close"
-              >收起<i class="iconfont icon-chevron-up"
+              >收起<i class="el-icon-arrow-up"
             /></span>
           </h3>
         </div>

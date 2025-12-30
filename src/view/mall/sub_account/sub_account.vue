@@ -220,7 +220,7 @@
                   <span>{{ scope.row.timeStart | formatTimestamp }}</span>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="100">
+              <el-table-column fixed="left" label="操作" width="100">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="goDetail(scope.row.tradeId)">
                     查看

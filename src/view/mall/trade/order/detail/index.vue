@@ -562,7 +562,8 @@ import {
   PROFIT_TYPE,
   PAY_TYPE,
   PAY_STATUS,
-  GOOD_CATEGORY_MAP
+  GOOD_CATEGORY_MAP,
+  OPEN_STATUS_ARR
 } from '@/consts'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
@@ -575,7 +576,7 @@ export default {
         { label: '订单编号:', field: 'order_id', is_show: true },
         { label: '订单类型:', field: 'order_class', is_show: true },
         { label: '订单状态:', field: 'order_status_msg', is_show: true },
-        { label: '开票状态:', field: 'is_invoiced', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '开票状态:', field: 'invoice_status', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '配送类型:', field: 'receiptTypeTxt', is_show: true },
         { label: '会员昵称:', field: 'username', is_show: true },
         { label: '会员手机号:', field: 'mobile', is_show: true },
@@ -782,13 +783,13 @@ export default {
       // 发票信息个人
       invoiceList: [
         { label: '类型:', field: 'invoiceType', is_show: true },
-        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '开票状态:', field: 'invoice_status', is_show: true },
         { label: '发票抬头:', field: 'invoiceContent', is_show: true }
       ],
       // 发票信息公司
       invoiceListUnit: [
         { label: '类型:', field: 'invoiceType', is_show: true },
-        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '开票状态:', field: 'invoice_status', is_show: true },
         { label: '公司名称:', field: 'invoicedCompanyName', is_show: true },
         { label: '税号:', field: 'invoiceRegistrationNumber', is_show: true },
         { label: '电话号码:', field: 'invoicedCompanyPhone', is_show: true },
@@ -846,6 +847,9 @@ export default {
     this.getLogisticsList()
   },
   methods: {
+    invoiceFilter(item) {
+      return OPEN_STATUS_ARR.find(el => el.value === item)?.title || ''
+    },
     getFiledValue(key) {
       const { orderInfo } = this
       if (orderInfo) {
@@ -946,7 +950,7 @@ export default {
         create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
         order_class: `${fd ? fd.title : '实体订单'}${crossOrderTxt}`,
         _order_class: orderInfo.order_class,
-        is_invoiced: orderInfo.is_invoiced ? '已开票' : '未开票',
+        invoice_status: OPEN_STATUS_ARR.find(el => el.value === orderInfo.invoice_status)?.title || '',
         receiptTypeTxt,
         username,
         community_activity_name,

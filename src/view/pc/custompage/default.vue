@@ -73,7 +73,7 @@
               <transition name="el-fade-in-linear">
                 <div
                   v-if="k == editorIndex"
-                  class="iconfont icon-trash-alt1"
+                  class="el-icon-delete-solid"
                   @click="removeCurrent"
                 />
               </transition>

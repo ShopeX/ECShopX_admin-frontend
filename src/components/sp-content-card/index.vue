@@ -79,7 +79,6 @@
             </div>
             <div slot="reference">
               <el-button
-                icon="iconfont icon-sort-amount-up text-xs"
                 type="text-default"
                 size="mini"
                 class="text-gray-400"
@@ -91,7 +90,6 @@
         </div>
         <div class="flex-1 text-xs text-center h-full leading-10">
           <el-button
-            icon="iconfont icon-trash-alt text-xs"
             type="text-default"
             size="mini"
             class="text-gray-400"

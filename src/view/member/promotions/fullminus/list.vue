@@ -113,7 +113,7 @@
             <el-table-column min-width="70" prop="source_name" label="店铺" />
             <el-table-column label="操作" min-width="150">
               <template slot-scope="scope">
-                <div class="operating-icons">
+                <div class="operating-icons gap-2">
                   <el-button
                     v-if="scope.row.use_bound != 0"
                     type="text"
@@ -139,18 +139,9 @@
                     查看详情
                   </el-button>
                   <template v-if="scope.row.edit_btn == 'Y'">
-                    <i
-                      v-if="scope.row.status == 'waiting' || scope.row.status == 'ongoing'"
-                      class="iconfont icon-edit1"
-                      @click="editActivityAction(scope.$index, scope.row)"
-                    />
+                    <el-button type="text" v-if="scope.row.status == 'waiting' || scope.row.status == 'ongoing'" @click="editActivityAction(scope.$index, scope.row)"> 编辑 </el-button>
+                    <el-button type="text" v-if="scope.row.status == 'waiting'" @click="deleteActivityAction(scope.row)"> 删除 </el-button>
                   </template>
-
-                  <i
-                    v-if="scope.row.status == 'waiting'"
-                    class="iconfont icon-trash-alt"
-                    @click="deleteActivityAction(scope.row)"
-                  />
                 </div>
               </template>
             </el-table-column>

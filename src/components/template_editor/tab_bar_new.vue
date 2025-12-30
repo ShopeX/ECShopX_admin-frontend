@@ -24,7 +24,7 @@
       <el-row>
         <div v-for="(item, index) in data" :key="index" class="setting-item">
           <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
-            <i class="iconfont icon-trash-alt" />
+            <i class="el-icon-delete" />
           </div>
           <img
             v-if="item.iconPath"
@@ -33,7 +33,7 @@
             @click="handleIconChange(index)"
           >
           <div v-else class="icon-setter" @click="handleIconChange(index)">
-            <i class="iconfont icon-image muted" />
+            <i class="el-icon-picture muted" />
           </div>
           <img
             v-if="item.selectedIconPath"
@@ -42,7 +42,7 @@
             @click="handleSelectedIconChange(index)"
           >
           <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
-            <i class="iconfont icon-image muted" />
+            <i class="el-icon-picture muted" />
           </div>
           <div class="uploader-setting">
             <el-input v-model="item.text" placeholder="tab名称" maxlength="" />

@@ -60,14 +60,14 @@
     background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
     display: none;
-    .icon-trash-alt {
+    .el-icon-delete {
       font-size: 18px;
       color: #fff;
       float: left;
       margin-top: 40px;
       margin-left: 30px;
     }
-    .icon-arrows-alt {
+    .el-icon-rank {
       font-size: 18px;
       color: #fff;
       float: left;
@@ -85,7 +85,7 @@
   margin: 0 10px 10px 0;
   overflow: hidden;
   position: relative;
-  .icon-camera {
+  .el-icon-camera {
     font-size: 28px;
     color: #ccc;
     position: absolute;
@@ -260,14 +260,14 @@
                       <div class="img-wrap">
                         <el-image style="width: 100%; height: 100%" :src="item" fit="contain" />
                         <div class="goodspic-mask">
-                          <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
-                          <div class="iconfont icon-arrows-alt" />
+                          <div class="el-icon-delete" @click="removePicsImg(index)" />
+                          <div class="el-icon-rank" />
                         </div>
                       </div>
                       <el-checkbox v-model="value.pics_create_qrcode[index]" class="checkBox" />
                     </li>
                     <li v-if="value.pics.length < 9" class="upload-box" @click="handlePicsChange">
-                      <i class="iconfont icon-camera" />
+                      <i class="el-icon-camera" />
                     </li>
                   </draggable>
                 </ul>
@@ -345,7 +345,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.goodspic'
       }
     }

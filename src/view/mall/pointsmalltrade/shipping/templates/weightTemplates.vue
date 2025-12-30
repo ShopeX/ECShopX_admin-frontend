@@ -38,9 +38,9 @@
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i class="iconfont icon-edit1" @click="editTemplatesAction(scope.$index, scope.row)" />
+            <i class="el-icon-edit-outline" @click="editTemplatesAction(scope.$index, scope.row)" />
             <i
-              class="mark iconfont icon-trash-alt1"
+              class="mark el-icon-delete-solid"
               @click="deleteTemplatesAction(scope.$index, scope.row)"
             />
           </div>

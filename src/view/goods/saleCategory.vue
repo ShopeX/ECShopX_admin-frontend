@@ -34,30 +34,6 @@
         width="100%"
       >
         <el-table-column label="" width="60"></el-table-column>
-        <el-table-column label="分类名称" prop="category_name">
-          <template slot-scope="scope">
-            <div class="whitespace-nowrap">
-              {{ scope.row.category_name }}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="sort" label="分类排序" width="80">
-          <template slot-scope="scope">
-            <div>{{ scope.row.sort }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="分类图片" width="200">
-          <template slot-scope="scope">
-            <div class="img-container">
-              <SpImage
-                v-if="scope.row.image_url"
-                :src="scope.row.image_url"
-                :width="48"
-                :height="48"
-              />
-            </div>
-          </template>
-        </el-table-column>
         <el-table-column label="操作" width="320">
           <template slot-scope="scope">
             <el-button type="text">
@@ -109,6 +85,30 @@
             <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
               删除
             </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类名称" prop="category_name">
+          <template slot-scope="scope">
+            <div class="whitespace-nowrap">
+              {{ scope.row.category_name }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="sort" label="分类排序" width="80">
+          <template slot-scope="scope">
+            <div>{{ scope.row.sort }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类图片" width="200">
+          <template slot-scope="scope">
+            <div class="img-container">
+              <SpImage
+                v-if="scope.row.image_url"
+                :src="scope.row.image_url"
+                :width="48"
+                :height="48"
+              />
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -191,7 +191,7 @@ export default {
   mounted() {
     this.init()
     this.fetchWechatList()
-    this.classification()
+    // this.classification()
   },
   methods: {
     async classification() {
@@ -206,7 +206,7 @@ export default {
       list.forEach(element => {
         ;(element.title = element.page_name), (element.value = element.id)
       })
-      // this.categoryFormList[4].options = list
+      this.categoryFormList[4].options = list
     },
     async init() {
       const list = await this.getCategory()

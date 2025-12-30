@@ -37,7 +37,7 @@
           <template v-if="data.leftNavList">
             <div v-for="(item, index) in data.leftNavList" class="setting-item">
               <div class="setting-remove" @click="delTypeNav(index)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </div>
               <div class="uploader-setting" style="padding-left: 0">
                 <el-input v-model="item.titleName" placeholder="请输入快链名称" />
@@ -52,7 +52,7 @@
                     {{ item.title }}
                   </div>
                   <div v-else class="content-center">
-                    <i class="iconfont icon-link" @click="setTypeNavLink(index)" />设置路径
+                    <i class="el-icon-link" @click="setTypeNavLink(index)" />设置路径
                   </div>
                 </div>
               </div>
@@ -81,7 +81,7 @@
                     @click="handleImgChange(0)"
                   >
                   <div v-else class="banner-uploader" @click="handleImgChange(0)">
-                    <i class="iconfont icon-camera" />上传图片
+                    <i class="el-icon-camera" />上传图片
                   </div>
                 </div>
                 <span class="frm-tips">建议尺寸：250x440</span>
@@ -114,7 +114,7 @@
                       {{ data.leftImg.children.data.title }}
                     </div>
                     <div v-else class="content-center" @click="setTypeNavLink(-1, 0)">
-                      <i class="iconfont icon-link" />设置路径
+                      <i class="el-icon-link" />设置路径
                     </div>
                   </div>
                 </div>
@@ -136,7 +136,7 @@
                     >
                   </div>
                   <div v-else class="banner-uploader" @click="handleImgChange(1)">
-                    <i class="iconfont icon-camera" />上传图片
+                    <i class="el-icon-camera" />上传图片
                   </div>
                 </div>
                 <span class="frm-tips">建议尺寸：155x280</span>
@@ -169,7 +169,7 @@
                       {{ data.rightImg1.children.data.title }}
                     </div>
                     <div v-else class="content-center" @click="setTypeNavLink(-1, 1)">
-                      <i class="iconfont icon-link" />设置路径
+                      <i class="el-icon-link" />设置路径
                     </div>
                   </div>
                 </div>
@@ -191,7 +191,7 @@
                     >
                   </div>
                   <div v-else class="banner-uploader" @click="handleImgChange(2)">
-                    <i class="iconfont icon-camera" />上传图片
+                    <i class="el-icon-camera" />上传图片
                   </div>
                 </div>
                 <span class="frm-tips">建议尺寸：155x280</span>
@@ -224,7 +224,7 @@
                       {{ data.rightImg2.children.data.title }}
                     </div>
                     <div v-else class="content-center" @click="setTypeNavLink(-1, 2)">
-                      <i class="iconfont icon-link" />设置路径
+                      <i class="el-icon-link" />设置路径
                     </div>
                   </div>
                 </div>
@@ -237,7 +237,7 @@
           <template v-if="data.leftNavList">
             <div v-for="(item, index) in data.tabList" class="setting-item">
               <div class="setting-remove" @click="delTabList(index)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </div>
               <div class="uploader-setting" style="padding-left: 0">
                 <el-input v-model="item.title" placeholder="请输入导航名称" />

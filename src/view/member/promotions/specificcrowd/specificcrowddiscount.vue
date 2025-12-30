@@ -58,7 +58,7 @@
                   <el-button style="margin-right: 20px" type="text" @click="viewDetail(scope.row)">
                     查看优惠日志
                   </el-button>
-                  <!--<i class="iconfont icon-trash-alt" @click="deleteActivityAction(scope.row)"></i> -->
+                  <!--<i class="el-icon-delete" @click="deleteActivityAction(scope.row)"></i> -->
                 </div>
               </template>
             </el-table-column>

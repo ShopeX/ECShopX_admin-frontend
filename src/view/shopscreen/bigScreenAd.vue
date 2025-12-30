@@ -95,7 +95,7 @@
               @click="handleImgChange('thumb_img')"
             >
             <div v-else class="banner-uploader" @click="handleImgChange('thumb_img')">
-              <i class="iconfont icon-camera" />
+              <i class="el-icon-camera" />
               上传图片
             </div>
           </template>
@@ -114,7 +114,7 @@
                 @click="handleImgChange('media_url')"
               >
               <div v-else class="banner-uploader" @click="handleImgChange('media_url')">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
                 上传图片
               </div>
             </template>

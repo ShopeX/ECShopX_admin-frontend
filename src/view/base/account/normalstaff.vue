@@ -22,6 +22,17 @@
     </div>
 
     <el-table v-loading="loading" border :data="accountsList">
+      <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+          <!--<el-button
+            type="text"
+            @click="deleteAccountAction(scope.$index, scope.row)"
+          >
+            删除
+          </el-button>-->
+        </template>
+      </el-table-column>
       <el-table-column prop="login_name" label="登录账号" />
       <el-table-column prop="mobile" label="手机号" />
       <el-table-column prop="username" label="姓名" />
@@ -47,17 +58,6 @@
             inactive-color="#ccc"
             @change="acitonDisabled(scope.$index, scope.row)"
           />
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
-          <!--<el-button
-            size="mini"
-            @click="deleteAccountAction(scope.$index, scope.row)"
-          >
-            删除
-          </el-button>-->
         </template>
       </el-table-column>
     </el-table>

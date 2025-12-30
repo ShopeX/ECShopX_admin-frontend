@@ -32,7 +32,7 @@
           <router-link
             :to="{ path: '/brand/onecode/things', query: { thing_id: thingInfo.thing_id } }"
           >
-            <el-button class="iconfont icon-edit1" type="text"> 编辑 </el-button>
+            <el-button type="text"> 编辑 </el-button>
           </router-link>
         </div>
       </div>

@@ -48,7 +48,7 @@
             <li v-else />
             <li>
               <span class="remove-category" @click="deleteCategory(node, data)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </span>
             </li>
           </ul>

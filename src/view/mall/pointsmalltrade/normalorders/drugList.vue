@@ -116,7 +116,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="source_name" label="来源" />
-          <el-table-column label="操作" fixed="right">
+          <el-table-column label="操作" fixed="left">
             <template slot-scope="scope">
               <router-link
                 :to="{

@@ -108,7 +108,7 @@
               <template v-if="config.moreLink.linkPage === 'custom_page'"> 自定义页面： </template>
               {{ config.moreLink.title }}
             </div>
-            <div v-else class="content-center"><i class="iconfont icon-link" />设置路径</div>
+            <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
           </div>
         </el-form-item>
         <el-form-item label="设置「更多」图片">
@@ -119,7 +119,7 @@
             @click="handleImgChange('backImg')"
           >
           <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
-            <i class="iconfont icon-camera" />
+            <i class="el-icon-camera" />
             上传图片
           </div>
         </el-form-item>

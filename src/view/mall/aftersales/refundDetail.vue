@@ -37,21 +37,21 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 应退金额: </el-col>
+          <el-col :span="3" class="col-3 content-right"> 应退商品金额: </el-col>
           <el-col :span="20"> ￥{{ refundDetail.refund_fee / 100 }} </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 实退金额: </el-col>
+          <el-col :span="3" class="col-3 content-right"> 实退商品金额: </el-col>
           <el-col :span="20"> ￥{{ refundDetail.refunded_fee / 100 }} </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 应退积分: </el-col>
+          <el-col :span="3" class="col-3 content-right"> 应退商品积分: </el-col>
           <el-col :span="20">
             {{ refundDetail.refund_point }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 实退积分: </el-col>
+          <el-col :span="3" class="col-3 content-right"> 实退商品积分: </el-col>
           <el-col :span="20">
             {{ refundDetail.refunded_point }}
           </el-col>
@@ -126,9 +126,15 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退运费金额: </el-col>
+          <el-col :span="3" class="col-3 content-right"> 退款运费金额（¥）: </el-col>
           <el-col :span="20">
-            {{ refundDetail.freight / 100 }}
+            {{ refundDetail.freight_type == 'cash' ? (refundDetail.freight / 100).toFixed(2) : 0 }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 退款运费（积分）: </el-col>
+          <el-col :span="20">
+            {{ refundDetail.freight_type == 'point' ? refundDetail.freight : 0 }}
           </el-col>
         </el-row>
         <el-row>
@@ -217,7 +223,7 @@ h3.title {
   color: #ff5000;
 }
 .col-3 {
-  width: 120px;
+  width: 150px;
   margin-right: 10px;
 }
 .detail-info {

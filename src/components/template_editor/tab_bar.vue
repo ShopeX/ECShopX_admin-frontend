@@ -29,7 +29,7 @@
               @click="handleIconChange(index)"
             >
             <div v-else class="icon-setter" @click="handleIconChange(index)">
-              <i class="iconfont icon-image muted" />
+              <i class="el-icon-picture muted" />
             </div>
             <img
               v-if="item.selectedIconPath"
@@ -38,7 +38,7 @@
               @click="handleSelectedIconChange(index)"
             >
             <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
-              <i class="iconfont icon-image muted" />
+              <i class="el-icon-picture muted" />
             </div>
             <div class="uploader-setting">
               <el-input v-model="item.text" placeholder="tab名称" maxlength="" />

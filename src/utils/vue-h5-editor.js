@@ -139,7 +139,7 @@ const options = {
   // extended modules
   modules: [
     {
-      icon: 'iconfont icon-image',
+      icon: 'el-icon-picture',
       name: 'uploader',
       dashboard: {
         template: '<el-button @click="onUpload">图片上传</el-button>',

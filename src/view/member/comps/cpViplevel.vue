@@ -334,13 +334,13 @@ export default {
           this.$message({ message: '请输入会员折扣', type: 'error' })
           return
         }
-        if (!reg.test(value) && this.VERSION_SHUYUN()) {
-          this.$message({
-            message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
-            type: 'error'
-          })
-          return
-        }
+        // if (!reg.test(value) && this.VERSION_SHUYUN()) {
+        //   this.$message({
+        //     message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
+        //     type: 'error'
+        //   })
+        //   return
+        // }
       }
     },
     // getIndex (index) {
@@ -395,12 +395,12 @@ export default {
           this.$message({ message: '请输入会员折扣', type: 'error' })
           break
         } else if (!discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())) {
-          isflag = true
-          this.$message({
-            message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
-            type: 'error'
-          })
-          break
+          // isflag = true
+          // this.$message({
+          //   message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',
+          //   type: 'error'
+          // })
+          // break
         }
 
         var priceList = this.levelData[i].price_list

@@ -67,7 +67,7 @@
       .image-meta {
         display: block;
       }
-      .icon-link {
+      .el-icon-link {
         display: block;
       }
       .icon-play-circle1 {
@@ -84,7 +84,7 @@
       display: none;
     }
   }
-  .icon-link {
+  .el-icon-link {
     position: absolute;
     top: 2px;
     left: 4px;
@@ -210,11 +210,11 @@
             @click="handleClickItem(item)"
           >
             <!-- <div class="image-item" :style="{ color: '#fff', backgroundImage: `url(${item.url})` }">
-              <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
+              <i class="el-icon-link" @click.stop="handleCopy(item.url)" />
             </div> -->
             <div class="image-item">
               <video :src="item.url" class="image-item-video" />
-              <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
+              <i class="el-icon-link" @click.stop="handleCopy(item.url)" />
               <i class="iconfont icon-play-circle1" @click.stop="handleCopy(item.url)" />
             </div>
 

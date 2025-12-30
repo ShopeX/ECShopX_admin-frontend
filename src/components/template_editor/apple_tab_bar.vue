@@ -25,11 +25,11 @@
             <!--
             <img v-if="item.iconPath" :src="item.iconPath" class="icon-setter" @click="handleIconChange(index)"/>
             <div class="icon-setter" v-else @click="handleIconChange(index)">
-              <i class="iconfont icon-image muted"></i>
+              <i class="el-icon-picture muted"></i>
             </div>
             <img v-if="item.selectedIconPath" :src="item.selectedIconPath" class="icon-setter" @click="handleSelectedIconChange(index)"/>
             <div class="icon-setter" v-else @click="handleSelectedIconChange(index)">
-              <i class="iconfont icon-image muted"></i>
+              <i class="el-icon-picture muted"></i>
             </div>-->
             <div class="uploader-setting">
               <el-input v-model="item.text" placeholder="tab名称" maxlength="" />
@@ -71,7 +71,7 @@
               {{ base.title }}
             </div>
             <div v-else class="content-center">
-              <i class="iconfont icon-link" @click="handleGoodsChange" />服务页面设置路径
+              <i class="el-icon-link" @click="handleGoodsChange" />服务页面设置路径
             </div>
           </div>
         </el-form-item>

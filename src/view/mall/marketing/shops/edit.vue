@@ -109,14 +109,14 @@
       <el-form-item label="门店LOGO">
         <div class="upload-box" @click="handleImgPicker('logo')">
           <img v-if="form.logo" :src="form.logo" class="avatar">
-          <i v-else class="iconfont icon-camera avatar-uploader-icon" />
+          <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
       </el-form-item>
       <el-form-item v-if="VERSION_PLATFORM()" label="门店横幅广告">
         <div class="upload-box" @click="handleImgPicker('banner')">
           <img v-if="form.banner" :src="form.banner" class="avatar">
-          <i v-else class="iconfont icon-camera avatar-uploader-icon" />
+          <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
       </el-form-item>

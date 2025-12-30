@@ -216,7 +216,7 @@ export default {
       this.init()
     },
     fnGo(tabName) {
-      this.$router.push({ path: `/setting/system-config/sms-service/ali_sms/${tabName}` })
+      this.$router.push({ path: `/setting/system-config/sms-service/${tabName}` })
     }
   }
 }

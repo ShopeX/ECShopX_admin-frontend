@@ -351,7 +351,7 @@ $txt-placeholder: #f5f5f7;
       right: 0;
       top: 0;
     }
-    .icon-times {
+    .el-icon-close {
       display: inline-block;
       width: 15px;
       height: 15px;
@@ -784,7 +784,7 @@ $txt-placeholder: #f5f5f7;
                   >
                     <span v-if="editableSeries === item.name" slot="label">
                       <el-input v-model="item.title" size="mini" class="series-name-input" />
-                      <i class="iconfont icon-times" @click="removeTab(item.name)" />
+                      <i class="el-icon-close" @click="removeTab(item.name)" />
                     </span>
                   </el-tab-pane>
                 </el-tabs>
@@ -816,13 +816,16 @@ $txt-placeholder: #f5f5f7;
                       :src="item.img ? item.img : 'https://fakeimg.pl/50x50'"
                       alt=""
                     >
-                    <div v-else class="iconfont icon-images" />
+                    <div v-else>
+                      <i class="el-icon-pictures"></i>
+                    </div>
                   </div>
                   <el-input v-model="item.name" placeholder="名称" />
-                  <div class="bind-btn iconfont icon-link" @click="showCategory(fidx)">
+                  <div class="bind-btn" @click="showCategory(fidx)">
+                    <i class="el-icon-link"></i>
                     {{ item.category_name ? item.category_name : '绑定分类' }}
                   </div>
-                  <!-- <div @click="openPageDialog(fidx)" class="bind-btn iconfont icon-link"> {{item.page_name ? item.page_name : '绑定自定义页面'}}</div> -->
+                  <!-- <div @click="openPageDialog(fidx)" class="bind-btn el-icon-link"> {{item.page_name ? item.page_name : '绑定自定义页面'}}</div> -->
                   <el-checkbox v-model="item.hot"> 热推 </el-checkbox>
                   <div class="control-bar move iconfont icon-stream" />
                   <div class="control-bar remove iconfont icon-trash" @click="remove(fidx)" />
@@ -837,16 +840,14 @@ $txt-placeholder: #f5f5f7;
                             :src="sitem.img ? sitem.img : 'https://fakeimg.pl/50x50'"
                             alt=""
                           >
-                          <div v-else class="iconfont icon-images" />
+                          <div v-else class="el-icon-pictures" />
                         </div>
                         <el-input v-model="sitem.name" placeholder="名称" />
                         <div
                           class="bind-btn"
-                          :class="{
-                            ' iconfont icon-link': !sitem.main_category_id && !sitem.category_id
-                          }"
                           @click="showCategory(fidx, sidx)"
                         >
+                          <i class="el-icon-link" v-if="!sitem.main_category_id && !sitem.category_id"></i>
                           {{ sitem.main_category_id ? '管理分类：' : ''
                           }}{{ sitem.category_id ? '商品分类：' : ''
                           }}{{ sitem.category_name ? sitem.category_name : '绑定分类' }}
@@ -871,17 +872,16 @@ $txt-placeholder: #f5f5f7;
                                   :src="litem.img ? litem.img : 'https://fakeimg.pl/50x50'"
                                   alt=""
                                 >
-                                <div v-else class="iconfont icon-images" />
+                                <div v-else>
+                                  <i class="el-icon-pictures"></i>
+                                </div>
                               </div>
                               <el-input v-model="litem.name" placeholder="名称" />
                               <div
                                 class="bind-btn"
-                                :class="{
-                                  'iconfont icon-link':
-                                    !litem.main_category_id && !litem.category_id
-                                }"
                                 @click="showCategory(fidx, sidx, lidx)"
                               >
+                                <i class="el-icon-link" v-if="!litem.main_category_id && !litem.category_id"></i>
                                 {{ litem.main_category_id ? '管理分类：' : ''
                                 }}{{ litem.category_id ? '商品分类：' : ''
                                 }}{{ litem.category_name ? litem.category_name : '绑定分类' }}

@@ -26,7 +26,7 @@
             </div>
             <div class="notice-footer">
               <div class="footer-item">
-                <div @click="handleEdit(index)"><i class="iconfont icon-edit" />编辑</div>
+                <div @click="handleEdit(index)"><i class="el-icon-edit-outline" />编辑</div>
               </div>
               <div v-if="dataList[item.id]" class="footer-item">
                 <div
@@ -40,7 +40,7 @@
                 </div>
               </div>
               <!-- <div class="footer-item" @click="handleTemplRemove(index)">
-                  <i class="iconfont icon-trash-alt"></i>废弃
+                  <i class="el-icon-delete"></i>废弃
                 </div> -->
             </div>
           </div>

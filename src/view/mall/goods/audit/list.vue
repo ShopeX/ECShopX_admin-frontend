@@ -37,7 +37,7 @@
             </el-select>
           </SpFilterFormItem>
           <SpFilterFormItem prop="distributor_id" label="店铺:">
-            <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+            <SpSelectShop v-model="params.distributor_id" @change="onDistributorChange" clearable placeholder="请选择" />
           </SpFilterFormItem>
           <SpFilterFormItem prop="main_cat_id" label="管理分类:">
             <el-cascader
@@ -363,6 +363,9 @@ export default {
     this.fetchList()
   },
   methods: {
+    onDistributorChange(value) {
+      this.params.distributor_id = value ? value : 'all_distributor'
+    },
     async getMainCategory() {
       //管理分类
       const res = await this.$api.goods.getCategory({ is_main_category: true })

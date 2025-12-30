@@ -184,7 +184,7 @@
                     </el-button>
                   </div>
                   <el-button slot="reference" type="text">
-                    <i class="iconfont icon-angle-double-right" />
+                    <i class="el-icon-d-arrow-right" />
                   </el-button>
                 </el-popover>
               </template>

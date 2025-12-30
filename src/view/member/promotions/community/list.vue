@@ -78,7 +78,7 @@
       </el-table-column>
       <el-table-column min-width="140" label="操作">
         <template slot-scope="scope">
-          <div class="operating-icons">
+          <div class="operating-icons gap-2">
             <el-button
               v-if="scope.row.status === 'loading'"
               type="text"
@@ -92,10 +92,9 @@
             <el-button type="text" @click="editCommunityAction(scope.$index, scope.row)">
               编辑
             </el-button>
-            <i
-              class="mark iconfont icon-trash-alt1"
-              @click="deleteCommunityAction(scope.$index, scope.row)"
-            />
+            <el-button type="text" @click="deleteCommunityAction(scope.$index, scope.row)">
+              删除
+            </el-button>
           </div>
         </template>
       </el-table-column>

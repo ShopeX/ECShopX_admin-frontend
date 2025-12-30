@@ -74,7 +74,7 @@
           <el-button size="mini" type="text" v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'" @click="updateStatusCommunityAction(scope.$index, scope.row)">终止活动</el-button>
         </template>
       </el-table-column> -->
-        <el-table-column label="操作" min-width="150" fixed="right">
+        <el-table-column label="操作" min-width="150" fixed="left">
           <template slot-scope="scope">
             <el-button type="text" @click="viewGoodsList(scope.row.activity_id)">
               查看商品

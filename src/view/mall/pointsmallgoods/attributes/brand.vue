@@ -78,7 +78,7 @@
           <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
           <div class="upload-box" @click="handleImgPicker">
             <img v-if="form.image_url" :src="form.image_url" class="avatar">
-            <i v-else class="iconfont icon-camera avatar-uploader-icon" />
+            <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
         <el-form-item>

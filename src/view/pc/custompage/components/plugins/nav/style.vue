@@ -31,7 +31,7 @@
                 <template v-if="item.linkPage === 'store'"> 【店铺】{{ item.name }} </template>
               </div>
               <div class="setting-remove" @click="removeItem(index)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </div>
             </div>
           </draggable>

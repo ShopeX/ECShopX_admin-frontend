@@ -75,8 +75,25 @@
 
     <el-form ref="form" label-width="100px">
       <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
-        <el-table-column prop="refund_bn" min-width="220" label="退款单号">
+        <el-table-column label="操作" fixed="left">
           <template slot-scope="scope">
+            <el-button type="text" @click="handleDetail(scope.row)">详情</el-button>
+            <el-button
+              v-if="
+                scope.row.refund_status == 'AUDIT_SUCCESS' &&
+                scope.row.refund_channel == 'offline' &&
+                (jstErpSetting?.is_open ? scope?.row?.progress != '8' : true)
+              "
+              style="color: #459ae9"
+              type="text"
+              @click="() => handleRefund(scope.row)"
+            >
+              确认退款
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column prop="refund_bn" min-width="220" label="退款单号">
+          <template slot-scope="scope" style="margin-left: 10px;">
             <el-tag v-if="scope.row.refund_type == '0'" effect="plain" type="warning" size="mini">
               售后
             </el-tag>
@@ -222,8 +239,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="180" label="退运费">
-          <template slot-scope="scope"> ￥{{ scope.row.freight / 100 }} </template>
+        <el-table-column width="180" label="退款运费金额（¥）">
+          <template slot-scope="scope"> {{ scope.row.freight_type == 'cash' ? scope.row.freight / 100 : 0 }} </template>
+        </el-table-column>
+        <el-table-column width="180" label="退款运费（积分）">
+          <template slot-scope="scope"> {{ scope.row.freight_type == 'point' ? scope.row.freight : 0 }} </template>
         </el-table-column>
 
         <!-- 退款方式 -->
@@ -267,30 +287,6 @@
             <el-tag v-if="scope.row.refund_status == 'REFUNDCLOSE'" type="info" size="mini">
               退款关闭
             </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <router-link
-              :to="{
-                path: matchRoutePath('detail'),
-                query: { refund_bn: scope.row.refund_bn }
-              }"
-            >
-              详情
-            </router-link>
-            <el-button
-              v-if="
-                scope.row.refund_status == 'AUDIT_SUCCESS' &&
-                scope.row.refund_channel == 'offline' &&
-                (jstErpSetting?.is_open ? scope?.row?.progress != '8' : true)
-              "
-              style="color: #459ae9"
-              type="text"
-              @click="() => handleRefund(scope.row)"
-            >
-              确认退款
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -465,6 +461,12 @@ export default {
     this.getJstErpSetting()
   },
   methods: {
+    handleDetail(row) {
+      this.$router.push({
+        path: this.matchRoutePath('detail'),
+        query: { refund_bn: row.refund_bn }
+      })
+    },
     getJstErpSetting() {
       this.$api.third.getJstErpSetting().then((res) => {
         this.jstErpSetting = res

@@ -146,7 +146,7 @@
       </el-form-item>-->
       <!--<el-form-item label="产品详情" prop="item_intro">
         <span class="tpl_item img" @click="addImgPreview" style="">
-          <i class="iconfont icon-image"></i>图片
+          <i class="el-icon-picture"></i>图片
         </span>
         <imgPicker :dialog-visible="thumbDialog" :sc-status="isGetThumb" @chooseImg="pickThumb" @closeImgDialog="closeThumbDialog"></imgPicker>
       </el-form-item>-->

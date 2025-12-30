@@ -58,7 +58,7 @@
                   <div slot="reference"><i class="iconfont icon-sort-amount-up" />排序</div>
                 </el-popover>
                 <div class="footer-item" @click="handleClickDel(item)">
-                  <i class="iconfont icon-trash-alt" />删除
+                  <i class="el-icon-delete" />删除
                 </div>
               </div>
             </div>

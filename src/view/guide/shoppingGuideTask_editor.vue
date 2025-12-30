@@ -48,14 +48,14 @@
                 >
                   <img :src="wximageurl + item">
                   <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
-                    <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
-                    <div class="iconfont icon-arrows-alt" />
+                    <div class="el-icon-delete" @click="removePicsImg(index)" />
+                    <div class="el-icon-rank" />
                   </div>
                 </li>
               </draggable>
             </ul>
             <div v-if="dataForm.pics.length < 9" class="upload-box" @click="handlePicsChange">
-              <i class="iconfont icon-camera" />
+              <i class="el-icon-camera" />
             </div>
           </div>
           <div class="frm-tips">
@@ -93,7 +93,7 @@
             <el-table-column prop="address" label="地址" show-overflow-tooltip />
             <el-table-column label="操作" width="50">
               <template slot-scope="scope">
-                <i class="iconfont icon-trash-alt" @click="deleteDistritutorRow(scope.$index)" />
+                <i class="el-icon-delete" @click="deleteDistritutorRow(scope.$index)" />
               </template>
             </el-table-column>
           </el-table>
@@ -153,7 +153,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.goodspic'
       },
       isGetThumb: false,

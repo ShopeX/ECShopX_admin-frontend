@@ -87,7 +87,7 @@
           </el-upload>
           <div class="upload-preview" v-if="form.imageUrl">
             <img :src="form.imageUrl ? wximageurl + form.imageUrl : ''" class="avatar" />
-            <span class="icon-close" @click="removeImg"><i class="iconfont icon-times"></i></span>
+            <span class="icon-close" @click="removeImg"><i class="el-icon-close"></i></span>
           </div>
         </el-form-item> -->
 

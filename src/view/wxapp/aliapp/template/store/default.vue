@@ -349,7 +349,7 @@
               <div class="appmsg_container_bd">
                 <ul id="js_media_list" class="tpl_list">
                   <li class="tpl_item img" style="" @click="addImgPreview">
-                    <i class="iconfont icon-image" />图片
+                    <i class="el-icon-picture" />图片
                   </li>
                 </ul>
                 <imgPicker

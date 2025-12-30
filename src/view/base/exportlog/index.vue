@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage>
+  <SpPage class="sp-export-log-page">
     <div class="content-bottom-padded">
       <el-alert type="info" title="下载提示" show-icon>
         <div>已经生成的文件只保留一天，请及时下载</div>
@@ -119,20 +119,20 @@
       <el-tab-pane label="业绩订单" name="popularizeOrder" />
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">
-        <el-table-column prop="log_id" label="ID" width="80" />
+        <el-table-column label="操作" >
+          <template slot-scope="scope">
+            <el-button type="text" @click.prevent="handleDown(scope.row)">下载</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column prop="log_id" label="ID" />
         <el-table-column prop="file_name" label="文件名称" />
-        <el-table-column prop="finish_date" label="处理完成时间" width="160" />
-        <el-table-column prop="handle_status" label="处理状态" width="80">
+        <el-table-column prop="finish_date" label="处理完成时间"/>
+        <el-table-column prop="handle_status" label="处理状态">
           <template slot-scope="scope">
             <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
             <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
             <span v-if="scope.row.handle_status == 'processing'">处理中</span>
             <span v-if="scope.row.handle_status == 'fail'">处理失败</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" min-width="150" fixed="right">
-          <template slot-scope="scope">
-            <a href=" " @click.prevent="handleDown(scope.row)">下载</a>
           </template>
         </el-table-column>
       </el-table>

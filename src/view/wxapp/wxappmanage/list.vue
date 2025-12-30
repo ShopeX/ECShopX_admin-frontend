@@ -201,7 +201,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="key_name" label="模版英文名" width="140" />
-            <el-table-column label="绑定操作" fixed="right">
+            <el-table-column label="绑定操作" fixed="left">
               <template slot-scope="scope">
                 <div v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <el-button-group>
@@ -250,7 +250,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="其他操作" fixed="right">
+            <el-table-column label="其他操作" fixed="left">
               <template slot-scope="scope">
                 <span v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <router-link
@@ -339,7 +339,7 @@
                 <el-tag v-else type="gray" size="mini"> 未绑定 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="绑定操作" fixed="right">
+            <el-table-column label="绑定操作" fixed="left">
               <template slot-scope="scope">
                 <div v-if="scope.row.authorizer_appid">
                   <el-button-group>

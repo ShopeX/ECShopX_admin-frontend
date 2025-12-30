@@ -52,7 +52,7 @@
             <img :src="img.row.head_img" height="60">
           </div>
           <div v-else>
-            <i class="iconfont icon-image fa-3x" aria-hidden="true" />
+            <i class="el-icon-picture fa-3x" aria-hidden="true" />
           </div>
         </template>
       </el-table-column>

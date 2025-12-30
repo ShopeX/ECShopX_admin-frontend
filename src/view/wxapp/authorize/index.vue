@@ -13,7 +13,7 @@
               <img class="app-img" :src="wximageurl + detail.head_img" height="60">
             </div>
             <div v-else>
-              <i class="iconfont icon-image fa-3x" aria-hidden="true" />
+              <i class="el-icon-picture fa-3x" aria-hidden="true" />
             </div>
             <div v-if="detail.nick_name" class="app-name">
               {{ detail.nick_name }}

@@ -268,7 +268,7 @@ export default {
     openDialog(detail = null) {
       this.page_dialog = true
       if (detail) {
-        this.pageForm = detail
+        this.pageForm = JSON.parse(JSON.stringify(detail))
         if (detail.is_open == 1) {
           this.pageForm.is_open = true
         }
@@ -287,7 +287,7 @@ export default {
         }
       }
     },
-    savePage() {
+    async savePage() {
       let {
         page_name,
         page_description,
@@ -308,25 +308,21 @@ export default {
         template_name: this.template_name,
         page_type
       }
-      if (this.dialogTitle == '编辑页面') {
-        editCustomPage(id, params).then((res) => {
-          this.page_dialog = false
-          this.fetchPageList()
-          this.$message({
-            type: 'success',
-            message: '保存页面成功'
-          })
+      try {
+        if (this.dialogTitle == '编辑页面') {
+          await editCustomPage(id, params)
+        }
+        if (this.dialogTitle == '新增页面') {
+          await createCustomPage(params)
+        }
+        this.page_dialog = false
+        this.fetchPageList()
+        this.$message({
+          type: 'success',
+          message: '保存页面成功'
         })
-      }
-      if (this.dialogTitle == '新增页面') {
-        createCustomPage(params).then((res) => {
-          this.page_dialog = false
-          this.fetchPageList()
-          this.$message({
-            type: 'success',
-            message: '保存页面成功'
-          })
-        })
+      } catch (error) {
+        console.log(error)
       }
     },
     fetchPageList() {

@@ -31,7 +31,7 @@
             :fill="activeMainMenu === item.alias_name ? computedPrimaryColor : '#333'"
           />
           <span
-            class="text-sm mt-1"
+            class="text-sm mt-1 text-center"
             :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
             >{{ item.name }}</span
           >

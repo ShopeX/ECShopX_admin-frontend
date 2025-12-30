@@ -96,7 +96,7 @@
           >
             <div v-if="form.is_image" class="upload-box" @click="handleImgPicker(index)">
               <img v-if="item.image_url" :src="item.image_url" class="avatar">
-              <i v-else class="iconfont icon-camera avatar-uploader-icon" />
+              <i v-else class="el-icon-camera avatar-uploader-icon" />
             </div>
             <div
               class="view-flex-item"
@@ -104,7 +104,9 @@
             >
               <el-input v-model="item.attribute_value" placeholder="规格值名称" />
             </div>
-            <div class="iconfont icon-trash-alt1" @click="removeItem(index)" />
+            <div @click="removeItem(index)">
+              <i class="el-icon-delete-solid"></i>
+            </div>
           </div>
           <el-button type="default" size="small" @click="addItem"> 添加规格值 </el-button>
         </el-form-item>

@@ -73,7 +73,7 @@
         <el-form-item label="轮播项">
           <div v-for="(item, index) in data" :key="index" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
-              <i class="iconfont icon-trash-alt" />
+              <i class="el-icon-delete" />
             </div>
             <template v-if="type === 'wxapp'">
               <div v-if="item.imgUrl" class="upload-box">
@@ -84,7 +84,7 @@
                 >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
                 上传图片
               </div>
               <div class="uploader-setting">
@@ -129,7 +129,7 @@
                     {{ item.title }}
                   </div>
                   <div v-else class="content-center">
-                    <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
                   </div>
                 </div>
               </div>
@@ -139,7 +139,7 @@
                 <img :src="item.url" class="banner-uploader" @click="handleImgChange(index)">
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
                 上传图片
               </div>
               <div class="uploader-setting">
@@ -152,7 +152,7 @@
                 <div class="goods-select" @click="handleGoodsChange(index)">
                   <div v-if="item.goodsId" class="link-content">商品：{{ item.title }}</div>
                   <div v-else class="content-center">
-                    <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
                   </div>
                 </div>
               </div>

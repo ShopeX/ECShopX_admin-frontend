@@ -81,7 +81,7 @@
                 @click="handleImgChange(index)"
               >
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
                 上传图片
               </div>
               <div class="uploader-setting">
@@ -94,7 +94,7 @@
                 <div class="goods-select" @click="handleGoodsChange(index)">
                   <div v-if="item.title" class="link-content">商品：{{ item.title }}</div>
                   <div v-else class="content-center">
-                    <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
                   </div>
                 </div>
               </div>

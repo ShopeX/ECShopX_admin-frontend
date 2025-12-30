@@ -172,7 +172,8 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        operator_type: 'supplier'
+        operator_type: 'supplier',
+        ...this.searchParams
       }
       return params
     },

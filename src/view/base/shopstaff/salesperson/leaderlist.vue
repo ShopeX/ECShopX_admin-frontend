@@ -48,9 +48,9 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operating-icons">
-              <i class="iconfont icon-edit1" @click="updateSalesperson(scope.row)" />
+              <i class="el-icon-edit-outline" @click="updateSalesperson(scope.row)" />
               <i
-                class="mark iconfont icon-trash-alt1"
+                class="mark el-icon-delete-solid"
                 @click="deleteSalesperson(scope.$index, scope.row)"
               />
             </div>
@@ -102,7 +102,7 @@
                 <el-table-column label="操作" width="50">
                   <template slot-scope="scope">
                     <i
-                      class="iconfont icon-trash-alt"
+                      class="el-icon-delete"
                       @click="deleteStoreRow(scope.$index, rel_distributor_ids)"
                     />
                   </template>

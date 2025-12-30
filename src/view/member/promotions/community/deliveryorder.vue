@@ -101,7 +101,7 @@
               <span>{{ scope.row.created_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="操作" min-width="120" fixed="right">
+          <el-table-column prop="status" label="操作" min-width="120" fixed="left">
             <template slot-scope="scope">
               <el-button
                 v-if="scope.row.status == 'PENDING'"

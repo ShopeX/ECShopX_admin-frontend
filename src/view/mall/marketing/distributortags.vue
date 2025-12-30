@@ -38,12 +38,9 @@
       <el-table-column prop="description" label="标签描述" width="250" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <div class="operating-icons">
-            <i class="iconfont icon-edit1" @click="editAction(scope.$index, scope.row)" />
-            <i
-              class="mark iconfont icon-trash-alt1"
-              @click="deleteAction(scope.$index, scope.row)"
-            />
+          <div class="operating-icons gap-2">
+            <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="deleteAction(scope.$index, scope.row)"> 删除 </el-button>
           </div>
         </template>
       </el-table-column>

@@ -120,14 +120,14 @@
                   >
                     <img :src="wximageurl + item">
                     <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
-                      <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
-                      <div class="iconfont icon-arrows-alt" />
+                      <div class="el-icon-delete" @click="removePicsImg(index)" />
+                      <div class="el-icon-rank" />
                     </div>
                   </li>
                 </draggable>
               </ul>
               <div class="upload-box" @click="handleActivityPicsChange">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
               </div>
             </div>
             <div class="frm-tips">
@@ -353,7 +353,7 @@
             <SpRichText v-model="introInfo" />
           </div>
           <!-- <span class="tpl-btn" @click="addImgPreview" style="">
-          <i class="iconfont icon-image"></i>图片
+          <i class="el-icon-picture"></i>图片
         </span> -->
         </div>
         <div v-else style="margin-top: 20px">
@@ -495,7 +495,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.goodspic'
       },
       picsCurrent: -1,

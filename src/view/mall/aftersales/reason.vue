@@ -36,7 +36,7 @@
     <sideBar :visible.sync="show_sideBar" :title="'添加售后原因'">
       <el-form>
         <el-form-item label="售后原因">
-          <el-input v-model="form.reason" maxlength="20" />
+          <el-input v-model="form.reason" maxlength="120" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="add"> 提交 </el-button>

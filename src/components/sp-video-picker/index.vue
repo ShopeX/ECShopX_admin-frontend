@@ -202,7 +202,7 @@ export default {
       return (
         <div class="image-item" key={`image-item__${index}`}>
           <i
-            class="iconfont icon-times-circle1"
+            class="el-icon-close-circle1"
             on-click={this.handleDeleteItem.bind(this, index)}
           />
           <video-player class="picker-video-player" options={this.getOptions(item?.url || item)} />

@@ -70,7 +70,7 @@
         .image-meta {
           display: block;
         }
-        .icon-link {
+        .el-icon-link {
           display: block;
         }
       }
@@ -85,7 +85,7 @@
       background-color: rgba(0, 0, 0, 0.4);
       display: none;
     }
-    .icon-link {
+    .el-icon-link {
       position: absolute;
       top: 2px;
       left: 4px;
@@ -212,7 +212,7 @@
                 }"
               />
               <div class="image-modal" @click="handleClickItem(item)">
-                <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
+                <i class="el-icon-link" @click.stop="handleCopy(item.url)" />
               </div>
             </div>
             <div class="image-title-wrap" :title="item.image_name">

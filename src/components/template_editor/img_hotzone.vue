@@ -70,7 +70,7 @@
                   {{ item.title }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
+                  <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
                 </div>
               </div>
               <div v-else>

@@ -14,7 +14,7 @@
   flex: 1;
   font-size: 14px;
 }
-.icon-trash-alt1 {
+.el-icon-delete-solid {
   color: #888;
   font-size: 13px;
 }

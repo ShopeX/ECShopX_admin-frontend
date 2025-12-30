@@ -136,6 +136,15 @@ export default {
   //     }
   //   }
   // },
+  computed: {
+    formLabelPosition() {
+      if (this.labelPosition !== '') {
+        return this.labelPosition
+      }
+      const lang = this.$store?.state?.system?.lang
+      return ['en', 'ar'].includes(lang) ? 'top' : ''
+    }
+  },
   created() {},
   methods: {
     handleCancel() {
@@ -441,7 +450,7 @@ export default {
         label-width={labelWidth}
         validate-on-rule-change={false}
         inline-message
-        label-position={this.labelPosition !== '' ? this.labelPosition : (this.$store?.state?.system?.lang !== 'en' ? '' : 'top')}
+        label-position={this.formLabelPosition}
       >
         {formList.map((item, index) => {
           if (item.type == 'group') {

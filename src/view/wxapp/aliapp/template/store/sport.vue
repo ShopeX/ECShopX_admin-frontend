@@ -125,7 +125,7 @@
           <div class="section-body">
             <div v-for="(item, index) in form.bannerPicList" class="setting-item slider">
               <div class="setting-remove" @click="handleDelBanner(index)">
-                <i class="iconfont icon-trash-alt1" />
+                <i class="el-icon-delete-solid" />
               </div>
               <div>
                 <img
@@ -136,7 +136,7 @@
                 >
                 <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
-                    <i class="iconfont icon-camera" /><br>
+                    <i class="el-icon-camera" /><br>
                     上传图片
                   </div>
                 </div>
@@ -147,7 +147,7 @@
                 </div>
                 <div v-else class="content-center">
                   <i
-                    class="iconfont icon-link"
+                    class="el-icon-link"
                     @click="handleGoodsChange(index, 'banner')"
                   />绑定商品
                 </div>
@@ -181,7 +181,7 @@
                   >
                   <div v-else class="banner-uploader" @click="handleImgChange(index, 'hotGoods')">
                     <div class="content-center">
-                      <i class="iconfont icon-camera" /><br>
+                      <i class="el-icon-camera" /><br>
                       上传图片
                     </div>
                   </div>
@@ -206,7 +206,7 @@
                 <div v-if="item.item_id">
                   {{ item.type === 'goods' ? '商品' : '活动' }}：{{ item.item_name }}
                 </div>
-                <div v-else class="content-center"><i class="iconfont icon-link" />绑定商品</div>
+                <div v-else class="content-center"><i class="el-icon-link" />绑定商品</div>
               </div>
             </div>
           </div>

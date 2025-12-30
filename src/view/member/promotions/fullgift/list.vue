@@ -151,17 +151,9 @@
                     查看详情
                   </el-button>
                   <template v-if="scope.row.edit_btn == 'Y'">
-                    <i
-                      v-if="scope.row.status == 'waiting' || scope.row.status == 'ongoing'"
-                      class="iconfont icon-edit1"
-                      @click="editActivityAction(scope.$index, scope.row)"
-                    />
+                    <el-button type="text" v-if="scope.row.status == 'waiting' || scope.row.status == 'ongoing'" @click="editActivityAction(scope.$index, scope.row)"> 编辑 </el-button>
                   </template>
-                  <i
-                    v-if="scope.row.status == 'waiting'"
-                    class="iconfont icon-trash-alt"
-                    @click="deleteActivityAction(scope.row)"
-                  />
+                  <el-button type="text" v-if="scope.row.status == 'waiting'" @click="deleteActivityAction(scope.row)"> 编辑 </el-button>
                 </div>
               </template>
             </el-table-column>

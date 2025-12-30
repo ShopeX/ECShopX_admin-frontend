@@ -381,7 +381,7 @@
               {{ openStatus?.find(item => item.value === scope.row.invoice_status)?.title }}
             </template>
           </el-table-column>
-          <el-table-column prop="mobile" label="客户手机号">
+          <el-table-column prop="mobile" label="客户手机号" width="140">
             <template slot-scope="scope">
               <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
                 <router-link
@@ -470,14 +470,14 @@
               {{ scope.row.self_delivery_operator_name }}
             </template>
           </el-table-column>
-
+  
           <el-table-column label="配送费">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元' }}
             </template>
           </el-table-column>
-
-          <el-table-column label="配送员电话">
+  
+          <el-table-column label="配送员电话" width="140">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_mobile }}
             </template>

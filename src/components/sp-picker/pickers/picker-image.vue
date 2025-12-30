@@ -31,7 +31,7 @@
         float: right;
         display: none;
       }
-      .icon-trash-alt1 {
+      .el-icon-delete-solid {
         font-size: 13px;
         float: right;
         margin-top: 1px;
@@ -88,10 +88,10 @@
       .image-meta {
         display: block;
       }
-      .icon-link {
+      .el-icon-link {
         display: block;
       }
-    }
+    }     
     .image-meta {
       height: 28px;
       width: 100%;
@@ -101,7 +101,7 @@
       background-color: rgba(0, 0, 0, 0.4);
       display: none;
     }
-    .icon-link {
+    .el-icon-link {
       position: absolute;
       top: 2px;
       left: 4px;
@@ -247,8 +247,8 @@
             <SpIcon v-if="index > 0" name="edit-two" @click="onEditGroup(item)" />
             <SpIcon v-if="index > 0" name="delete" @click="onDeleteGroup(item)" />
           </div>
-          <!-- <i v-if="index > 0" class="iconfont icon-edit" @click.stop="onEditGroup(item)" />
-          <i v-if="index > 0" class="iconfont icon-trash-alt1" @click.stop="onDeleteGroup(item)" /> -->
+          <!-- <i v-if="index > 0" class="el-icon-edit-outline" @click.stop="onEditGroup(item)" />
+          <i v-if="index > 0" class="el-icon-delete-solid" @click.stop="onDeleteGroup(item)" /> -->
         </div>
       </div>
       <div class="rg-container">
@@ -332,10 +332,10 @@
           :auto-crop="option.autoCrop"
         />
         <div class="cropper-actions">
-          <i class="iconfont icon-search-minus" @click="handleCropperAction('minus')" />
-          <i class="iconfont icon-search-plus" @click="handleCropperAction('plus')" />
-          <i class="iconfont icon-undo-alt" @click="handleCropperAction('rotateRight')" />
-          <i class="iconfont icon-redo-alt" @click="handleCropperAction('rotateLeft')" />
+          <i class="el-icon-remove-outline" @click="handleCropperAction('minus')" />
+          <i class="el-icon-circle-plus-outline" @click="handleCropperAction('plus')" />
+          <i class="el-icon-refresh-left" @click="handleCropperAction('rotateRight')" />
+          <i class="el-icon-refresh-right" @click="handleCropperAction('rotateLeft')" />
         </div>
       </div>
       <span slot="footer" class="dialog-footer">

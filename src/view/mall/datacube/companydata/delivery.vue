@@ -149,7 +149,7 @@ export default {
         ],
         actions: [
           {
-            name: '导出',
+            name: '导 出',
             key: 'add',
             type: 'button',
             slot: 'header',

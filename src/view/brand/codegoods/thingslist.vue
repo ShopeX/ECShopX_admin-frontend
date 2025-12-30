@@ -56,7 +56,7 @@
               </el-tooltip>
             </router-link>
             <el-tooltip effect="light" content="删除物品" placement="top">
-              <i class="iconfont icon-trash-alt1" @click="deleteThingsAction(item.thing_id)" />
+              <i class="el-icon-delete-solid" @click="deleteThingsAction(item.thing_id)" />
             </el-tooltip>
           </div>
         </div>

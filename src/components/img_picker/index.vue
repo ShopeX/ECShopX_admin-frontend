@@ -24,7 +24,7 @@
             <img :src="wximageurl + item">
             <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
               <!-- <div
-                class="iconfont icon-trash-alt"
+                class="el-icon-delete"
                 @click="removePicsImg(index)"
               ></div> -->
               <div class="text">拖动进行排序</div>

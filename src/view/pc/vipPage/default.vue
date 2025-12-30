@@ -47,9 +47,10 @@
               <transition name="el-fade-in-linear">
                 <div
                   v-if="k == editorIndex"
-                  class="iconfont icon-trash-alt1"
                   @click="removeCurrent"
-                />
+                >
+                  <i class="el-icon-delete-solid"></i>
+                </div>
               </transition>
             </component>
           </draggable>

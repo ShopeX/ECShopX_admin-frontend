@@ -40,7 +40,7 @@
           </el-select>
           <div class="subtitle">
             没有需要的签名，马上
-            <router-link to="/setting/systemsetting/datamessage/ali_sms/sms_signatures/edit">
+            <router-link to="/setting/system-config/sms-service/sms_signatures/edit">
               添加签名
             </router-link>
           </div>
@@ -61,7 +61,7 @@
           </el-select>
           <div class="subtitle">
             没有需要的签名，马上
-            <router-link to="/systemsetting/datamessage/ali_sms/sms_template/edit">
+            <router-link to="/setting/system-config/sms-service/sms_template/edit">
               添加模板
             </router-link>
             <p>仅支持推广短信类型</p>

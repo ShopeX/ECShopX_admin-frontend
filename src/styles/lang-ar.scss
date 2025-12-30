@@ -1,0 +1,542 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+html[lang='ar-SA'],
+html[dir='rtl'] {
+  direction: rtl;
+  text-align: right;
+
+  .shop-left {
+    .option-item {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+  .sp-form {
+    .el-form-item {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+    .el-form-item__label {
+      text-align: right;
+    }
+  }
+  *:not(
+      .el-tabs__item,
+      .el-pager > .number,
+      .el-menu-item,
+      .el-submenu__title,
+      .el-tag,
+      .el-select-dropdown__item,
+      .el-dropdown-menu__item,
+      .el-range-separator,
+      .btn-linkpath,
+      .el-input__inner,
+      .el-input,
+      .el-input-number *,
+      .el-input-number
+    ) {
+    line-height: 1.2;
+  }
+  .el-table__cell .cell,
+  .el-dialog__body {
+    word-break: normal !important;
+    text-align: right;
+  }
+  .el-table__cell .cell {
+    line-height: 1.2;
+  }
+
+  .sub-menu-list {
+    .third-menu-item {
+      padding-right: 20px !important;
+      padding-left: 0 !important;
+    }
+    .el-submenu {
+      margin-bottom: 15px;
+    }
+    .el-menu-item,
+    .el-submenu__title {
+      word-break: normal;
+      height: auto;
+      white-space: normal;
+      padding: 5px 0;
+      line-height: 1.2;
+      width: 100%;
+      text-align: right;
+    }
+    .el-menu-item {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .el-submenu__title {
+      box-sizing: border-box;
+      span {
+        display: inline-block;
+        width: 80%;
+      }
+      padding-right: 9px !important;
+      padding-left: 0 !important;
+    }
+  }
+
+  .attr-panel-cell {
+    display: block !important;
+    padding-bottom: 10px;
+  }
+  .cell-label {
+    line-height: 1.2 !important;
+    padding-bottom: 5px;
+    width: auto !important;
+    text-align: right;
+  }
+  .el-dropdown-menu__item {
+    div {
+      &,
+      * {
+        line-height: 36px !important;
+      }
+    }
+  }
+
+  // RTL 镜像样式
+  // 浮动方向镜像
+  .el-float-left,
+  [class*='float-left'],
+  [style*='float: left'] {
+    float: right !important;
+  }
+  .el-float-right,
+  [class*='float-right'],
+  [style*='float: right'] {
+    float: left !important;
+  }
+
+  .f_l {
+    float: right !important;
+  }
+  .f_r {
+    float: left !important;
+  }
+
+  // 文本对齐镜像
+  .el-text-left,
+  .text-left,
+  [class*='text-left'] {
+    text-align: right !important;
+  }
+  .el-text-right,
+  [class*='text-right'] {
+    text-align: left !important;
+  }
+
+  // 定位镜像 - 处理绝对定位和固定定位的 left/right
+  // Element UI 组件中的定位镜像
+  .el-popper,
+  .el-select-dropdown,
+  .el-dropdown-menu,
+  .el-cascader-menus,
+  .el-date-picker,
+  .el-time-picker,
+  .el-color-picker__panel {
+    direction: rtl;
+  }
+
+  // 处理常见的定位场景 - 使用 CSS 逻辑属性或明确镜像
+  // 对于绝对定位和固定定位的元素，需要镜像 left/right
+
+  // 处理 Element UI 中常见的定位模式
+  .el-form-item__error {
+    left: auto !important;
+    right: 0 !important;
+  }
+
+  .el-input__prefix {
+    right: 5px !important;
+    left: auto !important;
+  }
+
+  .el-input__suffix {
+    left: 5px !important;
+    right: auto !important;
+  }
+
+  .el-textarea__inner {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  // 处理图标和按钮的定位
+  .el-icon-close,
+  .el-icon-circle-close {
+    right: 15px !important;
+    left: auto !important;
+  }
+
+  // 处理弹出层和下拉菜单的定位
+  .el-popover,
+  .el-tooltip__popper {
+    direction: rtl;
+  }
+
+  // 处理步骤条中的定位
+  .el-step__line {
+    left: auto !important;
+    right: 14px !important;
+  }
+
+  // 处理时间选择器中的定位
+  .el-time-spinner__item {
+    text-align: right;
+  }
+
+  // 处理日期选择器中的定位
+  .el-date-table td {
+    text-align: right;
+  }
+
+  // 通用规则：对于同时设置了 left 和 right 的元素，需要交换
+  // 注意：这个规则需要谨慎使用，可能会影响不需要镜像的元素
+  // 建议在具体组件中明确指定需要镜像的定位
+
+  // 处理常见的定位值镜像（使用 CSS 变量或逻辑属性会更好，但这里提供兼容方案）
+  // 对于明确需要镜像的组件，在下面单独处理
+
+  // Element UI 组件 RTL 支持
+  .el-form-item__label {
+    text-align: right;
+  }
+  .el-input-group__prepend {
+    border-left: 1px solid #dcdfe6;
+    border-right: none;
+  }
+  .el-input-group__append {
+    border-right: 1px solid #dcdfe6;
+    border-left: none;
+  }
+  .el-button-group > .el-button:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 4px;
+  }
+  .el-button-group > .el-button:last-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 4px;
+  }
+  .el-tabs__nav {
+    float: right;
+  }
+  .el-tabs__active-bar {
+    right: 0;
+    left: auto;
+  }
+  .el-pagination {
+    .el-pagination__sizes {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    .el-pagination__jump {
+      margin-right: 10px;
+      margin-left: 0;
+    }
+  }
+  .el-dialog {
+    .el-dialog__header {
+      padding: 20px 20px 10px;
+      text-align: right;
+    }
+    .el-dialog__headerbtn {
+      right: auto;
+      left: 20px;
+    }
+    .el-dialog__footer {
+      text-align: left;
+    }
+  }
+  .el-message-box {
+    .el-message-box__header {
+      padding: 20px 20px 10px;
+      text-align: right;
+    }
+    .el-message-box__headerbtn {
+      right: auto;
+      left: 20px;
+    }
+    .el-message-box__content {
+      text-align: right;
+    }
+    .el-message-box__btns {
+      text-align: left;
+    }
+  }
+  .el-dropdown-menu {
+    text-align: right;
+  }
+  .el-select-dropdown {
+    .el-select-dropdown__item {
+      text-align: right;
+    }
+  }
+  .el-cascader-menus {
+    direction: rtl;
+  }
+  .el-date-editor {
+    .el-range-input {
+      text-align: right;
+    }
+    .el-range-separator {
+      margin: 0 10px;
+    }
+  }
+  .el-table {
+    .el-table__header-wrapper {
+      th {
+        text-align: right;
+      }
+    }
+    .el-table__body-wrapper {
+      td {
+        text-align: right;
+      }
+    }
+    // 处理表格中的定位
+    .el-table__fixed,
+    .el-table__fixed-right {
+      left: auto !important;
+      right: 0 !important;
+    }
+    .el-table__fixed-header-wrapper {
+      left: auto !important;
+      right: 0;
+    }
+    .el-table__fixed-body-wrapper {
+      left: auto !important;
+      right: 0;
+    }
+  }
+  .el-menu {
+    text-align: right;
+  }
+
+  // 菜单图标镜像
+  // Element UI 默认的子菜单箭头图标
+  .el-submenu__icon-arrow {
+    left: 20px !important;
+    right: auto !important;
+  }
+
+  // 处理自定义菜单图标（如 icon-xiala）
+  .el-submenu__title {
+    position: relative;
+
+    .icon-xiala,
+    .icon-shouqijiantouxiao,
+    [class^='icon-'],
+    [class*=' icon-'] {
+      right: 8px !important;
+      left: auto !important;
+      margin-right: 0 !important;
+      margin-left: 4px !important;
+    }
+
+    // 处理绝对定位的图标
+    .icon-xiala {
+      position: absolute;
+      right: 8px !important;
+      left: auto !important;
+    }
+  }
+
+  // 菜单项中的图标位置调整
+  .el-menu-item {
+    i,
+    .iconfont,
+    [class^='icon-'],
+    [class*=' icon-'] {
+      margin-right: 0 !important;
+      margin-left: 16px !important;
+    }
+  }
+
+  // 子菜单标题中的图标（包括 iconfont）
+  .el-submenu__title {
+    i,
+    .iconfont,
+    [class^='icon-'],
+    [class*=' icon-'] {
+      margin-right: 0 !important;
+      margin-left: 16px !important;
+    }
+
+    // 确保图标在 RTL 中正确显示
+    .iconfont {
+      margin-right: 0 !important;
+      margin-left: 16px !important;
+    }
+  }
+
+  // 处理菜单组中的图标
+  .menu-group {
+    .icon-shouqijiantouxiao,
+    [class^='icon-'],
+    [class*=' icon-'] {
+      margin-right: 0 !important;
+      margin-left: 4px !important;
+    }
+  }
+
+  // 处理页面布局中的菜单图标
+  .page-layout {
+    .el-submenu__title {
+      .icon-xiala {
+        right: 8px !important;
+        left: auto !important;
+      }
+    }
+  }
+  .el-breadcrumb {
+    .el-breadcrumb__separator {
+      margin: 0 8px;
+    }
+  }
+  .el-steps {
+    .el-step__head {
+      .el-step__icon {
+        margin-right: 0;
+        margin-left: 8px;
+      }
+    }
+    .el-step__main {
+      text-align: right;
+    }
+  }
+  .el-timeline {
+    .el-timeline-item__node {
+      left: auto;
+      right: 0;
+    }
+    .el-timeline-item__wrapper {
+      padding-right: 28px;
+      padding-left: 0;
+      text-align: right;
+    }
+  }
+
+  // 处理更多常见的定位场景
+  // 处理侧边栏和菜单的定位
+  .el-menu--horizontal {
+    .el-menu-item,
+    .el-submenu__title {
+      text-align: right;
+    }
+  }
+
+  // 处理抽屉组件的定位
+  .el-drawer {
+    direction: rtl;
+    &.rtl {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  // 处理通知组件的定位
+  .el-notification {
+    right: auto !important;
+    left: 16px !important;
+  }
+
+  // 处理消息组件的定位
+  .el-message {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  // 处理加载组件的定位
+  .el-loading-mask {
+    direction: rtl;
+  }
+
+  // 处理标签页的定位
+  .el-tabs__item {
+    text-align: right;
+  }
+
+  // 处理导航菜单的定位
+  .el-menu-vertical {
+    .el-menu-item,
+    .el-submenu__title {
+      text-align: right;
+      padding-right: 20px;
+      padding-left: 0;
+    }
+  }
+
+  // 处理卡片组件的定位
+  .el-card {
+    .el-card__header {
+      text-align: right;
+    }
+  }
+
+  // 处理表单验证错误的定位
+  .el-form-item.is-error {
+    .el-input__inner,
+    .el-textarea__inner {
+      border-color: #f56c6c;
+    }
+  }
+
+  // 处理工具提示的定位
+  .el-tooltip__popper {
+    direction: rtl;
+    text-align: right;
+  }
+
+  // 处理弹出确认框的定位
+  .el-popconfirm {
+    direction: rtl;
+    text-align: right;
+  }
+  .el-form {
+    &.el-form--label-left {
+      .el-form-item__label {
+        float: right;
+      }
+    }
+  }
+  .cpn_drawer {
+    .box {
+      left: 0 !important;
+      right: auto !important;
+    }
+    .title {
+      left: 100% !important;
+      right: auto !important;
+    }
+    .el-icon-d-arrow-right {
+      transform: rotate(180deg);
+    }
+
+    // RTL 模式下的动画：从左侧滑出（translateX(-100%)）
+    .show {
+      animation: slide-rtl 0.5s forwards;
+    }
+    .hide {
+      animation: slide-rtl 0.5s reverse;
+    }
+  }
+  @keyframes slide-rtl {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}

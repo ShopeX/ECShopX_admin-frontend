@@ -36,7 +36,7 @@
         <el-form-item label="文字颜色" style="flex: 1">
           <el-color-picker v-model="item.color" />
         </el-form-item>
-        <div class="iconfont icon-times" @click="handleRemove(index)" />
+        <div class="el-icon-close" @click="handleRemove(index)" />
       </div>
       <el-button type="primary" plain icon="el-icon-circle-plus" @click="handleClick">
         添加内容项

@@ -204,7 +204,7 @@
                 {{ item.label }}
               </li>
             </ul>
-            <i slot="reference" class="iconfont icon-chevron-down tab-handle" />
+            <i slot="reference" class="iconfont el-icon-arrow-down tab-handle" />
           </el-popover>
         </div>
       </div>
@@ -236,7 +236,7 @@
                 {{ item.label }}
               </li>
             </ul>
-            <i slot="reference" class="iconfont icon-chevron-down tab-handle" />
+            <i slot="reference" class="iconfont el-icon-arrow-down tab-handle" />
           </el-popover>
         </div>
       </div>

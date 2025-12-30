@@ -69,7 +69,7 @@ export default {
     align-items: center;
     justify-content: center;
     display: none;
-    .icon-trash-alt1 {
+    .el-icon-delete-solid {
       font-size: 14px;
       color: #fff;
     }

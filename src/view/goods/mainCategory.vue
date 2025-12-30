@@ -32,7 +32,63 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :load="load"
     >
-      <el-table-column label="分类名称" width="180">
+      <el-table-column label="操作" width="350">
+        <template slot-scope="scope">
+          <el-button type="text">
+            <router-link
+              :to="{
+                path: '/products/product-manage/self-products',
+                query: { main_cat_id: scope.row.category_id }
+              }"
+            >
+              {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
+            </router-link>
+          </el-button>
+          <el-button v-if="VERSION_PLATFORM()" type="text">
+            <router-link
+              :to="{
+                path: '/products/product-manage/merchant-products',
+                query: { main_cat_id: scope.row.category_id }
+              }"
+            >
+              店铺商品
+            </router-link>
+          </el-button>
+          <el-button
+            v-if="scope.row.category_level == 3"
+            type="text"
+            @click="onLinkGoodsParams(scope.row)"
+          >
+            关联参数
+          </el-button>
+          <el-button
+            v-if="scope.row.category_level == 3"
+            type="text"
+            @click="onLinkGoodsSku(scope.row)"
+          >
+            关联规格
+          </el-button>
+          <!-- <el-button
+            v-if="scope.row.category_level == 3"
+            type="text"
+            @click="handleProfitPrice(scope.row)"
+          >
+            分润配置
+          </el-button> -->
+          <el-button
+            v-if="scope.row.category_level < 3"
+            type="text"
+            @click="appendChildren(scope.row)"
+          >
+            新增子类
+          </el-button>
+          <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="分类名称">
         <template slot-scope="scope">
           <span
             v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
@@ -51,70 +107,12 @@
               :width="48"
               :height="48"
             />
-            <span>{{ scope.row.category_name }}</span>
           </div>
         </template>
         </el-table-column>
         <el-table-column prop="sort" label="分类排序" width="140">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="text">
-              <router-link
-                :to="{
-                  path: '/products/product-manage/self-products',
-                  query: { main_cat_id: scope.row.category_id }
-                }"
-              >
-                {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
-              </router-link>
-            </el-button>
-            <el-button v-if="VERSION_PLATFORM()" type="text">
-              <router-link
-                :to="{
-                  path: '/entity/goods/goodsaudit',
-                  query: { main_cat_id: scope.row.category_id }
-                }"
-              >
-                店铺商品
-              </router-link>
-            </el-button>
-            <el-button
-              v-if="scope.row.category_level == 3"
-              type="text"
-              @click="onLinkGoodsParams(scope.row)"
-            >
-              关联参数
-            </el-button>
-            <el-button
-              v-if="scope.row.category_level == 3"
-              type="text"
-              @click="onLinkGoodsSku(scope.row)"
-            >
-              关联规格
-            </el-button>
-            <!-- <el-button
-              v-if="scope.row.category_level == 3"
-              type="text"
-              @click="handleProfitPrice(scope.row)"
-            >
-              分润配置
-            </el-button> -->
-            <el-button
-              v-if="scope.row.category_level < 3"
-              type="text"
-              @click="appendChildren(scope.row)"
-            >
-              新增子类
-            </el-button>
-            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-              删除
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -234,7 +232,7 @@ export default {
   },
   mounted() {
     this.init()
-    this.classification()
+    // this.classification()
   },
   methods: {
     async classification() {

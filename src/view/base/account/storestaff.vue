@@ -46,6 +46,17 @@
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="accountsList">
+      <el-table-column label="操作" width="100px">
+        <template slot-scope="scope">
+          <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+          <!--<el-button
+            type="text"
+            @click="deleteAccountAction(scope.$index, scope.row)"
+          >
+            删除
+          </el-button>-->
+        </template>
+      </el-table-column>
       <!-- <el-table-column label="登陆账号">
         <template slot-scope="scope">
           {{ scope.row.login_name }}
@@ -91,17 +102,6 @@
             inactive-color="#ccc"
             @change="acitonDisabled(scope.$index, scope.row)"
           />
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
-          <!--<el-button
-            size="mini"
-            @click="deleteAccountAction(scope.$index, scope.row)"
-          >
-            删除
-          </el-button>-->
         </template>
       </el-table-column>
     </el-table>

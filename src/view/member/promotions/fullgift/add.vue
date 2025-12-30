@@ -132,7 +132,7 @@
               选赠品
             </el-button>
             </div> -->
-            <el-button
+            <!-- <el-button
               type="primary"
               class="el-icon-plus"
               :disabled="form.status == 'waiting' ? false : true"
@@ -141,7 +141,7 @@
               @click="addRules"
             >
               添加
-            </el-button>
+            </el-button> -->
           </el-col>
           <el-col>
             <el-checkbox

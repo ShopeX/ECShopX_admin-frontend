@@ -475,7 +475,7 @@
                   </template>
                 </el-table-column>
                 <template v-if="deliveryForm.delivery_type == 'sep'">
-                  <el-table-column label="发货数量" width="200" fixed="right">
+                  <el-table-column label="发货数量" width="200" fixed="left">
                     <template slot-scope="scope">
                       <el-input-number
                         v-if="scope.row.num - scope.row.delivery_item_num != 0"

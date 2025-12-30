@@ -42,7 +42,7 @@
             <el-col :span="20">
               <SpRichText v-model="form.intro" />
               <span class="tpl_item img" style="" @click="addImgPreview">
-                <i class="iconfont icon-image" />图片
+                <i class="el-icon-picture" />图片
               </span>
               <imgPicker
                 :dialog-visible="thumbDialog"

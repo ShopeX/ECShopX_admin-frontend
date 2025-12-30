@@ -108,7 +108,7 @@
               <SpRichText v-model="intro" />
             </div>
             <!-- <span class="tpl-btn" @click="addImgPreview" style="">
-              <i class="iconfont icon-image"></i>图片
+              <i class="el-icon-picture"></i>图片
             </span> -->
           </div>
           <div v-else class="component-block">
@@ -212,7 +212,7 @@ export default {
       },
       modules: [
         {
-          icon: 'iconfont icon-image',
+          icon: 'el-icon-picture',
           name: 'uploader'
         }
       ],
@@ -300,7 +300,7 @@ export default {
     addUploaderEventListener() {
       const self = this
       setTimeout(() => {
-        const uploaderDom = document.getElementsByClassName('icon iconfont icon-image')[0]
+        const uploaderDom = document.getElementsByClassName('icon el-icon-picture')[0]
         uploaderDom &&
           uploaderDom.addEventListener('click', () => {
             self.addImgPreview()

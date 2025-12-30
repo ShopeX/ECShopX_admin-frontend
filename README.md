@@ -54,7 +54,7 @@ npm i
 ```shell
 # B2C Business Model
 npm run dev:b2c
-
+  
 # B2B2C Business Model
 npm run dev:bbc
 ```
@@ -63,7 +63,7 @@ npm run dev:bbc
 ```shell
 # B2C Business Model
 npm run build:b2c
-
+  
 # B2B2C Business Model
 npm run build:bbc
 ```

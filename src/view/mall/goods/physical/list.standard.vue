@@ -117,11 +117,11 @@
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="cat_id" label="销售分类:">
+        <SpFilterFormItem prop="category" label="销售分类:">
           <el-cascader
-            v-model="params.cat_id"
+            v-model="params.category"
             :options="categoryList"
-            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
+            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id', emitPath: false }"
             clearable
           />
         </SpFilterFormItem>
@@ -425,7 +425,8 @@
             />
             <el-table-column label="供应状态" width="120">
               <template slot-scope="scope">
-                {{ scope.row.is_market == '1' ? '可售' : '不可售' }}
+                <span v-if="scope.row.item_holder == 'distributor' && !scope.row.supplier_name"></span>
+                <span v-else>{{ scope.row.is_market == '1' ? '可售' : '不可售' }}</span>
               </template>
             </el-table-column>
 
@@ -989,7 +990,7 @@ export default {
         operator_name: '',
         is_can_sale: '',
         supplier_name: '',
-        cat_id: '',
+        category: '',
         item_holder: '',
         is_gift: ''
       },
@@ -1558,10 +1559,16 @@ export default {
       }
     },
     editItemsAction(index, row, isNew) {
-      // 编辑商品弹框
-      this.show_rebate_sideBar = false
-      this.show_sideBar = false
-      this.show_itemStore = false
+      // // 编辑商品弹框
+      // this.show_rebate_sideBar = false
+      // this.show_sideBar = false
+      // this.show_itemStore = false
+      this.$router.push({
+        path: `${this.$route.path}/editor/${row.item_id}`,
+        query: {
+          detail: true
+        }
+      })
     },
     saveRebateConf() {
       var rebateConf = []
@@ -1776,9 +1783,6 @@ export default {
         pageSize,
         ...this.params,
         distributor_id: this.shopId
-      }
-      if (params.category.length > 0) {
-        params.category = params.category[params.category.length - 1]
       }
       // const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       const { list, total_count, warning_store } = await this.$api.marketing.getDistributorItems(

@@ -90,7 +90,7 @@
               :src="form.origincountry_img_url"
               class="avatar"
             >
-            <i v-else class="iconfont icon-camera avatar-uploader-icon" />
+            <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
         <el-form-item>

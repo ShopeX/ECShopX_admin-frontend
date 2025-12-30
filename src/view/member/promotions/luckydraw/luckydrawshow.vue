@@ -11,7 +11,7 @@
         <el-col :span="10">
           <div v-for="(item, index) in data" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
-              <i class="iconfont icon-trash-alt" />
+              <i class="el-icon-delete" />
             </div>
             <img
               v-if="item.imgUrl"
@@ -21,7 +21,7 @@
             >
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="iconfont icon-camera" /><br>
+                <i class="el-icon-camera" /><br>
                 上传图片
               </div>
             </div>

@@ -93,7 +93,7 @@
           <template slot-scope="scope">
             {{ scope.row.role_name }}
             <i
-              class="iconfont icon-edit1"
+              class="el-icon-edit-outline"
               @click="handleUpdateSalesmanRole(scope.row)"
             />
           </template>
@@ -115,10 +115,10 @@
             <el-table-column label="操作" width="160px">
               <template slot-scope="scope">
                 <div class="operating-icons">
-                  <i class="iconfont icon-edit1" @click="handleUpdateSalesman(scope.row)" />
+                  <i class="el-icon-edit-outline" @click="handleUpdateSalesman(scope.row)" />
                   <!-- <i
                 v-if="activeName == 'admin'"
-                class="mark iconfont icon-trash-alt1"
+                class="mark el-icon-delete-solid"
                 @click="handleDeleteSalesman(scope.$index, scope.row)"
               /> -->
                 </div>

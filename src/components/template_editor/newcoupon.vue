@@ -23,7 +23,7 @@
               <!--<img v-if="item.imgUrl" :src="wximageurl + item.imgUrl" class="banner-uploader square thumbnail" @click="handleImgChange(index)"/>
               <div class="banner-uploader square thumbnail" v-else @click="handleImgChange(index)">
                 <div class="content-center">
-                  <i class="iconfont icon-camera"></i>
+                  <i class="el-icon-camera"></i>
                 </div>
               </div>-->
               {{ item.title }}
@@ -31,7 +31,7 @@
               <span v-if="item.type === 'discount'" class="amount-cur">{{ item.amount }}折券</span>
 
               <div class="setting-remove" @click="removeItem(index)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </div>
             </div>
             <div class="background-color">

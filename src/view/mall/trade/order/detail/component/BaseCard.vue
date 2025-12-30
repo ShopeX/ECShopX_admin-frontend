@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { OPEN_STATUS_ARR } from '@/consts'
 import { dateFilter } from '@/utils'
 import CustomCard from './CustomCard'
 export default {
@@ -39,7 +40,7 @@ export default {
         [
           {
             name: '开票状态',
-            field: 'is_invoiced',
+            field: 'invoice_status',
             filter: self.invoiceFilter
           },
           {
@@ -154,13 +155,7 @@ export default {
       return returnValue
     },
     invoiceFilter(item) {
-      let returnValue = ''
-      if (item) {
-        returnValue = '已开票'
-      } else {
-        returnValue = '未开票'
-      }
-      return returnValue
+      return OPEN_STATUS_ARR.find(el => el.value === item)?.title || ''
     },
     receiptTypeFilter(item) {
       let returnValue = ''

@@ -14,7 +14,7 @@
           <el-form-item label="会员权益" prop="content">
             <SpRichText v-model="form_content.content" />
             <span class="tpl_item img" style="" @click="addImgPreview">
-              <i class="iconfont icon-image" />图片
+              <i class="el-icon-picture" />图片
             </span>
           </el-form-item>
           <div class="section-footer with-border content-center">

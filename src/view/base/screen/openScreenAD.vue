@@ -106,7 +106,7 @@
                   </span>
                 </div>
                 <div v-else class="content-center" @click="handleGoodsChange()">
-                  <i class="iconfont icon-link" />设置路径
+                  <i class="el-icon-link" />设置路径
                 </div>
               </div>
             </div>

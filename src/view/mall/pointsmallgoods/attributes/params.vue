@@ -89,7 +89,9 @@
             <div class="view-flex-item content-padded-right">
               <el-input v-model="item.attribute_value" placeholder="参数值名称" />
             </div>
-            <div class="iconfont icon-trash-alt1" @click="removeItem(index)" />
+            <div @click="removeItem(index)">
+              <i class="el-icon-delete-solid"></i>
+            </div>
           </div>
           <el-button type="default" size="small" @click="addItem"> 添加参数值 </el-button>
         </el-form-item>

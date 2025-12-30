@@ -32,7 +32,7 @@
             >
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="iconfont icon-camera" /><br>
+                <i class="el-icon-camera" /><br>
                 上传图片
               </div>
             </div>
@@ -48,7 +48,7 @@
                   {{ item.title }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
+                  <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
                 </div>
               </div>
             </div>

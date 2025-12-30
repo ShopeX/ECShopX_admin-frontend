@@ -146,12 +146,12 @@
                   </el-button>
                   <i
                     v-if="scope.row.status == 'waiting'"
-                    class="iconfont icon-edit1"
+                    class="el-icon-edit-outline"
                     @click="editActivityAction(scope.$index, scope.row)"
                   />
                   <i
                     v-if="scope.row.status == 'waiting'"
-                    class="iconfont icon-trash-alt"
+                    class="el-icon-delete"
                     @click="deleteActivityAction(scope.row)"
                   />
                 </div>

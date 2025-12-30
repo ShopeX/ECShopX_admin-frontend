@@ -41,7 +41,7 @@
               <i class="iconfont icon-stream drag-handler" />
               <span>
                 {{ item.title }}
-                <div class="iconfont icon-trash-alt btn-remove" @click="handleRemove(index)" />
+                <div class="el-icon-delete btn-remove" @click="handleRemove(index)" />
               </span>
             </div>
           </draggable>
@@ -54,7 +54,7 @@
               <i class="iconfont icon-stream drag-handler" />
               <span>
                 <el-input v-model="item.title" size="small" />
-                <div class="iconfont icon-trash-alt btn-remove" @click="handleRemove(index)" />
+                <div class="el-icon-delete btn-remove" @click="handleRemove(index)" />
               </span>
             </div>
           </draggable>

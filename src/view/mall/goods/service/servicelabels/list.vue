@@ -47,11 +47,11 @@
               @click="serviceLabelsDetail(scope.$index, scope.row)"
             />
             <i
-              class="iconfont icon-edit1"
+              class="el-icon-edit-outline"
               @click="editServiceLabelsAction(scope.$index, scope.row)"
             />
             <i
-              class="mark iconfont icon-trash-alt1"
+              class="mark el-icon-delete-solid"
               @click="deleteServiceLabelsAction(scope.$index, scope.row)"
             />
           </div>

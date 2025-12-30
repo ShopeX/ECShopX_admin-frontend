@@ -18,7 +18,7 @@
       <template v-if="!lock">
         <div
           v-if="checked.id && checked.id != '0' && isChangeStore"
-          class="iconfont icon-times"
+          class="el-icon-close"
           @click="handleResetClick"
         />
         <div v-if="isChangeStore" class="iconfont icon-sync-alt" @click="handleClick" />

@@ -95,7 +95,7 @@
               <!-- <i class="iconfont icon-search-plus" @click="communityDetail(scope.$index, scope.row)"></i> -->
               <i
                 v-if="scope.row.status == 'waiting'"
-                class="iconfont icon-edit1"
+                class="el-icon-edit-outline"
                 @click="editCommunityAction(scope.$index, scope.row)"
               />
             </div>

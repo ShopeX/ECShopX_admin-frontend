@@ -495,14 +495,14 @@ export default {
   cursor: pointer;
   display: none;
 }
-.goodspic .goodspic-mask .icon-trash-alt {
+.goodspic .goodspic-mask .el-icon-delete {
   font-size: 18px;
   color: #fff;
   float: left;
   margin-top: 25px;
   margin-left: 15px;
 }
-.goodspic .goodspic-mask .icon-arrows-alt {
+.goodspic .goodspic-mask .el-icon-rank {
   font-size: 18px;
   color: #fff;
   float: left;
@@ -513,7 +513,7 @@ export default {
 .ugc-form .goodspic:hover .goodspic-mask {
   display: block;
 }
-.ugc-form .livideo .goodspic-mask .icon-trash-alt {
+.ugc-form .livideo .goodspic-mask .el-icon-delete {
   margin-left: 35px;
 }
 .ugc-form /deep/ .el-image__inner {

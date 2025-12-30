@@ -32,7 +32,7 @@
                 >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(0)">
-                <i class="iconfont icon-camera" />上传图片
+                <i class="el-icon-camera" />上传图片
               </div>
             </div>
           </el-col>
@@ -55,7 +55,7 @@
                 >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(1)">
-                <i class="iconfont icon-camera" />上传图片
+                <i class="el-icon-camera" />上传图片
               </div>
             </div>
           </el-col>
@@ -80,7 +80,7 @@
                 >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(2)">
-                <i class="iconfont icon-camera" />上传图片
+                <i class="el-icon-camera" />上传图片
               </div>
             </div>
           </el-col>
@@ -104,7 +104,7 @@
             </el-col>
             <el-col :key="item.uuid2" :span="6">
               <div class="del-or-add-nav">
-                <i class="iconfont icon-trash-alt" @click="delTypeNav(index)" />
+                <i class="el-icon-delete" @click="delTypeNav(index)" />
               </div>
             </el-col>
           </template>
@@ -123,7 +123,7 @@
             </el-col>
             <el-col :key="item.uuid2" :span="6">
               <div>
-                <i class="iconfont icon-trash-alt" @click="delTabList(index)" />
+                <i class="el-icon-delete" @click="delTabList(index)" />
               </div>
             </el-col>
           </template>
@@ -154,7 +154,7 @@
                 </el-col>
                 <el-col :span="6">
                   <div class="del-or-add-nav">
-                    <i class="iconfont icon-trash-alt" @click="delGoods(i)" />
+                    <i class="el-icon-delete" @click="delGoods(i)" />
                   </div>
                 </el-col>
               </el-col>

@@ -6,9 +6,6 @@
 <template>
   <SpPage>
     <div class="ali-sms-page">
-      <div class="btn">
-        <router-link class="link" to="/setting/system-config/sms-service"> 切换短信商 </router-link>
-      </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="基础配置" name="base_config" />
         <el-tab-pane label="发送短信" name="send_sms" />
@@ -41,9 +38,9 @@ export default {
     handleClick(tab, event) {
       this.activeName = tab.name
       if (tab.name == 'base_config') {
-        this.$router.push({ path: `/setting/system-config/sms-service/ali_sms` })
+        this.$router.push({ path: `/setting/system-config/sms-service` })
       } else {
-        this.$router.push({ path: `${this.$route.matched[2].path}/${tab.name}` })
+        this.$router.push({ path: `${this.$route.matched[1].path}/${tab.name}` })
       }
     },
     switchSMS() {

@@ -30,7 +30,7 @@
         <div class="template-item">
           <div v-if="item.is_weapp_grade" class="has-upgrade" />
           <div v-if="item.wxaCodeVisible" class="wxcode">
-            <div class="iconfont icon-times" @click="closeWxcode(index)" />
+            <div class="el-icon-close" @click="closeWxcode(index)" />
             <img :src="item.wxaCodeImage" alt="">
           </div>
           <div class="template-wrap items-center flex-col flex" >

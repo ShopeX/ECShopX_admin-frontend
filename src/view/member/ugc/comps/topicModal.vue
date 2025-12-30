@@ -67,7 +67,7 @@
                   <div class="text">
                     {{ item.topic_name }}
                   </div>
-                  <div class="iconfont icon-arrows-alt" />
+                  <div class="el-icon-rank" />
                 </li>
               </draggable>
             </el-col>
@@ -115,7 +115,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.topic'
       }
     }

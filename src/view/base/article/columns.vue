@@ -31,7 +31,7 @@
               <input v-model="data.category_name" placeholder="栏目名称">
               <!-- <span class="add-child-category" v-if="data.level == 0"
                   @click="append(data.children, 1)">
-            <i class="el-icon-plus"></i>增加子栏目
+            <i class="el-icon-plus"></i>增加子栏目 
           </span> -->
             </li>
             <li>

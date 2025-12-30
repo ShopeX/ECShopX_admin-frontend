@@ -170,9 +170,9 @@
                             >
                               <img :src="wximageurl + item">
                               <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
-                                <!-- <div class="iconfont icon-trash-alt" /> -->
+                                <!-- <div class="el-icon-delete" /> -->
                                 <SpIcon name="delete" @click="removePicsImg(index)" />
-                                <!-- <div class="iconfont icon-arrows-alt" /> -->
+                                <!-- <div class="el-icon-rank" /> -->
                               </div>
                             </li>
                           </draggable>
@@ -830,7 +830,7 @@
           <template v-if="mode === 'richText'">
             <SpRichText ref="editor" v-model="form.intro" class="rich-text-editor" />
             <!-- <span class="tpl_item img" style="" @click="addImgPreview">
-              <i class="iconfont icon-image" />图片
+              <i class="el-icon-picture" />图片
             </span> -->
           </template>
           <template v-else>
@@ -943,7 +943,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.goodspic'
       },
       form: {
@@ -1402,7 +1402,7 @@ export default {
     pickThumb: function (arr) {
       if (arr.length != 0) {
         this.thumbDialog = false
-
+        
         // 直接将图片插入到富文本内容中
         let imgHtml = ''
         arr.forEach(data => {
@@ -1411,7 +1411,7 @@ export default {
             imgHtml += `<img src="${imageUrl}" style="max-width: 100%; height: auto; display: block; margin: 10px 0;" />`
           }
         })
-
+        
         if (imgHtml) {
           // 将图片HTML追加到现有内容中
           this.form.intro = this.form.intro + imgHtml

@@ -96,7 +96,7 @@
               <template v-if="config.moreLink.linkPage === 'custom_page'"> 自定义页面： </template>
               {{ config.moreLink.title }}
             </div>
-            <div v-else class="content-center"><i class="iconfont icon-link" />设置路径</div>
+            <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
           </div>
         </el-form-item>
       </el-form>

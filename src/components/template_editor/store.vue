@@ -83,9 +83,9 @@
                   </div>
                 </template>
                 <div class="setting-modal">
-                  <!-- <div class="iconfont icon-arrows-alt"></div> -->
+                  <!-- <div class="el-icon-rank"></div> -->
                   <div class="iconfont icon-cog" @click="handleGoods(index)" />
-                  <!-- <div class="iconfont icon-trash-alt1" @click="handleRemove(index)"></div> -->
+                  <!-- <div class="el-icon-delete-solid" @click="handleRemove(index)"></div> -->
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@
               >
             </div>
             <div v-else class="banner-uploader" @click="handleImgChange">
-              <i class="iconfont icon-camera" />上传图片
+              <i class="el-icon-camera" />上传图片
             </div>
           </div>
         </el-form-item>
@@ -156,7 +156,7 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.icon-arrows-alt',
+        handle: '.el-icon-rank',
         draggable: '.setting-item'
       }
     }
@@ -245,7 +245,7 @@ export default {
       font-size: 28px;
       color: #fff;
     }
-    .icon-arrows-alt {
+    .el-icon-rank {
       cursor: move;
     }
   }

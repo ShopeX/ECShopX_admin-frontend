@@ -148,6 +148,7 @@ export default {
         brief: '',
         isPrescriptionApproved:false,
         templatesId: '',
+        templatesName: '',
         brandId: '',
         itemUnit: '',
         sort: 1,
@@ -265,7 +266,16 @@ export default {
           required: true,
           disabled,
           message: '请选择运费模板',
-          display: 'inline'
+          display: 'inline',
+          isShow: () => !this.routerParams?.isSupplierGoods
+        },
+        {
+          label: '运费模板',
+          key: 'templatesName',
+          type: 'input',
+          disabled: true,
+          display: 'inline',
+          isShow: () => this.routerParams?.isSupplierGoods
         },
         {
           label: '品牌',
@@ -996,6 +1006,10 @@ export default {
       const { itemId } = this.$route.params
       const { is_new, supplier, islist } = this.$route.query
       this.routerParams = this.$route.query || {}
+      // 将 isSupplierGoods 从字符串转换为布尔值
+      if (this.routerParams.isSupplierGoods !== undefined) {
+        this.routerParams.isSupplierGoods = this.routerParams.isSupplierGoods === 'true' || this.routerParams.isSupplierGoods === true
+      }
 
       const {
         item_id,
@@ -1004,6 +1018,7 @@ export default {
         item_name,
         brief,
         templates_id,
+        templates_name,
         brand_id,
         item_unit,
         sort,
@@ -1035,7 +1050,6 @@ export default {
         item_main_cat_id,
         is_show_specimg,
         is_market,
-        spec_images,
         spec_items,
         mode,
         tdk_content,
@@ -1091,6 +1105,7 @@ export default {
       this.form.supplier_id = supplier_id
       this.form.brief = brief
       this.form.templatesId = templates_id.toString()
+      this.form.templatesName = templates_name
       this.form.brandId = brand_id + ''
       this.form.itemUnit = item_unit
       this.form.sort = sort
@@ -1174,6 +1189,12 @@ export default {
           package_type
         }
         this.resolveSkuParams(goods_spec, spec_items)
+        let spec_images = []
+        spec_items.forEach(item => {
+          item.item_spec.forEach(item => {
+            spec_images.push(item)
+          })
+        })
         this.$refs['skuParams'].onSkuChange({ spec_images, spec_items, restParams })
       } else {
         this.resolveSkuParams(goods_spec)
@@ -1189,7 +1210,7 @@ export default {
         this.form.mode = 'component'
         this.form.content = intro
       } else {
-        this.form.intro = isString(intro) ? intro : intro.toString()
+        this.form.intro = isString(intro) ? intro : intro?.toString()
       }
     },
     // 递归管理分类
@@ -1234,14 +1255,14 @@ export default {
         status: 1
       })
       if (list.length > 0) {
-        this.formList[5].options = list.map(item => {
+        const index = this.formList.findIndex(item => item.key == 'templatesId')
+        this.formList[index].options = list.map(item => {
           return {
             value: item.template_id,
             title: item.name
           }
         })
 
-        console.log('this.formList[5]:', this.formList[5])
       } else {
         this.$message.error('请先添加运费模板')
       }
@@ -1254,7 +1275,9 @@ export default {
         attribute_type: 'brand'
         // attribute_name: searchVal
       })
-      this.formList[6].options = list.map(({ attribute_id, attribute_name }) => {
+      console.log('-----------', this.formList)
+      const index = this.formList.findIndex(item => item.key == 'brandId')
+      this.formList[index].options = list.map(({ attribute_id, attribute_name }) => {
         return {
           value: attribute_id,
           title: attribute_name

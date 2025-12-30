@@ -139,8 +139,8 @@
         </ul>
       </el-form-item> -->
       <el-form-item v-if="$route.query.type !== 'detail'">
-        <loadingBtn ref="loadingBtn" @clickHandle="submitForm('form')" />
-        <el-button @click="fnBack"> 取消 </el-button>
+        <loadingBtn ref="loadingBtn" size="small" @clickHandle="submitForm('form')" />
+        <el-button size="small" @click="fnBack"> 取消 </el-button>
         <ul class="tips">
           <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
           <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
@@ -287,7 +287,7 @@ export default {
     },
     fnBack() {
       this.$router.push({
-        path: `/setting/system-config/sms-service/ali_sms/sms_signatures`
+        path: `/setting/system-config/sms-service/sms_signatures`
       })
     },
     fnAgain() {

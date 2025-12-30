@@ -94,6 +94,12 @@ const setGlobalLang = (_lang) => {
         const langAttr = langAttrMap[_lang] || langAttrMap.zhcn;
         // 设置 HTML lang 属性
         htmlElement.setAttribute('lang', langAttr);
+        // 如果是阿拉伯语，设置 dir="rtl"，否则设置为 "ltr"
+        if (_lang === 'ar') {
+            htmlElement.setAttribute('dir', 'rtl');
+        } else {
+            htmlElement.setAttribute('dir', 'ltr');
+        }
     }
 }
 setGlobalLang(lang);

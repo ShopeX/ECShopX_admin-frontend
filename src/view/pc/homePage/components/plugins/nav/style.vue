@@ -21,7 +21,7 @@
               class="setting-item item-selected"
             >
               <div class="setting-remove" @click="removeItem(index)">
-                <i class="iconfont icon-trash-alt" />
+                <i class="el-icon-delete" />
               </div>
               <el-input v-model="item.tab" placeholder="请输入导航名" class="input-m" />
               <div class="uploader-setting">
@@ -36,7 +36,7 @@
                       【分类】{{ item.title }}
                     </template>
                   </div>
-                  <div v-else class="content-center"><i class="iconfont icon-link" />设置路径</div>
+                  <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
                 </div>
               </div>
             </div>

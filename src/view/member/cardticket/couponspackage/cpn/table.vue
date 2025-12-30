@@ -43,7 +43,7 @@
       </template>
     </el-table-column>
     <el-table-column prop="give_num" label="发送数量" width="100" show-overflow-tooltip />
-    <el-table-column v-if="type != 'edit'" fixed="right" label="操作" width="100">
+    <el-table-column v-if="type != 'edit'" fixed="left" label="操作" width="100">
       <template slot-scope="scope">
         <el-button
           style="color: #409eff"

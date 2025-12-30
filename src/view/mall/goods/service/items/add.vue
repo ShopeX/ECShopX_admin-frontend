@@ -236,7 +236,7 @@
                       :class="picsCurrent == index ? 'on' : ''"
                       @click="removePicsImg(index)"
                     >
-                      <i class="iconfont icon-trash-alt1 icon1" />
+                      <i class="el-icon-delete-solid icon1" />
                     </div>
                   </li>
                 </ul>

@@ -15,10 +15,10 @@
   img {
     width: 100%;
   }
-}
-.icon-camera {
-  font-size: 40px;
-  color: #d7d7d7;
+  .el-icon-camera {
+    font-size: 40px;
+    color: #d7d7d7;
+  }
 }
 .form-item-tip {
   font-size: 13px;
@@ -36,14 +36,14 @@
       <el-form-item label="店铺Logo">
         <div class="upload-box" @click="handleImgPicker('logo')">
           <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar">
-          <i v-else class="iconfont icon-camera" />
+          <i v-else class="el-icon-camera" />
         </div>
         <div class="form-item-tip">推荐尺寸：140px * 140px</div>
       </el-form-item>
       <el-form-item label="商铺背景">
         <div class="upload-box" @click="handleImgPicker('banner')">
           <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar">
-          <i v-else class="iconfont icon-camera" />
+          <i v-else class="el-icon-camera" />
         </div>
         <div class="form-item-tip">推荐尺寸：400px * 260px</div>
       </el-form-item>

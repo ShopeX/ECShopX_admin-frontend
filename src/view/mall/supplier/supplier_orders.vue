@@ -207,7 +207,7 @@
                   </template>
                 </div>
                 <el-button slot="reference" type="text">
-                  更多<i class="iconfont icon-angle-double-right" />
+                  更多<i class="el-icon-d-arrow-right" />
                 </el-button>
               </el-popover>
             </template>

@@ -294,7 +294,7 @@ export default {
     },
     fnBack() {
       this.$router.push({
-        path: `/setting/system-config/sms-service/ali_sms/sms_template`
+        path: `/setting/system-config/sms-service/sms_template`
       })
     },
     fnAgain() {

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/": ["./src/"],
+      "@/filters": ["./src/filters/index"],
+      "@/consts": ["./src/consts/index"],
+      "@/components/*": ["./src/components/*"],
+      "@/api": ["./src/api/index"],
+      "@/api/*": ["./src/api/*"],
+      "@/view/*": ["./src/view/*"],
+      "@/store": ["./src/store/index"],
+      "@/common/*": ["./src/common/*"],
+      "@/mixins": ["./src/mixins/index"],
+      "@/mixins/*": ["./src/mixins/*"],
+      "@/router": ["./src/router/index"],
+      "@/router/*": ["./src/router/*"],
+      "@/utils": ["./src/utils/index"],
+      "@/utils/fetch": ["./src/utils/fetch"],
+      "@/utils/*": ["./src/utils/*"]
+    },
+    "allowArbitraryExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "jsx": "preserve"
+  },
+  "include": ["./src"],
+  "exclude": ["dist", "node_modules"]
+}

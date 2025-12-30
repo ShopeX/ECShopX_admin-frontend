@@ -1,0 +1,8 @@
+build/*.js
+config/*.js
+src/i18n/lang/index.js
+newpc_b2c/
+newpc_bbc/
+dist/
+*.scss
+*.css

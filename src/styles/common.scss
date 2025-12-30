@@ -1,0 +1,225 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+.action-container {
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .btn-upload {
+    display: inline-block;
+  }
+
+  .el-button,
+  .el-dropdown {
+    margin-left: 0;
+  }
+}
+
+/* nprogress */
+#nprogress {
+  .bar {
+    background: var(--primary) !important;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary) !important;
+  }
+
+  .spinner-icon {
+    border-top-color: var(--primary) !important;
+    border-left-color: var(--primary) !important;
+  }
+}
+
+/* tip-info */
+.tip-info {
+  background-color: #fff6f7;
+  border-radius: 4px;
+  border-left: 4px solid #f12805;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+/* sp-finder */
+.sp-finder {
+  .pop-edit-box-icon {
+    .icon-edit {
+      font-size: 13px;
+      margin-left: 2px;
+    }
+  }
+
+  &__popover-edit {
+    // display: flex;
+    // align-items: center;
+    width: auto !important;
+    // .pop-edit-container {
+    //   display: flex;
+    //   align-items: center;
+    //   margin: 0 0 0 10px !important;
+    // }
+  }
+
+  .sp-finder-actions-item {
+    // margin-bottom: 8px;
+  }
+
+  .sp-finder-actions__wrap {
+    justify-content: flex-start !important;
+  }
+
+  .sp-finder-search {
+    padding: 16px 0 0 0;
+    border: none;
+    position: relative;
+
+    .sp-finder-search-fields {
+      background-color: #f6f7f9;
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: 0;
+      margin-bottom: 16px;
+      padding-top: 16px;
+
+      .search-field {
+        display: flex;
+        align-items: center;
+        padding: 0 8px 16px 0;
+        flex-grow: 0 !important;
+
+        .search-field-label {
+          text-align: right;
+        }
+      }
+    }
+
+    .search-field-label {
+      width: 90px;
+      margin-right: 8px;
+    }
+
+    .search-field-value {
+      width: 214px;
+    }
+
+    .sp-finder-search-actions {
+      margin-bottom: 16px;
+      position: absolute;
+      top: 35px;
+      right: 10px;
+    }
+
+    .search-more {
+      position: absolute;
+      right: 10px;
+      top: 75px;
+
+      span {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .sp-finder-bd {
+    padding: 0;
+
+    .el-pagination {
+      text-align: center;
+    }
+
+    .el-loading-spinner {
+      top: 50%;
+      left: 50%;
+      width: auto;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .sp-finder-actions {
+    &-item {
+    }
+
+    &__wrap {
+      justify-content: flex-start !important;
+      display: flex;
+      gap: 8px;
+
+      .sp-finder-button {
+        .el-button {
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+
+  .sp-finder-footer {
+    margin-top: 16px;
+
+    .el-pagination {
+      text-align: right;
+    }
+  }
+
+  .copitext-col {
+    display: flex;
+    gap: 4px;
+  }
+
+  .el-table--border .el-table__cell:last-of-type {
+    border-right: 1px solid #ebeef5;
+  }
+
+  .el-table--border .el-table__cell:first-of-type {
+    border-left: 1px solid #ebeef5;
+  }
+
+  .el-table thead tr th:first-child {
+    border-right: none;
+  }
+
+  .el-table thead th {
+    // border-left: none !important;
+    background: #f0f2f5 !important;
+  }
+
+  .el-table__row--striped {
+    .el-table__cell {
+      background: #fff !important;
+    }
+  }
+}
+
+/* vue-html5-editor */
+.vue-html5-editor {
+  .toolbar {
+    ul {
+      li {
+        line-height: 26px;
+        height: 36px;
+      }
+
+      .icon {
+        display: inline !important;
+      }
+    }
+
+    .dashboard-font {
+      line-height: initial;
+    }
+  }
+
+  .content {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

@@ -1,0 +1,147 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+表单组件使用文档
+
+组件：SpForm
+参数	说明	类型	可选值	默认值
+formList	表单字段配置	FormList[]
+value	表单数据对象	Object
+size	表单样式大小	String	normal、min	normal
+submit	是否显示默认提交按钮	Boolean		true
+labelWidth	表单label宽度	String		160px
+showMessage	是否显示校验信息	Boolean		false
+FormList
+参数	说明	类型	可选值	默认值
+label	字段名称	String
+key	字段键值	String
+type	字段类型	String	input、number、text、select、radio、checkbox、table、richText、switch、textarea	自定义组件时可不填
+options	select、radio、checkbox、table的配置项	Options[]	详见：SelectOptions[]、RadioOptions[]、CheckboxOptions[]、TableOptions[]
+required	是否必填	Boolean
+disabled	是否可编辑	Boolean
+showMessage	是否显示校验错误信息	Boolean
+message	校验错误信息内容	String
+component	自定义组件	Component	component: ({ key }, value) => {
+            return <SpImagePicker v-model={value[key]} />
+          }
+width	表单项宽度	String		auto
+tip	表单项提示信息	String
+placeholder	占位内容	String	type为input、select、textarea
+isShow	是否显示	Boolean|Function
+onChange		Function	type为select、radio、checkbox、switch支持
+validator	自定义校验方法	Function(rule, value, callback)	validator: (rule, value, callback) => {
+            console.log('value:', value)
+            if (this.form.is_dada) {
+              if (!value) {
+                callback(new Error('达达业务类型必填'))
+              } else {
+                callback()
+              }
+            } else {
+              callback()
+            }
+          }
+SelectOptions
+参数	说明	类型	可选值	默认值
+title	名称	String
+value	值	String|Number
+RadioOptions
+参数	说明	类型	可选值	默认值
+label	radio的value	String
+name	radio属性名称	String
+CheckboxOptions
+参数	说明	类型	可选值	默认值
+label	checkbox的value	String
+name	checkbox属性名称	String
+disabled	禁止选择	Boolean
+TableOptions
+参数	说明	类型	可选值	默认值
+title	列标题	String
+key	键	String
+width	列宽度	Boolean
+render	列渲染内容	Function(row,column, cell)
+isShow	是否显示	Boolean		true
+Demo
+<SpForm
+  ref="form"
+  v-model="form"
+  show-message
+  label-width="100px"
+  :form-list="formList"
+  :submit="false"
+  />
+
+formList = [
+  {
+    label: '店铺类型',
+    type: 'group',
+    isShow: ({ key }, value) => this.IS_ADMIN && this.distributor_self == 0
+  },
+  {
+    label: '店铺类型',
+    key: 'distribution_type',
+    type: 'select',
+    clearable: false,
+    options: distributionTypeOptions,
+    isShow: ({ key }, value) => this.IS_ADMIN && this.distributor_self == 0
+  },
+  {
+    label: '业务类型',
+    key: 'business',
+    type: 'select',
+    options: [],
+    isShow: ({ key }, value) => value.is_dada && this.dadaEnable,
+    validator: (rule, value, callback) => {
+      console.log('value:', value)
+      if (this.form.is_dada) {
+        if (!value) {
+          callback(new Error('达达业务类型必填'))
+        } else {
+          callback()
+        }
+      } else {
+        callback()
+      }
+    }
+  },
+  {
+    label: '到店自提',
+    type: 'group'
+  },
+  {
+    label: '到店自提',
+    key: 'is_ziti',
+    type: 'switch',
+    width: 'auto',
+    tip: '启用到店自提功能后，买家下单时可选择下方地址自提，下单后你需要尽快将商品配送至指定自提点；下方自提地址共享该店铺库存。'
+  },
+  {
+    label: '',
+    width: '1000px',
+    component: ({ key }, value) => <DaoDianZiti ref='daoDianZiti' />,
+    isShow: ({ key }, value) => value.is_ziti
+  },
+  {
+    label: '可退货店铺',
+    width: '1000px',
+    component: ({ key }, value) => (
+      <RefundGoodsStore
+        v-model={value['offline_aftersales_address']}
+        ref='refundGoodsStore'
+      />
+    )
+  },
+  {
+    label: '其他店铺订单',
+    key: 'offline_aftersales_other',
+    type: 'switch',
+    width: 'auto',
+    tip: '启用后其他店铺在设置可退货店铺时可选择本店（即本店可接收其他店铺订单到店退货）；商家发起的售后订单不受此规则限制。'
+  },
+  {
+    label: '店铺介绍',
+    type: 'group'
+  }
+]

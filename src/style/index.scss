@@ -1,0 +1,129 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #f0f2f5;
+
+  #app {
+    height: 100%;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.view-flex {
+  display: flex;
+}
+
+.view-flex-item {
+  flex: 1;
+}
+
+.dom-link {
+  cursor: pointer;
+}
+
+.filter-header {
+  .el-input {
+    width: 220px;
+    margin: 0 5px 5px 0;
+  }
+}
+
+.logout-popper {
+  .popover-row {
+    display: flex;
+    align-items: center;
+    color: #888;
+
+    &:first-child {
+      border-bottom: 1px solid #efefef;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+  }
+}
+
+// el-css
+// .el-button {
+//   &-group {
+//     margin-right: 5px;
+//   }
+//   & + .el-button {
+//     margin-left: 5px;
+//   }
+// }
+
+.el-row {
+  margin-bottom: 10px !important;
+}
+
+.copy-link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+}
+
+.page-body {
+  &.has-footer {
+    margin-bottom: 57px;
+  }
+}
+
+#nprogress {
+  .bar {
+    background-color: $color-primary;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px $color-primary, 0 0 5px $color-primary;
+  }
+
+  .spinner-icon {
+    border-top-color: $color-primary;
+    border-left-color: $color-primary;
+  }
+}
+
+/***** filter-container *****/
+.filter-container {
+  background: #f6f7f9;
+  border-radius: 2px;
+}
+
+/***** footer-container *****/
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 222px;
+  background: #fff;
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #efefef;
+  z-index: 2000;
+
+  .el-button {
+    margin: 0 20px;
+  }
+}

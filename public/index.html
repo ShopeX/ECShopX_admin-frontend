@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="never" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>ECShopX</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3832401_lyx1hsdvyee.css" />
+    <link
+      rel="shortcut icon"
+      href="<%= process.env.VUE_APP_PLATFORM === 'shuyun' ? '/favicon-shuyun.ico' : '/favicon.ico' %>"
+    />
+    <link rel="stylesheet" href="<%= BASE_URL %>loading.css" data-app-loading="inject-css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div class="global-loading" id="__app-loading__">
+      <div class="loader"></div>
+      <img src="<%= BASE_URL %>images/logo.png" alt="logo" class="logo" width="220" style="margin-top: 36px;">
+    </div>
+  </body>
+</html>

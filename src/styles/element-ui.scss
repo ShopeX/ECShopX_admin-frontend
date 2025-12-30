@@ -1,0 +1,204 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+$--color-primary: var(--primary, #ff0000) !default;
+
+$--button-font-weight: 400;
+$--button-padding-vertical: 8px;
+$--button-padding-horizontal: 10px;
+
+$--border-radius-base: 6px;
+
+// $--input-height: 32px;
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@function mix($color1, $color2, $p: 50%) {
+  @return color-mix(in srgb, $color1 $p, $color2);
+}
+
+@import '~element-ui/packages/theme-chalk/src/index';
+
+// el-tabs
+.el-tabs {
+  &--card {
+    .el-tabs__header {
+      border-bottom-width: 0;
+      margin-bottom: 8px;
+    }
+
+    .el-tabs__nav {
+      height: 36px;
+      background: #f0f2f5;
+      border-radius: 2px !important;
+      padding: 4px;
+      border-width: 0 !important;
+    }
+
+    .el-tabs__item {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      font-weight: 400;
+      color: #666;
+      border-left-width: 0 !important;
+
+      &.is-active {
+        background: #fff;
+        color: $--color-primary;
+      }
+    }
+  }
+}
+
+.el-button {
+  & + .el-button {
+    margin-left: 8px;
+  }
+
+  & + .el-dropdown {
+    margin-left: 8px;
+  }
+
+  .ecx-icon {
+    font-size: 14px;
+  }
+}
+
+.el-dropdown {
+  & + .el-button {
+    margin-left: 8px;
+  }
+
+  & + .el-dropdown {
+    margin-left: 8px;
+  }
+}
+
+.el-table {
+  &--border {
+    .el-table__header {
+      th {
+        background: #f0f2f5;
+        color: #666;
+        padding: 6px 0;
+        font-weight: 400;
+        border-left: 1px solid #e8e8e8;
+      }
+    }
+
+    .el-table__cell {
+      border-right-width: 0;
+    }
+
+    td {
+      border-right-width: 0;
+    }
+  }
+}
+
+.el-card {
+  &--normal {
+    box-shadow: none !important;
+    border-width: 0;
+    margin-bottom: 20px;
+
+    .el-card__header {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 0 0 10px;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      // border-width: 0;
+      border-bottom: 1px solid #f1f2f5;
+
+      &:before {
+        position: absolute;
+        top: 12px;
+        bottom: 10px;
+        left: 0;
+        width: 2px;
+        background-color: #298dff;
+        content: '';
+      }
+    }
+
+    .el-card__body {
+      padding: 10px 6px;
+    }
+
+    .card-panel {
+      &-item {
+        margin-bottom: 6px;
+      }
+
+      &__label {
+        color: #333;
+      }
+
+      &__value {
+        color: #999;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.el-pagination {
+  .btn-prev,
+  .btn-next {
+    .el-icon {
+      margin: 0 auto;
+    }
+  }
+}
+
+.el-loading-spinner {
+  top: 50%;
+  left: 50%;
+  width: auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.el-dialog {
+  margin-top: 10vh !important;
+  border-radius: 8px;
+
+  &.is-fullscreen {
+    margin-top: 0 !important;
+    border-radius: 0;
+  }
+}
+
+.el-range-separator {
+  top: 0 !important;
+}
+
+// .el-range-editor {
+//   height: 32px;
+//   line-height: 32px;
+//   width: 100%;
+
+//   &.el-input__inner {
+//     padding: 0 15px;
+//   }
+
+//   .el-range-input {
+//     width: auto;
+//     text-align: left;
+//   }
+
+//   .el-range-separator {
+//     width: initial;
+//     margin-right: 16px;
+//     color: #666;
+//   }
+
+//   .el-input__icon {
+//     display: none;
+//   }
+// }

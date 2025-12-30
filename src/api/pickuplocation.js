@@ -1,0 +1,82 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+import { fetch } from './request'
+
+export function addZitiLocation(params) {
+  return fetch({
+    url: '/pickuplocation',
+    method: 'post',
+    params
+  })
+}
+
+// 获取自提点列表
+export function getZitiLocationList(params) {
+  return fetch({
+    url: '/pickuplocation/list',
+    method: 'get',
+    params
+  })
+}
+
+// 获取自提点详情
+export function getZitiLocation(id) {
+  return fetch({
+    url: `/pickuplocation/${id}`,
+    method: 'get'
+  })
+}
+
+// 更新自提点
+export function updateZitiLocation(id, params) {
+  return fetch({
+    url: `/pickuplocation/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+// 删除自提点
+export function deleteZitiLocation(id) {
+  return fetch({
+    url: `/pickuplocation/${id}`,
+    method: 'delete'
+  })
+}
+
+// 自提点关联门店
+export function bindZitiLocation(params) {
+  return fetch({
+    url: `pickuplocation/reldistributor`,
+    method: 'post',
+    params
+  })
+}
+
+// 自提点取消关联门店
+export function unbindZitiLocation(params) {
+  return fetch({
+    url: `pickuplocation/reldistributor/cancel`,
+    method: 'post',
+    params
+  })
+}
+
+// 保存商家自配送
+export function postPickuplocationList(params) {
+  return fetch({
+    url: `/distributor/selfdelivery/setting`,
+    method: 'post',
+    params
+  })
+}
+
+// 获取商家自配送
+export function getPickuplocationList() {
+  return fetch({
+    url: '/distributor/selfdelivery/setting',
+    method: 'get'
+  })
+}

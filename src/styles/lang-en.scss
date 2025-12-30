@@ -1,0 +1,80 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+html[lang='en-CN'] {
+  .shop-left {
+    .option-item {
+      margin-right: 10px;
+    }
+  }
+  .sp-form {
+    .el-form-item {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  *:not(
+      .el-tabs__item,
+      .el-pager > .number,
+      .el-menu-item,
+      .el-submenu__title,
+      .el-tag,
+      .el-select-dropdown__item,
+      .el-range-separator,
+      .btn-linkpath,
+      .el-input__inner,
+      .el-input,
+      .el-input-number *,
+      .el-input-number
+    ) {
+    line-height: 1.2;
+  }
+  .el-table__cell .cell,
+  .el-dialog__body {
+    word-break: normal !important;
+  }
+  .el-table__cell .cell {
+    line-height: 1.2;
+  }
+
+  .sub-menu-list {
+    .third-menu-item {
+      padding-left: 20px !important;
+    }
+    .el-submenu {
+      margin-bottom: 15px;
+    }
+    .el-menu-item,
+    .el-submenu__title {
+      word-break: normal;
+      height: auto;
+      white-space: normal;
+      padding: 5px 0;
+      line-height: 1.2;
+      width: 100%;
+    }
+    .el-menu-item {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .el-submenu__title {
+      box-sizing: border-box;
+      span {
+        display: inline-block;
+        width: 80%;
+      }
+      padding-left: 9px !important;
+    }
+  }
+
+  .attr-panel-cell {
+    display: block !important;
+    padding-bottom: 10px;
+  }
+  .cell-label {
+    line-height: 1.2 !important;
+    padding-bottom: 5px;
+    width: auto !important;
+  }
+}

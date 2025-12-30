@@ -1,0 +1,78 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+const name = '报表'
+import Layout from '@/view/layout' // 主框架
+
+export default {
+  path: '/shopadmin/statistics',
+  component: Layout,
+  children: [
+    {
+      path: 'distributordata',
+      name: `店铺统计`,
+      component: () => import('@/view/mall/datacube/distributordata')
+    },
+    {
+      path: 'deliverystaffstatistics',
+      name: `deliverystaffstatistics`,
+      meta: {
+        title: `${name}-配送员业绩`
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/delivery'
+        )
+    },
+    // {
+    //   path: 'accountingStatistics',
+    //   name: `店铺分账统计`,
+    //   component: () => import( '@/view/mall/splitbill/storeAccount' )
+    // },
+    {
+      path: 'accountingStatistics',
+      name: `店铺分账统计`,
+      meta: {
+        title: `分账统计`
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "companydata-accountingStatistics" */ '@/view/mall/datacube/accountingstatistics'
+        ),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          meta: {
+            title: `分账统计-查看`
+          },
+          component: () =>
+            import(
+              /* webpackChunkName: "companydata-accountingStatistics-detail" */ '@/view/mall/datacube/accountingstatistics_detail'
+            )
+        }
+      ]
+    },
+    {
+      path: 'cashRecord',
+      name: `提现记录`,
+      component: () => import('@/view/mall/datacube/cashrecord')
+    },
+    // {
+    //   path: 'accountingStatistics',
+    //   name: `accountingStatistics`,
+    //   component: () =>import('@/view/mall/splitbill/storeAccount')
+    // },
+    {
+      path: 'financial/settlement/summary',
+      name: `结算汇总`,
+      component: () => import('@/view/financial/settlement/summary'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
+    }
+  ]
+}

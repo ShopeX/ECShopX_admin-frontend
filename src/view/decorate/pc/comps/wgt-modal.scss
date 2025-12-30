@@ -1,0 +1,25 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+.wgts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 80px);
+  grid-gap: 20px;
+  .el-radio__input {
+  }
+  .el-radio__label {
+    padding: 0px;
+  }
+  .wgt-item--content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .el-radio__label {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,1063 @@
+{
+  "totalSheets": 1,
+  "totalRows": 104,
+  "updated": [
+    {
+      "sheet": "云店翻译-装修",
+      "row": 3,
+      "zhCn": "小程序模版呈现：",
+      "oldEn": "Mini-program template presentation",
+      "newEn": "Mini Program Template",
+      "matchedKeys": [
+        "t2uhtk8"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 5,
+      "zhCn": "店铺首页",
+      "oldEn": "Store homepage",
+      "newEn": "Store Homepage",
+      "matchedKeys": [
+        "ck2dr64"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 7,
+      "zhCn": "同步并启用",
+      "oldEn": "Synchronize and enable",
+      "newEn": "Sync and Enable",
+      "matchedKeys": [
+        "claysq5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 8,
+      "zhCn": "小程序配置",
+      "oldEn": "Mini Program configuration",
+      "newEn": "Mini Program Configuration",
+      "matchedKeys": [
+        "kl8htg5",
+        "sisg387"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 9,
+      "zhCn": "小程序导航配置",
+      "oldEn": "Mini-Program navigation configuration",
+      "newEn": "Mini Program Navigation Configuration",
+      "matchedKeys": [
+        "xlgzvm7",
+        "dwy50e9"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 10,
+      "zhCn": "添加模板",
+      "oldEn": "Add template",
+      "newEn": "Add Template",
+      "matchedKeys": [
+        "e7zygz4",
+        "tuq9el6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 11,
+      "zhCn": "店铺可编辑挂件",
+      "oldEn": "The store can edit pendants",
+      "newEn": "The store can edit widgets",
+      "matchedKeys": [
+        "dagtad7"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 12,
+      "zhCn": "立即启用",
+      "oldEn": "Enable immediately",
+      "newEn": "Enable Now",
+      "matchedKeys": [
+        "fu70814"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 13,
+      "zhCn": "定时启用",
+      "oldEn": "Scheduled activation",
+      "newEn": "Schedule Enable",
+      "matchedKeys": [
+        "bz9zzp4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 14,
+      "zhCn": "设置模板切换时间",
+      "oldEn": "Set the template switching time",
+      "newEn": "Set Template Switching Time",
+      "matchedKeys": [
+        "ibubdz8"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 18,
+      "zhCn": "废弃",
+      "oldEn": "Abandoned",
+      "newEn": "Discard",
+      "matchedKeys": [
+        "gm6c2",
+        "evj244"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 19,
+      "zhCn": "废弃模板",
+      "oldEn": "Synchronize the template to the store",
+      "newEn": "Discard Template",
+      "matchedKeys": [
+        "cc2ldu4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 20,
+      "zhCn": "确认废弃当前模板？",
+      "oldEn": "Confirm the abandonment of the current template?",
+      "newEn": "Confirm to discard the current template?",
+      "matchedKeys": [
+        "xyd8dv9"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 23,
+      "zhCn": "同步模板至店铺",
+      "oldEn": "Synchronize the template to the store",
+      "newEn": "Sync Template to Store",
+      "matchedKeys": [
+        "mnt3pb7",
+        "u2xpgh9"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 24,
+      "zhCn": "商城装修",
+      "oldEn": "Mall decoration",
+      "newEn": "Mall Decoration",
+      "matchedKeys": [
+        "b4ponl4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 26,
+      "zhCn": "商品栅格",
+      "oldEn": "Product grid",
+      "newEn": "Product Grid",
+      "matchedKeys": [
+        "b445si4",
+        "4jgmb26"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 27,
+      "zhCn": "热区图",
+      "oldEn": "Heat zone map",
+      "newEn": "Hotspot Map",
+      "matchedKeys": [
+        "gy3753",
+        "f2y65r5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 28,
+      "zhCn": "视频",
+      "oldEn": "Video",
+      "newEn": "Video",
+      "matchedKeys": [
+        "o9sb2",
+        "lguz94"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 30,
+      "zhCn": "橱窗",
+      "oldEn": "Window display",
+      "newEn": "Display Window",
+      "matchedKeys": [
+        "is062",
+        "gqjqy4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 33,
+      "zhCn": "文字标题",
+      "oldEn": "Text title",
+      "newEn": "Text Title",
+      "matchedKeys": [
+        "d6w2014",
+        "23mp6p6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 34,
+      "zhCn": "热点话题",
+      "oldEn": "Hot topics",
+      "newEn": "Hot Topics",
+      "matchedKeys": [
+        "epy47b4",
+        "ppyuw76"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 35,
+      "zhCn": "商品滚动",
+      "oldEn": "Product rolling",
+      "newEn": "Product Scroller",
+      "matchedKeys": [
+        "b457d54",
+        "4kcz2v6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 36,
+      "zhCn": "文字轮播",
+      "oldEn": "Text carousel",
+      "newEn": "Text Carousel",
+      "matchedKeys": [
+        "d72h0v4",
+        "1y3rgv6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 37,
+      "zhCn": "楼层图片",
+      "oldEn": "Floor picture",
+      "newEn": "Floor Image",
+      "matchedKeys": [
+        "dowm334",
+        "deulg16"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 38,
+      "zhCn": "图片导航",
+      "oldEn": "Image navigation",
+      "newEn": "Image Navigation",
+      "matchedKeys": [
+        "bg6vsn4",
+        "ext0fd6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 39,
+      "zhCn": "整屏滑动",
+      "oldEn": "Swipe across the entire screen",
+      "newEn": "Full-screen Swipe",
+      "matchedKeys": [
+        "d6pswi4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 43,
+      "zhCn": "轮播时间",
+      "oldEn": "Carousel time",
+      "newEn": "Rotation Interval",
+      "matchedKeys": [
+        "iiidbx4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 44,
+      "zhCn": "组件间距",
+      "oldEn": "Component spacing",
+      "newEn": "Component Spacing",
+      "matchedKeys": [
+        "gbw1i34"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 45,
+      "zhCn": "圆角图片",
+      "oldEn": "Rounded corner picture",
+      "newEn": "Rounded Image",
+      "matchedKeys": [
+        "bjr72t4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 46,
+      "zhCn": "指示点样式",
+      "oldEn": "Indicator point style",
+      "newEn": "Indicator Style",
+      "matchedKeys": [
+        "n87fsy5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 47,
+      "zhCn": "点",
+      "oldEn": "point",
+      "newEn": "Dot",
+      "matchedKeys": [
+        "m9l1"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 49,
+      "zhCn": "指示点覆盖",
+      "oldEn": "Indication point coverage",
+      "newEn": "Indicator Overlay",
+      "matchedKeys": [
+        "n81n565"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 50,
+      "zhCn": "指示点位置",
+      "oldEn": "Position of the indicator point",
+      "newEn": "Indicator Position",
+      "matchedKeys": [
+        "n8bhyx5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 51,
+      "zhCn": "居左",
+      "oldEn": "On the left",
+      "newEn": "Left",
+      "matchedKeys": [
+        "g7k12",
+        "eixun4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 52,
+      "zhCn": "居中",
+      "oldEn": "In the middle",
+      "newEn": "Center",
+      "matchedKeys": [
+        "g4g82",
+        "eg9ko4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 53,
+      "zhCn": "居右",
+      "oldEn": "On the  right",
+      "newEn": "Right",
+      "matchedKeys": [
+        "g5la2",
+        "eh8xe4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 54,
+      "zhCn": "指示点形状",
+      "oldEn": "Shape of the indicator point",
+      "newEn": "Indicator Shape",
+      "matchedKeys": [
+        "n88u065"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 55,
+      "zhCn": "圆形",
+      "oldEn": "Cricle",
+      "newEn": "Cricle",
+      "matchedKeys": [
+        "fbq42",
+        "drj384"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 57,
+      "zhCn": "指示点颜色",
+      "oldEn": "Color of the indicator point",
+      "newEn": "Indicator Color",
+      "matchedKeys": [
+        "n7z0h05"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 58,
+      "zhCn": "深色",
+      "oldEn": "Dark color",
+      "newEn": "Dark",
+      "matchedKeys": [
+        "jezl2",
+        "hac8v4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 59,
+      "zhCn": "亮色",
+      "oldEn": "Bright colors",
+      "newEn": "Light",
+      "matchedKeys": [
+        "e3k42",
+        "cphx84"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 60,
+      "zhCn": "轮播项间距",
+      "oldEn": "Carousel item spacing",
+      "newEn": "Carousel Item Spacing",
+      "matchedKeys": [
+        "5wc5z75"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 61,
+      "zhCn": "轮播项",
+      "oldEn": "Carousel item",
+      "newEn": "Carousel Item",
+      "matchedKeys": [
+        "li9ga3"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 62,
+      "zhCn": "选择路径",
+      "oldEn": "Select a path",
+      "newEn": "Select Path",
+      "matchedKeys": [
+        "il6j5h4",
+        "n55yjv6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 64,
+      "zhCn": "建议尺寸:（宽度640px，高度自适应）",
+      "oldEn": "Suggested size: (Width 640px, height adaptive)",
+      "newEn": "Recommended Size: (Width 640px, Height Auto)",
+      "matchedKeys": [
+        "1zp8ayk"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 66,
+      "zhCn": "后退",
+      "oldEn": "Back off",
+      "newEn": "Back",
+      "matchedKeys": [
+        "f35e2",
+        "dk58u4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 71,
+      "zhCn": "直接加购",
+      "oldEn": "Add to purchase directly",
+      "newEn": "Direct Add to Cart",
+      "matchedKeys": [
+        "ff4lmm4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 73,
+      "zhCn": "一行两个",
+      "oldEn": "Two per row",
+      "newEn": "Two per Row",
+      "matchedKeys": [
+        "aeiguq4",
+        "hi7us26"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 74,
+      "zhCn": "一行三个",
+      "oldEn": "Three in a row",
+      "newEn": "Three per Row",
+      "matchedKeys": [
+        "aeig7h4",
+        "hi8est6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 75,
+      "zhCn": "显示价格",
+      "oldEn": "Display price",
+      "newEn": "Show Price",
+      "matchedKeys": [
+        "dedyw14"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 76,
+      "zhCn": "显示品牌",
+      "oldEn": "Show the brand",
+      "newEn": "Show Brand",
+      "matchedKeys": [
+        "def0br4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 77,
+      "zhCn": "商品类型",
+      "oldEn": "Product type",
+      "newEn": "Product Type",
+      "matchedKeys": [
+        "b47jsb4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 78,
+      "zhCn": "普通商品",
+      "oldEn": "Ordinary commodities",
+      "newEn": "Standard Product",
+      "matchedKeys": [
+        "dim7c74"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 79,
+      "zhCn": "积分商品",
+      "oldEn": "points-based goods",
+      "newEn": "Points Product",
+      "matchedKeys": [
+        "fq30qa4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 80,
+      "zhCn": "查看更多",
+      "oldEn": "View more",
+      "newEn": "View More",
+      "matchedKeys": [
+        "dlojqk4",
+        "amwkno6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 84,
+      "zhCn": "标题",
+      "oldEn": "(空)",
+      "newEn": "Title",
+      "matchedKeys": [
+        "ij5d2",
+        "gix7z4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 85,
+      "zhCn": "副标题",
+      "oldEn": "(空)",
+      "newEn": "Subtitle",
+      "matchedKeys": [
+        "cl7a83"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 86,
+      "zhCn": "组件间距",
+      "oldEn": "(空)",
+      "newEn": "Component Spacing",
+      "matchedKeys": [
+        "gbw1i34"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 87,
+      "zhCn": "热区设置",
+      "oldEn": "(空)",
+      "newEn": "Hotspot Settings",
+      "matchedKeys": [
+        "elmfbx4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 88,
+      "zhCn": "选择图片",
+      "oldEn": "(空)",
+      "newEn": "Select Image",
+      "matchedKeys": [
+        "ikxafd4",
+        "mx7g2f6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 89,
+      "zhCn": "建议尺寸:（宽度640px，高度自适应）",
+      "oldEn": "(空)",
+      "newEn": "Recommended Size: (Width 640px, Height Auto)",
+      "matchedKeys": [
+        "1zp8ayk"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 90,
+      "zhCn": "选择路径",
+      "oldEn": "(空)",
+      "newEn": "Select Path",
+      "matchedKeys": [
+        "il6j5h4",
+        "n55yjv6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 92,
+      "zhCn": "设置路径",
+      "oldEn": "(空)",
+      "newEn": "Set Path",
+      "matchedKeys": [
+        "i5v6cl4",
+        "571yxx5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 93,
+      "zhCn": "商品",
+      "oldEn": "(空)",
+      "newEn": "Products",
+      "matchedKeys": [
+        "eywr2",
+        "dght14"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 94,
+      "zhCn": "销售分类",
+      "oldEn": "(空)",
+      "newEn": "Sales Category",
+      "matchedKeys": [
+        "j5fnxf4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 95,
+      "zhCn": "管理分类",
+      "oldEn": "(空)",
+      "newEn": "Management Category",
+      "matchedKeys": [
+        "g2r33u4",
+        "gaz7466"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 96,
+      "zhCn": "商品标签",
+      "oldEn": "(空)",
+      "newEn": "Product Tags",
+      "matchedKeys": [
+        "b449n64",
+        "4jjxpq6"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 97,
+      "zhCn": "文章",
+      "oldEn": "(空)",
+      "newEn": "Articles",
+      "matchedKeys": [
+        "hxyx2"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 98,
+      "zhCn": "软文",
+      "oldEn": "(空)",
+      "newEn": "Seeding Articles",
+      "matchedKeys": [
+        "oyd42",
+        "m20w84"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 99,
+      "zhCn": "页面",
+      "oldEn": "(空)",
+      "newEn": "Pages",
+      "matchedKeys": [
+        "qrgt2"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 100,
+      "zhCn": "活动报名",
+      "oldEn": "(空)",
+      "newEn": "​Event Registration",
+      "matchedKeys": [
+        "e4k5914"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 101,
+      "zhCn": "内购活动",
+      "oldEn": "(空)",
+      "newEn": "Employee Purchase",
+      "matchedKeys": [
+        "avctg54"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 102,
+      "zhCn": "秒杀",
+      "oldEn": "(空)",
+      "newEn": "Flash Sale",
+      "matchedKeys": [
+        "lacu2"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 103,
+      "zhCn": "自定义页面",
+      "oldEn": "(空)",
+      "newEn": "Custom Page",
+      "matchedKeys": [
+        "mmy2sm5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 104,
+      "zhCn": "直播",
+      "oldEn": "(空)",
+      "newEn": "Live Stream",
+      "matchedKeys": [
+        "ksah2"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 105,
+      "zhCn": "外部小程序",
+      "oldEn": "(空)",
+      "newEn": "External Mini Program",
+      "matchedKeys": [
+        "bu510h5"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 106,
+      "zhCn": "抽奖活动",
+      "oldEn": "(空)",
+      "newEn": "Lucky Draw",
+      "matchedKeys": [
+        "cty30m4"
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 107,
+      "zhCn": "分享页",
+      "oldEn": "(空)",
+      "newEn": "Share Page",
+      "matchedKeys": [
+        "ceq403"
+      ]
+    }
+  ],
+  "failed": [
+    {
+      "sheet": "云店翻译-装修",
+      "row": 2,
+      "zhCn": "该功能支持微信小程序商城，H5商城，APP商城，支付宝小程序商城。",
+      "oldEn": "This function supportsWechat Mini ProgramMall，H5Mall，APPMall，Alipay Mini ProgramsMall。",
+      "targetEn": "This function supports WeChat Mini Program Mall, H5 Mall, APP Mall, and Alipay Mini Program Mall.",
+      "reason": "未找到匹配的中文条目",
+      "similarMatches": [
+        {
+          "key": "c57ypr6",
+          "zhCn": "支付宝小程序",
+          "similarity": 50
+        },
+        {
+          "key": "tf07z45",
+          "zhCn": "微信小程序",
+          "similarity": 50
+        },
+        {
+          "key": "ezig2",
+          "zhCn": "商城",
+          "similarity": 50
+        },
+        {
+          "key": "aax9gr5",
+          "zhCn": "该功能支持",
+          "similarity": 50
+        },
+        {
+          "key": "e2p833",
+          "zhCn": "小程序",
+          "similarity": 50
+        }
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 6,
+      "zhCn": "模版同步设置",
+      "oldEn": "Template synchronization Settings",
+      "targetEn": "Template Sync Settings",
+      "reason": "未找到匹配的中文条目",
+      "similarMatches": [
+        {
+          "key": "ogvk2",
+          "zhCn": "设置",
+          "similarity": 50
+        },
+        {
+          "key": "vihti7",
+          "zhCn": "模版同步设置：",
+          "similarity": 50
+        },
+        {
+          "key": "lmys04",
+          "zhCn": "设置",
+          "similarity": 50
+        }
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 48,
+      "zhCn": "数",
+      "oldEn": "Digital",
+      "targetEn": "Number",
+      "reason": "未找到匹配的中文条目",
+      "similarMatches": [
+        {
+          "key": "hoo12",
+          "zhCn": "数云",
+          "similarity": 50
+        },
+        {
+          "key": "t5ukom6",
+          "zhCn": "数云官方商城",
+          "similarity": 50
+        },
+        {
+          "key": "p1sr4ch",
+          "zhCn": "所选劵包发送数量大于库存，请修改~",
+          "similarity": 50
+        },
+        {
+          "key": "4pqtwtg",
+          "zhCn": "所选优惠券发送数量必须为正整数~",
+          "similarity": 50
+        },
+        {
+          "key": "81jd18f",
+          "zhCn": "所选优惠券发送数量不可小于1~",
+          "similarity": 50
+        }
+      ]
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 56,
+      "zhCn": "长方形",
+      "oldEn": "Rectangular",
+      "targetEn": "Rectangular",
+      "reason": "未找到匹配的中文条目",
+      "similarMatches": []
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 91,
+      "zhCn": "H5路径",
+      "oldEn": "(空)",
+      "targetEn": "H5 Path",
+      "reason": "未找到匹配的中文条目",
+      "similarMatches": []
+    }
+  ],
+  "skipped": [
+    {
+      "sheet": "云店翻译-装修",
+      "row": 4,
+      "zhCn": "总部首页",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 15,
+      "zhCn": "编辑",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 16,
+      "zhCn": "复制",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 17,
+      "zhCn": "导航",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 21,
+      "zhCn": "确认",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 22,
+      "zhCn": "取消",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 25,
+      "zhCn": "轮播",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 29,
+      "zhCn": "优惠券",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 31,
+      "zhCn": "商品Tab",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 32,
+      "zhCn": "搜索",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 40,
+      "zhCn": "订单导航",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 41,
+      "zhCn": "标题",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 42,
+      "zhCn": "副标题",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 63,
+      "zhCn": "H5链接",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 65,
+      "zhCn": "保存",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 68,
+      "zhCn": "标题",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 69,
+      "zhCn": "副标题",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 70,
+      "zhCn": "组件间距",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 72,
+      "zhCn": "样式",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 81,
+      "zhCn": "选择路径",
+      "reason": "英文翻译已是最新或无需更新"
+    },
+    {
+      "sheet": "云店翻译-装修",
+      "row": 82,
+      "zhCn": "H5链接",
+      "reason": "英文翻译已是最新或无需更新"
+    }
+  ]
+}

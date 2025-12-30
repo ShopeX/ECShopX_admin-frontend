@@ -1,0 +1,485 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+$color-primary: var(--themeColor);
+$color-secondary: rgba(var(--themeColorRgb), 0.8);
+
+.el-button {
+  padding: 10px 16px;
+
+  .ecx-icon {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+
+  .icon-zhankai {
+    transform: scale(0.8);
+    display: inline-block;
+  }
+
+  &--mini {
+    padding: 7px 15px;
+    font-size: 12px;
+  }
+
+  &--primary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+
+    &:hover {
+      color: #fff !important;
+      border-color: $color-secondary !important;
+      background-color: $color-secondary !important;
+    }
+
+    &:focus {
+      color: #fff !important;
+      border-color: $color-primary !important;
+      background-color: $color-primary !important;
+    }
+  }
+
+  &.is-plain {
+    color: $color-primary;
+    border-color: $color-primary;
+    background-color: #fff;
+
+    &:hover {
+      color: $color-secondary;
+      border-color: $color-secondary;
+      background-color: #fff;
+    }
+
+    &:focus {
+      color: $color-primary;
+      border-color: $color-primary;
+      background-color: #fff;
+    }
+  }
+
+  &.is-disabled {
+    &.is-plain {
+      background-color: #fff;
+      border-color: #ebeef5;
+      color: #c0c4cc;
+
+      &:hover {
+        background-color: #fff;
+        border-color: #ebeef5;
+        color: #c0c4cc;
+      }
+
+      &:focus {
+        background-color: #fff;
+        border-color: #ebeef5;
+        color: #c0c4cc;
+      }
+    }
+  }
+
+  &--text {
+    padding: 0;
+    color: $color-primary;
+
+    &:hover {
+      color: $color-secondary !important;
+      border-color: transparent !important;
+    }
+
+    &:focus {
+      color: $color-primary !important;
+      border-color: transparent !important;
+    }
+
+    a {
+      color: $color-primary;
+    }
+  }
+
+  &--text-default {
+    padding: 0;
+    color: #9ca3af;
+    border-width: 0;
+
+    &:hover {
+      color: #374151 !important;
+      border-color: transparent !important;
+    }
+
+    &:focus {
+      color: #9ca3af !important;
+      border-color: transparent !important;
+    }
+
+    a {
+      color: #9ca3af;
+    }
+  }
+
+  & + .el-button {
+    margin-left: 8px;
+  }
+
+  &:hover {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+  }
+
+  &:focus {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+  }
+}
+
+.el-input {
+  &__inner {
+    border-radius: 2px;
+    border: 1px solid #d9d9d9;
+    height: 36px;
+    padding: 0 12px;
+
+    &:focus {
+      border-color: $color-secondary;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #bbb;
+      font-size: 14px;
+    }
+  }
+}
+
+.el-input-number {
+  &.is-controls-right {
+    .el-input-number__decrease {
+      bottom: 2px;
+      height: 18px;
+    }
+
+    .el-input-number__increase {
+      top: 2px;
+      height: 18px;
+
+      &:hover ~ .el-input {
+        .el-input__inner {
+          border-color: #d9d9d9;
+        }
+      }
+    }
+
+    .el-input__inner {
+      text-align: left;
+    }
+  }
+}
+
+.el-textarea {
+  &__inner:focus {
+    border-color: $color-primary;
+  }
+}
+
+.el-cascader {
+  line-height: 36px;
+
+  .el-input {
+    &__inner {
+      &:focus {
+        border-color: $color-secondary;
+      }
+    }
+
+    &.is-focus {
+      .el-input__inner {
+        border-color: $color-secondary;
+      }
+    }
+
+    .el-input__inner {
+      &:focus {
+        border-color: $color-secondary;
+      }
+    }
+  }
+
+  &-panel {
+    .el-cascader-node.in-active-path,
+    .el-cascader-node.is-active,
+    .el-cascader-node.is-selectable.in-checked-path {
+      color: $color-primary;
+    }
+  }
+}
+
+.el-select {
+  .el-input {
+    &__inner {
+      &:focus {
+        border-color: $color-secondary;
+      }
+    }
+
+    &.is-focus {
+      .el-input__inner {
+        border-color: $color-secondary;
+      }
+    }
+  }
+}
+
+.el-tabs {
+  &--card {
+    .el-tabs__header {
+      border-bottom-width: 0;
+      margin-bottom: 8px;
+    }
+
+    .el-tabs__nav {
+      height: 36px;
+      background: #f0f2f5;
+      border-radius: 2px !important;
+      padding: 4px;
+      border-width: 0 !important;
+    }
+
+    .el-tabs__item {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      color: #545d7a;
+      border-left-width: 0 !important;
+
+      &.is-active {
+        background: #fff;
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.el-table {
+  &--border {
+    .el-table__header {
+      th {
+        background: #f0f2f5;
+        color: #222;
+        padding: 6px 0;
+        font-weight: 400;
+        border-left: 1px solid #e8e8e8;
+      }
+    }
+
+    .el-table__cell {
+      border-right-width: 0;
+    }
+
+    td {
+      border-right-width: 0;
+    }
+  }
+}
+
+.el-card {
+  &--normal {
+    box-shadow: none !important;
+    border-width: 0;
+
+    .el-card__header {
+      padding: 0 0 0 10px;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      // border-width: 0;
+      border-bottom: 1px solid #f1f2f5;
+
+      &:before {
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        left: 0;
+        width: 2px;
+        background-color: #298dff;
+        content: '';
+      }
+    }
+
+    .el-card__body {
+      padding: 10px 6px;
+    }
+
+    .card-panel {
+      &-item {
+        margin-bottom: 6px;
+      }
+
+      &__label {
+        color: #333;
+      }
+
+      &__value {
+        color: #999;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.el-steps {
+  .el-step__head {
+    &.is-success {
+      color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+
+  .el-step__title {
+    &.is-success {
+      color: $color-primary;
+    }
+  }
+}
+
+/* 分页 */
+.el-pagination {
+  font-weight: 500;
+  &.is-background {
+    .el-pager {
+      li:not(.disabled) {
+        &.active {
+          background-color: $color-primary;
+          color: #fff !important;
+        }
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+  .btn-prev,
+  .btn-next {
+    .el-icon {
+      margin: 0 auto;
+    }
+  }
+}
+
+.el-tag {
+  &--primary {
+    color: $color-primary;
+    border-color: $color-secondary;
+  }
+}
+
+.el-select-dropdown {
+  &__item {
+    &.selected {
+      color: $color-primary;
+    }
+  }
+}
+
+.el-radio {
+  &__input {
+    &.is-checked {
+      .el-radio__inner {
+        border-color: $color-primary;
+        background: $color-primary;
+      }
+    }
+
+    &.is-checked + .el-radio__label {
+      color: inherit;
+    }
+  }
+
+  &__inner {
+    &:hover {
+      border-color: $color-secondary;
+    }
+  }
+}
+
+.el-checkbox {
+  &__input {
+    &.is-checked {
+      .el-checkbox__inner {
+        border-color: $color-primary;
+        background: $color-primary;
+      }
+    }
+
+    &.is-checked + .el-checkbox__label {
+      color: inherit;
+    }
+  }
+
+  &__inner {
+    &:hover {
+      border-color: $color-secondary;
+    }
+  }
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: $color-primary;
+  border-color: $color-primary;
+}
+
+/* el-loading-spinner */
+.el-loading-spinner {
+  top: 50%;
+  left: 50%;
+  width: auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+
+  .path {
+    stroke: $color-primary;
+  }
+
+  .el-loading-text {
+    color: $color-primary;
+  }
+}
+
+.el-dropdown-menu {
+  &__item:focus,
+  &__item:not(.is-disabled):hover {
+    background-color: rgba(var(--themeColorRgb), 0.1);
+    color: $color-primary;
+  }
+}
+
+.el-checkbox {
+  &__inner:hover {
+    border-color: $color-primary;
+  }
+
+  &__input {
+    &.is-focus {
+      .el-checkbox__inner {
+        border-color: $color-primary;
+      }
+    }
+  }
+}
+
+.el-statistic .head {
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+
+.el-image {
+  display: block;
+}
+
+.el-link {
+  line-height: initial;
+}

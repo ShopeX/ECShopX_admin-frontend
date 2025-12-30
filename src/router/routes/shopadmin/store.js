@@ -1,0 +1,259 @@
+/**
+ * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+ * See LICENSE file for license details.
+ */
+import { BasicLayout } from '@/layout/basic' // 主框架
+
+const routes = [
+  {
+    component: BasicLayout,
+    meta: {
+      aliasName: 'store',
+      icon: 'application',
+      keepAlive: true,
+      title: '店铺'
+    },
+    name: 'shopadminStore',
+    path: '/shopadmin/store',
+    children: [
+      {
+        name: 'marketingDistributor',
+        path: 'marketingdistributor',
+        component: () => import('@/view/mall/marketing/distributor'),
+        meta: {
+          aliasName: 'marketingdistributor',
+          icon: 'icon-shop',
+          title: '店铺信息',
+          permissions: ['store.marketingdistributor']
+        },
+        children: [
+          {
+            path: 'editor/:itemId?',
+            component: () => import('@/view/merchant/store'),
+            meta: {
+              title: '编辑店铺',
+              hidden: true
+            }
+          },
+          {
+            path: 'template/:distributor_id?',
+            component: () => import('@/view/mall/marketing/distributor_template'),
+            meta: {
+              title: '店铺模板',
+              hidden: true
+            }
+          },
+          {
+            path: 'details/:id?',
+            component: () => import('@/view/mall/marketing/distributor_details'),
+            meta: {
+              title: '店铺详情',
+              hidden: true
+            }
+          },
+          {
+            path: 'wxpaysetting',
+            component: () => import('@/view/mall/marketing/distributor_wxpaysetting'),
+            meta: {
+              title: '微信支付设置',
+              hidden: true
+            }
+          },
+          {
+            path: 'alipaysetting',
+            component: () => import('@/view/mall/marketing/distributor_alipaysetting'),
+            meta: {
+              title: '支付宝设置',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'storeWhitelist',
+        path: 'store-whitelist',
+        component: () => import('@/view/mall/marketing/storewhitelist'),
+        meta: {
+          aliasName: 'storewhitelist',
+          icon: 'icon-whitelist',
+          title: '店铺白名单',
+          permissions: ['store.storewhitelist']
+        },
+        children: [
+          {
+            path: 'storewhitelistUpload',
+            component: () => import('@/view/mall/marketing/storewhitelistUpload'),
+            meta: {
+              title: '白名单上传',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'distributorCode',
+        path: 'distributorCode',
+        component: () => import('@/view/mall/marketing/distributorCode'),
+        meta: {
+          aliasName: 'distributorCode',
+          icon: 'icon-qrcode',
+          title: '店铺码',
+          permissions: ['store.distributorCode']
+        }
+      },
+      {
+        name: 'marketingSalesman',
+        path: 'marketingsalesman',
+        component: () => import('@/view/guide/salesman'),
+        meta: {
+          aliasName: 'marketingsalesman',
+          icon: 'icon-salesman',
+          title: '业务员',
+          permissions: ['shopadmin.store.marketingsalesman']
+        },
+        children: [
+          {
+            path: 'detail',
+            component: () => import('@/view/popularize/brokerageLog'),
+            meta: {
+              title: '业务员详情',
+              hidden: true
+            }
+          },
+          {
+            path: 'child',
+            component: () => import('@/view/popularize/children'),
+            meta: {
+              title: '下级业务员',
+              hidden: true
+            }
+          },
+          {
+            path: 'children',
+            component: () => import('@/view/guide/children'),
+            meta: {
+              title: '业务员下级',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'popularizeGoods',
+        path: 'popularize/popularizegoods',
+        component: () => import('@/view/popularize/goodsStore'),
+        meta: {
+          aliasName: 'popularizegoods',
+          icon: 'icon-goods',
+          title: '分销商品',
+          permissions: ['shopadmin.store.popularize.popularizegoods']
+        }
+      },
+      {
+        name: 'popularizeList',
+        path: 'marketing/popularize/popularizelist',
+        component: () => import('@/view/popularize/list'),
+        meta: {
+          aliasName: 'popularizelist',
+          icon: 'icon-popularize',
+          title: '推广员列表',
+          permissions: ['shopadmin.store.marketing.popularize.popularizelist']
+        },
+        children: [
+          {
+            path: 'detail',
+            component: () => import('@/view/popularize/brokerageLog'),
+            meta: {
+              title: '推广员详情',
+              hidden: true
+            }
+          },
+          {
+            path: 'child',
+            component: () => import('@/view/popularize/children'),
+            meta: {
+              title: '下级推广员',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'popularizeData',
+        path: 'marketing/popularize/popularizedata',
+        component: () => import('@/view/popularize/data'),
+        meta: {
+          aliasName: 'popularizedata',
+          icon: 'icon-data',
+          title: '业务员业绩',
+          permissions: ['shopadmin.store.marketing.popularize.popularizedata']
+        },
+        children: [
+          {
+            path: 'detail',
+            component: () => import('@/view/popularize/brokerageLog'),
+            meta: {
+              title: '业绩详情',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'popularizeWithdraw',
+        path: 'popularizewithdraw',
+        component: () => import('@/view/mall/marketing/salesmanwithdraw'),
+        meta: {
+          aliasName: 'popularizewithdraw',
+          icon: 'icon-withdraw',
+          title: '业务员提现',
+          permissions: ['shopadmin.store.popularizewithdraw']
+        }
+      },
+      {
+        name: 'shopDecoration',
+        path: 'tmpl/shopDecoration',
+        component: () => import('@/view/mall/marketing/shopDecoration'),
+        meta: {
+          aliasName: 'shopdecoration',
+          icon: 'icon-mobile',
+          title: '移动商城',
+          permissions: ['shopadmin.store.tmpl.shopdecoration']
+        },
+        children: [
+          {
+            path: 'detail/:itemId?',
+            component: () => import('@/view/mall/aftersales/detail'),
+            meta: {
+              title: '商城详情',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: 'planting',
+        path: 'planting',
+        component: () => import('@/view/content/soft-article'),
+        meta: {
+          aliasName: 'planting',
+          icon: 'icon-article',
+          title: '软文',
+          permissions: ['shopadmin.store.planting']
+        },
+        children: [
+          {
+            path: 'editor/:itemId?',
+            component: () => import('@/view/content/soft-article-id'),
+            meta: {
+              title: '软文编辑',
+              hidden: true
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export default routes

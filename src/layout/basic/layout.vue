@@ -1,0 +1,123 @@
+<!--
+  Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
+  See LICENSE file for license details.
+-->
+
+<template>
+  <div class="relative flex min-h-full w-full">
+    <el-container>
+      <el-aside class="!w-auto">
+        <LayoutSidebar @change="handleSidebarChange" />
+      </el-aside>
+
+      <el-container>
+        <el-header height="50px">
+          <LayoutHeader>
+            <div
+              class="light flex h-full items-center text-xl px-3 text-[#333]"
+              v-if="!showSubMenu"
+            >
+              {{ systemTitle }}
+            </div>
+          </LayoutHeader>
+          <!-- <div class="flex justify-between items-center">
+            <div></div>
+            <div>
+              <BasicToolbar />
+            </div>
+          </div> -->
+          <!-- <LayoutHeader />
+          < /> -->
+        </el-header>
+
+        <el-main class="!px-0 !py-0" style="height: calc(100vh - 100px)">
+          <LayoutContent v-if="!$route.path.includes('/decoration/web/template/edit')">
+            <!-- <RouterView /> -->
+            <router-view v-slot="{ Component }">
+              <Transition name="fade" appear mode="out-in">
+                <component :is="Component" />
+              </Transition>
+            </router-view>
+          </LayoutContent>
+
+          <div id="design-view" v-else class="relative h-full" />
+        </el-main>
+
+        <el-footer class="flex justify-center items-center gap-2" height="50px">
+          <LicenseLogo />
+        </el-footer>
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+import DEFAULT_CONFIG from '@/config'
+import { getSystemTitle } from '@/utils'
+import { micrApp } from '@/utils/micr-app'
+import LayoutSidebar from './layout-sidebar.vue'
+import LayoutContent from './layout-content.vue'
+import LayoutHeader from './layout-header.vue'
+import BasicToolbar from './layout-toolbar.vue'
+import EmptyLayout from './layout-empty.vue'
+import LicenseLogo from '@/layout/basic/components/license-logo'
+export default {
+  components: {
+    LayoutSidebar,
+    LayoutContent,
+    LayoutHeader,
+    BasicToolbar,
+    EmptyLayout,
+    LicenseLogo
+  },
+  data() {
+    return {
+      refresh: true,
+      showSubMenu: false,
+      mainMenus: [],
+      subMenus: []
+    }
+  },
+  computed: {
+    activeMainMenu() {
+      return this.$route.matched[0]?.meta?.aliasName
+    },
+    systemTitle() {
+      // 如果有选中的一级菜单，返回该菜单的title
+      if (this.activeMainMenu) {
+        const activeMenu = this.mainMenus?.find(item => item.alias_name === this.activeMainMenu)
+        if (activeMenu) {
+          return activeMenu.name
+        }
+      }
+      // 否则返回默认系统标题
+      return getSystemTitle()
+    },
+  },
+
+  mounted() {
+    this.mainMenus = this.$store.state.user.accessMenus || []
+    const [mainRoute] = this.$route.matched
+    this.subMenus =
+      this.mainMenus.find(item => item.alias_name === mainRoute?.meta?.aliasName)?.children || []
+    this.getSystemSetting()
+    micrApp.init()
+  },
+  methods: {
+    async getSystemSetting() {
+      const { logo } = await this.$api.system.getBrandLogo()
+      this.$store.commit('system/setSystemLogo', { logo })
+    },
+    handleSidebarChange(val) {
+      this.showSubMenu = val
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.el-header {
+  padding-left: 8px;
+  padding-right: 0;
+}
+</style>

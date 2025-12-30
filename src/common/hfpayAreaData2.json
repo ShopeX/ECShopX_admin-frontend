@@ -1,0 +1,1670 @@
+[
+    {
+        "prov_code": "0011",
+        "prov_name": "北京",
+        "child": [
+            {
+                "prov_code": "1100",
+                "prov_name": "北京"
+            }
+        ]
+    },
+    {
+        "prov_code": "0012",
+        "prov_name": "天津",
+        "child": [
+            {
+                "prov_code": "1200",
+                "prov_name": "天津"
+            }
+        ]
+    },
+    {
+        "prov_code": "0013",
+        "prov_name": "河北",
+        "child": [
+            {
+                "prov_code": "1301",
+                "prov_name": "石家庄"
+            },
+            {
+                "prov_code": "1302",
+                "prov_name": "保定"
+            },
+            {
+                "prov_code": "1303",
+                "prov_name": "沧州"
+            },
+            {
+                "prov_code": "1304",
+                "prov_name": "承德"
+            },
+            {
+                "prov_code": "1305",
+                "prov_name": "邯郸"
+            },
+            {
+                "prov_code": "1306",
+                "prov_name": "衡水"
+            },
+            {
+                "prov_code": "1307",
+                "prov_name": "廊坊"
+            },
+            {
+                "prov_code": "1308",
+                "prov_name": "秦皇岛"
+            },
+            {
+                "prov_code": "1309",
+                "prov_name": "唐山"
+            },
+            {
+                "prov_code": "1310",
+                "prov_name": "邢台"
+            },
+            {
+                "prov_code": "1311",
+                "prov_name": "张家口"
+            }
+        ]
+    },
+    {
+        "prov_code": "0014",
+        "prov_name": "山西",
+        "child": [
+            {
+                "prov_code": "1401",
+                "prov_name": "太原"
+            },
+            {
+                "prov_code": "1402",
+                "prov_name": "长治"
+            },
+            {
+                "prov_code": "1403",
+                "prov_name": "大同"
+            },
+            {
+                "prov_code": "1404",
+                "prov_name": "晋城"
+            },
+            {
+                "prov_code": "1405",
+                "prov_name": "离石"
+            },
+            {
+                "prov_code": "1406",
+                "prov_name": "临汾"
+            },
+            {
+                "prov_code": "1407",
+                "prov_name": "朔州"
+            },
+            {
+                "prov_code": "1408",
+                "prov_name": "忻州"
+            },
+            {
+                "prov_code": "1409",
+                "prov_name": "阳泉"
+            },
+            {
+                "prov_code": "1410",
+                "prov_name": "榆次"
+            },
+            {
+                "prov_code": "1411",
+                "prov_name": "运城"
+            },
+            {
+                "prov_code": "1412",
+                "prov_name": "晋中"
+            },
+            {
+                "prov_code": "1413",
+                "prov_name": "吕梁"
+            }
+        ]
+    },
+    {
+        "prov_code": "0015",
+        "prov_name": "内蒙古",
+        "child": [
+            {
+                "prov_code": "1501",
+                "prov_name": "呼和浩特"
+            },
+            {
+                "prov_code": "1502",
+                "prov_name": "包头"
+            },
+            {
+                "prov_code": "1503",
+                "prov_name": "阿拉善"
+            },
+            {
+                "prov_code": "1504",
+                "prov_name": "巴彦淖尔"
+            },
+            {
+                "prov_code": "1505",
+                "prov_name": "赤峰"
+            },
+            {
+                "prov_code": "1506",
+                "prov_name": "呼伦贝尔"
+            },
+            {
+                "prov_code": "1507",
+                "prov_name": "乌海"
+            },
+            {
+                "prov_code": "1508",
+                "prov_name": "乌兰察布"
+            },
+            {
+                "prov_code": "1509",
+                "prov_name": "锡林郭勒"
+            },
+            {
+                "prov_code": "1510",
+                "prov_name": "兴安"
+            },
+            {
+                "prov_code": "1511",
+                "prov_name": "鄂尔多斯"
+            },
+            {
+                "prov_code": "1512",
+                "prov_name": "通辽"
+            }
+        ]
+    },
+    {
+        "prov_code": "0021",
+        "prov_name": "辽宁",
+        "child": [
+            {
+                "prov_code": "2101",
+                "prov_name": "沈阳"
+            },
+            {
+                "prov_code": "2102",
+                "prov_name": "大连"
+            },
+            {
+                "prov_code": "2103",
+                "prov_name": "鞍山"
+            },
+            {
+                "prov_code": "2104",
+                "prov_name": "本溪"
+            },
+            {
+                "prov_code": "2105",
+                "prov_name": "朝阳"
+            },
+            {
+                "prov_code": "2106",
+                "prov_name": "丹东"
+            },
+            {
+                "prov_code": "2107",
+                "prov_name": "抚顺"
+            },
+            {
+                "prov_code": "2108",
+                "prov_name": "阜新"
+            },
+            {
+                "prov_code": "2109",
+                "prov_name": "葫芦岛"
+            },
+            {
+                "prov_code": "2110",
+                "prov_name": "锦州"
+            },
+            {
+                "prov_code": "2111",
+                "prov_name": "辽阳"
+            },
+            {
+                "prov_code": "2112",
+                "prov_name": "盘锦"
+            },
+            {
+                "prov_code": "2113",
+                "prov_name": "铁岭"
+            },
+            {
+                "prov_code": "2114",
+                "prov_name": "营口"
+            }
+        ]
+    },
+    {
+        "prov_code": "0022",
+        "prov_name": "吉林",
+        "child": [
+            {
+                "prov_code": "2201",
+                "prov_name": "长春"
+            },
+            {
+                "prov_code": "2202",
+                "prov_name": "白城"
+            },
+            {
+                "prov_code": "2203",
+                "prov_name": "白山"
+            },
+            {
+                "prov_code": "2204",
+                "prov_name": "吉林"
+            },
+            {
+                "prov_code": "2205",
+                "prov_name": "辽源"
+            },
+            {
+                "prov_code": "2206",
+                "prov_name": "四平"
+            },
+            {
+                "prov_code": "2207",
+                "prov_name": "松原"
+            },
+            {
+                "prov_code": "2208",
+                "prov_name": "通化"
+            },
+            {
+                "prov_code": "2209",
+                "prov_name": "延边"
+            }
+        ]
+    },
+    {
+        "prov_code": "0023",
+        "prov_name": "黑龙江",
+        "child": [
+            {
+                "prov_code": "2301",
+                "prov_name": "哈尔滨"
+            },
+            {
+                "prov_code": "2302",
+                "prov_name": "大庆"
+            },
+            {
+                "prov_code": "2303",
+                "prov_name": "大兴安岭"
+            },
+            {
+                "prov_code": "2304",
+                "prov_name": "鹤岗"
+            },
+            {
+                "prov_code": "2305",
+                "prov_name": "黑河"
+            },
+            {
+                "prov_code": "2306",
+                "prov_name": "鸡西"
+            },
+            {
+                "prov_code": "2307",
+                "prov_name": "佳木斯"
+            },
+            {
+                "prov_code": "2308",
+                "prov_name": "牡丹江"
+            },
+            {
+                "prov_code": "2309",
+                "prov_name": "七台河"
+            },
+            {
+                "prov_code": "2310",
+                "prov_name": "齐齐哈尔"
+            },
+            {
+                "prov_code": "2311",
+                "prov_name": "双鸭山"
+            },
+            {
+                "prov_code": "2312",
+                "prov_name": "绥化"
+            },
+            {
+                "prov_code": "2313",
+                "prov_name": "伊春"
+            }
+        ]
+    },
+    {
+        "prov_code": "0031",
+        "prov_name": "上海",
+        "child": [
+            {
+                "prov_code": "3100",
+                "prov_name": "上海"
+            }
+        ]
+    },
+    {
+        "prov_code": "0032",
+        "prov_name": "江苏",
+        "child": [
+            {
+                "prov_code": "3201",
+                "prov_name": "南京"
+            },
+            {
+                "prov_code": "3202",
+                "prov_name": "常州"
+            },
+            {
+                "prov_code": "3203",
+                "prov_name": "淮安"
+            },
+            {
+                "prov_code": "3204",
+                "prov_name": "连云港"
+            },
+            {
+                "prov_code": "3205",
+                "prov_name": "南通"
+            },
+            {
+                "prov_code": "3206",
+                "prov_name": "苏州"
+            },
+            {
+                "prov_code": "3207",
+                "prov_name": "宿迁"
+            },
+            {
+                "prov_code": "3208",
+                "prov_name": "泰州"
+            },
+            {
+                "prov_code": "3209",
+                "prov_name": "无锡"
+            },
+            {
+                "prov_code": "3210",
+                "prov_name": "徐州"
+            },
+            {
+                "prov_code": "3211",
+                "prov_name": "盐城"
+            },
+            {
+                "prov_code": "3212",
+                "prov_name": "扬州"
+            },
+            {
+                "prov_code": "3213",
+                "prov_name": "镇江"
+            },
+            {
+                "prov_code": "3214",
+                "prov_name": "胥浦"
+            }
+        ]
+    },
+    {
+        "prov_code": "0033",
+        "prov_name": "浙江",
+        "child": [
+            {
+                "prov_code": "3301",
+                "prov_name": "杭州"
+            },
+            {
+                "prov_code": "3302",
+                "prov_name": "宁波"
+            },
+            {
+                "prov_code": "3303",
+                "prov_name": "湖州"
+            },
+            {
+                "prov_code": "3304",
+                "prov_name": "嘉兴"
+            },
+            {
+                "prov_code": "3305",
+                "prov_name": "金华"
+            },
+            {
+                "prov_code": "3306",
+                "prov_name": "绍兴"
+            },
+            {
+                "prov_code": "3307",
+                "prov_name": "台州"
+            },
+            {
+                "prov_code": "3308",
+                "prov_name": "温州"
+            },
+            {
+                "prov_code": "3309",
+                "prov_name": "舟山"
+            },
+            {
+                "prov_code": "3310",
+                "prov_name": "衢州"
+            },
+            {
+                "prov_code": "3311",
+                "prov_name": "丽水"
+            }
+        ]
+    },
+    {
+        "prov_code": "0034",
+        "prov_name": "安徽",
+        "child": [
+            {
+                "prov_code": "3401",
+                "prov_name": "合肥"
+            },
+            {
+                "prov_code": "3402",
+                "prov_name": "安庆"
+            },
+            {
+                "prov_code": "3403",
+                "prov_name": "蚌埠"
+            },
+            {
+                "prov_code": "3404",
+                "prov_name": "巢湖"
+            },
+            {
+                "prov_code": "3405",
+                "prov_name": "池州"
+            },
+            {
+                "prov_code": "3406",
+                "prov_name": "滁州"
+            },
+            {
+                "prov_code": "3407",
+                "prov_name": "阜阳"
+            },
+            {
+                "prov_code": "3408",
+                "prov_name": "淮北"
+            },
+            {
+                "prov_code": "3409",
+                "prov_name": "淮南"
+            },
+            {
+                "prov_code": "3410",
+                "prov_name": "黄山"
+            },
+            {
+                "prov_code": "3411",
+                "prov_name": "六安"
+            },
+            {
+                "prov_code": "3412",
+                "prov_name": "马鞍山"
+            },
+            {
+                "prov_code": "3414",
+                "prov_name": "铜陵"
+            },
+            {
+                "prov_code": "3415",
+                "prov_name": "芜湖"
+            },
+            {
+                "prov_code": "3416",
+                "prov_name": "宣城"
+            },
+            {
+                "prov_code": "3417",
+                "prov_name": "亳州"
+            },
+            {
+                "prov_code": "3418",
+                "prov_name": "宿州"
+            }
+        ]
+    },
+    {
+        "prov_code": "0035",
+        "prov_name": "福建",
+        "child": [
+            {
+                "prov_code": "3501",
+                "prov_name": "福州"
+            },
+            {
+                "prov_code": "3502",
+                "prov_name": "厦门"
+            },
+            {
+                "prov_code": "3503",
+                "prov_name": "龙岩"
+            },
+            {
+                "prov_code": "3504",
+                "prov_name": "南平"
+            },
+            {
+                "prov_code": "3505",
+                "prov_name": "宁德"
+            },
+            {
+                "prov_code": "3506",
+                "prov_name": "莆田"
+            },
+            {
+                "prov_code": "3507",
+                "prov_name": "泉州"
+            },
+            {
+                "prov_code": "3508",
+                "prov_name": "三明"
+            },
+            {
+                "prov_code": "3509",
+                "prov_name": "漳州"
+            }
+        ]
+    },
+    {
+        "prov_code": "0036",
+        "prov_name": "江西",
+        "child": [
+            {
+                "prov_code": "3601",
+                "prov_name": "南昌"
+            },
+            {
+                "prov_code": "3602",
+                "prov_name": "抚州"
+            },
+            {
+                "prov_code": "3603",
+                "prov_name": "赣州"
+            },
+            {
+                "prov_code": "3604",
+                "prov_name": "吉安"
+            },
+            {
+                "prov_code": "3605",
+                "prov_name": "景德镇"
+            },
+            {
+                "prov_code": "3606",
+                "prov_name": "九江"
+            },
+            {
+                "prov_code": "3607",
+                "prov_name": "萍乡"
+            },
+            {
+                "prov_code": "3608",
+                "prov_name": "上饶"
+            },
+            {
+                "prov_code": "3609",
+                "prov_name": "新余"
+            },
+            {
+                "prov_code": "3610",
+                "prov_name": "宜春"
+            },
+            {
+                "prov_code": "3611",
+                "prov_name": "鹰潭"
+            }
+        ]
+    },
+    {
+        "prov_code": "0037",
+        "prov_name": "山东",
+        "child": [
+            {
+                "prov_code": "3701",
+                "prov_name": "济南"
+            },
+            {
+                "prov_code": "3702",
+                "prov_name": "青岛"
+            },
+            {
+                "prov_code": "3703",
+                "prov_name": "滨州"
+            },
+            {
+                "prov_code": "3704",
+                "prov_name": "德州"
+            },
+            {
+                "prov_code": "3705",
+                "prov_name": "东营"
+            },
+            {
+                "prov_code": "3706",
+                "prov_name": "菏泽"
+            },
+            {
+                "prov_code": "3707",
+                "prov_name": "济宁"
+            },
+            {
+                "prov_code": "3708",
+                "prov_name": "莱芜"
+            },
+            {
+                "prov_code": "3709",
+                "prov_name": "聊城"
+            },
+            {
+                "prov_code": "3710",
+                "prov_name": "临沂"
+            },
+            {
+                "prov_code": "3711",
+                "prov_name": "日照"
+            },
+            {
+                "prov_code": "3712",
+                "prov_name": "泰安"
+            },
+            {
+                "prov_code": "3713",
+                "prov_name": "威海"
+            },
+            {
+                "prov_code": "3714",
+                "prov_name": "潍坊"
+            },
+            {
+                "prov_code": "3715",
+                "prov_name": "烟台"
+            },
+            {
+                "prov_code": "3716",
+                "prov_name": "枣庄"
+            },
+            {
+                "prov_code": "3717",
+                "prov_name": "淄博"
+            }
+        ]
+    },
+    {
+        "prov_code": "0041",
+        "prov_name": "河南",
+        "child": [
+            {
+                "prov_code": "4101",
+                "prov_name": "郑州"
+            },
+            {
+                "prov_code": "4102",
+                "prov_name": "安阳"
+            },
+            {
+                "prov_code": "4103",
+                "prov_name": "焦作"
+            },
+            {
+                "prov_code": "4104",
+                "prov_name": "鹤壁"
+            },
+            {
+                "prov_code": "4105",
+                "prov_name": "开封"
+            },
+            {
+                "prov_code": "4106",
+                "prov_name": "洛阳"
+            },
+            {
+                "prov_code": "4107",
+                "prov_name": "南阳"
+            },
+            {
+                "prov_code": "4108",
+                "prov_name": "平顶山"
+            },
+            {
+                "prov_code": "4109",
+                "prov_name": "三门峡"
+            },
+            {
+                "prov_code": "4110",
+                "prov_name": "商丘"
+            },
+            {
+                "prov_code": "4111",
+                "prov_name": "新乡"
+            },
+            {
+                "prov_code": "4112",
+                "prov_name": "信阳"
+            },
+            {
+                "prov_code": "4113",
+                "prov_name": "许昌"
+            },
+            {
+                "prov_code": "4114",
+                "prov_name": "周口"
+            },
+            {
+                "prov_code": "4115",
+                "prov_name": "驻马店"
+            },
+            {
+                "prov_code": "4116",
+                "prov_name": "漯河"
+            },
+            {
+                "prov_code": "4117",
+                "prov_name": "濮阳"
+            },
+            {
+                "prov_code": "4118",
+                "prov_name": "济源"
+            }
+        ]
+    },
+    {
+        "prov_code": "0042",
+        "prov_name": "湖北",
+        "child": [
+            {
+                "prov_code": "4201",
+                "prov_name": "武汉"
+            },
+            {
+                "prov_code": "4202",
+                "prov_name": "鄂州"
+            },
+            {
+                "prov_code": "4203",
+                "prov_name": "恩施"
+            },
+            {
+                "prov_code": "4204",
+                "prov_name": "黄冈"
+            },
+            {
+                "prov_code": "4205",
+                "prov_name": "黄石"
+            },
+            {
+                "prov_code": "4206",
+                "prov_name": "荆门"
+            },
+            {
+                "prov_code": "4207",
+                "prov_name": "荆州"
+            },
+            {
+                "prov_code": "4208",
+                "prov_name": "十堰"
+            },
+            {
+                "prov_code": "4209",
+                "prov_name": "随州"
+            },
+            {
+                "prov_code": "4210",
+                "prov_name": "咸宁"
+            },
+            {
+                "prov_code": "4211",
+                "prov_name": "襄樊"
+            },
+            {
+                "prov_code": "4212",
+                "prov_name": "孝感"
+            },
+            {
+                "prov_code": "4213",
+                "prov_name": "神农架"
+            },
+            {
+                "prov_code": "4214",
+                "prov_name": "天门"
+            },
+            {
+                "prov_code": "4215",
+                "prov_name": "宜昌"
+            },
+            {
+                "prov_code": "4216",
+                "prov_name": "三峡"
+            }
+        ]
+    },
+    {
+        "prov_code": "0043",
+        "prov_name": "湖南",
+        "child": [
+            {
+                "prov_code": "4301",
+                "prov_name": "长沙"
+            },
+            {
+                "prov_code": "4302",
+                "prov_name": "常德"
+            },
+            {
+                "prov_code": "4303",
+                "prov_name": "郴州"
+            },
+            {
+                "prov_code": "4304",
+                "prov_name": "衡阳"
+            },
+            {
+                "prov_code": "4305",
+                "prov_name": "怀化"
+            },
+            {
+                "prov_code": "4306",
+                "prov_name": "娄底"
+            },
+            {
+                "prov_code": "4307",
+                "prov_name": "邵阳"
+            },
+            {
+                "prov_code": "4308",
+                "prov_name": "湘潭"
+            },
+            {
+                "prov_code": "4309",
+                "prov_name": "湘西"
+            },
+            {
+                "prov_code": "4310",
+                "prov_name": "益阳"
+            },
+            {
+                "prov_code": "4311",
+                "prov_name": "永州"
+            },
+            {
+                "prov_code": "4312",
+                "prov_name": "岳阳"
+            },
+            {
+                "prov_code": "4313",
+                "prov_name": "张家界"
+            },
+            {
+                "prov_code": "4314",
+                "prov_name": "株洲"
+            }
+        ]
+    },
+    {
+        "prov_code": "0044",
+        "prov_name": "广东",
+        "child": [
+            {
+                "prov_code": "4401",
+                "prov_name": "广州"
+            },
+            {
+                "prov_code": "4402",
+                "prov_name": "深圳"
+            },
+            {
+                "prov_code": "4403",
+                "prov_name": "潮州"
+            },
+            {
+                "prov_code": "4404",
+                "prov_name": "东莞"
+            },
+            {
+                "prov_code": "4405",
+                "prov_name": "佛山"
+            },
+            {
+                "prov_code": "4406",
+                "prov_name": "惠州"
+            },
+            {
+                "prov_code": "4407",
+                "prov_name": "江门"
+            },
+            {
+                "prov_code": "4408",
+                "prov_name": "揭阳"
+            },
+            {
+                "prov_code": "4409",
+                "prov_name": "茂名"
+            },
+            {
+                "prov_code": "4410",
+                "prov_name": "梅州"
+            },
+            {
+                "prov_code": "4411",
+                "prov_name": "清远"
+            },
+            {
+                "prov_code": "4412",
+                "prov_name": "汕头"
+            },
+            {
+                "prov_code": "4413",
+                "prov_name": "汕尾"
+            },
+            {
+                "prov_code": "4414",
+                "prov_name": "韶关"
+            },
+            {
+                "prov_code": "4415",
+                "prov_name": "阳江"
+            },
+            {
+                "prov_code": "4416",
+                "prov_name": "云浮"
+            },
+            {
+                "prov_code": "4417",
+                "prov_name": "湛江"
+            },
+            {
+                "prov_code": "4418",
+                "prov_name": "肇庆"
+            },
+            {
+                "prov_code": "4419",
+                "prov_name": "中山"
+            },
+            {
+                "prov_code": "4420",
+                "prov_name": "河源"
+            },
+            {
+                "prov_code": "4421",
+                "prov_name": "珠海"
+            }
+        ]
+    },
+    {
+        "prov_code": "0045",
+        "prov_name": "广西",
+        "child": [
+            {
+                "prov_code": "4501",
+                "prov_name": "南宁"
+            },
+            {
+                "prov_code": "4502",
+                "prov_name": "百色"
+            },
+            {
+                "prov_code": "4503",
+                "prov_name": "北海"
+            },
+            {
+                "prov_code": "4504",
+                "prov_name": "桂林"
+            },
+            {
+                "prov_code": "4505",
+                "prov_name": "河池"
+            },
+            {
+                "prov_code": "4506",
+                "prov_name": "柳州"
+            },
+            {
+                "prov_code": "4507",
+                "prov_name": "梧州"
+            },
+            {
+                "prov_code": "4508",
+                "prov_name": "玉林"
+            },
+            {
+                "prov_code": "4509",
+                "prov_name": "崇左"
+            },
+            {
+                "prov_code": "4510",
+                "prov_name": "防城港"
+            },
+            {
+                "prov_code": "4511",
+                "prov_name": "贵港"
+            },
+            {
+                "prov_code": "4512",
+                "prov_name": "贺州"
+            },
+            {
+                "prov_code": "4513",
+                "prov_name": "来宾"
+            },
+            {
+                "prov_code": "4514",
+                "prov_name": "钦州"
+            }
+        ]
+    },
+    {
+        "prov_code": "0046",
+        "prov_name": "海南",
+        "child": [
+            {
+                "prov_code": "4601",
+                "prov_name": "海口"
+            },
+            {
+                "prov_code": "4602",
+                "prov_name": "三亚"
+            },
+            {
+                "prov_code": "4603",
+                "prov_name": "白沙"
+            },
+            {
+                "prov_code": "4604",
+                "prov_name": "保亭"
+            },
+            {
+                "prov_code": "4605",
+                "prov_name": "昌江"
+            },
+            {
+                "prov_code": "4606",
+                "prov_name": "澄迈"
+            },
+            {
+                "prov_code": "4607",
+                "prov_name": "儋州"
+            },
+            {
+                "prov_code": "4608",
+                "prov_name": "定安"
+            },
+            {
+                "prov_code": "4609",
+                "prov_name": "东方"
+            },
+            {
+                "prov_code": "4610",
+                "prov_name": "乐东"
+            },
+            {
+                "prov_code": "4611",
+                "prov_name": "临高"
+            },
+            {
+                "prov_code": "4612",
+                "prov_name": "陵水"
+            },
+            {
+                "prov_code": "4613",
+                "prov_name": "琼海"
+            },
+            {
+                "prov_code": "4614",
+                "prov_name": "琼中"
+            },
+            {
+                "prov_code": "4615",
+                "prov_name": "屯昌"
+            },
+            {
+                "prov_code": "4616",
+                "prov_name": "万宁"
+            },
+            {
+                "prov_code": "4617",
+                "prov_name": "文昌"
+            },
+            {
+                "prov_code": "4618",
+                "prov_name": "五指山"
+            },
+            {
+                "prov_code": "4619",
+                "prov_name": "洋浦"
+            }
+        ]
+    },
+    {
+        "prov_code": "0050",
+        "prov_name": "重庆",
+        "child": [
+            {
+                "prov_code": "5000",
+                "prov_name": "重庆"
+            }
+        ]
+    },
+    {
+        "prov_code": "0051",
+        "prov_name": "四川",
+        "child": [
+            {
+                "prov_code": "5101",
+                "prov_name": "成都"
+            },
+            {
+                "prov_code": "5102",
+                "prov_name": "巴中"
+            },
+            {
+                "prov_code": "5103",
+                "prov_name": "达州"
+            },
+            {
+                "prov_code": "5104",
+                "prov_name": "德阳"
+            },
+            {
+                "prov_code": "5105",
+                "prov_name": "广安"
+            },
+            {
+                "prov_code": "5106",
+                "prov_name": "广元"
+            },
+            {
+                "prov_code": "5107",
+                "prov_name": "乐山"
+            },
+            {
+                "prov_code": "5108",
+                "prov_name": "凉山"
+            },
+            {
+                "prov_code": "5109",
+                "prov_name": "眉山"
+            },
+            {
+                "prov_code": "5110",
+                "prov_name": "绵阳"
+            },
+            {
+                "prov_code": "5111",
+                "prov_name": "南充"
+            },
+            {
+                "prov_code": "5112",
+                "prov_name": "内江"
+            },
+            {
+                "prov_code": "5113",
+                "prov_name": "攀枝花"
+            },
+            {
+                "prov_code": "5114",
+                "prov_name": "遂宁"
+            },
+            {
+                "prov_code": "5115",
+                "prov_name": "雅安"
+            },
+            {
+                "prov_code": "5116",
+                "prov_name": "宜宾"
+            },
+            {
+                "prov_code": "5117",
+                "prov_name": "自贡"
+            },
+            {
+                "prov_code": "5118",
+                "prov_name": "泸州"
+            },
+            {
+                "prov_code": "5119",
+                "prov_name": "阿坝"
+            },
+            {
+                "prov_code": "5120",
+                "prov_name": "甘孜"
+            },
+            {
+                "prov_code": "5121",
+                "prov_name": "资阳"
+            }
+        ]
+    },
+    {
+        "prov_code": "0052",
+        "prov_name": "贵州",
+        "child": [
+            {
+                "prov_code": "5201",
+                "prov_name": "贵阳"
+            },
+            {
+                "prov_code": "5202",
+                "prov_name": "安顺"
+            },
+            {
+                "prov_code": "5203",
+                "prov_name": "毕节"
+            },
+            {
+                "prov_code": "5204",
+                "prov_name": "六盘水"
+            },
+            {
+                "prov_code": "5205",
+                "prov_name": "铜仁"
+            },
+            {
+                "prov_code": "5206",
+                "prov_name": "遵义"
+            },
+            {
+                "prov_code": "5207",
+                "prov_name": "黔东南"
+            },
+            {
+                "prov_code": "5208",
+                "prov_name": "黔南"
+            },
+            {
+                "prov_code": "5209",
+                "prov_name": "黔西南"
+            }
+        ]
+    },
+    {
+        "prov_code": "0053",
+        "prov_name": "云南",
+        "child": [
+            {
+                "prov_code": "5301",
+                "prov_name": "昆明"
+            },
+            {
+                "prov_code": "5302",
+                "prov_name": "西双版纳"
+            },
+            {
+                "prov_code": "5303",
+                "prov_name": "保山"
+            },
+            {
+                "prov_code": "5304",
+                "prov_name": "楚雄"
+            },
+            {
+                "prov_code": "5305",
+                "prov_name": "大理"
+            },
+            {
+                "prov_code": "5306",
+                "prov_name": "德宏"
+            },
+            {
+                "prov_code": "5307",
+                "prov_name": "红河"
+            },
+            {
+                "prov_code": "5308",
+                "prov_name": "丽江"
+            },
+            {
+                "prov_code": "5309",
+                "prov_name": "临沧"
+            },
+            {
+                "prov_code": "5310",
+                "prov_name": "怒江"
+            },
+            {
+                "prov_code": "5311",
+                "prov_name": "曲靖"
+            },
+            {
+                "prov_code": "5312",
+                "prov_name": "思茅"
+            },
+            {
+                "prov_code": "5313",
+                "prov_name": "文山"
+            },
+            {
+                "prov_code": "5314",
+                "prov_name": "玉溪"
+            },
+            {
+                "prov_code": "5315",
+                "prov_name": "昭通"
+            },
+            {
+                "prov_code": "5316",
+                "prov_name": "中甸"
+            },
+            {
+                "prov_code": "5317",
+                "prov_name": "迪庆州"
+            }
+        ]
+    },
+    {
+        "prov_code": "0054",
+        "prov_name": "西藏",
+        "child": [
+            {
+                "prov_code": "5401",
+                "prov_name": "拉萨"
+            },
+            {
+                "prov_code": "5402",
+                "prov_name": "阿里"
+            },
+            {
+                "prov_code": "5403",
+                "prov_name": "昌都"
+            },
+            {
+                "prov_code": "5404",
+                "prov_name": "林芝"
+            },
+            {
+                "prov_code": "5405",
+                "prov_name": "那曲"
+            },
+            {
+                "prov_code": "5406",
+                "prov_name": "日喀则"
+            },
+            {
+                "prov_code": "5407",
+                "prov_name": "山南"
+            }
+        ]
+    },
+    {
+        "prov_code": "0061",
+        "prov_name": "陕西",
+        "child": [
+            {
+                "prov_code": "6101",
+                "prov_name": "西安"
+            },
+            {
+                "prov_code": "6102",
+                "prov_name": "安康"
+            },
+            {
+                "prov_code": "6103",
+                "prov_name": "宝鸡"
+            },
+            {
+                "prov_code": "6104",
+                "prov_name": "汉中"
+            },
+            {
+                "prov_code": "6105",
+                "prov_name": "商洛"
+            },
+            {
+                "prov_code": "6106",
+                "prov_name": "铜川"
+            },
+            {
+                "prov_code": "6107",
+                "prov_name": "渭南"
+            },
+            {
+                "prov_code": "6108",
+                "prov_name": "咸阳"
+            },
+            {
+                "prov_code": "6109",
+                "prov_name": "延安"
+            },
+            {
+                "prov_code": "6110",
+                "prov_name": "榆林"
+            }
+        ]
+    },
+    {
+        "prov_code": "0062",
+        "prov_name": "甘肃",
+        "child": [
+            {
+                "prov_code": "6201",
+                "prov_name": "兰州"
+            },
+            {
+                "prov_code": "6202",
+                "prov_name": "白银"
+            },
+            {
+                "prov_code": "6203",
+                "prov_name": "定西"
+            },
+            {
+                "prov_code": "6204",
+                "prov_name": "东风"
+            },
+            {
+                "prov_code": "6205",
+                "prov_name": "合作"
+            },
+            {
+                "prov_code": "6206",
+                "prov_name": "嘉峪关"
+            },
+            {
+                "prov_code": "6207",
+                "prov_name": "金昌"
+            },
+            {
+                "prov_code": "6208",
+                "prov_name": "酒泉"
+            },
+            {
+                "prov_code": "6209",
+                "prov_name": "矿区"
+            },
+            {
+                "prov_code": "6210",
+                "prov_name": "临夏"
+            },
+            {
+                "prov_code": "6211",
+                "prov_name": "陇南"
+            },
+            {
+                "prov_code": "6212",
+                "prov_name": "平凉"
+            },
+            {
+                "prov_code": "6213",
+                "prov_name": "庆阳"
+            },
+            {
+                "prov_code": "6214",
+                "prov_name": "天水"
+            },
+            {
+                "prov_code": "6215",
+                "prov_name": "武威"
+            },
+            {
+                "prov_code": "6216",
+                "prov_name": "张掖"
+            },
+            {
+                "prov_code": "6217",
+                "prov_name": "甘南州"
+            }
+        ]
+    },
+    {
+        "prov_code": "0063",
+        "prov_name": "青海",
+        "child": [
+            {
+                "prov_code": "6301",
+                "prov_name": "西宁"
+            },
+            {
+                "prov_code": "6302",
+                "prov_name": "海东"
+            }
+        ]
+    },
+    {
+        "prov_code": "0064",
+        "prov_name": "宁夏",
+        "child": [
+            {
+                "prov_code": "6401",
+                "prov_name": "银川"
+            },
+            {
+                "prov_code": "6402",
+                "prov_name": "中卫"
+            },
+            {
+                "prov_code": "6403",
+                "prov_name": "固原"
+            },
+            {
+                "prov_code": "6404",
+                "prov_name": "石嘴山"
+            },
+            {
+                "prov_code": "6405",
+                "prov_name": "吴忠"
+            }
+        ]
+    },
+    {
+        "prov_code": "0065",
+        "prov_name": "新疆",
+        "child": [
+            {
+                "prov_code": "6501",
+                "prov_name": "乌鲁木齐"
+            },
+            {
+                "prov_code": "6502",
+                "prov_name": "阿克苏"
+            },
+            {
+                "prov_code": "6503",
+                "prov_name": "阿勒泰"
+            },
+            {
+                "prov_code": "6504",
+                "prov_name": "巴州"
+            },
+            {
+                "prov_code": "6505",
+                "prov_name": "博州"
+            },
+            {
+                "prov_code": "6506",
+                "prov_name": "昌吉"
+            },
+            {
+                "prov_code": "6507",
+                "prov_name": "哈密"
+            },
+            {
+                "prov_code": "6508",
+                "prov_name": "和田"
+            },
+            {
+                "prov_code": "6509",
+                "prov_name": "喀什"
+            },
+            {
+                "prov_code": "6510",
+                "prov_name": "克拉玛依"
+            },
+            {
+                "prov_code": "6511",
+                "prov_name": "马兰"
+            },
+            {
+                "prov_code": "6512",
+                "prov_name": "石河子"
+            },
+            {
+                "prov_code": "6513",
+                "prov_name": "塔城"
+            },
+            {
+                "prov_code": "6514",
+                "prov_name": "吐鲁番"
+            },
+            {
+                "prov_code": "6515",
+                "prov_name": "伊犁"
+            },
+            {
+                "prov_code": "6516",
+                "prov_name": "克州"
+            },
+            {
+                "prov_code": "6517",
+                "prov_name": "阿拉尔"
+            },
+            {
+                "prov_code": "6518",
+                "prov_name": "五家渠"
+            }
+        ]
+    },
+    {
+        "prov_code": "2001",
+        "prov_name": "香港",
+        "child": [
+            {
+                "prov_code": "9901",
+                "prov_name": "香港"
+            }
+        ]
+    },
+    {
+        "prov_code": "2002",
+        "prov_name": "澳门",
+        "child": [
+            {
+                "prov_code": "9902",
+                "prov_name": "澳门"
+            }
+        ]
+    },
+    {
+        "prov_code": "2003",
+        "prov_name": "台湾",
+        "child": [
+            {
+                "prov_code": "9903",
+                "prov_name": "台湾"
+            }
+        ]
+    }
+]

@@ -1,0 +1,5 @@
+FROM registry.cn-zhangjiakou.aliyuncs.com/jst-shopex/openresty:1.19
+WORKDIR /app
+COPY ./docker/nginx-default.conf /usr/local/nginx/conf/vhosts/default.conf
+COPY ./dist .
+EXPOSE 80

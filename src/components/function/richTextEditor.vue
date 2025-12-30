@@ -93,7 +93,7 @@
                 <transition name="el-fade-in-linear">
                   <div
                     v-if="editorIndex === index"
-                    class="iconfont icon-trash-alt"
+                    class="el-icon-delete"
                     @click="removeCurrent"
                   />
                 </transition>
@@ -671,7 +671,7 @@ export default {
   .component-item {
     position: relative;
     top: 80px;
-    .icon-trash-alt {
+    .el-icon-delete {
       position: absolute;
       right: 20px;
       color: #ff5000;

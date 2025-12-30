@@ -28,7 +28,7 @@
             </div>
             <div v-else class="banner-uploader square thumbnail" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
               </div>
             </div>
             {{ item.title }}
@@ -36,7 +36,7 @@
             <span v-if="item.type === 'discount'" class="amount-cur">{{ item.amount }}折券</span>
 
             <div class="setting-remove" @click="removeItem(index)">
-              <i class="iconfont icon-trash-alt" />
+              <i class="el-icon-delete" />
             </div>
           </div>
           <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
@@ -65,12 +65,12 @@
             </div>
             <div v-else class="banner-uploader square thumbnail" @click="couponPackageImg(index)">
               <div class="content-center">
-                <i class="iconfont icon-camera" />
+                <i class="el-icon-camera" />
               </div>
             </div>
             {{ item.title }}
             <div class="setting-remove" @click="removeCouponPackage(index)">
-              <i class="iconfont icon-trash-alt" />
+              <i class="el-icon-delete" />
             </div>
           </div>
           <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>

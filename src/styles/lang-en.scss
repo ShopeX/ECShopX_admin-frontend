@@ -21,6 +21,7 @@ html[lang='en-CN'] {
       .el-submenu__title,
       .el-tag,
       .el-select-dropdown__item,
+      .el-dropdown-menu__item,
       .el-range-separator,
       .btn-linkpath,
       .el-input__inner,
@@ -76,5 +77,13 @@ html[lang='en-CN'] {
     line-height: 1.2 !important;
     padding-bottom: 5px;
     width: auto !important;
+  }
+  .el-dropdown-menu__item {
+    div {
+      &,
+      * {
+        line-height: 36px !important;
+      }
+    }
   }
 }

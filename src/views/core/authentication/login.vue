@@ -6,12 +6,13 @@
 <template>
   <div class="page-login bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="220" />
+      <img src="/images/logo.png" alt="logo" width="300" />
+      <!-- <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">总部</div> -->
       <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
-      <div class="text-[28px] font-helvca mt-8 text-[#333] ">请登录</div>
+      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333] ">请登录</div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-8 ml-2">
       <LoginForm ref="formRef" />
     </div>
 

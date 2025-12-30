@@ -559,13 +559,13 @@ export default {
             key: 'order_holder',
             width: 120,
             render: (h, { row }) => h('span', {}, this.getOrderCategoryName(row.order_holder)),
-            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+            visible: this.VERSION_STANDARD() || this.IS_ADMIN()
           },
           {
             name: '来源供应商',
             key: 'supplier_name',
             minWidth: 100,
-            visible: this.VERSION_STANDARD || this.IS_ADMIN()
+            visible: this.VERSION_STANDARD() || this.IS_ADMIN()
           },
           {
             name: '配送员',

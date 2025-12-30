@@ -31,7 +31,6 @@ export default {
       'SET_USERINFO',
       'SET_LOGIN_TYPE',
       'SET_LOGIN_FROM',
-      'SET_VERSION_MODE'
     ]),
     init() {
       let { code } = this.$route.query
@@ -85,8 +84,6 @@ export default {
       const { menu_type } = JSON.parse(atob(base64Url))
       console.log('menu_type', menu_type)
       this.SET_USERINFO(userInfo)
-      // this.SET_VERSION_MODE(menu_type)
-      this.SET_VERSION_MODE('shuyun')
       this.SET_LOGIN_TYPE({ loginType: this.loginType || userInfo.logintype })
       if (this.loginType == 'distributor') {
         this.$router.push({ path: '/shopadmin/shoplist' })

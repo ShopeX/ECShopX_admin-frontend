@@ -38,7 +38,7 @@
             <br>
             <span class="tip">说明：运费使用现金或积分支付</span>
           </el-form-item>
-          <el-form-item v-if="form.freight_type == 'point'" label="积分商城汇率设置">
+          <el-form-item v-if="form.freight_type == 'point'" label="积分商城运费抵扣比率">
             <el-input
               v-model="form.proportion"
               type="number"

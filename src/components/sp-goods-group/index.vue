@@ -12,7 +12,7 @@
       <SpGoodsCard v-for="(item, index) in localValue" :key="item.item_id" :info="item">
         <template slot="delete">
           <span class="sp-goods-card__delete">
-            <i class="iconfont icon-trash-alt1" @click="handleDelete(item, index)" />
+            <i class="el-icon-delete" @click="handleDelete(item, index)" />
           </span>
         </template>
       </SpGoodsCard>

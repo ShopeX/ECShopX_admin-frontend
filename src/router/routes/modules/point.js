@@ -59,6 +59,17 @@ const routes = [
             component: () => import('@/view/applications/pointmall/orderDetail')
           }
         ]
+      },
+      {
+        name: 'basicSettings',
+        path: 'basic-settings',
+        meta: {
+          aliasName: 'basicSettings',
+          icon: 'pay-circle',
+          title: '基础设置',
+          permissions: ['rewardsStore.basicSettings']
+        },
+        component: () => import('@/view/applications/pointmall/setting')
       }
     ]
   }

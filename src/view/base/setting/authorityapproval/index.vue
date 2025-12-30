@@ -132,14 +132,19 @@ export default {
   },
   methods: {
     beforeSearch(params) {
-      const [startTime, endTime] = this.queryParams.queryTime
+      let _params = {
+        ...params,
+        ...this.queryParams
+      }
+      const [startTime, endTime] = this.queryParams.queryTime || []
       if (startTime) {
-        params['start_time'] = moment(startTime).unix()
+        _params['start_time'] = moment(startTime).unix()
       }
       if (endTime) {
-        params['end_time'] = moment(endTime).unix()
+        _params['end_time'] = moment(endTime).unix()
       }
-      return params
+      delete _params.queryTime
+      return _params
     },
     onSearch() {
       this.$refs.finder.refresh(true)

@@ -37,10 +37,8 @@
 
       <template v-if="showDefaultActions">
         <div class="sp-form-plus__actions" :style="actionsStyle">
-          <el-button v-if="formType !== 'searchForm'" type="primary" @click="handleSubmit">
-            <div class="flex items-center">
+          <el-button v-if="formType !== 'searchForm'" type="primary" :loading="submitLoading" @click="handleSubmit">
               <span class="ml-1">保存</span>
-            </div>
           </el-button>
 
           <el-button v-if="formType === 'searchForm'" type="primary" @click="handleSubmit">
@@ -117,6 +115,10 @@ export default {
     layout: {
       type: String,
       default: 'horizontal'
+    },
+    submitLoading: {
+      type: Boolean,
+      default: false
     },
     showDefaultActions: {
       type: Boolean,

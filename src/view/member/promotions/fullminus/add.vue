@@ -74,7 +74,7 @@
             />
             元 &nbsp;&nbsp;<i
               v-if="key != 0"
-              class="iconfont icon-trash-alt"
+              class="el-icon-delete"
               @click="delRules(key)"
             />
           </div>
@@ -104,7 +104,7 @@
             />
             元 &nbsp;&nbsp;<i
               v-if="key != 0"
-              class="iconfont icon-trash-alt"
+              class="el-icon-delete"
               @click="delRules(key)"
             />
           </div>
@@ -186,22 +186,23 @@
           <el-radio label="brand"> 指定品牌适用 </el-radio>
         </el-radio-group>
       </el-form-item>
-      <div v-if="!zdItemHidden" class="flex gap-5">
-        <SkuSelector :data="relItems" @change="getItems" />
-        <div class="flex gap-5">
-          <el-upload
-            style="display: inline-block; height: 0"
-            action=""
-            :on-change="uploadHandleChange"
-            :auto-upload="false"
-            :show-file-list="false"
-          >
-            <el-button type="primary"> 批量上传 </el-button>
-          </el-upload>
-          <el-button type="primary" @click="uploadHandleTemplate()">
-            下载模板
-          </el-button>
-        </div>
+      <div v-if="!zdItemHidden">
+        <SkuSelector :data="relItems" @change="getItems">
+          <template #selectGoodsButton>
+            <el-upload
+              style="display: inline-block"
+              action=""
+              :on-change="uploadHandleChange"
+              :auto-upload="false"
+              :show-file-list="false"
+            >
+              <el-button type="primary"> 批量上传 </el-button>
+            </el-upload>
+            <el-button type="primary" @click="uploadHandleTemplate()">
+              下载模板
+            </el-button>
+          </template>
+        </SkuSelector>
       </div>
       <el-col :xs="12" :sm="12" :md="12">
         <div v-if="!categoryHidden" style="height: 350px">
@@ -288,7 +289,7 @@
           <el-table-column label="操作" width="50">
             <template slot-scope="scope">
               <i
-                class="iconfont icon-trash-alt"
+                class="el-icon-delete"
                 @click="deleteStoreRow(scope.$index, form.items)"
               />
             </template>

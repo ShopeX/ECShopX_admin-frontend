@@ -48,10 +48,12 @@
           （ 推荐尺寸:1920*690px ）
         </el-form-item>
       </div>
-      <div class="section-footer content-center">
+    </el-form>
+    <template slot="page-footer">
+      <div class="text-center">
         <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
       </div>
-    </el-form>
+    </template>
   </SpPage>
 </template>
 

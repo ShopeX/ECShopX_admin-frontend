@@ -42,11 +42,6 @@
         </template>
       </el-table-column>
       <el-table-column label="分类编号" prop="category_id" width="120" />
-      <el-table-column prop="sort" label="分类排序" width="140">
-        <template slot-scope="scope">
-          <div>{{ scope.row.sort }}</div>
-        </template>
-      </el-table-column>
       <el-table-column label="分类图片" width="200">
         <template slot-scope="scope">
           <div class="img-container">
@@ -66,7 +61,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="text">
@@ -168,7 +162,6 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: ''
       },
       categoryFormList: [
         {
@@ -195,14 +188,6 @@ export default {
           label: '分类图片',
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
-        },
-        {
-          label: '一级分类模版',
-          key: 'customize_page_id',
-          type: 'select',
-          options: [],
-          placeholder: '请选择一级分类模版',
-          display: 'inline'
         }
       ],
       profitDialog: false,
@@ -278,19 +263,17 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: ''
       }
       this.categoryDialog = true
     },
     // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url, customize_page_id }) {
+    editCategory({ parent_id, category_id, category_name, sort, image_url }) {
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
         image_url,
-        customize_page_id: customize_page_id == 0 ? '' : customize_page_id
       }
       this.categoryDialog = true
     },
@@ -305,7 +288,6 @@ export default {
         parent_id: category_id,
         parent_name: category_name,
         image_url: '',
-        customize_page_id: ''
       }
       this.categoryDialog = true
     },
@@ -381,7 +363,6 @@ export default {
         return {
           ...item,
           image_url: item.image_url || '',
-          customize_page_id: item.customize_page_id || '',
           hasChildren: item.has_children == '1'
         }
       })
@@ -394,15 +375,14 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, customize_page_id, parent_id, category_id } =
+      const { category_name, sort, image_url, parent_id, category_id } =
         this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,
           sort,
           image_url,
-          category_id,
-          customize_page_id
+          category_id
         })
         this.$message.success('编辑成功')
       } else {
@@ -411,7 +391,6 @@ export default {
           sort,
           is_main_category: 1,
           image_url,
-          customize_page_id,
           parent_id: parent_id != '0' ? parent_id : undefined
         })
         this.$message.success('添加成功')

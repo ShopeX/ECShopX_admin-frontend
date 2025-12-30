@@ -42,10 +42,10 @@
       </div>
       <div v-if="relStore.id == '0'" class="section-white mini-setting">
         <el-button type="text" style="margin-right: 10px" @click="handleShowConfig">
-          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序配置
+          <i class="el-icon-setting" style="color: #8080ff" /> 小程序配置
         </el-button>
         <el-button type="text" @click="handleShowTabConfig">
-          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序导航配置
+          <i class="el-icon-setting" style="color: #8080ff" /> 小程序导航配置
         </el-button>
       </div>
     </div>
@@ -207,7 +207,7 @@
               @click="handleImgChange"
             >
             <div v-else class="banner-uploader" @click="handleImgChange">
-              <i class="iconfont icon-camera" />
+              <i class="el-icon-camera" />
             </div>
           </div>
         </el-form-item>

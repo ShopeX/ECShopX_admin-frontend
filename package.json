@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -59,7 +59,7 @@
     "vuedraggable": "^2.17.0",
     "vuex": "^3.5.1",
     "vuex-persist": "^3.1.3",
-    "webpack-auto-i18n-plugin": "^1.1.5"
+    "webpack-auto-i18n-plugin": "1.1.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",

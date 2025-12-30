@@ -5,7 +5,9 @@
 
 <template>
   <div class="img-box-wrap" :class="{ inline: inline }" @click="handleClick">
-    <div v-if="removeBtn" class="remove-btn iconfont icon-trash-alt" @click="handleRemove" />
+    <div v-if="removeBtn" class="remove-btn" @click="handleRemove">
+      <SpIcon name="delete" size="18" />
+    </div>
     <div
       class="img-box"
       :class="{ 'border-dashed': border === 'dashed', 'border-none': border === 'none' }"

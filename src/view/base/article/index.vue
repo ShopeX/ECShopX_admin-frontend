@@ -54,7 +54,7 @@
                   class="footer-item copy-btn"
                 >
                   <input v-model="item.link" class="copy-link" type="text">
-                  <i class="iconfont icon-copy" /> 复制文章链接
+                  复制文章链接
                 </div>
               </div>
               <div class="footer">
@@ -63,7 +63,7 @@
                   @click="handlePublish(item.article_id, item.release_status)"
                 >
                   <template v-if="item.release_status">
-                    <i class="iconfont icon-undo-alt" /> 撤回
+                    撤回
                   </template>
                   <template v-else> <i class="iconfont icon-broadcast-tower" /> 发布 </template>
                 </div>
@@ -79,10 +79,10 @@
                       确定
                     </el-button>
                   </div>
-                  <div slot="reference"><i class="iconfont icon-sort-amount-up" /> 排序</div>
+                  <div slot="reference">排序</div>
                 </el-popover>
                 <div class="footer-item" @click="articleDelete(item.article_id)">
-                  <i class="iconfont icon-trash-alt" /> 删除
+                  删除
                 </div>
               </div>
             </div>

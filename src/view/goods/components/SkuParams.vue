@@ -56,8 +56,8 @@
                 <div class="popover-edit">
                   <el-input v-model="sku.custom_attribute_value" @change="onInputSkuChange" />
                 </div>
-                <el-button slot="reference" type="text">
-                  <i class="iconfont icon-edit1" />
+                <el-button slot="reference" type="text" class="inline-flex items-center p-0 ml-1 align-middle">
+                  <SpIcon name="edit-two" :size="16" />
                 </el-button>
               </el-popover>
             </span>
@@ -288,7 +288,7 @@
           <el-input v-model="scope.row.price" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="cost_price" label="成本价">
+      <el-table-column prop="cost_price" label="成本价" :render-header="$store.getters.login_type != 'admin' ? renderRequire : undefined">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.cost_price"

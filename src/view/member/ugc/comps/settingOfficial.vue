@@ -40,10 +40,10 @@
                   :src="ruleForm.avatar"
                 />
                 <div v-if="ruleForm.avatar" class="goodspic-mask" @click="removePicsImg">
-                  <div class="iconfont icon-trash-alt" />
+                  <SpIcon name="delete" />
                 </div>
                 <div v-else class="goodspic-mask" @click="handlePicsChange">
-                  <div class="iconfont iconfont icon-camera" />
+                  <SpIcon name="camera" />
                 </div>
               </div>
             </el-form-item>
@@ -178,7 +178,7 @@ export default {
   overflow: hidden;
   cursor: pointer;
 }
-.official-form .img-wrap .iconfont {
+.official-form .img-wrap .i-icon {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -195,7 +195,7 @@ export default {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 }
-.official-form .img-wrap.mask .goodspic-mask .iconfont {
+.official-form .img-wrap.mask .goodspic-mask .i-icon {
   color: #fff;
   font-size: 20px;
 }

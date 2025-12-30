@@ -14,7 +14,7 @@
       />
 
       <div class="action-container" v-if="!dmcrmSetting.is_open">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
+        <el-button type="primary" @click="addCoupon">
           创建优惠券
         </el-button>
       </div>
@@ -27,7 +27,7 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" :data="tableList" border @filter-change="filterTag">
-            <el-table-column width="200" label="操作">
+            <el-table-column width="240" label="操作">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button type="text">
@@ -44,12 +44,13 @@
                       查看
                     </router-link>
                   </el-button>
-                  <el-button
+                   <el-button
                     v-if="
                       scope.row.edit_btn == 'Y' &&
                       (!isShopadmin
                         ? parseInt(scope.row.source_id) <= 0
                         : parseInt(scope.row.source_id) > 0)
+                        && !dmcrmSetting.is_open
                     "
                     type="text"
                   >
@@ -65,7 +66,7 @@
                   <!-- <el-popover v-if="appID" placement="top" width="200" trigger="click"> -->
                   <el-popover placement="top" width="200" trigger="click">
                     <div>
-                      <img class="page-code" :src="appCodeUrl">
+                      <img class="page-code" :src="appCodeUrl" />
                       <div class="page-btns">
                         <el-button
                           type="primary"
@@ -90,7 +91,7 @@
                     </el-button>
                   </el-popover>
                   <el-button
-                    v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
+                    v-if="scope.row.status != 'CARD_STATUS_DISPATCH' && !dmcrmSetting.is_open"
                     type="text"
                     @click="deleteCard(scope.row.card_id, scope.$index)"
                   >
@@ -203,96 +204,16 @@
                 </el-popover> -->
               </template>
             </el-table-column>
-            <!-- <el-table-column width="80" prop="get_num" label="领取量">
-              <template v-if="scope.row.get_num">{{scope.row.get_num}}</template>
-              <template>0</template>
-            </el-table-column> -->
-            <!-- <el-table-column width="80" prop="use_num" label="使用量">
-              <template v-if="scope.row.use_num">{{scope.row.use_num}}</template>
-              <template>0</template>
-            </el-table-column> -->
-            <el-table-column width="200" prop="source_name" label="店铺" />
-            <el-table-column width="240" label="操作">
+            <el-table-column width="80" prop="get_num" label="领取量">
               <template slot-scope="scope">
-                <div class="operating-icons">
-                  <el-button type="text">
-                    <router-link
-                      :to="{
-                        path: matchRoutePath('detail'),
-                        query: {
-                          chooseCardtype: scope.row.card_type,
-                          cardId: scope.row.card_id,
-                          title: scope.row.title
-                        }
-                      }"
-                    >
-                      查看
-                    </router-link>
-                  </el-button>
-                  <el-button type="text">
-                    <router-link
-                      :to="{
-                        path: matchRoutePath('info'),
-                        query: { cardId: scope.row.card_id, onlyShow: true }
-                      }"
-                    >
-                      详情
-                    </router-link>
-                  </el-button>
-                   <el-button
-                    v-if="
-                      scope.row.edit_btn == 'Y' &&
-                      (!isShopadmin
-                        ? parseInt(scope.row.source_id) <= 0
-                        : parseInt(scope.row.source_id) > 0)
-                      && !dmcrmSetting.is_open
-                    "
-                    type="text"
-                  >
-                    <router-link
-                      :to="{
-                        path: matchRoutePath('editor'),
-                        query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
-                      }"
-                    >
-                      编辑
-                    </router-link>
-                  </el-button>
-                  <el-popover v-if="appID" placement="top" width="200" trigger="click">
-                    <div>
-                      <img class="page-code" :src="appCodeUrl" />
-                      <div class="page-btns">
-                        <el-button
-                          type="primary"
-                          plain
-                          size="mini"
-                          @click="handleDownload(scope.row.title)"
-                        >
-                          下载码
-                        </el-button>
-                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                          复制链接
-                        </el-button>
-                      </div>
-                    </div>
-                    <el-button
-                      slot="reference"
-                      style="width: 45px"
-                      type="text"
-                      @click="handleShow(scope.row.card_id)"
-                    >
-                      投放
-                    </el-button>
-                  </el-popover>
-                  <el-button
-                    v-if="scope.row.status != 'CARD_STATUS_DISPATCH' && !dmcrmSetting.is_open"
-                    type="text"
-                    @click="deleteCard(scope.row.card_id, scope.$index)"
-                  >
-                    删除
-                  </el-button>
-                </div>
-                <!-- <a v-if="!scope.row.ifpass" href="#" @click="sendoutShowAction(scope.row.card_id, scope.$index)">投放</a> -->
+                <span v-if="scope.row.get_num">{{scope.row.get_num}}</span>
+                <span>0</span>
+              </template>
+            </el-table-column>
+            <el-table-column width="80" prop="use_num" label="使用量">
+              <template slot-scope="scope">
+                <span v-if="scope.row.use_num">{{scope.row.use_num}}</span>
+                <span>0</span>
               </template>
             </el-table-column>
             <el-table-column width="200" prop="source_name" label="店铺" />
@@ -548,7 +469,13 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeCard({ card_id: id }).then(res => {
-              this.tableList.splice(index, 1)
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.fetchList()
+            }).catch(error => {
+              console.error(error)
             })
           }
           done()
@@ -571,6 +498,7 @@ export default {
               type: 'success',
               duration: 5 * 1000
             })
+            this.fetchList()
           })
         })
         .catch(() => {

@@ -120,6 +120,7 @@ export default {
   },
   methods: {
     beforeSearch(params) {
+      const queryParams = this.value?.queryParams || {}
       const regionLabels = []
       const getRegionLabel = (district, i) => {
         if (this.formData.region[i]) {
@@ -141,7 +142,8 @@ export default {
         province: province,
         city: city,
         area: area,
-        distribution_type: this.value?.distribution_type
+        distribution_type: this.value?.distribution_type,
+        ...queryParams
       }
       return params
     },

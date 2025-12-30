@@ -27,7 +27,7 @@
               >
             </div>
             <div v-else class="banner-uploader" @click="handleImgChange">
-              <i class="iconfont icon-camera" />上传图片
+              <i class="el-icon-camera" />上传图片
             </div>
           </div>
         </el-form-item>

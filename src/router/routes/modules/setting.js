@@ -416,6 +416,17 @@ const routes = [
         ]
       },
       {
+        name: `systemConfigWebPrivacyStatement`,
+        path: 'system-config/web-privacy-statement',
+        meta: {
+          aliasName: 'webPrivacyStatement',
+          icon: 'icon-products',
+          title: 'web隐私声明',
+          permissions: ['setting.systemsetting.webPrivacyStatement']
+        },
+        component: () => import('@/view/base/setting/webPrivacyStatement')
+      },
+      {
         name: `systemConfigExternalWxapp`,
         path: 'system-config/external-wxapp',
         meta: {
@@ -523,28 +534,6 @@ const routes = [
         component: () => import('@/view/mall/distribution/account')
       },
       {
-        name: 'systemInfoRenewalActivation',
-        path: 'system-info/renewal-activation',
-        component: () => import('@/view/base/asset/accountactivation/index'),
-        meta: {
-          aliasName: 'assetaccountactivation',
-          icon: 'icon-products',
-          title: '续费激活',
-          permissions: ['setting.systeminfo.assetaccountactivation']
-        }
-      },
-      {
-        name: 'systemInfoSoftwareProtocol',
-        path: 'system-info/software-protocol',
-        component: () => import('@/view/base/setting/agreement'),
-        meta: {
-          aliasName: 'agreement',
-          icon: 'icon-products',
-          title: '软件协议',
-          permissions: ['setting.systeminfo.agreement']
-        }
-      },
-      {
         name: 'systemInfoOperatorLogs',
         path: 'system-info/operator-logs',
         component: () => import('@/view/base/setting/companys/logs'),
@@ -579,7 +568,7 @@ const routes = [
           title: '地图服务',
           permissions: ['setting.systemsetting.mapsetting']
         },
-        component: () => import('@/view/base/setting/mapsetting')
+        component: () => import('@/views/settings/map-setting')
       },
       {
         name: `ERP`,

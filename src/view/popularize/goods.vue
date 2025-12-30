@@ -308,7 +308,7 @@
             <el-table-column label="成本价" min-width="80">
               <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
             </el-table-column>
-            <el-table-column label="类型" width="160">
+            <el-table-column label="类型" width="200">
               <template slot-scope="scope">
                 <el-switch
                   v-model="scope.row.rebate_conf.type"

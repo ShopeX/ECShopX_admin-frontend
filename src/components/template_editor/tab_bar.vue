@@ -20,7 +20,7 @@
         <el-form-item label="设置tabBar">
           <div v-for="(item, index) in data" class="setting-item">
             <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
-              <i class="iconfont icon-trash-alt" />
+              <i class="el-icon-delete" />
             </div>
             <img
               v-if="item.iconPath"

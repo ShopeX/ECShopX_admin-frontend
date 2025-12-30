@@ -33,10 +33,10 @@
                   v-if="1 == dataList[item.id].disabled"
                   @click="handleTemplOpen(dataList[item.id].template_id)"
                 >
-                  <i class="iconfont icon-trash-alt" />开启
+                  <i class="el-icon-delete" />开启
                 </div>
                 <div v-else @click="handleTemplClose(dataList[item.id].template_id)">
-                  <i class="iconfont icon-trash-alt" />关闭
+                  <i class="el-icon-delete" />关闭
                 </div>
               </div>
               <!-- <div class="footer-item" @click="handleTemplRemove(index)">

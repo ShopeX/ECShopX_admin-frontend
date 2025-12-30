@@ -44,7 +44,11 @@ export default {
       type: Boolean,
       default: false
     },
-    size: String
+    size: String,
+    queryParams: {
+      type: Object,
+      default: () => ({})
+    }
   },
   provide() {
     return {
@@ -90,7 +94,10 @@ export default {
         params.data = []
       }
       const { data } = await this.$picker.shop({
-        ...params
+        ...params,
+        queryParams: {
+          ...this.queryParams
+        }
       })
       if (data) {
         if (data.length > 1) {

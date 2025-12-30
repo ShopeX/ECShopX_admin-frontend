@@ -441,7 +441,7 @@ export default {
         label-width={labelWidth}
         validate-on-rule-change={false}
         inline-message
-        label-position={this.labelPosition !== '' ? this.labelPosition : (this.$store.state.system?.lang !== 'en' ? '' : 'top')}
+        label-position={this.labelPosition !== '' ? this.labelPosition : (this.$store?.state?.system?.lang !== 'en' ? '' : 'top')}
       >
         {formList.map((item, index) => {
           if (item.type == 'group') {

@@ -14,8 +14,8 @@
     ref="pageContainer"
   >
     <div :style="{ background: bgColor }" class="rounded-[6px]">
-      <div class="sp-page__header py-4 pl-5 pr-4 flex items-center" ref="header">
-        <div class="sp-page__header-title">{{ title }}</div>
+      <div class="sp-page__header py-4 pl-5 pr-4 flex items-end" ref="header">
+        <div class="sp-page__header-title mr-4">{{ title }}</div>
         <div class="sp-page__header-toolbar flex-1">
           <slot name="page-header" />
         </div>

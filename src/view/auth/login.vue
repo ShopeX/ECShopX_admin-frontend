@@ -158,7 +158,6 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.fnSize())
-    this.SET_VERSION_MODE(this.VUE_APP_PRODUCT_MODEL)
     this.init()
     this.$api.login.getAuthorizeLeve().then(res => {
       this.level = res.level
@@ -177,7 +176,6 @@ export default {
       'SET_TOKEN_EXP',
       'SET_USERINFO',
       'SET_LOGIN_TYPE',
-      'SET_VERSION_MODE'
     ]),
     init() {
       this.loginType = this.$route.meta.type
@@ -305,7 +303,6 @@ export default {
       const { menu_type } = JSON.parse(atob(base64Url))
       console.log('menu_type', menu_type)
       this.SET_USERINFO(userInfo)
-      this.SET_VERSION_MODE(menu_type)
       if (this.loginType == 'distributor') {
         this.$router.push({ path: '/shopadmin/shoplist' })
       } else if (this.loginType == 'dealer') {

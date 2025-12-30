@@ -13,7 +13,7 @@
         <el-input v-model="form.remind_content" style="width: 550px" />
       </el-form-item>
     </el-form>
-    <div slot="page-footer" class="section-footer with-border content-center text-right">
+    <div slot="page-footer" class="text-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
     </div>
     <!-- <el-tabs

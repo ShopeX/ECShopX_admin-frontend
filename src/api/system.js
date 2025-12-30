@@ -27,3 +27,20 @@ export function saveShareParams(data) {
     params: data
   })
 }
+
+//获取web隐私声明设置
+export function getWebPrivacyStatement() {
+  return fetch({
+    url: '/company/privacy_setting',
+    method: 'get'
+  })
+}
+
+//保存web隐私声明设置
+export function saveWebPrivacyStatement(data) {
+  return fetch({
+    url: '/company/privacy_setting',
+    method: 'post',
+    params: data
+  })
+}

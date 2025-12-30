@@ -134,7 +134,7 @@ export default {
           label: '成本价',
           key: 'cost_price',
           type: 'input',
-          required: true,
+          required: this.$store.getters.login_type != 'admin',
           message: '请输入商品成本价',
           display: 'inline'
         },

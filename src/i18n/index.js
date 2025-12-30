@@ -4,14 +4,16 @@
  */
 const i18n = {
   zhcn: '简体中文',
-  en: 'English'
-  // zhtw: '繁體中文'
+  en: 'English',
+  // zhtw: '繁體中文',
+  ar: 'العربية'
 }
 
 export const langMap = {
   zhcn: 'zh-CN',
   en: 'en-CN',
-  zhtw: 'zh-TW'
+  zhtw: 'zh-TW',
+  ar: 'ar-SA'
 }
 
 // 同时支持 CommonJS 导出，供 Tailwind 插件使用

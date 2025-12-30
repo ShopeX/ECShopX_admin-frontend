@@ -310,21 +310,22 @@
           </el-form-item>
 
           <div v-if="!zdItemHidden" style="position: relative">
-            <SkuSelector :data="relItems" @change="getItems" />
-            <div style="position: absolute; bottom: 0px; left: 112px">
-              <el-upload
-                style="display: inline-block; height: 0"
-                action=""
-                :on-change="uploadHandleChange"
-                :auto-upload="false"
-                :show-file-list="false"
-              >
-                <el-button type="primary"> 批量上传 </el-button>
-              </el-upload>
-              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
-                下载模板
-              </el-button>
-            </div>
+            <SkuSelector :data="relItems" @change="getItems">
+              <template #selectGoodsButton>
+                <el-upload
+                  style="display: inline-block"
+                  action=""
+                  :on-change="uploadHandleChange"
+                  :auto-upload="false"
+                  :show-file-list="false"
+                >
+                  <el-button type="primary"> 批量上传 </el-button>
+                </el-upload>
+                <el-button type="primary" @click="uploadHandleTemplate()">
+                  下载模板
+                </el-button>
+              </template>
+            </SkuSelector>
           </div>
 
           <el-col :xs="12" :sm="12" :md="12">
@@ -424,7 +425,7 @@
               <el-table-column prop="address" label="地址" show-overflow-tooltip />
               <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
-                  <i class="iconfont icon-trash-alt" @click="deleteRow(scope.$index, form.items)" />
+                  <i class="el-icon-delete" @click="deleteRow(scope.$index, form.items)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -455,7 +456,7 @@
               <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
                   <i
-                    class="iconfont icon-trash-alt"
+                    class="el-icon-delete"
                     @click="deleteDistritutorRow(scope.$index, form.items)"
                   />
                 </template>
@@ -1031,12 +1032,10 @@ export default {
                   this.$message({
                     message: '更新成功',
                     type: 'success',
-                    duration: 2 * 1000,
-                    onClose() {
-                      that.refresh()
-                      that.$router.go(-1)
-                    }
+                    duration: 2 * 1000
                   })
+                  this.refresh()
+                  this.$router.go(-1)
                 } else {
                   this.$message.error('更新优惠券失败!')
                   this.submitDisabled = false
@@ -1054,11 +1053,9 @@ export default {
                     message: '添加成功',
                     type: 'success',
                     duration: 2 * 1000,
-                    onClose() {
-                      that.refresh()
-                      that.$router.go(-1)
-                    }
                   })
+                  this.refresh()
+                  this.$router.go(-1)
                 } else {
                   this.$message.error('添加优惠券失败!')
                   this.submitDisabled = false

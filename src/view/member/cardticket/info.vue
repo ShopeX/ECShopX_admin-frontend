@@ -439,7 +439,7 @@
         </el-card>
 
         <el-card
-          v-if="VERSION_STANDARD && is_distributor == false && form.use_platform == 'mall'"
+          v-if="VERSION_STANDARD() && is_distributor == false && form.use_platform == 'mall'"
           header="店铺"
           shadow="naver"
         >

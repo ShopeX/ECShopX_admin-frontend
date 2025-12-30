@@ -37,19 +37,17 @@ export default {
                 v-model={value}
                 type={this.showPassword ? 'text' : 'password'}
                 placeholder='请输入新密码'
-                clearable
                 on-input={onInput}
               >
-                <i
+                <div
                   slot='suffix'
+                  class='h-full w-[25px] flex items-center justify-center'
                   on-click={() => {
                     this.showPassword = !this.showPassword
                   }}
-                  class={[
-                    'el-input__icon',
-                    this.showPassword ? 'el-icon-view-off' : 'el-icon-view'
-                  ]}
-                />
+                >
+                  <SpIcon name={this.showPassword ? 'preview-open' : 'preview-close'} size='16' />
+                </div>
               </el-input>
             )
           },
@@ -65,19 +63,20 @@ export default {
                 v-model={value}
                 type={this.showConfirmPassword ? 'text' : 'password'}
                 placeholder='请输入确认密码'
-                clearable
                 on-input={onInput}
               >
-                <i
+                <div
                   slot='suffix'
+                  class='h-full w-[25px] flex items-center justify-center'
                   on-click={() => {
                     this.showConfirmPassword = !this.showConfirmPassword
                   }}
-                  class={[
-                    'el-input__icon',
-                    this.showConfirmPassword ? 'el-icon-view-off' : 'el-icon-view'
-                  ]}
-                />
+                >
+                  <SpIcon
+                    name={this.showConfirmPassword ? 'preview-open' : 'preview-close'}
+                    size='16'
+                  />
+                </div>
               </el-input>
             )
           },
@@ -104,13 +103,16 @@ export default {
     }
   },
   methods: {
-    async validate() { // 暴露给layout-header弹框
+    async validate() {
+      // 暴露给layout-header弹框
       await this.$refs.changePasswordForm.validate()
     },
-    async getFieldsValue() { // 暴露给layout-header弹框
+    async getFieldsValue() {
+      // 暴露给layout-header弹框
       return this.$refs.changePasswordForm.getFieldsValue()
     },
-    async onSubmit() { // 暴露给layout-header弹框
+    async onSubmit() {
+      // 暴露给layout-header弹框
       try {
         await this.$refs.changePasswordForm.handleSubmit()
         await this.handleSubmit(this.formData)

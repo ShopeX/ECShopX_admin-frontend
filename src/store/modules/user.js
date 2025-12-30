@@ -33,7 +33,6 @@ const userStore = {
     ali_template_name: '',
     app_type: '',
     color_theme: '',
-    // versionMode: 'platform',
     readLicense: 0
   },
 
@@ -91,7 +90,6 @@ const userStore = {
       state.ali_template_name = ''
       state.app_type = ''
       state.color_theme = ''
-      state.versionMode = 'platform'
     },
     SET_LOGIN_TYPE: (state, payload) => {
       const { loginType } = payload
@@ -104,9 +102,6 @@ const userStore = {
     SET_PRODUCTION_CODE: (state, payload) => {
       const { productionCode } = payload
       state.product_code = productionCode
-    },
-    SET_VERSION_MODE: (state, payload) => {
-      state.versionMode = payload
     },
     SET_READ_LICENSE: (state, payload) => {
       state.readLicense = payload

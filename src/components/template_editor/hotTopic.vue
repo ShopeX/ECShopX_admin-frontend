@@ -20,7 +20,7 @@
 
         <div v-for="(item, index) in data" :key="index" class="setting-item slider">
           <div class="setting-remove" @click="removeItem(index)">
-            <i class="iconfont icon-trash-alt" />
+            <i class="el-icon-delete" />
           </div>
           <template v-if="type === 'wxapp'">
             <div class="uploader-setting">

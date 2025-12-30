@@ -24,7 +24,7 @@
             <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="原因" width="150">
+        <el-table-column prop="attribute_name" label="原因">
           <template slot-scope="scope">
             <div>{{ scope.row }}</div>
           </template>

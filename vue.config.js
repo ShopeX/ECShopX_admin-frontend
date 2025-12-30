@@ -15,7 +15,7 @@ const { generateId } = require('./build/utils')
 const AutoI18nOptions = {
   excludedPath: ['/src/i18n/index.js'],
   globalPath: path.resolve(__dirname, './src/i18n/lang'),
-  targetLangList: ['en', 'zh-tw'],
+  targetLangList: ['en', 'zh-tw', 'ar'],
   rewriteConfig: false,
   includePath: [/src\//, /node_modules\/element-ui\//]
 }

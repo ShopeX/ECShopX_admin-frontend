@@ -276,6 +276,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+      this.formData.theme_pc_template_id = ''
     },
     async getTemplateList() {
       const { page_no, page_size } = this.page

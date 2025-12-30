@@ -41,24 +41,24 @@
             <el-radio label="3"> 指定商品标签适用 </el-radio>
             <el-radio label="4"> 指定品牌适用 </el-radio>
           </el-radio-group>
-          <el-col v-if="!zdItemHidden" :span="23">
-            <!--<el-button type="primary" class="el-icon-plus" @click="relItemsClick" size="mini" round>选商品</el-button>-->
-            <SkuSelector :data="relItems" @change="getItems" />
-            <div style="position: absolute; bottom: 0px; left: 112px">
-              <el-upload
-                style="display: inline-block; height: 0"
-                action=""
-                :on-change="uploadHandleChange"
-                :auto-upload="false"
-                :show-file-list="false"
-              >
-                <el-button type="primary"> 批量上传 </el-button>
-              </el-upload>
-              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
-                下载模板
-              </el-button>
-            </div>
-          </el-col>
+          <div v-if="!zdItemHidden" style="position: relative">
+            <SkuSelector :data="relItems" @change="getItems">
+              <template #selectGoodsButton>
+                <el-upload
+                  style="display: inline-block"
+                  action=""
+                  :on-change="uploadHandleChange"
+                  :auto-upload="false"
+                  :show-file-list="false"
+                >
+                  <el-button type="primary"> 批量上传 </el-button>
+                </el-upload>
+                <el-button type="primary" @click="uploadHandleTemplate()">
+                  下载模板
+                </el-button>
+              </template>
+            </SkuSelector>
+          </div>
           <el-col :xs="12" :sm="12" :md="24">
             <div v-if="!categoryHidden">
               <treeselect

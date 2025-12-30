@@ -22,7 +22,7 @@
               </template>
             </div>
           </div>
-          <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)" />
+          <div class="goods-remove el-icon-delete" @click="handleSkuRemove(index)" />
         </div>
         <div v-if="isInputShow" class="grid-content bg-purple">
           <el-input

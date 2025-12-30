@@ -45,9 +45,6 @@ export default {
   },
   methods: {},
   computed: {
-    footerBackground: () => {
-      return require(`@/assets/svgs/logo.svg`)
-    },
     logo: () => {
       return require(`@/assets/images/${DEFAULT_CONFIG.logo}`)
     },

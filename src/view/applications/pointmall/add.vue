@@ -1402,7 +1402,7 @@ export default {
     pickThumb: function (arr) {
       if (arr.length != 0) {
         this.thumbDialog = false
-        
+
         // 直接将图片插入到富文本内容中
         let imgHtml = ''
         arr.forEach(data => {
@@ -1411,7 +1411,7 @@ export default {
             imgHtml += `<img src="${imageUrl}" style="max-width: 100%; height: auto; display: block; margin: 10px 0;" />`
           }
         })
-        
+
         if (imgHtml) {
           // 将图片HTML追加到现有内容中
           this.form.intro = this.form.intro + imgHtml
@@ -1534,7 +1534,18 @@ export default {
         }
       })
       if (arr.length > 0) {
-        let n = arr.findIndex(item => JSON.parse(item.is_image))
+        let n = arr.findIndex(item => {
+          // 确保 is_image 存在且不为空
+          if (!item.is_image || item.is_image.trim() === '') {
+            return false
+          }
+          try {
+            const parsed = JSON.parse(item.is_image)
+            return !!parsed
+          } catch (e) {
+            return false
+          }
+        })
         if (n != -1) {
           let obj = { ...arr[n] }
           let imgs = []

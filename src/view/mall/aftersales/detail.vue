@@ -142,7 +142,7 @@
     <div class="section-body">
       <el-row>
         <template>
-          <el-table :data="aftersalesInfo.detail" style="width: 100%">
+          <el-table :data="aftersalesInfo.detail" style="width: 960px">
             <el-table-column class="goods-img" prop="pic" label="商品图片" width="180">
               <template slot-scope="scope">
                 <span><img :src="scope.row.item_pic" :alt="scope.row.item_name"></span>

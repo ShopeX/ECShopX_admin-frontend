@@ -154,7 +154,15 @@ export default {
         item_bn: '',
         barcode: '',
         supplier_name: '',
-        approve_status: ''
+        approve_status: '',
+        brand_id: ''
+      },
+      goodsBranchList: [],
+      goodsBranchParams: {
+        page: 1,
+        pageSize: 1000,
+        attribute_type: 'brand',
+        attribute_name: ''
       },
       statusOption: statusOption,
       finderData: [],
@@ -226,6 +234,23 @@ export default {
           cellWidth: 1.3,
           componentProps: {
             placeholder: '请输入商品名称'
+          }
+        },
+        {
+          fieldName: 'brand_id',
+          label: '品牌',
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '商品/商标关键词',
+            remote: true,
+            filterable: true,
+            clearable: true,
+            remoteMethod: this.getGoodsBranchList,
+            options: this.goodsBranchList.map((item) => ({
+              label: item.attribute_name,
+              value: item.attribute_id
+            }))
           }
         },
         {
@@ -480,6 +505,7 @@ export default {
   },
   created() {
     this.getDefaultDistributor()
+    this.getGoodsBranchList()
   },
   methods: {
     onSearch() {
@@ -647,6 +673,11 @@ export default {
     },
     handleTabClick() {
       this.$refs.finder.refresh()
+    },
+    async getGoodsBranchList(searchVal = '') {
+      this.goodsBranchParams.attribute_name = searchVal
+      const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
+      this.goodsBranchList = list
     }
   }
 }

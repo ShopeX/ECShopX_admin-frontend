@@ -502,3 +502,77 @@ export function exportEmployees(params) {
     params
   })
 }
+
+// 创建标签组
+export function createTagGroup(query) {
+  return fetch({
+    url: '/member/tag-group',
+    method: 'post',
+    params: query
+  })
+}
+
+export function updateTagGroup(id, params) {
+  return fetch({
+    url: `/member/tag-group/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+// 删除标签组
+export function deleteTagGroup(id) {
+  return fetch({
+    url: `/member/tag-group/${id}`,
+    method: 'delete'
+  })
+}
+
+// 获取标签组
+export function getTagGroupList(query) {
+  return fetch({
+    url: '/member/tag-group',
+    method: 'get',
+    params: query
+  })
+}
+
+// 人群圈选配置按钮获取
+export function getMemberStructure(query) {
+  return fetch({
+    url: '/member/segment-rule/structure',
+    method: 'get',
+    params: query
+  })
+}
+// 获取规则的人数
+export function getSegmentRulePreview(query) {
+  return fetch({
+    url: '/member/segment-rule/preview',
+    method: 'post',
+    params: query
+  })
+}
+// 创建人群打标规则
+export function saveSegmentRule(query) {
+  return fetch({
+    url: '/member/segment-rule',
+    method: 'post',
+    params: query
+  })
+}
+// 获取圈选规则详情
+export function getSegmentRuleDetail(id) {
+  return fetch({
+    url: '/member/segment-rule/' + id,
+    method: 'get'
+  })
+}
+// 会员更换店铺
+export function setRegDistributor(params) {
+  return fetch({
+    url: '/member/regDistributor',
+    method: 'put',
+    params
+  })
+}

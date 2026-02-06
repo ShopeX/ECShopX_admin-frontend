@@ -86,3 +86,18 @@ export function getJstErpSetting() {
     method: 'get'
   })
 }
+
+export function getKujialeSetting() {
+  return fetch({
+    url: '/kujiale/config',
+    method: 'get'
+  })
+}
+
+export function setKujialeSetting(query) {
+  return fetch({
+    url: '/kujiale/config',
+    method: 'post',
+    params: query
+  })
+}

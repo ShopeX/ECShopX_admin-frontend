@@ -52,5 +52,10 @@ export const NAVS = [
     value: 'purchase',
     name: 'purchase',
     label: '内购'
+  },
+  {
+    value: 'kujiale',
+    name: 'kujiale',
+    label: '酷家乐案例'
   }
 ]

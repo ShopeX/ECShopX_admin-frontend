@@ -83,7 +83,6 @@ function createAxios(inst, isJson = true) {
     const isDeleteMethod = config.method === 'delete'
     const showError = config.showError === undefined ? true : config.showError
     config.headers['Authorization'] = 'Bearer ' + store.getters.token
-
     // 添加 country_code 语言参数；若传入 skipCountryCode 则不添加
     const skipCountryCode = config.skipCountryCode === true
     if (skipCountryCode) delete config.skipCountryCode
@@ -107,7 +106,6 @@ function createAxios(inst, isJson = true) {
         console.log('[utils/fetch] 2. POST/PUT 请求添加 country_code 到 params:', langMap[lang])
       }
     }
-
     if (isGetMethod || isDeleteMethod) {
       if (isObject(config.params)) {
         let params = {}

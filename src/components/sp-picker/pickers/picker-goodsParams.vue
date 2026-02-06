@@ -20,6 +20,18 @@
     margin: 0;
     padding: 10px;
   }
+  .attribute-values-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 和 Edge */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
 }
 </style>
 <template>
@@ -61,7 +73,7 @@ export default {
   data() {
     return {
       loading: false,
-      multiple: this.value?.multiple ?? true
+      multiple: (this.value && this.value.multiple !== undefined) ? this.value.multiple : true
     }
   },
   computed: {
@@ -101,13 +113,16 @@ export default {
               const { list } = scope.row.attribute_values
               return h(
                 'div',
-                {},
+                {
+                  class: 'attribute-values-scroll'
+                },
                 list.map((item, index) => {
                   return h(
                     'el-tag',
                     {
                       style: {
-                        'margin-right': '10px'
+                        'margin-right': '10px',
+                        'flex-shrink': '0'
                       },
                       props: {
                         size: 'mini'
@@ -138,7 +153,10 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.attribute_id))
+        // 统一转换为字符串类型 不然incluses匹配不到
+        let dataArrayString = this.value.data.map(item => String(item))
+        
+        const selectRows = list.filter(item => dataArrayString.includes(String(item.attribute_id)))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

@@ -19,7 +19,7 @@ const routes = [
       {
         name: 'memberList',
         path: 'member-manage/member-list',
-        component: () => import('@/view/member/members/list'),
+        component: () => import('@/views/members/member_list'),
         meta: {
           aliasName: 'members-lists',
           icon: 'icon-member',

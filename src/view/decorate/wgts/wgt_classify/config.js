@@ -48,7 +48,6 @@ const config = {
     const { base, ...rest } = v
     // 使用公共函数处理 base 中的样式数据转换
     const transformedBase = transformInBase(base, ['outerMargin', 'innerPadding'])
-
     return {
       name: v.name,
       ...transformedBase,
@@ -76,7 +75,6 @@ const config = {
           animate: 'animate',
           dataType: 'dataType'
         })
-
         return {
           ...baseData,
           ...otherBaseData

@@ -12,7 +12,7 @@ export default {
     {
       path: 'member',
       name: `会员列表`,
-      component: () => import('@/view/member/members/list'),
+      component: () => import('@/views/members/member_list'),
       children: [
         {
           path: 'detail/:user_id?',

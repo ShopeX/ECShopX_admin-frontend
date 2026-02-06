@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="page-cardticket">
+  <SpPage class="page-cardticket">
     <el-form ref="form" :rules="rules" :model="form" label-width="110px">
       <div v-if="!form.card_id && showTab" style="margin-bottom: 20px">
         <el-radio-group v-model="form.card_type" @change="handleTypeChange">
@@ -156,7 +156,8 @@
                       :key="item.value"
                       :label="item.text"
                       :value="item.value"
-                    /> </el-select
+                    />
+                  </el-select>
                   >&nbsp;生效，有效天数&nbsp;
 
                   <el-input
@@ -221,6 +222,26 @@
               >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
             >
           </el-form-item>
+          <el-form-item label="券类型" prop="coupon_type">
+            <el-radio-group v-model="form.coupon_type" @change="couponTypeChange">
+              <el-radio label="mall">商城券</el-radio>
+              <el-radio label="guide">导购专属券</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="导购发放数量" prop="guide_issue_quantity" v-if="form.coupon_type == 'guide'">
+            <el-input
+              v-model.number="form.guide_issue_quantity"
+              type="number"
+              min="1"
+              placeholder="请输入发放数量"
+              style="width: 240px"
+              oninput="value=value.replace(/[^\d.]/g,'')"
+            />
+            <span class="frm-tips" style="margin-left: 10px; color: #909399;">
+              按单个导购发放的用户领取数量限制
+            </span>
+          </el-form-item>
+          
           <!-- <el-form-item label="优惠券模板ID" prop="card_code">
            <el-input :maxlength="255" placeholder="优惠券模板ID" v-model="form.card_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_code}}</span>
         </el-form-item>
@@ -487,7 +508,7 @@
       @chooseStore="chooseDistributorAction"
       @closeStoreDialog="closeDistributorDialogAction"
     />
-  </div>
+  </SpPage>
 </template>
 
 <script>
@@ -677,7 +698,9 @@ export default {
         most_cost: 999999,
         item_category: [],
         tag_ids: [],
-        brand_ids: []
+        brand_ids: [],
+        coupon_type: 'mall', // 券类型：'mall'-商城券，'guide'-导购专属券
+        guide_issue_quantity: '' // 导购发放数量
       },
       relItems: [],
       kqhjCheckedItem: '',
@@ -1370,6 +1393,11 @@ export default {
     },
     haddleShowTab(value) {
       this.showTab = value
+    },
+    couponTypeChange(value) {
+      if (value === 'guide') {
+        this.form.receive = false
+      }
     }
   }
 }

@@ -116,7 +116,6 @@ const config = {
         if (baseData.imgHeight !== undefined && baseData.imgHeight !== null) {
           baseData.imgHeight = baseData.imgHeight * 2
         }
-
         return baseData
       },
       config: ({ data }) => {

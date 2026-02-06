@@ -11,7 +11,6 @@ import { pickBy } from '@/utils'
  */
 export function convertRpxToPx(marginObj) {
   if (!marginObj) return marginObj
-
   return {
     ...marginObj,
     paddedt: (marginObj.paddedt || 0) / 2,
@@ -28,7 +27,6 @@ export function convertRpxToPx(marginObj) {
  */
 export function convertPxToRpx(marginObj) {
   if (!marginObj) return marginObj
-
   const { paddedt, paddedb, paddedl, paddedr, ...otherFields } = marginObj
   return {
     ...otherFields,
@@ -56,7 +54,6 @@ export function transformInBase(base, styleKeys = ['outerMargin', 'innerPadding'
       result[key] = convertRpxToPx(base[key])
     }
   })
-
   return result
 }
 
@@ -87,7 +84,6 @@ export function transformOutBase(
       baseData[key] = convertPxToRpx(baseData[key])
     }
   })
-
   return baseData
 }
 

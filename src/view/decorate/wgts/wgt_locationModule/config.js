@@ -156,7 +156,6 @@ const config = {
     if (processedRestBase.navitemmargin !== undefined) {
       processedRestBase.navitemmargin = processedRestBase.navitemmargin / 2
     }
-
     return {
       name,
       uuid,
@@ -233,7 +232,6 @@ const config = {
           navitemradius: 'navitemradius',
           navitembordercolor: 'navitembordercolor'
         })
-
         return {
           ...otherBaseData,
           navitemarea,

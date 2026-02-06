@@ -203,7 +203,6 @@ const config = {
       showSearchButton,
       searchButtonColor
     } = base || {}
-
     // 兼容旧数据格式：如果 pTitleHotSetting 直接是热区图对象，转换为新格式
     if (pTitleHotSetting && pTitleHotSetting.imgUrl !== undefined && !pTitleHotSetting.type) {
       pTitleHotSetting = {

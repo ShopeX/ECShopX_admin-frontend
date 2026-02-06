@@ -17,7 +17,6 @@ const config = {
       component: 'input',
       value: ''
     },
-
     {
       label: '数据类型',
       key: 'dataType',

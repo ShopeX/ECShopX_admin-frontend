@@ -110,7 +110,7 @@ import SkuParams from './components/SkuParams'
 import sku from '../../store/modules/sku'
 export default {
   async beforeRouteLeave(to, from, next) {
-    if (this.$refs['decorateRef'].dialogVisible) {
+    if (this.$refs['decorateRef']?.dialogVisible) {
       this.$refs['decorateRef'].resetDecorateTheme()
       this.$refs['decorateRef'].onClose()
     } else if (!this.isLeave && !this.routerParams.detail) {
@@ -1103,7 +1103,7 @@ export default {
       this.form.item_id = item_id
       this.form.supplier_id = supplier_id
       this.form.brief = brief
-      this.form.templatesId = templates_id.toString()
+      this.form.templatesId = templates_id?.toString() || ''
       this.form.templatesName = templates_name
       this.form.brandId = brand_id + ''
       this.form.itemUnit = item_unit
@@ -1213,9 +1213,9 @@ export default {
       }
     },
     // 递归管理分类
-    deepMainCategory({ category_id, category_name, children }, mainCategory) {
+    deepMainCategory({ category_id, category_name, children = [] }, mainCategory) {
       mainCategory.push(category_id)
-      if (children) {
+      if (children?.length > 0) {
         this.deepMainCategory(children[0], mainCategory)
       }
     },
@@ -1635,10 +1635,12 @@ export default {
         }
         this.submitLoading = false
         this.isLeave = true
-        this.$parent.onActivated()
-        const _this = this
+        // 安全调用父组件方法
+        if (this.$parent && typeof this.$parent.onActivated === 'function') {
+          this.$parent.onActivated()
+        }
         setTimeout(() => {
-          _this.$router.go(-1)
+          this.$router.go(-1)
         }, 200)
       } catch (e) {
         this.submitLoading = false

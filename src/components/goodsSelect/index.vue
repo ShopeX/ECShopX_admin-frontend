@@ -97,6 +97,16 @@
         </el-col>
         <el-col :span="6" class="last-col">
           <el-input
+            v-model="params.goods_bn"
+            placeholder="SPU编码"
+            clearable
+            class="input-with-select"
+          >
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
+          </el-input>
+        </el-col>
+        <el-col :span="6" class="last-col">
+          <el-input
             v-model="params.supplier_name"
             placeholder="所属供应商"
             clearable
@@ -157,6 +167,7 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column prop="goods_bn" label="SPU编码" />
       <el-table-column label="是否赠品">
         <template slot-scope="scope">
           {{ scope.row.is_gift == '1' ? '是' : '否' }}
@@ -203,12 +214,13 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column prop="goods_bn" label="SPU编码" />
       <el-table-column label="是否赠品">
         <template slot-scope="scope">
           {{ scope.row.is_gift == '1' ? '是' : '否' }}
         </template>
       </el-table-column>
-      <el-table-column prop="supplier_name" label="所属供应商" />
+      <el-table-column prop="supplier_name" label="所属供应商" width="120" />
       <el-table-column label="商品类型">
         <template slot-scope="scope">
           {{ itemSourceMap[scope.row.item_holder] }}
@@ -359,7 +371,8 @@ export default {
         audit_status: 'approved',
         is_gift: '',
         supplier_name: '',
-        item_holder: ''
+        item_holder: '',
+        goods_bn: ''
       },
       categoryList: [],
       select_category_value: [],

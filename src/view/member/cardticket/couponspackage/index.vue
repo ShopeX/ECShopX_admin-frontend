@@ -68,6 +68,7 @@ export default {
     },
     beforeSearch(params) {
       params.title = this.params.title
+      params.is_guide = 0
       return { ...params }
     },
     queryCoupon() {

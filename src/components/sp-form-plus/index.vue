@@ -63,7 +63,7 @@
           </div>
         </div>
         <div
-          class="sp-form-plus__actions ml-1 mt-1 flex-col items-end !pt-[0px]"
+          class="sp-form-plus__actions ml-1 mt-1 flex-col items-end !pt-0"
           :style="actionsStyle"
           v-else
         >

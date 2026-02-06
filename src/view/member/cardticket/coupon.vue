@@ -4,8 +4,8 @@
 -->
 
 <template>
-  <SpPage>
-    <SpRouterView>
+  <SpRouterView>
+    <SpPage>
       <SpPlatformTip h5 app pc alipay />
       <SpPlatformTip
         class="damo-crm-tip"
@@ -208,17 +208,14 @@
             </el-table-column>
             <el-table-column width="80" prop="get_num" label="领取量">
               <template slot-scope="scope">
-                <span v-if="scope.row.get_num">{{ scope.row.get_num }}</span>
-                <span>0</span>
+                <span>{{scope.row.get_num || 0}}</span>
               </template>
             </el-table-column>
             <el-table-column width="80" prop="use_num" label="使用量">
               <template slot-scope="scope">
-                <span v-if="scope.row.use_num">{{ scope.row.use_num }}</span>
-                <span>0</span>
+                <span>{{scope.row.use_num || 0}}</span>
               </template>
             </el-table-column>
-            <el-table-column width="200" prop="source_name" label="店铺" />
           </el-table>
           <div class="mt-4 text-right">
             <el-pagination
@@ -250,8 +247,7 @@
           <el-button type="primary" @click.native="sendoutAction"> 确定 </el-button>
         </div>
       </el-dialog>
-    </SpRouterView>
-
+    </SpPage>
     <SpDialog
       ref="editDialogRef"
       v-model="editDialog"
@@ -261,7 +257,7 @@
       :form-list="editFormList"
       @onSubmit="onEditSubmit"
     />
-  </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

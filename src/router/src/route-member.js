@@ -13,7 +13,7 @@ export default {
     {
       path: 'member/memberlist',
       name: `会员列表`,
-      component: () => import('@/view/member/members/list'),
+      component: () => import('@/views/members/member_list'),
       children: [
         {
           path: 'detail/:user_id?',
@@ -79,7 +79,7 @@ export default {
     {
       path: 'membertouch/smssend',
       name: `群发短信`,
-      component: () => import('@/view/member/members/list')
+      component: () => import('@/views/members/member_list')
     },
     {
       path: 'membertouch/arrivalnotice',

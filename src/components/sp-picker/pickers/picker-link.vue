@@ -99,7 +99,8 @@ export default {
         { id: 'zitiOrder', title: '自提订单' },
         { id: 'customerService', title: '客服' },
         { id: 'homeSearch', title: '搜索' },
-        { id: 'settings', title: '设置' }
+        { id: 'settings', title: '设置' },
+        { id: 'kujiale', title: '酷家乐案例库' }
       ],
       multiple: this.value?.multiple ?? true
     }

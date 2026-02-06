@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div>
+  <SpPage>
     <div class="section section-white content-padded">
       <div class="clearfix heade-box">
         <div class="f_l member-card-box">
@@ -216,7 +216,7 @@
     <div class="text-center mt-4">
       <el-button type="primary" @click="goBack"> 返回 </el-button>
     </div>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -254,7 +254,6 @@ export default {
       preMobile: '',
       orderRecords: '',
       grade_id: '',
-      currentPage: 1,
       member: {
         user_id: '',
         company_id: '',
@@ -343,9 +342,6 @@ export default {
     }
     if (this.$route.query.orderRecords) {
       this.orderRecords = this.$route.query.orderRecords
-    }
-    if (this.$route.query.currentPage) {
-      this.currentPage = this.$route.query.currentPage
     }
     this.getMember({ user_id: this.user_id })
     this.getRegisterSetting()

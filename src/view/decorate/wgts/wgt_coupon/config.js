@@ -52,7 +52,6 @@ const config = {
                     regionauth_id: self.$route.query.regionauth_id
                   }
                 })
-
                 const formattedCouponList = couponData.map((item) => {
                   let amount
                   if (item.card_type == 'cash') {

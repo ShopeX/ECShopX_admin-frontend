@@ -88,7 +88,7 @@
                 :on-success="handleVideoSuccess"
               >
                 <el-button type="primary"> 本地上传 </el-button>
-                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过50M</div>
+                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过400M</div>
               </el-upload>
             </el-col>
           </el-form-item>
@@ -161,14 +161,14 @@ export default {
       }
 
       const isMP4 = file.type === 'video/mp4'
-      const isLt2M = file.size / 1024 / 1024 < 50
+      const isLt400M = file.size / 1024 / 1024 < 400
 
       if (!isMP4) {
         this.$message.error('上传视频只能是 mp4 格式!')
         return
       }
-      if (!isLt2M) {
-        this.$message.error('上传视频大小不能超过 50MB!')
+      if (!isLt400M) {
+        this.$message.error('上传视频大小不能超过 400MB!')
         return
       }
 
@@ -318,6 +318,11 @@ export default {
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
   }
+}
+.tc {
+  clear: both;
+  text-align: right;
+  margin-top: 10px;
 }
 .msg_card {
   background-color: #f4f5f9;

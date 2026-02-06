@@ -415,6 +415,17 @@ const routes = [
             component: () => import('@/view/applications/plugin/appDetail.vue')
           }
         ]
+      },
+      {
+        name: 'kujialeProducts',
+        path: 'kujiale/products',
+        meta: {
+          aliasName: 'kujiale-products',
+          title: '酷家乐商品',
+          icon: 'pay-circle',
+          permissions: ['applications.kujiale.kujiale-products']
+        },
+        component: () => import('@/views/applications/kujiale/list')
       }
     ]
   }

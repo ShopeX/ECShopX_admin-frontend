@@ -86,7 +86,7 @@ const routes = [
           title: '群发优惠券',
           permissions: ['marketing.coupon.couponsend']
         },
-        component: () => import('@/view/member/members/list'),
+        component: () => import('@/views/members/member_list'),
         children: [
           {
             path: 'detail',

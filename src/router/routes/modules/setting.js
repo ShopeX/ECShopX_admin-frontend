@@ -632,6 +632,17 @@ const routes = [
           permissions: ['setting.systemsetting.damoCrm']
         },
         component: () => import('@/views/settings/systemConfig/damoCrm/index')
+      },
+      {
+        name: `systemconfigKjlSetting`,
+        path: 'system-config/kjl-setting',
+        meta: {
+          aliasName: 'kjlsetting',
+          icon: 'icon-products',
+          title: '酷家乐设置',
+          permissions: ['setting.systemsetting.kjlsetting']
+        },
+        component: () => import('@/views/settings/kujiale-setting')
       }
     ]
   }

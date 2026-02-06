@@ -393,12 +393,13 @@ export default {
           if (this.form.date_type === 'DATE_TYPE_LONG') {
             this.form.send_begin_time = this.toTimeStamp(this.form.begintime)
             this.form.begin_time = this.form.limit
-          } else {
-            this.form.send_begin_time = this.toTimeStamp(this.form.issuetime[0])
-            this.form.send_end_time = this.toTimeStamp(this.form.issuetime[1])
-            this.form.begin_time = this.toTimeStamp(this.form.usetime[0])
-            this.form.end_time = this.toTimeStamp(this.form.usetime[1])
           }
+          // else {
+          //   this.form.send_begin_time = this.toTimeStamp(this.form.issuetime[0])
+          //   this.form.send_end_time = this.toTimeStamp(this.form.issuetime[1])
+          //   this.form.begin_time = this.toTimeStamp(this.form.usetime[0])
+          //   this.form.end_time = this.toTimeStamp(this.form.usetime[1])
+          // }
           this.submitGift(this.form, 'first')
         } else {
           return false
@@ -468,16 +469,17 @@ export default {
         if (initData.date_type === 'DATE_TYPE_LONG') {
           initData.begintime = this.toTimeDate(initData.send_begin_time)
           initData.limit = initData.begin_time
-        } else {
-          initData.issuetime = [
-            this.toTimeDate(initData.send_begin_time),
-            this.toTimeDate(initData.send_end_time)
-          ]
-          initData.usetime = [
-            this.toTimeDate(initData.begin_time),
-            this.toTimeDate(initData.end_time)
-          ]
         }
+        // else {
+        //   initData.issuetime = [
+        //     this.toTimeDate(initData.send_begin_time),
+        //     this.toTimeDate(initData.send_end_time)
+        //   ]
+        //   initData.usetime = [
+        //     this.toTimeDate(initData.begin_time),
+        //     this.toTimeDate(initData.end_time)
+        //   ]
+        // }
         // initData.user_tag_ids = [{tag_id: '142',tag_name:'员工'}]
         this.form = initData
         console.log(this.form, 'this.form初始化')

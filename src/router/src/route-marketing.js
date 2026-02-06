@@ -96,7 +96,7 @@ export default {
     {
       path: 'coupon/couponsend',
       name: `群发优惠券`,
-      component: () => import('@/view/member/members/list'),
+      component: () => import('@/views/members/member_list'),
       children: [
         {
           path: 'detail',

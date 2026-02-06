@@ -11,7 +11,6 @@
  */
 export function getOuterStyle(value) {
   const { outerMargin = {}, outerBackground } = value || {}
-
   // 如果存在 outerBackground，使用新的格式
   if (outerBackground) {
     return {
@@ -26,7 +25,6 @@ export function getOuterStyle(value) {
       backgroundRepeat: outerBackground.image ? 'no-repeat' : undefined
     }
   }
-
   // 否则使用 CompStyle 格式（背景数据存储在 outerMargin 中）
   const bgType = outerMargin.bgType
   let bgColor = ''
@@ -45,7 +43,6 @@ export function getOuterStyle(value) {
   else if (bgType === 'color' || !bgType) {
     bgColor = outerMargin.bgColor || ''
   }
-
   return {
     paddingTop: (outerMargin.paddedt || 0) + 'px',
     paddingBottom: (outerMargin.paddedb || 0) + 'px',
@@ -67,7 +64,6 @@ export function getOuterStyle(value) {
  */
 export function getInnerStyle(value) {
   const { innerPadding = {}, innerBackground } = value || {}
-
   // 如果存在 innerBackground，使用新的格式
   if (innerBackground) {
     return {
@@ -101,7 +97,6 @@ export function getInnerStyle(value) {
   else if (bgType === 'color' || !bgType) {
     bgColor = innerPadding.bgColor || ''
   }
-
   return {
     paddingLeft: (innerPadding.paddedl || 0) + 'px',
     paddingRight: (innerPadding.paddedr || 0) + 'px',

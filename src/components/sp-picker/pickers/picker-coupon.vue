@@ -167,7 +167,8 @@ export default {
         page_size: params.pageSize,
         end_date: 1,
         from: 'btn',
-        date_status: this.statusFilter
+        date_status: this.statusFilter,
+        is_guide: 0
       }
       return params
     },

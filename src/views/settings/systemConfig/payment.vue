@@ -1141,7 +1141,16 @@ export default {
     },
     async addDeliveryman(type) {
       if (type == 'add') {
-        this.accountsForm = {}
+        // 新增时设置默认值
+        this.accountsForm = {
+          bank_account_name: '',
+          bank_account_no: '',
+          bank_name: '',
+          china_ums_no: '',
+          pic: '',
+          remark: '',
+          is_default: 'false'
+        }
       }
       await this.$dialog.open({
         title: type == 'edit' ? '编辑收款账户' : '添加收款账户',

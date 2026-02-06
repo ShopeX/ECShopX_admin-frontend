@@ -718,3 +718,29 @@ export function exportCsvData(query) {
     params: query
   })
 }
+
+// 酷家乐获取方案列表
+export function getKjlList(params) {
+  return fetch({
+    url: '/kujiale/designer-works/list',
+    method: 'get',
+    params
+  })
+}
+
+// 酷家乐绑定商品和方案
+export function kjlBindItem(params) {
+  return fetch({
+    url: '/kujiale/designer-works/bind-item',
+    method: 'post',
+    params
+  })
+}
+
+export function kjlUnBindItem(params) {
+  return fetch({
+    url: '/kujiale/designer-works/unbind-item',
+    method: 'delete',
+    params
+  })
+}

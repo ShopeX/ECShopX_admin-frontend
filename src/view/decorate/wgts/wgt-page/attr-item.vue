@@ -12,22 +12,21 @@
       display: flex;
       width: 100%;
       justify-content: flex-end;
-      
+
       .el-radio-button {
-        
         &:first-child {
           .el-radio-button__inner {
             border-radius: 4px 0 0 4px;
             border-right: none;
           }
         }
-        
+
         &:last-child {
           .el-radio-button__inner {
             border-radius: 0 4px 4px 0;
           }
         }
-        
+
         .el-radio-button__inner {
           width: 100%;
           padding: 6px 12px;
@@ -36,13 +35,13 @@
           background-color: #fff;
           border: 1px solid #e0e0e0;
           transition: all 0.2s;
-          
+
           &:hover {
             color: #155bd4;
             border-color: #155bd4;
           }
         }
-        
+
         &.is-active {
           .el-radio-button__inner {
             color: #fff;
@@ -62,20 +61,20 @@
       .color-item {
         display: flex;
         align-items: center;
-        
+
         .color-label {
           font-size: 12px;
           color: #595961;
           width: 80px;
           flex-shrink: 0;
         }
-        
+
         .color-controls {
           flex: 1;
           display: flex;
           align-items: center;
           gap: 8px;
-          
+
           .color-code {
             font-size: 12px;
             color: #999;
@@ -96,7 +95,7 @@
             height: auto;
             line-height: 1.5;
           }
-          
+
           .color-swatch {
             width: 56px;
             height: 28px;
@@ -107,12 +106,12 @@
             flex-shrink: 0;
             transition: all 0.2s;
             overflow: hidden;
-            
+
             &:hover {
               border-color: #155bd4;
               box-shadow: 0 0 0 2px rgba(21, 91, 212, 0.1);
             }
-            
+
             .el-color-picker {
               position: absolute;
               top: 0;
@@ -121,7 +120,7 @@
               height: 100%;
               opacity: 0;
               z-index: 1;
-              
+
               ::v-deep .el-color-picker__trigger {
                 width: 100%;
                 height: 100%;
@@ -133,7 +132,7 @@
         }
       }
     }
-    
+
     .image-section {
       width: 100%;
     }
@@ -156,13 +155,11 @@
           <div class="color-controls">
             <span class="color-code">{{ displayColor }}</span>
             <div class="color-controls-item">
-            <el-button type="text" size="mini" class="reset-btn" @click="onClickReset">重置</el-button>
-            <div class="color-swatch" :style="{ backgroundColor: displayColor }">
-              <el-color-picker 
-                v-model="localValue.color" 
-                size="small" 
-                @change="handleChange"
-              />
+              <el-button type="text" size="mini" class="reset-btn" @click="onClickReset"
+                >重置</el-button
+              >
+              <div class="color-swatch" :style="{ backgroundColor: displayColor }">
+                <el-color-picker v-model="localValue.color" size="small" @change="handleChange" />
               </div>
             </div>
           </div>

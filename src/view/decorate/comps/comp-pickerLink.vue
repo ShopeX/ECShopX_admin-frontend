@@ -22,7 +22,7 @@
 
   .btn-linkpath {
     color: var(--primary);
-    border: 1px solid #DCDFE6;
+    border: 1px solid #dcdfe6;
     background-color: #fff;
     box-sizing: border-box;
     padding: 0 8px;
@@ -65,7 +65,12 @@
     <!-- {{ localValue }} -->
     <div class="tracking-params-wrapper">
       <label class="tracking-params-label">模式</label>
-      <el-radio-group v-model="localValue.linkType" class="linktype-radio" @change="onChangeLinkType" size="small">
+      <el-radio-group
+        v-model="localValue.linkType"
+        class="linktype-radio"
+        @change="onChangeLinkType"
+        size="small"
+      >
         <el-radio-button :label="0"> 选择路径 </el-radio-button>
         <el-radio-button v-if="isShowH5Link" :label="1">H5链接</el-radio-button>
       </el-radio-group>
@@ -76,13 +81,25 @@
     </div>
     <div class="tracking-params-wrapper" v-else>
       <label class="tracking-params-label">H5链接</label>
-      <el-input v-model="localValue.linkUrl" class="h5-link" size="small" type="text" placeholder="请填写自定义链接"
-        @change="onChangeLinkUrl" />
+      <el-input
+        v-model="localValue.linkUrl"
+        class="h5-link"
+        size="small"
+        type="text"
+        placeholder="请填写自定义链接"
+        @change="onChangeLinkUrl"
+      />
     </div>
     <div class="tracking-params-wrapper">
       <label class="tracking-params-label">埋点参数</label>
-      <el-input v-model="localValue.trackingParams" class="tracking-params-input" size="small" type="text"
-        placeholder="请输入埋点参数" @change="onChangeTrackingParams" />
+      <el-input
+        v-model="localValue.trackingParams"
+        class="tracking-params-input"
+        size="small"
+        type="text"
+        placeholder="请输入埋点参数"
+        @change="onChangeTrackingParams"
+      />
     </div>
   </div>
 </template>
@@ -95,7 +112,7 @@ export default {
   props: {
     value: {
       type: [Object, Array],
-      default: () => { }
+      default: () => {}
     },
     isShowH5Link: {
       // 不展示自定义链接label true：展示

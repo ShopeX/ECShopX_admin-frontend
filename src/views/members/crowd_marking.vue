@@ -110,9 +110,9 @@ export default {
           component: ({ key }, value) => {
             return (
               <el-input
-                type="textarea"
+                type='textarea'
                 v-model={value[key]}
-                placeholder="请输入人群说明"
+                placeholder='请输入人群说明'
                 rows={4}
               />
             )
@@ -171,9 +171,13 @@ export default {
         ...this.params
       }
       // 处理日期范围
-      if (finderParams.created && Array.isArray(finderParams.created) && finderParams.created.length === 2) {
-        finderParams.created_start = finderParams.created[0]/1000
-        finderParams.created_end = finderParams.created[1]/1000
+      if (
+        finderParams.created &&
+        Array.isArray(finderParams.created) &&
+        finderParams.created.length === 2
+      ) {
+        finderParams.created_start = finderParams.created[0] / 1000
+        finderParams.created_end = finderParams.created[1] / 1000
       } else {
         finderParams.created_start = ''
         finderParams.created_end = ''
@@ -184,7 +188,7 @@ export default {
     async afterRequest(response) {
       const data = response.data.data || response.data
       const { list, total_count } = data
-      
+
       return {
         list: list || [],
         count: total_count || 0

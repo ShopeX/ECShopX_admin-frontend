@@ -656,7 +656,7 @@ export default {
         if (fd) {
           return {
             ...fd,
-            spec_name: item.spec_name  // 使用重新计算的 spec_name
+            spec_name: item.spec_name // 使用重新计算的 spec_name
           }
         } else {
           return item

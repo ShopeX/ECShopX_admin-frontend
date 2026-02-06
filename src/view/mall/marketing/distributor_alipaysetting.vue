@@ -23,7 +23,8 @@
           href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001"
           target="_blank"
           class="text-blue-500 no-underline"
-        >手机网站支付</a>
+          >手机网站支付</a
+        >
       </span>
     </div>
     <div class="mt-5 pt-5 border-t border-gray-200 text-center">

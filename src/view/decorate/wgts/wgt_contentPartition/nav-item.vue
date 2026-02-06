@@ -130,7 +130,6 @@
   }
 
   .scope-item-item {
-
     .placeholder,
     .image-item {
       width: 32px !important;
@@ -138,7 +137,7 @@
 
       .el-icon-camera {
         font-size: 12px !important;
-        margin-bottom: 0!important;
+        margin-bottom: 0 !important;
       }
 
       .add-text {
@@ -152,31 +151,44 @@
       }
     }
   }
-  .el-drawer__header{
+  .el-drawer__header {
     height: 50px;
-      line-height: 50px;
-      padding: 0 20px;
-      font-size: 16px;
-      font-weight: 600;
-      border-bottom: 1px solid #f5f5f5;
+    line-height: 50px;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #f5f5f5;
   }
 }
 </style>
 
 <template>
   <div class="content-part-nav-item">
-    <CompDragList v-model="localValue" btn-text="添加导航项" type="text" :show-title="true" title="导航项"
-      @onAddItem="handleAddNavItem">
+    <CompDragList
+      v-model="localValue"
+      btn-text="添加导航项"
+      type="text"
+      :show-title="true"
+      title="导航项"
+      @onAddItem="handleAddNavItem"
+    >
       <template v-if="showSwitch" slot="title" slot-scope="scope">
-        <div class="scope-item-title" style="float: right; margin-left: 10px;">
-          <el-switch v-model="localValue[scope.index].isActive" @change="handleChangeIsActive(scope.index)" />
+        <div class="scope-item-title" style="float: right; margin-left: 10px">
+          <el-switch
+            v-model="localValue[scope.index].isActive"
+            @change="handleChangeIsActive(scope.index)"
+          />
         </div>
       </template>
       <template slot="body" slot-scope="scope">
         <div class="scope-item">
           <span class="scope-item-label">导航项形式</span>
           <div class="scope-item-body">
-            <el-radio-group v-model="localValue[scope.index].navitemtype" size="small" placeholder="请选择导航项形式">
+            <el-radio-group
+              v-model="localValue[scope.index].navitemtype"
+              size="small"
+              placeholder="请选择导航项形式"
+            >
               <el-radio label="text">文字</el-radio>
               <el-radio label="image">图片 </el-radio>
             </el-radio-group>
@@ -185,7 +197,11 @@
         <div v-if="localValue[scope.index].navitemtype == 'text'" class="scope-item">
           <span class="scope-item-label">导航名称</span>
           <div class="scope-item-body">
-            <el-input v-model="localValue[scope.index].navItemName" size="small" placeholder="导航项名称" />
+            <el-input
+              v-model="localValue[scope.index].navItemName"
+              size="small"
+              placeholder="导航项名称"
+            />
           </div>
         </div>
         <div v-if="localValue[scope.index].navitemtype == 'image'" class="scope-item">
@@ -197,7 +213,11 @@
             </div>
             <div class="scope-item-item">
               <span class="scope-item-item-label">选中图片</span>
-              <SpImagePicker v-model="localValue[scope.index].navitemactiveimg" size="small" text="" />
+              <SpImagePicker
+                v-model="localValue[scope.index].navitemactiveimg"
+                size="small"
+                text=""
+              />
             </div>
           </div>
         </div>
@@ -206,7 +226,11 @@
           <div class="scope-item-body">
             <div class="scope-item-item">
               <span class="scope-item-item-label">文字颜色</span>
-              <el-color-picker v-model="localValue[scope.index].navitemcolor" size="small" text="" />
+              <el-color-picker
+                v-model="localValue[scope.index].navitemcolor"
+                size="small"
+                text=""
+              />
             </div>
             <div class="scope-item-item">
               <span class="scope-item-item-label">背景颜色</span>
@@ -219,11 +243,19 @@
           <div class="scope-item-body">
             <div class="scope-item-item">
               <span class="scope-item-item-label">文字颜色</span>
-              <el-color-picker v-model="localValue[scope.index].navitemactivecolor" size="small" text="" />
+              <el-color-picker
+                v-model="localValue[scope.index].navitemactivecolor"
+                size="small"
+                text=""
+              />
             </div>
             <div class="scope-item-item">
               <span class="scope-item-item-label">背景颜色</span>
-              <el-color-picker v-model="localValue[scope.index].navitemactivebg" size="small" text="" />
+              <el-color-picker
+                v-model="localValue[scope.index].navitemactivebg"
+                size="small"
+                text=""
+              />
             </div>
           </div>
         </div>
@@ -236,13 +268,26 @@
             </div>
             <div class="scope-item-item">
               <span class="scope-item-item-label">背景图</span>
-              <SpImagePicker v-model="localValue[scope.index].navactivebgimg" size="small" text="" />
+              <SpImagePicker
+                v-model="localValue[scope.index].navactivebgimg"
+                size="small"
+                text=""
+              />
             </div>
           </div>
         </div>
-        <draggable :list="scope.data.children" :options="dragOptions" style="width: 100%" handle=".icon-shoudongpaixu">
-          <div v-for="(item, index) in scope.data.children" :key="index" class="scope-content"
-            @click="handleClickWidget(scope.data, item, index)">
+        <draggable
+          :list="scope.data.children"
+          :options="dragOptions"
+          style="width: 100%"
+          handle=".icon-shoudongpaixu"
+        >
+          <div
+            v-for="(item, index) in scope.data.children"
+            :key="index"
+            class="scope-content"
+            @click="handleClickWidget(scope.data, item, index)"
+          >
             <span>{{ item.wgtCustName || item.wgtName }}</span>
             <div class="scope-content-icon">
               <i class="icon-shoudongpaixu el-icon-sort" />
@@ -256,8 +301,12 @@
       </template>
     </CompDragList>
     <!--   显示配置 -->
-    <el-drawer :title="drawerTitle" :append-to-body="false" :before-close="handleCloseDrawer"
-      :visible.sync="showDrawer">
+    <el-drawer
+      :title="drawerTitle"
+      :append-to-body="false"
+      :before-close="handleCloseDrawer"
+      :visible.sync="showDrawer"
+    >
       <div v-if="activeWidget && hackReset">
         <CompPanel v-model="activeWidget" :info="getComponentAttr(activeWidget)" />
       </div>
@@ -309,7 +358,7 @@ export default {
         this.$emit('input', newVal)
       },
       deep: true
-    },
+    }
   },
   mounted() {
     this.localValue = cloneDeep(this.value)
@@ -317,7 +366,7 @@ export default {
     console.log(this.localValue, 'localValue')
     const wgts = gWgts[scene]
     Object.keys(wgts).forEach((index) => {
-      if (!['contentpartition','locationmodule'].includes(wgts[index].name.toLowerCase())) {
+      if (!['contentpartition', 'locationmodule'].includes(wgts[index].name.toLowerCase())) {
         this.gWgtsArr.push(wgts[index])
       }
     })

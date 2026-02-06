@@ -14,9 +14,7 @@
 <template>
   <div class="attr-horizontal">
     <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddhorizontal">
-      <template slot="header" slot-scope="scope">
-       文本{{ scope.index + 1 }}
-    </template>
+      <template slot="header" slot-scope="scope"> 文本{{ scope.index + 1 }} </template>
       <template slot="body" slot-scope="scope">
         <div class="cate-item">
           <el-input

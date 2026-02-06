@@ -247,15 +247,26 @@ export default {
                   class: 'flex items-start'
                 },
                 [
-                  h('div', { class: 'w-[60px] h-[60px] flex-shrink-0 flex items-center justify-center overflow-hidden bg-gray-100 mr-2.5' }, [
-                    h('img', {
-                      class: 'max-w-full max-h-full object-contain',
-                      attrs: { src: row.pics[0] }
-                    })
-                  ]),
+                  h(
+                    'div',
+                    {
+                      class:
+                        'w-[60px] h-[60px] flex-shrink-0 flex items-center justify-center overflow-hidden bg-gray-100 mr-2.5'
+                    },
+                    [
+                      h('img', {
+                        class: 'max-w-full max-h-full object-contain',
+                        attrs: { src: row.pics[0] }
+                      })
+                    ]
+                  ),
                   h('div', { class: 'flex-1' }, [
                     h('div', { class: 'text-gray-800 mt-1' }, row.itemName),
-                    h('div', { class: 'text-xs bg-gray-100 inline-block px-1 leading-[18px]' }, row.nospec ? '' : '多规格')
+                    h(
+                      'div',
+                      { class: 'text-xs bg-gray-100 inline-block px-1 leading-[18px]' },
+                      row.nospec ? '' : '多规格'
+                    )
                   ])
                 ]
               )

@@ -195,7 +195,7 @@ export default {
       }
       if (VERSION_PLATFORM() && IS_ADMIN()) {
         params = {
-          ...params,
+          ...params
           // distribution_type: 0
         }
       }

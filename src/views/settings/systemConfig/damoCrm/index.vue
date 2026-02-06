@@ -25,7 +25,7 @@ export default {
       formItems: [
         {
           component: 'input',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           componentProps: {
             placeholder: '请输入appKey',
             clearable: true
@@ -36,7 +36,7 @@ export default {
         },
         {
           component: 'input',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           componentProps: {
             placeholder: '请输入appSecret',
             clearable: true
@@ -47,7 +47,7 @@ export default {
         },
         {
           component: 'input',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           componentProps: {
             placeholder: '请输入企业标识',
             clearable: true
@@ -59,7 +59,7 @@ export default {
         {
           fieldName: 'is_open',
           label: '是否启用',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           component: 'switch',
           value: false,
           componentProps: {

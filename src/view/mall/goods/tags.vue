@@ -47,7 +47,15 @@ import { createSetting } from '@shopex-ui/finder'
 import { useForm } from '@/composables'
 
 // 预定义颜色常量
-const PREDEFINE_COLORS = ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585']
+const PREDEFINE_COLORS = [
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585'
+]
 
 const [TagForm, TagFormApi] = useForm({
   formType: 'normalForm',
@@ -231,17 +239,21 @@ export default {
             key: 'tag_name',
             width: 250,
             render: (h, scope) => {
-              return h('span', {
-                class: 'tag',
-                style: {
-                  color: scope.row.font_color,
-                  background: scope.row.tag_color,
-                  padding: '3px 5px',
-                  borderRadius: '3px',
-                  fontSize: '12px',
-                  lineHeight: '1'
-                }
-              }, scope.row.tag_name)
+              return h(
+                'span',
+                {
+                  class: 'tag',
+                  style: {
+                    color: scope.row.font_color,
+                    background: scope.row.tag_color,
+                    padding: '3px 5px',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    lineHeight: '1'
+                  }
+                },
+                scope.row.tag_name
+              )
             }
           },
           {

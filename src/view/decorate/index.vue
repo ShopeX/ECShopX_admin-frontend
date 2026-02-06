@@ -38,7 +38,7 @@
                 class="wgt-item"
                 :data-name="wgt.name"
               >
-              <SpIcon size="24" :name="wgt.wgtIcon" />
+                <SpIcon size="24" :name="wgt.wgtIcon" />
                 <!-- <div :class="['wgt-icon', wgt.wgtIcon]" /> -->
                 <div class="wgt-name">
                   {{ wgt.wgtName }}
@@ -122,9 +122,9 @@
         <div class="weapp-template">
           <Header v-if="headerVisible" :value="headerData" @change="handleClickHeader" />
           <div class="weapp-body" :style="weappBodyStyle">
-            <draggable 
-              :list="contentComps" 
-              group="easyview" 
+            <draggable
+              :list="contentComps"
+              group="easyview"
               class="components-design-wrap"
               :move="onDragMove"
               @add="onDragAdd"
@@ -239,9 +239,19 @@ export default {
     },
     widgetCategories() {
       // 通用挂件：轮播、热区图、视频、文字轮播
-      const generalNames = ['Slider', 'ImgHotzone', 'Film', 'Marquees',]
+      const generalNames = ['Slider', 'ImgHotzone', 'Film', 'Marquees']
       // 功能挂件：店铺、优惠券
-      const functionalNames = ['Shop', 'Classify', 'CouponCard', 'StoreAlphabet','Speedkill', 'Group', 'hotranking', 'Ranking', 'goods']
+      const functionalNames = [
+        'Shop',
+        'Classify',
+        'CouponCard',
+        'StoreAlphabet',
+        'Speedkill',
+        'Group',
+        'hotranking',
+        'Ranking',
+        'goods'
+      ]
       // 专用挂件：订单导航
       const dedicatedNames = ['OrderNavigation']
 
@@ -278,8 +288,13 @@ export default {
           const valid = this.contentComps.filter((c) => this.isValidContentComp(c))
           if (valid.length < this.contentComps.length) {
             this.contentComps.splice(0, this.contentComps.length, ...valid)
-            if (this.activeCompIndex !== null && (this.activeCompIndex >= this.contentComps.length || !this.contentComps[this.activeCompIndex])) {
-              this.activeCompIndex = this.contentComps.length > 0 ? this.contentComps.length - 1 : null
+            if (
+              this.activeCompIndex !== null &&
+              (this.activeCompIndex >= this.contentComps.length ||
+                !this.contentComps[this.activeCompIndex])
+            ) {
+              this.activeCompIndex =
+                this.contentComps.length > 0 ? this.contentComps.length - 1 : null
             }
           }
         })
@@ -338,14 +353,14 @@ export default {
     cloneDefaultField(e) {
       const { wgtName, wgtDesc, config } = e
       const { setting, name } = JSON.parse(JSON.stringify(config))
-      
+
       // 检查是否可以添加（在克隆时检查）
       if (!this.canAddWgt(name)) {
         this.$message.error(this.getMutualExclusiveMessage(name))
         // 返回 null 或抛出错误来阻止克隆
         return null
       }
-      
+
       const compData = {
         name,
         wgtName,
@@ -379,7 +394,12 @@ export default {
       const { id } = this.$route.query
       let list = []
       try {
-        if (this.localScene == '1004' || this.localScene == '1006'||this.localScene == '1007' || this.localScene == '1008') {
+        if (
+          this.localScene == '1004' ||
+          this.localScene == '1006' ||
+          this.localScene == '1007' ||
+          this.localScene == '1008'
+        ) {
           const resTemplate = await this.$api.wxa.getParamByTempName({
             template_name: 'yykweishop',
             page_name: `custom_${id}`,
@@ -409,7 +429,10 @@ export default {
       })
       const wgtHeader = list.find((item) => item.name == 'page')
       if (wgtHeader) {
-        const headParams = Header.config.transformIn({ id: wgtHeader?.id, ...wgtHeader.params }, this.widgets)
+        const headParams = Header.config.transformIn(
+          { id: wgtHeader?.id, ...wgtHeader.params },
+          this.widgets
+        )
         headerData = {
           // 初始数据
           ...headerData,
@@ -469,24 +492,24 @@ export default {
           return true // 允许拖拽，让其他逻辑处理
         }
         const draggedWgt = evt.draggedContext.element
-        
+
         // 从左侧拖拽时，draggedWgt 可能是组件对象（name 是组件名如 StoreAlphabet）
         // 也可能是克隆后的数据（name 是 config.name 如 storeAlphabet）
         if (!draggedWgt || !draggedWgt.name) {
           return true // 允许拖拽，让其他逻辑处理
         }
         let configName = draggedWgt.name
-        
+
         // 如果是组件对象，需要转换为 config.name
         if (draggedWgt.config) {
           // 已经是克隆后的数据，直接使用 name
           configName = draggedWgt.name
         } else {
           // 是组件对象，需要查找对应的 config.name
-          const wgt = this.widgets.find(w => w.name === draggedWgt.name)
+          const wgt = this.widgets.find((w) => w.name === draggedWgt.name)
           configName = wgt?.config?.name || draggedWgt.name
         }
-        
+
         // 检查是否可以添加
         if (!this.canAddWgt(configName)) {
           this.$message.error(this.getMutualExclusiveMessage(configName))
@@ -511,8 +534,13 @@ export default {
           }
           // 只保留在 widgets 中注册的有效挂件，剔除 null、空对象或未知项
           this.contentComps = this.contentComps.filter((c) => this.isValidContentComp(c))
-          if (this.activeCompIndex !== null && (this.activeCompIndex >= this.contentComps.length || !this.contentComps[this.activeCompIndex])) {
-            this.activeCompIndex = this.contentComps.length > 0 ? this.contentComps.length - 1 : null
+          if (
+            this.activeCompIndex !== null &&
+            (this.activeCompIndex >= this.contentComps.length ||
+              !this.contentComps[this.activeCompIndex])
+          ) {
+            this.activeCompIndex =
+              this.contentComps.length > 0 ? this.contentComps.length - 1 : null
           }
         })
         this.$message.error(this.getMutualExclusiveMessage(name))
@@ -530,22 +558,30 @@ export default {
       const fullSliderConfigName = 'fullSlider'
       const fullSliderComponentName = 'FullSlider'
 
-      const isAddingStoreAlphabet = wgtName === storeAlphabetConfigName || wgtName === storeAlphabetComponentName
-      const isAddingFullSlider = wgtName === fullSliderConfigName || wgtName === fullSliderComponentName
+      const isAddingStoreAlphabet =
+        wgtName === storeAlphabetConfigName || wgtName === storeAlphabetComponentName
+      const isAddingFullSlider =
+        wgtName === fullSliderConfigName || wgtName === fullSliderComponentName
       const isMutuallyExclusiveWgt = isAddingStoreAlphabet || isAddingFullSlider
 
       const hasStoreAlphabet = this.contentComps.some(
-        comp => comp && comp.name === storeAlphabetConfigName
+        (comp) => comp && comp.name === storeAlphabetConfigName
       )
       const hasFullSlider = this.contentComps.some(
-        comp => comp && comp.name === fullSliderConfigName
+        (comp) => comp && comp.name === fullSliderConfigName
       )
       const hasOtherWgts = this.contentComps.some(
-        comp => comp && comp.name !== storeAlphabetConfigName && comp.name !== fullSliderConfigName
+        (comp) =>
+          comp && comp.name !== storeAlphabetConfigName && comp.name !== fullSliderConfigName
       )
 
       // 添加整屏滑动/店铺字母列表时，已有其他挂件则不允许
-      if (isMutuallyExclusiveWgt && (hasOtherWgts || (isAddingFullSlider && hasStoreAlphabet) || (isAddingStoreAlphabet && hasFullSlider))) {
+      if (
+        isMutuallyExclusiveWgt &&
+        (hasOtherWgts ||
+          (isAddingFullSlider && hasStoreAlphabet) ||
+          (isAddingStoreAlphabet && hasFullSlider))
+      ) {
         return false
       }
       // 添加其他挂件时，已有整屏滑动或店铺字母列表则不允许
@@ -573,7 +609,12 @@ export default {
       })
       data.unshift(this.headerAttr.transformOut(this.headerData, this.widgets))
       const { id } = this.$route.query
-      if (this.localScene == '1004' || this.localScene == '1006' || this.localScene == '1008'||this.localScene == '1007') {
+      if (
+        this.localScene == '1004' ||
+        this.localScene == '1006' ||
+        this.localScene == '1008' ||
+        this.localScene == '1007'
+      ) {
         await this.$api.wxa.savePageParams({
           template_name: 'yykweishop',
           page_name: `custom_${id}`,

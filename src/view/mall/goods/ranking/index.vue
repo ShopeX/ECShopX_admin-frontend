@@ -325,17 +325,53 @@ export default {
           component({ disabled }, value) {
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP1:</span>
-                  <el-input v-model={value.reason.top1_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top1_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP2:</span>
-                  <el-input v-model={value.reason.top2_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top2_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP3:</span>
-                  <el-input v-model={value.reason.top3_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top3_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
               </div>
             )
@@ -488,17 +524,53 @@ export default {
           component: ({ disabled }, value) => {
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP1:</span>
-                  <el-input v-model={value.reason.top1_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top1_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP2:</span>
-                  <el-input v-model={value.reason.top2_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top2_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '10px',
+                    alignItems: 'center'
+                  }}
+                >
                   <span style={{ width: '50px' }}>TOP3:</span>
-                  <el-input v-model={value.reason.top3_intro} type='input' placeholder='请输入' disabled={disabled} />
+                  <el-input
+                    v-model={value.reason.top3_intro}
+                    type='input'
+                    placeholder='请输入'
+                    disabled={disabled}
+                  />
                 </div>
               </div>
             )
@@ -519,7 +591,7 @@ export default {
         delete params.start_time_start
         delete params.start_time_end
       }
-      
+
       // 处理结束时间区间
       if (params.end_time_start && params.end_time_end) {
         params.end_time_start = this.dateStrToTimeStamp(params.end_time_start)
@@ -528,9 +600,9 @@ export default {
         delete params.end_time_start
         delete params.end_time_end
       }
-      
+
       // 移除空值
-      Object.keys(params).forEach(key => {
+      Object.keys(params).forEach((key) => {
         if (params[key] === '' || params[key] === null || params[key] === undefined) {
           delete params[key]
         }
@@ -558,13 +630,18 @@ export default {
           name: detail.name || '',
           intro: detail.intro || '',
           sort: detail.sort || 0,
-          show_time: detail.start_time && detail.end_time 
-            ? [detail.start_time * 1000, detail.end_time * 1000] 
-            : [],
+          show_time:
+            detail.start_time && detail.end_time
+              ? [detail.start_time * 1000, detail.end_time * 1000]
+              : [],
           rank_by: detail.rank_by || 'hot',
           background: detail.background || '',
           apply_scope: detail.apply_scope || 'main_category',
-          scope_id: detail.scope_id ? (Array.isArray(detail.scope_id) ? detail.scope_id : [detail.scope_id]) : [],
+          scope_id: detail.scope_id
+            ? Array.isArray(detail.scope_id)
+              ? detail.scope_id
+              : [detail.scope_id]
+            : [],
           reason: {
             top1_intro: detail.top1_intro || '',
             top2_intro: detail.top2_intro || '',
@@ -603,9 +680,10 @@ export default {
       }
 
       // 处理管理分类ID
-      const scope_id = Array.isArray(this.rankingForm.scope_id) && this.rankingForm.scope_id.length > 0
-        ? this.rankingForm.scope_id[this.rankingForm.scope_id.length - 1]
-        : ''
+      const scope_id =
+        Array.isArray(this.rankingForm.scope_id) && this.rankingForm.scope_id.length > 0
+          ? this.rankingForm.scope_id[this.rankingForm.scope_id.length - 1]
+          : ''
 
       const params = {
         name: this.rankingForm.name.trim(),

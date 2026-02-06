@@ -23,28 +23,28 @@
     </template>
 
     <span slot="footer" class="dialog-footer">
-    <div>
-      <slot name="footer" />
-    </div>
-    <div>
-      <el-button
-        v-if="computedButtonCancel.visible"
-        icon="el-icon-circle-close"
-        @click="handleCancel"
-      >
-        {{ computedButtonCancel.text }}
-      </el-button>
+      <div>
+        <slot name="footer" />
+      </div>
+      <div>
+        <el-button
+          v-if="computedButtonCancel.visible"
+          icon="el-icon-circle-close"
+          @click="handleCancel"
+        >
+          {{ computedButtonCancel.text }}
+        </el-button>
 
-      <el-button
-        v-if="computedButtonConfirm.visible"
-        type="primary"
-        icon="el-icon-circle-check"
-        :loading="loading"
-        @click="handleConfirm"
-      >
-        {{ computedButtonConfirm.text }}
-      </el-button>
-    </div>
+        <el-button
+          v-if="computedButtonConfirm.visible"
+          type="primary"
+          icon="el-icon-circle-check"
+          :loading="loading"
+          @click="handleConfirm"
+        >
+          {{ computedButtonConfirm.text }}
+        </el-button>
+      </div>
     </span>
   </el-dialog>
 </template>

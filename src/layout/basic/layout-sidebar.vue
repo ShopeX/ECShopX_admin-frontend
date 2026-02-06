@@ -51,11 +51,14 @@
         </div>
       </div>
       <!-- 菜单展开状态管理 -->
-      <el-menu 
-        ref="subMenu" class="!border-none w-full" :default-active="activeSubIndex"
+      <el-menu
+        ref="subMenu"
+        class="!border-none w-full"
+        :default-active="activeSubIndex"
         :openeds="openedMenus"
         @open="handleMenuOpen"
-        @close="handleMenuClose">
+        @close="handleMenuClose"
+      >
         <template v-for="item in subMenus">
           <template v-if="resolveChildren(item.children)">
             <el-submenu :key="item.alias_name" :index="item.alias_name">
@@ -125,9 +128,13 @@ export default {
     activeSubIndex() {
       //通过权限标识查找三级菜单
       const lastRoute = this.$route.matched[this.$route.matched.length - 1]
-      if (lastRoute?.meta?.permissions && lastRoute.meta.permissions.length > 0 && this.subMenus.length > 0) {
+      if (
+        lastRoute?.meta?.permissions &&
+        lastRoute.meta.permissions.length > 0 &&
+        this.subMenus.length > 0
+      ) {
         const permission = lastRoute.meta.permissions[0]
-        
+
         // 在所有二级菜单的 children 中查找匹配的三级菜单
         for (const item of this.subMenus) {
           if (item.children && item.children.length > 0) {
@@ -279,8 +286,8 @@ export default {
     },
     closeOtherSubMenus(menuToOpen) {
       const menuComponent = this.$refs.subMenu
-      const menusToClose = this.openedMenus.filter(index => index !== menuToOpen)
-      this.openedMenus = this.openedMenus.filter(index => index === menuToOpen)
+      const menusToClose = this.openedMenus.filter((index) => index !== menuToOpen)
+      this.openedMenus = this.openedMenus.filter((index) => index === menuToOpen)
 
       const allSubmenus = menuComponent.$el.querySelectorAll('.el-submenu')
       menusToClose.forEach((indexToClose) => {
@@ -301,10 +308,11 @@ export default {
         const idx = el.getAttribute('index') || el.getAttribute('data-index')
         return idx === indexToClose
       })
-      
+
       if (submenu) {
-        const isOpened = submenu.classList.contains('is-opened') || 
-                        submenu.getAttribute('aria-expanded') === 'true'
+        const isOpened =
+          submenu.classList.contains('is-opened') ||
+          submenu.getAttribute('aria-expanded') === 'true'
         if (isOpened) {
           const titleEl = submenu.querySelector('.el-submenu__title')
           if (titleEl) {
@@ -358,8 +366,9 @@ export default {
 
         const submenuEl = this.findSubMenuElement(menuToOpen)
         if (submenuEl) {
-          const isOpened = submenuEl.classList.contains('is-opened') || 
-                          submenuEl.getAttribute('aria-expanded') === 'true'
+          const isOpened =
+            submenuEl.classList.contains('is-opened') ||
+            submenuEl.getAttribute('aria-expanded') === 'true'
           if (!isOpened) {
             const titleEl = submenuEl.querySelector('.el-submenu__title')
             if (titleEl) {
@@ -409,18 +418,20 @@ export default {
       if (!activeIndex || !this.$refs.subMenu) {
         return
       }
-      
+
       const menuComponent = this.$refs.subMenu
       menuComponent.activeIndex = activeIndex
-      
+
       setTimeout(() => {
         const allMenuItems = menuComponent.$el?.querySelectorAll('.el-menu-item')
         if (!allMenuItems) return
 
         allMenuItems.forEach((item) => item.classList.remove('is-active'))
-        
-        let activeMenuItem = menuComponent.$el?.querySelector(`.el-menu-item[index="${activeIndex}"]`)
-        
+
+        let activeMenuItem = menuComponent.$el?.querySelector(
+          `.el-menu-item[index="${activeIndex}"]`
+        )
+
         if (!activeMenuItem) {
           const targetMenu = this.findMenuByAlias(activeIndex)
           if (targetMenu) {
@@ -432,7 +443,7 @@ export default {
             }
           }
         }
-        
+
         if (activeMenuItem) {
           activeMenuItem.classList.add('is-active')
         }
@@ -445,7 +456,9 @@ export default {
           return item
         }
         if (item.children && item.children.length > 0) {
-          const childMenu = item.children.find((child) => child.is_menu && child.alias_name === aliasName)
+          const childMenu = item.children.find(
+            (child) => child.is_menu && child.alias_name === aliasName
+          )
           if (childMenu) {
             return childMenu
           }

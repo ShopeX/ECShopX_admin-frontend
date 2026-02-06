@@ -10,13 +10,11 @@
       <div v-if="backgroundType === 'color'" class="color-section">
         <div class="color-picker-wrapper">
           <span class="color-code">{{ displayColor }}</span>
-          <el-button type="text" size="mini" class="reset-btn" @click="handleResetColor">重置</el-button>
+          <el-button type="text" size="mini" class="reset-btn" @click="handleResetColor"
+            >重置</el-button
+          >
           <div class="color-swatch" :style="{ backgroundColor: displayColor }">
-            <el-color-picker 
-              v-model="localValue.color" 
-              size="small" 
-              @change="handleChange"
-            />
+            <el-color-picker v-model="localValue.color" size="small" @change="handleChange" />
           </div>
         </div>
       </div>
@@ -115,7 +113,7 @@ export default {
     updateLocalValue(newVal) {
       const normalized = this.normalizeValue(newVal)
       // 只更新变化的字段，避免不必要的响应式更新
-      Object.keys(normalized).forEach(key => {
+      Object.keys(normalized).forEach((key) => {
         if (this.localValue[key] !== normalized[key]) {
           this.$set(this.localValue, key, normalized[key])
         }
@@ -165,27 +163,27 @@ export default {
     margin-bottom: 12px;
     display: flex;
     justify-content: flex-start;
-    
+
     .el-radio-group {
       display: flex;
       width: 100%;
-      
+
       .el-radio-button {
         flex: 1;
-        
+
         &:first-child {
           .el-radio-button__inner {
             border-radius: 4px 0 0 4px;
             border-right: none;
           }
         }
-        
+
         &:last-child {
           .el-radio-button__inner {
             border-radius: 0 4px 4px 0;
           }
         }
-        
+
         .el-radio-button__inner {
           width: 100%;
           padding: 8px 16px;
@@ -194,12 +192,12 @@ export default {
           background-color: #fff;
           border: 1px solid #e0e0e0;
           transition: all 0.3s;
-          
+
           &:hover {
             color: #155bd4;
           }
         }
-        
+
         &.is-active {
           .el-radio-button__inner {
             color: #fff;
@@ -218,13 +216,13 @@ export default {
         display: flex;
         align-items: center;
         gap: 12px;
-        
+
         .color-code {
           font-size: 12px;
           color: #595961;
           min-width: 60px;
         }
-        
+
         .reset-btn {
           padding: 0;
           font-size: 12px;
@@ -233,7 +231,7 @@ export default {
           line-height: 1;
           margin-left: auto;
         }
-        
+
         .color-swatch {
           width: 32px;
           height: 32px;
@@ -242,7 +240,7 @@ export default {
           cursor: pointer;
           position: relative;
           flex-shrink: 0;
-          
+
           .el-color-picker {
             position: absolute;
             top: 0;
@@ -250,7 +248,7 @@ export default {
             width: 100%;
             height: 100%;
             opacity: 0;
-            
+
             ::v-deep .el-color-picker__trigger {
               width: 100%;
               height: 100%;
@@ -261,7 +259,7 @@ export default {
         }
       }
     }
-    
+
     .image-section {
       width: 100%;
     }
@@ -278,4 +276,3 @@ export default {
   }
 }
 </style>
-

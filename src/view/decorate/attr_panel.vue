@@ -58,21 +58,18 @@ export default {
         <div class='el-color-picker-wrap'>
           <span class='color-code'>{displayColor}</span>
           <div class='color-controls-item'>
-          <el-button
-            class='button-reset'
-            type='text'
-            on-click={() => {
-              this.value[key] = ''
-            }}
-          >
-            重置
-          </el-button>
-          <div class='color-swatch' style={{ backgroundColor: displayColor }}>
-            <el-color-picker 
-              v-model={this.value[key]} 
-              size='small'
-            />
-          </div>
+            <el-button
+              class='button-reset'
+              type='text'
+              on-click={() => {
+                this.value[key] = ''
+              }}
+            >
+              重置
+            </el-button>
+            <div class='color-swatch' style={{ backgroundColor: displayColor }}>
+              <el-color-picker v-model={this.value[key]} size='small' />
+            </div>
           </div>
         </div>
       )
@@ -165,23 +162,24 @@ export default {
         'navitemarea',
         'autoplay',
         'searchButtonColor',
-        'showSearchButton',
+        'showSearchButton'
       ]
     },
     // 将配置项按分组组织
     groupedSettings() {
       const { setting } = this.info
-      if (!setting || !Array.isArray(setting)) return { content: [], style: [], contentUngrouped: [], styleUngrouped: [] }
-      
+      if (!setting || !Array.isArray(setting))
+        return { content: [], style: [], contentUngrouped: [], styleUngrouped: [] }
+
       const contentGroups = {}
       const styleGroups = {}
       const contentUngrouped = []
       const styleUngrouped = []
-      
-      setting.forEach(item => {
+
+      setting.forEach((item) => {
         // 判断是否为样式设置：1. key 在 styleKeys 中，2. group 为 '样式设置'
         const isStyle = this.styleKeys.includes(item.key) || item.group === '样式设置'
-        
+
         // 如果没有 group，不进行分组，但需要展示
         if (!item.group || !item.group.trim()) {
           if (isStyle) {
@@ -191,16 +189,16 @@ export default {
           }
           return
         }
-        
+
         const group = item.group
         const targetGroups = isStyle ? styleGroups : contentGroups
-        
+
         if (!targetGroups[group]) {
           targetGroups[group] = []
         }
         targetGroups[group].push(item)
       })
-      
+
       return {
         content: Object.entries(contentGroups).map(([groupName, items]) => ({ groupName, items })),
         style: Object.entries(styleGroups).map(([groupName, items]) => ({ groupName, items })),
@@ -212,7 +210,7 @@ export default {
     contentSettings() {
       const { setting } = this.info
       if (!setting || !Array.isArray(setting)) return []
-      return setting.filter(item => {
+      return setting.filter((item) => {
         // 不在样式列表中的都是内容设置
         return !this.styleKeys.includes(item.key)
       })
@@ -221,7 +219,7 @@ export default {
     styleSettings() {
       const { setting } = this.info
       if (!setting || !Array.isArray(setting)) return []
-      return setting.filter(item => {
+      return setting.filter((item) => {
         // 在样式列表中的都是样式设置
         return this.styleKeys.includes(item.key)
       })
@@ -279,8 +277,10 @@ export default {
       return settings.map((item, index) => {
         const hasLabel = item.label && item.label.trim() !== ''
         // 检查是否包含 SpImagePicker（通过 key 或 component 判断）
-        const hasImagePicker = item.key === 'titleBackgroundImage' || 
-          (typeof item.component === 'function' && item.component.toString().includes('SpImagePicker'))
+        const hasImagePicker =
+          item.key === 'titleBackgroundImage' ||
+          (typeof item.component === 'function' &&
+            item.component.toString().includes('SpImagePicker'))
         return (
           <div
             class={[
@@ -295,7 +295,9 @@ export default {
             {hasLabel && <div class='cell-label'>{item.label}</div>}
             <div class='cell-value'>
               <div class='cell-value-content'>{renderComp(item)}</div>
-              {(item.tip || item.tips) && <div class='cell-value-tip' domPropsInnerHTML={item.tip || item.tips} />}
+              {(item.tip || item.tips) && (
+                <div class='cell-value-tip' domPropsInnerHTML={item.tip || item.tips} />
+              )}
             </div>
           </div>
         )
@@ -304,13 +306,11 @@ export default {
 
     const renderGroupedSettings = (groups) => {
       if (groups.length === 0) return null
-      
+
       return groups.map(({ groupName, items }) => (
         <div class='setting-group' key={groupName}>
           <div class='setting-group-header'>{groupName}</div>
-          <div class='setting-group-content'>
-            {renderSettings(items)}
-          </div>
+          <div class='setting-group-content'>{renderSettings(items)}</div>
         </div>
       ))
     }
@@ -327,12 +327,14 @@ export default {
             <div class='layout-selector-label'>商品排列</div>
             <CompLayoutSelector
               value={this.layoutValue}
-              on-input={(val) => { this.layoutValue = val }}
+              on-input={(val) => {
+                this.layoutValue = val
+              }}
               options={[
                 { label: '默认排列', value: 'default' },
                 { label: '一行一个', value: 'one' },
                 { label: '一行两个', value: 'two' },
-                { label: '一行三个', value: 'three' },
+                { label: '一行三个', value: 'three' }
               ]}
             />
           </div>
@@ -341,15 +343,21 @@ export default {
           <el-tab-pane label='内容设置' name='content'>
             <div class='attr-panel-content'>
               {hasContentGroups && renderGroupedSettings(this.groupedSettings.content)}
-              {this.groupedSettings.contentUngrouped.length > 0 && renderSettings(this.groupedSettings.contentUngrouped)}
-              {!hasContentGroups && this.groupedSettings.contentUngrouped.length === 0 && renderSettings(this.contentSettings)}
+              {this.groupedSettings.contentUngrouped.length > 0 &&
+                renderSettings(this.groupedSettings.contentUngrouped)}
+              {!hasContentGroups &&
+                this.groupedSettings.contentUngrouped.length === 0 &&
+                renderSettings(this.contentSettings)}
             </div>
           </el-tab-pane>
           <el-tab-pane label='样式设置' name='style'>
             <div class='attr-panel-content'>
               {hasStyleGroups && renderGroupedSettings(this.groupedSettings.style)}
-              {this.groupedSettings.styleUngrouped.length > 0 && renderSettings(this.groupedSettings.styleUngrouped)}
-              {!hasStyleGroups && this.groupedSettings.styleUngrouped.length === 0 && renderSettings(this.styleSettings)}
+              {this.groupedSettings.styleUngrouped.length > 0 &&
+                renderSettings(this.groupedSettings.styleUngrouped)}
+              {!hasStyleGroups &&
+                this.groupedSettings.styleUngrouped.length === 0 &&
+                renderSettings(this.styleSettings)}
             </div>
           </el-tab-pane>
         </el-tabs>

@@ -1,7 +1,12 @@
 <style lang="scss" src="./index.scss"></style>
 <template>
   <div class="wgt-shop" :style="outerStyle">
-    <div :class="['wgt-shop-container-list', { 'wgt-shop-container-list-single': value.data.length == 1 }]">
+    <div
+      :class="[
+        'wgt-shop-container-list',
+        { 'wgt-shop-container-list-single': value.data.length == 1 }
+      ]"
+    >
       <div
         v-for="(item, index) in value.data"
         :key="index"
@@ -11,7 +16,7 @@
         <div class="shop-header">
           <div class="shop-info">
             <div class="shop-logo">
-              <img :src="value.distributor?.logo || defaultShopLogo" alt="店铺logo">
+              <img :src="value.distributor?.logo || defaultShopLogo" alt="店铺logo" />
             </div>
             <div class="shop-name">{{ item?.name || 'ADIDAS' }}</div>
           </div>
@@ -81,18 +86,16 @@ export default {
     },
     innerStyle() {
       return getInnerStyle(this.value)
-    },
+    }
   },
   watch: {
-    value:{
-      handler(newVal) {
-      },
-    immediate: true,
-    deep: true
+    value: {
+      handler(newVal) {},
+      immediate: true,
+      deep: true
     },
     'value.data': {
       handler(newVal) {
-      
         if (newVal.length > 0) {
           this.getList()
         }

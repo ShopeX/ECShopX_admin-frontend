@@ -155,28 +155,25 @@ export default {
             return (
               <div>
                 {value.map((item, index) => (
-                  <div
-                    key={index}
-                    class="flex items-center mb-2 bg-gray-50 rounde"
-                  >
+                  <div key={index} class='flex items-center mb-2 bg-gray-50 rounde'>
                     {isImage && (
                       <div
-                        class="w-12 h-12 flex justify-center items-center cursor-pointer border border-gray-200 rounded mr-2"
+                        class='w-12 h-12 flex justify-center items-center cursor-pointer border border-gray-200 rounded mr-2'
                         onClick={() => {
                           vm.handleImgPicker(index)
                         }}
                       >
                         {item.image_url ? (
-                          <img src={item.image_url} class="w-12 h-12 object-cover rounded" />
+                          <img src={item.image_url} class='w-12 h-12 object-cover rounded' />
                         ) : (
-                          <SpIcon size={22} name="camera" />
+                          <SpIcon size={22} name='camera' />
                         )}
                       </div>
                     )}
-                    <div class="flex-1 mr-2">
+                    <div class='flex-1 mr-2'>
                       <el-input
                         value={item.attribute_value}
-                        placeholder="规格值名称"
+                        placeholder='规格值名称'
                         on-input={(val) => {
                           const newValues = [...value]
                           newValues[index].attribute_value = val
@@ -185,7 +182,7 @@ export default {
                       />
                     </div>
                     <div
-                      class="cursor-pointer flex items-center text-gray-500 p-1 rounded"
+                      class='cursor-pointer flex items-center text-gray-500 p-1 rounded'
                       onClick={async () => {
                         try {
                           await Vue.prototype.$confirm('确认删除当前值？', '提示', {
@@ -201,15 +198,15 @@ export default {
                         }
                       }}
                     >
-                      <SpIcon name="delete" size={22} />
+                      <SpIcon name='delete' size={22} />
                     </div>
                   </div>
                 ))}
-                <div class="w-[110px] ml-0.8 border-gray-200">
+                <div class='w-[110px] ml-0.8 border-gray-200'>
                   <el-button
-                    type="default"
-                    size="small"
-                    class="border-dashed"
+                    type='default'
+                    size='small'
+                    class='border-dashed'
                     onClick={() => {
                       if (value.length >= 50) {
                         Vue.prototype.$message({ type: 'warning', message: '最多添加50项' })
@@ -229,10 +226,10 @@ export default {
         }
       ]
     })
-    
+
     // 将 API 保存到组件实例
     SpecFormApi = SpecFormApiInstance
-    
+
     return {
       SpecForm,
       currentIndex: '',
@@ -312,7 +309,7 @@ export default {
         if (attributeValues.length === 0) {
           attributeValues = [{ attribute_value: '', image_url: '' }]
         }
-        
+
         SpecFormApi.setFieldsValue({
           attribute_name: data.attribute_name,
           attribute_memo: data.attribute_memo,
@@ -376,7 +373,7 @@ export default {
       }
       getGoodsAttr(params).then((res) => {
         // 统一转换 is_image 为布尔值
-        this.list = res.data.data.list.map(item => ({
+        this.list = res.data.data.list.map((item) => ({
           ...item,
           is_image: this.normalizeIsImage(item.is_image)
         }))

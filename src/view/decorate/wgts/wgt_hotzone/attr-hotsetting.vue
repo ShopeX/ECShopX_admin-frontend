@@ -22,9 +22,7 @@
     >
       <div v-if="dialog">
         <div class="dialog-header">
-          <el-button type="primary" size="small" plain @click="onSelectImage">
-            选择图片
-          </el-button>
+          <el-button type="primary" size="small" plain @click="onSelectImage"> 选择图片 </el-button>
           <span class="dialog-tip">{{ desc || defaultDesc }}</span>
         </div>
 
@@ -166,7 +164,7 @@ export default {
         })
 
         const { imgWidth, imgHeight } = await this.calculateImageSize(url)
-        
+
         // 确保 imgWidth 和 imgHeight 被正确设置
         this.$set(this.localValue, 'imgWidth', imgWidth)
         this.$set(this.localValue, 'imgHeight', imgHeight)

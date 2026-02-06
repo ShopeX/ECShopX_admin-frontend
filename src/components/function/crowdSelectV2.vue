@@ -1,7 +1,14 @@
 <template>
   <div class="crowd-select">
-    <el-radio-group v-model="selectedCrowds.type" size="mini" style="margin-bottom: 10px;" @change="handleTypeChange">
-      <el-radio-button v-for="item in options" :key="item.id" :label="item.id" :value="item.id">{{ item.name }}</el-radio-button>
+    <el-radio-group
+      v-model="selectedCrowds.type"
+      size="mini"
+      style="margin-bottom: 10px"
+      @change="handleTypeChange"
+    >
+      <el-radio-button v-for="item in options" :key="item.id" :label="item.id" :value="item.id">{{
+        item.name
+      }}</el-radio-button>
     </el-radio-group>
     <div class="crowd-select-header">
       <el-button
@@ -15,7 +22,14 @@
       </el-button>
       <slot />
     </div>
-    <div v-if="selectedCrowds.type == '1' && selectedCrowds.no_meber_tags && selectedCrowds.no_meber_tags.length > 0" class="selected-crowds">
+    <div
+      v-if="
+        selectedCrowds.type == '1' &&
+        selectedCrowds.no_meber_tags &&
+        selectedCrowds.no_meber_tags.length > 0
+      "
+      class="selected-crowds"
+    >
       <el-tag
         v-for="(item, index) in selectedCrowds.no_meber_tags"
         :key="index"
@@ -26,7 +40,14 @@
         {{ item.tag_name }}
       </el-tag>
     </div>
-    <div v-if="selectedCrowds.type == '2' && selectedCrowds.meber_tags && selectedCrowds.meber_tags.length > 0" class="selected-crowds">
+    <div
+      v-if="
+        selectedCrowds.type == '2' &&
+        selectedCrowds.meber_tags &&
+        selectedCrowds.meber_tags.length > 0
+      "
+      class="selected-crowds"
+    >
       <el-tag
         v-for="(item, index) in selectedCrowds.meber_tags"
         :key="index"
@@ -62,15 +83,16 @@ export default {
   },
   data() {
     return {
-      options: [{
-        id: '2',
-        name: '适用人群'
-      },
-      // {
-      //   id: '1',
-      //   name: '不适用人群'
-      // }
-    ]
+      options: [
+        {
+          id: '2',
+          name: '适用人群'
+        }
+        // {
+        //   id: '1',
+        //   name: '不适用人群'
+        // }
+      ]
     }
   },
   computed: {
@@ -93,7 +115,10 @@ export default {
     },
     async handleSelect() {
       const { data } = await this.$picker.crowds({
-        data: this.selectedCrowds.type == '1' ? this.selectedCrowds.no_meber_tags : this.selectedCrowds.meber_tags,
+        data:
+          this.selectedCrowds.type == '1'
+            ? this.selectedCrowds.no_meber_tags
+            : this.selectedCrowds.meber_tags,
         params: { regionauth_id: this.areaId }
       })
       if (data) {

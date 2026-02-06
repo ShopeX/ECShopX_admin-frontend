@@ -362,7 +362,7 @@ export default {
             })
             this.configForm.is_open_wechatapp_location = tempStatus
           }
-        },
+        }
         // {
         //   label: '扫码功能',
         //   key: 'is_open_scan_qrcode',

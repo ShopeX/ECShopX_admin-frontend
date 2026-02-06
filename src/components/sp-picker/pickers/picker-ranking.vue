@@ -112,9 +112,9 @@ export default {
       if (this.value.data && this.value.data.length > 0) {
         // 处理传入的数据格式，可能是ID或对象
         const selectedIds = Array.isArray(this.value.data)
-          ? this.value.data.map(item => (typeof item === 'object' ? item.id : item))
+          ? this.value.data.map((item) => (typeof item === 'object' ? item.id : item))
           : [typeof this.value.data === 'object' ? this.value.data.id : this.value.data]
-        const selectRows = list.filter(item => selectedIds.includes(item.id))
+        const selectRows = list.filter((item) => selectedIds.includes(item.id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)
@@ -137,7 +137,7 @@ export default {
     },
     onSelectionChange(selection) {
       // 转换数据格式，返回需要的字段
-      const data = selection.map(row => ({
+      const data = selection.map((row) => ({
         id: row.id,
         name: row.name,
         type: row.type,

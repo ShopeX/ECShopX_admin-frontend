@@ -780,7 +780,11 @@ $txt-placeholder: #f5f5f7;
                     <el-button size="mini" type="text" @click="handleCancel"> 取消 </el-button>
                     <el-button type="primary" size="mini" @click="addSeries"> 确定 </el-button>
                   </div>
-                  <el-button slot="reference" type="text" class="absolute end-0 top-0 iconfont icon-plus-circle">
+                  <el-button
+                    slot="reference"
+                    type="text"
+                    class="absolute end-0 top-0 iconfont icon-plus-circle"
+                  >
                     添加系列
                   </el-button>
                 </el-popover>
@@ -789,7 +793,10 @@ $txt-placeholder: #f5f5f7;
             <draggable v-model="editableData" :options="dragParentOptions">
               <div v-for="(item, fidx) in editableData" :key="fidx" class="form-parent">
                 <div class="flex items-center w-[90%]">
-                  <div class="relative w-[50px] h-[50px] me-[10px] leading-[50px] border border-dashed border-[#ccc] rounded-[3px] text-center text-[#ccc] bg-white z-[5] flex justify-center items-center cursor-pointer" @click="showImgs(fidx)">
+                  <div
+                    class="relative w-[50px] h-[50px] me-[10px] leading-[50px] border border-dashed border-[#ccc] rounded-[3px] text-center text-[#ccc] bg-white z-[5] flex justify-center items-center cursor-pointer"
+                    @click="showImgs(fidx)"
+                  >
                     <img
                       v-if="item.img"
                       :src="item.img ? item.img : 'https://fakeimg.pl/50x50'"

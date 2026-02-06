@@ -208,12 +208,12 @@
             </el-table-column>
             <el-table-column width="80" prop="get_num" label="领取量">
               <template slot-scope="scope">
-                <span>{{scope.row.get_num || 0}}</span>
+                <span>{{ scope.row.get_num || 0 }}</span>
               </template>
             </el-table-column>
             <el-table-column width="80" prop="use_num" label="使用量">
               <template slot-scope="scope">
-                <span>{{scope.row.use_num || 0}}</span>
+                <span>{{ scope.row.use_num || 0 }}</span>
               </template>
             </el-table-column>
           </el-table>

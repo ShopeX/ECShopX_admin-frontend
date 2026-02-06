@@ -79,7 +79,7 @@ export default {
         {
           fieldName: 'cert_id',
           label: '通行证账号：',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           component: 'input',
           componentProps: {
             readonly: true
@@ -93,7 +93,7 @@ export default {
         {
           fieldName: 'node_id',
           label: '当前证书节点号：',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           component: 'input',
           componentProps: {
             readonly: true
@@ -102,7 +102,7 @@ export default {
         {
           fieldName: 'shopex_uid',
           label: '当前证书节点号：',
-          formItemClass:'w-1/2',
+          formItemClass: 'w-1/2',
           component: 'input',
           componentProps: {
             readonly: true

@@ -31,7 +31,13 @@
           <el-button type="primary" plain round size="mini" @click="openDialog(scope.row)">
             编辑
           </el-button>
-          <el-button type="danger" plain round size="mini" @click="delCollection(scope.row.collection_id)">
+          <el-button
+            type="danger"
+            plain
+            round
+            size="mini"
+            @click="delCollection(scope.row.collection_id)"
+          >
             删除
           </el-button>
         </template>
@@ -81,7 +87,12 @@
 </template>
 
 <script>
-import { getActivityCollectionList, createActivityCollection, editActivityCollection, delActivityCollection } from '@/api/promotions'
+import {
+  getActivityCollectionList,
+  createActivityCollection,
+  editActivityCollection,
+  delActivityCollection
+} from '@/api/promotions'
 
 export default {
   name: 'ActivityCollection',

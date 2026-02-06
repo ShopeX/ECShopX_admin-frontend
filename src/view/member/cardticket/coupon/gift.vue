@@ -416,7 +416,8 @@ export default {
       })
       params.get_limit = params.get_limit || 1
       params.grade_ids = params.grade_ids?.length > 0 ? JSON.stringify(params.grade_ids) : []
-      params.vip_grade_ids = params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
+      params.vip_grade_ids =
+        params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
       console.log(params, 'params参数')
       if (params.card_id) {
         const data = await updateCard(params)
@@ -493,7 +494,8 @@ export default {
       })
       params.kq_status = Number(status)
       params.grade_ids = params.grade_ids?.length > 0 ? JSON.stringify(params.grade_ids) : []
-      params.vip_grade_ids = params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
+      params.vip_grade_ids =
+        params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
       updateCard(params).then((res) => {
         if (res) {
           this.$message.success('更新成功')

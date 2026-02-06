@@ -72,7 +72,7 @@ export default {
     async fetch() {
       const { data } = this.value || {}
       const res = await this.$api.goods.getCategory()
-      this.options = Array.isArray(res) ? res : (res?.data || res?.list || [])
+      this.options = Array.isArray(res) ? res : res?.data || res?.list || []
       this.localValue = this.findPathById(this.options, data) || []
     },
     findPathById(list, v, path) {

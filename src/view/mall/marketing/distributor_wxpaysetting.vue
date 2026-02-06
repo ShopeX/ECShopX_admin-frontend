@@ -47,7 +47,7 @@ export default {
         cert_name: '',
         cert_key_name: '',
         is_open: true
-      },
+      }
     }
   },
   computed: {
@@ -120,7 +120,7 @@ export default {
           componentProps: {
             placeholder: '请输入服务商APPID',
             style: { width: '300px' }
-          },
+          }
         },
         {
           fieldName: 'servicer_merchant_id',
@@ -131,7 +131,7 @@ export default {
           componentProps: {
             placeholder: '请输入服务商商户号',
             style: { width: '300px' }
-          },
+          }
         },
         {
           fieldName: 'cert',
@@ -152,7 +152,7 @@ export default {
                   this.$refs.formRef.$refs.form.validateField('cert')
                 }
               })
-            },
+            }
           },
           tip: '微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_cert.pem',
           rules: [

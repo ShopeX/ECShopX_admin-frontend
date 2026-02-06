@@ -7,7 +7,8 @@
   <div>
     <div
       class="flex items-center gap-2 px-3 py-1 cursor-pointer bg-gray-100 hover:bg-gray-50 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
-      @click="openSearchDialog">
+      @click="openSearchDialog"
+    >
       <Search theme="outline" :size="14" fill="#333" />
       <span class="text-gray-600">搜索</span>
       <span class="px-2 py-1 bg-white rounded-l-md rounded-r-xl text-gray-700 font-medium">
@@ -21,11 +22,14 @@
       size="mini"
       :button-cancel="{ visible: false }"
       :button-confirm="{ visible: false }"
-      @close="closeDialog">
+      @close="closeDialog"
+    >
       <template #title>
         <div class="flex items-center h-[30px] bg-white border-gray-100 rounded-t-lg px-2">
           <div class="flex-1 min-w-0 max-w-full mr-2.5 relative">
-            <div class="absolute left-1 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none">
+            <div
+              class="absolute left-1 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none"
+            >
               <Search theme="outline" :size="16" fill="#c0c4cc" />
             </div>
             <sp-form-plus
@@ -58,7 +62,8 @@
           <div
             class="flex-1 overflow-y-auto overflow-x-hidden min-h-0"
             :class="needsScroll ? 'max-h-[355px] pr-2' : ''"
-            @mousemove="handleMouseMove">
+            @mousemove="handleMouseMove"
+          >
             <div v-if="keyword?.trim()">
               <div v-if="filteredMenus.length > 0" class="menu-list">
                 <div
@@ -66,16 +71,32 @@
                   :key="menu.permission"
                   class="menu-item p-3 mb-2 cursor-pointer rounded border"
                   :class="selectedIndex === index ? 'menu-item-selected' : ''"
-                  :style="selectedIndex === index
-                    ? { background: 'color-mix(in srgb, #ffffff 90%, var(--primary))', borderColor: 'transparent' }
-                    : { background: 'transparent' }"
+                  :style="
+                    selectedIndex === index
+                      ? {
+                          background: 'color-mix(in srgb, #ffffff 90%, var(--primary))',
+                          borderColor: 'transparent'
+                        }
+                      : { background: 'transparent' }
+                  "
                   @click="handleMenuClick(menu)"
-                  @mouseenter="handleMouseEnter(index)">
+                  @mouseenter="handleMouseEnter(index)"
+                >
                   <div
                     class="font-medium flex items-center"
-                    :style="selectedIndex === index ? { color: 'var(--primary)' } : { color: '#333' }">
-                    <SpIcon v-if="menu.icon" :name="menu.icon" :size="16" class="mr-2 flex-shrink-0" />
-                    <span v-html="highlightText(menu.name, keyword, selectedIndex === index)"></span>
+                    :style="
+                      selectedIndex === index ? { color: 'var(--primary)' } : { color: '#333' }
+                    "
+                  >
+                    <SpIcon
+                      v-if="menu.icon"
+                      :name="menu.icon"
+                      :size="16"
+                      class="mr-2 flex-shrink-0"
+                    />
+                    <span
+                      v-html="highlightText(menu.name, keyword, selectedIndex === index)"
+                    ></span>
                   </div>
                   <div v-if="menu.path" class="text-xs text-gray-400 mt-1">{{ menu.path }}</div>
                 </div>
@@ -94,21 +115,32 @@
                     :style="{
                       paddingRight: '40px',
                       ...(selectedIndex === index
-                        ? { background: 'color-mix(in srgb, #ffffff 90%, var(--primary))', borderColor: 'transparent' }
+                        ? {
+                            background: 'color-mix(in srgb, #ffffff 90%, var(--primary))',
+                            borderColor: 'transparent'
+                          }
                         : { background: 'transparent' })
                     }"
                     @click="handleHistoryItemClick(historyItem)"
-                    @mouseenter="handleMouseEnter(index)">
+                    @mouseenter="handleMouseEnter(index)"
+                  >
                     <div
                       class="font-medium flex items-center"
-                      :style="selectedIndex === index ? { color: 'var(--primary)' } : { color: '#333' }">
+                      :style="
+                        selectedIndex === index ? { color: 'var(--primary)' } : { color: '#333' }
+                      "
+                    >
                       {{ historyItem.name }}
                     </div>
-                    <div v-if="historyItem.path" class="text-xs text-gray-400 mt-1">{{ historyItem.path }}</div>
+                    <div v-if="historyItem.path" class="text-xs text-gray-400 mt-1">
+                      {{ historyItem.path }}
+                    </div>
                     <span
                       class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-300 cursor-pointer text-lg font-bold"
-                      style="line-height: 1; padding: 4px;"
-                      @click.stop="deleteHistoryItem(index, $event)">×</span>
+                      style="line-height: 1; padding: 4px"
+                      @click.stop="deleteHistoryItem(index, $event)"
+                      >×</span
+                    >
                   </div>
                 </div>
               </div>
@@ -146,7 +178,10 @@ import SpDialogPlus from '@/components/sp-dialog-plus/main.vue'
 export default {
   name: 'MenuSearch',
   components: {
-    Search, EnterKey, SortThree, SpDialogPlus
+    Search,
+    EnterKey,
+    SortThree,
+    SpDialogPlus
   },
   data() {
     return {
@@ -172,16 +207,18 @@ export default {
       if (this.keyword?.trim()) {
         return this.filteredMenus
       }
-      return this.searchHistory.map(item => {
+      return this.searchHistory.map((item) => {
         const menu = this.getAllMenuItems().find(
-          m => m.permission === item.permission || m.name === item.name
+          (m) => m.permission === item.permission || m.name === item.name
         )
-        return menu || {
-          name: item.name,
-          path: item.path,
-          permission: item.permission,
-          isHistoryItem: true
-        }
+        return (
+          menu || {
+            name: item.name,
+            path: item.path,
+            permission: item.permission,
+            isHistoryItem: true
+          }
+        )
       })
     }
   },
@@ -369,16 +406,16 @@ export default {
 
       this.searchHistory.splice(index, 1)
 
-            if (this.selectedIndex >= index) {
-              this.selectedIndex = this.selectedIndex === index ? -1 : this.selectedIndex - 1
-            }
-            if (this.availableList.length === 0) {
-              this.selectedIndex = -1
-            } else if (this.selectedIndex >= this.availableList.length) {
-              this.selectedIndex = this.availableList.length - 1
-            } else if (this.selectedIndex < -1) {
-              this.selectedIndex = -1
-            }
+      if (this.selectedIndex >= index) {
+        this.selectedIndex = this.selectedIndex === index ? -1 : this.selectedIndex - 1
+      }
+      if (this.availableList.length === 0) {
+        this.selectedIndex = -1
+      } else if (this.selectedIndex >= this.availableList.length) {
+        this.selectedIndex = this.availableList.length - 1
+      } else if (this.selectedIndex < -1) {
+        this.selectedIndex = -1
+      }
 
       try {
         localStorage.setItem(this.searchHistoryKey, JSON.stringify(this.searchHistory))
@@ -392,9 +429,7 @@ export default {
       this.filteredMenus = this.getFilteredMenus(keyword)
     },
     handleHistoryItemClick(historyItem) {
-      const menu = this.getAllMenuItems().find(
-        (m) => m.permission === historyItem.permission
-      )
+      const menu = this.getAllMenuItems().find((m) => m.permission === historyItem.permission)
       if (menu) {
         this.handleMenuClick(menu)
       }
@@ -402,17 +437,19 @@ export default {
     highlightText(text, keyword, isSelected = false) {
       if (!keyword || !text) return text
       const regex = new RegExp(`(${keyword})`, 'gi')
-      const parts = text.split(regex).filter(part => part)
-      return parts.map(part => {
-        if (part.toLowerCase() === keyword.toLowerCase()) {
-          if (isSelected) {
-            return `<span style="color: var(--primary); font-weight: 600;">${part}</span>`
-          } else {
-            return `<span style="background-color: color-mix(in srgb, #ffffff 70%, var(--primary));">${part}</span>`
+      const parts = text.split(regex).filter((part) => part)
+      return parts
+        .map((part) => {
+          if (part.toLowerCase() === keyword.toLowerCase()) {
+            if (isSelected) {
+              return `<span style="color: var(--primary); font-weight: 600;">${part}</span>`
+            } else {
+              return `<span style="background-color: color-mix(in srgb, #ffffff 70%, var(--primary));">${part}</span>`
+            }
           }
-        }
-        return part
-      }).join('')
+          return part
+        })
+        .join('')
     },
     findRouteByPermission(permission) {
       return this.$router.getRoutes().find((route) => route.meta?.permissions?.includes(permission))
@@ -427,7 +464,7 @@ export default {
       const result = []
 
       const flattenMenu = (items, parentPath = '') => {
-        items.forEach(item => {
+        items.forEach((item) => {
           if (item.is_menu === false && item.is_show === true) {
             return
           }
@@ -439,7 +476,7 @@ export default {
             path: currentPath,
             icon: this.getMenuIconByAlias(item.alias_name),
             originalItem: item,
-            hasChildren: !!(item.children?.length),
+            hasChildren: !!item.children?.length,
             children: item.children || []
           }
           result.push(menuItem)
@@ -457,7 +494,7 @@ export default {
     findFirstLeafMenu(menuItem) {
       if (!menuItem?.originalItem) return null
 
-      const findFirstChild = item => {
+      const findFirstChild = (item) => {
         if (item.is_menu && !item.children?.length) {
           return item
         }
@@ -474,9 +511,10 @@ export default {
     getFilteredMenus(keyword = '') {
       const lowerKeyword = keyword.toLowerCase().trim()
       return this.getAllMenuItems()
-        .filter(menu =>
-          menu.name.toLowerCase().includes(lowerKeyword) ||
-          menu.path.toLowerCase().includes(lowerKeyword)
+        .filter(
+          (menu) =>
+            menu.name.toLowerCase().includes(lowerKeyword) ||
+            menu.path.toLowerCase().includes(lowerKeyword)
         )
         .slice(0, 20)
     },
@@ -486,7 +524,7 @@ export default {
       if (historyStr) {
         history = JSON.parse(historyStr)
       }
-      history = history.filter(item => item.permission !== menu.permission)
+      history = history.filter((item) => item.permission !== menu.permission)
       history.unshift({
         name: menu.name,
         path: menu.path,
@@ -522,10 +560,12 @@ export default {
 
       if (route) {
         this.saveSearchHistory(menuToSave)
-        this.$router.push({ path: route.path }).catch(() => { })
+        this.$router.push({ path: route.path }).catch(() => {})
       } else {
         const basePath = getBasePath()
-        this.$router.push({ path: basePath ? `/${basePath}/not-found` : '/not-found' }).catch(() => { })
+        this.$router
+          .push({ path: basePath ? `/${basePath}/not-found` : '/not-found' })
+          .catch(() => {})
       }
     }
   }
@@ -536,7 +576,7 @@ export default {
 .menu-item-selected {
   background: color-mix(in srgb, #ffffff 90%, var(--primary)) !important;
   border-color: transparent !important;
-  
+
   .font-medium {
     color: var(--primary) !important;
   }
@@ -546,19 +586,19 @@ export default {
   ::v-deep {
     background: #fff !important;
     padding: 0 !important;
-    
+
     .sp-form-plus__wrapper {
       background: #fff !important;
       padding: 0 !important;
     }
-    
+
     .el-form-item {
       margin-bottom: 0 !important;
     }
-    
+
     .el-input {
       background: #fff !important;
-      
+
       &__inner {
         background: #fff !important;
         border: none !important;
@@ -566,18 +606,18 @@ export default {
         padding-left: 24px !important;
         height: 28px !important;
         line-height: 28px !important;
-        
+
         &:focus {
           border: none !important;
           box-shadow: none !important;
           outline: none !important;
         }
-        
+
         &::placeholder {
           color: #c0c4cc !important;
         }
       }
-      
+
       &:focus-within {
         border: none !important;
         box-shadow: none !important;

@@ -94,9 +94,11 @@ export default {
     syncValue(val) {
       const type = this.conditionType
       if (type === 'timeRange') {
-        const newDateRange = Array.isArray(val) ? val.map(timestamp => {
-          return timestamp < 1000000000000 ? dayjs.unix(timestamp / 1000).valueOf() : timestamp
-        }) : []
+        const newDateRange = Array.isArray(val)
+          ? val.map((timestamp) => {
+              return timestamp < 1000000000000 ? dayjs.unix(timestamp / 1000).valueOf() : timestamp
+            })
+          : []
         if (JSON.stringify(this.dateRange) !== JSON.stringify(newDateRange)) {
           this.dateRange = newDateRange
         }
@@ -112,12 +114,12 @@ export default {
           }
         }
       } else if (type === 'number_items') {
-        const newSelectedGoods = (val && Array.isArray(val)) ? val : []
+        const newSelectedGoods = val && Array.isArray(val) ? val : []
         if (JSON.stringify(this.selectedGoods) !== JSON.stringify(newSelectedGoods)) {
           this.selectedGoods = newSelectedGoods
         }
       } else if (type === 'mapping') {
-        const newCheckoutValues = (val && Array.isArray(val)) ? val : []
+        const newCheckoutValues = val && Array.isArray(val) ? val : []
         if (JSON.stringify(this.checkoutValues) !== JSON.stringify(newCheckoutValues)) {
           this.checkoutValues = newCheckoutValues
         }
@@ -195,16 +197,20 @@ export default {
     // 渲染选择商品
     renderPickGoods() {
       return h('div', { class: 'flex items-center' }, [
-        h('el-button', {
-          props: {
-            size: 'small',
-            type: 'primary',
-            disabled: this.disabled
+        h(
+          'el-button',
+          {
+            props: {
+              size: 'small',
+              type: 'primary',
+              disabled: this.disabled
+            },
+            on: {
+              click: this.selectGoods
+            }
           },
-          on: {
-            click: this.selectGoods
-          }
-        }, '选择商品'),
+          '选择商品'
+        ),
         this.selectedGoods.length > 0
           ? h('span', { class: 'ml-2.5' }, `已选择${this.selectedGoods.length}件商品`)
           : null
@@ -212,53 +218,69 @@ export default {
     },
     // 渲染复选框（mapping）
     renderCheckout() {
-      const checkboxes = this.options.map(option =>
-        h('el-checkbox', {
-          props: {
-            label: option.id,
-            value: option.name,
-            disabled: this.disabled
+      const checkboxes = this.options.map((option) =>
+        h(
+          'el-checkbox',
+          {
+            props: {
+              label: option.id,
+              value: option.name,
+              disabled: this.disabled
+            },
+            key: option.id
           },
-          key: option.id
-        }, option.name)
+          option.name
+        )
       )
       return h('div', [
-        h('el-checkbox-group', {
-          props: {
-            value: this.checkoutValues,
-            disabled: this.disabled
-          },
-          on: {
-            input: (val) => {
-              this.checkoutValues = val
+        h(
+          'el-checkbox-group',
+          {
+            props: {
+              value: this.checkoutValues,
+              disabled: this.disabled
+            },
+            on: {
+              input: (val) => {
+                this.checkoutValues = val
+              }
             }
-          }
-        }, checkboxes)
+          },
+          checkboxes
+        )
       ])
     },
     renderRadio() {
-      const radios = this.options.map(option =>
-        h('el-radio', {
-          props: {
-            label: option.id,
-            value: option.name,
-            disabled: this.disabled
+      const radios = this.options.map((option) =>
+        h(
+          'el-radio',
+          {
+            props: {
+              label: option.id,
+              value: option.name,
+              disabled: this.disabled
+            },
+            key: option.id
           },
-          key: option.id
-        }, option.name)
+          option.name
+        )
       )
       return h('div', { class: 'flex items-center' }, [
-        h('el-radio-group', {
-          props: {
-            value: this.radioValue,
-            disabled: this.disabled
-          },
-          on: {
-            input: (val) => {
-              this.radioValue = val
+        h(
+          'el-radio-group',
+          {
+            props: {
+              value: this.radioValue,
+              disabled: this.disabled
+            },
+            on: {
+              input: (val) => {
+                this.radioValue = val
+              }
             }
-          }
-        }, radios)
+          },
+          radios
+        )
       ])
     },
     // 选择商品方法
@@ -266,9 +288,9 @@ export default {
       try {
         const { data } = await this.$picker.goods({
           multiple: true,
-          data: this.selectedGoods.map(g => g.item_id)
+          data: this.selectedGoods.map((g) => g.item_id)
         })
-        this.selectedGoods = data.map(item => ({
+        this.selectedGoods = data.map((item) => ({
           item_id: item.item_id,
           item_name: item.item_name
         }))

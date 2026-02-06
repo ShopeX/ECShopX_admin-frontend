@@ -1030,7 +1030,10 @@ export default {
         // 初始化门店数据
         const response = await getItemsDetail(_self.$route.params.itemId)
         let itemsDetailData = response.data.data
-        const categoryInfoRes = await getCategoryInfo(itemsDetailData.item_main_cat_id, { is_point: 1,item_id: _self.$route.params.itemId })
+        const categoryInfoRes = await getCategoryInfo(itemsDetailData.item_main_cat_id, {
+          is_point: 1,
+          item_id: _self.$route.params.itemId
+        })
         const categoryInfoDetail = categoryInfoRes.data.data
         if (itemsDetailData.regions_id) {
           _self.select_regions_value = itemsDetailData.regions_id
@@ -1274,11 +1277,11 @@ export default {
     },
     generateSpec(data, savedSpecItems = null) {
       let skus = []
-      
+
       data.forEach((item) => {
         let specs = []
         let specValueIds = new Set()
-        
+
         // 先添加分类中的规格值
         item.attribute_values.list.forEach((spec) => {
           if (!spec.custom_attribute_value) {
@@ -1287,7 +1290,7 @@ export default {
           specs.push(spec)
           specValueIds.add(spec.attribute_value_id)
         })
-        
+
         // 如果已保存的规格值不在分类的规格值列表中，也要添加进去
         // 这样可以确保新勾选的规格值能够正确显示和恢复
         if (savedSpecItems && savedSpecItems.length > 0) {
@@ -1295,12 +1298,16 @@ export default {
             if (savedItem.item_spec && savedItem.item_spec.length > 0) {
               savedItem.item_spec.forEach((savedSpec) => {
                 // 如果这个规格值属于当前规格（spec_id匹配），且不在列表中，则添加
-                if (savedSpec.spec_id === item.attribute_id && !specValueIds.has(savedSpec.spec_value_id)) {
+                if (
+                  savedSpec.spec_id === item.attribute_id &&
+                  !specValueIds.has(savedSpec.spec_value_id)
+                ) {
                   // 创建一个新的规格值对象，使用已保存的数据
                   specs.push({
                     attribute_value_id: savedSpec.spec_value_id,
                     attribute_value: savedSpec.spec_value_name || '',
-                    custom_attribute_value: savedSpec.spec_custom_value_name || savedSpec.spec_value_name || ''
+                    custom_attribute_value:
+                      savedSpec.spec_custom_value_name || savedSpec.spec_value_name || ''
                   })
                   specValueIds.add(savedSpec.spec_value_id)
                 }
@@ -1308,7 +1315,7 @@ export default {
             }
           })
         }
-        
+
         let sku = {
           sku_id: item.attribute_id,
           sku_name: item.attribute_name,
@@ -1349,8 +1356,7 @@ export default {
       this.submitLoading = true
       const that = this
       let formSkuItem = this.editingSkus
-      
-      
+
       if (this.mode === 'component') {
         this.form.intro = JSON.stringify(this.content)
       }

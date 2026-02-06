@@ -90,14 +90,11 @@ const [ParamsForm, ParamsFormApi] = useForm({
         return (
           <div>
             {value.map((item, index) => (
-              <div
-                key={index}
-                class="flex items-center mb-2 bg-gray-50 rounded"
-              >
-                <div class="flex-1 mr-2.5">
+              <div key={index} class='flex items-center mb-2 bg-gray-50 rounded'>
+                <div class='flex-1 mr-2.5'>
                   <el-input
                     value={item.attribute_value}
-                    placeholder="参数值名称"
+                    placeholder='参数值名称'
                     on-input={(val) => {
                       const newValues = [...value]
                       newValues[index].attribute_value = val
@@ -106,7 +103,7 @@ const [ParamsForm, ParamsFormApi] = useForm({
                   />
                 </div>
                 <div
-                  class="cursor-pointer flex items-center text-gray-500 p-1 rounded"
+                  class='cursor-pointer flex items-center text-gray-500 p-1 rounded'
                   onClick={async () => {
                     try {
                       await Vue.prototype.$confirm('确认删除当前值？', '提示', {
@@ -122,15 +119,15 @@ const [ParamsForm, ParamsFormApi] = useForm({
                     }
                   }}
                 >
-                  <SpIcon name="delete" size={22} />
+                  <SpIcon name='delete' size={22} />
                 </div>
               </div>
             ))}
-            <div class="w-[110px] ml-0.8 border-gray-200">
+            <div class='w-[110px] ml-0.8 border-gray-200'>
               <el-button
-                type="default"
-                size="small"
-                class="border-dashed"
+                type='default'
+                size='small'
+                class='border-dashed'
                 onClick={() => {
                   if (value.length >= 50) {
                     Vue.prototype.$message({ type: 'warning', message: '最多添加50项' })
@@ -238,7 +235,7 @@ export default {
             isShow = data.is_show === 'true' || data.is_show === true
           }
         }
-        
+
         // 安全地处理 attribute_values
         let attributeValues = []
         if (data.attribute_values) {
@@ -255,7 +252,7 @@ export default {
             attributeValues = data.attribute_values
           }
         }
-        
+
         ParamsFormApi.setFieldsValue({
           attribute_name: data.attribute_name,
           attribute_memo: data.attribute_memo,

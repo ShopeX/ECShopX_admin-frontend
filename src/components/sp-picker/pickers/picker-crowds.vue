@@ -38,7 +38,7 @@
       :setting="{
         columns: [
           { name: 'ID', key: 'tag_id', width: 80 },
-          { name: '标签名称', key: 'tag_name' },
+          { name: '标签名称', key: 'tag_name' }
         ]
       }"
       :hooks="{
@@ -77,23 +77,22 @@ export default {
       multipleSelection: [],
       multiple: this.value?.multiple ?? true,
       localSelection: [],
-      regionauthList: [],
+      regionauthList: []
     }
   },
-  computed: {
-  },
+  computed: {},
   created() {
     this.localSelection = cloneDeep(this.value.data) || []
     this.rowKey = this.value?.rowKey || 'tag_id'
   },
   mounted() {},
   methods: {
-     beforeSearch(params) {
+    beforeSearch(params) {
       params = {
         ...params,
         ...this.formData,
         ...(this.value?.params || {}),
-        api_source: 'component',
+        api_source: 'component'
       }
       return params
     },

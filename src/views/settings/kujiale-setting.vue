@@ -27,27 +27,23 @@ export default {
           component: 'input',
           componentProps: {
             placeholder: '请输入appKey',
-            clearable: true,
+            clearable: true
           },
           fieldName: 'appKey',
           formItemClass: 'w-2/4',
           label: 'appKey',
-          rules: [
-            { required: true, message: '请输入appKey', trigger: 'blur' }
-          ]
+          rules: [{ required: true, message: '请输入appKey', trigger: 'blur' }]
         },
         {
           component: 'input',
           componentProps: {
             placeholder: '请输入appSecret',
-            clearable: true,
+            clearable: true
           },
           fieldName: 'appSecret',
           formItemClass: 'w-2/4',
           label: 'appSecret',
-          rules: [
-            { required: true, message: '请输入appSecret', trigger: 'blur' }
-          ]
+          rules: [{ required: true, message: '请输入appSecret', trigger: 'blur' }]
         }
       ],
       formData: {

@@ -9,7 +9,6 @@
       @click="onOpenDialog"
     />
     <el-dialog :modal="false" :visible.sync="dialogVisible" title="选择优惠券" width="80vw">
-
       <el-button type="primary" size="small" @click="onAddCoupon">选择优惠券</el-button>
       <SpFinder
         ref="finder"
@@ -200,7 +199,7 @@ export default {
         'OFFLINE': '线下专享',
         'ONLINE': '线上商城专享',
         'COMMON': '通用券',
-        'NONE': '通用券'//兑换券
+        'NONE': '通用券' //兑换券
       }
       return cardType[value] || value
     },

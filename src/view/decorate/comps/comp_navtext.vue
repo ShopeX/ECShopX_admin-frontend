@@ -19,7 +19,12 @@
     <div v-if="localShowType !== 'default'" class="color-pickers">
       <template v-if="localType === 'text'">
         <div class="color-item">
-          <el-input v-model="localValue.text" size="small" :maxlength="maxlength" @change="handleChange" />
+          <el-input
+            v-model="localValue.text"
+            size="small"
+            :maxlength="maxlength"
+            @change="handleChange"
+          />
         </div>
       </template>
       <template v-else-if="localType === 'image'">
@@ -97,10 +102,10 @@ export default {
     handleShowTypeChange(type) {
       this.localShowType = type
       this.localValue.showtype = type
-      if(type=='default'){
-          this.localValue.text = ''
-          this.localValue.image = this.defaultImage
-          this.localValue.type = 'image'
+      if (type == 'default') {
+        this.localValue.text = ''
+        this.localValue.image = this.defaultImage
+        this.localValue.type = 'image'
       }
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)
@@ -117,21 +122,21 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    
+
     .type-label {
       font-size: 10px;
       color: #606266;
       margin-right: 5px;
     }
-    
+
     .el-radio {
       margin-right: 15px;
     }
   }
-  
+
   .color-pickers {
     display: flex;
-    
+
     .color-item {
       margin-right: 10px;
     }

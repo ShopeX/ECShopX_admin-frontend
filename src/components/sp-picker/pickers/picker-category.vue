@@ -74,7 +74,7 @@ export default {
       const res = await this.$api.goods.getCategory({
         is_main_category: true
       })
-      this.options = Array.isArray(res) ? res : (res?.data || res?.list || [])
+      this.options = Array.isArray(res) ? res : res?.data || res?.list || []
       this.localValue = this.findPathById(this.options, data) || []
     },
     findPathById(list, v, path) {

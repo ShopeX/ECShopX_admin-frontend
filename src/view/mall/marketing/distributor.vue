@@ -380,7 +380,12 @@
         <el-table-column label="收款主体" width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.payment_subject == 1 ? '店铺' : '平台' }}</span>
-            <i v-if="IS_ADMIN() && (VERSION_STANDARD() || VERSION_PLATFORM())" class="el-icon-edit cursor-pointer" style="color: var(--primary)" @click="editPaymentSubject(scope.row)"></i>
+            <i
+              v-if="IS_ADMIN() && (VERSION_STANDARD() || VERSION_PLATFORM())"
+              class="el-icon-edit cursor-pointer"
+              style="color: var(--primary)"
+              @click="editPaymentSubject(scope.row)"
+            ></i>
           </template>
         </el-table-column>
 
@@ -882,7 +887,7 @@ export default {
           message: '请输入商户号',
           componentProps: {
             placeholder: '请输入商户号'
-          },
+          }
         },
         {
           label: '终端号',
@@ -893,7 +898,7 @@ export default {
           message: '请输入终端号',
           componentProps: {
             placeholder: '请输入终端号'
-          },
+          }
         },
         {
           label: '企业用户号',
@@ -904,7 +909,7 @@ export default {
           message: '请输入企业用户号',
           componentProps: {
             placeholder: '请输入企业用户号'
-          },
+          }
         }
       ],
       isOpen: false,
@@ -1613,7 +1618,7 @@ export default {
         showClose: true
       })
     },
-    isShowEdit () {
+    isShowEdit() {
       if (this.IS_ADMIN() && (this.VERSION_STANDARD() || this.VERSION_PLATFORM())) return true
       return false
     }

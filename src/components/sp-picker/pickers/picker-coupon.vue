@@ -113,7 +113,7 @@ export default {
               )
           },
           { name: '卡券名称', key: 'title' },
-      
+
           {
             name: '优惠券状态',
             key: '_coupon_status',
@@ -156,7 +156,7 @@ export default {
     getCouponStatus(row) {
       const statusMap = { 1: '未生效', 2: '已生效', 3: '已过期' }
       const s = row?.date_status
-      return s != null ? (statusMap[s] || '-') : '-'
+      return s != null ? statusMap[s] || '-' : '-'
     },
     onStatusFilterChange() {
       this.$refs.finder && this.$refs.finder.refresh()

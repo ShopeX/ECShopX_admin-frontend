@@ -167,15 +167,24 @@
 <template>
   <div class="wgt-page" :style="headerStyle" @click="handleClickHeader">
     <div class="wgt-page-content" :style="contentStyle">
-      <div v-if="value && value.titleStyle != '0'" class="header-container"
-        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }" :style="containerStyle">
+      <div
+        v-if="value && value.titleStyle != '0'"
+        class="header-container"
+        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }"
+        :style="containerStyle"
+      >
         <!-- 功能区：热区图 -->
-        <div class="title-function"
-          v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl">
+        <div
+          class="title-function"
+          v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl"
+        >
           <sp-image class="title-function-image" :src="functionAreaHotzone.imgUrl" />
         </div>
         <!-- 功能区：附近门店 -->
-        <div v-if="showFunctionArea && functionAreaType === 'nearby'" class="title-function nearby-function">
+        <div
+          v-if="showFunctionArea && functionAreaType === 'nearby'"
+          class="title-function nearby-function"
+        >
           <p class="nearby-function-text">上海</p>
           <i class="nearby-function-icon el-icon-arrow-down" />
           <!-- 附近门店组件，可根据需要添加 -->
@@ -184,7 +193,7 @@
         <div v-if="value.titleStyle == '3' && value.showSearchButton" class="title-search">
           <div class="search-container">
             <i class="el-icon-search search-icon" />
-            <input type="text" class="search-input" placeholder="">
+            <input type="text" class="search-input" placeholder="" />
             <div class="search-button" :style="searchButtonStyle">
               <span>搜索</span>
             </div>
@@ -193,7 +202,11 @@
         <!-- 标题区：页面名称 -->
         <div v-if="value.titleStyle == '1'" class="title-text">{{ value.wgtName }}</div>
         <!-- 标题区：图片 -->
-        <sp-image v-if="value.titleStyle == '2'" class="title-image" :src="value.titleBackgroundImage" />
+        <sp-image
+          v-if="value.titleStyle == '2'"
+          class="title-image"
+          :src="value.titleBackgroundImage"
+        />
       </div>
     </div>
   </div>
@@ -220,24 +233,25 @@ export default {
       const { newNavigateStyle } = this.value || {}
       const style = {}
 
-        if (newNavigateStyle?.color) {
-          style['background-color'] = newNavigateStyle.color
-        }
-        if (newNavigateStyle?.image) {
-          style['background-image'] = `url(${newNavigateStyle.image})`
-          style['background-size'] = 'cover'
-          style['background-position'] = 'center'
-        }
+      if (newNavigateStyle?.color) {
+        style['background-color'] = newNavigateStyle.color
+      }
+      if (newNavigateStyle?.image) {
+        style['background-image'] = `url(${newNavigateStyle.image})`
+        style['background-size'] = 'cover'
+        style['background-position'] = 'center'
+      }
 
       return style
     },
     contentStyle() {
       const { navigateBackgroundColor } = this.value || {}
       return {
-        'background-image': `url(${this.isLight(this.get16ToRgb(navigateBackgroundColor))
-          ? weappHeaderDark
-          : weappHeaderLight
-          })`
+        'background-image': `url(${
+          this.isLight(this.get16ToRgb(navigateBackgroundColor))
+            ? weappHeaderDark
+            : weappHeaderLight
+        })`
       }
     },
     containerStyle() {
@@ -268,7 +282,7 @@ export default {
       }
     }
   },
-  created() { },
+  created() {},
   methods: {
     handleClickHeader() {
       this.$emit('change')

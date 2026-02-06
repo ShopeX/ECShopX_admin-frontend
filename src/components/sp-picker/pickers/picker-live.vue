@@ -101,7 +101,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data && Array.isArray(this.value.data) && this.value.data.length > 0) {
-        const selectRows = list.filter(item => this.value.data.includes(item.roomid))
+        const selectRows = list.filter((item) => this.value.data.includes(item.roomid))
         const { finderTable } = this.$refs.finder.$refs
         // 只有当找到匹配的项时才设置选中状态，避免清空其他选中项
         if (selectRows.length > 0) {

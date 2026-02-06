@@ -28,12 +28,12 @@
     width: 100%;
     margin-bottom: 10px;
   }
-  
+
   .item-fd-left {
     display: flex;
     align-items: center;
   }
-  
+
   .item-fd-right {
     display: flex;
     align-items: center;
@@ -55,7 +55,13 @@
 </style>
 <template>
   <div class="comp-todolist">
-    <draggable :list="localValue" :options="dragOptions" style="width: 100%" handle=".mover" @end="onDragEnd">
+    <draggable
+      :list="localValue"
+      :options="dragOptions"
+      style="width: 100%"
+      handle=".mover"
+      @end="onDragEnd"
+    >
       <div v-for="(item, index) in localValue" :key="`todo-item__${index}`" class="todo-list">
         <div class="item-fd">
           <div class="item-fd-left">
@@ -75,7 +81,9 @@
           <slot name="body" :data="item" :index="index" />
         </div>
       </div>
-      <el-button slot="footer" type="primary" @click="handleAddItem" class="add-btn">{{ btnText }}</el-button>
+      <el-button slot="footer" type="primary" @click="handleAddItem" class="add-btn">{{
+        btnText
+      }}</el-button>
     </draggable>
   </div>
 </template>

@@ -17,32 +17,32 @@
         @reset="onReset"
       />
 
-    <div class="action-container mt-4">
-      <el-button type="primary" @click="onAddChange"> 新建标签组 </el-button>
-    </div>
+      <div class="action-container mt-4">
+        <el-button type="primary" @click="onAddChange"> 新建标签组 </el-button>
+      </div>
 
-    <SpFinder
-      ref="finder"
-      :setting="finderSetting"
-      :row-key="getRowKeys"
-      url="/member/tag-group"
-      :page-size="pageSize"
-      :show-overflow-tooltip="false"
-      no-selection
-      :hooks="{
-        beforeSearch: beforeSearch,
-        afterRequest: afterRequest
-      }"
-    />
+      <SpFinder
+        ref="finder"
+        :setting="finderSetting"
+        :row-key="getRowKeys"
+        url="/member/tag-group"
+        :page-size="pageSize"
+        :show-overflow-tooltip="false"
+        no-selection
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterRequest: afterRequest
+        }"
+      />
 
-    <!-- 新建/编辑标签组弹框 -->
-    <CompAddTag
-      :visible.sync="addGroupVisible"
-      :is-edit="isEdit"
-      :form="form"
-      @submit="handleSubmit"
-      @close="addGroupVisible = false"
-    />
+      <!-- 新建/编辑标签组弹框 -->
+      <CompAddTag
+        :visible.sync="addGroupVisible"
+        :is-edit="isEdit"
+        :form="form"
+        @submit="handleSubmit"
+        @close="addGroupVisible = false"
+      />
     </SpRouterView>
   </SpPage>
 </template>
@@ -108,20 +108,24 @@ export default {
               // 如果是企微标签，显示企微图标
               if (row.is_wechat) {
                 children.push(
-                  h('span', {
-                    style: {
-                      display: 'inline-block',
-                      width: '20px',
-                      height: '20px',
-                      lineHeight: '20px',
-                      textAlign: 'center',
-                      backgroundColor: '#409EFF',
-                      color: '#fff',
-                      borderRadius: '2px',
-                      fontSize: '12px',
-                      marginLeft: '8px'
-                    }
-                  }, '企')
+                  h(
+                    'span',
+                    {
+                      style: {
+                        display: 'inline-block',
+                        width: '20px',
+                        height: '20px',
+                        lineHeight: '20px',
+                        textAlign: 'center',
+                        backgroundColor: '#409EFF',
+                        color: '#fff',
+                        borderRadius: '2px',
+                        fontSize: '12px',
+                        marginLeft: '8px'
+                      }
+                    },
+                    '企'
+                  )
                 )
               }
               return h('div', children)
@@ -135,7 +139,7 @@ export default {
               return h(CompTagList, {
                 props: {
                   'is-add': true,
-                  'list': row.tags || [],
+                  'list': row.tags || []
                 },
                 on: {
                   'add-tag': (value) => vm.handleAddTags(row, value)
@@ -150,23 +154,31 @@ export default {
             fixed: 'right',
             render: (h, { row }) => {
               const actions = [
-              h('el-button', {
-                  props: {
-                    type: 'text',
+                h(
+                  'el-button',
+                  {
+                    props: {
+                      type: 'text'
+                    },
+                    on: {
+                      click: () => vm.handleEdit(row)
+                    }
                   },
-                  on: {
-                    click: () => vm.handleEdit(row)
-                  }
-                }, '编辑'),
-                h('el-button', {
-                  props: {
-                    type: 'text',
-                    style: 'color: #F56C6C;'
+                  '编辑'
+                ),
+                h(
+                  'el-button',
+                  {
+                    props: {
+                      type: 'text',
+                      style: 'color: #F56C6C;'
+                    },
+                    on: {
+                      click: () => vm.handleDelete(row)
+                    }
                   },
-                  on: {
-                    click: () => vm.handleDelete(row)
-                  }
-                }, '删除')
+                  '删除'
+                )
               ]
               return h('div', actions)
             }
@@ -198,9 +210,9 @@ export default {
     async afterRequest(response) {
       const data = response.data.data || response.data
       const { list, total_count } = data
-      
+
       // 处理标签数据，将标签列表展开
-      const processedList = (list || []).map(item => {
+      const processedList = (list || []).map((item) => {
         // 如果 tags 是字符串，尝试解析
         if (typeof item.tags === 'string') {
           try {
@@ -211,7 +223,7 @@ export default {
         }
         return item
       })
-      
+
       return {
         list: processedList,
         count: total_count || 0

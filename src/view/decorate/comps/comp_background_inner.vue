@@ -7,7 +7,12 @@
       <el-radio v-model="currentType" :label="TYPE_GRADIENT" @change="handleTypeChange">
         <span class="type-label">上下渐变色</span>
       </el-radio>
-      <el-radio v-if="showImage" v-model="currentType" :label="TYPE_IMAGE" @change="handleTypeChange">
+      <el-radio
+        v-if="showImage"
+        v-model="currentType"
+        :label="TYPE_IMAGE"
+        @change="handleTypeChange"
+      >
         <span class="type-label">图片</span>
       </el-radio>
     </div>
@@ -121,7 +126,7 @@ export default {
     updateLocalValue(newVal) {
       const normalized = this.normalizeValue(newVal)
       // 只更新变化的字段，避免不必要的响应式更新
-      Object.keys(normalized).forEach(key => {
+      Object.keys(normalized).forEach((key) => {
         if (this.localValue[key] !== normalized[key]) {
           this.$set(this.localValue, key, normalized[key])
         }
@@ -136,7 +141,7 @@ export default {
     isValueChanged(newVal, oldVal) {
       if (!newVal || !oldVal) return true
       const keys = ['type', 'color', 'startColor', 'endColor', 'image']
-      return keys.some(key => newVal[key] !== oldVal[key])
+      return keys.some((key) => newVal[key] !== oldVal[key])
     },
     /**
      * 处理类型变化
@@ -161,7 +166,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
 .comp-background-inner {
   margin-bottom: 15px;
@@ -191,7 +196,3 @@ export default {
   }
 }
 </style>
-
-
-
-

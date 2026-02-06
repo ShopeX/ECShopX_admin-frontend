@@ -228,7 +228,11 @@
               <el-radio label="guide">导购专属券</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="导购发放数量" prop="guide_issue_quantity" v-if="form.coupon_type == 'guide'">
+          <el-form-item
+            label="导购发放数量"
+            prop="guide_issue_quantity"
+            v-if="form.coupon_type == 'guide'"
+          >
             <el-input
               v-model.number="form.guide_issue_quantity"
               type="number"
@@ -237,11 +241,11 @@
               style="width: 240px"
               oninput="value=value.replace(/[^\d.]/g,'')"
             />
-            <span class="frm-tips" style="margin-left: 10px; color: #909399;">
+            <span class="frm-tips" style="margin-left: 10px; color: #909399">
               按单个导购发放的用户领取数量限制
             </span>
           </el-form-item>
-          
+
           <!-- <el-form-item label="优惠券模板ID" prop="card_code">
            <el-input :maxlength="255" placeholder="优惠券模板ID" v-model="form.card_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_code}}</span>
         </el-form-item>

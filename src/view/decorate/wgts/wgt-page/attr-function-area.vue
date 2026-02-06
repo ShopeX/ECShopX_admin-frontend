@@ -10,7 +10,7 @@
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    
+
     .el-radio-button {
       &:first-child {
         .el-radio-button__inner {
@@ -18,13 +18,13 @@
           border-right: none;
         }
       }
-      
+
       &:last-child {
         .el-radio-button__inner {
           border-radius: 0 4px 4px 0;
         }
       }
-      
+
       .el-radio-button__inner {
         width: 100%;
         padding: 6px 12px;
@@ -33,13 +33,13 @@
         background-color: #fff;
         border: 1px solid #e0e0e0;
         transition: all 0.2s;
-        
+
         &:hover {
           color: #155bd4;
           border-color: #155bd4;
         }
       }
-      
+
       &.is-active {
         .el-radio-button__inner {
           color: #fff;

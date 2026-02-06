@@ -33,7 +33,13 @@
                 页面装修
               </el-button>
               <el-button type="text" class="m-0 px-1">
-                <a href="javascript:void(0)" class="no-underline text-inherit" @click="openDialog(scope.row)"> 编辑 </a>
+                <a
+                  href="javascript:void(0)"
+                  class="no-underline text-inherit"
+                  @click="openDialog(scope.row)"
+                >
+                  编辑
+                </a>
               </el-button>
               <el-popover v-if="appID" placement="top" width="200" trigger="click">
                 <div>
@@ -62,7 +68,13 @@
                 </el-button>
               </el-popover>
               <el-button type="text" class="m-0 pl-2">
-                <a href="javascript:void(0)" class="no-underline text-inherit" @click="delPage(scope.row.id)"> 删除 </a>
+                <a
+                  href="javascript:void(0)"
+                  class="no-underline text-inherit"
+                  @click="delPage(scope.row.id)"
+                >
+                  删除
+                </a>
               </el-button>
             </div>
           </template>

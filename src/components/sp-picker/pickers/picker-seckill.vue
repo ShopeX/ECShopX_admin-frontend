@@ -97,7 +97,7 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        seckill_type:'limited_time_sale',
+        seckill_type: 'limited_time_sale',
         ...this.formData
         // status: 'valid'
       }

@@ -55,7 +55,7 @@
                 placeholder="可输入方案名称或下拉选择方案"
                 filterable
                 clearable
-                style="width: 300px; margin-right: 10px;margin-left: 30px;"
+                style="width: 300px; margin-right: 10px; margin-left: 30px"
                 @change="handleSelecteChange"
               >
                 <el-option
@@ -76,14 +76,21 @@
           <div class="section-header">
             <h3 class="section-title">2、选择酷家乐案例关联商品</h3>
           </div>
-          <div style="margin-top: 16px;margin-left: 40px;">
-            <SkuSelector :key="skuSelectorKey" :data="relItems" :is-hiden-sku="true" @change="handleGoodsChange" />
+          <div style="margin-top: 16px; margin-left: 40px">
+            <SkuSelector
+              :key="skuSelectorKey"
+              :data="relItems"
+              :is-hiden-sku="true"
+              @change="handleGoodsChange"
+            />
           </div>
         </div>
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="handleDialogClose">取消</el-button>
-          <el-button type="primary" :loading="confirmLoading" @click="handleConfirm">确认</el-button>
+          <el-button type="primary" :loading="confirmLoading" @click="handleConfirm"
+            >确认</el-button
+          >
         </span>
       </el-dialog>
     </SpRouterView>
@@ -170,7 +177,7 @@ export default {
               { label: '前台可销售', value: 'onsale' },
               { label: '不可销售', value: 'instock' },
               { label: '前台仅展示', value: 'only_show' },
-              { label: '前台不展示', value: 'offline_sale' },
+              { label: '前台不展示', value: 'offline_sale' }
             ]
           },
           fieldName: 'approve_status',
@@ -288,7 +295,7 @@ export default {
             width: 100,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
-            },
+            }
           },
           {
             name: '市场价',
@@ -296,7 +303,7 @@ export default {
             width: 100,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
-            },
+            }
           },
           {
             name: '成本价',
@@ -304,7 +311,7 @@ export default {
             width: 100,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
-            },
+            }
           },
           {
             name: '商品状态',
@@ -318,12 +325,16 @@ export default {
                 offline_sale: { text: '前台不展示', type: 'warning' }
               }
               const status = statusMap[row.approve_status] || { text: '-', type: 'info' }
-              return h('el-tag', {
-                props: {
-                  type: status.type,
-                  size: 'small'
-                }
-              }, status.text)
+              return h(
+                'el-tag',
+                {
+                  props: {
+                    type: status.type,
+                    size: 'small'
+                  }
+                },
+                status.text
+              )
             }
           },
           {
@@ -339,7 +350,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             action: {
-              handler: ([row]) => vm.handleUnbind(row),
+              handler: ([row]) => vm.handleUnbind(row)
             }
           }
         ]
@@ -384,7 +395,7 @@ export default {
       try {
         const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
         // 更新搜索表单中的选项
-        const categoryItem = this.searchFormItems.find(item => item.fieldName === 'main_cat_id')
+        const categoryItem = this.searchFormItems.find((item) => item.fieldName === 'main_cat_id')
         if (categoryItem) {
           categoryItem.componentProps.options = itemCategoryList
         }
@@ -444,7 +455,7 @@ export default {
       }
       this.confirmLoading = true
       try {
-        const goodsIds = [...new Set(this.selectedSkus.map(item => item.goods_id))]
+        const goodsIds = [...new Set(this.selectedSkus.map((item) => item.goods_id))]
         await this.$api.goods.kjlBindItem({
           design_id: this.design_id,
           item_id: goodsIds
@@ -479,24 +490,25 @@ export default {
       this.$confirm('确定要解绑该商品与方案的关联吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(async () => {
-        try {
-          await this.$api.goods.kjlUnBindItem({
-            design_id: row.design.design_id,
-            item_id: row.item_id
-          })
-        this.$message.success('解绑成功')
-        this.$refs.finder.refresh(true)
-        } catch (error) {
-          this.$message.error(error.message || '解绑失败')
-        }
       })
-      .catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
+        .then(async () => {
+          try {
+            await this.$api.goods.kjlUnBindItem({
+              design_id: row.design.design_id,
+              item_id: row.item_id
+            })
+            this.$message.success('解绑成功')
+            this.$refs.finder.refresh(true)
+          } catch (error) {
+            this.$message.error(error.message || '解绑失败')
+          }
         })
-      })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
     }
   }
 }
@@ -508,14 +520,14 @@ export default {
     align-items: center;
     margin-bottom: 16px;
     margin-left: 30px;
-    
+
     .section-title {
       font-size: 16px;
       font-weight: bold;
       margin: 0;
       color: #333;
     }
-    
+
     .section-actions {
       display: flex;
       align-items: center;

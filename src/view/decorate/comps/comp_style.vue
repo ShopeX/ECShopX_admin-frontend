@@ -4,12 +4,7 @@
     <div class="comps_style-item">
       <el-row class="im-bd">
         <template v-for="field in paddingFields">
-          <el-col
-            v-if="field.show"
-            :key="field.key"
-            :span="10"
-            class="im-bd-pd"
-          >
+          <el-col v-if="field.show" :key="field.key" :span="10" class="im-bd-pd">
             <p class="label">{{ field.label }}</p>
             <el-input-number
               v-model="form[field.key]"
@@ -26,12 +21,7 @@
     <div class="comps_style-item">
       <el-row class="im-bd">
         <template v-for="field in combinedPaddingFields">
-          <el-col
-            v-if="field.show"
-            :key="field.key"
-            :span="10"
-            class="im-bd-pd"
-          >
+          <el-col v-if="field.show" :key="field.key" :span="10" class="im-bd-pd">
             <p class="label">{{ field.label }}</p>
             <el-input-number
               v-model="form[field.key]"
@@ -45,75 +35,73 @@
     </div>
 
     <!-- 背景设置 -->
-      <div class="comps_style-item comps_style-bg">
-        <div class="im-tt">背景</div>
-        <div class="im-bd">
-          <div class="background-type-selector">
-            <el-radio-group v-model="form.bgType" size="mini" @change="handleChange">
-              <el-radio-button label="color">背景颜色</el-radio-button>
-              <el-radio-button label="pic">背景图片</el-radio-button>
-              <el-radio-button label="gradient">渐变背景</el-radio-button>
-            </el-radio-group>
+    <div class="comps_style-item comps_style-bg">
+      <div class="im-tt">背景</div>
+      <div class="im-bd">
+        <div class="background-type-selector">
+          <el-radio-group v-model="form.bgType" size="mini" @change="handleChange">
+            <el-radio-button label="color">背景颜色</el-radio-button>
+            <el-radio-button label="pic">背景图片</el-radio-button>
+            <el-radio-button label="gradient">渐变背景</el-radio-button>
+          </el-radio-group>
+        </div>
+        <div class="background-content">
+          <div v-if="form.bgType === 'color'" class="color-section">
+            <div class="color-item">
+              <span class="color-label">背景颜色</span>
+              <div class="color-controls">
+                <span class="color-code">{{ displayBgColor }}</span>
+                <div class="color-controls-item">
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetBgColor"
+                    >重置</el-button
+                  >
+                  <div class="color-swatch" :style="{ backgroundColor: displayBgColor }">
+                    <el-color-picker v-model="form.bgColor" size="small" @change="handleChange" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="background-content">
-            <div v-if="form.bgType === 'color'" class="color-section">
-              <div class="color-item">
-                <span class="color-label">背景颜色</span>
-                <div class="color-controls">
-                  <span class="color-code">{{ displayBgColor }}</span>
-                  <div class="color-controls-item">
-                    <el-button type="text" size="mini" class="reset-btn" @click="onResetBgColor">重置</el-button>
-                    <div class="color-swatch" :style="{ backgroundColor: displayBgColor }">
-                      <el-color-picker 
-                        v-model="form.bgColor" 
-                        size="small" 
-                        @change="handleChange"
-                      />
-                    </div>
+          <div v-if="form.bgType === 'gradient'" class="gradient-section">
+            <div class="gradient-item">
+              <span class="color-label">起始颜色</span>
+              <div class="color-controls">
+                <span class="color-code">{{ displayStartColor }}</span>
+                <div class="color-controls-item">
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetStartColor"
+                    >重置</el-button
+                  >
+                  <div class="color-swatch" :style="{ backgroundColor: displayStartColor }">
+                    <el-color-picker
+                      v-model="form.startColor"
+                      size="small"
+                      @change="handleChange"
+                    />
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="form.bgType === 'gradient'" class="gradient-section">
-              <div class="gradient-item">
-                <span class="color-label">起始颜色</span>
-                <div class="color-controls">
-                  <span class="color-code">{{ displayStartColor }}</span>
-                  <div class="color-controls-item">
-                    <el-button type="text" size="mini" class="reset-btn" @click="onResetStartColor">重置</el-button>
-                    <div class="color-swatch" :style="{ backgroundColor: displayStartColor }">
-                      <el-color-picker 
-                        v-model="form.startColor" 
-                        size="small" 
-                        @change="handleChange"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gradient-item">
-                <span class="color-label">结束颜色</span>
-                <div class="color-controls">
-                  <span class="color-code">{{ displayEndColor }}</span>
-                  <div class="color-controls-item">
-                    <el-button type="text" size="mini" class="reset-btn" @click="onResetEndColor">重置</el-button>
-                    <div class="color-swatch" :style="{ backgroundColor: displayEndColor }">
-                      <el-color-picker 
-                        v-model="form.endColor" 
-                        size="small" 
-                        @change="handleChange"
-                      />
-                    </div>
+            <div class="gradient-item">
+              <span class="color-label">结束颜色</span>
+              <div class="color-controls">
+                <span class="color-code">{{ displayEndColor }}</span>
+                <div class="color-controls-item">
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetEndColor"
+                    >重置</el-button
+                  >
+                  <div class="color-swatch" :style="{ backgroundColor: displayEndColor }">
+                    <el-color-picker v-model="form.endColor" size="small" @change="handleChange" />
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="form.bgType === 'pic'" class="image-section">
-              <SpImagePicker v-model="form.bgPic" size="small" class="video-link" text="背景图" />
-            </div>
+          </div>
+          <div v-if="form.bgType === 'pic'" class="image-section">
+            <SpImagePicker v-model="form.bgPic" size="small" class="video-link" text="背景图" />
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -229,9 +217,10 @@ export default {
   methods: {
     // 初始化表单数据
     initForm() {
-      this.form = this.value && Object.keys(this.value).length > 0
-        ? cloneDeep(this.value)
-        : { ...DEFAULT_FORM }
+      this.form =
+        this.value && Object.keys(this.value).length > 0
+          ? cloneDeep(this.value)
+          : { ...DEFAULT_FORM }
     },
     // 背景类型改变处理
     handleChange() {
@@ -317,39 +306,38 @@ export default {
       display: flex;
       align-items: center;
     }
-    
+
     &.comps_style-bg {
       flex-direction: row;
       align-items: flex-start;
       margin-left: -80px;
-      
+
       .im-bd {
         width: 100%;
         flex-direction: column;
-        
+
         .background-type-selector {
           margin-bottom: 10px;
           width: 100%;
           .el-radio-group {
             width: 100%;
-          display: flex;
-          justify-content: flex-end;
-            
+            display: flex;
+            justify-content: flex-end;
+
             .el-radio-button {
-              
               &:first-child {
                 .el-radio-button__inner {
                   border-radius: 4px 0 0 4px;
                   border-right: none;
                 }
               }
-              
+
               &:last-child {
                 .el-radio-button__inner {
                   border-radius: 0 4px 4px 0;
                 }
               }
-              
+
               .el-radio-button__inner {
                 width: 100%;
                 padding: 6px 12px;
@@ -358,13 +346,13 @@ export default {
                 background-color: #fff;
                 border: 1px solid #e0e0e0;
                 transition: all 0.2s;
-                
+
                 &:hover {
                   color: #155bd4;
                   border-color: #155bd4;
                 }
               }
-              
+
               &.is-active {
                 .el-radio-button__inner {
                   color: #fff;
@@ -377,10 +365,10 @@ export default {
             }
           }
         }
-        
+
         .background-content {
           margin-left: -80px;
-          
+
           .color-section,
           .gradient-section {
             .color-item,
@@ -388,45 +376,45 @@ export default {
               display: flex;
               align-items: center;
               margin-bottom: 10px;
-              
+
               &:last-child {
                 margin-bottom: 0;
               }
-              
+
               .color-label {
                 font-size: 12px;
                 color: #595961;
                 width: 80px;
                 flex-shrink: 0;
               }
-              
+
               .color-controls {
                 flex: 1;
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                
+
                 .color-code {
                   font-size: 12px;
                   color: #999;
                   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
                   min-width: 70px;
                 }
-                
+
                 .color-controls-item {
                   display: flex;
                   align-items: center;
                   gap: 8px;
                   justify-content: flex-end;
                   flex: 1;
-                  
+
                   .reset-btn {
                     padding: 0;
                     font-size: 12px;
                     height: auto;
                     line-height: 1.5;
                   }
-                  
+
                   .color-swatch {
                     width: 56px;
                     height: 28px;
@@ -437,11 +425,11 @@ export default {
                     flex-shrink: 0;
                     transition: all 0.2s;
                     overflow: hidden;
-                    
+
                     &:hover {
                       box-shadow: 0 0 0 2px rgba(21, 91, 212, 0.1);
                     }
-                    
+
                     .el-color-picker {
                       position: absolute;
                       top: 0;
@@ -450,7 +438,7 @@ export default {
                       height: 100%;
                       opacity: 0;
                       z-index: 1;
-                      
+
                       ::v-deep .el-color-picker__trigger {
                         width: 100%;
                         height: 100%;
@@ -463,7 +451,7 @@ export default {
               }
             }
           }
-          
+
           .image-section {
             width: 100%;
           }

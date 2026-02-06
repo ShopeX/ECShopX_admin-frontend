@@ -14,44 +14,55 @@
       :z-index="3001"
       @close="handleClose"
     >
-    <div class="max-h-[500px] overflow-y-auto pr-2.5">
-      <div
-        v-for="category in tagCategories"
-        :key="category.group_id"
-        class="mb-6 pb-4 border-b border-[#e4e7ed] last:border-b-0"
-      >
-        <div class="flex justify-between items-center mb-3">
-          <span class="font-medium text-sm text-[#303133]">{{ category.group_name }}</span>
+      <div class="max-h-[500px] overflow-y-auto pr-2.5">
+        <div
+          v-for="category in tagCategories"
+          :key="category.group_id"
+          class="mb-6 pb-4 border-b border-[#e4e7ed] last:border-b-0"
+        >
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-medium text-sm text-[#303133]">{{ category.group_name }}</span>
+          </div>
+          <CompTagList
+            :list="getFormattedTags(category)"
+            :tags-id="category.group_id"
+            :selection-babel="true"
+            :readonly="IS_DISTRIBUTOR()"
+            tag-size="small"
+            :no-background="true"
+            @add-tag="(val) => handleAddTags(category, val)"
+            @tag-select="(tag, index) => handleTagSelect(category, tag, index)"
+          />
         </div>
-        <CompTagList
-          :list="getFormattedTags(category)"
-          :tags-id="category.group_id"
-          :selection-babel="true"
-          :readonly="IS_DISTRIBUTOR()"
-          tag-size="small"
-          :no-background="true"
-          @add-tag="(val) => handleAddTags(category, val)"
-          @tag-select="(tag, index) => handleTagSelect(category, tag, index)"
-        />
       </div>
-    </div>
-    
-    <div slot="footer" :class="{ 'flex justify-between items-center': !IS_DISTRIBUTOR(), 'flex justify-end items-center': IS_DISTRIBUTOR() }">
-      <el-button type="text" @click="showAddTagDialog" class="text-[#409EFF]" v-if="!IS_DISTRIBUTOR()">
-        新建标签组
-      </el-button>
-      <div>
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm">确 定</el-button>
+
+      <div
+        slot="footer"
+        :class="{
+          'flex justify-between items-center': !IS_DISTRIBUTOR(),
+          'flex justify-end items-center': IS_DISTRIBUTOR()
+        }"
+      >
+        <el-button
+          type="text"
+          @click="showAddTagDialog"
+          class="text-[#409EFF]"
+          v-if="!IS_DISTRIBUTOR()"
+        >
+          新建标签组
+        </el-button>
+        <div>
+          <el-button @click="handleClose">取 消</el-button>
+          <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        </div>
       </div>
-    </div>
-  </el-dialog>
-  <CompAddTag
-    :visible.sync="addTagDialogVisible"
-    :form="addTagForm"
-    @submit="handleAddTagGroup"
-    @close="addTagDialogVisible = false"
-  />
+    </el-dialog>
+    <CompAddTag
+      :visible.sync="addTagDialogVisible"
+      :form="addTagForm"
+      @submit="handleAddTagGroup"
+      @close="addTagDialogVisible = false"
+    />
   </div>
 </template>
 
@@ -127,7 +138,7 @@ export default {
       // 初始化已选标签
       this.selectedTagMap = {}
       if (this.selectedTags && this.selectedTags.length > 0) {
-        this.selectedTags.forEach(tag => {
+        this.selectedTags.forEach((tag) => {
           const groupId = tag.group_id
           if (!this.selectedTagMap[groupId]) {
             this.$set(this.selectedTagMap, groupId, [])
@@ -139,10 +150,12 @@ export default {
     getFormattedTags(category) {
       const tags = category.tags || []
       const groupId = category.group_id
-      
-      return tags.map(tag => {
+
+      return tags.map((tag) => {
         let tagObj = {
-          selected: this.selectedTagMap[groupId]?.some(selectedTag => selectedTag.tag_id == tag.tag_id),
+          selected: this.selectedTagMap[groupId]?.some(
+            (selectedTag) => selectedTag.tag_id == tag.tag_id
+          ),
           group_id: groupId,
           ...tag
         }
@@ -155,12 +168,16 @@ export default {
       if (!this.selectedTagMap[groupId]) {
         this.$set(this.selectedTagMap, groupId, [])
       }
-      
-      const existingIndex = this.selectedTagMap[groupId]?.findIndex(selectedTag => tag.tag_id == selectedTag.tag_id)
+
+      const existingIndex = this.selectedTagMap[groupId]?.findIndex(
+        (selectedTag) => tag.tag_id == selectedTag.tag_id
+      )
       console.log('existingIndex', existingIndex)
-      if (tag.selected && existingIndex == -1) { // 选中
+      if (tag.selected && existingIndex == -1) {
+        // 选中
         this.selectedTagMap[groupId].push(tag)
-      } else if (!tag.selected && existingIndex > -1) { // 取消选中
+      } else if (!tag.selected && existingIndex > -1) {
+        // 取消选中
         this.selectedTagMap[groupId].splice(existingIndex, 1)
       }
     },
@@ -192,8 +209,8 @@ export default {
     handleConfirm() {
       // 收集所有选中的标签
       const allSelectedTags = []
-      Object.keys(this.selectedTagMap).forEach(groupId => {
-        this.selectedTagMap[groupId].forEach(tag => {
+      Object.keys(this.selectedTagMap).forEach((groupId) => {
+        this.selectedTagMap[groupId].forEach((tag) => {
           allSelectedTags.push({
             group_id: groupId,
             tag_id: tag.tag_id,
@@ -227,4 +244,3 @@ export default {
   }
 }
 </script>
-

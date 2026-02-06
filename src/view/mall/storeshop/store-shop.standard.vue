@@ -349,7 +349,7 @@ export default {
           {
             name: 'sku编码',
             key: 'item_bn',
-            width: 150,
+            width: 150
           },
           {
             name: '商品库存',

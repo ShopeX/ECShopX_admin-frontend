@@ -12,12 +12,15 @@ const { YoudaoTranslator, EmptyTranslator, Translator } = require('webpack-auto-
 const axios = require('axios')
 const { generateId } = require('./build/utils')
 
+// 保证 targetLangList / originLang 始终为有效数组或字符串，避免 auto-i18n-plugin-core 内部访问 .length 报错
 const AutoI18nOptions = {
   excludedPath: ['/src/i18n/index.js'],
   globalPath: path.resolve(__dirname, './src/i18n/lang'),
-  targetLangList: ['en', 'zh-tw', 'ar'],
+  originLang: 'zh-cn',
+  targetLangList: ['en', 'ar'],
   rewriteConfig: false,
   includePath: [/src\//, /node_modules\/element-ui\//]
+  // languageJsonMode: 'split'
 }
 
 if (process.argv.includes('i18n')) {
@@ -29,7 +32,15 @@ if (process.argv.includes('i18n')) {
   AutoI18nOptions['translator'] = new EmptyTranslator()
 }
 
-const i18nPlugin = new webpackPluginsAutoI18n.default(AutoI18nOptions)
+// 规范化选项，避免 auto-i18n-plugin-core 中 v(..., targetLangList, true) 时 targetLangList 为 undefined 导致 "reading 'length'" 报错
+const safeI18nOptions = {
+  ...AutoI18nOptions,
+  originLang: AutoI18nOptions.originLang || 'zh-cn',
+  targetLangList: Array.isArray(AutoI18nOptions.targetLangList)
+    ? [...AutoI18nOptions.targetLangList]
+    : ['en']
+}
+const i18nPlugin = new webpackPluginsAutoI18n.default(safeI18nOptions)
 
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env

@@ -12,7 +12,7 @@ const i18n = {
 export const langMap = {
   zhcn: 'zh-CN',
   en: 'en-CN',
-  zhtw: 'zh-TW',
+  // zhtw: 'zh-TW',
   ar: 'ar-SA'
 }
 

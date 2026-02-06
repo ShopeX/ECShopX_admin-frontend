@@ -59,7 +59,14 @@ export default {
       pages: (args) => fn({ value: { ...args }, type: 'pickerPages' }),
       widget: (args) => fn({ value: { ...args }, type: 'pickerWidget' }),
       lottery: (args) => fn({ value: { ...args }, type: 'pickerLottery' }),
-      couponV2: (args) => fn({ value: { ...args }, type: 'pickerCouponV2' })
+      couponV2: (args) => fn({ value: { ...args }, type: 'pickerCouponV2' }),
+      saleCategory: (args) => fn({ value: { ...args }, type: 'pickerSaleCategory' }),
+      category: (args) => fn({ value: { ...args }, type: 'pickerCategory' }),
+      crowds: (args) => fn({ value: { ...args }, type: 'pickerCrowds' }),
+      store: (args) => fn({ value: { ...args }, type: 'pickerStore' }),
+      groups: (args) => fn({ value: { ...args }, type: 'pickerGroups' }),
+      activityCollection: (args) => fn({ value: { ...args }, type: 'pickerActivityCollection' }),
+      ranking: (args) => fn({ value: { ...args }, type: 'pickerRanking' })
     }
 
     Vue.prototype.$picker = $picker

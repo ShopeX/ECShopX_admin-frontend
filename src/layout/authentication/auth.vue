@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       currentLang: '',
-      isYD:process.env.VUE_APP_PLATFORM == 'yd'
+      isYD: process.env.VUE_APP_PLATFORM == 'yd'
     }
   },
   methods: {},

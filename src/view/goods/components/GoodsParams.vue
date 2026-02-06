@@ -47,7 +47,7 @@ export default {
   methods: {
     async handleChange(item) {
       let paprms = []
-      item.children.forEach(item1 => {
+      item.children.forEach((item1) => {
         paprms.push(item1.value)
       })
       if (item.attr_id && paprms.indexOf(item.attr_id) == -1) {

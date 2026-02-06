@@ -37,7 +37,12 @@
             </el-select>
           </SpFilterFormItem>
           <SpFilterFormItem prop="distributor_id" label="店铺:">
-            <SpSelectShop v-model="params.distributor_id" @change="onDistributorChange" clearable placeholder="请选择" />
+            <SpSelectShop
+              v-model="params.distributor_id"
+              @change="onDistributorChange"
+              clearable
+              placeholder="请选择"
+            />
           </SpFilterFormItem>
           <SpFilterFormItem prop="main_cat_id" label="管理分类:">
             <el-cascader
@@ -200,82 +205,82 @@
         </el-dialog>
 
         <SideBar :visible.sync="show_commission_sideBar" title="总部结算佣金配置" width="60">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>
-                  <el-alert
-                    title="佣金结算类型: 【百分比】"
-                    description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费】"
-                    type="info"
-                    close-text=" "
-                    class="alert-text"
-                    show-icon
-                  />
-                </span>
-                <span>
-                  <el-alert
-                    title="佣金结算类型: 【固定金额】"
-                    description="计算方式： 固定金额结算佣金"
-                    type="info"
-                    close-text=" "
-                    class="alert-text"
-                    show-icon
-                  />
-                </span>
-              </div>
-              <el-form ref="form" label-width="120px">
-                <el-form-item label="商品名称">
-                  {{ current.item_name }}
-                </el-form-item>
-                <el-form-item label="佣金结算类型">
-                  <el-radio-group v-model="commissionSpecItems.commission_type">
-                    <el-radio label="1"> 百分比 </el-radio>
-                    <el-radio label="2"> 固定金额 </el-radio>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="SPU结算佣金" :rules="[{ required: true }]">
-                  <el-input
-                    v-model="commissionSpecItems.commission"
-                    size="mini"
-                    type="number"
-                    style="width: 200px"
-                  >
-                    <template v-if="1 == commissionSpecItems.commission_type" slot="append">
-                      %
-                    </template>
-                  </el-input>
-                  <div class="form-item-tip">SKU未设置佣金时，按SPU设置的佣金结算</div>
-                </el-form-item>
-              </el-form>
-              <el-table v-loading="skuLoading" :data="commissionSpecItems.sku_commission">
-                <el-table-column label="规格" prop="item_spec_desc" min-width="120">
-                  <template slot-scope="scope">
-                    <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
-                    ><span v-else>单规格</span>
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>
+                <el-alert
+                  title="佣金结算类型: 【百分比】"
+                  description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费】"
+                  type="info"
+                  close-text=" "
+                  class="alert-text"
+                  show-icon
+                />
+              </span>
+              <span>
+                <el-alert
+                  title="佣金结算类型: 【固定金额】"
+                  description="计算方式： 固定金额结算佣金"
+                  type="info"
+                  close-text=" "
+                  class="alert-text"
+                  show-icon
+                />
+              </span>
+            </div>
+            <el-form ref="form" label-width="120px">
+              <el-form-item label="商品名称">
+                {{ current.item_name }}
+              </el-form-item>
+              <el-form-item label="佣金结算类型">
+                <el-radio-group v-model="commissionSpecItems.commission_type">
+                  <el-radio label="1"> 百分比 </el-radio>
+                  <el-radio label="2"> 固定金额 </el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="SPU结算佣金" :rules="[{ required: true }]">
+                <el-input
+                  v-model="commissionSpecItems.commission"
+                  size="mini"
+                  type="number"
+                  style="width: 200px"
+                >
+                  <template v-if="1 == commissionSpecItems.commission_type" slot="append">
+                    %
                   </template>
-                </el-table-column>
-                <el-table-column label="销售价" min-width="80">
-                  <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
-                </el-table-column>
-                <el-table-column label="成本价" min-width="80">
-                  <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
-                </el-table-column>
-                <el-table-column label="SKU结算佣金">
-                  <template slot-scope="scope">
-                    <div v-if="0 == commissionSpecItems.commission_type">
-                      <el-input :disabled="true" size="mini" type="number" value="0" />
-                    </div>
-                    <div v-else>
-                      <el-input v-model="scope.row.commission" size="mini" type="number">
-                        <template v-if="1 == commissionSpecItems.commission_type" slot="append">
-                          %
-                        </template>
-                      </el-input>
-                    </div>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-card>
+                </el-input>
+                <div class="form-item-tip">SKU未设置佣金时，按SPU设置的佣金结算</div>
+              </el-form-item>
+            </el-form>
+            <el-table v-loading="skuLoading" :data="commissionSpecItems.sku_commission">
+              <el-table-column label="规格" prop="item_spec_desc" min-width="120">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
+                  ><span v-else>单规格</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售价" min-width="80">
+                <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
+              </el-table-column>
+              <el-table-column label="成本价" min-width="80">
+                <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
+              </el-table-column>
+              <el-table-column label="SKU结算佣金">
+                <template slot-scope="scope">
+                  <div v-if="0 == commissionSpecItems.commission_type">
+                    <el-input :disabled="true" size="mini" type="number" value="0" />
+                  </div>
+                  <div v-else>
+                    <el-input v-model="scope.row.commission" size="mini" type="number">
+                      <template v-if="1 == commissionSpecItems.commission_type" slot="append">
+                        %
+                      </template>
+                    </el-input>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-card>
           <div slot="footer">
             <el-button type="primary" :loading="submitLoading" @click="saveCommissionConf">
               保存
@@ -385,7 +390,7 @@ export default {
       }
       const { status } = await this.$api.goods.exportGoodsCode({
         ...params,
-        source: 'distributor',
+        item_source: 'distributor',
         export_type: exportType
       })
       if (status) {
@@ -408,7 +413,7 @@ export default {
     // 审核确定
     onSubmit() {
       this.form.goods_id = this.goods_id
-      auditItems(this.form).then(res => {
+      auditItems(this.form).then((res) => {
         this.$message.success('保存成功')
         this.dialogVisible = false
         this.fetchList()
@@ -454,7 +459,7 @@ export default {
       }
 
       const { list, total_count } = await this.$api.goods.getItemsList(params)
-      list.forEach(item => {
+      list.forEach((item) => {
         item.price = item.price / 100
         item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
       })
@@ -472,7 +477,7 @@ export default {
       let params = {}
       if (this.goods_id.length > 0) {
         let data = []
-        this.goods_id.forEach(goods_id => {
+        this.goods_id.forEach((goods_id) => {
           data.push({ goods_id: goods_id })
         })
         params = {
@@ -481,7 +486,7 @@ export default {
         }
       }
       this.submitLoading = true
-      updateItemsStatus(params).then(res => {
+      updateItemsStatus(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '修改成功',
@@ -498,7 +503,7 @@ export default {
       this.show_commission_sideBar = true
       this.skuLoading = true
       this.current = data
-      getGoodsCommission(data.item_id).then(res => {
+      getGoodsCommission(data.item_id).then((res) => {
         var commissionSpecItems = res.data.data
         this.commissionSpecItems = commissionSpecItems
         this.skuLoading = false
@@ -523,7 +528,7 @@ export default {
       } else {
         params.commission = this.commissionSpecItems.commission * 100
       }
-      this.commissionSpecItems.sku_commission.forEach(item => {
+      this.commissionSpecItems.sku_commission.forEach((item) => {
         var sku_commission = { item_id: item.item_id }
         if (this.commissionSpecItems.commission_type == '2') {
           sku_commission.commission = item.commission * 100
@@ -533,7 +538,7 @@ export default {
         rebateConf.push(sku_commission)
       })
       params.sku_commission = JSON.stringify(rebateConf)
-      saveGoodsCommission(params).then(res => {
+      saveGoodsCommission(params).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',

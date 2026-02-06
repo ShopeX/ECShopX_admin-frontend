@@ -66,7 +66,7 @@
             @click="addTemplate"
           >
             <div class="template-wrap flex-col items-center justify-center flex">
-              <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+              <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
               <div class="add-text">添加模板</div>
             </div>
           </div>
@@ -75,7 +75,7 @@
           <div class="template-item">
             <div class="img-wrap">
               <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
+                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览" />
                 <span class="preview-cover_text">预览</span>
               </div>
               <el-image class="template-pic" :src="item.template_pic" fit="cover" />
@@ -114,7 +114,7 @@
               <div v-if="item.timer_status == 2" class="no-time">
                 <div>定时启用</div>
                 <div class="picker-wrap">
-                  <img class="time-img" src="@/assets/img/time-img.png">
+                  <img class="time-img" src="@/assets/img/time-img.png" />
                   <span>设置模板切换时间</span>
                   <el-date-picker
                     v-model="item.timer_time"
@@ -363,26 +363,26 @@ export default {
             this.configForm.is_open_wechatapp_location = tempStatus
           }
         },
-        {
-          label: '扫码功能',
-          key: 'is_open_scan_qrcode',
-          type: 'switch',
-          onChange: async () => {
-            await this.$api.template.setPagesTemplate({
-              is_open_scan_qrcode: this.configForm.is_open_scan_qrcode ? 1 : 2
-            })
-          }
-        },
-        {
-          label: '公众号组件',
-          key: 'is_open_official_account',
-          type: 'switch',
-          onChange: async () => {
-            await this.$api.template.setPagesTemplate({
-              is_open_official_account: this.configForm.is_open_official_account ? 1 : 2
-            })
-          }
-        }
+        // {
+        //   label: '扫码功能',
+        //   key: 'is_open_scan_qrcode',
+        //   type: 'switch',
+        //   onChange: async () => {
+        //     await this.$api.template.setPagesTemplate({
+        //       is_open_scan_qrcode: this.configForm.is_open_scan_qrcode ? 1 : 2
+        //     })
+        //   }
+        // },
+        // {
+        //   label: '公众号组件',
+        //   key: 'is_open_official_account',
+        //   type: 'switch',
+        //   onChange: async () => {
+        //     await this.$api.template.setPagesTemplate({
+        //       is_open_official_account: this.configForm.is_open_official_account ? 1 : 2
+        //     })
+        //   }
+        // }
       ],
       template_name: 'yykweishop',
       isTemplateNavList: true,
@@ -457,10 +457,10 @@ export default {
           label: '',
           key: 'name',
           component: () => (
-            <div class="tablist">
+            <div class='tablist'>
               {this.navForm?.tabList?.map((item, index) => (
                 <div
-                  class="tab-item"
+                  class='tab-item'
                   style={{
                     color: index == 0 ? this.navForm.theme.selectedColor : this.navForm.theme.color
                   }}
@@ -471,12 +471,12 @@ export default {
                   )}
                   {(item.iconPath || item.selectedIconPath) && (
                     <el-image
-                      class="tab-image"
+                      class='tab-image'
                       src={item.selectedIconPath || item.iconPath}
-                      fit="cover"
+                      fit='cover'
                     />
                   )}
-                  <div class="tab-text">{item.text}</div>
+                  <div class='tab-text'>{item.text}</div>
                 </div>
               ))}
             </div>
@@ -488,19 +488,19 @@ export default {
           component: () => (
             <el-row>
               <el-col span={8}>
-                <div class="theme-item">
+                <div class='theme-item'>
                   <el-color-picker v-model={this.navForm.theme.backgroundColor}></el-color-picker>
                   背景色
                 </div>
               </el-col>
               <el-col span={8}>
-                <div class="theme-item">
+                <div class='theme-item'>
                   <el-color-picker v-model={this.navForm.theme.color}></el-color-picker>
                   默认颜色
                 </div>
               </el-col>
               <el-col span={8}>
-                <div class="theme-item">
+                <div class='theme-item'>
                   <el-color-picker v-model={this.navForm.theme.selectedColor}></el-color-picker>
                   选中颜色
                 </div>
@@ -512,17 +512,17 @@ export default {
           label: '',
           key: 'tabList',
           component: () => (
-            <div class="nav-list">
-              <div class="nav-list-body">
+            <div class='nav-list'>
+              <div class='nav-list-body'>
                 {this.navForm?.tabList?.map((item, index) => (
-                  <div class="nav-item">
-                    <div class="nav-item-hd">
+                  <div class='nav-item'>
+                    <div class='nav-item-hd'>
                       <SpImagePicker v-model={item.iconPath} />
                       <SpImagePicker v-model={item.selectedIconPath} />
-                      <SpInput v-model={item.text} width={'120px'} placeholder="导航名称" />
+                      <SpInput v-model={item.text} width={'120px'} placeholder='导航名称' />
                       <el-select
                         v-model={item.pagePath}
-                        placeholder="请选择页面"
+                        placeholder='请选择页面'
                         on-change={this.onChangePagePath.bind(this, index)}
                       >
                         {this.templateNavList.map((item, index) => (
@@ -530,9 +530,9 @@ export default {
                         ))}
                       </el-select>
                       {item.pagePath == 'customPage' && (
-                        <div class="uploader-setting">
+                        <div class='uploader-setting'>
                           <div
-                            class="btn-linkpath"
+                            class='btn-linkpath'
                             onClick={this.handleCustomPageSelect.bind(this, item)}
                           >
                             {item?.customPage?.page_name ?? '请选择自定义页面'}
@@ -540,9 +540,9 @@ export default {
                         </div>
                       )}
                     </div>
-                    <div class="nav-item-bd">
+                    <div class='nav-item-bd'>
                       {index > 1 && (
-                        <el-button type="text" on-click={this.removeTabItem.bind(this, index)}>
+                        <el-button type='text' on-click={this.removeTabItem.bind(this, index)}>
                           删除
                         </el-button>
                       )}
@@ -555,7 +555,7 @@ export default {
           ),
           tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）',
           validator: (rule, value, callback) => {
-            const fd = value.find(item => !item.pagePath || !item.name)
+            const fd = value.find((item) => !item.pagePath || !item.name)
             if (fd) {
               callback('请设置导航名称以及导航页面')
             } else {
@@ -567,10 +567,10 @@ export default {
           label: '',
           component: () => (
             <el-button
-              type="primary"
+              type='primary'
               disabled={this.navForm?.tabList?.length >= 5}
               plain
-              class="iconfont icon-plus-circle"
+              class='iconfont icon-plus-circle'
               on-click={this.addTabItem}
             >
               添加菜单项
@@ -586,9 +586,9 @@ export default {
       return distributor_id > 0
     },
     templateNavList() {
-      let res = this.isTemplateNavList ? NAVS.filter(item => item.name != 'purchase') : NAVS
+      let res = this.isTemplateNavList ? NAVS.filter((item) => item.name != 'purchase') : NAVS
       //数云隐藏社区
-      res = this.VERSION_SHUYUN() ? res.filter(item => item.name != 'ugc') : res
+      res = this.VERSION_SHUYUN() ? res.filter((item) => item.name != 'ugc') : res
       return res
     }
   },
@@ -642,7 +642,7 @@ export default {
         page_size: 20
       }
       const { list, total_count } = await this.$api.template.getPagesTemplateList(params)
-      this.templateList = list.map(item => {
+      this.templateList = list.map((item) => {
         return {
           ...item,
           // 店铺模板可编辑
@@ -665,7 +665,7 @@ export default {
         return
       }
       this.relDistributors = data
-      let shop_ids = data.map(item => {
+      let shop_ids = data.map((item) => {
         return item.distributor_id
       })
       this.syncTemplate(2, shop_ids)
@@ -688,7 +688,7 @@ export default {
       if (is_all_distributor == 2) {
         params.distributor_ids = JSON.stringify(shop_ids)
       }
-      syncPagesTemplate(params).then(res => {
+      syncPagesTemplate(params).then((res) => {
         this.distributorVisible = false
         this.distributorStatus = false
         this.$message({
@@ -889,7 +889,7 @@ export default {
       this.navForm.tabList.push(item)
     },
     onChangePagePath(index, value) {
-      const { label, name } = this.templateNavList.find(item => item.value == value)
+      const { label, name } = this.templateNavList.find((item) => item.value == value)
       this.navForm.tabList[index].text = label
       this.navForm.tabList[index].name = name
       if (value != 'customPage' && this.navForm.tabList[index]?.customPage) {
@@ -899,7 +899,7 @@ export default {
     async onSubmitTabList() {
       const { pages_template_id, theme, tabList } = this.navForm
 
-      const emptyIndex = tabList.findIndex(item => item.name == 'customPage' && !item.customPage)
+      const emptyIndex = tabList.findIndex((item) => item.name == 'customPage' && !item.customPage)
       if (emptyIndex > -1) {
         return this.$message({
           message: '请选择自定义页面',

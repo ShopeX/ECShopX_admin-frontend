@@ -109,11 +109,7 @@
                 @click="setCurrent(k)"
               >
                 <transition name="el-fade-in-linear">
-                  <div
-                    v-if="k == editorIndex"
-                    class="el-icon-delete"
-                    @click="removeCurrent"
-                  />
+                  <div v-if="k == editorIndex" class="el-icon-delete" @click="removeCurrent" />
                 </transition>
                 <component
                   :is="widget.name"
@@ -383,7 +379,7 @@ export default {
     // }
   },
   created() {
-    Object.keys(plugins).forEach(key => {
+    Object.keys(plugins).forEach((key) => {
       let widget = plugins[key].widget
       // console.log('widget', widget)
       Vue.component(key, widget)
@@ -442,16 +438,16 @@ export default {
     },
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then(_ => {
+        .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     saveConfig() {
-      const tmp = this.components.find(v => v.name === 'navbar')
+      const tmp = this.components.find((v) => v.name === 'navbar')
       this.components = tmp ? this.components : [...this.components, ...[this.navConfig]]
       // this.components.forEach((v, i) => {
       //   v.name == 'nav' && this.components.splice(i, 1)
@@ -467,7 +463,7 @@ export default {
           version: `v1.0.1_${this.id}`,
           page_name: 'store_index'
         }) // 店铺
-      savePageParams(filter).then(res => {
+      savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',
@@ -484,7 +480,7 @@ export default {
           config: JSON.stringify([this.settings]),
           page_name: 'settings'
         }
-        savePageParams(setting).then(res => {
+        savePageParams(setting).then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '保存成功',
@@ -507,11 +503,11 @@ export default {
           version: `v1.0.1_${this.id}`,
           page_name: 'store_index'
         }) // 店铺
-      getParamByTempName(filter).then(res => {
-        let components = res.data.data.config.filter(item => {
+      getParamByTempName(filter).then((res) => {
+        let components = res.data.data.config.filter((item) => {
           return item.name != 'navbar' && item.name != 'nav'
         })
-        let navbar = res.data.data.config.filter(item => {
+        let navbar = res.data.data.config.filter((item) => {
           return item.name == 'navbar' || item.name == 'nav'
         })
         if (navbar.name == 'nav') {
@@ -530,7 +526,7 @@ export default {
           version: 'v1.0.1',
           page_name: 'settings'
         }
-        getParamByTempName(setting).then(res => {
+        getParamByTempName(setting).then((res) => {
           if (res.data.data.config.length > 0) {
             this.settings = res.data.data.config[0]
           }

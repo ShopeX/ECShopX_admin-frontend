@@ -40,7 +40,7 @@
             class="store-list-item"
             :class="
               multiple
-                ? current && current.findIndex(cur => cur.id === item.id) !== -1
+                ? current && current.findIndex((cur) => cur.id === item.id) !== -1
                   ? 'active'
                   : ''
                 : current.id === item.id
@@ -182,7 +182,7 @@ export default {
     },
     handleItemClick(val) {
       if (this.multiple) {
-        const checkedIdx = this.current.findIndex(item => item.id === val.id)
+        const checkedIdx = this.current.findIndex((item) => item.id === val.id)
         if (checkedIdx === -1) {
           this.current.push(val)
         } else {
@@ -205,9 +205,9 @@ export default {
       this.params.page += 1
       const { list, total_count } = await api.marketing.getDistributorList(this.params)
       let _list = []
-      list.map(item => {
+      list.map((item) => {
         let tags = []
-        item.tagList.map(tag => {
+        item.tagList.map((tag) => {
           tags.push({
             id: tag.tag_id,
             name: tag.tag_name

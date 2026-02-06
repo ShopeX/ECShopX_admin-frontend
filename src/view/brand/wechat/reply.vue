@@ -239,7 +239,7 @@ export default {
       this.loading = true
       if (this.activeName == 'kfreply' && !this.kfreplyloadData) {
         this.kfreplyload = true
-        getOpenKfReply().then(response => {
+        getOpenKfReply().then((response) => {
           this.isOpenKfReply = response.data.data.isOpenKfReply
           this.kfreplyloadData = true
           this.loading = false
@@ -257,7 +257,7 @@ export default {
       }
 
       if (this.activeName == 'autoreply' && !this.autoreplyloadData) {
-        getDefaultReply().then(response => {
+        getDefaultReply().then((response) => {
           this.autoreplyData = response.data.data.reply_content
           this.autoreplyType = response.data.data.reply_type
           this.autoreplyloadData = true
@@ -268,7 +268,7 @@ export default {
       }
 
       if (this.activeName == 'keyword' && !this.keywordReplyloadData) {
-        getKeywordReply().then(response => {
+        getKeywordReply().then((response) => {
           if (response.data.data.list.length > 0) {
             this.keywordReplyData = response.data.data.list
             this.keywordReplyloadData = true
@@ -281,7 +281,7 @@ export default {
     },
     // 获取被关注自动回复配置
     getSubscribeSetting() {
-      getSubscribeReply().then(response => {
+      getSubscribeReply().then((response) => {
         this.subscribeData = response.data.data.reply_content
         this.subscribeType = response.data.data.reply_type
         this.subscribeReplyloadData = true
@@ -313,7 +313,7 @@ export default {
           this.$refs.subscribeMsg.data,
           this.$refs.subscribeMsg.currentName
         )
-        setSubscribeReply(params).then(response => {
+        setSubscribeReply(params).then((response) => {
           this.messageSuccess()
         })
       } else if (this.activeName == 'autoreply') {
@@ -321,7 +321,7 @@ export default {
           this.$refs.autoreplyMsg.data,
           this.$refs.autoreplyMsg.currentName
         )
-        setDefaultReply(params).then(response => {
+        setDefaultReply(params).then((response) => {
           this.messageSuccess()
         })
       }
@@ -349,12 +349,12 @@ export default {
         return
       }
       if (this.keywordReplyData[index].is_new) {
-        addKeywordReply(params).then(response => {
+        addKeywordReply(params).then((response) => {
           this.keywordReplyData[index].is_new = false
           this.messageSuccess()
         })
       } else {
-        updateKeywordReply(params).then(response => {
+        updateKeywordReply(params).then((response) => {
           this.messageSuccess()
         })
       }
@@ -371,7 +371,7 @@ export default {
         this.isRequest = true
         let query = { isOpenKfReply: isOpen }
         setOpenKfReply(query)
-          .then(response => {
+          .then((response) => {
             this.isOpenKfReply = isOpen
             this.$message({
               type: 'success',
@@ -379,7 +379,7 @@ export default {
             })
             this.isRequest = false
           })
-          .catch(error => {
+          .catch((error) => {
             this.isRequest = false
           })
       }
@@ -425,7 +425,7 @@ export default {
             }
           } else {
             let params = { rule_name: item.rule_name }
-            deleteKeywordReply(params).then(response => {
+            deleteKeywordReply(params).then((response) => {
               this.keywordReplyData.splice(index, 1)
               if (this.keywordReplyData.length == 0) {
                 this.addReplyAction()

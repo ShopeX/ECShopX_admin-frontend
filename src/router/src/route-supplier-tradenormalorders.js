@@ -74,7 +74,13 @@ export default {
     {
       path: 'logistics',
       name: `配送管理`,
-      component: () => import('@/view/mall/trade/logistics/index')
+      component: () => import('@/views/settings/deliverySettings/logistics/index'),
+      children: [
+        {
+          path: 'editor/:id?',
+          component: () => import('@/views/settings/deliverySettings/logistics/add-ziti')
+        }
+      ]
     },
     {
       path: 'aftersalesrefundlist',

@@ -57,7 +57,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                ctx => {
+                (ctx) => {
                   handleChange(ctx, 'business_code_img')
                 }
               "
@@ -66,7 +66,7 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -97,7 +97,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                ctx => {
+                (ctx) => {
                   handleChange(ctx, 'institution_code_img')
                 }
               "
@@ -106,7 +106,7 @@
                 v-if="fileList.institution_code_img"
                 :src="fileList.institution_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -137,12 +137,12 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                ctx => {
+                (ctx) => {
                   handleChange(ctx, 'tax_code_img')
                 }
               "
             >
-              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar">
+              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -175,7 +175,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                ctx => {
+                (ctx) => {
                   handleChange(ctx, 'social_credit_code_img')
                 }
               "
@@ -184,7 +184,7 @@
                 v-if="fileList.social_credit_code_img"
                 :src="fileList.social_credit_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -218,7 +218,7 @@
             v-model="form.controlling_shareholder_id_card_type"
             placeholder="选择股东证件类型"
             :disabled="disabled"
-            @visible-change="bool => (isEdit = bool)"
+            @visible-change="(bool) => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -239,7 +239,7 @@
             v-model="form.legal_id_card_type"
             placeholder="选择法人代表证件类"
             :disabled="disabled"
-            @visible-change="bool => (isEdit = bool)"
+            @visible-change="(bool) => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -283,12 +283,12 @@
             :auto-upload="true"
             :show-file-list="false"
             :http-request="
-              ctx => {
+              (ctx) => {
                 handleChange(ctx, 'legal_card_imgz')
               }
             "
           >
-            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -300,12 +300,12 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              ctx => {
+              (ctx) => {
                 handleChange(ctx, 'legal_card_imgf')
               }
             "
           >
-            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -406,12 +406,12 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              ctx => {
+              (ctx) => {
                 handleChange(ctx, 'bank_acct_img')
               }
             "
           >
-            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar">
+            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -609,7 +609,7 @@ export default {
       delete data.created_at
       delete data.updated_at
       let fileList = JSON.parse(JSON.stringify(this.fileList))
-      Object.keys(fileList).forEach(key => {
+      Object.keys(fileList).forEach((key) => {
         fileList[key] = data[`${key}_full_url`]
       })
       this.fileList = fileList
@@ -620,10 +620,10 @@ export default {
       this.form.area = [this.form.bank_prov, this.form.bank_area]
     },
     onSubmit() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form))
-          saveHffile(obj).then(res => {
+          saveHffile(obj).then((res) => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -658,7 +658,7 @@ export default {
       }
       const upload = new UploadUtil()
       // 上传
-      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then(res => {
+      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then((res) => {
         this.fileList[type] = URL.createObjectURL(file)
         let { data } = res[1]
         let { key } = res[0]

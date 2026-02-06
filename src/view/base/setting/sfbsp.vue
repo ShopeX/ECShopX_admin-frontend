@@ -58,7 +58,7 @@ export default {
       let query = {}
       if (this.activeName === 'sfbsp') {
         // query = {kuaidi_type: 'kdniao'}
-        getSfbspSetting(query).then(response => {
+        getSfbspSetting(query).then((response) => {
           const data = response.data.data
           if (!Array.isArray(data)) {
             if (data.is_open == 'true') {
@@ -80,14 +80,14 @@ export default {
         query = this.form
       }
       seSfbspSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

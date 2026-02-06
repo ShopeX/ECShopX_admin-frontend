@@ -75,7 +75,7 @@ export default {
                   'inactive-value': false
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.login.changeOperatorStatus({
                       operator_id: row.operator_id,
                       is_disable: e ? 1 : 0

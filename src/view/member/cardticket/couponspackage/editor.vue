@@ -171,7 +171,7 @@ export default {
       console.log(this.$route)
       const { type, package_id } = this.$route.query
       if (type == 'edit') {
-        this.$refs[formName].validate(async valid => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
             const { status } = await this.$api.coupons_package.editCouponPackage({
               ...this.ruleForm,
@@ -192,11 +192,11 @@ export default {
           }
         })
       } else {
-        this.$refs[formName].validate(async valid => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
             let package_content = []
 
-            this.seletedCoupon.forEach(item => {
+            this.seletedCoupon.forEach((item) => {
               package_content.push({ card_id: item.card_id, give_num: item.give_num })
             })
 

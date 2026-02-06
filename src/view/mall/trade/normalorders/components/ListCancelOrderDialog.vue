@@ -121,7 +121,7 @@ export default {
         return false
       }
       this.cancelOrderForm.order_id = this.info.order_id
-      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then(response => {
+      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         // debugger
         if (cancelOrderStatus == 'WAIT_CHECK') {

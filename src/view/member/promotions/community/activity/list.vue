@@ -50,7 +50,7 @@
         </el-table-column>
         <el-table-column prop="activity_id" label="活动ID" width="80" />
         <el-table-column label="活动名称">
-          <template slot-scope="scope"> {{ scope.row.activity_name }}<br> </template>
+          <template slot-scope="scope"> {{ scope.row.activity_name }}<br /> </template>
         </el-table-column>
         <el-table-column prop="activity_start_date" label="开始时间" width="160" />
         <el-table-column prop="activity_end_date" label="结束时间" width="160" />
@@ -287,13 +287,13 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + activity_id + '?is_new=true' })
     },
     exportActivityItemList(activity_id) {
-      exportActivityItemList({ activity_id: activity_id }).then(res => {
+      exportActivityItemList({ activity_id: activity_id }).then((res) => {
         window.open(res.data.data.url, '_blank')
       })
     },
     communityDetail(index, row) {
       this.communityDetailVisible = true
-      CommunityActivityInfo(row.activity_id).then(response => {
+      CommunityActivityInfo(row.activity_id).then((response) => {
         this.communityDetailData = response.data.data
       })
     },
@@ -308,7 +308,7 @@ export default {
       } else {
         this.params.status = ''
       }
-      CommunityActivityList(params).then(response => {
+      CommunityActivityList(params).then((response) => {
         this.activityLists = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -329,7 +329,7 @@ export default {
             CommunityActivityStatusUpdate({
               activity_id: row.activity_id,
               delete_type: status
-            }).then(response => {
+            }).then((response) => {
               this.getActivityLists(this.params)
               this.$message({
                 message: '修改活动状态成功',
@@ -359,7 +359,7 @@ export default {
     viewCommunityList(ids) {
       this.communityVisible = true
       var params = { community_id: ids }
-      getCommunityList(params).then(res => {
+      getCommunityList(params).then((res) => {
         if (res.data.data.total_count > 0) {
           this.communityLists = res.data.data.list
         }
@@ -371,7 +371,7 @@ export default {
       communityActivityItemList(activityId, {
         page: this.goodsPage,
         pageSize: this.goodsPageSize
-      }).then(res => {
+      }).then((res) => {
         this.goodsList = res.data.data.list
         this.goodsCount = res.data.data.total_count
       })
@@ -385,13 +385,13 @@ export default {
       this.goodsVisible = false
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     updateActivityData(params) {
-      updateActivityItemData(params).then(res => {})
+      updateActivityItemData(params).then((res) => {})
     },
     editItemPrice(row) {
       let form = {

@@ -56,18 +56,18 @@
           <template slot-scope="scope">
             <!-- 店铺端 需要只展示自己的店铺名称 -->
             <span v-if="IS_DISTRIBUTOR()">{{
-              scope.row.distributor_info.find(item => item.distributor_id === shopId)?.name
+              scope.row.distributor_info.find((item) => item.distributor_id === shopId)?.name
             }}</span>
-            <span v-else>{{ scope.row.distributor_info.map(item => item.name).join(',') }}</span>
+            <span v-else>{{ scope.row.distributor_info.map((item) => item.name).join(',') }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="distributor_info" label="店铺号">
           <template slot-scope="scope">
             <span v-if="IS_DISTRIBUTOR()">{{
-              scope.row.distributor_info.find(item => item.distributor_id === shopId)?.shop_code
+              scope.row.distributor_info.find((item) => item.distributor_id === shopId)?.shop_code
             }}</span>
             <span v-else>{{
-              scope.row.distributor_info.map(item => item.shop_code).join(',')
+              scope.row.distributor_info.map((item) => item.shop_code).join(',')
             }}</span>
           </template>
         </el-table-column>
@@ -187,13 +187,13 @@ export default {
             return this.editType !== 'edit' || !this.IS_DISTRIBUTOR() // 店铺端编辑不能选择店铺
           },
           component: () => (
-            <div class="distributor-tags">
+            <div class='distributor-tags'>
               {this.whitelistForm.distributors.map((item, index) => (
                 <el-tag key={item.name} closable on-close={this.storeClose.bind(this, index)}>
                   {item.name}
                 </el-tag>
               ))}
-              <el-button type="text" on-click={this.addStoreAction}>
+              <el-button type='text' on-click={this.addStoreAction}>
                 添加适用店铺
               </el-button>
             </div>
@@ -255,7 +255,7 @@ export default {
     },
     // 添加白名单适用店铺
     async addStoreAction() {
-      const distributor_ids = this.whitelistForm.distributors.map(item => item.distributor_id)
+      const distributor_ids = this.whitelistForm.distributors.map((item) => item.distributor_id)
       const { data } = await this.$picker.shop({
         data: distributor_ids
       })
@@ -267,7 +267,7 @@ export default {
     // 添加白名单
     async addWhitelistFormSubmit() {
       const { distributors, username, mobile, id } = this.whitelistForm
-      const distributor_id = distributors.map(item => item.distributor_id)
+      const distributor_id = distributors.map((item) => item.distributor_id)
       let params = {
         id, // 传了id就是修改
         distributor_id: distributor_id, // 编辑的时候，这里是一条int类型的店铺ID，新增的时候是数组
@@ -305,7 +305,7 @@ export default {
     editShopWhite(row) {
       console.log('🚀🚀🚀 ~ file: storewhitelist.vue:225 ~ editShopWhite ~ row:', row)
       const { distributor_info, mobile, username, id } = row
-      const distributors = distributor_info.map(item => ({
+      const distributors = distributor_info.map((item) => ({
         distributor_id: item.distributor_id,
         name: item.name
       }))
@@ -322,7 +322,7 @@ export default {
     // 删除白名单
     async delWhitelist(row) {
       const type = this.editType === 'delAll' ? 'distributor' : 'id' // 'distributor' 清空店铺白名单，id 清除一个店铺
-      const distributorsId = this.whitelistForm.distributors.map(item => item.distributor_id)
+      const distributorsId = this.whitelistForm.distributors.map((item) => item.distributor_id)
       const id = this.editType === 'delAll' ? distributorsId : [row.id]
       const params = {
         type,

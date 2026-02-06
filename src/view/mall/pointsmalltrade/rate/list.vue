@@ -156,7 +156,7 @@
         :before-close="handleClose"
       >
         <el-dialog width="45%" :visible.sync="imgVisible" append-to-body>
-          <img width="100%" :src="Dialogpic">
+          <img width="100%" :src="Dialogpic" />
         </el-dialog>
         <div class="section-white">
           <div class="section-header with-border">
@@ -167,7 +167,7 @@
               <el-table :data="details.itemInfo" style="width: 100%">
                 <el-table-column class="goods-img" prop="pic" label="商品图片">
                   <template slot-scope="scope">
-                    <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100">
+                    <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="item_name" label="商品名称" width="180" />
@@ -207,7 +207,7 @@
                   :src="pic"
                   width="100"
                   @click="showImg(pic)"
-                >
+                />
               </el-col>
             </el-row>
             <el-row>
@@ -396,8 +396,8 @@ export default {
     // },
     rateDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前评价吗？').then(_ => {
-        deleteRate(id).then(res => {
+      this.$confirm('确认删除当前评价吗？').then((_) => {
+        deleteRate(id).then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '删除成功',
@@ -421,7 +421,7 @@ export default {
       this.replyDialogVisible = true
     },
     replySubmit() {
-      replyTradeRate(this.form).then(res => {
+      replyTradeRate(this.form).then((res) => {
         this.$message({
           type: 'success',
           message: '回复成功'
@@ -431,7 +431,7 @@ export default {
       })
     },
     detailsDialog(row) {
-      getTradeRateDetails(row.rate_id).then(res => {
+      getTradeRateDetails(row.rate_id).then((res) => {
         this.details = res.data.data
         console.log(this.details)
       })
@@ -484,7 +484,7 @@ export default {
     },
     getTradeRateList(filter) {
       this.loading = true
-      getTradeRateList(filter).then(response => {
+      getTradeRateList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false

@@ -63,7 +63,7 @@ export default {
   methods: {
     handleModalConfirm(visible) {
       if (visible) {
-        this.$refs['form'].validate(async vaild => {
+        this.$refs['form'].validate(async (vaild) => {
           if (vaild) {
             const { form } = this
             addDealer({ ...form, operator_type: 'dealer' })

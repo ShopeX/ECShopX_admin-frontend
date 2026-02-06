@@ -241,7 +241,7 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.check_status == '0'
             },
             action: {
@@ -258,7 +258,7 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.check_status != '0'
             },
             action: {
@@ -301,26 +301,26 @@ export default {
         {
           component: () => (
             <div>
-              <el-descriptions title="用户信息" column={3}>
-                <el-descriptions-item label="订单号">
+              <el-descriptions title='用户信息' column={3}>
+                <el-descriptions-item label='订单号'>
                   {this.itemInfo?.order_info?.order_id}
                 </el-descriptions-item>
-                <el-descriptions-item label="下单时间">
+                <el-descriptions-item label='下单时间'>
                   {this.itemInfo?.create_time &&
                     moment(this.itemInfo?.order_info?.create_time * 1000).format(
                       'YYYY-MM-DD HH:mm:ss'
                     )}
                 </el-descriptions-item>
-                <el-descriptions-item label="会员手机号">
+                <el-descriptions-item label='会员手机号'>
                   {this.itemInfo?.order_info?.mobile}
                 </el-descriptions-item>
-                <el-descriptions-item label="运费">
+                <el-descriptions-item label='运费'>
                   ¥
                   {this.itemInfo?.order_info?.freight_fee
                     ? (this.itemInfo?.order_info?.freight_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="订单金额">
+                <el-descriptions-item label='订单金额'>
                   {this.itemInfo?.order_info?.order_type != 'bargain'
                     ? this.itemInfo?.order_info?.item_fee
                       ? `¥${(this.itemInfo?.order_info?.item_fee / 100).toFixed(2)}`
@@ -329,36 +329,36 @@ export default {
                     ? `¥${(this.itemInfo?.order_info?.item_price / 100).toFixed(2)}`
                     : '￥0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="会员优惠">
+                <el-descriptions-item label='会员优惠'>
                   ￥
                   {this.itemInfo?.order_info?.member_discount
                     ? (this.itemInfo?.order_info?.member_discount / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="优惠卷减免">
+                <el-descriptions-item label='优惠卷减免'>
                   ￥
                   {this.itemInfo?.order_info?.coupon_discount
                     ? (this.itemInfo?.order_info?.coupon_discount / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="优惠总金额">
+                <el-descriptions-item label='优惠总金额'>
                   ￥
                   {this.itemInfo?.order_info?.discount_fee
                     ? (this.itemInfo?.order_info?.discount_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="积分抵扣金额">
+                <el-descriptions-item label='积分抵扣金额'>
                   ￥
                   {this.itemInfo?.order_info?.point_fee
                     ? (this.itemInfo?.order_info?.point_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="应付总金额">
+                <el-descriptions-item label='应付总金额'>
                   {this.itemInfo?.order_info?.total_fee
                     ? (this.itemInfo?.order_info?.total_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="实付总金额">
+                <el-descriptions-item label='实付总金额'>
                   ￥
                   {this.itemInfo?.tradeInfo?.payType === 'point'
                     ? '0.00'
@@ -368,16 +368,16 @@ export default {
                     ? (this.itemInfo?.order_info?.total_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label="支付状态">
+                <el-descriptions-item label='支付状态'>
                   {PAY_STATUS[this.itemInfo?.tradeInfo?.tradeState]}
                 </el-descriptions-item>
               </el-descriptions>
 
-              <div class="good-info-title">商品信息</div>
+              <div class='good-info-title'>商品信息</div>
 
               <SpFinder
-                ref="goodfinder"
-                class="goodfinder"
+                ref='goodfinder'
+                class='goodfinder'
                 setting={this.goodSetting}
                 data={this.itemInfo?.order_info?.items}
                 show-pager={false}
@@ -398,7 +398,7 @@ export default {
                   {this.itemInfo?.china_ums_no}
                 </el-descriptions-item>
               </el-descriptions> */}
-              <el-descriptions title="付款账户信息" column={2}>
+              <el-descriptions title='付款账户信息' column={2}>
                 {/* <el-descriptions-item label='付款银行'>
                   {this.itemInfo?.pay_account_bank}
                 </el-descriptions-item>
@@ -408,28 +408,28 @@ export default {
                 <el-descriptions-item label='付款账户名'>
                   {this.itemInfo?.bank_name}
                 </el-descriptions-item> */}
-                <el-descriptions-item label="交易流水号">
+                <el-descriptions-item label='交易流水号'>
                   {this.itemInfo?.pay_sn}
                 </el-descriptions-item>
-                <el-descriptions-item label="转账金额">
+                <el-descriptions-item label='转账金额'>
                   {(this.itemInfo?.pay_fee / 100).toFixed(2)}
                 </el-descriptions-item>
-                <el-descriptions-item label="支付备注" span={2}>
+                <el-descriptions-item label='支付备注' span={2}>
                   {this.itemInfo?.transfer_remark}
                 </el-descriptions-item>
-                <el-descriptions-item label="凭证图片集合" span={2}>
+                <el-descriptions-item label='凭证图片集合' span={2}>
                   {Array.isArray(this.itemInfo?.voucher_pic) &&
                     this.itemInfo?.voucher_pic.length > 0 &&
-                    this.itemInfo?.voucher_pic.map(urlitem => (
+                    this.itemInfo?.voucher_pic.map((urlitem) => (
                       <ElImage
                         src={urlitem}
-                        class="voucher-pic"
+                        class='voucher-pic'
                         previewSrcList={this.itemInfo.voucher_pic}
                       />
                     ))}
                 </el-descriptions-item>
               </el-descriptions>
-              <div class="modal-header el-descriptions__title">订单信息</div>
+              <div class='modal-header el-descriptions__title'>订单信息</div>
             </div>
           )
         },
@@ -443,8 +443,8 @@ export default {
             // { title: '可售', value: 1 },
             // { title: '不可售', value: 0 }
           ],
-          onChange: e => {
-            const targetItem = this.bankList.find(item => item.id == e)
+          onChange: (e) => {
+            const targetItem = this.bankList.find((item) => item.id == e)
             this.addForm.bank_account_no = targetItem?.bank_account_no
             this.addForm.bank_name = targetItem?.bank_name
             this.addForm.china_ums_no = targetItem?.china_ums_no
@@ -515,7 +515,7 @@ export default {
         page: 1,
         pageSize: 999
       })
-      const _list = list.map(item => ({
+      const _list = list.map((item) => ({
         ...item,
         //搜索银行选项label，bank_name
         label: `${item.bank_name}:${item.bank_account_no}`,
@@ -583,7 +583,7 @@ export default {
       this.addForm.china_ums_no = res.china_ums_no
     },
     getCheckStatusLabel(status) {
-      return this.checkStatusOptions.find(item => item.value == status)?.label
+      return this.checkStatusOptions.find((item) => item.value == status)?.label
     },
     async onAddSubmit() {
       this.confirmStatus = true

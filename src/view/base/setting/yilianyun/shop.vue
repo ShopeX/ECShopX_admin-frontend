@@ -138,7 +138,7 @@ export default {
       this.getPrinterShopList()
     },
     getPrinterShopList() {
-      getPrinterShopList(this.params).then(res => {
+      getPrinterShopList(this.params).then((res) => {
         this.printerShopList = res.data.data.list
       })
     },
@@ -152,7 +152,7 @@ export default {
     },
     getDistributor(ids) {
       let param = { distributor_id: ids }
-      getDistributorList(param).then(res => {
+      getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
       })
     },
@@ -206,12 +206,12 @@ export default {
         type: 'warning'
       }).then(() => {
         deletePrinter(row.id)
-          .then(response => {
+          .then((response) => {
             this.$message({ message: '删除成功', type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
           })
-          .catch(error => {})
+          .catch((error) => {})
       })
     },
     submitAction() {
@@ -223,21 +223,21 @@ export default {
 
       if (this.id) {
         updatePrinter(this.id, this.form)
-          .then(response => {
+          .then((response) => {
             this.$message({ message: '保存成功', type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
           })
-          .catch(error => {})
+          .catch((error) => {})
       } else {
         createPrinter(this.form)
-          .then(response => {
+          .then((response) => {
             this.$message({ message: ' 添加成功', type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
             this.handleCancel()
           })
-          .catch(error => {})
+          .catch((error) => {})
       }
     },
     DistributorChooseAction(data) {

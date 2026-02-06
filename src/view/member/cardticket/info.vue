@@ -125,7 +125,7 @@
                   value-format="timestamp"
                   :picker-options="form.card_id ? '' : pickerOptions"
                   style="width: 380px"
-                  :disabled="(form.date_type == 'DATE_TYPE_FIX_TERM' || onlyShow) ? true : false"
+                  :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' || onlyShow ? true : false"
                 />
               </div>
               <div
@@ -156,8 +156,7 @@
                       :key="item.value"
                       :label="item.text"
                       :value="item.value"
-                    />
-                  </el-select
+                    /> </el-select
                   >&nbsp;生效，有效天数&nbsp;
 
                   <el-input
@@ -232,7 +231,12 @@
         </el-card>
         <el-card shadow="never" header="适用规则">
           <el-form-item label="前台直接领取1">
-            <el-switch v-model="form.receive" active-color="#13ce66" inactive-color="#d2d4db" :disabled="onlyShow" />
+            <el-switch
+              v-model="form.receive"
+              active-color="#13ce66"
+              inactive-color="#d2d4db"
+              :disabled="onlyShow"
+            />
           </el-form-item>
           <el-form-item label="领券限制">
             <el-input
@@ -283,7 +287,7 @@
               <el-radio label="1"> 启用验证码 </el-radio>
               <el-radio label="0"> 不启用验证码 </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <el-input
               v-if="self_rcode === '1'"
               v-model="form.self_consume_code"
@@ -301,7 +305,11 @@
           shadow="naver"
         >
           <el-form-item label="适用商品">
-            <el-radio-group v-model="form.use_all_items" @change="itemTypeChange" :disabled="onlyShow">
+            <el-radio-group
+              v-model="form.use_all_items"
+              @change="itemTypeChange"
+              :disabled="onlyShow"
+            >
               <el-radio label="true"> 全部商品适用 </el-radio>
               <el-radio label="false"> 指定商品适用 </el-radio>
               <el-radio label="category">
@@ -418,13 +426,19 @@
           shadow="naver"
         >
           <el-form-item label="适用门店">
-            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange" :disabled="onlyShow">
+            <el-radio-group
+              v-model="form.use_all_shops"
+              @change="shopTypeChange"
+              :disabled="onlyShow"
+            >
               <el-radio label="true"> 全部门店适用 </el-radio>
               <el-radio label="false"> 指定门店适用 </el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button type="primary" @click="addStoreAction" :disabled="onlyShow"> 选择门店 </el-button>
+            <el-button type="primary" @click="addStoreAction" :disabled="onlyShow">
+              选择门店
+            </el-button>
             <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
               <el-table-column label="ID" prop="wxShopId" width="60" />
               <el-table-column label="名称" prop="storeName" />
@@ -1084,7 +1098,7 @@ export default {
       })
     },
     addStoreAction() {
-      if(this.onlyShow) return
+      if (this.onlyShow) return
       this.storeVisible = true
       this.setStatus = true
       this.relShopIds = this.form.rel_shops_ids

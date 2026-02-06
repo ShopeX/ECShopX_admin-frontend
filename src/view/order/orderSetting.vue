@@ -54,9 +54,9 @@ export default {
           key: 'order_cancel_time',
           component: () => (
             <SpInput
-              prefix="未付款订单，将在"
-              suffix="（分钟）之后取消"
-              width="100px"
+              prefix='未付款订单，将在'
+              suffix='（分钟）之后取消'
+              width='100px'
               v-model={this.form.order_cancel_time}
             />
           ),
@@ -74,9 +74,9 @@ export default {
           key: 'order_finish_time',
           component: () => (
             <SpInput
-              prefix="已发货订单，将在"
-              suffix="（天）后自动完成"
-              width="100px"
+              prefix='已发货订单，将在'
+              suffix='（天）后自动完成'
+              width='100px'
               v-model={this.form.order_finish_time}
             />
           )
@@ -86,9 +86,9 @@ export default {
           key: 'latest_aftersale_time',
           component: () => (
             <SpInput
-              prefix="已确认收货订单，将在"
-              suffix="（天）后不可申请售后"
-              width="100px"
+              prefix='已确认收货订单，将在'
+              suffix='（天）后不可申请售后'
+              width='100px'
               v-model={this.form.latest_aftersale_time}
             />
           ),
@@ -99,9 +99,9 @@ export default {
           key: 'auto_refuse_time',
           component: () => (
             <SpInput
-              prefix="退货退款同意后未退回商品，将在"
-              suffix="（天）后驳回售后"
-              width="100px"
+              prefix='退货退款同意后未退回商品，将在'
+              suffix='（天）后驳回售后'
+              width='100px'
               v-model={this.form.auto_refuse_time}
             />
           ),

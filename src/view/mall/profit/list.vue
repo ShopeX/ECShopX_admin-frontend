@@ -138,7 +138,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getProfitStatistics(this.params).then(response => {
+      getProfitStatistics(this.params).then((response) => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -154,7 +154,7 @@ export default {
         this.params.profit_user_type = 3
       }
       this.params.page = 1
-      profitExport(this.params).then(response => {
+      profitExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

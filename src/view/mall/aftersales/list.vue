@@ -317,11 +317,7 @@ export default {
             render: (h, { row }) => {
               return h('div', [
                 h('div', { class: 'order-num' }, [
-                  h(
-                    'span',
-                    {},
-                    row.aftersales_bn
-                  ),
+                  h('span', {}, row.aftersales_bn),
                   h(
                     'el-tooltip',
                     {
@@ -368,11 +364,7 @@ export default {
             minWidth: 180,
             render: (h, { row }) => {
               return h('div', { class: 'order-num' }, [
-                h(
-                  'span',
-                  {},
-                  row.order_id
-                ),
+                h('span', {}, row.order_id),
                 h(
                   'el-tooltip',
                   {
@@ -430,7 +422,7 @@ export default {
             render: (h, { row }) => {
               if (row.freight_type == 'point') return null
               return h('span', {}, (row.freight / 100).toFixed(2))
-            },
+            }
           },
           {
             name: '退款运费（积分）',
@@ -440,7 +432,7 @@ export default {
             render: (h, { row }) => {
               if (row.freight_type == 'cash') return null
               return h('span', {}, row.freight)
-            },
+            }
           },
           {
             name: '实退金额（¥）',
@@ -497,9 +489,7 @@ export default {
                     ? '/member/member/memberlist/detail'
                     : '/shopadmin/member/member/memberlist/detail'
 
-                return h('div', { class: 'order-num' }, [
-                  h('span', {}, row.mobile)
-                ])
+                return h('div', { class: 'order-num' }, [h('span', {}, row.mobile)])
               }
               return h('span', {}, row.mobile)
             }
@@ -507,6 +497,7 @@ export default {
           {
             name: '导购',
             key: 'salesman_name',
+            visible: this.VERSION_STANDARD(),
             width: 100
           },
           {

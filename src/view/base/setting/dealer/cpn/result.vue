@@ -7,7 +7,7 @@
   <div class="cpn-result">
     <div v-if="currentStatus.resultStatus == 'failed'" class="content">
       <div class="img">
-        <img :src="fail_IMG" alt="">
+        <img :src="fail_IMG" alt="" />
       </div>
       <div class="tips">
         <p>
@@ -20,7 +20,7 @@
     </div>
     <div v-else-if="currentStatus.resultStatus == 'succeeded'" class="content">
       <div class="img">
-        <img :src="success_IMG" alt="">
+        <img :src="success_IMG" alt="" />
       </div>
       <div class="tips">
         <p>
@@ -36,7 +36,7 @@
     </div>
     <div v-else-if="currentStatus.resultStatus == 'netin'" class="content">
       <div class="img">
-        <img :src="success_IMG" alt="">
+        <img :src="success_IMG" alt="" />
       </div>
       <div class="tips">
         <p>您的入网环节顺利完成</p>
@@ -44,7 +44,7 @@
     </div>
     <div v-else class="content">
       <div class="img">
-        <img :src="wait_IMG" alt="">
+        <img :src="wait_IMG" alt="" />
       </div>
       <div class="tips">
         <p>已提交审核，请耐心等待～</p>

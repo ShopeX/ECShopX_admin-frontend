@@ -103,7 +103,7 @@
         <SpFilterFormItem prop="distributor_id" label="店铺号:">
           <el-input v-model="params.shop_code" placeholder="店铺号" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="open_divided" label="开启白名单:">
+        <SpFilterFormItem prop="open_divided" label="开启白名单:" v-if="VERSION_STANDARD()">
           <el-select v-model="params.open_divided" placeholder="是否开启">
             <el-option
               v-for="(item, index) in isOpenList"
@@ -131,6 +131,12 @@
             <el-option label="自营" value="0"> 自营 </el-option>
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem prop="payment_subject" label="收款主体:">
+          <el-select v-model="params.payment_subject" clearable placeholder="选择收款主体">
+            <el-option label="店铺" value="1"> 店铺 </el-option>
+            <el-option label="平台" value="0"> 平台 </el-option>
+          </el-select>
+        </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!VERSION_STANDARD() && $store.getters.login_type == 'admin'"
           prop="merchant_name"
@@ -146,7 +152,12 @@
             添加店铺
           </el-button>
 
-          <el-button v-if="VERSION_STANDARD()" type="primary" icon="el-icon-circle-plus" @click="uploadHandleChange()">
+          <el-button
+            v-if="VERSION_STANDARD()"
+            type="primary"
+            icon="el-icon-circle-plus"
+            @click="uploadHandleChange()"
+          >
             导入店铺
           </el-button>
         </div>
@@ -366,6 +377,13 @@
           </template>
         </el-table-column>
 
+        <el-table-column label="收款主体" width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payment_subject == 1 ? '店铺' : '平台' }}</span>
+            <i v-if="IS_ADMIN() && (VERSION_STANDARD() || VERSION_PLATFORM())" class="el-icon-edit cursor-pointer" style="color: var(--primary)" @click="editPaymentSubject(scope.row)"></i>
+          </template>
+        </el-table-column>
+
         <el-table-column v-if="VERSION_PLATFORM()" prop="tagList" label="标签" class="tab">
           <template slot-scope="scope">
             <el-tag
@@ -407,9 +425,7 @@
               </router-link>
             </el-button>
 
-            <el-button type="text" @click="linkTemplates(scope.row)">
-              店铺装修
-            </el-button>
+            <el-button type="text" @click="linkTemplates(scope.row)"> 店铺装修 </el-button>
 
             <el-popover placement="top-start" trigger="hover">
               <div>
@@ -447,13 +463,25 @@
                   <!-- <input v-model="scope.row.link" class="copy-link" type="text"> -->
                   复制店铺链接
                 </el-button>
-                <el-button type="text" @click="linkWxpaysettting(scope.row)">
+                <el-button
+                  v-if="paymentSubjectStatus.wxpay"
+                  type="text"
+                  @click="linkWxpaysettting(scope.row)"
+                >
                   微信支付配置
                 </el-button>
-                <el-button type="text" @click="linkAlipaysettting(scope.row)">
+                <el-button
+                  v-if="paymentSubjectStatus.alipay"
+                  type="text"
+                  @click="linkAlipaysettting(scope.row)"
+                >
                   支付宝配置
                 </el-button>
-                <el-button type="text" @click="showSettingChinaumspay(scope.row.distributor_id)">
+                <el-button
+                  v-if="paymentSubjectStatus.chinaumspay"
+                  type="text"
+                  @click="showSettingChinaumspay(scope.row.distributor_id)"
+                >
                   银联商务支付配置
                 </el-button>
                 <!-- <el-button v-if="scope.row.distribution_type == '0' || IS_DISTRIBUTOR()" type="text" @click="showSettingDistance(scope.row.distributor_id)">
@@ -642,39 +670,16 @@
       <!-- 编辑距离-结束 -->
 
       <!-- 银联商务支付配置-开始 -->
-      <el-dialog
+      <!-- 银联商务支付配置 -->
+      <SpDialog
+        ref="chinaumspayDialogRef"
+        width="40%"
+        v-model="setChinaumspayVisible"
         title="银联商务支付配置"
-        width="50%"
-        :visible.sync="setChinaumspayVisible"
-        :before-close="handleChinaumspayCancel"
-      >
-        <template>
-          <el-form
-            ref="chinaumspayForm"
-            :model="chinaumspayForm"
-            class="demo-ruleForm"
-            label-width="90px"
-          >
-            <el-form-item label="商户号">
-              <el-input v-model="chinaumspayForm.mid" placeholder="请输入内容" style="width: 30%" />
-            </el-form-item>
-            <el-form-item label="终端号">
-              <el-input v-model="chinaumspayForm.tid" placeholder="请输入内容" style="width: 30%" />
-            </el-form-item>
-            <el-form-item label="企业用户号">
-              <el-input
-                v-model="chinaumspayForm.enterpriseid"
-                placeholder="请输入内容"
-                style="width: 30%"
-              />
-            </el-form-item>
-          </el-form>
-        </template>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click.native="handleChinaumspayCancel"> 取消 </el-button>
-          <el-button type="primary" @click="handleSubmitChinaumspay"> 保存 </el-button>
-        </div>
-      </el-dialog>
+        :form="chinaumspayForm"
+        :form-list="chinaumspayFormList"
+        @onSubmit="handleSubmitChinaumspay"
+      />
       <!-- 银联商务支付配置-结束 -->
 
       <!-- 添加分组 -->
@@ -686,6 +691,17 @@
         :form="keFuForm"
         :form-list="keFuFormList"
         @onSubmit="onKeFuFormSubmit"
+      />
+
+      <!-- 编辑收款主体 -->
+      <SpDialog
+        ref="paymentSubjectDialogRef"
+        width="30%"
+        v-model="paymentSubjectDialog"
+        :title="`编辑【${paymentSubjectForm.name || ''}】收款主体`"
+        :form="paymentSubjectForm"
+        :form-list="paymentSubjectFormList"
+        @onSubmit="onPaymentSubjectSubmit"
       />
     </SpRouterView>
   </SpPage>
@@ -733,7 +749,8 @@ export default {
       distributor_id: undefined,
       tag_id: [],
       shop_code: undefined,
-      open_divided: undefined
+      open_divided: undefined,
+      payment_subject: undefined
     }
 
     const validateLink = (rule, value, callback) => {
@@ -855,6 +872,41 @@ export default {
         tid: '',
         enterpriseid: ''
       },
+      chinaumspayFormList: [
+        {
+          label: '商户号',
+          key: 'mid',
+          type: 'input',
+          defaultValue: '',
+          required: true,
+          message: '请输入商户号',
+          componentProps: {
+            placeholder: '请输入商户号'
+          },
+        },
+        {
+          label: '终端号',
+          key: 'tid',
+          type: 'input',
+          defaultValue: '',
+          required: true,
+          message: '请输入终端号',
+          componentProps: {
+            placeholder: '请输入终端号'
+          },
+        },
+        {
+          label: '企业用户号',
+          key: 'enterpriseid',
+          type: 'input',
+          defaultValue: '',
+          required: true,
+          message: '请输入企业用户号',
+          componentProps: {
+            placeholder: '请输入企业用户号'
+          },
+        }
+      ],
       isOpen: false,
       keFuDialog: false,
       keFuForm: {
@@ -867,6 +919,31 @@ export default {
         aliapp: '',
         pc: ''
       },
+      paymentSubjectDialog: false,
+      paymentSubjectForm: {
+        distributor_id: '',
+        payment_subject: 0,
+        name: ''
+      },
+      paymentSubjectFormList: [
+        {
+          label: '收款主体',
+          key: 'payment_subject',
+          type: 'radio',
+          defaultValue: 0,
+          options: [
+            { label: 0, name: '平台' },
+            { label: 1, name: '店铺' }
+          ],
+          required: true,
+          message: '请选择收款主体'
+        }
+      ],
+      paymentSubjectStatus: {
+        wxpay: false,
+        alipay: false,
+        chinaumspay: false
+      }, // 支付配置开关状态
       keFuFormList: [
         {
           label: '店铺客服',
@@ -968,6 +1045,8 @@ export default {
       let data = res.data.data
       this.isOpen = data.is_open == 'true'
     })
+    // 获取支付配置开关状态
+    this.getPaymentSubjectStatus()
   },
   methods: {
     // 导入店铺
@@ -1120,7 +1199,7 @@ export default {
         var temp = '微商城'
         a.href = response.data.data.base64Image
         if (response.data.data.tempname) {
-           temp = response.data.data.tempname
+          temp = response.data.data.tempname
         }
         a.download = temp + row.name + '.png'
         a.click()
@@ -1235,6 +1314,24 @@ export default {
         distributor_id.push(val[i].distributor_id)
       }
       this.distributor_id = distributor_id
+    },
+    async getPaymentSubjectStatus() {
+      try {
+        const data = await this.$api.system.getPaymentSubjectStatus()
+        console.log(data)
+        this.paymentSubjectStatus = {
+          wxpay: data.wxpay.is_open,
+          alipay: data.alipay.is_open,
+          chinaumspay: data.chinaumspay.is_open
+        }
+      } catch (error) {
+        this.paymentSubjectStatus = {
+          wxpay: false,
+          alipay: false,
+          chinaumspay: false
+        }
+        console.error('获取支付配置状态失败:', error)
+      }
     },
     getAllTagList() {
       let params = {
@@ -1402,6 +1499,29 @@ export default {
       this.keFuDialog = false
       this.$message.success('保存成功')
     },
+    editPaymentSubject(row) {
+      // 打开编辑收款主体弹框
+      this.paymentSubjectForm = {
+        distributor_id: row.distributor_id,
+        payment_subject: Number(row.payment_subject) || 0,
+        name: row.name || ''
+      }
+      this.paymentSubjectDialog = true
+    },
+    async onPaymentSubjectSubmit() {
+      try {
+        const params = {
+          payment_subject: this.paymentSubjectForm.payment_subject
+        }
+        await this.$api.shop.updatePaymentSubject(this.paymentSubjectForm.distributor_id, params)
+        this.$message.success('保存成功')
+        this.paymentSubjectDialog = false
+        // 刷新列表
+        this.fetchList()
+      } catch (error) {
+        console.log(error)
+      }
+    },
     showSettingDistance(distributor_id) {
       // 设置距离参数
       this.setDistanceVisible = true
@@ -1436,36 +1556,51 @@ export default {
     showSettingChinaumspay(distributor_id) {
       // 设置银联商务支付配置
       this.setChinaumspayVisible = true
-      let that = this
       let query = { pay_type: 'chinaumspay', distributor_id: distributor_id }
       getPaymentSetting(query).then((response) => {
-        that.chinaumspayForm = response.data.data
-        that.chinaumspayForm.distributor_id = query.distributor_id
+        const data = response.data.data
+        this.chinaumspayForm = {
+          distributor_id: distributor_id,
+          mid: data.mid || '',
+          tid: data.tid || '',
+          enterpriseid: data.enterpriseid || ''
+        }
       })
-      console.log(this.chinaumspayForm)
     },
     handleChinaumspayCancel() {
       // 银联商务支付设置窗口关闭
       this.setChinaumspayVisible = false
-      this.chinaumspayForm.mid = ''
-      this.chinaumspayForm.tid = ''
-    },
-    handleSubmitChinaumspay() {
-      // 提交银联支付配置
-      let params = {
-        pay_type: 'chinaumspay',
-        distributor_id: this.chinaumspayForm.distributor_id,
-        mid: this.chinaumspayForm.mid,
-        tid: this.chinaumspayForm.tid,
-        enterpriseid: this.chinaumspayForm.enterpriseid
+      this.chinaumspayForm = {
+        distributor_id: 0,
+        mid: '',
+        tid: '',
+        enterpriseid: ''
       }
-      setPaymentSetting(params).then((response) => {
+    },
+    async handleSubmitChinaumspay() {
+      try {
+        await this.$refs.chinaumspayDialogRef.$refs.form.validate()
+      } catch (error) {
+        return
+      }
+      // 提交银联支付配置
+      try {
+        let params = {
+          pay_type: 'chinaumspay',
+          distributor_id: this.chinaumspayForm.distributor_id,
+          mid: this.chinaumspayForm.mid,
+          tid: this.chinaumspayForm.tid,
+          enterpriseid: this.chinaumspayForm.enterpriseid
+        }
+        await setPaymentSetting(params)
         this.$message({
           type: 'success',
           message: '提交成功'
         })
         this.handleChinaumspayCancel()
-      })
+      } catch (error) {
+        console.log(error)
+      }
     },
     handleSizeChange(pageSize) {
       this.params.page = 1
@@ -1477,6 +1612,10 @@ export default {
         message: '复制成功',
         showClose: true
       })
+    },
+    isShowEdit () {
+      if (this.IS_ADMIN() && (this.VERSION_STANDARD() || this.VERSION_PLATFORM())) return true
+      return false
     }
   },
   beforeRouteUpdate(to, from, next) {

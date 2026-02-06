@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     getDistributorData() {
-      getDistributorList().then(res => {
+      getDistributorList().then((res) => {
         this.distributorOption = res.data.data.list
         this.params.distributor_id = this.distributorOption[0].distributor_id
         this.getList()
@@ -188,7 +188,7 @@ export default {
         this.params.start_date = this.vdate[0]
         this.params.end_date = this.vdate[1]
 
-        getStoreAccount(this.params).then(res => {
+        getStoreAccount(this.params).then((res) => {
           this.allListData = res.data.data.list.data
           this.total_count = res.data.data.list.total_count
           this.totle = res.data.data.totle
@@ -212,7 +212,7 @@ export default {
         order_id: this.params.order_id,
         distributor_id: this.params.distributor_id
       }
-      exportAccount(obj).then(res => {
+      exportAccount(obj).then((res) => {
         this.$message({
           type: 'success',
           message: '已加入执行队列，请在设置-导出列表中下载'

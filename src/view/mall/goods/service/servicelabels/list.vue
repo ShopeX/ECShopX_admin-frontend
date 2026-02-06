@@ -295,14 +295,14 @@ export default {
           label_price: this.form.label_price,
           label_desc: this.form.label_desc
         }
-        updateServiceLabels(this.form.label_id, params).then(response => {
+        updateServiceLabels(this.form.label_id, params).then((response) => {
           this.serviceLabelsDetailData = response.data.data
           this.editServiceLabelsVisible = false
           this.getLabelsList()
           this.handleCancel()
         })
       } else {
-        createServiceLabels(this.form).then(response => {
+        createServiceLabels(this.form).then((response) => {
           this.serviceLabelsDetailData = response.data.data
           this.editServiceLabelsVisible = false
           this.getLabelsList()
@@ -312,7 +312,7 @@ export default {
     },
     serviceLabelsDetail(index, row) {
       this.serviceLabelsDetailVisible = true
-      getServiceLabelsDetail(row.labelId).then(response => {
+      getServiceLabelsDetail(row.labelId).then((response) => {
         this.serviceLabelsDetailData = response.data.data
       })
     },
@@ -324,7 +324,7 @@ export default {
     getLabelsList() {
       this.loading = true
       this.params.service_type = 'timescard'
-      getServiceLabelsList(this.params).then(response => {
+      getServiceLabelsList(this.params).then((response) => {
         this.serviceLabelsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -337,7 +337,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteServiceLabels(row.labelId).then(response => {
+          deleteServiceLabels(row.labelId).then((response) => {
             this.serviceLabelsList.splice(index, 1)
             this.$message({
               message: '删除基础物料成功',
@@ -357,7 +357,7 @@ export default {
       return this.cursymbol + row.labelPrice / 100
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

@@ -21,7 +21,7 @@
       </tr>
       <template v-if="dataSource && dataSource.length">
         <tr
-          v-for="(data, index) in dataSource.filter(el => Number(el.discount_fee) !== 0)"
+          v-for="(data, index) in dataSource.filter((el) => Number(el.discount_fee) !== 0)"
           :key="index"
         >
           <td v-for="(row, index) in columns" :key="index">
@@ -77,7 +77,7 @@ export default {
     orderInfo: {
       handler(val) {
         this.dataSource =
-          val && val.discount_info.filter(el => el.discount_fee !== 0 && el.discount_fee !== '0')
+          val && val.discount_info.filter((el) => el.discount_fee !== 0 && el.discount_fee !== '0')
       },
       deep: true
     }

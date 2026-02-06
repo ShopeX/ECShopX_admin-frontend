@@ -222,7 +222,7 @@
                     >
                       <div class="div-text">
                         <div>{{ item.prize_name }}</div>
-                        <img :src="item.prize_image">
+                        <img :src="item.prize_image" />
                       </div>
                     </li>
                   </ul>
@@ -389,7 +389,7 @@ export default {
      * */
     _getEffectiveCardList() {
       const requestData = { page_size: 1000 }
-      getEffectiveCardList(requestData).then(response => {
+      getEffectiveCardList(requestData).then((response) => {
         this.coupon_options = response.data.data.list
       })
     },
@@ -428,12 +428,12 @@ export default {
      * 获取大转盘详情
      * */
     _getSurntableconfig() {
-      getSurntableconfig({}).then(res => {
+      getSurntableconfig({}).then((res) => {
         if (Array.isArray(res)) return
 
         let data = res.data.data
 
-        let list = data.prizes.map(item => {
+        let list = data.prizes.map((item) => {
           item.prize_probability = item.prize_probability / 100
           return item
         })
@@ -528,7 +528,7 @@ export default {
       let { data } = await getGoodsbycoupon(item.prize_value)
       let { list } = data.data
 
-      let nList = list.map(item => {
+      let nList = list.map((item) => {
         return {
           value: item.item_id,
           label: item.item_name
@@ -559,7 +559,7 @@ export default {
         return
       }
 
-      let list = nTableData.map(item => {
+      let list = nTableData.map((item) => {
         return {
           ...item,
           prize_probability: item.prize_probability * 100,
@@ -582,7 +582,7 @@ export default {
 
       console.log('this.tableData', list)
 
-      setSurntableconfig(params).then(res => {
+      setSurntableconfig(params).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success'

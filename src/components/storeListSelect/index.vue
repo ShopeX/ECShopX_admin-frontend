@@ -143,7 +143,7 @@ export default {
     },
     toggleSelection(rows) {
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
@@ -153,8 +153,8 @@ export default {
     handleSelectionChange(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        const newVal = this.selectRows.filter(item => {
-          const isHaveRow = this.storeData.some(row => {
+        const newVal = this.selectRows.filter((item) => {
+          const isHaveRow = this.storeData.some((row) => {
             if (item.distributor_id) {
               return item.distributor_id == row.distributor_id
             } else {
@@ -165,8 +165,8 @@ export default {
         })
         this.selectRows = [...newVal, ...val]
       } else {
-        const list = this.selectRows.filter(row => {
-          const isHave = this.storeData.some(item => {
+        const list = this.selectRows.filter((row) => {
+          const isHave = this.storeData.some((item) => {
             if (row.distributor_id) {
               return item.distributor_id == row.distributor_id
             } else {
@@ -182,10 +182,10 @@ export default {
     selectAll(val) {
       if (val.length > 0) {
         this.multipleSelection = val
-        val.forEach(item => {
+        val.forEach((item) => {
           let isInArr = -1
           if (this.selectRows.length > 0) {
-            isInArr = this.selectRows.findIndex(n => {
+            isInArr = this.selectRows.findIndex((n) => {
               if (n.distributor_id) {
                 return n.distributor_id == item.distributor_id
               } else {
@@ -198,8 +198,8 @@ export default {
           }
         })
       } else {
-        const list = this.selectRows.filter(item => {
-          const isHave = this.storeData.some(n => item.distributor_id === n.distributor_id)
+        const list = this.selectRows.filter((item) => {
+          const isHave = this.storeData.some((n) => item.distributor_id === n.distributor_id)
           return !isHave
         })
         this.selectRows = list
@@ -218,15 +218,15 @@ export default {
     getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getDistributorEasyList(this.params).then(response => {
+        getDistributorEasyList(this.params).then((response) => {
           this.storeData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false
           this.multipleSelection = []
           this.$refs.multipleTable.clearSelection()
           if (this.selectRows) {
-            this.storeData.forEach(item => {
-              const isHave = this.selectRows.findIndex(n => {
+            this.storeData.forEach((item) => {
+              const isHave = this.selectRows.findIndex((n) => {
                 if (n.distributor_id) {
                   return n.distributor_id && n.distributor_id == item.distributor_id
                 } else {

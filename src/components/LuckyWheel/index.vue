@@ -77,7 +77,7 @@ export default {
     config: {
       handler(newVal) {
         const { prizeData, hotArea, ruleBtnStyle, recordBtnStyle } = newVal || {}
-        this.prizes = prizeData.map(item => {
+        this.prizes = prizeData.map((item) => {
           const _data = {
             fonts: [{ text: item.text || '', top: '30%' }],
             background: item?.background,

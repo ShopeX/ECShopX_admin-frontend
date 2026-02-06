@@ -72,10 +72,7 @@
         </el-table-column>
         <el-table-column label="操作" width="50">
           <template slot-scope="scope">
-            <i
-              class="el-icon-delete"
-              @click="deleteMainItemRow(scope.$index, form.main_items)"
-            />
+            <i class="el-icon-delete" @click="deleteMainItemRow(scope.$index, form.main_items)" />
           </template>
         </el-table-column>
       </el-table>
@@ -276,7 +273,7 @@ export default {
 
       if (this.$route.params.package_id) {
         updatePackagePromotions(this.$route.params.package_id, this.form)
-          .then(response => {
+          .then((response) => {
             this.loading = false
             this.$message({
               message: '修改成功',
@@ -291,7 +288,7 @@ export default {
           .catch()
       } else {
         createPackagePromotions(this.form)
-          .then(response => {
+          .then((response) => {
             this.loading = false
             this.$message({
               message: '添加成功',
@@ -310,7 +307,7 @@ export default {
     getItems(data) {
       let items = []
       this.relItemsTemp = JSON.parse(JSON.stringify(data))
-      data.forEach(item => {
+      data.forEach((item) => {
         items.push({
           item_id: item.itemId,
           item_title: item.itemName,
@@ -325,14 +322,14 @@ export default {
       this.form.items = items
     },
     getListVipGrade() {
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
         }
       })
     },
     getGradeList() {
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
           if (result) {
@@ -342,15 +339,15 @@ export default {
       })
     },
     getPackagePromotionsInfo(id) {
-      getPackagePromotionsInfo(id).then(response => {
+      getPackagePromotionsInfo(id).then((response) => {
         this.form.used_platform = response.data.data.used_platform
         this.form.free_postage = response.data.data.free_postage
         this.form.package_name = response.data.data.package_name
         this.form.source_id = response.data.data.source_id
         this.validGrade = response.data.data.valid_grade
-        response.data.data.itemTreeLists.forEach(item => {
+        response.data.data.itemTreeLists.forEach((item) => {
           if (item.spec_items && item.spec_items.length > 0) {
-            item.spec_items.map(specItem => {
+            item.spec_items.map((specItem) => {
               for (let n in response.data.data.new_price) {
                 if (n === specItem.item_id) {
                   specItem.price = response.data.data.new_price[n]
@@ -362,7 +359,7 @@ export default {
           }
         })
 
-        response.data.data.main_items.forEach(item => {
+        response.data.data.main_items.forEach((item) => {
           item.item_price = Number(item.item_price) / 100
         })
 
@@ -397,7 +394,7 @@ export default {
         this.relMain[0].spec_items = this.relMain[0].spec_items
       }
       this.relMain[0].price = this.relMain[0].price / 100
-      let index = this.relItemsTemp.findIndex(n => n.itemId === this.relMain[0].itemId)
+      let index = this.relItemsTemp.findIndex((n) => n.itemId === this.relMain[0].itemId)
       this.relItemsTemp.splice(index, 1)
       this.relItems = JSON.parse(JSON.stringify(this.relItemsTemp))
       if (store.id) {
@@ -413,8 +410,8 @@ export default {
     getMainItemList(id) {
       this.skuParams.item_id = id
       let items = []
-      getItemsList(this.skuParams).then(res => {
-        res.data.data.list.forEach(item => {
+      getItemsList(this.skuParams).then((res) => {
+        res.data.data.list.forEach((item) => {
           items.push({
             item_id: item.itemId,
             item_title: item.itemName,
@@ -437,11 +434,11 @@ export default {
       this.skuParams.item_id = this.relMain[0].item_id
       this.dialogVisible = true
       let checked = this.relMain[0].spec_items
-      getItemsList(this.skuParams).then(res => {
+      getItemsList(this.skuParams).then((res) => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach(item => {
-            let index = checked.findIndex(n => item.item_id === n.item_id)
+          that.skus.forEach((item) => {
+            let index = checked.findIndex((n) => item.item_id === n.item_id)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -454,7 +451,7 @@ export default {
       this.relMain[0].spec_items = this.checkedSkus
       let items = []
       if (this.checkedSkus.length > 0) {
-        this.checkedSkus.forEach(item => {
+        this.checkedSkus.forEach((item) => {
           items.push({
             item_id: item.itemId,
             item_title: item.itemName,
@@ -469,7 +466,7 @@ export default {
         this.relMain[0].spec_items = items
         this.form.main_items = items
       } else {
-        this.skus.forEach(item => {
+        this.skus.forEach((item) => {
           items.push({
             item_id: item.itemId,
             item_title: item.itemName,

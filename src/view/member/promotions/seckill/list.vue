@@ -51,7 +51,7 @@
         <el-table-column prop="seckill_id" label="ID" width="50" />
         <el-table-column label="活动">
           <template slot-scope="scope">
-            {{ scope.row.activity_name }}<br>
+            {{ scope.row.activity_name }}<br />
             <span class="text-muted">{{ scope.row.description }}</span>
           </template>
         </el-table-column>
@@ -281,7 +281,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then(response => {
+            seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then((response) => {
               this.fetchList()
               this.$message({
                 message: '修改活动状态成功',
@@ -304,7 +304,7 @@ export default {
         seckill_id: activityId,
         page: this.goodsPage,
         pageSize: this.goodsPageSize
-      }).then(res => {
+      }).then((res) => {
         this.goodsList = res.data.data.list
         this.goodsCount = res.data.data.total_count
       })
@@ -318,13 +318,13 @@ export default {
       this.goodsVisible = false
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     updateActivityData(params) {
-      updateActivityItemData(params).then(res => {})
+      updateActivityItemData(params).then((res) => {})
     },
     editItemPrice(row) {
       let form = {

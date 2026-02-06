@@ -73,11 +73,41 @@ function createAxios(inst, isJson = true) {
   inst.defaults.baseURL = inst.defaults.baseURL || process.env.VUE_APP_BASE_API || '/'
   inst.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
   inst.interceptors.request.use((config) => {
+    console.log('[utils/fetch] 1. 拦截器开始处理:', {
+      url: config.url,
+      method: config.method,
+      hasParams: !!config.params
+    })
     const isGetMethod = config.method === 'get'
     const isPutMethod = config.method === 'put'
     const isDeleteMethod = config.method === 'delete'
     const showError = config.showError === undefined ? true : config.showError
     config.headers['Authorization'] = 'Bearer ' + store.getters.token
+
+    // 添加 country_code 语言参数；若传入 skipCountryCode 则不添加
+    const skipCountryCode = config.skipCountryCode === true
+    if (skipCountryCode) delete config.skipCountryCode
+    const lang = window.localStorage.getItem('lang')
+    const langMap = {
+      zhcn: 'zh-CN',
+      en: 'en-CN',
+      zhtw: 'zh-TW',
+      ar: 'ar-SA'
+    }
+    if (lang && langMap[lang] && !skipCountryCode) {
+      if (isGetMethod || isDeleteMethod) {
+        // GET/DELETE 请求添加到 params
+        config.params = config.params || {}
+        config.params.country_code = langMap[lang]
+        console.log('[utils/fetch] 2. GET/DELETE 请求添加 country_code 到 params:', langMap[lang])
+      } else {
+        // POST/PUT 请求添加到 params（后续会转换为 data）
+        config.params = config.params || {}
+        config.params.country_code = langMap[lang]
+        console.log('[utils/fetch] 2. POST/PUT 请求添加 country_code 到 params:', langMap[lang])
+      }
+    }
+
     if (isGetMethod || isDeleteMethod) {
       if (isObject(config.params)) {
         let params = {}
@@ -87,6 +117,7 @@ function createAxios(inst, isJson = true) {
           }
         })
         config.params = params
+        console.log('[utils/fetch] 3. GET/DELETE 请求处理完成，params:', params)
       } else {
         config.params = {
           ...config.params
@@ -95,25 +126,35 @@ function createAxios(inst, isJson = true) {
     } else {
       if (isJson) {
         const { params } = config
+        console.log('[utils/fetch] 3. POST/PUT 请求，原始 params:', params)
         if (params) {
           const { isUploadFile } = params
           if (isUploadFile) {
             let formParams = new FormData()
+            console.log('[utils/fetch] 4. 创建 FormData，params keys:', Object.keys(params))
             for (var key in config.params) {
               if (key !== 'isUploadFile') {
                 formParams.append(key, config.params[key])
+                console.log('[utils/fetch] 5. FormData append:', key, 'value:', config.params[key])
               }
             }
             config.data = formParams
+            console.log('[utils/fetch] 6. FormData 创建完成')
             delete config.params
           } else {
             config.data = qs.stringify(config.params)
+            console.log('[utils/fetch] 4. 使用 qs.stringify，data:', config.data)
             delete config.params
           }
         }
       }
     }
     config.showError = showError
+    console.log('[utils/fetch] 7. 拦截器处理完成，最终 config:', {
+      method: config.method,
+      hasData: !!config.data,
+      hasParams: !!config.params
+    })
     return config
   })
 

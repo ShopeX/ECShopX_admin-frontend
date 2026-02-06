@@ -6,117 +6,14 @@
 <template>
   <SpRouterView>
     <SpPage>
-      <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="keywords" label="商品标题:">
-          <el-input v-model="searchParams.keywords" placeholder="商品标题或副标题关键词" />
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="approve_status" label="商品状态:">
-          <el-select v-model="searchParams.approve_status" clearable placeholder="请选择">
-            <el-option
-              v-for="item in statusOption"
-              :key="item.value"
-              :label="item.title"
-              size="mini"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="IS_SUPPLIER()" prop="is_market" label="供应状态:">
-          <el-select v-model="searchParams.is_market" clearable placeholder="请选择">
-            <el-option :key="1" label="可售" :value="1" />
-            <el-option :key="0" label="不可售" :value="0" />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="main_cat_id" label="管理分类:">
-          <el-cascader
-            v-model="searchParams.main_cat_id"
-            placeholder="请选择"
-            clearable
-            :options="itemCategoryList"
-            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="销售分类:">
-          <el-cascader
-            v-model="searchParams.category"
-            :options="categoryList"
-            :props="{
-              checkStrictly: true,
-              label: 'category_name',
-              value: 'category_id',
-              emitPath: false
-            }"
-            clearable
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="templates_id" label="运费模板:">
-          <el-select v-model="searchParams.templates_id" placeholder="请选择" clearable>
-            <el-option
-              v-for="item in templatesList"
-              :key="item.template_id"
-              :label="item.name"
-              :value="item.template_id"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="brand_id" label="品牌:">
-          <el-select
-            v-model="searchParams.brand_id"
-            placeholder="商品/商标关键词"
-            remote
-            filterable
-            clearable
-            :remote-method="getGoodsBranchList"
-          >
-            <el-option
-              v-for="item in goodsBranchList"
-              :key="item.attribute_id"
-              :label="item.attribute_name"
-              :value="item.attribute_id"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="SKU编码:">
-          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
-          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
-          <el-cascader
-            v-model="searchParams.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="tag_id" label="商品标签:">
-          <el-cascader
-            v-model="searchParams.tag_id"
-            size="small"
-            placeholder="选择标签"
-            :options="tagList"
-            :props="{ value: 'tag_id', label: 'tag_name' }"
-            clearable
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="is_gift" label="赠品:">
-          <el-select v-model="searchParams.is_gift">
-            <el-option :value="undefined" label="全部" />
-            <el-option :value="true" label="是" />
-            <el-option :value="false" label="否" />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription" label="处方药:">
-          <el-select v-model="searchParams.is_prescription">
-            <el-option value="" label="全部" />
-            <el-option value="1" label="处方药" />
-            <el-option value="0" label="非处方药" />
-          </el-select>
-        </SpFilterFormItem>
-      </SpFilterForm>
-
-      <div class="action-container">
+      <SpFormPlus
+        ref="searchForm"
+        v-model="searchParams"
+        :form-items="searchFormItems"
+        form-type="searchForm"
+        @submit="onSearch"
+      />
+      <div class="action-container mt-4">
         <el-button type="primary" @click="addItems"> 添加商品 </el-button>
 
         <el-button v-if="!IS_SUPPLIER()" type="primary" @click="changeCategory">
@@ -148,9 +45,8 @@
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
         <el-dropdown @command="handleImport">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+          <el-button type="primary" icon="iconfont icon-daorucaozuo-01">
             导入<i class="el-icon-arrow-down el-icon--right" />
-
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
@@ -473,6 +369,7 @@ import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
 import { createTbAddForm } from './schema'
 import SpPageUpload from '@/components/sp-page-upload'
+import { createSetting } from '@shopex-ui/finder'
 
 export default {
   components: {
@@ -592,7 +489,8 @@ export default {
         brand_id: '',
         goods_bn: '',
         operator_name: '',
-        cat_id: ''
+        cat_id: '',
+        main_cat_id: null
       },
       auditStatusMap: {
         1: '未审核',
@@ -713,7 +611,7 @@ export default {
                   value: 'category_id',
                   label: 'category_name',
                   multiple: true,
-                  checkStrictly: true,
+                  // checkStrictly: true,
                   children: 'children'
                 }
               }}
@@ -762,8 +660,13 @@ export default {
       changePriceDialog: false,
       changePriceForm: {},
       changePriceFormList: [],
-      list_time: [],
-      tableList: {
+      list_time: []
+    }
+  },
+  computed: {
+    // 表格配置
+    tableList() {
+      return createSetting({
         actions: [
           {
             name: '编辑',
@@ -1292,10 +1195,194 @@ export default {
             }
           }
         ]
-      }
-    }
-  },
-  computed: {
+      })
+    },
+    // 搜索表单配置
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'keywords',
+          label: '商品标题',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '商品标题或副标题关键词'
+          }
+        },
+        // 商品状态（非供应商）
+        {
+          fieldName: 'approve_status',
+          label: '商品状态',
+          component: 'select',
+          isShow: () => !this.IS_SUPPLIER(),
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: '请选择',
+            options: this.statusOption.map((item) => ({
+              label: item.title,
+              value: item.value
+            }))
+          }
+        },
+        // 供应状态（供应商）
+        {
+          fieldName: 'is_market',
+          label: '供应状态',
+          component: 'select',
+          isShow: () => this.IS_SUPPLIER(),
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: '请选择',
+            options: [
+              { label: '可售', value: 1 },
+              { label: '不可售', value: 0 }
+            ]
+          }
+        },
+        // 管理分类
+        {
+          fieldName: 'main_cat_id',
+          label: '管理分类',
+          cellWidth: 1.3,
+          component: 'cascader',
+          componentProps: {
+            placeholder: '请选择',
+            clearable: true,
+            options: this.itemCategoryList,
+            props: { value: 'category_id', label: 'category_name', checkStrictly: true }
+          }
+        },
+        // 销售分类
+        {
+          fieldName: 'category',
+          label: '销售分类',
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            options: this.categoryList,
+            props: {
+              checkStrictly: true,
+              label: 'category_name',
+              value: 'category_id',
+              emitPath: false
+            }
+          }
+        },
+        // 运费模板
+        {
+          fieldName: 'templates_id',
+          label: '运费模板',
+          cellWidth: 1.3,
+          component: 'select',
+          componentProps: {
+            placeholder: '请选择',
+            clearable: true,
+            options: this.templatesList.map((item) => ({
+              label: item.name,
+              value: item.template_id
+            }))
+          }
+        },
+        // 品牌（支持远程搜索）
+        {
+          fieldName: 'brand_id',
+          label: '品牌',
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '商品/商标关键词',
+            remote: true,
+            filterable: true,
+            clearable: true,
+            remoteMethod: this.getGoodsBranchList,
+            options: this.goodsBranchList.map((item) => ({
+              label: item.attribute_name,
+              value: item.attribute_id
+            }))
+          }
+        },
+        // SKU编码
+        {
+          fieldName: 'item_bn',
+          label: 'SKU编码',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请输入SKU编码'
+          }
+        },
+        // SPU编码
+        {
+          fieldName: 'goods_bn',
+          label: 'SPU编码',
+          cellWidth: 1.3,
+          component: 'input',
+          componentProps: {
+            placeholder: '请输入SPU编码'
+          }
+        },
+        // 商品产地
+        {
+          fieldName: 'regions_id',
+          label: '商品产地',
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请选择',
+            clearable: true,
+            options: this.regions
+          }
+        },
+        // 商品标签（非供应商）
+        {
+          fieldName: 'tag_id',
+          label: '商品标签',
+          component: 'cascader',
+          cellWidth: 1.3,
+          isShow: () => !this.IS_SUPPLIER(),
+          componentProps: {
+            placeholder: '选择标签',
+            clearable: true,
+            options: this.tagList,
+            props: { value: 'tag_id', label: 'tag_name' }
+          }
+        },
+        // 赠品
+        {
+          fieldName: 'is_gift',
+          label: '赠品',
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            options: [
+              { label: '全部', value: '' },
+              { label: '是', value: true },
+              { label: '否', value: false }
+            ]
+          }
+        },
+        // 处方药（医药行业）
+        {
+          fieldName: 'is_prescription',
+          label: '处方药',
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => this.is_pharma_industry,
+          componentProps: {
+            clearable: true,
+            options: [
+              { label: '全部', value: '' },
+              { label: '处方药', value: '1' },
+              { label: '非处方药', value: '0' }
+            ]
+          }
+        }
+      ]
+    },
     tabList() {
       let tabList = []
       if (IS_SUPPLIER()) {
@@ -1360,6 +1447,16 @@ export default {
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         ...this.searchParams,
         item_source: 'platform'
+      }
+      if (Array.isArray(params.main_cat_id)) {
+        params.main_cat_id = params.main_cat_id.filter(
+          (item) => item != null && item != undefined && item != ''
+        )
+        if (params.main_cat_id.length === 0) {
+          delete params.main_cat_id
+        }
+      } else if (!params.main_cat_id || params.main_cat_id === '') {
+        delete params.main_cat_id
       }
       return params
     },
@@ -1855,7 +1952,7 @@ export default {
       }
       const { status } = await this.$api.goods.exportGoodsCode({
         ...exportParams,
-        source: 'item',
+        item_source: 'item',
         export_type: exportType
       })
       if (status) {

@@ -99,7 +99,7 @@ export default {
         this.$message.error('请输入提货码!')
         return false
       }
-      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then(response => {
+      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
         var writeoffStatus = response.data.data.ziti_status
         var order_id = response.data.data.order_id
         if (writeoffStatus == 'DONE') {

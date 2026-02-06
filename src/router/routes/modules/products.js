@@ -167,6 +167,15 @@ const routes = [
         }
       },
       {
+        name: 'rankingList',
+        path: 'base-config/ranking-list',
+        component: () => import('@/view/mall/goods/ranking/index'),
+        meta: {
+          title: '榜单配置',
+          permissions: ['entity.goodsbase.rankingList']
+        }
+      },
+      {
         name: 'exportstoreitems',
         path: 'product-manage/exportstoreitems',
         component: () => import('@/view/mall/marketing/productUpdate'),

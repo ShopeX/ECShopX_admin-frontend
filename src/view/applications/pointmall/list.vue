@@ -101,11 +101,13 @@
         <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('instock')"> 批量下架 </el-button>
-        <el-button  v-if="isBindJstErp" plain type="primary" @click="uploadJstErpItems()">
+        <el-button v-if="isBindJstErp" plain type="primary" @click="uploadJstErpItems()">
           上传商品到聚水潭
         </el-button>
         <el-dropdown @command="exportItemsData">
-          <el-button type="primary" plain> 导出 <i class="el-icon-arrow-down el-icon--right" /></el-button>
+          <el-button type="primary" plain>
+            导出 <i class="el-icon-arrow-down el-icon--right"
+          /></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="product-export"> 商品导出 </el-dropdown-item>
           </el-dropdown-menu>
@@ -298,14 +300,14 @@
       </el-dialog>
       <!-- 选择商品分类-结束 -->
       <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
-          <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
-            <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-            <el-table-column label="库存">
-              <template slot-scope="scope">
-                <el-input v-model="scope.row.store" size="mini" type="number" />
-              </template>
-            </el-table-column>
-          </el-table>
+        <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
+          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
+          <el-table-column label="库存">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.store" size="mini" type="number" />
+            </template>
+          </el-table-column>
+        </el-table>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
             保存
@@ -447,7 +449,7 @@ export default {
       show_itemStore: false,
       itemstore: 0,
       exportTab: 'pointsmallitems',
-      isBindJstErp:false,
+      isBindJstErp: false
     }
   },
   computed: {
@@ -507,7 +509,7 @@ export default {
     exportItemsData() {
       if (this.item_id.length) {
         this.exportData.item_id = Object.assign({}, this.item_id)
-        exportItemsData(this.exportData).then(res => {
+        exportItemsData(this.exportData).then((res) => {
           if (res.data.data.status == true) {
             this.$message({
               type: 'success',
@@ -523,7 +525,7 @@ export default {
         })
       } else {
         this.exportData = Object.assign({}, this.params)
-        exportItemsData(this.exportData).then(res => {
+        exportItemsData(this.exportData).then((res) => {
           if (res.data.data.status == true) {
             this.$message({
               type: 'success',
@@ -565,7 +567,7 @@ export default {
       let params = {}
       params = {
         item_id: this.item_id,
-        item_type:'pointsmall'
+        item_type: 'pointsmall'
       }
       this.$api.goods.uploadJstErpItems(params).then((res) => {
         if (res.status == true) {
@@ -591,7 +593,7 @@ export default {
       this.getGoodsList()
     },
     setWarningStore() {
-      getItemWarningStore({ store: this.warning_store }).then(res => {
+      getItemWarningStore({ store: this.warning_store }).then((res) => {
         this.params.pageIndex = 1
         this.getGoodsList()
       })
@@ -633,7 +635,7 @@ export default {
         }
         this.addTemplatesdialogVisible = false
         setItemsTemplate({ templates_id: this.templates_new_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
           }
         )
@@ -645,7 +647,7 @@ export default {
       }
     },
     editItemsSort(index, row) {
-      setItemsSort({ sort: row.sort, item_id: row.itemId }).then(response => {
+      setItemsSort({ sort: row.sort, item_id: row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
@@ -660,7 +662,7 @@ export default {
         }
         this.addCategorydialogVisible = false
         setItemsCategory({ category_id: this.category_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
             this.category_id = []
           }
@@ -721,7 +723,7 @@ export default {
       }
       const { list, total_count, warning_store } = await this.$api.pointsmall.getItemsList(params)
       this.ItemsList = list
-      this.ItemsList.forEach(item => {
+      this.ItemsList.forEach((item) => {
         item.price = item.price / 100
         item.market_price = item.market_price / 100
         item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
@@ -739,7 +741,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteItems(row.itemId).then(response => {
+          deleteItems(row.itemId).then((response) => {
             this.ItemsList.splice(index, 1)
             this.$message({
               message: '删除商品成功',
@@ -770,7 +772,7 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.templatesParams).then(response => {
+      getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
@@ -784,7 +786,7 @@ export default {
       this.categoryList = data
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
@@ -819,7 +821,7 @@ export default {
       let params = {}
       if (this.goods_id.length > 0) {
         let data = []
-        this.goods_id.forEach(goods_id => {
+        this.goods_id.forEach((goods_id) => {
           data.push({ goods_id: goods_id })
         })
         params = {
@@ -828,7 +830,7 @@ export default {
         }
       }
       this.submitLoading = true
-      updateItemsStatus(params).then(res => {
+      updateItemsStatus(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '修改成功',
@@ -848,7 +850,7 @@ export default {
         items: [{ goods_id: items.goods_id }],
         status: items.approve_status === 'instock' ? 'onsale' : 'instock'
       }
-      updateItemsStatus(params).then(res => {
+      updateItemsStatus(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '操作成功',
@@ -867,10 +869,10 @@ export default {
       param.item_id = items.item_id
       param.is_sku = true
       this.storeItemsList = []
-      getItemsList(param).then(response => {
+      getItemsList(param).then((response) => {
         let list = response.data.data.list
         let data = {}
-        list.forEach(item => {
+        list.forEach((item) => {
           let data = {
             item_id: item.item_id,
             store: item.store,
@@ -899,7 +901,7 @@ export default {
         }
       } else if (this.item_id.length > 0) {
         let data = []
-        this.item_id.forEach(itemid => {
+        this.item_id.forEach((itemid) => {
           data.push({ item_id: itemid, store: this.itemstore, is_default: true })
         })
         params = {
@@ -909,7 +911,7 @@ export default {
       this.submitLoading = true
       const _self = this
       updateItemsStore(params)
-        .then(res => {
+        .then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '修改成功',
@@ -922,7 +924,7 @@ export default {
           this.skuLoading = false
           this.storeUpdate = false
         })
-        .catch(err => {
+        .catch((err) => {
           this.submitLoading = false
           this.skuLoading = false
         })

@@ -111,7 +111,7 @@
             <div class="grid-content">跟踪二维码</div>
           </el-col>
           <el-col :span="15">
-            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%">
+            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%" />
           </el-col>
         </el-row>
         <el-row class="row-bg">
@@ -171,17 +171,17 @@ import {
   getRelSources
 } from '../../../../api/datacube'
 
-const getWxaCodeImg = url => {
+const getWxaCodeImg = (url) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
       url,
       responseType: 'arraybuffer'
     })
-      .then(data => {
+      .then((data) => {
         resolve(data.data)
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString())
       })
   })
@@ -279,7 +279,7 @@ export default {
       })
         .then(() => {
           deleteRelSources(row.monitor_id, row.source_id)
-            .then(response => {
+            .then((response) => {
               this.$message({
                 message: '删除监控来源成功',
                 type: 'success',
@@ -306,7 +306,7 @@ export default {
       var that = this
       that.wxaCodeInfo.source_name = row.source_name
       let params = { monitor_id: row.monitor_id, source_id: row.source_id }
-      getMonitorsWxaCode64(params).then(response => {
+      getMonitorsWxaCode64(params).then((response) => {
         that.wxaCodeInfo.code_src = response.data.data.base64Image
       })
       that.dialogVisible = true
@@ -321,7 +321,7 @@ export default {
       a.click()
     },
     getPageInfo() {
-      getMonitorsDetail(this.monitor_id).then(response => {
+      getMonitorsDetail(this.monitor_id).then((response) => {
         this.detail = response.data.data
       })
     },
@@ -358,7 +358,7 @@ export default {
           break
       }
       this.dataSpan = []
-      getMonitorsStats(params).then(response => {
+      getMonitorsStats(params).then((response) => {
         this.dataList = response.data.data.stats_list
         this.statstotal = response.data.data.stats_total
         var codeSpan = (this.dataList.length / this.codeInterval + '').indexOf('.')
@@ -461,14 +461,14 @@ export default {
       const cache = {}
       const promises = []
       var that = this
-      this.checkedSource.forEach(item => {
+      this.checkedSource.forEach((item) => {
         var url =
           this.BASE_API +
           '/datacube/monitorsWxaCodeStream?monitor_id=' +
           item.monitor_id +
           '&source_id=' +
           item.source_id
-        const promise = getWxaCodeImg(url).then(result_file => {
+        const promise = getWxaCodeImg(url).then((result_file) => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = item.source_name + '(' + item.source_id + ')' + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -478,7 +478,7 @@ export default {
       })
       this.checkedSource = []
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then(content => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
           FileSaver.saveAs(content, '小程序码(批量).zip') // 利用file-saver保存文件
           that.isdownloadOk = true

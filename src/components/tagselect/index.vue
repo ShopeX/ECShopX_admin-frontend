@@ -63,7 +63,7 @@ export default {
       getTagList({
         page: 1,
         page_size: 500
-      }).then(response => {
+      }).then((response) => {
         let tagsList = response.data.data.list
         tagsList.map((v, i) => {
           v.type = this.tagTypes[(i + 1) % 4]
@@ -80,13 +80,13 @@ export default {
     },
     // 选择全部
     selectAll() {
-      this.tagsList.map(v => {
+      this.tagsList.map((v) => {
         v.selected = true
       })
     },
     // 确定选择
     submitTags() {
-      let selectTagsList = this.tagsList.filter(v => v.selected)
+      let selectTagsList = this.tagsList.filter((v) => v.selected)
       this.$emit('selectTags', selectTagsList)
     }
   }

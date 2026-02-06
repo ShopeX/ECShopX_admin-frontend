@@ -244,7 +244,7 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              const format = d =>
+              const format = (d) =>
                 `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d
                   .getDate()
                   .toString()
@@ -259,7 +259,7 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              const format = d =>
+              const format = (d) =>
                 `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d
                   .getDate()
                   .toString()
@@ -274,7 +274,7 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              const format = d =>
+              const format = (d) =>
                 `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d
                   .getDate()
                   .toString()
@@ -303,7 +303,7 @@ export default {
       var end = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
       end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-      const format = d =>
+      const format = (d) =>
         `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d
           .getDate()
           .toString()
@@ -344,7 +344,7 @@ export default {
       this.params.distributor = val
     },
     getDistributorData() {
-      getDistributorList({ is_valid: true }).then(res => {
+      getDistributorList({ is_valid: true }).then((res) => {
         this.distributorOption = res.data.data.list
       })
     },
@@ -370,7 +370,7 @@ export default {
         distributor_id: this.params.distributor
       }
       getDistributorData(params)
-        .then(res => {
+        .then((res) => {
           this.allListData = res.data.data.list
           let companyDataList = res.data.data.list
           console.log(companyDataList)
@@ -396,7 +396,7 @@ export default {
             this.chartInit(params)
           })
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取统计信息出错'

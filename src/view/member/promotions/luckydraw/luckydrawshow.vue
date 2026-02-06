@@ -18,10 +18,10 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader"
               @click="handleImgChange(index)"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br>
+                <i class="el-icon-camera" /><br />
                 上传图片
               </div>
             </div>
@@ -46,11 +46,11 @@
         添加轮播图
       </el-button>
     </div>
-    <br>
+    <br />
     <div class="section-footer with-border content-center">
       <el-button type="primary" @click="save"> 保存 </el-button>
     </div>
-    <br>
+    <br />
   </el-col>
 </template>
 
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     save() {
-      setLuckydrawShow(this.data).then(res => {
+      setLuckydrawShow(this.data).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -86,7 +86,7 @@ export default {
       })
     },
     getLuckydrawShow() {
-      getLuckydrawShow().then(res => {
+      getLuckydrawShow().then((res) => {
         this.data = res.data.data
       })
     },

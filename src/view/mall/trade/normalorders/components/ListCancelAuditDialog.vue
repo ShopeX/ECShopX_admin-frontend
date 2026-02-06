@@ -119,7 +119,7 @@ export default {
     },
     submitCancelConfirmAction() {
       // 提交取消订单审核结果
-      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then(response => {
+      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()

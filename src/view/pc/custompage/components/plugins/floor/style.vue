@@ -29,7 +29,7 @@
                   :src="dataForm.leftImg.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(0)"
-                >
+                />
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(0)">
                 <i class="el-icon-camera" />上传图片
@@ -52,7 +52,7 @@
                   :src="dataForm.rightImg1.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(1)"
-                >
+                />
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(1)">
                 <i class="el-icon-camera" />上传图片
@@ -77,7 +77,7 @@
                   :src="dataForm.rightImg2.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(2)"
-                >
+                />
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(2)">
                 <i class="el-icon-camera" />上传图片

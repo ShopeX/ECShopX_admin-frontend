@@ -36,7 +36,7 @@
               <div v-if="item.is_weapp_grade" class="has-upgrade" />
               <div v-if="item.wxaCodeVisible" class="wxcode">
                 <div class="el-icon-close" @click="closeWxcode(idx, index)" />
-                <img :src="item.wxaCodeImage" alt="">
+                <img :src="item.wxaCodeImage" alt="" />
               </div>
               <div class="template-wrap items-center flex-col flex">
                 <div class="template-img">
@@ -44,49 +44,49 @@
                     v-if="item.template_name === 'yykmembership'"
                     src="@/assets/img/template_img.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykmendian'"
                     src="@/assets/img/template_img_01.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcutdown'"
                     src="@/assets/img/template_img_02.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykweishop'"
                     src="@/assets/img/template_img_04.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'appleweishop'"
                     src="@/assets/img/template_img_09.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcommunity'"
                     src="@/assets/img/template_img_07.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcommunitypms'"
                     src="@/assets/img/template_img_06.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'onexshop'"
                     src="@/assets/img/onexshop.png"
                     alt=""
-                  >
+                  />
                   <div
                     v-if="idx === 0 && item.is_bind"
                     v-loading="item.loading"
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'wechat')"
                   >
-                    <img src="@/assets/img/code.png" height="34" width="35" alt="">
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
                   </div>
                   <div
                     v-if="item.bindInfo && idx === 1 && item.bindInfo.status === 5"
@@ -94,7 +94,7 @@
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'alipay')"
                   >
-                    <img src="@/assets/img/code.png" height="34" width="35" alt="">
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
                   </div>
                 </div>
                 <div class="template-caption">
@@ -156,7 +156,7 @@ export default {
     }
   },
   mounted() {
-    getTemplateList().then(response => {
+    getTemplateList().then((response) => {
       var res = response.data.data.list
       for (var i = 0; i < res.length; i++) {
         res[i].loading = false
@@ -166,7 +166,7 @@ export default {
       }
       this.list.unshift(res)
     })
-    getALiTemplateList().then(response => {
+    getALiTemplateList().then((response) => {
       var res = response.data.data.list
       for (var i = 0; i < res.length; i++) {
         res[i].loading = false
@@ -206,7 +206,7 @@ export default {
           let params = {
             template_name: data.templateInfo.key_name
           }
-          getALiPreAuthUrl(params).then(response => {
+          getALiPreAuthUrl(params).then((response) => {
             this.authorizerUrl = response.data.data.url
           })
           this.isShow = true
@@ -239,7 +239,7 @@ export default {
         if (type === 'wechat') {
           let params = { wxaAppId: info.authorizer_appid }
           this.list[idx][index].loading = true
-          getCodeUnlimit(params).then(response => {
+          getCodeUnlimit(params).then((response) => {
             this.list[idx][index].wxaCodeImage = response.data.data.base64Image
             this.list[idx][index].wxaCodeVisible = true
             this.list[idx][index].loading = false
@@ -250,7 +250,7 @@ export default {
             template_name: info.template_name
           }
           this.list[idx][index].loading = true
-          getALiCodeUnlimit(params).then(response => {
+          getALiCodeUnlimit(params).then((response) => {
             this.list[idx][index].wxaCodeImage = response.data.data.qr_code_url
             this.list[idx][index].wxaCodeVisible = true
             this.list[idx][index].loading = false

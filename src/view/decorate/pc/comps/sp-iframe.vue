@@ -42,7 +42,7 @@ export default {
   },
   mounted() {
     this.postmessage = new PostMessage('*')
-    this.postmessage.onMessage(event => {
+    this.postmessage.onMessage((event) => {
       this.$emit('message', event.data)
     })
     // 设置窗口大小改变时的事件监听

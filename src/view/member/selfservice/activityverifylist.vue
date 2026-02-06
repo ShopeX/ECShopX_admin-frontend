@@ -146,7 +146,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -158,7 +158,7 @@ export default {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach(row => {
+        list.forEach((row) => {
           this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
         })
       }

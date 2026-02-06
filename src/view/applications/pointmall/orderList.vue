@@ -8,18 +8,18 @@
     <div class="">
       <div v-if="$route.path.indexOf('detail') === -1">
         <el-row class="filter-header" :gutter="20">
-            <!-- <shop-select v-if="$store.getters.login_type != 'distributor'" distributors  @update="storeSearch"></shop-select> -->
-            <el-date-picker
-              v-model="create_time"
-              type="daterange"
-              start-placeholder="开始日期"
-              ange-separator="至"
-              end-placeholder="结束日期"
-              value-format="yyyy/MM/dd"
-              placeholder="选择日期范围"
-              @change="dateChange"
-            />
-            <!-- <el-select v-model="order_class" @change="TypeHandle" placeholder="请选择订单类型">
+          <!-- <shop-select v-if="$store.getters.login_type != 'distributor'" distributors  @update="storeSearch"></shop-select> -->
+          <el-date-picker
+            v-model="create_time"
+            type="daterange"
+            start-placeholder="开始日期"
+            ange-separator="至"
+            end-placeholder="结束日期"
+            value-format="yyyy/MM/dd"
+            placeholder="选择日期范围"
+            @change="dateChange"
+          />
+          <!-- <el-select v-model="order_class" @change="TypeHandle" placeholder="请选择订单类型">
             <el-option
               v-for="(item, index) in order_class_array"
               :key="index"
@@ -27,14 +27,14 @@
               :value="item.value">
             </el-option>
           </el-select> -->
-            <!-- <el-autocomplete
+          <!-- <el-autocomplete
             class="inline-input"
             v-model="source_name"
             :fetch-suggestions="querySearch"
             placeholder="请输入来源"
             @select="sourceSearch">
           </el-autocomplete> -->
-            <!-- <el-input class="input-m" placeholder="导购员手机号" v-model="salesman_mobile">
+          <!-- <el-input class="input-m" placeholder="导购员手机号" v-model="salesman_mobile">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
           </el-input> -->
           <el-col :span="8">
@@ -42,8 +42,18 @@
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
-          <el-select v-model="invoice_status" placeholder="开票状态" @change="invoiceStatusChange" clearable>
-            <el-option v-for="item in open_status_arr" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select
+            v-model="invoice_status"
+            placeholder="开票状态"
+            @change="invoiceStatusChange"
+            clearable
+          >
+            <el-option
+              v-for="item in open_status_arr"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
           </el-select>
         </el-row>
         <el-row>
@@ -209,7 +219,8 @@
                   <!-- 发货状态 -->
                   <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
                   <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
-                  <span v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
+                  <span
+                    v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
                     >待自提</span
                   >
                   <span
@@ -831,7 +842,7 @@ export default {
       datapass_block: 1,
       exportTab: '',
       jstErpSetting: {},
-      invoice_status: ""
+      invoice_status: ''
     }
   },
   computed: {
@@ -946,7 +957,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then(response => {
+      getOrderList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.datapass_block = response.data.data.datapass_block
@@ -954,15 +965,15 @@ export default {
       })
     },
     getStatus() {
-      isBind().then(response => {
+      isBind().then((response) => {
         this.IsBind = response.data.data.result
       })
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then(response => {
+      getSourcesList(params).then((response) => {
         if (response.data.data.list) {
-          response.data.data.list.forEach(row => {
+          response.data.data.list.forEach((row) => {
             this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
@@ -975,7 +986,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -986,10 +997,10 @@ export default {
       this.selectItemType = data.delivery_type
       // this.selectItemType = 'new'
       this.deliveryTitle = '发货'
-      getLogisticsList().then(res => {
+      getLogisticsList().then((res) => {
         this.dlycorps = res.data.data.list
       })
-      getOrderDetail(order_id).then(response => {
+      getOrderDetail(order_id).then((response) => {
         this.deliveryData = response.data.data
         if (this.deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
           this.$message.error('客户已经申请退款，请先处理退款操作再决定是否发货!')
@@ -1011,7 +1022,7 @@ export default {
     confirmCancelOrderAction(order_id) {
       // 已支付订单的取消订单审核
       let params = { order_type: 'normal' }
-      getCancelOrderInfo(order_id, params).then(response => {
+      getCancelOrderInfo(order_id, params).then((response) => {
         this.cancelData = response.data.data
         this.cancelVisible = true
         console.log(response)
@@ -1027,7 +1038,7 @@ export default {
     },
     submitCancelConfirmAction() {
       // 提交取消订单审核结果
-      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then(response => {
+      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'SUCCESS' || cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()
@@ -1066,14 +1077,14 @@ export default {
         } else {
           this.deliveryForm.sepInfo = JSON.stringify(
             JSON.parse(JSON.stringify(this.deliveryData.orderInfo.items)).filter(
-              item => item.delivery_num && item.delivery_num != ''
+              (item) => item.delivery_num && item.delivery_num != ''
             )
           )
         }
       } else {
         this.deliveryForm.sepInfo = {}
       }
-      delivery(this.deliveryForm).then(response => {
+      delivery(this.deliveryForm).then((response) => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()
@@ -1088,7 +1099,7 @@ export default {
     cancelOrderAction(order_id) {
       //取消订单
       let params = { order_type: 'normal' }
-      getOrderDetail(order_id).then(response => {
+      getOrderDetail(order_id).then((response) => {
         this.cancelOrderData = response.data.data
         console.log(this.cancelOrderData)
         if (this.cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
@@ -1124,7 +1135,7 @@ export default {
         this.$message.error('请输入取消原因!')
         return false
       }
-      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then(response => {
+      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'WAIT_CHECK' || cancelOrderStatus == 'SUCCESS') {
           this.handleCancelOrder()
@@ -1139,7 +1150,7 @@ export default {
     },
     writeoffOrderAction(order_id) {
       //自提订单核销
-      getWriteoff(order_id).then(response => {
+      getWriteoff(order_id).then((response) => {
         this.writeoffOrderData = response.data.data
         if (this.writeoffOrderData.ziti_status == 'DONE') {
           this.$message.error('该订单已核销!')
@@ -1164,7 +1175,7 @@ export default {
         this.$message.error('请输入提货码!')
         return false
       }
-      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then(response => {
+      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
         var writeoffStatus = response.data.data.ziti_status
         var order_id = response.data.data.order_id
         if (writeoffStatus == 'DONE') {
@@ -1195,7 +1206,7 @@ export default {
         })
         return
       }
-      orderExport(this.params).then(response => {
+      orderExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -1219,7 +1230,7 @@ export default {
     exportInvoice() {
       this.getParams()
       ;(this.params.type = 'normal'),
-        exportInvoice(this.params).then(response => {
+        exportInvoice(this.params).then((response) => {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
@@ -1258,7 +1269,7 @@ export default {
               order_id: row.order_id,
               status: status
             }
-            isInvoiced(params).then(response => {
+            isInvoiced(params).then((response) => {
               if (response.data.data.success) {
                 this.$message({
                   type: 'success',
@@ -1279,7 +1290,7 @@ export default {
     },
     uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'normal_orders', file: file.raw }
-      handleUploadFile(params).then(response => {
+      handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
           message: '上传成功，等待处理'

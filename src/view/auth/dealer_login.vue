@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">欢迎登录</div>
       </div>
@@ -86,7 +86,7 @@
 <script>
 import { Message } from 'element-ui'
 import { isMobile } from '@/utils/validate'
-import { fetch } from './request'
+import { fetch } from '@/api/request'
 import { login, getAdminInfo } from '@/api/login'
 import { mapMutations } from 'vuex'
 export default {
@@ -129,7 +129,7 @@ export default {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
     handleSubmit1() {
       this.$store.dispatch('setLoginType', 'dealer')
-      this.$refs.ruleForm1.validate(async valid => {
+      this.$refs.ruleForm1.validate(async (valid) => {
         if (valid) {
           this.loading = true
           this.submitDisabled = true

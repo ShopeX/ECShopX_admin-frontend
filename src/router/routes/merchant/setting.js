@@ -30,7 +30,7 @@ const routes = [
       {
         name: `deliverySettingDistributionManagement`,
         path: 'delivery-setting/deliver-person-management',
-        component: () => import('@/view/base/account/delivery'),
+        component: () => import('@/views/settings/deliverySettings/delivery-management'),
         meta: {
           aliasName: 'merchant_setting_staff_selfdeliverystaff',
           icon: 'icon-delivery',
@@ -52,7 +52,8 @@ const routes = [
       {
         name: `systemConfigPrivacyApproval`,
         path: 'system-config/provacy-approval',
-        component: () => import('@/view/base/setting/authorityapproval'),
+        //component: () => import('@/view/base/setting/authorityapproval'),
+        component: () => import('@/views/settings/systemConfig/authorityapproval'),
         meta: {
           aliasName: 'datapassapply',
           icon: 'icon-apply',
@@ -62,7 +63,7 @@ const routes = [
         children: [
           {
             path: 'approve/:id?',
-            component: () => import('@/view/base/setting/authorityapproval/approve'),
+            component: () => import('@/views/settings/systemConfig/authorityapproval/approve'),
             meta: {
               title: '审批详情',
               hidden: true
@@ -84,7 +85,7 @@ const routes = [
       {
         name: 'operatorLogs',
         path: 'operatorlogs',
-        component: () => import('@/view/base/setting/companys/logs'),
+        component: () => import('@/views/settings/systemInfo/operation-log'),
         meta: {
           aliasName: 'operatorlogs',
           icon: 'icon-log',
@@ -97,7 +98,7 @@ const routes = [
       {
         name: 'dataPassApprove',
         path: 'datapassapprove',
-        component: () => import('@/view/base/encrypt/authAdmin.vue'),
+        component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue'),
         meta: {
           aliasName: 'datapassapprove',
           icon: 'icon-approve',

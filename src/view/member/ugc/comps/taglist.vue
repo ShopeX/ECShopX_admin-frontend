@@ -16,7 +16,7 @@
 
       <el-table-column v-if="handleType == 'view'" label="昵称/手机号">
         <template slot-scope="scope">
-          {{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}
+          {{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}
         </template>
       </el-table-column>
 
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     resetText() {
-      return row => {
+      return (row) => {
         var text = '审核'
         if (row.status == '1') {
           text = '拒绝'
@@ -80,7 +80,7 @@ export default {
       var checkList = []
       var auditdiff = false
       var status = null
-      val.forEach(item => {
+      val.forEach((item) => {
         checkList.push(item.tag_id)
         if (status == null) {
           status = item.status

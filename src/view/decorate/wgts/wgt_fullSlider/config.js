@@ -5,20 +5,13 @@
 import Vue from 'vue'
 import { pickBy, isObject } from '@/utils'
 import AttrItem from './attr-item.vue'
+import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
-export default {
+const config = {
   name: 'fullSlider',
   setting: [
-    { label: '埋点参数', key: 'track', component: 'input' },
-    // {
-    //   label: "组件间距",
-    //   key: "padded",
-    //   component: "switch",
-    //   value: false,
-    // },
-    // { label: '埋点上报参数', key: 'eventParams', component: 'input' },
     {
-      label: '轮播项',
+      label: '',
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -37,12 +30,14 @@ export default {
     },
     {
       label: '指示器字体颜色',
+      group: '指示器设置',
       key: 'indicatorColor',
       component: 'color',
       value: '#f5f5f5'
     },
     {
       label: '指示器字体大小',
+      group: '指示器设置',
       key: 'indicatorFontSize',
       component: 'number',
       value: 12,
@@ -53,6 +48,7 @@ export default {
     },
     {
       label: '指示器下边距',
+      group: '指示器设置',
       key: 'dotbottom',
       component: 'number',
       value: 0,
@@ -61,9 +57,15 @@ export default {
       step: 1,
       tip: '单位为 px'
     },
-    { label: '指示器下文案', key: 'indicatorText', component: 'input' },
+    {
+      label: '指示器下文案',
+      group: '指示器设置',
+      key: 'indicatorText',
+      component: 'input'
+    },
     {
       label: '轮播时间',
+      group: '内容样式',
       key: 'interval',
       component: 'number',
       isShow: function () {
@@ -77,6 +79,7 @@ export default {
     },
     {
       label: '自动切换',
+      group: '内容样式',
       key: 'autoplay',
       component: 'switch',
       value: true,
@@ -84,6 +87,7 @@ export default {
     },
     {
       label: '',
+      group: '内容样式',
       key: 'height',
       component: 'input',
       value: 667,
@@ -97,13 +101,25 @@ export default {
       name,
       base,
       config: { ...otherConfig },
-      data
+      data,
+      track,
+      tagsType,
+      meber_tags,
+      no_meber_tags
     } = v
+    // 使用公共函数处理 base 中的样式数据转换
+    const transformedBase = transformInBase(base, ['outerMargin'])
     return {
       id: v?.id,
       name,
-      ...base,
+      ...transformedBase,
       ...otherConfig,
+      track,
+      tags: {
+        type: tagsType || '2',
+        meber_tags: meber_tags || [],
+        no_meber_tags: no_meber_tags || []
+      },
       data: data.map((item) => {
         const {
           linkPage,
@@ -148,10 +164,12 @@ export default {
       id: 'id',
       name: 'name',
       base: (v) => {
-        return pickBy(v, {
-          track: 'track',
-          padded: 'padded'
-        })
+        // 使用公共函数处理 outerMargin 转换，同时保留其他字段
+        const baseData = createTransformOutBase(
+          ['track', 'padded', 'outerMargin'],
+          ['outerMargin']
+        )(v)
+        return baseData
       },
       config: (v) => {
         return pickBy(v, {
@@ -189,7 +207,18 @@ export default {
           moreLink: 'moreLink'
           // loop: 'loop',
         })
-      }
+      },
+      track: 'track',
+      tags: 'tags',
+      tagsType: 'tags.type',
+      meber_tags: 'tags.meber_tags',
+      no_meber_tags: 'tags.no_meber_tags'
     })
   }
 }
+
+// 自动处理 compStyle 配置（初始化全局处理函数）
+import '../../comps/configsetting'
+export default typeof globalThis !== 'undefined' && globalThis.__processConfig__
+  ? globalThis.__processConfig__(config)
+  : config

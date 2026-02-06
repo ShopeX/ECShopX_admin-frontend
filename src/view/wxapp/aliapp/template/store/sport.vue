@@ -22,7 +22,7 @@
     <section class="section-white view-warp">
       <div class="pages-view">
         <div class="page active">
-          <img alt="" src="@/assets/img/wxapp_member_sport.jpg" height="569" width="320">
+          <img alt="" src="@/assets/img/wxapp_member_sport.jpg" height="569" width="320" />
         </div>
       </div>
       <div class="template-view">
@@ -95,7 +95,7 @@
                   </div>
                 </div>
                 <div class="hot-more">
-                  更多 <img class="hot-more-img" src="@/assets/img/arrow.png">
+                  更多 <img class="hot-more-img" src="@/assets/img/arrow.png" />
                 </div>
               </div>
             </div>
@@ -108,11 +108,11 @@
             </div>
             <div class="view-flex view-flex-center store-contact">
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_location.png">
+                <img class="store-icon" src="@/assets/img/store_location.png" />
                 <div>1220 km</div>
               </div>
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_phone.png">
+                <img class="store-icon" src="@/assets/img/store_phone.png" />
                 <div>咨询</div>
               </div>
             </div>
@@ -133,10 +133,10 @@
                   :src="wximageurl + item.url"
                   class="banner-uploader"
                   @click="handleImgChange(index, 'banner')"
-                >
+                />
                 <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
-                    <i class="el-icon-camera" /><br>
+                    <i class="el-icon-camera" /><br />
                     上传图片
                   </div>
                 </div>
@@ -146,10 +146,7 @@
                   {{ item.type === 'goods' ? '商品' : '活动' }}：{{ item.item_name }}
                 </div>
                 <div v-else class="content-center">
-                  <i
-                    class="el-icon-link"
-                    @click="handleGoodsChange(index, 'banner')"
-                  />绑定商品
+                  <i class="el-icon-link" @click="handleGoodsChange(index, 'banner')" />绑定商品
                 </div>
               </div>
             </div>
@@ -178,10 +175,10 @@
                     :src="wximageurl + item.url"
                     class="banner-uploader"
                     @click="handleImgChange(index, 'hotGoods')"
-                  >
+                  />
                   <div v-else class="banner-uploader" @click="handleImgChange(index, 'hotGoods')">
                     <div class="content-center">
-                      <i class="el-icon-camera" /><br>
+                      <i class="el-icon-camera" /><br />
                       上传图片
                     </div>
                   </div>
@@ -347,14 +344,14 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykmendian', name: 'banner', page_name: 'index' }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       if (res.data.data) {
         this.form.bannerPicList = res.data.data[0].params
         this.bannerPicListSetId = res.data.data[0].id
       }
     })
     let hotGoodsFilter = { template_name: 'yykmendian', name: 'hotGoods', page_name: 'index' }
-    getParamByTempName(hotGoodsFilter).then(res => {
+    getParamByTempName(hotGoodsFilter).then((res) => {
       if (res.data.data) {
         this.form.hotGoods = res.data.data[0].params
         this.hotGoodsSetId = res.data.data[0].id
@@ -434,7 +431,7 @@ export default {
     //选择商品分页
     handleSelectGoodsChange(val) {
       this.params.page = val
-      this.goodsList.forEach(row => {
+      this.goodsList.forEach((row) => {
         //如果选中
         let index = this.selectGoods.indexOf(row.key)
         if (index != -1) {
@@ -465,7 +462,7 @@ export default {
       this.selectGoodsVisible = false
       if (this.selectGoods.length > 0) {
         if (this.type == 'goods') {
-          this.goodsList.forEach(row => {
+          this.goodsList.forEach((row) => {
             //如果选中
             let index = this.selectGoods.indexOf(row.key)
             if (index != -1) {
@@ -487,7 +484,7 @@ export default {
               title: '',
               value: ''
             }
-            this.marketingList.forEach(item => {
+            this.marketingList.forEach((item) => {
               if (this.selectedMarketing === item.value) {
                 ;(obj.title = item.title), (obj.value = item.value)
               }
@@ -521,9 +518,9 @@ export default {
       this.selectGoods = []
     },
     getGoodsList() {
-      getItemsList(this.params).then(response => {
+      getItemsList(this.params).then((response) => {
         this.goodsList = []
-        response.data.data.list.forEach(row => {
+        response.data.data.list.forEach((row) => {
           let itemid = ''
           if (this.currentType == 'banner') {
             itemid = this.form.bannerPicList[this.currentIndex].item_id
@@ -564,7 +561,7 @@ export default {
           page_name: 'index',
           id: this.bannerPicListSetId
         }
-        updateParamsById(bannerParams).then(response => {
+        updateParamsById(bannerParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -578,7 +575,7 @@ export default {
           name: 'banner',
           page_name: 'index'
         }
-        setPageParams(bannerParams).then(response => {
+        setPageParams(bannerParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -595,7 +592,7 @@ export default {
           page_name: 'index',
           id: this.hotGoodsSetId
         }
-        updateParamsById(hotGoodsParams).then(response => {
+        updateParamsById(hotGoodsParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -609,7 +606,7 @@ export default {
           name: 'hotGoods',
           page_name: 'index'
         }
-        setPageParams(hotGoodsParams).then(response => {
+        setPageParams(hotGoodsParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',

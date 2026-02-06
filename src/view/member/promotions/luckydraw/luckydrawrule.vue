@@ -16,7 +16,7 @@
     <div class="section-footer content-center">
       <el-button type="primary" @click="saveContent"> 保存 </el-button>
     </div>
-    <br>
+    <br />
   </el-col>
 </template>
 
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     saveContent() {
-      setLuckydrawRules(this.form_content).then(res => {
+      setLuckydrawRules(this.form_content).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -44,7 +44,7 @@ export default {
       })
     },
     getLuckydrawRules() {
-      getLuckydrawRules().then(res => {
+      getLuckydrawRules().then((res) => {
         this.form_content = res.data.data
       })
     }

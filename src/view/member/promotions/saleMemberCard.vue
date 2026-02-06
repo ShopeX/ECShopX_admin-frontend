@@ -33,16 +33,10 @@
           <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
-          <imgPicker
-            :dialog-visible="imgDialog"
-            :sc-status="isGetImage"
-            @chooseImg="pickImg"
-            @closeImgDialog="closeImgDialog"
-          />
         </el-form-item>
         <el-form-item label="请选择赠送会员卡类型：">
           <el-radio-group v-model="membercards.index_value" @change="vipGradeChange">
@@ -73,17 +67,12 @@
   </div>
 </template>
 <script>
-import imgPicker from '../../../components/imageselect'
 import { saveRegisterPromotions } from '../../../api/promotions'
 export default {
-  components: {
-    imgPicker
-  },
+  components: {},
   props: ['getStatus', 'activeName'],
   data() {
     return {
-      isGetImage: false,
-      imgDialog: false,
       total_count: 0,
       vipGrade: [],
       priceList: [],
@@ -123,20 +112,32 @@ export default {
       await this.getMemberVipGrade()
       await this.getRegisterData()
     },
-    handleImgChange() {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      this.form.ad_pic = data.url
-      this.imgDialog = false
-    },
-    closeImgDialog() {
-      this.imgDialog = false
+    async handleImgChange() {
+      try {
+        const { data } = await this.$picker.image({
+          data: this.form.ad_pic ? { url: this.form.ad_pic } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (data && data.url) || data || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          // form.ad_pic 存储的是相对路径（显示时使用 wximageurl + form.ad_pic）
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            this.form.ad_pic = imgUrl.replace(this.wximageurl, '')
+          } else {
+            this.form.ad_pic = imgUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
+      }
     },
     save() {
       this.form.promotions_value.membercard = this.membercards
-      saveRegisterPromotions(this.form).then(res => {
+      saveRegisterPromotions(this.form).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',

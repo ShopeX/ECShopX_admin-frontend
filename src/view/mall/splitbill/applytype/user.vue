@@ -31,7 +31,7 @@
             v-model="form_user.id_card_type"
             placeholder="选择证件类型"
             :disabled="disabled"
-            @visible-change="bool => (isEdit = bool)"
+            @visible-change="(bool) => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -128,11 +128,11 @@ export default {
       console.log(this.form_user)
     },
     onUserSubmit() {
-      this.$refs.form_user.validate(valid => {
+      this.$refs.form_user.validate((valid) => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form_user))
           console.log(obj)
-          saveHffile(obj).then(res => {
+          saveHffile(obj).then((res) => {
             this.$message({
               message: '保存成功',
               type: 'success'

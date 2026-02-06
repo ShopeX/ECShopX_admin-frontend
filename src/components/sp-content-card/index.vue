@@ -78,23 +78,12 @@
               <el-button type="primary" @click="handleSort"> 确定 </el-button>
             </div>
             <div slot="reference">
-              <el-button
-                type="text-default"
-                size="mini"
-                class="text-gray-400"
-              >
-                排序
-              </el-button>
+              <el-button type="text-default" size="mini" class="text-gray-400"> 排序 </el-button>
             </div>
           </el-popover>
         </div>
         <div class="flex-1 text-xs text-center h-full leading-10">
-          <el-button
-            type="text-default"
-            size="mini"
-            class="text-gray-400"
-            @click="handleDelete"
-          >
+          <el-button type="text-default" size="mini" class="text-gray-400" @click="handleDelete">
             删除
           </el-button>
         </div>

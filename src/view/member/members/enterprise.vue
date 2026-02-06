@@ -176,14 +176,14 @@ export default {
       // 如果没有id，则表示为新增
       if (!this.form.enterprise_id) {
         delete this.form.enterprise_id
-        addEnterpriseInfo(this.form).then(res => {
+        addEnterpriseInfo(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.page.pageIndex = 1
           this.resetData()
           this.fetchList()
         })
       } else {
-        updateEnterpriseInfo(this.form.enterprise_id, this.form).then(res => {
+        updateEnterpriseInfo(this.form.enterprise_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.fetchList()
           this.setChinaumspayVisible = false
@@ -198,7 +198,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getEnterpriseList(params).then(res => {
+      getEnterpriseList(params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

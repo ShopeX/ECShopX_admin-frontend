@@ -238,7 +238,7 @@ export default {
       this.seletedShopHandle()
     },
     confirm(formName, ref) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
             if (this.isAllShop == 'Y') {

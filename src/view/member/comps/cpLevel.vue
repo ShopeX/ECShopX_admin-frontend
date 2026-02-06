@@ -68,10 +68,7 @@
             </div>
             <div>
               <span class="txt">等级编码</span
-              ><el-input
-                v-model="item.dm_grade_code"
-                placeholder="请输入内容"
-              />
+              ><el-input v-model="item.dm_grade_code" placeholder="请输入内容" />
             </div>
             <div v-if="!VERSION_SHUYUN()" class="clearfix">
               <span class="txt f_l">升级条件</span>
@@ -407,7 +404,10 @@ export default {
             isflag = true
             this.$message({ message: '请输入会员折扣', type: 'error' })
             break
-          } else if (!discountReg.test(this.levelData[i].privileges.discount) && this.VERSION_SHUYUN()) {
+          } else if (
+            !discountReg.test(this.levelData[i].privileges.discount) &&
+            this.VERSION_SHUYUN()
+          ) {
             // isflag = true
             // this.$message({
             //   message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',

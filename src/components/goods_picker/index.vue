@@ -123,8 +123,8 @@ export default {
     // 选择商品触发事件
     goodsSelector(value, direction, movedKeys) {
       let list = []
-      this.goodsList.forEach(item => {
-        this.selectedGoods.forEach(itemKey => {
+      this.goodsList.forEach((item) => {
+        this.selectedGoods.forEach((itemKey) => {
           if (item.key === itemKey) {
             list.push(item)
           }
@@ -144,8 +144,8 @@ export default {
     goodsComfirm() {
       let values = []
       if (this.selectedGoods.length > 0) {
-        this.goodsList.forEach(item => {
-          this.selectedGoods.forEach(key => {
+        this.goodsList.forEach((item) => {
+          this.selectedGoods.forEach((key) => {
             if (item.key == key) {
               let obj = {
                 imgUrl: item.imgUrl,
@@ -181,9 +181,9 @@ export default {
       }
     },
     _getItemsList() {
-      getItemsList(this.params).then(response => {
+      getItemsList(this.params).then((response) => {
         let list = []
-        response.data.data.list.forEach(item => {
+        response.data.data.list.forEach((item) => {
           list.push({
             key: item.itemId,
             label: item.itemName,
@@ -199,9 +199,9 @@ export default {
       })
     },
     _getPcItemsList() {
-      getPcItemsList(Object.assign({}, this.params, { item_type: 'normal' })).then(response => {
+      getPcItemsList(Object.assign({}, this.params, { item_type: 'normal' })).then((response) => {
         let list = []
-        response.data.data.list.forEach(item => {
+        response.data.data.list.forEach((item) => {
           let imgUrl = ''
           if (typeof item.pics === 'string' && item.pics !== '') {
             imgUrl = JSON.parse(item.pics)[0]

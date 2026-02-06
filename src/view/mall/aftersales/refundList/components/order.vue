@@ -93,7 +93,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="refund_bn" min-width="220" label="退款单号">
-          <template slot-scope="scope" style="margin-left: 10px;">
+          <template slot-scope="scope" style="margin-left: 10px">
             <el-tag v-if="scope.row.refund_type == '0'" effect="plain" type="warning" size="mini">
               售后
             </el-tag>
@@ -240,10 +240,14 @@
           </template>
         </el-table-column>
         <el-table-column width="180" label="退款运费金额（¥）">
-          <template slot-scope="scope"> {{ scope.row.freight_type == 'cash' ? scope.row.freight / 100 : 0 }} </template>
+          <template slot-scope="scope">
+            {{ scope.row.freight_type == 'cash' ? scope.row.freight / 100 : 0 }}
+          </template>
         </el-table-column>
         <el-table-column width="180" label="退款运费（积分）">
-          <template slot-scope="scope"> {{ scope.row.freight_type == 'point' ? scope.row.freight : 0 }} </template>
+          <template slot-scope="scope">
+            {{ scope.row.freight_type == 'point' ? scope.row.freight : 0 }}
+          </template>
         </el-table-column>
 
         <!-- 退款方式 -->
@@ -534,7 +538,7 @@ export default {
       this.loading = false
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -598,7 +602,7 @@ export default {
       var params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach(row => {
+        list.forEach((row) => {
           this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
         })
       }

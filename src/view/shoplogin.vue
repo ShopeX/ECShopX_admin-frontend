@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">欢迎登录</div>
       </div>
@@ -121,7 +121,7 @@ export default {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
     handleSubmit1() {
       this.$store.dispatch('setLoginType', 'distributor')
-      this.$refs.ruleForm1.validate(async valid => {
+      this.$refs.ruleForm1.validate(async (valid) => {
         if (valid) {
           this.loading = true
           this.submitDisabled = true

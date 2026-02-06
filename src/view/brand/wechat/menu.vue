@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
             name: this.ruleForm.name,
@@ -190,7 +190,7 @@ export default {
             url: this.ruleForm.url,
             wxsys: this.ruleForm.wxsys
           }
-          addMenu(params).then(res => {
+          addMenu(params).then((res) => {
             this.tableData = res.data.data.menu
           })
         } else {
@@ -206,14 +206,14 @@ export default {
       let params = {
         pid: '0'
       }
-      getParentMenu(params).then(res => {
+      getParentMenu(params).then((res) => {
         if (res.data.data.menu) {
           this.parentMenu = res.data.data.menu
         }
       })
     },
     getMenuTree() {
-      getMenuTree().then(res => {
+      getMenuTree().then((res) => {
         if (res.data.data.menu) {
           this.tableData = res.data.data.menu
         }

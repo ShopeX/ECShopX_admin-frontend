@@ -50,7 +50,12 @@
           <span>{{ systemTitle }}</span>
         </div>
       </div>
-      <el-menu class="!border-none w-full" :default-active="activeSubIndex">
+      <!-- 菜单展开状态管理 -->
+      <el-menu 
+        ref="subMenu" class="!border-none w-full" :default-active="activeSubIndex"
+        :openeds="openedMenus"
+        @open="handleMenuOpen"
+        @close="handleMenuClose">
         <template v-for="item in subMenus">
           <template v-if="resolveChildren(item.children)">
             <el-submenu :key="item.alias_name" :index="item.alias_name">
@@ -97,7 +102,9 @@ export default {
   data() {
     return {
       mainMenus: [],
-      subMenus: []
+      subMenus: [],
+      //当前打开的二级菜单标识列表
+      openedMenus: []
     }
   },
   computed: {
@@ -107,7 +114,7 @@ export default {
     systemTitle() {
       // 如果有选中的一级菜单，返回该菜单的title
       if (this.activeMainMenu) {
-        const activeMenu = this.mainMenus.find(item => item.alias_name === this.activeMainMenu)
+        const activeMenu = this.mainMenus.find((item) => item.alias_name === this.activeMainMenu)
         if (activeMenu) {
           return activeMenu.name
         }
@@ -116,7 +123,24 @@ export default {
       return getSystemTitle()
     },
     activeSubIndex() {
-      return this.$route.matched[1]?.meta?.aliasName
+      //通过权限标识查找三级菜单
+      const lastRoute = this.$route.matched[this.$route.matched.length - 1]
+      if (lastRoute?.meta?.permissions && lastRoute.meta.permissions.length > 0 && this.subMenus.length > 0) {
+        const permission = lastRoute.meta.permissions[0]
+        
+        // 在所有二级菜单的 children 中查找匹配的三级菜单
+        for (const item of this.subMenus) {
+          if (item.children && item.children.length > 0) {
+            const childMenu = item.children.find((child) => {
+              return child.is_menu && child.permission === permission
+            })
+            if (childMenu && childMenu.alias_name) {
+              return childMenu.alias_name
+            }
+          }
+        }
+      }
+      return null
     },
     computedPrimaryColor() {
       return Config.themeConfig.primaryColor
@@ -126,17 +150,40 @@ export default {
     subMenus: {
       handler(val) {
         this.$emit('change', val.length > 0)
+        this.updateMenuState()
+      },
+      immediate: true
+    },
+    // 监听路由变化，自动更新菜单状态
+    '$route': {
+      handler() {
+        this.updateSubMenus()
+        this.$nextTick(() => {
+          this.updateMenuState()
+        })
       },
       immediate: true
     }
   },
   mounted() {
     this.mainMenus = this.$store.state.user.accessMenus || []
-    const [mainRoute] = this.$route.matched
-    this.subMenus =
-      this.mainMenus.find((item) => item.alias_name === mainRoute?.meta?.aliasName)?.children || []
+    this.updateSubMenus()
   },
   methods: {
+    // 更新中间二级菜单列表
+    updateSubMenus() {
+      const [mainRoute] = this.$route.matched
+      if (mainRoute?.meta?.aliasName) {
+        const mainMenu = this.mainMenus.find((item) => item.alias_name === mainRoute.meta.aliasName)
+        if (mainMenu) {
+          this.subMenus = mainMenu.children || []
+        } else {
+          this.subMenus = []
+        }
+      } else {
+        this.subMenus = []
+      }
+    },
     toNotFound() {
       const basePath = getBasePath()
       if (!this.$route.path.includes('not-found')) {
@@ -148,8 +195,11 @@ export default {
       }
     },
     computedMenuIcon(item) {
-      const allRoutes = this.$router.getRoutes()
-      const route = allRoutes.find((route) => route.meta?.aliasName === item.alias_name)
+      return this.getMenuIconByAlias(item.alias_name)
+    },
+    getMenuIconByAlias(aliasName) {
+      if (!aliasName) return ''
+      const route = this.$router.getRoutes().find((route) => route.meta?.aliasName === aliasName)
       return route?.meta?.icon || ''
     },
     resolveChildren(children) {
@@ -180,8 +230,7 @@ export default {
         permission = firstChild(this.subMenus)
       }
 
-      const allRoutes = this.$router.getRoutes()
-      const route = allRoutes.find((route) => route.meta?.permissions?.includes(permission))
+      const route = this.findRouteByPermission(permission)
       if (route) {
         this.$router.push({ path: route.path })
       } else {
@@ -189,18 +238,220 @@ export default {
       }
     },
     handleSubMenuClick(item) {
-      const allRoutes = this.$router.getRoutes()
-      const route = allRoutes.find((route) => route.meta?.permissions?.includes(item.permission))
-      console.log('handleSubMenuClick:', route)
-
+      const route = this.findRouteByPermission(item.permission)
       if (route) {
-        if (this.$route.path == route?.path) {
+        if (this.$route.path === route.path) {
           return
         }
         this.$router.push({ path: route.path })
       } else {
         this.toNotFound()
       }
+    },
+    findRouteByPermission(permission) {
+      return this.$router.getRoutes().find((route) => route.meta?.permissions?.includes(permission))
+    },
+    // 查找父级二级菜单
+    findParentSubMenu(menuAlias) {
+      return this.subMenus.find((item) => {
+        if (item.children && item.children.length > 0) {
+          return item.children.some((child) => child.is_menu && child.alias_name === menuAlias)
+        }
+        return false
+      })
+    },
+    // 查找需要打开的二级菜单
+    findMenuToOpen() {
+      const activeMenuAlias = this.activeSubIndex
+      if (!activeMenuAlias) {
+        return null
+      }
+
+      const activeSubMenu = this.subMenus.find(
+        (item) => item.alias_name === activeMenuAlias && item.children && item.children.length > 0
+      )
+      if (activeSubMenu) {
+        return activeSubMenu.alias_name
+      }
+
+      const parentSubMenu = this.findParentSubMenu(activeMenuAlias)
+      return parentSubMenu?.alias_name || null
+    },
+    closeOtherSubMenus(menuToOpen) {
+      const menuComponent = this.$refs.subMenu
+      const menusToClose = this.openedMenus.filter(index => index !== menuToOpen)
+      this.openedMenus = this.openedMenus.filter(index => index === menuToOpen)
+
+      const allSubmenus = menuComponent.$el.querySelectorAll('.el-submenu')
+      menusToClose.forEach((indexToClose) => {
+        if (typeof menuComponent.close === 'function') {
+          try {
+            menuComponent.close(indexToClose)
+          } catch (e) {
+            this.closeSubMenuByClick(allSubmenus, indexToClose)
+          }
+        } else {
+          this.closeSubMenuByClick(allSubmenus, indexToClose)
+        }
+      })
+    },
+    // 通过点击关闭指定的二级菜单
+    closeSubMenuByClick(allSubmenus, indexToClose) {
+      const submenu = Array.from(allSubmenus).find((el) => {
+        const idx = el.getAttribute('index') || el.getAttribute('data-index')
+        return idx === indexToClose
+      })
+      
+      if (submenu) {
+        const isOpened = submenu.classList.contains('is-opened') || 
+                        submenu.getAttribute('aria-expanded') === 'true'
+        if (isOpened) {
+          const titleEl = submenu.querySelector('.el-submenu__title')
+          if (titleEl) {
+            titleEl.click()
+          }
+        }
+      }
+    },
+    //查找菜单DOM元素
+    findSubMenuElement(menuAlias) {
+      const menuComponent = this.$refs.subMenu
+      if (!menuComponent || !menuComponent.$el) {
+        return null
+      }
+      const allSubmenus = menuComponent.$el.querySelectorAll('.el-submenu')
+      if (!allSubmenus) {
+        return null
+      }
+      for (const submenu of allSubmenus) {
+        const index = submenu.getAttribute('index') || submenu.getAttribute('data-index')
+        if (index === menuAlias) {
+          return submenu
+        }
+      }
+      const menuItem = this.subMenus.find((item) => item.alias_name === menuAlias)
+      if (menuItem) {
+        for (const submenu of allSubmenus) {
+          const titleEl = submenu.querySelector('.el-submenu__title')
+          if (titleEl && titleEl.textContent.trim() === menuItem.name) {
+            return submenu
+          }
+        }
+      }
+      return null
+    },
+    // 展开指定的二级菜单
+    openSubMenu(menuToOpen) {
+      if (!menuToOpen || !this.$refs.subMenu) {
+        return
+      }
+
+      this.closeOtherSubMenus(menuToOpen)
+
+      setTimeout(() => {
+        const menuComponent = this.$refs.subMenu
+        if (!menuComponent) return
+
+        if (!this.openedMenus.includes(menuToOpen)) {
+          this.openedMenus.push(menuToOpen)
+        }
+
+        const submenuEl = this.findSubMenuElement(menuToOpen)
+        if (submenuEl) {
+          const isOpened = submenuEl.classList.contains('is-opened') || 
+                          submenuEl.getAttribute('aria-expanded') === 'true'
+          if (!isOpened) {
+            const titleEl = submenuEl.querySelector('.el-submenu__title')
+            if (titleEl) {
+              titleEl.click()
+            }
+          }
+        } else if (typeof menuComponent.open === 'function') {
+          try {
+            menuComponent.open(menuToOpen)
+          } catch (e) {
+            // 忽略错误
+          }
+        }
+      }, 100)
+    },
+    //统一更新菜单状态（展开和高亮）
+    updateMenuState() {
+      if (this.subMenus.length === 0) {
+        return
+      }
+
+      const menuToOpen = this.findMenuToOpen()
+      if (menuToOpen) {
+        this.openSubMenu(menuToOpen)
+      }
+
+      setTimeout(() => {
+        this.setActiveMenuItem()
+      }, 150)
+    },
+    // 处理菜单展开事件
+    handleMenuOpen(index) {
+      if (!this.openedMenus.includes(index)) {
+        this.openedMenus.push(index)
+      }
+    },
+    // 处理菜单折叠事件
+    handleMenuClose(index) {
+      const indexPos = this.openedMenus.indexOf(index)
+      if (indexPos > -1) {
+        this.openedMenus.splice(indexPos, 1)
+      }
+    },
+    // 设置菜单高亮
+    setActiveMenuItem() {
+      const activeIndex = this.activeSubIndex
+      if (!activeIndex || !this.$refs.subMenu) {
+        return
+      }
+      
+      const menuComponent = this.$refs.subMenu
+      menuComponent.activeIndex = activeIndex
+      
+      setTimeout(() => {
+        const allMenuItems = menuComponent.$el?.querySelectorAll('.el-menu-item')
+        if (!allMenuItems) return
+
+        allMenuItems.forEach((item) => item.classList.remove('is-active'))
+        
+        let activeMenuItem = menuComponent.$el?.querySelector(`.el-menu-item[index="${activeIndex}"]`)
+        
+        if (!activeMenuItem) {
+          const targetMenu = this.findMenuByAlias(activeIndex)
+          if (targetMenu) {
+            for (const menuItem of allMenuItems) {
+              if (menuItem.textContent.trim() === targetMenu.name) {
+                activeMenuItem = menuItem
+                break
+              }
+            }
+          }
+        }
+        
+        if (activeMenuItem) {
+          activeMenuItem.classList.add('is-active')
+        }
+      }, 50)
+    },
+    // 通过菜单标识查找菜单项数据
+    findMenuByAlias(aliasName) {
+      for (const item of this.subMenus) {
+        if (item.alias_name === aliasName) {
+          return item
+        }
+        if (item.children && item.children.length > 0) {
+          const childMenu = item.children.find((child) => child.is_menu && child.alias_name === aliasName)
+          if (childMenu) {
+            return childMenu
+          }
+        }
+      }
+      return null
     }
   }
 }
@@ -252,7 +503,6 @@ export default {
   height: 42px;
   line-height: 42px;
   margin: 0 8px 2px;
-  background: 216 14% 93% !important;
   color: #666;
 }
 </style>

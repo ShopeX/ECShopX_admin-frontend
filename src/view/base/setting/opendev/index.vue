@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    getShopSetting().then(response => {
+    getShopSetting().then((response) => {
       this.shopForm = response.data.data
     })
     // getSalesSetting().then((response) => {
@@ -116,7 +116,7 @@ export default {
       this.currentTemplate = params
     },
     saveShop() {
-      saveShopSetting(this.shopForm).then(_ => {
+      saveShopSetting(this.shopForm).then((_) => {
         this.$message({
           type: 'success',
           message: '保存销售中心开发设置成功'
@@ -124,7 +124,7 @@ export default {
       })
     },
     saveSales() {
-      saveSalesSetting(this.salesForm).then(_ => {
+      saveSalesSetting(this.salesForm).then((_) => {
         this.$message({
           type: 'success',
           message: '保存营销中心开发设置成功'

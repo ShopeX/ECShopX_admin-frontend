@@ -41,13 +41,13 @@
         <div class="el-table__header-wrapper">
           <table cellspacing="0" cellpadding="0" border="0" class="el-table__header">
             <colgroup>
-              <col name="el-table_5_column_31" width="220">
-              <col name="el-table_5_column_32" width="230">
-              <col name="el-table_5_column_33" width="100">
-              <col name="el-table_5_column_34" width="100">
-              <col name="el-table_5_column_35" width="100">
-              <col name="el-table_5_column_36" width="100">
-              <col name="el-table_5_column_37" width="927">
+              <col name="el-table_5_column_31" width="220" />
+              <col name="el-table_5_column_32" width="230" />
+              <col name="el-table_5_column_33" width="100" />
+              <col name="el-table_5_column_34" width="100" />
+              <col name="el-table_5_column_35" width="100" />
+              <col name="el-table_5_column_36" width="100" />
+              <col name="el-table_5_column_37" width="927" />
             </colgroup>
             <thead class="">
               <tr class="">
@@ -87,13 +87,13 @@
               <div class="el-table__body-wrapper">
                 <table cellspacing="0" cellpadding="0" border="0" class="el-table__body">
                   <colgroup>
-                    <col name="el-table_5_column" width="220">
-                    <col name="el-table_5_column" width="230">
-                    <col name="el-table_5_column" width="100">
-                    <col name="el-table_5_column" width="100">
-                    <col name="el-table_5_column" width="100">
-                    <col name="el-table_5_column" width="100">
-                    <col name="el-table_5_column" width="927">
+                    <col name="el-table_5_column" width="220" />
+                    <col name="el-table_5_column" width="230" />
+                    <col name="el-table_5_column" width="100" />
+                    <col name="el-table_5_column" width="100" />
+                    <col name="el-table_5_column" width="100" />
+                    <col name="el-table_5_column" width="100" />
+                    <col name="el-table_5_column" width="927" />
                   </colgroup>
                   <thead class="">
                     <tr class="" style="font-size: 12px; color: #606266; font-weight: 400">
@@ -309,14 +309,14 @@ export default {
   methods: {
     getMenuTrees() {
       let params = { version: this.version }
-      getShopMenu(params).then(res => {
+      getShopMenu(params).then((res) => {
         this.tableData = res.list
         this.shopmenulist = res.list
       })
     },
     uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file: file.raw, version: this.version }
-      uploadMenu(params).then(res => {
+      uploadMenu(params).then((res) => {
         this.getMenuTrees()
       })
     },
@@ -339,10 +339,10 @@ export default {
       if (event.newIndex == event.oldIndex) {
         return
       }
-      let oldItem,newParent,childItem;
+      let oldItem, newParent, childItem
       // 向下移动
       if (event.newIndex > event.oldIndex) {
-       oldItem = this.shopmenulist[event.oldIndex]
+        oldItem = this.shopmenulist[event.oldIndex]
         newParent = this.shopmenulist[event.newIndex]
         childItem = this.shopmenulist[event.newIndex + 1]
       } else {
@@ -390,7 +390,7 @@ export default {
         return
       }
 
-      saveMenu(true, oldItem).then(res => {
+      saveMenu(true, oldItem).then((res) => {
         this.getMenuTrees()
       })
     },
@@ -410,7 +410,7 @@ export default {
       this.setApisForm.is_menu = row.is_menu
     },
     actionSetMenuApis() {
-      saveMenu(true, this.setApisForm).then(res => {
+      saveMenu(true, this.setApisForm).then((res) => {
         this.editApisVisible = false
         this.getMenuTrees()
       })
@@ -473,7 +473,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteMenu(id).then(res => {
+        deleteMenu(id).then((res) => {
           this.getMenuTrees()
         })
       })
@@ -482,7 +482,7 @@ export default {
       if (this.form.url && this.form.url[0] !== '/') this.form.url = `/${this.form.url}`
       if (this.form.parentUrl) this.form.url = this.form.parentUrl + this.form.url
       console.log(this.form)
-      saveMenu(this.isEdit, this.form).then(res => {
+      saveMenu(this.isEdit, this.form).then((res) => {
         this.editVisible = false
         this.getMenuTrees()
       })

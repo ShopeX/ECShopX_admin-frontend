@@ -49,15 +49,14 @@ function setupAccessGuard(router) {
 
     const hasToken = store.state.user.token
     if (!hasToken) {
-      if (/\/login$/.test(to.path)) {
+      // 如果目标页面是登录页或许可证页，直接放行
+      if (/\/login$/.test(to.path) || /\/license$/.test(to.path)) {
         next()
       } else if (
         /^https?:\/\/[^/]+\/(shopadmin|supplier|merchant)(\/.*)?$/.test(location.origin + to.path)
       ) {
         const basePath = to.path.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
         next(`/${basePath}/login`)
-      } else if (/\/license$/.test(to.path)) {
-        next()
       } else {
         next('/login')
       }
@@ -72,8 +71,15 @@ function setupAccessGuard(router) {
     // 如果当前访问的端不是当前登录的端，则退出登录，并重定向到登录页
     const basePath = window.location.href.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
     if ((basePath == null && !IS_ADMIN()) || (basePath == 'shopadmin' && !IS_DISTRIBUTOR())) {
-      store.commit('user/logout')
-      next(basePath ? `/${basePath}/login` : '/login')
+      const loginPath = basePath ? `/${basePath}/login` : '/login'
+      // 如果目标不是登录页，才需要重定向
+      if (to.path !== loginPath) {
+        store.commit('user/logout')
+        next(loginPath)
+      } else {
+        // 已经在去登录页的路上，放行
+        next()
+      }
       return
     }
 
@@ -118,7 +124,12 @@ function setupAccessGuard(router) {
       to.path === '/merchant'
     ) {
       const firstPath = getFirstRoutePath()
-      next(firstPath)
+      // 避免循环重定向 - 如果目标已经是第一个路由，放行
+      if (to.path !== firstPath) {
+        next(firstPath)
+      } else {
+        next()
+      }
       return
     }
     next(to)

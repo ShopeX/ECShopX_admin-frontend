@@ -7,11 +7,11 @@
   <el-form ref="form" label-width="100px">
     <el-form-item label="AppId">
       <el-input v-model="form.app_id" style="width: 300px" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item label="AppSecret">
       <el-input v-model="form.app_secret" type="textarea" :rows="5" placeholder="请输入内容" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item label="支付渠道id">
       <el-input
@@ -20,7 +20,7 @@
         :rows="5"
         placeholder="请输入内容"
       />
-      <br>
+      <br />
       <span class="frm-tips">支付渠道id(易百分配)</span>
     </el-form-item>
     <!-- <el-form-item label="温馨提示">
@@ -55,7 +55,7 @@ export default {
     },
     getConfig() {
       let query = { pay_type: 'ebuy' }
-      getPaymentSetting(query).then(response => {
+      getPaymentSetting(query).then((response) => {
         this.form = response.data.data
       })
     },
@@ -63,14 +63,14 @@ export default {
       this.loading = true
       this.form.pay_type = 'ebuy'
       setPaymentSetting(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

@@ -24,7 +24,7 @@
                   :src="wximageurl + scope.row.url"
                   class="banner-uploader"
                   @click="handleImgChange(scope.$index, 'banner')"
-                >
+                />
                 <i
                   v-else
                   class="el-icon-plus banner-uploader"
@@ -63,7 +63,7 @@
                   :src="wximageurl + scope.row.url"
                   class="banner-uploader"
                   @click="handleImgChange(scope.$index, 'hotGoods')"
-                >
+                />
                 <i
                   v-else
                   class="el-icon-plus banner-uploader"
@@ -166,14 +166,14 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykmendian', name: 'banner', page_name: 'index' }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       if (res.data.data) {
         this.form.bannerPicList = res.data.data[0].params
         this.bannerPicListSetId = res.data.data[0].id
       }
     })
     let hotGoodsFilter = { template_name: 'yykmendian', name: 'hotGoods', page_name: 'index' }
-    getParamByTempName(hotGoodsFilter).then(res => {
+    getParamByTempName(hotGoodsFilter).then((res) => {
       if (res.data.data) {
         this.form.hotGoods = res.data.data[0].params
         this.hotGoodsSetId = res.data.data[0].id
@@ -232,7 +232,7 @@ export default {
     //选择商品分页
     handleSelectGoodsChange(val) {
       this.params.page = val
-      this.goodsList.forEach(row => {
+      this.goodsList.forEach((row) => {
         //如果选中
         let index = this.selectGoods.indexOf(row.key)
         if (index != -1) {
@@ -262,7 +262,7 @@ export default {
     handleGoodsDialog() {
       this.selectGoodsVisible = false
       if (this.selectGoods.length > 0) {
-        this.goodsList.forEach(row => {
+        this.goodsList.forEach((row) => {
           //如果选中
           let index = this.selectGoods.indexOf(row.key)
           if (index != -1) {
@@ -287,9 +287,9 @@ export default {
       this.selectGoods = []
     },
     getGoodsList() {
-      getItemsList(this.params).then(response => {
+      getItemsList(this.params).then((response) => {
         this.goodsList = []
-        response.data.data.list.forEach(row => {
+        response.data.data.list.forEach((row) => {
           let itemid = ''
           if (this.currentType == 'banner') {
             itemid = this.form.bannerPicList[this.currentIndex].item_id
@@ -330,7 +330,7 @@ export default {
           page_name: 'index',
           id: this.bannerPicListSetId
         }
-        updateParamsById(bannerParams).then(response => {
+        updateParamsById(bannerParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -344,7 +344,7 @@ export default {
           name: 'banner',
           page_name: 'index'
         }
-        setPageParams(bannerParams).then(response => {
+        setPageParams(bannerParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -361,7 +361,7 @@ export default {
           page_name: 'index',
           id: this.hotGoodsSetId
         }
-        updateParamsById(hotGoodsParams).then(response => {
+        updateParamsById(hotGoodsParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -375,7 +375,7 @@ export default {
           name: 'hotGoods',
           page_name: 'index'
         }
-        setPageParams(hotGoodsParams).then(response => {
+        setPageParams(hotGoodsParams).then((response) => {
           this.$message({
             message: '保存成功',
             type: 'success',

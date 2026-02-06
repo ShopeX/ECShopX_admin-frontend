@@ -510,12 +510,12 @@
       <el-col :span="4">
         <section v-show="activateInfo.source != 'demo'" class="section-card fn-b-20 card-right">
           <div class="phone-card">
-            <img class="phone-icon" :src="img.phone" alt="客服电话">
+            <img class="phone-icon" :src="img.phone" alt="客服电话" />
             <span class="phone-text">客服电话 </span>
           </div>
           <h4 class="phone-num">400-921-3522 转 3</h4>
           <div class="phone-btn">
-            <img class="phone-icon" :src="img.qq" alt="在线客服">
+            <img class="phone-icon" :src="img.qq" alt="在线客服" />
             <span
               ><a
                 href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
@@ -532,7 +532,7 @@
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
           <div class="sl-img-hd"><i class="el-icon-user-solid" />售前客户经理</div>
-          <img :src="img.customerService" alt="" class="img-demo">
+          <img :src="img.customerService" alt="" class="img-demo" />
         </section>
       </el-col>
     </el-row>
@@ -560,7 +560,7 @@
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img :src="img.suo" alt="" class="suo">
+            <img :src="img.suo" alt="" class="suo" />
             <p>当前版本为免费试用版本</p>
             <p>升级解锁享受更多服务</p>
           </div>
@@ -578,11 +578,11 @@
         <div class="buy-item-ft">
           <div>
             <p>适用于搭建线上社交零售商城的商家,快速开店</p>
-            <p><img :src="img.check" alt="" class="check-icon">小程序、公众号、PC一体化商城</p>
-            <p><img :src="img.check" alt="" class="check-icon">种草粉丝内容点赞、分享传播</p>
-            <p><img :src="img.check" alt="" class="check-icon">粉丝、员工、网红分销卖货</p>
-            <p><img :src="img.check" alt="" class="check-icon">拼团/砍价/秒杀丰富的营销玩法</p>
-            <p><img :src="img.check" alt="" class="check-icon">直播预约、点赞、分享、互动</p>
+            <p><img :src="img.check" alt="" class="check-icon" />小程序、公众号、PC一体化商城</p>
+            <p><img :src="img.check" alt="" class="check-icon" />种草粉丝内容点赞、分享传播</p>
+            <p><img :src="img.check" alt="" class="check-icon" />粉丝、员工、网红分销卖货</p>
+            <p><img :src="img.check" alt="" class="check-icon" />拼团/砍价/秒杀丰富的营销玩法</p>
+            <p><img :src="img.check" alt="" class="check-icon" />直播预约、点赞、分享、互动</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('商城')">
@@ -601,13 +601,13 @@
           <div>
             <p>适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务</p>
             <p>
-              <img :src="img.check" alt="" class="check-icon">
+              <img :src="img.check" alt="" class="check-icon" />
               千店千面，门店运营线上化
             </p>
-            <p><img :src="img.check" alt="" class="check-icon">实现门店差异化促销及服务</p>
-            <p><img :src="img.check" alt="" class="check-icon">门店导购拉新、服务、激励数字化</p>
-            <p><img :src="img.check" alt="" class="check-icon">建立门店触达私域用户渠道与方式</p>
-            <p><img :src="img.check" alt="" class="check-icon">多维度进行全链路经营数据跟踪</p>
+            <p><img :src="img.check" alt="" class="check-icon" />实现门店差异化促销及服务</p>
+            <p><img :src="img.check" alt="" class="check-icon" />门店导购拉新、服务、激励数字化</p>
+            <p><img :src="img.check" alt="" class="check-icon" />建立门店触达私域用户渠道与方式</p>
+            <p><img :src="img.check" alt="" class="check-icon" />多维度进行全链路经营数据跟踪</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('连锁')">
@@ -858,7 +858,7 @@ export default {
     },
     submit() {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))
-      ydleadsInfo(obj).then(res => {
+      ydleadsInfo(obj).then((res) => {
         this.$message({
           message: '订购提交成功',
           type: 'success'
@@ -896,7 +896,7 @@ export default {
       let params = {
         callback_url: this.wxAuthCallbackUrl + 'auth/woa'
       }
-      getWechatPreAuthUrl(params).then(response => {
+      getWechatPreAuthUrl(params).then((response) => {
         this.url = response.data.data.url
       })
     },
@@ -910,7 +910,7 @@ export default {
       let params = {
         industry: item.name
       }
-      updateCompanyInfo(params).then(res => {})
+      updateCompanyInfo(params).then((res) => {})
     },
     storeChoose: function (item, index) {
       this.state = 3
@@ -1034,7 +1034,7 @@ export default {
       return isInSaleCenter && isSass
     },
     mountedFunc() {
-      getActivateInfo().then(res => {
+      getActivateInfo().then((res) => {
         this.activateInfo = res.data.data
         if (!res.data.data.is_valid) {
           this.$router.push({
@@ -1047,7 +1047,7 @@ export default {
         this.activateInfo.vue_ecshopx_verion = process.env.VUE_APP_PRODUCT_MODEL
       })
       //   this.getUrl();
-      getCompanyStatistics().then(res => {
+      getCompanyStatistics().then((res) => {
         this.staticsData = res.data.data
         let memberData = res.data.data.member_data
         for (var key in memberData) {
@@ -1071,7 +1071,7 @@ export default {
       }
       if (store.getters.is_authorizer || this.isSassAndInCenter()) {
         this.isBind = true
-        getAuthorizerInfo().then(response => {
+        getAuthorizerInfo().then((response) => {
           this.authorizerData = response.data.data
         })
       } else {

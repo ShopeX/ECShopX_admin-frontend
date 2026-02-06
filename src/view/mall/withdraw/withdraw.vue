@@ -162,7 +162,7 @@ export default {
       this.end_time = val[1]
     },
     btnClick(formName, ref) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
             const { status } = await this.$api.adapay.applyForWithdrawal(this.form)

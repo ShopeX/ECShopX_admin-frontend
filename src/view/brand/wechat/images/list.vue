@@ -104,7 +104,7 @@ export default {
         return
       }
       let params = { isUploadFile: true, file: file.raw, type: 'image' }
-      uploadMaterial(params).then(res => {
+      uploadMaterial(params).then((res) => {
         this.isLoadData = false
         this.getList()
       })
@@ -113,7 +113,7 @@ export default {
       if (!this.isLoadData) {
         this.loading = true
         getWechatMaterial(this.params)
-          .then(response => {
+          .then((response) => {
             this.imageList = response.data.data
             this.total_count = response.data.data.total_count
             this.isLoadData = true
@@ -131,7 +131,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteWechatMaterial({ media_id: item.media_id }).then(response => {
+          deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.imageList.item.splice(index, 1)
             this.$message({
               message: '删除成功',

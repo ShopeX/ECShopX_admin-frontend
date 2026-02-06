@@ -111,7 +111,7 @@ export default {
       const { list } = response.data.data
       if (this.value.data) {
         const valueData = this.multiple ? valueData : this.value.data + ''
-        const selectRows = list.filter(item => valueData.includes(item.id))
+        const selectRows = list.filter((item) => valueData.includes(item.id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

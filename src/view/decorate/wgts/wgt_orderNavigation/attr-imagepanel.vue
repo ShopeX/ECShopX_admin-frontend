@@ -53,6 +53,7 @@ export default {
 </script>
 <style lang="scss">
 .attr-nav-item {
+  width: 100%;
   .nav-item--picker {
     display: flex;
     margin-top: 10px;

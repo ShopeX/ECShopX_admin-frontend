@@ -109,7 +109,7 @@ export default {
         this.params.time_end = ''
       }
       this.loading = true
-      getTaskBrokerageLog(this.params).then(res => {
+      getTaskBrokerageLog(this.params).then((res) => {
         this.loading = false
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count

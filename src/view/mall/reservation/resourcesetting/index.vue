@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted() {
-    getSetting().then(res => {
+    getSetting().then((res) => {
       if (res.data.data.resourceName) {
         this.resourceName = res.data.data.resourceName
       } else {

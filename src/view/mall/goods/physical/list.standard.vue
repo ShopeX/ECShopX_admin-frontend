@@ -121,7 +121,12 @@
           <el-cascader
             v-model="params.category"
             :options="categoryList"
-            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id', emitPath: false }"
+            :props="{
+              checkStrictly: true,
+              label: 'category_name',
+              value: 'category_id',
+              emitPath: false
+            }"
             clearable
           />
         </SpFilterFormItem>
@@ -425,7 +430,9 @@
             />
             <el-table-column label="供应状态" width="120">
               <template slot-scope="scope">
-                <span v-if="scope.row.item_holder == 'distributor' && !scope.row.supplier_name"></span>
+                <span
+                  v-if="scope.row.item_holder == 'distributor' && !scope.row.supplier_name"
+                ></span>
                 <span v-else>{{ scope.row.is_market == '1' ? '可售' : '不可售' }}</span>
               </template>
             </el-table-column>
@@ -533,79 +540,79 @@
         </span>
       </el-dialog>
       <SideBar :visible.sync="show_rebate_sideBar" title="商品分销配置" width="60">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span v-if="popularizeSetting.popularize_ratio.type == 'profit'">
-                <el-alert
-                  title="返佣计算类型: 【按利润分佣】"
-                  description="计算方式：商品利润 ×  百分比，其中商品利润为【支付金额-运费-商品成本价】，如果设置的返佣为固定金额，则不会按利润返佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
-                  type="info"
-                  close-text=" "
-                  class="alert-text"
-                  show-icon
-                />
-              </span>
-              <span v-else>
-                <el-alert
-                  title="返佣计算类型: 【按订单金额分佣】"
-                  description="计算方式： 订单金额 × 百分比，其中订单金额为【支付金额-运费】，如果设置的返佣为固定金额，则不会按订单金额分佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
-                  type="info"
-                  close-text=" "
-                  class="alert-text"
-                  show-icon
-                />
-              </span>
-            </div>
-            商品名称：{{ current.item_name }}
-            <el-table v-loading="skuLoading" :data="rebateSpecItems">
-              <el-table-column label="规格" prop="item_spec_desc" min-width="120">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
-                  ><span v-else>单规格</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="销售价" min-width="80">
-                <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
-              </el-table-column>
-              <!-- <el-table-column label="成本价" min-width="80">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span v-if="popularizeSetting.popularize_ratio.type == 'profit'">
+              <el-alert
+                title="返佣计算类型: 【按利润分佣】"
+                description="计算方式：商品利润 ×  百分比，其中商品利润为【支付金额-运费-商品成本价】，如果设置的返佣为固定金额，则不会按利润返佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                type="info"
+                close-text=" "
+                class="alert-text"
+                show-icon
+              />
+            </span>
+            <span v-else>
+              <el-alert
+                title="返佣计算类型: 【按订单金额分佣】"
+                description="计算方式： 订单金额 × 百分比，其中订单金额为【支付金额-运费】，如果设置的返佣为固定金额，则不会按订单金额分佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                type="info"
+                close-text=" "
+                class="alert-text"
+                show-icon
+              />
+            </span>
+          </div>
+          商品名称：{{ current.item_name }}
+          <el-table v-loading="skuLoading" :data="rebateSpecItems">
+            <el-table-column label="规格" prop="item_spec_desc" min-width="120">
+              <template slot-scope="scope">
+                <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
+                ><span v-else>单规格</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="销售价" min-width="80">
+              <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
+            </el-table-column>
+            <!-- <el-table-column label="成本价" min-width="80">
                 <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
               </el-table-column> -->
-              <el-table-column label="类型" width="160">
-                <template slot-scope="scope">
-                  <el-switch
-                    v-model="scope.row.rebate_conf.type"
-                    active-value="money"
-                    inactive-value="ratio"
-                    active-text="金额"
-                    inactive-text="比例"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-for="(item, key) in popularizeSetting.popularize_ratio.profit"
-                :key="key"
-                :label="item.name"
-                min-width="110"
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    v-if="scope.row.rebate_conf.type == 'money'"
-                    v-model="scope.row.rebate_conf.value[key]"
-                    type="number"
-                    size="mini"
-                    suffix-icon="iconfont icon-yen-sign"
-                  />
-                  <el-input
-                    v-else
-                    v-model="scope.row.rebate_conf.value[key]"
-                    size="mini"
-                    type="number"
-                    suffix-icon="iconfont icon-percent"
-                  />
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-card>
+            <el-table-column label="类型" width="160">
+              <template slot-scope="scope">
+                <el-switch
+                  v-model="scope.row.rebate_conf.type"
+                  active-value="money"
+                  inactive-value="ratio"
+                  active-text="金额"
+                  inactive-text="比例"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-for="(item, key) in popularizeSetting.popularize_ratio.profit"
+              :key="key"
+              :label="item.name"
+              min-width="110"
+            >
+              <template slot-scope="scope">
+                <el-input
+                  v-if="scope.row.rebate_conf.type == 'money'"
+                  v-model="scope.row.rebate_conf.value[key]"
+                  type="number"
+                  size="mini"
+                  suffix-icon="iconfont icon-yen-sign"
+                />
+                <el-input
+                  v-else
+                  v-model="scope.row.rebate_conf.value[key]"
+                  size="mini"
+                  type="number"
+                  suffix-icon="iconfont icon-percent"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveRebateConf">
             保存
@@ -618,87 +625,87 @@
         title="商品分销配置"
         width="60"
       >
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>
-                <el-alert
-                  title="导购分润计算类型: 【默认】"
-                  description="计算方式：默认按照 管理分类分润配置优先,导购分润配置计算其次"
-                  type="info"
-                  close-text=" "
-                  class="alert-text"
-                  show-icon
-                />
-              </span>
-              <span>
-                <el-alert
-                  title="导购分润计算类型: 【百分比】"
-                  description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费-商品优惠金额】"
-                  type="info"
-                  close-text=" "
-                  class="alert-text"
-                  show-icon
-                />
-              </span>
-              <span>
-                <el-alert
-                  title="导购分润计算类型: 【商品金额】"
-                  description="计算方式： 固定金额分佣"
-                  type="info"
-                  close-text=" "
-                  class="alert-text"
-                  show-icon
-                />
-              </span>
-            </div>
-            商品名称：{{ current.item_name }}
-            <el-table v-loading="skuLoading" :data="profitSpecItems">
-              <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-              <el-table-column label="原价" prop="market_price" width="100">
-                <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
-              </el-table-column>
-              <el-table-column label="销售价" width="100">
-                <template slot-scope="scope"> ¥{{ scope.row.price }} </template>
-              </el-table-column>
-              <el-table-column label="分润类型">
-                <template slot-scope="scope">
-                  <el-select v-model="scope.row.profit_type" placeholder="请选择">
-                    <el-option label="默认" :value="0" />
-                    <el-option label="百分比" :value="1" />
-                    <el-option label="商品金额" :value="2" />
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column label="拉新导购分润">
-                <template slot-scope="scope">
-                  <div v-if="0 == scope.row.profit_type">
-                    <el-input :disabled="true" size="mini" type="number" value="0" />
-                  </div>
-                  <div v-else>
-                    <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
-                      <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
-                    </el-input>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="推广导购分润">
-                <template slot-scope="scope">
-                  <div v-if="0 == scope.row.profit_type">
-                    <el-input :disabled="true" size="mini" type="number" value="0" />
-                  </div>
-                  <div v-else>
-                    <el-input
-                      v-model="scope.row.profit_conf_popularize_profit"
-                      size="mini"
-                      type="number"
-                    >
-                      <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
-                    </el-input>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-card>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>
+              <el-alert
+                title="导购分润计算类型: 【默认】"
+                description="计算方式：默认按照 管理分类分润配置优先,导购分润配置计算其次"
+                type="info"
+                close-text=" "
+                class="alert-text"
+                show-icon
+              />
+            </span>
+            <span>
+              <el-alert
+                title="导购分润计算类型: 【百分比】"
+                description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费-商品优惠金额】"
+                type="info"
+                close-text=" "
+                class="alert-text"
+                show-icon
+              />
+            </span>
+            <span>
+              <el-alert
+                title="导购分润计算类型: 【商品金额】"
+                description="计算方式： 固定金额分佣"
+                type="info"
+                close-text=" "
+                class="alert-text"
+                show-icon
+              />
+            </span>
+          </div>
+          商品名称：{{ current.item_name }}
+          <el-table v-loading="skuLoading" :data="profitSpecItems">
+            <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
+            <el-table-column label="原价" prop="market_price" width="100">
+              <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+            </el-table-column>
+            <el-table-column label="销售价" width="100">
+              <template slot-scope="scope"> ¥{{ scope.row.price }} </template>
+            </el-table-column>
+            <el-table-column label="分润类型">
+              <template slot-scope="scope">
+                <el-select v-model="scope.row.profit_type" placeholder="请选择">
+                  <el-option label="默认" :value="0" />
+                  <el-option label="百分比" :value="1" />
+                  <el-option label="商品金额" :value="2" />
+                </el-select>
+              </template>
+            </el-table-column>
+            <el-table-column label="拉新导购分润">
+              <template slot-scope="scope">
+                <div v-if="0 == scope.row.profit_type">
+                  <el-input :disabled="true" size="mini" type="number" value="0" />
+                </div>
+                <div v-else>
+                  <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
+                    <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
+                  </el-input>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="推广导购分润">
+              <template slot-scope="scope">
+                <div v-if="0 == scope.row.profit_type">
+                  <el-input :disabled="true" size="mini" type="number" value="0" />
+                </div>
+                <div v-else>
+                  <el-input
+                    v-model="scope.row.profit_conf_popularize_profit"
+                    size="mini"
+                    type="number"
+                  >
+                    <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
+                  </el-input>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveProfitConf">
             保存
@@ -706,62 +713,62 @@
         </div>
       </SideBar>
       <SideBar :visible.sync="show_sideBar" title="设置会员价" width="60">
-          <el-table v-loading="skuLoading" :data="specItems" height="100%">
-            <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-            <el-table-column label="原价" prop="market_price" width="100">
-              <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
-            </el-table-column>
-            <el-table-column label="销售价" width="100">
-              <template slot-scope="scope">
-                <div v-if="scope.row.item_id !== currentId">
-                  ¥{{ scope.row.price }}
-                  <i
-                    class="el-input__icon el-icon-edit"
-                    @click="editPrice(scope.row.item_id, scope.row.price)"
-                  />
-                </div>
-                <el-input
-                  v-else
-                  :ref="'input_' + scope.row.item_id"
-                  v-model="currentPrice"
-                  size="mini"
-                  @blur="handleBlur(scope.$index)"
+        <el-table v-loading="skuLoading" :data="specItems" height="100%">
+          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
+          <el-table-column label="原价" prop="market_price" width="100">
+            <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+          </el-table-column>
+          <el-table-column label="销售价" width="100">
+            <template slot-scope="scope">
+              <div v-if="scope.row.item_id !== currentId">
+                ¥{{ scope.row.price }}
+                <i
+                  class="el-input__icon el-icon-edit"
+                  @click="editPrice(scope.row.item_id, scope.row.price)"
                 />
+              </div>
+              <el-input
+                v-else
+                :ref="'input_' + scope.row.item_id"
+                v-model="currentPrice"
+                size="mini"
+                @blur="handleBlur(scope.$index)"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column label="会员">
+            <el-table-column v-for="(item, index) in grade" :key="index" :label="item.grade_name">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.grade[index].mprice" size="mini" type="number" />
               </template>
             </el-table-column>
-            <el-table-column label="会员">
-              <el-table-column v-for="(item, index) in grade" :key="index" :label="item.grade_name">
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.grade[index].mprice" size="mini" type="number" />
-                </template>
-              </el-table-column>
+          </el-table-column>
+          <el-table-column label="付费会员">
+            <el-table-column
+              v-for="(item, index) in vipGrade"
+              :key="index"
+              :label="item.grade_name"
+            >
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.vipGrade[index].mprice" size="mini" type="number" />
+              </template>
             </el-table-column>
-            <el-table-column label="付费会员">
-              <el-table-column
-                v-for="(item, index) in vipGrade"
-                :key="index"
-                :label="item.grade_name"
-              >
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.vipGrade[index].mprice" size="mini" type="number" />
-                </template>
-              </el-table-column>
-            </el-table-column>
-          </el-table>
+          </el-table-column>
+        </el-table>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="savePrice"> 保存 </el-button>
         </div>
       </SideBar>
       <!-- 选择商品分类-结束 -->
       <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
-          <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
-            <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-            <el-table-column label="库存">
-              <template slot-scope="scope">
-                <el-input v-model="scope.row.store" size="mini" type="number" />
-              </template>
-            </el-table-column>
-          </el-table>
+        <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
+          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
+          <el-table-column label="库存">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.store" size="mini" type="number" />
+            </template>
+          </el-table-column>
+        </el-table>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
             保存
@@ -1063,7 +1070,7 @@ export default {
       itemSkuDrawerTitle: '',
       itemSkuList: [],
       goodCategoryMap: GOOD_CATEGORY_MAP,
-      goodCategory: GOOD_CATEGORY.filter(item => item.value != 'distributor')
+      goodCategory: GOOD_CATEGORY.filter((item) => item.value != 'distributor')
     }
   },
   computed: {
@@ -1147,7 +1154,7 @@ export default {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop()
-        distributorIds = data.map(item => item.distributor_id)
+        distributorIds = data.map((item) => item.distributor_id)
       }
       await this.$api.marketing.saveDistributorItems({
         distributor_ids: distributorIds,
@@ -1173,7 +1180,7 @@ export default {
         page,
         id
       }
-      getPageCode(params).then(response => {
+      getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
@@ -1208,7 +1215,7 @@ export default {
       this.xpGoodsVisible = false
       let list = JSON.parse(JSON.stringify(data))
       if (list === null || list.length === 0) return
-      const items = list.map(item => {
+      const items = list.map((item) => {
         return {
           goods_id: item.goods_id
         }
@@ -1258,7 +1265,7 @@ export default {
       if (this.item_id.length) {
         this.isGiftsData.item_id = Object.assign({}, this.item_id)
         this.isGiftsData.status = status
-        saveIsGifts(this.isGiftsData).then(res => {
+        saveIsGifts(this.isGiftsData).then((res) => {
           if (res.data.data.status == true) {
             this.$message({
               type: 'success',
@@ -1287,7 +1294,7 @@ export default {
         ...this.params
       }
       if (this.item_id.length > 0) {
-        exportParams['item_id'] = this.item_id.map(item => item)
+        exportParams['item_id'] = this.item_id.map((item) => item)
       }
       const { status } = await this.$api.goods.exportItemsData(exportParams)
       if (status) {
@@ -1302,7 +1309,7 @@ export default {
         ...this.params
       }
       if (this.item_id.length > 0) {
-        exportParams['item_id'] = this.item_id.map(item => item)
+        exportParams['item_id'] = this.item_id.map((item) => item)
       }
       const { status } = await this.$api.goods.exportItemsTagData(exportParams)
       if (status) {
@@ -1317,11 +1324,11 @@ export default {
         ...this.params
       }
       if (this.item_id.length > 0) {
-        exportParams['item_id'] = this.item_id.map(item => item)
+        exportParams['item_id'] = this.item_id.map((item) => item)
       }
       const { status } = await this.$api.goods.exportGoodsCode({
         ...exportParams,
-        source: 'item',
+        item_source: 'item',
         export_type: exportType
       })
       if (status) {
@@ -1341,7 +1348,7 @@ export default {
       }
     },
     syncItems() {
-      syncItems().then(res => {
+      syncItems().then((res) => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -1369,7 +1376,7 @@ export default {
         this.currentPrice = ''
         return
       }
-      updateGoodsInfo({ item_id: this.currentId, price: this.currentPrice }).then(res => {
+      updateGoodsInfo({ item_id: this.currentId, price: this.currentPrice }).then((res) => {
         this.$message({
           type: 'success',
           message: '操作成功'
@@ -1420,7 +1427,7 @@ export default {
       if (this.item_id.length) {
         this.showTags()
         this.tag.form.item_ids = this.item_id
-        this.tag.editItem = this.selections.map(v => v.itemName)
+        this.tag.editItem = this.selections.map((v) => v.itemName)
       } else {
         this.$message({
           type: 'error',
@@ -1431,7 +1438,7 @@ export default {
     showTags() {
       let tags = []
       this.tag.list.forEach((item, index) => {
-        let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+        let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
         if (isInArr === -1) {
           tags.push(item)
         }
@@ -1444,7 +1451,7 @@ export default {
       this.tag.currentTags.splice(index, 1)
     },
     tagAdd(item, index) {
-      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
@@ -1452,12 +1459,12 @@ export default {
     },
     submitItemTag() {
       this.tag.form.tag_ids = []
-      this.tag.currentTags.forEach(item => {
+      this.tag.currentTags.forEach((item) => {
         this.tag.form.tag_ids.push(item.tag_id)
       })
       this.tag.dialog = false
       itemsRelTags(this.tag.form)
-        .then(res => {
+        .then((res) => {
           if (res.data.data.status) {
             this.$message({
               type: 'success',
@@ -1466,7 +1473,7 @@ export default {
             this.getGoodsList()
           }
         })
-        .catch(e => {
+        .catch((e) => {
           this.getGoodsList()
         })
     },
@@ -1480,7 +1487,7 @@ export default {
         page: 1,
         pageSize: 500
       }
-      getTagList(params).then(response => {
+      getTagList(params).then((response) => {
         this.tag.list = response.data.data.list
       })
     },
@@ -1495,7 +1502,7 @@ export default {
         }
         this.addTemplatesdialogVisible = false
         setItemsTemplate({ templates_id: this.templates_new_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
           }
         )
@@ -1507,7 +1514,7 @@ export default {
       }
     },
     editItemsSort(index, row) {
-      setItemsSort({ sort: row.sort, item_id: row.itemId }).then(response => {
+      setItemsSort({ sort: row.sort, item_id: row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
@@ -1522,7 +1529,7 @@ export default {
         }
         this.addCategorydialogVisible = false
         setItemsCategory({ category_id: this.category_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
             this.category_id = []
           }
@@ -1572,18 +1579,18 @@ export default {
     },
     saveRebateConf() {
       var rebateConf = []
-      this.rebateSpecItems.forEach(item => {
+      this.rebateSpecItems.forEach((item) => {
         var rebate_conf = item.rebate_conf
         rebate_conf.ratio_type = this.popularizeSetting.popularize_ratio.type
         rebateConf.push(rebate_conf)
       })
-      updateItemRebateConf({ rebateConf: JSON.stringify(rebateConf) }).then(res => {
+      updateItemRebateConf({ rebateConf: JSON.stringify(rebateConf) }).then((res) => {
         this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
       })
     },
     saveProfitConf() {
       var profitConf = []
-      this.profitSpecItems.forEach(item => {
+      this.profitSpecItems.forEach((item) => {
         var profit_conf = {}
         profit_conf.item_id = item.item_id
         profit_conf.profit_type = item.profit_type
@@ -1598,7 +1605,7 @@ export default {
 
         profitConf.push(profit_conf)
       })
-      saveGoodsProfitPrice({ profit_conf: JSON.stringify(profitConf) }).then(res => {
+      saveGoodsProfitPrice({ profit_conf: JSON.stringify(profitConf) }).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -1618,9 +1625,9 @@ export default {
         is_sku: true,
         item_id: data.item_id,
         item_type: 'normal'
-      }).then(res => {
+      }).then((res) => {
         var rebateSpecItems = []
-        res.data.data.list.forEach(item => {
+        res.data.data.list.forEach((item) => {
           if (item.rebate_conf.length === 0) {
             item.rebate_conf = {}
             item.rebate_conf.type = 'money'
@@ -1661,10 +1668,10 @@ export default {
     },
     getGoodsPrice(item_id) {
       this.skuLoading = true
-      getGoodsPrice(item_id).then(res => {
+      getGoodsPrice(item_id).then((res) => {
         let specItems = []
         let colConfigs = []
-        res.data.data.list.forEach(item => {
+        res.data.data.list.forEach((item) => {
           specItems.push({
             item_id: item.item_id,
             item_spec_desc: item.item_spec_desc || item.itemName,
@@ -1682,10 +1689,10 @@ export default {
     },
     getGoodsProfitPrice(item_id) {
       this.skuLoading = true
-      getGoodsProfitPrice(item_id).then(res => {
+      getGoodsProfitPrice(item_id).then((res) => {
         let profitSpecItems = []
         let colConfigs = []
-        res.data.data.list.forEach(item => {
+        res.data.data.list.forEach((item) => {
           let arr = {
             item_id: item.item_id,
             item_spec_desc: item.item_spec_desc || item.itemName,
@@ -1722,13 +1729,13 @@ export default {
         mprice: ''
       }
       let skus = {}
-      this.specItems.forEach(item => {
+      this.specItems.forEach((item) => {
         let grade = {}
-        item.grade.forEach(child => {
+        item.grade.forEach((child) => {
           Object.assign(grade, { [child.vip_grade_id]: child.mprice })
         })
         let vipGrade = {}
-        item.vipGrade.forEach(child => {
+        item.vipGrade.forEach((child) => {
           Object.assign(vipGrade, { [child.vip_grade_id]: child.mprice })
         })
         Object.assign(skus, {
@@ -1743,7 +1750,7 @@ export default {
       this.submitLoading = true
       const _self = this
       updateGoodsPrice(param)
-        .then(res => {
+        .then((res) => {
           this.$message({
             type: 'success',
             message: '更新成功',
@@ -1756,7 +1763,7 @@ export default {
             }
           })
         })
-        .catch(res => {
+        .catch((res) => {
           _self.submitLoading = false
         })
     },
@@ -1788,7 +1795,7 @@ export default {
       const { list, total_count, warning_store } = await this.$api.marketing.getDistributorItems(
         params
       )
-      list.forEach(item => {
+      list.forEach((item) => {
         item.price = item.price / 100
         item.market_price = item.market_price / 100
         item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
@@ -1805,7 +1812,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteItems(row.itemId).then(response => {
+          deleteItems(row.itemId).then((response) => {
             this.ItemsList.splice(index, 1)
             this.$message({
               message: '删除商品成功',
@@ -1827,13 +1834,13 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
-      this.templatesListavailable = list.filter(item => item.status)
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     getGoodsBranchList(searchVal = '') {
       // this.loading = true
       // console.log(searchVal)
       this.goodsBranchParams.attribute_name = searchVal
-      getGoodsAttr(this.goodsBranchParams).then(response => {
+      getGoodsAttr(this.goodsBranchParams).then((response) => {
         this.goodsBranchList = response.data.data.list
         // console.log(this.goodsBranchList)
       })
@@ -1848,7 +1855,7 @@ export default {
       this.itemCategoryList = itemCategoryList
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
@@ -1918,10 +1925,10 @@ export default {
         ...param,
         page: this.page.pageIndex,
         pageSize: this.page.pageSize
-      }).then(response => {
+      }).then((response) => {
         let list = response.data.data.list
         let data = {}
-        list.forEach(item => {
+        list.forEach((item) => {
           let data = {
             item_id: item.item_id,
             store: item.store,
@@ -1950,7 +1957,7 @@ export default {
         }
       } else if (this.item_id.length > 0) {
         let data = []
-        this.item_id.forEach(itemid => {
+        this.item_id.forEach((itemid) => {
           data.push({ item_id: itemid, store: this.itemstore, is_default: true })
         })
         params = {
@@ -1960,7 +1967,7 @@ export default {
       this.submitLoading = true
       const _self = this
       updateItemsStore(params)
-        .then(res => {
+        .then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '修改成功',
@@ -1974,7 +1981,7 @@ export default {
 
           this.getGoodsList()
         })
-        .catch(err => {
+        .catch((err) => {
           this.submitLoading = false
           this.skuLoading = false
         })
@@ -2006,7 +2013,7 @@ export default {
       })
     },
     checkWdtErpBind() {
-      this.$api.third.getWdtErpSetting().then(response => {
+      this.$api.third.getWdtErpSetting().then((response) => {
         this.isBindWdtErp = response.is_open
       })
     },
@@ -2023,7 +2030,7 @@ export default {
       params = {
         item_id: this.item_id
       }
-      this.$api.goods.uploadWdtErpItems(params).then(res => {
+      this.$api.goods.uploadWdtErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',
@@ -2038,7 +2045,7 @@ export default {
       })
     },
     checkJstErpBind() {
-      this.$api.third.getJstErpSetting().then(response => {
+      this.$api.third.getJstErpSetting().then((response) => {
         this.isBindJstErp = response.is_open
       })
     },
@@ -2054,7 +2061,7 @@ export default {
       params = {
         item_id: this.item_id
       }
-      this.$api.goods.uploadJstErpItems(params).then(res => {
+      this.$api.goods.uploadJstErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',

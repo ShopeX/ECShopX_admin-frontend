@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     fnConfirm(formName) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.$emit(
             'callbackConfirm',

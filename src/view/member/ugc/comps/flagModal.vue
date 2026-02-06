@@ -14,7 +14,7 @@
     >
       <div>
         <div class="result">
-          单选，选择后在小程序中将在笔记右上角展示；<br>角标的设置需在「官方角标管理」中调整。
+          单选，选择后在小程序中将在笔记右上角展示；<br />角标的设置需在「官方角标管理」中调整。
         </div>
 
         <div v-loading="modalLoad" class="flag-list">
@@ -100,7 +100,7 @@ export default {
       const { dufCheckFlag } = this.$props
       //console.log('modeal flag',dufCheckFlag)
       that.$data.modalLoad = true
-      getBadge({}).then(res => {
+      getBadge({}).then((res) => {
         var { list, total_count } = res.data.data
         if (list && this.flagList.length < 1) {
           list.unshift({ badge_id: null, badge_name: '无' })
@@ -124,7 +124,7 @@ export default {
     },
     modalHandle() {
       const { checkFlag, flagList } = this.$data
-      var badge = flagList.find(item => item.badge_id == checkFlag)
+      var badge = flagList.find((item) => item.badge_id == checkFlag)
       //console.log('modalHandle',checkFlag,badge)
       this.$emit('modalHandle', badge)
     }

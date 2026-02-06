@@ -134,7 +134,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getSalespersonLoginLog(this.params).then(response => {
+      getSalespersonLoginLog(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = Number(response.data.data.total_count)

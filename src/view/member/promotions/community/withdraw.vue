@@ -436,7 +436,7 @@ export default {
       } else {
         var params = { process_type: processType }
       }
-      processCashWithdrawal(this.detail.id, params).then(response => {
+      processCashWithdrawal(this.detail.id, params).then((response) => {
         this.canceldialog = false
         this.dialog = false
         this.getList()
@@ -454,13 +454,13 @@ export default {
     dialogPayInfo(detail) {
       this.payDialog = true
       this.detail = detail
-      getMerchantTradeList(detail.id).then(response => {
+      getMerchantTradeList(detail.id).then((response) => {
         this.payList = response.data.data.list
       })
     },
     getList() {
       this.loading = true
-      getCashWithdrawalList(this.params).then(response => {
+      getCashWithdrawalList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
@@ -470,7 +470,7 @@ export default {
     },
     exportData(type) {
       this.params.page = 1
-      withdrawExport(this.params).then(response => {
+      withdrawExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -494,7 +494,7 @@ export default {
       this.batchfilter.cash_withdrawal_id = []
       this.selectData = []
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           if (row) {
             this.batchfilter.cash_withdrawal_id.push(row.id)
             this.selectData.push(row)
@@ -506,7 +506,7 @@ export default {
       this.newDialog = true
     },
     batchPayment(type) {
-      batchProcessCashWithdrawal(this.batchfilter).then(res => {
+      batchProcessCashWithdrawal(this.batchfilter).then((res) => {
         this.newDialog = false
         this.$message({ type: 'success', message: '打款成功' })
         this.getList()

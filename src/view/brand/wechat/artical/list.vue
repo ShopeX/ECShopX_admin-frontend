@@ -148,7 +148,7 @@ export default {
       if (!this.isLoadData) {
         this.loading = true
         getWechatMaterial(this.params)
-          .then(response => {
+          .then((response) => {
             this.list_news = response.data.data
             this.total_count = response.data.data.total_count
             this.isLoadData = true
@@ -157,7 +157,7 @@ export default {
             //   Vue.redrawVueMasonry()
             // }, 200)
           })
-          .catch(error => {
+          .catch((error) => {
             this.loading = false
           })
       }
@@ -176,7 +176,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteWechatMaterial({ media_id: item.media_id }).then(response => {
+          deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.list_news.item.splice(index, 1)
             this.$message({
               message: '删除成功',

@@ -84,7 +84,7 @@
                     @mouseover.native="mouseoverHandle(index_y)"
                     @mouseleave.native="mouseleaveHandle()"
                   >
-                    <img class="thumbnail" :src="wximageurl + item_y.imgUrl" alt="">
+                    <img class="thumbnail" :src="wximageurl + item_y.imgUrl" alt="" />
                     <div class="title">
                       {{ item_y.title }}
                     </div>

@@ -40,7 +40,7 @@
                 clearable
                 placeholder="请选择"
                 @change="
-                  e => {
+                  (e) => {
                     paramsChange(e, item)
                   }
                 "
@@ -72,7 +72,7 @@ export default {
   methods: {
     paramsChange(e, item) {
       if (e) {
-        const fd = item.children.find(k => k.value == e)
+        const fd = item.children.find((k) => k.value == e)
         item.attribute_value_name = fd.label
         this.$emit('input', this.value)
       } else {

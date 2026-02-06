@@ -14,7 +14,7 @@
           <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar">
+              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -183,10 +183,7 @@
               </el-table-column>
               <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
-                  <i
-                    class="el-icon-delete"
-                    @click="deleteItemRow(scope.$index, form.items)"
-                  />
+                  <i class="el-icon-delete" @click="deleteItemRow(scope.$index, form.items)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -268,7 +265,7 @@ export default {
   },
   mounted() {
     var params = { is_disabled: 'false' }
-    listVipGrade(params).then(res => {
+    listVipGrade(params).then((res) => {
       this.vipGrade = res.data.data
       if (this.$route.query.is_new == 'true') {
         this.is_add_similar = true
@@ -308,10 +305,10 @@ export default {
       return row.community_id
     },
     getCommunitysList() {
-      getCommunityList(this.communityParams).then(response => {
+      getCommunityList(this.communityParams).then((response) => {
         this.communityList = response.data.data.list
         if (this.initCommunity.length > 0) {
-          this.communityList.forEach(row => {
+          this.communityList.forEach((row) => {
             var index = this.initCommunity.indexOf(row.community_id)
             if (index !== -1) {
               this.initCommunity.splice(index, 1)
@@ -325,7 +322,7 @@ export default {
     handleCommunitySelectionChange(val) {
       if (val.length > 0) {
         this.form.community = []
-        val.forEach(row => {
+        val.forEach((row) => {
           this.form.community.push(row.community_id)
         })
       } else {
@@ -339,7 +336,7 @@ export default {
       let arr = []
       data.forEach((item, index) => {
         let newData = ''
-        let isInArr = this.form.items.findIndex(n => n.item_id == item.itemId)
+        let isInArr = this.form.items.findIndex((n) => n.item_id == item.itemId)
         if (isInArr == -1) {
           newData = {
             item_id: item.itemId,
@@ -383,7 +380,7 @@ export default {
       params = JSON.parse(params)
       params.items = JSON.stringify(params.items)
       if (this.form.activity_id && !this.is_add_similar) {
-        CommunityActivityUpdate(this.form.activity_id, params).then(res => {
+        CommunityActivityUpdate(this.form.activity_id, params).then((res) => {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
@@ -402,7 +399,7 @@ export default {
         })
       } else {
         params.status = 'waiting'
-        CommunityActivityCreate(params).then(res => {
+        CommunityActivityCreate(params).then((res) => {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
@@ -432,7 +429,7 @@ export default {
       return str
     },
     getActivityDetail(id) {
-      CommunityActivityInfo(id).then(res => {
+      CommunityActivityInfo(id).then((res) => {
         let response = res.data.data
         let data = {
           activity_id: response.activity_id,

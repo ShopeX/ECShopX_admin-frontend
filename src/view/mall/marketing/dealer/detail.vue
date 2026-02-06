@@ -9,7 +9,7 @@
       <el-card>
         <el-row>
           <el-col :span="3">
-            <img class="cus-details-img" src="@/assets/img/adapay/dealer.png" alt="">
+            <img class="cus-details-img" src="@/assets/img/adapay/dealer.png" alt="" />
           </el-col>
           <el-col :span="20">
             <div class="cus-details-flex">
@@ -218,11 +218,11 @@ export default {
     },
     getTabDetail(id) {
       getDealerDetail(id)
-        .then(response => {
+        .then((response) => {
           this.infoList = response.data.data
           this.split_ledger_info = response.data.data.split_ledger_info || {}
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -232,11 +232,11 @@ export default {
     },
     getLogList() {
       getAdapayLogList({ log_type: 'dealer', ...this.params, operator_id: this.operator_id })
-        .then(response => {
+        .then((response) => {
           this.logList = response.data.data.list || {}
           this.total_count = response.data.data.total_count || 0
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',

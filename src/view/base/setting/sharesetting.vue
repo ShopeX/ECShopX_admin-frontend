@@ -25,7 +25,7 @@
                   v-if="shareForm.index.imageUrl"
                   :src="wximageurl + shareForm.index.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -63,7 +63,7 @@
                   v-if="shareForm.planting.imageUrl"
                   :src="wximageurl + shareForm.planting.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -95,7 +95,7 @@
                   v-if="shareForm.itemlist.imageUrl"
                   :src="wximageurl + shareForm.itemlist.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -127,7 +127,7 @@
                   v-if="shareForm.group.imageUrl"
                   :src="wximageurl + shareForm.group.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -159,7 +159,7 @@
                   v-if="shareForm.seckill.imageUrl"
                   :src="wximageurl + shareForm.seckill.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -191,7 +191,7 @@
                   v-if="shareForm.coupon.imageUrl"
                   :src="wximageurl + shareForm.coupon.imageUrl"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -263,7 +263,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
-    getShareSetting().then(res => {
+    getShareSetting().then((res) => {
       this.shareForm = res.data.data
     })
   },
@@ -276,7 +276,7 @@ export default {
       })
         .then(() => {
           setShareSetting(this.shareForm)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'

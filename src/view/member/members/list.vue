@@ -216,9 +216,12 @@
           <template slot-scope="scope">
             {{ scope.row.mobile }}
             <el-tooltip
-              v-if="$store.getters.login_type != 'distributor' &&
+              v-if="
+                $store.getters.login_type != 'distributor' &&
                 datapass_block == 0 &&
-                !VERSION_SHUYUN() && !dmcrmIsOpen"
+                !VERSION_SHUYUN() &&
+                !dmcrmIsOpen
+              "
               class="item"
               effect="dark"
               content="修改手机号"
@@ -315,7 +318,7 @@
           <template slot-scope="scope">
             <el-tooltip placement="top">
               <div slot="content">
-                注册时间<br>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+                注册时间<br />{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
               </div>
               <span>{{ scope.row.created | datetime }}</span>
             </el-tooltip>
@@ -841,7 +844,7 @@
 
 <script>
 import exportTip from '@/components/export_tips'
-import aliyunsmsDialog from '@/view/base/shortmessage/cpn/sms_MassLog_edit.vue'
+import aliyunsmsDialog from '@/views/settings/systemConfig/smsService/sms_MassLog_edit.vue'
 import { mapGetters } from 'vuex'
 import {
   getMembers,
@@ -1063,7 +1066,7 @@ export default {
       datapass_block: 1,
       gradeList: [], // 普通会员等级列表
       vipGrade: [], // 付费会员等级列表
-      dmcrmIsOpen:false
+      dmcrmIsOpen: false
     }
   },
   computed: {

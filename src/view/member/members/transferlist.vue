@@ -66,7 +66,7 @@ export default {
   methods: {
     getList(params) {
       this.loading = true
-      transferRightsList(params).then(res => {
+      transferRightsList(params).then((res) => {
         this.transferList = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

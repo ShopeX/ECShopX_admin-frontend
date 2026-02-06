@@ -63,13 +63,13 @@ export default {
   },
   methods: {
     getInfo() {
-      getFapiaoset(this.query).then(response => {
+      getFapiaoset(this.query).then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
       saveFapiaoset(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({ message: '保存成功', type: 'success' })
           this.getInfo()
         })

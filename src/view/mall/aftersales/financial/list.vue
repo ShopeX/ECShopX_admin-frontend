@@ -180,7 +180,7 @@ export default {
     },
     getAftersalesList(filter) {
       this.loading = true
-      getAftersalesList(filter).then(response => {
+      getAftersalesList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
@@ -193,14 +193,14 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     exportData() {
       this.getParams()
       this.params.page = 1
-      exportAftersalesFinancialList(this.params).then(response => {
+      exportAftersalesFinancialList(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

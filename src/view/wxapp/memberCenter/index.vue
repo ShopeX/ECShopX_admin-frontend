@@ -7,9 +7,9 @@
   <SpPage>
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="会员中心BANNER" name="banner">
+      <!-- <el-tab-pane label="会员中心BANNER" name="banner">
         <bannerTemplates />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="菜单隐藏显示设置" name="menuoption">
         <menuoptionTemplates />
       </el-tab-pane>
@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      activeName: 'banner'
+      activeName: 'menuoption'
     }
   },
   mounted() {

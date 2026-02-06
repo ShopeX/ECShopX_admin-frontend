@@ -49,7 +49,7 @@
       <el-table-column label="小程序头像" width="120">
         <template slot-scope="img">
           <div v-if="img.row.head_img">
-            <img :src="img.row.head_img" height="60">
+            <img :src="img.row.head_img" height="60" />
           </div>
           <div v-else>
             <i class="el-icon-picture fa-3x" aria-hidden="true" />
@@ -211,9 +211,9 @@ export default {
   },
   mounted() {
     this.getWxaList()
-    templateList().then(response => {
+    templateList().then((response) => {
       var res = response.data.data.list
-      res.forEach(item => {
+      res.forEach((item) => {
         console.log(item)
         if (item.key_name == 'yykweishop') {
           this.templateList.push(item)
@@ -224,7 +224,7 @@ export default {
   methods: {
     getWxaList() {
       this.loading = true
-      getWxaAuthList().then(response => {
+      getWxaAuthList().then((response) => {
         this.list = response.data.data.list
         this.loading = false
       })
@@ -237,7 +237,7 @@ export default {
       this.weappForm = {}
     },
     handleSubmitWxapp() {
-      addWxapp(this.weappForm).then(response => {
+      addWxapp(this.weappForm).then((response) => {
         this.$message({
           message: '修改成功',
           type: 'success',
@@ -259,7 +259,7 @@ export default {
     },
     handleUpdateSubmit() {
       let params = { authorizer_appsecret: this.updateRow.authorizer_appsecret }
-      configSubmitHandle(this.updateRow.authorizer_appid, params).then(response => {
+      configSubmitHandle(this.updateRow.authorizer_appid, params).then((response) => {
         this.$message({
           message: '修改成功',
           type: 'success',

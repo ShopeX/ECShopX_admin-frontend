@@ -14,13 +14,13 @@
               class="cus-dealer-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            >
+            />
             <img
               v-if="loginType === 'distributor'"
               class="cus-dealer-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            >
+            />
           </el-col>
           <el-col :span="20">
             <div class="cus-dealer-flex">
@@ -222,7 +222,7 @@ export default {
     },
     getDetail() {
       getDealderInfo()
-        .then(response => {
+        .then((response) => {
           this.loading = false
           this.infoList = response.data.data
           this.member_type = response.data.data.member_type
@@ -240,7 +240,7 @@ export default {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',

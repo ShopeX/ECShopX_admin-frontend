@@ -128,7 +128,7 @@ export default {
     },
     getDataList(filter) {
       this.loading = true
-      getRefundErrorLogsList(filter).then(response => {
+      getRefundErrorLogsList(filter).then((response) => {
         this.dataList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -150,7 +150,7 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     refundResubmit(row) {
-      refundResubmit(row.id).then(res => {
+      refundResubmit(row.id).then((res) => {
         this.$message.success('提交成功!')
         this.getDataList(this.params)
       })

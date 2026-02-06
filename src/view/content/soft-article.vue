@@ -151,7 +151,7 @@ export default {
                 <el-button disabled={form[key].length >= 3} onClick={this.onSelectGoods}>
                   选择商品
                 </el-button>
-                <SpGoodsGroup v-model={form[key]} style="margin-top: 10px;" />
+                <SpGoodsGroup v-model={form[key]} style='margin-top: 10px;' />
               </div>
             )
           },
@@ -217,7 +217,7 @@ export default {
       const res = await this.$api.article.getArticleCategoryList({
         category_type: 'bring'
       })
-      this.channelOptions = res.map(item => {
+      this.channelOptions = res.map((item) => {
         return {
           title: item.category_name,
           value: item.category_id
@@ -302,7 +302,7 @@ export default {
       const { data } = await this.$picker.goodsitem()
       // 过滤掉已选商品
       const filterData = data.filter(
-        item => !this.aiArticleForm.goods.find(m => m.item_id === item.item_id)
+        (item) => !this.aiArticleForm.goods.find((m) => m.item_id === item.item_id)
       )
       if (this.aiArticleForm.goods.concat(filterData).length > 3) {
         this.$message.error('最多添加3个商品')
@@ -312,7 +312,7 @@ export default {
     },
     async onSubmitCreateArticle() {
       const params = {
-        product: this.aiArticleForm.goods.map(item => {
+        product: this.aiArticleForm.goods.map((item) => {
           return {
             item_id: item.item_id,
             name: item.item_name,

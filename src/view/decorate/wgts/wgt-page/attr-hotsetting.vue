@@ -16,7 +16,7 @@
     <CompButton
       placeholder="设置热区"
       format="{0}个热区"
-      :value="value.data?.length"
+      :value="hotZoneDisplayValue"
       :view-btn="false"
       @click="onSetHotZone"
       @remove="onRemoveHotZone"
@@ -95,6 +95,15 @@ export default {
         data: []
       },
       dialog: false
+    }
+  },
+  computed: {
+    // 有图片或热区时均允许清除（仅热区数量时，仅有图片无法清除）
+    hotZoneDisplayValue() {
+      const v = this.value || {}
+      const hasImage = !!(v.imgUrl || (this.localValue && this.localValue.imgUrl))
+      const len = (v.data || this.localValue?.data || []).length
+      return len > 0 ? len : hasImage ? 1 : 0
     }
   },
   watch: {

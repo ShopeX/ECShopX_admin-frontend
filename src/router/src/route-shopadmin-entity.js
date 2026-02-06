@@ -84,7 +84,7 @@ export default {
     {
       path: 'brandmaterial',
       name: `素材管理`,
-      component: () => import('@/view/brand/wechat/aterialmanagement'),
+      component: () => import('@/views/content/aterialmanagement'),
       children: [
         {
           path: 'editor/:id?',

@@ -19,7 +19,7 @@
                   <div class="logo-box">
                     <div class="bran-img">
                       <div v-if="goods.pics" class="groups-addgoods">
-                        <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
+                        <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                         <div class="gooups-goodsmsg">
                           <div>{{ goods.itemName }}</div>
                           <div>原价：{{ cursymbol }} {{ goods.price / 100 }}</div>
@@ -174,7 +174,7 @@
         <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
@@ -281,14 +281,14 @@ export default {
   },
   methods: {
     submitItemsAction(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.form.item_id) {
             this.$message.error('请选择商品')
             return false
           }
           if (this.luckydraw_id) {
-            updateLuckyDrawActivity(this.luckydraw_id, this.form).then(res => {
+            updateLuckyDrawActivity(this.luckydraw_id, this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
@@ -298,7 +298,7 @@ export default {
               }
             })
           } else {
-            createLuckyDrawActivity(this.form).then(res => {
+            createLuckyDrawActivity(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
@@ -337,12 +337,12 @@ export default {
     getGoodsList() {
       this.itemsLoading = true
       getItemsList(this.itemsParams)
-        .then(response => {
+        .then((response) => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch(error => {
+        .catch((error) => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -352,7 +352,7 @@ export default {
     },
     getLuckyDrawInfo() {
       getLuckyDrawInfo(this.luckydraw_id)
-        .then(response => {
+        .then((response) => {
           this.form = response.data.data
           this.form.luckydraw_price = this.form.luckydraw_price / 100
           this.paymentTotalChange()
@@ -362,7 +362,7 @@ export default {
           ]
           this.goods = response.data.data.goods
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取活动详情失败'
@@ -373,7 +373,7 @@ export default {
       return this.cursymbol + row.price / 100
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

@@ -34,8 +34,7 @@ export default {
   },
   computed: {},
   watch: {},
-  mounted() {
-  },
+  mounted() {},
   methods: {
     beforeEnter(el) {
       console.log('beforeEnter', el)

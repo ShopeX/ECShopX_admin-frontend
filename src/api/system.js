@@ -44,3 +44,11 @@ export function saveWebPrivacyStatement(data) {
     params: data
   })
 }
+
+//获取支付配置开关状态
+export function getPaymentSubjectStatus() {
+  return fetch({
+    url: '/trade/payment/open-status',
+    method: 'get'
+  })
+}

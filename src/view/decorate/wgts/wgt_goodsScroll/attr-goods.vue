@@ -90,8 +90,8 @@ export default {
     async handleClickAdd() {
       const ids = this.value.data.map(({ goodsId }) => goodsId)
       let list = this.value.data
-        .filter(item => item.goodsId)
-        .map(item => ({
+        .filter((item) => item.goodsId)
+        .map((item) => ({
           pics: [item?.imgUrl],
           itemName: item.title,
           itemId: item.goodsId,

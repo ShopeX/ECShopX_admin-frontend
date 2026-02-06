@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">欢迎登录供应商端</div>
       </div>
@@ -86,7 +86,7 @@
 <script>
 import { Message } from 'element-ui'
 import { isMobile } from '../utils/validate'
-import { fetch } from './request'
+import { fetch } from '@/api/request'
 import { login, getAdminInfo } from '../api/login'
 export default {
   data() {
@@ -133,7 +133,7 @@ export default {
       setTimeout(function () {}, 200)
 
       const _self = this
-      this.$refs.ruleForm1.validate(valid => {
+      this.$refs.ruleForm1.validate((valid) => {
         if (valid) {
           this.loading = true
           this.submitDisabled = true
@@ -143,14 +143,14 @@ export default {
             logintype: 'distributor'
           }
           login(params)
-            .then(response => {
+            .then((response) => {
               this.$store.dispatch('setToken', response.data.data.token)
 
               this.loading = false
-              fetch({ url: '/permission', method: 'get' }).then(res => {
+              fetch({ url: '/permission', method: 'get' }).then((res) => {
                 if (res.data.data) {
                   this.$store.dispatch('setMenu', res.data.data)
-                  getAdminInfo().then(info => {
+                  getAdminInfo().then((info) => {
                     this.$message({
                       message: '登录成功',
                       type: 'success',

@@ -45,6 +45,12 @@
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="请输入页面名称" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="is_open">
+        <el-select v-model="formData.is_open" clearable placeholder="是否启用">
+          <el-option value="1" label="是" />
+          <el-option value="0" label="否" />
+        </el-select>
+      </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
@@ -85,7 +91,8 @@ export default {
   data() {
     return {
       formData: {
-        keywords: ''
+        keywords: '',
+        is_open: ''
       },
       multiple: this.value?.multiple ?? true
     }
@@ -104,12 +111,18 @@ export default {
           page_name: keywords
         }
       }
+      if (this.formData.is_open) {
+        params = {
+          ...params,
+          is_open: this.formData.is_open
+        }
+      }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter(item => this.value.data.includes(item.id))
+        const selectRows = list.filter((item) => this.value.data.includes(item.id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

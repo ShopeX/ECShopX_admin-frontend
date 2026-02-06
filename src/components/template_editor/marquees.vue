@@ -181,7 +181,7 @@ export default {
       this.relArticles = data
       if (data.length > 0) {
         this.data.splice(0)
-        data.forEach(item => {
+        data.forEach((item) => {
           let obj = {
             title: item.title,
             id: item.article_id

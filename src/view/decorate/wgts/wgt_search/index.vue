@@ -9,6 +9,7 @@
       'wgt-search': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -31,6 +32,7 @@
 </template>
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Search',
   wgtName: '搜索',
@@ -39,6 +41,11 @@ export default {
   config: config,
   props: {
     value: [Object, Array]
+  },
+  computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    }
   }
 }
 </script>

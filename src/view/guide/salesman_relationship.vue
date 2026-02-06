@@ -87,7 +87,7 @@ export default {
     },
     getWorkWechatRelList() {
       this.loading = true
-      getWorkWechatRelList(this.salesperson_id, this.params).then(res => {
+      getWorkWechatRelList(this.salesperson_id, this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

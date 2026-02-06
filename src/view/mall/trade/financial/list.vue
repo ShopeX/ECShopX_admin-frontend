@@ -121,14 +121,14 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     exportData() {
       this.getParams()
       this.params.page = 1
-      exportSalesReport(this.params).then(response => {
+      exportSalesReport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

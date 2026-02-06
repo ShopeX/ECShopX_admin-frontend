@@ -63,12 +63,12 @@ export default {
   },
   methods: {
     getInfo() {
-      getMeiqiaInfo(this.query).then(response => {
+      getMeiqiaInfo(this.query).then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
-      saveMeiqia(this.form).then(response => {})
+      saveMeiqia(this.form).then((response) => {})
     }
   }
 }

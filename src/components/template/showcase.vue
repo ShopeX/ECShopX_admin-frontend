@@ -20,15 +20,15 @@
     <div :class="'showcase-scheme-' + config.style">
       <div class="scheme-item">
         <div class="layout layout-1">
-          <img v-if="data[0]" class="show-img" :src="wximageurl + data[0].imgUrl">
+          <img v-if="data[0]" class="show-img" :src="wximageurl + data[0].imgUrl" />
         </div>
       </div>
       <div class="scheme-item">
         <div class="layout layout-2">
-          <img v-if="data[1]" class="show-img" :src="wximageurl + data[1].imgUrl">
+          <img v-if="data[1]" class="show-img" :src="wximageurl + data[1].imgUrl" />
         </div>
         <div class="layout layout-3">
-          <img v-if="data[2]" class="show-img" :src="wximageurl + data[2].imgUrl">
+          <img v-if="data[2]" class="show-img" :src="wximageurl + data[2].imgUrl" />
         </div>
       </div>
     </div>

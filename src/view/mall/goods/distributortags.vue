@@ -31,10 +31,7 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="el-icon-edit-outline" @click="editAction(scope.$index, scope.row)" />
-            <i
-              class="mark el-icon-delete-solid"
-              @click="deleteAction(scope.$index, scope.row)"
-            />
+            <i class="mark el-icon-delete-solid" @click="deleteAction(scope.$index, scope.row)" />
           </div>
         </template>
       </el-table-column>
@@ -165,12 +162,12 @@ export default {
     getDataList() {
       this.loading = true
       getTagList(this.params)
-        .then(response => {
+        .then((response) => {
           this.tagsList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -186,7 +183,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then(response => {
+            .then((response) => {
               this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -227,7 +224,7 @@ export default {
     saveTagData() {
       this.memberTagDialog = false
       if (this.form.tag_id) {
-        updateTag(this.form).then(res => {
+        updateTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -237,7 +234,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then(res => {
+        saveTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',

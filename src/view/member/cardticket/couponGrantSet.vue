@@ -97,7 +97,7 @@ export default {
   methods: {
     getList() {
       this.loading = true
-      getSalepersonCouponList(this.params).then(response => {
+      getSalepersonCouponList(this.params).then((response) => {
         this.total_count = response.data.data.total_count
         this.form_setting = response.data.data.coupon_setting
         this.coupon_list = response.data.data.list
@@ -113,7 +113,7 @@ export default {
       })
     },
     saveCouponGrantSet() {
-      createSalepersonCoupon(this.form_setting).then(response => {
+      createSalepersonCoupon(this.form_setting).then((response) => {
         if (response.data.data.status) {
           this.$message({
             message: '保存成功',
@@ -142,7 +142,7 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteSalepersonCoupon(row.id)
-          .then(response => {
+          .then((response) => {
             that.$message({
               type: 'success',
               message: '移除可发放优惠券成功'

@@ -62,7 +62,7 @@
                 @mouseover.native="mouseoverHandle(index)"
                 @mouseleave.native="mouseleaveHandle()"
               >
-                <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="">
+                <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="" />
                 <div class="title">
                   {{ item.title }}
                 </div>
@@ -117,7 +117,7 @@
             :src="wximageurl + base.backgroundImg"
             class="banner-uploader"
             @click="handleImgChange('backImg')"
-          >
+          />
           <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
             <i class="el-icon-camera" />
             上传图片
@@ -173,10 +173,10 @@ export default {
               page: 1,
               pageSize: 20,
               status: 'not_end'
-            }).then(response => {
+            }).then((response) => {
               this.seckill = response.data.data.list
               const id = this.res.config.seckillId
-              const isHaveSeckill = this.seckill.findIndex(item => item.seckill_id == id) > -1
+              const isHaveSeckill = this.seckill.findIndex((item) => item.seckill_id == id) > -1
               console.log('--seckill-', this.seckill, id, isHaveSeckill)
               if (!isHaveSeckill) {
                 this.config.seckillId = ''
@@ -189,7 +189,7 @@ export default {
               pageSize: 20,
               status: 'valid',
               seckill_type: 'limited_time_sale'
-            }).then(response => {
+            }).then((response) => {
               this.limitTimeSale = response.data.data.list
             })
           }

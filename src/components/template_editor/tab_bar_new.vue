@@ -31,7 +31,7 @@
             :src="item.iconPath"
             class="icon-setter"
             @click="handleIconChange(index)"
-          >
+          />
           <div v-else class="icon-setter" @click="handleIconChange(index)">
             <i class="el-icon-picture muted" />
           </div>
@@ -40,7 +40,7 @@
             :src="item.selectedIconPath"
             class="icon-setter"
             @click="handleSelectedIconChange(index)"
-          >
+          />
           <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
             <i class="el-icon-picture muted" />
           </div>
@@ -197,7 +197,7 @@ export default {
       this.current = index
     },
     handleChange(value) {
-      let n = this.pathOptions.find(item => item.value === value)
+      let n = this.pathOptions.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
@@ -212,7 +212,9 @@ export default {
       this.$emit('bindImgs', index, 'selected')
     },
     handleSave() {
-      const emptyIndex = this.data.findIndex(item => item.name == 'customPage' && !item.customPage)
+      const emptyIndex = this.data.findIndex(
+        (item) => item.name == 'customPage' && !item.customPage
+      )
       if (emptyIndex > -1) {
         return this.$message({
           message: '请选择自定义页面',

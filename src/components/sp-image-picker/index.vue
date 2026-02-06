@@ -15,6 +15,21 @@
       height: 64px;
     }
   }
+  &.mini {
+    .image-item {
+      width: 48px;
+      height: 48px;
+    }
+    .placeholder {
+      height: 48px;
+    }
+    .el-icon-camera {
+      font-size: 18px;
+    }
+    .add-text {
+      font-size: 10px;
+    }
+  }
   &.big {
     .image-item {
       width: 120px;
@@ -157,7 +172,7 @@ export default {
     drag: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     return {
@@ -248,20 +263,20 @@ export default {
     _renderImage(item, index = 0) {
       return (
         <div class={['image-item', { drag: this.drag }]} key={`image-item__${index}`}>
-          <i class="ecx-icon icon-tuozhuai" />
-          <i class="ecx-icon icon-sousuo" on-click={this.previewSrcList.bind(item, index)} />
+          <i class='ecx-icon icon-tuozhuai' />
+          <i class='ecx-icon icon-sousuo' on-click={this.previewSrcList.bind(item, index)} />
           <i
-            class="ecx-icon icon-qingchuFilled"
+            class='ecx-icon icon-qingchuFilled'
             on-click={this.handleDeleteItem.bind(this, index)}
           />
           <el-image
-            class="img-content"
+            class='img-content'
             src={item?.url || item}
-            fit="cover"
-            id="imageRef"
+            fit='cover'
+            id='imageRef'
             preview-src-list={this.showViewer}
           />
-          <span class="image-meta" on-click={this.onUpdateImage.bind(this, index)}>
+          <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
             更换图片
           </span>
         </div>
@@ -282,27 +297,27 @@ export default {
       >
         {max > 1 && (
           <draggable
-            class="list-container"
+            class='list-container'
             list={value}
             disabled={!this.drag}
             options={this.dragOptions}
-            handle=".icon-tuozhuai"
+            handle='.icon-tuozhuai'
           >
             {value.map((item, index) => this._renderImage(item, index))}
           </draggable>
         )}
         {max > 1 && value.length < max && (
-          <div class="image-item placeholder" on-click={this.handleSelectImage}>
-            <i class="el-icon-camera" />
-            <div class="add-text">图片({`${value.length}/${max}`})</div>
+          <div class='image-item placeholder' on-click={this.handleSelectImage}>
+            <i class='el-icon-camera' />
+            <div class='add-text'>图片({`${value.length}/${max}`})</div>
           </div>
         )}
 
         {max == 1 && !isEmpty(value) && this._renderImage(value)}
         {max == 1 && isEmpty(value) && (
-          <div class="image-item placeholder" on-click={this.handleSelectImage}>
-            <i class="el-icon-camera" />
-            <div class="add-text">添加图片</div>
+          <div class='image-item placeholder' on-click={this.handleSelectImage}>
+            <i class='el-icon-camera' />
+            <div class='add-text'>添加图片</div>
           </div>
         )}
       </div>

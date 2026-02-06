@@ -295,7 +295,8 @@ export const PAY_TYPE = {
   wx_qr: '微信PC支付',
   alipay_wap: '支付宝H5支付',
   alipay_qr: '支付宝PC支付',
-  alipaymini: '支付宝小程序'
+  alipaymini: '支付宝小程序',
+  localPay: '零元订单'
 }
 
 export const PAY_STATUS = {
@@ -375,6 +376,9 @@ export const CARD_TYPE = {
   discount: '折扣券',
   cash: '满减券',
   new_gift: '兑换券'
+
+  // 'minus': '立减券',
+  // 'gift': '兑换券'
 }
 
 export const SECKILL_ACTIVITY_STATUS = {

@@ -5,13 +5,15 @@
 
 <template>
   <SpPage>
-    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="attribute_name" label="品牌名称:">
-        <el-input v-model="params.attribute_name" placeholder="请输入品牌名称" />
-      </SpFilterFormItem>
-    </SpFilterForm>
+    <SpFormPlus
+      ref="searchForm"
+      v-model="searchParams"
+      :form-items="searchFormItems"
+      form-type="searchForm"
+      @submit="onSearch"
+    />
 
-    <div class="action-container">
+    <div class="action-container mt-4">
       <el-button type="primary" @click="handleNew"> 新增品牌 </el-button>
     </div>
 
@@ -24,76 +26,29 @@
         同步品牌
       </el-button>
     </div> -->
-    <el-table
-      v-loading="loading"
-      border
-      :data="list"
-      :height="wheight - 170"
-      element-loading-text="数据加载中"
-      :default-sort="{ prop: 'bind_date', order: 'descending' }"
-    >
-      <el-table-column label="操作" width="150">
-        <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
-          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="品牌图片" width="150">
-        <template slot-scope="scope">
-          <el-image style="width: 70px; height: 70px" :src="scope.row.image_url" fit="cover" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="attribute_name" label="品牌名称">
-        <template slot-scope="scope">
-          <div v-if="!scope.row.attribute_id">
-            <el-input v-model="scope.row.attribute_name" placeholder="请输入品牌名称" />
-          </div>
-          <div v-else>
-            {{ scope.row.attribute_name }}
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div class="mt-4 text-right">
-      <el-pagination
-        background
-        layout="total, sizes, prev, pager, next"
-        :current-page.sync="page.pageIndex"
-        :page-sizes="[10, 20, 50]"
-        :total="total_count"
-        :page-size="page.pageSize"
-        @current-change="onCurrentChange"
-        @size-change="onSizeChange"
-      />
-    </div>
-    <imgPicker
-      :dialog-visible="imgDialog"
-      :sc-status="isGetImage"
-      @chooseImg="pickImg"
-      @closeImgDialog="closeImgDialog"
+    <SpFinder
+      ref="finder"
+      url="/goods/attributes"
+      fixed-row-action
+      row-actions-align="left"
+      row-actions-fixed-align="left"
+      row-actions-width="150px"
+      :no-selection="true"
+      :setting="tableSetting"
+      :hooks="{
+        beforeSearch: beforeSearch
+      }"
     />
     <sideBar :visible.sync="show_sideBar" :title="'新增品牌'">
-      <el-form>
-        <el-form-item label="品牌名">
-          <el-input v-model="form.attribute_name" />
-        </el-form-item>
-        <el-form-item label="品牌logo">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
-          <div class="upload-box" @click="handleImgPicker">
-            <img v-if="form.image_url" :src="form.image_url" class="avatar" width="100%">
-            <SpIcon v-else name="camera" :size="28" class="avatar-uploader-icon" />
-          </div>
-        </el-form-item>
-      </el-form>
+      <BrandForm :value="form" @submit="onFormSubmit" />
       <div slot="footer">
-        <el-button type="primary" @click="save"> 提交 </el-button>
+        <el-button type="primary" @click="handleFormSubmit"> 提交 </el-button>
       </div>
     </sideBar>
   </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import imgPicker from '@/components/imageselect'
 import {
   getGoodsAttr,
   addGoodsAttr,
@@ -101,14 +56,45 @@ import {
   deleteGoodsAttr,
   syncBrand
 } from '../../../../api/goods'
-import { pageMixin } from '@/mixins'
 import sideBar from '@/components/element/sideBar'
+import { createSetting } from '@shopex-ui/finder'
+import { useForm } from '@/composables'
+
+const [BrandForm, BrandFormApi] = useForm({
+  formType: 'normalForm',
+  labelWidth: '80px',
+  showDefaultActions: false,
+  labelInline: true,
+  formItems: [
+    {
+      fieldName: 'attribute_name',
+      label: '品牌名',
+      component: 'input',
+      value: '',
+      componentProps: {
+        placeholder: '请输入品牌名称'
+      },
+      rules: [{ required: true, message: '请输入品牌名称', trigger: 'blur' }]
+    },
+    {
+      fieldName: 'image_url',
+      label: '品牌logo',
+      component: 'imagepicker',
+      value: '',
+      componentProps: {
+        multiple: false,
+        limit: 1
+      },
+      tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）'
+    }
+  ]
+})
+
 export default {
   components: {
     sideBar,
-    imgPicker
+    BrandForm
   },
-  mixins: [pageMixin],
   data() {
     return {
       form: {
@@ -117,24 +103,25 @@ export default {
         attribute_name: '',
         image_url: ''
       },
-      params: {
+      searchParams: {
         attribute_type: 'brand',
         attribute_name: ''
       },
-      list: [],
-      loading: false,
-      imgDialog: false,
-      isGetImage: false,
-      imgIndex: 0,
       brand_name: '',
-      total_count: 0,
       show_sideBar: false
     }
   },
-  mounted() {
-    this.fetchList()
-  },
+  mounted() {},
   methods: {
+    onSearch() {
+      this.$refs.finder.refresh(true)
+    },
+    beforeSearch(params) {
+      return {
+        ...params,
+        ...this.searchParams
+      }
+    },
     // handleCurrentChange(page_num) {
     //   this.page.pageIndex = page_num
     //   this.fetchList()
@@ -146,17 +133,24 @@ export default {
     // },
     handleDelete(data) {
       this.$confirm('确认删除该品牌？')
-        .then(_ => {
-          deleteGoodsAttr(data.row.attribute_id).then(res => {
-            this.list.splice(data.$index, 1)
+        .then((_) => {
+          deleteGoodsAttr(data.row.attribute_id).then((res) => {
             this.$message({ type: 'success', message: '操作成功' })
+            this.$refs.finder.refresh()
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     handleNew() {
       this.show_sideBar = true
       this.resetData()
+      this.$nextTick(() => {
+        BrandFormApi.resetFields()
+        BrandFormApi.setFieldsValue({
+          attribute_name: '',
+          image_url: ''
+        })
+      })
     },
     resetData() {
       this.form = {
@@ -168,62 +162,51 @@ export default {
     },
     handleEdit(data) {
       this.show_sideBar = true
-      this.form = {
-        attribute_id: data.attribute_id,
-        attribute_type: data.attribute_type,
-        attribute_name: data.attribute_name,
-        image_url: data.image_url
-      }
-    },
-    save() {
-      // 如果没有id，则表示为新增
-      if (!this.form.attribute_id) {
-        addGoodsAttr(this.form).then(res => {
-          this.$message({ type: 'success', message: '操作成功' })
-          this.page.pageIndex = 1
-          this.resetData()
-          this.fetchList()
+      this.$nextTick(() => {
+        BrandFormApi.setFieldsValue({
+          attribute_name: data.attribute_name,
+          image_url: data.image_url
         })
-      } else {
-        updateGoodsAttr(this.form.attribute_id, this.form).then(res => {
-          this.$message({ type: 'success', message: '操作成功' })
-          this.fetchList()
-        })
-      }
-    },
-    fetchList() {
-      this.loading = true
-      const { pageIndex: page, pageSize } = this.page
-      let params = {
-        page,
-        pageSize,
-        ...this.params
-      }
-      getGoodsAttr(params).then(res => {
-        this.list = res.data.data.list
-        this.total_count = res.data.data.total_count
-        this.loading = false
+        this.form = {
+          attribute_id: data.attribute_id,
+          attribute_type: data.attribute_type,
+          attribute_name: data.attribute_name,
+          image_url: data.image_url
+        }
       })
     },
-    handleImgChange(data) {
-      this.imgDialog = true
-      this.isGetImage = true
-      this.imgIndex = data.$index
+    async handleFormSubmit() {
+      try {
+        await BrandFormApi.validate()
+        const formData = BrandFormApi.getFieldsValue()
+        this.onFormSubmit(formData)
+      } catch (error) {
+        // 验证失败
+      }
     },
-    handleImgPicker() {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      this.form.image_url = data.url
-      this.imgDialog = false
-    },
-    closeImgDialog() {
-      this.imgDialog = false
-      this.isGetImage = false
+    onFormSubmit(formData) {
+      const submitData = {
+        ...this.form,
+        ...formData
+      }
+      // 如果没有id，则表示为新增
+      if (!submitData.attribute_id) {
+        addGoodsAttr(submitData).then((res) => {
+          this.$message({ type: 'success', message: '操作成功' })
+          this.resetData()
+          this.show_sideBar = false
+          this.$refs.finder.refresh(true)
+        })
+      } else {
+        updateGoodsAttr(submitData.attribute_id, submitData).then((res) => {
+          this.$message({ type: 'success', message: '操作成功' })
+          this.show_sideBar = false
+          this.$refs.finder.refresh()
+        })
+      }
     },
     syncBrand() {
-      syncBrand().then(res => {
+      syncBrand().then((res) => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -239,8 +222,77 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
-  }
+    ...mapGetters(['wheight']),
+    // 搜索表单配置
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'attribute_name',
+          label: '品牌名称',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: '请输入品牌名称'
+          }
+        }
+      ]
+    },
+    // 表格配置
+    tableSetting() {
+      return createSetting({
+        actions: [
+          {
+            name: '编辑',
+            key: 'edit',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              type: 'link',
+              handler: ([row]) => {
+                this.handleEdit(row)
+              }
+            }
+          },
+          {
+            name: '删除',
+            key: 'delete',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              type: 'link',
+              handler: ([row]) => {
+                this.handleDelete({ row, $index: 0 })
+              }
+            }
+          }
+        ],
+        columns: [
+          {
+            name: '品牌图片',
+            key: 'image_url',
+            width: 150,
+            render: (h, scope) => {
+              return h('el-image', {
+                props: {
+                  src: scope.row.image_url,
+                  fit: 'cover'
+                },
+                style: {
+                  width: '70px',
+                  height: '70px'
+                }
+              })
+            }
+          },
+          {
+            name: '品牌名称',
+            key: 'attribute_name'
+          }
+        ]
+      })
+    }
+  },
 }
 </script>
 <style scoped lang="scss">

@@ -62,7 +62,7 @@ const [Form, FormApi] = useForm({
         return (
           <SpRichText
             value={value}
-            onChange={val => {
+            onChange={(val) => {
               onInput(val)
             }}
           />
@@ -97,7 +97,7 @@ export default {
     })
 
     FormApi.setFieldComponentProps('category_id', {
-      options: res.map(item => ({
+      options: res.map((item) => ({
         label: item.category_name,
         value: item.category_id
       }))

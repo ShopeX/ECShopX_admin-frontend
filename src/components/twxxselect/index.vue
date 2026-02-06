@@ -17,7 +17,7 @@
           <li v-for="(item, index) in dataList">
             <el-row>
               <el-col :span="18" class="frm-tips">
-                <input type="radio" name="sendItem" :value="index">&nbsp;{{ item.title }}
+                <input type="radio" name="sendItem" :value="index" />&nbsp;{{ item.title }}
               </el-col>
               <el-col :span="6" class="tr">
                 <span class="frm-tips">{{ item.date }}</span>
@@ -32,7 +32,7 @@
           <li v-for="(item, index) in scDataList">
             <el-row>
               <el-col :span="18" class="frm-tips">
-                <input type="radio" name="scItem" :value="index">&nbsp;{{ item.title }}
+                <input type="radio" name="scItem" :value="index" />&nbsp;{{ item.title }}
               </el-col>
               <el-col :span="6" class="tr">
                 <span class="frm-tips">{{ item.date }}</span>
@@ -45,7 +45,7 @@
         <div class="history_msg clearfix">
           <div class="preview_area f_l">
             <div class="preview_box">
-              <img :src="demoimg">
+              <img :src="demoimg" />
             </div>
             <p>公众帐号历史消息列表示例</p>
           </div>

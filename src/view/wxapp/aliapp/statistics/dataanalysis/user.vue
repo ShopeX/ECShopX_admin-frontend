@@ -497,7 +497,7 @@ export default {
       getUserPortrait({
         wxaAppId: this.wxAppId,
         queryType: date || 'weekly'
-      }).then(res => {
+      }).then((res) => {
         if (chart) {
           this[chart].data = res.data.data
           if (chart === 'gender') {

@@ -27,37 +27,37 @@
                 v-if="item.template_name === 'yykmendian'"
                 src="@/assets/img/template_img.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykmembership'"
                 src="@/assets/img/template_img_01.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcutdown'"
                 src="@/assets/img/template_img_02.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykweishop'"
                 src="@/assets/img/template_img_04.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'appleweishop'"
                 src="@/assets/img/template_img_09.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcommunity'"
                 src="@/assets/img/template_img_07.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcommunitypms'"
                 src="@/assets/img/template_img_06.jpg"
                 alt=""
-              >
+              />
               <!-- <div class="template-theme">
                 <div class="theme-item">
                   <div style="background: #ff7000"></div>
@@ -129,7 +129,7 @@ export default {
     ...mapGetters(['name'])
   },
   mounted() {
-    templateList().then(response => {
+    templateList().then((response) => {
       this.templateList = response.data.data.list
     })
   },
@@ -139,8 +139,8 @@ export default {
     },
     openTemp(name) {
       var filter = { template_name: name }
-      templateOpen(filter).then(response => {
-        templateList().then(response => {
+      templateOpen(filter).then((response) => {
+        templateList().then((response) => {
           this.templateList = response.data.data.list
         })
       })

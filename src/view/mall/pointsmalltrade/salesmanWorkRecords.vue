@@ -150,7 +150,7 @@ export default {
     },
     getDataList(filter) {
       this.loading = true
-      getRightsLogList(filter).then(response => {
+      getRightsLogList(filter).then((response) => {
         this.dataList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -168,7 +168,7 @@ export default {
     exportData() {
       this.getParams()
       this.params.page = 1
-      exportList(this.params).then(response => {
+      exportList(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -191,7 +191,7 @@ export default {
       this.storeList = []
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
-      getWxShopsList(shopFilter).then(response => {
+      getWxShopsList(shopFilter).then((response) => {
         this.shopListData = response.data.data.list
         if (this.shopId == '' && this.shopListData[0].wxShopId) {
           this.shopId = this.shopListData[0].wxShopId

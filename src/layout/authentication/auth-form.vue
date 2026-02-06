@@ -23,12 +23,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .page-login {
-    .bg-white {
-      box-shadow: 0 0 30px 20px rgba(0, 0, 0, .2);
-    }
-    ::v-deep .el-form-item__label {
-      font-weight: 500;
-    }
-  } 
+.page-login {
+  .bg-white {
+    box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.2);
+  }
+  ::v-deep .el-form-item__label {
+    font-weight: 500;
+  }
+}
 </style>

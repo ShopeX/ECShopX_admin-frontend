@@ -68,6 +68,7 @@
       'wgt-goods-card': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -98,6 +99,7 @@
 
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Goods',
   wgtName: '商品卡片',
@@ -113,6 +115,9 @@ export default {
     }
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     sourceUrl() {
       const { data } = this.value
       return data?.url || ''

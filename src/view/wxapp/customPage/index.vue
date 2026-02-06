@@ -28,41 +28,43 @@
         </el-table-column>
         <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
-            <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
-              页面装修
-            </el-button>
-            <el-button type="text">
-              <a href="javascript:void(0)" @click="openDialog(scope.row)"> 编辑 </a>
-            </el-button>
-            <el-popover v-if="appID" placement="top" width="200" trigger="click">
-              <div>
-                <img class="page-code" :src="appCodeUrl" />
-                <div class="page-btns">
-                  <el-button
-                    type="primary"
-                    plain
-                    size="mini"
-                    @click="handleDownload(scope.row.page_name)"
-                  >
-                    下载码
-                  </el-button>
-                  <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                    复制链接
-                  </el-button>
-                </div>
-              </div>
-              <el-button
-                slot="reference"
-                style="width: 45px"
-                type="text"
-                @click="handleClick(scope.row.id)"
-              >
-                投放
+            <div class="flex items-center flex-wrap gap-2">
+              <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
+                页面装修
               </el-button>
-            </el-popover>
-            <el-button type="text">
-              <a href="javascript:void(0)" @click="delPage(scope.row.id)"> 删除 </a>
-            </el-button>
+              <el-button type="text" class="m-0 px-1">
+                <a href="javascript:void(0)" class="no-underline text-inherit" @click="openDialog(scope.row)"> 编辑 </a>
+              </el-button>
+              <el-popover v-if="appID" placement="top" width="200" trigger="click">
+                <div>
+                  <img class="page-code" :src="appCodeUrl" />
+                  <div class="page-btns">
+                    <el-button
+                      type="primary"
+                      plain
+                      size="mini"
+                      @click="handleDownload(scope.row.page_name)"
+                    >
+                      下载码
+                    </el-button>
+                    <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                      复制链接
+                    </el-button>
+                  </div>
+                </div>
+                <el-button
+                  slot="reference"
+                  type="text"
+                  class="m-0 px-1"
+                  @click="handleClick(scope.row.id)"
+                >
+                  投放
+                </el-button>
+              </el-popover>
+              <el-button type="text" class="m-0 pl-2">
+                <a href="javascript:void(0)" class="no-underline text-inherit" @click="delPage(scope.row.id)"> 删除 </a>
+              </el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -371,5 +373,9 @@ export default {
 }
 .page-btns {
   text-align: center;
+}
+// 覆盖 Element UI 文本按钮的默认 margin-left
+::v-deep .flex .el-button--text {
+  margin-left: 0;
 }
 </style>

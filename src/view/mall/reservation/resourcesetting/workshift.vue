@@ -491,7 +491,7 @@ export default {
     getStoreList() {
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
-      getWxShopsList(shopFilter).then(response => {
+      getWxShopsList(shopFilter).then((response) => {
         this.shopListData = response.data.data.list
         if (this.shopId == '' && this.shopListData[0].wxShopId) {
           this.shopId = this.shopListData[0].wxShopId
@@ -504,11 +504,11 @@ export default {
     },
     getDefaultWorkShift() {
       this.defaultDialogVisible = true
-      getListShiftType().then(response => {
+      getListShiftType().then((response) => {
         if (response.data.data.list) {
           this.typeList = response.data.data.list
           var params = { shop_id: this.shopId }
-          getDefaultShift(params).then(res => {
+          getDefaultShift(params).then((res) => {
             var list = res.data.data
             var week = this.weekdays
             if (list.length > 0) {
@@ -542,7 +542,7 @@ export default {
     addDefaultShift() {
       var params = { shop_id: this.shopId, defaultData: this.weekdays }
       console.log(params)
-      createDefautlShift(params).then(res => {
+      createDefautlShift(params).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -565,7 +565,7 @@ export default {
         this.$message.error('班次类型结束时间不能为空')
         return
       }
-      createShiftType(this.addItem).then(res => {
+      createShiftType(this.addItem).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -578,7 +578,7 @@ export default {
       this.addItem = { typeName: '', beginTime: '', endTime: '' }
     },
     deleteShiftType(typeId) {
-      deleteShiftType(typeId).then(res => {
+      deleteShiftType(typeId).then((res) => {
         if (res.data.data.status == false) {
           this.$message.error('该类型不可被删除')
           return
@@ -609,7 +609,7 @@ export default {
     },
     clearCell(rowIndex, weekdaynum, shiftId) {
       var params = { id: shiftId }
-      deleteWorkShift(params).then(res => {
+      deleteWorkShift(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
             type: 'success',
@@ -666,7 +666,7 @@ export default {
         return
       }
       if (this.relResource.id) {
-        updateWorkShift(this.relResource).then(res => {
+        updateWorkShift(this.relResource).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -676,7 +676,7 @@ export default {
           this.getWorkShiftList(this.filterSelect)
         })
       } else {
-        createWorkShift(this.relResource).then(res => {
+        createWorkShift(this.relResource).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -690,7 +690,7 @@ export default {
     },
     getShiftTypeList(typeId) {
       var params = {}
-      getListShiftType(params).then(response => {
+      getListShiftType(params).then((response) => {
         if (response.data.data.list) {
           this.typeList = response.data.data.list
           //console.log(this.typeList, '+++++')
@@ -707,7 +707,7 @@ export default {
     },
     getWorkShiftList(params) {
       this.loading = true
-      getListWorkShift(params).then(res => {
+      getListWorkShift(params).then((res) => {
         this.manageData = res.data.data.resourceLevel
         this.sevenDays = res.data.data.weekDay
         this.total_count = res.data.data.total_count
@@ -716,7 +716,7 @@ export default {
     },
     getEveryYearWeek() {
       var params = { year: this.currYear }
-      getweekday(params).then(res => {
+      getweekday(params).then((res) => {
         this.weekData = res.data.data.list
         if (this.weekData.length > 0) {
           let currDate = this.weekData[this.weekData.length - 1].label

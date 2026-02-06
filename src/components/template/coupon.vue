@@ -25,7 +25,7 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img class="coupon-img" :src="item.imgUrl">
+          <img class="coupon-img" :src="item.imgUrl" />
         </template>
         <template v-else>
           <div class="coupon-amount">
@@ -34,7 +34,7 @@
             <div v-if="item.type === 'discount'" class="amount-cur">折</div>
           </div>
           <div class="coupon-brand">
-            <img class="brand-img" :src="wximageurl + item.imgUrl">
+            <img class="brand-img" :src="wximageurl + item.imgUrl" />
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">
@@ -58,11 +58,11 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img class="coupon-img" :src="item.imgUrl">
+          <img class="coupon-img" :src="item.imgUrl" />
         </template>
         <template v-else>
           <div class="coupon-brand">
-            <img class="brand-img" :src="wximageurl + item.imgUrl">
+            <img class="brand-img" :src="wximageurl + item.imgUrl" />
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">

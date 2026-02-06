@@ -775,7 +775,7 @@
           <el-col :span="6">
             <el-row class="region-list">
               <el-col>
-                已选：<br>
+                已选：<br />
                 {{ conf_area | formatCityData(district, false) }}
               </el-col>
             </el-row>
@@ -947,7 +947,7 @@ export default {
     this.getAddress()
     if (this.$route.params.templatesId) {
       this.templatesId = this.$route.params.templatesId
-      getShippingTemplatesInfo(this.templatesId).then(res => {
+      getShippingTemplatesInfo(this.templatesId).then((res) => {
         if (res.data.data) {
           this.form.name = res.data.data.name
           this.form.is_free = res.data.data.is_free
@@ -1050,7 +1050,7 @@ export default {
         this.form.nopost_conf = this.nopost_self_conf
       }
       if (this.templatesId) {
-        updateShippingTemplates(this.templatesId, this.form).then(res => {
+        updateShippingTemplates(this.templatesId, this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               message: '更新成功',
@@ -1064,7 +1064,7 @@ export default {
           }
         })
       } else {
-        createShippingTemplates(this.form).then(res => {
+        createShippingTemplates(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               message: '添加成功',
@@ -1733,7 +1733,7 @@ export default {
       }
     },
     getAddress() {
-      getAddress().then(res => {
+      getAddress().then((res) => {
         let that = this
         this.district = res.data.data
         this.district.forEach(function (provinceItem) {

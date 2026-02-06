@@ -149,7 +149,7 @@ export default {
       this.videoForm.file = file.raw
       this.videoForm.type = 'video'
       uploadMaterial(this.videoForm)
-        .then(res => {
+        .then((res) => {
           this.isLoadData = false
           this.uploadDialog = false
           this.getList()
@@ -162,7 +162,7 @@ export default {
       if (!this.isLoadData) {
         this.loading = true
         getWechatMaterial(this.params)
-          .then(response => {
+          .then((response) => {
             this.videoList = response.data.data
             this.total_count = response.data.data.total_count
             this.isLoadData = false
@@ -180,7 +180,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteWechatMaterial({ media_id: item.media_id }).then(response => {
+          deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.videoList.item.splice(index, 1)
             this.$message({
               message: '删除成功',

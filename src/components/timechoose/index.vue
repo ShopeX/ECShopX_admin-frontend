@@ -11,8 +11,7 @@
       <el-option label="最近30天" :value="2" />
       <el-option label="自然天" :value="3" />
       <el-option label="今日实时" :value="4" />
-      <el-option label="自定义" :value="5" />
-</el-select
+      <el-option label="自定义" :value="5" /> </el-select
     >&nbsp;
     <span v-if="isNeardate"
       >{{ typeText

@@ -111,7 +111,7 @@ export default {
       getWxaMessageTemplateList({
         wxapp_appid: this.wxapp_id,
         template_name: this.template_name
-      }).then(res => {
+      }).then((res) => {
         this.temlateList = res.data.data.list
       })
     }
@@ -130,7 +130,7 @@ export default {
       if (this.currentTemplate.send_time_desc.value) {
         params.send_time = this.currentTemplate.send_time_desc.value
       }
-      openWxaMessageTemplate(params).then(res => {
+      openWxaMessageTemplate(params).then((res) => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     },

@@ -7,66 +7,66 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-        <SpSelectShop
-          ref="selectShop"
-          v-model="formData.distributor_id"
-          clearable
-          placeholder="请选择"
-        />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="formData.order_id" placeholder="请输入订单号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="invoice_apply_bn" label="开票申请流水:">
-        <el-input v-model="formData.invoice_apply_bn" placeholder="请输入开票申请流水" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="company_title" label="发票抬头:">
-        <el-input v-model="formData.company_title" placeholder="请输入发票抬头" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="invoice_source" label="开票来源:">
-        <el-select v-model="formData.invoice_source" clearable placeholder="请选择">
-          <el-option
-            v-for="item in invoiceSourceList"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
+        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
+          <SpSelectShop
+            ref="selectShop"
+            v-model="formData.distributor_id"
+            clearable
+            placeholder="请选择"
           />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="开票申请手机号:">
-        <el-input v-model="formData.mobile" placeholder="请输入开票申请手机号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="email" label="开票申请邮箱:">
-        <el-input v-model="formData.email" placeholder="请输入开票申请邮箱" />
-      </SpFilterFormItem>
-
-      <SpFilterFormItem prop="invoice_type_code" label="发票类型:">
-        <el-select v-model="formData.invoice_type_code" clearable placeholder="请选择">
-          <el-option
-            v-for="item in typeList"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="cycleTime" label="创建时间:" size="max">
-        <el-date-picker
-          v-model="formData.cycleTime"
-          clearable
-          type="datetimerange"
-          format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
-          prefix-icon="null"
-          :default-time="defaultTime"
-        />
         </SpFilterFormItem>
-    </SpFilterForm>
+        <SpFilterFormItem prop="order_id" label="订单号:">
+          <el-input v-model="formData.order_id" placeholder="请输入订单号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="invoice_apply_bn" label="开票申请流水:">
+          <el-input v-model="formData.invoice_apply_bn" placeholder="请输入开票申请流水" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="company_title" label="发票抬头:">
+          <el-input v-model="formData.company_title" placeholder="请输入发票抬头" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="invoice_source" label="开票来源:">
+          <el-select v-model="formData.invoice_source" clearable placeholder="请选择">
+            <el-option
+              v-for="item in invoiceSourceList"
+              :key="item.value"
+              :label="item.title"
+              size="mini"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="mobile" label="开票申请手机号:">
+          <el-input v-model="formData.mobile" placeholder="请输入开票申请手机号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="email" label="开票申请邮箱:">
+          <el-input v-model="formData.email" placeholder="请输入开票申请邮箱" />
+        </SpFilterFormItem>
+
+        <SpFilterFormItem prop="invoice_type_code" label="发票类型:">
+          <el-select v-model="formData.invoice_type_code" clearable placeholder="请选择">
+            <el-option
+              v-for="item in typeList"
+              :key="item.value"
+              :label="item.title"
+              size="mini"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="cycleTime" label="创建时间:" size="max">
+          <el-date-picker
+            v-model="formData.cycleTime"
+            clearable
+            type="datetimerange"
+            format="yyyy-MM-dd HH:mm:ss"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            prefix-icon="null"
+            :default-time="defaultTime"
+          />
+        </SpFilterFormItem>
+      </SpFilterForm>
       <SpFinder
         ref="finder"
         url="/order/invoice/list"
@@ -348,7 +348,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sp-filter-form-item.label .form-item__label{
+.sp-filter-form-item.label .form-item__label {
   white-space: nowrap;
 }
 </style>

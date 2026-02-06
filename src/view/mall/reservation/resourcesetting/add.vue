@@ -94,7 +94,7 @@
         <el-form-item label="展示图">
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar">
+              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -269,7 +269,7 @@ export default {
     // },
     saveResource() {
       const that = this
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           var storeList = this.storeData
           var index
@@ -279,7 +279,7 @@ export default {
             }
           }
           if (this.form.resourceLevelId) {
-            updateResourceLevel(this.form).then(res => {
+            updateResourceLevel(this.form).then((res) => {
               if (res.data.data.status) {
                 this.$message({
                   message: '更新成功',
@@ -293,7 +293,7 @@ export default {
               }
             })
           } else {
-            createResourceLevel(this.form).then(res => {
+            createResourceLevel(this.form).then((res) => {
               if (res.data.data.status) {
                 this.$message({
                   message: '添加成功',
@@ -318,7 +318,7 @@ export default {
     },
     getStoreList() {
       let params = { page: 1, pageSize: 500, isValid: 'true' }
-      getWxShopsList(params).then(response => {
+      getWxShopsList(params).then((response) => {
         var shopList = response.data.data.list
         for (var i = 0; i < shopList.length; i++) {
           this.storeData.push({ value: shopList[i].wxShopId, label: shopList[i].storeName })
@@ -330,7 +330,7 @@ export default {
       this.loading = true
       var params = { page: 1, pageSize: 100 }
       params.service_type = 'timescard'
-      getServiceLabelsList(params).then(response => {
+      getServiceLabelsList(params).then((response) => {
         var labelsList = response.data.data.list
         var index
         for (index in labelsList) {
@@ -343,12 +343,12 @@ export default {
       })
     },
     getResourceLevel() {
-      getResourceLevel(this.resourceId).then(res => {
+      getResourceLevel(this.resourceId).then((res) => {
         this.form = res.data.data
       })
     },
     getResourceName() {
-      getSetting().then(res => {
+      getSetting().then((res) => {
         this.resourceName = res.data.data.resourceName
       })
     },

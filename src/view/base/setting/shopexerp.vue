@@ -62,7 +62,7 @@ export default {
       this.getConfig()
     },
     getConfig() {
-      getShopexErpSetting().then(response => {
+      getShopexErpSetting().then((response) => {
         this.form = response.data.data
       })
     },
@@ -70,14 +70,14 @@ export default {
       this.loading = true
 
       setShopexErpSetting(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

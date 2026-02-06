@@ -205,7 +205,7 @@ export default {
     },
     getList(filter) {
       this.loading = true
-      getFapiaoList(filter).then(response => {
+      getFapiaoList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -221,7 +221,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          DeleteSettingData(params).then(response => {
+          DeleteSettingData(params).then((response) => {
             this.list.splice(index, 1)
             this.$message({
               message: '操作成功',
@@ -269,7 +269,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          fapiaoSet(query).then(response => {
+          fapiaoSet(query).then((response) => {
             this.getList(this.params)
             this.$message({
               message: '操作成功',

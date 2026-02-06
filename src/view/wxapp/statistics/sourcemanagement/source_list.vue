@@ -211,7 +211,7 @@ export default {
     handleSelectionChange(rows) {
       this.checkSource = []
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           if (row) {
             this.checkSource.push(row)
           }
@@ -231,7 +231,7 @@ export default {
     },
     edit(row) {
       this.dialogVisible = true
-      getSourcesDetail(row.sourceId).then(res => {
+      getSourcesDetail(row.sourceId).then((res) => {
         let detail = res.data.data
         this.form.source_name = detail.source_name
         this.form.source_id = detail.source_id
@@ -242,18 +242,18 @@ export default {
       })
     },
     onSubmit() {
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           var params = {
             source_name: this.form.source_name,
             tags_id: []
           }
-          this.checktags.forEach(item => {
+          this.checktags.forEach((item) => {
             params.tags_id.push(item.tag_id)
           })
 
           if (this.form.source_id) {
-            updateSources(this.form.source_id, params).then(response => {
+            updateSources(this.form.source_id, params).then((response) => {
               if (response.data.data.source_id) {
                 this.dialogVisible = false
                 this.form.source_name = ''
@@ -265,7 +265,7 @@ export default {
               }
             })
           } else {
-            createSources(params).then(response => {
+            createSources(params).then((response) => {
               if (response.data.data.source_id) {
                 this.dialogVisible = false
                 this.form.source_name = ''
@@ -300,14 +300,14 @@ export default {
       }
       // console.log(params)
       getSourcesList(params)
-        .then(response => {
+        .then((response) => {
           this.dataList = response.data.data.list
           // console.log(this.dataList)
           this.total_count = response.data.data.total_count
           this.AllcheckTags = response.data.data.checkTags
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -331,12 +331,12 @@ export default {
         page: page,
         page_size: this.pageLimit
       }
-      getTagList(params).then(response => {
+      getTagList(params).then((response) => {
         this.taglist = response.data.data.list
 
         if (this.checktags.length > 0) {
-          this.checktags.forEach(item => {
-            let checked = this.taglist.find(n => n.tag_id === item.tag_id)
+          this.checktags.forEach((item) => {
+            let checked = this.taglist.find((n) => n.tag_id === item.tag_id)
             if (checked) {
               this.$refs.multipleTable.toggleRowSelection(item)
             }
@@ -355,15 +355,15 @@ export default {
         return false
       }
       let checkSource = []
-      this.checkSource.forEach(item => {
+      this.checkSource.forEach((item) => {
         checkSource.push(item.sourceId)
       })
       let checktags = []
-      this.checktags.forEach(item => {
+      this.checktags.forEach((item) => {
         checktags.push(item.tag_id)
       })
       let params = { source_ids: JSON.stringify(checkSource), tags_id: JSON.stringify(checktags) }
-      saveTags(params).then(res => {
+      saveTags(params).then((res) => {
         this.$message({
           type: 'success',
           message: '保存完成'
@@ -379,15 +379,15 @@ export default {
     handleSelectAll(val) {
       if (val.length > 0) {
         this.checktags = []
-        val.forEach(item => {
-          let inChecked = this.checktags.findIndex(n => item.tag_id === n.tag_id)
+        val.forEach((item) => {
+          let inChecked = this.checktags.findIndex((n) => item.tag_id === n.tag_id)
           if (inChecked === -1) {
             this.checktags.push(item)
           }
         })
       } else {
         this.taglist.forEach((item, index) => {
-          let inChecked = this.checktags.findIndex(n => item.tag_id === n.tag_id)
+          let inChecked = this.checktags.findIndex((n) => item.tag_id === n.tag_id)
           if (inChecked !== -1) {
             this.checktags.splice(inChecked, 1)
           }
@@ -395,7 +395,7 @@ export default {
       }
     },
     handleSelectChange(val, row) {
-      let inChecked = this.checktags.findIndex(item => row.tag_id === item.tag_id)
+      let inChecked = this.checktags.findIndex((item) => row.tag_id === item.tag_id)
       if (inChecked !== -1) {
         this.checktags.splice(inChecked, 1)
       } else {

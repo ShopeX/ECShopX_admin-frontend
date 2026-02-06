@@ -130,8 +130,8 @@ export default {
   methods: {
     moment,
     getAreas() {
-      api.regionauth.getRegionauth().then(res => {
-        this.areas = res?.list?.map(el => ({
+      api.regionauth.getRegionauth().then((res) => {
+        this.areas = res?.list?.map((el) => ({
           value: el.regionauth_id,
           label: el.regionauth_name
         }))
@@ -149,7 +149,7 @@ export default {
       const { list = [] } = response.data.data
       const _data = this.value?.data || []
       if (_data?.length) {
-        const selectRows = list.filter(item => _data?.includes(item.id))
+        const selectRows = list.filter((item) => _data?.includes(item.id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

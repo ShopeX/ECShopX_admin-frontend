@@ -1,101 +1,60 @@
-<!--
-  Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
-  See LICENSE file for license details.
--->
-
 <style lang="scss" src="./index.scss" />
 <template>
-  <div
-    :class="{
-      'wgt-coupon': true,
-      padded: value.padded
-    }"
-  >
-    <div v-if="value.title || value.subtitle" class="wgt-hd">
-      <span class="title">{{ value.title }}</span>
-      <span class="sub-title">{{ value.subtitle }}</span>
-    </div>
-    <div
-      :class="[
-        'wgt-bd',
-        `coupon-style-${
-          value.data.length + value.voucher_package.length <= 2
-            ? value.data.length + value.voucher_package.length
-            : 3
-        }`
-      ]"
-    >
-      <!-- 挂件自定义部分 -->
-      <div
-        v-for="(item, index) in value.data"
-        :key="`wgt-coupon-item__${index}`"
-        :class="[
-          'wgt-coupon-item',
-          {
-            'has-img': item.imgUrl
-          }
-        ]"
-        :style="getCouponStyle(item)"
-      >
-        <template v-if="!item.imgUrl">
-          <div class="coupon-bd">
-            <div v-if="item.type == 'cash'" class="coupon-amount">
-              <span class="symbol">¥</span>
-              <span class="value">{{ item.amount / 100 }}</span>
+  <div class="wgt-couponcard" :style="outerStyle">
+    <div class="wgt-couponcard-inner" :style="innerStyle" :class="{
+      'wgt-couponcard-one': value.data.length == 1,
+      'wgt-couponcard-two': value.data.length == 2,
+      'wgt-couponcard-three': value.data.length == 3,
+      'wgt-couponcard-more': value.data.length >= 4
+    }">
+      <div v-for="(item, index) in value.data" :key="index" class="wgt-couponcard-item">
+        <div class="wgt-couponcard-item-body">
+          <div class="wgt-couponcard-item-header">
+            <div v-if="item.type !== 'discount'" class="coupon-unit" :style="{ color: value.amountColor }">
+              ¥
             </div>
-            <div v-if="item.type == 'discount'" class="coupon-amount">
-              <span class="value">{{ item.amount }}</span>
-              <span class="symbol">折</span>
-            </div>
-            <div v-if="item.type == 'new_gift'" class="coupon-amount">
-              <span class="value">{{ item.amount / 100 }}</span>
-              <span class="symbol">元</span>
-            </div>
-            <div class="coupon-desc">
-              <div class="name">{{ item.title }}</div>
-              <div class="desc">{{ item.desc }}</div>
+            <div class="coupon-title" :style="{ color: value.amountColor }">{{ item.amount }}</div>
+            <div v-if="item.type == 'discount'" class="coupon-unit" :style="{ color: value.amountColor }">
+              折
             </div>
           </div>
-          <div class="coupon-ft">
-            <div class="btn">领取</div>
+          <div v-if="value.data.length == 1" class="wgt-couponcard-item-info">
+            <p class="use-title">{{ item?.title }}</p>
+    
+            <p  class="use-desc" v-html="item.description" />
+            <p class="use-time">
+              有效期至 {{ item.end_date }}
+            </p>
+            <p  class="use-time">{{ item?.valid_date }}</p>
           </div>
-        </template>
+          <div v-else class="wgt-couponcard-item-info">
+            <p class="use-title">{{ item?.title }}</p>
+            <p class="use-desc">{{ item.desc }}</p>
+          </div>
+        </div>
+        <!-- dayStockNum: 'stockNum',//日剩余库存
+  stockNum:'realStockNum', //总剩余库存
+  remainingNum:({get_num,quantity})=> quantity - get_num -->
+   
+        <div 
+          :class="['wgt-couponcard-item-btn', { 'disabled': item.quantity - item.get_num <= 0 }]"
+          :style="receiveBtnStyle">
+          {{
+            item.quantity - item.get_num <= 0 ? '已领完' : '立即领取' }} </div>
+        </div>
       </div>
-
-      <div
-        v-for="(item, index) in value.voucher_package"
-        :key="`wgt-coupon-package-item__${index}`"
-        :class="['wgt-coupon-item']"
-        :style="getCouponStyle(item)"
-      >
-        <template v-if="!item.imgUrl">
-          <div class="coupon-bd">
-            <div class="coupon-amount">
-              <span class="package-value">券包</span>
-            </div>
-            <div class="coupon-desc">
-              <div class="name">{{ item.title }}</div>
-              <div class="desc">{{ item.desc }}</div>
-            </div>
-          </div>
-          <div class="coupon-ft">
-            <div class="btn">领取</div>
-          </div>
-        </template>
-      </div>
-      <!-- 挂件自定义部分 -->
     </div>
-  </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import config from './config'
+import { getOuterStyle, getInnerStyle } from '../../comps/style-utils'
 export default {
-  name: 'Coupon',
+  name: 'CouponCard',
   wgtName: '优惠券',
   wgtDesc: '',
-  wgtIcon: 'wgt-coupon',
+  wgtIcon: 'ticket',
+  wgtType: 2,
   config: config,
   props: {
     value: [Object, Array]
@@ -106,16 +65,34 @@ export default {
       couponDeep: {}
     }
   },
-  created() {},
-  methods: {
-    getCouponStyle(item, index) {
-      if (item.imgUrl) {
-        return {
-          'background-image': `url(${item.imgUrl})`,
-          'background-size': 'cover',
-          'background-position': 'center'
-        }
+  computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
+    innerStyle() {
+      return getInnerStyle(this.value)
+    },
+    receiveBtnStyle() {
+      const { color, textColor } = this.value.receiveBtn
+      return {
+        backgroundColor: color,
+        color: textColor
       }
+    }
+  },
+  created() { },
+  methods: {
+    AIOFormatter(item) {
+      if (item.stockNum > 0 && item.realStockNum > 0) {
+        return '立即领取'
+      } else {
+        return item.realStockNum <= 0 ? '已领完' : '今日已领完'
+      }
+      // return {
+      //   dayStockNum: 'stockNum',//日剩余库存
+      //   stockNum:'realStockNum', //总剩余库存
+      //   remainingNum:({get_num,quantity})=> quantity - get_num
+      // }
     }
   }
 }

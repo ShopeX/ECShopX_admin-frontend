@@ -71,11 +71,7 @@
               @click.native="setCurrent(k)"
             >
               <transition name="el-fade-in-linear">
-                <div
-                  v-if="k == editorIndex"
-                  class="el-icon-delete-solid"
-                  @click="removeCurrent"
-                />
+                <div v-if="k == editorIndex" class="el-icon-delete-solid" @click="removeCurrent" />
               </transition>
             </component>
           </draggable>
@@ -289,7 +285,7 @@ export default {
     }
   },
   created() {
-    Object.keys(plugins).forEach(key => {
+    Object.keys(plugins).forEach((key) => {
       let widget = plugins[key].widget
       Vue.component(key, widget)
     })
@@ -341,19 +337,19 @@ export default {
      */
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then(_ => {
+        .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     /**
      * 保存
      */
     saveConfig() {
-      const tmp = this.components.find(v => v.name === 'nav')
+      const tmp = this.components.find((v) => v.name === 'nav')
       this.components = tmp ? this.components : [...this.components, ...[this.navConfig]]
       console.log('save components', this.components)
       console.log('save nav', tmp)
@@ -365,7 +361,7 @@ export default {
         page_name: `custom_${this.id}`
       }
 
-      savePageParams(filter).then(res => {
+      savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',
@@ -385,11 +381,11 @@ export default {
         version: 'v1.0.1',
         page_name: `custom_${newName}`
       }
-      getParamByTempName(filter).then(res => {
+      getParamByTempName(filter).then((res) => {
         const data = res.data.data
         if (!data.config.length) return
         this.components = data.config
-        const tmp = data.config.find(v => v.name === 'nav') // 导航
+        const tmp = data.config.find((v) => v.name === 'nav') // 导航
         tmp && (this.navConfig = tmp)
         console.log('_getParamByTempName nav-->', tmp)
       })

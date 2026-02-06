@@ -12,8 +12,8 @@
         </div>
         <div class="content">
           <div class="toolbar">
-            <el-button 
-              type="primary" 
+            <el-button
+              type="primary"
               icon="el-icon-download"
               @click="handleExport"
               :loading="exportLoading"
@@ -66,24 +66,24 @@ export default {
         type: 'audit'
       }
     },
-    
+
     afterSearch({ data }) {
       const { search_options = {} } = data.data
       this.search_options = search_options.status
     },
-    
+
     async handleAudit(row, action) {
       try {
         // 弹出确认对话框
         const confirmText = action === 'approve' ? '确认通过此提现申请？' : '确认拒绝此提现申请？'
         const actionText = action === 'approve' ? '通过' : '拒绝'
-        
+
         await this.$confirm(confirmText, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: action === 'approve' ? 'success' : 'warning'
         })
-        
+
         // 弹出备注输入框
         const { value: remark } = await this.$prompt('请输入审核备注', '审核备注', {
           confirmButtonText: '确定',
@@ -91,16 +91,16 @@ export default {
           inputPattern: /.+/,
           inputErrorMessage: '备注不能为空'
         })
-        
+
         // 调用审核接口
         const params = {
           apply_id: row.id,
           action: action,
           remark: remark
         }
-        console.log('params',params)
+        console.log('params', params)
         const result = await this.$api.bspay.withdrawAudit(params)
-        
+
         if (result.status) {
           this.$message.success(`${actionText}成功`)
           // 刷新列表
@@ -115,17 +115,17 @@ export default {
         }
       }
     },
-    
+
     async handleExport() {
       try {
         this.exportLoading = true
-        
+
         // 构建导出参数，包含固定的 type 参数
         const exportParams = {
           type: 'audit',
           export_type: 'bspay_withdraw'
         }
-        
+
         // 调用导出接口
         const response = await this.$api.bspay.exportWithdrawData(exportParams)
         if (response.status) {
@@ -149,7 +149,7 @@ export default {
         this.exportLoading = false
       }
     },
-    
+
     // 下载文件方法
     downloadFile(url, filename) {
       const a = document.createElement('a')
@@ -168,9 +168,9 @@ export default {
   .clearfix span {
     font-weight: 700;
   }
-  
+
   .toolbar {
     margin-bottom: 16px;
   }
 }
-</style> 
+</style>

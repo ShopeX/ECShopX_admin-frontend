@@ -43,7 +43,7 @@
               :auto-upload="true"
               :show-file-list="false"
               :http-request="
-                ctx => {
+                (ctx) => {
                   handleSoloChange(ctx, 'business_code_img')
                 }
               "
@@ -52,7 +52,7 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -98,7 +98,7 @@
             v-model="form_solo.legal_id_card_type"
             placeholder="选择法人代表证件类"
             :disabled="disabled"
-            @visible-change="bool => (isEdit = bool)"
+            @visible-change="(bool) => (isEdit = bool)"
           >
             <el-option
               v-for="item in cardType"
@@ -139,12 +139,12 @@
             :auto-upload="true"
             :show-file-list="false"
             :http-request="
-              ctx => {
+              (ctx) => {
                 handleSoloChange(ctx, 'legal_card_imgz')
               }
             "
           >
-            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -156,12 +156,12 @@
             :disabled="disabled"
             :show-file-list="false"
             :http-request="
-              ctx => {
+              (ctx) => {
                 handleSoloChange(ctx, 'legal_card_imgf')
               }
             "
           >
-            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -219,7 +219,7 @@
             v-model="form_solo.occupation"
             placeholder="选择职业"
             :disabled="disabled"
-            @visible-change="bool => (isEdit = bool)"
+            @visible-change="(bool) => (isEdit = bool)"
           >
             <el-option
               v-for="item in occupationList"
@@ -463,18 +463,18 @@ export default {
       delete data.created_at
       delete data.updated_at
       let fileList = JSON.parse(JSON.stringify(this.fileList))
-      Object.keys(fileList).forEach(key => {
+      Object.keys(fileList).forEach((key) => {
         fileList[key] = data[`${key}_full_url`]
       })
       this.fileList = fileList
       this.form_solo = data
     },
     onSoloSubmit() {
-      this.$refs['form_solo'].validate(valid => {
+      this.$refs['form_solo'].validate((valid) => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form_solo))
 
-          saveHffile(obj).then(res => {
+          saveHffile(obj).then((res) => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -508,7 +508,7 @@ export default {
       }
       const upload = new UploadUtil()
       // 上传
-      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then(res => {
+      Promise.all([upload.uploadImg(file, file.name), upLoadHffile(params)]).then((res) => {
         this.fileList[type] = URL.createObjectURL(file)
         let { data } = res[1]
         let { key } = res[0]

@@ -200,7 +200,8 @@ export default {
     getUploadList() {
       this.loading = true
       let params = {
-        file_type: IS_SUPPLIER() && this.activeName == 'normal_goods' ? 'supplier_goods' : this.activeName,
+        file_type:
+          IS_SUPPLIER() && this.activeName == 'normal_goods' ? 'supplier_goods' : this.activeName,
         page: this.page,
         pageSize: this.pageSize,
         ...this.getDistributorId()

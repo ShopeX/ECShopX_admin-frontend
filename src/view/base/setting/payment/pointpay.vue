@@ -38,7 +38,7 @@ export default {
       let query = {}
       if (this.activeName == 'point_pay') {
         query = { pay_type: 'point_pay' }
-        getPaymentSetting(query).then(response => {
+        getPaymentSetting(query).then((response) => {
           console.log('response == ', response)
           this.form = response.data.data
           this.form.point_pay_first = response.data.data.point_pay_first == '1' ? true : false
@@ -55,14 +55,14 @@ export default {
         }
       }
       setPaymentSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

@@ -58,7 +58,7 @@
               {{ item.label }}
             </el-radio>
           </el-radio-group>
-          <br>
+          <br />
           <span v-if="form.limitType == 'limit_days'">
             <el-input v-model="form.limit" style="width: 80px" />天内可预约1次(从预约日开始算)
           </span>
@@ -180,7 +180,7 @@ export default {
   },
   methods: {
     save() {
-      saveSetting(this.form).then(res => {
+      saveSetting(this.form).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -192,7 +192,7 @@ export default {
     },
     getData() {
       this.loading = true
-      getSetting().then(res => {
+      getSetting().then((res) => {
         if (res.data.data) {
           var data = res.data.data
           this.form.reservationMode = data.reservationMode

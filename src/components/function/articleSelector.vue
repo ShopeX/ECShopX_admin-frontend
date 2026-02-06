@@ -100,18 +100,18 @@ export default {
         this.show = true
         let ids = []
         this.loading = true
-        this.multipleSelection.forEach(item => {
+        this.multipleSelection.forEach((item) => {
           ids.push(item.article_id)
         })
         if (ids.length > 0) {
           let param = JSON.parse(JSON.stringify(this.params))
           param.article_id = ids
           this.selectRows = []
-          getArticleList(param).then(res => {
+          getArticleList(param).then((res) => {
             this.selectRows = res.data.data.list
             this.$refs.multipleTable.clearSelection()
-            this.itemsData.forEach(item => {
-              let checked = this.selectRows.find(n => n.itemId === item.itemId)
+            this.itemsData.forEach((item) => {
+              let checked = this.selectRows.find((n) => n.itemId === item.itemId)
               if (checked) {
                 this.$refs.multipleTable.toggleRowSelection(item)
               }
@@ -134,8 +134,8 @@ export default {
     },
     itemsData(val) {
       if (this.selectRows.length > 0) {
-        this.itemsData.forEach(item => {
-          let checked = this.selectRows.find(n => n.itemId === item.itemId)
+        this.itemsData.forEach((item) => {
+          let checked = this.selectRows.find((n) => n.itemId === item.itemId)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -170,8 +170,8 @@ export default {
       if (this.limitNum) {
         this.$message({ message: '当前组件不支持全选', type: 'warning' })
         this.$refs.multipleTable.clearSelection()
-        this.itemsData.forEach(item => {
-          let checked = this.selectRows.find(n => n.article_id === item.article_id)
+        this.itemsData.forEach((item) => {
+          let checked = this.selectRows.find((n) => n.article_id === item.article_id)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -179,15 +179,15 @@ export default {
         return
       }
       if (val.length > 0) {
-        val.forEach(item => {
-          let inChecked = this.selectRows.findIndex(n => item.article_id === n.article_id)
+        val.forEach((item) => {
+          let inChecked = this.selectRows.findIndex((n) => item.article_id === n.article_id)
           if (inChecked === -1) {
             this.selectRows.push(item)
           }
         })
       } else {
         this.itemsData.forEach((item, index) => {
-          let inChecked = this.selectRows.findIndex(n => item.article_id === n.article_id)
+          let inChecked = this.selectRows.findIndex((n) => item.article_id === n.article_id)
           if (inChecked !== -1) {
             this.selectRows.splice(inChecked, 1)
           }
@@ -195,14 +195,14 @@ export default {
       }
     },
     handleSelectChange(val, row) {
-      let inChecked = this.selectRows.findIndex(item => row.article_id === item.article_id)
+      let inChecked = this.selectRows.findIndex((item) => row.article_id === item.article_id)
       if (inChecked !== -1) {
         this.selectRows.splice(inChecked, 1)
       } else {
         if (this.limitNum && this.selectRows.length >= this.limitNum) {
           this.$message({ message: `最多选择${this.limitNum}件商品`, type: 'warning' })
           this.$refs.multipleTable.clearSelection()
-          this.selectRows.forEach(item => {
+          this.selectRows.forEach((item) => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
           return
@@ -222,7 +222,7 @@ export default {
     getNewsList() {
       if (this.getStatus) {
         this.loading = true
-        getArticleList(this.params).then(response => {
+        getArticleList(this.params).then((response) => {
           this.itemsData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false

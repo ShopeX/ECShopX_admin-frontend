@@ -114,7 +114,7 @@ export default {
     getCardList(data) {
       this.listLoading = true
       if (this.scStatus) {
-        getEffectiveCardList(data).then(response => {
+        getEffectiveCardList(data).then((response) => {
           this.listLoading = false
           this.tableData = response.data.data.list
           this.total_count = response.data.data.total_count

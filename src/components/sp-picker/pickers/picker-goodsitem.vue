@@ -96,7 +96,10 @@
           :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="isShowFormItem('distributor_id') && !value.isPointGoods" prop="distributor_id">
+      <SpFilterFormItem
+        v-if="isShowFormItem('distributor_id') && !value.isPointGoods"
+        prop="distributor_id"
+      >
         <SpSelectShop
           v-model="formData.distributor_id"
           clearable
@@ -236,7 +239,7 @@ export default {
       item_holder: '',
       is_gift: '',
       is_prescription: '',
-      item_bn:""
+      item_bn: ''
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {
@@ -260,7 +263,7 @@ export default {
   },
   computed: {
     url() {
-      if (this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD() && this.formData.distributor_id)){
+      if (this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD() && this.formData.distributor_id)) {
         return '/distributor/items'
       } else {
         if (this.value.isPointGoods) {
@@ -307,8 +310,8 @@ export default {
       const { list } = response.data.data
       if (this.localSelection.length > 0) {
         const { finderTable } = this.$refs.finder.$refs
-        const ids = this.localSelection.map(m => m[this.rowKey])
-        const selectRows = list.filter(item => ids.includes(item[this.rowKey]))
+        const ids = this.localSelection.map((m) => m[this.rowKey])
+        const selectRows = list.filter((item) => ids.includes(item[this.rowKey]))
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)
         })
@@ -330,7 +333,7 @@ export default {
         })
       } else {
         const isAdd = selection.includes(row)
-        const idx = this.localSelection.findIndex(f => f[this.rowKey] === row[this.rowKey])
+        const idx = this.localSelection.findIndex((f) => f[this.rowKey] === row[this.rowKey])
 
         if (isAdd && idx === -1) {
           this.localSelection.push(row)
@@ -338,7 +341,7 @@ export default {
           this.localSelection.splice(idx, 1)
         }
       }
-      this.localSelection = this.localSelection.filter(item => item.itemId)
+      this.localSelection = this.localSelection.filter((item) => item.itemId)
       this.updateVal(this.localSelection)
     },
     /**
@@ -349,16 +352,16 @@ export default {
     async handleSelectAll(list) {
       const { finderTable } = this.$refs.finder.$refs
       const currentPageData = finderTable.$refs.finderTable.list
-      const currentPageDataIds = currentPageData.map(m => m[this.rowKey])
+      const currentPageDataIds = currentPageData.map((m) => m[this.rowKey])
 
       // 获取当前页面已选中的数据
-      const currentPageSelectList = list.filter(item =>
+      const currentPageSelectList = list.filter((item) =>
         currentPageDataIds.includes(item[this.rowKey])
       )
 
       // 先移除当前页的所有选中项
       this.localSelection = this.localSelection.filter(
-        item => !currentPageDataIds.includes(item[this.rowKey])
+        (item) => !currentPageDataIds.includes(item[this.rowKey])
       )
 
       // 如果有选中项，则添加到 localSelection

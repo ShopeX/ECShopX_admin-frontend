@@ -18,33 +18,31 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      value: {
-        type: Object,
-        default: () => ({})
-      }
-    },
-    data() {
-      return {
-        localValue: {
-          date: this.value.date,
-          is_forever: this.value.is_forever
-        }
-      }
-    },
-    watch: {
+export default {
+  props: {
+    value: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
       localValue: {
-        handler(val) {
-          this.$emit('change', val)
-        },
-        deep: true,
-        immediate: false
+        date: this.value.date,
+        is_forever: this.value.is_forever
       }
     }
+  },
+  watch: {
+    localValue: {
+      handler(val) {
+        this.$emit('change', val)
+      },
+      deep: true,
+      immediate: false
+    }
   }
+}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

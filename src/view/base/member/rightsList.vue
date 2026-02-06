@@ -231,7 +231,7 @@ export default {
   methods: {
     onSubmit() {
       let query = { mobile: this.mobile, itemids: this.addRightsItems }
-      createRights(query).then(res => {
+      createRights(query).then((res) => {
         this.mobile = ''
         this.addRightsItems = []
         this.$message({
@@ -265,7 +265,7 @@ export default {
     handleGoodsChange(val) {
       this.goodsParams.page = val
       this.goodsListSelect = []
-      this.goodsList.forEach(row => {
+      this.goodsList.forEach((row) => {
         //如果选中
         let index = this.addRightsItems.indexOf(row.key)
         if (index != -1) {
@@ -275,9 +275,9 @@ export default {
       this.getGoodsList()
     },
     getGoodsList() {
-      getItemsList(this.goodsParams).then(response => {
+      getItemsList(this.goodsParams).then((response) => {
         let list = []
-        response.data.data.list.forEach(row => {
+        response.data.data.list.forEach((row) => {
           let index = this.addRightsItems.indexOf(row.itemId)
           //如果未选中
           if (index === -1) {
@@ -293,7 +293,7 @@ export default {
     },
     getRightsList() {
       this.loading = true
-      findRightsList(this.params).then(response => {
+      findRightsList(this.params).then((response) => {
         this.rightsList = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
@@ -305,7 +305,7 @@ export default {
       this.rightsInfo = item
       this.form.rights_id = item.rights_id
       var filter = { rights_id: item.rights_id }
-      getRightsInfo(filter).then(res => {
+      getRightsInfo(filter).then((res) => {
         if (res.data.data.logs.list) {
           this.delayData = res.data.data.logs.list
         }
@@ -313,7 +313,7 @@ export default {
       this.delayDialog = true
     },
     delaySave() {
-      delayRights(this.form).then(res => {
+      delayRights(this.form).then((res) => {
         if (res.data.data) {
           this.delayDialog = false
           this.getRightsList()

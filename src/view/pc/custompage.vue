@@ -133,8 +133,8 @@ export default {
       this.fetchPageList()
     },
     delPage(id) {
-      this.$confirm('确认删除当前页面吗？').then(_ => {
-        delCustomPage(id).then(res => {
+      this.$confirm('确认删除当前页面吗？').then((_) => {
+        delCustomPage(id).then((res) => {
           this.$message({ type: 'success', message: '操作成功！' })
           this.fetchPageList()
         })
@@ -157,7 +157,7 @@ export default {
       let { page_name, page_description, is_open, id } = this.pageForm
       const params = { page_name, page_description, is_open, template_name: this.template_name }
       if (this.dialogTitle == '编辑页面') {
-        editCustomPage(id, params).then(res => {
+        editCustomPage(id, params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -167,7 +167,7 @@ export default {
         })
       }
       if (this.dialogTitle == '新增页面') {
-        createCustomPage(params).then(res => {
+        createCustomPage(params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -180,7 +180,7 @@ export default {
     fetchPageList() {
       this.loading = true
       Object.assign(this.params, { template_name: this.template_name })
-      getCustomPageList(this.params).then(response => {
+      getCustomPageList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

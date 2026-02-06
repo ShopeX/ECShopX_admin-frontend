@@ -150,7 +150,7 @@ export default {
           label: '店铺',
           key: 'num',
           component: () => (
-            <div class="distributor-tags">
+            <div class='distributor-tags'>
               {this.addressForm.distributors.map((item, index) => (
                 <el-tag
                   key={item.name}
@@ -161,7 +161,7 @@ export default {
                 </el-tag>
               ))}
               {!this.addressForm.address_id && (
-                <el-button type="text" on-click={this.addStoreAction}>
+                <el-button type='text' on-click={this.addStoreAction}>
                   添加适用店铺
                 </el-button>
               )}
@@ -292,7 +292,7 @@ export default {
       this.fetchList()
     },
     async addStoreAction() {
-      const distributor_ids = this.addressForm.distributors.map(item => item.distributor_id)
+      const distributor_ids = this.addressForm.distributors.map((item) => item.distributor_id)
       const { data } = await this.$picker.shop({
         data: distributor_ids
       })
@@ -301,7 +301,7 @@ export default {
     async onAddressFormSubmit() {
       const [province, city, area] = getRegionNameById(this.addressForm.regions_id, this.regions)
       const { distributors, regions_id, address, contact, mobile } = this.addressForm
-      const distributor_id = distributors.map(item => item.distributor_id)
+      const distributor_id = distributors.map((item) => item.distributor_id)
       let params = {
         distributor_id: JSON.stringify(distributor_id),
         regions_id: JSON.stringify(regions_id),
@@ -314,7 +314,7 @@ export default {
         mobile
       }
       if (this.addressForm.address_id) {
-        const [distributor_id] = this.addressForm.distributors.map(item => item.distributor_id)
+        const [distributor_id] = this.addressForm.distributors.map((item) => item.distributor_id)
         params = {
           ...params,
           distributor_id,

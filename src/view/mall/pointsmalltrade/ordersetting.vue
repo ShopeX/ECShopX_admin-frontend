@@ -77,7 +77,7 @@ export default {
     }
   },
   mounted() {
-    getOrderSetting().then(res => {
+    getOrderSetting().then((res) => {
       let setting = res.data.data
       if (setting.order_cancel_time) {
         this.form.order_cancel_time = setting.order_cancel_time
@@ -96,7 +96,7 @@ export default {
   methods: {
     save() {
       console.log(this.form)
-      setOrderSetting(this.form).then(res => {
+      setOrderSetting(this.form).then((res) => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     }

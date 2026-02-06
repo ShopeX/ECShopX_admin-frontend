@@ -196,7 +196,7 @@ export default {
     },
     AddRecommendLikeItem() {
       this.show_sideBar = true
-      getRecommendLikeItems().then(res => {
+      getRecommendLikeItems().then((res) => {
         if (res.data.data.list) {
           this.relItemsIds = res.data.data.list
         }
@@ -220,7 +220,7 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            deleteRecommendLikeItem(param).then(response => {
+            deleteRecommendLikeItem(param).then((response) => {
               this.fetchList()
               this.$message({
                 type: 'success',
@@ -249,7 +249,7 @@ export default {
       this.show_sideBar = false
     },
     submitActivityAction() {
-      saveRecommendLikeItem(this.form).then(res => {
+      saveRecommendLikeItem(this.form).then((res) => {
         this.fetchList()
         this.$message({
           type: 'success',
@@ -270,7 +270,7 @@ export default {
       let arr = []
       data.forEach((item, index) => {
         let newData = ''
-        let isInArr = this.form.items.findIndex(n => n.item_id == item.itemId)
+        let isInArr = this.form.items.findIndex((n) => n.item_id == item.itemId)
         if (isInArr == -1) {
           newData = {
             distributor_id: item.distributor_id,
@@ -300,7 +300,7 @@ export default {
         item_id: rows.item_id,
         sort: rows.sort
       }
-      updateRecommendLikeSort(params).then(res => {
+      updateRecommendLikeSort(params).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',

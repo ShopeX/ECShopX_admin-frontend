@@ -247,7 +247,7 @@ export default {
       console.log(val)
     },
     getPointRule() {
-      getPointRule().then(response => {
+      getPointRule().then((response) => {
         this.form = response.data.data
         this.access = this.form.access
         this.include_freight = this.form.include_freight
@@ -277,7 +277,7 @@ export default {
           }
         }
       }
-      savePointRule(this.form).then(response => {
+      savePointRule(this.form).then((response) => {
         this.getPointRule()
         this.$message({
           message: '保存成功',

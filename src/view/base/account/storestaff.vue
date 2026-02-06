@@ -16,8 +16,7 @@
             target="_blank"
             type="primary"
           >
-            商户后台
-</el-link
+            商户后台 </el-link
           >。
         </li>
         <li>每个店铺仅可设置一个超级管理员账号，但一个账号可以同时是多个店铺的超级管理员。</li>
@@ -27,8 +26,7 @@
             target="_blank"
             type="primary"
           >
-            店铺后台
-</el-link
+            店铺后台 </el-link
           >。
         </li>
       </ul>
@@ -318,7 +316,7 @@ export default {
     },
     getDistributor(ids) {
       let param = { distributor_id: ids }
-      getDistributorList(param).then(res => {
+      getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
         this.oldData = [...res.data.data.list]
       })
@@ -363,12 +361,12 @@ export default {
       this.is_distributor_main = row.is_distributor_main
       console.log(1111111, row)
       this.form.password = ''
-      row.role_data.forEach(item => {
+      row.role_data.forEach((item) => {
         this.form.role_id.push(item.role_id)
       })
       if (row.distributor_ids && row.distributor_ids.length > 0) {
         let ids = []
-        row.distributor_ids.forEach(item => {
+        row.distributor_ids.forEach((item) => {
           ids.push(item.distributor_id)
         })
         this.getDistributor(ids)
@@ -379,7 +377,7 @@ export default {
       this.form.shop_ids = []
       this.form.distributor_ids = []
       if (this.relDistributors.length > 0) {
-        this.relDistributors.forEach(distributor => {
+        this.relDistributors.forEach((distributor) => {
           this.form.distributor_ids.push({
             name: distributor.name,
             distributor_id: distributor.distributor_id
@@ -395,14 +393,14 @@ export default {
         return false
       }
       if (this.operator_id) {
-        updateAccountInfo(this.operator_id, this.form).then(response => {
+        updateAccountInfo(this.operator_id, this.form).then((response) => {
           this.$message.success('保存成功')
           this.detailData = response.data.data
           this.editVisible = false
           this.fetchList()
         })
       } else {
-        createAccount(this.form).then(response => {
+        createAccount(this.form).then((response) => {
           this.$message.success('保存成功')
           this.detailData = response.data.data
           this.editVisible = false
@@ -419,9 +417,9 @@ export default {
         pageSize,
         ...this.params
       }
-      getAccountList(params).then(response => {
+      getAccountList(params).then((response) => {
         let list = response.data.data.list
-        list.forEach(item => {
+        list.forEach((item) => {
           if (item.is_disable == 1) {
             item.is_disable = '1'
           } else {
@@ -443,7 +441,7 @@ export default {
       })
         .then(() => {
           deleteAccountInfo(row.operator_id)
-            .then(response => {
+            .then((response) => {
               this.accountsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -477,7 +475,7 @@ export default {
             operator_id: row.operator_id,
             is_disable: row.is_disable
           }
-          changeOperatorStatus(params).then(res => {
+          changeOperatorStatus(params).then((res) => {
             // this.fetchList()
           })
         })
@@ -486,14 +484,14 @@ export default {
           operator_id: row.operator_id,
           is_disable: row.is_disable
         }
-        changeOperatorStatus(params).then(res => {
+        changeOperatorStatus(params).then((res) => {
           // this.fetchList()
         })
       }
     },
     getRolesListData() {
       var params = { page: 1, pageSize: 100, role_source: 'distributor' }
-      getRolesList(params).then(res => {
+      getRolesList(params).then((res) => {
         this.rolesListData = res.data.data.list
       })
     },

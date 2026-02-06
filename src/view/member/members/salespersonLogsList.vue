@@ -89,7 +89,7 @@ export default {
     },
     getWorkWechatRelLogsList() {
       this.loading = true
-      getWorkWechatRelLogsList(this.user_id, this.params).then(res => {
+      getWorkWechatRelLogsList(this.user_id, this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

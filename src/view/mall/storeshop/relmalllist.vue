@@ -206,7 +206,7 @@ import {
   getDistributorInfo
 } from '../../../api/marketing'
 import sideBar from '@/components/element/sideBar'
-const getWxaCodeImg = url => {
+const getWxaCodeImg = (url) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
@@ -214,10 +214,10 @@ const getWxaCodeImg = url => {
       responseType: 'arraybuffer',
       headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then(data => {
+      .then((data) => {
         resolve(data.data)
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString())
       })
   })
@@ -351,7 +351,7 @@ export default {
       }
 
       var goodsIds = []
-      this.itemsChecked.forEach(item => {
+      this.itemsChecked.forEach((item) => {
         goodsIds.push(item.goods_id)
       })
 
@@ -376,7 +376,7 @@ export default {
     },
     getSkuList() {
       const { list, ...restParams } = this.itemSku
-      getDistributorItems({ ...this.itemSkuParam, ...restParams }).then(res => {
+      getDistributorItems({ ...this.itemSkuParam, ...restParams }).then((res) => {
         this.itemSku.list = res.data.data.list
         this.itemSku.total = res.data.data.total_count
         for (var i = 0; i < this.itemSku.list.length; i++) {
@@ -418,11 +418,11 @@ export default {
     exportList() {
       let post_date = this.params
       let goods_ids = []
-      this.itemsChecked.forEach(item => {
+      this.itemsChecked.forEach((item) => {
         goods_ids.push(item.goods_id)
       })
       post_date.goods_ids = goods_ids
-      exportDistributorItems(post_date).then(response => {
+      exportDistributorItems(post_date).then((response) => {
         console.log('导出', response)
         if (response.data.data.status) {
           this.$message({
@@ -434,7 +434,7 @@ export default {
       })
     },
     getList() {
-      getDistributorItems(this.params).then(response => {
+      getDistributorItems(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           for (var i = 0; i < this.list.length; i++) {
@@ -461,14 +461,14 @@ export default {
       const cache = {}
       const promises = []
       var that = this
-      that.itemsChecked.forEach(item => {
+      that.itemsChecked.forEach((item) => {
         const url =
           this.BASE_API +
           '/goods/distributionGoodsWxaCodeStream?item_id=' +
           item.itemId +
           '&distributor_id=' +
           this.params.distributor_id
-        const promise = getWxaCodeImg(url).then(result_file => {
+        const promise = getWxaCodeImg(url).then((result_file) => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = item.itemName + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -477,7 +477,7 @@ export default {
         promises.push(promise)
       })
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then(content => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
           FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
         })
@@ -485,7 +485,7 @@ export default {
     },
     updateDistributorItem(params) {
       console.log(params)
-      updateDistributorItem(params).then(res => {
+      updateDistributorItem(params).then((res) => {
         this.getList()
         this.$message({
           type: 'success',
@@ -538,7 +538,7 @@ export default {
       }
 
       var goodsIds = []
-      this.itemsChecked.forEach(item => {
+      this.itemsChecked.forEach((item) => {
         goodsIds.push(item.goods_id)
       })
 

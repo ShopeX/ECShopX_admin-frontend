@@ -24,8 +24,7 @@
                 :indeterminate="isIndeterminate"
                 @change="handleCheckAllChange"
               >
-                全选
-</el-checkbox
+                全选 </el-checkbox
               ><span style="line-height: 36px">（选择会员手机号）</span>
               <el-button type="text" class="f_r" @click="showAddMobile"> 添加手机号 </el-button>
             </div>

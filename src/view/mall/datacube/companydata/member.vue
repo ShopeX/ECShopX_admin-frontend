@@ -141,7 +141,7 @@ export default {
       var end = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
       end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-      const format = d =>
+      const format = (d) =>
         `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d
           .getDate()
           .toString()
@@ -163,7 +163,7 @@ export default {
       this.dataInfo.member_count.total_num = 0
       let params = { start: this.params.vdate[0], end: this.params.vdate[1] }
       getCompanyData(params)
-        .then(res => {
+        .then((res) => {
           this.allListData = res.data.data.list
           let companyDataList = res.data.data.list
           for (var key in companyDataList) {
@@ -179,7 +179,7 @@ export default {
             })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取统计信息出错'

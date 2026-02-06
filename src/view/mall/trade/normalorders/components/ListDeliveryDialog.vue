@@ -236,14 +236,14 @@ export default {
         } else {
           this.deliveryForm.sepInfo = JSON.stringify(
             JSON.parse(JSON.stringify(this.deliveryData.orderInfo.items)).filter(
-              item => item.delivery_num && item.delivery_num != ''
+              (item) => item.delivery_num && item.delivery_num != ''
             )
           )
         }
       } else {
         this.deliveryForm.sepInfo = {}
       }
-      delivery(this.deliveryForm).then(response => {
+      delivery(this.deliveryForm).then((response) => {
         let deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()

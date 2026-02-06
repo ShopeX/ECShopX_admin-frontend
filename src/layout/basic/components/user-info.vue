@@ -79,13 +79,16 @@ export default {
     }
   },
   methods: {
-    async validate() { // 暴露给layout-header弹框
+    async validate() {
+      // 暴露给layout-header弹框
       await this.$refs.userInfoForm.validate()
     },
-    async getFieldsValue() { // 暴露给layout-header弹框
+    async getFieldsValue() {
+      // 暴露给layout-header弹框
       return this.$refs.userInfoForm.getFieldsValue()
     },
-    async onSubmit() { // 暴露给layout-header弹框
+    async onSubmit() {
+      // 暴露给layout-header弹框
       try {
         await this.$refs.userInfoForm.handleSubmit()
         await this.handleSubmit(this.formData)

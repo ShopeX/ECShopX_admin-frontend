@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="22">
         <div class="tips">
-          设置敏感词列表，敏感词优先级高于机器审核。<br>用户未来创建的含有敏感词的笔记将显示为***。
+          设置敏感词列表，敏感词优先级高于机器审核。<br />用户未来创建的含有敏感词的笔记将显示为***。
         </div>
       </el-col>
     </el-row>
@@ -49,7 +49,7 @@
       :show-close="false"
       width="30%"
     >
-      <div class="dialog-tips">已经存在的笔记将不受影响，<br>请前往笔记列表页手动筛选。</div>
+      <div class="dialog-tips">已经存在的笔记将不受影响，<br />请前往笔记列表页手动筛选。</div>
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
         <el-form-item prop="text" label="敏感词">
           <el-input
@@ -165,7 +165,7 @@ export default {
       const { ruleForm } = this.$data
       var message = ruleForm.id ? '更新成功' : '创建成功'
       console.log('编辑更新敏感词', this.$data.ruleForm)
-      this.$refs['ruleForm'].validate(valid => {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           this.$message({
             type: 'success',

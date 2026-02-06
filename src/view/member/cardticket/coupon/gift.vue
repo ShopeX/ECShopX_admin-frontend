@@ -32,7 +32,7 @@
         <el-form-item label="活动类型" prop="date_type">
           <el-radio-group v-model="form.date_type" :disabled="form.card_id ? true : false">
             <el-radio label="DATE_TYPE_LONG"> 长期活动 </el-radio>
-            <el-radio label="DATE_TYPE_SHORT"> 短期活动 </el-radio>
+            <!-- <el-radio label="DATE_TYPE_SHORT"> 短期活动 </el-radio> -->
           </el-radio-group>
           <template v-if="form.date_type === 'DATE_TYPE_LONG'">
             <el-form-item class="m-b-10" label-width="80px" label="开始时间" prop="begintime">
@@ -102,7 +102,7 @@
               </template>
             </el-form-item>
           </template>
-          <template v-else>
+          <!-- <template v-else>
             <el-form-item class="m-b-10" label-width="80px" label="发放时间" prop="issuetime">
               <el-date-picker
                 v-model="form.issuetime"
@@ -127,7 +127,7 @@
                 size="small"
               />
             </el-form-item>
-          </template>
+          </template> -->
         </el-form-item>
 
         <el-form-item label="卡券使用说明" prop="description">
@@ -340,8 +340,8 @@ export default {
         quantity: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
         date_type: [{ required: true, message: '请选择活动类型', trigger: 'blur' }],
         begintime: [{ required: true, message: '请选择开始时间', trigger: 'blur' }],
-        issuetime: [{ required: true, message: '请选择发放时间', trigger: 'blur' }],
-        usetime: [{ required: true, message: '请选择使用时间', trigger: 'blur' }],
+        // issuetime: [{ required: true, message: '请选择发放时间', trigger: 'blur' }],
+        // usetime: [{ required: true, message: '请选择使用时间', trigger: 'blur' }],
         days: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
         description: [{ required: true, message: '请填写卡券使用说明', trigger: 'blur' }],
         // color: [{ required: true, message: '请选择优惠券主色', trigger: 'blur' }],
@@ -388,7 +388,7 @@ export default {
         this.$message.error('请输入有效的数字')
         return
       }
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.form.date_type === 'DATE_TYPE_LONG') {
             this.form.send_begin_time = this.toTimeStamp(this.form.begintime)
@@ -410,12 +410,12 @@ export default {
     },
     async submitGift(listData, source) {
       const params = this.params
-      Object.keys(params).forEach(key => {
+      Object.keys(params).forEach((key) => {
         params[key] = listData[key]
       })
       params.get_limit = params.get_limit || 1
-      params.grade_ids = JSON.stringify(params.grade_ids)
-      params.vip_grade_ids = JSON.stringify(params.vip_grade_ids)
+      params.grade_ids = params.grade_ids?.length > 0 ? JSON.stringify(params.grade_ids) : []
+      params.vip_grade_ids = params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
       console.log(params, 'params参数')
       if (params.card_id) {
         const data = await updateCard(params)
@@ -486,13 +486,13 @@ export default {
     // 编辑卡券状态
     editGift(status) {
       const params = this.params
-      Object.keys(params).forEach(key => {
+      Object.keys(params).forEach((key) => {
         params[key] = this.form[key]
       })
       params.kq_status = Number(status)
-      params.grade_ids = JSON.stringify(params.grade_ids)
-      params.vip_grade_ids = JSON.stringify(params.vip_grade_ids)
-      updateCard(params).then(res => {
+      params.grade_ids = params.grade_ids?.length > 0 ? JSON.stringify(params.grade_ids) : []
+      params.vip_grade_ids = params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
+      updateCard(params).then((res) => {
         if (res) {
           this.$message.success('更新成功')
           this.refresh()

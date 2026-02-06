@@ -61,14 +61,14 @@ export default {
     },
     textVal: {
       type: String,
-      default:''
+      default: ''
     }
   },
   methods: {
     getTipText() {
-      if(this.textVal)return this.textVal
+      if (this.textVal) return this.textVal
       const tips = []
-      platformList.forEach(item => {
+      platformList.forEach((item) => {
         if (this[item.value]) {
           tips.push(`${item.title}商城`)
         }

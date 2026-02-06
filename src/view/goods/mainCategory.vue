@@ -23,92 +23,92 @@
         <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
       </div>
 
-    <el-table
-      ref="tableTree"
-      :data="categoryList"
-      row-key="category_id"
-      border
-      lazy
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      :load="load"
-    >
-      <el-table-column label="操作" width="350">
-        <template slot-scope="scope">
-          <el-button type="text">
-            <router-link
-              :to="{
-                path: '/products/product-manage/self-products',
-                query: { main_cat_id: scope.row.category_id }
-              }"
+      <el-table
+        ref="tableTree"
+        :data="categoryList"
+        row-key="category_id"
+        border
+        lazy
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :load="load"
+      >
+        <el-table-column label="操作" width="450">
+          <template slot-scope="scope">
+            <el-button type="text">
+              <router-link
+                :to="{
+                  path: '/products/product-manage/self-products',
+                  query: { main_cat_id: scope.row.category_id }
+                }"
+              >
+                {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
+              </router-link>
+            </el-button>
+            <el-button v-if="VERSION_PLATFORM()" type="text">
+              <router-link
+                :to="{
+                  path: '/products/product-manage/merchant-products',
+                  query: { main_cat_id: scope.row.category_id }
+                }"
+              >
+                店铺商品
+              </router-link>
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level == 3"
+              type="text"
+              @click="onLinkGoodsParams(scope.row)"
             >
-              {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
-            </router-link>
-          </el-button>
-          <el-button v-if="VERSION_PLATFORM()" type="text">
-            <router-link
-              :to="{
-                path: '/products/product-manage/merchant-products',
-                query: { main_cat_id: scope.row.category_id }
-              }"
+              关联参数
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level == 3"
+              type="text"
+              @click="onLinkGoodsSku(scope.row)"
             >
-              店铺商品
-            </router-link>
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level == 3"
-            type="text"
-            @click="onLinkGoodsParams(scope.row)"
-          >
-            关联参数
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level == 3"
-            type="text"
-            @click="onLinkGoodsSku(scope.row)"
-          >
-            关联规格
-          </el-button>
-          <!-- <el-button
+              关联规格
+            </el-button>
+            <!-- <el-button
             v-if="scope.row.category_level == 3"
             type="text"
             @click="handleProfitPrice(scope.row)"
           >
             分润配置
           </el-button> -->
-          <el-button
-            v-if="scope.row.category_level < 3"
-            type="text"
-            @click="appendChildren(scope.row)"
-          >
-            新增子类
-          </el-button>
-          <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
-          <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类名称">
-        <template slot-scope="scope">
-          <span
-            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-            style="display: inline-block; width: 24px"
-          />
-          <span>{{ scope.row.category_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类编号" prop="category_id" width="120" />
-      <el-table-column label="分类图片" width="200">
-        <template slot-scope="scope">
-          <div class="img-container">
-            <SpImage
-              v-if="scope.row.image_url"
-              :src="scope.row.image_url"
-              :width="48"
-              :height="48"
+            <el-button
+              v-if="scope.row.category_level < 3"
+              type="text"
+              @click="appendChildren(scope.row)"
+            >
+              新增子类
+            </el-button>
+            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类名称" width="280">
+          <template slot-scope="scope">
+            <span
+              v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
+              style="display: inline-block; width: 24px"
             />
-          </div>
-        </template>
+            <span>{{ scope.row.category_name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类编号" prop="category_id" width="120" />
+        <el-table-column label="分类图片" width="200">
+          <template slot-scope="scope">
+            <div class="img-container">
+              <SpImage
+                v-if="scope.row.image_url"
+                :src="scope.row.image_url"
+                :width="48"
+                :height="48"
+              />
+            </div>
+          </template>
         </el-table-column>
         <el-table-column prop="sort" label="分类排序" width="140">
           <template slot-scope="scope">
@@ -159,7 +159,7 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: '',
+        image_url: ''
       },
       categoryFormList: [
         {
@@ -200,12 +200,12 @@ export default {
         {
           component: () => (
             <div>
-              <div style="margin-left: 8px; line-height: initial;">导购分润计算方式: </div>
-              <div class="form-item-tip">
+              <div style='margin-left: 8px; line-height: initial;'>导购分润计算方式: </div>
+              <div class='form-item-tip'>
                 【按比例分佣】商品最终金额 ×
                 百分比（其中商品最终金额为【支付金额-运费-商品优惠金额】）
               </div>
-              <div class="form-item-tip">【按金额分佣】固定金额分佣</div>
+              <div class='form-item-tip'>【按金额分佣】固定金额分佣</div>
             </div>
           )
         },
@@ -244,7 +244,7 @@ export default {
       }
       let { list } = await this.$api.wxa.getCustomPageList(params)
       console.log(list, 'src/view/goods/saleCategory.vue-第197行')
-      list.forEach(element => {
+      list.forEach((element) => {
         ;(element.title = element.page_name), (element.value = element.id)
       })
       this.categoryFormList[4].options = list
@@ -260,7 +260,7 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: '',
+        image_url: ''
       }
       this.categoryDialog = true
     },
@@ -271,7 +271,7 @@ export default {
         category_name,
         sort,
         parent_id,
-        image_url,
+        image_url
       }
       this.categoryDialog = true
     },
@@ -285,7 +285,7 @@ export default {
         sort: 0,
         parent_id: category_id,
         parent_name: category_name,
-        image_url: '',
+        image_url: ''
       }
       this.categoryDialog = true
     },
@@ -333,7 +333,7 @@ export default {
         num: 99
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_params: JSON.stringify(data.map(item => item.attribute_id))
+        goods_params: JSON.stringify(data.map((item) => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -348,7 +348,7 @@ export default {
         islimitImgType: true
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_spec: JSON.stringify(data.map(item => item.attribute_id))
+        goods_spec: JSON.stringify(data.map((item) => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -357,7 +357,7 @@ export default {
         parent_id: pid,
         is_main_category: true
       })
-      const list = res.map(item => {
+      const list = res.map((item) => {
         return {
           ...item,
           image_url: item.image_url || '',
@@ -373,8 +373,7 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, parent_id, category_id } =
-        this.categoryForm
+      const { category_name, sort, image_url, parent_id, category_id } = this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,

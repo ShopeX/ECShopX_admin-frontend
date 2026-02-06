@@ -25,8 +25,8 @@ export default {
   props: {
     itemId: String,
     distributorId: String,
-    isTotalStore:Boolean,
-    isSuplier:Boolean
+    isTotalStore: Boolean,
+    isSuplier: Boolean
   },
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
             name: '库存',
             key: 'store',
             width: 100,
-            showType: !this.isTotalStore?'editable':"",
+            showType: !this.isTotalStore ? 'editable' : '',
             componentProps: {
               change: async (v, row) => {
                 await this.$api.marketing.updateDistributorItem({
@@ -62,7 +62,7 @@ export default {
             key: 'price',
             width: 160,
             // render: (h, { row }) => h('span', {}, row.price / 100),
-            showType: !this.isTotalStore?'editable':"",
+            showType: !this.isTotalStore ? 'editable' : '',
             componentProps: {
               change: async (v, row) => {
                 await this.$api.marketing.updateDistributorItem({
@@ -87,10 +87,10 @@ export default {
                   value: row.is_can_sale,
                   'active-value': true,
                   'inactive-value': false,
-                  'disabled':this.IS_ADMIN() && this.VERSION_STANDARD() && this.isSuplier
+                  'disabled': this.IS_ADMIN() && this.VERSION_STANDARD() && this.isSuplier
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.marketing.updateDistributorItem({
                       distributor_id: this.distributorId,
                       item_id: row.item_id,
@@ -119,7 +119,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
 
-      list.forEach(item => {
+      list.forEach((item) => {
         item.price = item.price / 100
       })
       return list

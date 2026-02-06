@@ -69,21 +69,21 @@ export default {
       this.getConfig()
     },
     getConfig() {
-      getTeadeSetting().then(response => {
+      getTeadeSetting().then((response) => {
         this.form.config = response.data.data
       })
     },
     onSubmit() {
       this.loading = true
       setTradeSetting(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

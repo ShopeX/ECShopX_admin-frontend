@@ -29,8 +29,7 @@
             type="success"
             size="mini"
           >
-            {{ item.label }}
-</el-tag
+            {{ item.label }} </el-tag
           >&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
       </el-table-column>
@@ -141,7 +140,7 @@ export default {
     },
     itemsDetail(index, row) {
       this.loading = true
-      getRegisterInfo(row.id).then(res => {
+      getRegisterInfo(row.id).then((res) => {
         console.log(res.data.data)
         if (res.data.data) {
           this.dateDetail = res.data.data
@@ -161,7 +160,7 @@ export default {
       })
         .then(() => {
           deleteRegister(row.id)
-            .then(response => {
+            .then((response) => {
               this.dataList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -186,7 +185,7 @@ export default {
     getDataList() {
       this.loading = true
       getRegisterList(this.params)
-        .then(res => {
+        .then((res) => {
           if (res.data.data.list.length > 0) {
             this.dataList = res.data.data.list
             this.pagers.total = res.data.data.pagers.total
@@ -196,7 +195,7 @@ export default {
             this.loading = false
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

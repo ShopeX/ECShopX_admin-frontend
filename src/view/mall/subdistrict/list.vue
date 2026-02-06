@@ -187,22 +187,22 @@ export default {
     },
     getAddress() {
       this.loading = true
-      getAddress().then(response => {
+      getAddress().then((response) => {
         this.loading = false
         // console.log('res===', response)
         const data = response.data.data
 
         if (data && data.length > 0) {
-          const province = data.map(item => {
+          const province = data.map((item) => {
             return {
               label: item.label,
               value: item.value
             }
           })
           let city = []
-          data.forEach(item => {
+          data.forEach((item) => {
             city = city.concat(
-              item.children.map(item2 => {
+              item.children.map((item2) => {
                 return {
                   label: item2.label,
                   value: item2.value
@@ -211,10 +211,10 @@ export default {
             )
           })
           let area = []
-          data.forEach(item => {
-            item.children.forEach(item2 => {
+          data.forEach((item) => {
+            item.children.forEach((item2) => {
               area = area.concat(
-                ...item2.children.map(item3 => {
+                ...item2.children.map((item3) => {
                   return {
                     label: item3.label,
                     value: item3.value
@@ -279,9 +279,9 @@ export default {
         this.dialog.loading = true
         let query = {}
         if (!is_hassuperior && title == '街道') {
-          const province = this.province.find(item => item.value === address[0])
-          const city = this.city.find(item => item.value === address[1])
-          const area = this.area.find(item => item.value === address[2])
+          const province = this.province.find((item) => item.value === address[0])
+          const city = this.city.find((item) => item.value === address[1])
+          const area = this.area.find((item) => item.value === address[2])
           if (!province || !city || !area) {
             this.$message.error('选择的地区不存在！')
           }
@@ -303,7 +303,7 @@ export default {
           // console.log('query===', query)
           // return
           addSubDistrictInfo(query)
-            .then(res => {
+            .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -317,7 +317,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch(err => {
+            .catch((err) => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -334,7 +334,7 @@ export default {
           }
           // console.log('query===', query)
           updateSubDistrictInfo(query)
-            .then(res => {
+            .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -348,7 +348,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch(err => {
+            .catch((err) => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -358,9 +358,9 @@ export default {
     },
     getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then(response => {
+      getDistributorList(params).then((response) => {
         if (response.data.data.list) {
-          this.distributorList = response.data.data.list.map(item => {
+          this.distributorList = response.data.data.list.map((item) => {
             return {
               ...item,
               distributor_id: item.distributor_id + ''
@@ -371,17 +371,17 @@ export default {
     },
     getCategory() {
       this.loading = true
-      getSubDistrictList(this.params).then(response => {
+      getSubDistrictList(this.params).then((response) => {
         // debugger
         this.categoryList = response.data.data
-        this.categoryList.forEach(d => {
+        this.categoryList.forEach((d) => {
           d.distributor_list = d.distributor_id.map((dd, index) => {
             return {
               id: dd + '',
               name: d.distributor[index]
             }
           })
-          d.distributor_id = d.distributor_id.map(item => {
+          d.distributor_id = d.distributor_id.map((item) => {
             return item + ''
           })
         })
@@ -397,7 +397,7 @@ export default {
       })
         .then(() => {
           if (typeof data.id != 'undefined') {
-            deleteSubDistrictInfo(data.id).then(response => {
+            deleteSubDistrictInfo(data.id).then((response) => {
               this.$message({
                 type: 'success',
                 message: '删除分类成功'
@@ -408,7 +408,7 @@ export default {
             const { level, id, parent_id } = data
             let key = level === 0 ? id : parent_id
             const categoryList = this.categoryList
-            const parentIndex = categoryList.findIndex(item => item.id === key)
+            const parentIndex = categoryList.findIndex((item) => item.id === key)
             const deleteList = function (children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
@@ -428,7 +428,7 @@ export default {
             this.categoryList = categoryList
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e)
           this.$message({
             type: 'info',
@@ -493,22 +493,24 @@ export default {
       }
 
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex(d => d.id === this.current.id)
+        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else if (this.current.parent_id && this.current.level == 1) {
-        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
+        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       } else {
         let findex
         let cindex
         for (var item in this.categoryList) {
-          cindex = this.categoryList[item].children.findIndex(d => d.id === this.current.parent_id)
+          cindex = this.categoryList[item].children.findIndex(
+            (d) => d.id === this.current.parent_id
+          )
           findex = item
           if (cindex > -1) break
         }
         const tindex = this.categoryList[findex].children[cindex].children.findIndex(
-          d => d.id === this.current.id
+          (d) => d.id === this.current.id
         )
         this.categoryList[findex].children[cindex].children[tindex].image_url = data.url
       }

@@ -120,7 +120,7 @@ export default {
       this.multipleSelection = new Array(row)
     },
     getDistributor() {
-      getDistributorList(this.params).then(response => {
+      getDistributorList(this.params).then((response) => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
         this.loading = false

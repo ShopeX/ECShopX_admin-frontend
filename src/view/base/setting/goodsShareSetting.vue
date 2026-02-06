@@ -133,7 +133,7 @@ export default {
     },
     // 保存表单
     save() {
-      this.$refs['form'].validate(async vaild => {
+      this.$refs['form'].validate(async (vaild) => {
         if (vaild) {
           const { form } = this
           const data = await saveShareSetting(form)

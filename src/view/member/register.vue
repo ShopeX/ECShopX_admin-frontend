@@ -70,7 +70,13 @@
       </el-tab-pane>
       <el-tab-pane label="注册协议与隐私政策配置" class="paneSecond" name="second">
         <div class="mainSecond">
-          <el-form ref="privacy" :model="privacyForm" :rles="rules" :label-position="formLabelPosition" label-width="100px">
+          <el-form
+            ref="privacy"
+            :model="privacyForm"
+            :rles="rules"
+            :label-position="formLabelPosition"
+            label-width="100px"
+          >
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
@@ -115,7 +121,13 @@
       </el-tab-pane>
       <el-tab-pane label="互联网诊疗风险告知及知情同意书配置" class="paneSecond" name="third">
         <div class="mainSecond">
-          <el-form ref="medicine" :model="medicineForm" :rules="rules2" :label-position="formLabelPosition" label-width="100px">
+          <el-form
+            ref="medicine"
+            :model="medicineForm"
+            :rules="rules2"
+            :label-position="formLabelPosition"
+            label-width="100px"
+          >
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
@@ -148,7 +160,7 @@
         label-width="120px"
       >
         <el-form-item label="配置标题" prop="label">
-          <el-input v-model="editform.label" type="text" maxlength="9" show-word-limit />
+          <el-input v-model="editform.label" type="text" maxlength="200" show-word-limit />
         </el-form-item>
         <el-form-item label="信息格式">
           <el-select v-model="editform.field_type" @change="fieldTypeChange">
@@ -177,12 +189,7 @@
           class="select"
           prop="select"
         >
-          <el-input
-            v-model="selectValue.label"
-            placeholder="内容"
-            type="text"
-            show-word-limit
-          >
+          <el-input v-model="selectValue.label" placeholder="内容" type="text" show-word-limit>
             <template slot="append">
               <el-button type="primary" :disabled="!isSelectValue" @click="saveSelect">
                 确认
@@ -206,7 +213,7 @@
           <el-input
             v-model="editform.alert_required_message"
             type="text"
-            maxlength="15"
+            maxlength="200"
             show-word-limit
           />
         </el-form-item>

@@ -31,7 +31,7 @@
             <el-form-item label="开启全局积分" prop="enable" label-width="110px">
               <el-switch v-model="ruleForm.enable" active-color="#13ce66" />
               <div class="tips unit">
-                开启后用户可通过特定行为获得积分，<br>下方所有设置将生效。
+                开启后用户可通过特定行为获得积分，<br />下方所有设置将生效。
               </div>
             </el-form-item>
           </el-col>
@@ -302,12 +302,12 @@ export default {
     getFetch() {
       this.$data.formLoad = true
       getUGCSetting({ type: 'point' }).then(
-        res => {
+        (res) => {
           // console.log('res',res.data.data)
           this.transForm(res.data.data)
           this.$data.formLoad = false
         },
-        err => {
+        (err) => {
           this.$data.formLoad = false
         }
       )
@@ -356,13 +356,13 @@ export default {
       const that = this
       const { ruleForm } = this.$data
       //console.log('ruleForm',ruleForm)
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           //console.log('confirmHandle submit!!',ruleForm);
           var params = that.formTrans()
           //console.log('confirmHandle params',params);
           // return false;
-          setUGCSetting(params).then(res => {
+          setUGCSetting(params).then((res) => {
             var { message } = res.data.data
             this.$message({
               type: 'success',

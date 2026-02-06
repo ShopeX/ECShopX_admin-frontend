@@ -165,7 +165,7 @@ const ActionsButton = {
       <div>
         <el-button onClick={this.onCancel}>取消</el-button>
         <el-button
-          type="primary"
+          type='primary'
           disabled={this.disabled}
           onClick={() => {
             this.$emit('save')
@@ -225,10 +225,10 @@ export default {
           key: 'linkHome',
           component: ({ disabled }) => (
             <div>
-              <span class="link-home">
+              <span class='link-home'>
                 {this.formBase?.linkHome && this.formBase.linkHome.template_title}
               </span>
-              <el-button type="text" disabled={disabled} on-click={this.onPickerTemp}>
+              <el-button type='text' disabled={disabled} on-click={this.onPickerTemp}>
                 选择首页
               </el-button>
             </div>
@@ -246,8 +246,8 @@ export default {
           label: '分享活动',
           key: 'share_pic',
           component: () => (
-            <div class="activity-pic-field">
-              <div class="form-item-tip">
+            <div class='activity-pic-field'>
+              <div class='form-item-tip'>
                 员工通过小程序卡片分享活动时展示，建议尺寸300*240，支持 png、jpg 格式，文件大小为 2M
                 内
               </div>
@@ -306,7 +306,7 @@ export default {
           key: 'companyList',
           type: 'input',
           component: ({ disabled }) => (
-            <div class="company-list">
+            <div class='company-list'>
               {this.activityRule.companyList.map((item, index) => (
                 <el-tag
                   closable
@@ -318,7 +318,7 @@ export default {
                   {item.name}
                 </el-tag>
               ))}
-              <el-button type="text" disabled={disabled} on-click={this.onPickerCompany}>
+              <el-button type='text' disabled={disabled} on-click={this.onPickerCompany}>
                 选择企业
               </el-button>
             </div>
@@ -336,13 +336,13 @@ export default {
           label: '开始预热',
           key: 'preheatTime',
           component: ({ disabled }) => (
-            <div class="preheat-time">
+            <div class='preheat-time'>
               从
               <el-date-picker
                 v-model={this.activityRule.preheatTime}
                 disabled={disabled}
-                type="datetime"
-                placeholder="选择日期时间"
+                type='datetime'
+                placeholder='选择日期时间'
               ></el-date-picker>
               开始活动将展示在活动列表
             </div>
@@ -360,31 +360,31 @@ export default {
           label: '员工',
           key: 'employee',
           component: ({ disabled: { datetime, quota } }) => (
-            <div class="activity-employee-field">
-              <div class="form-item-content">
-                <div class="content-item">
+            <div class='activity-employee-field'>
+              <div class='form-item-content'>
+                <div class='content-item'>
                   <label>购买时间</label>
                   <el-date-picker
                     v-model={this.activityRule.employee.datetime}
                     disabled={datetime}
-                    type="daterange"
-                    range-separator="至"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
+                    type='daterange'
+                    range-separator='至'
+                    start-placeholder='开始时间'
+                    end-placeholder='结束时间'
                   />
                 </div>
-                <div class="form-item-tip">活动人员在该段内可购买商品</div>
+                <div class='form-item-tip'>活动人员在该段内可购买商品</div>
               </div>
-              <div class="form-item-content">
-                <div class="content-item">
+              <div class='form-item-content'>
+                <div class='content-item'>
                   <label>购买额度</label>
                   <SpInput
                     v-model={this.activityRule.employee.quota}
-                    width="120px"
+                    width='120px'
                     disabled={quota}
-                    placeholder="大于0的整数"
-                    prefix="每人最多可购买额度"
-                    suffix="元"
+                    placeholder='大于0的整数'
+                    prefix='每人最多可购买额度'
+                    suffix='元'
                   />
                 </div>
               </div>
@@ -408,67 +408,67 @@ export default {
           label: '亲友',
           key: 'relatives',
           component: ({ disabled: { join, num, datetime, type, shareLimit } }) => (
-            <div class="activity-relatives-field">
-              <div class="form-item-content">
-                <div class="content-item">
+            <div class='activity-relatives-field'>
+              <div class='form-item-content'>
+                <div class='content-item'>
                   <el-switch v-model={this.activityRule.relatives.join} disabled={join} />
-                  <span class="form-item-tip">亲友参与活/亲友不参与活动</span>
+                  <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
                 </div>
               </div>
               {this.activityRule.relatives.join ? (
                 <div>
-                  <div class="form-item-content">
-                    <div class="content-item">
+                  <div class='form-item-content'>
+                    <div class='content-item'>
                       <label>邀请亲友</label>
                       <SpInput
                         v-model={this.activityRule.relatives.num}
-                        width="120px"
+                        width='120px'
                         disabled={num}
-                        placeholder="大于0的整数"
-                        prefix="每名员工最多可邀请"
-                        suffix="名亲友"
+                        placeholder='大于0的整数'
+                        prefix='每名员工最多可邀请'
+                        suffix='名亲友'
                       />
                     </div>
                   </div>
-                  <div class="form-item-content">
-                    <div class="content-item">
+                  <div class='form-item-content'>
+                    <div class='content-item'>
                       <label>购买时间</label>
                       <el-date-picker
                         v-model={this.activityRule.relatives.datetime}
                         disabled={datetime}
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始时间"
-                        end-placeholder="结束时间"
+                        type='daterange'
+                        range-separator='至'
+                        start-placeholder='开始时间'
+                        end-placeholder='结束时间'
                       />
                     </div>
                   </div>
-                  <div class="form-item-content">
-                    <div class="content-item">
+                  <div class='form-item-content'>
+                    <div class='content-item'>
                       <label>购买额度</label>
-                      <div class="content-item-field">
-                        <div class="item-wrap">
+                      <div class='content-item-field'>
+                        <div class='item-wrap'>
                           <el-radio
                             v-model={this.activityRule.relatives.type}
                             disabled={type}
-                            label="1"
+                            label='1'
                             onChange={this.onRadioChange}
                           >
                             <SpInput
                               v-model={this.activityRule.relatives.shareLimit}
-                              width="120px"
+                              width='120px'
                               disabled={shareLimit}
-                              placeholder="大于0的整数"
-                              prefix="每人最多可购买额度"
-                              suffix="元"
+                              placeholder='大于0的整数'
+                              prefix='每人最多可购买额度'
+                              suffix='元'
                             />
                           </el-radio>
                         </div>
-                        <div class="item-wrap">
+                        <div class='item-wrap'>
                           <el-radio
                             v-model={this.activityRule.relatives.type}
                             disabled={type}
-                            label="2"
+                            label='2'
                             onChange={this.onRadioChange}
                           >
                             共享员工额度
@@ -499,10 +499,10 @@ export default {
             <SpInput
               v-model={this.activityRule.orderMiniAmount}
               disabled={disabled}
-              width="120px"
-              placeholder="大于0的整数"
-              prefix="单笔订单不低于"
-              suffix="元"
+              width='120px'
+              placeholder='大于0的整数'
+              prefix='单笔订单不低于'
+              suffix='元'
             />
           ),
           disabled: false
@@ -514,10 +514,10 @@ export default {
             <SpInput
               v-model={this.activityRule.modifyReceiveAddress}
               disabled={disabled}
-              width="140px"
-              placeholder="大于等于0的整数"
-              prefix="活动进行中所有买家（员工和亲友）都可以修改收货地址，活动结束后"
-              suffix="小时内买家可修改收货地址，已发货订单不允许修改收货地址"
+              width='140px'
+              placeholder='大于等于0的整数'
+              prefix='活动进行中所有买家（员工和亲友）都可以修改收货地址，活动结束后'
+              suffix='小时内买家可修改收货地址，已发货订单不允许修改收货地址'
             />
           ),
           disabled: false,
@@ -669,7 +669,7 @@ export default {
       this.formBase.linkHome = data ? data[0] : null
     },
     async onPickerCompany() {
-      const ids = this.activityRule.companyList.map(item => item.id)
+      const ids = this.activityRule.companyList.map((item) => item.id)
       const params = {
         data: ids
       }
@@ -695,8 +695,8 @@ export default {
         //编辑获取详情数据处理
         return keys.reduce((prev, cur) => {
           let _arr = []
-          prices.forEach(item => {
-            _arr = Object.keys(form[cur]).filter(item2 => form[cur][item2] == 'true')
+          prices.forEach((item) => {
+            _arr = Object.keys(form[cur]).filter((item2) => form[cur][item2] == 'true')
             console.log(Object.keys(form[cur]))
           })
           prev[cur] = _arr
@@ -705,7 +705,7 @@ export default {
       }
       return keys.reduce((prev, cur) => {
         let _obj = {}
-        prices.forEach(item => {
+        prices.forEach((item) => {
           _obj[item] = form[cur].includes(item) + ''
         })
         prev[cur] = _obj
@@ -738,7 +738,7 @@ export default {
         pages_template_id,
         share_pic: share_pic,
         pic: pic,
-        enterprise_id: companyList.map(item => item.id),
+        enterprise_id: companyList.map((item) => item.id),
         display_time: moment(preheatTime).unix(),
         employee_begin_time: moment(employeeDateTime[0]).unix(),
         employee_end_time: moment(employeeDateTime[1]).unix(),

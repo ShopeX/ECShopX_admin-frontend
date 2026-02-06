@@ -31,11 +31,11 @@
               <el-col :span="8">
                 <el-form-item label="支付方式" prop="pay_channel">
                   <el-select v-model="form.pay_channel" style="width: 100%">
-                    <el-option 
-                      v-for="option in bspayPaymentOptions" 
+                    <el-option
+                      v-for="option in bspayPaymentOptions"
                       :key="option.value"
-                      :label="option.label" 
-                      :value="option.value" 
+                      :label="option.label"
+                      :value="option.value"
                     />
                   </el-select>
                 </el-form-item>

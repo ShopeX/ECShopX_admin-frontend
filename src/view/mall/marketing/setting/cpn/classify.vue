@@ -158,7 +158,7 @@ export default {
     },
     // 查找id
     queryParent(id) {
-      return this.tableList.find(item => {
+      return this.tableList.find((item) => {
         return item.id == id
       })
     },

@@ -5,7 +5,13 @@
 
 <template>
   <SpPage>
-    <SpForm v-model="form" :reset-btn="false" submit-btn-text="保存配置" :form-list="formList" @onSubmit="onSaveConfig" />
+    <SpForm
+      v-model="form"
+      :reset-btn="false"
+      submit-btn-text="保存配置"
+      :form-list="formList"
+      @onSubmit="onSaveConfig"
+    />
   </SpPage>
 </template>
 
@@ -38,7 +44,7 @@ export default {
       api.financial.getInvoiceComfirmSetting(this.id).then((res) => {
         this.form = {
           ...generatorParams(formSchema(this), res),
-          special_invoice_confirm_open:res.special_invoice_confirm_open == '1'
+          special_invoice_confirm_open: res.special_invoice_confirm_open == '1'
         }
       })
     },
@@ -47,7 +53,7 @@ export default {
       api.financial
         .setInvoiceComfirmSetting({
           ...this.form,
-          special_invoice_confirm_open:this.form.special_invoice_confirm_open ? 1 : 0
+          special_invoice_confirm_open: this.form.special_invoice_confirm_open ? 1 : 0
         })
         .then((res) => {
           this.$message.success('发送成功')

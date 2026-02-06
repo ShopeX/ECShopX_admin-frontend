@@ -154,7 +154,7 @@ export default {
 
       var checkedNodes = this.$refs.tree.getCheckedNodes()
       var checkedKeys = []
-      checkedNodes.forEach(item => {
+      checkedNodes.forEach((item) => {
         if (!item.isChildrenMenu) {
           checkedKeys.push(item.alias_name)
         }
@@ -163,13 +163,13 @@ export default {
       var version = this.$store.getters.menus && this.$store.getters.menus[0]?.version
       this.form.permission = { shopmenu_alias_name: checkedKeys, version: version }
       if (this.form.role_id) {
-        updateRolesInfo(this.form.role_id, this.form).then(response => {
+        updateRolesInfo(this.form.role_id, this.form).then((response) => {
           this.editRoleVisible = false
           this.fetchList()
           this.handleCancel()
         })
       } else {
-        createRoles(this.form).then(response => {
+        createRoles(this.form).then((response) => {
           this.editRoleVisible = false
           this.fetchList()
           this.handleCancel()
@@ -186,12 +186,12 @@ export default {
         ...this.params
       }
       getRolesList(params)
-        .then(response => {
+        .then((response) => {
           this.rolesList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -206,7 +206,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteRole(row.role_id).then(response => {
+          deleteRole(row.role_id).then((response) => {
             this.rolesList.splice(index, 1)
             this.$message({
               message: '删除成功',

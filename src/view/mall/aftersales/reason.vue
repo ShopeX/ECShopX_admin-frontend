@@ -82,11 +82,11 @@ export default {
     // 删除
     handleDelete(data) {
       this.$confirm('确认删除该原因么？')
-        .then(_ => {
+        .then((_) => {
           this.reason_list.splice(data.$index, 1)
           this.save()
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 初始化
     resetData() {
@@ -105,7 +105,7 @@ export default {
     },
     // 保存数据
     save() {
-      addAftersalesReason({ reason: this.reason_list }).then(res => {
+      addAftersalesReason({ reason: this.reason_list }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.resetData()
         this.getList()
@@ -115,7 +115,7 @@ export default {
     getList() {
       // console.log('获取数据')
       // this.loading = true
-      getAftersalesReason([]).then(res => {
+      getAftersalesReason([]).then((res) => {
         console.log('返回数据', res)
         this.reason_list = res.data.data
       })

@@ -7,12 +7,12 @@
   <el-form ref="form" label-width="100px">
     <el-form-item label="商户客户号">
       <el-input v-model="form.mer_cust_id" style="width: 300px" />
-      <br>
+      <br />
       <span class="frm-tips">汇付生成的商户唯一标志：mer_cust_id</span>
     </el-form-item>
     <el-form-item label="商户账户号">
       <el-input v-model="form.acct_id" style="width: 300px" />
-      <br>
+      <br />
       <span class="frm-tips">汇付生成的唯一标志：acct_id</span>
     </el-form-item>
     <el-form-item label="证书密钥">
@@ -95,9 +95,12 @@ export default {
       let query = {}
       if (this.activeName == 'hfpay') {
         query = { pay_type: 'hfpay' }
-        getPaymentSetting(query).then(response => {
+        getPaymentSetting(query).then((response) => {
           this.form = response.data.data
-          this.form.is_open = (response.data.data.is_open == 'true' || response.data.data.is_open == true) ? true : false
+          this.form.is_open =
+            response.data.data.is_open == 'true' || response.data.data.is_open == true
+              ? true
+              : false
         })
       }
     },
@@ -123,14 +126,14 @@ export default {
         }
       }
       setPaymentSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

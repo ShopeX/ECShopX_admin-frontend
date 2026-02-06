@@ -266,7 +266,7 @@ export default {
       })
         .then(() => {
           // 新增
-          closeWorkWechatTemplate(id).then(res => {
+          closeWorkWechatTemplate(id).then((res) => {
             that.$message({
               message: '关闭成功',
               type: 'success'
@@ -284,7 +284,7 @@ export default {
       })
         .then(() => {
           // 新增
-          openWorkWechatTemplate(id).then(res => {
+          openWorkWechatTemplate(id).then((res) => {
             that.$message({
               message: '开启成功',
               type: 'success'

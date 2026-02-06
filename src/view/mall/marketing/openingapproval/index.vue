@@ -84,13 +84,13 @@
                   class="cus-row-img"
                   src="@/assets/img/adapay/distributor.png"
                   alt=""
-                >
+                />
                 <img
                   v-if="item.apply_type === 'dealer'"
                   class="cus-row-img"
                   src="@/assets/img/adapay/dealer.png"
                   alt=""
-                >
+                />
               </el-col>
               <el-col :span="13">
                 <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
@@ -111,13 +111,13 @@
                   src="@/assets/img/adapay/pass.png"
                   alt=""
                   style="width: 100px; height: 84px"
-                >
+                />
                 <img
                   v-if="item.status === 'REJECT'"
                   src="@/assets/img/adapay/reject.png"
                   alt=""
                   style="width: 90px; height: 89px"
-                >
+                />
               </el-col>
               <el-col
                 class="cus-row-btn"
@@ -224,7 +224,7 @@ export default {
     },
     getAftersalesList(params) {
       this.loading = true
-      getOpenApprovedList(params).then(response => {
+      getOpenApprovedList(params).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false

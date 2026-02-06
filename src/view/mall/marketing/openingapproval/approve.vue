@@ -14,13 +14,13 @@
               class="cus-approve-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            >
+            />
             <img
               v-if="apply_type === 'distributor'"
               class="cus-approve-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            >
+            />
           </el-col>
         </el-col>
         <el-col :span="20">
@@ -285,7 +285,7 @@ export default {
   methods: {
     getDetail(id) {
       getOpenApproveDetail(id)
-        .then(response => {
+        .then((response) => {
           const { is_rel_dealer, distributor_info, entry_apply_info, entry_info, dealer_info } =
             response.data.data || {}
           this.infoList = response.data.data
@@ -342,7 +342,7 @@ export default {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -429,7 +429,7 @@ export default {
       this.visibleModal = visible
     },
     getDistributor(parmas) {
-      getDistributorList(parmas).then(response => {
+      getDistributorList(parmas).then((response) => {
         this.storeList = response.data.data.list
         this.modalData.total_count = parseInt(response.data.data.total_count)
         this.modalData.loading = false

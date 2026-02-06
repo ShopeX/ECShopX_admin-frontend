@@ -28,23 +28,11 @@
           </el-row>
         </el-form-item>
         <el-form-item label="商城Logo">
-          <imgBox :img-url="form.logo" inline @click="handleImgChange('imgDialog')" />
-          <imgPicker
-            :dialog-visible="imgDialog"
-            :sc-status="isGetImage"
-            @chooseImg="pickImg"
-            @closeImgDialog="closeImgDialog('imgDialog')"
-          />
+          <imgBox :img-url="form.logo" inline @click="handleImgChange('logo')" />
           （ 推荐尺寸:147*46px ）
         </el-form-item>
         <el-form-item label="登录页背景图">
-          <imgBox :img-url="form.background" inline @click="handleImgChange('imgDialogLoginBg')" />
-          <imgPicker
-            :dialog-visible="imgDialogLoginBg"
-            :sc-status="isGetImage"
-            @chooseImg="pickImgLoginBg"
-            @closeImgDialog="closeImgDialog('imgDialogLoginBg')"
-          />
+          <imgBox :img-url="form.background" inline @click="handleImgChange('background')" />
           （ 推荐尺寸:1920*690px ）
         </el-form-item>
       </div>
@@ -60,11 +48,9 @@
 <script>
 import { putSettingWxShops, getSettingWxShops } from '@/api/shop'
 import { uploadMaterial } from '@/api/wechat'
-import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 export default {
   components: {
-    imgPicker,
     imgBox
   },
   data() {
@@ -80,14 +66,11 @@ export default {
       textarea: '',
       pic: '',
       remnant: 0,
-      fileList: [],
-      imgDialog: false,
-      imgDialogLoginBg: false,
-      isGetImage: false
+      fileList: []
     }
   },
   mounted() {
-    getSettingWxShops().then(res => {
+    getSettingWxShops().then((res) => {
       this.form.logo = res.data.data.logo
       this.pic = this.wximageurl + res.data.data.logo
       this.form.intro = res.data.data.intro
@@ -114,7 +97,7 @@ export default {
         background: this.form.background
       }
       console.log(params)
-      putSettingWxShops(params).then(response => {
+      putSettingWxShops(params).then((response) => {
         if (response.data.data) {
           this.$message({
             message: '保存配置信息成功！',
@@ -148,21 +131,42 @@ export default {
     countInput() {
       this.remnant = this.form.intro.length
     },
-    //门店LOGO
-    handleImgChange(name) {
-      this[name] = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      this.form.logo = data.url
-      this.imgDialog = false
-    },
-    pickImgLoginBg(data) {
-      this.form.background = data.url
-      this.imgDialogLoginBg = false
-    },
-    closeImgDialog(name) {
-      this[name] = false
+    //门店LOGO和登录页背景图
+    async handleImgChange(type) {
+      try {
+        // 根据不同的类型获取当前图片URL
+        let currentImgUrl = ''
+        if (type === 'logo') {
+          currentImgUrl = this.form.logo || ''
+        } else if (type === 'background') {
+          currentImgUrl = this.form.background || ''
+        }
+
+        const { data } = await this.$picker.image({
+          data: currentImgUrl ? { url: currentImgUrl } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (data && data.url) || data || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          let finalUrl = imgUrl
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            finalUrl = imgUrl.replace(this.wximageurl, '')
+          }
+
+          // 根据不同的类型设置对应的字段
+          if (type === 'logo') {
+            this.form.logo = finalUrl
+          } else if (type === 'background') {
+            this.form.background = finalUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
+      }
     }
   }
 }

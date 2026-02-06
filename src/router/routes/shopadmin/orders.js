@@ -138,7 +138,7 @@ const routes = [
       {
         name: 'logistics',
         path: 'logistics',
-        component: () => import('@/view/mall/trade/logistics/index'),
+        component: () => import('@/views/settings/deliverySettings/logistics/index'),
         meta: {
           aliasName: 'wl-logistics',
           icon: 'icon-logistics',
@@ -148,7 +148,7 @@ const routes = [
         children: [
           {
             path: 'editor/:id?',
-            component: () => import('@/view/mall/trade/logistics/add-ziti'),
+            component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
             meta: {
               title: '自提点管理',
               hidden: true

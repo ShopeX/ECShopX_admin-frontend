@@ -11,9 +11,9 @@
 
     <div class="floorImg">
       <div v-if="base.openBackImg" class="floorImg_img_list">
-        <img :src="wximageurl + base.backgroundImg" class="floorImg-imgs">
+        <img :src="wximageurl + base.backgroundImg" class="floorImg-imgs" />
         <div v-for="(item, index) in data" :key="index" class="floorImg_img_li1">
-          <img class="floorImg_img" :src="wximageurl + item.imgUrl">
+          <img class="floorImg_img" :src="wximageurl + item.imgUrl" />
           <div class="imgs_title" :style="'color:' + base.WordColor">
             {{ item.ImgTitle }}
           </div>
@@ -22,7 +22,7 @@
 
       <div v-else class="floorImg_img_list">
         <div v-for="(item, index) in data" :key="index" class="floorImg_img_li2">
-          <img class="floorImg_img" :src="wximageurl + item.imgUrl">
+          <img class="floorImg_img" :src="wximageurl + item.imgUrl" />
           <div class="imgs_title" :style="'color:' + base.WordColor">
             {{ item.ImgTitle }}
           </div>

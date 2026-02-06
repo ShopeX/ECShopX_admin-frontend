@@ -111,7 +111,7 @@
         <el-row :gutter="20">
           <el-col :span="18">
             <div class="frm-tips">
-              请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br>最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M
+              请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br />最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M
             </div>
             <div class="pics-box">
               <ul class="goodspic-wrap">
@@ -122,7 +122,7 @@
                   @mouseenter="picsEnter(index)"
                   @mouseleave="picsLeave"
                 >
-                  <img :src="wximageurl + item">
+                  <img :src="wximageurl + item" />
                   <div
                     class="goodspic-mask"
                     :class="picsCurrent == index ? 'on' : ''"
@@ -227,7 +227,7 @@
             :show-file-list="false"
             :on-change="handleQualificationPicChange"
           >
-            <img v-if="qpic_url" :src="qpic_url" class="avatar">
+            <img v-if="qpic_url" :src="qpic_url" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-col>
@@ -314,7 +314,7 @@ export default {
     }
   },
   mounted() {
-    getAuthorizerInfo().then(response => {
+    getAuthorizerInfo().then((response) => {
       this.principal_name = response.data.data.principal_name
     })
 
@@ -322,7 +322,7 @@ export default {
       // 初始化门店数据
       //this.add_flag = 0;
       getWxShopsDetail(this.$route.params.wxShopId)
-        .then(response => {
+        .then((response) => {
           this.wxShopsDetailData = response.data.data
           this.form.pic_list = this.wxShopsDetailData.pic_list
           this.form.contract_phone = this.wxShopsDetailData.contract_phone
@@ -372,7 +372,7 @@ export default {
           // 编辑门店时初始化地图
           this.qqmapinit(this.wxShopsDetailData.lat, this.wxShopsDetailData.lng)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.go(-1)
         })
     } else {
@@ -424,7 +424,7 @@ export default {
       if (this.wxShopsDetailData.wx_shop_id) {
         // 编辑门店数据提交
         // console.log(params);
-        updateWxShops(this.wxShopsDetailData.wx_shop_id, params).then(response => {
+        updateWxShops(this.wxShopsDetailData.wx_shop_id, params).then((response) => {
           if (response.data.data.wx_shop_id) {
             this.loading = false
             this.refresh()
@@ -436,7 +436,7 @@ export default {
         })
       } else {
         // 添加门店数据提交
-        createWxShops(params).then(response => {
+        createWxShops(params).then((response) => {
           if (response.data.data.wx_shop_id) {
             this.loading = false
             this.refresh()
@@ -603,7 +603,7 @@ export default {
       }
 
       let params = { isUploadFile: true, file: file.raw, type: 'image', is_temp: 'true' }
-      uploadMaterial(params).then(res => {
+      uploadMaterial(params).then((res) => {
         this.form.qpic = res.data.data.media_id
       })
     },
@@ -623,7 +623,7 @@ export default {
         return false
       } else {
         if (arr.length != 0) {
-          arr.forEach(data => {
+          arr.forEach((data) => {
             if (data && data.url !== '') {
               this.picsDialog = false
               this.form.pic_list.push(data.url)

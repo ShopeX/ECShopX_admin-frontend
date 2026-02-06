@@ -118,7 +118,7 @@
                     @mouseenter="picsEnter(index)"
                     @mouseleave="picsLeave"
                   >
-                    <img :src="wximageurl + item">
+                    <img :src="wximageurl + item" />
                     <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
                       <div class="el-icon-delete" @click="removePicsImg(index)" />
                       <div class="el-icon-rank" />
@@ -134,13 +134,6 @@
               建议尺寸:750*750，文件格式为：png、jpeg、bmp、 jpg大小不超
               2M，小程序卡片分享与报名活动列表取详情第一张图展示
             </div>
-            <imgPicker
-              :dialog-visible="activityPicsDialog"
-              :sc-status="isGetActivityImage"
-              :is-most="true"
-              @chooseImg="chooseActivityImg"
-              @closeImgDialog="closeImgDialog"
-            />
           </el-col>
         </el-form-item>
       </el-card>
@@ -410,7 +403,6 @@ import {
   regActivityUpdate,
   getTemplateList
 } from '@/api/selfhelpform'
-import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 import district from '@/common/district.json'
 import { listVipGrade } from '@/api/cardticket'
@@ -423,7 +415,6 @@ import draggable from 'vuedraggable'
 
 export default {
   components: {
-    imgPicker,
     imgBox,
     richTextEditor,
     EnterpriseDialog,
@@ -477,8 +468,6 @@ export default {
         is_valid: 1
       },
       temp_options: [],
-      activityPicsDialog: false,
-      isGetActivityImage: false,
       vipGrade: [],
       memberGrade: [],
       mode: 'richText',
@@ -527,7 +516,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                const inChecked = this.distributor_list.findIndex(v => v.id == row.id)
+                const inChecked = this.distributor_list.findIndex((v) => v.id == row.id)
                 if (inChecked > -1) {
                   this.distributor_list.splice(inChecked, 1)
                 }
@@ -553,7 +542,7 @@ export default {
                 { name: '邮箱', value: 'email' },
                 { name: '二维码', value: 'qr_code' }
               ]
-              const authType = VALIDATE_TYPES.find(item => item.value == auth_type)?.name
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
               return authType
             }
           },
@@ -567,7 +556,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                const inChecked = this.enterprise_list.findIndex(v => v.id == row.id)
+                const inChecked = this.enterprise_list.findIndex((v) => v.id == row.id)
                 if (inChecked > -1) {
                   this.enterprise_list.splice(inChecked, 1)
                 }
@@ -583,7 +572,7 @@ export default {
     if (this.$route.query.id) {
       this.pageType = this.$route.query.type
       let filter = { activity_id: this.$route.query.id }
-      regActivityGet(filter).then(res => {
+      regActivityGet(filter).then((res) => {
         this.form = res.data.data
         this.activity_date = [this.form.start_time * 1000, this.form.end_time * 1000]
         this.enterprise_list = this.form.enterprise_list
@@ -618,12 +607,12 @@ export default {
   },
   methods: {
     getGradeLevelList() {
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
         }
       })
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.memberGrade = response.data.data
         }
@@ -648,8 +637,8 @@ export default {
       }
       params['show_fields'] = JSON.stringify(obj)
       params['distributor_ids'] =
-        this.distributor_list?.map(item => item.distributor_id).join(',') || ''
-      params['enterprise_ids'] = this.enterprise_list?.map(item => item.id).join(',') || ''
+        this.distributor_list?.map((item) => item.distributor_id).join(',') || ''
+      params['enterprise_ids'] = this.enterprise_list?.map((item) => item.id).join(',') || ''
       params['member_level'] = this.memberLevelList ? this.memberLevelList.join(',') : ''
       // params['use_all_distributor'] = this.useAllDistributor
       params['pics'] = this.picsList.join(',')
@@ -667,7 +656,7 @@ export default {
       delete params.updated
       delete params.created
       delete params.member_level_list
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (!this.useAllDistributor && this.distributor_list.length == 0) {
             return this.$message.error('请选择店铺')
@@ -676,7 +665,7 @@ export default {
             return this.$message.error('请选择企业')
           }
           if (this.form.activity_id) {
-            regActivityUpdate(params).then(res => {
+            regActivityUpdate(params).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -690,7 +679,7 @@ export default {
               }
             })
           } else {
-            regActivityAdd(params).then(res => {
+            regActivityAdd(params).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',
@@ -718,8 +707,8 @@ export default {
     },
     getTemplateList() {
       this.loading = true
-      getTemplateList(this.templateParams).then(response => {
-        response.data.data.list.map(item => {
+      getTemplateList(this.templateParams).then((response) => {
+        response.data.data.list.map((item) => {
           this.temp_options.push({
             label: item.tem_name,
             value: item.id
@@ -732,26 +721,34 @@ export default {
         this.loading = false
       })
     },
-    chooseActivityImg(data) {
-      if (data.length > 0) {
-        data.forEach(data => {
-          if (data && data.url !== '') {
-            this.picsList.push(data.url)
-          }
+    async handleActivityPicsChange() {
+      try {
+        const { data } = await this.$picker.image({
+          multiple: true,
+          num: 20 // 最多选择20张图片
         })
+
+        if (data && data.length > 0) {
+          data.forEach((item) => {
+            const imgUrl = (item && item.url) || item || ''
+            if (imgUrl) {
+              // 如果包含 wximageurl，则提取相对路径
+              let finalUrl = imgUrl
+              if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+                finalUrl = imgUrl.replace(this.wximageurl, '')
+              }
+              this.picsList.push(finalUrl)
+            }
+          })
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
       }
-      this.activityPicsDialog = false
-    },
-    closeImgDialog() {
-      this.activityPicsDialog = false
-    },
-    handleActivityPicsChange() {
-      this.activityPicsDialog = true
-      this.isGetActivityImage = true
     },
     pickThumb: function (arr) {
       if (arr.length != 0) {
-        arr.forEach(data => {
+        arr.forEach((data) => {
           if (data && data.url !== '') {
             this.thumbDialog = false
             var index = this.$refs.editor.$el.id

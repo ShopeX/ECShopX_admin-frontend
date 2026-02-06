@@ -152,7 +152,7 @@ export default {
     },
     toggleSelection(rows) {
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {

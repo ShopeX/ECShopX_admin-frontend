@@ -119,7 +119,7 @@ export default {
       let { data } = await getActivearticleList(params)
       // this.paging.total = data.data.total_count;
 
-      this.list = data.data.list.map(item => {
+      this.list = data.data.list.map((item) => {
         item.visible = false
         return item
       })
@@ -154,7 +154,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          delActivearticle(row.id).then(res => {
+          delActivearticle(row.id).then((res) => {
             this._getActivearticleList()
             this.$message({
               message: '删除活动成功',

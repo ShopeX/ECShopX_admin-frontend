@@ -108,14 +108,14 @@
       </el-form-item>
       <el-form-item label="门店LOGO">
         <div class="upload-box" @click="handleImgPicker('logo')">
-          <img v-if="form.logo" :src="form.logo" class="avatar">
+          <img v-if="form.logo" :src="form.logo" class="avatar" />
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
       </el-form-item>
       <el-form-item v-if="VERSION_PLATFORM()" label="门店横幅广告">
         <div class="upload-box" @click="handleImgPicker('banner')">
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.banner" :src="form.banner" class="avatar" />
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
@@ -203,7 +203,7 @@ export default {
   mounted() {
     this.distributor_id = this.$route.query.distributor_id
     if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
-      getDistributorInfo({ distributor_id: this.distributor_id }).then(res => {
+      getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
         this.form = res.data.data
         if (res.data.data.hour) {
           // 处理营业时间的格式
@@ -247,14 +247,14 @@ export default {
       this.submitLoading = true
       this.form.hour = this.startTime + '-' + this.endTime
       addDistributorShop(this.form)
-        .then(res => {
+        .then((res) => {
           this.submitLoading = false
           this.$message({ type: 'success', message: '保存门店成功' })
           if (this.$store.getters.login_type != 'distributor') {
             this.$router.go(-1)
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.submitLoading = false
         })
     },

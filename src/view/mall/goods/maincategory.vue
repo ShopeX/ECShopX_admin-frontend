@@ -247,58 +247,49 @@
       title="商品分销配置"
       width="60"
     >
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>
-              <el-alert
-                title="导购分润计算类型: 【按比例分佣】"
-                description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费-商品优惠金额】"
-                type="info"
-                close-text=" "
-                class="alert-text"
-                show-icon
-              />
-            </span>
-            <span>
-              <el-alert
-                title="导购分润计算类型: 【按金额分佣】"
-                description="计算方式： 固定金额分佣"
-                type="info"
-                close-text=" "
-                class="alert-text"
-                show-icon
-              />
-            </span>
-          </div>
-          分类名称：{{ current.category_name }}
-          <el-table
-            v-loading="categoryLoading"
-            :data="profitSpecCategory"
-            height="100%"
-            size="small"
-          >
-            <el-table-column label="分类名称" prop="category_name" min-width="120" />
-            <el-table-column label="分润类型"> 百分比 </el-table-column>
-            <el-table-column label="推广导购分润">
-              <template slot-scope="scope">
-                <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
-                  <template slot="append"> % </template>
-                </el-input>
-              </template>
-            </el-table-column>
-            <el-table-column label="拉新导购分润">
-              <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.profit_conf_popularize_profit"
-                  size="mini"
-                  type="number"
-                >
-                  <template slot="append"> % </template>
-                </el-input>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-card>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>
+            <el-alert
+              title="导购分润计算类型: 【按比例分佣】"
+              description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费-商品优惠金额】"
+              type="info"
+              close-text=" "
+              class="alert-text"
+              show-icon
+            />
+          </span>
+          <span>
+            <el-alert
+              title="导购分润计算类型: 【按金额分佣】"
+              description="计算方式： 固定金额分佣"
+              type="info"
+              close-text=" "
+              class="alert-text"
+              show-icon
+            />
+          </span>
+        </div>
+        分类名称：{{ current.category_name }}
+        <el-table v-loading="categoryLoading" :data="profitSpecCategory" height="100%" size="small">
+          <el-table-column label="分类名称" prop="category_name" min-width="120" />
+          <el-table-column label="分润类型"> 百分比 </el-table-column>
+          <el-table-column label="推广导购分润">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
+                <template slot="append"> % </template>
+              </el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="拉新导购分润">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.profit_conf_popularize_profit" size="mini" type="number">
+                <template slot="append"> % </template>
+              </el-input>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
       <div slot="footer">
         <el-button type="primary" :loading="submitLoading" @click="saveProfitConf">
           保存
@@ -414,7 +405,7 @@ export default {
             is_main_category: 1,
             parent_id: is_hassuperior ? superior_cat_id : undefined
           })
-            .then(res => {
+            .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -428,7 +419,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch(err => {
+            .catch((err) => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -440,7 +431,7 @@ export default {
             is_main_category: 1,
             category_id: current_id
           })
-            .then(res => {
+            .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
                 loading: false,
@@ -454,7 +445,7 @@ export default {
               }
               _this.getCategory()
             })
-            .catch(err => {
+            .catch((err) => {
               if (err) {
                 _this.dialog.loading = false
               }
@@ -465,7 +456,7 @@ export default {
     saveProfitConf() {
       let profitConf
       let category_id
-      this.profitSpecCategory.forEach(item => {
+      this.profitSpecCategory.forEach((item) => {
         var profit_conf = {}
         category_id = item.category_id
         profit_conf.profit_conf_profit = item.profit_conf_profit
@@ -476,7 +467,7 @@ export default {
         category_id: category_id,
         profit_conf: JSON.stringify(profitConf)
       }
-      saveCategoryProfitPrice(params).then(res => {
+      saveCategoryProfitPrice(params).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -505,7 +496,7 @@ export default {
       console.log('保存税率')
       updateCategory(this.category_id, {
         crossborder_tax_rate: this.crossborder_tax_rate
-      }).then(res => {
+      }).then((res) => {
         this.$message({ type: 'success', message: '保存成功' })
         this.show_sideBar = false
         this.category_id = 0
@@ -545,11 +536,11 @@ export default {
       this.$refs.multipleTable.clearSelection()
 
       var checkids = []
-      this.checkGoodsAttr.forEach(item => {
+      this.checkGoodsAttr.forEach((item) => {
         checkids.push(item.attribute_id)
       })
 
-      this.goodsAttr.forEach(item => {
+      this.goodsAttr.forEach((item) => {
         if (checkids && checkids.indexOf(item.attribute_id) !== -1) {
           this.$refs.multipleTable.toggleRowSelection(item)
         }
@@ -601,7 +592,7 @@ export default {
     },
     async getGoodsAttr(checkids = []) {
       if (checkids.length === 0) {
-        this.checkGoodsAttr.forEach(item => {
+        this.checkGoodsAttr.forEach((item) => {
           checkids.push(item.attribute_id)
         })
       }
@@ -612,7 +603,7 @@ export default {
           pageSize: 100,
           attribute_type: this.currentAttrType,
           attribute_ids: checkids
-        }).then(info => {
+        }).then((info) => {
           this.checkGoodsAttr = info.data.data.list
         })
       }
@@ -621,12 +612,12 @@ export default {
         page: this.attrParams.page,
         pageSize: this.attrParams.pageSize,
         attribute_type: this.currentAttrType
-      }).then(res => {
+      }).then((res) => {
         this.goodsAttr = res.data.data.list
         this.goodsAttrTotal = res.data.data.total_count
       })
 
-      this.goodsAttr.forEach(item => {
+      this.goodsAttr.forEach((item) => {
         const isHave = Array.isArray(checkids)
           ? checkids.indexOf(item.attribute_id) !== -1
           : checkids === item.attribute_id
@@ -638,7 +629,7 @@ export default {
     },
     saveCategoryAttr() {
       var checkids = []
-      this.checkGoodsAttr.forEach(item => {
+      this.checkGoodsAttr.forEach((item) => {
         checkids.push(item.attribute_id)
       })
 
@@ -651,7 +642,7 @@ export default {
       }
 
       if (this.currentCategory.category_id) {
-        updateCategory(this.currentCategory.category_id, selectionData).then(res => {
+        updateCategory(this.currentCategory.category_id, selectionData).then((res) => {
           this.$message({ type: 'success', message: '保存成功' })
           this.handleCancel()
           this.getCategory()
@@ -673,7 +664,7 @@ export default {
     getCategory() {
       this.loading = true
       this.params.is_main_category = true
-      getCategory(this.params).then(response => {
+      getCategory(this.params).then((response) => {
         this.categoryList = response.data.data
         this.loading = false
         this.spaceInput = false
@@ -718,7 +709,7 @@ export default {
         this.isDisable = false
       }, 1000)
       let form = JSON.stringify(this.categoryList)
-      saveCategory({ form: form }).then(response => {
+      saveCategory({ form: form }).then((response) => {
         this.$message({
           type: 'success',
           message: '保存类目成功'
@@ -734,7 +725,7 @@ export default {
       })
         .then(() => {
           if (typeof data.category_id != 'undefined') {
-            deleteCategory(data.category_id).then(response => {
+            deleteCategory(data.category_id).then((response) => {
               this.$message({
                 type: 'success',
                 message: '删除类目成功'
@@ -749,7 +740,7 @@ export default {
             const { category_level, id, parent_id } = data
             let key = category_level === 1 ? id : parent_id
             const categoryList = this.categoryList
-            const parentIndex = categoryList.findIndex(item => item.id === key)
+            const parentIndex = categoryList.findIndex((item) => item.id === key)
             const deleteList = function (children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
@@ -769,7 +760,7 @@ export default {
             this.categoryList = categoryList
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e)
           this.$message({
             type: 'info',
@@ -871,11 +862,11 @@ export default {
     },
     pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex(d => d.id === this.current.id)
+        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else {
-        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
+        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       }
       this.imgDialog = false
@@ -884,7 +875,7 @@ export default {
       this.imgDialog = false
     },
     syncMainCategory() {
-      syncMainCategory().then(res => {
+      syncMainCategory().then((res) => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',

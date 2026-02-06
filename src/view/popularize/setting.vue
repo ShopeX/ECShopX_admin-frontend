@@ -188,7 +188,7 @@
                   v-if="form.qrcode_bg_img"
                   :src="wximageurl + form.qrcode_bg_img"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -209,7 +209,7 @@
             <el-form-item label="小店图片">
               <div>
                 <div class="upload-box" @click="handleImgChange">
-                  <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar">
+                  <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
@@ -260,7 +260,7 @@
                         v-if="form.applets_share_img"
                         :src="wximageurl + form.applets_share_img"
                         class="avatar"
-                      >
+                      />
                       <i v-else class="el-icon-plus avatar-uploader-icon" />
                     </div>
                     <div class="frm-tips upload-box inline">建议尺寸5:4</div>
@@ -273,7 +273,7 @@
                         v-if="form.h5_share_img"
                         :src="wximageurl + form.h5_share_img"
                         class="avatar"
-                      >
+                      />
                       <i v-else class="el-icon-plus avatar-uploader-icon" />
                     </div>
                     <div class="frm-tips upload-box inline">建议尺寸1:1</div>
@@ -326,12 +326,6 @@
           -->
         </template>
       </div>
-      <imgPicker
-        :dialog-visible="imgDialog"
-        :sc-status="isGetImage"
-        @chooseImg="pickImg"
-        @closeImgDialog="closeImgDialog"
-      />
       <div class="section-footer with-border content-center">
         <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
@@ -342,12 +336,9 @@
 import { getPopularizeSetting, setPopularizeSetting } from '../../api/promotions'
 import { listVipGrade } from '../../api/cardticket'
 import { getCustomPageList } from '@/api/wxa'
-import imgPicker from '../../components/imageselect'
 import { getWeappId } from '../../api/template'
 export default {
-  components: {
-    imgPicker
-  },
+  components: {},
   data() {
     return {
       params: {
@@ -432,11 +423,7 @@ export default {
           label: '会员已完成订单数'
         }
       ],
-      // 要设置的图片
-      setImg: '',
       vipGradeList: {},
-      imgDialog: false,
-      isGetImage: false,
       custompage_template_id: 0,
       FormworkVisible: false,
       FormworkList: []
@@ -444,7 +431,7 @@ export default {
   },
   mounted() {
     // this.getFormworkList()
-    getPopularizeSetting().then(res => {
+    getPopularizeSetting().then((res) => {
       this.form = { ...this.form, ...res.data.data }
       this.form.goods = this.form.goods ? this.form.goods : 'all'
       this.form.share_title = this.form.share_title ? this.form.share_title : '这家小店不一般！'
@@ -465,7 +452,7 @@ export default {
         }
       }
     }),
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGradeList = response.data.data
         }
@@ -587,7 +574,7 @@ export default {
     },
     linkTo() {
       let link = ''
-      getWeappId().then(res => {
+      getWeappId().then((res) => {
         var data = res.data.data.weappid
         var tempName = res.data.data.tempName
         if (data) {
@@ -624,30 +611,57 @@ export default {
           })
         })
     },
-    handleImgChange(data = 'banner') {
-      this.imgDialog = true
-      this.isGetImage = true
-      this.setImg = data
-    },
-    pickImg(data) {
-      // this.form.guideImg = data.url
-      switch (this.setImg) {
-        case 'web':
-          this.form.h5_share_img = data.url
-          break
-        case 'wxapp':
-          this.form.applets_share_img = data.url
-          break
-        case 'qrcode_bg_img':
-          this.form.qrcode_bg_img = data.url
-          break
-        default:
-          this.form.banner_img = data.url
+    async handleImgChange(data = 'banner') {
+      try {
+        // 根据不同的图片类型获取当前图片URL
+        let currentImgUrl = ''
+        switch (data) {
+          case 'web':
+            currentImgUrl = this.form.h5_share_img || ''
+            break
+          case 'wxapp':
+            currentImgUrl = this.form.applets_share_img || ''
+            break
+          case 'qrcode_bg_img':
+            currentImgUrl = this.form.qrcode_bg_img || ''
+            break
+          default:
+            currentImgUrl = this.form.banner_img || ''
+        }
+
+        const { data: result } = await this.$picker.image({
+          data: currentImgUrl ? { url: currentImgUrl } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (result && result.url) || result || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          let finalUrl = imgUrl
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            finalUrl = imgUrl.replace(this.wximageurl, '')
+          }
+
+          // 根据不同的图片类型设置对应的字段
+          switch (data) {
+            case 'web':
+              this.form.h5_share_img = finalUrl
+              break
+            case 'wxapp':
+              this.form.applets_share_img = finalUrl
+              break
+            case 'qrcode_bg_img':
+              this.form.qrcode_bg_img = finalUrl
+              break
+            default:
+              this.form.banner_img = finalUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
       }
-      this.imgDialog = false
-    },
-    closeImgDialog() {
-      this.imgDialog = false
     },
     save() {
       let plusReg = /^[1-9](\d+)?$/
@@ -674,14 +688,14 @@ export default {
         // }
       }
 
-      setPopularizeSetting(this.form).then(res => {
+      setPopularizeSetting(this.form).then((res) => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     },
     // 自定义页面模板列表
     getFormworkList() {
       this.loading = true
-      getCustomPageList(this.params).then(response => {
+      getCustomPageList(this.params).then((response) => {
         this.FormworkList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

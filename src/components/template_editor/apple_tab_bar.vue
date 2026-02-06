@@ -171,7 +171,7 @@ export default {
     },
     editItem() {
       if (this.base && this.base.linkPage && this.base.linkPage === 'custom_page') {
-        this.data.map(item => {
+        this.data.map((item) => {
           if (item.name === 'service') {
             item.id = this.base.id
           }
@@ -185,7 +185,7 @@ export default {
       this.current = index
     },
     handleChange(value) {
-      let n = this.pathOptions.find(item => item.value === value)
+      let n = this.pathOptions.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }

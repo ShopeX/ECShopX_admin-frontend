@@ -81,7 +81,7 @@
                   :src="wximageurl + item.imgUrl"
                   class="banner-uploader"
                   @click="handleImgChange(index)"
-                >
+                />
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
@@ -136,7 +136,7 @@
             </template>
             <template v-if="type === 'pc'">
               <div v-if="item.url" class="upload-box">
-                <img :src="item.url" class="banner-uploader" @click="handleImgChange(index)">
+                <img :src="item.url" class="banner-uploader" @click="handleImgChange(index)" />
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />

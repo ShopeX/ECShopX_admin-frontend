@@ -467,7 +467,7 @@ export default {
         wxaAppId: this.wxAppId,
         date: '',
         queryType: ''
-      }).then(res => {
+      }).then((res) => {
         this.survey = res.data.data
         this.surveyLoading = false
       })
@@ -499,7 +499,7 @@ export default {
       getSummaryTrend({
         wxaAppId: this.wxAppId,
         queryType: this.chart.date
-      }).then(res => {
+      }).then((res) => {
         var visitTotal = [],
           sharePv = [],
           shareUv = [],
@@ -524,7 +524,7 @@ export default {
       getVisitTrend({
         wxaAppId: this.wxAppId,
         queryType: this.chart.date
-      }).then(res => {
+      }).then((res) => {
         var sessionCnt = [],
           visitPv = [],
           visitUv = [],
@@ -568,7 +568,7 @@ export default {
       getVisitPage({
         wxaAppId: this.wxAppId,
         queryType: this.visitPage.date
-      }).then(res => {
+      }).then((res) => {
         var pageVisitPv = [],
           entrypagePv = [],
           pageVisitTotal = res.data.data.total.page_visit_pv,

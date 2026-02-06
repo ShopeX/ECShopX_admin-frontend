@@ -265,10 +265,11 @@ export function updateCategory(category_id, query) {
   })
 }
 
-export function getCategoryInfo(category_id) {
+export function getCategoryInfo(category_id, params) {
   return fetch({
     url: '/goods/category/' + category_id,
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

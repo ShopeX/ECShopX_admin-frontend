@@ -203,7 +203,7 @@ export default {
     handleSelectionChange(rows) {
       this.delivery_id = []
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           if (row) {
             this.delivery_id.push(row.delivery_id)
           }
@@ -214,7 +214,7 @@ export default {
       if (this.delivery_id) {
         this.params.delivery_id = this.delivery_id
       }
-      exportDeliveryorderInfo(this.params).then(response => {
+      exportDeliveryorderInfo(this.params).then((response) => {
         this.downloadUrl = response.data.data.url
         this.downloadName = response.data.data.filename
         this.downloadView = true
@@ -224,7 +224,7 @@ export default {
       if (this.delivery_id) {
         this.params.delivery_id = this.delivery_id
       }
-      exportDeliveryorder(this.params).then(response => {
+      exportDeliveryorder(this.params).then((response) => {
         this.downloadUrl = response.data.data.url
         this.downloadName = response.data.data.filename
         this.downloadView = true
@@ -243,7 +243,7 @@ export default {
       let params = {}
       if (this.delivery_id.length > 0) {
         let data = []
-        this.delivery_id.forEach(delivery_id => {
+        this.delivery_id.forEach((delivery_id) => {
           data.push({ delivery_id: delivery_id })
         })
         params = {
@@ -251,7 +251,7 @@ export default {
           status: status
         }
       }
-      batchShippingDeliveryorder(params).then(res => {
+      batchShippingDeliveryorder(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '操作成功',
@@ -270,7 +270,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          shippingDeliveryorder({ delivery_id: row.delivery_id }).then(response => {
+          shippingDeliveryorder({ delivery_id: row.delivery_id }).then((response) => {
             this.$message({
               type: 'success',
               message: '操作成功!'
@@ -295,7 +295,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getDeliveryOrderList(this.params).then(response => {
+      getDeliveryOrderList(this.params).then((response) => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

@@ -28,7 +28,7 @@ export default {
   created() {
     // 获取所有 SVG 文件
     const svgFiles = require.context('@/assets/svgs', false, /\.svg$/)
-    this.icons = svgFiles.keys().map(key => {
+    this.icons = svgFiles.keys().map((key) => {
       return key.replace(/^\.\/(.*?)\.svg$/, '$1')
     })
   },

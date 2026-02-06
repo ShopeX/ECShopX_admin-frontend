@@ -7,7 +7,7 @@
   <div class="notExistAuth_page">
     <el-card class="box-card card">
       <div class="box">
-        <img :src="require('@/assets/img/warning.png')" alt="">
+        <img :src="require('@/assets/img/warning.png')" alt="" />
         <p>登录失败，该账号无权限</p>
       </div>
       <p class="message">

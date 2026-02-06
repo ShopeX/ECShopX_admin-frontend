@@ -44,7 +44,7 @@ export default {
     isPrescriptionApproved: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     let statusOption = [
@@ -85,7 +85,7 @@ export default {
         cost_price: '',
         market_price: '',
         barcode: '',
-        delivery_time:"",
+        delivery_time: '',
         point_num: 0,
         start_num: 0 //起订量
       },

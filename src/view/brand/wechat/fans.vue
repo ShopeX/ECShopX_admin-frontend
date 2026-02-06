@@ -143,7 +143,7 @@
           <el-table-column type="selection" width="46" />
           <el-table-column prop="headimgurl" label="用户信息" width="80">
             <template slot-scope="scope">
-              <img class="fan-avatar" :src="scope.row.headimgurl" alt="">
+              <img class="fan-avatar" :src="scope.row.headimgurl" alt="" />
             </template>
           </el-table-column>
           <el-table-column label="">
@@ -152,7 +152,7 @@
                 scope.row.remark
                   ? scope.row.remark + ' (' + scope.row.nickname + ')'
                   : scope.row.nickname
-              }}<br>
+              }}<br />
               <el-popover
                 ref="tag"
                 v-model="scope.row.tagpop"
@@ -326,7 +326,7 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize
       }
-      getFansList(params).then(response => {
+      getFansList(params).then((response) => {
         this.tableData = response.data.data.list
         this.total_count = +response.data.data.total_count
         this.total = +response.data.data.total_count
@@ -348,14 +348,14 @@ export default {
       this.getFansList(val)
     },
     getTagList() {
-      getTagList().then(response => {
+      getTagList().then((response) => {
         this.tags = response.data.data
       })
     },
     createTag() {
       let tag = this.$refs.tagName.$refs.input.value
       let params = { tag_name: tag }
-      createTag(params).then(response => {
+      createTag(params).then((response) => {
         var newTag = response.data.data
         newTag.total = '0'
         this.tags.push(response.data.data)
@@ -377,7 +377,7 @@ export default {
         param.openIds = this.fansOpenids.join(',')
         this.tagsPop = false
 
-        batchSetUserTags(param).then(response => {
+        batchSetUserTags(param).then((response) => {
           this.groupTag = []
           this.fansOpenids = []
           this.getFansList()
@@ -399,7 +399,7 @@ export default {
         let paramId = ids.join(',')
         param.tagIds = paramId
         param.openIds = this.tableData[index].open_id
-        batchSetUserTags(param).then(response => {
+        batchSetUserTags(param).then((response) => {
           this.getFansList()
           this.getTagList()
         })
@@ -411,7 +411,7 @@ export default {
         param.remark = this.tableData[index].remark = this.tempRemark
         param.open_id = this.tableData[index].open_id
         this.tableData[index].remarkpop = false
-        remark(param).then(response => {})
+        remark(param).then((response) => {})
       }
     },
     tagFilter(id, name) {
@@ -431,7 +431,7 @@ export default {
         tag_name: this.renameTag
       }
       updateTag(param)
-        .then(response => {
+        .then((response) => {
           this.tagname = this.renameTag
           this.tags.forEach((item, index) => {
             if (this.currentTag === item.tag_id) {
@@ -442,7 +442,7 @@ export default {
             }
           })
         })
-        .catch(error => {
+        .catch((error) => {
           this.renameLoading = false
         })
     },
@@ -452,7 +452,7 @@ export default {
         tag_id: this.currentTag
       }
       deleteTag(param)
-        .then(response => {
+        .then((response) => {
           this.tags.forEach((item, index) => {
             if (this.currentTag === item.tag_id) {
               this.tags.splice(index, 1)
@@ -464,29 +464,29 @@ export default {
             }
           })
         })
-        .catch(error => {
+        .catch((error) => {
           this.removeLoading = false
         })
     },
     syncTags() {
       this.syncTagLoading = true
       syncTags()
-        .then(response => {
+        .then((response) => {
           this.syncTagLoading = false
           this.getTagList()
         })
-        .catch(error => {
+        .catch((error) => {
           this.syncTagLoading = false
         })
     },
     syncFans() {
       this.syncFansLoading = true
       syncFans()
-        .then(response => {
+        .then((response) => {
           this.syncFansLoading = false
           this.getFansList()
         })
-        .catch(error => {
+        .catch((error) => {
           this.syncFansLoading = false
         })
     },

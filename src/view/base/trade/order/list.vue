@@ -236,7 +236,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then(response => {
+      getOrderList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.loading = false
@@ -253,9 +253,9 @@ export default {
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then(response => {
+      getSourcesList(params).then((response) => {
         if (response.data.data.list) {
-          response.data.data.list.forEach(row => {
+          response.data.data.list.forEach((row) => {
             this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
@@ -268,7 +268,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     }

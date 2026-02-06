@@ -27,7 +27,7 @@
               <template slot-scope="scope">
                 <div class="comment-photo">
                   <template v-for="item in scope.row.pics">
-                    <img width="60" height="60" :src="item">
+                    <img width="60" height="60" :src="item" />
                   </template>
                 </div>
               </template>
@@ -113,14 +113,14 @@ export default {
     },
     getcomments(filter) {
       this.loading = true
-      getCommentList(filter).then(response => {
+      getCommentList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
       })
     },
     updateComment($commentId, params) {
-      upadteComment($commentId, params).then(res => {
+      upadteComment($commentId, params).then((res) => {
         this.getcomments()
       })
     },

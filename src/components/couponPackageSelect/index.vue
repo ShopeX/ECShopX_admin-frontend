@@ -177,7 +177,7 @@ export default {
         this.$emit('closeHandle')
         return
       }
-      let voucher_package = seletedCoupon.map(item => {
+      let voucher_package = seletedCoupon.map((item) => {
         return item.package_id
       })
       const type = this.type == 'grade' ? 'grade_id' : 'vip_grade_id'
@@ -238,7 +238,7 @@ export default {
     },
     toggleSelection(rows) {
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {

@@ -49,7 +49,7 @@ const routes = [
             'shopsetting.distributor-staff.shopadmin_shopsetting_staff_selfdeliverystaff'
           ]
         },
-        component: () => import('@/view/base/account/delivery')
+        component: () => import('@/views/settings/deliverySettings/delivery-management')
       },
       {
         name: `exportList`,
@@ -71,7 +71,7 @@ const routes = [
           title: '脱敏数据申请',
           permissions: ['shopsetting.datapass.applyDataPass']
         },
-        component: () => import('@/view/base/encrypt/authAdmin.vue')
+        component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
       }
     ]
   }

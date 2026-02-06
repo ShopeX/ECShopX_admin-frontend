@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    getMemberanalysisrightsContent().then(response => {
+    getMemberanalysisrightsContent().then((response) => {
       this.form_content.content = response.data.data.content
     })
   },
@@ -62,9 +62,9 @@ export default {
       this.form_content.content = data
     },
     saveContent() {
-      this.$refs['form_content'].validate(valid => {
+      this.$refs['form_content'].validate((valid) => {
         if (valid) {
-          setMemberanalysisrightsContent(this.form_content).then(response => {
+          setMemberanalysisrightsContent(this.form_content).then((response) => {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -81,7 +81,7 @@ export default {
 
     pickThumb: function (arr) {
       if (arr.length != 0) {
-        arr.forEach(data => {
+        arr.forEach((data) => {
           if (data && data.url !== '') {
             this.thumbDialog = false
             var loc = this.$refs.editor

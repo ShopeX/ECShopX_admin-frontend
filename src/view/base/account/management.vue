@@ -227,7 +227,7 @@ export default {
     },
     queryShopNameSearch(queryString, cb) {
       var restaurants = []
-      getDistributorList({ name: queryString, page: 1, pageSize: 500 }).then(res => {
+      getDistributorList({ name: queryString, page: 1, pageSize: 500 }).then((res) => {
         restaurants = res.data.data.list
         // 调用 callback 返回建议列表的数据
         cb(restaurants)
@@ -277,26 +277,26 @@ export default {
 
       this.form.distributor_ids = row.distributor_ids ? row.distributor_ids : []
       if (this.form.distributor_ids.length > 0) {
-        this.form.distributor_ids.forEach(item => {
+        this.form.distributor_ids.forEach((item) => {
           this.dynamicShopName.push(item.name)
         })
       }
 
       this.form.secret = ''
-      row.role_data.forEach(item => {
+      row.role_data.forEach((item) => {
         this.form.role_id.push(item.role_id)
       })
     },
     submitAction() {
       // 提交物料
       if (this.operator_id) {
-        updateAccountInfo(this.operator_id, this.form).then(response => {
+        updateAccountInfo(this.operator_id, this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getAccountListData()
         })
       } else {
-        createAccount(this.form).then(response => {
+        createAccount(this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getAccountListData()
@@ -311,7 +311,7 @@ export default {
     },
     getAccountListData() {
       this.loading = true
-      getAccountList(this.params).then(response => {
+      getAccountList(this.params).then((response) => {
         this.accountsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -324,7 +324,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteAccountInfo(row.operator_id).then(response => {
+          deleteAccountInfo(row.operator_id).then((response) => {
             this.accountsList.splice(index, 1)
             this.$message({
               message: '删除成功',
@@ -342,7 +342,7 @@ export default {
     },
     getRolesListData() {
       var params = { page: 1, pageSize: 100 }
-      getRolesList(params).then(res => {
+      getRolesList(params).then((res) => {
         this.rolesListData = res.data.data.list
       })
     }

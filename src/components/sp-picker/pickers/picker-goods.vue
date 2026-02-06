@@ -150,8 +150,8 @@
               })
           },
           {
-            name: '商品名称', 
-            key: 'item_name',
+            name: '商品名称',
+            key: 'item_name'
           },
           { name: 'SKU编码', key: 'item_bn', width: 120 },
           { name: 'SPU编码', key: 'goods_bn', width: 120 },
@@ -267,6 +267,9 @@ export default {
         is_sku: false,
         ...this.formData,
         category: category[category.length - 1]
+      }
+      if (this.IS_SUPPLIER()) {
+        params.operate_source = 'supplier'
       }
       return params
     },

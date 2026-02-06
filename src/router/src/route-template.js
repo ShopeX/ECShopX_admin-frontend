@@ -56,6 +56,11 @@ export default {
       name: `开屏广告`,
       component: () => import('@/view/base/screen/openScreenAD')
     },
+    {
+      path: '/manage/activitycollection',
+      name: `活动集合`,
+      component: () => import('@/view/wxapp/manage/activitycollection/index.vue')
+    },
     // 小程序模板装修
     // {
     //   path: 'manage/decorate',

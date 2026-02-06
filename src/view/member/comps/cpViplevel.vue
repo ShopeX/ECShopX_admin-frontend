@@ -20,7 +20,7 @@
             <div>
               <div class="upload-box" @click="handleImgChange(item, index)">
                 <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
-                  <img :src="wximageurl + item.background_pic_url" class="avatar">
+                  <img :src="wximageurl + item.background_pic_url" class="avatar" />
                 </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
@@ -394,7 +394,9 @@ export default {
           isflag = true
           this.$message({ message: '请输入会员折扣', type: 'error' })
           break
-        } else if (!discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())) {
+        } else if (
+          !discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())
+        ) {
           // isflag = true
           // this.$message({
           //   message: '会员折扣为大于0小于等于10的数字，精确到小数点后1位',

@@ -337,7 +337,7 @@ export default {
   },
   methods: {
     refundsInfo() {
-      getRefundsDetail(this.refund_bn).then(response => {
+      getRefundsDetail(this.refund_bn).then((response) => {
         let data = response.data.data
         this.refundDetail = data
         console.log(this.refundDetail, 'refundDetail======')

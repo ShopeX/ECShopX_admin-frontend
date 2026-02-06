@@ -10,7 +10,7 @@
       <div slot="header" class="header_">
         <div>平台账户收入</div>
         <div class="why" @mouseenter="mouseenterHandle(1)" @mouseout="mouseoverHandle(1)">
-          <img src="../../../../assets/img/wenhao.png" alt="">
+          <img src="../../../../assets/img/wenhao.png" alt="" />
 
           <div v-if="tips_1" class="tips">
             <div class="tips_content">
@@ -115,7 +115,7 @@
             <el-button type="primary" size="mini" @click="exportHandle"> 导出 </el-button>
           </div>
           <div class="why" @mouseenter="mouseenterHandle(2)" @mouseout="mouseoverHandle(2)">
-            <img src="../../../../assets/img/wenhao.png" alt="">
+            <img src="../../../../assets/img/wenhao.png" alt="" />
 
             <div v-if="tips_2" class="tips">
               <div class="tips_content">

@@ -56,7 +56,11 @@
                 <div class="popover-edit">
                   <el-input v-model="sku.custom_attribute_value" @change="onInputSkuChange" />
                 </div>
-                <el-button slot="reference" type="text" class="inline-flex items-center p-0 ml-1 align-middle">
+                <el-button
+                  slot="reference"
+                  type="text"
+                  class="inline-flex items-center p-0 ml-1 align-middle"
+                >
                   <SpIcon name="edit-two" :size="16" />
                 </el-button>
               </el-popover>
@@ -288,7 +292,11 @@
           <el-input v-model="scope.row.price" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="cost_price" label="成本价" :render-header="$store.getters.login_type != 'admin' ? renderRequire : undefined">
+      <el-table-column
+        prop="cost_price"
+        label="成本价"
+        :render-header="$store.getters.login_type != 'admin' ? renderRequire : undefined"
+      >
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.cost_price"
@@ -371,7 +379,7 @@ export default {
     isPrescriptionApproved: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     let statusOption = [
@@ -474,7 +482,7 @@ export default {
     },
     statusDisabled({ value }) {
       //处方药审核通过
-      if(this.isPrescriptionApproved) return false
+      if (this.isPrescriptionApproved) return false
 
       if ((this.medicinePrescription && value == 'instock') || !this.medicinePrescription) {
         return false
@@ -492,7 +500,7 @@ export default {
       this.getSkuItemImages()
       this.getSkuItems()
     },
-    onInputSkuChange(){
+    onInputSkuChange() {
       this.getSkuItemImages()
       this.getSkuItems()
     },
@@ -603,19 +611,17 @@ export default {
         const key = item.sort((a, b) => a - b).join('_')
         // 那当前选择的规格组合和原来的规格组合进行对比
         // 以选择的规格组合为基准，有的话才取原来的规格数据
-        const oldItem = _specItems.find(({ sku_id }) => sku_id == key)
+        const oldItemIndex = _specItems.findIndex(({ sku_id }) => sku_id == key)
         // 编辑规格的情况下，需要编辑规格数据
-        // if (oldItem) {
-        //   _specItems.splice(oldItem, 1, {
-        //     ...oldItem,
-        //   })
-        // }
-        // 删除规格的情况下，需要删除规格数据
-        // if (oldItem) {
-        //   _specItems.splice(oldItem, 1)
-        // }
-        // 新增规格的情况下，需要新增规格数据
-        if (!oldItem) {
+        // 如果已存在，更新 spec_name（因为自定义名称可能已修改）
+        if (oldItemIndex !== -1) {
+          // 重新计算规格名称，使用最新的自定义名称，创建新对象确保 Vue 响应式更新
+          _specItems[oldItemIndex] = {
+            ..._specItems[oldItemIndex],
+            spec_name: this.getSpecName(item)
+          }
+        } else {
+          // 新增规格的情况下，需要新增规格数据
           _specItems.push({
             sku_id: key,
             spec_name: this.getSpecName(item),
@@ -650,7 +656,7 @@ export default {
         if (fd) {
           return {
             ...fd,
-            spec_name: item.spec_name
+            spec_name: item.spec_name  // 使用重新计算的 spec_name
           }
         } else {
           return item

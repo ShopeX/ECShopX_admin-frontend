@@ -278,7 +278,7 @@
         <div class="wrap">
           <el-form-item prop="license_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('license_url')">
-              <img v-if="form.license_url" class="avatar" :src="form.license_url">
+              <img v-if="form.license_url" class="avatar" :src="form.license_url" />
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p><span style="color: red">*</span> 营业执照</p>
@@ -289,7 +289,7 @@
                 v-if="form.legal_certid_front_url"
                 class="avatar"
                 :src="form.legal_certid_front_url"
-              >
+              />
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>
@@ -303,7 +303,7 @@
                 v-if="form.legal_cert_id_back_url"
                 class="avatar"
                 :src="form.legal_cert_id_back_url"
-              >
+              />
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>
@@ -313,14 +313,14 @@
           </el-form-item>
           <el-form-item prop="bank_card_front_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('bank_card_front_url')">
-              <img v-if="form.bank_card_front_url" class="avatar" :src="form.bank_card_front_url">
+              <img v-if="form.bank_card_front_url" class="avatar" :src="form.bank_card_front_url" />
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>结算银行卡正面照</p>
           </el-form-item>
           <el-form-item prop="contract_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('contract_url')">
-              <img v-if="form.contract_url" class="avatar" :src="form.contract_url">
+              <img v-if="form.contract_url" class="avatar" :src="form.contract_url" />
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>合同</p>
@@ -750,7 +750,7 @@ export default {
       }
     },
     submitFn(formName) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { type, merchantId } = this.$route.query
           const result = await addTheBusinessman(this.form, type == 'edit' ? merchantId : null)
@@ -845,7 +845,7 @@ export default {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      var restaurants = this.AllBank.map(item => {
+      var restaurants = this.AllBank.map((item) => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -857,7 +857,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -910,7 +910,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(res => {
+        .then((res) => {
           next()
         })
         .catch(() => {

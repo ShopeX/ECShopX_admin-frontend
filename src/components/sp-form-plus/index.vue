@@ -9,6 +9,7 @@
     class="sp-form-plus"
     :class="{
       'sp-form-plus--search-form': formType === 'searchForm',
+      'sp-form-plus--display-form': formType === 'displayForm',
       'sp-form-plus--inline': inline,
       'sp-form-plus--collapsed': formType === 'searchForm' && !extend
     }"
@@ -17,12 +18,14 @@
     :label-position="labelPosition"
   >
     <div ref="wrapperRef" :class="{ flex: formType === 'searchForm' }">
-      <div :class="{
-        'sp-form-plus__wrapper': formType === 'searchForm',
-        'sp-form-plus__wrapper-inline': inline,
-        'sp-form-plus__wrapper-flex': inline && hasFormItemClass,
-        'flex-1': true
-      }">
+      <div
+        :class="{
+          'sp-form-plus__wrapper': formType === 'searchForm',
+          'sp-form-plus__wrapper-inline': inline,
+          'sp-form-plus__wrapper-flex': inline && hasFormItemClass,
+          'flex-1': true
+        }"
+      >
         <FormField
           v-for="item in formItems"
           :key="item.fieldName"
@@ -30,7 +33,12 @@
           :component-props="item.componentProps"
           :field-name="item.fieldName"
           :form-item-class="item.formItemClass"
+          :cell-width="item.cellWidth || 1"
+          :computed-cell-width="getComputedCellWidth(item.cellWidth || 1)"
+          :default-cell-width="effectiveDefaultCellWidth"
+          :cell-gap="cellGap"
           :form-data="formData"
+          :form-type="formType"
           :is-show="item.isShow"
           :label="item.label ? item.label + (colon ? ':' : '') : ''"
           :label-inline="labelInline"
@@ -42,15 +50,23 @@
           @input="(val) => handleFieldChange(item.fieldName, val)"
         />
       </div>
-      <div v-if="showDefaultActions">
-        <div class="sp-form-plus__actions items-center justify-end" :style="actionsStyle" v-if="formType !== 'searchForm'">
+      <div v-if="showDefaultActions" class="sp-form-plus__actions-wrapper">
+        <div
+          class="sp-form-plus__actions items-center justify-end"
+          :style="actionsStyle"
+          v-if="formType !== 'searchForm'"
+        >
           <div class="sp-form-plus__actions-btns">
             <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
               <span class="ml-1">保存</span>
             </el-button>
           </div>
         </div>
-        <div class="sp-form-plus__actions ml-1 mt-1 flex-col items-end" :style="actionsStyle" v-else>
+        <div
+          class="sp-form-plus__actions ml-1 mt-1 flex-col items-end !pt-[0px]"
+          :style="actionsStyle"
+          v-else
+        >
           <div class="sp-form-plus__actions-btns">
             <el-button type="primary" @click="handleSubmit">
               <div class="flex items-center">
@@ -89,7 +105,7 @@ export default {
   props: {
     labelPosition: {
       type: String,
-      default: 'right',
+      default: 'right'
     },
 
     colon: {
@@ -118,7 +134,8 @@ export default {
     },
     labelWidth: {
       type: String,
-      default: '160px'
+      //default: '160px'
+      default: '100px'
     },
     labelInline: {
       type: Boolean,
@@ -139,6 +156,14 @@ export default {
     value: {
       type: Object,
       default: () => ({})
+    },
+    defaultCellWidth: {
+      type: Number,
+      default: 240
+    },
+    cellGap: {
+      type: Number,
+      default: 8
     }
   },
   data() {
@@ -147,7 +172,9 @@ export default {
       .filter((item) => item.component !== 'group')
       .forEach((item) => {
         formData[item.fieldName] =
-          typeof item.value === 'undefined' ? (this.value && this.value[item.fieldName] || '') : item.value
+          typeof item.value === 'undefined'
+            ? (this.value && this.value[item.fieldName]) || ''
+            : item.value
       })
     return {
       formData,
@@ -157,6 +184,12 @@ export default {
     }
   },
   computed: {
+    effectiveDefaultCellWidth() {
+      if (this.formType === 'searchForm') {
+        return this.defaultCellWidth
+      }
+      return null
+    },
     actionsStyle() {
       return this.formType === 'searchForm'
         ? {
@@ -171,7 +204,7 @@ export default {
     },
     // 检查是否有表单项使用了 formItemClass
     hasFormItemClass() {
-      return this.formItems.some(item => item.formItemClass)
+      return this.formItems.some((item) => item.formItemClass)
     }
   },
   watch: {
@@ -215,6 +248,12 @@ export default {
     }
   },
   methods: {
+    getComputedCellWidth(cellWidth) {
+      if (this.effectiveDefaultCellWidth === null) {
+        return null
+      }
+      return cellWidth * this.effectiveDefaultCellWidth + (cellWidth - 1) * this.cellGap
+    },
     // 处理字段值变化
     handleFieldChange(fieldName, value) {
       this.$set(this.formData, fieldName, value)
@@ -271,7 +310,7 @@ export default {
         }
 
         const formFields = Array.from(wrapper.querySelectorAll('.form-field'))
-        
+
         if (formFields.length === 0) {
           this.showExtend = false
           return
@@ -281,7 +320,7 @@ export default {
         // 这是最准确的方法，适用于所有布局方式（grid、flex等）
         const rowPositions = new Set()
         const wrapperRect = wrapper.getBoundingClientRect()
-        
+
         formFields.forEach((field) => {
           const fieldRect = field.getBoundingClientRect()
           const relativeTop = Math.round(fieldRect.top - wrapperRect.top)
@@ -339,22 +378,35 @@ export default {
     box-sizing: content-box;
     padding: 16px 16px 16px;
     overflow: hidden;
-    
+
+    .sp-form-plus__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-width: 0; //允许 flex 子元素缩小
+      overflow: hidden; //防止内容溢出
+
+      .form-field {
+        margin-bottom: 0;
+        // 当空间不足时，允许表单项缩小或换行
+        max-width: 100%;
+        overflow: hidden;
+      }
+    }
+
     &.sp-form-plus--collapsed {
       .sp-form-plus__wrapper {
         max-height: 85px;
         overflow: hidden;
       }
     }
+
+    // 按钮容器包装器，防止被压缩
+    .sp-form-plus__actions-wrapper {
+      flex-shrink: 0;
+      min-width: fit-content;
+    }
   }
-  // &__wrapper {
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   gap: 8px;
-  //   .form-field {
-  //     margin-bottom: 0;
-  //   }
-  // }
   &__actions {
     padding-top: 40px;
     display: flex;

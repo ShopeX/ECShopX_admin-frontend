@@ -64,13 +64,13 @@
                 class="cus-row-img"
                 src="@/assets/img/adapay/distributor.png"
                 alt=""
-              >
+              />
               <img
                 v-if="item.operator_type === 'merchant'"
                 class="cus-row-img"
                 src="@/assets/img/adapay/dealer.png"
                 alt=""
-              >
+              />
             </el-col>
             <el-col :span="13">
               <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
@@ -93,13 +93,13 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 100px; height: 84px"
-              >
+              />
               <img
                 v-if="item.status === 'REJECT'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 90px; height: 89px"
-              >
+              />
             </el-col>
             <el-col class="cus-row-btn" :span="3" :offset="item.status === 'WAIT_APPROVE' ? 5 : 0">
               <router-link
@@ -193,7 +193,7 @@ export default {
     },
     getList(params) {
       this.loading = true
-      this.$api.bspay.getSubApproveList(params).then(response => {
+      this.$api.bspay.getSubApproveList(params).then((response) => {
         this.list = response.list
         this.total_count = Number(response.total_count)
         this.loading = false

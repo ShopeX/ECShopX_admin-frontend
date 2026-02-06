@@ -24,7 +24,7 @@
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader square thumbnail"
                 @click="handleImgChange(index)"
-              >
+              />
             </div>
             <div v-else class="banner-uploader square thumbnail" @click="handleImgChange(index)">
               <div class="content-center">
@@ -61,7 +61,7 @@
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader square thumbnail"
                 @click="couponPackageImg(index)"
-              >
+              />
             </div>
             <div v-else class="banner-uploader square thumbnail" @click="couponPackageImg(index)">
               <div class="content-center">

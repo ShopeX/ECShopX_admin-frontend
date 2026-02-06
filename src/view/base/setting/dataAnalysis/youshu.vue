@@ -135,7 +135,7 @@ export default {
       this.getConfig()
     },
     getConfig() {
-      getSetting().then(response => {
+      getSetting().then((response) => {
         if (response.status == 200) {
           this.form = response.data.data
         }
@@ -147,7 +147,7 @@ export default {
         ...this.form
       }
       setSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -155,7 +155,7 @@ export default {
           this.getConfig()
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

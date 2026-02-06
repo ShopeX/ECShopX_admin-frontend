@@ -213,7 +213,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            communityDeliver({ activity_id: row.activity_id }).then(response => {
+            communityDeliver({ activity_id: row.activity_id }).then((response) => {
               this.fetchList()
               this.$message({
                 message: '发货成功',

@@ -10,6 +10,7 @@
       'wgt-nearby-shop': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -125,6 +126,7 @@
 
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 const defaultShopImg = require('@/assets/imgs/decorate/default-shop.png')
 const defaultShopBanner = require('@/assets/imgs/decorate/default-shop-banner.png')
 const defaultShopLogo = require('@/assets/imgs/decorate/default-shop-logo.png')
@@ -148,12 +150,17 @@ export default {
       showMore: true
     }
   },
+  computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    }
+  },
   watch: {
     'value.seletedTags': {
       handler: function (nVal, oVal) {
         if (nVal.length > 0) {
           const [{ tag_id }] = nVal
-          let item_tag_id = this.value.productLabel.map(item => item.tag_id)
+          let item_tag_id = this.value.productLabel.map((item) => item.tag_id)
           this.activeIndex = 0
           let params = {
             tag_id: tag_id,
@@ -170,7 +177,7 @@ export default {
     'value.productLabel': {
       handler: function (nVal, oVal) {
         if (this.value.seletedTags.length > 0) {
-          let item_tag_id = nVal.map(item => item.tag_id)
+          let item_tag_id = nVal.map((item) => item.tag_id)
           let params = {
             tag_id: this.value.seletedTags[this.activeIndex].tag_id,
             item_tag_id,
@@ -198,7 +205,7 @@ export default {
       this.shopList = list.slice(0, this.value.merchantsNumber)
     },
     handleClickTag(item, index) {
-      let item_tag_id = this.value.productLabel.map(item => item.tag_id)
+      let item_tag_id = this.value.productLabel.map((item) => item.tag_id)
       let params = {
         tag_id: item.tag_id,
         item_tag_id,

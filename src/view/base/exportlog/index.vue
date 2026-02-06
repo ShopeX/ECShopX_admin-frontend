@@ -32,9 +32,8 @@
         <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
         <el-tab-pane label="业绩订单" name="popularizeOrder" />
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
-
       </template>
-      
+
       <template v-else>
         <el-tab-pane label="提现记录导出" name="bspay_withdraw" />
         <el-tab-pane label="会员导出" name="member" />
@@ -59,11 +58,7 @@
         <!-- <el-tab-pane label="商品标签导出" name="normal_items_tag" /> -->
         <el-tab-pane label="积分记录导出" name="member_point_logs" />
         <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="店铺商品导出" name="distributor_items" />
-        <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE()"
-          label="积分商品导出"
-          name="pointsmallitems"
-        />
+        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="积分商品导出" name="pointsmallitems" />
         <!-- <el-tab-pane
           label="权益导出"
           name="right"
@@ -119,14 +114,14 @@
       <el-tab-pane label="业绩订单" name="popularizeOrder" />
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">
-        <el-table-column label="操作" >
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click.prevent="handleDown(scope.row)">下载</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="log_id" label="ID" />
         <el-table-column prop="file_name" label="文件名称" />
-        <el-table-column prop="finish_date" label="处理完成时间"/>
+        <el-table-column prop="finish_date" label="处理完成时间" />
         <el-table-column prop="handle_status" label="处理状态">
           <template slot-scope="scope">
             <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
@@ -182,7 +177,7 @@ export default {
     activeTabHandler() {
       const active = this.$store.getters.login_type
       const { tab } = this.$route.query
-      
+
       if (tab) {
         this.activeName = tab
       } else {
@@ -194,7 +189,7 @@ export default {
           this.activeName = 'member'
         }
       }
-      
+
       // 设置完 activeName 后立即获取导出列表
       this.$nextTick(() => {
         this.getExportLogLists(this.params)
@@ -217,7 +212,7 @@ export default {
     getExportLogLists(params) {
       this.loading = true
       params.export_type = this.activeName
-      ExportLogList(params).then(response => {
+      ExportLogList(params).then((response) => {
         this.exportLogLists = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -243,7 +238,7 @@ export default {
         return
       }
 
-      ExportLogFileDown({ log_id: log_id }).then(response => {
+      ExportLogFileDown({ log_id: log_id }).then((response) => {
         const url = this.genUrl(response.data.data.csv_data, {}) //{}指的是表头，response.data.data.csv_data是后台返回来的数据
         const a = document.createElement('a')
         a.href = url

@@ -167,7 +167,7 @@ export default {
             }
           }
         ],
-        disabledDate: time => {
+        disabledDate: (time) => {
           return time.getTime() > end
         }
       },
@@ -226,7 +226,7 @@ export default {
     renderChart(list) {
       let orderData = []
       let amountData = []
-      list.forEach(item => {
+      list.forEach((item) => {
         orderData.push({ time: item.count_date, name: '订单', value: parseInt(item.order_count) })
         orderData.push({
           time: item.count_date,

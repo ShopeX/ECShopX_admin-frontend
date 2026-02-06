@@ -18,7 +18,7 @@
             <div class="mask" />
             <div class="logo_area">
               <span class="logo">
-                <img :src="wximageurl + form.logo_url">
+                <img :src="wximageurl + form.logo_url" />
               </span>
               <p>{{ form.brand_name }}</p>
               <p id="js_title_preview" class="card_name">
@@ -65,7 +65,7 @@
               <div>
                 <div class="upload-box" @click="handleImgChange">
                   <HoverDelete v-if="form.logo_url" @delete="form.logo_url = ''">
-                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar">
+                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar" />
                   </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
@@ -85,7 +85,7 @@
                     v-if="form.background_pic_url"
                     @delete="form.background_pic_url = ''"
                   >
-                    <img :src="wximageurl + form.background_pic_url" class="avatar">
+                    <img :src="wximageurl + form.background_pic_url" class="avatar" />
                   </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
@@ -209,7 +209,7 @@ export default {
     }
   },
   mounted() {
-    getMemberCardDetail().then(res => {
+    getMemberCardDetail().then((res) => {
       if (res.data.data.brand_name) {
         this.form = res.data.data
       }
@@ -217,11 +217,11 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           this.submitDisabled = true
           let params = this.form
-          setMemberCard(params).then(res => {
+          setMemberCard(params).then((res) => {
             if (res.data.data) {
               this.submitDisabled = false
               this.$message.success('设置成功')

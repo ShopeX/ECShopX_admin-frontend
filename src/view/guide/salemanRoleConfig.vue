@@ -137,7 +137,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteRole(row.salesman_role_id).then(response => {
+          deleteRole(row.salesman_role_id).then((response) => {
             if (response.data.data.status) {
               this.$message({
                 type: 'success',
@@ -169,7 +169,7 @@ export default {
       this.relShop.relShopVisible = false
     },
     createDistributorRole() {
-      createRole(this.data).then(response => {
+      createRole(this.data).then((response) => {
         if (response.data.data.salesman_role_id) {
           this.$message({
             message: '添加成功',
@@ -186,7 +186,7 @@ export default {
       })
     },
     updateDistributorRole(row) {
-      updateRole(this.data.salesman_role_id, this.data).then(response => {
+      updateRole(this.data.salesman_role_id, this.data).then((response) => {
         if (response.data.data.salesman_role_id) {
           this.$message({
             message: '修改成功',
@@ -204,7 +204,7 @@ export default {
     },
     getDistributorRoleList() {
       this.tableLoading = true
-      getRoleList(this.params).then(response => {
+      getRoleList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           for (var item in this.list) {
@@ -216,7 +216,7 @@ export default {
       })
     },
     getSalesmanRoleList() {
-      getSalesmanRole().then(response => {
+      getSalesmanRole().then((response) => {
         if (response.data.data) {
           this.roleList = response.data.data
         }

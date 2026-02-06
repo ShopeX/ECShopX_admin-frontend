@@ -66,12 +66,8 @@
         <el-table-column prop="point" label="积分变动">
           <template slot-scope="scope">
             <span v-if="scope.row.point == 0">{{ scope.row.point }}</span>
-            <span v-else-if="scope.row.income > 0"
-              >+{{ scope.row.income }}</span
-            >
-            <span v-else-if="scope.row.outcome > 0"
-              >-{{ scope.row.outcome }}</span
-            >
+            <span v-else-if="scope.row.income > 0">+{{ scope.row.income }}</span>
+            <span v-else-if="scope.row.outcome > 0">-{{ scope.row.outcome }}</span>
           </template>
         </el-table-column>
 
@@ -158,7 +154,7 @@ export default {
     },
     exportData() {
       this.params.page = 1
-      pointMemberExport(this.params).then(response => {
+      pointMemberExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -181,7 +177,7 @@ export default {
     },
     getList(query) {
       this.loading = true
-      getMemberPoint(query).then(res => {
+      getMemberPoint(query).then((res) => {
         this.recordList = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

@@ -32,11 +32,11 @@ export default {
     {
       path: 'delivery/logistics',
       name: `物流公司`,
-      component: () => import('@/view/mall/trade/logistics/index'),
+      component: () => import('@/views/settings/deliverySettings/logistics/index'),
       children: [
         {
           path: 'addziti/:id?',
-          component: () => import('@/view/mall/trade/logistics/add-ziti'),
+          component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
           beforeEnter: ({ params, meta }, from, next) => {
             meta.title = params.id ? '编辑自提点' : '新增自提点'
             next()
@@ -68,7 +68,7 @@ export default {
     {
       path: 'delivery/selfdeliverystaff',
       name: `账号管理-店铺配送员`,
-      component: () => import('@/view/base/account/delivery')
+      component: () => import('@/views/settings/deliverySettings/delivery-management')
     },
     {
       path: 'delivery/deliverystaffstatistics',
@@ -155,12 +155,12 @@ export default {
     {
       path: 'systemsetting/wdtSetting',
       name: `旺店通ERP`,
-      component: () => import('@/view/base/setting/saaserp/wdtSetting')
+      component: () => import('@/views/settings/systemConfig/wdtSetting')
     },
     {
       path: 'systemsetting/jstSetting',
       name: '聚水潭ERP',
-      component: () => import('@/view/base/setting/saaserp/jstSetting')
+      component: () => import('@/views/settings/systemConfig/jstSetting')
     },
     {
       path: 'systemsetting/assetpayment',
@@ -181,23 +181,24 @@ export default {
               path: '/',
               name: '基础配置',
               meta: 'base_config',
-              component: () => import('@/view/base/shortmessage/cpn/base_config')
+              component: () => import('@/views/settings/systemConfig/smsService/base_config')
             },
             {
               path: 'send_sms',
               name: '发送短信',
               meta: 'send_sms',
-              component: () => import('@/view/base/shortmessage/cpn/send_sms')
+              component: () => import('@/views/settings/systemConfig/smsService/send_sms')
             },
             {
               path: 'sms_signatures',
               name: '短信签名',
-              component: () => import('@/view/base/shortmessage/cpn/sms_signatures'),
+              component: () => import('@/views/settings/systemConfig/smsService/sms_signatures'),
               meta: 'sms_signatures',
               children: [
                 {
                   path: 'edit',
-                  component: () => import('@/view/base/shortmessage/cpn/sms_signatures_edit'),
+                  component: () =>
+                    import('@/views/settings/systemConfig/smsService/sms_signatures_edit'),
                   meta: 'sms_signatures'
                 }
               ]
@@ -205,12 +206,13 @@ export default {
             {
               path: 'sms_template',
               name: '短信模板',
-              component: () => import('@/view/base/shortmessage/cpn/sms_template'),
+              component: () => import('@/views/settings/systemConfig/smsService/sms_template'),
               meta: 'sms_template',
               children: [
                 {
                   path: 'edit',
-                  component: () => import('@/view/base/shortmessage/cpn/sms_template_edit'),
+                  component: () =>
+                    import('@/views/settings/systemConfig/smsService/sms_template_edit'),
                   meta: 'sms_template'
                 }
               ]
@@ -218,18 +220,19 @@ export default {
             {
               path: 'sms_sendLog',
               name: '短信发送记录',
-              component: () => import('@/view/base/shortmessage/cpn/sms_sendLog'),
+              component: () => import('@/views/settings/systemConfig/smsService/sms_sendLog'),
               meta: 'sms_sendLog'
             },
             {
               path: 'sms_MassLog',
               name: '短信群发送记录',
-              component: () => import('@/view/base/shortmessage/cpn/sms_MassLog'),
+              component: () => import('@/views/settings/systemConfig/smsService/sms_MassLog'),
               meta: 'sms_MassLog',
               children: [
                 {
                   path: 'edit',
-                  component: () => import('@/view/base/shortmessage/cpn/sms_MassLog_edit'),
+                  component: () =>
+                    import('@/views/settings/systemConfig/smsService/sms_MassLog_edit'),
                   meta: 'sms_MassLog'
                 }
               ]
@@ -239,7 +242,7 @@ export default {
         {
           path: 'shopex_sms',
           name: '商派短信',
-          component: () => import('@/view/base/shortmessage/shopex_sms')
+          component: () => import('@/views/settings/systemConfig/smsService/shopex_sms')
         }
       ]
     },
@@ -251,12 +254,12 @@ export default {
     {
       path: 'systemsetting/Yilianyun',
       name: `小票打印`,
-      component: () => import('@/view/base/setting/yilianyun/index')
+      component: () => import('@/views/settings/systemConfig/yilianyun/index')
     },
     {
       path: 'systemsetting/ugctpos',
       name: `UGC审核配置`,
-      component: () => import('@/view/member/ugc/ugcTPOS')
+      component: () => import('@/views/settings/systemConfig/ugcTPOS')
     },
     {
       path: 'systemsetting/wxaindex',
@@ -313,12 +316,12 @@ export default {
     {
       path: 'systemsetting/wdtSetting',
       name: `旺店通`,
-      component: () => import('@/view/base/setting/saaserp/wdtSetting')
+      component: () => import('@/views/settings/systemConfig/wdtSetting')
     },
     {
       path: 'systemsetting/jstSetting',
       name: '聚水潭',
-      component: () => import('@/view/base/setting/saaserp/jstSetting')
+      component: () => import('@/views/settings/systemConfig/jstSetting')
     },
     {
       path: 'systemsetting/certificate',
@@ -338,7 +341,7 @@ export default {
     {
       path: 'systemsetting/approve',
       name: '脱敏数据申请',
-      component: () => import('@/view/base/encrypt/authAdmin.vue')
+      component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
     },
     {
       path: 'systemsetting/apply',
@@ -400,7 +403,7 @@ export default {
     {
       path: 'systeminfo/operatorlogs',
       name: `操作日志`,
-      component: () => import('@/view/base/setting/companys/logs')
+      component: () => import('@/views/settings/systemInfo/operation-log')
     },
     {
       path: 'omsqueuelog',

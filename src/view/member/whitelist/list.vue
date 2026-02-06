@@ -193,13 +193,13 @@ export default {
     submitAction() {
       // 提交物料
       if (this.whitelist_id) {
-        updateMembersWhitelist(this.whitelist_id, this.form).then(response => {
+        updateMembersWhitelist(this.whitelist_id, this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getListData()
         })
       } else {
-        createMembersWhitelist(this.form).then(response => {
+        createMembersWhitelist(this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getListData()
@@ -214,7 +214,7 @@ export default {
     },
     getListData() {
       this.loading = true
-      getMembersWhitelistList(this.params).then(response => {
+      getMembersWhitelistList(this.params).then((response) => {
         this.whitelistList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.datapass_block = response.data.data.datapass_block
@@ -229,7 +229,7 @@ export default {
       })
         .then(() => {
           deleteMembersWhitelist(row.whitelist_id)
-            .then(response => {
+            .then((response) => {
               this.whitelistList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -256,7 +256,7 @@ export default {
       this.handleCancelTips()
       this.editTitle = '白名单提示'
       this.editTipsVisible = true
-      getWhitelistSetting().then(response => {
+      getWhitelistSetting().then((response) => {
         this.form.tips = response.data.data.whitelist_tips
       })
     },
@@ -267,7 +267,7 @@ export default {
     submitTipsAction() {
       // 提交物料
       const params = { whitelist_tips: this.form.tips }
-      setWhitelistSetting(params).then(response => {
+      setWhitelistSetting(params).then((response) => {
         this.editTipsVisible = false
         this.handleTipsCancel()
       })

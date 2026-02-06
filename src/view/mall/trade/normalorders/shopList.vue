@@ -929,20 +929,20 @@ export default {
         operator_type: 'self_delivery_staff'
       }
       let { list } = await this.$api.company.getAccountList(params)
-      list.forEach(ele => {
+      list.forEach((ele) => {
         ;(ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.deliveryPersonnel = list
     },
     getDistributionType({ receipt_type }) {
-      const fd = DISTRIBUTION_TYPE.find(item => item.value == receipt_type)
+      const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
       if (fd) {
         return fd.title
       }
     },
 
     getDistributionStatus({ self_delivery_status }) {
-      const fd = DISTRIBUTION_STATUS.find(item => item.value == self_delivery_status)
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == self_delivery_status)
       if (fd) {
         return fd.title
       }
@@ -1026,7 +1026,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then(response => {
+      getOrderList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.loading = false
@@ -1034,9 +1034,9 @@ export default {
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then(response => {
+      getSourcesList(params).then((response) => {
         if (response.data.data.list) {
-          response.data.data.list.forEach(row => {
+          response.data.data.list.forEach((row) => {
             this.source_list.push({
               value: row.sourceName,
               source_id: row.sourceId
@@ -1052,12 +1052,12 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     getOrderCategoryName(order_holder) {
-      return this.orderCategory.find(item => item.value == order_holder)?.title ?? ''
+      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
     },
     deliveryAction(data) {
       // 编辑物料弹框
@@ -1066,10 +1066,10 @@ export default {
       this.selectItemType = data.delivery_type
       // this.selectItemType = 'new'
       this.deliveryTitle = '发货'
-      getLogisticsList().then(res => {
+      getLogisticsList().then((res) => {
         this.dlycorps = res.data.data.list
       })
-      getOrderDetail(order_id).then(response => {
+      getOrderDetail(order_id).then((response) => {
         this.deliveryData = response.data.data
         if (this.deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
           this.$message.error('客户已经申请退款，请先处理退款操作再决定是否发货!')
@@ -1097,7 +1097,7 @@ export default {
     },
     writeoffOrderAction(order_id) {
       //自提订单核销
-      getWriteoff(order_id).then(response => {
+      getWriteoff(order_id).then((response) => {
         this.writeoffOrderData = response.data.data
         if (this.writeoffOrderData.ziti_status == 'DONE') {
           this.$message.error('该订单已核销!')
@@ -1122,7 +1122,7 @@ export default {
         this.$message.error('请输入提货码!')
         return false
       }
-      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then(response => {
+      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
         var writeoffStatus = response.data.data.ziti_status
         var order_id = response.data.data.order_id
         if (writeoffStatus == 'DONE') {
@@ -1143,7 +1143,7 @@ export default {
     confirmCancelOrderAction(order_id) {
       // 已支付订单的取消订单审核
       let params = { order_type: 'normal' }
-      getCancelOrderInfo(order_id, params).then(response => {
+      getCancelOrderInfo(order_id, params).then((response) => {
         this.cancelData = response.data.data
         this.cancelVisible = true
         console.log(response)
@@ -1157,7 +1157,7 @@ export default {
     },
     submitCancelConfirmAction() {
       // 提交取消订单审核结果
-      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then(response => {
+      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()
@@ -1192,14 +1192,14 @@ export default {
         } else {
           this.deliveryForm.sepInfo = JSON.stringify(
             JSON.parse(JSON.stringify(this.deliveryData.orderInfo.items)).filter(
-              item => item.delivery_num && item.delivery_num != ''
+              (item) => item.delivery_num && item.delivery_num != ''
             )
           )
         }
       } else {
         this.deliveryForm.sepInfo = {}
       }
-      delivery(this.deliveryForm).then(response => {
+      delivery(this.deliveryForm).then((response) => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()
@@ -1214,7 +1214,7 @@ export default {
     cancelOrderAction(order_id) {
       //取消订单
       let params = { order_type: 'normal' }
-      getOrderDetail(order_id).then(response => {
+      getOrderDetail(order_id).then((response) => {
         this.cancelOrderData = response.data.data
         console.log(this.cancelOrderData)
         if (this.cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
@@ -1250,7 +1250,7 @@ export default {
         this.$message.error('请输入取消原因!')
         return false
       }
-      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then(response => {
+      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'WAIT_CHECK') {
           this.handleCancelOrder()
@@ -1276,7 +1276,7 @@ export default {
         })
         return
       }
-      orderExport(this.params).then(response => {
+      orderExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

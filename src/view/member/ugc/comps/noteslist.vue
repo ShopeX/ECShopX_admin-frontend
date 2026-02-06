@@ -30,7 +30,7 @@
       <el-table-column label="创建人">
         <template slot-scope="scope">
           <div v-if="scope.row.source == '2'">管理员</div>
-          <div v-else>{{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}</div>
+          <div v-else>{{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}</div>
         </template>
       </el-table-column>
 
@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     resetText() {
-      return row => {
+      return (row) => {
         var text = '审核'
         if (row.status == '1') {
           text = '下架'
@@ -121,7 +121,7 @@ export default {
       var auditdiff = false
       var status = null
 
-      val.forEach(item => {
+      val.forEach((item) => {
         checkList.push(item.post_id)
         if (status == null) {
           status = item.status

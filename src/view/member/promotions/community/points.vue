@@ -159,7 +159,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(({ value }) => {
-          changeCommunityPoint({ community_id: this.community_id, point: value }).then(res => {
+          changeCommunityPoint({ community_id: this.community_id, point: value }).then((res) => {
             if (value > 0) {
               this.$message({ type: 'success', message: '新增积分: ' + value })
             } else {
@@ -195,7 +195,7 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     getlist() {
-      getCommunityPointList(this.params).then(res => {
+      getCommunityPointList(this.params).then((res) => {
         this.dataList = res.data.data.list
         this.total_count = res.data.data.total_count
         if (this.community_id) {

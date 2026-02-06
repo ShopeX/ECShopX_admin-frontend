@@ -19,16 +19,10 @@
               <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB（建议尺寸：750px*1334px）</p>
               <div>
                 <div class="upload-box" @click="handleImgChange">
-                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar">
+                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
-              <imgPicker
-                :dialog-visible="imgDialog"
-                :sc-status="isGetImage"
-                @chooseImg="pickImg"
-                @closeImgDialog="closeImgDialog"
-              />
             </div>
             <!--视频组件-->
             <div v-if="form.material_type === 2">
@@ -118,7 +112,6 @@
   <el-checkbox label="app" :key="2" name="crossborder_show1">APP</el-checkbox>
   </el-checkbox-group>
   </el-form-item> -->
-
         </el-form>
       </div>
 
@@ -144,7 +137,6 @@
 </template>
 <script>
 import linkSetter from '@/components/template_links' // 添加导航连接
-import imgPicker from '../../../components/imageselect'
 import videoPicker from '@/components/videoselect'
 import { mapGetters } from 'vuex'
 import { getOpenScreenADSet, saveOpenScreenADSet } from '../../../api/openscreenad'
@@ -152,7 +144,6 @@ import { getOpenScreenADSet, saveOpenScreenADSet } from '../../../api/openscreen
 export default {
   components: {
     linkSetter,
-    imgPicker,
     videoPicker
   },
   data() {
@@ -161,8 +152,6 @@ export default {
       linksArr: [],
       linksVisible: false, // 路径设置组件
       itemVideo: {},
-      imgDialog: false,
-      isGetImage: false,
       loading: false,
       ad_pic: '',
       video: {
@@ -204,16 +193,28 @@ export default {
     closeDialog() {
       this.linksVisible = false
     },
-    handleImgChange() {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    closeImgDialog() {
-      this.imgDialog = false
-    },
-    pickImg(data) {
-      this.ad_pic = data.url
-      this.imgDialog = false
+    async handleImgChange() {
+      try {
+        const { data } = await this.$picker.image({
+          data: this.ad_pic ? { url: this.ad_pic } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (data && data.url) || data || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          // ad_pic 存储的是相对路径（显示时使用 wximageurl + ad_pic）
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            this.ad_pic = imgUrl.replace(this.wximageurl, '')
+          } else {
+            this.ad_pic = imgUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
+      }
     },
     // 视频
     pickVideo(data) {
@@ -228,7 +229,7 @@ export default {
     // 获取信息
     getInfo() {
       this.loading = true
-      getOpenScreenADSet(this.params).then(res => {
+      getOpenScreenADSet(this.params).then((res) => {
         if (res.data.data.length !== 0) {
           this.form.ad_material = res.data.data.ad_material
           this.form.is_enable = res.data.data.is_enable
@@ -290,7 +291,7 @@ export default {
       } else {
         this.form.app = this.is_app.join(',')
       }
-      saveOpenScreenADSet(this.form).then(res => {
+      saveOpenScreenADSet(this.form).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

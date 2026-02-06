@@ -43,11 +43,8 @@
       'wgt-film': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
-    <div v-if="value.title || value.subtitle" class="wgt-hd">
-      <span class="title">{{ value.title }}</span>
-      <span class="sub-title">{{ value.subtitle }}</span>
-    </div>
     <div class="wgt-bd">
       <!-- 挂件自定义部分 -->
       <video-player
@@ -70,11 +67,12 @@
 
 <script>
 import config, { proportions } from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Film',
   wgtName: '视频',
   wgtDesc: '',
-  wgtIcon: 'wgt-film',
+  wgtIcon: 'video-two',
   config: config,
   props: {
     value: [Object, Array]
@@ -85,9 +83,12 @@ export default {
     }
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     aspectRatio() {
       const { proportion } = this.value
-      return proportions.find(item => item.label == proportion).name
+      return proportions.find((item) => item.label == proportion).name
     },
     sourceUrl() {
       const { data } = this.value

@@ -177,7 +177,7 @@ const typeList = [
 export default {
   filters: {
     filterType(val) {
-      const data = typeList.find(item => item.type === val)
+      const data = typeList.find((item) => item.type === val)
       return data.name
     }
   },
@@ -299,7 +299,7 @@ export default {
     },
     // 保存编辑
     saveForm() {
-      this.$refs.editform.validate(async valid => {
+      this.$refs.editform.validate(async (valid) => {
         if (valid) {
           if (!this.editform.id) {
             await createRegForm(this.editform)
@@ -361,7 +361,7 @@ export default {
     handleRmoveTag(tag) {
       const { editform } = this
       const { key } = tag
-      const findIndex = editform.radio_list.findIndex(item => item.key === key)
+      const findIndex = editform.radio_list.findIndex((item) => item.key === key)
       editform.radio_list.splice(findIndex, 1)
     },
     // 显示添加
@@ -435,7 +435,7 @@ export default {
       this.privacyForm.salesman_privacy.content = data
     },
     saveContent(type) {
-      this.$refs['privacy'].validate(valid => {
+      this.$refs['privacy'].validate((valid) => {
         if (valid) {
           putRulesInfo({
             data: [
@@ -448,7 +448,7 @@ export default {
                 ...this.privacyForm.salesman_service
               }
             ]
-          }).then(response => {
+          }).then((response) => {
             this.$message({
               message: '保存成功',
               type: 'success'

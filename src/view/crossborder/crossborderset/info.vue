@@ -13,7 +13,7 @@
               <el-radio :label="1"> 是 </el-radio>
               <el-radio :label="0"> 否 </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <span class="tip">说明：用户端是否展示跨境购物车</span>
           </el-form-item>
           <el-form-item label="全局税率">
@@ -30,7 +30,7 @@
               :max="100"
             />
             <span style="margin-left: 5px">%</span>
-            <br>
+            <br />
             <span class="tip"
               >说明：跨境商品税率设置权重按 商品 -> 类目 ->
               全局，当商品及类目未设置时，按全局计算，以此类推
@@ -85,7 +85,7 @@ export default {
     // 获取信息
     getInfo() {
       this.loading = true
-      getCrossborderSet(this.params).then(res => {
+      getCrossborderSet(this.params).then((res) => {
         this.form.tax_rate = res.data.data.tax_rate
         this.form.quota_tip = res.data.data.quota_tip
         this.form.crossborder_show = res.data.data.crossborder_show
@@ -99,7 +99,7 @@ export default {
     },
     // 保存数据
     save() {
-      saveCrossborderSet(this.form).then(res => {
+      saveCrossborderSet(this.form).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

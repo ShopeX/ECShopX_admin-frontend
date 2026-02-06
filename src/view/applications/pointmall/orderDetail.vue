@@ -533,7 +533,7 @@
                     class="item-image"
                     :src="wximageurl + scope.row.pic"
                     :alt="scope.row.item_name"
-                ></span>
+                /></span>
               </template>
             </el-table-column>
             <el-table-column prop="item_name" label="商品名称" width="180">
@@ -729,7 +729,7 @@
           </el-col>
           <el-col :span="20">
             <span v-for="(item, index) in orderInfo.third_params.drug_list_image">
-              <img class="item-image" :src="item.url" @click="imagedetail(item.url)">
+              <img class="item-image" :src="item.url" @click="imagedetail(item.url)" />
             </span>
           </el-col>
         </el-row>
@@ -748,7 +748,7 @@
         :visible.sync="dialogVisible"
         width="80%"
       >
-        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%">
+        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%" />
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
         </span>
@@ -1006,7 +1006,7 @@ export default {
       this.dialog = false
     },
     getMemberInfo(filter) {
-      getMember(filter).then(response => {
+      getMember(filter).then((response) => {
         this.memberInfo = response.data.data
       })
     },
@@ -1017,17 +1017,17 @@ export default {
         delivery_code: this.orderInfo.delivery_code,
         delivery_corp_source: this.orderInfo.delivery_corp_source
       }
-      getDeliveryDetail(query).then(response => {
+      getDeliveryDetail(query).then((response) => {
         this.activities = response.data.data
       })
     },
     getMemberInfo(filter) {
-      getMember(filter).then(response => {
+      getMember(filter).then((response) => {
         this.memberInfo = response.data.data
       })
     },
     process() {
-      processDrugOrders(this.order_id, this.form).then(res => {
+      processDrugOrders(this.order_id, this.form).then((res) => {
         this.$message({ type: 'success', message: '审核成功' })
         this.getDetail()
       })
@@ -1038,13 +1038,13 @@ export default {
         pageSize: 100,
         name: query,
         distributor_id: this.orderInfo.distributor_id
-      }).then(res => {
+      }).then((res) => {
         this.shopsList = res.data.data.list
       })
     },
     getDetail() {
       this.loading = true
-      getOrderDetail(this.order_id).then(response => {
+      getOrderDetail(this.order_id).then((response) => {
         this.orderInfo = response.data.data.orderInfo
         this.tradeInfo = response.data.data.tradeInfo
         this.tradeList = response.data.data.tradeList
@@ -1060,7 +1060,7 @@ export default {
       this.bigImageUrl = imgurl
     },
     getLogisticsList() {
-      getLogisticsList().then(res => {
+      getLogisticsList().then((res) => {
         this.dlycorps = res.data.data.list
       })
     },
@@ -1076,7 +1076,7 @@ export default {
         this.deliveryForm.delivery_corp = ''
         this.deliveryForm.delivery_code = ''
       }
-      updateDelivery(this.order_id, this.deliveryForm).then(response => {
+      updateDelivery(this.order_id, this.deliveryForm).then((response) => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.$message.success('修改物流信息成功!')

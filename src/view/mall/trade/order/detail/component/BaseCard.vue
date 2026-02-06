@@ -155,7 +155,7 @@ export default {
       return returnValue
     },
     invoiceFilter(item) {
-      return OPEN_STATUS_ARR.find(el => el.value === item)?.title || ''
+      return OPEN_STATUS_ARR.find((el) => el.value === item)?.title || ''
     },
     receiptTypeFilter(item) {
       let returnValue = ''

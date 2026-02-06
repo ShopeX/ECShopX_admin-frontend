@@ -138,7 +138,7 @@ export default {
         this.params.start_date = this.vdate[0]
         this.params.end_date = this.vdate[1]
         this.loading = true
-        getPlatformAccount(this.params).then(res => {
+        getPlatformAccount(this.params).then((res) => {
           this.allListData = res.data.data.list.data
           this.total_count = res.data.data.list.total_count
           this.totle = res.data.data.totle
@@ -161,7 +161,7 @@ export default {
         end_date: this.params.end_date,
         order_id: this.params.order_id
       }
-      exportAccount(obj).then(res => {
+      exportAccount(obj).then((res) => {
         this.$message({
           type: 'success',
           message: '已加入执行队列，请在设置-导出列表中下载'

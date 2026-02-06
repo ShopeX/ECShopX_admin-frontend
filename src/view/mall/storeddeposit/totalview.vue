@@ -91,10 +91,10 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
-    getDepositTradeList().then(res => {
+    getDepositTradeList().then((res) => {
       this.dataList = res.data.data.list
     })
-    getDepositCountIndex().then(res => {
+    getDepositCountIndex().then((res) => {
       this.count = res.data.data
     })
   },

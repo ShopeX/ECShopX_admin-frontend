@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-import fetch from '@/utils/fetch'
+import { fetch } from '@/api/request'
 
 // 获取模板
 export function getTemplate(query) {

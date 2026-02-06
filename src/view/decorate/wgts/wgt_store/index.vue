@@ -10,6 +10,7 @@
       'wgt-store': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -55,6 +56,7 @@
 
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 const defaultShopLogo = require('@/assets/imgs/decorate/default-shop-logo.png')
 export default {
   name: 'Store',
@@ -72,6 +74,9 @@ export default {
     }
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     blockStyle() {
       const { backgroundColor = '' } = this.value
       return {

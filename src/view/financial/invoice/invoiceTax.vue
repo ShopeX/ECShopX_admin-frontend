@@ -20,7 +20,13 @@
         @selection-change="handleSelectionChange"
       >
         <template v-slot:tableTop>
-          <el-button class="add-btn" type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="handleAdd">添加新配置</el-button>
+          <el-button
+            class="add-btn"
+            type="primary"
+            icon="iconfont icon-xinzengcaozuo-01"
+            @click="handleAdd"
+            >添加新配置</el-button
+          >
         </template>
       </SpFinder>
 
@@ -86,7 +92,7 @@ export default {
     this.getMainCategory()
   },
   methods: {
-    
+
     async getInvoiceSellerList() {
       const {list} = await this.$api.financial.getInvoiceSellerList()
       console.log(list)
@@ -115,22 +121,22 @@ export default {
     getCategoryPaths(categories = [], targetIds = []) {
         // 存储每个目标ID的路径
         const paths = {};
-        
+
         // 递归查找路径
         function findPath(node, currentPath) {
             const newPath = [...currentPath, node.category_id];
-            
+
             // 如果当前节点是目标ID，记录路径
             if (targetIds.includes(node.category_id)) {
                 paths[node.category_id] = newPath;
             }
-            
+
             // 继续遍历子节点
             if (node.children && node.children.length > 0) {
                 node.children.forEach(child => findPath(child, newPath));
             }
         }
-        
+
         // 从根节点开始遍历
         categories.forEach(root => findPath(root, []));
         // 构建结果数组，按目标ID的顺序排列
@@ -139,7 +145,7 @@ export default {
     getCategoryPathsName(categories = [], targetIds = []) {
         // 存储每个目标ID的路径
         const paths = {};
-        
+
         // 递归查找路径
         function findPath(node, currentPath) {
             // 将当前节点的ID和名称添加到路径中
@@ -147,18 +153,18 @@ export default {
                 id: node.category_id,
                 name: node.category_name
             }];
-            
+
             // 如果当前节点是目标ID，记录路径
             if (targetIds.includes(node.category_id)) {
                 paths[node.category_id] = newPath;
             }
-            
+
             // 继续遍历子节点
             if (node.children && node.children.length > 0) {
                 node.children.forEach(child => findPath(child, newPath));
             }
         }
-        
+
         // 从根节点开始遍历
         categories.forEach(root => findPath(root, []));
         // 构建结果数组，按目标ID的顺序排列
@@ -177,7 +183,7 @@ export default {
       this.selectedRows = selection
     },
     onDialogFormSubmit() {
-      
+
       const form = cloneDeep(this.dialogForm)
       if(form.tax_rate_type == "SPECIFIED"){
         form.category_ids = form.category_ids.map(item=>item[item.length - 1])
@@ -201,7 +207,7 @@ export default {
           this.confirmStatus = false
         })
       }
-     
+
     },
     handleAdd(){
       this.dialogTitle = '新增管理分类税率配置'
@@ -229,13 +235,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.add-btn{
+.add-btn {
   margin-bottom: 20px;
 }
-
 </style>
-<style lang="scss" >
-
+<style lang="scss">
 .invoice-cascader {
   .el-input {
     max-width: 320px !important;
@@ -245,4 +249,3 @@ export default {
   }
 }
 </style>
-

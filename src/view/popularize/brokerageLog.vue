@@ -240,13 +240,13 @@ export default {
       withdrawalStatistics({
         user_id: this.params.user_id,
         distributor_id: this.params.distributor_id
-      }).then(response => {
+      }).then((response) => {
         this.count = response.data.data
       })
     },
     getList() {
       this.loading = true
-      getBrokerageLog(this.params).then(response => {
+      getBrokerageLog(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

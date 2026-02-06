@@ -26,7 +26,9 @@
         <template slot-scope="scope">
           <div class="operating-icons gap-2">
             <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">编辑</el-button>
-            <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)">删除</el-button>
+            <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)"
+              >删除</el-button
+            >
           </div>
         </template>
       </el-table-column>
@@ -156,7 +158,7 @@ export default {
 
       var checkedNodes = this.$refs.tree.getCheckedNodes()
       var checkedKeys = []
-      checkedNodes.forEach(item => {
+      checkedNodes.forEach((item) => {
         if (!item.isChildrenMenu) {
           checkedKeys.push(item.shopmenu_id)
         }
@@ -165,13 +167,13 @@ export default {
       var version = this.$store.getters.menus[0].version
       this.form.permission = { shopmenu_ids: checkedKeys, version: version }
       if (this.form.role_id) {
-        updateRolesInfo(this.form.role_id, this.form).then(response => {
+        updateRolesInfo(this.form.role_id, this.form).then((response) => {
           this.editRoleVisible = false
           this.getRolesDataList()
           this.handleCancel()
         })
       } else {
-        createRoles(this.form).then(response => {
+        createRoles(this.form).then((response) => {
           this.editRoleVisible = false
           this.getRolesDataList()
           this.handleCancel()
@@ -186,12 +188,12 @@ export default {
       this.loading = true
       this.params.service_type = 'timescard'
       getRolesList(this.params)
-        .then(response => {
+        .then((response) => {
           this.rolesList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -206,7 +208,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteRole(row.role_id).then(response => {
+          deleteRole(row.role_id).then((response) => {
             this.rolesList.splice(index, 1)
             this.$message({
               message: '删除成功',

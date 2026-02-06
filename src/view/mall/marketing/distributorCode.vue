@@ -8,7 +8,7 @@
     <div v-if="wxaCodeImage" class="content-center">
       <el-row>
         <el-col>
-          <img :src="wxaCodeImage">
+          <img :src="wxaCodeImage" />
         </el-col>
         <el-col>
           <el-button type="primary" @click="downDistributorCode">
@@ -34,7 +34,7 @@ export default {
   },
   mounted() {
     let params = { template_name: 'yykweishop', codetype: 'store' }
-    getWxaDristributorCodeStream(params).then(response => {
+    getWxaDristributorCodeStream(params).then((response) => {
       this.wxaCodeImage = response.data.data.base64Image
       this.name = '微商城'
     })

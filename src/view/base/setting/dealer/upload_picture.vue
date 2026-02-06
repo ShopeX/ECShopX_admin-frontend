@@ -28,7 +28,7 @@
                 v-if="form.social_credit_code_url"
                 :src="form.social_credit_code_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>* 三证合一码</span>
                 <el-tooltip
@@ -47,7 +47,7 @@
                 v-if="form.legal_certId_front_url"
                 :src="form.legal_certId_front_url"
                 class="avatar"
-              >
+              />
               <span>* 法人/小微负责人身份证正面</span>
             </el-form-item>
             <el-form-item prop="legal_cert_id_back_url">
@@ -56,13 +56,13 @@
                 v-if="form.legal_cert_id_back_url"
                 :src="form.legal_cert_id_back_url"
                 class="avatar"
-              >
+              />
               <span>* 法人/小微负责人身份证反面</span>
             </el-form-item>
 
             <el-form-item prop="store_url">
               <image-upload type="04" @successHandle="successHandle" />
-              <img v-if="form.store_url" :src="form.store_url" class="avatar">
+              <img v-if="form.store_url" :src="form.store_url" class="avatar" />
               <div class="row">
                 <span>门店</span>
                 <el-tooltip
@@ -82,7 +82,7 @@
                 v-if="form.cert_front_image_url"
                 :src="form.cert_front_image_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>股东身份证正面</span>
               </div>
@@ -90,7 +90,7 @@
 
             <el-form-item prop="cert_back_image_url">
               <image-upload type="07" @successHandle="successHandle" />
-              <img v-if="form.cert_back_image_url" :src="form.cert_back_image_url" class="avatar">
+              <img v-if="form.cert_back_image_url" :src="form.cert_back_image_url" class="avatar" />
               <div class="row">
                 <span>股东身份证反面</span>
               </div>
@@ -114,9 +114,9 @@
                 v-if="form.account_opening_permit_url"
                 :src="form.account_opening_permit_url"
                 class="avatar"
-              >
+              />
               <div class="row" style="margin-top: 10px; line-height: 20px">
-                <span>* 开户许可证/小微负责人<br>银行卡正面照</span>
+                <span>* 开户许可证/小微负责人<br />银行卡正面照</span>
               </div>
             </el-form-item>
 
@@ -126,7 +126,7 @@
                 v-if="form.settle_account_certificate_url"
                 :src="form.settle_account_certificate_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>结算账号开户证明</span>
               </div>
@@ -146,7 +146,7 @@
           <div class="wrap">
             <el-form-item prop="web_pic_url">
               <image-upload type="09" @successHandle="successHandle" />
-              <img v-if="form.web_pic_url" :src="form.web_pic_url" class="avatar">
+              <img v-if="form.web_pic_url" :src="form.web_pic_url" class="avatar" />
               <div class="row">
                 <span>网站截图</span>
               </div>
@@ -158,7 +158,7 @@
                 v-if="form.industry_qualify_doc_license_url"
                 :src="form.industry_qualify_doc_license_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>行业资质文件</span>
                 <el-tooltip
@@ -178,13 +178,13 @@
                 v-if="form.icp_registration_license_url"
                 :src="form.icp_registration_license_url"
                 class="avatar"
-              >
+              />
               <span>ICP备案许可证明/许可证编码</span>
             </el-form-item>
 
             <el-form-item prop="lease_contract_url">
               <image-upload type="12" @successHandle="successHandle" />
-              <img v-if="form.lease_contract_url" :src="form.lease_contract_url" class="avatar">
+              <img v-if="form.lease_contract_url" :src="form.lease_contract_url" class="avatar" />
               <div class="row">
                 <span>租赁合同</span>
                 <el-tooltip
@@ -204,7 +204,7 @@
                 v-if="form.transaction_test_record_url"
                 :src="form.transaction_test_record_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>交易测试记录</span>
                 <el-tooltip
@@ -224,7 +224,7 @@
                 v-if="form.buss_support_materials_url"
                 :src="form.buss_support_materials_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>业务场景证明材料</span>
                 <el-tooltip
@@ -476,7 +476,7 @@ export default {
       this.$message.success('上传成功')
     },
     submitForm() {
-      this.$refs['ruleForm'].validate(async valid => {
+      this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           this.checkBoxVisibleHandle()
         } else {

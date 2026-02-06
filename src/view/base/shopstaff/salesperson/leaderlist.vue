@@ -275,7 +275,7 @@ export default {
     },
     addSalespersonAction() {
       if (this.salespersonId) {
-        updateSalesperson(this.salespersonId, this.form).then(response => {
+        updateSalesperson(this.salespersonId, this.form).then((response) => {
           this.detailDialog = false
           this.getList()
           this.$message({
@@ -284,7 +284,7 @@ export default {
           })
         })
       } else {
-        createSalesperson(this.form).then(response => {
+        createSalesperson(this.form).then((response) => {
           this.detailDialog = false
           this.getList()
           this.$message({
@@ -298,7 +298,7 @@ export default {
       this.salespersonId = row.salespersonId
       this.detailDialog = true
       var params = { salesperson_id: row.salespersonId }
-      getSalespersonInfo(params).then(res => {
+      getSalespersonInfo(params).then((res) => {
         this.form = {
           name: res.data.data.name,
           mobile: res.data.data.mobile,
@@ -317,7 +317,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteSalesperson(row.salespersonId).then(response => {
+          deleteSalesperson(row.salespersonId).then((response) => {
             this.salespersonList.splice(index, 1)
             this.$message({
               type: 'success',
@@ -349,7 +349,7 @@ export default {
     getList() {
       this.loading = true
       getSalespersonList(this.params)
-        .then(response => {
+        .then((response) => {
           if (response.data.data.list) {
             this.salespersonList = response.data.data.list
             this.total_count = Number(response.data.data.total_count)
@@ -357,7 +357,7 @@ export default {
           }
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -371,7 +371,7 @@ export default {
       if (storetype) {
         this.relShop.params.store_type = storetype
       }
-      getRelShopList(this.relShop.params).then(res => {
+      getRelShopList(this.relShop.params).then((res) => {
         this.relShop.list = res.data.data.list
         this.relShop.total_count = res.data.data.total_count
       })

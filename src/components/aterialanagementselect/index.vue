@@ -121,7 +121,7 @@ export default {
     },
     getNewsList(data) {
       if (this.scStatus) {
-        getWechatMaterial(data).then(response => {
+        getWechatMaterial(data).then((response) => {
           this.newsList = response.data.data.item
         })
       }

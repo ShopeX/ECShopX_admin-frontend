@@ -622,7 +622,7 @@ export default {
     submitForm(isSubmit, ref) {
       this.form.submit_review = isSubmit
       this.form.isUploadFile = true
-      this.$refs['ruleForm'].validate(async valid => {
+      this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           if (this.form.id) {
             // 更新
@@ -669,7 +669,7 @@ export default {
     },
     submitFormPerson(isSubmit, ref) {
       this.indvForm.submit_review = isSubmit
-      this.$refs['indvForm'].validate(async valid => {
+      this.$refs['indvForm'].validate(async (valid) => {
         if (valid) {
           console.log(this.indvForm)
           if (this.indvForm.id) {
@@ -804,7 +804,7 @@ export default {
         bank_name: this.form.bank_name
       })
 
-      var restaurants = this.AllBank.map(item => {
+      var restaurants = this.AllBank.map((item) => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -816,7 +816,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },

@@ -130,13 +130,13 @@ export default {
       } else {
         this.form.customer_switch = 0
       }
-      setCompanySetting(this.form).then(res => {
+      setCompanySetting(this.form).then((res) => {
         this.$message({ message: '操作成功', type: 'success' })
         this.getConfig()
       })
     },
     getConfig() {
-      getCompanySetting().then(res => {
+      getCompanySetting().then((res) => {
         if (res.data.data.company_id) {
           this.form = res.data.data
           if (this.form.customer_switch) {

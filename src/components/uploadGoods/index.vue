@@ -12,7 +12,7 @@
     <div>
       <div class="tips">商品数量不能超过两万，超过部分会被删除</div>
       <div class="upload" @dragover="fileDragover" @drop="fileDrop">
-        <img class="upload-img" src="@/assets/img/upload.svg" alt="">
+        <img class="upload-img" src="@/assets/img/upload.svg" alt="" />
         <div class="upload-text">
           <span>将文件拖到此处，或</span>
           <el-upload
@@ -65,7 +65,7 @@ export default {
      * */
     uploadHandleTemplate() {
       let params = { file_type: 'discount_goods', file_name: '商品模板' }
-      exportUploadTemplate(params).then(response => {
+      exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
           var a = document.createElement('a')
@@ -105,7 +105,7 @@ export default {
         fileUpload = file.raw
       }
       let params = { isUploadFile: true, file_type: 'discount_goods', file: fileUpload }
-      handleUploadFile(params).then(response => {
+      handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
           message: '上传成功'
@@ -113,7 +113,7 @@ export default {
 
         let { data } = response.data
         if (data.fail.length > 0) {
-          let str = data.fail.map(item => {
+          let str = data.fail.map((item) => {
             return item.item_bn
           })
           setTimeout(() => {

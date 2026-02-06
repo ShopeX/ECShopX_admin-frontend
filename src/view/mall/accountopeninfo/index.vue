@@ -8,7 +8,7 @@
     <el-card>
       <el-row>
         <el-col :span="3">
-          <img class="cus-openaccount-img" src="@/assets/img/adapay/qiye.png" alt="">
+          <img class="cus-openaccount-img" src="@/assets/img/adapay/qiye.png" alt="" />
         </el-col>
         <el-col :span="20">
           <div class="cus-openaccount-flex">
@@ -400,13 +400,13 @@ export default {
   methods: {
     getDetail() {
       getOpenDetail()
-        .then(response => {
+        .then((response) => {
           const { info } = response.data.data || {}
           this.MerchantEntry = info.MerchantEntry || {}
           this.SubmitLicense = info.SubmitLicense || {}
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -416,11 +416,11 @@ export default {
     },
     getLogList() {
       getAdapayLogList({ log_type: 'merchant', ...this.params })
-        .then(response => {
+        .then((response) => {
           this.logList = response.data.data.list || {}
           this.total_count = response.data.data.total_count || 0
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',

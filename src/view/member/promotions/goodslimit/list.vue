@@ -188,7 +188,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            cancelLimitPromotions(row.limit_id).then(res => {
+            cancelLimitPromotions(row.limit_id).then((res) => {
               this.$message({
                 message: '取消成功',
                 type: 'success',

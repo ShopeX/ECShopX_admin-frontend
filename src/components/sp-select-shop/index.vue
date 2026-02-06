@@ -101,7 +101,7 @@ export default {
       })
       if (data) {
         if (data.length > 1) {
-          const distributorIds = data.map(item => item.distributor_id)
+          const distributorIds = data.map((item) => item.distributor_id)
           this.onChange({
             name: `已选择${data.length}个店铺`,
             value: distributorIds

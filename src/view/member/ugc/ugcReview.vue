@@ -207,14 +207,14 @@ export default {
       }
       that.loading = true
       getComment(params).then(
-        res => {
+        (res) => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.reviewList = list
           that.$data.pagers = { total: total_count }
           that.loading = false
         },
-        err => {
+        (err) => {
           that.$data.loading = false
         }
       )
@@ -280,7 +280,7 @@ export default {
       }
       params.comment_id = id_set
       //console.log('进行审核 auditNote',params);
-      commentVerify(params).then(res => {
+      commentVerify(params).then((res) => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)

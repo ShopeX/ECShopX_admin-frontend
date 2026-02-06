@@ -16,7 +16,7 @@
         <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
         <div class="activity-poster">
           <div class="upload-box" @click="handleImgChange">
-            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
+            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </div>
         </div>
@@ -51,7 +51,7 @@
           <div class="pics-list">
             <template v-for="(item, index) in form.help_pics">
               <div class="pics-item">
-                <img :src="wximageurl + item">
+                <img :src="wximageurl + item" />
                 <div class="bg-mask">
                   <i class="icon el-icon-edit-outline" @click="picsEdit(index)" />
                   <i class="icon el-icon-delete" @click="picsDelete(index)" />
@@ -78,7 +78,7 @@
             <div class="logo-box">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>原价：￥{{ goods.price }}</div>
@@ -175,7 +175,7 @@
         <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
@@ -352,7 +352,7 @@ export default {
     if (this.$route.params.bargain_id) {
       // 初始化助力活动详情数据
       getBargainsDetail(this.$route.params.bargain_id)
-        .then(response => {
+        .then((response) => {
           let bargainsDetailData = response.data.data
           bargainsDetailData.price = bargainsDetailData.price / 100
           bargainsDetailData.limit_num = +bargainsDetailData.limit_num
@@ -371,7 +371,7 @@ export default {
           this.form = bargainsDetailData
           this.goodsShow(this.form)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.go(-1)
         })
     }
@@ -398,12 +398,12 @@ export default {
       where.approve_status = ['onsale']
       where.is_gift = false
       getItemsList(where)
-        .then(response => {
+        .then((response) => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch(error => {
+        .catch((error) => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -504,7 +504,7 @@ export default {
     },
     save() {
       const that = this
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           var bargainRange = {
             min: this.form.price_min,
@@ -543,7 +543,7 @@ export default {
           // console.log('请求参数1', params.item_id)
           if (this.form.bargain_id) {
             params.bargain_id = this.form.bargain_id
-            updateBargains(this.form.bargain_id, params).then(response => {
+            updateBargains(this.form.bargain_id, params).then((response) => {
               if (response.data.data.bargain_id) {
                 this.$message({
                   message: '更新成功',
@@ -560,7 +560,7 @@ export default {
               }
             })
           } else {
-            addBargins(params).then(response => {
+            addBargins(params).then((response) => {
               if (response.data.data.bargain_id) {
                 this.$message({
                   message: '添加成功',

@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     onGetConfig() {
-      getMapSetting().then(response => {
+      getMapSetting().then((response) => {
         this.form = response.data.data.list[0]
       })
     },
@@ -94,7 +94,7 @@ export default {
         is_default: 1
       }
       setMapSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -103,7 +103,7 @@ export default {
           this.onGetConfig()
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     },

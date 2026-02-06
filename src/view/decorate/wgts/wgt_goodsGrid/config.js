@@ -6,17 +6,15 @@ import { pickBy } from '@/utils'
 import AttrGoods from './attr-goods'
 import CompPickerLink from '../../comps/comp-pickerLink'
 
-export default {
+const config = {
   name: 'goodsGrid',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '爆品直邮' },
-    { label: '副标题', key: 'subtitle', component: 'input', value: '宅家买遍全法' },
     { label: '组件间距', key: 'padded', component: 'switch', value: true },
     { label: '直接加购', key: 'addCart', component: 'switch', value: false },
     {
       label: '样式',
       key: 'style',
-      component: 'radio',
+      component: 'radiobutton',
       options: [
         { name: '一行两个', label: 'grid' },
         { name: '一行三个', label: 'grids' }
@@ -124,7 +122,8 @@ export default {
     }
   ],
   transformIn: (v) => {
-    const { name, base, config, data, distributor_id } = v
+    const { name, base, config, data, distributor_id, track, tagsType, meber_tags, no_meber_tags } =
+      v
     const { type = 'normal' } = config
     let list = []
     let pointGoods = []
@@ -141,6 +140,12 @@ export default {
       data,
       list,
       distributor_id,
+      track,
+      tags: {
+        type: tagsType || '2',
+        meber_tags: meber_tags || [],
+        no_meber_tags: no_meber_tags || []
+      },
       goodsSetting: {
         type: type,
         data: list,
@@ -175,7 +180,18 @@ export default {
         } else {
           return data
         }
-      }
+      },
+      track: 'track',
+      tags: 'tags',
+      tagsType: 'tags.type',
+      meber_tags: 'tags.meber_tags',
+      no_meber_tags: 'tags.no_meber_tags'
     })
   }
 }
+
+// 自动处理 compStyle 配置（初始化全局处理函数）
+import '../../comps/configsetting'
+export default typeof globalThis !== 'undefined' && globalThis.__processConfig__
+  ? globalThis.__processConfig__(config)
+  : config

@@ -212,7 +212,7 @@ export default {
     exportCommunityOrder() {
       if (this.activity_id.length) {
         let params = { activity_id: this.activity_id }
-        communityOrderExport(params).then(response => {
+        communityOrderExport(params).then((response) => {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
@@ -233,7 +233,7 @@ export default {
           }
         })
       } else {
-        communityOrderExport(this.params).then(response => {
+        communityOrderExport(this.params).then((response) => {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
@@ -258,7 +258,7 @@ export default {
     handleSelectionChange(rows) {
       this.activity_id = []
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           if (row) {
             this.activity_id.push(row.activity_id)
           }
@@ -287,7 +287,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            communityDeliver({ activity_id: row.activity_id }).then(response => {
+            communityDeliver({ activity_id: row.activity_id }).then((response) => {
               this.fetchList()
               this.$message({
                 message: '发货成功',

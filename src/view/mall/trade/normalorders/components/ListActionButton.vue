@@ -86,7 +86,7 @@ export default {
         type,
         page: 1,
         ...this.filterParams
-      }).then(response => {
+      }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message({
@@ -114,7 +114,7 @@ export default {
       exportInvoice({
         ...this.params,
         type
-      }).then(response => {
+      }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message({

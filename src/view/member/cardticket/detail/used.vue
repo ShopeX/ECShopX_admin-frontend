@@ -75,7 +75,7 @@ export default {
     getCardUserList() {
       this.loading = true
       getCardUserList(this.params)
-        .then(res => {
+        .then((res) => {
           if (res.data.data.list.length > 0) {
             this.cardList = res.data.data.list
             this.total_count = res.data.data.total_count
@@ -85,7 +85,7 @@ export default {
             this.loading = false
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

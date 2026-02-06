@@ -116,7 +116,7 @@
               :data="content"
               :control="['film', 'slider', 'heading', 'writing']"
               @change="
-                data => {
+                (data) => {
                   content = data
                 }
               "
@@ -379,7 +379,7 @@ export default {
       this.getGoodsParams(goodsDetail.item_params_list, goodsDetail.item_params)
 
       if (!goodsDetail.nospec) {
-        goodsDetail.spec_items.forEach(item => {
+        goodsDetail.spec_items.forEach((item) => {
           item.price = item.price / 100
           item.cost_price = item.cost_price / 100
           item.market_price = item.market_price / 100
@@ -420,7 +420,7 @@ export default {
     },
     // 商品参数
     getGoodsParams(list, value) {
-      list.forEach(item => {
+      list.forEach((item) => {
         const temp = {
           value: item.attribute_id,
           label: item.attribute_name,
@@ -434,7 +434,7 @@ export default {
             label: attribute_value
           })
         })
-        const fd = value.find(sitem => sitem.attribute_id == item.attribute_id)
+        const fd = value.find((sitem) => sitem.attribute_id == item.attribute_id)
         if (fd) {
           temp.attribute_value_id = fd.attribute_value_id
           temp.attribute_value_name = fd.attribute_value_name
@@ -447,9 +447,9 @@ export default {
       this.skuData.skus = []
 
       if (list) {
-        list.forEach(item => {
+        list.forEach((item) => {
           const specs = []
-          item.attribute_values.list.forEach(attr => {
+          item.attribute_values.list.forEach((attr) => {
             specs.push({
               image_url: attr.image_url ? attr.image_url : '',
               attribute_value_id: attr.attribute_value_id,
@@ -458,8 +458,8 @@ export default {
             })
           })
           const checked_sku = []
-          value.forEach(spec => {
-            spec.item_spec.forEach(sitem => {
+          value.forEach((spec) => {
+            spec.item_spec.forEach((sitem) => {
               if (item.attribute_id == sitem.spec_id) {
                 if (checked_sku.indexOf(sitem.spec_value_id) < 0) {
                   checked_sku.push(sitem.spec_value_id)
@@ -481,21 +481,21 @@ export default {
     getSkuItems() {
       const { is_new } = this.$route.query
       const skuMartix = []
-      this.skuData.skus.forEach(sku => {
+      this.skuData.skus.forEach((sku) => {
         skuMartix.push(sku.checked_sku)
       })
       const _specItmes = this.cartesianProductOf(...skuMartix)
       const cacheItems = {}
       console.log('specItems:', this.skuData.specItems)
-      this.skuData.specItems.forEach(sitem => {
-        const itemSpecs = sitem.item_spec.map(k => {
+      this.skuData.specItems.forEach((sitem) => {
+        const itemSpecs = sitem.item_spec.map((k) => {
           return k.spec_value_id
         })
         cacheItems[itemSpecs.join('_')] = sitem
       })
       console.log('_specItmes:', _specItmes)
       console.log('cacheItems:', cacheItems)
-      this.skuData.specItems = _specItmes.map(item => {
+      this.skuData.specItems = _specItmes.map((item) => {
         // console.log('item:', item)
         const key = item.join('_')
         const temp = {
@@ -516,7 +516,7 @@ export default {
             ? cacheItems[key].item_spec
             : item.map((m, n) => {
                 const { sku_id, sku_value } = this.skuData.skus[n]
-                const fd = sku_value.find(sv => sv.attribute_value_id == m)
+                const fd = sku_value.find((sv) => sv.attribute_value_id == m)
                 return {
                   spec_id: sku_id,
                   spec_value_id: m,
@@ -534,14 +534,14 @@ export default {
       console.log('specItems:', this.skuData.specItems)
       // 查找规格图片, 取最后一行
       const skus = JSON.parse(JSON.stringify(this.skuData.skus))
-      const imgSkus = skus.reverse().find(item => item.is_image == 'true')
+      const imgSkus = skus.reverse().find((item) => item.is_image == 'true')
       if (imgSkus) {
         const checkedImgSkus = imgSkus.sku_value.filter(
-          item => imgSkus.checked_sku.indexOf(item.attribute_value_id) > -1
+          (item) => imgSkus.checked_sku.indexOf(item.attribute_value_id) > -1
         )
-        this.skuData.specImages = checkedImgSkus.map(skuItem => {
+        this.skuData.specImages = checkedImgSkus.map((skuItem) => {
           const fd = this.skuData.specImages.find(
-            item => item.spec_value_id == skuItem.attribute_value_id
+            (item) => item.spec_value_id == skuItem.attribute_value_id
           )
           return {
             spec_value_id: skuItem.attribute_value_id,
@@ -573,7 +573,7 @@ export default {
       const specNames = []
       keys.forEach((key, index) => {
         const fd = this.skuData.itemSpecList[index].attribute_values.list.find(
-          item => item.attribute_value_id == key
+          (item) => item.attribute_value_id == key
         )
         if (fd) {
           specNames.push(fd.custom_attribute_value || fd.attribute_value)
@@ -586,7 +586,7 @@ export default {
       const res = await getCategory({ is_main_category: true })
       const category = res.data.data
       function deepMainCategory(cate, temp) {
-        cate.forEach(item => {
+        cate.forEach((item) => {
           const _temp = {
             label: item.category_name,
             value: item.category_id
@@ -703,7 +703,7 @@ export default {
         videos_url: itemVideo.url,
         nospec,
         is_show_specimg: isShowSpecimg,
-        item_params: this.paramsData.map(item => {
+        item_params: this.paramsData.map((item) => {
           return {
             attribute_id: item.value,
             attribute_value_id: item.attribute_value_id,
@@ -718,7 +718,7 @@ export default {
 
       // 多规格
       if (!nospec) {
-        const specImages = this.skuData.specImages.map(item => {
+        const specImages = this.skuData.specImages.map((item) => {
           return {
             spec_value_id: item.spec_value_id,
             item_spec: item.spec_custom_value_name || item.spec_value_name,
@@ -733,14 +733,14 @@ export default {
         // 编辑
         if (item_id) {
           params['spec_items'] = JSON.stringify(
-            this.skuData.specItems.filter(item => !!item.approve_status)
+            this.skuData.specItems.filter((item) => !!item.approve_status)
           )
         } else {
           const specItems = this.skuData.specItems.map((item, index) => {
             const skuIds = item.sku_id.split('_')
             const itemSpec = []
             this.skuData.skus.forEach((m, n) => {
-              const t = m.sku_value.find(k => k.attribute_value_id == skuIds[n])
+              const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
               itemSpec.push({
                 spec_id: m.sku_id,
                 spec_value_id: skuIds[n],
@@ -839,7 +839,7 @@ export default {
     },
     pickThumb: function (arr) {
       if (arr.length != 0) {
-        arr.forEach(data => {
+        arr.forEach((data) => {
           if (data && data.url !== '') {
             this.thumbDialog = false
             var index = this.$refs.editor.$el.id

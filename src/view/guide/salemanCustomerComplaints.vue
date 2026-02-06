@@ -246,7 +246,7 @@ export default {
   methods: {
     getList() {
       const queryData = Object.assign(this.listQuery, this.filterData)
-      getSalemanCustomerComplaints(queryData).then(response => {
+      getSalemanCustomerComplaints(queryData).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total = response.data.data.total_count
@@ -310,7 +310,7 @@ export default {
         return
       }
       this.replyForm.reply_content = this.replyContent
-      replySalemanCustomerComplaints(this.replyForm).then(response => {
+      replySalemanCustomerComplaints(this.replyForm).then((response) => {
         this.$message({
           message: '回复成功！',
           type: 'success'

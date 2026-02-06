@@ -11,9 +11,22 @@
     :before-close="handleBeforeClose"
     @close="handleClose"
   >
-    <slot />
+    <template v-if="$slots.title" slot="title">
+      <slot name="title" />
+    </template>
+
+    <template v-if="$slots.body">
+      <slot name="body" />
+    </template>
+    <template v-else>
+      <slot />
+    </template>
 
     <span slot="footer" class="dialog-footer">
+    <div>
+      <slot name="footer" />
+    </div>
+    <div>
       <el-button
         v-if="computedButtonCancel.visible"
         icon="el-icon-circle-close"
@@ -31,6 +44,7 @@
       >
         {{ computedButtonConfirm.text }}
       </el-button>
+    </div>
     </span>
   </el-dialog>
 </template>

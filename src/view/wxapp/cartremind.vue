@@ -77,7 +77,7 @@ export default {
       this.getConfig()
     },
     getConfig() {
-      getCartremindSetting().then(response => {
+      getCartremindSetting().then((response) => {
         this.form = response.data.data
       })
     },
@@ -85,14 +85,14 @@ export default {
       this.loading = true
 
       setCartremindSetting(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

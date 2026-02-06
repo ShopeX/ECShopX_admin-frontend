@@ -433,7 +433,7 @@ export default {
           if (minDate && !maxDate) this.dateRange[0] = minDate
           if (maxDate) this.dateRange[1] = maxDate
         },
-        disabledDate: time => {
+        disabledDate: (time) => {
           if (this.dateRange) {
             let currentTime = this.dateRange[0]
             let threeMonths = 60 * 60 * 1000 * 24 * 90
@@ -477,7 +477,7 @@ export default {
       // 搜索
       this.dataSource.loading = true
       GetAccountStatisList({ ...this.formData, ...this.params })
-        .then(res => {
+        .then((res) => {
           this.tableDataList = res.data.data.list.data
           this.allAccountList = res.data.data.total
           let total = res.data.data.list.total_count
@@ -486,13 +486,13 @@ export default {
             loading: false
           }
           if (this.loginType === 'distributor') {
-            getStoreAccount({ ...this.formData, ...this.params }).then(res => {
+            getStoreAccount({ ...this.formData, ...this.params }).then((res) => {
               this.totalList = res.data.data.totle
             })
           }
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取统计信息出错'
@@ -535,7 +535,7 @@ export default {
     },
     onExportExcel() {
       // 表格导出
-      onOrderExportData(this.formData).then(response => {
+      onOrderExportData(this.formData).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message({

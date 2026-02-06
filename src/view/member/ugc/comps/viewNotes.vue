@@ -88,7 +88,7 @@
           <el-col class="value imgflxe" :span="20">
             <div v-if="post_info.video" class="img">
               <video id="video" class="video">
-                <source :src="post_info.video" type="video/mp4">
+                <source :src="post_info.video" type="video/mp4" />
               </video>
               <div class="upload-box" @click="magnifyImg(post_info.video, true)">
                 <div class="iconfont icon-play" />
@@ -100,7 +100,7 @@
               class="img"
               @click="magnifyImg(item.url)"
             >
-              <img :src="item.url" alt="">
+              <img :src="item.url" alt="" />
             </div>
           </el-col>
         </el-row>
@@ -117,7 +117,7 @@
           <el-col class="value imgflxe" :span="20">
             <div v-for="(item, index) in post_info.goods" :key="index" class="goods">
               <div class="pics">
-                <img :src="item.pics" alt="">
+                <img :src="item.pics" alt="" />
               </div>
               <div class="text">
                 {{ item.item_name }}
@@ -174,10 +174,10 @@
     >
       <div class="magnify" @click="magnifyHide">
         <video v-if="magnifyVideo" id="preview-video" class="video" controls autoplay>
-          <source :src="magnifyVideo" type="video/mp4">
+          <source :src="magnifyVideo" type="video/mp4" />
         </video>
 
-        <img v-if="magnifySrc" :src="magnifySrc" alt="">
+        <img v-if="magnifySrc" :src="magnifySrc" alt="" />
       </div>
     </el-dialog>
 
@@ -253,7 +253,7 @@ export default {
       // console.log('post_id',post_id)
       this.$data.formLoad = true
       getNotesDetail({ post_id }).then(
-        res => {
+        (res) => {
           var post_info = res.data.data.post_info
           var taglist = []
           var relFlag = {}
@@ -262,7 +262,7 @@ export default {
             is_top: post_info.is_top
           }
           const imageList = JSON.parse(post_info.images)
-          imageList.forEach(item => {
+          imageList.forEach((item) => {
             if (item.tags) {
               taglist = [...taglist, ...item.tags]
             }
@@ -281,7 +281,7 @@ export default {
           that.$data.formLoad = false
           //console.log('getNotesDetail',ruleForm)
         },
-        err => {
+        (err) => {
           //console.log('err',err);
           that.$data.post_info = {}
           that.$data.errInfo = err
@@ -301,7 +301,7 @@ export default {
         option: ruleForm
       }
 
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           //  console.log('handleAudit',params)
           this.handleCancelLabelsDialog()
@@ -328,7 +328,7 @@ export default {
       ruleForm.post_id = post_info.post_id
       //console.log('ruleForm',ruleForm)
       notesSimpleEdit(ruleForm).then(
-        res => {
+        (res) => {
           var msg = res.data.data.message
           //console.log('notesSimpleEdit res',res);
           this.$message({
@@ -340,7 +340,7 @@ export default {
             }
           })
         },
-        err => {
+        (err) => {
           console.log('notesSimpleEdit err', err)
         }
       )

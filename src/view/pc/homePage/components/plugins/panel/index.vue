@@ -12,7 +12,7 @@
           <img
             class="i"
             :src="item.imgUrl || 'https://fakeimg.pl/250x250/F8F8F8/CCC/?text=Image&font=helvetica'"
-          >
+          />
           <!-- <a class="cover-link"></a> -->
         </li>
       </ul>

@@ -267,7 +267,7 @@ export default {
             'x-wxapp-session': session
           }
         })
-        .then(response => {
+        .then((response) => {
           this.timeList = response.data.data.list
           this.total_count = response.data.data.total_count
           console.log(response, 220)
@@ -288,10 +288,10 @@ export default {
             'x-wxapp-session': session
           }
         })
-        .then(response => {
+        .then((response) => {
           // 表格
           this.list = response.data.data.list
-          response.data.data.list.map(item => {
+          response.data.data.list.map((item) => {
             this.listKeyData.push({
               fieldkey: item.fieldkey,
               fieldname: item.fieldname
@@ -306,7 +306,7 @@ export default {
           console.log(this.listKeyData, this.listValueData, 160)
 
           // 动态生成图表的数量
-          response.data.data.keyindex.map(item => {
+          response.data.data.keyindex.map((item) => {
             this.keyIndexData.push({
               label: item.fieldname,
               data: Array.reverse(item.fieldvalue)

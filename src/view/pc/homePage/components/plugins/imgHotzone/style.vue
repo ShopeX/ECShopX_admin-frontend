@@ -27,7 +27,7 @@
               :src="config.imgUrl"
               class="banner-uploader"
               @click="handleImgChange"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="el-icon-camera" />上传图片
             </div>

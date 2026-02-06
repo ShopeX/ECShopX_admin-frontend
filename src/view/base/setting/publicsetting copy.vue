@@ -11,7 +11,7 @@
           <span>分享带门店参数设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="是否带门店参数">
           <el-switch v-model="form.distributor_param_status" @change="paramShareChange()" />
@@ -44,7 +44,7 @@
           <span>评论设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="是否开启评论">
           <el-switch v-model="form.rate_status" @change="rateStatusChange()" />
@@ -58,7 +58,7 @@
           <span>提货码设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="是否开启提货码">
           <el-switch v-model="form.pickupcode_status" @change="presaleStatusChange()" />
@@ -71,7 +71,7 @@
         <span>会员白名单设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item label="是否开启白名单">
         <el-switch v-model="form.whitelist_status" @change="whitelistStatusChange()" />
@@ -84,7 +84,7 @@
           <span>赠品设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <!-- <el-form v-model="form" label-width="200px">
         <el-form-item label="赠品是否扣门店库存">
           <el-switch
@@ -109,7 +109,7 @@
           <span>推单设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="自提订单推oms">
           <el-switch v-model="form.ziti_send_oms" @change="sendOmsChange('ziti_send_oms')" />
@@ -123,7 +123,7 @@
           <span>前端店铺展示关闭：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="是否关闭">
           <el-switch v-model="form.nostores_status" @change="sendNoStoresChange" />
@@ -149,7 +149,7 @@
         <span>取消订单设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item label="拒绝后是否能再次发起申请">
         <el-switch v-model="form.repeat_cancel" @change="repeatCancelChange()" />
@@ -161,7 +161,7 @@
         <span>商品库存设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item label="商品详情页是否显示库存">
         <el-switch v-model="form.item_store_status" @change="itemStoreChange()" />
@@ -173,7 +173,7 @@
         <span>商品销量设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item label="商品销量是否显示">
         <el-switch v-model="form.item_sales_status" @change="itemSalesChange()" />
@@ -186,7 +186,7 @@
           <span>发票设置：</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item label="结算页是否显示发票">
           <el-switch v-model="form.invoice_status" @change="invoiceStatusChange()" />
@@ -199,7 +199,7 @@
         <span>店务设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item label="移动端是否展示店务端入口">
         <el-switch v-model="form.dianwu_show_status" @change="dianwuShowStatusChange()" />
@@ -283,56 +283,56 @@ export default {
     ...mapGetters(['wheight', 'isMicorMall'])
   },
   mounted() {
-    getRateSetting().then(res => {
+    getRateSetting().then((res) => {
       this.form.rate_status = Boolean(res.data.data.rate_status)
     })
 
-    getShareParams().then(res => {
+    getShareParams().then((res) => {
       this.form.distributor_param_status = Boolean(res.data.data.distributor_param_status)
     })
 
-    getWhitelistSetting().then(res => {
+    getWhitelistSetting().then((res) => {
       this.form.whitelist_status = Boolean(res.data.data.whitelist_status)
     })
 
-    getPickupcodeSetting().then(res => {
+    getPickupcodeSetting().then((res) => {
       this.form.pickupcode_status = Boolean(res.data.data.pickupcode_status)
     })
 
-    getGiftSetting().then(res => {
+    getGiftSetting().then((res) => {
       this.form.minus_shop_gift_store = Boolean(res.data.data.minus_shop_gift_store)
       this.form.check_gift_store = Boolean(res.data.data.check_gift_store)
     })
 
-    getSendOmsSetting().then(res => {
+    getSendOmsSetting().then((res) => {
       this.form.ziti_send_oms = Boolean(res.data.data.ziti_send_oms)
     })
 
-    getNoStores().then(res => {
+    getNoStores().then((res) => {
       this.form.nostores_status = Boolean(res.data.data.nostores_status)
     })
 
-    getRechargeSetting().then(res => {
+    getRechargeSetting().then((res) => {
       this.form.recharge_status = Boolean(res.data.data.recharge_status)
     })
 
-    getRepeatCancelSetting().then(res => {
+    getRepeatCancelSetting().then((res) => {
       this.form.repeat_cancel = Boolean(res.data.data.repeat_cancel)
     })
 
-    getItemStoreSetting().then(res => {
+    getItemStoreSetting().then((res) => {
       this.form.item_store_status = Boolean(res.data.data.item_store_status)
     })
 
-    getItemSalesSetting().then(res => {
+    getItemSalesSetting().then((res) => {
       this.form.item_sales_status = Boolean(res.data.data.item_sales_status)
     })
 
-    getInvoiceStatus().then(res => {
+    getInvoiceStatus().then((res) => {
       this.form.invoice_status = Boolean(res.data.data.invoice_status)
     })
 
-    getDianwuShowStatus().then(res => {
+    getDianwuShowStatus().then((res) => {
       this.form.dianwu_show_status = Boolean(res.data.data.dianwu_show_status)
     })
   },
@@ -351,7 +351,7 @@ export default {
       })
         .then(() => {
           setRateSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -390,7 +390,7 @@ export default {
       })
         .then(() => {
           saveShareParams(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -403,7 +403,7 @@ export default {
               })
             })
         })
-        .catch(e => {
+        .catch((e) => {
           console.log('e', e)
           if (this.form.distributor_param_status === true) {
             this.form.distributor_param_status = false
@@ -430,7 +430,7 @@ export default {
       })
         .then(() => {
           setWhitelistSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -469,7 +469,7 @@ export default {
       })
         .then(() => {
           setPickupcodeSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -518,7 +518,7 @@ export default {
       })
         .then(() => {
           setGiftSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -564,7 +564,7 @@ export default {
       })
         .then(() => {
           setSendOmsSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -604,7 +604,7 @@ export default {
         .then(() => {
           let params = { nostores_status: this.form.nostores_status }
           setNoStores(params)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -643,7 +643,7 @@ export default {
       })
         .then(() => {
           setRechargeSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -682,7 +682,7 @@ export default {
       })
         .then(() => {
           setRepeatCancelSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -722,7 +722,7 @@ export default {
       })
         .then(() => {
           setItemStoreSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -762,7 +762,7 @@ export default {
       })
         .then(() => {
           setItemSalesSetting(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -802,7 +802,7 @@ export default {
       })
         .then(() => {
           setInvoiceStatus(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
@@ -842,7 +842,7 @@ export default {
       })
         .then(() => {
           setDianwuShowStatus(this.form)
-            .then(res => {
+            .then((res) => {
               this.$message({
                 type: 'success',
                 message: '保存成功'

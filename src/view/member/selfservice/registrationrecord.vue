@@ -337,8 +337,8 @@ export default {
     },
     regActivityEasylists() {
       this.loading = true
-      regActivityEasylist(this.activityParams).then(response => {
-        response.data.data.list.map(item => {
+      regActivityEasylist(this.activityParams).then((response) => {
+        response.data.data.list.map((item) => {
           this.activity_options.push({
             label: item.activity_name,
             value: item.activity_id
@@ -354,7 +354,7 @@ export default {
     uploadHandleTemplate() {
       var fileName = '报名批量审核'
       let params = { file_type: 'selform_registration_record', file_name: fileName }
-      exportUploadTemplate(params).then(response => {
+      exportUploadTemplate(params).then((response) => {
         if (response.data.data.file) {
           var a = document.createElement('a')
           a.href = response.data.data.file
@@ -372,7 +372,7 @@ export default {
     },
     uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'selform_registration_record', file: file.raw }
-      handleUploadFile(params).then(response => {
+      handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
           message: '上传成功，等待处理'
@@ -385,7 +385,7 @@ export default {
     },
     exportData() {
       this.currentPage = 1
-      recordExport(this.params).then(response => {
+      recordExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -410,7 +410,7 @@ export default {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach(row => {
+        list.forEach((row) => {
           this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
         })
       }
@@ -426,7 +426,7 @@ export default {
       this.params.distributor.id = storeItem.distributor_id
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },

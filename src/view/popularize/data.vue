@@ -42,8 +42,7 @@
           </el-button>
 
           <el-button type="primary" plain @click="exportPopularizeOrder">
-            导出业绩订单详细
-</el-button
+            导出业绩订单详细 </el-button
           >* 下载订单详细日期
         </div>
 
@@ -290,7 +289,7 @@ export default {
         pageSize,
         ...this.params
       }
-      exportPopularizeData(params).then(res => {
+      exportPopularizeData(params).then((res) => {
         if (res.data.data.status == true) {
           this.$export_open('popularize')
           this.$message({
@@ -330,7 +329,7 @@ export default {
         date_end,
         ...this.params
       }
-      exportPopularizeStatic(params).then(res => {
+      exportPopularizeStatic(params).then((res) => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -360,7 +359,7 @@ export default {
         date_end,
         ...this.params
       }
-      exportPopularizeOrder(params).then(res => {
+      exportPopularizeOrder(params).then((res) => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -397,7 +396,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getPopularizeList(params).then(res => {
+      getPopularizeList(params).then((res) => {
         this.list = res.data.data.list
         this.total_count = Number(res.data.data.total_count)
         this.datapass_block = res.data.data.datapass_block

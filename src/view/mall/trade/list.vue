@@ -128,7 +128,7 @@
                           <p>
                             优惠金额：{{ scope.row.curFeeSymbol }}{{ item.discount_fee / 100 }} 元
                           </p>
-                          <hr>
+                          <hr />
                         </div>
                       </div>
                       <div slot="reference" class="name-wrapper">
@@ -267,7 +267,7 @@
                 {{ scope.row.self_delivery_operator_name }}
               </template>
             </el-table-column>
-            <el-table-column prop="mobile" label="业务员">
+            <!-- <el-table-column prop="mobile" label="业务员">
               <template slot-scope="scope">
                 {{ scope.row.salesman_mobile }}
                 <el-tooltip
@@ -283,7 +283,7 @@
                   />
                 </el-tooltip>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
             <el-table-column
               v-if="$store.getters.login_type != 'merchant' && !VERSION_IN_PURCHASE()"
@@ -440,7 +440,7 @@ export default {
       this.onSearch()
     },
     getDistributionType({ receipt_type }) {
-      const fd = DISTRIBUTION_TYPE.find(item => item.value == receipt_type)
+      const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
       if (fd) {
         return fd.title
       }

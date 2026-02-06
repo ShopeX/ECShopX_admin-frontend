@@ -48,7 +48,7 @@
           weappName
         }}小程序开发者商派软件有限公司（以下简称“开发者”）为处理你的个人信息而制定。
       </p>
-      <br>
+      <br />
       <h4>1. 开发者处理的信息</h4>
       <p>根据法律规定，开发者仅处理实现小程序功能所必要的信息。</p>
       <div class="policy-container mtp-10">
@@ -65,14 +65,14 @@
           />，开发者将在获取你的明示同意后，收集你的{{ getPrivacyDesc(key) }}
         </div>
       </div>
-      <br>
+      <br />
       <h4>2. 第三方服务商信息</h4>
       <p>
         {{
           weappName
         }}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。
       </p>
-      <br>
+      <br />
       <h4>3. 你的权益</h4>
       <p>
         3.1
@@ -104,7 +104,7 @@
           </el-select>
         </el-input>
       </div>
-      <br>
+      <br />
       <h4>4. 开发者对信息的存储</h4>
       <!-- <p>{{weappName}}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。</p> -->
       <div class="mtp-10">
@@ -123,7 +123,7 @@
           </el-radio>
         </div>
       </div>
-      <br>
+      <br />
       <h4>5. 信息的使用规则</h4>
       <p>5.1 开发者将会在本指引所明示的用途内使用收集的信息</p>
       <p>
@@ -138,7 +138,7 @@
         />
         方式告知并征得你的明示同意。
       </div>
-      <br>
+      <br />
       <h4>6. 信息对外提供</h4>
       <p>
         6.1
@@ -148,7 +148,7 @@
         6.2
         开发者承诺，不会对外公开披露你的信息，如必须公开披露时，开发者应当向你告知公开披露的目的、披露信息的类型及可能涉及的信息，并征得你的单独同意。
       </p>
-      <br>
+      <br />
       <h4>7. 补充文档</h4>
       <p>了解更多个人信息处理规则可查看补充文档，稳定格式只支持.txt，大小不超过100kb</p>
       <div class="upload-block">
@@ -258,8 +258,8 @@ export default {
       //   "CalendarWriteOnly",
       //   "MessageFile"
       // ]
-      this.privacyList.forEach(key => {
-        const fd = this.settingList.find(item => item.privacy_key == key)
+      this.privacyList.forEach((key) => {
+        const fd = this.settingList.find((item) => item.privacy_key == key)
         this.$set(this.policyObject, key, fd ? fd.privacy_text : '')
       })
     },
@@ -314,14 +314,14 @@ export default {
         }
       }
       let settingList = []
-      Object.keys(this.policyObject).forEach(key => {
+      Object.keys(this.policyObject).forEach((key) => {
         settingList.push({
           privacy_key: key,
           privacy_text: this.policyObject[key]
         })
       })
 
-      const fd = settingList.find(item => item.privacy_text == '')
+      const fd = settingList.find((item) => item.privacy_text == '')
       if (fd) {
         this.$message.error(`请填写收集${this.getPrivacyDesc(fd.privacy_key)}的原因`)
         return
@@ -340,7 +340,7 @@ export default {
       this.$router.go(-1)
     },
     getPrivacyDesc(key) {
-      const fd = this.privacyDescList.find(item => item.privacy_key == key)
+      const fd = this.privacyDescList.find((item) => item.privacy_key == key)
       return fd ? fd.privacy_desc : ''
     }
   }

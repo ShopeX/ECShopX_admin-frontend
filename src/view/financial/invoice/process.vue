@@ -93,8 +93,11 @@ export default {
     },
     getProcessLogInfo() {
       this.loading = true
-      this.$api.financial.getInvoiceLog({invoice_id:this.invoice_id}).then((response) => {
-        this.list = response.list.map(item=>({...item,operator_content:JSON.parse(item.operator_content)}))
+      this.$api.financial.getInvoiceLog({ invoice_id: this.invoice_id }).then((response) => {
+        this.list = response.list.map((item) => ({
+          ...item,
+          operator_content: JSON.parse(item.operator_content)
+        }))
         console.log(this.list)
         this.loading = false
       })

@@ -104,7 +104,7 @@ export default {
             }
           }
         ],
-        disabledDate: time => {
+        disabledDate: (time) => {
           return time.getTime() > defaultEndDate
         }
       },
@@ -151,10 +151,7 @@ export default {
   },
   methods: {
     async fetch() {
-      const {
-        datetime,
-        activity_id
-      } = this.queryForm || {}
+      const { datetime, activity_id } = this.queryForm || {}
       const [display_time_begin, display_time_end] = datetime || []
       const { list } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),
@@ -172,10 +169,7 @@ export default {
     },
     async exportData() {
       this.exportloading = true
-      const {
-        datetime,
-        activity_id
-      } = this.queryForm || {}
+      const { datetime, activity_id } = this.queryForm || {}
       const [display_time_begin, display_time_end] = datetime || []
       const { status, url } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),

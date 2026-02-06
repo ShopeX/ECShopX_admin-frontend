@@ -210,13 +210,13 @@ export default {
     getLuckyDrawTeamList() {
       this.loading = true
       getLuckyDrawTeamList(this.luckydraw_id, this.params)
-        .then(response => {
+        .then((response) => {
           this.luckyDrawTeamList = response.data.data.list
           this.luckyDrawActivity = response.data.data.luckyDrawActivity
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -248,7 +248,7 @@ export default {
         this.$message.error('获奖用户还没有填写收货地址，暂时不能发货!')
         return false
       }
-      luckydrawDelivery(this.deliveryForm).then(response => {
+      luckydrawDelivery(this.deliveryForm).then((response) => {
         if (response.data.data) {
           this.handleCancel()
           this.$message.success('发货成功!')

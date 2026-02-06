@@ -28,17 +28,17 @@
           <ul slot-scope="{ node, data }" class="custom-tree-node">
             <li>
               <i v-if="data.level == 0" /><i v-else>　├─</i>
-              <input v-model="data.category_name" placeholder="栏目名称">
+              <input v-model="data.category_name" placeholder="栏目名称" />
               <!-- <span class="add-child-category" v-if="data.level == 0"
                   @click="append(data.children, 1)">
             <i class="el-icon-plus"></i>增加子栏目 
           </span> -->
             </li>
             <li>
-              <input v-model="data.sort" placeholder="栏目排序">
+              <input v-model="data.sort" placeholder="栏目排序" />
             </li>
             <li v-clipboard:copy="data.link" v-clipboard:success="onCopy">
-              <input v-model="data.link" class="copy-link" type="text">
+              <input v-model="data.link" class="copy-link" type="text" />
               <i class="el-icon-copy-document" /> 复制栏目链接
             </li>
             <li>
@@ -101,7 +101,7 @@ export default {
     },
     getArticleCategory() {
       this.loading = true
-      getArticleCategoryList(this.params).then(response => {
+      getArticleCategoryList(this.params).then((response) => {
         let list = response.data.data
         list.forEach((item, index) => {
           let link = `/pages/recommend/list?id=${item.category_id}&name=${item.category_name}`
@@ -147,7 +147,7 @@ export default {
         }
       }
       let form = JSON.stringify(this.categoryList)
-      saveArticleCategory({ form: form }).then(response => {
+      saveArticleCategory({ form: form }).then((response) => {
         this.$message({
           type: 'success',
           message: '保存栏目成功'
@@ -163,7 +163,7 @@ export default {
       })
         .then(() => {
           if (typeof data.category_id != 'undefined') {
-            deleteArticleCategoryInfo(data.category_id).then(response => {
+            deleteArticleCategoryInfo(data.category_id).then((response) => {
               this.$message({
                 type: 'success',
                 message: '删除栏目成功'
@@ -173,7 +173,7 @@ export default {
           } else {
             const parent = node.parent
             const children = parent.data.children || parent.data
-            const index = children.findIndex(d => d.id === data.id)
+            const index = children.findIndex((d) => d.id === data.id)
             children.splice(index, 1)
           }
         })
@@ -230,11 +230,11 @@ export default {
     },
     pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
-        const index = this.categoryList.findIndex(d => d.id === this.current.id)
+        const index = this.categoryList.findIndex((d) => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
       } else {
-        const findex = this.categoryList.findIndex(d => d.id === this.current.parent_id)
-        const cindex = this.categoryList[findex].children.findIndex(d => d.id === this.current.id)
+        const findex = this.categoryList.findIndex((d) => d.id === this.current.parent_id)
+        const cindex = this.categoryList[findex].children.findIndex((d) => d.id === this.current.id)
         this.categoryList[findex].children[cindex].image_url = data.url
       }
       this.imgDialog = false

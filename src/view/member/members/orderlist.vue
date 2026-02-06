@@ -127,7 +127,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then(response => {
+      getOrderList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.loading = false

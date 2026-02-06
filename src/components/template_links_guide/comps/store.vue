@@ -101,7 +101,7 @@ export default {
     async fetch() {
       const { list, total_count } = await this.$api.marketing.getDistributorList(this.params)
       let _list = []
-      list.map(item => {
+      list.map((item) => {
         _list.push({
           id: item.distributor_id,
           name: item.name,

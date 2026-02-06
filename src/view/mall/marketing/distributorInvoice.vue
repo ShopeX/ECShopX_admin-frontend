@@ -243,7 +243,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteInvoice(row.invoice_id).then(response => {
+          deleteInvoice(row.invoice_id).then((response) => {
             if (response.data.data.status) {
               this.$message({
                 type: 'success',
@@ -297,7 +297,7 @@ export default {
         ids.push(value.distributor_id)
       })
       this.data.distributor_id = ids
-      createInvoice(this.data).then(response => {
+      createInvoice(this.data).then((response) => {
         if (response.data.data.status) {
           this.$message({
             message: '添加成功',
@@ -314,7 +314,7 @@ export default {
       })
     },
     updateDistributorInvoice(row) {
-      updateInvoice(this.data.invoice_id, this.data).then(response => {
+      updateInvoice(this.data.invoice_id, this.data).then((response) => {
         if (response.data.data.status) {
           this.$message({
             message: '修改成功',
@@ -332,7 +332,7 @@ export default {
     },
     getDistributorInvoiceList() {
       this.tableLoading = true
-      getInvoiceList(this.params).then(response => {
+      getInvoiceList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

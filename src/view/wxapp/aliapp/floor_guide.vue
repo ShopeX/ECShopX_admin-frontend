@@ -340,7 +340,7 @@ $txt-placeholder: #f5f5f7;
                     <div
                       v-for="item in editableData[curIdx].stores"
                       v-if="
-                        currentTag === '' || item.tags.findIndex(n => n.id === currentTag) !== -1
+                        currentTag === '' || item.tags.findIndex((n) => n.id === currentTag) !== -1
                       "
                       :key="item.distributor_id"
                       class="store-item"
@@ -349,7 +349,7 @@ $txt-placeholder: #f5f5f7;
                         class="store-img"
                         :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                         alt=""
-                      >
+                      />
                       <div class="store-caption">
                         <div class="store-name">
                           {{ item.name }}
@@ -445,7 +445,7 @@ $txt-placeholder: #f5f5f7;
               class="store-img"
               :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
               alt=""
-            >
+            />
             <div class="store-caption">
               {{ item.name }}
             </div>
@@ -526,7 +526,7 @@ export default {
   },
   mounted() {
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'floor_guide' }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
         this.form = res.data.data.list[0].params
         if (!this.form.hasSeries) {
@@ -586,12 +586,12 @@ export default {
           }
 
           this.editableSeries = activeName
-          this.series = tabs.filter(tab => tab.name !== targetName)
+          this.series = tabs.filter((tab) => tab.name !== targetName)
           if (this.series.length === 0) {
             this.form.hasSeries = false
-            this.editableData = this.form.data.find(item => item.name === targetName).content
+            this.editableData = this.form.data.find((item) => item.name === targetName).content
           } else {
-            this.editableData = this.form.data.find(item => item.name === activeName).content
+            this.editableData = this.form.data.find((item) => item.name === activeName).content
           }
         })
         .catch(() => {})
@@ -613,10 +613,10 @@ export default {
     // 移除楼层
     remove(idx) {
       this.$confirm('确认删除？')
-        .then(_ => {
+        .then((_) => {
           this.editableData.splice(idx, 1)
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 模版演示父级菜单切换
     switchTab(index) {
@@ -639,14 +639,14 @@ export default {
       this.editableData[this.curIdx].stores = JSON.parse(JSON.stringify(val))
       this.curStores = JSON.parse(JSON.stringify(val))
       let ids = []
-      val.map(item => {
+      val.map((item) => {
         ids.push(item.id)
       })
       api.marketing
         .getDistributorList({ page: 1, pageSize: 200, is_valid: true, distributor_id: ids })
         .then(({ tagList }) => {
           let tags = []
-          tagList.map(item => {
+          tagList.map((item) => {
             tags.push({
               name: item.tag_name,
               id: item.tag_id
@@ -675,7 +675,7 @@ export default {
         config: JSON.stringify([this.form]),
         page_name: 'floor_guide'
       }
-      savePageParams(param).then(res => {
+      savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

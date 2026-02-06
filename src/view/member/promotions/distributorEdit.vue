@@ -31,7 +31,7 @@
           <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -210,7 +210,7 @@ export default {
   mounted() {
     var id = this.$route.params.id
     if (id) {
-      getRegisterInfo(id).then(response => {
+      getRegisterInfo(id).then((response) => {
         this.form.id = response.data.data.id
         this.form.ad_pic = response.data.data.ad_pic
         this.form.is_open = response.data.data.is_open
@@ -343,7 +343,7 @@ export default {
       getCardList({
         page_no: current,
         page_size: this.coupons.page.pageSize
-      }).then(res => {
+      }).then((res) => {
         var data = res.data.data.list
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < this.coupons.checked.length; j++) {
@@ -377,7 +377,7 @@ export default {
       //     this.form.promotions_value.itemsList.push(row)
       //   }
       // })
-      createRegister(this.form).then(res => {
+      createRegister(this.form).then((res) => {
         this.$message({
           message: '更新成功',
           type: 'success',
@@ -392,7 +392,7 @@ export default {
     handleDistributorChange(val) {
       this.dis_params.page = val
       this.checkedDistributorIds = []
-      this.distributorList.forEach(row => {
+      this.distributorList.forEach((row) => {
         //如果选中
         let index = this.form.distributor_id.indexOf(row.key)
         if (index != -1) {
@@ -402,9 +402,9 @@ export default {
       this.getDustributorData()
     },
     getDustributorData() {
-      getDistributorList(this.dis_params).then(response => {
+      getDistributorList(this.dis_params).then((response) => {
         let list = []
-        response.data.data.list.forEach(row => {
+        response.data.data.list.forEach((row) => {
           let index = -1
           if (this.form.distributor_id) {
             index = this.form.distributor_id.indexOf(row.distributor_id)

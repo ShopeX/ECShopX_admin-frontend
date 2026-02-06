@@ -9,7 +9,7 @@
       <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
         <div class="slogn">
           <div class="logo-box">
-            <img :src="logoIcon" alt="">
+            <img :src="logoIcon" alt="" />
           </div>
           <div v-if="companyBrand == '超新星'">
             <h3>超新星因你而更好</h3>
@@ -37,7 +37,7 @@
       >
         <div class="brand">
           <div class="logo-box">
-            <img :src="logoIcon" alt="">
+            <img :src="logoIcon" alt="" />
           </div>
           <span>{{ resultTxt }}</span>
         </div>
@@ -103,7 +103,7 @@ export default {
       let params = {
         active_code: this.active_code
       }
-      activate(params).then(res => {
+      activate(params).then((res) => {
         if (res.data.data) {
           this.$store.dispatch('setLicenseValid', true)
           this.expired_at = res.data.data.expired_at
@@ -120,7 +120,7 @@ export default {
       })
     },
     getActivateInfo() {
-      getActivateInfo().then(res => {
+      getActivateInfo().then((res) => {
         this.activateInfo = res.data.data
         if (res.data.data.is_valid) {
           this.activateInfo = res.data.data

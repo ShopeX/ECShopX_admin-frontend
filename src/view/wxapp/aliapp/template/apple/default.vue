@@ -116,11 +116,7 @@
               @click="setCurrent(index)"
             >
               <transition name="el-fade-in-linear">
-                <div
-                  v-if="editorIndex === index"
-                  class="el-icon-delete"
-                  @click="removeCurrent"
-                />
+                <div v-if="editorIndex === index" class="el-icon-delete" @click="removeCurrent" />
               </transition>
               <coupon v-if="item.name === 'coupon'" :res="item" :active="index == editorIndex" />
               <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
@@ -194,14 +190,14 @@
                       item.selectedIconPath ||
                       'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  >
+                  />
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  >
+                  />
                 </template>
                 <div class="tab-text">
                   {{ item.text }}
@@ -752,7 +748,7 @@ export default {
     }
     const faverite = await getRecommendLikeItemList()
     let data = []
-    faverite.data.data.list.forEach(item => {
+    faverite.data.data.list.forEach((item) => {
       data.push({
         imgUrl: item.pics ? item.pics[0] : '',
         title: item.itemName,
@@ -772,7 +768,7 @@ export default {
     } else {
       this.components = [...this.initData]
     }
-    this.components.forEach(item => {
+    this.components.forEach((item) => {
       if (item.name === 'setting') {
         this.isOpenLocation = item.config.location
         this.isOpenFaverite = item.config.faverite
@@ -818,13 +814,13 @@ export default {
     // 删除当前组件
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then(_ => {
+        .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 视频选择器绑定事件
     getVideo(data) {
@@ -874,7 +870,7 @@ export default {
         items = this.editorData.data
       }
       if (items.length > 0 && items[0].goodsId) {
-        items.forEach(item => {
+        items.forEach((item) => {
           ids.push(item.key || item.goodsId)
         })
         let itemParams = {
@@ -886,7 +882,7 @@ export default {
         if (index !== undefined) {
           Object(itemParams, { distributor_id: this.relStore.id })
         }
-        getItemsList(itemParams).then(res => {
+        getItemsList(itemParams).then((res) => {
           this.relItemsIds = res.data.data.list
           setTimeout(() => {
             this.setItemStatus = true
@@ -916,7 +912,7 @@ export default {
       this.relStore = store
       let values = []
       if (data.length > 0) {
-        data.forEach(item => {
+        data.forEach((item) => {
           let obj = {
             imgUrl: item.pics[0],
             title: item.itemName,
@@ -1019,7 +1015,7 @@ export default {
     },
     // 保存配置
     async saveConfig() {
-      let hasLocation = this.components.findIndex(item => item.name === 'setting')
+      let hasLocation = this.components.findIndex((item) => item.name === 'setting')
 
       if (hasLocation == -1) {
         this.components.push({
@@ -1033,7 +1029,7 @@ export default {
           }
         })
       } else {
-        this.components.forEach(item => {
+        this.components.forEach((item) => {
           if (item.name === 'setting') {
             item.config = {
               location: this.isOpenLocation,

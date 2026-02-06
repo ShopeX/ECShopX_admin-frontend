@@ -20,7 +20,13 @@
         @selection-change="handleSelectionChange"
       >
         <template v-slot:tableTop>
-          <el-button class="add-btn" type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="handleAdd">添加销方信息</el-button>
+          <el-button
+            class="add-btn"
+            type="primary"
+            icon="iconfont icon-xinzengcaozuo-01"
+            @click="handleAdd"
+            >添加销方信息</el-button
+          >
         </template>
       </SpFinder>
 
@@ -130,8 +136,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.add-btn{
+.add-btn {
   margin-bottom: 20px;
 }
 </style>
-

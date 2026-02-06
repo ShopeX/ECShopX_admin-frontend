@@ -14,7 +14,7 @@
           @mouseenter="picsEnter(index)"
           @mouseleave="picsLeave"
         >
-          <img :src="wximageurl + item">
+          <img :src="wximageurl + item" />
           <div
             class="goodspic-mask"
             :class="picsCurrent == index ? 'on' : ''"
@@ -75,7 +75,7 @@ export default {
         return false
       } else {
         if (arr.length != 0) {
-          arr.forEach(data => {
+          arr.forEach((data) => {
             if (data && data.url !== '') {
               this.picsDialog = false
               this.list.push(data.url)

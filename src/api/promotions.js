@@ -208,6 +208,38 @@ export function getGroupsList(query) {
   })
 }
 
+// 活动集合
+export function getActivityCollectionList(query) {
+  return fetch({
+    url: '/promotions/collection/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function createActivityCollection(query) {
+  return fetch({
+    url: '/promotions/collection',
+    method: 'post',
+    params: query
+  })
+}
+
+export function editActivityCollection(id, query) {
+  return fetch({
+    url: `/promotions/collection/${id}`,
+    method: 'put',
+    params: query
+  })
+}
+
+export function delActivityCollection(id) {
+  return fetch({
+    url: `/promotions/collection/${id}`,
+    method: 'delete'
+  })
+}
+
 // 拼团活动
 export function getGroupsTeamList(group_id, query) {
   return fetch({

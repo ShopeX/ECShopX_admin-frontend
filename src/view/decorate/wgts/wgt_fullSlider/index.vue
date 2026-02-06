@@ -10,6 +10,7 @@
       'wgt-full-slider': true,
       'padded': value.padded
     }"
+    :style="outerStyle"
     ref="fullSlider"
   >
     <div
@@ -45,7 +46,7 @@
               muted="muted"
               objectFit="cover"
             >
-              <source :src="item.videoUrl">
+              <source :src="item.videoUrl" />
             </video>
             <!-- <video-player
               v-if="item.media_type == 'video' && item.videoUrl"
@@ -115,12 +116,13 @@
 
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 
 export default {
   name: 'FullSlider',
   wgtName: '整屏滑动',
   wgtDesc: '',
-  wgtIcon: 'wgt-full-slider',
+  wgtIcon: 'auto-height-one',
   wgtType: 1,
   wgtTem: 1, //0代表微信和抖音小程序都可以配置,1代表只能配置微信
   config: config,
@@ -223,6 +225,9 @@ export default {
     }
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     setCarouselHeight() {
       const h = (this.value.height * this.offsetWidth) / 375
       return { height: `${h}px` }

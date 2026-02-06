@@ -87,7 +87,7 @@ export default {
     getList() {
       if (!this.isLoadData) {
         this.isLoadData = true
-        getLiverooms(this.params).then(response => {
+        getLiverooms(this.params).then((response) => {
           this.videoList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.isLoadData = false

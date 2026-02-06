@@ -48,7 +48,7 @@ export default {
   mounted() {
     this.renderable = false
     let filter = { template_name: 'pc', version: 'v1.0.1', page_name: 'footer' }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       const data = res.data.data.config
       if (data.length !== 0) {
         this.info = data[0].data
@@ -58,7 +58,7 @@ export default {
           }
         })
       }
-      this.$nextTick(_ => {
+      this.$nextTick((_) => {
         this.renderable = true
       })
     })
@@ -79,7 +79,7 @@ export default {
         config: JSON.stringify(params),
         page_name: 'footer'
       }
-      savePageParams(filter).then(res => {
+      savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

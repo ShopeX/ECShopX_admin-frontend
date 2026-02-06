@@ -167,7 +167,7 @@ export default {
       this.realTimeData.aftersale_count.today = today_data.real_aftersale_count
       this.realTimeData.aftersale_count.yesterday = yesterday_data.real_aftersale_count
 
-      Object.keys(member_data).forEach(key => {
+      Object.keys(member_data).forEach((key) => {
         this.chartData['new_user'].push({
           type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1/$2'),
           sales: member_data[key].newAddMember

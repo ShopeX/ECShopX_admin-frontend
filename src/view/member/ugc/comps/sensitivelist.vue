@@ -59,7 +59,7 @@ export default {
     },
     checkChange(val) {
       var checkList = []
-      val.forEach(item => {
+      val.forEach((item) => {
         checkList.push(item.id)
       })
       this.$emit('selectNotes', { id_set: checkList })

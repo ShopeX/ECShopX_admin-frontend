@@ -54,7 +54,7 @@ const routes = [
           title: '素材管理',
           permissions: ['site.material.brandmaterial']
         },
-        component: () => import('@/view/brand/wechat/aterialmanagement'),
+        component: () => import('@/views/content/aterialmanagement'),
         children: [
           {
             path: 'editor/:id?',

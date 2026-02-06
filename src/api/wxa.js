@@ -30,7 +30,8 @@ export function getCodeUnlimit(query) {
   return fetch({
     url: '/wxa/codeunlimit',
     method: 'get',
-    params: query
+    params: query,
+    skipCountryCode: true
   })
 }
 
@@ -348,5 +349,22 @@ export function setCartremindSetting(query) {
     url: '/wxa/cartremind/setting',
     method: 'post',
     params: query
+  })
+}
+
+// 页面关联分类
+export function bindcategory(id, query) {
+  return fetch({
+    url: `/wxa/customizepage/${id}/bindcategory`,
+    method: 'put',
+    params: query
+  })
+}
+
+// 复制页面
+export function copyCustomPage(id) {
+  return fetch({
+    url: `/wxa/customizepage/copy/${id}`,
+    method: 'post'
   })
 }

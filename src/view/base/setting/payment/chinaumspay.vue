@@ -21,16 +21,16 @@
     </el-form-item> -->
     <el-form-item label="平台商户号">
       <el-input v-model="form.mid" style="width: 500px" />
-      <br>
+      <br />
       <!-- <span class="frm-tips">APPID</span> -->
     </el-form-item>
     <el-form-item label="平台终端号">
       <el-input v-model="form.tid" style="width: 500px" placeholder="请输入内容" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item label="费率">
       <el-input v-model="form.rate" style="width: 200px" placeholder="请输入内容" />%
-      <br>
+      <br />
       <span class="frm-tips">收单手续费</span>
     </el-form-item>
     <el-form-item label="商户加签私钥">
@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item label="密码">
       <el-input v-model="form.password" style="width: 200px" placeholder="请输入内容" />
-      <br>
+      <br />
       <!-- <span class="frm-tips">收单手续费</span> -->
     </el-form-item>
     <el-form-item label="商户回盘验签公钥">
@@ -96,7 +96,7 @@ export default {
     },
     getConfig() {
       let query = { pay_type: this.payType }
-      getPaymentSetting(query).then(response => {
+      getPaymentSetting(query).then((response) => {
         this.form = response.data.data
       })
     },
@@ -116,14 +116,14 @@ export default {
         is_open: this.form.is_open
       }
       setPaymentSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

@@ -15,35 +15,6 @@
   .sp-finder-hd {
     display: none;
   }
-  .item-info {
-    display: flex;
-    .item-image {
-      margin-right: 10px;
-      width: 80px;
-    }
-    .item-name {
-      color: #333;
-      margin-top: 4px;
-    }
-    .item-sku {
-      font-size: 12px;
-      background-color: #f0f2f5;
-      display: inline-block;
-      padding: 0 4px;
-      line-height: 18px;
-    }
-  }
-  .cascader-header {
-    display: flex;
-    background-color: #f0f2f5;
-    margin-top: 10px;
-    .hd {
-      color: #222;
-      width: 180px;
-      padding: 6px 20px;
-      border-left: 1px solid #e8e8e8;
-    }
-  }
 }
 </style>
 <template>
@@ -57,7 +28,7 @@
       </el-radio-group>
     </div>
 
-    <div v-show="typeSelect == 1">
+    <div v-show="typeSelect == 1" class="type-select">
       <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="main_cat_id">
           <el-cascader
@@ -273,16 +244,18 @@ export default {
               h(
                 'div',
                 {
-                  class: 'item-info'
+                  class: 'flex items-start'
                 },
                 [
-                  h('el-image', {
-                    class: 'item-image',
-                    props: { src: row.pics[0], fit: 'cover' }
-                  }),
-                  h('div', { class: 'item-name-wrap' }, [
-                    h('div', { class: 'item-name' }, row.itemName),
-                    h('div', { class: 'item-sku' }, row.nospec ? '' : '多规格')
+                  h('div', { class: 'w-[60px] h-[60px] flex-shrink-0 flex items-center justify-center overflow-hidden bg-gray-100 mr-2.5' }, [
+                    h('img', {
+                      class: 'max-w-full max-h-full object-contain',
+                      attrs: { src: row.pics[0] }
+                    })
+                  ]),
+                  h('div', { class: 'flex-1' }, [
+                    h('div', { class: 'text-gray-800 mt-1' }, row.itemName),
+                    h('div', { class: 'text-xs bg-gray-100 inline-block px-1 leading-[18px]' }, row.nospec ? '' : '多规格')
                   ])
                 ]
               )
@@ -396,7 +369,7 @@ export default {
     },
     getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
-      getGoodsAttr(this.goodsBranchParams).then(response => {
+      getGoodsAttr(this.goodsBranchParams).then((response) => {
         this.goodsBranchList = response.data.data.list
         console.log(111, this.goodsBranchList)
       })

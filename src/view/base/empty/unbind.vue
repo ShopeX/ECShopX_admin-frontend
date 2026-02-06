@@ -23,7 +23,7 @@ export default {
     let params = {
       callback_url: this.wxAuthCallbackUrl + 'auth/woa'
     }
-    getWechatPreAuthUrl(params).then(response => {
+    getWechatPreAuthUrl(params).then((response) => {
       this.url = response.data.data.url
     })
   },

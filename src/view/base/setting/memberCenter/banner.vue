@@ -90,7 +90,7 @@ export default {
       page_name: 'member_center_setting'
     }
     if (this.$route.path.indexOf('aliapp') === -1) {
-      getParamByTempName(filter).then(res => {
+      getParamByTempName(filter).then((res) => {
         if (res.data.data.list.length !== 0) {
           if (typeof res.data.data.list[0].params.data != 'undefined') {
             this.form = res.data.data.list[0].params
@@ -98,7 +98,7 @@ export default {
         }
       })
     } else {
-      getALiParamByTempName(filter).then(res => {
+      getALiParamByTempName(filter).then((res) => {
         if (res.data.data.list.length !== 0) {
           if (typeof res.data.data.list[0].params.data != 'undefined') {
             this.form = res.data.data.list[0].params
@@ -118,7 +118,7 @@ export default {
         page_name: 'member_center_setting'
       }
       if (this.$route.path.indexOf('aliapp') === -1) {
-        savePageParams(param).then(res => {
+        savePageParams(param).then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '保存成功',
@@ -127,7 +127,7 @@ export default {
           }
         })
       } else {
-        saveALiPageParams(param).then(res => {
+        saveALiPageParams(param).then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '保存成功',

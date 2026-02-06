@@ -472,7 +472,7 @@ export default {
     this.getBrandList('', true)
     if (this.$route.query.id) {
       let filter = { purchase_id: this.$route.query.id }
-      getPurchaseInfo(filter).then(res => {
+      getPurchaseInfo(filter).then((res) => {
         this.form = res.data.data
         const { used_roles, dependents_limitfee, employee_limitfee, item_limit, minimum_amount } =
           this.form
@@ -481,7 +481,7 @@ export default {
         this.form.minimum_amount = (minimum_amount / 100).toFixed(2)
         this.form.employee_limitfee = (employee_limitfee / 100).toFixed(2)
         if (Array.isArray(item_limit) && item_limit.length > 0) {
-          this.form.item_limit = item_limit.map(item => {
+          this.form.item_limit = item_limit.map((item) => {
             item.limit_fee = (item.limit_fee / 100).toFixed(2)
             return item
           })
@@ -490,7 +490,7 @@ export default {
         if (this.form.item_type === 'category') {
           this.categoryHidden = false
           this.allHiden = true
-          this.item_category = this.form.item_limit.map(item => {
+          this.item_category = this.form.item_limit.map((item) => {
             item.category_id = item.item_id
             item.category_name = item.name
             return item
@@ -499,7 +499,7 @@ export default {
         if (this.form.item_type === 'tag') {
           this.tagHidden = false
           this.allHiden = true
-          this.tag.currentTags = this.form.item_limit.map(item => {
+          this.tag.currentTags = this.form.item_limit.map((item) => {
             item.tag_id = item.item_id
             item.tag_name = item.name
             return item
@@ -508,7 +508,7 @@ export default {
         if (this.form.item_type === 'brand') {
           this.brandHidden = false
           this.allHiden = true
-          this.brand.currentBrands = this.form.item_limit.map(item => {
+          this.brand.currentBrands = this.form.item_limit.map((item) => {
             item.attribute_id = item.item_id
             item.attribute_name = item.name
             return item
@@ -581,15 +581,15 @@ export default {
       }
     },
     fetchMainCate: function () {
-      getCategory({ is_main_category: true, ignore_none: true }).then(response => {
+      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
         this.categoryList = response.data.data
       })
     },
     getItems(data) {
       const { item_limit } = this.form
       if (Array.isArray(item_limit) && item_limit.length > 0) {
-        this.good.currentGoods = data.map(item => {
-          this.form.item_limit.forEach(limitItem => {
+        this.good.currentGoods = data.map((item) => {
+          this.form.item_limit.forEach((limitItem) => {
             if (item.itemId === limitItem.item_id) {
               item.limit_fee = limitItem.limit_fee
               item.limit_num = limitItem.limit_num
@@ -617,7 +617,7 @@ export default {
     uploadHandleChange(file, fileList) {
       console.log('file', file)
       let params = { isUploadFile: true, file_type: 'purchase_goods', file: file.raw }
-      handleUploadFile(params).then(response => {
+      handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
           message: '上传成功'
@@ -626,7 +626,7 @@ export default {
         let { data } = response.data
 
         if (data.fail.length > 0) {
-          let str = data.fail.map(item => {
+          let str = data.fail.map((item) => {
             return item.item_bn
           })
 
@@ -642,7 +642,7 @@ export default {
         if (data.succ.length <= 0) return
         this.relItems = data.succ
         let list = []
-        data.succ.forEach(item => {
+        data.succ.forEach((item) => {
           if (!item.nospec) {
             list.push(Object.assign(item, { spec_items: [] }))
           } else {
@@ -656,7 +656,7 @@ export default {
      * */
     uploadHandleTemplate() {
       let params = { file_type: 'purchase_goods', file_name: '商品模板' }
-      exportUploadTemplate(params).then(response => {
+      exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
           var a = document.createElement('a')
@@ -678,7 +678,7 @@ export default {
         page: 1,
         pageSize: 500
       }
-      getTagList(params).then(response => {
+      getTagList(params).then((response) => {
         this.tag.list = response.data.data.list
         this.showTags()
       })
@@ -687,19 +687,19 @@ export default {
       let remainTags = []
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
-        let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+        let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
         if (isInArr == -1) remainTags.push(item)
       })
       this.tag.tags = remainTags
     },
     tagAdd: function (item, index) {
-      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
       }
       this.form.tag_ids = []
-      this.tag.currentTags.forEach(item => {
+      this.tag.currentTags.forEach((item) => {
         this.form.tag_ids.push(item.tag_id)
       })
     },
@@ -708,10 +708,10 @@ export default {
       this.tag.currentTags.splice(index, 1)
       this.form.tag_ids = []
       let tagItems = []
-      this.tag.currentTags.forEach(item => {
+      this.tag.currentTags.forEach((item) => {
         this.form.tag_ids.push(item.tag_id)
         let items = []
-        this.ItemsList.forEach(i => {
+        this.ItemsList.forEach((i) => {
           if (i.tag_ids.indexOf(item.tag_id) != -1) items.push(i)
         })
         tagItems = items
@@ -728,7 +728,7 @@ export default {
         attribute_type: 'brand',
         attribute_name: searchVal,
         attribute_ids: isInit ? this.form.brand_id : ''
-      }).then(res => {
+      }).then((res) => {
         for (let item of res.data.data.list) {
           list.push({ attribute_name: item.attribute_name, attribute_id: item.attribute_id })
         }
@@ -740,14 +740,14 @@ export default {
       let remainBrands = []
       this.brand.brands = [...this.brand.list]
       this.brand.brands.forEach((item, index) => {
-        let isInArr = this.brand.currentBrands.findIndex(n => n.attribute_id == item.attribute_id)
+        let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
         if (isInArr == -1) remainBrands.push(item)
       })
       this.brand.brands = remainBrands
     },
     brandRemove: function (index) {
       let items = []
-      this.ItemsList.forEach(item => {
+      this.ItemsList.forEach((item) => {
         if (this.brand.currentBrands[index].attribute_id != item.brand_id) items.push(item)
       })
       this.ItemsList = items
@@ -757,7 +757,7 @@ export default {
       this.brand.currentBrands.splice(index, 1)
     },
     brandAdd: function (item, index) {
-      let isInArr = this.brand.currentBrands.findIndex(n => n.attribute_id == item.attribute_id)
+      let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
       if (isInArr == -1) {
         this.brand.currentBrands.push(item)
         this.brand.brands.splice(index, 1)
@@ -776,7 +776,7 @@ export default {
         return false
       }
       if (this.form.item_type === 'brand') {
-        const newArr = this.brand.currentBrands.map(item => {
+        const newArr = this.brand.currentBrands.map((item) => {
           const newItem = {}
           newItem.id = item.attribute_id
           newItem.limit_fee = item.limit_fee
@@ -786,7 +786,7 @@ export default {
         this.form.item_limit = newArr
       }
       if (this.form.item_type === 'tag') {
-        const newArr = this.tag.currentTags.map(item => {
+        const newArr = this.tag.currentTags.map((item) => {
           const newItem = {}
           newItem.id = item.tag_id
           newItem.limit_fee = item.limit_fee
@@ -796,7 +796,7 @@ export default {
         this.form.item_limit = newArr
       }
       if (this.form.item_type === 'category') {
-        const newArr = this.item_category.map(item => {
+        const newArr = this.item_category.map((item) => {
           const newItem = {}
           newItem.id = item.category_id
           newItem.limit_fee = item.limit_fee
@@ -806,7 +806,7 @@ export default {
         this.form.item_limit = newArr
       }
       if (this.form.item_type === 'item') {
-        const newArr = this.good.currentGoods.map(item => {
+        const newArr = this.good.currentGoods.map((item) => {
           const newItem = {}
           newItem.id = item.itemId
           newItem.limit_fee = item.limit_fee
@@ -822,7 +822,7 @@ export default {
       // console.log('this.form==>', this.form)
       // return
       if (this.form.purchase_id) {
-        editPurchase(this.form).then(res => {
+        editPurchase(this.form).then((res) => {
           if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({
@@ -840,7 +840,7 @@ export default {
           }
         })
       } else {
-        createPurchase(this.form).then(res => {
+        createPurchase(this.form).then((res) => {
           if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({

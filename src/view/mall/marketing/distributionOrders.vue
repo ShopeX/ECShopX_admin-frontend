@@ -44,7 +44,7 @@ import { IS_ADMIN, VERSION_STANDARD, formatPrice } from '@/utils'
 import { useForm } from '@/composables'
 import hqbdlycorp from '@/common/hqbdlycorp.json'
 
-const LOCAL_ORDER_TYPE = _map(ORDER_TYPE, item => ({ label: item.title, value: item.value }))
+const LOCAL_ORDER_TYPE = _map(ORDER_TYPE, (item) => ({ label: item.title, value: item.value }))
 
 const [SearchForm, SearchFormApi] = useForm({
   formType: 'searchForm',
@@ -121,14 +121,14 @@ const [DeliveryForm, DeliveryFormApi] = useForm({
     {
       component: ({ h, value }) => {
         return (
-          <el-table border data={value} style="width: 100%">
-            <el-table-column prop="item_name" label="商品名" />
-            <el-table-column prop="num" label="数量" width="80" />
+          <el-table border data={value} style='width: 100%'>
+            <el-table-column prop='item_name' label='商品名' />
+            <el-table-column prop='num' label='数量' width='80' />
             <el-table-column
-              label="总价"
-              width="160"
+              label='总价'
+              width='160'
               scopedSlots={{
-                default: scope => <span>{formatPrice(scope.row.total_fee)}</span>
+                default: (scope) => <span>{formatPrice(scope.row.total_fee)}</span>
               }}
             />
           </el-table>
@@ -145,7 +145,7 @@ const [DeliveryForm, DeliveryFormApi] = useForm({
       formItemClass: 'w-1/3',
       componentProps: {
         filterable: true,
-        options: _map(hqbdlycorp, item => ({
+        options: _map(hqbdlycorp, (item) => ({
           label: item.name,
           value: item.value
         }))
@@ -226,7 +226,7 @@ export default {
                 this.$refs.finder.refresh()
               }
             },
-            visible: row => {
+            visible: (row) => {
               return (
                 row.receipt_type == 'logistics' &&
                 row.order_status == 'PAYED' &&
@@ -245,8 +245,8 @@ export default {
               return (
                 <div>
                   <SpClipboard content={row.order_id} />
-                  <div class="flex items-center">
-                    <SpIcon class="mr-1" name="store" />
+                  <div class='flex items-center'>
+                    <SpIcon class='mr-1' name='store' />
                     {row.distributor_name}
                   </div>
                 </div>
@@ -285,8 +285,8 @@ export default {
           {
             name: '订单类型',
             key: 'order_class',
-            formatter: value => {
-              return LOCAL_ORDER_TYPE.find(item => item.value == value)?.label
+            formatter: (value) => {
+              return LOCAL_ORDER_TYPE.find((item) => item.value == value)?.label
             }
           },
           {

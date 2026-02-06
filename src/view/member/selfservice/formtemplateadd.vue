@@ -184,12 +184,6 @@
             <div class="frm-tips">
               只能上传jpg/png文件，且不超过2M （建议尺寸：640px，高度自适应）
             </div>
-            <imgPicker
-              :dialog-visible="imgDialog"
-              :sc-status="isGetImage"
-              @chooseImg="pickImg"
-              @closeImgDialog="closeImgDialog"
-            />
           </el-col>
         </el-form-item>
         <el-form-item
@@ -212,61 +206,61 @@
       </el-form>
     </div>
     <SideBar :visible.sync="showElementList" title="选择表单元素" width="40">
-        <el-row class="content-bottom-padded" :gutter="20">
-          <el-col :span="6">
-            <el-select
-              v-model="params.form_element"
-              placeholder="请选择表单元素"
-              style="width: 100%"
-              clearable
-              @change="searchData"
-            >
-              <el-option
-                v-for="(item, key) in formElement"
-                :key="item.value"
-                :label="item.name"
-                :value="item.value"
-              />
-            </el-select>
-          </el-col>
-          <el-col :span="6">
-            <el-input v-model="params.field_title" placeholder="标题" style="width: 100%">
-              <el-button slot="append" icon="el-icon-search" @click="searchData" />
-            </el-input>
-          </el-col>
-        </el-row>
-        <el-table
-          ref="multipleTable"
-          v-loading="loading"
-          :data="ItemsList"
-          tooltip-effect="dark"
-          style="width: 100%"
-          :row-key="getRowKeys"
-          :select-on-indeterminate="false"
-          @select="handleSelectChange"
-          @select-all="handleSelectAll"
-        >
-          <el-table-column type="selection" :reserve-selection="true" width="50" />
-          <el-table-column prop="id" label="ID" width="40" />
-          <el-table-column prop="field_title" label="标题" width="150" />
-          <el-table-column prop="form_element" label="元素" width="80" />
-          <el-table-column label="选择项">
-            <template slot-scope="scope">
-              <span v-for="(item, index) in scope.row.options" :key="index"> {{ item.value }}</span>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div v-if="total_count > params.pageSize" class="tr">
-          <el-pagination
-            layout="prev, pager, next"
-            :total="total_count"
-            :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-          />
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="saveStoreAction">确 定</el-button>
-        </span>
+      <el-row class="content-bottom-padded" :gutter="20">
+        <el-col :span="6">
+          <el-select
+            v-model="params.form_element"
+            placeholder="请选择表单元素"
+            style="width: 100%"
+            clearable
+            @change="searchData"
+          >
+            <el-option
+              v-for="(item, key) in formElement"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :span="6">
+          <el-input v-model="params.field_title" placeholder="标题" style="width: 100%">
+            <el-button slot="append" icon="el-icon-search" @click="searchData" />
+          </el-input>
+        </el-col>
+      </el-row>
+      <el-table
+        ref="multipleTable"
+        v-loading="loading"
+        :data="ItemsList"
+        tooltip-effect="dark"
+        style="width: 100%"
+        :row-key="getRowKeys"
+        :select-on-indeterminate="false"
+        @select="handleSelectChange"
+        @select-all="handleSelectAll"
+      >
+        <el-table-column type="selection" :reserve-selection="true" width="50" />
+        <el-table-column prop="id" label="ID" width="40" />
+        <el-table-column prop="field_title" label="标题" width="150" />
+        <el-table-column prop="form_element" label="元素" width="80" />
+        <el-table-column label="选择项">
+          <template slot-scope="scope">
+            <span v-for="(item, index) in scope.row.options" :key="index"> {{ item.value }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div v-if="total_count > params.pageSize" class="tr">
+        <el-pagination
+          layout="prev, pager, next"
+          :total="total_count"
+          :page-size="params.pageSize"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      </span>
     </SideBar>
   </div>
 </template>
@@ -280,14 +274,12 @@ import {
   getSettingList
 } from '../../../api/selfhelpform'
 import SideBar from '@/components/element/sideBar'
-import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 
 export default {
   inject: ['refresh'],
   components: {
     SideBar,
-    imgPicker,
     imgBox
   },
   data() {
@@ -331,14 +323,12 @@ export default {
       ],
       templateRadio: '',
       formcontentindex: 0,
-      selectdata: [],
-      imgDialog: false,
-      isGetImage: false
+      selectdata: []
     }
   },
   mounted() {
     if (this.$route.query.id) {
-      getTemplateInfo(this.$route.query.id).then(res => {
+      getTemplateInfo(this.$route.query.id).then((res) => {
         this.form = res.data.data
         if (this.form.tem_type === 'basic_entry') {
           this.keyIndexIsShow = true
@@ -351,11 +341,11 @@ export default {
   methods: {
     getDataList() {
       this.loading = true
-      getSettingList(this.params).then(response => {
+      getSettingList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
         this.$refs.multipleTable.clearSelection()
-        this.selectdata.forEach(item => {
-          let checked = this.ItemsList.find(n => n.id === item.id)
+        this.selectdata.forEach((item) => {
+          let checked = this.ItemsList.find((n) => n.id === item.id)
           if (checked) {
             this.$refs.multipleTable.toggleRowSelection(item)
           }
@@ -366,7 +356,7 @@ export default {
     },
     submitAction() {
       const that = this
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.tem_type == 'basic_entry' && this.form.key_index.length <= 0) {
             this.$message({
@@ -380,7 +370,7 @@ export default {
           postparams.key_index = JSON.stringify(postparams.key_index)
           postparams.content = JSON.stringify(postparams.content)
           if (this.form.id) {
-            updateTemplate(postparams).then(res => {
+            updateTemplate(postparams).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -395,7 +385,7 @@ export default {
             })
           } else {
             saveTemplate(postparams)
-              .then(res => {
+              .then((res) => {
                 if (res.data.data) {
                   this.$message({
                     message: '添加成功',
@@ -408,7 +398,7 @@ export default {
                   })
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 this.$message({
                   type: 'error',
                   message: '保存出错'
@@ -449,7 +439,7 @@ export default {
         return false
       }
       if (this.form.key_index.length > 0) {
-        let inChecked = this.form.key_index.findIndex(n => val.id === n.id)
+        let inChecked = this.form.key_index.findIndex((n) => val.id === n.id)
         if (inChecked !== -1) {
           this.form.key_index.splice(inChecked, 1)
         } else if (val.key_index) {
@@ -507,7 +497,7 @@ export default {
       let index = this.formcontentindex
       this.showElementList = false
       let newselectrows = JSON.parse(JSON.stringify(this.form.content[index].formdata))
-      newselectrows.forEach(item => {
+      newselectrows.forEach((item) => {
         item.is_required = false
       })
       this.form.content[index].formdata = newselectrows
@@ -516,15 +506,15 @@ export default {
       let index = this.formcontentindex
       if (val.length > 0) {
         this.form.content[index].formdata = []
-        val.forEach(item => {
-          let inChecked = this.form.content[index].formdata.findIndex(n => item.id === n.id)
+        val.forEach((item) => {
+          let inChecked = this.form.content[index].formdata.findIndex((n) => item.id === n.id)
           if (inChecked === -1) {
             this.form.content[index].formdata.push(item)
           }
         })
       } else {
         this.ItemsList.forEach((item, index) => {
-          let inChecked = this.form.content[index].formdata.findIndex(n => item.id === n.id)
+          let inChecked = this.form.content[index].formdata.findIndex((n) => item.id === n.id)
           if (inChecked !== -1) {
             this.form.content[index].formdata.splice(inChecked, 1)
           }
@@ -533,7 +523,7 @@ export default {
     },
     handleSelectChange(val, row) {
       let index = this.formcontentindex
-      let inChecked = this.form.content[index].formdata.findIndex(item => row.id === item.id)
+      let inChecked = this.form.content[index].formdata.findIndex((item) => row.id === item.id)
       if (inChecked !== -1) {
         this.form.content[index].formdata.splice(inChecked, 1)
       } else {
@@ -551,16 +541,28 @@ export default {
     delCard(index) {
       this.form.content.splice(index, 1)
     },
-    handleImgBChange() {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      this.form.header_bg_pic = data.url
-      this.imgDialog = false
-    },
-    closeImgDialog() {
-      this.imgDialog = false
+    async handleImgBChange() {
+      try {
+        const { data } = await this.$picker.image({
+          data: this.form.header_bg_pic ? { url: this.form.header_bg_pic } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (data && data.url) || data || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          // form.header_bg_pic 存储的是相对路径（显示时使用 wximageurl + form.header_bg_pic）
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            this.form.header_bg_pic = imgUrl.replace(this.wximageurl, '')
+          } else {
+            this.form.header_bg_pic = imgUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
+      }
     }
   }
 }

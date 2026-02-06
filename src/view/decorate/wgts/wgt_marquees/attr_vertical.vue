@@ -5,7 +5,7 @@
 
 <style lang="scss" scoped>
 .attr-vertical {
-  margin-top: 2px;
+  flex: 1;
 
   .cate-item {
     height: 32px;
@@ -18,6 +18,9 @@
 <template>
   <div class="attr-vertical">
     <CompTodoList v-model="value" :max="20" is-edit @onAddItem="handleAddItem" @edit="onEdit">
+      <template slot="header" slot-scope="scope">
+       软文{{ scope.index + 1 }}
+    </template>
       <template slot="body" slot-scope="scope">
         <div class="cate-item">
           {{ scope.data.title }}

@@ -39,7 +39,7 @@
       <el-table-column prop="name" label="企业名称" />
       <el-table-column v-if="type != 'show'" prop="auth_type" label="登录类型">
         <template slot-scope="scope">
-          <div>{{ VALIDATE_TYPES.find(item => item.value == scope.row.auth_type)?.name }}</div>
+          <div>{{ VALIDATE_TYPES.find((item) => item.value == scope.row.auth_type)?.name }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="distributor_name" label="来源店铺" />

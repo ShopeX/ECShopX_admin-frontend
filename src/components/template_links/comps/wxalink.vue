@@ -39,7 +39,7 @@ export default {
     const { list } = await api.wxa.getWxLinkListSetting({
       page: 1
     })
-    this.options = list.map(item => {
+    this.options = list.map((item) => {
       return {
         label: item.app_name,
         value: item.app_id

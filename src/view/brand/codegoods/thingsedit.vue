@@ -26,7 +26,7 @@
           <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar">
+              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -92,7 +92,7 @@ export default {
     if (this.$route.query.thing_id) {
       // 初始化门店数据
       getThingsDetail(this.$route.query.thing_id)
-        .then(response => {
+        .then((response) => {
           console.log(response)
           let thingsDetailData = response.data.data
 
@@ -103,7 +103,7 @@ export default {
           this.form.intro = thingsDetailData.intro
           console.log(this.form)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -161,7 +161,7 @@ export default {
       }
 
       let params = { isUploadFile: true, file: file.raw, type: 'image' }
-      uploadMaterial(params).then(res => {
+      uploadMaterial(params).then((res) => {
         file.url = this.wximageurl + res.data.data.url
         that.form.pic = res.data.data.url
       })
@@ -170,10 +170,10 @@ export default {
       // 提交商品
       if (this.form.thing_id) {
         updateThings(this.form.thing_id, this.form)
-          .then(response => {
+          .then((response) => {
             this.$router.push({ path: '/brand/onecode' })
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error)
             this.$message({
               type: 'error',
@@ -182,11 +182,11 @@ export default {
           })
       } else {
         createThings(this.form)
-          .then(response => {
+          .then((response) => {
             console.log(response)
             this.$router.push({ path: '/brand/onecode' })
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message({
               type: 'error',
               message: '保存物品信息出错'

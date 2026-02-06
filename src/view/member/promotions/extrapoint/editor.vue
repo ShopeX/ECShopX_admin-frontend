@@ -171,10 +171,7 @@
               <el-table-column prop="address" label="地址" show-overflow-tooltip />
               <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
-                  <i
-                    class="el-icon-delete"
-                    @click="deleteStoreRow(scope.$index, form.items)"
-                  />
+                  <i class="el-icon-delete" @click="deleteStoreRow(scope.$index, form.items)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -435,9 +432,7 @@ export default {
               duration: 2 * 1000,
               onClose() {
                 that.refresh()
-                that.$router.push({
-                  path: '/marketing/member/extrapoint'
-                })
+                that.$router.go(-1)
               }
             })
           } else {
@@ -455,9 +450,7 @@ export default {
               duration: 2 * 1000,
               onClose() {
                 that.refresh()
-                that.$router.push({
-                  path: '/marketing/member/extrapoint'
-                })
+                that.$router.go(-2)
               }
             })
           } else {

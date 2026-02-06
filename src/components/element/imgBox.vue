@@ -13,7 +13,7 @@
       :class="{ 'border-dashed': border === 'dashed', 'border-none': border === 'none' }"
       :style="{ width: width + 'px', height: height + 'px' }"
     >
-      <img v-if="imgUrl" :src="imgUrl" alt="">
+      <img v-if="imgUrl" :src="imgUrl" alt="" />
       <i v-else class="iconfont" :class="icon" :style="'font-size:' + width * 0.3 + 'px'" />
     </div>
     <div v-if="bottomInfo" class="bottom-info">

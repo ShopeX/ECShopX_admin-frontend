@@ -130,7 +130,7 @@ export default {
     },
     getList(query) {
       this.loading = true
-      getDepositTradeList(query).then(res => {
+      getDepositTradeList(query).then((res) => {
         this.recordList = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

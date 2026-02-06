@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              移动端 <br>
+              移动端 <br />
               (包含小程序/H5/APP）
             </span>
             <el-switch
@@ -35,7 +35,7 @@
               <el-radio :label="'cash'"> 按现金 </el-radio>
               <el-radio :label="'point'"> 按积分 </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <span class="tip">说明：运费使用现金或积分支付</span>
           </el-form-item>
           <el-form-item v-if="form.freight_type == 'point'" label="积分商城运费抵扣比率">
@@ -53,7 +53,7 @@
               <el-radio :label="'down'"> 向下取整 </el-radio>
               <el-radio :label="'up'"> 向上取整 </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <!-- <span class="tip">说明：运费使用现金或积分支付</span> -->
           </el-form-item>
           <!-- <el-form-item size="large">
@@ -108,7 +108,7 @@ export default {
     // 获取列表
     getInfo() {
       this.loading = true
-      getSetting().then(res => {
+      getSetting().then((res) => {
         this.form.freight_type = res.data.data.freight_type
         this.form.proportion = res.data.data.proportion
         this.form.rounding_mode = res.data.data.rounding_mode
@@ -126,7 +126,7 @@ export default {
         entrance: {
           mobile_openstatus: this.entrance.mobile_openstatus
         }
-      }).then(res => {
+      }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()
       })

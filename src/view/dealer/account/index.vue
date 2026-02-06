@@ -169,7 +169,7 @@ export default {
       }
     },
     onGetsOpeationId() {
-      getOpeationId().then(res => {
+      getOpeationId().then((res) => {
         const {
           data: { data }
         } = res
@@ -177,10 +177,10 @@ export default {
       })
     },
     handleSumbit() {
-      this.$refs['form'].validate(async vaild => {
+      this.$refs['form'].validate(async (vaild) => {
         if (vaild) {
           if (this.operator_id) {
-            editDealer(this.operator_id, { password: this.form.password }).then(response => {
+            editDealer(this.operator_id, { password: this.form.password }).then((response) => {
               console.log(response)
               this.getAccountListData()
               this.handleCancel()
@@ -191,7 +191,7 @@ export default {
               operator_type: 'dealer',
               is_dealer_main: '0',
               dealer_parent_id: this.dealer_parent_id
-            }).then(response => {
+            }).then((response) => {
               this.$message.success('保存成功')
               this.getAccountListData()
               this.handleCancel()
@@ -207,7 +207,7 @@ export default {
     },
     getAccountListData() {
       this.loading = true
-      getDealerAccountList({ params: JSON.stringify(this.params) }).then(response => {
+      getDealerAccountList({ params: JSON.stringify(this.params) }).then((response) => {
         this.accountsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -221,7 +221,7 @@ export default {
       })
         .then(() => {
           deleteDealer(row.operator_id)
-            .then(response => {
+            .then((response) => {
               this.$message({
                 message: '删除成功',
                 type: 'success'

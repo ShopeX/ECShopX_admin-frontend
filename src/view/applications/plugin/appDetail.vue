@@ -106,7 +106,7 @@ export default {
   created() {
     const { id } = this.$route.params
     this.id = id
-    const { title, desc } = APPLICATION_LIST.find(item => item.key == id)
+    const { title, desc } = APPLICATION_LIST.find((item) => item.key == id)
     this.appName = title
     this.appDesc = desc
   },

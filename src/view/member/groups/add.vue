@@ -13,12 +13,6 @@
         <div>
           <imgBox :img-url="wximageurl + form.pics" @click="handleImgChange" />
         </div>
-        <imgPicker
-          :dialog-visible="imgDialog"
-          :sc-status="isGetImage"
-          @chooseImg="pickImg"
-          @closeImgDialog="closeImgDialog"
-        />
       </el-form-item>
       <el-form-item label="拼团商品">
         <el-row :gutter="20">
@@ -27,7 +21,7 @@
             <div class="logo-box" @click="changeItem">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>原价：{{ goods.price }}</div>
@@ -178,7 +172,7 @@
         <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
@@ -216,13 +210,11 @@ import { uploadMaterial } from '../../../api/wechat'
 import { getItemsList } from '../../../api/goods'
 import { getDefaultCurrency } from '../../../api/company'
 import { createGroupActivity, updateGroupActivity, getGroupsInfo } from '../../../api/promotions'
-import imgPicker from '../../../components/imageselect'
 import imgBox from '@/components/element/imgBox'
 
 export default {
   inject: ['refresh'],
   components: {
-    imgPicker,
     imgBox
   },
   data() {
@@ -285,8 +277,6 @@ export default {
         ],
         share_desc: [{ required: true, message: '请输入分享描述' }]
       },
-      imgDialog: false,
-      isGetImage: false,
       currency: {},
       cursymbol: '￥',
       goodsTypeTitle: '服务类商品'
@@ -305,7 +295,7 @@ export default {
   methods: {
     submitItemsAction(formName) {
       const that = this
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.form.pics) {
             this.$message.error('请上传活动封面')
@@ -316,7 +306,7 @@ export default {
             return false
           }
           if (this.groups_activity_id) {
-            updateGroupActivity(this.groups_activity_id, this.form).then(res => {
+            updateGroupActivity(this.groups_activity_id, this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -330,7 +320,7 @@ export default {
               }
             })
           } else {
-            createGroupActivity(this.form).then(res => {
+            createGroupActivity(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',
@@ -396,12 +386,12 @@ export default {
       where.approve_status = ['onsale', 'offline_sale']
       where.is_gift = false
       getItemsList(where)
-        .then(response => {
+        .then((response) => {
           this.itemsLoading = false
           this.itemsList = response.data.data.list
           this.itemsTotalCount = response.data.data.total_count
         })
-        .catch(error => {
+        .catch((error) => {
           this.itemsLoading = false
           this.$message({
             type: 'error',
@@ -411,7 +401,7 @@ export default {
     },
     getGroupsInfo() {
       getGroupsInfo(this.groups_activity_id)
-        .then(response => {
+        .then((response) => {
           this.form = response.data.data
           this.form.act_price = this.form.act_price / 100
           this.form.goods.price = this.form.goods.price / 100
@@ -426,7 +416,7 @@ export default {
           this.logo_url = this.wximageurl + response.data.data.pics
           this.goods = response.data.data.goods
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取拼团活动详情失败'
@@ -437,24 +427,34 @@ export default {
       return this.cursymbol + row.price / 100
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     //活动封面
-    handleImgChange() {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      console.log(data.url)
-      this.form.pics = data.url
-      console.log(this.form.pics)
-      this.imgDialog = false
-    },
-    closeImgDialog() {
-      this.imgDialog = false
+    async handleImgChange() {
+      try {
+        const { data } = await this.$picker.image({
+          data: this.form.pics ? { url: this.form.pics } : undefined
+        })
+
+        // 获取图片URL，可能是对象中的url属性，也可能是直接的字符串
+        const imgUrl = (data && data.url) || data || ''
+
+        if (imgUrl) {
+          // 如果包含 wximageurl，则提取相对路径
+          // form.pics 存储的是相对路径（显示时使用 wximageurl + form.pics）
+          if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
+            this.form.pics = imgUrl.replace(this.wximageurl, '')
+          } else {
+            this.form.pics = imgUrl
+          }
+        }
+      } catch (error) {
+        // 用户取消选择时不处理错误
+        console.log('图片选择已取消')
+      }
     },
     changeGoods(type) {
       switch (type) {

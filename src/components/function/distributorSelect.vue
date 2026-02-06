@@ -162,7 +162,7 @@ export default {
     },
     getDistributor() {
       this.params.distribution_type = this.distribution_type
-      getDistributorList(this.params).then(response => {
+      getDistributorList(this.params).then((response) => {
         if (this.storeData.length > 0) this.isFristLoad = false
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
@@ -174,7 +174,7 @@ export default {
         // 如果是 首次加载，并且是回显 状态 则执行
         if (this.isFristLoad && this.selectRows) {
           console.log('this.selectRows-test', this.selectRows.length, this.selectRows)
-          this.selectRows.forEach(item => {
+          this.selectRows.forEach((item) => {
             this.$refs.multipleTable.toggleRowSelection(item)
           })
         }
@@ -193,7 +193,7 @@ export default {
     },
     toggleSelection(rows) {
       if (rows) {
-        rows.forEach(row => {
+        rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
       } else {
@@ -204,8 +204,8 @@ export default {
       if (val) {
         // console.log('handleSelectionChange',val)
         this.multipleSelection = val
-        val.forEach(item => {
-          let isInArr = this.selectRows.findIndex(n => n.distributor_id == item.distributor_id)
+        val.forEach((item) => {
+          let isInArr = this.selectRows.findIndex((n) => n.distributor_id == item.distributor_id)
           if (isInArr == -1) {
             this.selectRows.push(item)
           }

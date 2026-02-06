@@ -267,7 +267,7 @@ export default {
         data: [100],
         shopid: this.shopId
       })
-      const goods_id = data.map(item => item.item_id)
+      const goods_id = data.map((item) => item.item_id)
       await this.$api.community.addActivityGoods({
         goods_id
       })

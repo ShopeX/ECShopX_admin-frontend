@@ -9,7 +9,7 @@
       <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img :src="item.pics[0]" alt="">
+            <img :src="item.pics[0]" alt="" />
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -161,11 +161,11 @@ export default {
       this.skuParams.item_id = this.goods[index].default_item_id
       this.dialogVisible = true
       let checked = this.goods[index].spec_items
-      getItemsList(this.skuParams).then(res => {
+      getItemsList(this.skuParams).then((res) => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach(item => {
-            let index = checked.findIndex(n => item.itemId === n.itemId)
+          that.skus.forEach((item) => {
+            let index = checked.findIndex((n) => item.itemId === n.itemId)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -198,7 +198,7 @@ export default {
       if (data === null || data.length <= 0) return
       this.relItems = data
       let list = []
-      data.forEach(item => {
+      data.forEach((item) => {
         Object.assign(item, {
           new_price:
             'undefined' == typeof this.itemNewPrice[item.item_id]
@@ -212,8 +212,8 @@ export default {
         }
       })
       if (this.goods.length > 0) {
-        list.forEach(item => {
-          let goodsItem = this.goods.find(n => item.itemId === n.item_id)
+        list.forEach((item) => {
+          let goodsItem = this.goods.find((n) => item.itemId === n.item_id)
           if (goodsItem && goodsItem.spec_items && goodsItem.spec_items.length > 0) {
             item.spec_items = goodsItem.spec_items
           }
@@ -228,7 +228,7 @@ export default {
       let newPrice = 0
       let goodsList = JSON.parse(JSON.stringify(this.goods))
       this.itemNewPrice = []
-      goodsList.forEach(item => {
+      goodsList.forEach((item) => {
         if (!item.nospec && item.spec_items.length === 0) {
           noSkuItem.push(item.default_item_id)
         }
@@ -236,21 +236,21 @@ export default {
       if (noSkuItem.length > 0) {
         let param = this.skuParams
         param.item_id = noSkuItem
-        getItemsList(this.skuParams).then(res => {
-          goodsList.forEach(item => {
+        getItemsList(this.skuParams).then((res) => {
+          goodsList.forEach((item) => {
             if (!item.nospec) {
-              res.data.data.list.forEach(sku => {
+              res.data.data.list.forEach((sku) => {
                 if (item.item_id === sku.default_item_id) {
                   item.spec_items.push(sku)
                 }
               })
             }
           })
-          goodsList.forEach(item => {
+          goodsList.forEach((item) => {
             newPrice += item.new_price ? parseFloat(item.new_price) : 0
             this.itemNewPrice[item.item_id] = item.new_price ? parseFloat(item.new_price) : 0
             if (!item.nospec) {
-              item.spec_items = item.spec_items.map(v => {
+              item.spec_items = item.spec_items.map((v) => {
                 return { ...Object.assign({}, v, { new_price: item.new_price }) }
               })
               response = [...response, ...item.spec_items]
@@ -262,11 +262,11 @@ export default {
           this.$emit('newPrice', newPrice)
         })
       } else {
-        goodsList.forEach(item => {
+        goodsList.forEach((item) => {
           newPrice += item.new_price ? parseFloat(item.new_price) : 0
           this.itemNewPrice[item.item_id] = item.new_price ? parseFloat(item.new_price) : 0
           if (!item.nospec) {
-            const spec_items = item.spec_items.map(v => {
+            const spec_items = item.spec_items.map((v) => {
               return { ...Object.assign({}, v, { new_price: v.new_price }) }
             })
             response = [...response, ...spec_items]

@@ -94,7 +94,7 @@ export default {
             slot: 'header',
             buttonType: 'primary is-plain',
             action: {
-              handler: async val => {
+              handler: async (val) => {
                 this.addForm.id = ''
                 this.addForm.distributor_id = ''
                 this.addForm.cycleData = {
@@ -156,7 +156,7 @@ export default {
           label: '店铺',
           key: 'distributor_id',
           component: () => (
-            <SpSelectShop v-model={this.addForm.distributor_id} clearable placeholder="请选择" />
+            <SpSelectShop v-model={this.addForm.distributor_id} clearable placeholder='请选择' />
           ),
           // required: true,
           validator: (rule, value, callback) => {

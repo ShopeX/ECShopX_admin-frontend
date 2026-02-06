@@ -93,7 +93,7 @@
               :src="edit.thumb_img"
               class="banner-uploader"
               @click="handleImgChange('thumb_img')"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange('thumb_img')">
               <i class="el-icon-camera" />
               上传图片
@@ -112,7 +112,7 @@
                 :src="edit.media_url"
                 class="banner-uploader"
                 @click="handleImgChange('media_url')"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange('media_url')">
                 <i class="el-icon-camera" />
                 上传图片
@@ -199,7 +199,7 @@ export default {
   methods: {
     getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then(response => {
+      getDistributorList(params).then((response) => {
         if (response.data.data.list) {
           this.distributorList = response.data.data.list
         }
@@ -233,7 +233,7 @@ export default {
     },
     sumbit() {
       let obj = JSON.parse(JSON.stringify(this.edit))
-      postShopScreenAd(obj).then(res => {
+      postShopScreenAd(obj).then((res) => {
         this.showDialog = false
         this.edit = {}
         this.fetchList()
@@ -245,8 +245,8 @@ export default {
     },
     articleDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前选项？').then(_ => {
-        delShopScreenAd(id).then(res => {
+      this.$confirm('确认删除当前选项？').then((_) => {
+        delShopScreenAd(id).then((res) => {
           if (res.data.data.status) {
             this.$message({
               message: '删除成功',
@@ -262,7 +262,7 @@ export default {
 
     handleSort(id) {
       const _self = this
-      let index = this.list.findIndex(item => item.id === id)
+      let index = this.list.findIndex((item) => item.id === id)
       this.list[index].visible = false
       let param = {
         inputdata: [
@@ -272,7 +272,7 @@ export default {
           }
         ]
       }
-      putShopScreenAd(param).then(res => {
+      putShopScreenAd(param).then((res) => {
         _self.fetchList()
       })
     },
@@ -285,7 +285,7 @@ export default {
       }
       const _self = this
       this.$confirm(msg)
-        .then(res => {
+        .then((res) => {
           let param = {
             inputdata: [
               {
@@ -294,7 +294,7 @@ export default {
               }
             ]
           }
-          putShopScreenAd(param).then(res => {
+          putShopScreenAd(param).then((res) => {
             _self.fetchList()
           })
         })
@@ -308,7 +308,7 @@ export default {
     },
     fetchList() {
       this.loading = true
-      getShopScreenAd(this.params).then(res => {
+      getShopScreenAd(this.params).then((res) => {
         if (res.data.data.total_count === 0) {
           this.showPlaceholder = true
         }

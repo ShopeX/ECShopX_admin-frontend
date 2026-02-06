@@ -37,7 +37,7 @@ export default {
       confirmForm: {
         email: ''
       },
-      confirmStatus:false,
+      confirmStatus: false,
       confirmRuleForm: [
         {
           key: 'email',
@@ -45,7 +45,7 @@ export default {
           type: 'input',
           defaultValue: '',
           required: true,
-          tip:'电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
+          tip: '电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
         }
       ]
     }
@@ -70,7 +70,7 @@ export default {
       this.confirmDialogShow = true
       this.confirmForm = {
         // email: this.form.email
-        email:''
+        email: ''
       }
     },
     getInvoice() {
@@ -92,7 +92,8 @@ export default {
         .then((res) => {
           this.$message.success('发送成功')
           this.confirmDialogShow = false
-        }).finally(()=>{
+        })
+        .finally(() => {
           this.confirmStatus = false
         })
     }
@@ -101,10 +102,9 @@ export default {
 </script>
 
 <style lang="scss">
-.invoice-detail-page .sp-form .el-form-item{
-  &.inline{
+.invoice-detail-page .sp-form .el-form-item {
+  &.inline {
     width: 33% !important;
   }
 }
 </style>
-

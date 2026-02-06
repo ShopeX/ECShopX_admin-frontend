@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="22">
         <div class="tips">
-          在此配置完成角标后，可在笔记中选择角标。<br>一篇笔记仅能与一个角标关联，关联后将在笔记列表页下的笔记右上角展示角标。
+          在此配置完成角标后，可在笔记中选择角标。<br />一篇笔记仅能与一个角标关联，关联后将在笔记列表页下的笔记右上角展示角标。
         </div>
       </el-col>
     </el-row>
@@ -152,14 +152,14 @@ export default {
       //console.log('getDataList',params.status)
       that.$data.loading = true
       getBadge(params).then(
-        res => {
+        (res) => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.flagList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        err => {
+        (err) => {
           that.$data.loading = false
         }
       )
@@ -194,9 +194,9 @@ export default {
       const that = this
       const { ruleForm } = this.$data
       //console.log('updataFalg',ruleForm)
-      this.$refs['ruleForm'].validate(valid => {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          createBadge(ruleForm).then(res => {
+          createBadge(ruleForm).then((res) => {
             var { message } = res.data.data
             this.$message({
               type: 'success',
@@ -222,7 +222,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        badgeDelete(params).then(res => {
+        badgeDelete(params).then((res) => {
           // console.log('notesDelete',res)
           var msg = res.data.data.message
           this.getDataList()
@@ -262,7 +262,7 @@ export default {
       const { id_set } = this.$data
       params.badge_id = id_set
       //console.log('进行审核 auditNote',params);
-      badgeVerify(params).then(res => {
+      badgeVerify(params).then((res) => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)

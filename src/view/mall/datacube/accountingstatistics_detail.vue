@@ -55,7 +55,7 @@ export default {
     },
     onGetDetail() {
       let orderId = this.$route.query.orderId
-      GetOrderInfoList(orderId).then(res => {
+      GetOrderInfoList(orderId).then((res) => {
         // const { profitsharing_status, order_status } = res.data.data || {}
         // let profit = profitsharing_status === '2' // 已结算
         // let noprofit = profitsharing_status === '1' // 未结算

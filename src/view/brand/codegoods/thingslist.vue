@@ -16,7 +16,7 @@
         <div class="list-item view-flex">
           <div class="view-flex view-flex-item">
             <div class="thumbnail">
-              <img :src="wximageurl + item.pic">
+              <img :src="wximageurl + item.pic" />
             </div>
             <div>
               <div class="item-title">
@@ -96,10 +96,10 @@ export default {
     thingsDetail(index, row) {
       this.ItemsDetailVisible = true
       getThingsDetail(row.thing_id)
-        .then(response => {
+        .then((response) => {
           this.itemsDetailData = response.data.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -110,12 +110,12 @@ export default {
     getCodeThingsList() {
       this.loading = true
       getThingsList(this.params)
-        .then(response => {
+        .then((response) => {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -131,7 +131,7 @@ export default {
       })
         .then(() => {
           deleteThings(thing_id)
-            .then(response => {
+            .then((response) => {
               this.$message({
                 message: '删除物品成功',
                 type: 'success',

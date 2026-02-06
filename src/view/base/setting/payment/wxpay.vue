@@ -9,7 +9,7 @@
       <el-input v-model="form.app_id" style="width: 300px" /><span class="frm-tips">
         适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span
       >
-      <br>
+      <br />
       <span class="frm-tips"
         >微信支付分配的公众账号ID（企业号corpid即为此appId）。请到 微信公众平台 → 开发 → 基本配置 →
         获取</span
@@ -19,7 +19,7 @@
       <el-input v-model="form.app_app_id" style="width: 300px" /><span class="frm-tips">
         适用于【第三方APP】</span
       >
-      <br>
+      <br />
       <span class="frm-tips"
         >微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）</span
       >
@@ -27,12 +27,12 @@
     <el-form-item label="商户号">
       <el-input v-model="form.merchant_id" style="width: 300px" /><span class="frm-tips">
         适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span
-      ><br><span class="frm-tips">请到 微信支付商户平台→账户中心→商户信息→获取</span>
+      ><br /><span class="frm-tips">请到 微信支付商户平台→账户中心→商户信息→获取</span>
     </el-form-item>
     <el-form-item label="API密钥">
       <el-input v-model="form.key" style="width: 300px" /><span class="frm-tips">
         适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span
-      ><br><span class="frm-tips"
+      ><br /><span class="frm-tips"
         >请到 微信支付商户平台 → 账户中心 → API安全 → API密钥
         中设置32位密钥，并将密钥复粘贴过来</span
       >
@@ -116,13 +116,16 @@ export default {
       let query = {}
       if (this.activeName == 'wxpay') {
         query = { pay_type: 'wxpay' }
-        getPaymentSetting(query).then(response => {
+        getPaymentSetting(query).then((response) => {
           let form =
             Array.isArray(response.data.data) && !response.data.data.length
               ? {}
               : response.data.data
           form.is_servicer = response.data.data.is_servicer == 'true' ? true : false
-          form.is_open = (response.data.data.is_open == 'true' || response.data.data.is_open == true) ? true : false
+          form.is_open =
+            response.data.data.is_open == 'true' || response.data.data.is_open == true
+              ? true
+              : false
 
           for (let key of Object.keys(form)) {
             this.$set(this.form, key, form[key])
@@ -131,7 +134,7 @@ export default {
         })
       } else {
         query = { pay_type: 'teegon' }
-        getPaymentSetting(query).then(response => {
+        getPaymentSetting(query).then((response) => {
           this.teegonForm = response.data.data
         })
       }
@@ -161,14 +164,14 @@ export default {
         }
       }
       setPaymentSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

@@ -332,6 +332,14 @@ export const transformTree = (tree, obj = {}) => {
   return transformedTree
 }
 
+/**
+ * 检测是否为 Mac 系统
+ * @returns {boolean} 如果是 Mac 系统返回 true，否则返回 false
+ */
+export function isMac() {
+  return /Mac|iPhone|iPod|iPad/i.test(navigator.platform) || /Mac/i.test(navigator.userAgent)
+}
+
 export { log, isEmpty }
 
 export default {}

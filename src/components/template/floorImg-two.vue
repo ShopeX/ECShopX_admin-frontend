@@ -10,7 +10,7 @@
     <div class="floorImg">
       <div class="floorImg_img_list">
         <div v-for="(item, index) in data" :key="index" class="floorImg_img_li">
-          <img class="floorImg_img" :src="wximageurl + item.imgUrl">
+          <img class="floorImg_img" :src="wximageurl + item.imgUrl" />
           <div class="imgs_title" :style="'color:' + base.WordColor">
             {{ item.ImgTitle }}
           </div>

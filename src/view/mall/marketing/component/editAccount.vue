@@ -435,7 +435,7 @@ export default {
   },
   methods: {
     submitHandle(formName, isSubmit) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           if (formName == 'ruleForm') {
             this.$confirm(
@@ -570,7 +570,7 @@ export default {
       })
       this.AllBank = result.data.data
 
-      var restaurants = this.AllBank.map(item => {
+      var restaurants = this.AllBank.map((item) => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -582,7 +582,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },

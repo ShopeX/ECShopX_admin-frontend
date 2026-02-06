@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">找回密码</div>
       </div>
@@ -63,7 +63,7 @@
                   :src="yzmcode"
                   style="width: auto; height: 38px; cursor: pointer"
                   @click="getImageCode"
-                >
+                />
               </el-input>
             </el-form-item>
             <el-form-item class="smscode" prop="code">
@@ -189,7 +189,7 @@ export default {
   methods: {
     getSmsCode() {
       getSmsCode(this.smsData)
-        .then(response => {
+        .then((response) => {
           if (response.data.data.status == true) {
             Message({ message: '验证码发送成功', type: 'success', duration: 2 * 1000 })
             this.countDown()
@@ -198,21 +198,21 @@ export default {
             this.yzmbutton = false
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.yzmbutton = false
         })
     },
     getImageCode() {
-      getImageCode().then(response => {
+      getImageCode().then((response) => {
         this.yzmcode = response.data.data.imageData
         this.smsData.token = response.data.data.imageToken
       })
     },
     handleResetPassword() {
       const loginPath = this.path_prefixes ? `/${this.path_prefixes}/login` : '/login'
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          resetPassword(this.ruleForm).then(response => {
+          resetPassword(this.ruleForm).then((response) => {
             Message({ message: response.data.data.message, type: 'success', duration: 2 * 1000 })
             this.$router.push({ path: loginPath })
           })

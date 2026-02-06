@@ -11,6 +11,7 @@
 </style>
 <template>
   <div class="daodianziti">
+    <div class="tip">若没有关联自提点，优先取店铺地址</div>
     <el-button type="text" @click="onSelectZiti">选择自提点</el-button>
     <SpFinder
       ref="finder"
@@ -19,6 +20,8 @@
       :data="finderData"
       :url="finderUrl"
       :setting="setting"
+      row-actions-align="left"
+      row-actions-width="100px"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -54,7 +57,7 @@ export default {
                   })
                   this.$refs['finder'].refresh()
                 } else {
-                  const index = this.finderData.findIndex(item => item.id == row.id)
+                  const index = this.finderData.findIndex((item) => item.id == row.id)
                   this.finderData.splice(index, 1)
                   this.zitiList = this.finderData
                   this.$nextTick(() => {
@@ -72,7 +75,7 @@ export default {
             render: (h, { row }) =>
               h('span', {}, `${row.province}${row.city}${row.area}${row.address}`)
           },
-          { name: '联系电话', key: 'contract_phone', width: '150px' }
+          { name: '联系电话', key: 'contract_phone', width: '170px' }
         ]
       })
     }
@@ -100,11 +103,11 @@ export default {
     },
     async onSelectZiti() {
       const { data } = await this.$picker.zitiList({
-        data: this.zitiList.map(item => item.id)
+        data: this.zitiList.map((item) => item.id)
       })
 
       if (this.distributor_id) {
-        const ids = data.map(item => item.id)
+        const ids = data.map((item) => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
           id: ids,
           rel_distributor_id: this.distributor_id

@@ -88,7 +88,11 @@ export default {
     }
   },
   computed: {
-    logo: () => {
+    logo() {
+      const sysLogo = this.$store.state.system.logo
+      if (sysLogo) {
+        return sysLogo
+      }
       return require(`@/assets/images/${DEFAULT_CONFIG.logo}`)
     }
   },

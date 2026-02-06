@@ -61,7 +61,7 @@ export default {
     },
     getLogisticsListData() {
       this.loading = true
-      getLogisticsLists(this.params).then(response => {
+      getLogisticsLists(this.params).then((response) => {
         this.logisticsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -69,11 +69,11 @@ export default {
     },
     setEnable(row) {
       if (row.is_enable) {
-        createCompanyLogistics(row).then(response => {
+        createCompanyLogistics(row).then((response) => {
           this.getLogisticsListData()
         })
       } else {
-        deleteCompanyLogistics(row.corp_id).then(response => {
+        deleteCompanyLogistics(row.corp_id).then((response) => {
           this.getLogisticsListData()
         })
       }

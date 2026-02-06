@@ -712,7 +712,7 @@ export default {
             { label: 'batch', name: '整单发货' },
             { label: 'sep', name: '拆分发货' }
           ],
-          onChange: e => {
+          onChange: (e) => {
             if (e == 'sep') {
               this.deliverGoodsFormList[1].options[4].isShow = true
             } else {
@@ -739,11 +739,11 @@ export default {
                 } else {
                   return (
                     <el-input-number
-                      size="mini"
+                      size='mini'
                       v-model={row.delivery_num}
                       min={1}
                       max={row.num - row.delivery_item_num}
-                      class="cel-input-num"
+                      class='cel-input-num'
                     ></el-input-number>
                   )
                 }
@@ -834,9 +834,9 @@ export default {
       this.user_id = user_id
     }
     this.$api.third.getDmcrmSetting().then((response) => {
-      if(response?.is_open){
-        this.infoList = this.infoList.map(el =>{
-          if(el.label == '订单获取积分'){ 
+      if (response?.is_open) {
+        this.infoList = this.infoList.map((el) => {
+          if (el.label == '订单获取积分') {
             el.is_show = false
           }
           return el
@@ -848,7 +848,7 @@ export default {
   },
   methods: {
     invoiceFilter(item) {
-      return OPEN_STATUS_ARR.find(el => el.value === item)?.title || ''
+      return OPEN_STATUS_ARR.find((el) => el.value === item)?.title || ''
     },
     getFiledValue(key) {
       const { orderInfo } = this
@@ -919,14 +919,14 @@ export default {
         }
         this.is_community = true
       }
-      const fd = ORDER_TYPE.find(k => k.value == order_class)
+      const fd = ORDER_TYPE.find((k) => k.value == order_class)
 
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
         crossOrderTxt = `（跨境订单）`
       }
 
-      const fdReceiptType = DISTRIBUTION_TYPE.find(k => k.value == receipt_type)
+      const fdReceiptType = DISTRIBUTION_TYPE.find((k) => k.value == receipt_type)
       let receiptTypeTxt = '普通快递'
       if (fdReceiptType) {
         receiptTypeTxt = fdReceiptType.title
@@ -950,7 +950,8 @@ export default {
         create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
         order_class: `${fd ? fd.title : '实体订单'}${crossOrderTxt}`,
         _order_class: orderInfo.order_class,
-        invoice_status: OPEN_STATUS_ARR.find(el => el.value === orderInfo.invoice_status)?.title || '',
+        invoice_status:
+          OPEN_STATUS_ARR.find((el) => el.value === orderInfo.invoice_status)?.title || '',
         receiptTypeTxt,
         username,
         community_activity_name,
@@ -960,8 +961,8 @@ export default {
         memberDiscount,
         discount_info: discount_info
           ? discount_info
-              .filter(item => item.discount_fee > 0)
-              .map(item => {
+              .filter((item) => item.discount_fee > 0)
+              .map((item) => {
                 return {
                   ...item,
                   discount_fee: item.discount_fee / 100
@@ -980,9 +981,13 @@ export default {
             : orderInfo.item_price
             ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
             : '￥0.00',
-        freightFee: orderInfo.freight_fee || orderInfo.freight_point_fee
-          ? `¥${(((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0))/ 100).toFixed(2)}`
-          : '￥0.00',
+        freightFee:
+          orderInfo.freight_fee || orderInfo.freight_point_fee
+            ? `¥${(
+                ((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0)) /
+                100
+              ).toFixed(2)}`
+            : '￥0.00',
         memberDiscountPrice: orderInfo.member_discount
           ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`
           : '￥0.00',
@@ -1082,7 +1087,7 @@ export default {
           : '',
         dst_file_path: prescription_data.dst_file_path,
         sale_salesman_distributor_id: orderInfo?.sale_salesman_distributor_info?.name,
-        salesman_mobile: orderInfo?.salespersonInfo?.work_userid,
+        salesman_mobile: orderInfo?.salespersonInfo?.work_userid
       }
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log
@@ -1147,7 +1152,7 @@ export default {
     },
     async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
-      const options = list.map(item => {
+      const options = list.map((item) => {
         return {
           title: item.name,
           value: item.value
@@ -1164,7 +1169,7 @@ export default {
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
-        this.deliverGoodsForm.items = items.map(item => {
+        this.deliverGoodsForm.items = items.map((item) => {
           return {
             ...item,
             price: item.price / 100
@@ -1195,7 +1200,7 @@ export default {
       }
       // 拆单发货
       if (delivery_type == 'sep') {
-        params['sepInfo'] = JSON.stringify(items.filter(item => item.delivery_num))
+        params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false

@@ -80,7 +80,7 @@ export default {
             slot: 'header',
             buttonType: 'primary is-plain',
             action: {
-              handler: async val => {
+              handler: async (val) => {
                 const formQuery = JSON.parse(JSON.stringify(this.formQuery))
                 if (formQuery.cycleTime.length > 0) {
                   formQuery['start_time'] = moment(formQuery.cycleTime[0]).unix()
@@ -194,7 +194,7 @@ export default {
           {
             name: '订单完成时间',
             key: 'end_time',
-            width: 160,
+            width: 160
             // formatter: (row, column) => {
             //   if (column.confirm_time) {
             //     return <div>{moment(column.confirm_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>

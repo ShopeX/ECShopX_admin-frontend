@@ -89,7 +89,7 @@ export default {
         delivery_code: this.delivery_code,
         delivery_corp_source: this.delivery_corp_source
       }
-      getDeliveryDetail(query).then(response => {
+      getDeliveryDetail(query).then((response) => {
         this.list = response.data.data
         this.loading = false
       })

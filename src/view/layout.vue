@@ -13,7 +13,7 @@
           <div class="brand-con">
             <div v-if="login_type === 'merchant'">
               <div class="img-wrap">
-                <img :src="brandIco" alt="">
+                <img :src="brandIco" alt="" />
               </div>
             </div>
             <router-link
@@ -28,7 +28,7 @@
               }`"
             >
               <div class="img-wrap">
-                <img :src="sys_logo" alt="">
+                <img :src="sys_logo" alt="" />
               </div>
             </router-link>
           </div>
@@ -117,7 +117,7 @@
             >
               <div class="popover-row base" @click="handleUserInfo">
                 <div class="avatar">
-                  <img v-if="avatar" class="user-avatar" :src="avatar">
+                  <img v-if="avatar" class="user-avatar" :src="avatar" />
                   <i v-else class="user-avatar iconfont icon-user-circle1" />
                 </div>
                 <div class="username">
@@ -129,7 +129,7 @@
                 退出登录
               </div>
 
-              <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar">
+              <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar" />
               <i v-else slot="reference" class="iconfont icon-user-circle1" />
             </el-popover>
           </div>
@@ -141,15 +141,15 @@
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
         <div class="system-release flex justify-center items-center">
-          <img v-if="VERSION_B2C()" :src="loginBottomB2c" alt="" class="system-image">
+          <img v-if="VERSION_B2C()" :src="loginBottomB2c" alt="" class="system-image" />
           <img
             v-if="VERSION_IN_PURCHASE()"
             :src="loginBottomInpurchase"
             alt=""
             class="system-image"
-          >
-          <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image">
-          <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image">
+          />
+          <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image" />
+          <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image" />
         </div>
         <div id="design-view" />
       </el-main>
@@ -170,7 +170,7 @@ import { micrApp } from '@/utils/micr-app'
 import store from '@/store'
 export default {
   beforeRouteEnter(to, from, next) {
-    next(vm => {
+    next((vm) => {
       vm.activeIndex = to.matched[0].path || '/'
     })
   },
@@ -182,7 +182,7 @@ export default {
           this.menuOpeneds = [`${index}`]
         }
       } else {
-        if (menu.children.find(item => item.url == to.path)) {
+        if (menu.children.find((item) => item.url == to.path)) {
           this.menuOpeneds = [`${index}`]
         }
       }
@@ -216,10 +216,10 @@ export default {
       'sys_logo'
     ]),
     ...mapState({
-      menuList: state => {
+      menuList: (state) => {
         const { menus } = state.menu
         if (store.getters.login_type == 'distributor') {
-          menus.forEach(menu => {
+          menus.forEach((menu) => {
             const [path1, path2] = menu.url.match(/\/\w+/g)
             menu.url = `${path1}${path2 || ''}`
           })
@@ -229,7 +229,7 @@ export default {
     }),
     submenuList() {
       let list = []
-      const fd = this.menuList.find(item => {
+      const fd = this.menuList.find((item) => {
         // const paths = item.url.match(/\/[a-z]+/g)
         const paths = item.url.match(/\/\w+/g)
         if ((paths && paths[0] == '/shopadmin') || (paths && paths[0] == '/dealer')) {

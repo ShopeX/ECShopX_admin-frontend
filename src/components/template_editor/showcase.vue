@@ -29,10 +29,10 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader"
               @click="handleImgChange(index)"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br>
+                <i class="el-icon-camera" /><br />
                 上传图片
               </div>
             </div>

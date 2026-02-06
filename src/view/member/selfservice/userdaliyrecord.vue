@@ -112,7 +112,7 @@ export default {
     // 时间列表
     getTimeData() {
       this.params.user_id = this.$route.query.user_id
-      timeData(this.params).then(response => {
+      timeData(this.params).then((response) => {
         this.timeList = response.data.data.list
         this.total_count = response.data.data.total_count
       })
@@ -212,17 +212,17 @@ export default {
         timeChoosed: time ? time : '',
         user_id: this.$route.query.user_id,
         form_type: 'physical'
-      }).then(response => {
+      }).then((response) => {
         // 表格
         this.list = response.data.data.list
-        response.data.data.list.map(item => {
+        response.data.data.list.map((item) => {
           this.listData.push({
             label: item.fieldname,
             data: Array.reverse(item.fieldvalue)
           })
         })
         // 动态生成图表的数量
-        response.data.data.keyindex.map(item => {
+        response.data.data.keyindex.map((item) => {
           this.keyIndexData.push({
             label: item.fieldname,
             data: Array.reverse(item.fieldvalue)

@@ -117,7 +117,7 @@ export default {
       this.multipleSelection = new Array(row)
     },
     getRegionauth() {
-      getRegionauth(this.params).then(response => {
+      getRegionauth(this.params).then((response) => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
         this.loading = false

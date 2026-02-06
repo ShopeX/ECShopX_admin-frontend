@@ -120,7 +120,7 @@ export default {
         this.params.time_end = ''
       }
       this.loading = true
-      getTaskBrokerageCountList(this.params).then(res => {
+      getTaskBrokerageCountList(this.params).then((res) => {
         this.loading = false
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
@@ -141,7 +141,7 @@ export default {
     },
     exportData() {
       this.params.page = 1
-      exportTaskBrokerageCount(this.params).then(response => {
+      exportTaskBrokerageCount(this.params).then((response) => {
         this.downloadUrl = response.data.data.url
         this.downloadfilename = response.data.data.filename
         setTimeout(() => {

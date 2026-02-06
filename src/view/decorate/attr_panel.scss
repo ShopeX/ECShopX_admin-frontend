@@ -3,35 +3,200 @@
  * See LICENSE file for license details.
  */
 .attr-panel {
+  .layout-selector-wrapper {
+    padding: 16px;
+    border-bottom: 1px solid #f5f5f5;
+    background: #fff;
+
+    .layout-selector-label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+  }
+
+  .attr-panel-tabs {
+    .el-tabs__header {
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .el-tabs__nav-wrap {
+      &::after {
+        display: none;
+      }
+    }
+    .el-tabs__nav {
+      display: flex;
+      width: 100%;
+    }
+    .el-tabs__item {
+      flex: 1;
+      height: 50px;
+      line-height: 50px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      &:hover {
+        color: #155bd4;
+      }
+      &.is-active {
+        color: #155bd4;
+        font-weight: 500;
+        border-bottom-color: #155bd4;
+      }
+    }
+    .el-tabs__active-bar {
+      display: none;
+    }
+    .el-tabs__content {
+      padding: 0;
+    }
+  }
+  .attr-panel-content {
+    padding: 10px 0;
+  }
+
+  .setting-group {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+      padding: 0 10px;
+    }
+
+    &-content {
+      background-color: #fafafa;
+      border-radius: 4px;
+      padding: 8px 0;
+      margin: 0 5px;
+
+      .attr-panel-cell {
+        margin: 0 10px 8px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
   .attr-panel-cell {
-    align-items: flex-start;
-    margin: 10px;
     display: none;
+    font-size: 12px;
+    color: #595961;
     &.is-show {
       display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin: 5px;
     }
 
     .cell-label {
       width: 80px;
-      color: #888;
+      flex-shrink: 0;
+      color: #595961;
       margin-top: 6px;
+      font-size: 12px;
+    }
+    // 当没有 label 时，cell-value 占据全宽
+    &.no-label {
+      .cell-value {
+        width: 100%;
+      }
     }
     .cell-value {
-      width: 220px;
-      min-height: 32px;
       flex: 1;
+      min-height: 32px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      font-size: 12px;
+      color: #595961;
       &-content {
         display: flex;
         align-items: center;
+        font-size: 12px;
+        color: #595961;
+        justify-content: flex-end;
+        width: 100%;
       }
       &-tip {
         font-size: 12px;
         color: #888;
         margin-top: 4px;
       }
+    }
+    // 当包含图片选择器时，换行显示
+    &.has-image-picker {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .cell-label {
+        width: 100%;
+        margin-bottom: 8px;
+        margin-top: 0;
+      }
+
+      .cell-value {
+        width: 100%;
+
+        &-content {
+          width: 100%;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          .sp-image-picker {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            &.mini {
+              width: 50px;
+              height: 50px;
+              .image-item {
+                width: 100%;
+                height: 100%;
+                .el-icon-camera {
+                  font-size: 18px;
+                }
+                .add-text {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .sp-image-picker-contentpart {
+        display: flex;
+        width: 100%;
+        margin-top: -30px;
+        margin-left: 100px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+    }
+    .cell-value-tip {
+      text-align: right;
     }
     // &.top {
     //   align-items: flex-start;
@@ -52,9 +217,60 @@
     .el-color-picker-wrap {
       display: flex;
       align-items: center;
+      gap: 8px;
+      flex: 1;
+      .color-controls-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: flex-end;
+        flex: 1;
+      }
+      .color-code {
+        font-size: 12px;
+        color: #999;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        min-width: 70px;
+      }
+
       .button-reset {
-        margin-left: 6px;
-        font-size: 13px;
+        padding: 0;
+        font-size: 12px;
+        height: auto;
+        line-height: 1.5;
+      }
+
+      .color-swatch {
+        width: 56px;
+        height: 28px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+        transition: all 0.2s;
+        overflow: hidden;
+
+        &:hover {
+          box-shadow: 0 0 0 2px rgba(21, 91, 212, 0.1);
+        }
+
+        .el-color-picker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          z-index: 1;
+
+          ::v-deep .el-color-picker__trigger {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 0;
+          }
+        }
       }
     }
     .el-color-picker {
@@ -65,6 +281,58 @@
         height: 32px;
         line-height: 28px;
       }
+    }
+    // 图片选择器样式优化
+    .sp-image-picker {
+      width: 100%;
+      + * {
+        // 图片选择器后面的元素（如提示文字）左对齐
+        text-align: left;
+      }
+      .image-item {
+        width: 100%;
+        height: 120px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-right: 0;
+        margin-bottom: 8px;
+        background-color: #fafafa;
+        &.placeholder {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          &:hover {
+            border-color: #155bd4;
+            background-color: #f5f7fa;
+          }
+          .el-icon-camera {
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 8px;
+          }
+          .add-text {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+      &.small {
+        .image-item {
+          width: 100%;
+          height: 120px;
+          &.placeholder {
+            height: 120px;
+          }
+        }
+      }
+    }
+    // 当 cell-value-content 包含图片选择器时，改为左对齐
+    .cell-value-content:has(.sp-image-picker) {
+      justify-content: flex-end;
+      align-items: flex-end;
     }
   }
   &.wgt-attr-film {

@@ -127,13 +127,13 @@ export default {
     },
     handleDelete(data) {
       this.$confirm('确认删除该分类？')
-        .then(_ => {
-          deleteTagCategory(data.row.category_id).then(res => {
+        .then((_) => {
+          deleteTagCategory(data.row.category_id).then((res) => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     handleNew() {
       this.show_sideBar = true
@@ -158,14 +158,14 @@ export default {
     save() {
       // 如果没有id，则表示为新增
       if (!this.form.category_id) {
-        createTagCategory(this.form).then(res => {
+        createTagCategory(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateTagCategory(this.form.category_id, this.form).then(res => {
+        updateTagCategory(this.form.category_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
@@ -173,7 +173,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getTagCategoryList(this.params).then(res => {
+      getTagCategoryList(this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false
@@ -184,7 +184,7 @@ export default {
         category_id: '0',
         tag_status: 'online'
       }
-      getTagList(param).then(res => {})
+      getTagList(param).then((res) => {})
     },
     categorySearch() {
       this.getList()

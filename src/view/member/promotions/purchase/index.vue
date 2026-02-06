@@ -205,7 +205,7 @@ export default {
       }
       const { list, total_count } = await this.$api.purchase.getPurchaseList(params)
       if (list.length > 0) {
-        this.tableList = list.map(item => {
+        this.tableList = list.map((item) => {
           item.dependents_limitfee = (item.dependents_limitfee / 100).toFixed(2)
           item.employee_limitfee = (item.employee_limitfee / 100).toFixed(2)
           return item

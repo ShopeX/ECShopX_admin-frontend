@@ -1,0 +1,281 @@
+{
+    "data": {
+        "collection_item_id": "308",
+        "collection_id": "128",
+        "collection_name": "\u79d2\u6740\u96c6\u5408\u9875demo",
+        "relation_id": "115",
+        "relation_name": "jj\u5bf9\u7167demo\u79d2\u6740\u6d3b\u52a8",
+        "activity_type": "limited_time_sale",
+        "start_time": 1766073600,
+        "end_time": 1767196799,
+        "created": 1766113053,
+        "name": "jj\u5bf9\u7167demo\u79d2\u6740\u6d3b\u52a8",
+        "items": {
+            "total_count": 5,
+            "list": [
+                {
+                    "item_id": "11405",
+                    "goods_id": "11342",
+                    "item_name": "\u674e\u5b811990\u674e\u5b81\uff08lining\uff09\u8fd0\u52a8\u751f\u6d3b\u7cfb\u5217\u7537\u5b50\u4f11\u95f2\u886c\u886bASHU547-3",
+                    "regionauth_id": "14",
+                    "distributor_id": 1649,
+                    "distributor_status": 1,
+                    "goods_bn": "FVJJ096I_SP-ln8150706001220",
+                    "item_total_store": 634,
+                    "item_total_sales": 64,
+                    "pics": [
+                        "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/27\/image\/64f2ab27c6f3a878bdbaff8d776aeced173104901095928697937970074306.jpg"
+                    ],
+                    "audit_status": "approved",
+                    "store": 634,
+                    "sales": 64,
+                    "price": "1100",
+                    "market_price": "99900",
+                    "activity_price": 100,
+                    "discount_rate": 1,
+                    "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/27\/image\/64f2ab27c6f3a878bdbaff8d776aeced173104901095928697937970074306.jpg",
+                    "promotion_start_time": "1750321769",
+                    "promotion_end_time": "1790047968",
+                    "is_show": 1,
+                    "promotion_activity": [
+                        {
+                            "promotion_id": "115",
+                            "tag_type": "limited_time_sale",
+                            "activity_price": "9900",
+                            "start_time": "1766073600",
+                            "end_time": "1767196799",
+                            "item_id": "11342",
+                            "item_store": 0
+                        }
+                    ],
+                    "member_preference": [],
+                    "kaquan_list": [
+                        {
+                            "card_id": "293",
+                            "card_type": "cash",
+                            "title": "\u6ee1100\u51cf10",
+                            "discount_rule": "\u6ee1100\u51cf10"
+                        }
+                    ],
+                    "is_stock": 1,
+                    "sort": "0"
+                },
+                {
+                    "item_id": "11340",
+                    "goods_id": "11340",
+                    "item_name": "\u674e\u5b811990\u674e\u5b8105\u6625\u5b63\u7537\u5973\u60c5\u4fa3\u5355\u80a9\u659c\u630e\u5305\u5927\u5bb9\u91cf\u65f6\u5c1a\u80f8\u5305ABDV071-",
+                    "regionauth_id": "14",
+                    "distributor_id": 1649,
+                    "distributor_status": 1,
+                    "goods_bn": "FVJJ096I_SP-ln1150705918906",
+                    "item_total_store": 6,
+                    "item_total_sales": 15,
+                    "pics": [
+                        "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/721e3cec754957fcef27fc99f80fa93820250619171807173519339495933050284259624840.jpg"
+                    ],
+                    "audit_status": "approved",
+                    "store": 6,
+                    "sales": 15,
+                    "price": "19900",
+                    "market_price": "19900",
+                    "activity_price": 200,
+                    "discount_rate": 2,
+                    "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/721e3cec754957fcef27fc99f80fa93820250619171807173519339495933050284259624840.jpg",
+                    "promotion_start_time": "1750321769",
+                    "promotion_end_time": "1790047968",
+                    "is_show": 1,
+                    "promotion_activity": [
+                        {
+                            "promotion_id": "115",
+                            "tag_type": "limited_time_sale",
+                            "activity_price": "9900",
+                            "start_time": "1766073600",
+                            "end_time": "1767196799",
+                            "item_id": "11340",
+                            "item_store": 1
+                        }
+                    ],
+                    "member_preference": [],
+                    "kaquan_list": [
+                        {
+                            "card_id": "293",
+                            "card_type": "cash",
+                            "title": "\u6ee1100\u51cf10",
+                            "discount_rule": "\u6ee1100\u51cf10"
+                        }
+                    ],
+                    "is_stock": 1,
+                    "sort": "0"
+                },
+                {
+                    "item_id": "11341",
+                    "goods_id": "11341",
+                    "item_name": "\u674e\u5b811990\u674e\u5b8105\u6625\u5b63\u7537\u5973\u60c5\u4fa3\u5355\u80a9\u659c\u630e\u5305\u5927\u5bb9\u91cf\u65f6\u5c1a\u80f8\u5305ABDV071-1",
+                    "regionauth_id": "14",
+                    "distributor_id": 1649,
+                    "distributor_status": 1,
+                    "goods_bn": "FVJJ096I_SP-ln8150706185458",
+                    "item_total_store": 26,
+                    "item_total_sales": 2,
+                    "pics": [
+                        "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/4952eaaab907856166154534b0fe0c7320250619171817173519339495933050284259624840.jpg"
+                    ],
+                    "audit_status": "approved",
+                    "store": 26,
+                    "sales": 2,
+                    "price": "700",
+                    "market_price": "19900",
+                    "activity_price": 100,
+                    "discount_rate": 1,
+                    "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/f21d7d3bee86f5d22b552502e764d32420250619171816173519339495933050284259624840.jpg",
+                    "promotion_start_time": "1750321769",
+                    "promotion_end_time": "1790047968",
+                    "is_show": 1,
+                    "promotion_activity": [
+                        {
+                            "promotion_id": "115",
+                            "tag_type": "limited_time_sale",
+                            "activity_price": "9900",
+                            "start_time": "1766073600",
+                            "end_time": "1767196799",
+                            "item_id": "11341",
+                            "item_store": 1
+                        }
+                    ],
+                    "member_preference": [],
+                    "kaquan_list": [
+                        {
+                            "card_id": "293",
+                            "card_type": "cash",
+                            "title": "\u6ee1100\u51cf10",
+                            "discount_rule": "\u6ee1100\u51cf10"
+                        }
+                    ],
+                    "is_stock": 1,
+                    "sort": "0"
+                },
+                {
+                    "item_id": "11330",
+                    "goods_id": "11330",
+                    "item_name": "\u674e\u5b811990\u301004\u65b0\u54c1\u3011\u674e\u5b81\u5065\u8eab\u7cfb\u5217\u5973\u5b50\u52a0\u7ed2\u4fdd\u6696\u5bbd\u677e\u5f00\u886b\u8fde\u5e3d\u536b\u8863AWDU56-4",
+                    "regionauth_id": "14",
+                    "distributor_id": 1649,
+                    "distributor_status": 1,
+                    "goods_bn": "FVJJ096I_SP-ln8150704473300",
+                    "item_total_store": 89,
+                    "item_total_sales": 1,
+                    "pics": [
+                        "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/95b7584661187f7ac6065ae3b66af75b20250619171756172984211345327491040463955576.jpg"
+                    ],
+                    "audit_status": "approved",
+                    "store": 89,
+                    "sales": 1,
+                    "price": "39800",
+                    "market_price": "39900",
+                    "activity_price": 400,
+                    "discount_rate": 2,
+                    "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/d06638611c0ed8ffad02637f5a3c781420250619171755172984211345327491040463955576.jpg",
+                    "promotion_start_time": "1750321769",
+                    "promotion_end_time": "1790047968",
+                    "is_show": 1,
+                    "promotion_activity": [
+                        {
+                            "promotion_id": "115",
+                            "tag_type": "limited_time_sale",
+                            "activity_price": "9900",
+                            "start_time": "1766073600",
+                            "end_time": "1767196799",
+                            "item_id": "11330",
+                            "item_store": 1
+                        }
+                    ],
+                    "member_preference": [],
+                    "kaquan_list": [
+                        {
+                            "card_id": "293",
+                            "card_type": "cash",
+                            "title": "\u6ee1100\u51cf10",
+                            "discount_rule": "\u6ee1100\u51cf10"
+                        }
+                    ],
+                    "is_stock": 1,
+                    "sort": "0"
+                },
+                {
+                    "item_id": "11348",
+                    "goods_id": "11348",
+                    "item_name": "\u674e\u5b811990\u674e\u5b81\u7537\u5b50\u536b\u88e405\u6625\u5b63\u8fd0\u52a8\u4f11\u95f2\u51c9\u611f\u8212\u9002\u767e\u642d\u8fd0\u52a8\u957f\u88e4AKLV97-1",
+                    "regionauth_id": "14",
+                    "distributor_id": 1649,
+                    "distributor_status": 1,
+                    "goods_bn": "FVJJ096I_SP-ln3150706871720",
+                    "item_total_store": 66,
+                    "item_total_sales": 0,
+                    "pics": [
+                        "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/23\/f0bc3c11f0bde6a9ae441f5c162506461750668953925.WechatIMG719.jpg"
+                    ],
+                    "audit_status": "approved",
+                    "store": 66,
+                    "sales": 0,
+                    "price": "24900",
+                    "market_price": "24900",
+                    "activity_price": 300,
+                    "discount_rate": 2,
+                    "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/23\/f0bc3c11f0bde6a9ae441f5c162506461750668953925.WechatIMG719.jpg",
+                    "promotion_start_time": "1750321769",
+                    "promotion_end_time": "1790047968",
+                    "is_show": 1,
+                    "promotion_activity": [
+                        {
+                            "promotion_id": "115",
+                            "tag_type": "limited_time_sale",
+                            "activity_price": "9900",
+                            "start_time": "1766073600",
+                            "end_time": "1767196799",
+                            "item_id": "11348",
+                            "item_store": 1
+                        }
+                    ],
+                    "member_preference": [],
+                    "kaquan_list": [
+                        {
+                            "card_id": "293",
+                            "card_type": "cash",
+                            "title": "\u6ee1100\u51cf10",
+                            "discount_rule": "\u6ee1100\u51cf10"
+                        }
+                    ],
+                    "is_stock": 1,
+                    "sort": "0"
+                }
+            ],
+            "newFilter": {
+                "company_id": "1",
+                "audit_status": "approved",
+                "approve_status": "onsale",
+                "item_id": [
+                    "11405",
+                    "11353",
+                    "11352",
+                    "11351",
+                    "11350",
+                    "11349",
+                    "11348",
+                    "11347",
+                    "11346",
+                    "11345",
+                    "11344",
+                    "11343",
+                    "11342",
+                    "11341",
+                    "11340",
+                    "11333",
+                    "11332",
+                    "11331",
+                    "11330"
+                ],
+                "regionauth_id": 14
+            }
+        }
+    }
+}

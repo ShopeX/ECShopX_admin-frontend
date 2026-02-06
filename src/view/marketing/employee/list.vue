@@ -128,7 +128,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
               return (
                 row.status != 'cancel' &&
@@ -147,7 +147,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'cancel' || row.status == 'over'
             },
             action: {
@@ -202,7 +202,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'not_started'
             },
             action: {
@@ -218,7 +218,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'warm_up'
             },
             action: {
@@ -234,7 +234,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'pending'
             },
             action: {
@@ -250,7 +250,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
               return row.status == 'ongoing' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
@@ -267,7 +267,7 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
               return (
                 (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') &&

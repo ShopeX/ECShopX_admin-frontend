@@ -148,7 +148,7 @@ export default {
             key: 'settlement',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               if (this.IS_ADMIN() && row.statement_status == 'confirmed') {
                 return true
               }

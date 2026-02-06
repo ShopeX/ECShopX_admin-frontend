@@ -83,7 +83,7 @@ export default {
   created() {
     // this.fetch()
   },
-  methods: {    
+  methods: {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {

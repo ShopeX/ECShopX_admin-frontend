@@ -13,43 +13,29 @@ const routes = [
       keepAlive: true,
       title: '应用'
     },
-    name: 'supplierapplications',
+    name: 'supplierApplications',
     path: '/supplier/applications',
     children: [
       {
-        name: 'bspayUser',
-        path: 'bspay/user',
-        component: () => import('@/view/mall/marketing/huifuBspay'),
+        name: 'dougongUserManage',
+        path: 'dougong/user-manage',
+        component: () => import('@/view/dealer/bspay_create_user'),
         meta: {
-          aliasName: 'supplierapplicationsbspayuser_audit',
+          aliasName: 'user',
           icon: 'icon-user',
           title: '进件管理',
-          permissions: [
-            'supplierapplications.supplierapplicationsbspay.supplierapplicationsbspayuser_audit'
-          ]
-        },
-        children: [
-          {
-            path: 'approve/:order_id',
-            component: () => import('@/view/mall/marketing/huifuBspay/approve'),
-            meta: {
-              title: '进件管理详情',
-              hidden: true
-            }
-          }
-        ]
+          permissions: ['supplierapplications.supplierapplicationsbspay.user']
+        }
       },
       {
-        name: 'bspayTrades',
-        path: 'bspay/trades',
+        name: 'dougongSeparateAccountDetail',
+        path: 'dougong/separate-account-detail',
         component: () => import('@/view/mall/bspay_sub_account/sub_account'),
         meta: {
-          aliasName: 'supplierapplicationsbspaytrades',
+          aliasName: 'trades',
           icon: 'icon-trades',
           title: '分账明细',
-          permissions: [
-            'supplierapplications.supplierapplicationsbspay.supplierapplicationsbspaytrades'
-          ]
+          permissions: ['supplierapplications.supplierapplicationsbspay.trades']
         },
         children: [
           {

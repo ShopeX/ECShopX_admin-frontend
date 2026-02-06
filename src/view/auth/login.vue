@@ -38,7 +38,7 @@
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    >
+                    />
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
@@ -56,7 +56,7 @@
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    >
+                    />
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
@@ -75,7 +75,7 @@
                     :src="imageData"
                     style="width: auto; height: 38px; cursor: pointer"
                     @click="_getImagesCode"
-                  >
+                  />
                 </el-input>
               </el-form-item>
             </div>
@@ -159,7 +159,7 @@ export default {
   mounted() {
     window.addEventListener('resize', this.fnSize())
     this.init()
-    this.$api.login.getAuthorizeLeve().then(res => {
+    this.$api.login.getAuthorizeLeve().then((res) => {
       this.level = res.level
       if (this.level === 'img_code') {
         this._getImagesCode()
@@ -171,12 +171,7 @@ export default {
     window.removeEventListener('resize', this.fnSize)
   },
   methods: {
-    ...mapMutations([
-      'SET_TOKEN',
-      'SET_TOKEN_EXP',
-      'SET_USERINFO',
-      'SET_LOGIN_TYPE',
-    ]),
+    ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
     init() {
       this.loginType = this.$route.meta.type
       this.getBgImg()
@@ -185,7 +180,7 @@ export default {
     _getImagesCode() {
       if (this.checkCode) return
       this.checkCode = true
-      this.$api.login.getImageCode({ type: 'login' }).then(res => {
+      this.$api.login.getImageCode({ type: 'login' }).then((res) => {
         let { imageData, imageToken } = res
         this.imageData = imageData
         this.imageToken = imageToken
@@ -244,7 +239,7 @@ export default {
       this.size = document.body.clientHeight
     },
     fnLogin(formName, agreement_id) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const params = {
             username: this.form.account,

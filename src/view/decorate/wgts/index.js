@@ -2,54 +2,55 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-import { VERSION_PLATFORM } from '@/utils'
+import { VERSION_PLATFORM, VERSION_STANDARD } from '@/utils'
 import WgtSlider from './wgt_slider'
-import WgtGoodsGrid from './wgt_goodsGrid'
 import WgtHotZone from './wgt_hotzone'
 import WgtFilm from './wgt_film'
 import WgtCoupon from './wgt_coupon'
-import WgtShowCase from './wgt_showcase'
-import WgtGoodsGridTab from './wgt_goodsGridTab'
-import WgtStore from './wgt_store'
-import WgtSearch from './wgt_search'
-import WgtHeadline from './wgt_headline'
-import WgtHotTopic from './wgt_hotTopic'
-import WgtGoodsScroll from './wgt_goodsScroll'
+import WgtShop from './wgt_shop'
 import WgtMarquees from './wgt_marquees'
-import WgtFloorImg from './wgt_floorImg'
 import WgtNearbyShop from './wgt_nearbyShop'
-import WgtImageNavigation from './wgt_imgNavigation'
 import WgtGoodsCard from './wgt_goodsCard'
 import WgtWriting from './wgt_writing'
 import WgtHeading from './wgt_heading'
 import WgtFullSlider from './wgt_fullSlider'
 import wgtOrderNavigation from './wgt_orderNavigation'
+import WgtStoreAlphabet from './wgt_store-alphabet'
+import WgtClassify from './wgt_classify'
+// import WgtShelves from './wgt_shelves'
+import WgtLocationModule from './wgt_locationModule'
+import WgtContentPartition from './wgt_contentPartition'
+// import WgtSpeedkill from './wgt_speedkill' // 秒杀 - 已注释
+// import WgtGroup from './wgt_group' // 拼团 - 已注释
+// import WgtRanking from './wgt_ranking' // 品类榜单 - 已注释
+import WgtHotRanking from './wgt_hotranking'
+import WgtGoods from './wgt_goods'
+console.log('VERSION_STANDARD', VERSION_STANDARD())
 
 // 首页装修
 let SCENE_1001 = {
   WgtSlider,
-  WgtGoodsGrid,
   WgtHotZone,
   WgtFilm,
   WgtCoupon,
-  WgtShowCase,
-  WgtGoodsGridTab,
-  WgtSearch,
-  WgtHeadline,
-  WgtHotTopic,
-  WgtGoodsScroll,
   WgtMarquees,
-  WgtFloorImg,
-  WgtImageNavigation,
   WgtFullSlider,
-  wgtOrderNavigation
+  wgtOrderNavigation,
+  WgtClassify,
+  WgtLocationModule,
+  WgtContentPartition,
+  // WgtSpeedkill, // 秒杀 - 已注释
+  // WgtGroup, // 拼团 - 已注释
+  // WgtRanking, // 品类榜单 - 已注释
+  WgtHotRanking,
+  WgtGoods
 }
 
+// 店铺挂件仅 BBC 展示，B2C 不展示
 if (VERSION_PLATFORM()) {
   SCENE_1001 = {
     ...SCENE_1001,
-    WgtStore,
-    WgtNearbyShop
+    WgtShop
   }
 }
 
@@ -57,28 +58,19 @@ if (VERSION_PLATFORM()) {
 const SCENE_1002 = {
   WgtSlider,
   WgtFilm,
-  WgtHeadline,
   WgtHotZone
 }
 
-// 店铺装修
+// 店铺装修（店铺挂件仅 BBC 展示）
 const SCENE_1003 = {
   WgtSlider,
-  WgtGoodsGrid,
   WgtHotZone,
   WgtFilm,
   WgtCoupon,
-  WgtShowCase,
-  WgtGoodsGridTab,
-  WgtSearch,
-  WgtHeadline,
-  WgtHotTopic,
-  WgtGoodsScroll,
   WgtMarquees,
-  WgtFloorImg,
-  WgtImageNavigation,
-  WgtStore,
-  WgtNearbyShop
+  ...(!VERSION_STANDARD() ? { WgtShop } : {}),
+  WgtNearbyShop,
+  WgtClassify
 }
 
 // 自定义页面装修
@@ -98,10 +90,7 @@ const SCENE_1006 = {
   WgtSlider,
   WgtHotZone,
   WgtFilm,
-  WgtCoupon,
-  WgtShowCase,
-  WgtSearch,
-  WgtHeadline
+  WgtCoupon
 }
 
 // 个人中心
@@ -113,11 +102,20 @@ const SCENE_1008 = {
   wgtOrderNavigation
 }
 
-const SCENE_1009 = {
-  WgtSearch,
+// 分类页面（storeAlphabet 仅在此页可用；店铺挂件仅 BBC 展示）
+const SCENE_1007 = {
   WgtSlider,
   WgtHotZone,
-  WgtGoodsGrid
+  WgtFilm,
+  ...(!VERSION_STANDARD() ? { WgtShop } : {}),
+  WgtStoreAlphabet,
+  WgtClassify
+  // WgtTask
+}
+
+const SCENE_1009 = {
+  WgtSlider,
+  WgtHotZone
 }
 
 export default {
@@ -127,6 +125,7 @@ export default {
   1004: SCENE_1004,
   1005: SCENE_1005,
   1006: SCENE_1006,
+  1007: SCENE_1007,
   1008: SCENE_1008,
   1009: SCENE_1009
 }

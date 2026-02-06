@@ -59,7 +59,7 @@ export default {
         is_open: this.form.is_open,
         multiple: this.form.multiple
       }
-      setRechargeMultiple(form).then(res => {
+      setRechargeMultiple(form).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -69,7 +69,7 @@ export default {
     },
     getMultiple() {
       this.loading = true
-      getRechargeMultipleByCompanyId().then(res => {
+      getRechargeMultipleByCompanyId().then((res) => {
         this.form.is_open = res.data.data.is_open
         this.form.multiple = res.data.data.multiple
         this.form.datetimerange = [

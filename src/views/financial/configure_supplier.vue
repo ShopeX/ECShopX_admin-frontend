@@ -12,56 +12,55 @@
 }
 </style>
 <template>
-   <SpPage>
+  <SpPage>
     <div>
-    <el-tabs type="card">
-      <el-tab-pane label="结算周期配置">
-        <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
-      </el-tab-pane>
-      <el-tab-pane label="供应商结算周期">
-        <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-          <!-- <SpFilterFormItem prop="mobile" label="供应商:">
+      <el-tabs type="card">
+        <el-tab-pane label="结算周期配置">
+          <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
+        </el-tab-pane>
+        <el-tab-pane label="供应商结算周期">
+          <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+            <!-- <SpFilterFormItem prop="mobile" label="供应商:">
             <el-input v-model="formQuery.supplier_name" placeholder="请输入供应商名称" />
           </SpFilterFormItem> -->
-          <SpFilterFormItem prop="supplier_id" label="供应商:">
-          <SpSelectSupplier v-model="formQuery.supplier_id" clearable placeholder="请选择" />
-        </SpFilterFormItem>
-        </SpFilterForm>
-        <div class="action-container">
-          <el-button type="primary" @click="addItems"> 添加供应商配置 </el-button>
+            <SpFilterFormItem prop="supplier_id" label="供应商:">
+              <SpSelectSupplier v-model="formQuery.supplier_id" clearable placeholder="请选择" />
+            </SpFilterFormItem>
+          </SpFilterForm>
+          <div class="action-container">
+            <el-button type="primary" @click="addItems"> 添加供应商配置 </el-button>
           </div>
-        <SpFinder
-          ref="finder"
-          no-selection
-          :setting="setting"
-          :hooks="{
-            beforeSearch: beforeSearch
-          }"
-          url="/statement/period/supplier/setting"
-        />
-      </el-tab-pane>
-    </el-tabs>
+          <SpFinder
+            ref="finder"
+            no-selection
+            :setting="setting"
+            :hooks="{
+              beforeSearch: beforeSearch
+            }"
+            url="/statement/period/supplier/setting"
+          />
+        </el-tab-pane>
+      </el-tabs>
 
-    <SpDialog
-      ref="addDialogRef"
-      v-model="addDialog"
-      :title="`${this.addForm.id ? '供应商编辑' : '添加供应商配置'}`"
-      :form="addForm"
-      :form-list="addFormList"
-      @onSubmit="onAddSubmit"
-    />
-  </div>
-   </SpPage>
-
+      <SpDialog
+        ref="addDialogRef"
+        v-model="addDialog"
+        :title="`${this.addForm.id ? '供应商编辑' : '添加供应商配置'}`"
+        :form="addForm"
+        :form-list="addFormList"
+        @onSubmit="onAddSubmit"
+      />
+    </div>
+  </SpPage>
 </template>
 
 <script>
 import SettlementCycle from './components/SettlementCycle.vue'
 import { createSetting } from '@shopex-ui/finder'
-import SpSelectSupplier from "../../components/sp-select-supplier/index";
+import SpSelectSupplier from '../../components/sp-select-supplier/index'
 export default {
   name: '',
-  components: {SpSelectSupplier},
+  components: { SpSelectSupplier },
   data() {
     return {
       merchant_type: 'supplier',
@@ -92,7 +91,7 @@ export default {
         supplier_name: '',
         distributor_id: '',
         merchant_id: '',
-        supplier_id:''
+        supplier_id: ''
       },
       setting: createSetting({
         actions: [
@@ -187,8 +186,7 @@ export default {
             }
           }
         }
-      ],
-      
+      ]
     }
   },
   created() {
@@ -205,15 +203,17 @@ export default {
       this.addForm.id = ''
       this.addForm.distributor_id = ''
       this.addForm.cycleData = {
-          cycle: '',
-          unit: ''
+        cycle: '',
+        unit: ''
       }
       // this.addFormList[0].isShow = true
       // this.addFormList[1].isShow = false
       this.addDialog = true
     },
     async fetch() {
-      const { period } = await this.$api.financial.getDefaultSetting({merchant_type: this.merchant_type});
+      const { period } = await this.$api.financial.getDefaultSetting({
+        merchant_type: this.merchant_type
+      })
       if (period.length == 2) {
         this.form.cycleData = {
           cycle: period[0],

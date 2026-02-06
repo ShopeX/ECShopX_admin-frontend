@@ -154,7 +154,7 @@ export default {
   },
   computed: {
     checkedVideoList() {
-      return this.checked.filter(item => item.media_id)
+      return this.checked.filter((item) => item.media_id)
     }
   },
   watch: {
@@ -179,10 +179,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          res => e.onSuccess(res),
-          err => e.onError(err)
+          (res) => e.onSuccess(res),
+          (err) => e.onError(err)
         )
-        .catch(err => e.onError(err))
+        .catch((err) => e.onError(err))
     },
     handleVideoSuccess(res, file) {
       let uploadParams = {
@@ -195,7 +195,7 @@ export default {
         storage: 'videos' //视频id必填
       }
       // if (res.key) {
-      uploadQiniuVideo(uploadParams).then(res => {
+      uploadQiniuVideo(uploadParams).then((res) => {
         this.$message({
           message: '上传成功',
           type: 'success',
@@ -222,7 +222,7 @@ export default {
     },
     showVideos() {
       this.visible = true
-      this.temp = this.checked.map(item => item.media_id)
+      this.temp = this.checked.map((item) => item.media_id)
       if (this.$store.getters.login_type == 'distributor') {
         this.activeName = 'localvideos'
         this.fetchLocalVideos()
@@ -262,7 +262,7 @@ export default {
     fetchLocalVideos() {
       this.localloading = true
       getQiniuVideoList(this.localparams)
-        .then(response => {
+        .then((response) => {
           this.localvideoList = response.data.data.list
           this.localloading = false
         })
@@ -313,7 +313,7 @@ export default {
       if (this.checked) {
         this.visible = false
         let arr = []
-        this.localvideoList.forEach(item => {
+        this.localvideoList.forEach((item) => {
           if (this.temp.indexOf(item.url) !== -1) {
             arr.push({
               desc: item.brief,

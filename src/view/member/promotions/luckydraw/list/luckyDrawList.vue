@@ -16,7 +16,7 @@
       <el-table-column prop="goods_info.itemName" label="商品名称" />
       <el-table-column label="活动有效期" width="160">
         <template slot-scope="scope">
-          {{ scope.row.start_time | datetime }}<br>{{ scope.row.end_time | datetime }}
+          {{ scope.row.start_time | datetime }}<br />{{ scope.row.end_time | datetime }}
         </template>
       </el-table-column>
       <el-table-column label="单价(积分/现金)" width="120">
@@ -44,9 +44,9 @@
             trigger="hover"
           >
             <span v-if="scope.row.third_info.name">彩种:{{ scope.row.third_info.name }}</span
-            ><br>
+            ><br />
             <span v-if="scope.row.third_info.period">期数:{{ scope.row.third_info.period }}</span
-            ><br>
+            ><br />
             <span v-if="scope.row.third_info.number">号码:{{ scope.row.third_info.number }}</span>
             <el-tag slot="reference" type="danger">
               {{ scope.row.lucky_code }}
@@ -150,12 +150,12 @@ export default {
     getLuckyDrawList() {
       this.loading = true
       getLuckyDrawList(this.params)
-        .then(response => {
+        .then((response) => {
           this.luckydrawList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -182,7 +182,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          finishLuckyDrawActivity(row.luckydraw_id).then(res => {
+          finishLuckyDrawActivity(row.luckydraw_id).then((res) => {
             this.getLuckyDrawList()
           })
         })
@@ -200,7 +200,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteLuckyDrawActivity(row.luckydraw_id).then(res => {
+          deleteLuckyDrawActivity(row.luckydraw_id).then((res) => {
             this.getLuckyDrawList()
           })
         })
@@ -212,7 +212,7 @@ export default {
         })
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

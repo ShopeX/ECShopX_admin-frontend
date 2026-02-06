@@ -90,7 +90,7 @@ export default {
     },
     getDataList() {
       this.loading = true
-      listCheckInList(this.params).then(response => {
+      listCheckInList(this.params).then((response) => {
         this.checkInList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

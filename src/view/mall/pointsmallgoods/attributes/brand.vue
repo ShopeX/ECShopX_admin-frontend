@@ -77,7 +77,7 @@
         <el-form-item label="品牌logo">
           <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
           <div class="upload-box" @click="handleImgPicker">
-            <img v-if="form.image_url" :src="form.image_url" class="avatar">
+            <img v-if="form.image_url" :src="form.image_url" class="avatar" />
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
@@ -142,13 +142,13 @@ export default {
     },
     handleDelete(data) {
       this.$confirm('确认删除该品牌？')
-        .then(_ => {
-          deleteGoodsAttr(data.row.attribute_id).then(res => {
+        .then((_) => {
+          deleteGoodsAttr(data.row.attribute_id).then((res) => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     handleNew() {
       this.show_sideBar = true
@@ -174,14 +174,14 @@ export default {
     save() {
       // 如果没有id，则表示为新增
       if (!this.form.attribute_id) {
-        addGoodsAttr(this.form).then(res => {
+        addGoodsAttr(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateGoodsAttr(this.form.attribute_id, this.form).then(res => {
+        updateGoodsAttr(this.form.attribute_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
@@ -189,7 +189,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getGoodsAttr(this.params).then(res => {
+      getGoodsAttr(this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

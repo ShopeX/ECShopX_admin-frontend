@@ -41,21 +41,21 @@ export default {
       this.getConfig()
     },
     getConfig() {
-      getWebUrlSetting().then(response => {
+      getWebUrlSetting().then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
       this.loading = true
       saveWebUrlSetting(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '配置成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

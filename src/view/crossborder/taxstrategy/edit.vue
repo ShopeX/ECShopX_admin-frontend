@@ -125,7 +125,7 @@ export default {
     getInfo() {
       this.submitLoading = true
       this.loader = true
-      getTaxstrategyInfo(this.taxstrategy_id, {}).then(res => {
+      getTaxstrategyInfo(this.taxstrategy_id, {}).then((res) => {
         this.submitLoading = false
         this.loader = false
         this.form = {
@@ -161,13 +161,13 @@ export default {
     isAdd() {
       const _this = this
       const _taxContent = []
-      this.form.taxstrategy_content.forEach(item => {
+      this.form.taxstrategy_content.forEach((item) => {
         _taxContent.push(JSON.stringify(item))
       })
       addTaxstrategy({
         ...this.form,
         taxstrategy_content: _taxContent
-      }).then(res => {
+      }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.submitLoading = false
         this.loader = false
@@ -179,13 +179,13 @@ export default {
     isUpdate() {
       const _this = this
       const _taxContent = []
-      this.form.taxstrategy_content.forEach(item => {
+      this.form.taxstrategy_content.forEach((item) => {
         _taxContent.push(JSON.stringify(item))
       })
       updateTaxstrategy(this.taxstrategy_id, {
         ...this.form,
         taxstrategy_content: _taxContent
-      }).then(res => {
+      }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.submitLoading = false
         this.loader = false

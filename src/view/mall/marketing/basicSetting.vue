@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     save() {
-      saveBasicConfig(this.form).then(res => {
+      saveBasicConfig(this.form).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -84,7 +84,7 @@ export default {
     },
     getData() {
       this.loading = true
-      getBasicConfig().then(res => {
+      getBasicConfig().then((res) => {
         if (res.data.data) {
           this.form = res.data.data
           if (this.form.limit_rebate) {

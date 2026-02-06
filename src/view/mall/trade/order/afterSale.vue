@@ -38,12 +38,7 @@
         >
           取消
         </el-button>
-        <el-button
-          type="primary"
-          @click="submitRefund"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="submitRefund"> 保存 </el-button>
       </div>
     </template>
     <!-- form: {{ form }} -->
@@ -104,7 +99,7 @@ export default {
             { label: 'ONLY_REFUND', name: '仅退款（无需退货）' },
             { label: 'REFUND_GOODS', name: '退货退款' }
           ],
-          onChange: e => {
+          onChange: (e) => {
             if (e == 'REFUND_GOODS') {
               this.formList[6].isShow = true
             } else {
@@ -124,9 +119,9 @@ export default {
           key: 'items',
           component: () => (
             <CompGoodsList
-              ref="compGoodsRef"
+              ref='compGoodsRef'
               value={this.orderInfo}
-              on-onChange={e => {
+              on-onChange={(e) => {
                 this.form.items = e
                 this.$refs['compRefundRef'].getTotalFee()
               }}
@@ -146,15 +141,19 @@ export default {
           component: () => (
             <CompRefundPoint
               value={this.orderInfo}
-              on-onChange={e => {
+              on-onChange={(e) => {
                 this.form.refund_point = e
               }}
             />
           ),
           validator: (rule, value, callback) => {
-            if (this.form.refund_point > this.orderInfo?.refund_point_amount /100) {
+            if (this.form.refund_point > this.orderInfo?.refund_point_amount / 100) {
               callback('退积分超过可退积分')
-            } else if (this.form.refund_point === '' || this.form.refund_point === null || this.form.refund_point === undefined) {
+            } else if (
+              this.form.refund_point === '' ||
+              this.form.refund_point === null ||
+              this.form.refund_point === undefined
+            ) {
               callback('退积分不能为空')
             } else {
               callback()
@@ -166,12 +165,12 @@ export default {
           key: 'refund_fee',
           component: () => (
             <CompRefundAmount
-              ref="compRefundRef"
+              ref='compRefundRef'
               value={this.orderInfo}
-              on-onChangeFee={e => {
+              on-onChangeFee={(e) => {
                 this.form.refund_fee = e
               }}
-              on-onChange={e => {
+              on-onChange={(e) => {
                 this.$refs['compGoodsRef'].setSelectAllGoods()
                 {
                   /* this.form.refund_fee = e */
@@ -180,7 +179,11 @@ export default {
             />
           ),
           validator: (rule, value, callback) => {
-            if (this.form.refund_fee === '' || this.form.refund_fee === null || this.form.refund_fee === undefined) {
+            if (
+              this.form.refund_fee === '' ||
+              this.form.refund_fee === null ||
+              this.form.refund_fee === undefined
+            ) {
               callback('退款金额不能为空')
             } else if (
               parseFloat(this.form.refund_fee) > parseFloat(this.$refs['compRefundRef'].refundFee)
@@ -206,9 +209,16 @@ export default {
           },
           validator: (rule, value, callback) => {
             console.log(this.form.freight)
-            if (this.form.freight === '' || this.form.freight === null || this.form.freight === undefined) {
+            if (
+              this.form.freight === '' ||
+              this.form.freight === null ||
+              this.form.freight === undefined
+            ) {
               callback('退运费不能为空')
-            } else if (parseFloat(this.form.freight) > parseFloat(this.orderInfo?.refund_freight_amount /100)) {
+            } else if (
+              parseFloat(this.form.freight) >
+              parseFloat(this.orderInfo?.refund_freight_amount / 100)
+            ) {
               callback('退运费超过可退运费')
             } else {
               callback()
@@ -251,7 +261,7 @@ export default {
   created() {},
   methods: {
     onLoad({ orderInfo }) {
-      orderInfo.items = orderInfo.items.map(item => {
+      orderInfo.items = orderInfo.items.map((item) => {
         return {
           ...item,
           refundNum: item.left_aftersales_num,
@@ -261,12 +271,12 @@ export default {
 
       this.orderInfo = orderInfo
     },
-    async  submitRefund() {
+    async submitRefund() {
       try {
         await this.$refs['form'].handleSubmit()
       } catch (error) {
         console.log(error)
-        const message = error.items?.[0]?.message 
+        const message = error.items?.[0]?.message
         this.$message.error(message)
       }
     },
@@ -276,7 +286,7 @@ export default {
         cancelButtonText: '取消'
       })
       const { id: order_id } = this.$route.params
-      const reason = REASONS.find(item => item.value == this.form.reason).title
+      const reason = REASONS.find((item) => item.value == this.form.reason).title
       const params = {
         order_id,
         aftersales_type: this.form.aftersales_type,

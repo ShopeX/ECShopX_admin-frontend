@@ -43,9 +43,55 @@
     &.padded {
       padding: 0 10px;
     }
+    .slider-item-content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .image-item-img {
+      width: 100%;
+      height: 100%;
+    }
+    .image-item-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay-item {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .overlay-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 20;
+      pointer-events: auto;
+      .over-lay {
+        width: 100%;
+        height: 100%;
+        &.transparent-transition {
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+        &.transparent-transition-active {
+          opacity: 1;
+        }
+      }
+    }
   }
   .placeholder-item {
     visibility: hidden;
+  }
+  /* 第一屏为视频时占位块：宽 100% 高按 9:16，撑开 .wgt-bd */
+  .placeholder-video-ratio {
+    width: 100%;
+    padding-bottom: calc(16 / 9 * 100%);
+    height: 0;
+    display: block;
   }
   .slider-container {
     position: absolute;

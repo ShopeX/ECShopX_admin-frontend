@@ -18,6 +18,7 @@
       'wgt-heading': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div
       class="wgt-bd"
@@ -34,6 +35,7 @@
 </template>
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Heading',
   wgtName: '标题',
@@ -44,6 +46,9 @@ export default {
     value: [Object, Array]
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     computedStyle() {
       return {
         'text-align': this.value.align,

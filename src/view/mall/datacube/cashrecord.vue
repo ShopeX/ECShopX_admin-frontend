@@ -268,7 +268,7 @@ export default {
           if (minDate && !maxDate) this.dateRange[0] = minDate
           if (maxDate) this.dateRange[1] = maxDate
         },
-        disabledDate: time => {
+        disabledDate: (time) => {
           if (this.dateRange) {
             let currentTime = this.dateRange[0]
             let threeMonths = 60 * 60 * 1000 * 24 * 90
@@ -324,7 +324,7 @@ export default {
         return
       }
       const { withdrawal_amount } = this.topforms
-      this.$refs.topforms.validate(valid => {
+      this.$refs.topforms.validate((valid) => {
         if (valid) {
           this.$confirm(
             `<div style='margin-left:45px'>
@@ -338,7 +338,7 @@ export default {
               dangerouslyUseHTMLString: true
             }
           ).then(() => {
-            onSumbitsData({ withdrawal_amount }).then(res => {
+            onSumbitsData({ withdrawal_amount }).then((res) => {
               this.$message({ type: 'success', message: '提现成功!' })
             })
           })
@@ -358,7 +358,7 @@ export default {
     },
     getCompanyDataList() {
       this.dataSource.loading = true
-      withdrawgetList({ ...this.formData, ...this.params }).then(res => {
+      withdrawgetList({ ...this.formData, ...this.params }).then((res) => {
         // 列表和统计
         this.allListData = res.data.data.list.data
         this.allAccountList = res.data.data.total
@@ -369,11 +369,11 @@ export default {
         }
         this.loading = false
       })
-      getStoreAccount({ ...this.formData, ...this.params }).then(res => {
+      getStoreAccount({ ...this.formData, ...this.params }).then((res) => {
         // 获取当前可提现金额
         this.withdrawal_balance = res.data.data.totle.withdrawal_balance
       })
-      getWithdrawset().then(res => {
+      getWithdrawset().then((res) => {
         // 获取提现限额和提现方式
         this.distributormoneyList = res.data.data
       })
@@ -412,7 +412,7 @@ export default {
     },
     onExportExcel() {
       // 导出
-      onCashExportData(this.formData).then(response => {
+      onCashExportData(this.formData).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message({

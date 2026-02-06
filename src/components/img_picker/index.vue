@@ -21,7 +21,7 @@
             @mouseenter="picsEnter(index)"
             @mouseleave="picsLeave"
           >
-            <img :src="wximageurl + item">
+            <img :src="wximageurl + item" />
             <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
               <!-- <div
                 class="el-icon-delete"
@@ -124,7 +124,7 @@ export default {
           return false
         } else {
           if (data.length != 0) {
-            data.forEach(data => {
+            data.forEach((data) => {
               if (data && data.url !== '') {
                 this.pics.push(data.url)
                 this.picsOldLen = this.pics.length

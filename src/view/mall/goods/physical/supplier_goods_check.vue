@@ -505,12 +505,12 @@ export default {
           component: ({ key }, value) => (
             <div>
               {this.tagList
-                .filter(item => !!item.selected)
-                .map(item => (
+                .filter((item) => !!item.selected)
+                .map((item) => (
                   <el-tag
                     closable
                     on-close={() => (item.selected = false)}
-                    style="margin: 0 10px 10px 0;"
+                    style='margin: 0 10px 10px 0;'
                   >
                     {item.tag_name}
                   </el-tag>
@@ -524,12 +524,12 @@ export default {
           component: ({ key }, value) => (
             <div>
               {this.tagList
-                .filter(item => !item.selected)
-                .map(item => (
+                .filter((item) => !item.selected)
+                .map((item) => (
                   <el-button
                     plain
-                    size="mini"
-                    class="tag-item"
+                    size='mini'
+                    class='tag-item'
                     onClick={() => {
                       item.selected = true
                     }}
@@ -579,7 +579,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesListavailable.map(item => (
+              {this.templatesListavailable.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -598,9 +598,9 @@ export default {
           component: ({ key }, value) => (
             <el-input-number
               v-model={value[key]}
-              controls-position="right"
+              controls-position='right'
               min={0}
-              style="width: 120px"
+              style='width: 120px'
             />
           )
         }
@@ -616,7 +616,7 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.audit_status == 'processing'
             },
             action: {
@@ -670,37 +670,37 @@ export default {
             render: (h, scope) => {
               return (
                 <div>
-                  <div style="white-space: normal;">
+                  <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
                       <el-tag
-                        size="mini"
-                        effect="plain"
-                        type="primary"
-                        style="margin-left: 4px; cursor: default;"
+                        size='mini'
+                        effect='plain'
+                        type='primary'
+                        style='margin-left: 4px; cursor: default;'
                         on-click={() => {
                           this.handleViewSkuInfo(scope.row)
                         }}
                       >
                         多
                         <i
-                          class="ecx-icon icon-sousuo"
-                          style="font-size: 12px; margin-left: 2px;"
+                          class='ecx-icon icon-sousuo'
+                          style='font-size: 12px; margin-left: 2px;'
                         ></i>
                       </el-tag>
                     )}
                   </div>
-                  <div style="color: #666;">
+                  <div style='color: #666;'>
                     {`SPU编码：${scope.row.goods_bn}`}
-                    <el-tooltip effect="dark" content="复制" placement="top-start">
+                    <el-tooltip effect='dark' content='复制' placement='top-start'>
                       <i
                         on-click={() => {
                           this.$copyText(scope.row.goods_bn).then(() => {
                             this.$message.success('复制成功')
                           })
                         }}
-                        class="el-icon-document-copy"
-                        style="margin-left: 4px;"
+                        class='el-icon-document-copy'
+                        style='margin-left: 4px;'
                       />
                     </el-tooltip>
                   </div>
@@ -714,8 +714,8 @@ export default {
             name: '标签',
             key: 'tagList',
             render: (h, scope) => (
-              <div style="white-space: normal;">
-                {scope.row.tagList.map(item => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList.map((item) => (
                   <span
                     style={{
                       color: item.font_color,
@@ -870,7 +870,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
-      this.templatesListavailable = list.filter(item => item.status)
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类
@@ -887,7 +887,7 @@ export default {
       this.showMemberPriceDrawer = true
       const specItems = []
       const { list } = await this.$api.goods.getGoodsPrice(item_id)
-      list.forEach(item => {
+      list.forEach((item) => {
         specItems.push({
           item_id: item.item_id,
           item_spec_desc: item.item_spec_desc || item.itemName,
@@ -914,7 +914,7 @@ export default {
         pageSize: 1000
       })
       this.showItemStoreDrawer = true
-      this.storeItemsList = list.map(item => {
+      this.storeItemsList = list.map((item) => {
         return {
           item_id: item.item_id,
           store: item.store,
@@ -928,7 +928,7 @@ export default {
         page: 1,
         pageSize: 500
       })
-      this.tagList = list.map(item => {
+      this.tagList = list.map((item) => {
         return {
           ...item,
           selected: false
@@ -942,13 +942,13 @@ export default {
       }
       console.log('specItems', this.specItems)
       let skus = {}
-      this.specItems.forEach(item => {
+      this.specItems.forEach((item) => {
         let grade = {}
-        item.grade.forEach(child => {
+        item.grade.forEach((child) => {
           Object.assign(grade, { [child.vip_grade_id]: child.mprice > 0 ? child.mprice : '' })
         })
         let vipGrade = {}
-        item.vipGrade.forEach(child => {
+        item.vipGrade.forEach((child) => {
           Object.assign(vipGrade, { [child.vip_grade_id]: child.mprice > 0 ? child.mprice : '' })
         })
         skus[item.item_id] = {
@@ -990,7 +990,7 @@ export default {
     },
     changeCategory() {
       if (this.selectionItems.length > 0) {
-        this.saleCategoryForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.saleCategoryForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.saleCategoryDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -998,7 +998,7 @@ export default {
     },
     async onSaleCategorySubmit() {
       const { item_id, category_id } = this.saleCategoryForm
-      const _category_id = category_id.map(item => {
+      const _category_id = category_id.map((item) => {
         return item[item.length - 1]
       })
       await this.$api.goods.setItemsCategory({ item_id, category_id: _category_id })
@@ -1008,7 +1008,7 @@ export default {
     },
     changeFreightTemplate() {
       if (this.selectionItems.length > 0) {
-        this.freightTemplateForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.freightTemplateForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.freightTemplateDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1026,7 +1026,7 @@ export default {
     },
     changeItemsStore() {
       if (this.selectionItems.length > 0) {
-        this.storeItemForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.storeItemForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.storeItemDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1035,7 +1035,7 @@ export default {
     async onStoreItemSubmit() {
       const { item_id, storeNum } = this.storeItemForm
       const data = []
-      item_id.forEach(id => {
+      item_id.forEach((id) => {
         data.push({ item_id: id, store: storeNum, is_default: true })
       })
       await this.$api.goods.updateItemsStore({
@@ -1064,10 +1064,10 @@ export default {
     },
     // 审核确定
     onSubmitExamine() {
-      this.examineForm.item_ids = this.selectionItems.map(item => item.item_id).join(',')
+      this.examineForm.item_ids = this.selectionItems.map((item) => item.item_id).join(',')
       this.examineLoading = true
       batchReviewItems(this.examineForm)
-        .then(res => {
+        .then((res) => {
           this.$message.success('保存成功')
           this.dialogVisibleExamine = false
           this.$refs['finder'].refresh()
@@ -1079,8 +1079,8 @@ export default {
     async onChangePriceSubmit() {},
     changeGoodsLabel() {
       if (this.selectionItems.length > 0) {
-        this.labelForm.item_id = this.selectionItems.map(item => item.item_id)
-        this.tagList.forEach(item => {
+        this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
+        this.tagList.forEach((item) => {
           item.selected = false
         })
         this.labelDialog = true
@@ -1090,7 +1090,7 @@ export default {
     },
     async onLabelFormSubmit() {
       const { item_id } = this.labelForm
-      const tagIds = this.tagList.filter(item => !!item.selected).map(item => item.tag_id)
+      const tagIds = this.tagList.filter((item) => !!item.selected).map((item) => item.tag_id)
       await this.$api.goods.itemsRelTags({
         item_ids: item_id,
         tag_ids: tagIds
@@ -1113,11 +1113,11 @@ export default {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop()
-        distributorIds = data.map(item => item.distributor_id)
+        distributorIds = data.map((item) => item.distributor_id)
       }
       await this.$api.marketing.saveDistributorItems({
         distributor_ids: distributorIds,
-        item_ids: this.selectionItems.map(item => item.item_id),
+        item_ids: this.selectionItems.map((item) => item.item_id),
         // 是否同步并上架
         is_can_sale: false
       })

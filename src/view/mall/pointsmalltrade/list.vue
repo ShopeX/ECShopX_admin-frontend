@@ -73,7 +73,7 @@
                       <p>优惠原因：{{ item.info }}</p>
                       <p>优惠方案：{{ item.rule }}</p>
                       <p>优惠金额：{{ scope.row.curFeeSymbol }}{{ item.discount_fee / 100 }} 元</p>
-                      <hr>
+                      <hr />
                     </div>
                   </div>
                   <div slot="reference" class="name-wrapper">
@@ -283,7 +283,7 @@ export default {
     },
     getList(filter) {
       this.loading = true
-      getTradeList(filter).then(response => {
+      getTradeList(filter).then((response) => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -292,7 +292,7 @@ export default {
     exportData() {
       this.getParams()
       this.params.page = 1
-      tradeExport(this.params).then(response => {
+      tradeExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

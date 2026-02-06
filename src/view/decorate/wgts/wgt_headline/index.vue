@@ -27,6 +27,7 @@
       'wgt-headline': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div
       class="wgt-bd"
@@ -52,6 +53,7 @@
 </template>
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Headline',
   wgtName: '文字标题',
@@ -60,6 +62,11 @@ export default {
   config: config,
   props: {
     value: [Object, Array]
+  },
+  computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    }
   }
 }
 </script>

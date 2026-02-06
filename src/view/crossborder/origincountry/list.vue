@@ -89,7 +89,7 @@
               v-if="form.origincountry_img_url"
               :src="form.origincountry_img_url"
               class="avatar"
-            >
+            />
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
@@ -165,13 +165,13 @@ export default {
     // 删除
     handleDelete(data) {
       this.$confirm('确认删除该国家么？')
-        .then(_ => {
-          delOrigincountry(data.row.origincountry_id, []).then(res => {
+        .then((_) => {
+          delOrigincountry(data.row.origincountry_id, []).then((res) => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 初始化
     resetData() {
@@ -193,14 +193,14 @@ export default {
       }
 
       if (!this.form.origincountry_id) {
-        addOrigincountry(this.form).then(res => {
+        addOrigincountry(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateOrigincountry(this.form.origincountry_id, this.form).then(res => {
+        updateOrigincountry(this.form.origincountry_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
@@ -220,7 +220,7 @@ export default {
     getList() {
       console.log('获取数据')
       this.loading = true
-      getOrigincountry(this.params).then(res => {
+      getOrigincountry(this.params).then((res) => {
         console.log('返回数据', res)
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count

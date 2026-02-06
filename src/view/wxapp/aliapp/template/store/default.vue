@@ -50,7 +50,7 @@
             >
               <div class="view-flex view-flex-center">
                 <div class="member-card-avatar">
-                  <img class="member-card-avatar-img" :src="logo">
+                  <img class="member-card-avatar-img" :src="logo" />
                 </div>
                 <div class="view-flex view-flex-center view-flex-item view-flex-vertical">
                   <div class="store-name">源源客</div>
@@ -68,20 +68,20 @@
           </div>
           <div class="section section-white member-coupon">
             <div class="view-flex view-flex-center view-flex-middle code-toggle">
-              <img class="code-toggle-img" src="@/assets/img/qr_code.png">
-              <img class="item-icon" src="@/assets/img/icon_down.png">
+              <img class="code-toggle-img" src="@/assets/img/qr_code.png" />
+              <img class="item-icon" src="@/assets/img/icon_down.png" />
             </div>
             <div class="section-title content-center">我的资产</div>
             <div class="section-body">
               <div class="view-flex content-center member-coupon-wrapper">
                 <div class="view-flex-item view-flex-vertical member-coupon-item">
                   <div>¥ 122.00</div>
-                  <div><img class="member-coupon-icons" src="@/assets/img/icon_01.png"> 储值</div>
+                  <div><img class="member-coupon-icons" src="@/assets/img/icon_01.png" /> 储值</div>
                 </div>
                 <div class="view-flex-item view-flex-vertical member-coupon-item">
                   <div>6 张</div>
                   <div>
-                    <img class="member-coupon-icons" src="@/assets/img/icon_02.png"> 优惠券
+                    <img class="member-coupon-icons" src="@/assets/img/icon_02.png" /> 优惠券
                   </div>
                 </div>
               </div>
@@ -96,18 +96,18 @@
                 <div class="store-open-time">营业时间：9:30 - 18:30</div>
               </div>
               <div class="view-flex view-flex-vertical view-flex-middle store-location">
-                <img class="store-location-img" src="@/assets/img/icon_location.png">12km
+                <img class="store-location-img" src="@/assets/img/icon_location.png" />12km
               </div>
             </div>
             <div
               class="view-flex view-flex-middle view-flex-right section-footer with-border content-right"
             >
-              全部门店 <img class="icon-to-all" src="@/assets/img/icon_to.png">
+              全部门店 <img class="icon-to-all" src="@/assets/img/icon_to.png" />
             </div>
           </div>
           <div class="appmsg">
             <div class="appmsg-header">
-              <img class="appmsg-header-img" :src="wximageurl + articals[0].thumb_url">
+              <img class="appmsg-header-img" :src="wximageurl + articals[0].thumb_url" />
               <div class="appmsg-header-caption">
                 <template v-if="articals[0].title != ''">
                   {{ articals[0].title }}
@@ -124,7 +124,7 @@
                   <template v-else> 标题 </template>
                 </div>
                 <div class="appmsg-list-item-thumb">
-                  <img class="appmsg-list-item-thumb-img" :src="wximageurl + item.thumb_url">
+                  <img class="appmsg-list-item-thumb-img" :src="wximageurl + item.thumb_url" />
                 </div>
               </div>
             </div>
@@ -425,7 +425,7 @@ export default {
   },
   mounted() {
     let filter = { template_name: 'yykmembership', name: 'marketing_articles', page_name: 'index' }
-    getParamByTempName(filter).then(response => {
+    getParamByTempName(filter).then((response) => {
       if (response.data.data.length > 0) {
         var data = response.data.data[0].params
         for (var i = 0; i < data.length; i++) {
@@ -446,7 +446,7 @@ export default {
       name: 'common_setting',
       page_name: 'index'
     }
-    getParamByTempName(settingFilter).then(response => {
+    getParamByTempName(settingFilter).then((response) => {
       if (response.data.data.length > 0) {
         var data = response.data.data[0].params
         this.settings.recharge = data.recharge === 'true'
@@ -544,7 +544,7 @@ export default {
       let param = {}
       if (that.pageSettingId) {
         param = { params: that.articals, name: 'marketing_articles', id: that.pageSettingId }
-        updateParamsById(param).then(response => {
+        updateParamsById(param).then((response) => {
           this.$message({
             message: '修改文章成功',
             type: 'success',
@@ -558,7 +558,7 @@ export default {
           name: 'marketing_articles',
           page_name: 'index'
         }
-        setPageParams(param).then(response => {
+        setPageParams(param).then((response) => {
           this.$message({
             message: '添加文章成功',
             type: 'success',
@@ -570,7 +570,7 @@ export default {
       let settingParam = {}
       if (that.commonSettingId) {
         settingParam = { params: that.settings, name: 'common_setting', id: that.commonSettingId }
-        updateParamsById(settingParam).then(response => {
+        updateParamsById(settingParam).then((response) => {
           this.$message({
             message: '修改配置成功',
             type: 'success',
@@ -584,7 +584,7 @@ export default {
           name: 'common_setting',
           page_name: 'index'
         }
-        setPageParams(settingParam).then(response => {
+        setPageParams(settingParam).then((response) => {
           this.$message({
             message: '添加配置成功',
             type: 'success',

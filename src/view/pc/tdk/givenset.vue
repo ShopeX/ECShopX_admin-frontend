@@ -185,7 +185,7 @@ export default {
 
   methods: {
     tagType(type, value) {
-      let bool = this.tageArr[type].findIndex(item => item == value)
+      let bool = this.tageArr[type].findIndex((item) => item == value)
       if (bool == -1) {
         return ''
       } else {
@@ -202,14 +202,14 @@ export default {
       this.getList()
     },
     handelClick(type, tag) {
-      let index = this.tageArr[type].findIndex(item => tag.value == item)
+      let index = this.tageArr[type].findIndex((item) => tag.value == item)
       if (index == -1) {
         this.tageArr[type].push(tag.value)
         for (let key in this.tageArr) {
           this.form[key] = this.tageArr[key].join(',')
         }
       } else {
-        this.tageArr[type] = this.tageArr[type].filter(item => tag.value !== item)
+        this.tageArr[type] = this.tageArr[type].filter((item) => tag.value !== item)
         for (let key in this.tageArr) {
           this.form[key] = this.tageArr[key].join(',')
         }
@@ -231,12 +231,12 @@ export default {
     // 保存数据
     save() {
       if (this.type == 'detailTags') {
-        saveTdkgivensetDetail(this.form).then(res => {
+        saveTdkgivensetDetail(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.show_sideBar = false
         })
       } else {
-        saveTdkgivensetList(this.form).then(res => {
+        saveTdkgivensetList(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.show_sideBar = false
         })
@@ -247,7 +247,7 @@ export default {
     // 获取列表
     getList() {
       if (this.type == 'detailTags') {
-        getTdkgivensetDetail().then(res => {
+        getTdkgivensetDetail().then((res) => {
           let data = res.data.data
           this.form = data
           for (let key in data) {
@@ -259,7 +259,7 @@ export default {
           }
         })
       } else {
-        getTdkgivensetList().then(res => {
+        getTdkgivensetList().then((res) => {
           let data = res.data.data
           this.form = data
           for (let key in data) {

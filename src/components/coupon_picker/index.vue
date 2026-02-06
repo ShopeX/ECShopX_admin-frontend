@@ -77,8 +77,8 @@ export default {
     selectedCoupons(val) {
       if (val.length) {
         let list = []
-        this.couponList.forEach(item => {
-          val.forEach(key => {
+        this.couponList.forEach((item) => {
+          val.forEach((key) => {
             if (item.key == key) {
               list.push(item)
             }
@@ -111,8 +111,8 @@ export default {
     couponsComfirm() {
       let values = []
       if (this.selectedCoupons.length > 0) {
-        this.couponList.forEach(item => {
-          this.selectedCoupons.forEach(key => {
+        this.couponList.forEach((item) => {
+          this.selectedCoupons.forEach((key) => {
             if (item.key == key) {
               let obj = {
                 imgUrl: item.imgUrl,
@@ -140,9 +140,9 @@ export default {
     getCouponList() {
       this.loading = true
       getCardList({ ...this.params, from: 'btn' })
-        .then(res => {
+        .then((res) => {
           let list = []
-          res.data.data.list.forEach(item => {
+          res.data.data.list.forEach((item) => {
             list.push({
               type: item.card_type,
               key: item.card_id,
@@ -154,8 +154,8 @@ export default {
             })
           })
 
-          let arr = list.filter(item => {
-            let xx = this.selectList.find(row => {
+          let arr = list.filter((item) => {
+            let xx = this.selectList.find((row) => {
               return row.key === item.key
             })
             if (!xx) {
@@ -167,7 +167,7 @@ export default {
           this.total_count = res.data.data.pagers.total
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     },

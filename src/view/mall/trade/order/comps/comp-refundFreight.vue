@@ -33,7 +33,7 @@ export default {
   created() {},
   methods: {
     getTotalFee() {
-      return (this.value?.refund_freight_amount  || 0)/100
+      return (this.value?.refund_freight_amount || 0) / 100
     },
     onChangeFee() {
       this.$emit('onChange', this.fee)

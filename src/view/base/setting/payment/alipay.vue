@@ -7,17 +7,17 @@
   <el-form ref="form" label-width="100px">
     <el-form-item label="合作者PID">
       <el-input v-model="form.app_id" style="width: 300px" />
-      <br>
+      <br />
       <span class="frm-tips">APPID</span>
     </el-form-item>
     <el-form-item label="支付宝公钥">
       <el-input v-model="form.ali_public_key" type="textarea" :rows="5" placeholder="请输入内容" />
-      <br>
+      <br />
       <span class="frm-tips">RSA2(SHA256)密钥 支付宝公钥</span>
     </el-form-item>
     <el-form-item label="应用私钥">
       <el-input v-model="form.private_key" type="textarea" :rows="5" placeholder="请输入内容" />
-      <br>
+      <br />
       <span class="frm-tips">RSA2(SHA256)密钥 自己私钥</span>
     </el-form-item>
     <el-form-item label="是否启用">
@@ -62,7 +62,7 @@ export default {
     },
     getConfig() {
       let query = { pay_type: 'alipay' }
-      getPaymentSetting(query).then(response => {
+      getPaymentSetting(query).then((response) => {
         this.form = response.data.data
       })
     },
@@ -77,14 +77,14 @@ export default {
         ali_public_key: this.form.ali_public_key
       }
       setPaymentSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

@@ -253,7 +253,7 @@ export default {
   methods: {
     onSubmit() {
       var rebate = this.form.audit_status == 'approved' ? 1 : 3
-      updateGoodsInfo({ goods_id: this.goods_id, rebate: rebate }).then(res => {
+      updateGoodsInfo({ goods_id: this.goods_id, rebate: rebate }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.dialogVisible = false
         this.getGoodsList()
@@ -308,7 +308,7 @@ export default {
     },
     getGoodsList() {
       this.loading = true
-      getItemsListAll(this.params).then(response => {
+      getItemsListAll(this.params).then((response) => {
         this.ItemsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

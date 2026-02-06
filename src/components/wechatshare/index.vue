@@ -22,17 +22,17 @@
           ref="contentImg"
           :src="contentImgSrc"
           :class="{ normalImg: imgType === 0 || imgType === 2, heightImg: imgType === 1 }"
-        >
+        />
       </div>
       <div class="footer">
         <div class="link">
-          <img :src="link">
+          <img :src="link" />
         </div>
         <div>小程序</div>
       </div>
     </div>
     <div class="wechat-share-avatar">
-      <img :src="avatarImgSrc">
+      <img :src="avatarImgSrc" />
     </div>
     <div />
   </div>
@@ -83,7 +83,7 @@ export default {
   watch: {
     contentImgSrc(val) {
       const self = this
-      this.loadImgPromise(val).then(img => {
+      this.loadImgPromise(val).then((img) => {
         self.clipPic(img.width, img.height)
       })
     }

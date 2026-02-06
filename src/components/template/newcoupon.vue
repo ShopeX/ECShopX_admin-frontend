@@ -101,7 +101,7 @@ export default {
   methods: {
     setData(val) {
       this.base = val.base
-      val.data.map(item => {
+      val.data.map((item) => {
         item.background =
           'linear-gradient(169deg' + item.backgroundOne + '0%,' + item.backgroundTwo + '100%'
       })

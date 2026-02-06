@@ -113,7 +113,7 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'apply'
             },
             action: {
@@ -138,7 +138,7 @@ export default {
             key: 'apply',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.status == 'apply'
             },
             action: {
@@ -262,7 +262,7 @@ export default {
       return payType[type]
     },
     renderWithdrawStatu(state) {
-      return withDrawStatusList.find(item => item.value == state).title
+      return withDrawStatusList.find((item) => item.value == state).title
     },
     async onResloveSubmit() {
       const { id } = this.resloveForm

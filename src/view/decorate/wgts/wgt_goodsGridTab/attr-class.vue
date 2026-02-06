@@ -112,7 +112,7 @@ export default {
       })
       let values = []
       data &&
-        data.forEach(item => {
+        data.forEach((item) => {
           if (item.itemId) {
             let obj = {
               imgUrl: item.pics[0],
@@ -191,7 +191,7 @@ export default {
         },
         onAdd: async () => {
           const { data } = await this.$picker.goods()
-          const res = data.map(item => {
+          const res = data.map((item) => {
             return {
               imgUrl: item.pics[0],
               title: item.itemName,

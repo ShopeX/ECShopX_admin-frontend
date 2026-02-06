@@ -132,7 +132,7 @@ export default {
       this.dialogVisible = true
     },
     remove(row, index) {
-      deleteRechargeRuleById(row.id).then(res => {
+      deleteRechargeRuleById(row.id).then((res) => {
         this.$message({
           message: '删除成功',
           type: 'success',
@@ -143,7 +143,7 @@ export default {
     },
     getlist() {
       this.loading = true
-      getRechargeRuleList().then(res => {
+      getRechargeRuleList().then((res) => {
         this.dataList = []
         for (var i in res.data.data.list) {
           this.dataList.push({
@@ -157,10 +157,10 @@ export default {
       })
     },
     add() {
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.id) {
-            editRechargeRuleById(this.form).then(res => {
+            editRechargeRuleById(this.form).then((res) => {
               this.$message({
                 message: '保存成功',
                 type: 'success',
@@ -169,7 +169,7 @@ export default {
               this.getlist()
             })
           } else {
-            createRechargeRule(this.form).then(res => {
+            createRechargeRule(this.form).then((res) => {
               this.$message({
                 message: '保存成功',
                 type: 'success',

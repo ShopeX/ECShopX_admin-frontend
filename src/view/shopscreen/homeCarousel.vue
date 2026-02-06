@@ -79,7 +79,7 @@
                 :src="item.url"
                 class="banner-uploader"
                 @click="handleImgChange(index)"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
                 上传图片
@@ -217,15 +217,15 @@ export default {
   methods: {
     getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then(response => {
+      getDistributorList(params).then((response) => {
         if (response.data.data.list) {
           this.distributorList = response.data.data.list
         }
       })
     },
     distributorSelectHandle(val) {
-      this.curStore = this.distributorList.find(item => item.distributor_id == val)
-      getShopScreenSlider({ distributor_id: this.distributor_id }).then(res => {
+      this.curStore = this.distributorList.find((item) => item.distributor_id == val)
+      getShopScreenSlider({ distributor_id: this.distributor_id }).then((res) => {
         let { data } = res.data
         this.config = data.style_params || {}
         this.base.title = data.title || ''
@@ -235,7 +235,7 @@ export default {
       })
     },
     getDefaultSlider() {
-      getShopScreenSlider({ distributor_id: 0 }).then(res => {
+      getShopScreenSlider({ distributor_id: 0 }).then((res) => {
         let { data } = res.data
         this.config = data.style_params
         this.base.title = data.title
@@ -306,7 +306,7 @@ export default {
         image_list: this.data,
         desc_status: this.config.content
       }
-      postShopScreenSlider(obj).then(res => {
+      postShopScreenSlider(obj).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success'

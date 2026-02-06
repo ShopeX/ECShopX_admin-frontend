@@ -129,7 +129,7 @@ export default {
     },
     getConfig() {
       this.loading = true
-      getTrustLoginList().then(res => {
+      getTrustLoginList().then((res) => {
         this.list = res.data.data
         for (var i = res.data.data.length - 1; i >= 0; i--) {
           if (this.list[i].status == 'true') {
@@ -147,10 +147,9 @@ export default {
     handleEdit(data, loginversion) {
       this.show_sideBar = true
       this.form.name = data.name
-    
+
       this.form.status = data.status
-      
-      
+
       this.form.app_id = data.app_id
       this.form.secret = data.secret
       this.form.type = data.type
@@ -160,7 +159,7 @@ export default {
       console.log(data)
 
       saveStatusSetting(data)
-        .then(res => {
+        .then((res) => {
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -183,14 +182,14 @@ export default {
         query = this.form
       }
       setstandardSetting(query)
-        .then(response => {
+        .then((response) => {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     }

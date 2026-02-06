@@ -17,7 +17,8 @@
           {{ recorddata.activity_name }}
         </el-form-item>
         <el-form-item label="活动有效时间" prop="activity_time">
-          {{ recorddata.activity_start_time | datetime('YYYY-MM-DD HH:mm:ss') }} ~ {{ recorddata.activity_end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+          {{ recorddata.activity_start_time | datetime('YYYY-MM-DD HH:mm:ss') }} ~
+          {{ recorddata.activity_end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-form-item>
         <el-form-item label="活动状态：">
           {{ recorddata.status_name }}
@@ -213,7 +214,7 @@ export default {
                 { name: '邮箱', value: 'email' },
                 { name: '二维码', value: 'qr_code' }
               ]
-              const authType = VALIDATE_TYPES.find(item => item.value == auth_type)?.name
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
               return authType
             }
           },
@@ -228,7 +229,7 @@ export default {
     if (this.$route.query.id) {
       this.form.record_id = this.$route.query.id
       let filter = { record_id: this.$route.query.id }
-      regActivityRecordinfo(filter).then(res => {
+      regActivityRecordinfo(filter).then((res) => {
         this.getActivityDetail(res.data.data)
       })
       this.getGradeLevelList()
@@ -238,7 +239,7 @@ export default {
     getActivityDetail(recordInfo) {
       const activity_id = this.$route.query.activity_id
       let activityInfo = {}
-      regActivityGet({ activity_id }).then(res => {
+      regActivityGet({ activity_id }).then((res) => {
         const data = res.data.data
         activityInfo = {
           activity_name: data.activity_name,
@@ -264,12 +265,12 @@ export default {
       })
     },
     getGradeLevelList() {
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
         }
       })
-      getGradeList().then(response => {
+      getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.memberGrade = response.data.data
         }
@@ -278,7 +279,7 @@ export default {
     submitAction() {
       const that = this
 
-      registrationReview(this.form).then(res => {
+      registrationReview(this.form).then((res) => {
         if (res.data.data.status) {
           that.refresh()
           that.$router.go(-1)

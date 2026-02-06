@@ -95,13 +95,13 @@ export default {
     getGroupsTeamInfo() {
       this.loading = true
       getGroupsTeamInfo(this.team_id, this.params)
-        .then(response => {
+        .then((response) => {
           this.groupsTeamMemberList = response.data.data.list
           this.teamInfo = response.data.data.teamInfo
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',

@@ -61,7 +61,7 @@ export default {
     handleDialogChange() {
       const { audit_state } = this.info
       if (audit_state == '3') {
-        this.$refs.form.validate(valid => {
+        this.$refs.form.validate((valid) => {
           if (valid) {
             this.onPush()
           }
@@ -79,7 +79,7 @@ export default {
         distributor_id,
         name,
         is_rel: 1
-      }).then(res => {
+      }).then((res) => {
         this.form = {}
         this.$emit('handleClick', false)
         // 跳转到列表页

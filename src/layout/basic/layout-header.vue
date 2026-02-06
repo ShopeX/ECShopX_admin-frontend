@@ -18,6 +18,8 @@
     </div>
 
     <div class="flex items-center gap-2 px-3">
+      <MenuSearch />
+      <div class="text-[#B3B3B3] text-[13px] mx-2">|</div>
       <!-- <SpIcon class="p-2" button radius name="translate" :size="16" @click="handleSystemInfo" /> -->
 
       <SpLanguage>
@@ -85,9 +87,13 @@ import UserInfo from './components/user-info.vue'
 import SYSTEM_CONFIG from '@/config'
 import ChangePassword from './components/change-password.vue'
 import config from '../../../package.json'
+import MenuSearch from './components/menu-search.vue'
 
 export default {
   name: 'LayoutHeader',
+  components: {
+    MenuSearch
+  },
   data() {
     return {
       systemInfo: [],

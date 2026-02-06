@@ -80,13 +80,13 @@
           <template slot="label"> 营业执照 </template>
           <a :href="editForm.business_license" target="_blank"
             ><img :src="editForm.business_license" height="100"
-          ></a>
+          /></a>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"> 客服二维码 </template>
           <a :href="editForm.wechat_qrcode" target="_blank"
             ><img :src="editForm.wechat_qrcode" height="100"
-          ></a>
+          /></a>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"> 收款银行 </template>
@@ -172,7 +172,7 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.check_state == '审核通过'
             },
             action: {
@@ -187,7 +187,7 @@ export default {
             key: 'review',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return row.check_state != '审核通过'
             },
             action: {

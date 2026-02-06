@@ -7,7 +7,7 @@
   <div>
     <el-row class="section-white content-padded coupon-header">
       <el-col :span="6" class="coupon-img">
-        <img src="@/assets/img/webchat.png" alt="图片">
+        <img src="@/assets/img/webchat.png" alt="图片" />
       </el-col>
       <el-col :span="18" class="coupon-desc">
         <h3>派券大师<span>(2018年9月30日到期)</span></h3>

@@ -90,7 +90,7 @@
                   : 'background:' + form.data[0].marketing
               "
             >
-              <img :src="item.img">
+              <img :src="item.img" />
               <div
                 v-if="index == 5"
                 class="ab-view"
@@ -287,7 +287,7 @@ export default {
       version: 'v1.0.1',
       page_name: 'color_style'
     }
-    getALiParamByTempName(filter).then(res => {
+    getALiParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
         this.form = res.data.data.list[0].params
       }
@@ -301,7 +301,7 @@ export default {
         config: JSON.stringify([this.form]),
         page_name: 'color_style'
       }
-      saveALiPageParams(param).then(res => {
+      saveALiPageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

@@ -91,7 +91,12 @@
           <el-cascader
             v-model="searchParams.category"
             :options="categoryList"
-            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id', emitPath: false }"
+            :props="{
+              checkStrictly: true,
+              label: 'category_name',
+              value: 'category_id',
+              emitPath: false
+            }"
             clearable
           />
         </SpFilterFormItem>
@@ -469,7 +474,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -661,12 +666,12 @@ export default {
           component: ({ key }, value) => (
             <div>
               {this.tagList
-                .filter(item => !!item.selected)
-                .map(item => (
+                .filter((item) => !!item.selected)
+                .map((item) => (
                   <el-tag
                     closable
                     on-close={() => (item.selected = false)}
-                    style="margin: 0 10px 10px 0;"
+                    style='margin: 0 10px 10px 0;'
                   >
                     {item.tag_name}
                   </el-tag>
@@ -680,12 +685,12 @@ export default {
           component: ({ key }, value) => (
             <div>
               {this.tagList
-                .filter(item => !item.selected)
-                .map(item => (
+                .filter((item) => !item.selected)
+                .map((item) => (
                   <el-button
                     plain
-                    size="mini"
-                    class="tag-item"
+                    size='mini'
+                    class='tag-item'
                     onClick={() => {
                       item.selected = true
                     }}
@@ -735,7 +740,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesListavailable.map(item => (
+              {this.templatesListavailable.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -754,9 +759,9 @@ export default {
           component: ({ key }, value) => (
             <el-input-number
               v-model={value[key]}
-              controls-position="right"
+              controls-position='right'
               min={0}
-              style="width: 120px"
+              style='width: 120px'
             />
           )
         }
@@ -772,7 +777,7 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               return IS_SUPPLIER() || row.supplier_id == '0'
             },
             action: {
@@ -792,7 +797,7 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: row => IS_SUPPLIER() || IS_ADMIN(),
+            visible: (row) => IS_SUPPLIER() || IS_ADMIN(),
             action: {
               type: 'link',
               handler: ([row]) => {
@@ -813,7 +818,7 @@ export default {
             key: 'delete',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               const isShow = IS_SUPPLIER() && row.is_market == 0 && row.audit_status != 'processing' // 供应商端：不可售&非审核中状态可删除
               return isShow
             },
@@ -834,7 +839,7 @@ export default {
             key: 'copy',
             type: 'button',
             buttonType: 'text',
-            visible: row => IS_SUPPLIER(),
+            visible: (row) => IS_SUPPLIER(),
             action: {
               type: 'link',
               handler: async ([row]) => {
@@ -869,7 +874,7 @@ export default {
             key: 'setup_price',
             type: 'button',
             buttonType: 'text',
-            visible: row => !IS_SUPPLIER(),
+            visible: (row) => !IS_SUPPLIER(),
             action: {
               type: 'link',
               handler: async ([row]) => {
@@ -882,13 +887,13 @@ export default {
             key: 'label',
             type: 'button',
             buttonType: 'text',
-            visible: row => IS_ADMIN(),
+            visible: (row) => IS_ADMIN(),
             action: {
               type: 'link',
               handler: async ([row]) => {
                 // 同步taglist选中状态
-                this.tagList.forEach(item => {
-                  if (row.tagList.map(item => item.tag_id).includes(item.tag_id)) {
+                this.tagList.forEach((item) => {
+                  if (row.tagList.map((item) => item.tag_id).includes(item.tag_id)) {
                     item.selected = true
                   } else {
                     item.selected = false
@@ -904,7 +909,7 @@ export default {
             key: 'change_store',
             type: 'button',
             buttonType: 'text',
-            visible: row => IS_SUPPLIER(),
+            visible: (row) => IS_SUPPLIER(),
             action: {
               type: 'link',
               handler: async ([row]) => {
@@ -945,7 +950,7 @@ export default {
             key: 'offline',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               const visible = row.approve_status == 'onsale' && !IS_SUPPLIER()
               return visible
             },
@@ -967,7 +972,7 @@ export default {
             key: 'online',
             type: 'button',
             buttonType: 'text',
-            visible: row => {
+            visible: (row) => {
               const visible = row.approve_status == 'instock' && !IS_SUPPLIER() && !IS_ADMIN()
               return visible
             },
@@ -995,48 +1000,48 @@ export default {
             render: (h, scope) => {
               return (
                 <div>
-                  <div style="white-space: normal;">
+                  <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
                       <el-tag
-                        size="mini"
-                        effect="plain"
-                        type="primary"
-                        style="margin-left: 4px; cursor: default;"
+                        size='mini'
+                        effect='plain'
+                        type='primary'
+                        style='margin-left: 4px; cursor: default;'
                         on-click={() => {
                           this.handleViewSkuInfo(scope.row)
                         }}
                       >
                         多
                         <i
-                          class="ecx-icon icon-sousuo"
-                          style="font-size: 12px; margin-left: 2px;"
+                          class='ecx-icon icon-sousuo'
+                          style='font-size: 12px; margin-left: 2px;'
                         ></i>
                       </el-tag>
                     )}
 
                     {scope.row.is_gift == 1 && (
                       <el-tag
-                        size="mini"
-                        effect="plain"
-                        type="primary"
-                        style="margin-left: 4px; cursor: default;"
+                        size='mini'
+                        effect='plain'
+                        type='primary'
+                        style='margin-left: 4px; cursor: default;'
                       >
                         赠
                       </el-tag>
                     )}
                   </div>
-                  <div style="color: #666;">
+                  <div style='color: #666;'>
                     {`SPU编码：${scope.row.goods_bn}`}
-                    <el-tooltip effect="dark" content="复制" placement="top-start">
+                    <el-tooltip effect='dark' content='复制' placement='top-start'>
                       <i
                         on-click={() => {
                           this.$copyText(scope.row.goods_bn).then(() => {
                             this.$message.success('复制成功')
                           })
                         }}
-                        class="el-icon-document-copy"
-                        style="margin-left: 4px;"
+                        class='el-icon-document-copy'
+                        style='margin-left: 4px;'
                       />
                     </el-tooltip>
                   </div>
@@ -1049,8 +1054,8 @@ export default {
             width: 120,
             key: 'tagList',
             render: (h, scope) => (
-              <div style="white-space: normal;">
-                {scope.row.tagList?.map(item => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList?.map((item) => (
                   <span
                     style={{
                       color: item.font_color,
@@ -1162,7 +1167,7 @@ export default {
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {
-              return this.statusOption.find(item => item.value === value)?.title
+              return this.statusOption.find((item) => item.value === value)?.title
             }
           },
           // {
@@ -1245,7 +1250,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
-      this.templatesListavailable = list.filter(item => item.status)
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类
@@ -1258,7 +1263,7 @@ export default {
     },
     async onBatchChangeStateSubmit() {
       let data = []
-      this.selectionItems.map(item => {
+      this.selectionItems.map((item) => {
         data.push({ goods_id: item.goods_id })
       })
       await this.$api.goods.updateItemsStatus({
@@ -1277,7 +1282,7 @@ export default {
       this.showMemberPriceDrawer = true
       const specItems = []
       const { list } = await this.$api.goods.getGoodsPrice(item_id)
-      list.forEach(item => {
+      list.forEach((item) => {
         specItems.push({
           item_id: item.item_id,
           item_spec_desc: item.item_spec_desc || item.itemName,
@@ -1302,7 +1307,7 @@ export default {
         page,
         id: goods_id
       }
-      getPageCode(params).then(response => {
+      getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
         // this.$message.success('投放成功')
         this.sunCodeTitle = itemName + '---商品太阳码'
@@ -1320,7 +1325,7 @@ export default {
         pageSize: 1000
       })
       this.showItemStoreDrawer = true
-      this.storeItemsList = list.map(item => {
+      this.storeItemsList = list.map((item) => {
         return {
           item_id: item.item_id,
           store: item.store,
@@ -1334,7 +1339,7 @@ export default {
         page: 1,
         pageSize: 500
       })
-      this.tagList = list.map(item => {
+      this.tagList = list.map((item) => {
         return {
           ...item,
           selected: false
@@ -1348,13 +1353,13 @@ export default {
       }
       console.log('specItems', this.specItems)
       let skus = {}
-      this.specItems.forEach(item => {
+      this.specItems.forEach((item) => {
         let grade = {}
-        item.grade.forEach(child => {
+        item.grade.forEach((child) => {
           Object.assign(grade, { [child.vip_grade_id]: child.mprice > 0 ? child.mprice : '' })
         })
         let vipGrade = {}
-        item.vipGrade.forEach(child => {
+        item.vipGrade.forEach((child) => {
           Object.assign(vipGrade, { [child.vip_grade_id]: child.mprice > 0 ? child.mprice : '' })
         })
         skus[item.item_id] = {
@@ -1396,7 +1401,7 @@ export default {
     },
     changeCategory() {
       if (this.selectionItems.length > 0) {
-        this.saleCategoryForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.saleCategoryForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.saleCategoryDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1404,7 +1409,7 @@ export default {
     },
     async onSaleCategorySubmit() {
       const { item_id, category_id } = this.saleCategoryForm
-      const _category_id = category_id.map(item => {
+      const _category_id = category_id.map((item) => {
         return item[item.length - 1]
       })
       await this.$api.goods.setItemsCategory({ item_id, category_id: _category_id })
@@ -1424,7 +1429,7 @@ export default {
     },
     changeFreightTemplate() {
       if (this.selectionItems.length > 0) {
-        this.freightTemplateForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.freightTemplateForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.freightTemplateDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1442,7 +1447,7 @@ export default {
     },
     changeItemsStore() {
       if (this.selectionItems.length > 0) {
-        this.storeItemForm.item_id = this.selectionItems.map(item => item.item_id)
+        this.storeItemForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.storeItemDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1451,7 +1456,7 @@ export default {
     async onStoreItemSubmit() {
       const { item_id, storeNum } = this.storeItemForm
       const data = []
-      item_id.forEach(id => {
+      item_id.forEach((id) => {
         data.push({ item_id: id, store: storeNum, is_default: true })
       })
       await this.$api.goods.updateItemsStore({
@@ -1466,7 +1471,7 @@ export default {
       if (this.selectionItems.length > 0) {
         await this.$confirm(`${status == 'stop' ? '停售' : '开售'}选中商品, 是否继续?`, '提示')
         const params = {
-          goods_id: this.selectionItems.map(item => item.goods_id),
+          goods_id: this.selectionItems.map((item) => item.goods_id),
           is_market: status == 'stop' ? '0' : '1',
           operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
         }
@@ -1494,8 +1499,8 @@ export default {
     async onChangePriceSubmit() {},
     changeGoodsLabel() {
       if (this.selectionItems.length > 0) {
-        this.labelForm.item_id = this.selectionItems.map(item => item.item_id)
-        this.tagList.forEach(item => {
+        this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
+        this.tagList.forEach((item) => {
           item.selected = false
         })
         this.labelDialog = true
@@ -1517,7 +1522,7 @@ export default {
     },
     async onLabelFormSubmit() {
       const { item_id } = this.labelForm
-      const tagIds = this.tagList.filter(item => !!item.selected).map(item => item.tag_id)
+      const tagIds = this.tagList.filter((item) => !!item.selected).map((item) => item.tag_id)
       await this.$api.goods.itemsRelTags({
         item_ids: item_id,
         tag_ids: tagIds
@@ -1536,7 +1541,7 @@ export default {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop()
-        distributorIds = data.map(item => item.distributor_id)
+        distributorIds = data.map((item) => item.distributor_id)
       }
       if (this.selectionItems.length == 0) {
         await this.$confirm('是否将所有商品的都同步至店铺?', '提示')
@@ -1549,7 +1554,7 @@ export default {
       } else {
         await this.$api.marketing.saveDistributorItems({
           distributor_ids: distributorIds,
-          item_ids: this.selectionItems.map(item => item.item_id),
+          item_ids: this.selectionItems.map((item) => item.item_id),
           // 是否同步并上架
           is_can_sale: false
         })
@@ -1567,7 +1572,7 @@ export default {
         cancelButtonText: '取消'
       })
       await this.$api.goods.updateGoodsInfo({
-        goods_id: this.selectionItems.map(item => item.item_id),
+        goods_id: this.selectionItems.map((item) => item.item_id),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: 'processing'
       })
@@ -1609,7 +1614,7 @@ export default {
         item_source: 'supplier'
       }
       if (this.selectionItems.length > 0) {
-        exportParams['item_id'] = this.selectionItems.map(item => item.item_id)
+        exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
       const { status } = await this.$api.goods.exportItemsData(exportParams)
       if (status) {
@@ -1624,7 +1629,7 @@ export default {
         ...this.searchParams
       }
       if (this.selectionItems.length > 0) {
-        exportParams['item_id'] = this.selectionItems.map(item => item.item_id)
+        exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
       const { status } = await this.$api.goods.exportItemsTagData(exportParams)
       if (status) {
@@ -1639,11 +1644,11 @@ export default {
         ...this.searchParams
       }
       if (this.selectionItems.length > 0) {
-        exportParams['item_id'] = this.selectionItems.map(item => item.item_id)
+        exportParams['item_id'] = this.selectionItems.map((item) => item.item_id)
       }
       const { status } = await this.$api.goods.exportGoodsCode({
         ...exportParams,
-        source: 'item',
+        item_source: 'supplier',
         export_type: exportType
       })
       if (status) {

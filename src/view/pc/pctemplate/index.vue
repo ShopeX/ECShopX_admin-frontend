@@ -246,7 +246,7 @@ export default {
       }
     },
     submitForm(formName) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { status, theme_pc_template_id, ...rest } = this.formData
           this.loading = true

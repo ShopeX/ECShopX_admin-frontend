@@ -322,7 +322,7 @@ export default {
             done()
           }
         }
-      }).then(action => {
+      }).then((action) => {
         console.log(123)
       })
     },

@@ -51,7 +51,15 @@ export function useForm(options = {}) {
     methods: {
       // 表单验证
       async validate() {
-        return await this.$refs.form.validate()
+        if (this.$refs.form) {
+          // 如果 sp-form-plus 组件有 validate 方法，直接调用
+          if (typeof this.$refs.form.validate === 'function') {
+            return await this.$refs.form.validate()
+          } else if (this.$refs.form.$refs && this.$refs.form.$refs.form) {
+            // 否则访问内部的 el-form
+            return await this.$refs.form.$refs.form.validate()
+          }
+        }
         // return new Promise((resolve, reject) => {
         //   debugger
         //   this.$refs.form.validate(valid => {
@@ -66,11 +74,27 @@ export function useForm(options = {}) {
       },
       // 重置表单
       resetFields() {
-        this.$refs.formData.resetFields()
+        if (this.$refs.form) {
+          // 如果 sp-form-plus 组件有 resetFields 方法，直接调用
+          if (typeof this.$refs.form.resetFields === 'function') {
+            this.$refs.form.resetFields()
+          } else if (this.$refs.form.$refs && this.$refs.form.$refs.form) {
+            // 否则访问内部的 el-form
+            this.$refs.form.$refs.form.resetFields()
+          }
+        }
       },
       // 清除验证
       clearValidate(props) {
-        this.$refs.formData.clearValidate(props)
+        if (this.$refs.form) {
+          // 如果 sp-form-plus 组件有 clearValidate 方法，直接调用
+          if (typeof this.$refs.form.clearValidate === 'function') {
+            this.$refs.form.clearValidate(props)
+          } else if (this.$refs.form.$refs && this.$refs.form.$refs.form) {
+            // 否则访问内部的 el-form
+            this.$refs.form.$refs.form.clearValidate(props)
+          }
+        }
       },
       // 设置表单字段值
       setFieldsValue(values) {

@@ -74,7 +74,7 @@
                 class="grade-setting-col"
               >
                 <el-tag>{{ item.name }}</el-tag
-                ><br>
+                ><br />
                 <span class="title">等级名称</span>
                 <el-input
                   v-model="form.grade[key].custom_name"
@@ -189,13 +189,13 @@ export default {
     }
   },
   mounted() {
-    getPromoterGradeConfig().then(res => {
+    getPromoterGradeConfig().then((res) => {
       console.log(res.data.data)
       if (res.data.data.upgrade) {
         this.form = res.data.data
       }
     }),
-      listVipGrade().then(response => {
+      listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGradeList = response.data.data
         }
@@ -210,7 +210,7 @@ export default {
         return
       }
 
-      setPromoterGradeConfig(this.form).then(res => {
+      setPromoterGradeConfig(this.form).then((res) => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     },

@@ -78,9 +78,9 @@ export default {
               <div>
                 未付款订单，将在
                 <el-input
-                  type="number"
-                  min="0"
-                  style="width: 100px;margin-left: 10px;"
+                  type='number'
+                  min='0'
+                  style='width: 100px;margin-left: 10px;'
                   v-model={value[key]}
                 />
                 （小时）之后取消
@@ -275,7 +275,7 @@ export default {
       this.form.auto_cancel_time = res.auto_cancel_time
       this.form.pay_tips = res.pay_tips
       this.form.pay_desc = res.pay_desc
-      this.form.is_open = (res.is_open == 'true' || res.is_open == true) ? true : false
+      this.form.is_open = res.is_open == 'true' || res.is_open == true ? true : false
       this.form.is_need_finance_audit = res.is_need_finance_audit
     },
     async onSaveConfig() {

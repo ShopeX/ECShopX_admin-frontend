@@ -5,7 +5,7 @@
 
 <style lang="scss" src="./index.scss"></style>
 <template>
-  <div :class="{ 'wgt-goods-scroll': true, padded: value.padded }">
+  <div :class="{ 'wgt-goods-scroll': true, padded: value.padded }" :style="outerStyle">
     <!-- moreLink: {{ value.goodsSetting }} -->
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -95,6 +95,7 @@
 
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 const subscript = require('@/assets/img/subscript.png')
 
 export default {
@@ -110,6 +111,11 @@ export default {
     return {
       subscriptImg: subscript,
       goodsList: []
+    }
+  },
+  computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
     }
   },
   watch: {

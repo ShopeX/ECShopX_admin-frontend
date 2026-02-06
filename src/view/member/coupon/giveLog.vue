@@ -68,12 +68,12 @@ export default {
     getGiveLogList() {
       this.loading = true
       getGiveLogList(this.params)
-        .then(response => {
+        .then((response) => {
           this.giveLogList = response.data.data.list
           this.totalCount = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',

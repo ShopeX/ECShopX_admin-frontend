@@ -5,24 +5,13 @@
 
 <style lang="scss">
 .picker-image {
-  &-hd {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    .btn-actions {
-      display: flex;
-    }
-    .btn-upload {
-      margin-right: 10px;
-    }
-  }
   &-bd {
     display: flex;
     padding: 0 0 10px 10px;
     .lf-container {
       width: 220px;
       background: #f5f5f5;
-      height: 522px;
+      height: 555px;
       margin-right: 8px;
       padding: 8px;
       overflow: auto;
@@ -38,9 +27,6 @@
         margin-right: 6px;
         display: none;
       }
-    }
-    .rg-container {
-      flex: 1;
     }
   }
   .catgory-item {
@@ -91,7 +77,7 @@
       .el-icon-link {
         display: block;
       }
-    }     
+    }
     .image-meta {
       height: 28px;
       width: 100%;
@@ -153,9 +139,6 @@
       right: -2px;
     }
   }
-  .image-list {
-    height: 485px;
-  }
   .cropper-container {
     width: 498px;
     height: 498px;
@@ -178,24 +161,16 @@
 }
 </style>
 <template>
-  <div class="picker-image">
-    <div class="picker-image-hd">
-      <div class="btn-actions">
-        <el-upload
-          class="btn-upload"
-          action=""
-          accept="image/jpeg,image/png,image/gif"
-          :multiple="true"
-          :show-file-list="false"
-          :data="localpostData"
-          :http-request="handleUpload"
-          :before-upload="beforeAvatarUpload"
-          :on-success="handleAvatarSuccess"
-          :on-error="uploadError"
-        >
-          <el-button>上传图片</el-button>
-        </el-upload>
-        <el-button @click="onAddGroup"> 添加分组 </el-button>
+  <div v-loading="loading" class="picker-image">
+    <div class="p-3 flex justify-between">
+      <div class="flex items-center gap-3">
+        <SpImageUploader
+          :localpost-data="localpostData"
+          :refresh="refresh"
+          :current-category="selectCatgory"
+        />
+
+        <el-button @click="onAddGroup" class="h-[calc(1em+16px)]"> 添加分组 </el-button>
         <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移组 </el-button>
         <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
@@ -239,9 +214,9 @@
         >
           <div class="flex items-center">
             <SpIcon name="folder-open" />
-            <span class="w-[140px] ml-1 overflow-x-hidden text-ellipsis whitespace-nowrap">{{
-              item.image_cat_name
-            }}</span>
+            <span class="w-[120px] ml-1 overflow-x-hidden text-ellipsis whitespace-nowrap">
+              {{ item.image_cat_name }}
+            </span>
           </div>
           <div class="flex items-center w-12 gap-1">
             <SpIcon v-if="index > 0" name="edit-two" @click="onEditGroup(item)" />
@@ -251,8 +226,14 @@
           <i v-if="index > 0" class="el-icon-delete-solid" @click.stop="onDeleteGroup(item)" /> -->
         </div>
       </div>
-      <div class="rg-container">
-        <div v-loading="loading" class="image-list">
+
+      <SpCropper ref="spCropperRef" @save-complete="handleCropComplete" />
+
+      <div class="flex-1">
+        <div
+          class="grid gap-2 p-2 min-h-[300px] w-full"
+          :style="{ gridTemplateColumns: `repeat(${columns || 6}, minmax(100px, 1fr))` }"
+        >
           <div
             v-for="(item, index) in list"
             :key="`image-item-wrap__${index}`"
@@ -260,11 +241,38 @@
             @click="handleClickItem(item)"
           >
             <div
-              class="image-item relative"
+              class="image-item relative group"
               :style="{ color: '#fff', backgroundImage: `url('${item.url}')` }"
             >
-              <div class="absolute bottom-0 right-0 left-0 bg-black/40">
-                <SpIcon name="link" @click="handleCopy(item.url)" size="20" />
+              <div
+                class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <div
+                  class="w-6 h-6 rounded-full bg-black/40 hover:bg-black/40 flex items-center justify-center cursor-pointer duration-200"
+                >
+                  <close-small
+                    theme="outline"
+                    size="16"
+                    fill="white"
+                    @click.stop="removeItem(item, index)"
+                  />
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 right-0 left-0 bg-black/40 flex justify-between items-center px-2 py-1"
+              >
+                <copy-link
+                  theme="outline"
+                  size="20"
+                  fill="white"
+                  @click.stop="handleCopy(item.url)"
+                />
+                <file-editing
+                  theme="outline"
+                  size="20"
+                  fill="white"
+                  @click.stop="handleEditImage(item)"
+                />
               </div>
             </div>
             <div class="image-title-wrap" :title="item.image_name">
@@ -289,6 +297,7 @@
           :page-size="pageSize"
           :total="pageCount"
           @current-change="goPage"
+          background
         />
       </div>
     </div>
@@ -352,23 +361,72 @@ import UploadUtil from '@/utils/uploadUtil'
 import { isObject, isArray } from '@/utils'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import SpCropper from '@/components/sp-cropper/SpCropper'
+import SpImageUploader from '@/components/sp-image-uploader/SpImageUploader'
+import { CopyLink, FileEditing, CloseSmall } from '@icon-park/vue'
+import { deleteImage } from '@/api/qiniu'
+
 export default {
   name: 'PickerImage',
   components: {
-    VueCropper
+    VueCropper,
+    SpCropper,
+    SpImageUploader,
+    CopyLink,
+    FileEditing,
+    CloseSmall
   },
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
     title: '我的图片'
   },
-  props: ['value'],
+  props: {
+    value: {
+      type: Object,
+      default: () => ({})
+    },
+    columns: {
+      type: Number,
+      default: 6
+    }
+  },
   data() {
     let { multiple = false, data } = this.value || {}
-    if (!data) {
-      data = multiple ? [] : ''
+    //如果父组件指定了 multiple，使用指定值；否则使用默认值 true（多选）
+    if (this.value && this.value.multiple !== undefined) {
+      multiple = this.value.multiple
+    }
+    // 如果传入的是对象格式（不是数组），需要转换
+    if (data && typeof data === 'object' && !Array.isArray(data) && 'url' in data) {
+      //没有明确指定 multiple，自动推断为单选模式
+      if (this.value.multiple === undefined) {
+        multiple = false
+        data = data.url || null
+      }
+      //已经明确指定了 multiple，按指定模式转换数据格式
+      else {
+        if (multiple) {
+          //多选模式：对象转数组
+          data = data.url ? [{ url: data.url }] : []
+        } else {
+          //单选模式：提取 url 字符串
+          data = data.url || null
+        }
+      }
+    }
+    if (typeof data === 'string') {
+      //如果字符串为空，视为未选择
+      if (data.trim() === '') {
+        data = multiple ? [] : null
+      } else {
+        data = multiple ? [data] : data //多选转为数组，单选保持字符串
+      }
+    } else if (!data) {
+      data = multiple ? [] : null
     }
     return {
+      spCropperRef: null,
       multiple,
       list: [],
       selected: data,
@@ -418,6 +476,65 @@ export default {
       }
     }
   },
+  watch: {
+    value: {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        if (!val) return
+        // 首先同步 multiple 状态（无论 data 是否存在）
+        if (val.multiple !== undefined) {
+          this.multiple = val.multiple
+        }
+        // 同步 value.data 到 selected
+        if (val.data !== undefined) {
+          let { multiple = true, data } = val
+          // 如果明确指定了 multiple，使用指定的值
+          if (val.multiple !== undefined) {
+            multiple = val.multiple
+            this.multiple = val.multiple
+          }
+
+          if (data && typeof data === 'object' && !Array.isArray(data) && 'url' in data) {
+            // 只有当 multiple 未明确指定（使用默认值）时才自动设置为单选
+            if (val.multiple === undefined) {
+              multiple = false
+              this.multiple = false
+              // 提取 url 字符串，如果 url 为空字符串或 undefined 则视为未选择
+              data = data.url || null
+            } else {
+              // 如果明确指定了 multiple，保持原值，但需要转换对象格式
+              if (multiple) {
+                // 多选模式：将对象转换为数组格式
+                data = data.url ? [{ url: data.url }] : []
+              } else {
+                // 单选模式：提取 url 字符串
+                data = data.url || null
+              }
+            }
+          }
+
+          if (typeof data === 'string') {
+            // 如果字符串为空，视为未选择
+            if (data.trim() === '') {
+              data = multiple ? [] : null
+            } else {
+              data = multiple ? [data] : data
+            }
+          } else if (!data) {
+            data = multiple ? [] : null
+          }
+          // 确保 selected 与 value.data 同步
+          this.selected = data
+        } else {
+          // 如果 data 未定义，但明确指定了 multiple，也要同步 multiple 状态
+          if (val.multiple !== undefined) {
+            this.multiple = val.multiple
+          }
+        }
+      }
+    }
+  },
   computed: {
     disabledDeleteGroup() {
       return this.selectCatgory == -1
@@ -449,15 +566,65 @@ export default {
   mounted() {
     this.nextPage()
     this.getImageAllCatgory()
+    //等 DOM 更新完再访问 SpCropper 组件实例
+    this.$nextTick(() => {
+      this.spCropperRef = this.$refs.spCropper
+    })
+    /*console.log('组件挂载时')
+    console.log('selected的值:', this.selected)*/
   },
   methods: {
+    removeItem(item, index) {
+      this.$confirm('确定删除此图片吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          deleteImage({ image_id: item.image_id }).then((response) => {
+            this.refresh(true)
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+              duration: 5 * 1000
+            })
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+    },
+
+    handleEditImage(item) {
+      if (this.$refs.spCropperRef && item) {
+        const currentIndex = this.list.findIndex((img) => img.image_id === item.image_id)
+        if (currentIndex === -1) {
+          this.$message.warning('无法找到对应的图片')
+          return
+        }
+        this.$refs.spCropperRef.showDialog({
+          image: item,
+          imageList: this.list,
+          currentIndex: currentIndex
+        })
+      }
+    },
+
+    handleCropComplete(data) {
+      this.refresh(true)
+      this.$message.success('图片已保存')
+    },
+
     isActive({ image_id, url }) {
       if (this.multiple) {
-        return isArray(this.selected) ? this.selected.findIndex(item => item.url == url) : false
+        return isArray(this.selected) ? this.selected.findIndex((item) => item.url == url) : false
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
         if (this.selected) {
-          const handleRegExp = str => {
+          const handleRegExp = (str) => {
             const regExp = /^(http|https):\/\/(.*)/g
             const [p1, p2, p3] = regExp.exec(str)
             return p3
@@ -538,7 +705,7 @@ export default {
       this.refresh(true)
     },
 
-    handleEdit() {
+    /*handleEdit() {
       const { multiple, selected } = this
       this.editFormList[1].disabled = false
       if (multiple && selected.length == 1) {
@@ -554,7 +721,7 @@ export default {
       const { selected, multiple } = this
       this.option.img = multiple ? selected[0].url : selected.url
       this.cropperDialogShow = true
-    },
+    },*/
     async fetch({ page_no, page_size }) {
       let params = {
         type: 'image',
@@ -575,7 +742,7 @@ export default {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
       console.log('catgoryList:', this.catgoryList)
-      this.editFormList[0].options = this.catgoryList.map(item => {
+      this.editFormList[0].options = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
@@ -594,66 +761,44 @@ export default {
         url
       }
       if (this.multiple) {
-        const fdx = this.selected.findIndex(s => s.image_id == item.image_id)
+        // 支持字符串和对象两种格式的查找
+        const fdx = this.selected.findIndex((s) => {
+          if (typeof s === 'string') {
+            const handleRegExp = (str) => {
+              const regExp = /^(http|https):\/\/(.*)/g
+              const match = regExp.exec(str)
+              return match ? match[2] : str
+            }
+            return handleRegExp(s) === handleRegExp(url)
+          } else if (isObject(s)) {
+            return s.image_id == image_id || s.url === url
+          }
+          return false
+        })
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
           // 默认最多可选20
-          const { num = 20 } = this.value
-          if (this.selected.length < num) {
+          const maxSelect = 20
+          if (this.selected.length < maxSelect) {
             this.selected.push(_item)
           } else {
-            this.$message.error(`最多选择${num}张图片`)
+            this.$message.error(`最多选择${maxSelect}张图片`)
             return
           }
         }
       } else {
-        this.selected = _item
+        // 单选模式，检查当前点击的图片是否已经被选中
+        const isAlreadySelected = this.isActive(item)
+        if (isAlreadySelected) {
+          // 如果已经选中，点击后取消选中
+          this.selected = null
+        } else {
+          // 如果未选中，点击后选中这张图片
+          this.selected = _item
+        }
       }
       this.updateVal(this.selected)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isPNG = file.type === 'image/png'
-      const isGIF = file.type === 'image/gif'
-      const isLt2M = file.size / 1024 / 1024 < 5
-      if (!isJPG && !isPNG && !isGIF) {
-        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
-        return
-      }
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 5MB!')
-        return
-      }
-      this.localpostData.fname = file.name
-    },
-    async handleAvatarSuccess(res, file) {
-      const uploadParams = {
-        image_cat_id: this.selectCatgory, //图片分类必填,必须为整数
-        image_name: file.name, //图片名称必填,不能超过50个字符
-        image_url: res.key, //图片链接必填
-        image_type: file.raw.type, //图片分类长度不能超过20个字符
-        storage: 'image' //图片id必填
-      }
-      await this.$api.qiniu.uploadQiniuPic(uploadParams)
-      this.$message.success('上传成功')
-      this.refresh(true)
-    },
-    // 自定义上传
-    handleUpload: function (e) {
-      const upload = new UploadUtil()
-      // 上传
-      upload
-        .uploadImg(e.file, e.file.name)
-        .then(
-          res => e.onSuccess(res),
-          err => e.onError(err)
-        )
-        .catch(err => e.onError(err))
-    },
-    // 上传错误回调
-    uploadError: function (e) {
-      console.error(e)
     },
     async handleCopy(url) {
       await this.$copyText(url)
@@ -662,8 +807,9 @@ export default {
     handleCancelAll() {
       const { multiple } = this
       this.selected = multiple ? [] : null
-    },
-    handleCropperAction(action) {
+      this.updateVal(this.selected)
+    }
+    /*handleCropperAction(action) {
       switch (action) {
         case 'minus':
           this.$refs.cropper.changeScale(-2)
@@ -678,7 +824,7 @@ export default {
           this.$refs.cropper.rotateLeft()
           break
       }
-    }
+    }*/
   }
 }
 </script>

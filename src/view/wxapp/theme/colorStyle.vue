@@ -73,7 +73,7 @@
                 : 'background:' + form.data[0].marketing
             "
           >
-            <img :src="item.img">
+            <img :src="item.img" />
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default {
   },
   mounted() {
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'color_style' }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
         if (typeof res.data.data.list[0].params.data != 'undefined') {
           this.form.data = res.data.data.list[0].params.data
@@ -142,7 +142,7 @@ export default {
         config: JSON.stringify([this.form]),
         page_name: 'color_style'
       }
-      savePageParams(param).then(res => {
+      savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

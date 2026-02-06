@@ -237,7 +237,7 @@ export default {
   },
   watch: {
     value(newVal, oldVal) {
-      this.tableData = newVal.map(item => {
+      this.tableData = newVal.map((item) => {
         return {
           item_id: item.item_id,
           item_name: item.item_name,
@@ -319,7 +319,7 @@ export default {
         this.$message.error('不能高于原订单金额')
         return
       }
-      const items = this.tableData.map(item => {
+      const items = this.tableData.map((item) => {
         return {
           item_id: item.item_id,
           total_fee: item.change_price ? item.change_price * 100 : item.total_fee * 100
@@ -330,7 +330,7 @@ export default {
     },
     // 按折扣改价
     onChangeItemDiscount({ change_discount }) {
-      const items = this.tableData.map(item => {
+      const items = this.tableData.map((item) => {
         return {
           item_id: item.item_id,
           total_fee: item.change_discount
@@ -350,7 +350,7 @@ export default {
     },
     // 运费改价
     onChangeFreightFee() {
-      const items = this.tableData.map(item => {
+      const items = this.tableData.map((item) => {
         let total_fee
         if (this.changeType == 'change_price') {
           total_fee = item.change_price ? item.change_price * 100 : item.total_fee * 100

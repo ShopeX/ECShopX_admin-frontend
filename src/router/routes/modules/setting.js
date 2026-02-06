@@ -117,7 +117,7 @@ const routes = [
           title: '通用设置',
           permissions: ['setting.systemsetting.publicsetting']
         },
-        component: () => import('@/view/base/setting/publicsetting')
+        component: () => import('@/views/settings/systemConfig/publicsetting')
       },
       {
         name: `systemConfigInvoinceConfiguration`,
@@ -128,7 +128,7 @@ const routes = [
           title: '开票配置',
           permissions: ['setting.systemsetting.invoinceConfiguration']
         },
-        component: () => import('@/view/financial/invoice/baiSetting')
+        component: () => import('@/views/settings/systemConfig/invoiceConfiguration/baiSetting')
       },
       {
         name: `systemConfigPaymentConfiguration`,
@@ -139,7 +139,7 @@ const routes = [
           title: '支付配置',
           permissions: ['setting.systemsetting.assetpayment']
         },
-        component: () => import('@/view/base/setting/payment')
+        component: () => import('@/views/settings/systemConfig/payment')
       },
       {
         name: `systemConfigSmsService`,
@@ -152,9 +152,9 @@ const routes = [
         },
         component: () => {
           if (VERSION_SHUYUN()) {
-            return import('@/view/base/shortmessage/shopex_sms')
+            return import('@/views/settings/systemConfig/smsService/shopex_sms')
           } else {
-            return import('@/view/base/shortmessage/ali_sms')
+            return import('@/views/settings/systemConfig/smsService/ali_sms')
           }
         },
         children: [
@@ -162,23 +162,24 @@ const routes = [
             path: '/',
             name: '基础配置',
             meta: 'base_config',
-            component: () => import('@/view/base/shortmessage/cpn/base_config')
+            component: () => import('@/views/settings/systemConfig/smsService/base_config')
           },
           {
             path: 'send_sms',
             name: '发送短信',
             meta: 'send_sms',
-            component: () => import('@/view/base/shortmessage/cpn/send_sms')
+            component: () => import('@/views/settings/systemConfig/smsService/send_sms')
           },
           {
             path: 'sms_signatures',
             name: '短信签名',
-            component: () => import('@/view/base/shortmessage/cpn/sms_signatures'),
+            component: () => import('@/views/settings/systemConfig/smsService/sms_signatures'),
             meta: 'sms_signatures',
             children: [
               {
                 path: 'edit',
-                component: () => import('@/view/base/shortmessage/cpn/sms_signatures_edit'),
+                component: () =>
+                  import('@/views/settings/systemConfig/smsService/sms_signatures_edit'),
                 meta: 'sms_signatures'
               }
             ]
@@ -186,12 +187,13 @@ const routes = [
           {
             path: 'sms_template',
             name: '短信模板',
-            component: () => import('@/view/base/shortmessage/cpn/sms_template'),
+            component: () => import('@/views/settings/systemConfig/smsService/sms_template'),
             meta: 'sms_template',
             children: [
               {
                 path: 'edit',
-                component: () => import('@/view/base/shortmessage/cpn/sms_template_edit'),
+                component: () =>
+                  import('@/views/settings/systemConfig/smsService/sms_template_edit'),
                 meta: 'sms_template'
               }
             ]
@@ -199,18 +201,19 @@ const routes = [
           {
             path: 'sms_sendLog',
             name: '短信发送记录',
-            component: () => import('@/view/base/shortmessage/cpn/sms_sendLog'),
+            component: () => import('@/views/settings/systemConfig/smsService/sms_sendLog'),
             meta: 'sms_sendLog'
           },
           {
             path: 'sms_MassLog',
             name: '短信群发送记录',
-            component: () => import('@/view/base/shortmessage/cpn/sms_MassLog'),
+            component: () => import('@/views/settings/systemConfig/smsService/sms_MassLog'),
             meta: 'sms_MassLog',
             children: [
               {
                 path: 'edit',
-                component: () => import('@/view/base/shortmessage/cpn/sms_MassLog_edit'),
+                component: () =>
+                  import('@/views/settings/systemConfig/smsService/sms_MassLog_edit'),
                 meta: 'sms_MassLog'
               }
             ]
@@ -223,7 +226,7 @@ const routes = [
           {
             path: 'shopex_sms',
             name: '商派短信',
-            component: () => import('@/view/base/shortmessage/shopex_sms')
+            component: () => import('@/views/settings/systemConfig/smsService/shopex_sms')
           }
         ]
       },
@@ -236,7 +239,7 @@ const routes = [
           title: '小票打印',
           permissions: ['setting.systemsetting.Yilianyun']
         },
-        component: () => import('@/view/base/setting/yilianyun/index')
+        component: () => import('@/views/settings/systemConfig/yilianyun/index')
       },
       {
         name: `systemConfigUgcAuditConfiguration`,
@@ -247,7 +250,7 @@ const routes = [
           title: 'UGC审核配置',
           permissions: ['setting.systemsetting.ugctpos']
         },
-        component: () => import('@/view/member/ugc/ugcTPOS')
+        component: () => import('@/views/settings/systemConfig/ugcTPOS')
       },
       {
         name: `systemConfigWxappManagement`,
@@ -313,7 +316,7 @@ const routes = [
           title: '公众号授权',
           permissions: ['setting.systemsetting.brand']
         },
-        component: () => import('@/view/brand/wechat/open')
+        component: () => import('@/views/settings/systemConfig/official-account-auth')
       },
       {
         name: `systemConfigWxappCustomerService`,
@@ -324,7 +327,7 @@ const routes = [
           title: '小程序客服',
           permissions: ['setting.systemsetting.wxappchat']
         },
-        component: () => import('@/view/base/setting/im/wxappchat')
+        component: () => import('@/views/settings/systemConfig/wxapp-customer-service')
       },
       {
         name: `systemConfigOneChat`,
@@ -335,7 +338,7 @@ const routes = [
           title: '一洽客服',
           permissions: ['setting.systemsetting.EChat']
         },
-        component: () => import('@/view/base/setting/im/echat')
+        component: () => import('@/views/settings/systemConfig/echat')
       },
       {
         name: `systemConfigMeiChat`,
@@ -346,7 +349,7 @@ const routes = [
           title: '美洽客服',
           permissions: ['setting.systemsetting.meiqia']
         },
-        component: () => import('@/view/site/meiqia')
+        component: () => import('@/views/settings/systemConfig/meiqia')
       },
       {
         name: `systemConfigWangDianTong`,
@@ -357,7 +360,7 @@ const routes = [
           title: '旺店通',
           permissions: ['setting.systemsetting.wdtSetting']
         },
-        component: () => import('@/view/base/setting/saaserp/wdtSetting')
+        component: () => import('@/views/settings/systemConfig/wdtSetting')
       },
       {
         name: `systemConfigJuShuiTan`,
@@ -368,7 +371,7 @@ const routes = [
           title: '聚水潭',
           permissions: ['setting.systemsetting.jstSetting']
         },
-        component: () => import('@/view/base/setting/saaserp/jstSetting')
+        component: () => import('@/views/settings/systemConfig/jstSetting')
       },
       {
         name: `systemConfigDomainSetting`,
@@ -379,7 +382,7 @@ const routes = [
           title: '域名设置',
           permissions: ['setting.systemsetting.domain_setting']
         },
-        component: () => import('@/view/base/setting/companys/domain')
+        component: () => import('@/views/settings/systemConfig/domain')
       },
       {
         name: `systemConfigPrivacyApply`,
@@ -390,7 +393,7 @@ const routes = [
           title: '脱敏数据申请',
           permissions: ['setting.systemsetting.approveDataPass']
         },
-        component: () => import('@/view/base/encrypt/authAdmin.vue')
+        component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
       },
       {
         name: `systemConfigPrivacyApproval`,
@@ -401,11 +404,11 @@ const routes = [
           title: '脱敏申请审批',
           permissions: ['setting.systemsetting.applyDataPass']
         },
-        component: () => import('@/view/base/setting/authorityapproval'),
+        component: () => import('@/views/settings/systemConfig/authorityapproval'),
         children: [
           {
             path: 'approve/:id?',
-            component: () => import('@/view/base/setting/authorityapproval/approve'),
+            component: () => import('@/views/settings/systemConfig/authorityapproval/approve'),
             meta: {
               title: '脱敏申请审批详情',
               hidden: true
@@ -422,7 +425,7 @@ const routes = [
           title: 'web隐私声明',
           permissions: ['setting.systemsetting.webPrivacyStatement']
         },
-        component: () => import('@/view/base/setting/webPrivacyStatement')
+        component: () => import('@/views/settings/systemConfig/webPrivacyStatement')
       },
       {
         name: `systemConfigExternalWxapp`,
@@ -433,11 +436,11 @@ const routes = [
           title: '外链小程序',
           permissions: ['setting.systemsetting.extminilink']
         },
-        component: () => import('@/view/base/wxa/extMiniLink'),
+        component: () => import('@/views/settings/systemConfig/external-app'),
         children: [
           {
             path: 'editor',
-            component: () => import('@/view/base/wxa/extMiniLinkDetail'),
+            component: () => import('@/views/settings/systemConfig/extMiniLinkDetail'),
             meta: {
               title: '外部小程序配置-页面路径',
               hidden: true
@@ -454,11 +457,11 @@ const routes = [
           title: '配送设置',
           permissions: ['setting.delivery.logistics']
         },
-        component: () => import('@/view/mall/trade/logistics/index'),
+        component: () => import('@/views/settings/deliverySettings/logistics/index'),
         children: [
           {
             path: 'editor/:id?',
-            component: () => import('@/view/mall/trade/logistics/add-ziti'),
+            component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
             meta: {
               title: '编辑自提点',
               hidden: true
@@ -496,7 +499,7 @@ const routes = [
           title: '物流查询配置',
           permissions: ['setting.delivery.kdniao']
         },
-        component: () => import('@/view/base/setting/kdniao')
+        component: () => import('@/views/settings/deliverySettings/logistics-inquiry')
       },
       {
         name: `deliverySettingDistributionManagement`,
@@ -507,7 +510,7 @@ const routes = [
           title: '配送员管理',
           permissions: ['setting.delivery.setting_staffself_deliverystaff']
         },
-        component: () => import('@/view/base/account/delivery')
+        component: () => import('@/views/settings/deliverySettings/delivery-management')
       },
       {
         name: `deliverySettingDeliverPersonPerformance`,
@@ -518,7 +521,7 @@ const routes = [
           title: '配送员业绩',
           permissions: ['setting.delivery.companydata_deliverystaffstatistics']
         },
-        component: () => import('@/view/mall/datacube/companydata/delivery')
+        component: () => import('@/views/settings/deliverySettings/delivery-performance')
       },
       {
         name: `deliverySettingDadaAccount`,
@@ -529,12 +532,12 @@ const routes = [
           title: '达达账户',
           permissions: ['setting.delivery.dada']
         },
-        component: () => import('@/view/mall/distribution/account')
+        component: () => import('@/views/settings/deliverySettings/dada-account')
       },
       {
         name: 'systemInfoOperatorLogs',
         path: 'system-info/operator-logs',
-        component: () => import('@/view/base/setting/companys/logs'),
+        component: () => import('@/views/settings/systemInfo/operation-log'),
         meta: {
           aliasName: 'operatLorogs',
           icon: 'icon-products',
@@ -566,7 +569,7 @@ const routes = [
           title: '地图服务',
           permissions: ['setting.systemsetting.mapsetting']
         },
-        component: () => import('@/views/settings/map-setting')
+        component: () => import('@/views/settings/systemConfig/map-setting')
       },
       {
         name: `ERP`,
@@ -577,7 +580,7 @@ const routes = [
           title: '商派ERP',
           permissions: ['setting.systemsetting.certificate']
         },
-        component: () => import('@/view/base/setting/certificate/index')
+        component: () => import('@/views/settings/systemConfig/ShangPai-erp')
       },
       {
         name: `shopmenus`,
@@ -628,7 +631,7 @@ const routes = [
           title: '达摩CRM',
           permissions: ['setting.systemsetting.damoCrm']
         },
-        component: () => import('@/view/base/setting/damoCrm/index')
+        component: () => import('@/views/settings/systemConfig/damoCrm/index')
       }
     ]
   }

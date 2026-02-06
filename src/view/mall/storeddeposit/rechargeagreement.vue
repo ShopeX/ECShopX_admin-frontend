@@ -41,9 +41,9 @@ export default {
   },
   methods: {
     save() {
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
-          setRechargeAgreement(this.form).then(res => {
+          setRechargeAgreement(this.form).then((res) => {
             this.$message({
               message: '保存成功',
               type: 'success',
@@ -55,7 +55,7 @@ export default {
     },
     getAgreement() {
       this.loading = true
-      getRechargeAgreementByCompanyId().then(res => {
+      getRechargeAgreementByCompanyId().then((res) => {
         this.form.content = res.data.data.content
         this.loading = false
       })

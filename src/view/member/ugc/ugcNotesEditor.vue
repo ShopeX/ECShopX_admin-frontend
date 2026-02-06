@@ -123,11 +123,6 @@
           <el-col :span="16">
             <span class="text">最多可选 {{ goodslimit }} 件商品</span>
           </el-col>
-          <el-col :span="8" class="row-fright">
-            <el-button size="small" type="primary" plain @click="handleAddItems">
-              选择商品
-            </el-button>
-          </el-col>
         </el-row>
         <SkuSelector
           ref="itemsSku"
@@ -291,11 +286,11 @@ export default {
         content: info.content.replace(/<br\/>/g, '\n'),
         video: info.video,
         video_ratio: info.video_ratio,
-        images: JSON.parse(info.images).map(item => item.url)
+        images: JSON.parse(info.images).map((item) => item.url)
       }
 
       if (info.goods && info.goods.length) {
-        info.goods.forEach(item => {
+        info.goods.forEach((item) => {
           item.spec_items = []
           relItems.push(item)
         })
@@ -364,7 +359,7 @@ export default {
     },
 
     confirmHandle() {
-      this.$refs['dataForm'].validate(async valid => {
+      this.$refs['dataForm'].validate(async (valid) => {
         if (valid) {
           console.log(this.ruleForm)
           let params = JSON.parse(JSON.stringify(this.ruleForm))
@@ -372,9 +367,9 @@ export default {
           params.cover = params.images[0]
           params.image_path = params.images
           params.content = params.content.replace(/\n/g, `<br/>`)
-          params.topics = this.relTopics.map(item => item.topic_id)
+          params.topics = this.relTopics.map((item) => item.topic_id)
           params.images = JSON.stringify(
-            params.images.map(item => {
+            params.images.map((item) => {
               return {
                 url: item,
                 topics: []

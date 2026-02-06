@@ -14,7 +14,7 @@
     <el-table v-loading="loading" :data="kflist" :height="wheight - 160">
       <el-table-column label="客服头像" width="180">
         <template slot-scope="img">
-          <img v-if="img.row.kf_headimgurl" :src="wximageurl + img.row.kf_headimgurl" height="40">
+          <img v-if="img.row.kf_headimgurl" :src="wximageurl + img.row.kf_headimgurl" height="40" />
         </template>
       </el-table-column>
       <el-table-column prop="kf_nick" label="昵称" />
@@ -89,7 +89,7 @@
               :show-file-list="false"
               :auto-upload="false"
             >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="300">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="300" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -185,7 +185,7 @@ export default {
         nick: this.wechatKfFromData.nick,
         avatar: file
       }
-      createWechatKfs(params).then(response => {
+      createWechatKfs(params).then((response) => {
         this.addWechatKfVisible = false
         this.getWechatKf()
         this.$message({
@@ -215,7 +215,7 @@ export default {
         nick: this.wechatKfFromData.nick,
         avatar: file
       }
-      updateWechatKfs(params).then(response => {
+      updateWechatKfs(params).then((response) => {
         this.addWechatKfVisible = false
         this.wechatKfFromData.account = ''
         this.getWechatKf()
@@ -234,7 +234,7 @@ export default {
       })
         .then(() => {
           let params = { account: row.kf_account }
-          deleteWechatKfs(params).then(response => {
+          deleteWechatKfs(params).then((response) => {
             this.kflist.splice(index, 1)
             this.$essage({
               message: '删除客服成功',
@@ -252,7 +252,7 @@ export default {
     },
     getWechatKf() {
       this.loading = true
-      getWechatKfs().then(response => {
+      getWechatKfs().then((response) => {
         this.kflist = response.data.data.list
         this.loading = false
       })

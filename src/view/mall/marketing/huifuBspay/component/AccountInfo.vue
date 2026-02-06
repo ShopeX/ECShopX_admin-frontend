@@ -189,7 +189,7 @@ export default {
           save_id:
             entry_apply_info.operator_type === 'distributor' ? distributor_info.distributor_id : 0
         })
-        .then(res => {
+        .then((res) => {
           this.dialogFormVisible = false
           this.$emit('handleClose', 'update')
           // 跳转到列表页
@@ -209,7 +209,7 @@ export default {
       // 需要判断当时是店铺还是经销商 目前只判断了店铺
       this.approveType = status
       if (status === 'APPROVED') {
-        this.$refs['form'].validate(async vaild => {
+        this.$refs['form'].validate(async (vaild) => {
           if (vaild) {
             this.visibleContent = `请确认是否通过${user_name}的开户申请`
             this.dialogFormVisible = true

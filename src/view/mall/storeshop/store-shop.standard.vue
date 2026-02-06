@@ -36,42 +36,15 @@
 <template>
   <SpPage class="">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="distributor_id" label="店铺:">
-        <SpSelectShop
-          ref="selectShop"
-          v-model="formData.distributor_id"
-          clearable
-          placeholder="请选择"
-          :queryParams="{ is_valid: true }"
-        />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="keywords" label="商品名称:">
-        <el-input v-model="formData.keywords" placeholder="请输入商品名称" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="item_bn" label="商品货号:">
-        <el-input v-model="formData.item_bn" placeholder="请输入商品货号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="barcode" label="商品条码:">
-        <el-input v-model="formData.barcode" placeholder="请输入商品条码" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" label="所属供应商:">
-        <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status" label="总部销售状态:">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
-          <el-option
-            v-for="item in statusOption"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
-    </SpFilterForm>
+    <SpFormPlus
+      ref="searchForm"
+      v-model="searchParams"
+      :form-items="searchFormItems"
+      form-type="searchForm"
+      @submit="onSearch"
+    />
 
-    <div class="action-container">
+    <div class="action-container mt-4">
       <el-button type="primary" @click="removeItemFromShop"> 从店铺移除 </el-button>
       <!-- <el-button type="primary" plain> 变更状态 </el-button> -->
       <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
@@ -174,7 +147,8 @@ export default {
       statusOption = updateStatusOption
     }
     return {
-      formData: {
+      selectShopRef: null,
+      searchParams: {
         distributor_id: '',
         keywords: '',
         item_bn: '',
@@ -193,12 +167,12 @@ export default {
       activeTab: 'first',
       selectItems: [],
       itemSkuDialog: false,
-      editPrice:null,
-      editRow:{},
+      editPrice: null,
+      editRow: {},
       itemSkuForm: {
         itemName: '',
         itemId: '',
-        is_total_store:false
+        is_total_store: false
       },
       loading: false,
       itemSkuFormList: [
@@ -209,7 +183,7 @@ export default {
               itemId={this.itemSkuForm.itemId}
               isSuplier={this.editRow.supplier_id != '0'}
               isTotalStore={this.itemSkuForm.is_total_store}
-              distributorId={this.formData.distributor_id}
+              distributorId={this.searchParams.distributor_id}
             />
           )
         }
@@ -218,6 +192,85 @@ export default {
   },
   computed: {
     ...mapGetters(['login_type']),
+    // 搜索表单配置
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'distributor_id',
+          label: '店铺',
+          component: ({ value, onInput, h }) => {
+            return h('SpSelectShop', {
+              props: {
+                value: value,
+                clearable: true,
+                size: 'small',
+                placeholder: '请选择',
+                queryParams: { is_valid: true }
+              },
+              ref: (vm) => {
+                if (vm) {
+                  this.selectShopRef = vm
+                }
+              },
+              on: {
+                input: onInput
+              }
+            })
+          },
+          cellWidth: 1.3
+        },
+        {
+          fieldName: 'keywords',
+          label: '商品名称',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请输入商品名称'
+          }
+        },
+        {
+          fieldName: 'item_bn',
+          label: '商品货号',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请输入商品货号'
+          }
+        },
+        {
+          fieldName: 'barcode',
+          label: '商品条码',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请输入商品条码'
+          }
+        },
+        {
+          fieldName: 'supplier_name',
+          label: '所属供应商',
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '请输入所属供应商'
+          }
+        },
+        {
+          fieldName: 'approve_status',
+          label: '总部销售状态',
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: '请选择',
+            options: this.statusOption.map((item) => ({
+              label: item.title,
+              value: item.value
+            }))
+          }
+        }
+      ]
+    },
     setting() {
       return createSetting({
         actions: [
@@ -250,9 +303,9 @@ export default {
                   // 'disabled': this.IS_ADMIN() && row.is_market == '0'
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.marketing.updateDistributorItem({
-                      distributor_id: this.formData.distributor_id,
+                      distributor_id: this.searchParams.distributor_id,
                       goods_id: row.goods_id,
                       is_can_sale: e
                     })
@@ -272,8 +325,6 @@ export default {
             name: 'sku编码',
             key: 'item_bn',
             width: 150,
-            align: 'right',
-            headerAlign: 'center'
           },
           {
             name: '商品库存',
@@ -293,9 +344,9 @@ export default {
                   disabled: this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id != '0'
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.marketing.updateDistributorItem({
-                      distributor_id: this.formData.distributor_id,
+                      distributor_id: this.searchParams.distributor_id,
                       goods_id: row.goods_id,
                       is_total_store: !e
                     })
@@ -315,7 +366,7 @@ export default {
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {
-              return this.statusOption.find(item => item.value === value)?.title
+              return this.statusOption.find((item) => item.value === value)?.title
             }
           },
           {
@@ -348,31 +399,31 @@ export default {
               <div>
                 {row.price}
                 {this.IS_ADMIN() && this.VERSION_STANDARD() && row.supplier_id == '0' && (
-                      <el-popover
-                        placement="top"
-                        trigger="hover"
-                        on-show={() => this.editPrice = row.price}
+                  <el-popover
+                    placement='top'
+                    trigger='hover'
+                    on-show={() => (this.editPrice = row.price)}
+                  >
+                    <div class='popover-edit flex'>
+                      <el-input
+                        v-model={this.editPrice}
+                        class='edit-input'
+                        placeholder='请输入价格'
+                      />
+                      <el-button
+                        type='primary'
+                        size='mini'
+                        class='ml-1'
+                        on-click={this.onModifyItemPrice.bind(this, row)}
                       >
-                        <div class="popover-edit flex">
-                          <el-input
-                            v-model={this.editPrice}
-                            class="edit-input"
-                            placeholder="请输入价格"
-                          />
-                          <el-button
-                            type="primary"
-                            size="mini"
-                            class="ml-1"
-                            on-click={this.onModifyItemPrice.bind(this, row)}
-                          >
-                            确定
-                          </el-button>
-                        </div>
-                        <el-button slot="reference" type="text">
-                          <i class="el-icon-edit" />
-                        </el-button>
-                      </el-popover>
-                    )}
+                        确定
+                      </el-button>
+                    </div>
+                    <el-button slot='reference' type='text'>
+                      <i class='el-icon-edit' />
+                    </el-button>
+                  </el-popover>
+                )}
               </div>
             )
           },
@@ -400,8 +451,8 @@ export default {
             width: 120,
             key: 'tagList',
             render: (h, scope) => (
-              <div style="white-space: normal;">
-                {scope.row.tagList?.map(item => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList?.map((item) => (
                   <span
                     style={{
                       color: item.font_color,
@@ -435,34 +486,44 @@ export default {
       this.$refs.finder.refresh(true)
     },
     async getDefaultDistributor() {
-      if (!this.formData.distributor_id) {
-        {/* const { distributor_id, name } = await this.$api.marketing.getDistributorInfo({
+      if (!this.searchParams.distributor_id) {
+        {
+          /* const { distributor_id, name } = await this.$api.marketing.getDistributorInfo({
           distributor_id: 0
-        }) */}
+        }) */
+        }
 
         // 获取店铺列表中第一个店铺
-        const { list, total_count } = await this.$api.marketing.getDistributorList({ page: 1, pageSize: 10, is_valid: true })
-        if(list.length > 0) {
-          this.formData.distributor_id = list[0].distributor_id
-          if (this.$refs.selectShop) {
-            this.$refs.selectShop.selectValue = list[0].name
-          }
+        const { list, total_count } = await this.$api.marketing.getDistributorList({
+          page: 1,
+          pageSize: 10,
+          is_valid: true
+        })
+        if (list.length > 0) {
+          const { distributor_id, name } = list[0]
+          this.searchParams.distributor_id = distributor_id
+          this.$nextTick(() => {
+            if (this.selectShopRef) {
+              // 使用 onChange 方法设置值，这样会同时更新 selectValue 和 value
+              this.selectShopRef.onChange({ name, value: distributor_id })
+            }
+          })
         }
       }
       this.finderUrl = '/distributor/items'
       this.finderData = undefined
     },
     beforeSearch(params) {
-      const formData = this.formData
+      const searchParams = this.searchParams
       params = {
         ...params,
-        ...formData,
+        ...searchParams,
         is_can_sale: this.activeTab == 'second' ? true : this.activeTab == 'third' ? false : '_all'
       }
       return params
     },
     afterSearch({ data }) {
-      data.data.list.forEach(item => {
+      data.data.list.forEach((item) => {
         item.price = item.price / 100
       })
       return data
@@ -486,10 +547,10 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
-      const { distributor_id } = this.formData
+      const { distributor_id } = this.searchParams
       await this.$api.marketing.deleteDistributorItems({
         distributor_id,
-        item_ids: this.selectItems.map(item => item.goods_id)
+        item_ids: this.selectItems.map((item) => item.goods_id)
       })
       this.$message.success('商品删除成功')
       this.$refs.finder.refresh(true)
@@ -501,16 +562,16 @@ export default {
       }
       const zip = new JSZip()
       const requests = []
-      const { distributor_id } = this.formData
-      this.selectItems.forEach(item => {
+      const { distributor_id } = this.searchParams
+      this.selectItems.forEach((item) => {
         const url = `${this.BASE_API}/goods/distributionGoodsWxaCodeStream?item_id=${item.itemId}&distributor_id=${distributor_id}`
         requests.push(getFileBlob(url))
       })
-      Promise.all(requests).then(res => {
+      Promise.all(requests).then((res) => {
         res.forEach((file, index) => {
           zip.file(`${this.selectItems[index].itemName}.png`, file, { binary: true }) // 逐个添加文件
         })
-        zip.generateAsync({ type: 'blob' }).then(content => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
         })
       })
@@ -518,8 +579,8 @@ export default {
     // 导出
     async handleExport() {
       const exportParams = {
-        ...this.formData,
-        goods_ids: this.selectItems.map(item => item.goods_id)
+        ...this.searchParams,
+        goods_ids: this.selectItems.map((item) => item.goods_id)
       }
       const { status } = await this.$api.marketing.exportDistributorItems(exportParams)
       if (status) {
@@ -527,7 +588,7 @@ export default {
         this.$export_open('distributor_items')
       }
     },
-    async onModifyItemPrice(row){
+    async onModifyItemPrice(row) {
       await this.$api.marketing.updateDistributorItem({
         distributor_id: row.distributor_id,
         item_id: row.item_id,
@@ -547,7 +608,7 @@ export default {
         this.loading = true
         try {
           await this.$api.marketing.updateDistributorItem({
-            distributor_id: this.formData.distributor_id,
+            distributor_id: this.searchParams.distributor_id,
             goods_id: JSON.stringify(this.selectItems.map((item) => item.goods_id)),
             is_can_sale: command == '1'
           })
@@ -561,18 +622,18 @@ export default {
       } else if (command == '3' || command == '4') {
         this.loading = true
         let remainItems = []
-        if(this.IS_ADMIN() && this.VERSION_STANDARD()){
+        if (this.IS_ADMIN() && this.VERSION_STANDARD()) {
           //云店需要过滤供应商商品的
-          remainItems = this.selectItems.filter(item=>item.supplier_id == '0')
+          remainItems = this.selectItems.filter((item) => item.supplier_id == '0')
         }
-        if(!remainItems.length){
+        if (!remainItems.length) {
           this.$refs.finder.refresh(true)
           return
         }
         try {
           await this.$api.marketing.updateDistributorItem({
-            distributor_id: this.formData.distributor_id,
-            goods_id: JSON.stringify(remainItems.map(item => item.goods_id)),
+            distributor_id: this.searchParams.distributor_id,
+            goods_id: JSON.stringify(remainItems.map((item) => item.goods_id)),
             is_total_store: command == '3'
           })
           this.$message.success('操作成功')

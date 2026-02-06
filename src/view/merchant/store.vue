@@ -73,6 +73,15 @@
   }
 }
 </style>
+<style lang="scss">
+// 营业时间下拉选项居中（只针对 merchant-store 页面的时间选择器）
+.merchant-store-time-select {
+  .time-select-item,
+  .el-time-spinner__item {
+    text-align: center !important;
+  }
+}
+</style>
 <template>
   <SpPage class="merchant-store">
     <SpForm
@@ -289,6 +298,7 @@ export default {
                 <el-time-select
                   v-model={value['startTime']}
                   class='start-time'
+                  popper-class='merchant-store-time-select'
                   placeholder='起始时间'
                   picker-options={{
                     start: '00:00',
@@ -300,6 +310,7 @@ export default {
                 <el-time-select
                   v-model={value['endTime']}
                   class='end-time'
+                  popper-class='merchant-store-time-select'
                   placeholder='结束时间'
                   picker-options={{
                     start: '00:00',
@@ -610,7 +621,7 @@ export default {
     this.distributor_self = distributor_type === 'distributor_self' ? 1 : 0
     // 当distributor_self为1时，移除地理位置表单项的validator
     if (distributor_type === 'distributor_self') {
-      const addressItem = this.formList.find(item => item.key === 'address')
+      const addressItem = this.formList.find((item) => item.key === 'address')
       if (addressItem && addressItem.validator) {
         delete addressItem.validator
       }
@@ -722,7 +733,7 @@ export default {
       const { distributor_id } = this.$route.query
       if (distributor_id || this.IS_DISTRIBUTOR()) {
         const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
-        const [startTime, endTime] = res.hour.split('-')
+        const [startTime, endTime] = res.hour?.split('-') || []
 
         // 退货点区号、手机号
         // 退货点营业时间段
@@ -732,11 +743,11 @@ export default {
           offline_mobile = ''
         if (isObject(res.offline_aftersales_address)) {
           const { hours, mobile } = res.offline_aftersales_address
-          let [t1, t2] = hours.split('-')
+          let [t1, t2] = hours?.split('-') || []
           offline_startTime = t1
           offline_endTime = t2
           if (mobile.indexOf('-') > -1) {
-            let [code, m] = res.offline_aftersales_address.mobile.split('-')
+            let [code, m] = res.offline_aftersales_address.mobile?.split('-') || []
             offline_areaCode = code
             offline_mobile = m
           } else {
@@ -761,8 +772,8 @@ export default {
           is_require_building: res.is_require_building,
           logo: res.logo,
           banner: res.banner,
-          lng: res.lng,
-          lat: res.lat,
+          lng: res.lng || 116.397128,
+          lat: res.lat || 39.916527,
           regions_id: res.regions_id,
           address: res.address,
           house_number: res.house_number,

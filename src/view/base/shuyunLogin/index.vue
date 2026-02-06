@@ -30,7 +30,7 @@ export default {
       'SET_TOKEN_EXP',
       'SET_USERINFO',
       'SET_LOGIN_TYPE',
-      'SET_LOGIN_FROM',
+      'SET_LOGIN_FROM'
     ]),
     init() {
       let { code } = this.$route.query

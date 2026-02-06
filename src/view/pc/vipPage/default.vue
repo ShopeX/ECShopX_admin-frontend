@@ -45,10 +45,7 @@
               @click.native="setCurrent(k)"
             >
               <transition name="el-fade-in-linear">
-                <div
-                  v-if="k == editorIndex"
-                  @click="removeCurrent"
-                >
+                <div v-if="k == editorIndex" @click="removeCurrent">
                   <i class="el-icon-delete-solid"></i>
                 </div>
               </transition>
@@ -137,7 +134,7 @@ export default {
         this.renderable = false
         this.components[this.editorIndex] = newVal
         console.log('outer watch', this.components)
-        this.$nextTick(_ => {
+        this.$nextTick((_) => {
           this.renderable = true
         })
       },
@@ -146,7 +143,7 @@ export default {
   },
   created() {
     console.log('plugins', plugins)
-    Object.keys(plugins).forEach(key => {
+    Object.keys(plugins).forEach((key) => {
       let widget = plugins[key].widget
       console.log('widget', widget)
       Vue.component(key, widget)
@@ -158,7 +155,7 @@ export default {
       version: 'v1.0.1',
       page_name: 'member'
     }
-    getParamByTempName(filter).then(res => {
+    getParamByTempName(filter).then((res) => {
       if (res.data.data.config.length !== 0) {
         this.components = res.data.data.config
       }
@@ -212,13 +209,13 @@ export default {
     },
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then(_ => {
+        .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     saveConfig() {
       let filter = {
@@ -228,7 +225,7 @@ export default {
         page_name: 'member'
       }
       console.log('save', filter)
-      savePageParams(filter).then(res => {
+      savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
             message: '保存成功',

@@ -9,7 +9,7 @@
       <img src="/images/logo.png" alt="logo" width="300" />
       <!-- <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">总部</div> -->
       <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
-      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333] ">请登录</div>
+      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">请登录</div>
     </div>
 
     <div class="mt-8 ml-2">
@@ -129,6 +129,8 @@ export default {
           setTimeout(() => {
             if (accessMenus.length == 1 && accessMenus[0].url == '/activelicense') {
               window.location.href = '/activelicense'
+            } else if (accessMenus.length == 1 && accessMenus[0].url == '/login') {
+              window.location.href = '/login'
             } else {
               window.location.href = '/'
             }
@@ -155,23 +157,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .page-login {
-    ::v-deep .el-button {
-      padding-left: 30px;
-      padding-right: 30px;
-      border-radius: 50px;
-      font-size: 18px;
-    }
-    ::v-deep .el-input {
-      border-radius: 0;
-      border: 1px solid #333;
-      input {
-        border: none;
-        border-radius: none;
-      }
-    }
-    .font-helvca {
-      font-family: helvitca;
+.page-login {
+  ::v-deep .el-button {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 50px;
+    font-size: 18px;
+  }
+  ::v-deep .el-input {
+    border-radius: 0;
+    border: 1px solid #333;
+    input {
+      border: none;
+      border-radius: none;
     }
   }
+  .font-helvca {
+    font-family: helvitca;
+  }
+}
 </style>

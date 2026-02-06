@@ -63,7 +63,7 @@
           <el-table-column type="index" width="50" label="序号" />
           <el-table-column label="商品图片" min-width="50">
             <template slot-scope="scope">
-              <img :src="wximageurl + scope.row.item_pic" width="50">
+              <img :src="wximageurl + scope.row.item_pic" width="50" />
             </template>
           </el-table-column>
           <el-table-column prop="item_name" label="商品名称" min-width="100" />
@@ -105,7 +105,7 @@ export default {
   methods: {
     handleSetMemo() {
       setDeliveryorderMemo({ memo: this.detail.memo, delivery_id: this.detail.delivery_id }).then(
-        res => {
+        (res) => {
           this.$message({
             type: 'success',
             message: '备注更新成功'
@@ -121,7 +121,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          shippingDeliveryorder({ delivery_id: row.delivery_id }).then(response => {
+          shippingDeliveryorder({ delivery_id: row.delivery_id }).then((response) => {
             this.$message({
               type: 'success',
               message: '操作成功'
@@ -138,7 +138,7 @@ export default {
     },
     getDetail() {
       this.loading = true
-      getDeliveryOrderDetail(this.$route.params.delivery_id).then(response => {
+      getDeliveryOrderDetail(this.$route.params.delivery_id).then((response) => {
         this.detail = response.data.data
         this.loading = false
       })

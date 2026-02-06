@@ -151,46 +151,38 @@ html[dir='rtl'] {
     left: auto !important;
     right: 0 !important;
   }
-
   .el-input__prefix {
     right: 5px !important;
     left: auto !important;
   }
-
   .el-input__suffix {
     left: 5px !important;
     right: auto !important;
   }
-
   .el-textarea__inner {
     padding-right: 15px;
     padding-left: 15px;
   }
-
   // 处理图标和按钮的定位
   .el-icon-close,
   .el-icon-circle-close {
     right: 15px !important;
     left: auto !important;
   }
-
   // 处理弹出层和下拉菜单的定位
   .el-popover,
   .el-tooltip__popper {
     direction: rtl;
   }
-
   // 处理步骤条中的定位
   .el-step__line {
     left: auto !important;
     right: 14px !important;
   }
-
   // 处理时间选择器中的定位
   .el-time-spinner__item {
     text-align: right;
   }
-
   // 处理日期选择器中的定位
   .el-date-table td {
     text-align: right;
@@ -321,7 +313,6 @@ html[dir='rtl'] {
   .el-menu {
     text-align: right;
   }
-
   // 菜单图标镜像
   // Element UI 默认的子菜单箭头图标
   .el-submenu__icon-arrow {
@@ -342,7 +333,6 @@ html[dir='rtl'] {
       margin-right: 0 !important;
       margin-left: 4px !important;
     }
-
     // 处理绝对定位的图标
     .icon-xiala {
       position: absolute;
@@ -350,7 +340,6 @@ html[dir='rtl'] {
       left: auto !important;
     }
   }
-
   // 菜单项中的图标位置调整
   .el-menu-item {
     i,
@@ -361,7 +350,6 @@ html[dir='rtl'] {
       margin-left: 16px !important;
     }
   }
-
   // 子菜单标题中的图标（包括 iconfont）
   .el-submenu__title {
     i,
@@ -388,7 +376,6 @@ html[dir='rtl'] {
       margin-left: 4px !important;
     }
   }
-
   // 处理页面布局中的菜单图标
   .page-layout {
     .el-submenu__title {
@@ -425,7 +412,6 @@ html[dir='rtl'] {
       text-align: right;
     }
   }
-
   // 处理更多常见的定位场景
   // 处理侧边栏和菜单的定位
   .el-menu--horizontal {
@@ -434,7 +420,6 @@ html[dir='rtl'] {
       text-align: right;
     }
   }
-
   // 处理抽屉组件的定位
   .el-drawer {
     direction: rtl;
@@ -443,30 +428,25 @@ html[dir='rtl'] {
       right: 0;
     }
   }
-
   // 处理通知组件的定位
   .el-notification {
     right: auto !important;
     left: 16px !important;
   }
-
   // 处理消息组件的定位
   .el-message {
     right: auto !important;
     left: 50% !important;
     transform: translateX(-50%);
   }
-
   // 处理加载组件的定位
   .el-loading-mask {
     direction: rtl;
   }
-
   // 处理标签页的定位
   .el-tabs__item {
     text-align: right;
   }
-
   // 处理导航菜单的定位
   .el-menu-vertical {
     .el-menu-item,
@@ -476,14 +456,12 @@ html[dir='rtl'] {
       padding-left: 0;
     }
   }
-
   // 处理卡片组件的定位
   .el-card {
     .el-card__header {
       text-align: right;
     }
   }
-
   // 处理表单验证错误的定位
   .el-form-item.is-error {
     .el-input__inner,
@@ -491,13 +469,11 @@ html[dir='rtl'] {
       border-color: #f56c6c;
     }
   }
-
   // 处理工具提示的定位
   .el-tooltip__popper {
     direction: rtl;
     text-align: right;
   }
-
   // 处理弹出确认框的定位
   .el-popconfirm {
     direction: rtl;
@@ -522,7 +498,6 @@ html[dir='rtl'] {
     .el-icon-d-arrow-right {
       transform: rotate(180deg);
     }
-
     // RTL 模式下的动画：从左侧滑出（translateX(-100%)）
     .show {
       animation: slide-rtl 0.5s forwards;
@@ -537,6 +512,12 @@ html[dir='rtl'] {
     }
     100% {
       transform: translateX(-100%);
+    }
+  }
+  .page-decorate-index {
+    .right-container {
+      right: auto;
+      left: 0;
     }
   }
 }

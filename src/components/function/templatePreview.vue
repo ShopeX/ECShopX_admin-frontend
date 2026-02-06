@@ -75,14 +75,14 @@
                       item.selectedIconPath ||
                       'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  >
+                  />
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  >
+                  />
                 </template>
                 <div class="tab-text">
                   {{ item.text }}
@@ -478,7 +478,7 @@ export default {
       }
       const faverite = await getRecommendLikeItemList()
       let data = []
-      faverite.data.data.list.forEach(item => {
+      faverite.data.data.list.forEach((item) => {
         data.push({
           imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,

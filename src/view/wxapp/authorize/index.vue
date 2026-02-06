@@ -10,7 +10,7 @@
         <div v-if="wxapp_id && detail && detail.weapp && detail.weappTemplate">
           <div class="content-center">
             <div v-if="detail.head_img">
-              <img class="app-img" :src="wximageurl + detail.head_img" height="60">
+              <img class="app-img" :src="wximageurl + detail.head_img" height="60" />
             </div>
             <div v-else>
               <i class="el-icon-picture fa-3x" aria-hidden="true" />
@@ -24,7 +24,7 @@
                 class="demo-qrcode"
                 @click="downloadWxaCode"
               >
-                <img src="@/assets/img/code.png" alt="">
+                <img src="@/assets/img/code.png" alt="" />
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@
       </section>
       <el-dialog title="小程序码" :visible.sync="wxaCodeVisible">
         <div class="content-center">
-          <img :src="wxaCodeImage">
+          <img :src="wxaCodeImage" />
         </div>
       </el-dialog>
       <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
@@ -303,7 +303,7 @@
           show-icon
           :closable="false"
         />
-        <br>
+        <br />
         <el-form v-loading="domainloading" label-width="200px">
           <el-form-item label="request合法域名">
             <el-input
@@ -451,13 +451,13 @@ export default {
         wxa_name: this.$route.query.nick_name,
         templateName: this.template_name
       }
-      submitWxa(params).then(response => {
+      submitWxa(params).then((response) => {
         this.$message({
           message: '上传代码成功',
           type: 'success',
           duration: 5 * 1000
         })
-        getWxa(this.$route.query.wxapp_id).then(response => {
+        getWxa(this.$route.query.wxapp_id).then((response) => {
           this.detail = response.data.data
           this.$store.dispatch('setWxappId', this.$route.query.wxapp_id)
           this.$router.push({ path: this.matchInternalRoute('editauthorize') })
@@ -466,7 +466,7 @@ export default {
     } else {
       if (this.wxapp_id) {
         this.loading = true
-        getWxa(this.wxapp_id).then(response => {
+        getWxa(this.wxapp_id).then((response) => {
           this.detail = response.data.data
           this.weappTemplate = response.data.data.weappTemplate
           this.form.auto_publish = response.data.data.auto_publish
@@ -493,7 +493,7 @@ export default {
         template_id: this.weappTemplate.template_id,
         version: this.weappTemplate.version
       }
-      saveTemplate(data).then(response => {
+      saveTemplate(data).then((response) => {
         this.TemplateEditDialog = false
       })
     },
@@ -501,14 +501,14 @@ export default {
     getdomain() {
       this.domainDialog = true
       this.domainloading = true
-      getdomain().then(res => {
+      getdomain().then((res) => {
         this.domainData = res.data.data
         this.domainloading = false
       })
     },
     // 设置小程序域名
     setdomain() {
-      setdomain({ domain: this.domainData }).then(res => {
+      setdomain({ domain: this.domainData }).then((res) => {
         if (res.data.data.status === true) {
           this.domainDialog = false
           this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
@@ -521,7 +521,7 @@ export default {
       let params = {
         callback_url: this.wxAuthCallbackUrl + 'auth/wxa'
       }
-      getWechatPreAuthUrl(params).then(response => {
+      getWechatPreAuthUrl(params).then((response) => {
         this.authorizerUrl = response.data.data.url
         var metadata = document.getElementsByTagName('meta')
         for (var i = 0; i < metadata.length; i++) {
@@ -534,7 +534,7 @@ export default {
     },
     getWxa() {
       this.loading = true
-      getWxa(this.wxapp_id).then(response => {
+      getWxa(this.wxapp_id).then((response) => {
         this.detail = response.data.data
         this.loading = false
       })
@@ -551,7 +551,7 @@ export default {
         }
       )
         .then(() => {
-          undocodeaudit({ wxaAppId: this.detail.authorizer_appid }).then(response => {
+          undocodeaudit({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
               message: '撤销成功',
               type: 'success',
@@ -575,7 +575,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          revertcoderelease({ wxaAppId: this.detail.authorizer_appid }).then(response => {
+          revertcoderelease({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
               message: '回退成功',
               type: 'success',
@@ -595,7 +595,7 @@ export default {
       this.submitWeappForm.wxaAppId = this.detail.authorizer_appid
       this.submitWeappForm.wxa_name = this.detail.nick_name
       this.submitWeappForm.templateName = this.detail.weapp.template_name
-      submitOnlyCode(this.submitWeappForm).then(response => {
+      submitOnlyCode(this.submitWeappForm).then((response) => {
         this.$message({
           message: '上传代码成功，可查看体验版',
           type: 'success',
@@ -608,7 +608,7 @@ export default {
       this.submitWeappForm.wxaAppId = this.detail.authorizer_appid
       this.submitWeappForm.wxa_name = this.detail.nick_name
       this.submitWeappForm.templateName = this.detail.weapp.template_name
-      submitReview(this.submitWeappForm).then(response => {
+      submitReview(this.submitWeappForm).then((response) => {
         this.$message({
           message: '提交成功，等待微信审核',
           type: 'success',
@@ -630,7 +630,7 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            submitWxa(this.submitWeappForm).then(response => {
+            submitWxa(this.submitWeappForm).then((response) => {
               this.$message({
                 message: '上传并提交成功，等待微信审核',
                 type: 'success',
@@ -646,7 +646,7 @@ export default {
             })
           })
       } else {
-        submitWxa(this.submitWeappForm).then(response => {
+        submitWxa(this.submitWeappForm).then((response) => {
           this.$message({
             message: '上传并提交成功，等待微信审核',
             type: 'success',
@@ -658,14 +658,14 @@ export default {
     },
     downloadTextWxaCode() {
       let params = { wxaAppId: this.detail.authorizer_appid }
-      getTestQrcode(params).then(response => {
+      getTestQrcode(params).then((response) => {
         this.wxaCodeImage = response.data.data.base64Image
         this.wxaCodeVisible = true
       })
     },
     tryRelease() {
       let params = { wxaAppId: this.detail.authorizer_appid }
-      tryRelease(params).then(response => {
+      tryRelease(params).then((response) => {
         this.$message({
           message: response.data.data.message,
           type: 'success',
@@ -678,12 +678,12 @@ export default {
       this.getwxcodeloading = true
       let params = { wxaAppId: this.detail.authorizer_appid }
       getCodeUnlimit(params)
-        .then(response => {
+        .then((response) => {
           this.wxaCodeImage = response.data.data.base64Image
           this.wxaCodeVisible = true
           this.getwxcodeloading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.getwxcodeloading = false
         })
     },
@@ -692,7 +692,7 @@ export default {
     },
     configSave() {
       let params = this.form
-      configSubmitHandle(this.wxapp_id, params).then(response => {
+      configSubmitHandle(this.wxapp_id, params).then((response) => {
         this.wxaConfigVisible = false
         this.$message({
           message: '配置成功',
@@ -708,7 +708,7 @@ export default {
         templateName: this.template_name
         // templateName = this.template_name
       }
-      getDomainList(params).then(res => {
+      getDomainList(params).then((res) => {
         console.log(res)
         this.domainform.wxDomain = res.data.data.wxDomain
         this.domainform.localDomain = res.data.data.localDomain
@@ -719,7 +719,7 @@ export default {
         wxaAppId: this.wxapp_id,
         templateName: this.template_name
       }
-      saveDomain(params).then(response => {
+      saveDomain(params).then((response) => {
         this.wxaDomainVisible = false
         this.$message({
           message: '推送成功',

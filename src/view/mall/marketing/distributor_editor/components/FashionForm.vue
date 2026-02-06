@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted() {
-    getSetting().then(res => {
+    getSetting().then((res) => {
       let data = res.data.data
       this.isOpen = data.is_open == 'true'
     })

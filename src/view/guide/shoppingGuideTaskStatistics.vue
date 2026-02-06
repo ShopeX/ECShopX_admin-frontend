@@ -52,7 +52,7 @@ export default {
   methods: {
     getList() {
       this.loadingTable = true
-      getSalesperosnTaskStatistics(this.params).then(response => {
+      getSalesperosnTaskStatistics(this.params).then((response) => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loadingTable = false

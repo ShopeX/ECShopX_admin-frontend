@@ -32,7 +32,7 @@
           <el-table-column prop="title" label="活动名称" />
           <el-table-column label="活动时间" width="180">
             <template slot-scope="scope">
-              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br>
+              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br />
               {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </template>
           </el-table-column>
@@ -92,7 +92,7 @@
             <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：617px * 214px）</div>
             <div>
               <div class="upload-box" @click="handleImgChange">
-                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic">
+                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic" />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -162,7 +162,7 @@ export default {
           page_name: 'pages/kanjia',
           id: this.tempatePageKanJiaParamId
         }
-        updateParamsById(query).then(response => {
+        updateParamsById(query).then((response) => {
           // this.getAdPic()
           this.$message({
             message: '保存成功',
@@ -180,7 +180,7 @@ export default {
             name: 'banner',
             page_name: 'pages/kanjia'
           }
-          setPageParams(query).then(response => {
+          setPageParams(query).then((response) => {
             // this.getAdPic()
             this.submit = false
             this.$message({
@@ -211,7 +211,7 @@ export default {
     },
     getAdPic() {
       let filter = { template_name: 'yykcutdown', name: 'banner', page_name: 'pages/kanjia' }
-      getParamByTempName(filter).then(res => {
+      getParamByTempName(filter).then((res) => {
         if (res.data.data) {
           this.ad_pic = res.data.data[0].params.ad_pic
           this.tempatePageKanJiaParamId = res.data.data[0].id
@@ -225,7 +225,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteBargains(row.bargain_id).then(response => {
+          deleteBargains(row.bargain_id).then((response) => {
             this.$message({
               message: '删除助力活动成功',
               type: 'success',
@@ -248,7 +248,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          terminateBargains(row.bargain_id).then(response => {
+          terminateBargains(row.bargain_id).then((response) => {
             this.$message({
               message: '废除助力活动成功',
               type: 'success',
@@ -268,12 +268,12 @@ export default {
       this.loading = true
       let params = { page: this.params.page, pageSize: this.params.pageSize }
       listBargins(params)
-        .then(response => {
+        .then((response) => {
           this.loading = false
           this.dataList = response.data.data.list
           this.total_count = response.data.data.total_count
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取活动列表出错'

@@ -111,9 +111,7 @@ export default {
           label: '微信渠道费率类型',
           key: 'wxpay_fee_type',
           type: 'radio',
-          options: [
-            { name: '标准费率线上', label: 'online' }
-          ]
+          options: [{ name: '标准费率线上', label: 'online' }]
         },
         {
           label: '微信小程序支付费率',
@@ -157,9 +155,7 @@ export default {
           label: '支付宝渠道费率类型',
           key: 'alipay_fee_type',
           type: 'radio',
-          options: [
-            { name: '标准费率线上', label: 'online' }
-          ]
+          options: [{ name: '标准费率线上', label: 'online' }]
         },
         {
           label: '支付宝支付费率',
@@ -213,7 +209,7 @@ export default {
       }
     },
     async onSubmit(formName) {
-      this.$refs[formName].validate(async valid => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { status } = await this.$api.trade.setPaymentSetting({
             ...this.form,
@@ -233,7 +229,7 @@ export default {
     },
     async getConfig() {
       const res = await this.$api.trade.getPaymentSetting({ pay_type: 'bspay' })
-      Object.keys(res).forEach(key => {
+      Object.keys(res).forEach((key) => {
         if (typeof this.form[key]) {
           this.form[key] = res[key]
         }

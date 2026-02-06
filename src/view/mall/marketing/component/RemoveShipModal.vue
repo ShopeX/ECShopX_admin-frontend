@@ -57,7 +57,7 @@ export default {
     handleDialogChange() {
       const { audit_state } = this.info
       if (audit_state == '3') {
-        this.$refs.form.validate(valid => {
+        this.$refs.form.validate((valid) => {
           if (valid) {
             this.onPush()
           }
@@ -74,7 +74,7 @@ export default {
         distributor_id,
         name,
         is_rel: 0
-      }).then(res => {
+      }).then((res) => {
         this.$emit('handleClick', false)
         this.form = {}
         this.$message({

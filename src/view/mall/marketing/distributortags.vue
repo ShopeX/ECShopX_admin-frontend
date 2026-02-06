@@ -185,7 +185,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then(response => {
+            .then((response) => {
               // this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -226,7 +226,7 @@ export default {
     },
     saveTagData() {
       if (this.form.tag_id) {
-        updateTag(this.form.tag_id, this.form).then(res => {
+        updateTag(this.form.tag_id, this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -237,7 +237,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then(res => {
+        saveTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',

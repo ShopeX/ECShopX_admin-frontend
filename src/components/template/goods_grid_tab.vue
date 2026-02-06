@@ -43,7 +43,7 @@
         >
           <div class="goods-wrap">
             <div class="thumbnail">
-              <img class="goods-img" :src="wximageurl + item.imgUrl">
+              <img class="goods-img" :src="wximageurl + item.imgUrl" />
             </div>
             <div class="caption">
               <img
@@ -54,7 +54,7 @@
                     ? wximageurl + item.brand
                     : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
                 "
-              >
+              />
               <div class="goods-title">
                 {{ item.title }}
               </div>

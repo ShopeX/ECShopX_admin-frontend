@@ -255,7 +255,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.id) {
-      getSettingInfo(this.$route.query.id).then(res => {
+      getSettingInfo(this.$route.query.id).then((res) => {
         this.form = res.data.data
         this.defalutFileName = res.data.data.field_name
         if (!this.form.options) {
@@ -300,10 +300,10 @@ export default {
     },
     submitAction() {
       const that = this
-      this.$refs['form'].validate(valid => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.id) {
-            updateSetting(this.form).then(res => {
+            updateSetting(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -317,7 +317,7 @@ export default {
               }
             })
           } else {
-            saveSetting(this.form).then(res => {
+            saveSetting(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',

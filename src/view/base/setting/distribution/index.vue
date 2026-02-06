@@ -87,12 +87,12 @@ export default {
   },
   methods: {
     getConfig() {
-      getDistributionConfig().then(response => {
+      getDistributionConfig().then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
-      setDistributionConfig(this.form).then(response => {
+      setDistributionConfig(this.form).then((response) => {
         this.form = response.data.data
         this.$message({
           type: 'success',

@@ -215,14 +215,14 @@ export default {
         return
       }
       if (this.id) {
-        updateCurrencyInfo(this.id, this.form).then(response => {
+        updateCurrencyInfo(this.id, this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getCurrencytListData()
           this.handleCancel()
         })
       } else {
-        createCurrencyInfo(this.form).then(response => {
+        createCurrencyInfo(this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getCurrencytListData()
@@ -236,7 +236,7 @@ export default {
     },
     getCurrencytListData() {
       this.loading = true
-      getCurrencytLists(this.params).then(response => {
+      getCurrencytLists(this.params).then((response) => {
         this.currencyList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
@@ -249,7 +249,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteCurrencyInfo(row.id).then(response => {
+          deleteCurrencyInfo(row.id).then((response) => {
             this.currencyList.splice(index, 1)
             this.$message({
               message: '删除成功',
@@ -266,7 +266,7 @@ export default {
         })
     },
     setDefault(row) {
-      setDefaultCurrency(row.id).then(response => {
+      setDefaultCurrency(row.id).then((response) => {
         this.getCurrencytListData()
       })
     }

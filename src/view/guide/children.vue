@@ -197,7 +197,7 @@ export default {
     },
     getPopularizeListModalFun(filter) {
       this.modalLoading = true
-      getPopularizeList(filter).then(res => {
+      getPopularizeList(filter).then((res) => {
         this.modalList = res.data.data.list
         this.modal_total_count = Number(res.data.data.total_count)
         this.modalLoading = false
@@ -211,7 +211,7 @@ export default {
     },
     editPopularizeRemoveFun() {
       editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
-        res => {
+        (res) => {
           this.message = '上下级'
           this.loading = false
           this.$message({
@@ -225,7 +225,7 @@ export default {
     },
 
     getPopularizeChildrenFun() {
-      getPopularizeChildren(this.params).then(res => {
+      getPopularizeChildren(this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

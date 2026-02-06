@@ -67,9 +67,9 @@ export default {
           component: () => {
             return (
               <el-link
-                type="primary"
-                href="https://account.shopex.cn/account/security"
-                target="_blank"
+                type='primary'
+                href='https://account.shopex.cn/account/security'
+                target='_blank'
               >
                 商派账号中心
               </el-link>
@@ -95,7 +95,7 @@ export default {
     onSubmit() {
       console.log(this.form)
       const that = this
-      this.$api.login.updateAdminInfo(this.form).then(response => {
+      this.$api.login.updateAdminInfo(this.form).then((response) => {
         if (response.status) {
           this.$message({
             message: '更新成功',

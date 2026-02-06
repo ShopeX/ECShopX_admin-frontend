@@ -258,3 +258,12 @@ export function putRulesInfo(query) {
     }
   })
 }
+
+// 设置店铺收款主体
+export function updatePaymentSubject(id, params) {
+  return fetch({
+    url: `/distributor/${id}/payment-subject`,
+    method: 'put',
+    params: params
+  })
+}

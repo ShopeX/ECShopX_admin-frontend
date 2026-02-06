@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted() {
-    getCartMarketingAd().then(res => {
+    getCartMarketingAd().then((res) => {
       let setting = res.data.data
       if (setting.ad_title) {
         this.form.ad_title = setting.ad_title
@@ -43,7 +43,7 @@ export default {
         this.$message({ message: '信息必填', type: 'error' })
         return
       }
-      setCartMarketingAd(this.form).then(res => {
+      setCartMarketingAd(this.form).then((res) => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     }

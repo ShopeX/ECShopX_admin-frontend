@@ -118,7 +118,7 @@ export default {
   methods: {
     getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then(response => {
+      getDistributorList(params).then((response) => {
         if (response.data.data.list) {
           this.distributorList = response.data.data.list
         }
@@ -136,13 +136,13 @@ export default {
     },
     handleDelete(data) {
       this.$confirm('确认删除？')
-        .then(_ => {
-          delKeywords(data.row.id).then(res => {
+        .then((_) => {
+          delKeywords(data.row.id).then((res) => {
             this.getList()
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     handleNew() {
       this.show_sideBar = true
@@ -167,14 +167,14 @@ export default {
     save() {
       // 如果没有id，则表示为新增
       if (!this.form.id) {
-        postKeywords(this.form).then(res => {
+        postKeywords(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        postKeywords(this.form).then(res => {
+        postKeywords(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
@@ -182,7 +182,7 @@ export default {
     },
     getList() {
       // this.loading = true
-      getKeywords(this.params).then(res => {
+      getKeywords(this.params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

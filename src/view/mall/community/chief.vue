@@ -111,7 +111,7 @@ export default {
             { label: 1, name: '同意' },
             { label: 2, name: '不同意' }
           ],
-          onChange: e => {
+          onChange: (e) => {
             if (e == 2) {
               this.resloveFormList[1].isShow = true
             } else {

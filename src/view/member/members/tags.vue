@@ -294,7 +294,7 @@ export default {
     getDataList() {
       this.loading = true
       getTagList(this.params)
-        .then(response => {
+        .then((response) => {
           this.tagsList = response.data.data.list
           // this.tagsList.forEach((item) => {
           //   item.category_id = String(item.category_id)
@@ -302,7 +302,7 @@ export default {
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -318,7 +318,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then(response => {
+            .then((response) => {
               this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -358,7 +358,7 @@ export default {
     },
     saveTagData() {
       if (this.form.tag_id) {
-        updateTag(this.form).then(res => {
+        updateTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -369,7 +369,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then(res => {
+        saveTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -387,7 +387,7 @@ export default {
       if (name) {
         param.category_name = name
       }
-      getTagCategoryList(param).then(res => {
+      getTagCategoryList(param).then((res) => {
         // this.options = res.data.data.list
         this.loading = false
       })

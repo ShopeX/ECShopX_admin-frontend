@@ -187,7 +187,7 @@ export default {
         storage: 'videos' //视频id必填
       }
       // if (res.key) {
-      uploadQiniuVideo(uploadParams).then(res => {
+      uploadQiniuVideo(uploadParams).then((res) => {
         this.$message({
           message: '上传成功',
           type: 'success',
@@ -203,7 +203,7 @@ export default {
       if (!this.isLoadData) {
         this.loading = true
         getQiniuVideoList(this.params)
-          .then(response => {
+          .then((response) => {
             this.localvideosList = response.data.data
             this.isLoadData = true
             this.loading = false
@@ -231,7 +231,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteVideo({ image_id: item.image_id }).then(response => {
+          deleteVideo({ image_id: item.image_id }).then((response) => {
             this.localvideosList.list.splice(index, 1)
             this.$message({
               message: '删除成功',
@@ -260,10 +260,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          res => e.onSuccess(res),
-          err => e.onError(err)
+          (res) => e.onSuccess(res),
+          (err) => e.onError(err)
         )
-        .catch(err => e.onError(err))
+        .catch((err) => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {

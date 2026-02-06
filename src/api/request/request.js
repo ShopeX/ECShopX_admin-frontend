@@ -48,6 +48,10 @@ class RequestClient {
 
   async request(url, config) {
     try {
+      const skipCountryCode = config.skipCountryCode
+      if (config.skipCountryCode) {
+        delete config.skipCountryCode
+      }
       const lang = window.localStorage.getItem('lang')
       const langMap = {
         zhcn: 'zh-CN',
@@ -55,7 +59,7 @@ class RequestClient {
         zhtw: 'zh-TW',
         ar: 'ar-SA'
       }
-      if (lang) {
+      if (lang && !skipCountryCode) {
         if (config.data) {
           config.data.country_code = langMap[lang]
         } else {

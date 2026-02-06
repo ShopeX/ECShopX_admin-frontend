@@ -29,7 +29,7 @@
             size="small"
             class="topic-input"
           />
-          <CompPickerLink :value="scope.data" @change="e => onChangeLink(e, scope.index)" />
+          <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
         </div>
       </template>
     </CompTodoList>

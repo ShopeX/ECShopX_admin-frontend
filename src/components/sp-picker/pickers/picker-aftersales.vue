@@ -83,7 +83,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       const { data = [] } = this.value
-      const selectRow = list.filter(item => data.includes(item.distributor_id))
+      const selectRow = list.filter((item) => data.includes(item.distributor_id))
       const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
 
       setTimeout(() => {

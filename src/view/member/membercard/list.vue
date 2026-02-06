@@ -185,13 +185,13 @@ export default {
     getDataList() {
       this.loading = true
       listVipGrade(this.params)
-        .then(response => {
+        .then((response) => {
           this.vipGradeList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.datapass_block = response.data.data.datapass_block
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -207,7 +207,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then(response => {
+            .then((response) => {
               this.vipGradeList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -248,7 +248,7 @@ export default {
     saveTagData() {
       this.memberTagDialog = false
       if (this.form.tag_id) {
-        updateTag(this.form).then(res => {
+        updateTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -258,7 +258,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then(res => {
+        saveTag(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
               type: 'success',

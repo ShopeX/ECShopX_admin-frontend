@@ -17,7 +17,7 @@
           class="box-card"
           @click="tabClick(index)"
         >
-          <img :src="item.img" alt="">
+          <img :src="item.img" alt="" />
           <span>{{ item.title }}</span>
           <div v-if="index == 0" class="title">
             {{ aliyunsms_status ? '已启用' : '未启用' }}

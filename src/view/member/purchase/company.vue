@@ -250,7 +250,12 @@ export default {
             // },
             action: {
               handler: async ([row]) => {
-                window.open(`${getUrlPathByLoginType(`/applications/enterprise-purchase/staff-management?company_id=${row.id}`)}`, '_blank')
+                window.open(
+                  `${getUrlPathByLoginType(
+                    `/applications/enterprise-purchase/staff-management?company_id=${row.id}`
+                  )}`,
+                  '_blank'
+                )
               }
             }
           }

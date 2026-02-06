@@ -183,7 +183,7 @@
             <el-table-column prop="item_id" label="id" width="60" />
             <el-table-column prop="pics[0]" label="图片" width="80">
               <template slot-scope="scope">
-                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50">
+                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50" />
               </template>
             </el-table-column>
             <el-table-column prop="item_name" label="名称" />
@@ -348,7 +348,7 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     deleteActivityAction(row) {
-      removeMarketingActivity({ marketing_id: row.marketing_id }).then(res => {
+      removeMarketingActivity({ marketing_id: row.marketing_id }).then((res) => {
         if (res != undefined && res.data.data.status) {
           this.fetchList()
         }
@@ -365,7 +365,7 @@ export default {
         this.ItemLoading = true
         this.activityItemDialog = true
         this.activityItemParams.marketing_id = id
-        getMarketingActivityItemList(this.activityItemParams).then(res => {
+        getMarketingActivityItemList(this.activityItemParams).then((res) => {
           if (res != undefined && res.data.data && res.data.data.total_count > 0) {
             this.activityItemListsData = res.data.data.list
             this.activityItemTotalCount = res.data.data.total_count
@@ -378,7 +378,7 @@ export default {
       this.ItemLoading = true
       this.activityItemDialog = true
       this.activityItemParams.page = page_num
-      getMarketingActivityItemList(this.activityItemParams).then(res => {
+      getMarketingActivityItemList(this.activityItemParams).then((res) => {
         if (res != undefined && res.data.data && res.data.data.total_count > 0) {
           this.activityItemListsData = res.data.data.list
           this.activityItemTotalCount = res.data.data.total_count
@@ -403,7 +403,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeMarketingActivity({ marketing_id: row.marketing_id, isEnd: true }).then(
-              response => {
+              (response) => {
                 this.fetchList()
                 this.$message({
                   message: '修改活动状态成功',

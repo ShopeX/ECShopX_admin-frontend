@@ -13,7 +13,7 @@
         <el-col :span="16">
           <div class="tips">
             用户发表的笔记会通过「机器审核」，若包含违禁内容将自动变为下架状态；官方笔记不会被审核，默认下架状态，需人工上架笔记；
-            <br>若通过「机器审核」，则会为待审核，等待人工审核，此时社区内会展示笔记。
+            <br />若通过「机器审核」，则会为待审核，等待人工审核，此时社区内会展示笔记。
           </div>
         </el-col>
         <el-col :span="6">
@@ -326,14 +326,14 @@ export default {
 
       that.$data.loading = true
       getNotes(params).then(
-        res => {
+        (res) => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.noteList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        err => {
+        (err) => {
           that.$data.loading = false
         }
       )
@@ -342,13 +342,13 @@ export default {
     },
     getFlagsList() {
       const that = this
-      getBadge({}).then(res => {
+      getBadge({}).then((res) => {
         var { list, total_count } = res.data.data
         that.$data.flagList = list
       })
     },
     getVideoSetting() {
-      getUGCSetting({ type: 'video' }).then(res => {
+      getUGCSetting({ type: 'video' }).then((res) => {
         var { data } = res.data
         var video_enable = data['video_enable'] == '1'
         this.$data.video_enable = video_enable
@@ -358,7 +358,7 @@ export default {
       const { video_enable } = this.$data
       var params = { type: 'video', setting: { video_enable: video_enable ? '1' : '0' } }
       params.setting = JSON.stringify(params.setting)
-      setUGCSetting(params).then(res => {
+      setUGCSetting(params).then((res) => {
         var { message } = res.data.data
         this.$message({
           type: 'success',
@@ -415,7 +415,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        notesDelete(params).then(res => {
+        notesDelete(params).then((res) => {
           //console.log('notesDelete',res)
           var msg = res.data.data.message
           this.clearAudioData()
@@ -466,7 +466,7 @@ export default {
       }
       params.post_id = id_set
       //console.log('进行审核 auditNote',params);
-      notesVerify(params).then(res => {
+      notesVerify(params).then((res) => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)
@@ -498,7 +498,7 @@ export default {
       const { id_set } = this.$data
       var params = { post_id: id_set, badges: [flag.badge_id] }
       //console.log('更新笔记角标flagModalHandle',flag,id_set)
-      batchSetBadges(params).then(res => {
+      batchSetBadges(params).then((res) => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.flagModalHide(false)

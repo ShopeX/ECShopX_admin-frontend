@@ -5,7 +5,7 @@
 
 <style lang="scss" scoped>
 .attr-horizontal {
-  margin-top: 4px;
+  flex: 1;
   .cate-input {
     width: 220px;
   }
@@ -14,6 +14,9 @@
 <template>
   <div class="attr-horizontal">
     <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddhorizontal">
+      <template slot="header" slot-scope="scope">
+       文本{{ scope.index + 1 }}
+    </template>
       <template slot="body" slot-scope="scope">
         <div class="cate-item">
           <el-input

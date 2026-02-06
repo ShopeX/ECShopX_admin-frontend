@@ -90,7 +90,7 @@ export default {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }
-    hfpayVersionStatus().then(res => {
+    hfpayVersionStatus().then((res) => {
       let data = res.data.data
       if (data.hfpay_version_status) {
         this.activeName = 'hfpay'

@@ -14,9 +14,7 @@
       />
 
       <div class="action-container" v-if="!dmcrmSetting.is_open">
-        <el-button type="primary" @click="addCoupon">
-          创建优惠券
-        </el-button>
+        <el-button type="primary" @click="addCoupon"> 创建优惠券 </el-button>
       </div>
 
       <el-tabs v-model="params.date_status" type="card" @tab-click="handleClick">
@@ -27,11 +25,12 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" :data="tableList" border @filter-change="filterTag">
-            <el-table-column width="240" label="操作">
+            <el-table-column width="240" label="操作" fixed="left">
               <template slot-scope="scope">
-                <div class="operating-icons">
-                  <el-button type="text">
+                <div class="flex items-center flex-wrap gap-2">
+                  <el-button type="text" class="m-0 px-1">
                     <router-link
+                      class="no-underline text-inherit"
                       :to="{
                         path: matchRoutePath('detail'),
                         query: {
@@ -44,17 +43,19 @@
                       查看
                     </router-link>
                   </el-button>
-                   <el-button
+                  <el-button
                     v-if="
                       scope.row.edit_btn == 'Y' &&
                       (!isShopadmin
                         ? parseInt(scope.row.source_id) <= 0
-                        : parseInt(scope.row.source_id) > 0)
-                        && !dmcrmSetting.is_open
+                        : parseInt(scope.row.source_id) > 0) &&
+                      !dmcrmSetting.is_open
                     "
                     type="text"
+                    class="m-0 px-1"
                   >
                     <router-link
+                      class="no-underline text-inherit"
                       :to="{
                         path: matchRoutePath('editor'),
                         query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
@@ -83,8 +84,8 @@
                     </div>
                     <el-button
                       slot="reference"
-                      style="width: 45px"
                       type="text"
+                      class="m-0 px-1"
                       @click="handleShow(scope.row.card_id)"
                     >
                       投放
@@ -93,6 +94,7 @@
                   <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH' && !dmcrmSetting.is_open"
                     type="text"
+                    class="m-0 px-1"
                     @click="deleteCard(scope.row.card_id, scope.$index)"
                   >
                     删除
@@ -206,13 +208,13 @@
             </el-table-column>
             <el-table-column width="80" prop="get_num" label="领取量">
               <template slot-scope="scope">
-                <span v-if="scope.row.get_num">{{scope.row.get_num}}</span>
+                <span v-if="scope.row.get_num">{{ scope.row.get_num }}</span>
                 <span>0</span>
               </template>
             </el-table-column>
             <el-table-column width="80" prop="use_num" label="使用量">
               <template slot-scope="scope">
-                <span v-if="scope.row.use_num">{{scope.row.use_num}}</span>
+                <span v-if="scope.row.use_num">{{ scope.row.use_num }}</span>
                 <span>0</span>
               </template>
             </el-table-column>
@@ -339,7 +341,7 @@ export default {
           type: 'input',
           placeholder: '请输入数量',
           validator: (rule, value, callback) => {
-            const fd = this.tableList.find(item => item.card_id == this.editForm.card_id)
+            const fd = this.tableList.find((item) => item.card_id == this.editForm.card_id)
             if (this.editForm.type == 'reduce') {
               if (this.editForm.quantity > fd.quantity - fd.get_num) {
                 callback(new Error('减少数量不能大于可领取库存'))
@@ -352,7 +354,7 @@ export default {
           }
         }
       ],
-      dmcrmSetting: {},
+      dmcrmSetting: {}
     }
   },
   mounted() {
@@ -386,7 +388,7 @@ export default {
         page,
         card_id
       }
-      getPageCode(params).then(response => {
+      getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
@@ -451,7 +453,7 @@ export default {
     sendoutAction() {
       if (this.currSendout == 0) {
         if (this.typeId) {
-          getQRcode(this.typeId).then(res => {
+          getQRcode(this.typeId).then((res) => {
             var a = document.createElement('a')
             a.href = res.data.data.show_qrcode_url
             a.download = true
@@ -468,15 +470,17 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            removeCard({ card_id: id }).then(res => {
-              this.$message({
-                message: '删除成功',
-                type: 'success'
+            removeCard({ card_id: id })
+              .then((res) => {
+                this.$message({
+                  message: '删除成功',
+                  type: 'success'
+                })
+                this.fetchList()
               })
-              this.fetchList()
-            }).catch(error => {
-              console.error(error)
-            })
+              .catch((error) => {
+                console.error(error)
+              })
           }
           done()
         }
@@ -492,7 +496,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          pullWechatCard().then(response => {
+          pullWechatCard().then((response) => {
             this.$message({
               message: '同步成功',
               type: 'success',
@@ -546,7 +550,7 @@ export default {
         type: this.tableList[index].operationType,
         quantity: this.tableList[index].storeValue
       }
-      updateStore(param).then(response => {
+      updateStore(param).then((response) => {
         setTimeout(() => {
           this.loadingbtn = false
         }, 1000)
@@ -559,6 +563,10 @@ export default {
 <style scoped lang="scss">
 .el-icon-edit {
   cursor: pointer;
+}
+// 覆盖 Element UI 文本按钮的默认 margin-left，确保按钮间距正确
+::v-deep .flex .el-button--text {
+  margin-left: 0;
 }
 .coupon-list {
   margin-top: 10px;

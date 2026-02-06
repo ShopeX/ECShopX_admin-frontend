@@ -466,7 +466,7 @@ export default {
         this.currentPrice = ''
         return
       }
-      updateGoodsInfo({ item_id: this.currentId, price: this.currentPrice }).then(res => {
+      updateGoodsInfo({ item_id: this.currentId, price: this.currentPrice }).then((res) => {
         this.$message({
           type: 'success',
           message: '操作成功'
@@ -486,7 +486,7 @@ export default {
       this.getGoodsList()
     },
     setWarningStore() {
-      getItemWarningStore({ store: this.warning_store }).then(res => {
+      getItemWarningStore({ store: this.warning_store }).then((res) => {
         this.params.page = 1
         this.getGoodsList()
       })
@@ -523,7 +523,7 @@ export default {
         }
         this.addTemplatesdialogVisible = false
         setItemsTemplate({ templates_id: this.templates_new_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
           }
         )
@@ -535,7 +535,7 @@ export default {
       }
     },
     editItemsSort(index, row) {
-      setItemsSort({ sort: row.sort, item_id: row.itemId }).then(response => {
+      setItemsSort({ sort: row.sort, item_id: row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
@@ -550,7 +550,7 @@ export default {
         }
         this.addCategorydialogVisible = false
         setItemsCategory({ category_id: this.category_id, item_id: this.item_id }).then(
-          response => {
+          (response) => {
             this.getGoodsList()
             this.category_id = []
           }
@@ -605,7 +605,7 @@ export default {
     },
     itemsDetail(index, row) {
       this.ItemsDetailVisible = true
-      getItemsDetail(row.itemId).then(response => {
+      getItemsDetail(row.itemId).then((response) => {
         this.itemsDetailData = response.data.data
         this.start_date = this.getTimeStr(this.itemsDetailData.begin_date)
         this.end_date = this.getTimeStr(this.itemsDetailData.end_date)
@@ -618,9 +618,9 @@ export default {
     },
     getGoodsList() {
       this.loading = true
-      getItemsList(this.params).then(response => {
+      getItemsList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
-        this.ItemsList.forEach(item => {
+        this.ItemsList.forEach((item) => {
           item.price = item.price / 100
         })
         this.total_count = response.data.data.total_count
@@ -635,7 +635,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteItems(row.itemId).then(response => {
+          deleteItems(row.itemId).then((response) => {
             this.ItemsList.splice(index, 1)
             this.$message({
               message: '删除商品成功',
@@ -672,17 +672,17 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.templatesParams).then(response => {
+      getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
     getCategory() {
-      getCategory([]).then(response => {
+      getCategory([]).then((response) => {
         this.categoryList = response.data.data
       })
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

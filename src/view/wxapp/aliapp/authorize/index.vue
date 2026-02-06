@@ -9,7 +9,7 @@
       <div v-if="ali_appid && detail">
         <div class="content-center">
           <div class="page-top">
-            <img class="app-img" src="@/assets/img/onexshop_logo.png" height="60">
+            <img class="app-img" src="@/assets/img/onexshop_logo.png" height="60" />
             <div class="page-right">
               <div class="app-name">
                 <span v-if="!detail.app_id"> 小程序名称：{{ detail.app_id }} </span>
@@ -117,7 +117,7 @@
     <el-dialog title="小程序码" :visible.sync="aLiCodeVisible">
       <div class="content-center">
         <!-- <img src="http://wx.qlogo.cn/mmopen/FXXXHOj2xs8temGVQEFLnFNBwY6ticka7ed0qF8ZNemAXOAFbap0AjgovibyJhQiaXCj71V3ic51BKuBPlxSL3RcdJiaorbFUpPFn/0" /> -->
-        <img :src="aLiCodeImage">
+        <img :src="aLiCodeImage" />
       </div>
     </el-dialog>
   </div>
@@ -167,7 +167,7 @@ export default {
   mounted() {
     if (this.ali_appid) {
       this.loading = true
-      getALi(this.ali_appid).then(response => {
+      getALi(this.ali_appid).then((response) => {
         this.detail = response.data.data
         this.loading = false
       })
@@ -177,7 +177,7 @@ export default {
     // 获取数据
     getALi() {
       this.loading = true
-      getALi(this.ali_appid).then(response => {
+      getALi(this.ali_appid).then((response) => {
         this.detail = response.data.data
         this.loading = false
       })
@@ -201,7 +201,7 @@ export default {
       let params = {
         template_name: !bound ? this.$route.query.templatename : this.detail.template_name
       }
-      getALiPreAuthUrl(params).then(response => {
+      getALiPreAuthUrl(params).then((response) => {
         this.authorizerUrl = response.data.data.url
         // var metadata = document.getElementsByTagName('meta')
         // for (var i = 0; i < metadata.length; i++) {
@@ -216,7 +216,7 @@ export default {
     handleUndocodeaudit() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      cancelAudit(this.submitALiForm).then(response => {
+      cancelAudit(this.submitALiForm).then((response) => {
         this.$message({
           message: '撤销成功',
           type: 'success',
@@ -229,7 +229,7 @@ export default {
     handleOnLine() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      onLine(this.submitALiForm).then(response => {
+      onLine(this.submitALiForm).then((response) => {
         this.$message({
           message: '上架成功',
           type: 'success',
@@ -242,7 +242,7 @@ export default {
     handleOffLine() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      offLine(this.submitALiForm).then(response => {
+      offLine(this.submitALiForm).then((response) => {
         this.$message({
           message: '已下架',
           type: 'success',
@@ -255,7 +255,7 @@ export default {
     handleBackDev() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      backDev(this.submitALiForm).then(response => {
+      backDev(this.submitALiForm).then((response) => {
         this.$message({
           message: '已退回开发',
           type: 'success',
@@ -268,7 +268,7 @@ export default {
     handleRollBack() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      rollBack(this.submitALiForm).then(response => {
+      rollBack(this.submitALiForm).then((response) => {
         this.$message({
           message: '版本已回退',
           type: 'success',
@@ -281,7 +281,7 @@ export default {
     handleAddWxaActionSubmitReview() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      submitCheck(this.submitALiForm).then(response => {
+      submitCheck(this.submitALiForm).then((response) => {
         this.$message({
           message: '提交成功',
           type: 'success',
@@ -294,7 +294,7 @@ export default {
     handleAddALiAction() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      submitALi(this.submitALiForm).then(response => {
+      submitALi(this.submitALiForm).then((response) => {
         this.$message({
           message: '上传成功',
           type: 'success',
@@ -311,7 +311,7 @@ export default {
       }
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
-      getALiTestQrcode(this.submitALiForm).then(response => {
+      getALiTestQrcode(this.submitALiForm).then((response) => {
         if (response.data.data.status != 'expVersionPackged') {
           this.$message({
             message: '体验版二维码创建中，请稍后重试！',

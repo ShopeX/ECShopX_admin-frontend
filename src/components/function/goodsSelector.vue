@@ -9,7 +9,7 @@
       <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img :src="item.pics[0]" alt="">
+            <img :src="item.pics[0]" alt="" />
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -151,11 +151,11 @@ export default {
       this.skuParams.item_id = this.goods[index].default_item_id
       this.dialogVisible = true
       let checked = this.goods[index].spec_items
-      getItemsList(this.skuParams).then(res => {
+      getItemsList(this.skuParams).then((res) => {
         this.skus = res.data.data.list
         this.$nextTick(() => {
-          that.skus.forEach(item => {
-            let index = checked.findIndex(n => item.itemId === n.itemId)
+          that.skus.forEach((item) => {
+            let index = checked.findIndex((n) => item.itemId === n.itemId)
             if (index !== -1) {
               that.$refs.skuTable.toggleRowSelection(item)
             }
@@ -182,7 +182,7 @@ export default {
       if (data === null) return
       this.relItems = data
       let list = []
-      data.forEach(item => {
+      data.forEach((item) => {
         if (!item.nospec) {
           list.push(Object.assign(item, { spec_items: [] }))
         } else {
@@ -190,8 +190,8 @@ export default {
         }
       })
       if (this.goods.length > 0) {
-        list.forEach(item => {
-          let goodsItem = this.goods.find(n => item.itemId === n.item_id)
+        list.forEach((item) => {
+          let goodsItem = this.goods.find((n) => item.itemId === n.item_id)
           if (goodsItem && goodsItem.spec_items && goodsItem.spec_items.length > 0) {
             item.spec_items = goodsItem.spec_items
           }

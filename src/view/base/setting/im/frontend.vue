@@ -72,13 +72,13 @@ export default {
   },
   methods: {
     getInfo() {
-      getMeiqiaInfo(this.query).then(response => {
+      getMeiqiaInfo(this.query).then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
       saveMeiqia(this.form)
-        .then(response => {
+        .then((response) => {
           this.$message({ message: '保存成功', type: 'success' })
           this.getInfo()
         })

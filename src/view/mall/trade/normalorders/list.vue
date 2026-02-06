@@ -378,7 +378,7 @@
           </el-table-column> -->
           <el-table-column prop="invoice_status" label="发票状态">
             <template slot-scope="scope">
-              {{ openStatus?.find(item => item.value === scope.row.invoice_status)?.title }}
+              {{ openStatus?.find((item) => item.value === scope.row.invoice_status)?.title }}
             </template>
           </el-table-column>
           <el-table-column prop="mobile" label="客户手机号" width="140">
@@ -432,7 +432,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="distributor_name" label="来源店铺" />
-          <el-table-column prop="work_userid" label="导购">
+          <el-table-column prop="work_userid" label="导购" v-if="VERSION_STANDARD()">
             <template slot-scope="scope">
               {{ scope.row.salesman_info?.work_userid }}
             </template>
@@ -470,13 +470,15 @@
               {{ scope.row.self_delivery_operator_name }}
             </template>
           </el-table-column>
-  
+
           <el-table-column label="配送费">
             <template slot-scope="scope">
-              {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元' }}
+              {{
+                scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元'
+              }}
             </template>
           </el-table-column>
-  
+
           <el-table-column label="配送员电话" width="140">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_mobile }}
@@ -1366,10 +1368,12 @@ export default {
     if (tab) {
       this.params.order_status = tab
     }
-    if (monitorId) { // 千人千码跳过来
+    if (monitorId) {
+      // 千人千码跳过来
       this.params.monitor_id = monitorId
     }
-    if (sourceId) { // 千人千码跳过来
+    if (sourceId) {
+      // 千人千码跳过来
       this.params.source_id = sourceId
     }
     if (order_id) {
@@ -1388,7 +1392,7 @@ export default {
     })
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
@@ -1419,7 +1423,7 @@ export default {
 
       let res = await this.$api.trade.accountManagement(params)
       res.list.forEach((ele) => {
-        (ele.value = ele.operator_id), (ele.title = ele.username)
+        ;(ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.personnelFormList[1].options = res.list
       this.deliverGoodsFormList[5].options = res.list
@@ -1488,7 +1492,7 @@ export default {
       }
       let { list } = await this.$api.company.getAccountList(params)
       list.forEach((ele) => {
-        (ele.value = ele.operator_id), (ele.title = ele.username)
+        ;(ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.deliveryPersonnel = list
     },
@@ -1597,9 +1601,9 @@ export default {
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
             receipt_type != 'ziti' &&
-            cancel_status != 'WAIT_PROCESS' //待退款不展示发货按钮
+            cancel_status != 'WAIT_PROCESS' && //待退款不展示发货按钮
             // 打开了聚水潭不显示
-            && !this.jstErpSetting?.is_open
+            !this.jstErpSetting?.is_open
             // && this.login_type == 'supplier'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
@@ -2176,22 +2180,24 @@ export default {
         ...this.params,
         type,
         order_type: 'normal',
-        invoice_status : 'ALL'
-      }).then((response) => {
-        const { status, url, filename } = response.data.data
-        if (status) {
-          this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-          this.$export_open('invoice')
-          return
-        } else if (url) {
-          window.open(url)
-        } else {
-          this.$message.error('无内容可导出或执行失败，请检查重试')
-          return
-        }
-      }).catch((err) => {
-        console.log(err)
+        invoice_status: 'ALL'
       })
+        .then((response) => {
+          const { status, url, filename } = response.data.data
+          if (status) {
+            this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+            this.$export_open('invoice')
+            return
+          } else if (url) {
+            window.open(url)
+          } else {
+            this.$message.error('无内容可导出或执行失败，请检查重试')
+            return
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     exportDataNormal() {
       this.exportData('normal_order')

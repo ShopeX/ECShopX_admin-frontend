@@ -118,7 +118,7 @@ export default {
     },
     saveAddress() {
       let params = { addreeList: this.form }
-      setSelfDeliveryAddress(params).then(res => {
+      setSelfDeliveryAddress(params).then((res) => {
         this.$message({
           type: 'success',
           message: '保存成功'
@@ -126,7 +126,7 @@ export default {
       })
     },
     getList() {
-      getSelfDeliveryAddress().then(res => {
+      getSelfDeliveryAddress().then((res) => {
         if (res.data.data) {
           this.form = res.data.data
           if (this.form.length >= 2) {

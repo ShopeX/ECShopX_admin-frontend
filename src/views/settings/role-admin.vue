@@ -1,7 +1,15 @@
 <template>
   <SpPage>
-    <SpFormPlus v-model="params" form-type="searchForm" :form-items="filterFormItems" @submit="onSearch"
-      @reset="onReset" :inline="true" label-position="left" label-width="70px"/>
+    <SpFormPlus
+      v-model="params"
+      form-type="searchForm"
+      :form-items="filterFormItems"
+      @submit="onSearch"
+      @reset="onReset"
+      :inline="true"
+      label-position="left"
+      label-width="70px"
+    />
 
     <div class="action-container mt-5">
       <el-button type="primary" @click="addRoleLabels"> 添加角色 </el-button>
@@ -9,8 +17,14 @@
 
     <div class="flex gap-4 mt-4 h-[calc(100vh-200px)]" v-loading="loading">
       <div class="role-table-container flex flex-col w-[290px]">
-        <el-table border :data="rolesList" @row-click="selectRole" :row-class-name="tableRowClassName"
-          height="calc(100vh - 300px)" class="w-full cursor-pointer custom-table-header">
+        <el-table
+          border
+          :data="rolesList"
+          @row-click="selectRole"
+          :row-class-name="tableRowClassName"
+          height="calc(100vh - 300px)"
+          class="w-full cursor-pointer custom-table-header"
+        >
           <el-table-column prop="role_name" label="角色名称" width="290px" class="py-1">
             <template #default="{ row }">
               <div class="flex justify-between items-center w-full pr-5">
@@ -18,7 +32,11 @@
                 <span :class="['role-name', activeRoleId === row.role_id ? 'text-purple-600' : '']">
                   {{ row.role_name }}
                 </span>
-                <el-button type="text" @click.stop="deleteSpecificRole(row)" class="hover:underline">
+                <el-button
+                  type="text"
+                  @click.stop="deleteSpecificRole(row)"
+                  class="hover:underline"
+                >
                   删除
                 </el-button>
               </div>
@@ -26,40 +44,64 @@
           </el-table-column>
         </el-table>
 
-        <div class="p-0.5 text-xs border border-[#ebeef5] border-t-0 rounded-b w-full flex items-center justify-center">
-          <el-pagination layout="total, prev, pager, next" :current-page="page.pageIndex" :total="total_count"
-            :page-size="20" :pager-count="3" :small="true" @current-change="onCurrentChange"
-            class="flex items-center justify-center" background />
+        <div
+          class="p-0.5 text-xs border border-[#ebeef5] border-t-0 rounded-b w-full flex items-center justify-center"
+        >
+          <el-pagination
+            layout="total, prev, pager, next"
+            :current-page="page.pageIndex"
+            :total="total_count"
+            :page-size="20"
+            :pager-count="3"
+            :small="true"
+            @current-change="onCurrentChange"
+            class="flex items-center justify-center"
+            background
+          />
         </div>
       </div>
 
       <div class="flex flex-col flex-1">
         <div
-          class="bg-[#F0F2F5] py-2 px-1.5 border border-[#ebeef5] pl-2.5 rounded-t flex justify-between items-center">
+          class="bg-[#F0F2F5] py-2 px-1.5 border border-[#ebeef5] pl-2.5 rounded-t flex justify-between items-center"
+        >
           <span>{{ activeRole ? activeRole.role_name + ' - 角色权限' : '角色权限' }}</span>
           <el-button type="primary" @click="savePermissions" :loading="saveLoading" class="!mr-1">
             保存
           </el-button>
         </div>
 
-        <div class="flex-1 overflow-y-auto border border-[#ebeef5] border-t-0 rounded-b bg-[#fafbfc]">
-          <div v-if="activeRole && menu && menu.length > 0" class="bg-white rounded overflow-hidden">
+        <div
+          class="flex-1 overflow-y-auto border border-[#ebeef5] border-t-0 rounded-b bg-[#fafbfc]"
+        >
+          <div
+            v-if="activeRole && menu && menu.length > 0"
+            class="bg-white rounded overflow-hidden"
+          >
             <table class="w-full border-collapse">
               <tbody>
                 <!--for loop，第一行，先从一级菜单开始遍历-->
                 <template v-for="firstMenu in menu">
                   <template v-if="firstMenu.children && firstMenu.children.length > 0">
-                    <tr v-for="(secondMenu, secondIndex) in firstMenu.children"
+                    <tr
+                      v-for="(secondMenu, secondIndex) in firstMenu.children"
                       :key="`${firstMenu.alias_name}-${secondMenu.alias_name}`"
-                      class="hover:bg-[#f5f7fa] border-b border-[#ebeef5]">
+                      class="hover:bg-[#f5f7fa] border-b border-[#ebeef5]"
+                    >
                       <!--第一列：一级菜单-->
-                      <td v-if="secondIndex === 0" :rowspan="firstMenu.children.length"
-                        class="border-r border-[#ebeef5]">
+                      <td
+                        v-if="secondIndex === 0"
+                        :rowspan="firstMenu.children.length"
+                        class="border-r border-[#ebeef5]"
+                      >
                         <div class="flex items-center py-1">
                           <!-- pl-2 添加左侧内边距 -->
-                          <el-checkbox class="pl-2" :value="isPermissionChecked(firstMenu.alias_name)"
+                          <el-checkbox
+                            class="pl-2"
+                            :value="isPermissionChecked(firstMenu.alias_name)"
                             :indeterminate="isPermissionIndeterminate(firstMenu.alias_name)"
-                            @change="togglePermission(firstMenu.alias_name, $event)">
+                            @change="togglePermission(firstMenu.alias_name, $event)"
+                          >
                             {{ firstMenu.name }}
                           </el-checkbox>
                         </div>
@@ -68,9 +110,12 @@
                       <!--第二列：二级菜单-->
                       <td class="bg-[#fcfcfc] border-r border-[#ebeef5]">
                         <div class="flex items-center py-2">
-                          <el-checkbox class="pl-2" :value="isPermissionChecked(secondMenu.alias_name)"
+                          <el-checkbox
+                            class="pl-2"
+                            :value="isPermissionChecked(secondMenu.alias_name)"
                             :indeterminate="isPermissionIndeterminate(secondMenu.alias_name)"
-                            @change="togglePermission(secondMenu.alias_name, $event)">
+                            @change="togglePermission(secondMenu.alias_name, $event)"
+                          >
                             {{ secondMenu.name }}
                           </el-checkbox>
                         </div>
@@ -78,12 +123,17 @@
 
                       <!--第三列：三级菜单-->
                       <td>
-                        <div v-if="secondMenu.children && secondMenu.children.length > 0"
-                          class="flex flex-wrap gap-3 mt-2 mb-2">
+                        <div
+                          v-if="secondMenu.children && secondMenu.children.length > 0"
+                          class="flex flex-wrap gap-3 mt-2 mb-2"
+                        >
                           <div v-for="thirdMenu in secondMenu.children" :key="thirdMenu.alias_name">
-                            <el-checkbox class="pl-2" :value="isPermissionChecked(thirdMenu.alias_name)"
+                            <el-checkbox
+                              class="pl-2"
+                              :value="isPermissionChecked(thirdMenu.alias_name)"
                               :indeterminate="isPermissionIndeterminate(thirdMenu.alias_name)"
-                              @change="togglePermission(thirdMenu.alias_name, $event)">
+                              @change="togglePermission(thirdMenu.alias_name, $event)"
+                            >
                               {{ thirdMenu.name }}
                             </el-checkbox>
                           </div>
@@ -100,13 +150,16 @@
                     <tr class="hover:bg-[#f5f7fa] border-b border-[#ebeef5]">
                       <td class="border-r border-[#ebeef5]">
                         <div class="flex items-center py-2">
-                          <el-checkbox class="pl-2" :value="isPermissionChecked(firstMenu.alias_name)"
-                            @change="togglePermission(firstMenu.alias_name, $event)">
+                          <el-checkbox
+                            class="pl-2"
+                            :value="isPermissionChecked(firstMenu.alias_name)"
+                            @change="togglePermission(firstMenu.alias_name, $event)"
+                          >
                             {{ firstMenu.name }}
                           </el-checkbox>
                         </div>
                       </td>
-                      <td class="border-r border-[#ebeef5] ">
+                      <td class="border-r border-[#ebeef5]">
                         <div class="no-data-text"></div>
                       </td>
                       <td class="third-menu-cell">
@@ -116,10 +169,12 @@
                   </template>
                 </template>
               </tbody>
-
             </table>
           </div>
-          <div v-else class="flex items-center justify-center h-[300px] text-[#909399] text-base bg-[#fafbfc]">
+          <div
+            v-else
+            class="flex items-center justify-center h-[300px] text-[#909399] text-base bg-[#fafbfc]"
+          >
             <div class="empty-text">
               {{ activeRole ? '请从左侧选择一个角色进行权限配置' : '暂无权限数据' }}
             </div>
@@ -143,7 +198,7 @@ export default {
         role_name: '',
         role_id: '',
         permission: {
-          shopmenu_alias_name: [],
+          shopmenu_alias_name: []
         }
       },
 
@@ -201,7 +256,7 @@ export default {
         const originalSet = new Set(this.originalPermissions)
         const currentSet = new Set(newPermissions)
         const sizeSame = originalSet.size === currentSet.size
-        const contentSame = [...originalSet].every(perm => currentSet.has(perm))
+        const contentSame = [...originalSet].every((perm) => currentSet.has(perm))
         this.permissionsChanged = !(sizeSame && contentSame)
       },
       deep: true
@@ -240,7 +295,7 @@ export default {
         return permissions
       }
       //不是叶子节点（有孩子）
-      node.children.forEach(child => {
+      node.children.forEach((child) => {
         permissions.push(...this.getLeafPermissions(child)) //JS Spread Syntax
       })
       return permissions
@@ -259,7 +314,7 @@ export default {
       }
       //父节点
       const leafPermissions = this.getLeafPermissions(menuItem)
-      const selectedLeafCount = leafPermissions.filter(leaf => permList.includes(leaf)).length //有多少个被选中了
+      const selectedLeafCount = leafPermissions.filter((leaf) => permList.includes(leaf)).length //有多少个被选中了
 
       if (selectedLeafCount === 0) {
         return 0
@@ -280,7 +335,7 @@ export default {
 
       //递归添加子节点
       if (node.children) {
-        node.children.forEach(child => {
+        node.children.forEach((child) => {
           permissions.push(...this.getAllNodePermissions(child))
         })
       }
@@ -288,7 +343,7 @@ export default {
     },
     isPermissionChecked(aliasName) {
       const state = this.isNodeChecked(aliasName, this.currentPermissions)
-      return state === 2//只有全选才返回true
+      return state === 2 //只有全选才返回true
     },
     isPermissionIndeterminate(aliasName) {
       const state = this.isNodeChecked(aliasName, this.currentPermissions)
@@ -306,7 +361,7 @@ export default {
         //手动选中，添加该节点及其所有子节点的所有权限
         if (menuItem) {
           const allPermissions = this.getAllNodePermissions(menuItem)
-          allPermissions.forEach(perm => {
+          allPermissions.forEach((perm) => {
             if (!this.currentPermissions.includes(perm)) {
               this.currentPermissions.push(perm)
             }
@@ -316,7 +371,7 @@ export default {
         //手动取消选中,移除该节点及其所有子节点的所有权限
         if (menuItem) {
           const allPermissions = this.getAllNodePermissions(menuItem)
-          allPermissions.forEach(perm => {
+          allPermissions.forEach((perm) => {
             const index = this.currentPermissions.indexOf(perm)
             if (index > -1) {
               this.currentPermissions.splice(index, 1)
@@ -333,11 +388,15 @@ export default {
 
       if (this.permissionsChanged && this.activeRoleId) {
         try {
-          await this.$confirm('当前角色的权限有未保存的更改，是否要放弃更改并选择其他角色？', '提示', {
-            confirmButtonText: '放弃更改',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
+          await this.$confirm(
+            '当前角色的权限有未保存的更改，是否要放弃更改并选择其他角色？',
+            '提示',
+            {
+              confirmButtonText: '放弃更改',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }
+          )
         } catch {
           return
         }
@@ -364,8 +423,9 @@ export default {
           }
         }
         await this.$api.company.updateRolesInfo(this.activeRole.role_id, updateData)
-        const roleIndex = this.rolesList.findIndex(r => r.role_id === this.activeRoleId)
-        if (roleIndex !== -1) { //找到了roleIndex
+        const roleIndex = this.rolesList.findIndex((r) => r.role_id === this.activeRoleId)
+        if (roleIndex !== -1) {
+          //找到了roleIndex
           this.rolesList[roleIndex].permission = updateData.permission
         }
         this.originalPermissions = [...this.currentPermissions]
@@ -391,7 +451,7 @@ export default {
       this.form.role_name = ''
       this.form.role_id = ''
       this.form.permission = {
-        shopmenu_alias_name: [],
+        shopmenu_alias_name: []
       }
       this.currentDialogPermissions = []
     },
@@ -403,7 +463,7 @@ export default {
         shopmenu_alias_name: []
       }
       this.currentDialogPermissions = []
-      
+
       this.$dialog.open({
         title: '角色添加',
         size: 'mini',
@@ -411,29 +471,30 @@ export default {
           text: '保存'
         },
         content: (
-          <SpFormPlus 
+          <SpFormPlus
             v-model={this.form}
-            form-type="dialogForm" 
+            form-type='dialogForm'
             form-items={this.dialogFormItems}
-            show-default-actions={false}/>
+            show-default-actions={false}
+          />
         ),
         confirmBefore: async () => {
-            const formData = {
-              role_name: this.form.role_name.trim(),
-              permission: {
-                shopmenu_alias_name: this.currentDialogPermissions || []
-              }
-            } 
-            await this.$api.company.createRoles(formData)
-            //重置状态
-            this.activeRoleId = null
-            this.activeRole = null
-            this.activeRoleIndex = -1
-            this.originalPermissions = []
-            this.currentPermissions = []
-            this.permissionsChanged = false
-            await this.fetchList() 
-            this.$message.success('角色添加成功')
+          const formData = {
+            role_name: this.form.role_name.trim(),
+            permission: {
+              shopmenu_alias_name: this.currentDialogPermissions || []
+            }
+          }
+          await this.$api.company.createRoles(formData)
+          //重置状态
+          this.activeRoleId = null
+          this.activeRole = null
+          this.activeRoleIndex = -1
+          this.originalPermissions = []
+          this.currentPermissions = []
+          this.permissionsChanged = false
+          await this.fetchList()
+          this.$message.success('角色添加成功')
         }
       })
     },
@@ -455,7 +516,7 @@ export default {
         const data = response
         this.rolesList = data.list || []
         this.total_count = data.total_count
-        
+
         // 重置权限状态
         this.originalPermissions = []
         this.currentPermissions = []
@@ -465,7 +526,7 @@ export default {
         let selectIndex = -1
 
         if (previousActiveRoleId) {
-          const previousRole = this.rolesList.find(role => role.role_id === previousActiveRoleId)
+          const previousRole = this.rolesList.find((role) => role.role_id === previousActiveRoleId)
           if (previousRole) {
             roleToSelect = previousRole
             selectIndex = this.rolesList.indexOf(previousRole)
@@ -484,7 +545,6 @@ export default {
           this.activeRoleId = null
           this.activeRoleIndex = -1
         }
-
       } catch (error) {
         this.activeRoleId = null
         this.activeRole = null
@@ -509,8 +569,8 @@ export default {
           type: 'warning'
         })
         await this.$api.company.deleteRole(row.role_id)
-        
-        const deletedIndex = this.rolesList.findIndex(r => r.role_id === row.role_id)
+
+        const deletedIndex = this.rolesList.findIndex((r) => r.role_id === row.role_id)
         if (deletedIndex !== -1) {
           this.rolesList.splice(deletedIndex, 1)
           this.total_count--
@@ -524,7 +584,7 @@ export default {
             this.activeRole = null
             this.activeRoleIndex = -1
           }
-          
+
           // 如果删除后还剩余其他角色，自动选中第一个
           if (this.rolesList.length > 0) {
             const firstRole = this.rolesList[0]
@@ -533,7 +593,7 @@ export default {
             }
           }
         }
-        
+
         this.$message({
           message: '删除成功',
           type: 'success',
@@ -585,7 +645,7 @@ export default {
   @apply overflow-y-auto w-full overflow-x-hidden;
 }
 
-.role-table-container ::v-deep .el-table__row:hover>td {
+.role-table-container ::v-deep .el-table__row:hover > td {
   @apply !bg-[color-mix(in_srgb,_white_90%,_var(--primary))];
 }
 

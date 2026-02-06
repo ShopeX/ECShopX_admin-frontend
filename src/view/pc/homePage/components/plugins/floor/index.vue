@@ -41,7 +41,7 @@
                 dataForm.data.leftImg.url ||
                 'https://fakeimg.pl/204x361/F8F8F8/CCC/?text=250x440&font=helvetica'
               "
-            >
+            />
           </div>
         </div>
         <!-- 商品列表 -->
@@ -77,7 +77,7 @@
                 dataForm.data.rightImg1.url ||
                 'https://fakeimg.pl/127x230/F8F8F8/CCC/?text=155x280&font=helvetica'
               "
-            >
+            />
           </div>
           <div class="floor-right__footer">
             <img
@@ -85,7 +85,7 @@
                 dataForm.data.rightImg2.url ||
                 'https://fakeimg.pl/127x230/F8F8F8/CCC/?text=155x280&font=helvetica'
               "
-            >
+            />
           </div>
         </div>
       </div>

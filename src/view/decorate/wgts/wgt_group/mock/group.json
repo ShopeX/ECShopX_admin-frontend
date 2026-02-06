@@ -1,0 +1,1903 @@
+{
+    "data": [
+        {
+            "default_item_id": "11243",
+            "regionauth_id": "14",
+            "item_type": "normal",
+            "item_category_main": [
+                {
+                    "category_id": "321",
+                    "category_name": "\u8fd0\u52a8\u6237\u5916",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "344",
+                    "category_name": "\u8fd0\u52a8\u670d\u9970",
+                    "category_level": "2",
+                    "parent_id": "321"
+                },
+                {
+                    "category_id": "360",
+                    "category_name": "\u8fd0\u52a8\u5957\u88c5",
+                    "category_level": "3",
+                    "parent_id": "344"
+                }
+            ],
+            "item_name": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u52a0\u7ed2\u4fdd\u6696\u536b\u88e4\u5973\u5927\u7ae503\u79cb\u51ac\u65b0\u6b3e\u675f\u811a\u5bbd\u677e\u8fd0\u52a8\u88e4YKLT74 \u7c89\u674f\u8272YKLT74",
+            "keywords": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u52a0\u7ed2\u4fdd\u6696\u536b\u88e4\u5973\u5927\u7ae503\u79cb\u51ac\u65b0\u6b3e\u675f\u811a\u5bbd\u677e\u8fd0\u52a8\u88e4YKLT74 \u7c89\u674f\u8272YKLT74\/\u674e\u5b81\/\u8fd0\u52a8\u6237\u5916\/\u8fd0\u52a8\u670d\u9970\/\u8fd0\u52a8\u5957\u88c5",
+            "brief": "",
+            "distributor_id": 1649,
+            "distributor_valid": "true",
+            "distributor_status": 1,
+            "distributor_category_id": "20",
+            "goods_bn": "FVJJ096I_SP-ln7150701216416",
+            "brand_id": "17",
+            "goods_brand": "\u674e\u5b81",
+            "sort": "9",
+            "is_gift": 0,
+            "item_total_store": 59,
+            "item_total_sales": 1,
+            "item_category_info": [
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "405",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5\u4e8c\u7ea7",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "343",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "406",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "343"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "407",
+                    "category_name": "\u8fd0\u52a8\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                }
+            ],
+            "pics": [
+                "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/ee047a841aff9e082505e57d37ff286720250619171713170088843796618624044653676530.jpg"
+            ],
+            "item_params": [
+                {
+                    "attribute_id": "585",
+                    "attribute_name": "\u6750\u8d28",
+                    "attribute_value_id": "1508",
+                    "attribute_value_name": "\u805a\u916f\u7ea4\u7ef4"
+                },
+                {
+                    "attribute_id": "587",
+                    "attribute_name": "\u5e74\u9f84",
+                    "attribute_value_id": "1503",
+                    "attribute_value_name": "\u7ae5\u88c5"
+                }
+            ],
+            "nospec": 0,
+            "item_spec": [
+                {
+                    "spec_id": "2",
+                    "spec_name": "\u989c\u8272",
+                    "spec_value_id": "202",
+                    "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "159",
+                    "spec_value_name": "160"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "163",
+                    "spec_value_name": "140"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "178",
+                    "spec_value_name": "170"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "164",
+                    "spec_value_name": "150"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "162",
+                    "spec_value_name": "165"
+                },
+                {
+                    "item_id": "11243",
+                    "spec_id": "3",
+                    "spec_value_id": "159",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "160",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                },
+                {
+                    "item_id": "11243",
+                    "spec_id": "2",
+                    "spec_value_id": "202",
+                    "spec_name": "\u989c\u8272",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                }
+            ],
+            "spec_items": [
+                {
+                    "item_id": "11243",
+                    "item_bn": "FVJJ096I_SP-ln0150701266832",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "202",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "159",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "160"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "24900",
+                    "market_price": "24900",
+                    "approve_status": "onsale",
+                    "store": "18",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11244",
+                    "item_bn": "FVJJ096I_SP-ln3150701251090",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "202",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "163",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "140"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "24900",
+                    "market_price": "24900",
+                    "approve_status": "onsale",
+                    "store": "15",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11245",
+                    "item_bn": "FVJJ096I_SP-ln7150701241050",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "202",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "178",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "170"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "24900",
+                    "market_price": "24900",
+                    "approve_status": "onsale",
+                    "store": "6",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11246",
+                    "item_bn": "FVJJ096I_SP-ln2150701238948",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "202",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "164",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "150"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "24900",
+                    "market_price": "24900",
+                    "approve_status": "onsale",
+                    "store": "18",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11247",
+                    "item_bn": "FVJJ096I_SP-ln6150701223162",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "202",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u7c89\u674f\u8272 \u5973 \u536b\u88e4"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "162",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "165"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "24900",
+                    "market_price": "24900",
+                    "approve_status": "onsale",
+                    "store": "2",
+                    "sales": "1",
+                    "discount_rate": null
+                }
+            ],
+            "audit_status": "approved",
+            "store": 59,
+            "sales": 1,
+            "price": "24900",
+            "market_price": "24900",
+            "discount_rate": 13,
+            "tags": [],
+            "regions_id": null,
+            "type": 0,
+            "rebate": null,
+            "rebate_type": null,
+            "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/ee047a841aff9e082505e57d37ff286720250619171713170088843796618624044653676530.jpg",
+            "promotion_start_time": "1750321769",
+            "promotion_end_time": "1790047968",
+            "is_show": 1,
+            "item_id": "11243",
+            "goods_id": "11243",
+            "distributor_info": {
+                "distributor_id": "1649",
+                "is_distributor": "1",
+                "company_id": "1",
+                "mobile": "13789898621",
+                "address": "\u548c\u5e73\u5c0f\u533a",
+                "name": "\u674e\u5b81 1990",
+                "auto_sync_goods": "0",
+                "logo": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/08\/af19a93c9fb050d19c5273dbeac425ca1749373946133.1749373856831.jpg",
+                "contract_phone": "",
+                "banner": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/04\/73c8d677b84a1bb838ce9035c0130d6b1749036155160.1b6151b8c914d09bb2589d2cb68c20abd73f9ab5.png",
+                "contact": "hp",
+                "is_valid": "true",
+                "lng": "116.443136",
+                "lat": "39.921444",
+                "province": "\u5929\u6d25\u5e02",
+                "city": "\u5929\u6d25\u5e02",
+                "hour": "-",
+                "area": "\u548c\u5e73\u533a",
+                "regions_id": [
+                    "120000",
+                    "120100",
+                    "120101"
+                ],
+                "is_domestic": "1",
+                "is_direct_store": "1",
+                "child_count": "0",
+                "shop_id": "0",
+                "is_default": "0",
+                "is_audit_goods": "0",
+                "is_ziti": "0",
+                "is_delivery": "1",
+                "regions": [
+                    "\u5929\u6d25\u5e02",
+                    "\u5929\u6d25\u5e02",
+                    "\u548c\u5e73\u533a"
+                ],
+                "review_status": "0",
+                "source_from": "1",
+                "dealer_id": "0",
+                "split_ledger_info": null,
+                "created": "1745930513",
+                "updated": "1750071137",
+                "shop_code": "FVJJ096I",
+                "distributor_self": "0",
+                "wechat_work_department_id": "0",
+                "regionauth_id": "14",
+                "is_open": "false",
+                "rate": null,
+                "is_dada": "0",
+                "business": null,
+                "dada_shop_create": "0",
+                "introduce": "",
+                "merchant_id": "0",
+                "distribution_type": "0",
+                "is_require_subdistrict": "0",
+                "is_require_building": "0",
+                "delivery_distance": "0",
+                "offline_aftersales": "0",
+                "offline_aftersales_self": "0",
+                "offline_aftersales_distributor_id": null,
+                "offline_aftersales_other": "0",
+                "house_number": "",
+                "is_self_delivery": "0",
+                "is_open_salesman": "0",
+                "bspay_split_ledger_info": null,
+                "shansong_shop_create": "0",
+                "shansong_store_id": null,
+                "freight_time": "2",
+                "is_refund_freight": "0",
+                "wdt_shop_no": "",
+                "wdt_shop_id": "0",
+                "jst_shop_id": "0",
+                "kuaizhen_store_id": "0",
+                "open_divided": "0",
+                "category_id": "20",
+                "status": "1",
+                "unit_number": "96",
+                "business_mode": "cooperation",
+                "opening_date": "0",
+                "closing_date": "0",
+                "priority": "0",
+                "is_display": "1",
+                "related_shop_id": "0",
+                "first_letter": "L",
+                "tag_name": "",
+                "tag_start_time": "0",
+                "tag_end_time": "0",
+                "ship_template_id": "67"
+            },
+            "type_labels": [],
+            "item_spec_desc": "\u5c3a\u7801:160,\u989c\u8272:\u7c89\u674f\u8272 \u5973 \u536b\u88e4",
+            "is_stock": 1,
+            "seckill_discount_rate": "8800",
+            "activity_price": 3000,
+            "seckill_start_time": "1766073600",
+            "promotion_activity": [
+                {
+                    "promotion_id": "49",
+                    "tag_type": "single_group",
+                    "activity_price": "8800",
+                    "start_time": "1766073600",
+                    "end_time": "1767196799",
+                    "item_id": "11243",
+                    "item_store": 1,
+                    "tag_name": "0100\u9002\u7528",
+                    "person_num": 10
+                }
+            ]
+        },
+        {
+            "default_item_id": "11314",
+            "regionauth_id": "14",
+            "item_type": "normal",
+            "item_category_main": [
+                {
+                    "category_id": "321",
+                    "category_name": "\u8fd0\u52a8\u6237\u5916",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "344",
+                    "category_name": "\u8fd0\u52a8\u670d\u9970",
+                    "category_level": "2",
+                    "parent_id": "321"
+                },
+                {
+                    "category_id": "353",
+                    "category_name": "\u8f6f\u58f3\u88e4",
+                    "category_level": "3",
+                    "parent_id": "344"
+                }
+            ],
+            "item_name": "\u674e\u5b811990\u674e\u5b81CF\u6eaf | \u6eaf\u4e4b\u4e1c\u65b9\u4e3b\u9898\u79c0\u6b3e\u4e07\u9f99\u7532\u7537\u5973\u540c\u6b3e\u9632\u98ce\u900f\u6e7f\u5bbd\u677e\u5355\u5c42\u51b2\u950b\u8863AEMU049-5",
+            "keywords": "\u674e\u5b811990\u674e\u5b81CF\u6eaf | \u6eaf\u4e4b\u4e1c\u65b9\u4e3b\u9898\u79c0\u6b3e\u4e07\u9f99\u7532\u7537\u5973\u540c\u6b3e\u9632\u98ce\u900f\u6e7f\u5bbd\u677e\u5355\u5c42\u51b2\u950b\u8863AEMU049-5\/\u674e\u5b81\/\u8fd0\u52a8\u6237\u5916\/\u8fd0\u52a8\u670d\u9970\/\u8f6f\u58f3\u88e4",
+            "brief": "",
+            "distributor_id": 1649,
+            "distributor_valid": "true",
+            "distributor_status": 1,
+            "distributor_category_id": "20",
+            "goods_bn": "FVJJ096I_SP-ln3150705162234",
+            "brand_id": "17",
+            "goods_brand": "\u674e\u5b81",
+            "sort": "8",
+            "is_gift": 0,
+            "item_total_store": 54,
+            "item_total_sales": 5,
+            "item_category_info": [
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "405",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5\u4e8c\u7ea7",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "343",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "406",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "343"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "407",
+                    "category_name": "\u8fd0\u52a8\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                }
+            ],
+            "pics": [
+                "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/23\/item\/57ca76e7db90fb19f3eda4eb7dd8779420250623104451173640194824234050875252765205.jpg"
+            ],
+            "item_params": [
+                {
+                    "attribute_id": "585",
+                    "attribute_name": "\u6750\u8d28",
+                    "attribute_value_id": "1508",
+                    "attribute_value_name": "\u805a\u916f\u7ea4\u7ef4"
+                },
+                {
+                    "attribute_id": "590",
+                    "attribute_name": "\u6027\u522b",
+                    "attribute_value_id": "1511",
+                    "attribute_value_name": "\u60c5\u4fa3"
+                }
+            ],
+            "nospec": 0,
+            "item_spec": [
+                {
+                    "spec_id": "2",
+                    "spec_name": "\u989c\u8272",
+                    "spec_value_id": "214",
+                    "spec_value_name": "54505\u87ba\u70df\u7eff"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "56",
+                    "spec_value_name": "3XL"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "42",
+                    "spec_value_name": "M"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "203",
+                    "spec_value_name": "XXL"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "46",
+                    "spec_value_name": "S"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "7",
+                    "spec_value_name": "L"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "43",
+                    "spec_value_name": "XL"
+                },
+                {
+                    "item_id": "11314",
+                    "spec_id": "3",
+                    "spec_value_id": "56",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "3XL",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                },
+                {
+                    "item_id": "11314",
+                    "spec_id": "2",
+                    "spec_value_id": "214",
+                    "spec_name": "\u989c\u8272",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "54505\u87ba\u70df\u7eff",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                }
+            ],
+            "spec_items": [
+                {
+                    "item_id": "11314",
+                    "item_bn": "FVJJ096I_SP-ln8150705226131",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "56",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "3XL"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "instock",
+                    "store": "2",
+                    "sales": "1",
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11315",
+                    "item_bn": "FVJJ096I_SP-ln1150705218432",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "42",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "M"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "onsale",
+                    "store": "10",
+                    "sales": "2",
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11316",
+                    "item_bn": "FVJJ096I_SP-ln8150705201910",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "203",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "XXL"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "instock",
+                    "store": "9",
+                    "sales": "1",
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11317",
+                    "item_bn": "FVJJ096I_SP-ln5150705193284",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "46",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "S"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "instock",
+                    "store": "6",
+                    "sales": "0",
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11318",
+                    "item_bn": "FVJJ096I_SP-ln8150705185294",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "7",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "L"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "instock",
+                    "store": "18",
+                    "sales": "0",
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11319",
+                    "item_bn": "FVJJ096I_SP-ln1150705176240",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "214",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "54505\u87ba\u70df\u7eff"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "43",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "XL"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "79900",
+                    "market_price": "79900",
+                    "approve_status": "instock",
+                    "store": "9",
+                    "sales": "1",
+                    "discount_rate": null
+                }
+            ],
+            "audit_status": "approved",
+            "store": 10,
+            "sales": 5,
+            "price": "79900",
+            "market_price": "79900",
+            "discount_rate": 13,
+            "tags": [],
+            "regions_id": "",
+            "type": 0,
+            "rebate": null,
+            "rebate_type": null,
+            "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/23\/item\/57ca76e7db90fb19f3eda4eb7dd8779420250623104451173640194824234050875252765205.jpg",
+            "promotion_start_time": "1750321769",
+            "promotion_end_time": "1790047968",
+            "is_show": 1,
+            "item_id": "11314",
+            "goods_id": "11314",
+            "distributor_info": {
+                "distributor_id": "1649",
+                "is_distributor": "1",
+                "company_id": "1",
+                "mobile": "13789898621",
+                "address": "\u548c\u5e73\u5c0f\u533a",
+                "name": "\u674e\u5b81 1990",
+                "auto_sync_goods": "0",
+                "logo": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/08\/af19a93c9fb050d19c5273dbeac425ca1749373946133.1749373856831.jpg",
+                "contract_phone": "",
+                "banner": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/04\/73c8d677b84a1bb838ce9035c0130d6b1749036155160.1b6151b8c914d09bb2589d2cb68c20abd73f9ab5.png",
+                "contact": "hp",
+                "is_valid": "true",
+                "lng": "116.443136",
+                "lat": "39.921444",
+                "province": "\u5929\u6d25\u5e02",
+                "city": "\u5929\u6d25\u5e02",
+                "hour": "-",
+                "area": "\u548c\u5e73\u533a",
+                "regions_id": [
+                    "120000",
+                    "120100",
+                    "120101"
+                ],
+                "is_domestic": "1",
+                "is_direct_store": "1",
+                "child_count": "0",
+                "shop_id": "0",
+                "is_default": "0",
+                "is_audit_goods": "0",
+                "is_ziti": "0",
+                "is_delivery": "1",
+                "regions": [
+                    "\u5929\u6d25\u5e02",
+                    "\u5929\u6d25\u5e02",
+                    "\u548c\u5e73\u533a"
+                ],
+                "review_status": "0",
+                "source_from": "1",
+                "dealer_id": "0",
+                "split_ledger_info": null,
+                "created": "1745930513",
+                "updated": "1750071137",
+                "shop_code": "FVJJ096I",
+                "distributor_self": "0",
+                "wechat_work_department_id": "0",
+                "regionauth_id": "14",
+                "is_open": "false",
+                "rate": null,
+                "is_dada": "0",
+                "business": null,
+                "dada_shop_create": "0",
+                "introduce": "",
+                "merchant_id": "0",
+                "distribution_type": "0",
+                "is_require_subdistrict": "0",
+                "is_require_building": "0",
+                "delivery_distance": "0",
+                "offline_aftersales": "0",
+                "offline_aftersales_self": "0",
+                "offline_aftersales_distributor_id": null,
+                "offline_aftersales_other": "0",
+                "house_number": "",
+                "is_self_delivery": "0",
+                "is_open_salesman": "0",
+                "bspay_split_ledger_info": null,
+                "shansong_shop_create": "0",
+                "shansong_store_id": null,
+                "freight_time": "2",
+                "is_refund_freight": "0",
+                "wdt_shop_no": "",
+                "wdt_shop_id": "0",
+                "jst_shop_id": "0",
+                "kuaizhen_store_id": "0",
+                "open_divided": "0",
+                "category_id": "20",
+                "status": "1",
+                "unit_number": "96",
+                "business_mode": "cooperation",
+                "opening_date": "0",
+                "closing_date": "0",
+                "priority": "0",
+                "is_display": "1",
+                "related_shop_id": "0",
+                "first_letter": "L",
+                "tag_name": "",
+                "tag_start_time": "0",
+                "tag_end_time": "0",
+                "ship_template_id": "67"
+            },
+            "type_labels": [],
+            "item_spec_desc": "\u5c3a\u7801:3XL,\u989c\u8272:54505\u87ba\u70df\u7eff",
+            "is_stock": 1,
+            "seckill_discount_rate": "8800",
+            "activity_price": 9600,
+            "seckill_start_time": "1766073600",
+            "promotion_activity": [
+                {
+                    "promotion_id": "47",
+                    "tag_type": "single_group",
+                    "activity_price": "8800",
+                    "start_time": "1766073600",
+                    "end_time": "1767196799",
+                    "item_id": "11315",
+                    "item_store": 1,
+                    "tag_name": "demo",
+                    "person_num": 2
+                }
+            ]
+        },
+        {
+            "default_item_id": "11207",
+            "regionauth_id": "14",
+            "item_type": "normal",
+            "item_category_main": [
+                {
+                    "category_id": "321",
+                    "category_name": "\u8fd0\u52a8\u6237\u5916",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "344",
+                    "category_name": "\u8fd0\u52a8\u670d\u9970",
+                    "category_level": "2",
+                    "parent_id": "321"
+                },
+                {
+                    "category_id": "355",
+                    "category_name": "\u8fd0\u52a8\u88e4",
+                    "category_level": "3",
+                    "parent_id": "344"
+                }
+            ],
+            "item_name": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u7fbd\u7ed2\u670d85%\u7ed2\u7537\u5c0f\u7ae53\u51ac\u5b63\u649e\u8272\u8fde\u5e3d\u4e2d\u7fbd\u7ed2\u670d\u5916\u5957YYMT035",
+            "keywords": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u7fbd\u7ed2\u670d85%\u7ed2\u7537\u5c0f\u7ae53\u51ac\u5b63\u649e\u8272\u8fde\u5e3d\u4e2d\u7fbd\u7ed2\u670d\u5916\u5957YYMT035\/\u674e\u5b81\/\u8fd0\u52a8\u6237\u5916\/\u8fd0\u52a8\u670d\u9970\/\u8fd0\u52a8\u88e4",
+            "brief": "",
+            "distributor_id": 1649,
+            "distributor_valid": "true",
+            "distributor_status": 1,
+            "distributor_category_id": "20",
+            "goods_bn": "FVJJ096I_SP-ln0150696407927",
+            "brand_id": "17",
+            "goods_brand": "\u674e\u5b81",
+            "sort": "8",
+            "is_gift": 0,
+            "item_total_store": 84,
+            "item_total_sales": 0,
+            "item_category_info": [
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "405",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5\u4e8c\u7ea7",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "343",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "406",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "343"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "407",
+                    "category_name": "\u8fd0\u52a8\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "410",
+                    "category_name": "\u8fd0\u52a8\u7537\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                }
+            ],
+            "pics": [
+                "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/e0b326d600fe5f24ea37352735ced5c620250619171656170089067832218626285009341515.jpg"
+            ],
+            "item_params": [
+                {
+                    "attribute_id": "585",
+                    "attribute_name": "\u6750\u8d28",
+                    "attribute_value_id": "1504",
+                    "attribute_value_name": "\u725b\u76ae"
+                },
+                {
+                    "attribute_id": "587",
+                    "attribute_name": "\u5e74\u9f84",
+                    "attribute_value_id": "1505",
+                    "attribute_value_name": "\u7ae5"
+                }
+            ],
+            "nospec": 0,
+            "item_spec": [
+                {
+                    "spec_id": "2",
+                    "spec_name": "\u989c\u8272",
+                    "spec_value_id": "187",
+                    "spec_value_name": "\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "166",
+                    "spec_value_name": "110"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "168",
+                    "spec_value_name": "120"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "167",
+                    "spec_value_name": "100"
+                },
+                {
+                    "spec_id": "2",
+                    "spec_name": "\u989c\u8272",
+                    "spec_value_id": "185",
+                    "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "161",
+                    "spec_value_name": "130"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "170",
+                    "spec_value_name": "90"
+                },
+                {
+                    "item_id": "11207",
+                    "spec_id": "3",
+                    "spec_value_id": "166",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "110",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                },
+                {
+                    "item_id": "11207",
+                    "spec_id": "2",
+                    "spec_value_id": "187",
+                    "spec_name": "\u989c\u8272",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                }
+            ],
+            "spec_items": [
+                {
+                    "item_id": "11207",
+                    "item_bn": "FVJJ096I_SP-ln0150696484363",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "187",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "166",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "110"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "15",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11208",
+                    "item_bn": "FVJJ096I_SP-ln4150696473209",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "187",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "168",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "120"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "9",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11209",
+                    "item_bn": "FVJJ096I_SP-ln4150696467771",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "187",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "167",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "100"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "9",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11210",
+                    "item_bn": "FVJJ096I_SP-ln8150696453900",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "185",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "166",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "110"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "15",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11212",
+                    "item_bn": "FVJJ096I_SP-ln8150696445376",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "185",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "161",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "130"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "9",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11214",
+                    "item_bn": "FVJJ096I_SP-ln1150696436291",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "185",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "170",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "90"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "6",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11216",
+                    "item_bn": "FVJJ096I_SP-ln5150696421939",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "185",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "168",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "120"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "12",
+                    "sales": 0,
+                    "discount_rate": null
+                },
+                {
+                    "item_id": "11218",
+                    "item_bn": "FVJJ096I_SP-ln7150696413873",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "185",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u6d45\u94b4\u84dd\u6df1\u822a\u8230\u84dd \u7537 \u4e2d\u7fbd\u7ed2\u670d"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "167",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "100"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "69900",
+                    "market_price": "69900",
+                    "approve_status": "onsale",
+                    "store": "9",
+                    "sales": 0,
+                    "discount_rate": null
+                }
+            ],
+            "audit_status": "approved",
+            "store": 84,
+            "sales": 0,
+            "price": "69900",
+            "market_price": "69900",
+            "discount_rate": 71,
+            "tags": [],
+            "regions_id": null,
+            "type": 0,
+            "rebate": null,
+            "rebate_type": null,
+            "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/19\/item\/e0b326d600fe5f24ea37352735ced5c620250619171656170089067832218626285009341515.jpg",
+            "promotion_start_time": "1750321769",
+            "promotion_end_time": "1790047968",
+            "is_show": 1,
+            "item_id": "11207",
+            "goods_id": "11207",
+            "distributor_info": {
+                "distributor_id": "1649",
+                "is_distributor": "1",
+                "company_id": "1",
+                "mobile": "13789898621",
+                "address": "\u548c\u5e73\u5c0f\u533a",
+                "name": "\u674e\u5b81 1990",
+                "auto_sync_goods": "0",
+                "logo": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/08\/af19a93c9fb050d19c5273dbeac425ca1749373946133.1749373856831.jpg",
+                "contract_phone": "",
+                "banner": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/04\/73c8d677b84a1bb838ce9035c0130d6b1749036155160.1b6151b8c914d09bb2589d2cb68c20abd73f9ab5.png",
+                "contact": "hp",
+                "is_valid": "true",
+                "lng": "116.443136",
+                "lat": "39.921444",
+                "province": "\u5929\u6d25\u5e02",
+                "city": "\u5929\u6d25\u5e02",
+                "hour": "-",
+                "area": "\u548c\u5e73\u533a",
+                "regions_id": [
+                    "120000",
+                    "120100",
+                    "120101"
+                ],
+                "is_domestic": "1",
+                "is_direct_store": "1",
+                "child_count": "0",
+                "shop_id": "0",
+                "is_default": "0",
+                "is_audit_goods": "0",
+                "is_ziti": "0",
+                "is_delivery": "1",
+                "regions": [
+                    "\u5929\u6d25\u5e02",
+                    "\u5929\u6d25\u5e02",
+                    "\u548c\u5e73\u533a"
+                ],
+                "review_status": "0",
+                "source_from": "1",
+                "dealer_id": "0",
+                "split_ledger_info": null,
+                "created": "1745930513",
+                "updated": "1750071137",
+                "shop_code": "FVJJ096I",
+                "distributor_self": "0",
+                "wechat_work_department_id": "0",
+                "regionauth_id": "14",
+                "is_open": "false",
+                "rate": null,
+                "is_dada": "0",
+                "business": null,
+                "dada_shop_create": "0",
+                "introduce": "",
+                "merchant_id": "0",
+                "distribution_type": "0",
+                "is_require_subdistrict": "0",
+                "is_require_building": "0",
+                "delivery_distance": "0",
+                "offline_aftersales": "0",
+                "offline_aftersales_self": "0",
+                "offline_aftersales_distributor_id": null,
+                "offline_aftersales_other": "0",
+                "house_number": "",
+                "is_self_delivery": "0",
+                "is_open_salesman": "0",
+                "bspay_split_ledger_info": null,
+                "shansong_shop_create": "0",
+                "shansong_store_id": null,
+                "freight_time": "2",
+                "is_refund_freight": "0",
+                "wdt_shop_no": "",
+                "wdt_shop_id": "0",
+                "jst_shop_id": "0",
+                "kuaizhen_store_id": "0",
+                "open_divided": "0",
+                "category_id": "20",
+                "status": "1",
+                "unit_number": "96",
+                "business_mode": "cooperation",
+                "opening_date": "0",
+                "closing_date": "0",
+                "priority": "0",
+                "is_display": "1",
+                "related_shop_id": "0",
+                "first_letter": "L",
+                "tag_name": "",
+                "tag_start_time": "0",
+                "tag_end_time": "0",
+                "ship_template_id": "67"
+            },
+            "type_labels": [],
+            "item_spec_desc": "\u5c3a\u7801:110,\u989c\u8272:\u6c34\u7f25\u7070\u9ed1\u8272 \u7537 \u4e2d\u7fbd\u7ed2\u670d",
+            "is_stock": 1,
+            "seckill_discount_rate": "3000",
+            "activity_price": 49000,
+            "seckill_start_time": "1766073600",
+            "promotion_activity": [
+                {
+                    "promotion_id": "49",
+                    "tag_type": "single_group",
+                    "activity_price": "3000",
+                    "start_time": "1766073600",
+                    "end_time": "1767196799",
+                    "item_id": "11207",
+                    "item_store": 1,
+                    "tag_name": "0100\u9002\u7528",
+                    "person_num": 10
+                }
+            ]
+        },
+        {
+            "default_item_id": "11254",
+            "regionauth_id": "14",
+            "item_type": "normal",
+            "item_category_main": [
+                {
+                    "category_id": "321",
+                    "category_name": "\u8fd0\u52a8\u6237\u5916",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "344",
+                    "category_name": "\u8fd0\u52a8\u670d\u9970",
+                    "category_level": "2",
+                    "parent_id": "321"
+                },
+                {
+                    "category_id": "361",
+                    "category_name": "\u8fd0\u52a8\u5916\u5957",
+                    "category_level": "3",
+                    "parent_id": "344"
+                }
+            ],
+            "item_name": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u7537\u5c0f\u7ae5\u536b\u886303\u65b0\u6b3e\u65b0\u5e74\u7cfb\u5217\u798f\u661f\u9ad8\u7167\u5f00\u886b\u8fde\u5e3d\u8fd0\u52a8\u5916\u5957YWDU093",
+            "keywords": "\u674e\u5b811990\u674e\u5b81\u7ae5\u88c5\u7537\u5c0f\u7ae5\u536b\u886303\u65b0\u6b3e\u65b0\u5e74\u7cfb\u5217\u798f\u661f\u9ad8\u7167\u5f00\u886b\u8fde\u5e3d\u8fd0\u52a8\u5916\u5957YWDU093\/\u674e\u5b81\/\u8fd0\u52a8\u6237\u5916\/\u8fd0\u52a8\u670d\u9970\/\u8fd0\u52a8\u5916\u5957",
+            "brief": "",
+            "distributor_id": 1649,
+            "distributor_valid": "true",
+            "distributor_status": 1,
+            "distributor_category_id": "20",
+            "goods_bn": "FVJJ096I_SP-ln8150701631961",
+            "brand_id": "17",
+            "goods_brand": "\u674e\u5b81",
+            "sort": "7",
+            "is_gift": 0,
+            "item_total_store": 9,
+            "item_total_sales": 2,
+            "item_category_info": [
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "405",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5\u4e8c\u7ea7",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "343",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "406",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "343"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "407",
+                    "category_name": "\u8fd0\u52a8\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "404",
+                    "category_name": "\u6237\u5916\u8fd0\u52a8\u6d4b\u8bd5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "407",
+                    "category_name": "\u8fd0\u52a8\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "404"
+                },
+                {
+                    "category_id": "408",
+                    "category_name": "\u8fd0\u52a8\u98ce\u8863",
+                    "category_level": "3",
+                    "parent_id": "407"
+                },
+                {
+                    "category_id": "343",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "1",
+                    "parent_id": "0"
+                },
+                {
+                    "category_id": "406",
+                    "category_name": "\u5973\u88c5",
+                    "category_level": "2",
+                    "parent_id": "343"
+                },
+                {
+                    "category_id": "412",
+                    "category_name": "\u6237\u5916-\u5973\u88c5",
+                    "category_level": "3",
+                    "parent_id": "406"
+                }
+            ],
+            "pics": [
+                "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/07\/01\/image\/7addbe286b94f20c37d44fae6dc51eb2170089026254418649575274999644.jpg"
+            ],
+            "item_params": [
+                {
+                    "attribute_id": "585",
+                    "attribute_name": "\u6750\u8d28",
+                    "attribute_value_id": "1508",
+                    "attribute_value_name": "\u805a\u916f\u7ea4\u7ef4"
+                },
+                {
+                    "attribute_id": "587",
+                    "attribute_name": "\u5e74\u9f84",
+                    "attribute_value_id": "1505",
+                    "attribute_value_name": "\u7ae5"
+                }
+            ],
+            "nospec": 0,
+            "item_spec": [
+                {
+                    "spec_id": "2",
+                    "spec_name": "\u989c\u8272",
+                    "spec_value_id": "200",
+                    "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "166",
+                    "spec_value_name": "110"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "161",
+                    "spec_value_name": "130"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "168",
+                    "spec_value_name": "120"
+                },
+                {
+                    "spec_id": "3",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_value_id": "167",
+                    "spec_value_name": "100"
+                },
+                {
+                    "item_id": "11254",
+                    "spec_id": "3",
+                    "spec_value_id": "166",
+                    "spec_name": "\u5c3a\u7801",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "110",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                },
+                {
+                    "item_id": "11254",
+                    "spec_id": "2",
+                    "spec_value_id": "200",
+                    "spec_name": "\u989c\u8272",
+                    "spec_custom_value_name": null,
+                    "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863",
+                    "item_image_url": [],
+                    "spec_image_url": null
+                }
+            ],
+            "spec_items": [
+                {
+                    "item_id": "11254",
+                    "item_bn": "FVJJ096I_SP-ln5150701675789",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "200",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "166",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "110"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "10500",
+                    "market_price": "34900",
+                    "approve_status": "onsale",
+                    "store": "1",
+                    "sales": "2",
+                    "discount_rate": "31"
+                },
+                {
+                    "item_id": "11257",
+                    "item_bn": "FVJJ096I_SP-ln3150701660012",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "200",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "161",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "130"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "10500",
+                    "market_price": "34900",
+                    "approve_status": "onsale",
+                    "store": "2",
+                    "sales": 0,
+                    "discount_rate": "31"
+                },
+                {
+                    "item_id": "11260",
+                    "item_bn": "FVJJ096I_SP-ln4150701658052",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "200",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "168",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "120"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "10500",
+                    "market_price": "34900",
+                    "approve_status": "onsale",
+                    "store": "3",
+                    "sales": 0,
+                    "discount_rate": "31"
+                },
+                {
+                    "item_id": "11262",
+                    "item_bn": "FVJJ096I_SP-ln7150701647116",
+                    "item_spec": [
+                        {
+                            "spec_id": "2",
+                            "spec_name": "\u989c\u8272",
+                            "spec_value_id": "200",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863"
+                        },
+                        {
+                            "spec_id": "3",
+                            "spec_name": "\u5c3a\u7801",
+                            "spec_value_id": "167",
+                            "spec_custom_value_name": null,
+                            "spec_value_name": "100"
+                        }
+                    ],
+                    "barcode": "",
+                    "price": "10500",
+                    "market_price": "34900",
+                    "approve_status": "onsale",
+                    "store": "3",
+                    "sales": 0,
+                    "discount_rate": "31"
+                }
+            ],
+            "audit_status": "approved",
+            "store": 9,
+            "sales": 2,
+            "price": "10500",
+            "market_price": "34900",
+            "discount_rate": 1,
+            "tags": [],
+            "regions_id": null,
+            "type": 0,
+            "rebate": null,
+            "rebate_type": null,
+            "main_img": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/07\/01\/image\/7addbe286b94f20c37d44fae6dc51eb2170089026254418649575274999644.jpg",
+            "promotion_start_time": "1750321769",
+            "promotion_end_time": "1790047968",
+            "is_show": 1,
+            "item_id": "11254",
+            "goods_id": "11254",
+            "distributor_info": {
+                "distributor_id": "1649",
+                "is_distributor": "1",
+                "company_id": "1",
+                "mobile": "13789898621",
+                "address": "\u548c\u5e73\u5c0f\u533a",
+                "name": "\u674e\u5b81 1990",
+                "auto_sync_goods": "0",
+                "logo": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/08\/af19a93c9fb050d19c5273dbeac425ca1749373946133.1749373856831.jpg",
+                "contract_phone": "",
+                "banner": "https:\/\/aiopro-uat.oss-cn-shanghai.aliyuncs.com\/aiopro-uat\/image\/1\/2025\/06\/04\/73c8d677b84a1bb838ce9035c0130d6b1749036155160.1b6151b8c914d09bb2589d2cb68c20abd73f9ab5.png",
+                "contact": "hp",
+                "is_valid": "true",
+                "lng": "116.443136",
+                "lat": "39.921444",
+                "province": "\u5929\u6d25\u5e02",
+                "city": "\u5929\u6d25\u5e02",
+                "hour": "-",
+                "area": "\u548c\u5e73\u533a",
+                "regions_id": [
+                    "120000",
+                    "120100",
+                    "120101"
+                ],
+                "is_domestic": "1",
+                "is_direct_store": "1",
+                "child_count": "0",
+                "shop_id": "0",
+                "is_default": "0",
+                "is_audit_goods": "0",
+                "is_ziti": "0",
+                "is_delivery": "1",
+                "regions": [
+                    "\u5929\u6d25\u5e02",
+                    "\u5929\u6d25\u5e02",
+                    "\u548c\u5e73\u533a"
+                ],
+                "review_status": "0",
+                "source_from": "1",
+                "dealer_id": "0",
+                "split_ledger_info": null,
+                "created": "1745930513",
+                "updated": "1750071137",
+                "shop_code": "FVJJ096I",
+                "distributor_self": "0",
+                "wechat_work_department_id": "0",
+                "regionauth_id": "14",
+                "is_open": "false",
+                "rate": null,
+                "is_dada": "0",
+                "business": null,
+                "dada_shop_create": "0",
+                "introduce": "",
+                "merchant_id": "0",
+                "distribution_type": "0",
+                "is_require_subdistrict": "0",
+                "is_require_building": "0",
+                "delivery_distance": "0",
+                "offline_aftersales": "0",
+                "offline_aftersales_self": "0",
+                "offline_aftersales_distributor_id": null,
+                "offline_aftersales_other": "0",
+                "house_number": "",
+                "is_self_delivery": "0",
+                "is_open_salesman": "0",
+                "bspay_split_ledger_info": null,
+                "shansong_shop_create": "0",
+                "shansong_store_id": null,
+                "freight_time": "2",
+                "is_refund_freight": "0",
+                "wdt_shop_no": "",
+                "wdt_shop_id": "0",
+                "jst_shop_id": "0",
+                "kuaizhen_store_id": "0",
+                "open_divided": "0",
+                "category_id": "20",
+                "status": "1",
+                "unit_number": "96",
+                "business_mode": "cooperation",
+                "opening_date": "0",
+                "closing_date": "0",
+                "priority": "0",
+                "is_display": "1",
+                "related_shop_id": "0",
+                "first_letter": "L",
+                "tag_name": "",
+                "tag_start_time": "0",
+                "tag_end_time": "0",
+                "ship_template_id": "67"
+            },
+            "type_labels": [],
+            "item_spec_desc": "\u5c3a\u7801:110,\u989c\u8272:\u5982\u610f\u7ea2 \u7537 \u5f00\u886b\u8fde\u5e3d\u536b\u8863",
+            "is_stock": 1,
+            "seckill_discount_rate": "9910",
+            "activity_price": 100,
+            "seckill_start_time": "1766073600",
+            "promotion_activity": [
+                {
+                    "promotion_id": "47",
+                    "tag_type": "single_group",
+                    "activity_price": "9910",
+                    "start_time": "1766073600",
+                    "end_time": "1767196799",
+                    "item_id": "11254",
+                    "item_store": 1,
+                    "tag_name": "demo",
+                    "person_num": 2
+                }
+            ]
+        }
+    ],
+    "filter": {
+        "group_id": "0"
+    },
+    "newFilter": {
+        "company_id": "1",
+        "approve_status": [
+            "onsale",
+            "only_show"
+        ],
+        "audit_status": "approved",
+        "api_from": "",
+        "type": 0,
+        "item_type": "normal",
+        "is_gift": 0,
+        "valid_distributor": 1,
+        "promotion_start_time|lte": 1766486529,
+        "promotion_end_time|gte": 1766486529,
+        "is_show": 1,
+        "regionauth_id": "14",
+        "item_id": [
+            "11250",
+            "11251",
+            "11253",
+            "11254",
+            "11256",
+            "11257",
+            "11258",
+            "11260",
+            "11261",
+            "11262",
+            "11264",
+            "11266",
+            "11306",
+            "11307",
+            "11308",
+            "11309",
+            "11310",
+            "11311",
+            "11312",
+            "11313",
+            "11314",
+            "11315",
+            "11316",
+            "11317",
+            "11318",
+            "11319",
+            "11320",
+            "11321",
+            "11322",
+            "11323",
+            "11204",
+            "11205",
+            "11206",
+            "11207",
+            "11208",
+            "11209",
+            "11210",
+            "11212",
+            "11214",
+            "11216",
+            "11218",
+            "11226",
+            "11227",
+            "11228",
+            "11229",
+            "11230",
+            "11231",
+            "11232",
+            "11233",
+            "11234",
+            "11235",
+            "11236",
+            "11237",
+            "11238",
+            "11239",
+            "11240",
+            "11241",
+            "11242",
+            "11243",
+            "11244",
+            "11245",
+            "11246",
+            "11247",
+            "11248",
+            "11249",
+            "11252",
+            "11255",
+            "11259",
+            "11263",
+            "11265",
+            "11267",
+            "11268",
+            "11026",
+            "11027",
+            "11028",
+            "11029"
+        ]
+    },
+    "goodsSort": null,
+    "list_source": "redis"
+}

@@ -190,7 +190,7 @@ export default {
       this.list.gmvData = []
       let params = { start: this.params.start, end: this.params.end }
       getCompanyData(params)
-        .then(res => {
+        .then((res) => {
           this.allListData = res.data.data.list
           let companyDataList = res.data.data.list
           for (var key in companyDataList) {
@@ -216,7 +216,7 @@ export default {
             })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message({
             type: 'error',
             message: '获取统计信息出错'

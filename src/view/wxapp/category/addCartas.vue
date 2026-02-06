@@ -286,7 +286,7 @@
   <div class="addCartas-view">
     <!-- 搜索框 -->
     <div class="search-box">
-      <img src="@/assets/imgs/search-for.png" alt="">
+      <img src="@/assets/imgs/search-for.png" alt="" />
       <div class="search-input">|</div>
       <span class="search-input">搜索</span>
     </div>
@@ -315,7 +315,7 @@
             }"
             :src="item.image_url"
             alt=""
-          >
+          />
           <span
             :class="{
               'one-level-item-titles': index != oneIndex,
@@ -325,7 +325,7 @@
           >
         </div>
         <div class="all">
-          <span>全</span><span>部</span> <img src="@/assets/imgs/classification.png" alt="">
+          <span>全</span><span>部</span> <img src="@/assets/imgs/classification.png" alt="" />
         </div>
       </div>
 
@@ -363,7 +363,7 @@
           <!-- 三级分类商品 -->
           <div class="three-level-item">
             <div v-for="(item, index) in goodsIndex" :key="index" class="three-list">
-              <img class="three-list-img" :src="item.pics[0]" alt="">
+              <img class="three-list-img" :src="item.pics[0]" alt="" />
               <div class="three-list-title">
                 <span class="name">{{ item.itemName }}</span>
                 <div class="price">
@@ -373,7 +373,7 @@
                     >
                     <span class="price3">{{ item.cost_price / 100 }}</span>
                   </div>
-                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="">
+                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="" />
                 </div>
               </div>
             </div>
@@ -409,13 +409,13 @@ export default {
       const res = await this.$api.goods.getCategory(
         this.VERSION_PLATFORM() ? { is_main_category: true } : {}
       )
-      res.forEach(element => {
+      res.forEach((element) => {
         if (element?.children?.length > 0) {
           element?.children?.unshift({
             category_id: '',
             category_name: '全部'
           })
-          element?.children?.forEach(element1 => {
+          element?.children?.forEach((element1) => {
             if (element1?.children?.length > 0) {
               element1?.children?.unshift({
                 category_id: '',

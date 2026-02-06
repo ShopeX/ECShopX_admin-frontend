@@ -84,7 +84,7 @@ const routes = [
       {
         name: `materialManagement`,
         path: 'material-management',
-        component: () => import('@/view/brand/wechat/aterialmanagement'),
+        component: () => import('@/views/content/aterialmanagement'),
         meta: {
           aliasName: 'brandmaterial',
           icon: 'icon-products',

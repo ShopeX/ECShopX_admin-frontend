@@ -208,7 +208,7 @@ export default {
       // 初始化门店数据
       //this.add_flag = 0;
       getCommunityDetail(this.$route.params.community_id)
-        .then(response => {
+        .then((response) => {
           this.form = response.data.data
           if (this.form.regions.length > 0) {
             this.region = this.form.regions[this.form.regions.length - 1]
@@ -216,7 +216,7 @@ export default {
           // 编辑门店时初始化地图
           this.qqmapinit(this.form.lat, this.form.lng)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.go(-1)
         })
     } else {
@@ -231,7 +231,7 @@ export default {
       if (this.form.community_id) {
         // 编辑门店数据提交
         let community_id = this.form.community_id
-        communityUpdate(community_id, this.form).then(response => {
+        communityUpdate(community_id, this.form).then((response) => {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({
@@ -250,7 +250,7 @@ export default {
         })
       } else {
         // 添加门店数据提交
-        communityCreate(this.form).then(response => {
+        communityCreate(this.form).then((response) => {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({

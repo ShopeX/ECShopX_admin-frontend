@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">选择店铺</div>
       </div>
@@ -67,7 +67,7 @@ export default {
   },
   mounted() {
     console.log('-----2')
-    getDistributorList({ page: 1, pageSize: 100, is_all: true }).then(response => {
+    getDistributorList({ page: 1, pageSize: 100, is_all: true }).then((response) => {
       if (response.data.data.total_count === 1) {
         this.selectDistributor(response.data.data.list[0])
       } else {
@@ -75,11 +75,10 @@ export default {
         this.loading = false
       }
     })
-
   },
   methods: {
     selectDistributor(data) {
-      shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then(res => {
+      shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then((res) => {
         if (res.data.data.status) {
           this.$store.dispatch('setShopId', data.distributor_id)
           window.location.href = '/'

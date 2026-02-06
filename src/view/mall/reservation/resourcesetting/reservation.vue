@@ -60,13 +60,13 @@
                 <template v-if="item.begin == subItem.beginTime">
                   <el-tooltip effect="light" placement="top">
                     <div v-if="subItem.status == 'system'" slot="content">
-                      系统占位 <br><br>
+                      系统占位 <br /><br />
                       占用时间：{{ subItem.beginTime }}~{{ subItem.endTime }}
                     </div>
                     <div v-else slot="content">
-                      预约人：{{ subItem.userName }} <br><br>
-                      预约手机：{{ subItem.mobile }} <br><br>
-                      预约项目：{{ subItem.labelName }} <br><br>
+                      预约人：{{ subItem.userName }} <br /><br />
+                      预约手机：{{ subItem.mobile }} <br /><br />
+                      预约项目：{{ subItem.labelName }} <br /><br />
                       到店时间：{{ subItem.beginTime }}
                     </div>
                     <span v-if="subItem.userName">{{ subItem.userName }}</span>
@@ -268,7 +268,7 @@ export default {
       this.loading = true
       this.params.dateDay = this.dateDay
       this.params.shopId = this.shopId
-      getReservationRecord(this.params).then(res => {
+      getReservationRecord(this.params).then((res) => {
         if (res.data.data) {
           this.dataList = res.data.data.list
           this.total_count = res.data.data.total_count
@@ -282,7 +282,7 @@ export default {
     getStoreList() {
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
-      getWxShopsList(shopFilter).then(response => {
+      getWxShopsList(shopFilter).then((response) => {
         this.shopListData = response.data.data.list
         if (this.shopId == '' && this.shopListData[0].wxShopId) {
           this.shopId = this.shopListData[0].wxShopId
@@ -295,7 +295,7 @@ export default {
       if (this.shopId) {
         this.loading = true
         var timeFile = { shopId: this.shopId, dateDay: this.dateDay }
-        getTimePeriodTitle(timeFile).then(res => {
+        getTimePeriodTitle(timeFile).then((res) => {
           this.tableTitle = res.data.data.tableTitle
           this.loading = false
         })
@@ -377,7 +377,7 @@ export default {
           }
         }
       }
-      addReservationRecord(this.formData).then(res => {
+      addReservationRecord(this.formData).then((res) => {
         if (res.data.status) {
           this.$message({
             type: 'success',
@@ -407,7 +407,7 @@ export default {
       this.labelList = []
       if (this.formData.mobile) {
         let memberFilter = { mobile: this.formData.mobile }
-        getMembers(memberFilter).then(res => {
+        getMembers(memberFilter).then((res) => {
           if (res.data.data.list) {
             let member = res.data.data.list
             this.formData.userName = member[0].username
@@ -426,7 +426,7 @@ export default {
         pageSize: 100,
         resource_level_id: this.formData.resourceLevelId
       }
-      getRightsList(params).then(res => {
+      getRightsList(params).then((res) => {
         if (res.data.data.length == 0) {
           this.$message({
             message: '该用户无可预约权益',

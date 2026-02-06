@@ -26,8 +26,7 @@
       <el-table-column prop="attribute_name" label="区域">
         <template slot-scope="scope">
           <div>{{ scope.row.regionauth_name }}</div>
-        </template>
-</el-table-column
+        </template> </el-table-column
       ><el-table-column prop="attribute_name" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -124,13 +123,13 @@ export default {
     // 删除
     handleDelete(data) {
       this.$confirm('确认删除该区域么？')
-        .then(_ => {
-          delRegionauth(data.row.regionauth_id, []).then(res => {
+        .then((_) => {
+          delRegionauth(data.row.regionauth_id, []).then((res) => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
 
     // 启用&禁用
@@ -146,13 +145,13 @@ export default {
       }
 
       this.$confirm('确认' + tip + '该区域么？')
-        .then(_ => {
-          enableRegionauth(data.regionauth_id, query).then(res => {
+        .then((_) => {
+          enableRegionauth(data.regionauth_id, query).then((res) => {
             this.$message({ type: 'success', message: '操作成功' })
             this.getList()
           })
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 初始化
     resetData() {
@@ -164,14 +163,14 @@ export default {
     // 保存数据
     save() {
       if (!this.form.regionauth_id) {
-        addRegionauth(this.form).then(res => {
+        addRegionauth(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateRegionauth(this.form.regionauth_id, this.form).then(res => {
+        updateRegionauth(this.form.regionauth_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
@@ -191,7 +190,7 @@ export default {
     getList() {
       console.log('获取数据')
       this.loading = true
-      getRegionauth(this.params).then(res => {
+      getRegionauth(this.params).then((res) => {
         console.log('返回数据', res)
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count

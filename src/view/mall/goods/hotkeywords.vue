@@ -32,7 +32,7 @@
     <div class="section-footer content-center">
       <el-button type="primary" @click="saveContent"> 保存 </el-button>
     </div>
-    <br>
+    <br />
   </el-col>
 </template>
 
@@ -59,7 +59,7 @@ export default {
 
     showInput() {
       this.inputVisible = true
-      this.$nextTick(_ => {
+      this.$nextTick((_) => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
     },
@@ -73,7 +73,7 @@ export default {
       this.inputValue = ''
     },
     saveContent() {
-      setHotKeywords({ content: this.form_content }).then(res => {
+      setHotKeywords({ content: this.form_content }).then((res) => {
         this.$message({
           message: '保存成功',
           type: 'success',
@@ -82,7 +82,7 @@ export default {
       })
     },
     getContent() {
-      getHotKeywords().then(res => {
+      getHotKeywords().then((res) => {
         this.form_content = res.data.data.content || []
       })
     }

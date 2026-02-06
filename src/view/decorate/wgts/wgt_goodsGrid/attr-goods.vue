@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async handleClickAdd() {
-      const list = this.value.data.map(item => {
+      const list = this.value.data.map((item) => {
         return {
           item_id: item.goodsId,
           pics: [item.imgUrl],
@@ -95,11 +95,11 @@ export default {
       console.log(list, 'ids')
       const { data } = await this.$picker.goodsitem({
         isPointGoods: this.value.type === 'point',
-        data:list
+        data: list
       })
       console.log(data)
       const values = []
-      data.forEach(item => {
+      data.forEach((item) => {
         if (item.itemId) {
           const obj = {
             imgUrl: item.pics[0],
@@ -133,7 +133,7 @@ export default {
         },
         onAdd: async () => {
           const { data } = await this.$picker.goods()
-          const res = data.map(item => {
+          const res = data.map((item) => {
             return {
               imgUrl: item.pics[0],
               linkPage: '',
@@ -153,26 +153,26 @@ export default {
       this.localValue.data = data
     },
     async handleClickPointAdd() {
-      const list =this.value.pointGoods.map(item=>{
+      const list = this.value.pointGoods.map((item) => {
         return {
-          item_id:item.goodsId,
-          pics:[item.imgUrl],
-          itemName:item.title,
-          itemId:item.goodsId,
-          brand_logo:item.brand,
-          price:item.price,
-          market_price:item.market_price,
-          distributor_id:item.distributor_id,
-          item_en_name:item.itemEnName,
-          promotion_activity:item.promotionActivity,
-          medicine_data:item.medicine_data,
+          item_id: item.goodsId,
+          pics: [item.imgUrl],
+          itemName: item.title,
+          itemId: item.goodsId,
+          brand_logo: item.brand,
+          price: item.price,
+          market_price: item.market_price,
+          distributor_id: item.distributor_id,
+          item_en_name: item.itemEnName,
+          promotion_activity: item.promotionActivity,
+          medicine_data: item.medicine_data,
           point: item.point
         }
       })
-      console.log(list,'ids')
+      console.log(list, 'ids')
       const { data } = await this.$picker.goodsitem({
         isPointGoods: this.value.type === 'point',
-        data:list
+        data: list
       })
       console.log(data)
       const values = []
@@ -189,7 +189,7 @@ export default {
             distributor_id: item.distributor_id,
             itemEnName: item.item_en_name,
             promotionActivity: item.promotion_activity,
-            medicine_data:item.medicine_data,
+            medicine_data: item.medicine_data,
             point: item.point
           }
           values.push(obj)
@@ -224,7 +224,7 @@ export default {
         }
       })
       this.localValue.pointGoods = data
-    },
+    }
   }
 }
 </script>

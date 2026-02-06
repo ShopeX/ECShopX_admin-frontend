@@ -345,7 +345,7 @@ export default {
       } else {
         var params = { process_type: processType }
       }
-      checkWithdrawal(this.detail.id, params).then(response => {
+      checkWithdrawal(this.detail.id, params).then((response) => {
         this.canceldialog = false
         this.dialog = false
         this.getList()
@@ -360,7 +360,7 @@ export default {
       this.dialog = true
       this.detail = detail
       this.applyText = '推广员申请提现佣金' + detail.money / 100 + '元'
-      withdrawalStatistics({ user_id: detail.user_id }).then(response => {
+      withdrawalStatistics({ user_id: detail.user_id }).then((response) => {
         this.cashWithdrawalRebate =
           Number(response.data.data.cashWithdrawalRebate) +
           Number(response.data.data.freezeCashWithdrawalRebate)
@@ -369,13 +369,13 @@ export default {
     dialogPayInfo(detail) {
       this.payDialog = true
       this.detail = detail
-      withdrawalPayinfo(detail.id).then(response => {
+      withdrawalPayinfo(detail.id).then((response) => {
         this.payList = response.data.data.list
       })
     },
     getList() {
       this.loading = true
-      withdrawalApplications(this.params).then(response => {
+      withdrawalApplications(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

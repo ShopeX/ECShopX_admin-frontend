@@ -13,7 +13,7 @@
       <div class="list-item view-flex">
         <div class="view-flex view-flex-item">
           <div class="thumbnail">
-            <img :src="wximageurl + thingInfo.pic">
+            <img :src="wximageurl + thingInfo.pic" />
           </div>
           <div>
             <div class="item-title">
@@ -103,7 +103,7 @@ import imgPicker from '../../../components/imageselect'
 import { getThingsDetail, createThings, updateThings, getBatchsList } from '../../../api/onecode'
 import { uploadMaterial } from '../../../api/wechat'
 
-const getWxaCodeImg = url => {
+const getWxaCodeImg = (url) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
@@ -111,10 +111,10 @@ const getWxaCodeImg = url => {
       responseType: 'arraybuffer',
       headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then(data => {
+      .then((data) => {
         resolve(data.data)
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString())
       })
   })
@@ -163,10 +163,10 @@ export default {
     if (this.$route.query.thing_id) {
       // 初始化物品数据
       getThingsDetail(this.$route.query.thing_id)
-        .then(response => {
+        .then((response) => {
           this.thingInfo = response.data.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: '/brand/onecode' })
         })
 
@@ -177,10 +177,10 @@ export default {
         pageSize: 100
       }
       getBatchsList(params)
-        .then(response => {
+        .then((response) => {
           this.batchsList = response.data.data.list
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -242,7 +242,7 @@ export default {
       }
 
       let params = { isUploadFile: true, file: file.raw, type: 'image' }
-      uploadMaterial(params).then(res => {
+      uploadMaterial(params).then((res) => {
         file.url = this.wximageurl + res.data.data.url
         that.form.pic = res.data.data.url
       })
@@ -251,10 +251,10 @@ export default {
       // 提交商品
       if (this.form.thing_id) {
         updateThings(this.form.thing_id, this.form)
-          .then(response => {
+          .then((response) => {
             this.$router.push({ path: '/brand/onecode' })
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message({
               type: 'error',
               message: '更新物品信息出错'
@@ -262,10 +262,10 @@ export default {
           })
       } else {
         createThings(this.form)
-          .then(response => {
+          .then((response) => {
             this.$router.push({ path: '/brand/onecode' })
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message({
               type: 'error',
               message: '保存物品信息出错'
@@ -333,7 +333,7 @@ export default {
           '&num=' +
           i
         const num = i
-        const promise = getWxaCodeImg(url).then(result_file => {
+        const promise = getWxaCodeImg(url).then((result_file) => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = that.downParams.batch_number + '(' + num + ')' + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -342,7 +342,7 @@ export default {
         promises.push(promise)
       }
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then(content => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
           FileSaver.saveAs(content, '一物一码小程序码(批量).zip') // 利用file-saver保存文件
           that.isdownloadOk = true

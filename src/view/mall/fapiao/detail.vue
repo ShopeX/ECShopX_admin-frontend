@@ -94,7 +94,7 @@ export default {
   methods: {
     save() {
       const that = this
-      saveSettingData(this.form).then(res => {
+      saveSettingData(this.form).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -114,10 +114,10 @@ export default {
       this.loading = true
       if (this.$router.currentRoute.query.id) {
         params.id = this.$router.currentRoute.query.id
-        getListSetting(params).then(res => {
+        getListSetting(params).then((res) => {
           if (res.data.data.list) {
             var data = res.data.data.list
-            data.map(item => {
+            data.map((item) => {
               ;(this.form.id = item.id),
                 (this.form.resourceName = item.resourceName),
                 (this.form.title_date = item.title_date),

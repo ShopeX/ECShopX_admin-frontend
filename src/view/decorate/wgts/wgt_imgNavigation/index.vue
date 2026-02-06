@@ -10,6 +10,7 @@
       'wgt-img-navigation': true,
       padded: value.padded
     }"
+    :style="outerStyle"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -34,6 +35,7 @@
 </template>
 <script>
 import config from './config'
+import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Navigation',
   wgtName: '图片导航',
@@ -44,6 +46,9 @@ export default {
     value: []
   },
   computed: {
+    outerStyle() {
+      return getOuterStyle(this.value)
+    },
     getNavItemStyle() {
       const { length } = this.value.data
       return {

@@ -259,7 +259,7 @@ export default {
       }
 
       this.downloadfilename = row.activity_name + '.jpg'
-      seckillActivityWxcode(params).then(res => {
+      seckillActivityWxcode(params).then((res) => {
         this.downloadUrl = res.data.data.code
         setTimeout(() => {
           this.$refs.download.click()
@@ -285,7 +285,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then(response => {
+            seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then((response) => {
               this.fetchList()
               this.$message({
                 message: '修改活动状态成功',
@@ -322,13 +322,13 @@ export default {
       this.goodsVisible = false
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then(res => {
+      getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     updateActivityData(params) {
-      updateActivityItemData(params).then(res => {})
+      updateActivityItemData(params).then((res) => {})
     },
     editItemPrice(row) {
       let form = {

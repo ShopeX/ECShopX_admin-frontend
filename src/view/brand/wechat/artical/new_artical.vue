@@ -277,7 +277,7 @@ export default {
     if (this.$route.params.id) {
       this.isEditting = true
       getArtical(this.$route.params.id)
-        .then(response => {
+        .then((response) => {
           // console.log(response.data.data)
           this.articals = response.data.data.news_item
           this.articals[this.id].viewcontent = this.articals[this.id].content.replace(
@@ -297,7 +297,7 @@ export default {
             }
           }, 200)
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           this.$router.go(-1)
         })
@@ -353,7 +353,7 @@ export default {
       this.couponDialog = false
       if (data) {
         var couponId = { card_id: data.card_id }
-        getCouponHtml(couponId).then(response => {
+        getCouponHtml(couponId).then((response) => {
           var index = this.$refs.editor[0].$el.id
           var loc = this.$refs.editor[0]
           var coupon = response.data.data.html
@@ -455,7 +455,7 @@ export default {
       let param = {}
       if (this.$route.params.id) {
         param = { body: that.articals, media_id: this.$route.params.id }
-        updateArtical(param).then(response => {
+        updateArtical(param).then((response) => {
           this.$message({
             message: '修改图文成功',
             type: 'success',
@@ -468,7 +468,7 @@ export default {
         })
       } else {
         param = { body: that.articals }
-        createArtical(param).then(response => {
+        createArtical(param).then((response) => {
           this.$message({
             message: '添加图文成功',
             type: 'success',

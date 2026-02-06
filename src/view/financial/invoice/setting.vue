@@ -5,7 +5,13 @@
 
 <template>
   <SpPage>
-    <SpForm v-model="form" :reset-btn="false" submit-btn-text="保存" :form-list="formList" @onSubmit="onSaveConfig" />
+    <SpForm
+      v-model="form"
+      :reset-btn="false"
+      submit-btn-text="保存"
+      :form-list="formList"
+      @onSubmit="onSaveConfig"
+    />
   </SpPage>
 </template>
 
@@ -38,7 +44,7 @@ export default {
       api.financial.getInvoiceSetting(this.id).then((res) => {
         this.form = {
           ...generatorParams(formSchema(this), res),
-          invoice_status:res.invoice_status == 1
+          invoice_status: res.invoice_status == 1
         }
       })
     },
@@ -47,7 +53,7 @@ export default {
       api.financial
         .setInvoiceSetting({
           ...this.form,
-          invoice_status:this.form.invoice_status ? 1 : 0
+          invoice_status: this.form.invoice_status ? 1 : 0
         })
         .then((res) => {
           this.$message.success('保存成功')

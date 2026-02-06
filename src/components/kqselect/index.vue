@@ -15,7 +15,7 @@
     <el-table v-loading.body="listLoading" :data="tableData">
       <el-table-column label="" width="50">
         <template slot-scope="scope">
-          <input type="radio" name="kq" :value="JSON.stringify(scope.row)">
+          <input type="radio" name="kq" :value="JSON.stringify(scope.row)" />
         </template>
       </el-table-column>
       <el-table-column label="卡券类型">
@@ -90,7 +90,7 @@ export default {
     },
     saveAction() {
       var radios = document.getElementsByName('kq')
-      radios.forEach(index => {
+      radios.forEach((index) => {
         if (index.checked === true) {
           this.selectedItem = index.value
         }
@@ -103,7 +103,7 @@ export default {
     getCardList(data) {
       this.listLoading = true
       if (this.scStatus) {
-        getCardList(data).then(response => {
+        getCardList(data).then((response) => {
           this.listLoading = false
           this.tableData = response.data.data.list
           this.pagers.total = response.data.data.pagers.total

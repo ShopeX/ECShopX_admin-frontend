@@ -116,7 +116,7 @@ export default {
     },
     fetchList() {
       this.loading = true
-      specificcrowddiscountList(this.params).then(response => {
+      specificcrowddiscountList(this.params).then((response) => {
         this.tableList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

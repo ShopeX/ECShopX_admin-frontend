@@ -91,6 +91,7 @@
           <SpFinder
             ref="finder"
             no-selection
+            row-actions-align="left"
             :data="finderData"
             :url="finderUrl"
             :setting="setting"
@@ -207,7 +208,7 @@ export default {
                   })
                   this.$refs['finder'].refresh()
                 } else {
-                  const index = this.finderData.findIndex(item => item.id == row.id)
+                  const index = this.finderData.findIndex((item) => item.id == row.id)
                   this.finderData.splice(index, 1)
                   this.zitiList = this.finderData
                   this.$nextTick(() => {
@@ -282,9 +283,9 @@ export default {
       const { distributor_id } = this.$route.query
       if (distributor_id || IS_DISTRIBUTOR()) {
         const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
-        const [startTime, endTime] = res.hour.split('-')
+        const [startTime, endTime] = res.hour?.split('-') || []
         const [offline_startTime, offline_endTime] = res.offline_aftersales_address.hours
-          ? res.offline_aftersales_address.hours.split('-')
+          ? res.offline_aftersales_address.hours?.split('-') || []
           : ['', '']
         let area_code = ''
         let mobile = ''
@@ -293,7 +294,7 @@ export default {
           res.offline_aftersales_address.mobile.indexOf('-') > -1
         ) {
           ;[area_code, mobile] = res.offline_aftersales_address.mobile
-            ? res.offline_aftersales_address.mobile.split('-')
+            ? res.offline_aftersales_address.mobile?.split('-') || []
             : ['', '']
         } else {
           mobile = res.offline_aftersales_address.mobile
@@ -319,8 +320,8 @@ export default {
           distributor_self: res.distributor_self,
           logo: res.logo,
           banner: res.banner,
-          lng: res.lng,
-          lat: res.lat,
+          lng: res.lng || 116.397128,
+          lat: res.lat || 39.916527,
           regions_id: res.regions_id,
           address: res.address,
           is_dada: res.is_dada,
@@ -357,14 +358,14 @@ export default {
     },
     async onSelectZiti() {
       const { data } = await this.$picker.zitiList({
-        data: this.zitiList.map(item => item.id)
+        data: this.zitiList.map((item) => item.id)
       })
 
-      console.log(this.zitiList.map(item => item.id))
+      console.log(this.zitiList.map((item) => item.id))
       console.log(data)
 
       if (this.distributor_id) {
-        const ids = data.map(item => item.id)
+        const ids = data.map((item) => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
           id: ids,
           rel_distributor_id: this.distributor_id
@@ -383,7 +384,7 @@ export default {
     },
     formValidate() {
       return new Promise((resolve, reject) => {
-        return this.$refs.form.validate(valid => {
+        return this.$refs.form.validate((valid) => {
           if (valid) {
             resolve()
           } else {
@@ -423,7 +424,7 @@ export default {
           area: aftersales_regions[2]
         },
         offline_aftersales_distributor_id: this.$refs['returnGoodsFormRef'].finderData.map(
-          item => item.distributor_id
+          (item) => item.distributor_id
         )
       }
       if (this.baseForm.distribution_type == 0) {
@@ -441,7 +442,7 @@ export default {
           this.submitLoading = false
           this.$message.success('修改店铺成功')
         } else {
-          const ids = this.finderData.map(item => item.id)
+          const ids = this.finderData.map((item) => item.id)
           await this.$api.marketing.saveDistributorInfo({
             ...params,
             pickup_location: ids
@@ -463,7 +464,7 @@ export default {
         page: 1,
         merchant_name: name
       })
-      this.merchantList = list.map(item => ({ value: item.id, label: item.merchant_name }))
+      this.merchantList = list.map((item) => ({ value: item.id, label: item.merchant_name }))
       this.merchantLoading = false
     }
   }

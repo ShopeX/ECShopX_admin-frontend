@@ -17,7 +17,7 @@
       <el-table-column label="创建人">
         <template slot-scope="scope">
           <div v-if="scope.row.userInfo">
-            {{ scope.row.userInfo.nickanme }}<br>{{ scope.row.userInfo.mobile }}
+            {{ scope.row.userInfo.nickanme }}<br />{{ scope.row.userInfo.mobile }}
           </div>
           <div v-else>管理员</div>
         </template>
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     resetText() {
-      return row => {
+      return (row) => {
         var text = '审核'
         if (row.status == '1') {
           text = '拒绝'
@@ -93,7 +93,7 @@ export default {
       var auditdiff = false
       var status = null
 
-      val.forEach(item => {
+      val.forEach((item) => {
         checkList.push(item.comment_id)
         if (status == null) {
           status = item.status

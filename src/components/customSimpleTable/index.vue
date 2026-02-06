@@ -118,7 +118,7 @@ export default {
       this.getLogisticsListData()
     },
     getLogisticsListData() {
-      getLogisticsLists({ status: 1 }).then(response => {
+      getLogisticsLists({ status: 1 }).then((response) => {
         this.logisticsList = response.data.data.list
       })
     },
@@ -128,13 +128,13 @@ export default {
     },
     addFormSumbit(formName) {
       // 表单提交
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
             delivery_corp: this.form.delivery_corp_name,
             delivery_code: this.form.delivery_code
           }
-          editLogisticsList(this.form.orders_delivery_id, params).then(res => {
+          editLogisticsList(this.form.orders_delivery_id, params).then((res) => {
             this.$emit('update')
             this.resetForm(formName)
           })

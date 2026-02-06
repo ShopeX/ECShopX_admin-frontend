@@ -67,7 +67,7 @@ export default {
             { label: 'money', name: '按成团金额' }
           ],
           tip: '说明：按活动商品设置的起订量成团，0为不限制',
-          onChange: e => {
+          onChange: (e) => {
             if (e == 'num') {
               this.formList[0].tip = '说明：按活动商品设置的起订量成团，0为不限制'
               this.formList[1].isShow = false
@@ -130,7 +130,7 @@ export default {
             slot: 'header',
             buttonType: 'primary is-plain',
             action: {
-              handler: async val => {
+              handler: async (val) => {
                 this.registerForm = {
                   id: '',
                   label: '',
@@ -184,7 +184,7 @@ export default {
                   'inactive-value': 0
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.community.modifyFieldSwitch(row.id, {
                       type: 1,
                       switch: e
@@ -205,7 +205,7 @@ export default {
                   'inactive-value': 0
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.community.modifyFieldSwitch(row.id, {
                       type: 2,
                       switch: e
@@ -226,7 +226,7 @@ export default {
                   'inactive-value': 0
                 },
                 on: {
-                  change: async e => {
+                  change: async (e) => {
                     await this.$api.community.modifyFieldSwitch(row.id, {
                       type: 3,
                       switch: e
@@ -272,7 +272,7 @@ export default {
           ],
           required: true,
           message: '不能为空',
-          onChange: e => {
+          onChange: (e) => {
             if (e == 12) {
               this.cancelOrderFormList[1].isShow = true
             } else {

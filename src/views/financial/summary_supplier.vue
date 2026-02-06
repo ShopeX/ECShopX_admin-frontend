@@ -269,9 +269,7 @@ export default {
             width: 160,
             formatter: (row, column) => {
               if (column.end_time) {
-                return (
-                  <div>{moment(column.end_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>
-                )
+                return <div>{moment(column.end_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>
               }
             }
           },

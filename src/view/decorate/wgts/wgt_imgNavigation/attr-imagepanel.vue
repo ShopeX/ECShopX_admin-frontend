@@ -14,7 +14,7 @@
             <CompPickerLink
               :value="scope.data"
               @change="
-                e => {
+                (e) => {
                   handleChangeGoods(e, scope.index)
                 }
               "

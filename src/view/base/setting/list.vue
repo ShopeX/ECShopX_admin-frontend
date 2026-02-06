@@ -40,12 +40,12 @@ export default {
     getPaymentList() {
       this.loading = true
       getPaymentList()
-        .then(response => {
+        .then((response) => {
           const data = response.data.data
-          this.paymentData = Object.keys(data).map(v => data[v])
+          this.paymentData = Object.keys(data).map((v) => data[v])
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
         })
     },

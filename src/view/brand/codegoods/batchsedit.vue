@@ -141,7 +141,7 @@ import store from '../../../store'
 import { Message } from 'element-ui'
 import { getThingsDetail, getBatchsDetail, createBatchs, updateBatchs } from '../../../api/onecode'
 import { uploadMaterial } from '../../../api/wechat'
-const getWxaCodeImg = url => {
+const getWxaCodeImg = (url) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
@@ -149,10 +149,10 @@ const getWxaCodeImg = url => {
       responseType: 'arraybuffer',
       headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then(data => {
+      .then((data) => {
         resolve(data.data)
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString())
       })
   })
@@ -198,10 +198,10 @@ export default {
       this.form.thing_id = this.$route.query.thing_id
       // 获取物品信息
       getThingsDetail(this.$route.query.thing_id)
-        .then(response => {
+        .then((response) => {
           this.things = response.data.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -209,11 +209,11 @@ export default {
       this.form.batch_id = this.$route.query.batch_id
       // 获取物品信息
       getBatchsDetail(this.$route.query.batch_id)
-        .then(response => {
+        .then((response) => {
           this.form = response.data.data
           this.traceData = response.data.data.trace_info
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: '/brand/onecode' })
         })
     }
@@ -228,7 +228,7 @@ export default {
       }
       if (this.form.batch_id) {
         updateBatchs(this.form.batch_id, this.form)
-          .then(response => {
+          .then((response) => {
             this.$message({
               type: 'success',
               message: '更新批次信息成功'
@@ -236,7 +236,7 @@ export default {
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message({
               type: 'error',
               message: '更新批次信息出错'
@@ -244,7 +244,7 @@ export default {
           })
       } else {
         createBatchs(this.form)
-          .then(response => {
+          .then((response) => {
             this.$message({
               type: 'success',
               message: '添加批次信息成功'
@@ -252,7 +252,7 @@ export default {
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message({
               type: 'error',
               message: '添加批次信息出错'
@@ -332,7 +332,7 @@ export default {
           '&num=' +
           i
         const num = i
-        const promise = getWxaCodeImg(url).then(result_file => {
+        const promise = getWxaCodeImg(url).then((result_file) => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = that.downParams.batch_number + '(' + num + ')' + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -341,7 +341,7 @@ export default {
         promises.push(promise)
       }
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then(content => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
           FileSaver.saveAs(content, '一物一码小程序码(批量).zip') // 利用file-saver保存文件
           that.isdownloadOk = true

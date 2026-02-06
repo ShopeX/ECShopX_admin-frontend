@@ -89,12 +89,12 @@ export default {
   },
   methods: {
     getInfo() {
-      getFapiaoset(this.query).then(response => {
+      getFapiaoset(this.query).then((response) => {
         this.form = response.data.data
       })
     },
     onSubmit() {
-      saveFapiaoset(this.form).then(response => {})
+      saveFapiaoset(this.form).then((response) => {})
     }
   }
 }

@@ -622,7 +622,8 @@
 
 <script>
 import exportTip from '@/components/export_tips'
-import aliyunsmsDialog from '@/view/base/shortmessage/cpn/sms_MassLog_edit.vue'
+import aliyunsmsDialog from '@/views/settings/systemConfig/smsService/sms_MassLog_edit.vue'
+
 import { mapGetters } from 'vuex'
 import {
   updateMemberMobile,

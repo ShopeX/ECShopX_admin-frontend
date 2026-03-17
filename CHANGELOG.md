@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.4](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.3...v4.3.4) (2026-03-17)
+
+
+### Bug Fixes
+
+* shipping template form encoding and sale category customize_page_id ([281b471](https://github.com/shopeX-2002/ECShopX_AdminFrontend/commit/281b471e4357d047d7d30cc7f09e69a887214a62))
+
 ### [4.3.3](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.2...v4.3.3) (2026-02-06)
 
 ### [4.3.2](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.1...v4.3.2) (2026-02-06)

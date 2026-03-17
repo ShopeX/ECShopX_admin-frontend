@@ -2,6 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+import qs from 'qs'
 import Vue from 'vue'
 import store from '@/store'
 import router from '@/router'
@@ -93,6 +94,14 @@ function createRequestClient() {
           config.data = formData
           // FormData 会自动设置 Content-Type，不需要手动设置
           delete config.headers['Content-Type']
+        } else if (
+          config.headers &&
+          config.headers['Content-Type'] === 'application/x-www-form-urlencoded' &&
+          typeof config.data === 'object' &&
+          config.data !== null
+        ) {
+          // 声明为表单时若 data 仍是对象，则序列化为 form-urlencoded，避免后端解析失败
+          config.data = qs.stringify(config.data)
         }
       }
 

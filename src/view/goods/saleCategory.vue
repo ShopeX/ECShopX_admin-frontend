@@ -146,7 +146,7 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: ''
+        customize_page_id: 0
       },
       categoryFormList: [
         {
@@ -226,7 +226,7 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: ''
+        customize_page_id: 0
       }
       this.categoryDialog = true
     },
@@ -238,7 +238,7 @@ export default {
         sort,
         parent_id,
         image_url,
-        customize_page_id: customize_page_id == 0 ? '' : customize_page_id
+        customize_page_id
       }
       this.categoryDialog = true
     },
@@ -253,7 +253,7 @@ export default {
         parent_id: category_id,
         parent_name: category_name,
         image_url: '',
-        customize_page_id: ''
+        customize_page_id: 0
       }
       this.categoryDialog = true
     },
@@ -297,7 +297,7 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, customize_page_id, parent_id, category_id } =
+      const { category_name, sort, image_url, customize_page_id=0, parent_id, category_id } =
         this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({

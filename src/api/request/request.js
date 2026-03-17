@@ -60,11 +60,16 @@ class RequestClient {
         ar: 'ar-SA'
       }
       if (lang && !skipCountryCode) {
+        const countryCode = langMap[lang]
         if (config.data) {
-          config.data.country_code = langMap[lang]
+          if (typeof config.data === 'string') {
+            config.data = config.data + (config.data ? '&' : '') + 'country_code=' + encodeURIComponent(countryCode)
+          } else {
+            config.data.country_code = countryCode
+          }
         } else {
           config.data = {
-            country_code: langMap[lang]
+            country_code: countryCode
           }
         }
       }

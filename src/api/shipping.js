@@ -2,6 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+import qs from 'qs'
 import { fetch } from './request'
 
 export function getShippingTemplatesList(query) {
@@ -19,6 +20,7 @@ export function getShippingTemplatesInfo(id) {
   })
 }
 
+/** 以表单格式提交，避免 Content-Type 为 form-urlencoded 但 body 为 JSON 导致后端解析失败 */
 export function createShippingTemplates(params) {
   return fetch({
     url: '/shipping/templates/create',
@@ -26,15 +28,21 @@ export function createShippingTemplates(params) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    params: params
+    params,
+    data: qs.stringify(params)
   })
 }
 
+/** 编辑同样以表单格式提交 */
 export function updateShippingTemplates(id, params) {
   return fetch({
     url: '/shipping/templates/update/' + id,
     method: 'put',
-    params: params
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params,
+    data: qs.stringify(params)
   })
 }
 

@@ -8,7 +8,6 @@
     <div
       class="wgts-slider-dialog-left"
       v-if="sliderForm.media_type === 'img'"
-      :style="`height:${h}px;background:#f5f5f7`"
     >
       <SpImage
         v-if="!sliderForm.imgUrl"
@@ -39,7 +38,7 @@
       />
     </div>
 
-    <div class="wgts-slider-dialog-left" v-else :style="`height:${h}px;background:#f5f5f7`">
+    <div class="wgts-slider-dialog-left" v-else>
       <SpImage v-if="!videoUrlStr" class="sp-image" fit="scale-down" />
       <video-player
         v-if="videoUrlStr"
@@ -470,6 +469,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    max-height: calc(72vh - 60px)!important;
 
     .overlay {
       position: absolute;
@@ -570,6 +570,14 @@ export default {
         }
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.wgts-slider-dialog {
+  .hz-u-img {
+    object-fit: cover;
+    max-height: calc(72vh - 60px) !important;
   }
 }
 </style>

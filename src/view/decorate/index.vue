@@ -234,8 +234,10 @@ export default {
       }
     },
     headerVisible() {
-      // 仅商城装修(1001)展示页面设置挂件，1007 分类模版等不展示
-      return this.mode == 'page' && this.localScene == '1001'
+      // 商城装修(1001)、自定义页(1004)展示页面设置挂件；1007 分类模版等不展示
+      return (
+        this.mode == 'page' && (this.localScene == '1001' || this.localScene == '1004')
+      )
     },
     widgetCategories() {
       // 通用挂件：轮播、热区图、视频、文字轮播

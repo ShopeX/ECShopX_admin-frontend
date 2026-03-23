@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.5](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.4...v4.3.5) (2026-03-23)
+
+
+### Bug Fixes
+
+* **decorate:** cap slider dialog preview height with viewport-based max-height ([2f20aeb](https://github.com/shopeX-2002/ECShopX_AdminFrontend/commit/2f20aeb5d11fb84ce9d2afdf5a117ef4fb50ae25))
+* **decorate:** show page settings header for custom page scene (1004) ([32bf2ae](https://github.com/shopeX-2002/ECShopX_AdminFrontend/commit/32bf2ae4948f37bc52b7c997567610959fbc0e22))
+
 ### [4.3.4](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.3...v4.3.4) (2026-03-17)
 
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.6](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.5...v4.3.6) (2026-03-26)
+
+
+### Features
+
+* configurable document title via VUE_APP_PAGE_TITLE ([0bc82d3](https://github.com/shopeX-2002/ECShopX_AdminFrontend/commit/0bc82d3b8cbf0122541c8bae25648e03d19e7292))
+
 ### [4.3.5](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.3.4...v4.3.5) (2026-03-23)
 
 

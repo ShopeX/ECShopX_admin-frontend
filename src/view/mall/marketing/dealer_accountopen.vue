@@ -14,13 +14,13 @@
               class="cus-dealer-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            />
+            >
             <img
               v-if="loginType === 'distributor'"
               class="cus-dealer-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            />
+            >
           </el-col>
           <el-col :span="20">
             <div class="cus-dealer-flex">
@@ -42,14 +42,16 @@
               <div class="cus-dealer-pfonts">
                 <i class="el-icon-phone cus-icon" />
                 <span>{{
-                  infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
+                  infoList.basicInfo
+                    ? infoList.basicInfo.tel_no + '（' + $t('52f8a5c0.3d9d21') + '）'
+                    : '-'
                 }}</span>
               </div>
               <div v-if="loginType === 'distributor'" class="cus-dealer-pfonts cus-margin-50">
                 <i class="el-icon-message cus-icon" />
                 <span>{{
                   infoList.basicInfo && infoList.basicInfo.email
-                    ? infoList.basicInfo.email + '（企业邮箱）'
+                    ? infoList.basicInfo.email + '（' + $t('52f8a5c0.d7c0a1') + '）'
                     : '-'
                 }}</span>
               </div>
@@ -58,7 +60,7 @@
               <i class="el-icon-message cus-icon" />
               <span>{{
                 infoList.basicInfo && infoList.basicInfo.email
-                  ? infoList.basicInfo.email + '（企业邮箱）'
+                  ? infoList.basicInfo.email + '（' + $t('52f8a5c0.d7c0a1') + '）'
                   : '-'
               }}</span>
             </div>
@@ -78,19 +80,19 @@
       </el-card>
       <el-card>
         <el-tabs v-model="activeName" class="cus-dealer-tabs">
-          <el-tab-pane label="开户信息" name="first">
+          <el-tab-pane :label="$t('52f8a5c0.ac7b4c')" name="first">
             <BaseModal
               :title="
                 member_type === 'corp'
-                  ? `企业信息 ${infoList.audit_desc_1 || ''} `
-                  : '个人信息 ' + `${infoList.audit_desc_1 || ''} `
+                  ? `${$t('52f8a5c0.54796d')} ${infoList.audit_desc_1 || ''} `
+                  : $t('52f8a5c0.eab129') + ' ' + `${infoList.audit_desc_1 || ''} `
               "
               :label-list="member_type === 'corp' ? enterPriseInfo : personalInfo"
               :info="infoList"
               :span="7"
             />
             <BaseModal
-              :title="'结算账户信息' + `${infoList.audit_desc_2 || ''} `"
+              :title="$t('52f8a5c0.99f89b') + `${infoList.audit_desc_2 || ''} `"
               :label-list="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
               :info="infoList"
               :span="7"
@@ -102,11 +104,11 @@
             :span='7'
           /> -->
             <el-card v-if="member_type == 'corp'">
-              <div slot="header">其他信息</div>
+              <div slot="header">{{ $t('52f8a5c0.febe40') }}</div>
               <div class="body">
                 <el-row class="load-btn">
                   <el-col :span="4" style="text-align: right; padding-right: 10px">
-                    附件信息：
+                    {{ $t('52f8a5c0.8a9502') }}
                   </el-col>
                   <el-col :span="20" class="cus-btn">
                     <el-button
@@ -114,7 +116,7 @@
                       type="text"
                       @click="dowloadFile(infoList.attach_file)"
                     >
-                      附件
+                      {{ $t('52f8a5c0.c9a6ee') }}
                     </el-button>
                     <span v-else>-</span>
                   </el-col>
@@ -127,9 +129,9 @@
                 type="primary"
                 @click="editHandle(true)"
               >
-                编辑
+                {{ $t('52f8a5c0.95b351') }}
               </el-button>
-              <el-button v-if="infoList.audit_state == 'A'">审核中</el-button>
+              <el-button v-if="infoList.audit_state == 'A'">{{ $t('52f8a5c0.b720a6') }}</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -166,44 +168,44 @@ export default {
       tagsList: [],
       enterPriseInfo: [
         // 企业信息
-        { name: '法人姓名', field: 'legal_person' },
-        { name: '法人身份证号码', field: 'legal_cert_id' },
-        { name: '法人证件有效期', field: 'legal_cert_id_expires' },
-        { name: '营业执照号', field: 'social_credit_code' },
-        { name: '商户有效日期', field: 'social_credit_code_expires' },
-        { name: '经营范围', field: 'business_scope' },
-        { name: '法人电话号码', field: 'tel_no' },
-        { name: '企业地址', field: 'address' },
-        { name: '邮编', field: 'zip_code' }
+        { name: this.$t('52f8a5c0.2fe17a'), field: 'legal_person' },
+        { name: this.$t('52f8a5c0.1415b3'), field: 'legal_cert_id' },
+        { name: this.$t('52f8a5c0.a79a87'), field: 'legal_cert_id_expires' },
+        { name: this.$t('52f8a5c0.b9bf38'), field: 'social_credit_code' },
+        { name: this.$t('52f8a5c0.1fcd91'), field: 'social_credit_code_expires' },
+        { name: this.$t('52f8a5c0.04228b'), field: 'business_scope' },
+        { name: this.$t('52f8a5c0.6cd765'), field: 'tel_no' },
+        { name: this.$t('52f8a5c0.400147'), field: 'address' },
+        { name: this.$t('52f8a5c0.4d8e09'), field: 'zip_code' }
       ],
       enterAccountInfo: [
         // 企业结算账户信息
-        { name: '结算银行卡号', field: 'card_no' },
-        { name: '结算银行卡开户姓名', field: 'bank_card_name' },
-        { name: '结算银行卡所属银行', field: 'bank_name' },
-        { name: '结算银行卡开户省市', field: 'area' },
-        { name: '结算银行账户类型', field: 'bank_acct_type', filter: this.bankAcctType }
+        { name: this.$t('52f8a5c0.88174a'), field: 'card_no' },
+        { name: this.$t('52f8a5c0.2f4116'), field: 'bank_card_name' },
+        { name: this.$t('52f8a5c0.0a3e82'), field: 'bank_name' },
+        { name: this.$t('52f8a5c0.5ae594'), field: 'area' },
+        { name: this.$t('52f8a5c0.32734c'), field: 'bank_acct_type', filter: this.bankAcctType }
       ],
       enterSplitAcount: [
         // 企业分帐信息
-        { name: '手续费扣费方式', field: 'div_fee_mode', filter: this.adapayFilter }
+        { name: this.$t('52f8a5c0.6e640f'), field: 'div_fee_mode', filter: this.adapayFilter }
       ],
       personalInfo: [
         // 个人信息
-        { name: '用户姓名', field: 'user_name' },
-        { name: '用户手机号码', field: 'tel_no' },
-        { name: '法人身份证号码', field: 'cert_id' }
+        { name: this.$t('52f8a5c0.d5b5b5'), field: 'user_name' },
+        { name: this.$t('52f8a5c0.dde968'), field: 'tel_no' },
+        { name: this.$t('52f8a5c0.1415b3'), field: 'cert_id' }
       ],
       personalAccountInfo: [
         // 个人结算账户信息
-        { name: '开户人姓名', field: 'bank_card_name' },
-        { name: '银行预留手机号', field: 'bank_tel_no' },
-        { name: '银行账号', field: 'bank_card_id' },
-        { name: '开户人证件号码', field: 'bank_cert_id' }
+        { name: this.$t('52f8a5c0.e3f6a6'), field: 'bank_card_name' },
+        { name: this.$t('52f8a5c0.a0b7da'), field: 'bank_tel_no' },
+        { name: this.$t('52f8a5c0.954218'), field: 'bank_card_id' },
+        { name: this.$t('52f8a5c0.c503f0'), field: 'bank_cert_id' }
       ],
       personalSplitAcount: [
         // 个人分账信息
-        { name: '手续费扣费方式', field: 'div_fee_mode', filter: this.adapayFilter }
+        { name: this.$t('52f8a5c0.6e640f'), field: 'div_fee_mode', filter: this.adapayFilter }
       ]
     }
   },
@@ -228,23 +230,23 @@ export default {
           this.member_type = response.data.data.member_type
           const { auto_sync_goods, is_ziti, is_delivery, is_dada } = response.data.data.basicInfo
           if (auto_sync_goods) {
-            this.tagsList.push({ name: '自动上架商品', type: 'danger' })
+            this.tagsList.push({ name: this.$t('52f8a5c0.d35f24'), type: 'danger' })
           }
           if (is_ziti) {
-            this.tagsList.push({ name: '支持自提', type: '' })
+            this.tagsList.push({ name: this.$t('52f8a5c0.49a523'), type: '' })
           }
           if (is_delivery) {
-            this.tagsList.push({ name: '支持快递', type: 'success' })
+            this.tagsList.push({ name: this.$t('52f8a5c0.0051b8'), type: 'success' })
           }
           if (is_dada) {
-            this.tagsList.push({ name: '同城配', type: 'warning' })
+            this.tagsList.push({ name: this.$t('52f8a5c0.583dcd'), type: 'warning' })
           }
         })
         .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取详情出错'
+            message: this.$t('52f8a5c0.25bc43')
           })
         })
     },
@@ -259,7 +261,11 @@ export default {
     // },
     bankAcctType() {
       let { bank_acct_type } = this.infoList
-      return (bank_acct_type === '1' && '对公') || (bank_acct_type === '2' && '对私') || '-'
+      return (
+        (bank_acct_type === '1' && this.$t('52f8a5c0.18ba13')) ||
+        (bank_acct_type === '2' && this.$t('52f8a5c0.f0bf8a')) ||
+        '-'
+      )
     },
     dowloadFile(url) {
       let link = document.createElement('a')
@@ -269,7 +275,7 @@ export default {
       link.click()
       this.$message({
         type: 'success',
-        message: '下载成功'
+        message: this.$t('52f8a5c0.50940e')
       })
     },
     editHandle(isEdit) {
@@ -280,10 +286,10 @@ export default {
       let returnValue = ''
       switch (div_fee_mode) {
         case 'I':
-          returnValue = '内扣'
+          returnValue = this.$t('52f8a5c0.75d29a')
           break
         case 'O':
-          returnValue = '外扣'
+          returnValue = this.$t('52f8a5c0.6c1506')
           break
       }
       return returnValue

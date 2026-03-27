@@ -133,7 +133,7 @@ export default {
       //   }
       //   await this.$api.wxa.savePageParams(param)
       this.$message({
-        message: '保存成功',
+        message: this.$t('a42343f9.3b1083'),
         type: 'success'
       })
       // }

@@ -3,7 +3,7 @@
   See LICENSE file for license details.
 -->
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sp-video-picker {
   display: flex;
   &.small {
@@ -73,19 +73,29 @@
     font-size: 12px;
     cursor: default;
   }
-  .icon-times-circle1 {
+  .icon-qingchuFilled{
     position: absolute;
     right: -7px;
     z-index: 99;
     top: -17px;
     font-size: 18px;
     color: #666;
+    cursor: pointer;
   }
 
   .picker-video-player {
-    .vjs-big-play-button {
-      display: none;
-    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+<style lang="scss">
+.picker-video-player {
+  .vjs-big-play-button {
+    display: none;
   }
 }
 </style>
@@ -193,7 +203,7 @@ export default {
             src
           }
         ],
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
+        notSupportedMessage: this.$t('4a6afa54.01c0da'),
         controlBar: false
       }
     },
@@ -201,10 +211,16 @@ export default {
     _renderImage(item, index = 0) {
       return (
         <div class='image-item' key={`image-item__${index}`}>
-          <i class='el-icon-close-circle1' on-click={this.handleDeleteItem.bind(this, index)} />
+          <i
+            class='ecx-icon icon-qingchuFilled'
+            on-click={(e) => {
+              e.stopPropagation()
+              this.handleDeleteItem(index)
+            }}
+          />
           <video-player class='picker-video-player' options={this.getOptions(item?.url || item)} />
           <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
-            更换视频
+            {this.$t('4a6afa54.3b28f9')}
           </span>
         </div>
       )
@@ -213,14 +229,15 @@ export default {
   render() {
     const { value, max, size } = this
     const multiple = isArray(value)
-    console.log('value:', value)
     return (
       <div class={['sp-video-picker', size]}>
         {max > 1 && value.map((item, index) => this._renderImage(item, index))}
         {max > 1 && value.length < max && (
           <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
             <i class='iconfont icon-video' />
-            <div class='add-text'>视频({`${value.length}/${max}`})</div>
+            <div class='add-text'>
+              {this.$t('4a6afa54.7fcf42')}({`${value.length}/${max}`})
+            </div>
           </div>
         )}
 
@@ -228,7 +245,7 @@ export default {
         {max == 1 && isEmpty(value) && (
           <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
             <i class='iconfont icon-video' />
-            <div class='add-text'>添加视频</div>
+            <div class='add-text'>{this.$t('4a6afa54.57e40c')}</div>
           </div>
         )}
       </div>

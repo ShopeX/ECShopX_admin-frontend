@@ -12,19 +12,19 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="params.order_id" placeholder="请输入订单号" />
+      <SpFilterFormItem prop="order_id" :label="$t('44537686.070dce')">
+        <el-input v-model="params.order_id" :placeholder="$t('44537686.e9e836')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('44537686.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="添加时间筛选"
+          :placeholder="$t('44537686.5d92ab')"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="status" label="处理状态:">
-        <el-select v-model="params.status" placeholder="请选择处理状态">
+      <SpFilterFormItem prop="status" :label="$t('44537686.da9d4c')">
+        <el-select v-model="params.status" :placeholder="$t('44537686.9e471b')">
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
@@ -36,26 +36,26 @@
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
-      <el-table-column prop="order_id" label="订单号" width="180" />
-      <el-table-column prop="status" label="错误状态" width="120" />
-      <el-table-column prop="error_code" label="错误码" width="100" />
-      <el-table-column prop="error_desc" label="错误描述" />
-      <el-table-column prop="create_time" label="创建时间" width="200">
+      <el-table-column prop="order_id" :label="$t('44537686.1e8dc2')" width="180" />
+      <el-table-column prop="status" :label="$t('44537686.93f23e')" width="120" />
+      <el-table-column prop="error_code" :label="$t('44537686.ac41cc')" width="100" />
+      <el-table-column prop="error_desc" :label="$t('44537686.f23a26')" />
+      <el-table-column prop="create_time" :label="$t('44537686.eca37c')" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="is_resubmit" label="是否已重新提交" width="120">
+      <el-table-column prop="is_resubmit" :label="$t('44537686.8ad7ca')" width="120">
         <template slot-scope="scope">
-          <span v-if="scope.row.is_resubmit"> 已提交</span>
-          <span v-else> 未提交</span>
+          <span v-if="scope.row.is_resubmit"> {{ $t('44537686.f5e626') }}</span>
+          <span v-else> {{ $t('44537686.c3ef66') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column :label="$t('44537686.2b6bc0')" width="100">
         <template slot-scope="scope">
           <el-link v-if="scope.row.is_resubmit === false">
             <el-button type="primary" size="mini" @click="refundResubmit(scope.row)">
-              重新提交
+              {{ $t('44537686.ece899') }}
             </el-button>
           </el-link>
         </template>
@@ -79,6 +79,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
+import { i18n } from '@/i18n'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -95,9 +96,9 @@ export default {
         ...initialParams
       },
       statusList: [
-        { name: '全部', value: 'all' },
-        { name: '已处理', value: 'is_resubmit' },
-        { name: '未处理', value: 'waiting' }
+        { name: i18n.t('44537686.a8b0c2'), value: 'all' },
+        { name: i18n.t('44537686.5ad605'), value: 'is_resubmit' },
+        { name: i18n.t('44537686.2839c8'), value: 'waiting' }
       ]
     }
   },
@@ -146,7 +147,7 @@ export default {
     },
     async refundResubmit(row) {
       await this.$api.trade.refundResubmit(row.id)
-      this.$message.success('提交成功!')
+      this.$message.success(this.$t('44537686.814952'))
     },
     onSearch() {
       this.page.pageIndex = 1

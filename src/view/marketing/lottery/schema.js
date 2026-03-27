@@ -12,13 +12,12 @@ import { status_map, prize_types } from './constants'
 export const tableSchema = (vm) =>
   createSetting({
     search: [
-      // { name: '', placeholder: '请选择选择区域', key: 'regionauth_id', type: 'select', options: vm?.areas },
-      { name: '', placeholder: '请输入活动id', key: 'activity_id' },
-      { name: '', placeholder: '请输入活动名称', key: 'activity_name' }
+      { name: '', placeholder: vm.$t('dd9b5a55.6c252c'), key: 'activity_id' },
+      { name: '', placeholder: vm.$t('dd9b5a55.7528b3'), key: 'activity_name' }
     ],
     actions: [
       {
-        name: '编辑',
+        name: vm.$t('dd9b5a55.95b351'),
         key: 'config',
         type: 'button',
         buttonType: 'text',
@@ -35,7 +34,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '终止',
+        name: vm.$t('dd9b5a55.ff6c6a'),
         key: 'stop',
         type: 'button',
         buttonType: 'text',
@@ -55,7 +54,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '复制',
+        name: vm.$t('dd9b5a55.79d3ab'),
         key: 'copy',
         type: 'button',
         buttonType: 'text',
@@ -72,7 +71,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '统计',
+        name: vm.$t('dd9b5a55.d7656a'),
         key: 'statistics',
         type: 'button',
         buttonType: 'text',
@@ -95,28 +94,29 @@ export const tableSchema = (vm) =>
         key: 'id',
         width: '80'
       },
-      { name: '活动名称', key: 'activity_name', width: '300' },
+      { name: vm.$t('dd9b5a55.39834b'), key: 'activity_name', width: '300' },
       // { name: '活动区域', key: 'regionauth_name', width: '100' },
       {
-        name: '抽奖形式',
+        name: vm.$t('dd9b5a55.9f0391'),
         key: 'activity_type',
         render(_, { row }) {
+          const t = vm.$t
           return row.activity_type == 'wheel'
-            ? '大转盘'
+            ? t('dd9b5a55.5fa218')
             : row.activity_type == 'slotMachine'
-            ? '老虎机'
-            : '九宫格'
+            ? t('dd9b5a55.c01fe6')
+            : t('dd9b5a55.64a4df')
         }
       },
       {
-        name: '状态',
+        name: vm.$t('dd9b5a55.3fea7c'),
         key: 'status',
         render(_, { row }) {
-          return status_map[row.status]
+          return status_map(vm.$t)[row.status]
         }
       },
       {
-        name: '活动时间',
+        name: vm.$t('dd9b5a55.c799f5'),
         key: 'begin_time',
         render(_, { row }) {
           return `${moment(row.begin_time * 1000).format('YYYY-MM-DD HH:mm:ss')} - ${moment(
@@ -125,14 +125,14 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '创建时间',
+        name: vm.$t('dd9b5a55.eca37c'),
         key: 'created',
         render(_, { row }) {
           return `${moment(row.created * 1000).format('YYYY-MM-DD HH:mm:ss')}`
         }
       },
       {
-        name: '更新时间',
+        name: vm.$t('dd9b5a55.a001a2'),
         key: 'updated',
         render(_, { row }) {
           return `${moment(row.updated * 1000).format('YYYY-MM-DD HH:mm:ss')}`
@@ -166,7 +166,7 @@ export const statisticsFormSchema = (vm) =>
                   }
                 }
               }}
-              setting={outputSchema}
+              setting={outputSchema(vm)}
             >
               <div slot='tableTop'>
                 <div
@@ -178,12 +178,20 @@ export const statisticsFormSchema = (vm) =>
                     padding: '0 10px'
                   }}
                 >
-                  <div>总抽奖次数:{vm?.dialogData?.total}</div>
-                  <div>总抽奖人数:{vm?.dialogData?.totalGet}</div>
-                  <div>中奖次数:{vm?.dialogData?.totalGetUser}</div>
-                  <div>中奖人数:{vm?.dialogData?.totalUser}</div>
+                  <div>
+                    {vm.$t('dd9b5a55.8eeb9a')}:{vm?.dialogData?.total}
+                  </div>
+                  <div>
+                    {vm.$t('dd9b5a55.9d54e8')}:{vm?.dialogData?.totalGet}
+                  </div>
+                  <div>
+                    {vm.$t('dd9b5a55.f50abf')}:{vm?.dialogData?.totalGetUser}
+                  </div>
+                  <div>
+                    {vm.$t('dd9b5a55.0faa0f')}:{vm?.dialogData?.totalUser}
+                  </div>
                   <el-button type='primary' onClick={() => vm.exportReport()}>
-                    导出报表
+                    {vm.$t('dd9b5a55.4fcf74')}
                   </el-button>
                 </div>
               </div>
@@ -195,27 +203,24 @@ export const statisticsFormSchema = (vm) =>
     vm
   )
 
-const outputSchema = {
+const outputSchema = (vm) => ({
   columns: [
     { name: 'ID', key: 'user_id', width: '60' },
-    { name: '会员手机号', key: 'mobile' },
+    { name: vm.$t('dd9b5a55.6a52ee'), key: 'mobile' },
+    { name: vm.$t('dd9b5a55.d76cc0'), key: 'prize_title' },
     {
-      name: '获得奖品',
-      key: 'prize_title'
-    },
-    {
-      name: '奖品类型',
+      name: vm.$t('dd9b5a55.cb5b93'),
       key: 'prize_type',
       render(_, { row }) {
-        return <span>{prize_types[row.prize_type]}</span>
+        return <span>{prize_types(vm.$t)[row.prize_type]}</span>
       }
     },
     {
-      name: '中奖时间',
+      name: vm.$t('dd9b5a55.79b537'),
       key: 'created',
       render(_, { row }) {
         return `${moment(row.created * 1000).format('YYYY-MM-DD HH:mm:ss')}`
       }
     }
   ]
-}
+})

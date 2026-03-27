@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrStore from './attr-store'
 import AttrGoods from './attr-goods'
 import AttrLabel from './attr-label'
@@ -10,24 +11,24 @@ import AttrLabel from './attr-label'
 const config = {
   name: 'store',
   setting: [
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    { label: i18n.t('4762f515.4707ba'), key: 'padded', component: 'switch', value: true },
     {
-      label: '背景色',
+      label: i18n.t('4762f515.2f97db'),
       key: 'backgroundColor',
       component: 'color',
       value: '#fff'
     },
     {
-      label: '宣传图',
+      label: i18n.t('4762f515.691d9d'),
       key: 'imgUrl',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
       },
       value: '',
-      tip: `建议尺寸:（宽度640px，高度自适应）`
+      tip: '4762f515.818403'
     },
     {
-      label: '推荐店铺',
+      label: i18n.t('4762f515.089a3d'),
       key: 'distributor',
       component: function (h, { key }) {
         return (
@@ -49,7 +50,7 @@ const config = {
       }
     },
     {
-      label: '店铺商品',
+      label: i18n.t('4762f515.54d6cd'),
       key: 'items',
       component: function (h, { key }) {
         return <AttrGoods v-model={this.value[key]} distributor={this.value['distributor']} />
@@ -82,7 +83,7 @@ const config = {
       ]
     },
     {
-      label: '商品标签',
+      label: i18n.t('4762f515.0f394b'),
       key: 'tags',
       component: function (h, { key }) {
         return <AttrLabel v-model={this.value[key]} distributor={this.value['distributor']} />

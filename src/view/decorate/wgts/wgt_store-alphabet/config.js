@@ -1,16 +1,17 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
 const config = {
   name: 'storeAlphabet',
   setting: [
     {
-      label: '数据类型',
+      label: i18n.t('c6e0a96a.185f7b'),
       key: 'dataType',
       component: 'select',
       options: [
-        { label: '所有店铺', value: 'all' },
-        { label: '指定店铺', value: 'specify' }
+        { label: i18n.t('c6e0a96a.fc689d'), value: 'all' },
+        { label: i18n.t('c6e0a96a.fcf7d8'), value: 'specify' }
       ],
       value: 'all',
       onchange: function (e, vm) {
@@ -23,6 +24,7 @@ const config = {
     // 使用公共函数处理 base 中的样式数据转换
     const transformedBase = transformInBase(base, ['outerMargin', 'innerPadding'])
     return {
+      id: v?.id,
       name,
       ...transformedBase,
       data: data,
@@ -36,6 +38,7 @@ const config = {
   },
   transformOut: (v) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 outerMargin 和 innerPadding 转换，同时保留其他字段

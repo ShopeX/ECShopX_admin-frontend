@@ -8,23 +8,27 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <div class="content-bottom-padded">
         <el-form ref="listForm" :inline="true" :model="listForm" label-width="80px">
-          <el-form-item label="页面路径">
-            <el-input v-model="listForm.monitorPath" placeholder="请输入" />
+          <el-form-item :label="$t('7b552e7b.e3a8a6')">
+            <el-input v-model="listForm.monitorPath" :placeholder="$t('7b552e7b.02cc4f')" />
           </el-form-item>
           <div class="flex-right">
-            <el-button size="small" @click="handleReset"> 重置 </el-button>
-            <el-button size="small" type="primary" @click="getSearchDataList()"> 搜索 </el-button>
+            <el-button size="small" @click="handleReset">{{ $t('7b552e7b.4b9c32') }}</el-button>
+            <el-button size="small" type="primary" @click="getSearchDataList()">
+{{
+              $t('7b552e7b.e5f71f')
+            }}
+</el-button>
           </div>
         </el-form>
         <el-row>
           <el-col :span="12">
-            <el-button type="primary" @click="addMonitors"> 新增监控链接 </el-button>
+            <el-button type="primary" @click="addMonitors">{{ $t('7b552e7b.11a049') }}</el-button>
           </el-col>
         </el-row>
       </div>
       <el-table v-loading="loading" :data="monitorsList" style="width: 100%">
-        <el-table-column prop="monitorId" label="监控ID" />
-        <el-table-column prop="monitorPath" label="监控页面">
+        <el-table-column prop="monitorId" :label="$t('7b552e7b.de2b88')" />
+        <el-table-column prop="monitorPath" :label="$t('7b552e7b.c43330')">
           <template slot-scope="scope">
             <span>{{ scope.row.monitorPath }}</span
             ><span v-show="scope.row.monitorPathParams != ''"
@@ -32,21 +36,22 @@
             >
           </template>
         </el-table-column>
-        <el-table-column prop="pageName" label="页面描述" />
-        <el-table-column prop="nickName" label="小程序" />
-        <el-table-column prop="created" label="创建时间">
+        <el-table-column prop="pageName" :label="$t('7b552e7b.abf8f4')" />
+        <el-table-column prop="nickName" :label="$t('7b552e7b.0ed510')" />
+        <el-table-column prop="created" :label="$t('7b552e7b.eca37c')">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('7b552e7b.2b6bc0')">
           <template slot-scope="scope">
-            <a @click="removeMinotor(scope.$index, scope.row)">删除</a> &nbsp;
-            <a @click="manageSources(scope.row.monitorId)">管理来源</a> &nbsp;
+            <a @click="removeMinotor(scope.$index, scope.row)">{{ $t('7b552e7b.2f4aad') }}</a>
+            &nbsp;
+            <a @click="manageSources(scope.row.monitorId)">{{ $t('7b552e7b.f13032') }}</a> &nbsp;
             <router-link
               :to="{ path: matchRoutePath('detail'), query: { monitorId: scope.row.monitorId } }"
             >
-              监控详情
+              {{ $t('7b552e7b.dac525') }}
             </router-link>
           </template>
         </el-table-column>
@@ -64,7 +69,7 @@
         />
       </div>
       <el-dialog
-        title="新增跟踪链接"
+        :title="$t('7b552e7b.08cbfa')"
         :visible="dialogVisibleMonitors"
         :close-on-click-modal="false"
         :before-close="cancelMonitorsDialog"
@@ -76,21 +81,33 @@
               <el-option v-for="item in weappPagesList" :key="item.page" :label="item.label" :value="item.page" />
             </el-select>
           </el-form-item> -->
-          <el-form-item prop="link_type" label="页面" :label-width="formLabelWidth">
+          <el-form-item
+            prop="link_type"
+            :label="$t('7b552e7b.59ceff')"
+            :label-width="formLabelWidth"
+          >
             <el-radio-group v-model="monitorForm.link_type" class="linktype-radio">
-              <el-radio :label="0"> 选择路径 </el-radio>
+              <el-radio :label="0">{{ $t('7b552e7b.e3cf91') }}</el-radio>
               <!-- <el-radio :label="1" disabled>自定义路径</el-radio> -->
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="monitorForm.link_type == 0" :label-width="formLabelWidth">
             <el-col :span="10">
               <el-button class="monito_select_btn" @click="handleSelectPage">
-                <span v-if="monitorForm.page_type">{{ monitorForm.page_type + ':' }}</span
-                >{{ monitorForm.page_title }}
+                <span v-if="monitorForm.page_type">{{ $t(monitorForm.page_type) + ':' }}</span
+                >{{
+                  monitorForm.page_title === '7b552e7b.a4895e'
+                    ? $t('7b552e7b.a4895e')
+                    : monitorForm.page_title
+                }}
               </el-button>
             </el-col>
           </el-form-item>
-          <el-form-item prop="page_name" label="页面描述" :label-width="formLabelWidth">
+          <el-form-item
+            prop="page_name"
+            :label="$t('7b552e7b.abf8f4')"
+            :label-width="formLabelWidth"
+          >
             <el-col :span="10">
               <el-input v-model="monitorForm.page_name" />
             </el-col>
@@ -121,13 +138,13 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="resetMonitorsForm"> 重 置 </el-button>
-          <el-button type="primary" @click="saveMonitor"> 确 定 </el-button>
+          <el-button @click="resetMonitorsForm">{{ $t('7b552e7b.91858f') }}</el-button>
+          <el-button type="primary" @click="saveMonitor">{{ $t('7b552e7b.aa7527') }}</el-button>
         </div>
       </el-dialog>
 
       <el-dialog
-        title="管理跟踪来源"
+        :title="$t('7b552e7b.572f8a')"
         :visible="dialogVisibleSources"
         class="sources-dialog"
         :close-on-click-modal="false"
@@ -136,7 +153,7 @@
         <template>
           <el-transfer
             v-model="sourcesForm.sourceIds"
-            :titles="['来源名称列表', '已选中']"
+            :titles="[$t('7b552e7b.186429'), $t('7b552e7b.543b04')]"
             :props="{ key: 'sourceId', label: 'sourceName' }"
             :data="sourceList"
           >
@@ -153,8 +170,12 @@
             <div slot="right-footer" class="transfer-footer" />
           </el-transfer>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleSources = false"> 取 消 </el-button>
-            <el-button v-debounce="saveSources" type="primary"> 确 定 </el-button>
+            <el-button @click="dialogVisibleSources = false">{{ $t('7b552e7b.c08ab9') }}</el-button>
+            <el-button v-debounce="saveSources" type="primary">
+{{
+              $t('7b552e7b.aa7527')
+            }}
+</el-button>
           </div>
         </template>
       </el-dialog>
@@ -201,14 +222,10 @@ export default {
         link_type: 0,
         regionauth_id: '',
         page_name: '',
-        page_title: '选择页面',
+        page_title: '7b552e7b.a4895e',
         page_type: ''
       },
-      monitorFormRules: {
-        wxappid: [{ required: true, message: '请选择小程序', trigger: 'change' }],
-        link_type: [{ required: true, message: '请选择页面', trigger: 'change' }],
-        page_name: [{ required: true, message: '请输入页面描述', trigger: 'change' }]
-      },
+      monitorFormRules: null,
       sourcesForm: {
         monitor_id: '',
         sourceIds: []
@@ -234,7 +251,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['template_name'])
+    ...mapGetters(['template_name']),
+    monitorFormRules() {
+      return {
+        wxappid: [{ required: true, message: this.$t('7b552e7b.e4c3df'), trigger: 'change' }],
+        link_type: [{ required: true, message: this.$t('7b552e7b.4ef9f6'), trigger: 'change' }],
+        page_name: [{ required: true, message: this.$t('7b552e7b.9c5cf8'), trigger: 'change' }]
+      }
+    }
   },
   mounted() {
     if (this.$route.query && this.$route.query.app_id) {
@@ -254,7 +278,7 @@ export default {
       let info = {}
       switch (type) {
         case 'goods':
-          info = { url: 'pages/item/espier-detail?id=' + id, page_name: '商品详情页' }
+          info = { url: 'subpages/item/espier-detail?id=' + id, page_name: '商品详情页' }
           break
         case 'custom_page':
           info = { url: 'pages/custom/custom-page?id=' + id, page_name: '自定义页面' }
@@ -349,7 +373,7 @@ export default {
       this.$refs['monitorForm'].validate((valid) => {
         if (valid) {
           if (!that.monitorForm.page_type) {
-            return this.$message.error('请选择页面')
+            return this.$message.error(this.$t('7b552e7b.4ef9f6'))
           }
           that.wxaList.forEach(function (item) {
             if (item.authorizer_appid == that.monitorForm.wxappid) {
@@ -388,7 +412,7 @@ export default {
             .catch((error) => {
               this.$message({
                 type: 'error',
-                message: '保存监控监控错误'
+                message: this.$t('7b552e7b.34c26c')
               })
             })
         } else {
@@ -416,7 +440,7 @@ export default {
     },
     saveSources: function () {
       if (this.sourcesForm.sourceIds.length == 0) {
-        return this.$message.error('请选择来源')
+        return this.$message.error(this.$t('7b552e7b.d5c816'))
       }
       saveSources(this.sourcesForm)
         .then((response) => {
@@ -427,7 +451,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '关联来源保存错误'
+            message: this.$t('7b552e7b.9b76f9')
           })
         })
     },
@@ -444,7 +468,7 @@ export default {
       }
       this.monitorForm.page_type = ''
       this.monitorForm.page_name = ''
-      this.monitorForm.page_title = '选择页面'
+      this.monitorForm.page_title = '7b552e7b.a4895e'
       this.monitorForm.monitor_path_params = []
       this.pagesData = []
       // this.weappPagesList = []
@@ -498,7 +522,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取来源信息出错'
+            message: this.$t('7b552e7b.a2ce6e')
           })
         })
     },
@@ -535,16 +559,16 @@ export default {
       })
     },
     removeMinotor: function (index, row) {
-      this.$confirm('此操作将删除该监控页面, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('7b552e7b.400d9e'), this.$t('7b552e7b.02d981'), {
+        confirmButtonText: this.$t('7b552e7b.38cf16'),
+        cancelButtonText: this.$t('7b552e7b.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteMonitors(row.monitorId)
             .then((response) => {
               this.$message({
-                message: '删除监控页面成功',
+                message: this.$t('7b552e7b.dc9081'),
                 type: 'success',
                 duration: 2 * 1000
               })
@@ -553,14 +577,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除监控页面失败'
+                message: this.$t('7b552e7b.3835c8')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('7b552e7b.2111cc')
           })
         })
     },
@@ -601,7 +625,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取监控页面列表信息出错'
+            message: this.$t('7b552e7b.ce99b2')
           })
         })
     }

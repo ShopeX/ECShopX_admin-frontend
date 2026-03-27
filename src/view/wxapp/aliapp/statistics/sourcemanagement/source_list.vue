@@ -10,20 +10,18 @@
         <el-col :span="18">
           <div style="float: left">
             <el-button-group>
-              <el-button type="primary" @click="addSource"> 新增来源 </el-button>
-              <el-button type="primary" @click="checkMemberTags"> 选择会员标签 </el-button>
+              <el-button type="primary" @click="addSource"> {{ $t('1b23849d.aa8221') }} </el-button>
+              <el-button type="primary" @click="checkMemberTags">
+                {{ $t('1b23849d.177391') }}
+              </el-button>
             </el-button-group>
           </div>
           <div style="float: left">
-            <el-alert
-              title="批量打标签会替换所有标签，不会做合并，请慎重操作"
-              type="warning"
-              :closable="false"
-            />
+            <el-alert :title="$t('1b23849d.1be170')" type="warning" :closable="false" />
           </div>
         </el-col>
         <el-col :span="6" class="content-right">
-          <el-input v-model="searchTxt" placeholder="搜索" style="width: 260px">
+          <el-input v-model="searchTxt" :placeholder="$t('1b23849d.e5f71f')" style="width: 260px">
             <el-button slot="append" icon="el-icon-search" @click="getSourcesLists()" />
           </el-input>
         </el-col>
@@ -37,9 +35,9 @@
       :height="wheight - 210"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" label="全选" />
-      <el-table-column prop="sourceName" label="来源名称" />
-      <el-table-column prop="sourceName" label="标签">
+      <el-table-column type="selection" align="center" :label="$t('1b23849d.66eeac')" />
+      <el-table-column prop="sourceName" :label="$t('1b23849d.19f373')" />
+      <el-table-column prop="sourceName" :label="$t('1b23849d.14d342')">
         <template slot-scope="scope">
           <template>
             <el-tag v-for="(item, index) in scope.row.checkTags" :key="index + 'checktags1'">
@@ -48,16 +46,16 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间">
+      <el-table-column :label="$t('1b23849d.eca37c')">
         <template slot-scope="scope">
           <template>
             {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('1b23849d.2b6bc0')">
         <template slot-scope="scope">
-          <a href="#" @click="edit(scope.row)">修改名称</a>
+          <a href="#" @click="edit(scope.row)">{{ $t('1b23849d.54a3dd') }}</a>
         </template>
       </el-table-column>
     </el-table>
@@ -73,30 +71,34 @@
       </div>
     </div>
     <el-dialog
-      title="添加来源"
+      :title="$t('1b23849d.246f1d')"
       :visible="dialogVisible"
       :show-close="false"
       :close-on-click-modal="false"
     >
       <div>
         <el-form ref="form" :rules="rules" :model="form" label-width="120px">
-          <el-form-item v-if="!tagdialogVisible" label="来源名称" prop="source_name">
-            <el-input v-model="form.source_name" placeholder="填写来源名称" style="width: 80%" />
+          <el-form-item v-if="!tagdialogVisible" :label="$t('1b23849d.19f373')" prop="source_name">
+            <el-input
+              v-model="form.source_name"
+              :placeholder="$t('1b23849d.335e4b')"
+              style="width: 80%"
+            />
             <p class="frm-tips">
-              建议将来源名称命名为要使用的推广渠道的名称，方便理解与跟踪，例如：微信朋友圈广告
+              {{ $t('1b23849d.20010c') }}
             </p>
           </el-form-item>
-          <el-form-item v-if="!tagdialogVisible" label="会员标签" prop="source_name">
+          <el-form-item v-if="!tagdialogVisible" :label="$t('1b23849d.3cc026')" prop="source_name">
             <el-tag v-for="(item, index) in checktags" :key="index + 'checktags2'">
               {{ item.tag_name }}
             </el-tag>
           </el-form-item>
-          <el-form-item v-if="tagdialogVisible" label="选中的来源" prop="source_name">
+          <el-form-item v-if="tagdialogVisible" :label="$t('1b23849d.86ec51')" prop="source_name">
             <el-tag v-for="(item, index) in checkSource" :key="index + 'checksource3'">
               {{ item.sourceName }}
             </el-tag>
           </el-form-item>
-          <el-form-item label="标签列表" prop="source_name">
+          <el-form-item :label="$t('1b23849d.e01315')" prop="source_name">
             <template>
               <el-table
                 ref="multipleTable"
@@ -111,7 +113,7 @@
               >
                 <el-table-column type="selection" :reserve-selection="true" width="50" />
                 <el-table-column prop="tag_id" label="id" width="60" />
-                <el-table-column prop="tag_name" label="标签名称" width="300" />
+                <el-table-column prop="tag_name" :label="$t('1b23849d.341fe8')" width="300" />
               </el-table>
               <div v-if="tagcount > pageLimit" class="content-center content-top-padded">
                 <el-pagination
@@ -126,11 +128,11 @@
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="onCancel"> 取消 </el-button>
+        <el-button @click="onCancel"> {{ $t('1b23849d.625fb2') }} </el-button>
         <el-button v-if="tagdialogVisible" type="primary" @click="submitMemberTag">
-          确定
+          {{ $t('1b23849d.38cf16') }}
         </el-button>
-        <el-button v-else type="primary" @click="onSubmit"> 确定 </el-button>
+        <el-button v-else type="primary" @click="onSubmit"> {{ $t('1b23849d.38cf16') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -172,7 +174,9 @@ export default {
       tagPage: 1,
       total_count: 0,
       rules: {
-        source_name: [{ required: true, message: '请输入来源名称', trigger: 'blur' }]
+        source_name: [
+          { required: true, message: () => this.$t('1b23849d.eefe1f'), trigger: 'blur' }
+        ]
       }
     }
   },
@@ -238,7 +242,7 @@ export default {
                 this.form.source_id = ''
                 this.getSourcesLists()
               } else {
-                this.$message.error('更新来源失败!')
+                this.$message.error(this.$t('1b23849d.17d763'))
                 return false
               }
             })
@@ -250,7 +254,7 @@ export default {
                 this.form.source_id = ''
                 this.getSourcesLists()
               } else {
-                this.$message.error('创建来源失败!')
+                this.$message.error(this.$t('1b23849d.893e45'))
                 return false
               }
             })
@@ -289,7 +293,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取来源信息出错'
+            message: this.$t('1b23849d.a2ce6e')
           })
         })
     },
@@ -322,11 +326,11 @@ export default {
     },
     submitMemberTag() {
       if (this.checkSource.length == 0) {
-        this.$message.error('请选择来源!')
+        this.$message.error(this.$t('1b23849d.7b1910'))
         return false
       }
       if (this.checktags.length == 0) {
-        this.$message.error('请选择标签!')
+        this.$message.error(this.$t('1b23849d.b7d555'))
         return false
       }
       let checkSource = []
@@ -341,7 +345,7 @@ export default {
       saveTags(params).then((res) => {
         this.$message({
           type: 'success',
-          message: '保存完成'
+          message: this.$t('1b23849d.626a15')
         })
         this.tagdialogVisible = false
         this.dialogVisible = false

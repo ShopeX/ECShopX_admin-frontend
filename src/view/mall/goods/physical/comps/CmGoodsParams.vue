@@ -26,7 +26,7 @@
 <template>
   <div class="comp-goodsparams">
     <div class="form-block-head clearfix">
-      <div class="block-head-hd">商品参数</div>
+      <div class="block-head-hd">{{ $t('d41d8cd9.8686bb') }}</div>
     </div>
     <div class="form-block-body">
       <el-row :gutter="20">
@@ -38,7 +38,7 @@
                 v-model="item.attribute_value_id"
                 class="width-full"
                 clearable
-                placeholder="请选择"
+                :placeholder="$t('d41d8cd9.708c9d')"
                 @change="
                   (e) => {
                     paramsChange(e, item)

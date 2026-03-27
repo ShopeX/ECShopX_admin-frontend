@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage title="订单基本信息">
+  <SpPage :title="$t('3cdfcea1.168447')">
     <template slot="page-footer">
       <div v-if="btnActions.length > 0" class="text-center">
         <el-button
@@ -35,7 +35,7 @@
       </el-card>
 
       <el-card v-if="is_community" class="el-card--normal">
-        <div slot="header">跟团信息</div>
+        <div slot="header">{{ $t('3cdfcea1.ba9c75') }}</div>
         <el-row class="card-panel">
           <el-col
             v-for="(item, index) in communityInfoList"
@@ -60,30 +60,30 @@
       </el-card>
 
       <el-card class="el-card--normal">
-        <div slot="header">客户留言</div>
+        <div slot="header">{{ $t('3cdfcea1.9bf857') }}</div>
         <div class="card-panel">
-          <span class="card-panel__value">{{ memberRemark }}</span>
+          <span class="card-panel__value">{{ memberRemark || $t('3cdfcea1.101e5b') }}</span>
         </div>
       </el-card>
 
       <el-card class="el-card--normal">
-        <div slot="header">商家备注</div>
+        <div slot="header">{{ $t('3cdfcea1.1971f2') }}</div>
         <div class="card-panel">
-          <span class="card-panel__value">{{ merchantRemark }}</span>
+          <span class="card-panel__value">{{ merchantRemark || $t('3cdfcea1.2a450f') }}</span>
         </div>
       </el-card>
 
       <el-card class="el-card--normal">
-        <div slot="header">商品清单</div>
+        <div slot="header">{{ $t('3cdfcea1.08ea4e') }}</div>
         <div class="card-panel">
           <el-table v-if="orderInfo" border :data="orderInfo.items">
-            <el-table-column prop="item_id" label="商品ID" width="80" />
-            <el-table-column prop="pic" label="商品图片" width="120">
+            <el-table-column prop="item_id" :label="$t('3cdfcea1.858526')" width="80" />
+            <el-table-column prop="pic" :label="$t('3cdfcea1.9b94b1')" width="120">
               <template slot-scope="scope">
                 <el-image class="item-image" fit="fill" :src="`${wximageurl}${scope.row.pic}`" />
               </template>
             </el-table-column>
-            <el-table-column prop="item_name" label="商品名称" width="180">
+            <el-table-column prop="item_name" :label="$t('3cdfcea1.1fd1d5')" width="180">
               <template slot-scope="scope">
                 <div class="ell3">
                   <el-tag
@@ -92,20 +92,20 @@
                     size="mini"
                     style="background-color: #fff"
                   >
-                    处方药
+                    {{ $t('3cdfcea1.e8b7e1') }}
                   </el-tag>
                   {{ scope.row.item_name }}
                 </div>
                 <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
-                  赠品
+                  {{ $t('3cdfcea1.d017cc') }}
                 </el-tag>
               </template>
             </el-table-column>
             <!-- <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="处方用量" width="160" /> -->
-            <el-table-column prop="item_holder" label="商品类型" width="100">
+            <el-table-column prop="item_holder" :label="$t('3cdfcea1.2af133')" width="100">
               <template slot-scope="scope">
                 <div class="ell3">
-                  {{ goodCategoryMap[scope.row.item_holder] }}
+                  {{ $t(goodCategoryMap[scope.row.item_holder]) }}
                 </div>
               </template>
             </el-table-column>
@@ -115,21 +115,21 @@
             <!--              {{ scope.row.goods_bn }}-->
             <!--            </template>-->
             <!--          </el-table-column>-->
-            <el-table-column prop="item_spec_desc" label="SKU编码">
+            <el-table-column prop="item_spec_desc" :label="$t('3cdfcea1.b54bd0')">
               <template slot-scope="scope">
                 {{ scope.row.item_bn }}
               </template>
             </el-table-column>
-            <el-table-column prop="item_spec_desc" label="规格">
+            <el-table-column prop="item_spec_desc" :label="$t('3cdfcea1.ea887b')">
               <template slot-scope="scope">
-                {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
+                {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : $t('3cdfcea1.048df4') }}
               </template>
             </el-table-column>
 
             <el-table-column
               v-if="orderInfo.prescription_status"
               prop="medicine_symptom_set"
-              label="症状"
+              :label="$t('3cdfcea1.0b00b0')"
               width="160"
             >
               <template slot-scope="scope">
@@ -138,31 +138,31 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="supplier_name" label="来源供应商" width="120">
+            <el-table-column prop="supplier_name" :label="$t('3cdfcea1.55c61d')" width="120">
               <template slot-scope="scope">
-                {{ scope.row.supplier_name ? scope.row.supplier_name : '自营' }}
+                {{ scope.row.supplier_name ? scope.row.supplier_name : $t('3cdfcea1.491c0c') }}
               </template>
             </el-table-column>
-            <el-table-column prop="price" label="单价（¥）" width="100">
+            <el-table-column prop="price" :label="$t('3cdfcea1.6bf871')" width="100">
               <template slot-scope="scope">
                 {{ (scope.row.price / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column prop="cost_price" label="结算价（¥）" width="100">
+            <el-table-column prop="cost_price" :label="$t('3cdfcea1.17b4aa')" width="100">
               <template slot-scope="scope">
                 {{ (scope.row.cost_price / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column prop="cost_price" label="成本价（¥）" width="100">
+            <el-table-column prop="cost_price" :label="$t('3cdfcea1.066804')" width="100">
               <template slot-scope="scope">
                 {{ (scope.row.cost_price / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column prop="num" label="数量" width="80" />
+            <el-table-column prop="num" :label="$t('3cdfcea1.0bf60b')" width="80" />
             <el-table-column
               v-if="orderInfo.type == '1'"
               prop="price"
-              label="计税单价（¥）"
+              :label="$t('3cdfcea1.ecd6be')"
               width="120"
             >
               <template slot-scope="scope">
@@ -170,50 +170,57 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="小计（¥）" width="120">
+            <el-table-column :label="$t('3cdfcea1.5746e7')" width="120">
               <template slot-scope="scope">
                 {{ (scope.row.item_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column label="结算小计（¥）" width="120">
+            <el-table-column :label="$t('3cdfcea1.95f245')" width="120">
               <template slot-scope="scope">
                 {{ (scope.row.cost_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column label="成本小计（¥）" width="120">
+            <el-table-column :label="$t('3cdfcea1.1f1eac')" width="120">
               <template slot-scope="scope">
                 {{ (scope.row.cost_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column v-if="!VERSION_IN_PURCHASE()" label="会员优惠（¥）" width="120">
+            <el-table-column
+              v-if="!VERSION_IN_PURCHASE()"
+              :label="$t('3cdfcea1.5c7afc')"
+              width="120"
+            >
               <template slot-scope="scope">
                 {{ (scope.row.member_discount / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column label="积分抵扣（¥）" width="120">
+            <el-table-column :label="$t('3cdfcea1.2ecbc8')" width="120">
               <template slot-scope="scope">
                 {{ (scope.row.point_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column label="总支付价（¥）" width="120">
+            <el-table-column :label="$t('3cdfcea1.e95382')" width="120">
               <template slot-scope="scope">
                 {{ (scope.row.total_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column label="总优惠（¥）" width="100">
+            <el-table-column :label="$t('3cdfcea1.aae045')" width="100">
               <template slot-scope="scope">
                 {{ (scope.row.discount_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column v-if="!VERSION_IN_PURCHASE() && !VERSION_STANDARD()" label="货币汇率">
+            <el-table-column
+              v-if="!VERSION_IN_PURCHASE() && !VERSION_STANDARD()"
+              :label="$t('3cdfcea1.f8d735')"
+            >
               <template slot-scope="scope">
                 <span>{{ scope.row.fee_rate }}</span>
               </template>
             </el-table-column>
             <template v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp">
-              <el-table-column label="发货状态">
+              <el-table-column :label="$t('3cdfcea1.c3c7a1')">
                 <template slot-scope="scope">
-                  <span>已发货</span>
+                  <span>{{ $t('3cdfcea1.355409') }}</span>
                 </template>
               </el-table-column>
               <!-- <el-table-column label="快递公司" width="150px">
@@ -252,7 +259,7 @@
                     update(scope.row.delivery_corp, scope.row.delivery_code, scope.row)
                   "
                 >
-                  确认修改
+                  {{ $t('3cdfcea1.49e56c') }}
                 </el-button>
               </template>
             </el-table-column> -->
@@ -264,7 +271,7 @@
         v-if="orderInfo && orderInfo._order_class != 'excard' && !IS_SUPPLIER()"
         class="el-card--normal"
       >
-        <div slot="header">支付清单</div>
+        <div slot="header">{{ $t('3cdfcea1.a58517') }}</div>
         <el-row class="card-panel">
           <el-col
             v-for="(item, index) in payList"
@@ -281,7 +288,7 @@
 
       <el-card v-if="!VERSION_IN_PURCHASE()" class="el-card--normal">
         <el-card v-if="invoice" class="el-card--normal">
-          <div slot="header">发票信息</div>
+          <div slot="header">{{ $t('3cdfcea1.714483') }}</div>
           <div v-if="invoice.title == 'individual'">
             <el-row class="card-panel">
               <el-col
@@ -311,19 +318,19 @@
             </el-row>
           </div>
         </el-card>
-        <div v-if="!IS_SUPPLIER()" slot="header">优惠明细</div>
+        <div v-if="!IS_SUPPLIER()" slot="header">{{ $t('3cdfcea1.954493') }}</div>
         <div v-if="!IS_SUPPLIER()" class="card-panel">
           <el-table
             v-if="orderInfo"
             border
             show-summary
-            sum-text="总计优惠"
+            :sum-text="$t('3cdfcea1.ffbc0f')"
             :data="orderInfo.discount_info"
             style="max-width: 1000px"
           >
-            <el-table-column prop="info" label="优惠名称" />
-            <el-table-column prop="discount_fee" label="优惠金额（¥）" />
-            <el-table-column prop="rule" label="优惠说明" />
+            <el-table-column prop="info" :label="$t('3cdfcea1.72606e')" />
+            <el-table-column prop="discount_fee" :label="$t('3cdfcea1.e2c7b4')" />
+            <el-table-column prop="rule" :label="$t('3cdfcea1.028f5b')" />
           </el-table>
         </div>
       </el-card>
@@ -334,7 +341,7 @@
           v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length"
           class="el-card--normal"
         >
-          <div slot="header">问诊信息</div>
+          <div slot="header">{{ $t('3cdfcea1.4cf941') }}</div>
           <div class="card-panel">
             <el-row>
               <el-col
@@ -355,7 +362,7 @@
           class="el-card--normal"
           v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length"
         >
-          <div slot="header">处方信息</div>
+          <div slot="header">{{ $t('3cdfcea1.bf3412') }}</div>
           <div class="card-panel">
             <el-row>
               <el-col
@@ -373,7 +380,7 @@
                     :key="index1"
                   >
                     <div>{{ item1.drugCommonName }}</div>
-                    <div>用法：{{ item1.instructions }}</div>
+                    <div>{{ $t('3cdfcea1.6c9ae3') }}{{ item1.instructions }}</div>
                   </div>
                 </div>
                 <span v-if="!item.special" class="card-panel__value">{{
@@ -395,11 +402,11 @@
       </template>
 
       <el-card class="el-card--normal">
-        <div slot="header">物流信息</div>
+        <div slot="header">{{ $t('3cdfcea1.24bc07') }}</div>
         <div v-if="orderInfo" class="card-panel">
           <div class="card-panel-item">
             <span class="card-panel__label">{{
-              `${orderInfo.receipt_type == 'ziti' ? '自提地址' : '收货人信息'}:`
+              `${orderInfo.receipt_type == 'ziti' ? $t('3cdfcea1.818380') : $t('3cdfcea1.aec344')}:`
             }}</span>
             <span class="card-panel__value">{{ addressInfo }}</span>
           </div>
@@ -408,14 +415,14 @@
             v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info"
             class="card-panel-item"
           >
-            <span class="card-panel__label">提货人:</span>
+            <span class="card-panel__label">{{ $t('3cdfcea1.6f1246') }}</span>
             <span class="card-panel__value">{{ orderInfo.receiver_name }}</span>
           </div>
           <div
             v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info"
             class="card-panel-item"
           >
-            <span class="card-panel__label">提货时间:</span>
+            <span class="card-panel__label">{{ $t('3cdfcea1.a7e362') }}</span>
             <span class="card-panel__value">{{
               `${orderInfo.ziti_info.pickup_date} ${orderInfo.ziti_info.pickup_time.join('~')}`
             }}</span>
@@ -424,27 +431,27 @@
             v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info"
             class="card-panel-item"
           >
-            <span class="card-panel__label">联系电话:</span>
+            <span class="card-panel__label">{{ $t('3cdfcea1.733e3f') }}</span>
             <span class="card-panel__value">{{ orderInfo.receiver_mobile }}</span>
           </div>
 
           <div v-if="orderInfo.subdistrict_parent" class="card-panel-item">
-            <span class="card-panel__label">街道:</span>
+            <span class="card-panel__label">{{ $t('3cdfcea1.093af0') }}</span>
             <span class="card-panel__value">{{ orderInfo.subdistrict_parent }}</span>
           </div>
 
           <div v-if="orderInfo.subdistrict" class="card-panel-item">
-            <span class="card-panel__label">社区:</span>
+            <span class="card-panel__label">{{ $t('3cdfcea1.2431ae') }}</span>
             <span class="card-panel__value">{{ orderInfo.subdistrict }}</span>
           </div>
 
           <el-table border :data="deliveryData">
-            <el-table-column prop="delivery_time" label="发货时间" />
-            <el-table-column prop="delivery_code" label="物流单号" />
-            <el-table-column prop="delivery_corp_name" label="快递公司" />
-            <el-table-column prop="supplier_name" label="来源供应商" />
-            <el-table-column prop="delivery_corp" label="物流编码" />
-            <el-table-column label="操作">
+            <el-table-column prop="delivery_time" :label="$t('3cdfcea1.bfd255')" />
+            <el-table-column prop="delivery_code" :label="$t('3cdfcea1.0bb075')" />
+            <el-table-column prop="delivery_corp_name" :label="$t('3cdfcea1.f3af96')" />
+            <el-table-column prop="supplier_name" :label="$t('3cdfcea1.55c61d')" />
+            <el-table-column prop="delivery_corp" :label="$t('3cdfcea1.28acd4')" />
+            <el-table-column :label="$t('3cdfcea1.2b6bc0')">
               <template slot-scope="scope">
                 <template v-if="(IS_ADMIN() && scope.row.supplier_id == '0') || !IS_ADMIN()">
                   <el-button
@@ -454,7 +461,7 @@
                     type="text"
                     @click="modifyExpress(scope.row)"
                   >
-                    编辑
+                    {{ $t('3cdfcea1.95b351') }}
                   </el-button>
                 </template>
               </template>
@@ -464,14 +471,19 @@
       </el-card>
 
       <el-card class="el-card--normal">
-        <div slot="header">订单追踪</div>
+        <div slot="header">{{ $t('3cdfcea1.15c09f') }}</div>
         <div v-if="orderInfo?.self_delivery_operator_name" class="card-panel">
           <div class="card-panel-item">
-            <span>配送员姓名：{{ orderInfo.self_delivery_operator_name || '-' }}</span>
-            <span class="ml-16"
-              >配送员手机号：{{ orderInfo.self_delivery_operator_mobile || '-' }}</span
+            <span
+              >{{ $t('3cdfcea1.0bf1a7') }}{{ orderInfo.self_delivery_operator_name || '-' }}</span
             >
-            <span class="ml-16">配送费：{{ orderInfo.self_delivery_fee / 100 }}元</span>
+            <span class="ml-16"
+              >{{ $t('3cdfcea1.ad1a76') }}{{ orderInfo.self_delivery_operator_mobile || '-' }}</span
+            >
+            <span class="ml-16"
+              >{{ $t('3cdfcea1.ad365e') }}{{ orderInfo.self_delivery_fee / 100
+              }}{{ $t('3cdfcea1.c16655') }}</span
+            >
           </div>
         </div>
         <div class="delivery-log">
@@ -483,10 +495,12 @@
               placement="top"
             >
               <el-card>
-                <p>操作详情：{{ key.msg }}</p>
-                <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
+                <p>{{ $t('3cdfcea1.a7b805') }}{{ key.msg }}</p>
+                <p v-if="key.delivery_remark">
+                  {{ $t('3cdfcea1.82ad15') }}{{ key.delivery_remark }}
+                </p>
                 <div v-if="key.pics?.length">
-                  配送照片：
+                  {{ $t('3cdfcea1.6a1136') }}
                   <div class="img-box">
                     <el-image
                       v-for="(item, idx) in key.pics"
@@ -504,7 +518,7 @@
       </el-card>
 
       <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM()" class="el-card--normal">
-        <div slot="header">分润信息</div>
+        <div slot="header">{{ $t('3cdfcea1.ee6cce') }}</div>
         <el-row class="card-panel">
           <el-col
             v-for="(item, index) in profitList"
@@ -534,7 +548,7 @@
       <SpDialog
         ref="expressRef"
         v-model="expressDialog"
-        title="修改物流信息"
+        :title="$t('3cdfcea1.92ca2e')"
         :form="expressForm"
         :form-list="expressFormList"
         @onSubmit="expressSubmit"
@@ -545,7 +559,7 @@
         ref="deliverGoodsDialogRef"
         v-model="deliverGoodsDialog"
         width="1000px"
-        :title="`发货【订单:${deliverGoodsForm.order_id}】`"
+        :title="$t('3cdfcea1.cfcc1e') + deliverGoodsForm.order_id + '】'"
         :form="deliverGoodsForm"
         :form-list="deliverGoodsFormList"
         @onSubmit="deliverGoodsSubmit"
@@ -572,102 +586,158 @@ export default {
   data() {
     return {
       infoList: [
-        { label: '下单时间:', field: 'create_time', is_show: true },
-        { label: '订单编号:', field: 'order_id', is_show: true },
-        { label: '订单类型:', field: 'order_class', is_show: true },
-        { label: '订单状态:', field: 'order_status_msg', is_show: true },
-        { label: '开票状态:', field: 'invoice_status', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '配送类型:', field: 'receiptTypeTxt', is_show: true },
-        { label: '会员昵称:', field: 'username', is_show: true },
-        { label: '会员手机号:', field: 'mobile', is_show: true },
-        { label: '会员等级:', field: 'memberGrade', is_show: true },
-        { label: '会员折扣:', field: 'memberDiscount', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '货币类型:', field: 'fee_type', is_show: true },
-        { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '用户身份:', field: 'purchaseRole', is_show: true },
-        { label: '销售门店:', field: 'sale_salesman_distributor_id', is_show: true },
-        { label: '销售导购:', field: 'salesman_mobile', is_show: true },
-        { label: '姓名:', field: 'employee_name', is_show: true },
-        { label: '所属企业:', field: 'enterprise_name', is_show: true },
-        { label: '来源店铺:', field: 'distributor_name', is_show: true }
+        { label: this.$t('3cdfcea1.43c297'), field: 'create_time', is_show: true },
+        { label: this.$t('3cdfcea1.90d17e'), field: 'order_id', is_show: true },
+        { label: this.$t('3cdfcea1.0e83be'), field: 'order_class', is_show: true },
+        { label: this.$t('3cdfcea1.7816f5'), field: 'order_status_msg', is_show: true },
+        {
+          label: this.$t('3cdfcea1.dfc420'),
+          field: 'invoice_status',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        { label: this.$t('3cdfcea1.e9d70f'), field: 'receiptTypeTxt', is_show: true },
+        { label: this.$t('3cdfcea1.f1a471'), field: 'username', is_show: true },
+        { label: this.$t('3cdfcea1.468c2b'), field: 'mobile', is_show: true },
+        { label: this.$t('3cdfcea1.3b387e'), field: 'memberGrade', is_show: true },
+        {
+          label: this.$t('3cdfcea1.287fa3'),
+          field: 'memberDiscount',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        { label: this.$t('3cdfcea1.e48a1d'), field: 'fee_type', is_show: true },
+        {
+          label: this.$t('3cdfcea1.da46b5'),
+          field: 'bonus_points',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.2f0613'),
+          field: 'get_points',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.30c38a'),
+          field: 'extra_points',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.87c5d5'),
+          field: 'point_use',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        { label: this.$t('3cdfcea1.1583ee'), field: 'purchaseRole', is_show: true },
+        { label: this.$t('3cdfcea1.1e1a6f'), field: 'sale_salesman_distributor_id', is_show: true },
+        { label: this.$t('3cdfcea1.860510'), field: 'salesman_mobile', is_show: true },
+        { label: this.$t('3cdfcea1.75d152'), field: 'employee_name', is_show: true },
+        { label: this.$t('3cdfcea1.9030e8'), field: 'enterprise_name', is_show: true },
+        { label: this.$t('3cdfcea1.16f2bc'), field: 'distributor_name', is_show: true }
       ],
       payList: [
-        { label: '交易单号:', field: 'tradeId', is_show: true },
-        { label: '交易流水号:', field: 'transactionId', is_show: true },
-        { label: '商品总额:', field: 'goodsPrice', is_show: true },
-        { label: '运费:', field: 'freightFee', is_show: true },
-        { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE() },
-        { label: '应付总金额:', field: 'totalPrice', is_show: true },
-        { label: '实付总金额:', field: 'realPrice', is_show: true },
-        { label: '支付方式:', field: 'payTypeTxt', is_show: true },
-        { label: '支付状态:', field: 'tradeStateTxt', is_show: true },
-        { label: '交易时间:', field: 'timeStart', is_show: true },
-        { label: '交易结束时间:', field: 'timeExpire', is_show: true }
+        { label: this.$t('3cdfcea1.e850e7'), field: 'tradeId', is_show: true },
+        { label: this.$t('3cdfcea1.35b3c2'), field: 'transactionId', is_show: true },
+        { label: this.$t('3cdfcea1.6eb0c2'), field: 'goodsPrice', is_show: true },
+        { label: this.$t('3cdfcea1.b4a1ba'), field: 'freightFee', is_show: true },
+        {
+          label: this.$t('3cdfcea1.a34d7d'),
+          field: 'memberDiscountPrice',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.a1fed5'),
+          field: 'couponDiscount',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.0b4786'),
+          field: 'totalDiscount',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        {
+          label: this.$t('3cdfcea1.30020a'),
+          field: 'pointFee',
+          is_show: !this.VERSION_IN_PURCHASE()
+        },
+        { label: this.$t('3cdfcea1.32613e'), field: 'totalPrice', is_show: true },
+        { label: this.$t('3cdfcea1.e98e07'), field: 'realPrice', is_show: true },
+        { label: this.$t('3cdfcea1.292de2'), field: 'payTypeTxt', is_show: true },
+        { label: this.$t('3cdfcea1.011e95'), field: 'tradeStateTxt', is_show: true },
+        { label: this.$t('3cdfcea1.2def40'), field: 'timeStart', is_show: true },
+        { label: this.$t('3cdfcea1.ed916e'), field: 'timeExpire', is_show: true }
       ],
       profitList: [
-        { label: '分润门店类型:', field: 'profit_type' },
-        { label: '分润总金额:', field: 'profit_totalPrice' }
+        { label: this.$t('3cdfcea1.c1947d'), field: 'profit_type' },
+        { label: this.$t('3cdfcea1.783a35'), field: 'profit_totalPrice' }
       ],
       communityInfoList: [
-        { label: '活动名称:', field: 'community_activity_name', is_show: true },
-        { label: '所属团长:', field: 'community_chief_name', is_show: true },
-        { label: '跟团号:', field: 'community_activity_trade_no', is_show: true }
+        { label: this.$t('3cdfcea1.1cadc0'), field: 'community_activity_name', is_show: true },
+        { label: this.$t('3cdfcea1.a89d19'), field: 'community_chief_name', is_show: true },
+        { label: this.$t('3cdfcea1.e5dd91'), field: 'community_activity_trade_no', is_show: true }
       ],
       interrogationInfoList: [
-        { label: '用药人姓名:', field: 'user_family_name', is_show: true },
-        { label: '身份证号:', field: 'user_family_id_card', is_show: true },
-        { label: '手机号:', field: 'user_family_phone', is_show: true },
-        { label: '用药人年龄:', field: 'user_family_age', is_show: true },
-        { label: '用药人性别:', field: 'user_family_gender', is_show: true },
-        { label: '与您关系:', field: 'relationship', is_show: true },
-        { label: '用药人是否孕妇:', field: 'is_pregnant_woman', is_show: true },
-        { label: '用药人是否哺乳期:', field: 'is_lactation', is_show: true },
-        { label: '是否使用过此类药物:', field: 'before_ai_result_used_medicine', is_show: true },
-        { label: '是否有药物过敏史:', field: 'is_before_ai_result_allergy_history', is_show: true },
-        { label: '药物过敏说明:', field: 'before_ai_result_allergy_history', is_show: true },
-        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true }
+        { label: this.$t('3cdfcea1.6290d8'), field: 'user_family_name', is_show: true },
+        { label: this.$t('3cdfcea1.5d7781'), field: 'user_family_id_card', is_show: true },
+        { label: this.$t('3cdfcea1.ce2bf3'), field: 'user_family_phone', is_show: true },
+        { label: this.$t('3cdfcea1.df3258'), field: 'user_family_age', is_show: true },
+        { label: this.$t('3cdfcea1.53047c'), field: 'user_family_gender', is_show: true },
+        { label: this.$t('3cdfcea1.d651d6'), field: 'relationship', is_show: true },
+        { label: this.$t('3cdfcea1.312e3d'), field: 'is_pregnant_woman', is_show: true },
+        { label: this.$t('3cdfcea1.043fb3'), field: 'is_lactation', is_show: true },
+        {
+          label: this.$t('3cdfcea1.572906'),
+          field: 'before_ai_result_used_medicine',
+          is_show: true
+        },
+        {
+          label: this.$t('3cdfcea1.a5ebb2'),
+          field: 'is_before_ai_result_allergy_history',
+          is_show: true
+        },
+        {
+          label: this.$t('3cdfcea1.a0439b'),
+          field: 'before_ai_result_allergy_history',
+          is_show: true
+        },
+        {
+          label: this.$t('3cdfcea1.72c335'),
+          field: 'before_ai_result_body_abnormal',
+          is_show: true
+        }
       ],
       prescriptionInfoList: [
-        { label: '处方ID:', field: 'prescription_id', is_show: true },
-        { label: '互联网医院名称:', field: 'hospital_name', is_show: true },
-        { label: '580门店ID:', field: 'kuaizhen_store_id', is_show: true },
-        { label: '580门店名称:', field: 'kuaizhen_store_name', is_show: true },
-        { label: '处方编号:', field: 'serial_no', is_show: true },
-        { label: '医生签署时间:', field: 'doctor_sign_time', is_show: true },
-        { label: '医生科室:', field: 'doctor_office', is_show: true },
-        { label: '医生ID:', field: 'doctor_id', is_show: true },
-        { label: '开方医生:', field: 'doctor_name', is_show: true },
-        { label: '诊断标签:', field: 'tags', is_show: true },
-        { label: '处方状态:', field: 'prescription_in_status', is_show: true },
+        { label: this.$t('3cdfcea1.77de9b'), field: 'prescription_id', is_show: true },
+        { label: this.$t('3cdfcea1.11767f'), field: 'hospital_name', is_show: true },
+        { label: this.$t('3cdfcea1.a02158'), field: 'kuaizhen_store_id', is_show: true },
+        { label: this.$t('3cdfcea1.ea3467'), field: 'kuaizhen_store_name', is_show: true },
+        { label: this.$t('3cdfcea1.4465a6'), field: 'serial_no', is_show: true },
+        { label: this.$t('3cdfcea1.aac8bc'), field: 'doctor_sign_time', is_show: true },
+        { label: this.$t('3cdfcea1.a20bcf'), field: 'doctor_office', is_show: true },
+        { label: this.$t('3cdfcea1.11df6b'), field: 'doctor_id', is_show: true },
+        { label: this.$t('3cdfcea1.d9e80e'), field: 'doctor_name', is_show: true },
+        { label: this.$t('3cdfcea1.dda854'), field: 'tags', is_show: true },
+        { label: this.$t('3cdfcea1.cd43f7'), field: 'prescription_in_status', is_show: true },
         // { label: '通用名:', field: 'community_activity_name', is_show: false },
-        { label: '创建时间:', field: 'prescription_created', is_show: true },
-        { label: '更改时间:', field: 'prescription_updated', is_show: true },
-        { label: '备注:', field: 'prescription_memo', is_show: true },
-        { label: '补充说明:', field: 'prescription_remarks', is_show: true },
+        { label: this.$t('3cdfcea1.e2a03f'), field: 'prescription_created', is_show: true },
+        { label: this.$t('3cdfcea1.ebcac9'), field: 'prescription_updated', is_show: true },
+        { label: this.$t('3cdfcea1.55bea7'), field: 'prescription_memo', is_show: true },
+        { label: this.$t('3cdfcea1.54b8e3'), field: 'prescription_remarks', is_show: true },
         // { label: '药品用量说明:', field: 'drug_rsp_list', is_show: true },
-        { label: '处方审核状态:', field: 'audit_status', is_show: true },
-        { label: '审方时间:', field: 'audit_time', is_show: true },
-        { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
-        { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
-        { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
+        { label: this.$t('3cdfcea1.28833e'), field: 'audit_status', is_show: true },
+        { label: this.$t('3cdfcea1.274c72'), field: 'audit_time', is_show: true },
+        { label: this.$t('3cdfcea1.9b44a9'), field: 'audit_reason', is_show: true },
+        { label: this.$t('3cdfcea1.fbd545'), field: 'audit_apothecary_name', is_show: true },
+        { label: this.$t('3cdfcea1.3e5297'), field: 'diagnosis_id', is_show: true },
         {
-          label: '药品用法用量说明:',
+          label: this.$t('3cdfcea1.d8a21b'),
           field: 'drug_rsp_list',
           type: 'cycle',
           special: true,
           is_show: true
         },
-        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special: true }
+        { label: this.$t('3cdfcea1.5d35e6'), field: 'dst_file_path', is_show: true, special: true }
       ],
 
-      memberRemark: '暂无留言',
-      merchantRemark: '暂无备注',
+      memberRemark: '',
+      merchantRemark: '',
       loading: false,
       addressInfo: '',
       orderInfo: null,
@@ -677,21 +747,21 @@ export default {
       expressDialog: false,
       expressFormList: [
         {
-          label: '快递公司',
+          label: this.$t('3cdfcea1.f3af96'),
           key: 'delivery_corp',
-          placeholder: '请选择快递公司',
+          placeholder: this.$t('3cdfcea1.8367e8'),
           type: 'select',
           options: [],
           required: true,
-          message: '不能为空'
+          message: this.$t('3cdfcea1.281bad')
         },
         {
-          label: '物流单号',
+          label: this.$t('3cdfcea1.0bb075'),
           key: 'delivery_code',
           type: 'input',
-          placeholder: '物流公司单号',
+          placeholder: this.$t('3cdfcea1.0e9f1e'),
           required: true,
-          message: '不能为空'
+          message: this.$t('3cdfcea1.281bad')
         }
       ],
 
@@ -704,13 +774,13 @@ export default {
       deliverGoodsDialog: false,
       deliverGoodsFormList: [
         {
-          label: '发货类型',
+          label: this.$t('3cdfcea1.b01994'),
           key: 'delivery_type',
           type: 'radio',
           disabled: false,
           options: [
-            { label: 'batch', name: '整单发货' },
-            { label: 'sep', name: '拆分发货' }
+            { label: 'batch', name: this.$t('3cdfcea1.afb426') },
+            { label: 'sep', name: this.$t('3cdfcea1.95d243') }
           ],
           onChange: (e) => {
             if (e == 'sep') {
@@ -725,17 +795,17 @@ export default {
           key: 'items',
           type: 'table',
           options: [
-            { title: '商品名', key: 'item_name' },
-            { title: '数量', key: 'num', width: 60 },
-            { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 },
+            { title: this.$t('3cdfcea1.de5472'), key: 'item_name' },
+            { title: this.$t('3cdfcea1.0bf60b'), key: 'num', width: 60 },
+            { title: this.$t('3cdfcea1.745165'), key: 'delivery_item_num', width: 100 },
+            { title: this.$t('3cdfcea1.e95382'), key: 'price', width: 120 },
             {
-              title: '发货数量',
+              title: this.$t('3cdfcea1.4f5a46'),
               key: 'item_num',
               width: 160,
               render: (row, column, cell) => {
                 if (row.num - row.delivery_item_num == 0) {
-                  return '已完成'
+                  return this.$t('3cdfcea1.fad522')
                 } else {
                   return (
                     <el-input-number
@@ -753,21 +823,21 @@ export default {
           ]
         },
         {
-          label: '快递公司',
+          label: this.$t('3cdfcea1.f3af96'),
           key: 'delivery_corp',
-          placeholder: '请选择快递公司',
+          placeholder: this.$t('3cdfcea1.8367e8'),
           type: 'select',
           options: [],
           required: true,
-          message: '不能为空'
+          message: this.$t('3cdfcea1.281bad')
         },
         {
-          label: '物流单号',
+          label: this.$t('3cdfcea1.0bb075'),
           key: 'delivery_code',
           type: 'input',
-          placeholder: '物流公司单号',
+          placeholder: this.$t('3cdfcea1.0e9f1e'),
           required: true,
-          message: '不能为空'
+          message: this.$t('3cdfcea1.281bad')
         }
       ],
       deliverGoodsForm: {
@@ -782,35 +852,35 @@ export default {
       invoice: null,
       // 发票信息个人
       invoiceList: [
-        { label: '类型:', field: 'invoiceType', is_show: true },
-        { label: '开票状态:', field: 'invoice_status', is_show: true },
-        { label: '发票抬头:', field: 'invoiceContent', is_show: true }
+        { label: this.$t('3cdfcea1.436358'), field: 'invoiceType', is_show: true },
+        { label: this.$t('3cdfcea1.dfc420'), field: 'invoice_status', is_show: true },
+        { label: this.$t('3cdfcea1.5f4907'), field: 'invoiceContent', is_show: true }
       ],
       // 发票信息公司
       invoiceListUnit: [
-        { label: '类型:', field: 'invoiceType', is_show: true },
-        { label: '开票状态:', field: 'invoice_status', is_show: true },
-        { label: '公司名称:', field: 'invoicedCompanyName', is_show: true },
-        { label: '税号:', field: 'invoiceRegistrationNumber', is_show: true },
-        { label: '电话号码:', field: 'invoicedCompanyPhone', is_show: true },
-        { label: '开户银行:', field: 'invoicedBankName', is_show: true },
-        { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
-        { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
+        { label: this.$t('3cdfcea1.436358'), field: 'invoiceType', is_show: true },
+        { label: this.$t('3cdfcea1.dfc420'), field: 'invoice_status', is_show: true },
+        { label: this.$t('3cdfcea1.6c4365'), field: 'invoicedCompanyName', is_show: true },
+        { label: this.$t('3cdfcea1.da0b0a'), field: 'invoiceRegistrationNumber', is_show: true },
+        { label: this.$t('3cdfcea1.db7b04'), field: 'invoicedCompanyPhone', is_show: true },
+        { label: this.$t('3cdfcea1.dcc037'), field: 'invoicedBankName', is_show: true },
+        { label: this.$t('3cdfcea1.9488d5'), field: 'invoicedBankAccount', is_show: true },
+        { label: this.$t('3cdfcea1.eb4c89'), field: 'invoiceCompanyAddress', is_show: true }
       ],
       isBindOMS: false,
       deliveryLog: [],
       relationshipMap: {
-        1: '本人',
-        2: '父母',
-        3: '配偶',
-        4: '子女',
-        5: '其他'
+        1: this.$t('3cdfcea1.6c6d18'),
+        2: this.$t('3cdfcea1.b23382'),
+        3: this.$t('3cdfcea1.61d549'),
+        4: this.$t('3cdfcea1.84e10d'),
+        5: this.$t('3cdfcea1.0d98c7')
       },
       auditStatusMap: {
-        1: '未审核',
-        2: '审核通过',
-        3: '审核不通过',
-        4: '不需要审方'
+        1: this.$t('3cdfcea1.97a81d'),
+        2: this.$t('3cdfcea1.871a30'),
+        3: this.$t('3cdfcea1.abad33'),
+        4: this.$t('3cdfcea1.4878c1')
       }
     }
   },
@@ -836,7 +906,7 @@ export default {
     this.$api.third.getDmcrmSetting().then((response) => {
       if (response?.is_open) {
         this.infoList = this.infoList.map((el) => {
-          if (el.label == '订单获取积分') {
+          if (el.field == 'get_points') {
             el.is_show = false
           }
           return el
@@ -852,9 +922,11 @@ export default {
     },
     getFiledValue(key) {
       const { orderInfo } = this
-      if (orderInfo) {
-        return orderInfo[key]
-      }
+      if (!orderInfo) return ''
+      const v = orderInfo[key]
+      const i18nFields = ['payTypeTxt', 'tradeStateTxt', 'invoice_status', 'profit_type']
+      if (i18nFields.includes(key) && v) return this.$t(v)
+      return v
     },
     async getDetail() {
       this.loading = true
@@ -923,11 +995,11 @@ export default {
 
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
-        crossOrderTxt = `（跨境订单）`
+        crossOrderTxt = this.$t('3cdfcea1.d89979')
       }
 
       const fdReceiptType = DISTRIBUTION_TYPE.find((k) => k.value == receipt_type)
-      let receiptTypeTxt = '普通快递'
+      let receiptTypeTxt = this.$t('3cdfcea1.249bfe')
       if (fdReceiptType) {
         receiptTypeTxt = fdReceiptType.title
       }
@@ -937,7 +1009,7 @@ export default {
       if (vipgrade && vipgrade.is_vip) {
         memberGrade = vipgrade.grade_name
       } else {
-        memberGrade = gradeInfo ? gradeInfo.grade_name : '无'
+        memberGrade = gradeInfo ? gradeInfo.grade_name : this.$t('3cdfcea1.d81bb2')
       }
 
       let memberDiscount = ''
@@ -948,7 +1020,7 @@ export default {
       this.orderInfo = {
         ...orderInfo,
         create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
-        order_class: `${fd ? fd.title : '实体订单'}${crossOrderTxt}`,
+        order_class: `${fd ? this.$t(fd.title) : this.$t('3cdfcea1.7a83f9')}${crossOrderTxt}`,
         _order_class: orderInfo.order_class,
         invoice_status:
           OPEN_STATUS_ARR.find((el) => el.value === orderInfo.invoice_status)?.title || '',
@@ -1022,7 +1094,8 @@ export default {
         timeExpire: tradeInfo.timeExpire
           ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        invoiceType: invoiceType == 'individual' ? '个人' : '企业',
+        invoiceType:
+          invoiceType == 'individual' ? this.$t('3cdfcea1.6a0e04') : this.$t('3cdfcea1.04c9e3'),
         invoiceContent,
         invoicedCompanyName,
         invoiceRegistrationNumber,
@@ -1032,8 +1105,8 @@ export default {
         invoicedBankAccount,
         purchaseRole: orders_purchase_info
           ? orders_purchase_info.type == 'employee'
-            ? '员工'
-            : '亲友'
+            ? this.$t('3cdfcea1.2ed392')
+            : this.$t('3cdfcea1.4eca5b')
           : '',
         employee_name: orders_purchase_info ? orders_purchase_info.employee_name : '',
         enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name : '',
@@ -1042,20 +1115,33 @@ export default {
         user_family_id_card: diagnosis_data.user_family_id_card,
         user_family_phone: diagnosis_data.user_family_phone,
         user_family_age: diagnosis_data.user_family_age,
-        user_family_gender: diagnosis_data.user_family_gender == 1 ? '男' : '女',
+        user_family_gender:
+          diagnosis_data.user_family_gender == 1
+            ? this.$t('3cdfcea1.36a490')
+            : this.$t('3cdfcea1.87c835'),
         relationship: this.relationshipMap[diagnosis_data.relationship],
-        is_pregnant_woman: diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
-        is_lactation: diagnosis_data.is_lactation == 1 ? '是' : '否',
+        is_pregnant_woman:
+          diagnosis_data.is_pregnant_woman == 1
+            ? this.$t('3cdfcea1.0a60ac')
+            : this.$t('3cdfcea1.c9744f'),
+        is_lactation:
+          diagnosis_data.is_lactation == 1
+            ? this.$t('3cdfcea1.0a60ac')
+            : this.$t('3cdfcea1.c9744f'),
         before_ai_result_used_medicine:
-          diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
+          diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1
+            ? this.$t('3cdfcea1.0a60ac')
+            : this.$t('3cdfcea1.c9744f'),
         is_before_ai_result_allergy_history: diagnosis_data?.before_ai_data_list
           ?.before_ai_result_allergy_history
-          ? '是'
-          : '否',
+          ? this.$t('3cdfcea1.0a60ac')
+          : this.$t('3cdfcea1.c9744f'),
         before_ai_result_allergy_history:
           diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
         before_ai_result_body_abnormal:
-          diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
+          diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1
+            ? this.$t('3cdfcea1.0a60ac')
+            : this.$t('3cdfcea1.c9744f'),
 
         prescription_id: prescription_data.id,
         hospital_name: prescription_data.hospital_name,
@@ -1068,7 +1154,8 @@ export default {
         doctor_id: prescription_data.doctor_id,
         doctor_name: prescription_data.doctor_name,
         tags: prescription_data.tags,
-        prescription_in_status: prescription_data.status == 1 ? '正常' : '废弃',
+        prescription_in_status:
+          prescription_data.status == 1 ? this.$t('3cdfcea1.fd6e80') : this.$t('3cdfcea1.0044f6'),
         prescription_created: prescription_data.created
           ? moment(prescription_data.created * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
@@ -1091,8 +1178,8 @@ export default {
       }
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log
-      this.memberRemark = orderInfo.remark || '暂无留言'
-      this.merchantRemark = orderInfo.distributor_remark || '暂无备注'
+      this.memberRemark = orderInfo.remark || this.$t('3cdfcea1.101e5b')
+      this.merchantRemark = orderInfo.distributor_remark || this.$t('3cdfcea1.2a450f')
       // debugger
       // this.addressInfo =
       //   receipt_type == 'ziti'
@@ -1129,7 +1216,7 @@ export default {
           receipt_type != 'ziti' &&
           this.login_type == 'supplier'
         ) {
-          btnActions.push({ name: '发货', key: 'deliverGoods' })
+          btnActions.push({ name: this.$t('3cdfcea1.045315'), key: 'deliverGoods' })
         }
       }
       this.btnActions = btnActions
@@ -1148,7 +1235,7 @@ export default {
       await this.$api.trade.editLogisticsList(orders_delivery_id, params)
       this.expressDialog = false
       this.getDetail()
-      this.$message.success('修改成功')
+      this.$message.success(this.$t('3cdfcea1.69be67'))
     },
     async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
@@ -1165,7 +1252,7 @@ export default {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
         if (this.isBindOMS && this.IS_ADMIN()) {
-          return this.$message.warning('请至OMS处理订单发货')
+          return this.$message.warning(this.$t('3cdfcea1.72b354'))
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
@@ -1206,9 +1293,9 @@ export default {
       this.deliverGoodsDialog = false
       this.getDetail()
       if (delivery_status && delivery_status != 'PENDING') {
-        this.$message.success('发货成功!')
+        this.$message.success(this.$t('3cdfcea1.de3b52'))
       } else {
-        this.$message.error('发货失败!')
+        this.$message.error(this.$t('3cdfcea1.2249c1'))
       }
     }
   }

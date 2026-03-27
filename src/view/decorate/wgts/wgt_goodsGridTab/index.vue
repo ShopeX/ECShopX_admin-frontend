@@ -31,7 +31,7 @@
           ]"
           @click="handleClick(index)"
         >
-          {{ item.tabTitle }}
+          {{ i18n.t(item.tabTitle) }}
         </div>
       </div>
 
@@ -50,12 +50,14 @@
                   size="mini"
                   style="background-color: #fff"
                 >
-                  处方药
+                  {{ i18n.t('5c0a1eb5.e8b7e1') }}
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
+                <span v-if="item.point" class="item-price"
+                  >{{ item.point }}{{ i18n.t('5c0a1eb5.9f68a8') }}</span
+                >
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"
@@ -85,12 +87,14 @@
                   size="mini"
                   style="background-color: #fff"
                 >
-                  处方药
+                  {{ i18n.t('5c0a1eb5.e8b7e1') }}
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
+                <span v-if="item.point" class="item-price"
+                  >{{ item.point }}{{ i18n.t('5c0a1eb5.9f68a8') }}</span
+                >
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"
@@ -105,7 +109,7 @@
       </div>
 
       <div class="goods-more">
-        <p class="more-btn">查看更多</p>
+        <p class="more-btn">{{ i18n.t('5c0a1eb5.90ef7c') }}</p>
       </div>
 
       <!-- 挂件自定义部分 -->
@@ -114,12 +118,14 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import config from './config'
+import { i18n } from '@/i18n'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'GoodsGridTab',
-  wgtName: '商品Tab',
+  wgtName: i18n.t('5c0a1eb5.be92cb'),
   wgtDesc: '',
   wgtIcon: 'wgt-goods-grid-tab',
   config: config,
@@ -127,7 +133,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {
+    return {i18n,
       currentIndex: 1,
       checked: 0,
       goodsGridTabDeep: {},

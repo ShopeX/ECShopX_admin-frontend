@@ -12,8 +12,8 @@
       :show-file-list="false"
       :on-change="uploadImage"
     >
-      <el-button type="primary"> 上传图片 </el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
+      <el-button type="primary"> {{ $t('fac92f03.ce6855') }} </el-button>
+      <div slot="tip" class="el-upload__tip">{{ $t('fac92f03.3f13f6') }}</div>
     </el-upload>
     <div v-loading="loading" class="img_pick">
       <ul class="clearfix">
@@ -31,7 +31,12 @@
             <el-row>
               <el-col :span="24">
                 <div class="opr_item" @click="removeItem(imageitem, index)">
-                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="$t('fac92f03.2f4aad')"
+                    placement="top"
+                  >
                     <i class="el-icon-delete" />
                   </el-tooltip>
                 </div>
@@ -125,26 +130,25 @@ export default {
       }
     },
     removeItem(item, index) {
-      this.$confirm('确定删除此图片吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('fac92f03.5dab41'), this.$t('fac92f03.02d981'), {
+        confirmButtonText: this.$t('fac92f03.38cf16'),
+        cancelButtonText: this.$t('fac92f03.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.imageList.item.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('fac92f03.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
           })
-          //删除操作
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('fac92f03.2111cc')
           })
         })
     }

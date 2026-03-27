@@ -10,7 +10,7 @@ const routes = [
     meta: {
       aliasName: 'merchant',
       icon: 'all-application',
-      title: '概览'
+      title: 'ec5a39ee.863853'
     },
     path: '/merchant',
     children: [
@@ -21,7 +21,7 @@ const routes = [
         meta: {
           aliasName: 'merchant',
           icon: 'all-application',
-          title: '概览',
+          title: 'ec5a39ee.863853',
           permissions: ['merchant']
         }
       }

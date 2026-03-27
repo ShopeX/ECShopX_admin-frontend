@@ -8,8 +8,10 @@
     endTime: {{ endTime }}
     <slot :day="day" :hour="hour" :min="min" :sec="sec" :content="content">
       <div v-if="!content">
-        <span v-if="day > 0">{{ day }}天</span><span v-if="hour > 0">{{ hour }}时</span
-        ><span v-if="min > 0">{{ min }}分</span><span v-if="sec > 0">{{ sec }}秒</span>
+        <span v-if="day > 0">{{ day }}{{ $t('f622a94c.249aba') }}</span
+        ><span v-if="hour > 0">{{ hour }}{{ $t('f622a94c.609b5f') }}</span
+        ><span v-if="min > 0">{{ min }}{{ $t('f622a94c.daf783') }}</span
+        ><span v-if="sec > 0">{{ sec }}{{ $t('f622a94c.0c1fec') }}</span>
       </div>
       <div v-else>
         {{ content }}

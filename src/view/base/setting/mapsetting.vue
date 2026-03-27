@@ -10,18 +10,18 @@
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
-        :label="item.name"
+        :label="$t(item.name)"
         :name="item.activeName"
       >
         <el-form ref="form" :model="form" :rules="rules" label-width="150px">
           <div class="head-tips">
-            高德地图Key获取路径：
+            {{ $t('815b208f.f5ec99') }}
             <el-link
               href="https://developer.amap.com/?ref=http%3A%2F%2Flbs.gaode.com%2Fdev%2F"
               target="_blank"
               type="primary"
             >
-              高德地图控制台
+              {{ $t('815b208f.e07e1a') }}
             </el-link>
             ，进入 「我的应用」-「 创建新应用 」-「 添加新Key 」。
           </div>
@@ -30,27 +30,31 @@
             <el-input v-model="form.app_key" style="width: 60%" type="textarea" :rows="6" />
           </el-form-item>
           <el-form-item label="">
-            <div class="row-tip">Key 不填写或填写错误将导致该功能无法使用，请确保填写正确。</div>
+            <div class="row-tip">{{ $t('815b208f.79421a') }}</div>
           </el-form-item>
 
-          <el-form-item label="密钥" prop="app_secret" class="passwords">
+          <el-form-item :label="$t('815b208f.cdb81c')" prop="app_secret" class="passwords">
             <el-input v-model="form.app_secret" style="width: 60%" :type="pass_type" :rows="6" />
             <i
               v-if="pass_type == 'textarea'"
-              title="隐藏密码"
+              :title="$t('815b208f.dd909a')"
               class="iconfont icon-eye1 icons-class"
               @click="onChangePassIcon('password')"
             />
             <i
               v-else
-              title="隐藏密码"
+              :title="$t('815b208f.dd909a')"
               class="iconfont icon-eye-slash1 icons-class"
               @click="onChangePassIcon('textarea')"
             />
           </el-form-item>
 
           <div class="section-footer with-border content-center">
-            <el-button v-loading="loading" type="primary" @click="onSubmitChange"> 保存 </el-button>
+            <el-button v-loading="loading" type="primary" @click="onSubmitChange">
+{{
+              $t('815b208f.be5fbb')
+            }}
+</el-button>
           </div>
         </el-form>
       </el-tab-pane>
@@ -69,11 +73,15 @@ export default {
         app_key: '',
         app_secret: ''
       },
-      rules: {
-        app_key: { required: true, message: '请输入', trigger: 'blur' },
-        app_secret: { required: false, message: '请输入', trigger: 'blur' }
-      },
-      tabList: [{ name: '高德地图配置', activeName: 'first' }]
+      tabList: [{ name: '815b208f.89d5c0', activeName: 'first' }]
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        app_key: { required: true, message: this.$t('815b208f.02cc4f'), trigger: 'blur' },
+        app_secret: { required: false, message: this.$t('815b208f.02cc4f'), trigger: 'blur' }
+      }
     }
   },
   mounted() {
@@ -97,7 +105,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('815b208f.3b1083')
           })
           this.pass_type = 'password'
           this.onGetConfig()

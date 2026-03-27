@@ -9,7 +9,7 @@
       <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img :src="item.pics[0]" alt="" />
+            <img :src="item.pics[0]" alt="">
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -17,8 +17,14 @@
             </div>
             <div class="goods-sku">
               <template v-if="!item.nospec">
-                {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
+                {{
+                  item.spec_items.length > 0
+                    ? $t('9c91acb5.b9037f', { n: item.spec_items.length })
+                    : $t('9c91acb5.f46aac')
+                }}
+                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">
+                  {{ $t('9c91acb5.a0f99d') }}
+                </div>
               </template>
             </div>
           </div>
@@ -28,10 +34,10 @@
           <el-input
             v-model="item.new_price"
             type="input"
-            placeholder="组合商品价格"
+            :placeholder="$t('9c91acb5.27e08b')"
             @change="generateSku()"
           >
-            价格:
+            {{ $t('9c91acb5.3c70a0') }}
           </el-input>
         </div>
       </el-col>
@@ -45,21 +51,21 @@
         选择商品
       </el-button>
     </div>
-    <el-dialog title="选择sku" :visible.sync="dialogVisible" width="50%">
+    <el-dialog :title="$t('9c91acb5.8aa2c1')" :visible.sync="dialogVisible" width="50%">
       <el-table ref="skuTable" v-loading="loading" :data="skus" @selection-change="handleSkuChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column label="规格名称">
+        <el-table-column :label="$t('9c91acb5.023809')">
           <template slot-scope="scope">
             {{ scope.row.item_spec_desc }}
           </template>
         </el-table-column>
-        <el-table-column label="价格">
+        <el-table-column :label="$t('9c91acb5.0e9fd9')">
           <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
         </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleSkuSubmit">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{ $t('9c91acb5.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleSkuSubmit">{{ $t('9c91acb5.aa7527') }}</el-button>
       </span>
     </el-dialog>
     <GoodsSelector
@@ -189,7 +195,7 @@ export default {
     handleGoodsSubmit(data) {
       if (data.length > 10) {
         this.$message({
-          message: '最大选择10个商品',
+          message: this.$t('9c91acb5.120ab1'),
           type: 'error'
         })
         return

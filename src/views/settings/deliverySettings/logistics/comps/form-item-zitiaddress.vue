@@ -36,7 +36,7 @@
       v-model="data.region"
       filterable
       clearable
-      placeholder="选择省市区"
+      :placeholder="$t('750dd84b.01543b')"
       :class="keyClass('region')"
       :options="district"
       @change="onChange"
@@ -46,7 +46,7 @@
       class=""
       clearable
       type="text"
-      placeholder="请填写自提点的具体地址"
+      :placeholder="$t('750dd84b.2de66c')"
       :class="keyClass('address')"
       @change="onChange"
     />
@@ -96,10 +96,10 @@ export default {
       this.isErrorKey = ''
       if (region.length == 0) {
         this.isErrorKey = 'region'
-        throw new Error('请选择省市区')
+        throw new Error(this.$t('750dd84b.075488'))
       } else if (!address) {
         this.isErrorKey = 'address'
-        throw new Error('自提地址不能为空')
+        throw new Error(this.$t('750dd84b.faeec8'))
       }
     }
   }

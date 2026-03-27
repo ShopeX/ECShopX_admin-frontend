@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrDataVue from '../../comps/goods-attr/attr-data.vue'
 import CompPickerLinkVue from '../../comps/comp-pickerLink.vue'
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
@@ -9,8 +10,8 @@ const config = {
   name: 'group',
   setting: [
     {
-      group: '数据设置',
-      label: '数据设置',
+      group: i18n.t('55fecc70.e7af71'),
+      label: i18n.t('55fecc70.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -23,8 +24,8 @@ const config = {
       }
     },
     {
-      group: '数据设置',
-      label: '数据数量',
+      group: i18n.t('55fecc70.e7af71'),
+      label: i18n.t('55fecc70.87dfd7'),
       key: 'dataCount',
       component: 'number',
       value: 4,
@@ -32,19 +33,19 @@ const config = {
       max: 99
     },
     {
-      group: '组件标题',
-      label: '标题类型',
+      group: i18n.t('55fecc70.6f3360'),
+      label: i18n.t('55fecc70.c20c83'),
       key: 'groupTitleType',
       component: 'radiobutton',
       options: [
-        { name: '文字', label: 'text' },
-        { name: '图片', label: 'image' }
+        { name: i18n.t('55fecc70.ca746b'), label: 'text' },
+        { name: i18n.t('55fecc70.20def7'), label: 'image' }
       ],
       value: 'text'
     },
     {
-      group: '组件标题',
-      label: '标题图片',
+      group: i18n.t('55fecc70.6f3360'),
+      label: i18n.t('55fecc70.264fe1'),
       key: 'groupTitleImage',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
@@ -55,8 +56,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题文字',
+      group: i18n.t('55fecc70.6f3360'),
+      label: i18n.t('55fecc70.eded9e'),
       key: 'groupTitleText',
       component: 'input',
       value: '标题',
@@ -65,8 +66,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题颜色',
+      group: i18n.t('55fecc70.6f3360'),
+      label: i18n.t('55fecc70.94e391'),
       key: 'groupTitleColor',
       component: 'color',
       value: '#000000',
@@ -75,19 +76,19 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
-      label: '展示类型',
+      group: i18n.t('55fecc70.90507a'),
+      label: i18n.t('55fecc70.1711a8'),
       key: 'groupShowMoreBtn',
       component: 'radiobutton',
       options: [
-        { name: '显示', label: true },
-        { name: '隐藏', label: false }
+        { name: i18n.t('55fecc70.4d775d'), label: true },
+        { name: i18n.t('55fecc70.dce537'), label: false }
       ],
       value: true
     },
     {
-      group: '更多按钮',
-      label: '按钮颜色',
+      group: i18n.t('55fecc70.90507a'),
+      label: i18n.t('55fecc70.351201'),
       key: 'groupMoreBtnColor',
       component: 'color',
       value: '#000000',
@@ -96,7 +97,7 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
+      group: i18n.t('55fecc70.90507a'),
       label: '',
       key: 'groupMoreLink',
       component: function (h, { key }) {
@@ -132,6 +133,7 @@ const config = {
     }
 
     return {
+      id: v?.id,
       name: v.name,
       ...baseRest,
       data: v.data,
@@ -155,6 +157,7 @@ const config = {
   },
   transformOut: (v, wgtList, regionauth_id) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 base 中的样式数据转换

@@ -8,7 +8,7 @@
     <SpForm
       v-model="form"
       :reset-btn="false"
-      submit-btn-text="保存"
+      :submit-btn-text="$t('4a23b087.be5fbb')"
       :form-list="formList"
       @onSubmit="onSaveConfig"
     />
@@ -56,7 +56,7 @@ export default {
           invoice_status: this.form.invoice_status ? 1 : 0
         })
         .then((res) => {
-          this.$message.success('保存成功')
+          this.$message.success(this.$t('4a23b087.3b1083'))
           this.confirmDialogShow = false
         })
     }

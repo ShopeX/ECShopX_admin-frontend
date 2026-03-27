@@ -7,8 +7,8 @@
   <SpPage class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" @click="handleAddMenu"> 添加顶级菜单 </el-button>
-        <el-button type="info" @click="handleUrlDisabled"> 解锁更新菜单URL </el-button>
+        <el-button type="primary" @click="handleAddMenu">{{ $t('22d29d8e.12c072') }}</el-button>
+        <el-button type="info" @click="handleUrlDisabled">{{ $t('22d29d8e.a317e5') }}</el-button>
         <el-button v-if="dragOptions.disabled" type="danger" @click="handleDraggableDisabled">
           {{ draggableDisabled }}
         </el-button>
@@ -16,13 +16,13 @@
           {{ draggableDisabled }}
         </el-button>
         <el-button type="primary" @click="handleDownMenu">
-          下载版本配置<i class="el-icon-download el-icon--right" />
+          {{ $t('22d29d8e.34b9e3') }}<i class="el-icon-download el-icon--right" />
         </el-button>
         <!-- <el-button
             type="primary"
             @click="handleDownDistributorMenu"
           >
-            下载平台版配置<i class="el-icon-download el-icon--right" />
+            {{ $t('22d29d8e.34b9e3') }}<i class="el-icon-download el-icon--right" />
           </el-button> -->
         <el-upload
           style="margin-right: 10px; float: right"
@@ -31,7 +31,11 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button type="primary"> 导入<i class="el-icon-upload el-icon--right" /> </el-button>
+          <el-button type="primary"
+            >
+{{ $t('22d29d8e.8d9a07') }}<i class="el-icon-upload el-icon--right"
+          />
+</el-button>
         </el-upload>
       </div>
       <div
@@ -41,36 +45,36 @@
         <div class="el-table__header-wrapper">
           <table cellspacing="0" cellpadding="0" border="0" class="el-table__header">
             <colgroup>
-              <col name="el-table_5_column_31" width="220" />
-              <col name="el-table_5_column_32" width="230" />
-              <col name="el-table_5_column_33" width="100" />
-              <col name="el-table_5_column_34" width="100" />
-              <col name="el-table_5_column_35" width="100" />
-              <col name="el-table_5_column_36" width="100" />
-              <col name="el-table_5_column_37" width="927" />
+              <col name="el-table_5_column_31" width="220">
+              <col name="el-table_5_column_32" width="230">
+              <col name="el-table_5_column_33" width="100">
+              <col name="el-table_5_column_34" width="100">
+              <col name="el-table_5_column_35" width="100">
+              <col name="el-table_5_column_36" width="100">
+              <col name="el-table_5_column_37" width="927">
             </colgroup>
             <thead class="">
               <tr class="">
                 <th colspan="1" rowspan="1" class="el-table_5_column_31 is-leaf">
-                  <div style="width: 210px" class="cell">菜单名称</div>
+                  <div style="width: 210px" class="cell">{{ $t('22d29d8e.8ee9f2') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_32 is-leaf">
-                  <div style="width: 220px" class="cell">菜单URL</div>
+                  <div style="width: 220px" class="cell">{{ $t('22d29d8e.f03065') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_33 is-leaf">
-                  <div style="width: 80px" class="cell">是否显示</div>
+                  <div style="width: 80px" class="cell">{{ $t('22d29d8e.ae57b1') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_34 is-leaf">
-                  <div style="width: 80px" class="cell">顺序</div>
+                  <div style="width: 80px" class="cell">{{ $t('22d29d8e.6367e7') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_35 is-leaf">
-                  <div style="width: 80px" class="cell">是否为菜单</div>
+                  <div style="width: 80px" class="cell">{{ $t('22d29d8e.27b6a5') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_36 is-leaf">
-                  <div style="width: 80px" class="cell">菜单类型</div>
+                  <div style="width: 80px" class="cell">{{ $t('22d29d8e.52fe00') }}</div>
                 </th>
                 <th colspan="1" rowspan="1" class="el-table_5_column_37 is-leaf">
-                  <div class="cell">操作</div>
+                  <div class="cell">{{ $t('22d29d8e.2b6bc0') }}</div>
                 </th>
               </tr>
             </thead>
@@ -87,13 +91,13 @@
               <div class="el-table__body-wrapper">
                 <table cellspacing="0" cellpadding="0" border="0" class="el-table__body">
                   <colgroup>
-                    <col name="el-table_5_column" width="220" />
-                    <col name="el-table_5_column" width="230" />
-                    <col name="el-table_5_column" width="100" />
-                    <col name="el-table_5_column" width="100" />
-                    <col name="el-table_5_column" width="100" />
-                    <col name="el-table_5_column" width="100" />
-                    <col name="el-table_5_column" width="927" />
+                    <col name="el-table_5_column" width="220">
+                    <col name="el-table_5_column" width="230">
+                    <col name="el-table_5_column" width="100">
+                    <col name="el-table_5_column" width="100">
+                    <col name="el-table_5_column" width="100">
+                    <col name="el-table_5_column" width="100">
+                    <col name="el-table_5_column" width="927">
                   </colgroup>
                   <thead class="">
                     <tr class="" style="font-size: 12px; color: #606266; font-weight: 400">
@@ -133,8 +137,12 @@
                         </div>
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_33 is-leaf">
-                        <div v-if="item.is_show" style="width: 80px" class="cell">显示</div>
-                        <div v-else style="width: 80px" class="cell">隐藏</div>
+                        <div v-if="item.is_show" style="width: 80px" class="cell">
+                          {{ $t('22d29d8e.4d775d') }}
+                        </div>
+                        <div v-else style="width: 80px" class="cell">
+                          {{ $t('22d29d8e.dce537') }}
+                        </div>
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_34 is-leaf">
                         <div style="width: 80px" class="cell">
@@ -142,8 +150,12 @@
                         </div>
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_35 is-leaf">
-                        <div v-if="item.is_menu" style="width: 80px" class="cell">菜单</div>
-                        <div v-else style="width: 80px" class="cell">页面功能</div>
+                        <div v-if="item.is_menu" style="width: 80px" class="cell">
+                          {{ $t('22d29d8e.4ccbdc') }}
+                        </div>
+                        <div v-else style="width: 80px" class="cell">
+                          {{ $t('22d29d8e.4f227b') }}
+                        </div>
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_36 is-leaf">
                         <div
@@ -152,11 +164,27 @@
                           style="width: 80px"
                           class="cell"
                         >
-                          <template v-if="item_menu_type === 'b2c'"> 品牌官网 </template>
-                          <template v-if="item_menu_type === 'platform'"> ECX </template>
-                          <template v-if="item_menu_type === 'standard'"> 云店 </template>
-                          <template v-if="item_menu_type === 'in_purchase'"> 内购版 </template>
-                          <template v-if="item_menu_type === 'all'"> 通用 </template>
+                          <template v-if="item_menu_type === 'b2c'">
+{{
+                            $t('22d29d8e.34e314')
+                          }}
+</template>
+                          <template v-if="item_menu_type === 'platform'">ECX</template>
+                          <template v-if="item_menu_type === 'standard'">
+{{
+                            $t('22d29d8e.8adeba')
+                          }}
+</template>
+                          <template v-if="item_menu_type === 'in_purchase'">
+{{
+                            $t('22d29d8e.9e498b')
+                          }}
+</template>
+                          <template v-if="item_menu_type === 'all'">
+{{
+                            $t('22d29d8e.aa05fd')
+                          }}
+</template>
                         </div>
                       </td>
                       <td colspan="1" rowspan="1" class="el-table_5_column_37 is-leaf">
@@ -167,13 +195,13 @@
                             size="small"
                             @click="handleAddSubMenu(item)"
                           >
-                            添加子菜单
+                            {{ $t('22d29d8e.70fe21') }}
                           </el-button>
                           <el-button type="text" size="small" @click="handleUpdateMenu(item)">
-                            编辑菜单
+                            {{ $t('22d29d8e.ca3472') }}
                           </el-button>
                           <el-button type="text" size="small" @click="handleSetApis(item)">
-                            API权限
+                            {{ $t('22d29d8e.2d2a9b') }}
                           </el-button>
                           <el-button
                             type="text"
@@ -181,7 +209,7 @@
                             class="red"
                             @click="acitonDeleteMenu(item.shopmenu_id)"
                           >
-                            删除
+                            {{ $t('22d29d8e.2f4aad') }}
                           </el-button>
                         </div>
                       </td>
@@ -193,54 +221,56 @@
           </div>
         </transition-group>
       </draggable>
-      <el-dialog title="设置菜单API权限集" :visible.sync="editApisVisible" width="30%">
+      <el-dialog :title="$t('22d29d8e.beacb0')" :visible.sync="editApisVisible" width="30%">
         <el-form ref="form" :model="form" label-width="100px">
           <el-alert
-            title="设置菜单API权限集，请添加每个API后回车"
+            :title="$t('22d29d8e.6a036e')"
             type="info"
-            close-text="知道了"
+            :close-text="$t('22d29d8e.ce2695')"
           />
           <el-input
             v-model="setApisForm.apis"
             type="textarea"
             :rows="15"
-            placeholder="请输入内容"
+            :placeholder="$t('22d29d8e.a11cc7')"
           />
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editApisVisible = false">取 消</el-button>
-          <el-button type="primary" @click="actionSetMenuApis">确 定</el-button>
+          <el-button @click="editApisVisible = false">{{ $t('22d29d8e.c08ab9') }}</el-button>
+          <el-button type="primary" @click="actionSetMenuApis">{{
+            $t('22d29d8e.aa7527')
+          }}</el-button>
         </span>
       </el-dialog>
 
       <!-- 编辑弹出框 -->
-      <el-dialog title="添加&更新菜单" :visible.sync="editVisible" width="40%">
+      <el-dialog :title="$t('22d29d8e.ef3e1a')" :visible.sync="editVisible" width="40%">
         <el-form ref="form" :model="form" label-width="100px">
-          <el-form-item label="上级菜单">
-            <span>{{ parent_name }}</span>
+          <el-form-item :label="$t('22d29d8e.842705')">
+            <span>{{ parent_name || $t('22d29d8e.d81bb2') }}</span>
           </el-form-item>
-          <el-form-item label="菜单名称">
+          <el-form-item :label="$t('22d29d8e.8ee9f2')">
             <el-input v-model="form.name" />
           </el-form-item>
-          <el-form-item label="菜单类型">
+          <el-form-item :label="$t('22d29d8e.52fe00')">
             <el-checkbox-group v-model="form.menu_type">
-              <el-checkbox label="all">通用</el-checkbox>
-              <el-checkbox label="b2c">品牌官网</el-checkbox>
+              <el-checkbox label="all">{{ $t('22d29d8e.aa05fd') }}</el-checkbox>
+              <el-checkbox label="b2c">{{ $t('22d29d8e.34e314') }}</el-checkbox>
               <el-checkbox label="platform">ECX</el-checkbox>
-              <el-checkbox label="standard">云店</el-checkbox>
-              <el-checkbox label="in_purchase">内购版</el-checkbox>
+              <el-checkbox label="standard">{{ $t('22d29d8e.8adeba') }}</el-checkbox>
+              <el-checkbox label="in_purchase">{{ $t('22d29d8e.9e498b') }}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="菜单唯一标识">
+          <el-form-item :label="$t('22d29d8e.dbdeef')">
             <el-input v-model="form.alias_name" />
           </el-form-item>
-          <el-form-item label="菜单图标">
+          <el-form-item :label="$t('22d29d8e.948304')">
             <el-input v-model="form.icon" />
           </el-form-item>
-          <el-form-item label="菜单排序">
+          <el-form-item :label="$t('22d29d8e.1f8541')">
             <el-input v-model="form.sort" />
           </el-form-item>
-          <el-form-item label="菜单URL">
+          <el-form-item :label="$t('22d29d8e.f03065')">
             <div class="view-flex">
               <div class="parent-path">
                 {{ form.parentUrl }}
@@ -249,16 +279,16 @@
               <el-input v-else v-model="form.url" />
             </div>
           </el-form-item>
-          <el-form-item v-if="!disabledIsMenu" label="是否为菜单">
+          <el-form-item v-if="!disabledIsMenu" :label="$t('22d29d8e.27b6a5')">
             <el-switch v-model="form.is_menu" />
           </el-form-item>
-          <el-form-item label="是否显示">
+          <el-form-item :label="$t('22d29d8e.ae57b1')">
             <el-switch v-model="form.is_show" />
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editVisible = false">取 消</el-button>
-          <el-button type="primary" @click="actionSaveMenu">确 定</el-button>
+          <el-button @click="editVisible = false">{{ $t('22d29d8e.c08ab9') }}</el-button>
+          <el-button type="primary" @click="actionSaveMenu">{{ $t('22d29d8e.aa7527') }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -290,8 +320,8 @@ export default {
       editApisVisible: false,
       editVisible: false,
       disabledIsMenu: false,
-      draggableDisabled: '启用拖动',
-      parent_name: '无',
+      draggableDisabled: '',
+      parent_name: '',
       colspan: 0,
       setApisForm: {
         shopmenu_id: '',
@@ -304,6 +334,7 @@ export default {
     }
   },
   created() {
+    this.draggableDisabled = this.$t('22d29d8e.75c270')
     this.getMenuTrees()
   },
   methods: {
@@ -323,10 +354,10 @@ export default {
     handleDraggableDisabled() {
       if (this.dragOptions.disabled) {
         this.dragOptions.disabled = false
-        this.draggableDisabled = '禁用拖动'
+        this.draggableDisabled = this.$t('22d29d8e.1d75bd')
       } else {
         this.dragOptions.disabled = true
-        this.draggableDisabled = '启用拖动'
+        this.draggableDisabled = this.$t('22d29d8e.75c270')
       }
     },
     handleDownMenu() {
@@ -358,7 +389,7 @@ export default {
 
       if (!oldItem.is_menu) {
         Message({
-          message: '功能页面不可移动，只能跟着上级菜单移动',
+          message: this.$t('22d29d8e.41e7c2'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -386,7 +417,7 @@ export default {
         oldItem.pid = newParent.shopmenu_id
       } else {
         this.tableData = this.shopmenulist
-        Message({ message: '只能移动到相同级别的菜单', type: 'error', duration: 5 * 1000 })
+        Message({ message: this.$t('22d29d8e.7c2a0e'), type: 'error', duration: 5 * 1000 })
         return
       }
 
@@ -396,7 +427,7 @@ export default {
     },
     handleUrlDisabled() {
       this.isDisabledUpdateUrl = false
-      Message({ message: '解锁更新URL成功', type: 'success', duration: 5 * 1000 })
+      Message({ message: this.$t('22d29d8e.e1aaf8'), type: 'success', duration: 5 * 1000 })
     },
     handleCellClassName({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0) {
@@ -468,9 +499,9 @@ export default {
       this.editVisible = true
     },
     acitonDeleteMenu(id) {
-      this.$confirm('此操作将=删 除该菜单, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('22d29d8e.1440f8'), this.$t('22d29d8e.02d981'), {
+        confirmButtonText: this.$t('22d29d8e.38cf16'),
+        cancelButtonText: this.$t('22d29d8e.625fb2'),
         type: 'warning'
       }).then(() => {
         deleteMenu(id).then((res) => {

@@ -7,9 +7,9 @@ import { createSetting } from '@shopex-ui/finder'
 export const finderSetting = (vm) =>
   createSetting({
     columns: [
-      { name: '平台账号', key: 'userid', width: 100, visible: vm.VERSION_SHUYUN() },
+      { name: vm.$t('c30d0a27.26d82e'), key: 'userid', width: 100, visible: vm.VERSION_SHUYUN() },
       {
-        name: '手机号',
+        name: vm.$t('c30d0a27.8098e2'),
         key: 'mobile',
         width: 160,
         render: (h, { row }) => {
@@ -25,7 +25,7 @@ export const finderSetting = (vm) =>
                 'el-tooltip',
                 {
                   props: {
-                    content: '修改手机号',
+                    content: vm.$t('c30d0a27.29c9d5'),
                     placement: 'top-start',
                     effect: 'dark'
                   },
@@ -55,21 +55,21 @@ export const finderSetting = (vm) =>
           )
         }
       },
-      { name: '昵称', key: 'username', width: 140 },
+      { name: vm.$t('c30d0a27.23eb0e'), key: 'username', width: 140 },
       {
-        name: '性别',
+        name: vm.$t('c30d0a27.787b56'),
         key: 'sex',
         width: 70,
         render: (h, { row }) => {
-          if (row.sex == '2') return h('span', '女')
-          if (row.sex == '1') return h('span', '男')
-          if (row.sex == '0') return h('span', '未知')
+          if (row.sex == '2') return h('span', vm.$t('c30d0a27.87c835'))
+          if (row.sex == '1') return h('span', vm.$t('c30d0a27.36a490'))
+          if (row.sex == '0') return h('span', vm.$t('c30d0a27.1622dc'))
           return h('span', row.sex)
         },
         visible: !vm.VERSION_IN_PURCHASE()
       },
       {
-        name: '是否团长',
+        name: vm.$t('c30d0a27.c0db9f'),
         key: 'is_chief',
         width: 80,
         render: (h, scope) => {
@@ -90,7 +90,7 @@ export const finderSetting = (vm) =>
         visible: !vm.VERSION_IN_PURCHASE()
       },
       {
-        name: '会员等级',
+        name: vm.$t('c30d0a27.6c1583'),
         key: 'grade_id',
         width: 140,
         render: (h, { row }) => {
@@ -98,9 +98,14 @@ export const finderSetting = (vm) =>
         },
         visible: !vm.VERSION_IN_PURCHASE()
       },
-      { name: '推荐人', key: 'inviter', width: 130, visible: !vm.VERSION_IN_PURCHASE() },
       {
-        name: '是否禁用',
+        name: vm.$t('c30d0a27.dd0925'),
+        key: 'inviter',
+        width: 130,
+        visible: !vm.VERSION_IN_PURCHASE()
+      },
+      {
+        name: vm.$t('c30d0a27.3d6de2'),
         key: 'disabled',
         width: 80,
         render: (h, { $index, row }) => {
@@ -119,7 +124,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '会员标签',
+        name: vm.$t('c30d0a27.3cc026'),
         key: 'tagList',
         width: 130,
         render: (h, { row }) => {
@@ -157,11 +162,11 @@ export const finderSetting = (vm) =>
               )
             )
           }
-          return h('span', { class: 'muted' }, '暂无会员标签')
+          return h('span', { class: 'muted' }, vm.$t('c30d0a27.2de895'))
         }
       },
       {
-        name: '注册店铺',
+        name: vm.$t('c30d0a27.c74b7d'),
         key: 'name',
         width: 130,
         render: (h, { row }) => {
@@ -169,7 +174,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '注册导购',
+        name: vm.$t('c30d0a27.1df342'),
         key: 'name',
         width: 130,
         render: (h, { row }) => {
@@ -177,7 +182,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '归属店铺',
+        name: vm.$t('c30d0a27.002acd'),
         key: 'name',
         width: 130,
         render: (h, { row }) => {
@@ -185,7 +190,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '归属导购',
+        name: vm.$t('c30d0a27.8d1f18'),
         key: 'name',
         width: 130,
         render: (h, { row }) => {
@@ -193,7 +198,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '维护店铺',
+        name: vm.$t('c30d0a27.d881e1'),
         key: 'maintain_store',
         width: 130,
         render: (h, { row }) => {
@@ -201,19 +206,19 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '用户名',
+        name: vm.$t('c30d0a27.819767'),
         key: 'name',
         width: 130,
         render: (h, { row }) => {
           const children = [
-            row.name ? h('span', row.name) : h('span', { class: 'muted' }, '暂无用户名')
+            row.name ? h('span', row.name) : h('span', { class: 'muted' }, vm.$t('c30d0a27.cab655'))
           ]
           children.push(
             h(
               'el-tooltip',
               {
                 props: {
-                  content: '编辑用户名',
+                  content: vm.$t('c30d0a27.9b20a3'),
                   placement: 'top-start',
                   effect: 'dark'
                 },
@@ -237,19 +242,21 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '备注',
+        name: vm.$t('c30d0a27.2432b5'),
         key: 'remarks',
         width: 130,
         render: (h, { row }) => {
           const children = [
-            row.remarks ? h('span', row.remarks) : h('span', { class: 'muted' }, '暂无备注')
+            row.remarks
+              ? h('span', row.remarks)
+              : h('span', { class: 'muted' }, vm.$t('c30d0a27.2a450f'))
           ]
           children.push(
             h(
               'el-tooltip',
               {
                 props: {
-                  content: '编辑备注',
+                  content: vm.$t('c30d0a27.9f06dd'),
                   placement: 'top-start',
                   effect: 'dark'
                 },
@@ -275,7 +282,7 @@ export const finderSetting = (vm) =>
     ],
     actions: [
       {
-        name: '详情',
+        name: vm.$t('c30d0a27.f26225'),
         type: 'button',
         buttonType: 'text',
         action: {
@@ -283,7 +290,7 @@ export const finderSetting = (vm) =>
         }
       },
       {
-        name: '基础信息',
+        name: vm.$t('c30d0a27.6ea1fe'),
         type: 'button',
         buttonType: 'text',
         action: {
@@ -295,7 +302,7 @@ export const finderSetting = (vm) =>
           !vm.VERSION_SHUYUN()
       },
       {
-        name: '会员等级',
+        name: vm.$t('c30d0a27.6c1583'),
         type: 'button',
         buttonType: 'text',
         action: {
@@ -307,7 +314,7 @@ export const finderSetting = (vm) =>
           !vm.VERSION_SHUYUN()
       },
       {
-        name: '调整上级',
+        name: vm.$t('c30d0a27.23ced7'),
         type: 'button',
         buttonType: 'text',
         action: {

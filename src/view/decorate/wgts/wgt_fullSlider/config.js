@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import Vue from 'vue'
+import { i18n } from '@/i18n'
 import { pickBy, isObject } from '@/utils'
 import AttrItem from './attr-item.vue'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
@@ -29,43 +30,43 @@ const config = {
       module: 'slideritem'
     },
     {
-      label: '指示器字体颜色',
-      group: '指示器设置',
+      label: i18n.t('59022bdd.b73743'),
+      group: i18n.t('59022bdd.4c62d4'),
       key: 'indicatorColor',
       component: 'color',
       value: '#f5f5f5'
     },
     {
-      label: '指示器字体大小',
-      group: '指示器设置',
+      label: i18n.t('59022bdd.8fac75'),
+      group: i18n.t('59022bdd.4c62d4'),
       key: 'indicatorFontSize',
       component: 'number',
       value: 12,
       min: 10,
       max: 100,
       step: 1,
-      tip: '单位为 px'
+      tip: '59022bdd.8e6ead'
     },
     {
-      label: '指示器下边距',
-      group: '指示器设置',
+      label: i18n.t('59022bdd.1a5232'),
+      group: i18n.t('59022bdd.4c62d4'),
       key: 'dotbottom',
       component: 'number',
       value: 0,
       min: 0,
       max: 1000,
       step: 1,
-      tip: '单位为 px'
+      tip: '59022bdd.8e6ead'
     },
     {
-      label: '指示器下文案',
-      group: '指示器设置',
+      label: i18n.t('59022bdd.1972a4'),
+      group: i18n.t('59022bdd.4c62d4'),
       key: 'indicatorText',
       component: 'input'
     },
     {
-      label: '轮播时间',
-      group: '内容样式',
+      label: i18n.t('59022bdd.8695d8'),
+      group: i18n.t('59022bdd.9f1cbe'),
       key: 'interval',
       component: 'number',
       isShow: function () {
@@ -78,8 +79,8 @@ const config = {
       module: 'slidersetting'
     },
     {
-      label: '自动切换',
-      group: '内容样式',
+      label: i18n.t('59022bdd.3dd185'),
+      group: i18n.t('59022bdd.9f1cbe'),
       key: 'autoplay',
       component: 'switch',
       value: true,
@@ -87,7 +88,7 @@ const config = {
     },
     {
       label: '',
-      group: '内容样式',
+      group: i18n.t('59022bdd.9f1cbe'),
       key: 'height',
       component: 'input',
       value: 667,

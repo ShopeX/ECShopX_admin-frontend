@@ -7,9 +7,9 @@
   <div>
     <div class="tip-info">
       <p>
-        上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
+        {{ $t('d69632f8.08f306') }}
       </p>
-      <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
+      <p>{{ $t('d69632f8.4f6279') }}</p>
     </div>
 
     <div class="action-container">
@@ -19,9 +19,11 @@
         :auto-upload="false"
         :show-file-list="false"
       >
-        <el-button type="primary"> 点击上传 </el-button>
+        <el-button type="primary"> {{ $t('d69632f8.2c808b') }} </el-button>
       </el-upload>
-      <el-button type="primary" @click="onDownLoadTemplate()"> 下载模版 </el-button>
+      <el-button type="primary" @click="onDownLoadTemplate()">
+        {{ $t('d69632f8.402a67') }}
+      </el-button>
     </div>
 
     <SpFinder
@@ -50,31 +52,47 @@ import { getUploadLists, exportUploadErrorFile, exportUploadTemplate } from '../
 export default {
   data() {
     return {
-      finderSetting: createSetting({
+      finderSetting: null,
+      loading: false,
+      uploadList: []
+    }
+  },
+  mounted() {
+    this.initFinderSetting()
+  },
+  methods: {
+    initFinderSetting() {
+      const t = this.$t.bind(this)
+      this.finderSetting = createSetting({
         columns: [
-          { name: '上传文件', key: 'file_name' },
-          { name: '上传时间', key: 'created_date', formatterType: 'dateTime', width: 180 },
-          { name: '文件大小', key: 'file_size_format', width: 100 },
+          { name: t('d69632f8.a6fc9e'), key: 'file_name' },
           {
-            name: '处理状态',
+            name: t('d69632f8.cae255'),
+            key: 'created_date',
+            formatterType: 'dateTime',
+            width: 180
+          },
+          { name: t('d69632f8.396b7d'), key: 'file_size_format', width: 100 },
+          {
+            name: t('d69632f8.21b314'),
             key: 'handle_status',
             width: 120,
             formatter: (value, row, col) => {
               const HANDLE_STATUS = {
-                wait: '等待处理',
-                processing: '处理中',
-                finish: '处理完成'
+                wait: t('d69632f8.1e57c1'),
+                processing: t('d69632f8.5d459d'),
+                finish: t('d69632f8.7be39b')
               }
               return HANDLE_STATUS[value]
             }
           },
           {
-            name: '处理完成时间',
+            name: t('d69632f8.475dea'),
             key: 'finish_date',
             width: 180
           },
           {
-            name: '处理成功',
+            name: t('d69632f8.3ba621'),
             key: 'handle_message',
             width: 80,
             formatter: (value, row, col) => {
@@ -82,7 +100,7 @@ export default {
             }
           },
           {
-            name: '处理失败',
+            name: t('d69632f8.1012e0'),
             key: 'handle_message',
             render: (h, params) => {
               return h(
@@ -123,12 +141,12 @@ export default {
                               if (res.file) {
                                 downloadFile(res.file, res.name)
                               } else {
-                                this.$message.error('没有相关数据可导出')
+                                this.$message.error(this.$t('d69632f8.bfd8d5'))
                               }
                             }
                           }
                         },
-                        '下载错误详情'
+                        t('d69632f8.3798d3')
                       )
                     ]
                   : []
@@ -136,12 +154,8 @@ export default {
             }
           }
         ]
-      }),
-      loading: false,
-      uploadList: []
-    }
-  },
-  methods: {
+      })
+    },
     beforeSearch(params) {
       params = {
         ...params,
@@ -152,18 +166,18 @@ export default {
     async uploadHandleChange(file, fileList) {
       const params = { isUploadFile: true, file_type: 'community_chief', file: file.raw }
       await this.$api.common.handleUploadFile(params)
-      this.$message.success('上传成功，等待处理')
+      this.$message.success(this.$t('d69632f8.7bbfaa'))
       this.$refs.finder.refresh(true)
     },
     async onDownLoadTemplate() {
       const res = await this.$api.common.exportUploadTemplate({
         file_type: 'community_chief',
-        file_name: '上传团长信息'
+        file_name: this.$t('d69632f8.733c3a')
       })
       if (res.file) {
         downloadFile(res.file, res.name)
       } else {
-        this.$message.error('没有相关数据可导出')
+        this.$message.error(this.$t('d69632f8.bfd8d5'))
       }
     },
     getUploadList() {

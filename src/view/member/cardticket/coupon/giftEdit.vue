@@ -7,7 +7,7 @@
   <div class="gift-edit">
     <el-card class="box-card" shadow="never">
       <div slot="header" class="clearfix">
-        <span>适用店铺信息</span>
+        <span>{{ $t('4ba95137.10282d') }}</span>
         <el-button
           :disabled="listData.is_active"
           style="float: right"
@@ -15,7 +15,7 @@
           size="mini"
           @click="addDistributorAction"
         >
-          选择店铺
+          {{ $t('4ba95137.afa2e6') }}
         </el-button>
       </div>
       <div class="content store-content">
@@ -44,30 +44,31 @@
         </template>
 
         <div v-else class="tips">
-          默认全部店铺适用，若该券只适用于部分店铺请点击右上角
-          <span class="primary-color">「选择店铺」</span>
+          {{ $t('4ba95137.b697f3') }}
+          <span class="primary-color">{{ $t('4ba95137.981ba3') }}</span>
         </div>
       </div>
     </el-card>
 
     <el-card class="box-card goods" shadow="never">
       <div slot="header" class="clearfix">
-        <span>可兑商品信息</span>
+        <span>{{ $t('4ba95137.2119bf') }}</span>
         <span v-if="goodsList && goodsList.length > 0" class="tips">
-          (多规格商品支持SPU级别，如只能兑换其中一个规格产品请选择相应规格)</span
+          ({{ $t('4ba95137.43ab19') }})</span
         >
         <div style="float: right">
           <template v-if="goodsList && goodsList.length > 0">
-            <span>商品查询：</span>
+            <span>{{ $t('4ba95137.0748bd') }}</span>
             <el-input
               v-model="searchGoodsName"
               size="small"
-              placeholder="请输入内容"
+              :placeholder="$t('4ba95137.a11cc7')"
               style="width: 220px"
               class="goods-input"
             >
               <el-button slot="append" icon="el-icon-search" @click="searchGoods" />
-            </el-input> </template
+            </el-input>
+</template
           >&nbsp;
 
           <el-button
@@ -76,7 +77,7 @@
             size="mini"
             @click="handleGoodsDialogShow"
           >
-            选择商品
+            {{ $t('4ba95137.43d1e2') }}
           </el-button>
           <el-button
             :disabled="listData.is_active"
@@ -84,7 +85,7 @@
             size="mini"
             @click="showUpload = true"
           >
-            批量上传
+            {{ $t('4ba95137.c3202e') }}
           </el-button>
         </div>
       </div>
@@ -93,11 +94,11 @@
           <div class="goods-content">
             <div v-for="item in showGoodsList" :key="item.itemId" class="goods-list">
               <div style="width: 10%" class="item goods-id">
-                <div class="title-tips">商品ID</div>
+                <div class="title-tips">{{ $t('4ba95137.858526') }}</div>
                 <div>{{ item.itemId }}</div>
               </div>
               <div style="width: 50%" class="item goods-info">
-                <img v-if="item.pics" :src="item.pics[0]" alt="" />
+                <img v-if="item.pics" :src="item.pics[0]" alt="">
                 <div class="goods-sku">
                   <div>
                     {{ item.itemName }}
@@ -109,15 +110,15 @@
               </div>
 
               <div style="width: 10%" class="item goods-price">
-                <div class="title-tips">价格</div>
+                <div class="title-tips">{{ $t('4ba95137.0e9fd9') }}</div>
                 <div>￥ {{ item.price / 100 }}</div>
               </div>
               <div style="width: 10%" class="item goods-count">
-                <div class="title-tips">库存</div>
+                <div class="title-tips">{{ $t('4ba95137.0eac88') }}</div>
                 <div>{{ item.store }}</div>
               </div>
               <div style="width: 20%" class="item goods-limit">
-                <div class="title-tips">兑换上限</div>
+                <div class="title-tips">{{ $t('4ba95137.83b955') }}</div>
                 <div>
                   <el-input
                     v-model="item.limit"
@@ -143,14 +144,17 @@
           </div>
         </template>
         <div v-else class="tips">
-          暂未无可兑商品，请点击右上角<span class="primary-color">「选择商品」</span>进行添加
+          {{ $t('4ba95137.bef345') }}<span class="primary-color">{{ $t('4ba95137.ee1f52') }}</span
+          >{{ $t('4ba95137.e1bd33') }}
         </div>
       </div>
     </el-card>
 
     <div class="content-center">
-      <el-button @click="cancelSubmit"> 取消 </el-button>
-      <el-button v-loading="loading" type="primary" @click="submitDetail"> 提交 </el-button>
+      <el-button @click="cancelSubmit"> {{ $t('4ba95137.625fb2') }} </el-button>
+      <el-button v-loading="loading" type="primary" @click="submitDetail">
+        {{ $t('4ba95137.939d53') }}
+      </el-button>
     </div>
 
     <DistributorSelect
@@ -272,20 +276,16 @@ export default {
     },
     submitDetail() {
       if (this.goodsList.length < 1) {
-        this.$alert('您还未选择商品，请选择商品后再提交', '警告消息', {
-          confirmButtonText: '确定',
+        this.$alert(this.$t('4ba95137.344897'), this.$t('4ba95137.7a2ad9'), {
+          confirmButtonText: this.$t('4ba95137.38cf16'),
           type: 'warning',
           callback: (action) => {}
         })
       } else {
-        this.$confirm(
-          '活动创建成功后，活动开始之后商品和店铺相关信息不可修改，请确认是否提交',
-          '系统通知',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-          }
-        )
+        this.$confirm(this.$t('4ba95137.94c80e'), this.$t('4ba95137.891584'), {
+          confirmButtonText: this.$t('4ba95137.38cf16'),
+          cancelButtonText: this.$t('4ba95137.625fb2')
+        })
           .then(async () => {
             // 提交返回列表页
             const distributor_ids = this.distributorList.map((v) => v.distributor_id)
@@ -303,7 +303,7 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('4ba95137.2111cc')
             })
           })
       }

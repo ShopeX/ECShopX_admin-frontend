@@ -8,36 +8,36 @@
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
       <el-card shadow="never">
         <div slot="header" class="clearfix">
-          <span>基础信息</span>
+          <span>{{ $t('c17172ba.6ea1fe') }}</span>
         </div>
         <div class="content">
-          <el-form-item label="劵包标题" prop="title">
+          <el-form-item :label="$t('c17172ba.d994e3')" prop="title">
             <el-input v-model="ruleForm.title" class="maxW" maxlength="10" show-word-limit />
           </el-form-item>
-          <el-form-item label="描述">
+          <el-form-item :label="$t('c17172ba.3bdd08')">
             <el-input
               v-model="ruleForm.package_describe"
               class="maxW"
               maxlength="20"
               show-word-limit
-              placeholder="仅商家端显示，可以区分相似劵"
+              :placeholder="$t('c17172ba.fb6982')"
             />
           </el-form-item>
         </div>
       </el-card>
       <el-card shadow="never">
         <div slot="header" class="clearfix">
-          <span>劵包信息</span>
-          <div class="tips">劵包一旦保存,劵包信息不可再修改</div>
+          <span>{{ $t('c17172ba.d36e99') }}</span>
+          <div class="tips">{{ $t('c17172ba.f8c31f') }}</div>
         </div>
         <div class="content">
           <el-form-item label-width="0px">
             <el-tooltip placement="top" width="350">
               <div slot="content" class="tips">
-                <p>1. 券包不区分优惠券发送渠道，所有种类优惠券都可以配置到同一券包内。</p>
-                <p>2. 券包可以设置限领，但限领规则优先由券包内优惠券设置及库存等决定。</p>
-                <p>3. 券包内优惠券规则根据优惠券本身规则所定。</p>
-                <p>4. 若有优惠券限领1张，券包限领2次，按优惠券规则领取数量。</p>
+                <p>{{ $t('c17172ba.4c3511') }}</p>
+                <p>{{ $t('c17172ba.6d7554') }}</p>
+                <p>{{ $t('c17172ba.a6916e') }}</p>
+                <p>{{ $t('c17172ba.f3bf70') }}</p>
               </div>
               <el-button
                 style="border: none; font-size: 14px; width: 100px"
@@ -45,10 +45,12 @@
                 type="text"
                 icon="el-icon-warning-outline"
               >
-                优惠劵包
+                {{ $t('c17172ba.9ea8d6') }}
               </el-button>
             </el-tooltip>
-            <el-button :disabled="disabled" @click="pickHanle"> 选择优惠券 </el-button>
+            <el-button :disabled="disabled" @click="pickHanle">
+              {{ $t('c17172ba.45bcee') }}
+            </el-button>
           </el-form-item>
           <el-form-item v-if="seletedCoupon.length > 0" label-width="20px">
             <cpn-table
@@ -58,14 +60,12 @@
             />
           </el-form-item>
 
-          <el-form-item label="发送规则">
-            <span>券包内任一优惠券库存大于等于1时，券包都可继续发放 </span>
+          <el-form-item :label="$t('c17172ba.9e426a')">
+            <span>{{ $t('c17172ba.e7aa9e') }} </span>
             <span>
               <el-tooltip placement="top" width="250">
                 <div slot="content" class="tips">
-                  <p>
-                    例：选择券包内有5张优惠券，其中1张优惠券库存为零，用户可继续领取有库存的4张优惠券
-                  </p>
+                  <p>{{ $t('c17172ba.f31a0f') }}</p>
                 </div>
                 <el-button
                   style="border: none; font-size: 14px; color: none"
@@ -75,22 +75,24 @@
                 /> </el-tooltip
             ></span>
           </el-form-item>
-          <el-form-item label="限领次数">
+          <el-form-item :label="$t('c17172ba.c89f2c')">
             <el-input
               v-model="ruleForm.limit_count"
               style="width: 130px"
-              placeholder="请输入"
+              :placeholder="$t('c17172ba.02cc4f')"
               :disabled="disabled"
             >
-              <el-button slot="append"> 次 </el-button>
+              <el-button slot="append"> {{ $t('c17172ba.7229ec') }} </el-button>
             </el-input>
-            <p class="tips">每个用户领券上限，如不填，则默认为1。</p>
+            <p class="tips">{{ $t('c17172ba.727b1d') }}</p>
           </el-form-item>
         </div>
       </el-card>
       <div>
-        <el-button @click="back"> 返回 </el-button>
-        <el-button type="primary" @click="confirmHandle('ruleForm')"> 提交 </el-button>
+        <el-button @click="back"> {{ $t('c17172ba.5f4112') }} </el-button>
+        <el-button type="primary" @click="confirmHandle('ruleForm')">
+          {{ $t('c17172ba.939d53') }}
+        </el-button>
       </div>
     </el-form>
     <template v-if="visible">
@@ -123,9 +125,13 @@ export default {
         package_describe: '',
         limit_count: ''
       },
-      seletedCoupon: [],
-      rules: {
-        title: [requiredRules('劵包标题'), MaxRules(10)]
+      seletedCoupon: []
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        title: [requiredRules(this.$t('c17172ba.d994e3')), MaxRules(10)]
       }
     }
   },
@@ -179,12 +185,12 @@ export default {
             })
 
             if (status) {
-              this.$message.success('成功')
+              this.$message.success(this.$t('c17172ba.330363'))
               this.$router.push({
                 path: this.$route.matched[1].path
               })
             } else {
-              this.$message.success('失败')
+              this.$message.success(this.$t('c17172ba.acd5cb'))
             }
           } else {
             console.log('error submit!!')
@@ -206,12 +212,12 @@ export default {
             })
 
             if (status) {
-              this.$message.success('成功')
+              this.$message.success(this.$t('c17172ba.330363'))
               this.$router.push({
                 path: this.$route.matched[1].path
               })
             } else {
-              this.$message.success('失败')
+              this.$message.success(this.$t('c17172ba.acd5cb'))
             }
           } else {
             console.log('error submit!!')

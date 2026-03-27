@@ -4,19 +4,19 @@
 -->
 
 <template>
-  <el-card header="配置">
+  <el-card :header="$t('1a30494d.224e2c')">
     <el-row class="flex-center">
-      <el-col :span="3"> 达达同城配 </el-col>
+      <el-col :span="3">{{ $t('1a30494d.bcb155') }}</el-col>
       <el-col :span="6">
         <el-radio-group v-model="form.status" @change="statusChange">
-          <el-radio label="0"> 未开通过 </el-radio>
-          <el-radio label="1"> 已开通过 </el-radio>
+          <el-radio label="0">{{ $t('1a30494d.653dd0') }}</el-radio>
+          <el-radio label="1">{{ $t('1a30494d.762cd3') }}</el-radio>
         </el-radio-group>
       </el-col>
       <el-col :span="12">
         <div class="frm-tips">
           <el-alert type="info" :closable="false">
-            <div slot="title">是否用该企业在新达达平台注册过账户，如果注册过请选择已开通过</div>
+            <div slot="title">{{ $t('1a30494d.1fe9ff') }}</div>
           </el-alert>
         </div>
       </el-col>
@@ -31,26 +31,27 @@
     >
       <el-row :gutter="20">
         <el-col v-if="form.status === '1'" :span="8">
-          <el-form-item label="达达商户ID" prop="source_id">
+          <el-form-item :label="$t('1a30494d.d3e5d7')" prop="source_id">
             <el-input v-model="form.source_id" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="企业全称" prop="enterprise_name">
+          <el-form-item :label="$t('1a30494d.0b66da')" prop="enterprise_name">
             <el-input v-model="form.enterprise_name" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="企业地址" prop="enterprise_address">
+          <el-form-item :label="$t('1a30494d.400147')" prop="enterprise_address">
             <el-input v-model="form.enterprise_address" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item prop="mobile">
             <div class="cunstom_required padding-bottom">
-              商户手机号<span class="frm-tips" style="display: inne-block; margin-left: 20px"
-                >注册商户手机号,用于登录商户后台</span
-              >
+              {{ $t('1a30494d.e6961a')
+              }}<span class="frm-tips" style="display: inne-block; margin-left: 20px">{{
+                $t('1a30494d.cfe546')
+              }}</span>
             </div>
             <el-input v-model="form.mobile" />
           </el-form-item>
@@ -59,11 +60,12 @@
         <el-col :span="8">
           <el-form-item prop="city_name">
             <div class="cunstom_required padding-bottom">
-              商户城市名称<span class="frm-tips" style="display: inne-block; margin-left: 20px"
-                >商户城市名称(如,上海)</span
-              >
+              {{ $t('1a30494d.1ea9c9')
+              }}<span class="frm-tips" style="display: inne-block; margin-left: 20px">{{
+                $t('1a30494d.ad13b9')
+              }}</span>
             </div>
-            <el-select v-model="form.city_name" filterable placeholder="请选择">
+            <el-select v-model="form.city_name" filterable :placeholder="$t('1a30494d.708c9d')">
               <el-option
                 v-for="item in cityList"
                 :key="item.value"
@@ -74,40 +76,42 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="联系人姓名" prop="contact_name">
+          <el-form-item :label="$t('1a30494d.986d36')" prop="contact_name">
             <el-input v-model="form.contact_name" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="联系人电话" prop="contact_phone">
+          <el-form-item :label="$t('1a30494d.8ca6a4')" prop="contact_phone">
             <el-input v-model="form.contact_phone" />
           </el-form-item>
         </el-col>
 
         <el-col :span="8">
-          <el-form-item label="邮箱地址" prop="email">
+          <el-form-item :label="$t('1a30494d.6ab78f')" prop="email">
             <el-input v-model="form.email" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item prop="freight_type">
             <div class="padding-bottom">
-              运费承担方<span class="frm-tips" style="display: inne-block; margin-left: 20px"
-                >买家承担请保证商品规格数据准确性</span
-              >
+              {{ $t('1a30494d.8b3191')
+              }}<span class="frm-tips" style="display: inne-block; margin-left: 20px">{{
+                $t('1a30494d.d70b38')
+              }}</span>
             </div>
             <el-radio-group v-model="form.freight_type">
-              <el-radio label="0"> 商家承担 </el-radio>
-              <el-radio label="1"> 买家承担 </el-radio>
+              <el-radio label="0">{{ $t('1a30494d.ec1ffa') }}</el-radio>
+              <el-radio label="1">{{ $t('1a30494d.3f3e01') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item prop="is_open">
             <div class="padding-bottom">
-              是否开启<span class="frm-tips" style="display: inne-block; margin-left: 20px"
-                >买家承担请保证商品规格数据准确性</span
-              >
+              {{ $t('1a30494d.780afe')
+              }}<span class="frm-tips" style="display: inne-block; margin-left: 20px">{{
+                $t('1a30494d.d70b38')
+              }}</span>
             </div>
             <el-switch
               v-model="form.is_open"
@@ -121,18 +125,16 @@
         <el-col v-if="form.status === '1'" :span="16">
           <el-alert type="info" :closable="false">
             <div slot="title">
-              <div>1. 请输入您再新达达平台申请的商户信息，达达商户ID请务必保证填写正确；</div>
-              <div>2. 提交后请您到新达达商户后台关注开发者绑定申请；</div>
-              <div>
-                3. 收到“商派软件有限公司”开发者绑定通知后，请您审核通过，通过完成后即可使用。
-              </div>
+              <div>{{ $t('1a30494d.e4302e') }}</div>
+              <div>{{ $t('1a30494d.e07421') }}</div>
+              <div>{{ $t('1a30494d.023886') }}</div>
             </div>
           </el-alert>
         </el-col>
       </el-row>
     </el-form>
     <div class="footer-container">
-      <el-button type="primary" @click="save"> 保存配置 </el-button>
+      <el-button type="primary" @click="save">{{ $t('1a30494d.ed7526') }}</el-button>
     </div>
   </el-card>
 </template>
@@ -158,24 +160,28 @@ export default {
         source_id: '',
         freight_type: ''
       },
-      rules: {
-        source_id: [{ required: true, message: '请输入达达商户ID' }],
-        enterprise_name: [{ required: true, message: '请输入企业全称' }],
-        enterprise_address: [{ required: true, message: '请输入企业地址' }],
-        mobile: [{ required: true, message: '请输入商户手机号' }],
-        city_name: [{ required: true, message: '请输入商户城市名称' }],
-        contact_name: [{ required: true, message: '请输入联系人姓名' }],
-        contact_phone: [{ required: true, message: '请输入联系人电话' }],
+      cityList: []
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        source_id: [{ required: true, message: this.$t('1a30494d.f05c2c') }],
+        enterprise_name: [{ required: true, message: this.$t('1a30494d.f7baff') }],
+        enterprise_address: [{ required: true, message: this.$t('1a30494d.e5c27a') }],
+        mobile: [{ required: true, message: this.$t('1a30494d.61fd9d') }],
+        city_name: [{ required: true, message: this.$t('1a30494d.4b6bbe') }],
+        contact_name: [{ required: true, message: this.$t('1a30494d.e30625') }],
+        contact_phone: [{ required: true, message: this.$t('1a30494d.0e606b') }],
         email: [
           {
             required: true,
-            message: '请输入正确的邮箱',
+            message: this.$t('1a30494d.97e3ac'),
             pattern:
               /^([a-zA-Z0-9]+[_|_|\-|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
           }
         ]
-      },
-      cityList: []
+      }
     }
   },
   mounted() {
@@ -197,7 +203,7 @@ export default {
       }).then((res) => {
         console.log('saveCityLogisticsInfo', res)
         if (res.status === 200) {
-          this.$message.success('同城配设置成功！')
+          this.$message.success(this.$t('1a30494d.84a218'))
           return
         }
       })

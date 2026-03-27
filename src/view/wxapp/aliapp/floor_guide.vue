@@ -311,7 +311,7 @@ $txt-placeholder: #f5f5f7;
                     :class="{ active: index === curIdx }"
                     @click="switchTab(index)"
                   >
-                    {{ item.name ? item.name : '楼层' }}
+                    {{ item.name ? item.name : $t('97abc3f4.1c883a') }}
                   </div>
                 </div>
                 <div class="child-layout-view">
@@ -323,7 +323,7 @@ $txt-placeholder: #f5f5f7;
                           :class="{ active: currentTag === '' }"
                           @click="currentTag = ''"
                         >
-                          全部
+                          {{ $t('97abc3f4.a8b0c2') }}
                         </li>
                         <li
                           v-for="(item, idx) in editableData[curIdx].tags"
@@ -349,7 +349,7 @@ $txt-placeholder: #f5f5f7;
                         class="store-img"
                         :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                         alt=""
-                      />
+                      >
                       <div class="store-caption">
                         <div class="store-name">
                           {{ item.name }}
@@ -362,14 +362,14 @@ $txt-placeholder: #f5f5f7;
                   </div>
                   <div v-else class="view-placeholder">
                     <i class="iconfont icon-shapes" />
-                    请绑定楼层店铺
+                    {{ $t('97abc3f4.bcf490') }}
                   </div>
                 </div>
               </div>
             </div>
             <div v-if="!editableData.length" class="no-category-placeholder">
               <div class="iconfont icon-cubes" />
-              <div>请添加楼层</div>
+              <div>{{ $t('97abc3f4.b9f81c') }}</div>
             </div>
           </div>
         </div>
@@ -399,15 +399,19 @@ $txt-placeholder: #f5f5f7;
                       v-model="seriesTitle"
                       type="text"
                       size="small"
-                      placeholder="请输入系列名称"
+                      :placeholder="$t('97abc3f4.2df86a')"
                     />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button size="mini" type="text" @click="handleCancel"> 取消 </el-button>
-                    <el-button type="primary" size="mini" @click="addSeries"> 确定 </el-button>
+                    <el-button size="mini" type="text" @click="handleCancel">
+                      {{ $t('97abc3f4.625fb2') }}
+                    </el-button>
+                    <el-button type="primary" size="mini" @click="addSeries">
+                      {{ $t('97abc3f4.38cf16') }}
+                    </el-button>
                   </div>
                   <el-button slot="reference" type="text" class="add-btn iconfont icon-plus-circle">
-                    添加区域
+                    {{ $t('97abc3f4.4ba9cd') }}
                   </el-button>
                 </el-popover>
               </div>
@@ -417,19 +421,21 @@ $txt-placeholder: #f5f5f7;
                 <div class="form-item">
                   <div class="control-bar move iconfont icon-stream" />
                   <div class="control-bar remove iconfont icon-cog" @click="showStore(idx)" />
-                  <el-input v-model="item.name" placeholder="楼层" />
+                  <el-input v-model="item.name" :placeholder="$t('97abc3f4.1c883a')" />
                   <div class="control-bar remove iconfont icon-trash" @click="remove(idx)" />
                 </div>
               </div>
             </draggable>
             <el-button class="parent-add-btn iconfont icon-plus" @click="add()">
-              添加楼层
+              {{ $t('97abc3f4.ab3b7a') }}
             </el-button>
           </div>
         </div>
       </section>
       <section class="content-padded-s section-white content-center">
-        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">
+          {{ $t('97abc3f4.be5fbb') }}
+        </el-button>
       </section>
       <storeList
         :visible="storePickerVisible"
@@ -438,14 +444,14 @@ $txt-placeholder: #f5f5f7;
         @onClose="handleClose"
         @change="handleChange"
       />
-      <sideBar :visible.sync="storeVisible" title="编辑商铺" width="24">
+      <sideBar :visible.sync="storeVisible" :title="$t('97abc3f4.d78af2')" width="24">
         <div v-if="curStores.length" class="stores-list">
           <div v-for="(item, idx) in curStores" :key="item.distributor_id" class="store-item">
             <img
               class="store-img"
               :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
               alt=""
-            />
+            >
             <div class="store-caption">
               {{ item.name }}
             </div>
@@ -454,7 +460,7 @@ $txt-placeholder: #f5f5f7;
         </div>
         <div v-else class="view-placeholder">
           <i class="iconfont icon-store" />
-          请绑定楼层店铺
+          {{ $t('97abc3f4.bcf490') }}
         </div>
         <div slot="footer" class="content-center">
           <el-button
@@ -463,7 +469,7 @@ $txt-placeholder: #f5f5f7;
             class="control-bar bind iconfont icon-cog"
             @click="bindStore()"
           >
-            选择商铺
+            {{ $t('97abc3f4.e5cb5f') }}
           </el-button>
         </div>
       </sideBar>
@@ -544,7 +550,7 @@ export default {
     // 添加系列
     addSeries() {
       if (!this.seriesTitle) {
-        this.$message({ message: '区域名称必填', type: 'error' })
+        this.$message({ message: this.$t('97abc3f4.385d26'), type: 'error' })
         return
       }
       let newTabName = Date.parse(new Date()) + ''
@@ -566,9 +572,9 @@ export default {
     },
     // 移除系列
     removeTab(targetName) {
-      this.$confirm('删除系列将删除该区域下绑定的所有店铺, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('97abc3f4.31d64e'), this.$t('97abc3f4.02d981'), {
+        confirmButtonText: this.$t('97abc3f4.38cf16'),
+        cancelButtonText: this.$t('97abc3f4.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -612,7 +618,7 @@ export default {
     },
     // 移除楼层
     remove(idx) {
-      this.$confirm('确认删除？')
+      this.$confirm(this.$t('97abc3f4.b28efa'))
         .then((_) => {
           this.editableData.splice(idx, 1)
         })
@@ -678,7 +684,7 @@ export default {
       savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('97abc3f4.3b1083'),
             type: 'success'
           })
         }

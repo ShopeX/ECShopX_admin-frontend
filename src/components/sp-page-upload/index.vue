@@ -11,16 +11,18 @@
       :percentage="exportPercent"
       type="circle"
       width="40"
-    ></el-progress>
+    />
 
     <div>
-      <span v-if="exportPercent < 100" style="color: #e6a23c; line-height: 40px"
-        >正在导出数据,请耐心等待，不要关闭窗口！</span
-      >
-      <span v-else style="color: #67c23a; line-height: 40px">导出完成,数据导出成功！</span>
-      <el-button v-if="exportPercent < 100" size="mini" type="warning" @click="hanleStop"
-        >取消下载</el-button
-      >
+      <span v-if="exportPercent < 100" style="color: #e6a23c; line-height: 40px">{{
+        $t('089d6e70.45893e')
+      }}</span>
+      <span v-else style="color: #67c23a; line-height: 40px">{{ $t('089d6e70.498a19') }}</span>
+      <el-button v-if="exportPercent < 100" size="mini" type="warning" @click="hanleStop">
+{{
+        $t('089d6e70.84fac4')
+      }}
+</el-button>
     </div>
   </div>
 </template>
@@ -41,7 +43,7 @@ export default {
         this.start = true
         this.startExportCsvData(1, val, this.exportTotal)
       } else {
-        this.$message.error('已经存在进行中的导出任务，请等待上个任务执行完毕')
+        this.$message.error(this.$t('089d6e70.1be5b4'))
       }
     }
   },
@@ -50,9 +52,9 @@ export default {
   },
   methods: {
     hanleStop() {
-      this.$confirm('确定要取消当前文件导出吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('089d6e70.8ad17a'), this.$t('089d6e70.02d981'), {
+        confirmButtonText: this.$t('089d6e70.38cf16'),
+        cancelButtonText: this.$t('089d6e70.625fb2'),
         type: 'warning'
       })
         .then(() => {

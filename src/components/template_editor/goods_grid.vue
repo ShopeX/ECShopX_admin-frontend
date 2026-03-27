@@ -5,47 +5,47 @@
 
 <template>
   <section v-if="name === 'goodsGrid'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('37a3b709.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px" :label-position="usage == 'mobile' ? 'left' : 'top'">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('37a3b709.32c65d')">
           <el-input v-model="base.title" type="text" maxlength="20" show-word-limit />
         </el-form-item>
-        <el-form-item v-if="show_subtitle" label="副标题">
+        <el-form-item v-if="show_subtitle" :label="$t('37a3b709.72cf37')">
           <el-input v-model="base.subtitle" maxlength="20" show-word-limit />
         </el-form-item>
-        <el-form-item v-if="show_space" label="组件间距">
+        <el-form-item v-if="show_space" :label="$t('37a3b709.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item v-if="usage == 'pc'" label="组件间距">
+        <el-form-item v-if="usage == 'pc'" :label="$t('37a3b709.4707ba')">
           <el-input v-model="base.padded" type="number" />
         </el-form-item>
-        <el-form-item v-if="show_style" label="样式">
+        <el-form-item v-if="show_style" :label="$t('37a3b709.390037')">
           <el-radio-group v-model="config.style" @change="styleChange">
-            <el-radio :label="'grid'"> 一行两个 </el-radio>
-            <el-radio :label="'grids'"> 一行三个 </el-radio>
+            <el-radio :label="'grid'"> {{ $t('37a3b709.412d79') }} </el-radio>
+            <el-radio :label="'grids'"> {{ $t('37a3b709.41061c') }} </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="show_price" label="显示价格">
+        <el-form-item v-if="show_price" :label="$t('37a3b709.ba302e')">
           <el-switch v-model="config.showPrice" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item v-if="config.style !== 'grids' && show_brand" label="显示品牌">
+        <el-form-item v-if="config.style !== 'grids' && show_brand" :label="$t('37a3b709.02af2a')">
           <el-switch v-model="config.brand" active-color="#27cc6a" inactive-color="#efefef" />
-          <span class="muted content-padded">显示品牌需配置商品品牌logo</span>
+          <span class="muted content-padded">{{ $t('37a3b709.248261') }}</span>
         </el-form-item>
-        <el-form-item label="选择商品">
+        <el-form-item :label="$t('37a3b709.43d1e2')">
           <el-button
             v-if="!limit_num || items.length < limit_num"
             type="default"
             class="iconfont icon-cog banner-button-uploader"
             @click="setGoods"
           >
-            编辑商品
+            {{ $t('37a3b709.7d3792') }}
           </el-button>
           <span
             v-if="!limit_num || items.length < limit_num"
             style="font-size: 12px; margin-left: 20px"
-            >最多可选择100件商品；左侧实时预览内仅展示前50件；下方商品拖动以排序。</span
+            >{{ $t('37a3b709.d58793') }}</span
           >
           <el-row
             v-if="items.length > 0"
@@ -68,7 +68,7 @@
                 @mouseover.native="mouseoverHandle(index)"
                 @mouseleave.native="mouseleaveHandle()"
               >
-                <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="" />
+                <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="">
                 <div class="title">
                   {{ item.title }}
                 </div>
@@ -82,21 +82,39 @@
             </draggable>
           </el-row>
 
-          <span v-if="limit_num"> * 最多上传{{ limit_num }}个商品</span>
+          <span v-if="limit_num">
+            * {{ $t('37a3b709.b48d2c') }}{{ limit_num }}{{ $t('37a3b709.35a7af') }}</span
+          >
         </el-form-item>
-        <el-form-item v-if="config.moreLink" label="设置更多链接">
+        <el-form-item v-if="config.moreLink" :label="$t('37a3b709.c1a1e7')">
           <div class="goods-select" @click="handleMoreLink">
             <div v-if="config.moreLink.title" class="link-content">
-              <template v-if="config.moreLink.linkPage === 'goods'"> 商品： </template>
-              <template v-if="config.moreLink.linkPage === 'category'"> 分类： </template>
-              <template v-if="config.moreLink.linkPage === 'article'"> 文章： </template>
-              <template v-if="config.moreLink.linkPage === 'planting'"> 软文： </template>
-              <template v-if="config.moreLink.linkPage === 'link'"> 页面： </template>
-              <template v-if="config.moreLink.linkPage === 'marketing'"> 营销： </template>
-              <template v-if="config.moreLink.linkPage === 'custom_page'"> 自定义页面： </template>
+              <template v-if="config.moreLink.linkPage === 'goods'">
+                {{ $t('879af10c.10fe9c') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'category'">
+                {{ $t('879af10c.e7d2e8') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'article'">
+                {{ $t('879af10c.8cb9b8') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'planting'">
+                {{ $t('879af10c.9dcd91') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'link'">
+                {{ $t('879af10c.ffd741') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'marketing'">
+                {{ $t('879af10c.c78a2f') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'custom_page'">
+                {{ $t('879af10c.15ed03') }}
+              </template>
               {{ config.moreLink.title }}
             </div>
-            <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
+            <div v-else class="content-center">
+              <i class="el-icon-link" />{{ $t('37a3b709.4f2c29') }}
+            </div>
           </div>
         </el-form-item>
       </el-form>

@@ -5,13 +5,13 @@
 
 <template>
   <div style="padding-bottom: 58px">
-    <div class="title">列表页设置</div>
+    <div class="title">{{ $t('49f810f2.10aa2c') }}</div>
     <el-card v-if="!isMicorMall">
       <div class="card">
         <div class="card_title">
-          <div class="card_title_tip title">PC端Banner轮播图</div>
+          <div class="card_title_tip title">{{ $t('49f810f2.b7ee2d') }}</div>
           <div class="card_title_desc">
-            建议尺寸700px*450px；最多四张图，前后拖动排序；无图片则不展示该模块。
+            {{ $t('49f810f2.edfabd') }}
           </div>
         </div>
         <div class="card_content">
@@ -81,7 +81,7 @@
       </div>
     </el-card> -->
     <GlobalFooter>
-      <el-button type="primary" @click="save"> 保存 </el-button>
+      <el-button type="primary" @click="save">{{ $t('49f810f2.be5fbb') }}</el-button>
     </GlobalFooter>
   </div>
 </template>
@@ -181,7 +181,7 @@ export default {
       }))
 
       if (point_section.length !== this.deteleObject(numberList).length) {
-        this.$message.error('不可提交相同的积分区间')
+        this.$message.error(this.$t('49f810f2.360882'))
         return
       }
 
@@ -190,12 +190,12 @@ export default {
       )
 
       if (isNotSmallToBig) {
-        this.$message.error('积分区间起始值必须小于结束值！')
+        this.$message.error(this.$t('49f810f2.f61143'))
         return
       }
 
       if (isEmptyPoint) {
-        this.$message.error('积分区间起始值必填！')
+        this.$message.error(this.$t('49f810f2.6c3dbe'))
         return
       }
 
@@ -208,7 +208,7 @@ export default {
           point_section: point_section.map((item, index) => [item.score1, item.score2])
         }
       }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('49f810f2.33130f') })
         this.getInfo()
       })
     }

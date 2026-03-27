@@ -3,10 +3,10 @@
     <div class="flex mb-1">
       <div class="w-[300px]">
         <span class="text-red-500 mr-1">*</span>
-        <span class="font-medium">标签名称：</span>
+        <span class="font-medium">{{ $t('b0eef2c3.8086be') }}</span>
         <el-input
           v-model="rulesName"
-          placeholder="请输入标签名称"
+          :placeholder="$t('b0eef2c3.6f81f3')"
           class="mt-2"
           maxlength="50"
           show-word-limit
@@ -14,14 +14,14 @@
         />
       </div>
       <div class="ml-5 flex-1">
-        <span class="font-medium">人群说明：</span>
+        <span class="font-medium">{{ $t('b0eef2c3.fafac0') }}</span>
         <el-input
           v-model="description"
           type="textarea"
           show-word-limit
           :rows="2"
           maxlength="100"
-          placeholder="请输入人群说明"
+          :placeholder="$t('b0eef2c3.ff913c')"
           :disabled="!isEditMode"
         />
       </div>
@@ -32,16 +32,22 @@
         <div
           class="px-4 py-2 flex justify-between items-center border-b border-[#e4e7ed] font-medium"
         >
-          <span>选择客户特征</span>
+          <span>{{ $t('b0eef2c3.236d89') }}</span>
           <div>
             <el-button
               type="text"
               v-if="activeCollapse.length === 0"
               size="small"
               @click="expandAll"
-              >全部展开</el-button
+              >
+{{ $t('b0eef2c3.699371') }}
+</el-button
             >
-            <el-button type="text" v-else size="small" @click="collapseAll">全部收起</el-button>
+            <el-button type="text" v-else size="small" @click="collapseAll">
+{{
+              $t('b0eef2c3.b77295')
+            }}
+</el-button>
           </div>
         </div>
         <el-collapse v-model="activeCollapse">
@@ -76,7 +82,7 @@
           class="border border-[#e4e7ed] rounded bg-white flex flex-col overflow-hidden h-[calc(100vh-300px)]"
         >
           <div class="px-4 py-2 border-b border-[#e4e7ed] font-medium">
-            <span>人群需同时满足以下特征</span>
+            <span>{{ $t('b0eef2c3.c4300d') }}</span>
           </div>
           <div class="flex-1 overflow-y-auto p-4">
             <!-- 按分类分组渲染 -->
@@ -128,7 +134,7 @@
                       v-if="isEditMode"
                       class="el-icon-close cursor-pointer text-[#909399] hover:text-[#f56c6c]"
                       @click="removeCharacteristicByItem(item)"
-                    ></i>
+                    />
                   </div>
                   <div class="p-4">
                     <!-- 渲染子条件表单 -->
@@ -147,14 +153,20 @@
 
             <!-- 空状态 -->
             <div v-if="formItems.length === 0" class="text-center p-4 pt-6">
-              <span class="text-[#909399]">请从左侧选择客户特征</span>
+              <span class="text-[#909399]">{{ $t('b0eef2c3.8f0a51') }}</span>
             </div>
           </div>
 
           <div class="py-1.5 px-4 border-t border-[#e4e7ed] flex items-center bg-white">
-            <span class="pr-2">客户数: {{ estimateCount }} 人</span>
-            <el-button type="primary" size="small" :disabled="!isEditMode" @click="onSearchChange"
-              >查询</el-button
+            <span class="pr-2">{{ $t('b0eef2c3.5df9fd', [estimateCount]) }}</span>
+            <el-button
+              type="primary"
+              size="small"
+              :disabled="!isEditMode"
+              @click="onSearchChange"
+              >
+{{ $t('b0eef2c3.bee912') }}
+</el-button
             >
           </div>
         </div>
@@ -162,7 +174,7 @@
           class="border border-[#e4e7ed] rounded bg-white flex flex-col overflow-hidden max-h-[calc(100vh-200px)] mt-4"
         >
           <div class="px-4 py-2 border-b border-[#e4e7ed] font-medium">
-            <span>选择人群标签</span>
+            <span>{{ $t('b0eef2c3.d2a769') }}</span>
           </div>
           <div class="flex-1 overflow-y-auto p-4">
             <el-button
@@ -170,12 +182,14 @@
               size="small"
               @click="showTagDialog = true"
               :disabled="!isEditMode"
-              >选择人群标签</el-button
+              >
+{{ $t('b0eef2c3.d2a769') }}
+</el-button
             >
 
             <!-- 已选标签展示 -->
             <div v-if="selectedTags.length > 0" class="mt-4">
-              <div class="font-medium mb-2 text-[#606266]">已选中标签：</div>
+              <div class="font-medium mb-2 text-[#606266]">{{ $t('b0eef2c3.e98819') }}</div>
               <div class="flex flex-wrap items-center">
                 <el-tag
                   v-for="(tag, index) in selectedTags"
@@ -202,8 +216,16 @@
     </div>
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click="handleCancel"> {{ isEditMode ? '取消' : '返回' }} </el-button>
-        <el-button v-if="isEditMode" type="primary" @click="handleSave">保存</el-button>
+        <el-button @click="handleCancel">
+{{
+          isEditMode ? $t('b0eef2c3.625fb2') : $t('b0eef2c3.5f4112')
+        }}
+</el-button>
+        <el-button v-if="isEditMode" type="primary" @click="handleSave">
+{{
+          $t('b0eef2c3.be5fbb')
+        }}
+</el-button>
       </div>
     </template>
   </SpPage>
@@ -252,8 +274,8 @@ export default {
   methods: {
     getCategoryTitle(type) {
       const titleMap = {
-        member: '会员信息',
-        order: '订单信息'
+        member: this.$t('b0eef2c3.32fd76'),
+        order: this.$t('b0eef2c3.a6d10d')
       }
       return titleMap[type] || type
     },
@@ -392,7 +414,8 @@ export default {
     },
     async onSearchChange() {
       const condition = this.buildConditionsData()
-      if (!condition || condition.length === 0) return this.$message.error('请选择客户特征')
+      if (!condition || condition.length === 0)
+        return this.$message.error(this.$t('b0eef2c3.294301'))
       console.log('condition', condition)
       const { matched_count } = await this.$api.member.getSegmentRulePreview({
         condition: condition
@@ -536,7 +559,7 @@ export default {
       if (!this.isEditMode) return
       // 验证标签名称必填
       if (!this.rulesName || this.rulesName.trim() === '') {
-        this.$message.error('请输入标签名称')
+        this.$message.error(this.$t('b0eef2c3.6f81f3'))
         return
       }
 
@@ -549,7 +572,7 @@ export default {
       }
       await this.$api.member.saveSegmentRule(params)
       console.log('保存配置:', params, condition)
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('b0eef2c3.3b1083'))
       this.refresh()
       this.$router.go(-1)
     },

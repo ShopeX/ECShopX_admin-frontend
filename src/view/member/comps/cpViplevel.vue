@@ -20,7 +20,7 @@
             <div>
               <div class="upload-box" @click="handleImgChange(item, index)">
                 <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
-                  <img :src="wximageurl + item.background_pic_url" class="avatar" />
+                  <img :src="wximageurl + item.background_pic_url" class="avatar">
                 </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
@@ -31,16 +31,16 @@
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
             />
-            <p class="content-center">卡封面（建议尺寸：600px * 375px）</p>
+            <p class="content-center">{{ $t('da789d63.76d1bc') }}</p>
           </div>
           <div class="item-content f_l">
             <div>
-              <span class="txt">等级名称</span>
+              <span class="txt">{{ $t('da789d63.9d05c7') }}</span>
               <el-input
                 v-model="item.grade_name"
                 style="width: 380px"
                 :maxlength="32"
-                placeholder="最多填写32个字符"
+                :placeholder="$t('da789d63.cdc01b')"
                 :name="index + ''"
                 :disabled="VERSION_SHUYUN()"
                 @blur="nameblur"
@@ -48,11 +48,11 @@
               <el-input v-model="item.lv_type" type="hidden" :name="index + ''" />
             </div>
             <div style="display: flex">
-              <span class="txt">等级背景</span>
+              <span class="txt">{{ $t('da789d63.3334e5') }}</span>
               <SpImagePicker v-model="item.grade_background" />
             </div>
             <div class="clearfix">
-              <span class="txt f_l">购买金额</span>
+              <span class="txt f_l">{{ $t('da789d63.0efb0f') }}</span>
               <template>
                 <div class="f_l">
                   <template>
@@ -61,14 +61,14 @@
                         v-model="list.price"
                         style="width: 80px"
                         :name="index + ''"
-                      />&nbsp;元
+                      />&nbsp;{{ $t('da789d63.c16655') }}
                     </div>
                   </template>
                 </div>
               </template>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">会员折扣</span>
+              <span class="txt f_l">{{ $t('da789d63.eababe') }}</span>
               <div class="f_l">
                 <template>
                   <div>
@@ -76,7 +76,7 @@
                       v-model="item.privileges.discount"
                       :name="index + ''"
                       @blur="discountBlur"
-                    />&nbsp;折
+                    />&nbsp;{{ $t('da789d63.96c015') }}
                   </div>
                 </template>
               </div>
@@ -87,22 +87,23 @@
                 <template>
                   <el-tooltip placement="top" width="350">
                     <div slot="content" class="tips">
-                      <p>客户开通会员后，系统将自动发送优惠券包</p>
+                      <p>{{ $t('da789d63.bc76d3') }}</p>
                     </div>
                     <el-button
                       style="border: none; font-size: 14px; width: 100px"
                       class="btn"
                       icon="el-icon-warning-outline"
                     >
-                      优惠劵包
+                      {{ $t('da789d63.9ea8d6') }}
                     </el-button>
                   </el-tooltip>
-                  <el-button @click="pickHanle(index)"> 选择优惠券包 </el-button>
+                  <el-button @click="pickHanle(index)">{{ $t('da789d63.df19a7') }}</el-button>
                   <template
                     v-if="item.voucher_package !== undefined && item.voucher_package.length > 0"
                   >
                     <span style="margin-left: 30px"
-                      >已选 {{ item.voucher_package.length }} 个劵包</span
+                      >{{ $t('da789d63.7bf54e') }} {{ item.voucher_package.length }}
+                      {{ $t('da789d63.6dd3e5') }}</span
                     >
                   </template>
                 </template>
@@ -111,33 +112,33 @@
             <!------------------------------------- 卷包功能 -------------------------------------->
 
             <div class="clearfix">
-              <span class="txt f_l">购买引导文本</span>
+              <span class="txt f_l">{{ $t('da789d63.9e4217') }}</span>
               <div class="f_l">
                 <el-input
                   v-model="item.guide_title"
                   style="width: 380px"
                   type="textarea"
                   :rows="3"
-                  placeholder="请输入内容"
+                  :placeholder="$t('da789d63.a11cc7')"
                   :name="index + ''"
                 />&nbsp;<span class="frm-tips">30</span>
               </div>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">详细说明</span>
+              <span class="txt f_l">{{ $t('da789d63.d5a6cb') }}</span>
               <div class="f_l">
                 <el-input
                   v-model="item.description"
                   style="width: 380px"
                   type="textarea"
                   :rows="5"
-                  placeholder="请输入内容"
+                  :placeholder="$t('da789d63.a11cc7')"
                   :name="index + ''"
                 />
               </div>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">默认展示</span>
+              <span class="txt f_l">{{ $t('da789d63.0a5ac2') }}</span>
               <div class="f_l">
                 <el-radio
                   v-model="IsDefault"
@@ -150,7 +151,7 @@
               </div>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">是否禁用</span>
+              <span class="txt f_l">{{ $t('da789d63.3d6de2') }}</span>
               <div class="f_l">
                 <el-switch v-model="item.is_disabled" />
               </div>
@@ -284,12 +285,12 @@ export default {
         // if (check === true) {
         if (item.lv_type == this.IsDefault) {
           if (!item.guide_title) {
-            this.$message({ message: '购买引导必填', type: 'error' })
+            this.$message({ message: this.$t('da789d63.34bce1'), type: 'error' })
             canSaveResult = false
             return
           }
           if (item.is_disabled) {
-            this.$message({ message: '设为默认的等级，不能禁用', type: 'error' })
+            this.$message({ message: this.$t('da789d63.59420f'), type: 'error' })
             canSaveResult = false
             return
           }
@@ -311,7 +312,7 @@ export default {
       saveVipGrade(this.params).then(
         (res) => {
           if (res.data.data.status) {
-            this.$message.success('保存成功')
+            this.$message.success(this.$t('da789d63.3b1083'))
           }
         },
         () => {
@@ -321,7 +322,7 @@ export default {
     },
     nameblur(e) {
       if (e.target.value == '') {
-        this.$message({ message: '请输入等级名称', type: 'error' })
+        this.$message({ message: this.$t('da789d63.775081'), type: 'error' })
         return
       }
     },
@@ -331,7 +332,7 @@ export default {
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
       if (this.levelData[index].discount_checked && this.VERSION_SHUYUN()) {
         if (value == '') {
-          this.$message({ message: '请输入会员折扣', type: 'error' })
+          this.$message({ message: this.$t('da789d63.47ef84'), type: 'error' })
           return
         }
         // if (!reg.test(value) && this.VERSION_SHUYUN()) {
@@ -348,7 +349,7 @@ export default {
     // },
     addGrade() {
       if (this.levelData.length >= 2) {
-        this.$message({ message: '最多添加2个等级', type: 'error' })
+        this.$message({ message: this.$t('da789d63.8f8b1a'), type: 'error' })
         return
       }
       var arr = {
@@ -387,12 +388,12 @@ export default {
       for (var i = 0; i < this.levelData.length; i++) {
         if (this.levelData[i].grade_name == '' && this.VERSION_SHUYUN()) {
           isflag = true
-          this.$message({ message: '请输入等级名称', type: 'error' })
+          this.$message({ message: this.$t('da789d63.775081'), type: 'error' })
           break
         }
         if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
           isflag = true
-          this.$message({ message: '请输入会员折扣', type: 'error' })
+          this.$message({ message: this.$t('da789d63.47ef84'), type: 'error' })
           break
         } else if (
           !discountReg.test(this.levelData[i].privileges.discount && this.VERSION_SHUYUN())
@@ -418,7 +419,7 @@ export default {
         if (isAllNot) {
           isflag = true
           this.$message({
-            message: '购买金额：30天 、90天 、 365天 请至少填写一项金额',
+            message: this.$t('da789d63.831b87'),
             type: 'error'
           })
           break

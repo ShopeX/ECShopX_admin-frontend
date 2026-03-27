@@ -67,7 +67,7 @@ export default {
         .catch((err) => {
           console.error(err)
           this.loading = false
-          this.$message.error('请重新上传')
+          this.$message.error(this.$t('21382a0e.630b9f'))
         })
 
       // 上传
@@ -89,11 +89,11 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 1
 
       if (!isJPG && !isPNG) {
-        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+        this.$message.error(this.$t('21382a0e.34e969'))
         return (this.loading = false)
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 1MB!')
+        this.$message.error(this.$t('21382a0e.b595f3'))
         return (this.loading = false)
       }
     }

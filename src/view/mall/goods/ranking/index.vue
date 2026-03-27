@@ -18,7 +18,9 @@
     >
       <template #tableTop>
         <div class="action-container">
-          <el-button type="primary" icon="plus" @click="openDialog()"> 添加榜单 </el-button>
+          <el-button type="primary" icon="plus" @click="openDialog()">
+            {{ $t('92f7db48.cf02c6') }}
+          </el-button>
         </div>
       </template>
     </SpFinder>
@@ -48,7 +50,7 @@ export default {
   data() {
     return {
       ranking_dialog: false,
-      dialogTitle: '新增榜单',
+      dialogTitle: '',
       mainCategoryList: [],
       rankingForm: {
         id: '',
@@ -66,14 +68,16 @@ export default {
           top3_intro: ''
         }
       },
-      typeList: {
-        category_ranking: '品类榜单',
-        platform_ranking: '平台榜单'
-      },
+      typeList: {},
       rankingFormList: []
     }
   },
   async mounted() {
+    this.dialogTitle = this.$t('92f7db48.81cfbe')
+    this.typeList = {
+      category_ranking: this.$t('92f7db48.4abc55'),
+      platform_ranking: this.$t('92f7db48.b7986d')
+    }
     await this.getMainCategory()
     this.initFormList()
   },
@@ -81,10 +85,10 @@ export default {
     finderSetting() {
       return {
         columns: [
-          { name: '榜单ID', key: 'id', width: '100' },
-          { name: '榜单名称', key: 'name' },
+          { name: this.$t('92f7db48.962772'), key: 'id', width: '100' },
+          { name: this.$t('92f7db48.7cdb40'), key: 'name' },
           {
-            name: '管理分类',
+            name: this.$t('92f7db48.b3ed9f'),
             key: 'category_name',
             width: '150',
             formatter: (value, row, col) => {
@@ -92,7 +96,7 @@ export default {
             }
           },
           {
-            name: '副标题',
+            name: this.$t('92f7db48.72cf37'),
             key: 'intro',
             width: '150',
             formatter: (value, row, col) => {
@@ -100,7 +104,7 @@ export default {
             }
           },
           {
-            name: '排序优先级',
+            name: this.$t('92f7db48.5f2e60'),
             key: 'sort',
             width: '120',
             formatter: (value, row, col) => {
@@ -108,7 +112,7 @@ export default {
             }
           },
           {
-            name: '展示开始时间',
+            name: this.$t('92f7db48.c7b42d'),
             key: 'start_time',
             width: '180',
             formatter: (value, row, col) => {
@@ -116,7 +120,7 @@ export default {
             }
           },
           {
-            name: '展示结束时间',
+            name: this.$t('92f7db48.a9fe1c'),
             key: 'end_time',
             width: '180',
             formatter: (value, row, col) => {
@@ -126,7 +130,7 @@ export default {
         ],
         actions: [
           {
-            name: '编辑',
+            name: this.$t('92f7db48.95b351'),
             key: 'edit',
             type: 'button',
             buttonType: 'primary',
@@ -137,7 +141,7 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: this.$t('92f7db48.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'danger',
@@ -150,32 +154,32 @@ export default {
         ],
         search: [
           {
-            name: '榜单名称',
+            name: this.$t('92f7db48.7cdb40'),
             key: 'name',
             type: 'input',
-            placeholder: '请输入榜单名称'
+            placeholder: this.$t('92f7db48.270f1f')
           },
           {
-            name: '管理分类',
+            name: this.$t('92f7db48.b3ed9f'),
             key: 'category_name',
             type: 'input',
-            placeholder: '请输入管理分类'
+            placeholder: this.$t('92f7db48.1ff189')
           },
           {
-            name: '展示开始时间',
+            name: this.$t('92f7db48.c7b42d'),
             key: 'start_time',
             type: 'date-range',
             start: 'start_time_start',
             end: 'start_time_end',
-            placeholder: '请选择开始时间区间'
+            placeholder: this.$t('92f7db48.819bac')
           },
           {
-            name: '展示结束时间',
+            name: this.$t('92f7db48.a9fe1c'),
             key: 'end_time',
             type: 'date-range',
             start: 'end_time_start',
             end: 'end_time_end',
-            placeholder: '请选择结束时间区间'
+            placeholder: this.$t('92f7db48.5ca388')
           }
         ]
       }
@@ -185,35 +189,35 @@ export default {
     initFormList() {
       this.rankingFormList = [
         {
-          label: '榜单名称',
+          label: this.$t('92f7db48.7cdb40'),
           type: 'input',
           key: 'name',
           defaultValue: '',
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           required: true,
-          message: '榜单名称不能为空'
+          message: this.$t('92f7db48.7adf8c')
         },
         {
-          label: '副标题',
+          label: this.$t('92f7db48.72cf37'),
           type: 'input',
           key: 'intro',
           defaultValue: '',
           maxlength: 12,
-          placeholder: '请输入'
+          placeholder: this.$t('92f7db48.02cc4f')
         },
         {
-          label: '优先级',
+          label: this.$t('92f7db48.ee8ecb'),
           type: 'number',
           key: 'sort',
           defaultValue: 0,
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           min: 0,
           step: 1,
           required: true,
-          message: '优先级不能为空'
+          message: this.$t('92f7db48.aecabe')
         },
         {
-          label: '展示时间',
+          label: this.$t('92f7db48.438907'),
           key: 'show_time',
           defaultValue: [],
           component({ disabled }, value) {
@@ -223,9 +227,9 @@ export default {
                   v-model={value['show_time']}
                   disabled={disabled}
                   type='datetimerange'
-                  placeholder='选择日期范围'
-                  start-placeholder='开始时间'
-                  end-placeholder='结束时间'
+                  placeholder={this.$t('92f7db48.4b8cb9')}
+                  start-placeholder={this.$t('92f7db48.592c59')}
+                  end-placeholder={this.$t('92f7db48.f78277')}
                   format='yyyy-MM-dd HH:mm:ss'
                   value-format='timestamp'
                   default-time={['00:00:00', '23:59:59']}
@@ -238,46 +242,46 @@ export default {
           required: true,
           validator: (rule, value, callback) => {
             if (!value || value.length === 0) {
-              callback(new Error('请选择展示时间'))
+              callback(new Error(this.$t('92f7db48.dde02e')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '排序规则',
+          label: this.$t('92f7db48.726a6f'),
           key: 'rank_by',
           type: 'radio',
           options: [
             {
               label: 'hot',
-              name: '按热力值排序(销量*2000+PV*100)'
+              name: this.$t('92f7db48.89ead3')
             }
           ],
           required: true,
           defaultValue: 'hot'
         },
         {
-          label: '榜单背景图',
+          label: this.$t('92f7db48.0c4efc'),
           key: 'background',
           type: 'image',
           defaultValue: '',
-          placeholder: '请上传',
+          placeholder: this.$t('92f7db48.197c4f'),
           required: true,
-          message: '请上传榜单背景图',
-          tip: '建议上传尺寸1125×1125，文件大小不超过200kb，支持上传文件格式为JPG、PNG、JPEG',
+          message: this.$t('92f7db48.4dc2f1'),
+          tip: this.$t('92f7db48.9a5506'),
           component({ disabled }, value) {
             return <SpImagePicker v-model={value['background']} disabled={disabled} />
           }
         },
         {
-          label: '商品范围',
+          label: this.$t('92f7db48.6a252f'),
           key: 'apply_scope',
           type: 'radio',
           options: [
             {
               label: 'main_category',
-              name: '指定商品管理分类'
+              name: this.$t('92f7db48.adece7')
             }
           ],
           required: true,
@@ -304,7 +308,7 @@ export default {
             const form = this.rankingForm
             if (form.apply_scope === 'main_category') {
               if (!value || value.length === 0) {
-                callback(new Error('请选择商品管理分类'))
+                callback(new Error(this.$t('92f7db48.45bf88')))
               } else {
                 callback()
               }
@@ -314,14 +318,14 @@ export default {
           }
         },
         {
-          label: '上榜理由',
+          label: this.$t('92f7db48.a92812'),
           key: 'reason',
           defaultValue: {
             top1_intro: '',
             top2_intro: '',
             top3_intro: ''
           },
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           component({ disabled }, value) {
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -337,7 +341,7 @@ export default {
                   <el-input
                     v-model={value.reason.top1_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -353,7 +357,7 @@ export default {
                   <el-input
                     v-model={value.reason.top2_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -369,7 +373,7 @@ export default {
                   <el-input
                     v-model={value.reason.top3_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -384,35 +388,35 @@ export default {
     initFormList() {
       this.rankingFormList = [
         {
-          label: '榜单名称',
+          label: this.$t('92f7db48.7cdb40'),
           type: 'input',
           key: 'name',
           defaultValue: '',
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           required: true,
-          message: '榜单名称不能为空'
+          message: this.$t('92f7db48.7adf8c')
         },
         {
-          label: '副标题',
+          label: this.$t('92f7db48.72cf37'),
           type: 'input',
           key: 'intro',
           defaultValue: '',
           maxlength: 12,
-          placeholder: '请输入'
+          placeholder: this.$t('92f7db48.02cc4f')
         },
         {
-          label: '优先级',
+          label: this.$t('92f7db48.ee8ecb'),
           type: 'number',
           key: 'sort',
           defaultValue: 0,
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           min: 0,
           step: 1,
           required: true,
-          message: '优先级不能为空'
+          message: this.$t('92f7db48.aecabe')
         },
         {
-          label: '展示时间',
+          label: this.$t('92f7db48.438907'),
           key: 'show_time',
           defaultValue: [],
           component: ({ disabled }, value) => {
@@ -422,9 +426,9 @@ export default {
                   v-model={value['show_time']}
                   disabled={disabled}
                   type='datetimerange'
-                  placeholder='选择日期范围'
-                  start-placeholder='开始时间'
-                  end-placeholder='结束时间'
+                  placeholder={this.$t('92f7db48.4b8cb9')}
+                  start-placeholder={this.$t('92f7db48.592c59')}
+                  end-placeholder={this.$t('92f7db48.f78277')}
                   format='yyyy-MM-dd HH:mm:ss'
                   value-format='timestamp'
                   default-time={['00:00:00', '23:59:59']}
@@ -437,46 +441,46 @@ export default {
           required: true,
           validator: (rule, value, callback) => {
             if (!value || value.length === 0) {
-              callback(new Error('请选择展示时间'))
+              callback(new Error(this.$t('92f7db48.dde02e')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '排序规则',
+          label: this.$t('92f7db48.726a6f'),
           key: 'rank_by',
           type: 'radio',
           options: [
             {
               label: 'hot',
-              name: '按热力值排序(销量*2000+PV*100)'
+              name: this.$t('92f7db48.89ead3')
             }
           ],
           required: true,
           defaultValue: 'hot'
         },
         {
-          label: '榜单背景图',
+          label: this.$t('92f7db48.0c4efc'),
           key: 'background',
           type: 'image',
           defaultValue: '',
-          placeholder: '请上传',
+          placeholder: this.$t('92f7db48.197c4f'),
           required: true,
-          message: '请上传榜单背景图',
-          tip: '建议上传尺寸1125×1125，文件大小不超过200kb，支持上传文件格式为JPG、PNG、JPEG',
+          message: this.$t('92f7db48.4dc2f1'),
+          tip: this.$t('92f7db48.9a5506'),
           component: ({ disabled }, value) => {
             return <SpImagePicker v-model={value['background']} disabled={disabled} />
           }
         },
         {
-          label: '商品范围',
+          label: this.$t('92f7db48.6a252f'),
           key: 'apply_scope',
           type: 'radio',
           options: [
             {
               label: 'main_category',
-              name: '指定商品管理分类'
+              name: this.$t('92f7db48.adece7')
             }
           ],
           required: true,
@@ -503,7 +507,7 @@ export default {
             const form = this.rankingForm
             if (form.apply_scope === 'main_category') {
               if (!value || value.length === 0) {
-                callback(new Error('请选择商品管理分类'))
+                callback(new Error(this.$t('92f7db48.45bf88')))
               } else {
                 callback()
               }
@@ -513,14 +517,14 @@ export default {
           }
         },
         {
-          label: '上榜理由',
+          label: this.$t('92f7db48.a92812'),
           key: 'reason',
           defaultValue: {
             top1_intro: '',
             top2_intro: '',
             top3_intro: ''
           },
-          placeholder: '请输入',
+          placeholder: this.$t('92f7db48.02cc4f'),
           component: ({ disabled }, value) => {
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -536,7 +540,7 @@ export default {
                   <el-input
                     v-model={value.reason.top1_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -552,7 +556,7 @@ export default {
                   <el-input
                     v-model={value.reason.top2_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -568,7 +572,7 @@ export default {
                   <el-input
                     v-model={value.reason.top3_intro}
                     type='input'
-                    placeholder='请输入'
+                    placeholder={this.$t('92f7db48.02cc4f')}
                     disabled={disabled}
                   />
                 </div>
@@ -617,7 +621,7 @@ export default {
         const categoryData = res?.data?.data || res || []
         this.mainCategoryList = categoryData
       } catch (error) {
-        console.error('获取管理分类失败:', error)
+        console.error('Get category failed:', error)
         this.mainCategoryList = []
       }
     },
@@ -648,10 +652,10 @@ export default {
             top3_intro: detail.top3_intro || ''
           }
         }
-        this.dialogTitle = '编辑榜单'
+        this.dialogTitle = this.$t('92f7db48.d14463')
       } else {
         // 新增模式，重置表单
-        this.dialogTitle = '新增榜单'
+        this.dialogTitle = this.$t('92f7db48.81cfbe')
         this.rankingForm = {
           id: '',
           name: '',
@@ -701,7 +705,7 @@ export default {
       }
 
       try {
-        if (this.dialogTitle === '编辑榜单') {
+        if (this.dialogTitle === this.$t('92f7db48.d14463')) {
           await editRanking(this.rankingForm.id, params)
         } else {
           await createRanking(params)
@@ -710,28 +714,28 @@ export default {
         this.$refs.finder.refresh(true)
         this.$message({
           type: 'success',
-          message: '保存成功'
+          message: this.$t('92f7db48.3b1083')
         })
       } catch (error) {
         console.error(error)
-        this.$message.error('保存失败')
+        this.$message.error(this.$t('92f7db48.6de920'))
       }
     },
     delRanking(id) {
-      this.$confirm('确认删除该榜单吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('92f7db48.db2b21'), this.$t('92f7db48.02d981'), {
+        confirmButtonText: this.$t('92f7db48.38cf16'),
+        cancelButtonText: this.$t('92f7db48.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteRanking(id)
             .then(() => {
-              this.$message({ type: 'success', message: '删除成功' })
+              this.$message({ type: 'success', message: this.$t('92f7db48.0007d1') })
               this.$refs.finder.refresh(true)
             })
             .catch((error) => {
               console.error(error)
-              this.$message.error('删除失败')
+              this.$message.error(this.$t('92f7db48.acf066'))
             })
         })
         .catch(() => {})

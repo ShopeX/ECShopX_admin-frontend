@@ -7,25 +7,25 @@
   <SpPage>
     <SpRouterView class="merchantList">
       <SpFilterForm :model="formParams" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="merchant_name" label="商户名称:">
-          <el-input v-model="formParams.merchant_name" placeholder="请输入商户名称" />
+        <SpFilterFormItem prop="merchant_name" :label="$t('5f6110bf.a1b85f')">
+          <el-input v-model="formParams.merchant_name" :placeholder="$t('5f6110bf.18213b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="legal_name" label="联系人:">
-          <el-input v-model="formParams.legal_name" placeholder="请输入联系人" />
+        <SpFilterFormItem prop="legal_name" :label="$t('5f6110bf.eaa028')">
+          <el-input v-model="formParams.legal_name" :placeholder="$t('5f6110bf.9e3f21')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="legal_mobile" label="联系电话:">
-          <el-input v-model="formParams.legal_mobile" placeholder="请输入联系电话" />
+        <SpFilterFormItem prop="legal_mobile" :label="$t('5f6110bf.733e3f')">
+          <el-input v-model="formParams.legal_mobile" :placeholder="$t('5f6110bf.7b540b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="time_start" label="入驻时间:" size="max">
+        <SpFilterFormItem prop="time_start" :label="$t('5f6110bf.02a31d')" size="max">
           <el-date-picker
             v-model="formParams.time_start"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('5f6110bf.981cbe')"
+            :start-placeholder="$t('5f6110bf.b44c0f')"
+            :end-placeholder="$t('5f6110bf.1d468b')"
             prefix-icon="null"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
@@ -35,7 +35,7 @@
 
       <div class="action-container">
         <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="addMerchant">
-          新增商户
+          {{ $t('5f6110bf.8a69a5') }}
         </el-button>
       </div>
 
@@ -72,18 +72,18 @@ export default {
       datapass_block: 0,
       setting: createSetting({
         columns: [
-          { name: '商户名称', key: 'merchant_name' },
-          { name: '联系人', key: 'legal_name' },
-          { name: '联系电话', key: 'legal_mobile' },
+          { name: this.$t('5f6110bf.e6f169'), key: 'merchant_name' },
+          { name: this.$t('5f6110bf.52409d'), key: 'legal_name' },
+          { name: this.$t('5f6110bf.09a1f6'), key: 'legal_mobile' },
           {
-            name: '入驻时间',
+            name: this.$t('5f6110bf.773775'),
             key: 'created',
             formatter: (h, { created }) => {
               return moment(created * 1000).format('YYYY-MM-DD HH:mm:ss')
             }
           },
           {
-            name: '商品审核（商户商家商品是否需通过平台审核）',
+            name: this.$t('5f6110bf.fc90f2'),
             key: 'audit_goods',
             width: '100px',
             render: (h, { row }) =>
@@ -99,24 +99,25 @@ export default {
                   }
                 },
                 [
-                  h('span', { class: 'aaa' }, row.audit_goods ? ' 是 ' : ' 否 '),
+                  h(
+                    'span',
+                    { class: 'aaa' },
+                    row.audit_goods ? this.$t('5f6110bf.0a60ac') : this.$t('5f6110bf.c9744f')
+                  ),
                   h('i', { class: 'el-icon-s-tools' }, '')
                 ]
               ),
 
-            renderHeader() {
+            renderHeader: () => {
               return (
                 <div>
-                  <span>商品审核 </span>
+                  <span>{this.$t('5f6110bf.fc90f2').split('（')[0]} </span>
                   <el-tooltip
                     class='item'
                     effect='light'
-                    content='商户上架商品是否需通过平台审核'
+                    content={this.$t('5f6110bf.3792c2')}
                     placement='top-start'
                   >
-                    {/* <span slot='content'>
-                      商户商家商品是否<br/>需通过平台审核
-                      </span> */}
                     <i class='el-icon-question'></i>
                   </el-tooltip>
                 </div>
@@ -126,7 +127,7 @@ export default {
         ],
         actions: [
           {
-            name: '详情',
+            name: this.$t('5f6110bf.f26225'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -141,7 +142,7 @@ export default {
             }
           },
           {
-            name: '编辑',
+            name: this.$t('5f6110bf.95b351'),
             key: 'editor',
             type: 'button',
             buttonType: 'text',
@@ -159,7 +160,7 @@ export default {
             }
           },
           {
-            name: '禁用',
+            name: this.$t('5f6110bf.710ad0'),
             key: 'off',
             type: 'button',
             buttonType: 'text',
@@ -174,7 +175,7 @@ export default {
             }
           },
           {
-            name: '开启',
+            name: this.$t('5f6110bf.cc42dd'),
             key: 'off',
             type: 'button',
             buttonType: 'text',
@@ -207,12 +208,10 @@ export default {
       this.datapass_block = datapass_block
     },
     fnAffirm(row) {
-      const message = row.audit_goods
-        ? '关闭后商户商品上架时无需审核，请确认是否关闭'
-        : '开启后商户商品上架时需要审核，请确认是否开启'
-      this.$confirm(message, '通知消息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const message = row.audit_goods ? this.$t('5f6110bf.a38759') : this.$t('5f6110bf.fd1322')
+      this.$confirm(message, this.$t('5f6110bf.59a702'), {
+        confirmButtonText: this.$t('5f6110bf.38cf16'),
+        cancelButtonText: this.$t('5f6110bf.625fb2'),
         type: 'warning',
         center: true
       }).then(async () => {
@@ -220,21 +219,18 @@ export default {
         if (result.data.data.status) {
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('5f6110bf.a3869d')
           })
           this.$refs.finder.refresh(true)
         }
       })
-      console.log(row)
     },
     fnMerchantsState(row, status) {
       const id = row[0].id
-      const message = status
-        ? '开启后且该商户及其关联店铺的账号可登录商家端以及店铺端，该商户及其关联店铺在小程序显示，请确认是否开启。'
-        : '禁用后该商户及其关联店铺不在小程序显示，且该商户及其关联店铺的账号无法登录商家端以及店铺端，请确认是否禁用该商户。'
-      this.$confirm(message, '通知消息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const message = status ? this.$t('5f6110bf.415601') : this.$t('5f6110bf.8dcbc7')
+      this.$confirm(message, this.$t('5f6110bf.59a702'), {
+        confirmButtonText: this.$t('5f6110bf.38cf16'),
+        cancelButtonText: this.$t('5f6110bf.625fb2'),
         type: 'warning',
         center: true
       }).then(async () => {
@@ -242,7 +238,7 @@ export default {
         if (result.data.data.status) {
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('5f6110bf.a3869d')
           })
           this.$refs.finder.refresh(true)
         }

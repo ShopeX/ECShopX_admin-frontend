@@ -5,27 +5,27 @@
 
 <template>
   <section v-if="name === 'film'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('7e76487d.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('7e76487d.32c65d')">
           <el-input v-model="base.title" />
         </el-form-item>
-        <el-form-item label="副标题">
+        <el-form-item :label="$t('7e76487d.72cf37')">
           <el-input v-model="base.subtitle" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('7e76487d.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="选择视频">
+        <el-form-item :label="$t('7e76487d.543018')">
           <Videoselect :data="data[0]" @change="handleVideoChange" />
         </el-form-item>
         <el-form-item>
-          <div slot="label" class="label">视频比例</div>
-          <div slot="label" class="label">宽：高</div>
+          <div slot="label" class="label">{{ $t('7e76487d.df0134') }}</div>
+          <div slot="label" class="label">{{ $t('7e76487d.d44616') }}</div>
           <el-radio-group v-model="base.proportion" @change="radioChange">
             <template v-for="item in proportions">
-              <el-radio :label="item.label">
+              <el-radio :key="item.label" :label="item.label">
                 {{ item.name }}
               </el-radio>
             </template>

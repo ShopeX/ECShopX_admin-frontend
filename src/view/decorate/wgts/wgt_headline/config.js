@@ -3,18 +3,19 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 
 const config = {
   name: 'headline',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '标题' },
+    { label: i18n.t('f8a1a2cd.32c65d'), key: 'title', component: 'input', value: '标题' },
     {
-      label: '文字位置',
+      label: i18n.t('f8a1a2cd.d1b490'),
       key: 'float',
       component: 'radiobutton',
       options: [
-        { name: '居左', label: 'left' },
-        { name: '居中', label: 'center' }
+        { name: i18n.t('f8a1a2cd.316a63'), label: 'left' },
+        { name: i18n.t('f8a1a2cd.0bbc2e'), label: 'center' }
       ],
       value: 'center'
     }

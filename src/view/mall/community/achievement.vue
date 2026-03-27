@@ -18,11 +18,11 @@
 <template>
   <SpPage>
     <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="chief_mobile" label="团长手机号:">
-        <el-input v-model="formQuery.chief_mobile" placeholder="请输入团长手机号" />
+      <SpFilterFormItem prop="chief_mobile" :label="$t('8047bbf8.f5a186')">
+        <el-input v-model="formQuery.chief_mobile" :placeholder="$t('8047bbf8.999e78')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="chief_name" label="团长姓名:">
-        <el-input v-model="formQuery.chief_name" placeholder="请输入团长姓名" />
+      <SpFilterFormItem prop="chief_name" :label="$t('8047bbf8.1e5021')">
+        <el-input v-model="formQuery.chief_name" :placeholder="$t('8047bbf8.9d2c66')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -41,6 +41,8 @@
 
 <script>
 import { createSetting } from '@shopex-ui/finder'
+import { i18n } from '@/i18n'
+
 export default {
   name: '',
   data() {
@@ -51,30 +53,30 @@ export default {
       },
       setting: createSetting({
         columns: [
-          { name: '姓名', key: 'chief_name' },
-          { name: '手机号', key: 'chief_mobile' },
+          { name: i18n.t('8047bbf8.60d045'), key: 'chief_name' },
+          { name: i18n.t('8047bbf8.8098e2'), key: 'chief_mobile' },
           {
-            name: '可提现（¥）',
+            name: i18n.t('8047bbf8.4c54c1'),
             key: 'cash_withdrawal_rebate',
             render: (h, { row }) => h('span', {}, row.cash_withdrawal_rebate / 100)
           },
           {
-            name: '已提现（¥）',
+            name: i18n.t('8047bbf8.962d95'),
             key: 'payed_rebate',
             render: (h, { row }) => h('span', {}, row.payed_rebate / 100)
           },
           {
-            name: '申请提现（¥）',
+            name: i18n.t('8047bbf8.794510'),
             key: 'freeze_cash_withdrawal_rebate',
             render: (h, { row }) => h('span', {}, row.freeze_cash_withdrawal_rebate / 100)
           },
           {
-            name: '未结算（¥）',
+            name: i18n.t('8047bbf8.dd3aaf'),
             key: 'no_close_rebate',
             render: (h, { row }) => h('span', {}, row.no_close_rebate / 100)
           },
           {
-            name: '佣金总额（¥）',
+            name: i18n.t('8047bbf8.186472'),
             key: 'rebate_total',
             render: (h, { row }) => h('span', {}, row.rebate_total / 100)
           }

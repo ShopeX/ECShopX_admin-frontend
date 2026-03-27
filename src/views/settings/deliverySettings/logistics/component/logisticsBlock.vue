@@ -6,7 +6,7 @@
 <template>
   <div class="block">
     <div class="image">
-      <img :src="info.logo" />
+      <img :src="info.logo">
     </div>
     <div class="info">
       <div class="name">
@@ -31,7 +31,7 @@ export default {
       console.log('setEnable', this.info)
       if (this.info.is_enable) {
         createCompanyLogistics(this.info).then((response) => {
-          this.$message.success(`${this.info.corp_name}已开启`)
+          this.$message.success(this.info.corp_name + this.$t('eb0bcafd.9db7a8'))
           // this.$emit("refreshList");
         })
       } else {

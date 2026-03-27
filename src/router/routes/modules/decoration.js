@@ -12,7 +12,7 @@ const routes = [
       aliasName: 'wxapp-template',
       icon: 'page-template',
       keepAlive: true,
-      title: '装修'
+      title: '7d3fbb6d.81b2cb'
     },
     name: 'decoration',
     path: '/decoration',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'wxapp-template-edit',
           icon: 'pay-circle',
-          title: '首页',
+          title: '7d3fbb6d.db1c89',
           permissions: ['wxapp-template.wxappmanage.wxapp-template-edit']
         },
         component: () => import('@/view/wxapp/home'),
@@ -43,7 +43,7 @@ const routes = [
         meta: {
           aliasName: 'classificationTemplate',
           icon: 'pay-circle',
-          title: '附近店铺页',
+          title: '7d3fbb6d.398e60',
           permissions: ['wxapp-template.wxappmanage.classificationTemplate']
         },
         component: () => import('@/view/wxapp/classificationTemplate')
@@ -54,7 +54,7 @@ const routes = [
         meta: {
           aliasName: 'wxapp-editcategory',
           icon: 'pay-circle',
-          title: '分类页',
+          title: '7d3fbb6d.226fc6',
           permissions: ['wxapp-template.wxappmanage.wxapp-editcategory']
         },
         component: () => import('@/view/wxapp/category/categorize')
@@ -65,7 +65,7 @@ const routes = [
         meta: {
           aliasName: 'wxapp-custompage',
           icon: 'pay-circle',
-          title: '自定义页',
+          title: '7d3fbb6d.ec20e4',
           permissions: ['wxapp-template.wxappmanage.wxapp-custompage']
         },
         component: () => import('@/view/wxapp/customPage')
@@ -76,7 +76,7 @@ const routes = [
         meta: {
           aliasName: 'colorstyle',
           icon: 'pay-circle',
-          title: '商城配色',
+          title: '7d3fbb6d.c701e9',
           permissions: ['wxapp-template.wxappmanage.colorstyle']
         },
         component: () => import('@/view/wxapp/theme/colorStyle')
@@ -87,7 +87,7 @@ const routes = [
         meta: {
           aliasName: 'membercentersetting',
           icon: 'pay-circle',
-          title: '会员中心',
+          title: '7d3fbb6d.12688a',
           permissions: ['wxapp-template.wxappmanage.membercentersetting']
         },
         component: () => import('@/view/wxapp/memberCenter')
@@ -98,7 +98,7 @@ const routes = [
         meta: {
           aliasName: 'wxshopsetting',
           icon: 'pay-circle',
-          title: '商城信息',
+          title: '7d3fbb6d.cc5507',
           permissions: ['wxapp-template.wxappmanage.wxshopsetting']
         },
         component: () => import('@/view/wxapp/shopInfo')
@@ -109,7 +109,7 @@ const routes = [
         meta: {
           aliasName: 'openscreenad',
           icon: 'pay-circle',
-          title: '开屏广告',
+          title: '7d3fbb6d.1c1143',
           permissions: ['wxapp-template.wxappmanage.openscreenad']
         },
         component: () => import('@/view/base/screen/openScreenAD')
@@ -120,7 +120,7 @@ const routes = [
         meta: {
           aliasName: 'templatelist',
           icon: 'pay-circle',
-          title: '模板列表',
+          title: '7d3fbb6d.5a0a70',
           permissions: ['wxapp-template.pcmall.templatelist']
         },
         component: () => import('@/view/pc/pctemplate/index'),
@@ -148,7 +148,7 @@ const routes = [
         meta: {
           aliasName: 'loginPageSetting',
           icon: 'pay-circle',
-          title: '登录页',
+          title: '7d3fbb6d.7de289',
           permissions: ['wxapp-template.pcmall.loginPageSetting']
         },
         component: () => import('@/view/pc/pctemplate/login')
@@ -159,7 +159,7 @@ const routes = [
         meta: {
           aliasName: 'seo',
           icon: 'pay-circle',
-          title: 'SEO配置',
+          title: '7d3fbb6d.e807b2',
           permissions: ['wxapp-template.pcmall.seo']
         },
         component: () => import('@/view/pc/tdk/globalset')
@@ -170,7 +170,7 @@ const routes = [
         meta: {
           aliasName: 'pageseo',
           icon: 'pay-circle',
-          title: '页面SEO',
+          title: '7d3fbb6d.06bc38',
           permissions: ['wxapp-template.pcmall.pageseo']
         },
         component: () => import('@/view/pc/tdk/givenset')

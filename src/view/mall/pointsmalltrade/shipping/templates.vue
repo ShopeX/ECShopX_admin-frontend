@@ -8,24 +8,28 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-button type="primary" icon="plus" @click="addTemplates"> 新增运费模板 </el-button>
+          <el-button type="primary" icon="plus" @click="addTemplates">
+{{
+            $t('75c2575f.a8c029')
+          }}
+</el-button>
         </el-col>
       </el-row>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="卖家承担运费" name="first">
+        <el-tab-pane :label="$t('75c2575f.882490')" name="first">
           <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="按重量运费模板" name="second">
-          <weightTemplates :get-status="weightTemplates" />
+        <el-tab-pane :label="$t('75c2575f.843135')" name="second">
+          <weightTemplates ref="weightTemplates" :get-status="weightTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="按件数运费模板" name="third">
-          <numberTemplates :get-status="numberTemplates" />
+        <el-tab-pane :label="$t('75c2575f.5555b9')" name="third">
+          <numberTemplates ref="numberTemplates" :get-status="numberTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="按金额运费模板" name="fourth">
-          <priceTemplates :get-status="priceTemplates" />
+        <el-tab-pane :label="$t('75c2575f.877ec9')" name="fourth">
+          <priceTemplates ref="priceTemplates" :get-status="priceTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="按体积运费模板" name="fifth">
-          <volumeTemplates :get-status="volumeTemplates" />
+        <el-tab-pane :label="$t('75c2575f.a95569')" name="fifth">
+          <volumeTemplates ref="volumeTemplates" :get-status="volumeTemplates" />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -70,6 +74,13 @@ export default {
       this.activeName = this.$route.query.activeName
     }
   },
+  watch: {
+    $route(to, from) {
+      if (from && from.path.includes('editor') && to && !to.path.includes('editor')) {
+        this.$nextTick(() => this.getList())
+      }
+    }
+  },
   methods: {
     addTemplates() {
       // 添加运费模板
@@ -89,7 +100,18 @@ export default {
       }
     },
     getList() {
-      this.$refs.getShippingTemplatesList
+      const refs = [
+        this.$refs.buyerTemplates,
+        this.$refs.weightTemplates,
+        this.$refs.numberTemplates,
+        this.$refs.priceTemplates,
+        this.$refs.volumeTemplates
+      ]
+      refs.forEach((ref) => {
+        if (ref && typeof ref.getShippingTemplatesList === 'function') {
+          ref.getShippingTemplatesList()
+        }
+      })
     }
   }
 }

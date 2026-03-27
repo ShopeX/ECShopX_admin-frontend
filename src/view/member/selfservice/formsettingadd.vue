@@ -5,7 +5,7 @@
 
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">添加表单元素</div>
+    <div class="section-header with-border">{{ $t('c831a478.006ba3') }}</div>
     <div class="section-body">
       <el-form
         ref="form"
@@ -14,37 +14,29 @@
         label-position="right"
         class="demo-ruleForm"
       >
-        <el-form-item
-          label="标题"
-          prop="field_title"
-          :rules="[{ required: true, message: '请输入标题', trigger: 'blur' }]"
-        >
+        <el-form-item :label="$t('c831a478.32c65d')" prop="field_title" :rules="fieldTitleRules">
           <el-col :span="15">
             <el-input
               v-model.trim="form.field_title"
               :maxlength="30"
-              placeholder="身高(cm)"
+              :placeholder="$t('c831a478.8d92ea')"
               @change="fieldTitleChange"
             />
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="表单元素类型"
-          prop="form_element"
-          :rules="[{ required: true, message: '请选择表单元素', trigger: 'change' }]"
-        >
+        <el-form-item :label="$t('c831a478.08437e')" prop="form_element" :rules="formElementRules">
           <el-col :span="15">
             <el-radio-group v-model="form.form_element" @change="ElementChange">
-              <el-radio label="text"> 单文本框 </el-radio>
-              <el-radio label="number"> 数字(纯数字) </el-radio>
-              <el-radio label="checkbox"> 复选框 </el-radio>
-              <el-radio label="select"> 下拉选择 </el-radio>
-              <el-radio label="radio"> 单选按钮 </el-radio>
-              <el-radio label="textarea"> 多文本域 </el-radio>
-              <el-radio label="date"> 日期选择 </el-radio>
-              <el-radio label="area"> 地区选择 </el-radio>
-              <el-radio label="idcard"> 上传身份证 </el-radio>
-              <el-radio label="otherfile"> 上传其他附件 </el-radio>
+              <el-radio label="text">{{ $t('c831a478.e00ed1') }}</el-radio>
+              <el-radio label="number">{{ $t('c831a478.52d2a3') }}</el-radio>
+              <el-radio label="checkbox">{{ $t('8da83775.db98f8') }}</el-radio>
+              <el-radio label="select">{{ $t('c831a478.2a2aa7') }}</el-radio>
+              <el-radio label="radio">{{ $t('c831a478.f96dab') }}</el-radio>
+              <el-radio label="textarea">{{ $t('c831a478.136bf1') }}</el-radio>
+              <el-radio label="date">{{ $t('c831a478.de1a35') }}</el-radio>
+              <el-radio label="area">{{ $t('c831a478.9b711a') }}</el-radio>
+              <el-radio label="idcard">{{ $t('c831a478.820ef5') }}</el-radio>
+              <el-radio label="otherfile">{{ $t('c831a478.607b17') }}</el-radio>
             </el-radio-group>
           </el-col>
         </el-form-item>
@@ -56,13 +48,9 @@
             form.form_element == 'select'
           "
           :key="domain.key"
-          :label="'选择项' + index"
+          :label="$t('c831a478.6775bb') + index"
           :prop="'options.' + index + '.value'"
-          :rules="{
-            required: true,
-            message: '选择项不能为空',
-            trigger: 'blur'
-          }"
+          :rules="optionItemRules"
           :span="10"
         >
           <el-row>
@@ -70,7 +58,11 @@
               <el-input v-model="domain.value" width="20" />
             </el-col>
             <el-col v-if="index > 1" :span="5">
-              <el-button @click.prevent="removeDomain(domain)"> 删除 </el-button>
+              <el-button @click.prevent="removeDomain(domain)">
+{{
+                $t('8da83775.2f4aad')
+              }}
+</el-button>
             </el-col>
           </el-row>
           <el-row>
@@ -83,7 +75,7 @@
                 />
               </div>
               <div class="frm-tips">
-                只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
+                {{ $t('c831a478.6113fc') }}
               </div>
               <imgPicker
                 :dialog-visible="imgDialog"
@@ -102,18 +94,19 @@
           "
         >
           <el-col :span="15">
-            <el-button type="primary" circle @click="addOption"> 增 </el-button>
+            <el-button type="primary" circle @click="addOption">
+{{
+              $t('c831a478.c0a0f2')
+            }}
+</el-button>
           </el-col>
         </el-form-item>
         <!-- field_name：{{form.field_name}} | defalutFileName:{{defalutFileName}} -->
-        <el-form-item
-          label="英文标识"
-          :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
-        >
+        <el-form-item :label="$t('c831a478.7843a0')" :rules="englishIdRules">
           <el-col :span="15">
             <el-select
               v-model="defalutFileName"
-              placeholder="请选择英文标识"
+              :placeholder="$t('c831a478.69eb9f')"
               style="width: 90%"
               @change="handleOnChageCtrlFields"
             >
@@ -127,26 +120,21 @@
           </el-col>
         </el-form-item>
         <el-form-item>
-          <div style="line-height: 24px">英文标识填写说明：</div>
+          <div style="line-height: 24px">{{ $t('c831a478.839543') }}</div>
           <div style="line-height: 24px">
-            需填写姓名请选择字符username、生日为birthday、
-            身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address、
-            公司名称为Company name、统一社会信用代码为Unified Social Credit
-            Code、出席人身份证号为Attendance IDCard、帐号为account number、
-            类型为type、提示信息为Reminder information、上传附件为Attachment
-            upload，若都不是，选其他。
+            {{ $t('c831a478.eee5b3') }}
           </div>
         </el-form-item>
         <el-form-item
           v-if="defalutFileName == 'other'"
-          label="英文标识"
+          :label="$t('c831a478.7843a0')"
           prop="field_name"
-          :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
+          :rules="englishIdRules"
         >
           <el-col :span="15">
             <el-input
               v-model.trim="form.field_name"
-              placeholder="height 或者 shengao"
+              :placeholder="$t('c831a478.8a499b')"
               @blur="fieldNameChange"
             />
           </el-col>
@@ -175,24 +163,22 @@
           </el-col>
         </el-form-item> -->
         <el-form-item
-          label="证照名称"
+          :label="$t('c831a478.b889b5')"
           prop="pic_name"
           v-if="form.form_element == 'idcard' || form.form_element == 'otherfile'"
-          :rules="[
-            {
-              required: form.form_element == 'idcard' || form.form_element == 'otherfile',
-              message: '请输入证照名称',
-              trigger: 'blur'
-            }
-          ]"
+          :rules="picNameRules"
         >
           <el-col :span="15">
-            <el-input v-model.trim="form.pic_name" :maxlength="30" placeholder="请输入证照名称" />
+            <el-input
+              v-model.trim="form.pic_name"
+              :maxlength="30"
+              :placeholder="$t('c831a478.9c05b1')"
+            />
           </el-col>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="submitAction"> 保存 </el-button>
+          <el-button @click.native="handleCancel">{{ $t('8da83775.625fb2') }}</el-button>
+          <el-button type="primary" @click="submitAction">{{ $t('8da83775.be5fbb') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -253,6 +239,29 @@ export default {
       defalutFileName: 'username'
     }
   },
+  computed: {
+    fieldTitleRules() {
+      return [{ required: true, message: this.$t('8da83775.b91aba'), trigger: 'blur' }]
+    },
+    formElementRules() {
+      return [{ required: true, message: this.$t('c831a478.c2dba8'), trigger: 'change' }]
+    },
+    optionItemRules() {
+      return { required: true, message: this.$t('c831a478.975e58'), trigger: 'blur' }
+    },
+    englishIdRules() {
+      return [{ required: true, message: this.$t('c831a478.dc34dd'), trigger: 'blur' }]
+    },
+    picNameRules() {
+      return [
+        {
+          required: this.form.form_element === 'idcard' || this.form.form_element === 'otherfile',
+          message: this.$t('c831a478.9c05b1'),
+          trigger: 'blur'
+        }
+      ]
+    }
+  },
   mounted() {
     if (this.$route.query.id) {
       getSettingInfo(this.$route.query.id).then((res) => {
@@ -306,7 +315,7 @@ export default {
             updateSetting(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('c831a478.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -320,7 +329,7 @@ export default {
             saveSetting(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '添加成功',
+                  message: this.$t('c831a478.3fdaea'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -334,7 +343,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '请录入正确的数据'
+            message: this.$t('c831a478.3737df')
           })
           return false
         }

@@ -12,7 +12,7 @@
     <SpDialog
       ref="groupDialogRef"
       v-model="showSettingSaleClassify"
-      title="关联销售分类"
+      :title="$t('c7eb6efa.7b3c0e')"
       :form="saleClassifyForm"
       :form-list="saleClassifyFormList"
       @onSubmit="onSaleClassifyFormSubmit"
@@ -22,7 +22,7 @@
     <SpDialog
       ref="addTemplateDialogRef"
       v-model="showAddTemplateDialog"
-      :title="addTemplateForm.id ? '编辑模板' : '添加模板'"
+      :title="addTemplateForm.id ? $t('c7eb6efa.c6aa35') : $t('c7eb6efa.6fef15')"
       :form="addTemplateForm"
       :form-list="addTemplateFormList"
       @onSubmit="onAddTemplateFormSubmit"
@@ -73,34 +73,34 @@ export default {
         search: [
           {
             key: 'id',
-            name: '页面ID',
+            name: this.$t('c7eb6efa.d9df76'),
             minWidth: 100
           },
           {
             key: 'page_name',
-            name: '页面名称',
+            name: this.$t('c7eb6efa.b78454'),
             minWidth: 260
           }
         ],
         columns: [
           {
             key: 'id',
-            name: '页面ID',
+            name: this.$t('c7eb6efa.d9df76'),
             minWidth: 100
           },
           {
             key: 'page_name',
-            name: '页面名称',
+            name: this.$t('c7eb6efa.b78454'),
             minWidth: 260
           },
           {
             key: 'category_name',
-            name: '关联销售分类',
+            name: this.$t('c7eb6efa.7b3c0e'),
             minWidth: 120
           },
           {
             key: 'is_open',
-            name: '是否启用',
+            name: this.$t('c7eb6efa.53c3dd'),
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
@@ -119,7 +119,7 @@ export default {
                       template_name: 'yykweishop'
                     })
                     row.is_open = e
-                    this.$message.success('更新成功')
+                    this.$message.success(this.$t('c7eb6efa.55aa63'))
                     // this.$refs.finder.refresh()
                   }
                 }
@@ -129,7 +129,7 @@ export default {
         ],
         actions: [
           {
-            name: '添加模板',
+            name: this.$t('c7eb6efa.6fef15'),
             key: 'add',
             slot: 'header',
             type: 'button',
@@ -146,7 +146,7 @@ export default {
             }
           },
           {
-            name: '页面装修',
+            name: this.$t('c7eb6efa.6343df'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -157,7 +157,7 @@ export default {
             }
           },
           {
-            name: '关联销售分类',
+            name: this.$t('c7eb6efa.7b3c0e'),
             key: 'link',
             type: 'button',
             buttonType: 'text',
@@ -179,7 +179,7 @@ export default {
             }
           },
           {
-            name: '编辑',
+            name: this.$t('c7eb6efa.95b351'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
@@ -195,7 +195,7 @@ export default {
             }
           },
           {
-            name: '复制',
+            name: this.$t('c7eb6efa.79d3ab'),
             key: 'copy',
             type: 'button',
             buttonType: 'text',
@@ -203,21 +203,21 @@ export default {
               handler: async ([row]) => {
                 // this.showCopyDialog = true
                 await this.$api.wxa.copyCustomPage(row.id)
-                this.$message.success('复制成功')
+                this.$message.success(this.$t('c7eb6efa.20a495'))
                 this.$refs.finder.refresh()
               }
             }
           },
           {
-            name: '删除',
+            name: this.$t('c7eb6efa.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认删除？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
+                await this.$confirm(this.$t('c7eb6efa.b28efa'), this.$t('c7eb6efa.02d981'), {
+                  confirmButtonText: this.$t('c7eb6efa.38cf16'),
+                  cancelButtonText: this.$t('c7eb6efa.625fb2')
                 })
                 await this.$api.wxa.delCustomPage(row.id)
                 this.$refs['finder'].refresh()
@@ -230,13 +230,13 @@ export default {
     saleClassifyFormList() {
       return [
         {
-          label: '销售分类',
+          label: this.$t('c7eb6efa.392d49'),
           key: 'category_id',
           type: 'select',
           maxlength: 150,
-          placeholder: '请输入销售分类',
+          placeholder: this.$t('c7eb6efa.8f1896'),
           required: true,
-          message: '不能为空',
+          message: this.$t('c7eb6efa.281bad'),
           options: this.categoryList
         }
       ]
@@ -245,25 +245,25 @@ export default {
     addTemplateFormList() {
       return [
         {
-          label: '模板名称',
+          label: this.$t('c7eb6efa.a5d1c5'),
           key: 'page_name',
           type: 'input',
           maxlength: 150,
-          placeholder: '请输入模板名称',
+          placeholder: this.$t('c7eb6efa.8f21b9'),
           required: true,
-          message: '模板名称不能为空'
+          message: this.$t('c7eb6efa.a23746')
         },
         {
-          label: '页面描述',
+          label: this.$t('c7eb6efa.abf8f4'),
           key: 'page_description',
           type: 'input',
           maxlength: 150,
-          placeholder: '请输入页面描述',
+          placeholder: this.$t('c7eb6efa.9c5cf8'),
           required: true,
-          message: '页面描述不能为空'
+          message: this.$t('c7eb6efa.8aeb4e')
         },
         {
-          label: '是否启用',
+          label: this.$t('c7eb6efa.53c3dd'),
           key: 'is_open',
           type: 'switch'
         }
@@ -290,7 +290,7 @@ export default {
       await this.$api.wxa.bindcategory(this.saleClassifyForm.id, {
         category_id: this.saleClassifyForm.category_id
       })
-      this.$message.success('关联成功')
+      this.$message.success(this.$t('c7eb6efa.55828c'))
       this.showSettingSaleClassify = false
       this.$refs.finder.refresh()
     },
@@ -300,7 +300,7 @@ export default {
           id: form.id,
           name: form.name
         })
-        this.$message.success('复制成功')
+        this.$message.success(this.$t('c7eb6efa.20a495'))
         this.showCopyDialog = false
         this.$refs.finder.refresh()
       } catch (error) {
@@ -316,14 +316,14 @@ export default {
             page_type: 'category',
             template_name: 'yykweishop'
           })
-          this.$message.success('编辑成功')
+          this.$message.success(this.$t('c7eb6efa.3bb47b'))
         } else {
           await this.$api.wxa.createCustomPage({
             ...this.addTemplateForm,
             page_type: 'category',
             template_name: 'yykweishop'
           })
-          this.$message.success('添加成功')
+          this.$message.success(this.$t('c7eb6efa.3fdaea'))
         }
         this.showAddTemplateDialog = false
         this.$refs.finder.refresh()

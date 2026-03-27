@@ -7,27 +7,36 @@
   <el-form ref="form" label-width="100px">
     <el-form-item label="AppId">
       <el-input v-model="form.app_id" style="width: 300px" />
-      <br />
+      <br>
     </el-form-item>
     <el-form-item label="AppSecret">
-      <el-input v-model="form.app_secret" type="textarea" :rows="5" placeholder="请输入内容" />
-      <br />
+      <el-input
+        v-model="form.app_secret"
+        type="textarea"
+        :rows="5"
+        :placeholder="$t('e86b4ef3.a11cc7')"
+      />
+      <br>
     </el-form-item>
-    <el-form-item label="支付渠道id">
+    <el-form-item :label="$t('e86b4ef3.eb4ed4')">
       <el-input
         v-model="form.payment_channel_id"
         type="textarea"
         :rows="5"
-        placeholder="请输入内容"
+        :placeholder="$t('e86b4ef3.a11cc7')"
       />
-      <br />
-      <span class="frm-tips">支付渠道id(易百分配)</span>
+      <br>
+      <span class="frm-tips">{{ $t('e86b4ef3.fc6076') }}</span>
     </el-form-item>
     <!-- <el-form-item label="温馨提示">
       <span class="frm-tips">您绑定的企业支付宝账号必须开通<a href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001" target="_blank">手机网站支付</a></span>
     </el-form-item> -->
     <div class="section-footer with-border content-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('e86b4ef3.be5fbb')
+      }}
+</el-button>
     </div>
   </el-form>
 </template>
@@ -66,7 +75,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('e86b4ef3.3b1083')
           })
           this.loading = false
         })

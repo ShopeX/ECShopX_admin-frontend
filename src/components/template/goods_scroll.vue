@@ -14,7 +14,7 @@
         <countdown
           v-if="config.type !== 'goods'"
           :end-time="time"
-          :end-text="'活动已结束'"
+          :end-text="$t('2ba94ca2.cdae1c')"
           :callback="function () {}"
         >
           <template slot-scope="scope">
@@ -22,19 +22,19 @@
               <div class="time-box">
                 {{ scope.day ? scope.day : '00' }}
               </div>
-              <div class="dot">天</div>
+              <div class="dot">{{ $t('2ba94ca2.249aba') }}</div>
               <div class="time-box">
                 {{ scope.hour ? scope.hour : '00' }}
               </div>
-              <div class="dot">时</div>
+              <div class="dot">{{ $t('2ba94ca2.609b5f') }}</div>
               <div class="time-box">
                 {{ scope.min ? scope.min : '00' }}
               </div>
-              <div class="dot">分</div>
+              <div class="dot">{{ $t('2ba94ca2.daf783') }}</div>
               <div class="time-box">
                 {{ scope.sec ? scope.sec : '00' }}
               </div>
-              <div class="dot">秒</div>
+              <div class="dot">{{ $t('2ba94ca2.0c1fec') }}</div>
               <div>{{ text }}</div>
             </div>
             <div v-else class="activity-timer">
@@ -55,10 +55,10 @@
         <div v-for="(item, index) in data.slice(0, 50)" :key="index" class="scroll-item">
           <div v-if="config.leaderboard" class="subscript">
             <div class="subscript-text">NO.{{ index + 1 }}</div>
-            <img class="subscript-img" :src="subscriptImg" />
+            <img class="subscript-img" :src="subscriptImg">
           </div>
           <div class="thumbnail">
-            <img class="goods-img" :src="wximageurl + item.imgUrl" />
+            <img class="goods-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="marketing-title">
             {{ item.title }}
@@ -81,19 +81,19 @@
               :key="i"
               :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
             >
-              {{ s.tag_type == 'single_group' ? '团购' : '' }}
-              {{ s.tag_type == 'full_minus' ? '满减' : '' }}
-              {{ s.tag_type == 'full_discount' ? '满折' : '' }}
-              {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
-              {{ s.tag_type == 'normal' ? '秒杀' : '' }}
-              {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
+              {{ s.tag_type == 'single_group' ? $t('2ba94ca2.f47464') : '' }}
+              {{ s.tag_type == 'full_minus' ? $t('2ba94ca2.94b1fd') : '' }}
+              {{ s.tag_type == 'full_discount' ? $t('2ba94ca2.1c120b') : '' }}
+              {{ s.tag_type == 'full_gift' ? $t('2ba94ca2.8e2405') : '' }}
+              {{ s.tag_type == 'normal' ? $t('2ba94ca2.55c758') : '' }}
+              {{ s.tag_type == 'limited_time_sale' ? $t('2ba94ca2.a0aaca') : '' }}
             </p>
           </div>
         </div>
         <div v-if="base.backgroundImg" class="scroll-item">
           <div class="more">
-            <img :src="base.backgroundImg" alt="" />
-            <div>查看更多</div>
+            <img :src="base.backgroundImg" alt="">
+            <div>{{ $t('2ba94ca2.90ef7c') }}</div>
           </div>
         </div>
       </div>

@@ -56,9 +56,9 @@
 }
 </style>
 <template>
-  <SpPage title="添加活动商品">
+  <SpPage :title="$t('2ff5650c.498c0f')">
     <div class="marketing-employee-addgoods">
-      <el-card class="el-card--normal" header="活动商品">
+      <el-card class="el-card--normal" :header="$t('2ff5650c.42f9f7')">
         <SpForm
           ref="formBase"
           v-model="formBase"
@@ -69,7 +69,7 @@
         />
         <!-- {{ queryForm }} -->
         <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-          <SpFilterFormItem prop="main_cat_id" label="管理分类:">
+          <SpFilterFormItem prop="main_cat_id" :label="$t('2ff5650c.e73602')">
             <el-cascader
               v-model="queryForm.main_cat_id"
               :options="categoryList"
@@ -77,7 +77,7 @@
               clearable
             />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="category" label="销售分类:">
+          <SpFilterFormItem prop="category" :label="$t('2ff5650c.7ef1b3')">
             <el-cascader
               v-model="queryForm.category"
               :options="salesCategoryList"
@@ -90,24 +90,24 @@
               clearable
             />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="item_name" label="商品名称:">
-            <el-input v-model="queryForm.item_name" placeholder="请输入商品名称" />
+          <SpFilterFormItem prop="item_name" :label="$t('2ff5650c.752597')">
+            <el-input v-model="queryForm.item_name" :placeholder="$t('2ff5650c.d83187')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="item_bn" label="货号:">
-            <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
+          <SpFilterFormItem prop="item_bn" :label="$t('2ff5650c.d1d3e6')">
+            <el-input v-model="queryForm.item_bn" :placeholder="$t('2ff5650c.40a487')" />
           </SpFilterFormItem>
         </SpFilterForm>
 
         <div class="action-container">
           <!-- 平台端 来源店铺非平台则隐藏 -->
           <el-button type="primary" :disabled="adminDisabled" plain @click="handleImport">
-            导入商品
+            {{ $t('2ff5650c.6a4607') }}
           </el-button>
           <el-button type="primary" :disabled="adminDisabled" plain @click="onSelectGoods">
-            选择商品
+            {{ $t('2ff5650c.43d1e2') }}
           </el-button>
           <el-button type="primary" :disabled="adminDisabled" plain @click="handlePatchAction">
-            批量设置
+            {{ $t('2ff5650c.475dd0') }}
           </el-button>
         </div>
 
@@ -126,7 +126,7 @@
               <el-checkbox v-if="!scope.row.is_sku" v-model="scope.row.checked" />
             </template>
           </el-table-column>
-          <el-table-column prop="item_name" label="商品标题" width="380">
+          <el-table-column prop="item_name" :label="$t('2ff5650c.07ec01')" width="380">
             <template slot-scope="scope">
               <div v-if="!scope.row.is_sku" class="item-info">
                 <div>
@@ -135,14 +135,14 @@
                 <div>
                   <div class="item-name">{{ scope.row.item_name }}</div>
                   <div class="item-bn">
-                    货号：{{ scope.row.item_bn }}
+                    {{ $t('2ff5650c.4bb294') }}{{ scope.row.item_bn }}
                     <el-button
                       v-if="scope.row.nospec != 'true' && !adminDisabled"
                       style="margin-left: 4px"
                       type="text"
                       @click="onSelectSku(scope.row)"
                     >
-                      选择规格
+                      {{ $t('2ff5650c.a0f99d') }}
                     </el-button>
                   </div>
                 </div>
@@ -152,7 +152,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="store" label="商城库存">
+          <el-table-column prop="store" :label="$t('2ff5650c.50b64f')">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -160,12 +160,12 @@
               {{ scope.row.store }}
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="销售价（元）" width="120">
+          <el-table-column prop="price" :label="$t('2ff5650c.3af230')" width="120">
             <template slot-scope="scope">
               {{ scope.row.price / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="商城价格（元）" width="120">
+          <el-table-column prop="price" :label="$t('2ff5650c.140b3a')" width="120">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -173,7 +173,7 @@
               {{ scope.row.price / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="activity_price" label="活动价格（元）" width="120">
+          <el-table-column prop="activity_price" :label="$t('2ff5650c.49e9e4')" width="120">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -196,7 +196,7 @@
                     size="mini"
                     @click="onModifyActivityItem(scope.row, 'activity_price')"
                   >
-                    确定
+                    {{ $t('2ff5650c.38cf16') }}
                   </el-button>
                 </div>
                 <el-button slot="reference" type="text">
@@ -205,7 +205,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="activity_store" label="活动库存">
+          <el-table-column prop="activity_store" :label="$t('2ff5650c.a43d00')">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -228,7 +228,7 @@
                     size="mini"
                     @click="onModifyActivityItem(scope.row, 'activity_store')"
                   >
-                    确定
+                    {{ $t('2ff5650c.38cf16') }}
                   </el-button>
                 </div>
                 <el-button slot="reference" :disabled="formBase.value == '1'" type="text">
@@ -237,7 +237,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="sort" label="排序">
+          <el-table-column prop="sort" :label="$t('2ff5650c.c360e9')">
             <template slot-scope="scope">
               <span>{{ scope.row.sort }}</span>
               <el-popover
@@ -257,7 +257,7 @@
                     size="mini"
                     @click="onModifyActivityItem(scope.row, 'sort')"
                   >
-                    确定
+                    {{ $t('2ff5650c.38cf16') }}
                   </el-button>
                 </div>
                 <el-button slot="reference" type="text">
@@ -266,7 +266,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="limit_num" label="每人限购（件）" width="120">
+          <el-table-column prop="limit_num" :label="$t('2ff5650c.9542cd')" width="120">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -289,7 +289,7 @@
                     size="mini"
                     @click="onModifyActivityItem(scope.row, 'limit_num')"
                   >
-                    确定
+                    {{ $t('2ff5650c.38cf16') }}
                   </el-button>
                 </div>
                 <el-button slot="reference" type="text">
@@ -298,7 +298,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="limit_fee" label="每人限额（元）" width="120">
+          <el-table-column prop="limit_fee" :label="$t('2ff5650c.0588d2')" width="120">
             <template
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
@@ -321,7 +321,7 @@
                     size="mini"
                     @click="onModifyActivityItem(scope.row, 'limit_fee')"
                   >
-                    确定
+                    {{ $t('2ff5650c.38cf16') }}
                   </el-button>
                 </div>
                 <el-button slot="reference" type="text">
@@ -330,11 +330,10 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column fixed="left" label="操作" width="120px">
+          <el-table-column fixed="left" :label="$t('2ff5650c.2b6bc0')" width="120px">
             <template slot-scope="scope">
-              <!-- 平台端 来源店铺非平台则隐藏 -->
               <el-button v-if="!adminDisabled" type="text" @click="removeActivityItem(scope.row)">
-                移除
+                {{ $t('2ff5650c.86048b') }}
               </el-button>
             </template>
           </el-table-column>
@@ -356,7 +355,7 @@
       <SpDialog
         ref="patchDialogRef"
         v-model="patchDialog"
-        :title="`批量设置`"
+        :title="$t('2ff5650c.475dd0')"
         :form="patchForm"
         :form-list="patchFormList"
         @onSubmit="onPatchChangeSubmit"
@@ -374,26 +373,6 @@ export default {
       formBase: {
         value: '1'
       },
-      formBaseList: [
-        {
-          label: '商品库存',
-          key: 'value',
-          type: 'radio',
-          disabled: () => this.IS_ADMIN() && this.distributor_id != '0',
-          options: [
-            { name: '共享商城库存', label: '1' },
-            { name: '活动独立库存', label: '2' }
-          ],
-          onChange: async () => {
-            const { id } = this.$route.params
-            await this.$api.marketing.setActivityShareStore({
-              activity_id: id,
-              if_share_store: this.formBase.value == '1' ? 1 : 0
-            })
-            this.$message.success('操作成功')
-          }
-        }
-      ],
       distributor_id: null,
       patchDialog: false,
       patchForm: {
@@ -404,33 +383,6 @@ export default {
         limit_num: 0,
         limit_fee: 0
       },
-      patchFormList: [
-        {
-          label: '活动价格',
-          key: 'activity_price',
-          type: 'input'
-        },
-        {
-          label: '活动库存',
-          key: 'activity_store',
-          type: 'input'
-        },
-        {
-          label: '排序',
-          key: 'sort',
-          type: 'input'
-        },
-        {
-          label: '每人限购',
-          key: 'limit_num',
-          type: 'input'
-        },
-        {
-          label: '每人限额',
-          key: 'limit_fee',
-          type: 'input'
-        }
-      ],
       queryForm: {
         main_cat_id: [],
         category: '',
@@ -456,6 +408,37 @@ export default {
   computed: {
     adminDisabled() {
       return this.IS_ADMIN() && this.distributor_id != '0'
+    },
+    formBaseList() {
+      return [
+        {
+          label: this.$t('2ff5650c.24bc52'),
+          key: 'value',
+          type: 'radio',
+          disabled: () => this.IS_ADMIN() && this.distributor_id != '0',
+          options: [
+            { name: this.$t('2ff5650c.32925f'), label: '1' },
+            { name: this.$t('2ff5650c.97596e'), label: '2' }
+          ],
+          onChange: async () => {
+            const { id } = this.$route.params
+            await this.$api.marketing.setActivityShareStore({
+              activity_id: id,
+              if_share_store: this.formBase.value == '1' ? 1 : 0
+            })
+            this.$message.success(this.$t('2ff5650c.33130f'))
+          }
+        }
+      ]
+    },
+    patchFormList() {
+      return [
+        { label: this.$t('2ff5650c.b5ad46'), key: 'activity_price', type: 'input' },
+        { label: this.$t('2ff5650c.a43d00'), key: 'activity_store', type: 'input' },
+        { label: this.$t('2ff5650c.c360e9'), key: 'sort', type: 'input' },
+        { label: this.$t('2ff5650c.343488'), key: 'limit_num', type: 'input' },
+        { label: this.$t('2ff5650c.8a34e8'), key: 'limit_fee', type: 'input' }
+      ]
     }
   },
   async created() {
@@ -506,7 +489,7 @@ export default {
         this.patchForm.item_id = itemIds
         this.patchDialog = true
       } else {
-        this.$message.error('请选择商品')
+        this.$message.error(this.$t('2ff5650c.c5c5f2'))
       }
     },
     async onPatchChangeSubmit() {
@@ -628,7 +611,7 @@ export default {
     },
     async removeActivityItem({ item_id, is_sku }) {
       const { id } = this.$route.params
-      await this.$confirm(`确认删除？`, '提示')
+      await this.$confirm(this.$t('2ff5650c.b28efa'), this.$t('bea3f44a.02d981'))
       let params = {}
       if (!is_sku) {
         params['all'] = 1

@@ -2,6 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+import { i18n } from '@/i18n'
 import { pickBy, isObject } from '@/utils'
 import AttrItem from './attr-item'
 import AttrFunctionArea from './attr-function-area'
@@ -14,15 +15,15 @@ const config = {
   name: 'page',
   setting: [
     {
-      group: '风格设置',
-      label: '沉浸式页头',
+      group: i18n.t('f44e2c51.eeb8e8'),
+      label: i18n.t('f44e2c51.d83110'),
       key: 'isImmersive',
       component: 'switch',
       value: false
     },
     {
-      group: '页头设置',
-      label: '页头背景',
+      group: i18n.t('f44e2c51.304e64'),
+      label: i18n.t('f44e2c51.231901'),
       key: 'newNavigateStyle',
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
@@ -33,31 +34,41 @@ const config = {
       }
     },
     {
-      group: '风格设置',
-      label: '页头标题区',
+      group: i18n.t('f44e2c51.304e64'),
+      label: i18n.t('f44e2c51.c8d9e0'),
+      key: 'immersiveScrollBgColor',
+      component: 'color',
+      value: '#ffffff',
+      isShow: function () {
+        return scene === '1008' && this.value.isImmersive === true
+      }
+    },
+    {
+      group: i18n.t('f44e2c51.eeb8e8'),
+      label: i18n.t('f44e2c51.35b115'),
       key: 'titleStyle',
       component: 'radiobutton',
       options: [
-        { name: '不展示', label: '0' },
-        { name: '搜索', label: '3' },
-        { name: '页面名称', label: '1' },
-        { name: '图片', label: '2' }
+        { name: i18n.t('f44e2c51.006e01'), label: '0' },
+        { name: i18n.t('f44e2c51.e5f71f'), label: '3' },
+        { name: i18n.t('f44e2c51.b78454'), label: '1' },
+        { name: i18n.t('f44e2c51.20def7'), label: '2' }
       ],
       value: '1'
     },
     {
-      group: '标题设置',
-      label: '标题颜色',
+      group: i18n.t('f44e2c51.53f200'),
+      label: i18n.t('f44e2c51.94e391'),
       key: 'titleColor',
       component: 'color',
       value: '#000',
       isShow: function () {
         return this.value.titleStyle == '1' // 只在"页面名称"时显示
       },
-      tip: '页面标题文字请在管理后台装修-商城信息中填写。'
+      tip: 'f44e2c51.a7a33e'
     },
     {
-      group: '标题设置',
+      group: i18n.t('f44e2c51.53f200'),
       label: '',
       key: 'titleBackgroundImage',
       component: function (h, { key }) {
@@ -67,11 +78,11 @@ const config = {
       isShow: function () {
         return this.value.titleStyle == '2'
       },
-      tip: '建议尺寸：340 * 70 像素'
+      tip: 'f44e2c51.7ffc9e'
     },
     {
-      group: '标题设置',
-      label: '展示搜索按钮',
+      group: i18n.t('f44e2c51.53f200'),
+      label: i18n.t('f44e2c51.172f1a'),
       key: 'showSearchButton',
       component: 'switch',
       value: true,
@@ -80,8 +91,8 @@ const config = {
       }
     },
     {
-      group: '标题设置',
-      label: '按钮颜色',
+      group: i18n.t('f44e2c51.53f200'),
+      label: i18n.t('f44e2c51.351201'),
       key: 'searchButtonColor',
       component: function (h, { key }) {
         const vm = this
@@ -97,7 +108,7 @@ const config = {
             <div
               style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}
             >
-              <span style={{ fontSize: '12px', color: '#999' }}>底色</span>
+              <span style={{ fontSize: '12px', color: '#999' }}>{i18n.t('f44e2c51.b53d6d')}</span>
               <el-color-picker
                 value={bgColor}
                 size='small'
@@ -112,7 +123,7 @@ const config = {
             <div
               style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}
             >
-              <span style={{ fontSize: '12px', color: '#999' }}>文字</span>
+              <span style={{ fontSize: '12px', color: '#999' }}>{i18n.t('f44e2c51.ca746b')}</span>
               <el-color-picker
                 value={textColor}
                 size='small'
@@ -136,8 +147,8 @@ const config = {
       }
     },
     {
-      group: '风格设置',
-      label: '页头功能区',
+      group: i18n.t('f44e2c51.eeb8e8'),
+      label: i18n.t('f44e2c51.41b6e1'),
       key: 'pTitleHotSetting',
       component: function (h, { key }) {
         return <AttrFunctionArea v-model={this.value[key]} />
@@ -149,11 +160,11 @@ const config = {
         type: 'hotzone',
         hotzone: { imgUrl: '', data: [] }
       },
-      tip: scene != '1001' ? '建议尺寸：138 * 65 像素' : '建议尺寸：174 * 64 像素'
+      tip: scene != '1001' ? 'f44e2c51.5bc6b6' : 'f44e2c51.37a58e'
     },
     {
-      group: '风格设置',
-      label: '页面背景',
+      group: i18n.t('f44e2c51.eeb8e8'),
+      label: i18n.t('f44e2c51.1dff74'),
       key: 'newPageBackgroundStyle',
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
@@ -162,7 +173,7 @@ const config = {
         color: '#f5f5f5',
         image: ''
       },
-      tip: '背景图宽度为100%，高度自适应'
+      tip: 'f44e2c51.7b8435'
     }
     // {
     //   label: '',
@@ -194,12 +205,12 @@ const config = {
       titleStyle,
       titleColor,
       titleBackgroundImage,
-      titlePosition,
       pageBackgroundStyle,
       pageBackgroundColor,
       pageBackgroundImage,
       pTitleHotSetting = { imgUrl: '', data: [] },
       isImmersive,
+      immersiveScrollBgColor,
       showSearchButton,
       searchButtonColor
     } = base || {}
@@ -245,13 +256,13 @@ const config = {
       titleStyle,
       titleColor,
       titleBackgroundImage,
-      titlePosition, // 兼容旧版本
       pageBackgroundStyle, // 兼容旧版本
       pageBackgroundImage,
       newNavigateStyle,
       newPageBackgroundStyle,
       pTitleHotSetting,
       isImmersive,
+      immersiveScrollBgColor: immersiveScrollBgColor || '#ffffff',
       showSearchButton: showSearchButton !== undefined ? showSearchButton : true,
       searchButtonColor,
       track,
@@ -274,13 +285,13 @@ const config = {
           titleStyle: 'titleStyle',
           titleColor: 'titleColor',
           titleBackgroundImage: 'titleBackgroundImage',
-          titlePosition: 'titlePosition',
           showSearchButton: 'showSearchButton',
           searchButtonColor: 'searchButtonColor',
           pageBackgroundStyle: 'pageBackgroundStyle',
           pageBackgroundColor: 'newPageBackgroundStyle.color',
           pageBackgroundImage: 'newPageBackgroundStyle.image',
           isImmersive: 'isImmersive',
+          immersiveScrollBgColor: 'immersiveScrollBgColor',
           pTitleHotSetting: 'pTitleHotSetting'
         })
       },

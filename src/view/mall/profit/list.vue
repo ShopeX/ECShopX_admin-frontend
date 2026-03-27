@@ -7,7 +7,7 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-select v-model="params.profitType" placeholder="请选择">
+        <el-select v-model="params.profitType" :placeholder="$t('5d9b8e78.708c9d')">
           <el-option
             v-for="item in profitType"
             :key="item.value"
@@ -19,13 +19,13 @@
           v-model="params.date"
           type="month"
           value-format="yyyyMM"
-          placeholder="选择月"
+          :placeholder="$t('5d9b8e78.7f83ce')"
         />
         <el-input
           v-if="1 == params.profitType"
           v-model="params.salesperson"
           class="input-m"
-          placeholder="请输入导购"
+          :placeholder="$t('5d9b8e78.0d0256')"
         >
           <el-button slot="append" icon="el-icon-search" @click="listSearch" />
         </el-input>
@@ -33,7 +33,7 @@
           v-if="2 == params.profitType"
           v-model="params.distributor"
           class="input-m"
-          placeholder="请输入店铺"
+          :placeholder="$t('5d9b8e78.fe1411')"
         >
           <el-button slot="append" icon="el-icon-search" @click="listSearch" />
         </el-input>
@@ -46,10 +46,10 @@
       <el-col :span="24">
         <el-button-group>
           <el-button type="primary" @click="exportData('profit_salesperson')">
-            导出导购分润
+            {{ $t('5d9b8e78.37f9be') }}
           </el-button>
           <el-button type="primary" @click="exportData('profit_distributor')">
-            导出门店分润
+            {{ $t('5d9b8e78.0371e2') }}
           </el-button>
           <!-- <el-button  type="primary" @click="exportData('profit_agent')">导出经销商分润</el-button> -->
         </el-button-group>
@@ -58,9 +58,9 @@
 
     <el-card>
       <el-table v-loading="loading" :data="list">
-        <el-table-column prop="name" label="分润对象名称" min-width="240" />
-        <el-table-column prop="withdrawals_fee" label="分润金额" min-width="240" />
-        <el-table-column prop="date" label="分润时间" min-width="240" />
+        <el-table-column prop="name" :label="$t('5d9b8e78.d14da4')" min-width="240" />
+        <el-table-column prop="withdrawals_fee" :label="$t('5d9b8e78.2210bb')" min-width="240" />
+        <el-table-column prop="date" :label="$t('5d9b8e78.3aba61')" min-width="240" />
       </el-table>
       <div class="mt-4 text-right">
         <el-pagination
@@ -79,6 +79,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { i18n } from '@/i18n'
 import shopSelect from '@/components/shopSelect'
 import { getProfitStatistics, profitExport } from '../../../api/shop'
 
@@ -92,11 +93,11 @@ export default {
       profitType: [
         {
           value: 1,
-          label: '导购'
+          label: i18n.t('5d9b8e78.c60b43')
         },
         {
           value: 2,
-          label: '店铺'
+          label: i18n.t('5d9b8e78.295713')
         }
         // {
         //   "value": 3,
@@ -158,7 +159,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('5d9b8e78.3e1ddd')
           })
           return
         } else if (response.data.data.url) {
@@ -169,7 +170,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('5d9b8e78.89ae53')
           })
           return
         }

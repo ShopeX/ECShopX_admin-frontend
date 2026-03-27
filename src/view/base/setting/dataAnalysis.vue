@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="腾讯有数参数配置" name="youshu">
+      <el-tab-pane :label="$t('e748e03a.e75e33')" name="youshu">
         <youshu />
       </el-tab-pane>
     </el-tabs>

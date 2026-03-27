@@ -13,17 +13,17 @@
       >
         <section
           v-for="(item, index) in sms"
-          :key="item.title"
+          :key="item.titleKey"
           class="box-card"
           @click="tabClick(index)"
         >
-          <img :src="item.img" alt="" />
-          <span>{{ item.title }}</span>
+          <img :src="item.img" alt="">
+          <span>{{ $t(item.titleKey) }}</span>
           <div v-if="index == 0" class="title">
-            {{ aliyunsms_status ? '已启用' : '未启用' }}
+            {{ aliyunsms_status ? $t('c5fcdb17.53ace4') : $t('c5fcdb17.463776') }}
           </div>
           <div v-else class="title">
-            {{ aliyunsms_status ? '未启用' : '已启用' }}
+            {{ aliyunsms_status ? $t('c5fcdb17.463776') : $t('c5fcdb17.53ace4') }}
           </div>
         </section>
       </div>
@@ -43,11 +43,11 @@ export default {
     return {
       sms: [
         {
-          title: '阿里云短信',
+          titleKey: 'c5fcdb17.6a7686',
           img: ali
         },
         {
-          title: '商派短信',
+          titleKey: 'c5fcdb17.67fc96',
           img: shopex
         }
       ],

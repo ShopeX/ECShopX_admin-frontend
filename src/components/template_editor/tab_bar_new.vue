@@ -8,19 +8,19 @@
     <div class="section-body">
       <el-row>
         <el-col :span="8" class="row-col">
-          <span>背景色</span>
+          <span>{{ $t('13f63c15.2f97db') }}</span>
           <el-color-picker v-model="config.backgroundColor" />
         </el-col>
         <el-col :span="8" class="row-col">
-          <span>默认颜色</span>
+          <span>{{ $t('13f63c15.8d2317') }}</span>
           <el-color-picker v-model="config.color" />
         </el-col>
         <el-col :span="8" class="row-col">
-          <span>选中颜色</span>
+          <span>{{ $t('13f63c15.076d83') }}</span>
           <el-color-picker v-model="config.selectedColor" />
         </el-col>
       </el-row>
-      <el-row>设置tabBar</el-row>
+      <el-row>{{ $t('13f63c15.300cfd') }}</el-row>
       <el-row>
         <div v-for="(item, index) in data" :key="index" class="setting-item">
           <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
@@ -31,7 +31,7 @@
             :src="item.iconPath"
             class="icon-setter"
             @click="handleIconChange(index)"
-          />
+          >
           <div v-else class="icon-setter" @click="handleIconChange(index)">
             <i class="el-icon-picture muted" />
           </div>
@@ -40,22 +40,22 @@
             :src="item.selectedIconPath"
             class="icon-setter"
             @click="handleSelectedIconChange(index)"
-          />
+          >
           <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
             <i class="el-icon-picture muted" />
           </div>
           <div class="uploader-setting">
-            <el-input v-model="item.text" placeholder="tab名称" maxlength="" />
+            <el-input v-model="item.text" :placeholder="$t('13f63c15.cf2790')" maxlength="" />
           </div>
           <div class="uploader-setting">
             <el-select
               v-model="item.pagePath"
-              placeholder="设置tab路径"
+              :placeholder="$t('13f63c15.19b17a')"
               @focus="handleClick(index)"
               @change="handleChange"
             >
               <el-option
-                v-for="item in pathOptions"
+                v-for="item in pathOptionsTranslated"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -68,18 +68,20 @@
             </div>
           </div>
         </div>
-        <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）</div>
+        <div class="frm-tips">{{ $t('13f63c15.ebf932') }}</div>
         <el-button
           :disabled="data.length >= 5"
           type="default"
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          添加菜单项
+          {{ $t('13f63c15.648c5e') }}
         </el-button>
       </el-row>
       <el-row class="btn-row">
-        <el-button type="primary" round @click="handleSave"> 保存 </el-button>
+        <el-button type="primary" round @click="handleSave">
+          {{ $t('6eace4b2.be5fbb') }}
+        </el-button>
       </el-row>
     </div>
   </section>
@@ -100,53 +102,22 @@ export default {
       current: '',
       data: [],
       iconColor: '',
-      selectedIconColor: '',
-      pathOptions: [
-        {
-          value: '/pages/index',
-          name: 'home',
-          label: '首页'
-        },
-        {
-          value: '/pages/cart/espier-index',
-          name: 'cart',
-          label: '购物车'
-        },
-        {
-          value: '/pages/category/index',
-          name: 'category',
-          label: '分类'
-        },
-        {
-          value: '/pages/member/index',
-          name: 'member',
-          label: '我的'
-        },
-        {
-          value: '/pages/recommend/list',
-          name: 'article',
-          label: '软文'
-        },
-        {
-          value: '/pages/liveroom/index',
-          name: 'liveroom',
-          label: '直播'
-        },
-        {
-          value: '/pages/item/list?isTabBar=true',
-          name: 'allGoods',
-          label: '全部商品'
-        },
-        {
-          value: '/subpages/mdugc/index',
-          name: 'ugc',
-          label: '社区'
-        },
-        {
-          value: 'customPage',
-          name: 'customPage',
-          label: '自定义页面'
-        }
+      selectedIconColor: ''
+    }
+  },
+  computed: {
+    pathOptionsTranslated() {
+      const t = this.$t.bind(this)
+      return [
+        { value: '/pages/index', name: 'home', label: t('13f63c15.db1c89') },
+        { value: '/pages/cart/espier-index', name: 'cart', label: t('13f63c15.c017be') },
+        { value: '/pages/category/index', name: 'category', label: t('13f63c15.d0771a') },
+        { value: '/pages/member/index', name: 'member', label: t('13f63c15.07b181') },
+        { value: '/pages/recommend/list', name: 'article', label: t('13f63c15.e8f87a') },
+        { value: '/pages/liveroom/index', name: 'liveroom', label: t('13f63c15.7bbe8e') },
+        { value: '/pages/item/list?isTabBar=true', name: 'allGoods', label: t('13f63c15.794a4e') },
+        { value: '/subpages/mdugc/index', name: 'ugc', label: t('6eace4b2.888af1') },
+        { value: 'customPage', name: 'customPage', label: t('6eace4b2.cee6eb') }
       ]
     }
   },
@@ -182,7 +153,7 @@ export default {
       }
       if (this.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('13f63c15.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -197,7 +168,7 @@ export default {
       this.current = index
     },
     handleChange(value) {
-      let n = this.pathOptions.find((item) => item.value === value)
+      let n = this.pathOptionsTranslated.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
@@ -217,7 +188,7 @@ export default {
       )
       if (emptyIndex > -1) {
         return this.$message({
-          message: '请选择自定义页面',
+          message: this.$t('6eace4b2.7727a5'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -232,7 +203,7 @@ export default {
       this.$set(item, 'customPage', data[0])
     },
     getCustomPageName(item) {
-      return item?.customPage?.page_name ?? '请选择自定义页面'
+      return item?.customPage?.page_name ?? this.$t('6eace4b2.7727a5')
     }
   }
 }

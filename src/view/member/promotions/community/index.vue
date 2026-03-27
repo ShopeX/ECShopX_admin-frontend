@@ -11,7 +11,7 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="社区列表" name="first">
+      <el-tab-pane :label="$t('5207cfcf.147861')" name="first">
         <alllist ref="alllist" :get-status="alllist" />
       </el-tab-pane>
     </el-tabs>

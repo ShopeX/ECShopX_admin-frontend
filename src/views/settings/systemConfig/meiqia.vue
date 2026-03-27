@@ -24,7 +24,7 @@
       :show-default-actions="false"
     />
     <div class="footer-container">
-      <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('3fbbe844.be5fbb') }}</el-button>
     </div>
   </SpPage>
 </template>
@@ -56,7 +56,7 @@ export default {
           if (wxapp || h5 || app || aliapp || pc) {
             callback()
           } else {
-            callback(new Error('至少一项不能为空'))
+            callback(new Error(vm.$t('3fbbe844.d94839')))
           }
         } else {
           callback()
@@ -66,7 +66,7 @@ export default {
       const validateCommon = (rule, value, callback) => {
         const { channel, common } = vm.form
         if (channel == 'single' && !common) {
-          callback(new Error('客服链接不能为空'))
+          callback(new Error(vm.$t('3fbbe844.96c134')))
         } else {
           callback()
         }
@@ -76,37 +76,37 @@ export default {
         {
           fieldName: '__group_meiqia',
           component: 'group',
-          label: '美洽客服'
+          label: vm.$t('3fbbe844.7ef177')
         },
         {
           fieldName: 'is_open',
-          label: '美洽客服',
+          label: vm.$t('3fbbe844.7ef177'),
           component: 'switch'
         },
         {
-          label: '平台客服',
+          label: vm.$t('3fbbe844.0c4ef7'),
           fieldName: '__group_platform',
           component: 'group'
         },
         {
           fieldName: 'channel',
-          label: '平台客服',
+          label: vm.$t('3fbbe844.0c4ef7'),
           component: 'radio',
           componentProps: {
             options: [
-              { label: '统一配置', value: 'single' },
-              { label: '按渠道配置', value: 'multi' }
+              { label: vm.$t('3fbbe844.b240a2'), value: 'single' },
+              { label: vm.$t('3fbbe844.102471'), value: 'multi' }
             ]
           }
         },
         {
           fieldName: 'common',
-          label: '客服链接',
+          label: vm.$t('3fbbe844.c3c135'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
-          tip: '如实际运营中有多个客服人员接待咨询，建议配置为美洽客服组链接，在美洽客服组内添加客服人员坐席。',
+          tip: vm.$t('3fbbe844.9f3289'),
           rules: [{ validator: validateCommon }],
           isShow: () => {
             return vm.form.channel == 'single'
@@ -114,51 +114,51 @@ export default {
         },
         {
           fieldName: 'wxapp',
-          label: '微信小程序',
+          label: vm.$t('3fbbe844.439845'),
           component: 'input',
           componentProps: {
             style: { maxWidth: '600px' },
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
           rules: [{ validator: validateLink }],
           isShow: () => vm.form.channel == 'multi'
         },
         {
           fieldName: 'h5',
-          label: 'H5商城',
+          label: vm.$t('3fbbe844.715f06'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
           rules: [{ validator: validateLink }],
           isShow: () => vm.form.channel == 'multi'
         },
         {
           fieldName: 'app',
-          label: 'APP商城',
+          label: vm.$t('3fbbe844.df708d'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
           rules: [{ validator: validateLink }],
           isShow: () => vm.form.channel == 'multi'
         },
         {
           fieldName: 'aliapp',
-          label: '支付宝小程序',
+          label: vm.$t('3fbbe844.42d922'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
           rules: [{ validator: validateLink }],
           isShow: () => vm.form.channel == 'multi'
         },
         {
           fieldName: 'pc',
-          label: 'PC网页版',
+          label: vm.$t('3fbbe844.f0497f'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入内容'
+            placeholder: vm.$t('3fbbe844.a11cc7')
           },
           rules: [{ validator: validateLink }],
           isShow: () => vm.form.channel == 'multi'
@@ -166,19 +166,19 @@ export default {
         {
           fieldName: '__group_distributor',
           component: 'group',
-          label: '店铺客服'
+          label: vm.$t('3fbbe844.3161fb')
         },
         {
           fieldName: 'is_distributor_open',
-          label: '店铺独立客服',
+          label: vm.$t('3fbbe844.2a4375'),
           component: 'radio',
           componentProps: {
             options: [
-              { label: '允许', value: true },
-              { label: '不允许', value: false }
+              { label: vm.$t('3fbbe844.e6a5c3'), value: true },
+              { label: vm.$t('3fbbe844.e06828'), value: false }
             ]
           },
-          tip: '允许店铺配置独立客服时，请前往店铺管理中为店铺配置客服链接；如店铺未配置客服链接，则消费者咨询时将由平台客服接待。不允许店铺配置独立客服时，店铺里的消费者咨询将全部由平台客服接待。'
+          tip: vm.$t('3fbbe844.55343f')
         }
       ]
     }
@@ -206,7 +206,7 @@ export default {
     async onSubmit() {
       await this.$refs.form.validate()
       await this.$api.im.saveMeiqia(this.form)
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('3fbbe844.3b1083'))
     }
   }
 }

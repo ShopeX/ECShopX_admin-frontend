@@ -7,12 +7,13 @@
   <SpPage>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>充值</span>
+        <span>{{ $t('8099ec30.e50663') }}</span>
       </div>
       <div class="w-full px-[50px]">
         <div class="account w-[300px] py-[30px] mr-[100px] box-border">
           <p class="flex justify-between pb-6">
-            <span>账户可用余额</span> <span class="text-xl leading-5">{{ account }} 元</span>
+            <span>{{ $t('8099ec30.9e7ef0') }}</span>
+            <span class="text-xl leading-5">{{ account }} {{ $t('8099ec30.c16655') }}</span>
           </p>
           <SpFormPlus
             ref="form"
@@ -23,7 +24,7 @@
             :show-default-actions="false"
           />
           <div class="mx-auto mt-[50px]">
-            <el-button type="primary" @click="submitForm"> 确定充值 </el-button>
+            <el-button type="primary" @click="submitForm">{{ $t('8099ec30.060196') }}</el-button>
           </div>
         </div>
       </div>
@@ -48,7 +49,7 @@ export default {
       return [
         {
           fieldName: 'money',
-          label: '充值金额',
+          label: this.$t('8099ec30.1bcb8e'),
           cellWidth: 0.6,
           component: ({ value, h, onInput }) => {
             return h('el-input', {
@@ -65,7 +66,7 @@ export default {
             })
           },
           rules: [
-            { required: true, message: '充值金额不能为空', trigger: 'blur' },
+            { required: true, message: this.$t('8099ec30.2085ff'), trigger: 'blur' },
             { validator: this.validateMoney, trigger: 'change' }
           ]
         }
@@ -90,7 +91,7 @@ export default {
           this.form.money = null
           this.$refs.form.$refs.form.clearValidate()
         } catch (err) {
-          Message.error('充值失败')
+          Message.error(this.$t('8099ec30.d9217d'))
         }
       } catch (error) {
         // 验证失败
@@ -108,12 +109,12 @@ export default {
     validateMoney(rule, value, callback) {
       const reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!Number(value)) {
-        callback(new Error('请输入正确的数字'))
+        callback(new Error(this.$t('8099ec30.4bce36')))
       } else {
         if (!reg.test(value)) {
-          callback(new Error('请输入正确的金额，最多保留两位小数'))
+          callback(new Error(this.$t('8099ec30.061da0')))
         } else if (Number(value) > 10000) {
-          callback(new Error('每次充值不得超过10000元'))
+          callback(new Error(this.$t('8099ec30.f44589')))
         } else {
           callback()
         }

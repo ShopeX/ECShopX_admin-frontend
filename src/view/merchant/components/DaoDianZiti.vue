@@ -11,8 +11,8 @@
 </style>
 <template>
   <div class="daodianziti">
-    <div class="tip">若没有关联自提点，优先取店铺地址</div>
-    <el-button type="text" @click="onSelectZiti">选择自提点</el-button>
+    <div class="tip">{{ $t('e18035cd.f3240d') }}</div>
+    <el-button type="text" @click="onSelectZiti">{{ $t('e18035cd.47c2de') }}</el-button>
     <SpFinder
       ref="finder"
       no-selection
@@ -44,7 +44,7 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '移除',
+            name: this.$t('e18035cd.86048b'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -69,13 +69,13 @@ export default {
           }
         ],
         columns: [
-          { name: '自提点名称', key: 'name' },
+          { name: this.$t('e18035cd.6b88c4'), key: 'name' },
           {
-            name: '地址',
+            name: this.$t('e18035cd.765048'),
             render: (h, { row }) =>
               h('span', {}, `${row.province}${row.city}${row.area}${row.address}`)
           },
-          { name: '联系电话', key: 'contract_phone', width: '170px' }
+          { name: this.$t('e18035cd.09a1f6'), key: 'contract_phone', width: '170px' }
         ]
       })
     }

@@ -49,23 +49,23 @@ export default {
   data() {
     let statusOption = [
       {
-        title: '前台可销售',
+        title: this.$t('52409ed2.9b7481'),
         value: 'onsale',
         disabled: () => this.medicinePrescription && !this.isPrescriptionApproved
       },
       {
-        title: '前台仅展示',
+        title: this.$t('52409ed2.acf86b'),
         value: 'only_show',
         disabled: () => this.medicinePrescription && !this.isPrescriptionApproved
       },
       {
-        title: '不可销售',
+        title: this.$t('52409ed2.ae83a3'),
         value: 'instock'
       }
     ]
     if (!this.VERSION_IN_PURCHASE()) {
       statusOption.push({
-        title: '前台不展示',
+        title: this.$t('52409ed2.2c50a0'),
         value: 'offline_sale',
         disabled: () => this.medicinePrescription && !this.isPrescriptionApproved
       })
@@ -91,72 +91,72 @@ export default {
       },
       formList: [
         {
-          label: '商品状态',
+          label: this.$t('52409ed2.ce0008'),
           key: 'approve_status',
           type: 'select',
-          isShow: !IS_SUPPLIER(), //非供应商
+          isShow: !IS_SUPPLIER(),
           options: statusOption,
           display: 'inline'
         },
         {
-          label: '库存',
+          label: this.$t('52409ed2.0eac88'),
           key: 'store',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '商品货号',
+          label: this.$t('52409ed2.e9de29'),
           key: 'item_bn',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '重量',
+          label: this.$t('52409ed2.fcd943'),
           key: 'weight',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '体积',
+          label: this.$t('52409ed2.972d5f'),
           key: 'volume',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '销售价',
+          label: this.$t('52409ed2.e29575'),
           key: 'price',
           type: 'input',
           required: true,
-          message: '请输入商品销售价',
+          message: this.$t('52409ed2.f68807'),
           display: 'inline'
         },
         {
-          label: '成本价',
+          label: this.$t('52409ed2.2e2ce2'),
           key: 'cost_price',
           type: 'input',
           required: this.$store.getters.login_type != 'admin',
-          message: '请输入商品成本价',
+          message: this.$t('52409ed2.7bdb46'),
           display: 'inline'
         },
         {
-          label: '市场价',
+          label: this.$t('52409ed2.818fc4'),
           key: 'market_price',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '条形码',
+          label: this.$t('52409ed2.1e8836'),
           key: 'barcode',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '药品规格',
+          label: this.$t('52409ed2.e20511'),
           key: 'medicine_spec',
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.medicinePrescription) {
-              callback('请输入药品规格')
+              callback(this.$t('52409ed2.35e76f'))
             } else {
               callback()
             }
@@ -165,12 +165,12 @@ export default {
           display: 'inline'
         },
         {
-          label: '最大开方数',
+          label: this.$t('52409ed2.06bdef'),
           key: 'max_num',
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.medicinePrescription) {
-              callback('请输入最大开方数量')
+              callback(this.$t('52409ed2.8d1f7c'))
             } else {
               callback()
             }
@@ -179,13 +179,13 @@ export default {
           display: 'inline'
         },
         {
-          label: '起订量',
+          label: this.$t('52409ed2.ed52fd'),
           key: 'start_num',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '发货时间',
+          label: this.$t('52409ed2.bfd255'),
           key: 'delivery_time',
           type: 'input',
           display: 'inline'
@@ -207,7 +207,7 @@ export default {
       handler(newVal) {
         if (newVal) {
           this.formList.push({
-            label: '获取积分',
+            label: this.$t('52409ed2.c07abe'),
             key: 'point_num',
             type: 'input',
             display: 'inline'

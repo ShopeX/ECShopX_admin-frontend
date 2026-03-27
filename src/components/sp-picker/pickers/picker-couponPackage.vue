@@ -36,7 +36,7 @@
     <!-- multiple：{{ multiple }}, {{ value }} -->
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入券包名称搜索" />
+        <el-input v-model="formData.keywords" :placeholder="$t('fa1ac377.6bb84e')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -50,9 +50,9 @@
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: '券包名称', key: 'title' },
+          { name: $t('fa1ac377.01787d'), key: 'title' },
           {
-            name: '券包描述',
+            name: $t('fa1ac377.f847cc'),
             key: 'package_describe'
           }
         ]
@@ -81,6 +81,9 @@ export default {
     title: '选择券包'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('fa1ac377.f086bd')
+  },
   data() {
     return {
       formData: {
@@ -91,9 +94,6 @@ export default {
       loading: false,
       multiple: this.value?.multiple ?? true
     }
-  },
-  created() {
-    // this.fetch()
   },
   methods: {
     beforeSearch(params) {

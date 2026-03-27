@@ -13,7 +13,7 @@
       v-clipboard:success="
         () =>
           $message.success({
-            message: '复制成功'
+            message: this.$t('4d44c3e4.20a495')
           })
       "
     />

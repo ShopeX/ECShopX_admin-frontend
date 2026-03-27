@@ -10,33 +10,33 @@
 
       <el-table-column prop="topic_id" label="id" width="100" />
 
-      <el-table-column label="话题名称" prop="topic_name" />
+      <el-table-column :label="$t('45d681ba.220164')" prop="topic_name" />
 
-      <el-table-column label="话题置项">
+      <el-table-column :label="$t('45d681ba.40c294')">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.is_top == '1'" type="danger" size="mini" effect="dark">
-            置项
+            {{ $t('c5ae46b6.1b8e54') }}
           </el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column label="话题状态" prop="status_text" />
+      <el-table-column :label="$t('45d681ba.4938e6')" prop="status_text" />
 
-      <el-table-column label="创建人">
+      <el-table-column :label="$t('c5ae46b6.95a43e')">
         <template slot-scope="scope">
-          <div v-if="scope.row.source == '2'">管理员</div>
-          <div v-else>{{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}</div>
+          <div v-if="scope.row.source == '2'">{{ $t('c5ae46b6.b1dae9') }}</div>
+          <div v-else>{{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="160" align="center">
+      <el-table-column :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="auditNote(scope.row)">
             {{ resetText(scope.row) }}
           </el-button>
 
           <el-button v-if="scope.row.source == '2'" type="text" @click="handleEdit(scope.row)">
-            编辑
+            {{ $t('e240ae54.95b351') }}
           </el-button>
         </template>
       </el-table-column>
@@ -57,11 +57,11 @@ export default {
   computed: {
     resetText() {
       return (row) => {
-        var text = '审核'
+        var text = this.$t('e240ae54.cf13b1')
         if (row.status == '1') {
-          text = '拒绝'
+          text = this.$t('ed6f1bab.7173f8')
         } else if (row.status == '2') {
-          text = '通过'
+          text = this.$t('e240ae54.23c1f3')
         }
         return text
       }

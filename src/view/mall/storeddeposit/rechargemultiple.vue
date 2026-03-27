@@ -6,24 +6,24 @@
 <template>
   <div v-loading="loading" class="section-white content-padded">
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="是否开启" prop="content">
+      <el-form-item :label="$t('344aac07.780afe')" prop="content">
         <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
-        <div class="frm-tips">只有储值面额里面配置的是 充值送积分 才翻倍，充值送钱 不翻倍</div>
+        <div class="frm-tips">{{ $t('344aac07.d86d5f') }}</div>
       </el-form-item>
-      <el-form-item label="时间段" prop="content">
+      <el-form-item :label="$t('344aac07.ae20c0')" prop="content">
         <el-date-picker
           v-model="form.datetimerange"
           type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('344aac07.981cbe')"
+          :start-placeholder="$t('344aac07.b44c0f')"
+          :end-placeholder="$t('344aac07.1d468b')"
         />
       </el-form-item>
-      <el-form-item label="翻倍数" prop="content">
+      <el-form-item :label="$t('344aac07.61076e')" prop="content">
         <el-input-number v-model="form.multiple" controls-position="right" :min="1" :max="10" />
       </el-form-item>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('344aac07.be5fbb') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -61,7 +61,7 @@ export default {
       }
       setRechargeMultiple(form).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('344aac07.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })

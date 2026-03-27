@@ -7,7 +7,7 @@
   <el-row>
     <el-cascader
       v-model="selected_values"
-      placeholder="根据地区筛选"
+      :placeholder="$t('2f6dfc22.491f74')"
       :options="regions"
       filterable
       :props="{ checkStrictly: true }"

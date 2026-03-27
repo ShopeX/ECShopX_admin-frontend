@@ -119,7 +119,7 @@ export default {
     },
     process() {
       processDrugOrders(this.order_id, this.form).then((res) => {
-        this.$message({ type: 'success', message: '审核成功' })
+        this.$message({ type: 'success', message: this.$t('c13b7c9f.94129a') })
         this.getDetail()
       })
     },
@@ -175,10 +175,10 @@ export default {
       updateDelivery(this.order_id, this.deliveryForm).then((response) => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
-          this.$message.success('修改物流信息成功!')
+          this.$message.success(this.$t('c13b7c9f.687286'))
           this.getDetail()
         } else {
-          this.$message.error('修改物流信息失败!')
+          this.$message.error(this.$t('c13b7c9f.c3691c'))
           return false
         }
       })

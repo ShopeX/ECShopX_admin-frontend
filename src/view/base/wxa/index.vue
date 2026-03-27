@@ -7,14 +7,18 @@
   <div class="section section-white">
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="handleEditWeapp"> 添加直连小程序 </el-button>
+        <el-button type="primary" icon="plus" @click="handleEditWeapp">
+{{
+          $t('bba767c5.512e5d')
+        }}
+</el-button>
       </el-col>
     </el-row>
     <el-table
       v-loading="loading"
       :data="list"
       style="width: 100%"
-      element-loading-text="数据加载中"
+      :element-loading-text="$t('bba767c5.f09b12')"
     >
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -46,34 +50,34 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="小程序头像" width="120">
+      <el-table-column :label="$t('bba767c5.75688e')" width="120">
         <template slot-scope="img">
           <div v-if="img.row.head_img">
-            <img :src="img.row.head_img" height="60" />
+            <img :src="img.row.head_img" height="60">
           </div>
           <div v-else>
             <i class="el-icon-picture fa-3x" aria-hidden="true" />
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="authorizer_appid" label="小程序APPID" />
-      <el-table-column prop="nick_name" label="小程序名称">
+      <el-table-column prop="authorizer_appid" :label="$t('bba767c5.d70fe9')" />
+      <el-table-column prop="nick_name" :label="$t('bba767c5.d34f1f')">
         <template slot-scope="scope_name">
           <div v-if="scope_name.row.nick_name">
             {{ scope_name.row.nick_name }}
           </div>
-          <div v-else>未设置</div>
+          <div v-else>{{ $t('bba767c5.fe2d26') }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="weappTemplate.name" label="小程序模版" />
-      <el-table-column label="小程序上架状态">
+      <el-table-column prop="weappTemplate.name" :label="$t('bba767c5.1917d3')" />
+      <el-table-column :label="$t('bba767c5.869efb')">
         <template slot-scope="verify_type_info">
           <el-tag v-if="verify_type_info.row.weapp.release_status == '1'" type="success">
-            已上架
+            {{ $t('bba767c5.2390fa') }}
           </el-tag>
 
           <el-tag v-if="verify_type_info.row.weapp.audit_status == '1'" type="gray">
-            审核失败
+            {{ $t('bba767c5.fe3661') }}
           </el-tag>
           <!--审核成功并且已经上架则不需要显示-->
           <el-tag
@@ -83,14 +87,14 @@
             "
             type="success"
           >
-            审核成功
+            {{ $t('bba767c5.94129a') }}
           </el-tag>
           <el-tag v-else-if="verify_type_info.row.weapp.audit_status == '2'" type="primary">
-            审核中
+            {{ $t('bba767c5.b720a6') }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200px">
+      <el-table-column :label="$t('bba767c5.2b6bc0')" width="200px">
         <template slot-scope="scope">
           <el-button circle type="primary" icon="el-icon-edit" @click="handleUpdate(scope.row)" />
         </template>
@@ -98,14 +102,14 @@
     </el-table>
 
     <el-dialog
-      :title="dialogTitleWeapp"
+      :title="$t(dialogTitleWeapp)"
       :visible.sync="editWxaVisible"
       :before-close="handleEditWeappCancel"
     >
       <el-form ref="weappForm" :model="weappForm" label-position="left" label-width="180px">
         <div class="section-body">
-          <el-form-item label="小程序模板：">
-            <el-select v-model="weappForm.template_name" placeholder="请选择小程序模板">
+          <el-form-item :label="$t('bba767c5.0d425f')">
+            <el-select v-model="weappForm.template_name" :placeholder="$t('bba767c5.9c2e12')">
               <el-option
                 v-for="(item, index) in templateList"
                 :key="index"
@@ -114,39 +118,43 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="小程序名称：">
+          <el-form-item :label="$t('bba767c5.79e85e')">
             <el-col :span="18">
-              <el-input v-model="weappForm.nick_name" placeholder="请输入小程序名称" />
+              <el-input v-model="weappForm.nick_name" :placeholder="$t('bba767c5.7437cc')" />
             </el-col>
           </el-form-item>
           <el-form-item label="appid：">
             <el-col :span="18">
-              <el-input v-model="weappForm.authorizer_appid" placeholder="请输入小程序appid" />
+              <el-input v-model="weappForm.authorizer_appid" :placeholder="$t('bba767c5.f14601')" />
             </el-col>
           </el-form-item>
           <el-form-item label="appsecret：">
             <el-col :span="18">
               <el-input
                 v-model="weappForm.authorizer_appsecret"
-                placeholder="请输入小程序appsecret"
+                :placeholder="$t('bba767c5.ede01a')"
                 show-password
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="小程序描述：">
+          <el-form-item :label="$t('bba767c5.d50394')">
             <el-col :span="18">
-              <el-input v-model="weappForm.signature" placeholder="请输入小程序描述" />
+              <el-input v-model="weappForm.signature" :placeholder="$t('bba767c5.7efb18')" />
             </el-col>
           </el-form-item>
         </div>
         <div class="section-footer with-border content-center">
-          <el-button type="primary" @click="handleSubmitWxapp"> 保 存 </el-button>
+          <el-button type="primary" @click="handleSubmitWxapp">
+{{
+            $t('bba767c5.56df61')
+          }}
+</el-button>
         </div>
       </el-form>
     </el-dialog>
 
     <el-dialog
-      :title="dialogTitle"
+      :title="$t(dialogTitle)"
       :visible.sync="dialogVisible"
       :before-close="handleClose"
       width="55%"
@@ -167,15 +175,17 @@
           <el-col :span="13">
             <el-input
               v-model="updateRow.authorizer_appsecret"
-              placeholder="请输入小程序appsecret"
+              :placeholder="$t('bba767c5.ede01a')"
               show-password
             />
           </el-col>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateSubmit">确 定</el-button>
+        <el-button @click="handleClose">{{ $t('bba767c5.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleUpdateSubmit">{{
+          $t('bba767c5.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -189,7 +199,7 @@ export default {
       loading: false,
       templateName: '',
       editWxaVisible: false,
-      dialogTitleWeapp: '添加小程序',
+      dialogTitleWeapp: 'bba767c5.1880be',
       weappForm: {
         auto_publish: '',
         nick_name: '',
@@ -204,7 +214,7 @@ export default {
       },
       templateList: [],
       list: [],
-      dialogTitle: '添加小程序',
+      dialogTitle: 'bba767c5.1880be',
       dialogVisible: false,
       updateRow: {}
     }

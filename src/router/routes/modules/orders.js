@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'order',
       icon: 'order',
       keepAlive: true,
-      title: '订单'
+      title: 'c15892aa.4c117f'
     },
     name: 'orders',
     path: '/order',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'tradenormalorders',
           icon: 'icon-products',
-          title: '订单列表',
+          title: 'c15892aa.07166e',
           permissions: ['order.entitytrade.tradenormalorders']
         },
         component: () => import('@/view/mall/trade/normalorders/list'),
@@ -51,7 +51,7 @@ const routes = [
         meta: {
           aliasName: 'tradenormalshoporders',
           icon: 'icon-products',
-          title: '自营订单',
+          title: 'c15892aa.a509ca',
           permissions: ['order.entitytrade.tradenormalshoporders']
         },
         children: [
@@ -68,7 +68,7 @@ const routes = [
         meta: {
           aliasName: 'normalordersupload',
           icon: 'icon-products',
-          title: '批量发货',
+          title: 'c15892aa.425991',
           permissions: ['order.entitytrade.normalordersupload']
         }
       },
@@ -79,7 +79,7 @@ const routes = [
         meta: {
           aliasName: 'aftersaleslist',
           icon: 'icon-products',
-          title: '售后列表',
+          title: 'c15892aa.75bfab',
           permissions: ['order.aftersales.aftersaleslist']
         },
         children: [
@@ -96,7 +96,7 @@ const routes = [
         meta: {
           aliasName: 'ordersettingdetail',
           icon: 'icon-products',
-          title: '订单配置',
+          title: 'c15892aa.66cd47',
           permissions: ['order.ordersetting.ordersettingdetail']
         }
       },
@@ -107,7 +107,7 @@ const routes = [
         meta: {
           aliasName: 'tradesetting',
           icon: 'icon-products',
-          title: '礼品包装',
+          title: 'c15892aa.6d923e',
           permissions: ['order.ordersetting.tradesetting']
         }
       },
@@ -118,7 +118,7 @@ const routes = [
         meta: {
           aliasName: 'aftersalesreason',
           icon: 'icon-products',
-          title: '售后原因',
+          title: 'c15892aa.160adc',
           permissions: ['order.ordersetting.aftersalesreason']
         }
       },
@@ -131,7 +131,7 @@ const routes = [
         meta: {
           aliasName: 'cartremind',
           icon: 'icon-products',
-          title: '购物提醒',
+          title: 'c15892aa.b8c40b',
           permissions: ['order.ordersetting.cartremind']
         }
       },
@@ -142,7 +142,7 @@ const routes = [
         meta: {
           aliasName: 'goodslimit',
           icon: 'icon-products',
-          title: '商品限购',
+          title: 'c15892aa.44d46e',
           permissions: ['order.ordersetting.goodslimit']
         },
         children: [
@@ -155,7 +155,7 @@ const routes = [
 
       {
         path: 'entitytrade/prescriptionorders',
-        name: `处方药订单`,
+        name: `c15892aa.d42283`,
         component: () => import('@/view/mall/trade/normalorders/prepList'),
         children: [
           {
@@ -181,7 +181,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistribution_orders',
           icon: 'icon-products',
-          title: '店铺订单',
+          title: 'c15892aa.aae16d',
           permissions: ['order.entitytrade.marketingdistribution_orders']
         },
         component: () => import('@/view/mall/marketing/distributionOrders'),
@@ -216,12 +216,12 @@ const routes = [
       },
       {
         path: 'chinaums-division-list',
-        name: `分账单`,
+        name: `c15892aa.fb1213`,
         component: () => import('@/view/mall/chinaums/divisionList')
       },
       {
         path: 'servicetrade/tradeservice',
-        name: `服务订单`,
+        name: `c15892aa.cfebe1`,
         component: () => import('@/view/mall/trade/order/list'),
         children: [
           {
@@ -232,12 +232,12 @@ const routes = [
       },
       {
         path: 'servicetrade/tradeverification',
-        name: `服务核销单`,
+        name: `c15892aa.106f81`,
         component: () => import('@/view/mall/trade/salesmanWorkRecords')
       },
       {
         path: 'reservation/mallreservation',
-        name: `预约管理`,
+        name: `c15892aa.220e22`,
         component: () => import('@/view/mall/reservation/resourcesetting/index'),
         children: [
           {
@@ -248,12 +248,12 @@ const routes = [
       },
       {
         path: 'reservation/reservationsetting',
-        name: `预约设置`,
+        name: `c15892aa.0ccaa3`,
         component: () => import('@/view/mall/reservation/setting/index')
       },
       {
         path: 'reservation/reservationorder',
-        name: `预约单`,
+        name: `c15892aa.caa2e5`,
         component: () => import('@/view/mall/reservation/resourcesetting/reservation')
       }
 

@@ -4,15 +4,15 @@
 -->
 
 <template>
-  <el-card shadow="never" header="会员中心设置">
+  <el-card shadow="never" :header="$t('ee36ad5b.b04a32')">
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="会员中心BANNER" name="banner">
+      <el-tab-pane :label="$t('ee36ad5b.256f27')" name="banner">
         <bannerTemplates />
       </el-tab-pane>
-      <el-tab-pane label="菜单隐藏显示设置" name="menuoption">
+      <el-tab-pane :label="$t('d1e146de.fa23d6')" name="menuoption">
         <menuoptionTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="页面跳转设置" name="redirect">
+      <el-tab-pane v-if="!VERSION_IN_PURCHASE()" :label="$t('d1e146de.1f2e8b')" name="redirect">
         <redirectTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane

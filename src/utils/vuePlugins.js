@@ -20,6 +20,51 @@ import 'video.js/dist/video-js.css'
 Vue.use(VueVideoPlayer)
 
 import VueHtml5Editor from 'vue-html5-editor'
+import { i18n } from '@/i18n'
+
+const getEditorLocale = () => ({
+  align: i18n.t('d8872c7d.d5bc35'),
+  image: i18n.t('d8872c7d.20def7'),
+  list: i18n.t('d8872c7d.371297'),
+  link: i18n.t('d8872c7d.bfe68d'),
+  unlink: i18n.t('d8872c7d.ef67b1'),
+  table: i18n.t('d8872c7d.b339aa'),
+  font: i18n.t('d8872c7d.ca746b'),
+  'full screen': i18n.t('d8872c7d.185926'),
+  text: i18n.t('d8872c7d.3e2aea'),
+  eraser: i18n.t('d8872c7d.a468ce'),
+  info: i18n.t('d8872c7d.81d9f5'),
+  color: i18n.t('d8872c7d.6b36c6'),
+  'please enter a url': i18n.t('d8872c7d.6107b3'),
+  'create link': i18n.t('d8872c7d.44dfd2'),
+  bold: i18n.t('d8872c7d.3b8a43'),
+  italic: i18n.t('d8872c7d.33731e'),
+  underline: i18n.t('d8872c7d.f6f8ea'),
+  'strike through': i18n.t('d8872c7d.a120a8'),
+  subscript: i18n.t('d8872c7d.aa6cda'),
+  superscript: i18n.t('d8872c7d.dc4c91'),
+  heading: i18n.t('d8872c7d.32c65d'),
+  'font name': i18n.t('d8872c7d.8456bc'),
+  'font size': i18n.t('d8872c7d.93ab99'),
+  'left justify': i18n.t('d8872c7d.413f48'),
+  'center justify': i18n.t('d8872c7d.0bbc2e'),
+  'right justify': i18n.t('d8872c7d.fd8e95'),
+  'ordered list': i18n.t('d8872c7d.f4c650'),
+  'unordered list': i18n.t('d8872c7d.a9f2ad'),
+  'fore color': i18n.t('d8872c7d.ebf245'),
+  'background color': i18n.t('d8872c7d.2f97db'),
+  'row count': i18n.t('d8872c7d.656800'),
+  'column count': i18n.t('d8872c7d.eb22d4'),
+  save: i18n.t('d8872c7d.38cf16'),
+  upload: i18n.t('d8872c7d.d5a73b'),
+  progress: i18n.t('d8872c7d.c7bff7'),
+  unknown: i18n.t('d8872c7d.1622dc'),
+  'please wait': i18n.t('d8872c7d.a9d25d'),
+  error: i18n.t('d8872c7d.7030ff'),
+  abort: i18n.t('d8872c7d.d8d7ca'),
+  reset: i18n.t('d8872c7d.4b9c32')
+})
+
 const options = {
   // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
   // global component name
@@ -78,54 +123,13 @@ const options = {
       }
     }
   },
-  // 语言，内建的有英文（en-us）和中文（zh-cn）
-  // default en-us, en-us and zh-cn are built-in
-  language: 'zh-cn',
-  // 自定义语言
+  // 语言，跟随项目当前语言
+  language: i18n.locale === 'zh-CN' ? 'zh-cn' : i18n.locale === 'ar' ? 'ar' : 'en',
+  // 自定义语言（使用项目 i18n）
   i18n: {
-    // specify your language here
-    'zh-cn': {
-      align: '对齐方式',
-      image: '图片',
-      list: '列表',
-      link: '链接',
-      unlink: '去除链接',
-      table: '表格',
-      font: '文字',
-      'full screen': '全屏',
-      text: '排版',
-      eraser: '格式清除',
-      info: '关于',
-      color: '颜色',
-      'please enter a url': '请输入地址',
-      'create link': '创建链接',
-      bold: '加粗',
-      italic: '倾斜',
-      underline: '下划线',
-      'strike through': '删除线',
-      subscript: '上标',
-      superscript: '下标',
-      heading: '标题',
-      'font name': '字体',
-      'font size': '文字大小',
-      'left justify': '左对齐',
-      'center justify': '居中',
-      'right justify': '右对齐',
-      'ordered list': '有序列表',
-      'unordered list': '无序列表',
-      'fore color': '前景色',
-      'background color': '背景色',
-      'row count': '行数',
-      'column count': '列数',
-      save: '确定',
-      upload: '上传',
-      progress: '进度',
-      unknown: '未知',
-      'please wait': '请稍等',
-      error: '错误',
-      abort: '中断',
-      reset: '重置'
-    }
+    'zh-cn': getEditorLocale(),
+    'en': getEditorLocale(),
+    'ar': getEditorLocale()
   },
   // 隐藏不想要显示出来的模块
   // the modules you don't want

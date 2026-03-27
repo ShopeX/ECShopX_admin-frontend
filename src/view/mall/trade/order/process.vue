@@ -16,20 +16,24 @@
           >
             <el-card>
               <h2>{{ key.remarks }}</h2>
-              <p>操作人员：{{ key.operator_name }}</p>
+              <p>{{ $t('18d95d54.a73518') }}{{ key.operator_name }}</p>
               <p>
-                人员类型：
-                <span v-if="'user' == key.operator_type"> 用户 </span>
-                <span v-else-if="'salesperson' == key.operator_type"> 导购员 </span>
-                <span v-else-if="'admin' == key.operator_type"> 管理员 </span>
-                <span v-else-if="'system' == key.operator_type"> 系统 </span>
-                <span v-else-if="'distributor' == key.operator_type"> 店铺管理员 </span>
-                <span v-else> 未知 </span>
+                {{ $t('18d95d54.f1f902') }}
+                <span v-if="'user' == key.operator_type"> {{ $t('18d95d54.1fd02a') }} </span>
+                <span v-else-if="'salesperson' == key.operator_type">
+                  {{ $t('18d95d54.a6d9eb') }}
+                </span>
+                <span v-else-if="'admin' == key.operator_type"> {{ $t('18d95d54.b1dae9') }} </span>
+                <span v-else-if="'system' == key.operator_type"> {{ $t('18d95d54.8a8b89') }} </span>
+                <span v-else-if="'distributor' == key.operator_type">
+                  {{ $t('18d95d54.3282f2') }}
+                </span>
+                <span v-else> {{ $t('18d95d54.1622dc') }} </span>
               </p>
-              <p>操作详情：{{ key.detail }}</p>
-              <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
+              <p>{{ $t('18d95d54.a7b805') }}{{ key.detail }}</p>
+              <p v-if="key.delivery_remark">{{ $t('18d95d54.82ad15') }}{{ key.delivery_remark }}</p>
               <div v-if="key?.pics?.length">
-                配送照片：
+                {{ $t('18d95d54.6a1136') }}
                 <div class="img-box">
                   <el-image
                     v-for="(item, idx) in key.pics"

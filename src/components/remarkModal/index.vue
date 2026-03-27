@@ -4,12 +4,12 @@
 -->
 
 <template>
-  <el-dialog title="编辑备注信息" :visible.sync="show" :width="width">
+  <el-dialog :title="$t('ac085a58.4a5c92')" :visible.sync="show" :width="width">
     <div class="custom_textarea">
       <el-input
         v-model="value"
         type="textarea"
-        placeholder="请输入对此订单需要备注的内容…"
+        :placeholder="$t('ac085a58.9a6e7e')"
         :rows="rowLength"
       />
       <div class="statics" :class="{ error: maxValueLength() }">
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancel"> 取 消 </el-button>
-      <el-button type="primary" @click="handleSubmit"> 确 定 </el-button>
+      <el-button @click="handleCancel"> {{ $t('ac085a58.c08ab9') }} </el-button>
+      <el-button type="primary" @click="handleSubmit"> {{ $t('ac085a58.aa7527') }} </el-button>
     </div>
   </el-dialog>
 </template>
@@ -61,7 +61,7 @@ export default {
     },
     handleValidate() {
       if (this.maxValueLength()) {
-        this.$message.error('字数请不要超过150字')
+        this.$message.error(this.$t('ac085a58.832cb9'))
         return
       }
       return true
@@ -80,13 +80,13 @@ export default {
       ) {
         remarks(params).then((res) => {
           this.$emit('onDone', res)
-          this.$message.success('订单备注修改成功!')
+          this.$message.success(this.$t('ac085a58.c75e91'))
           this.show = false
         })
       } else if (this.currentType === 'afterList' || this.currentType === 'afterDetail') {
         afterRemarks(params).then((res) => {
           this.$emit('onDone', this.value)
-          this.$message.success('订单备注修改成功!')
+          this.$message.success(this.$t('ac085a58.c75e91'))
           this.show = false
         })
       }

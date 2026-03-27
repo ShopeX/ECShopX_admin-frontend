@@ -12,7 +12,7 @@
     />
 
     <div class="action-container mt-5">
-      <el-button type="primary" @click="addRoleLabels"> 添加角色 </el-button>
+      <el-button type="primary" @click="addRoleLabels">{{ $t('34fa19b2.596b04') }}</el-button>
     </div>
 
     <div class="flex gap-4 mt-4 h-[calc(100vh-200px)]" v-loading="loading">
@@ -25,7 +25,12 @@
           height="calc(100vh - 300px)"
           class="w-full cursor-pointer custom-table-header"
         >
-          <el-table-column prop="role_name" label="角色名称" width="290px" class="py-1">
+          <el-table-column
+            prop="role_name"
+            :label="$t('34fa19b2.10a6f1')"
+            width="290px"
+            class="py-1"
+          >
             <template #default="{ row }">
               <div class="flex justify-between items-center w-full pr-5">
                 <!--角色名和删除在水平方向上均匀分布，垂直居中对齐，第一个在起点，最后一个在终点，中间等间距-->
@@ -37,7 +42,7 @@
                   @click.stop="deleteSpecificRole(row)"
                   class="hover:underline"
                 >
-                  删除
+                  {{ $t('34fa19b2.2f4aad') }}
                 </el-button>
               </div>
             </template>
@@ -65,9 +70,11 @@
         <div
           class="bg-[#F0F2F5] py-2 px-1.5 border border-[#ebeef5] pl-2.5 rounded-t flex justify-between items-center"
         >
-          <span>{{ activeRole ? activeRole.role_name + ' - 角色权限' : '角色权限' }}</span>
+          <span>{{
+            activeRole ? activeRole.role_name + $t('34fa19b2.36afa2') : $t('34fa19b2.86a1be')
+          }}</span>
           <el-button type="primary" @click="savePermissions" :loading="saveLoading" class="!mr-1">
-            保存
+            {{ $t('34fa19b2.be5fbb') }}
           </el-button>
         </div>
 
@@ -139,7 +146,7 @@
                           </div>
                         </div>
                         <div v-else class="h-full flex items-center">
-                          <span class="no-data-text"></span>
+                          <span class="no-data-text" />
                         </div>
                       </td>
                     </tr>
@@ -160,10 +167,10 @@
                         </div>
                       </td>
                       <td class="border-r border-[#ebeef5]">
-                        <div class="no-data-text"></div>
+                        <div class="no-data-text" />
                       </td>
                       <td class="third-menu-cell">
-                        <div class="no-data-text"></div>
+                        <div class="no-data-text" />
                       </td>
                     </tr>
                   </template>
@@ -176,7 +183,7 @@
             class="flex items-center justify-center h-[300px] text-[#909399] text-base bg-[#fafbfc]"
           >
             <div class="empty-text">
-              {{ activeRole ? '请从左侧选择一个角色进行权限配置' : '暂无权限数据' }}
+              {{ activeRole ? $t('34fa19b2.7c1fcf') : $t('34fa19b2.5850fe') }}
             </div>
           </div>
         </div>
@@ -215,26 +222,31 @@ export default {
       originalPermissions: [],
       currentPermissions: [],
       permissionsChanged: false,
-      currentDialogPermissions: [],
-
-      filterFormItems: [
+      currentDialogPermissions: []
+    }
+  },
+  computed: {
+    filterFormItems() {
+      return [
         {
           formItemClass: 'w-1/3',
-          label: '角色名称',
+          label: this.$t('34fa19b2.10a6f1'),
           fieldName: 'role_name',
           component: 'input',
           componentProps: {
-            placeholder: '请输入角色名称'
+            placeholder: this.$t('34fa19b2.2a92f5')
           }
         }
-      ],
-      dialogFormItems: [
+      ]
+    },
+    dialogFormItems() {
+      return [
         {
-          label: '角色名称',
+          label: this.$t('34fa19b2.10a6f1'),
           fieldName: 'role_name',
           component: 'input',
           componentProps: {
-            placeholder: '订单管理员、商品管理员、等等',
+            placeholder: this.$t('34fa19b2.395730'),
             style: {
               width: '300px'
             }
@@ -388,15 +400,11 @@ export default {
 
       if (this.permissionsChanged && this.activeRoleId) {
         try {
-          await this.$confirm(
-            '当前角色的权限有未保存的更改，是否要放弃更改并选择其他角色？',
-            '提示',
-            {
-              confirmButtonText: '放弃更改',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }
-          )
+          await this.$confirm(this.$t('34fa19b2.a6dd59'), this.$t('34fa19b2.02d981'), {
+            confirmButtonText: this.$t('34fa19b2.1862d8'),
+            cancelButtonText: this.$t('34fa19b2.625fb2'),
+            type: 'warning'
+          })
         } catch {
           return
         }
@@ -432,13 +440,13 @@ export default {
         this.permissionsChanged = false
 
         this.$message({
-          message: '权限更新成功',
+          message: this.$t('34fa19b2.50e7aa'),
           type: 'success',
           duration: 2000
         })
       } catch (error) {
         this.$message({
-          message: '权限更新失败，请重试',
+          message: this.$t('34fa19b2.23a961'),
           type: 'error',
           duration: 2000
         })
@@ -465,10 +473,10 @@ export default {
       this.currentDialogPermissions = []
 
       this.$dialog.open({
-        title: '角色添加',
+        title: this.$t('34fa19b2.d36f39'),
         size: 'mini',
         buttonConfirm: {
-          text: '保存'
+          text: this.$t('34fa19b2.be5fbb')
         },
         content: (
           <SpFormPlus
@@ -494,7 +502,7 @@ export default {
           this.currentPermissions = []
           this.permissionsChanged = false
           await this.fetchList()
-          this.$message.success('角色添加成功')
+          this.$message.success(this.$t('34fa19b2.469266'))
         }
       })
     },
@@ -554,7 +562,7 @@ export default {
         this.permissionsChanged = false
         this.$message({
           type: 'error',
-          message: '页面已过期，请刷新重试'
+          message: this.$t('34fa19b2.929b60')
         })
       } finally {
         this.loading = false
@@ -563,9 +571,9 @@ export default {
 
     async deleteSpecificRole(row) {
       try {
-        await this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        await this.$confirm(this.$t('34fa19b2.82cd52'), this.$t('34fa19b2.02d981'), {
+          confirmButtonText: this.$t('34fa19b2.38cf16'),
+          cancelButtonText: this.$t('34fa19b2.625fb2'),
           type: 'warning'
         })
         await this.$api.company.deleteRole(row.role_id)
@@ -595,7 +603,7 @@ export default {
         }
 
         this.$message({
-          message: '删除成功',
+          message: this.$t('34fa19b2.0007d1'),
           type: 'success',
           duration: 5000
         })
@@ -603,11 +611,11 @@ export default {
         if (error === 'cancel' || error === 'close') {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('34fa19b2.2111cc')
           })
         } else {
           this.$message({
-            message: '删除失败，请重试',
+            message: this.$t('34fa19b2.89976e'),
             type: 'error',
             duration: 3000
           })

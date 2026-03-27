@@ -6,22 +6,29 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-tooltip class="item" effect="light" content="创建分销商注册促销" placement="right-start">
+      <el-tooltip
+        class="item"
+        effect="light"
+        :content="$t('2292c1bd.80f4f2')"
+        placement="right-start"
+      >
         <el-button type="primary" icon="plus" @click="actionCouponAdd">
-          创建分销商注册促销
+          {{ $t('2292c1bd.80f4f2') }}
         </el-button>
       </el-tooltip>
     </div>
     <el-table v-loading="loading" :data="dataList" style="width: 100%" height="580" border>
-      <el-table-column prop="id" label="编号" width="60" />
-      <el-table-column prop="ad_title" label="标题" width="200" />
-      <el-table-column prop="is_open" label="是否开启" width="80">
+      <el-table-column prop="id" :label="$t('2292c1bd.c515f3')" width="60" />
+      <el-table-column prop="ad_title" :label="$t('2292c1bd.32c65d')" width="200" />
+      <el-table-column prop="is_open" :label="$t('2292c1bd.780afe')" width="80">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_open == 'true'" type="success" size="mini"> 是 </el-tag>
-          <el-tag v-else type="success" size="mini"> 否 </el-tag>
+          <el-tag v-if="scope.row.is_open == 'true'" type="success" size="mini">
+            {{ $t('2292c1bd.0a60ac') }}
+          </el-tag>
+          <el-tag v-else type="success" size="mini"> {{ $t('2292c1bd.c9744f') }} </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="distributor" label="参与的分销商">
+      <el-table-column prop="distributor" :label="$t('2292c1bd.2ab486')">
         <template slot-scope="scope">
           <el-tag
             v-for="(item, index) in scope.row.distributor_id.list"
@@ -29,19 +36,18 @@
             type="success"
             size="mini"
           >
-            {{ item.label }} </el-tag
+            {{ item.label }}
+</el-tag
           >&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="distributor" label="参与的商品"> </el-table-column>
-      <el-table-column prop="distributor" label="参与的优惠券"> </el-table-column> -->
-      <el-table-column label="操作" width="250">
+      <el-table-column :label="$t('2292c1bd.2b6bc0')" width="250">
         <template slot-scope="scope">
           <el-button size="mini" icon="view" @click="itemsDetail(scope.$index, scope.row)">
-            详情
+            {{ $t('2292c1bd.f26225') }}
           </el-button>
           <el-button size="mini" icon="edit" @click="editAction(scope.$index, scope.row)">
-            编辑
+            {{ $t('2292c1bd.95b351') }}
           </el-button>
           <el-button
             size="mini"
@@ -49,7 +55,7 @@
             type="danger"
             @click="deleteAction(scope.$index, scope.row)"
           >
-            删除
+            {{ $t('2292c1bd.2f4aad') }}
           </el-button>
         </template>
       </el-table-column>
@@ -63,21 +69,21 @@
       />
     </div>
 
-    <el-dialog title="查看详情" :visible.sync="detailVisible">
+    <el-dialog :title="$t('2292c1bd.5b48db')" :visible.sync="detailVisible">
       <el-row :gutter="20">
-        <el-col :span="6"> 注册引导广告标题 </el-col>
+        <el-col :span="6"> {{ $t('2292c1bd.961f1b') }} </el-col>
         <el-col :span="6">
           {{ dateDetail.ad_title }}
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6"> 注册引导图片 </el-col>
+        <el-col :span="6"> {{ $t('2292c1bd.f9bb12') }} </el-col>
         <el-col :span="6">
           {{ dateDetail.ad_pic }}
         </el-col>
       </el-row>
       <el-row v-if="dateDetail.discributor_id" :gutter="20">
-        <el-col :span="6"> 参与的分销商 </el-col>
+        <el-col :span="6"> {{ $t('2292c1bd.2ab486') }} </el-col>
         <el-col :span="6">
           <div v-for="item in dateDetail.discributor_id.list">
             {{ item.label }}
@@ -85,18 +91,14 @@
         </el-col>
       </el-row>
       <el-row v-if="dateDetail.promotions_value" :gutter="20">
-        <el-col :span="6"> 参与的优惠券 </el-col>
+        <el-col :span="6"> {{ $t('2292c1bd.2b1519') }} </el-col>
         <div v-for="item in dateDetail.promotions_value.coupons">
           {{ item.title }}
         </div>
         <el-col :span="6" />
       </el-row>
-      <!-- <el-row :gutter="20">
-        <el-col :span="6"></el-col>
-        <el-col :span="6"></el-col>
-      </el-row> -->
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addCouponVisible = false"> 关闭 </el-button>
+        <el-button @click.native="detailVisible = false"> {{ $t('2292c1bd.b15d91') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -153,9 +155,9 @@ export default {
       this.detailVisible = true
     },
     deleteAction(index, row) {
-      this.$confirm('此操作将删除该促销, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('2292c1bd.f83376'), this.$t('2292c1bd.02d981'), {
+        confirmButtonText: this.$t('2292c1bd.38cf16'),
+        cancelButtonText: this.$t('2292c1bd.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -163,7 +165,7 @@ export default {
             .then((response) => {
               this.dataList.splice(index, 1)
               this.$message({
-                message: '删除成功',
+                message: this.$t('2292c1bd.0007d1'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -171,14 +173,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除失败'
+                message: this.$t('2292c1bd.acf066')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('2292c1bd.2111cc')
           })
         })
     },

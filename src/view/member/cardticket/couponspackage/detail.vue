@@ -5,7 +5,7 @@
 
 <template>
   <div class="zyk_couponDetail">
-    <h3>VIP-优惠劵包 领取记录</h3>
+    <h3>{{ $t('4351c920.533c24') }}</h3>
     <SpFinder
       ref="finder"
       :split-count="4"
@@ -22,24 +22,16 @@
 import setting_ from './setting/detail'
 export default {
   data() {
-    return {
-      receive_type: [
-        {
-          key: 'template',
-          value: '模版领取'
-        },
-        {
-          key: 'grade',
-          value: '等级领取'
-        },
-        {
-          key: 'vip_grade',
-          value: 'vip等级领取'
-        }
-      ]
-    }
+    return {}
   },
   computed: {
+    receive_type() {
+      return [
+        { key: 'template', value: this.$t('4351c920.a50ef1') },
+        { key: 'grade', value: this.$t('4351c920.0eafd9') },
+        { key: 'vip_grade', value: this.$t('4351c920.573531') }
+      ]
+    },
     setting() {
       return setting_(this)
     }

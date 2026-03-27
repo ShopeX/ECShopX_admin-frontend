@@ -47,18 +47,18 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="pic" label="商品图片" width="120">
+      <el-table-column prop="pic" :label="$t('2d162ff1.9b94b1')" width="120">
         <template slot-scope="scope">
           <el-image class="item-image" :src="scope.row.pic" fit="fit" />
         </template>
       </el-table-column>
-      <el-table-column label="商品参数" width="180">
+      <el-table-column :label="$t('2d162ff1.8686bb')" width="180">
         <template slot-scope="scope">
           <div class="item-info">
             <div class="item-name">{{ scope.row.item_name }}</div>
             <div class="item-price">{{ `¥${scope.row.total_fee / scope.row.num / 100}` }}</div>
             <div v-if="scope.row.item_spec_desc" class="spec-desc">
-              {{ `规格：${scope.row.item_spec_desc}` }}
+              {{ $t('2d162ff1.69c069') }}{{ scope.row.item_spec_desc }}
             </div>
             <el-input-number
               v-model="scope.row.refundNum"
@@ -72,24 +72,29 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="point_fee" label="抵扣积分" width="120">
+      <el-table-column prop="point_fee" :label="$t('2d162ff1.3359fe')" width="120">
         <template slot-scope="scope">
           {{ scope.row.point_fee / 100 }}
         </template>
       </el-table-column>
-      <el-table-column v-if="!VERSION_STANDARD()" prop="pic" label="成本价(¥)" width="120">
+      <el-table-column
+        v-if="!VERSION_STANDARD()"
+        prop="pic"
+        :label="$t('2d162ff1.5937ae')"
+        width="120"
+      >
         <template slot-scope="scope">
           {{ scope.row.fee_symbol }}{{ scope.row.cost_price / 100 }}
         </template>
       </el-table-column>
-      <el-table-column prop="item_holder" label="商品类型" width="100">
+      <el-table-column prop="item_holder" :label="$t('2d162ff1.2af133')" width="100">
         <template slot-scope="scope">
           <div class="ell3">
             {{ goodCategoryMap[scope.row.item_holder] }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="supplier_name" label="来源供应商" width="100" />
+      <el-table-column prop="supplier_name" :label="$t('2d162ff1.55c61d')" width="100" />
     </el-table>
 
     <!-- <div v-for="(item, index) in items" :key="`goods-item-${index}`" class="goods-item">
@@ -103,7 +108,7 @@
       <div class="item-info">
         <div class="item-name">{{ item.item_name }}</div>
         <div class="item-price">{{ `¥${item.total_fee / item.num / 100}` }}</div>
-        <div v-if="item.item_spec_desc" class="spec-desc">{{ `规格：${item.item_spec_desc}` }}</div>
+        <div v-if="item.item_spec_desc" class="spec-desc">{{ $t('2d162ff1.69c069') + item.item_spec_desc }}</div>
         <el-input-number
           v-model="item.refundNum"
           size="mini"

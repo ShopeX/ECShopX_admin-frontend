@@ -9,53 +9,65 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <section class="section section-white">
-            <el-form-item label="模板名称:">
+            <el-form-item :label="$t('477a43bd.fad9b7')">
               <el-input v-model="form.name" />
             </el-form-item>
-            <el-form-item label="是否包邮:">
+            <el-form-item :label="$t('477a43bd.f3171a')">
               <el-radio v-if="templatesId" v-model="form.is_free" disabled label="0">
-                自定义运费
+                {{ $t('d41d8cd9.b2c3d4') }}
               </el-radio>
-              <el-radio v-else v-model="form.is_free" label="0"> 自定义运费 </el-radio>
+              <el-radio v-else v-model="form.is_free" label="0">
+                {{ $t('d41d8cd9.b2c3d4') }}
+              </el-radio>
               <el-radio v-if="templatesId" v-model="form.is_free" disabled label="1">
-                卖家承担运费
+                {{ $t('d41d8cd9.f8g9h0') }}
               </el-radio>
-              <el-radio v-else v-model="form.is_free" label="1"> 卖家承担运费 </el-radio>
-              <p class="frm-tips">选择了卖家承担运费，运费计算和包邮规则设置将会丢失！</p>
+              <el-radio v-else v-model="form.is_free" label="1">
+                {{ $t('d41d8cd9.f8g9h0') }}
+              </el-radio>
+              <p class="frm-tips">{{ $t('d41d8cd9.h8i9j0') }}</p>
             </el-form-item>
-            <el-form-item v-show="form.is_free == 0" label="计价方式:">
+            <el-form-item v-show="form.is_free == 0" :label="$t('477a43bd.99caba')">
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="1">
-                按重量
+                {{ $t('d41d8cd9.k1l2m3') }}
               </el-radio>
-              <el-radio v-else v-model="form.valuation" label="1"> 按重量 </el-radio>
+              <el-radio v-else v-model="form.valuation" label="1">
+                {{ $t('d41d8cd9.k1l2m3') }}
+              </el-radio>
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="2">
-                按件数
+                {{ $t('d41d8cd9.n4o5p6') }}
               </el-radio>
-              <el-radio v-else v-model="form.valuation" label="2"> 按件数 </el-radio>
+              <el-radio v-else v-model="form.valuation" label="2">
+                {{ $t('d41d8cd9.n4o5p6') }}
+              </el-radio>
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="3">
-                按金额
+                {{ $t('d41d8cd9.q7r8s9') }}
               </el-radio>
-              <el-radio v-else v-model="form.valuation" label="3"> 按金额 </el-radio>
+              <el-radio v-else v-model="form.valuation" label="3">
+                {{ $t('d41d8cd9.q7r8s9') }}
+              </el-radio>
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="4">
-                按体积
+                {{ $t('d41d8cd9.t0u1v2') }}
               </el-radio>
-              <el-radio v-else v-model="form.valuation" label="4"> 按体积 </el-radio>
-              <p class="frm-tips">运费模版保存后，计费方式将无法切换！！</p>
+              <el-radio v-else v-model="form.valuation" label="4">
+                {{ $t('d41d8cd9.t0u1v2') }}
+              </el-radio>
+              <p class="frm-tips">{{ $t('d41d8cd9.w3x4y5') }}</p>
             </el-form-item>
-            <el-form-item label="是否启用:">
-              <el-radio v-model="form.status" label="1"> 启用 </el-radio>
-              <el-radio v-model="form.status" label="0"> 禁用 </el-radio>
+            <el-form-item :label="$t('477a43bd.84d6a9')">
+              <el-radio v-model="form.status" label="1"> {{ $t('d41d8cd9.z6a7b8') }} </el-radio>
+              <el-radio v-model="form.status" label="0"> {{ $t('d41d8cd9.c9d0e1') }} </el-radio>
             </el-form-item>
-            <el-form-item v-show="form.is_free == 1" label="不配送城市:">
+            <el-form-item v-show="form.is_free == 1" :label="$t('477a43bd.411d4a')">
               <section class="section section-white shipping-calc">
-                <p class="font-bold">不配送城市（优先级最高）</p>
+                <p class="font-bold">{{ $t('d41d8cd9.f2g3h4') }}</p>
                 <p v-if="nopost_self_conf && nopost_self_conf.length > 0" class="font-bold nopost">
                   {{ nopost_self_conf | formatCityData(district) }}
                 </p>
-                <p v-else class="font-bold nopost">暂无数据</p>
+                <p v-else class="font-bold nopost">{{ $t('d41d8cd9.i5j6k7') }}</p>
                 <div class="content-v-padded">
                   <el-button type="primary" size="mini" @click="handleSelfNoPostEditArea()">
-                    编辑地区
+                    {{ $t('d41d8cd9.l8m9n0') }}
                   </el-button>
                 </div>
               </section>
@@ -64,31 +76,31 @@
         </el-col>
         <el-col v-show="form.is_free == 0" :span="16">
           <section v-show="form.valuation == 1" class="section section-white">
-            <p class="font-bold">运费计算:</p>
+            <p class="font-bold">{{ $t('d41d8cd9.o1p2q3') }}:</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">默认运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.r4s5t6') }}:</p>
               <el-form-item label-width="140">
-                重量（kg以内）：
+                {{ $t('d41d8cd9.u7v8w9') }}
                 <el-input v-model="fee_conf[0].start_standard" size="mini" style="width: 100px" />
-                运费（元）：
+                {{ $t('d41d8cd9.x0y1z2') }}
                 <el-input v-model="fee_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">增重运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.a3b4c5') }}:</p>
               <el-form-item label-width="140">
-                每增加（kg内）：
+                {{ $t('d41d8cd9.www1xx') }}
                 <el-input
                   v-model="fee_conf[0].add_standard"
                   class="inline-input"
                   style="width: 100px"
                 />
-                增加（元）：
+                {{ $t('d41d8cd9.yyy3zz') }}
                 <el-input v-model="fee_conf[0].add_fee" class="inline-input" style="width: 100px" />
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区城市设置运费</p>
+              <p class="font-bold">{{ $t('d41d8cd9.m5n6o7') }}</p>
               <el-table :data="fee_conf.slice(1)" style="width: 100%" border>
-                <el-table-column label="运送到" width="200">
+                <el-table-column :label="$t('477a43bd.4aed3f')" width="200">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -97,31 +109,31 @@
                       type="primary"
                       @click="handleWeightFeeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="重量(kg)">
+                <el-table-column :label="$t('477a43bd.8c0d75')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="首费(元)">
+                <el-table-column :label="$t('477a43bd.23e30a')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续重(kg)">
+                <el-table-column :label="$t('477a43bd.1ed90e')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续费(元)">
+                <el-table-column :label="$t('477a43bd.0dc2ad')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column :label="$t('477a43bd.2b6bc0')">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
@@ -129,7 +141,7 @@
                       type="danger"
                       @click="handleWeightFeeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -141,30 +153,30 @@
                   size="mini"
                   @click="handleAddArea('fee_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p class="font-bold">{{ $t('d41d8cd9.f2g3h4') }}</p>
               <p v-if="nopost_conf && nopost_conf.length > 0" class="font-bold nopost">
                 {{ nopost_conf | formatCityData(district) }}
               </p>
-              <p v-else class="font-bold nopost">暂无数据</p>
+              <p v-else class="font-bold nopost">{{ $t('d41d8cd9.aaa1bb') }}</p>
               <div class="content-v-padded">
                 <el-button type="primary" size="mini" @click="handleWeightNoPostEditArea()">
-                  编辑地区
+                  {{ $t('d41d8cd9.bbb3cc') }}
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
               <el-checkbox v-model="priceFreeStatus" :value="priceFreeStatus" />
-              指定条件包邮:
+              {{ $t('d41d8cd9.s1t2u3') }}
             </p>
             <section v-if="priceFreeStatus" class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区设置包邮规则</p>
+              <p class="font-bold">{{ $t('d41d8cd9.p8q9r0') }}</p>
               <el-table :data="free_conf" style="width: 100%" border>
-                <el-table-column label="地区设置" width="150">
+                <el-table-column :label="$t('477a43bd.df53d0')" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -174,15 +186,15 @@
                       type="primary"
                       @click="handleWeightFreeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="包邮条件(kg)">
+                <el-table-column :label="$t('477a43bd.ad40d2')">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
-                      placeholder="请选择"
+                      :placeholder="$t('477a43bd.708c9d')"
                       style="width: 100px"
                     >
                       <el-option
@@ -193,22 +205,22 @@
                       />
                     </el-select>
                     <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                      >在&nbsp;<el-input
+                      >{{ $t('d41d8cd9.c7d8e9') }}&nbsp;<el-input
                         v-model="scope.row.inweight"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;kg内包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.i3j4k5') }}</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元以上包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.n2o3p4') }}</span
                     >
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="100">
+                <el-table-column :label="$t('477a43bd.2b6bc0')" width="100">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -217,7 +229,7 @@
                       type="danger"
                       @click="handleWeightFreeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -229,41 +241,41 @@
                   size="mini"
                   @click="handleAddArea('free_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
           </section>
           <section v-show="form.valuation == 2" class="section section-white">
-            <p class="font-bold">运费计算:</p>
+            <p class="font-bold">{{ $t('d41d8cd9.ccc5dd') }}</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">默认运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.ddd7ee') }}</p>
               <el-form-item label-width="140">
-                件数（件以内）：
+                {{ $t('d41d8cd9.v4w5x6') }}
                 <el-input
                   v-model="fee_number_conf[0].start_standard"
                   size="mini"
                   style="width: 100px"
                 />
-                运费（元）：
+                {{ $t('d41d8cd9.x0y1z2') }}
                 <el-input v-model="fee_number_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">增件运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.y7z8a9') }}</p>
               <el-form-item label-width="140">
-                每增加（件内）：
+                {{ $t('d41d8cd9.b0c1d2') }}
                 <el-input
                   v-model="fee_number_conf[0].add_standard"
                   size="mini"
                   style="width: 100px"
                 />
-                增加（元）：
+                {{ $t('d41d8cd9.e3f4g5') }}
                 <el-input v-model="fee_number_conf[0].add_fee" size="mini" style="width: 100px" />
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区城市设置运费</p>
+              <p class="font-bold">{{ $t('d41d8cd9.m5n6o7') }}</p>
               <el-table :data="fee_number_conf.slice(1)" style="width: 100%" border>
-                <el-table-column label="运送到">
+                <el-table-column :label="$t('477a43bd.4aed3f')">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -272,31 +284,31 @@
                       type="primary"
                       @click="handleNumberFeeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="首件(件)">
+                <el-table-column :label="$t('477a43bd.cb7d60')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="首费(元)">
+                <el-table-column :label="$t('477a43bd.23e30a')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续件(件)">
+                <el-table-column :label="$t('477a43bd.a472ba')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续费(元)">
+                <el-table-column :label="$t('477a43bd.0dc2ad')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="80">
+                <el-table-column :label="$t('477a43bd.2b6bc0')" width="80">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
@@ -304,7 +316,7 @@
                       type="danger"
                       @click="handleNumberFeeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -316,33 +328,33 @@
                   size="mini"
                   @click="handleAddArea('fee_number_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p class="font-bold">{{ $t('d41d8cd9.f2g3h4') }}</p>
               <p
                 v-if="nopost_number_conf && nopost_number_conf.length > 0"
                 class="font-bold nopost"
               >
                 {{ nopost_number_conf | formatCityData(district) }}
               </p>
-              <p v-else class="font-bold nopost">暂无数据</p>
+              <p v-else class="font-bold nopost">{{ $t('d41d8cd9.aaa1bb') }}</p>
               <div class="content-v-padded">
                 <el-button type="primary" size="mini" @click="handleNumberNoPostEditArea()">
-                  编辑地区
+                  {{ $t('d41d8cd9.bbb3cc') }}
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
               <el-checkbox v-model="numberFreeStatus" :value="numberFreeStatus" />
-              指定条件包邮:
+              {{ $t('d41d8cd9.s1t2u3') }}
             </p>
             <section v-if="numberFreeStatus" class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区设置包邮规则</p>
+              <p class="font-bold">{{ $t('d41d8cd9.p8q9r0') }}</p>
               <el-table :data="free_number_conf" style="width: 100%" border>
-                <el-table-column label="地区设置" width="120">
+                <el-table-column :label="$t('477a43bd.df53d0')" width="120">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -352,15 +364,15 @@
                       type="primary"
                       @click="handleNumberFreeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="包邮条件(件)">
+                <el-table-column :label="$t('477a43bd.95c6aa')">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
-                      placeholder="请选择"
+                      :placeholder="$t('477a43bd.708c9d')"
                       style="width: 100px"
                     >
                       <el-option
@@ -371,22 +383,22 @@
                       />
                     </el-select>
                     <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                      >满&nbsp;<el-input
+                      >{{ $t('d41d8cd9.h6i7j8') }}&nbsp;<el-input
                         v-model="scope.row.upquantity"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;件包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.k9l0m1') }}</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元以上包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.n2o3p4') }}</span
                     >
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="80">
+                <el-table-column :label="$t('477a43bd.2b6bc0')" width="80">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -395,7 +407,7 @@
                       type="danger"
                       @click="handleNumberFreeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -407,16 +419,16 @@
                   size="mini"
                   @click="handleAddArea('free_number_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
           </section>
           <section v-show="form.valuation == 3" class="section section-white">
             <section class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区城市设置运费</p>
+              <p class="font-bold">{{ $t('d41d8cd9.m5n6o7') }}</p>
               <el-table :data="fee_money_conf" style="width: 100%" border>
-                <el-table-column label="运送到">
+                <el-table-column :label="$t('477a43bd.4aed3f')">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -426,11 +438,11 @@
                       type="primary"
                       @click="handleMoneyFeeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="金额上下限(元)" width="300">
+                <el-table-column :label="$t('477a43bd.785b74')" width="300">
                   <template slot-scope="scope">
                     <div
                       v-for="(money_key, money_index) in scope.row.rules"
@@ -461,7 +473,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="运费(元)" width="200">
+                <el-table-column :label="$t('477a43bd.ef79a9')" width="200">
                   <template slot-scope="scope">
                     <div v-for="money_key in scope.row.rules" style="margin-top: 5px">
                       <el-input
@@ -472,7 +484,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="add_standard" label="操作" width="100">
+                <el-table-column prop="add_standard" :label="$t('477a43bd.2b6bc0')" width="100">
                   <template slot-scope="scope">
                     <div
                       v-for="(money_key, money_index) in scope.row.rules"
@@ -485,7 +497,7 @@
                         type="danger"
                         @click="handleMoneyFeeDeleteArea(scope.$index, money_index)"
                       >
-                        删除
+                        {{ $t('d41d8cd9.g9h0i1') }}
                       </el-button>
                     </div>
                     <div v-else style="height: 45px" />
@@ -499,46 +511,46 @@
                   size="mini"
                   @click="handleAddArea('fee_money_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p class="font-bold">{{ $t('d41d8cd9.f2g3h4') }}</p>
               <p v-if="nopost_money_conf && nopost_money_conf.length > 0" class="font-bold nopost">
                 {{ nopost_money_conf | formatCityData(district) }}
               </p>
-              <p v-else class="font-bold nopost">暂无数据</p>
+              <p v-else class="font-bold nopost">{{ $t('d41d8cd9.aaa1bb') }}</p>
               <div class="content-v-padded">
                 <el-button type="primary" size="mini" @click="handleMoneyNoPostEditArea()">
-                  编辑地区
+                  {{ $t('d41d8cd9.bbb3cc') }}
                 </el-button>
               </div>
             </section>
           </section>
           <section v-show="form.valuation == 4" class="section section-white">
-            <p class="font-bold">运费计算:</p>
+            <p class="font-bold">{{ $t('d41d8cd9.ccc5dd') }}</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">默认运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.ddd7ee') }}</p>
               <el-form-item label-width="140">
-                体积（m³以内）：
+                {{ $t('d41d8cd9.t8u9v0') }}
                 <el-input
                   v-model="fee_volume_conf[0].start_standard"
                   size="mini"
                   style="width: 100px"
                 />
-                运费（元）：
+                {{ $t('d41d8cd9.x0y1z2') }}
                 <el-input v-model="fee_volume_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">增体积运费:</p>
+              <p class="font-bold">{{ $t('d41d8cd9.w1x2y3') }}</p>
               <el-form-item label-width="140">
-                每增加（m³内）：
+                {{ $t('d41d8cd9.z4a5b6') }}
                 <el-input
                   v-model="fee_volume_conf[0].add_standard"
                   class="inline-input"
                   style="width: 100px"
                 />
-                增加（元）：
+                {{ $t('d41d8cd9.e3f4g5') }}
                 <el-input
                   v-model="fee_volume_conf[0].add_fee"
                   class="inline-input"
@@ -547,9 +559,9 @@
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区城市设置运费</p>
+              <p class="font-bold">{{ $t('d41d8cd9.m5n6o7') }}</p>
               <el-table :data="fee_volume_conf.slice(1)" style="width: 100%" border>
-                <el-table-column label="运送到" width="200">
+                <el-table-column :label="$t('477a43bd.4aed3f')" width="200">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -558,31 +570,31 @@
                       type="primary"
                       @click="handleVolumeFeeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="首体积(m³)">
+                <el-table-column :label="$t('477a43bd.748118')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="首费(元)">
+                <el-table-column :label="$t('477a43bd.23e30a')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续体积(m³)">
+                <el-table-column :label="$t('477a43bd.2e42ab')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="续费(元)">
+                <el-table-column :label="$t('477a43bd.0dc2ad')">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column :label="$t('477a43bd.2b6bc0')">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
@@ -590,7 +602,7 @@
                       type="danger"
                       @click="handleVolumeFeeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -602,33 +614,33 @@
                   size="mini"
                   @click="handleAddArea('fee_volume_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p class="font-bold">{{ $t('d41d8cd9.f2g3h4') }}</p>
               <p
                 v-if="nopost_volume_conf && nopost_volume_conf.length > 0"
                 class="font-bold nopost"
               >
                 {{ nopost_volume_conf | formatCityData(district) }}
               </p>
-              <p v-else class="font-bold nopost">暂无数据</p>
+              <p v-else class="font-bold nopost">{{ $t('d41d8cd9.aaa1bb') }}</p>
               <div class="content-v-padded">
                 <el-button type="primary" size="mini" @click="handleVolumeNoPostEditArea()">
-                  编辑地区
+                  {{ $t('d41d8cd9.bbb3cc') }}
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
               <el-checkbox v-model="volumeFreeStatus" :value="volumeFreeStatus" />
-              指定条件包邮:
+              {{ $t('d41d8cd9.s1t2u3') }}
             </p>
             <section v-if="volumeFreeStatus" class="section section-white shipping-calc">
-              <p class="font-bold">为指定地区设置包邮规则</p>
+              <p class="font-bold">{{ $t('d41d8cd9.p8q9r0') }}</p>
               <el-table :data="free_volume_conf" style="width: 100%" border>
-                <el-table-column label="地区设置" width="150">
+                <el-table-column :label="$t('477a43bd.df53d0')" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -638,15 +650,15 @@
                       type="primary"
                       @click="handleVolumeFreeEditArea(scope.$index, scope.row)"
                     >
-                      编辑
+                      {{ $t('d41d8cd9.d6e7f8') }}
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="包邮条件(m³)">
+                <el-table-column :label="$t('477a43bd.80ef80')">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
-                      placeholder="请选择"
+                      :placeholder="$t('477a43bd.708c9d')"
                       style="width: 100px"
                     >
                       <el-option
@@ -657,22 +669,22 @@
                       />
                     </el-select>
                     <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                      >在&nbsp;<el-input
+                      >{{ $t('d41d8cd9.c7d8e9') }}&nbsp;<el-input
                         v-model="scope.row.upvolume"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;m³内包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.f0g1h2') }}</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元以上包邮</span
+                      />&nbsp;{{ $t('d41d8cd9.n2o3p4') }}</span
                     >
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="100">
+                <el-table-column :label="$t('477a43bd.2b6bc0')" width="100">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -681,7 +693,7 @@
                       type="danger"
                       @click="handleVolumeFreeDeleteArea(scope.$index)"
                     >
-                      删除
+                      {{ $t('d41d8cd9.g9h0i1') }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -693,7 +705,7 @@
                   size="mini"
                   @click="handleAddArea('free_volume_conf')"
                 >
-                  添加地区
+                  {{ $t('d41d8cd9.j2k3l4') }}
                 </el-button>
               </div>
             </section>
@@ -701,13 +713,15 @@
         </el-col>
       </el-row>
       <div class="section-footer with-border content-center clearfix">
-        <el-button type="primary" @click="submitSaveAction"> 保存 </el-button>
+        <el-button type="primary" @click="submitSaveAction">
+          {{ $t('d41d8cd9.l6m7n8') }}
+        </el-button>
       </div>
-      <el-dialog title="选择区域" :visible.sync="dialogAreaFormVisible" width="960px">
+      <el-dialog :title="$t('477a43bd.97d03d')" :visible.sync="dialogAreaFormVisible" width="960px">
         <el-row>
           <el-col :span="6">
             <el-row class="province-list">
-              <el-col>省份</el-col>
+              <el-col>{{ $t('d41d8cd9.o9p0q1') }}</el-col>
               <el-col
                 v-for="(item, index) in areaInfo"
                 :key="'province' + index"
@@ -727,7 +741,7 @@
           </el-col>
           <el-col v-if="provinceIndex > -1" :span="6">
             <el-row class="city-list">
-              <el-col>城市</el-col>
+              <el-col>{{ $t('d41d8cd9.r2s3t4') }}</el-col>
               <el-col
                 v-for="(item, index) in areaInfo[provinceIndex].children"
                 :key="'city' + index"
@@ -747,12 +761,12 @@
           </el-col>
           <el-col v-else :span="6">
             <el-row class="region-list">
-              <el-col>城市</el-col>
+              <el-col>{{ $t('d41d8cd9.r2s3t4') }}</el-col>
             </el-row>
           </el-col>
           <el-col v-if="cityIndex > -1" :span="6">
             <el-row class="region-list">
-              <el-col>地区</el-col>
+              <el-col>{{ $t('d41d8cd9.u5v6w7') }}</el-col>
               <el-col
                 v-for="(item, index) in areaInfo[provinceIndex].children[cityIndex].children"
                 :key="'city' + index"
@@ -769,21 +783,25 @@
           </el-col>
           <el-col v-else :span="6">
             <el-row class="region-list">
-              <el-col>地区</el-col>
+              <el-col>{{ $t('d41d8cd9.u5v6w7') }}</el-col>
             </el-row>
           </el-col>
           <el-col :span="6">
             <el-row class="region-list">
               <el-col>
-                已选：<br />
+                {{ $t('d41d8cd9.x8y9z0') }}<br>
                 {{ conf_area | formatCityData(district, false) }}
               </el-col>
             </el-row>
           </el-col>
         </el-row>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogAreaFormVisible = false"> 取 消 </el-button>
-          <el-button type="primary" @click="handleAreaChooseFinish"> 确 定 </el-button>
+          <el-button @click="dialogAreaFormVisible = false">
+            {{ $t('d41d8cd9.a1b2c3') }}
+          </el-button>
+          <el-button type="primary" @click="handleAreaChooseFinish">
+            {{ $t('d41d8cd9.d4e5f6') }}
+          </el-button>
         </div>
       </el-dialog>
     </el-form>
@@ -898,48 +916,48 @@ export default {
       ],
       options: [
         {
-          label: '重量',
+          label: this.$t('477a43bd.fcd943'),
           value: '1'
         },
         {
-          label: '金额',
+          label: this.$t('477a43bd.4cf24a'),
           value: '2'
         },
         {
-          label: '重量+金额',
+          label: this.$t('477a43bd.ee0422'),
           value: '3'
         }
       ],
       options_number: [
         {
-          label: '件数',
+          label: this.$t('477a43bd.e4f48b'),
           value: '1'
         },
         {
-          label: '金额',
+          label: this.$t('477a43bd.4cf24a'),
           value: '2'
         },
         {
-          label: '件数+金额',
+          label: this.$t('477a43bd.87b0b8'),
           value: '3'
         }
       ],
       options_volume: [
         {
-          label: '体积',
+          label: this.$t('477a43bd.972d5f'),
           value: '1'
         },
         {
-          label: '金额',
+          label: this.$t('477a43bd.4cf24a'),
           value: '2'
         },
         {
-          label: '体积+金额',
+          label: this.$t('477a43bd.a39163'),
           value: '3'
         }
       ],
       rule: {
-        name: [{ required: true, message: '请填写模板名称', trigger: 'change' }]
+        name: [{ required: true, message: this.$t('477a43bd.920abc'), trigger: 'change' }]
       }
     }
   },
@@ -1000,7 +1018,7 @@ export default {
     submitSaveAction() {
       const that = this
       if (!this.form.name) {
-        this.$message.error('模板名称必填')
+        this.$message.error(this.$t('477a43bd.ea85b5'))
         return
       }
       switch (this.form.valuation) {
@@ -1030,7 +1048,7 @@ export default {
           for (var i in this.form.fee_conf) {
             for (var j in this.form.fee_conf[i].rules) {
               if (this.form.fee_conf[i].rules[j].basefee === '') {
-                this.$message.error('运费金额不能为空')
+                this.$message.error(this.$t('477a43bd.8408b0'))
                 return
               }
             }
@@ -1042,7 +1060,7 @@ export default {
             !this.form.fee_conf[0].add_standard ||
             !this.form.fee_conf[0].add_fee
           ) {
-            this.$message.error('运费计算不能为空')
+            this.$message.error(this.$t('477a43bd.63162f'))
             return
           }
         }
@@ -1053,7 +1071,7 @@ export default {
         updateShippingTemplates(this.templatesId, this.form).then((res) => {
           if (res.data.data) {
             this.$message({
-              message: '更新成功',
+              message: this.$t('477a43bd.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -1067,7 +1085,7 @@ export default {
         createShippingTemplates(this.form).then((res) => {
           if (res.data.data) {
             this.$message({
-              message: '添加成功',
+              message: this.$t('477a43bd.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -1243,7 +1261,7 @@ export default {
       if (this.conf_area.length == 0) {
         this.$message({
           type: 'error',
-          message: '请选择地区'
+          message: this.$t('477a43bd.ad1a24')
         })
         return false
       }
@@ -1750,7 +1768,7 @@ export default {
         return false
       }
       if (parseInt(this.fee_money_conf[parentIndex].rules[index].up) > parseInt(lastMoney)) {
-        this.$message.error('金额上限要大于金额下限!')
+        this.$message.error(this.$t('477a43bd.e5873e'))
         return false
       }
       this.fee_money_conf[parentIndex].rules[index].now = lastMoney

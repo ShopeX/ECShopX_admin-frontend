@@ -6,9 +6,9 @@
 <template>
   <div class="bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="300" />
-      <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">供应商端</div>
-      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">请登录</div>
+      <img src="/images/logo.png" alt="logo" width="300">
+      <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">{{ $t('65ffe27b.14f5bc') }}</div>
+      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>
     </div>
 
     <div class="mt-8 ml-2">
@@ -22,7 +22,7 @@
         :loading="loading"
         @click="handleLogin"
       >
-        登录
+        {{ $t('24b2720c.402d19') }}
       </el-button>
     </div>
   </div>
@@ -101,7 +101,7 @@ export default {
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: 'supplier' })
-          this.$message.success('登录成功')
+          this.$message.success(this.$t('24b2720c.71fa3b'))
           await this.$store.dispatch('user/fetchAccessMenus')
           await this.$store.dispatch('user/fetchAccountInfo')
           setTimeout(() => {
@@ -116,12 +116,10 @@ export default {
       }
     },
     handleError(error) {
-      console.error('表单错误:', error)
-      this.$message.error('表单验证失败，请检查输入')
+      this.$message.error(this.$t('24b2720c.653132'))
     },
     handleReset() {
-      console.log('表单重置')
-      this.$message.info('表单已重置')
+      this.$message.info(this.$t('65ffe27b.a865cc'))
     }
   }
 }

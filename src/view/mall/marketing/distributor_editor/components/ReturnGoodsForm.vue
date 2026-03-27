@@ -4,30 +4,30 @@
 -->
 
 <template>
-  <el-card class="el-card--normal" header="到店退货">
+  <el-card class="el-card--normal" :header="$t('8b441c8b.11b600')">
     <el-form class="return-goods-form" label-width="120px">
-      <el-form-item label="本店订单">
+      <el-form-item :label="$t('8b441c8b.6dc5f4')">
         <el-switch v-model="content.baseForm.offline_aftersales" />
         <div class="form-item-tip">
-          启用后本店订单买家发起退货退款申请时可选择到店退货，关闭时本店订单仅可使用快递退货；商家发起的售后订单不受此规则限制。
+          {{ $t('8b441c8b.53dbe3') }}
         </div>
       </el-form-item>
       <div>
-        <el-form-item label="本店退货点" style="margin-bottom: 0">
+        <el-form-item :label="$t('8b441c8b.efdb86')" style="margin-bottom: 0">
           <div class="form-item-tip line-height-40">
-            退货点信息会在买家选择到店退货时展示，初次使用此功能时本店退货点默认为选中状态（可退货店铺列表内未展示），可在保存店铺信息后再次进入此页面移除。
+            {{ $t('8b441c8b.7f3581') }}
           </div>
         </el-form-item>
 
         <div class="inner-base-form">
-          <el-form-item label="退货点名称" prop="shop_code">
+          <el-form-item :label="$t('8b441c8b.4a3fed')" prop="shop_code">
             <el-input
               v-model="content.baseForm.offline_aftersales_address['name']"
-              placeholder="请填写退货点名称便于买家理解和管理"
+              :placeholder="$t('8b441c8b.acb9a6')"
             />
           </el-form-item>
 
-          <el-form-item label="退货点地址" prop="name" class="range-select">
+          <el-form-item :label="$t('8b441c8b.fba620')" prop="name" class="range-select">
             <el-cascader
               v-model="content.baseForm.offline_aftersales_address['regions_id']"
               class="regions"
@@ -35,26 +35,26 @@
             />
             <el-input
               v-model="content.baseForm.offline_aftersales_address['address']"
-              placeholder="请填写退货点的具体地址，最短5字，最长120字"
+              :placeholder="$t('8b441c8b.8415ae')"
             />
           </el-form-item>
 
-          <el-form-item label="联系电话" prop="contact" class="range-select">
+          <el-form-item :label="$t('8b441c8b.09a1f6')" prop="contact" class="range-select">
             <el-input
               v-model="content.baseForm.offline_aftersales_address['area_code']"
               class="start-num"
-              placeholder="区号"
+              :placeholder="$t('8b441c8b.9a0e44')"
             />
             <span class="separator">~</span>
             <el-input
               v-model="content.baseForm.offline_aftersales_address['mobile']"
-              placeholder="请填写准确的联系电话，便于买家联系（手机号时，区号可为空）"
+              :placeholder="$t('8b441c8b.8f24ce')"
             />
           </el-form-item>
-          <el-form-item label="营业时间" prop="mobile" class="range-select">
+          <el-form-item :label="$t('8b441c8b.cc3307')" prop="mobile" class="range-select">
             <el-time-select
               v-model="content.baseForm.offline_aftersales_address['startTime']"
-              placeholder="起始时间"
+              :placeholder="$t('8b441c8b.26dac3')"
               :picker-options="{
                 start: '00:00',
                 step: '00:30',
@@ -64,7 +64,7 @@
             <span class="separator">~</span>
             <el-time-select
               v-model="content.baseForm.offline_aftersales_address['endTime']"
-              placeholder="结束时间"
+              :placeholder="$t('8b441c8b.f78277')"
               :picker-options="{
                 start: '00:00',
                 step: '00:30',
@@ -74,18 +74,18 @@
           </el-form-item>
         </div>
 
-        <el-form-item label="可退货店铺">
+        <el-form-item :label="$t('8b441c8b.6105a8')">
           <div class="form-item-tip line-height-40">
-            本店订单买家发起退货退款申请时可选择此列表店铺的退货点完成到店退货。
+            {{ $t('8b441c8b.0e97ba') }}
           </div>
-          <el-button type="text" @click="onSelectShop">选择店铺</el-button>
+          <el-button type="text" @click="onSelectShop">{{ $t('8b441c8b.afa2e6') }}</el-button>
           <SpFinder ref="finder" no-selection :data="finderData" :setting="setting" />
         </el-form-item>
 
-        <el-form-item label="其他店铺订单">
+        <el-form-item :label="$t('8b441c8b.7c8532')">
           <el-switch v-model="content.baseForm.offline_aftersales_other" />
           <div class="form-item-tip">
-            启用后其他店铺在设置可退货店铺时可选择本店（即本店可接收其他店铺订单到店退货）；商家发起的售后订单不受此规则限制。
+            {{ $t('8b441c8b.2c41e6') }}
           </div>
         </el-form-item>
       </div>
@@ -106,7 +106,7 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '移除',
+            name: this.$t('8b441c8b.86048b'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -121,7 +121,7 @@ export default {
             }
           }
         ],
-        columns: [{ name: '店铺名称', key: 'name' }]
+        columns: [{ name: this.$t('8b441c8b.0d4934'), key: 'name' }]
       })
     }
   },

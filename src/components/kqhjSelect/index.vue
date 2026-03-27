@@ -5,13 +5,13 @@
 
 <template>
   <el-dialog
-    title="选择卡券货架"
+    :title="$t('5dd655cd.676f34')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
     <div class="sub_title_bar tr">
-      <el-button type="primary"> <i class="el-icon-plus" />添加货架 </el-button>
+      <el-button type="primary"> <i class="el-icon-plus" />{{ $t('5dd655cd.fbaa1a') }} </el-button>
     </div>
     <div class="select_shelf_area group">
       <div class="shelf_item_col shelf_item_col_odd">
@@ -25,22 +25,30 @@
             <div class="shop_module_item shop_module_banner js_shopModuleWrapper">
               <strong class="shop_banner_title">Onex平台</strong>
               <!-- <span class="banner_logo"><img src="@/assets/img/logo2.31693aa.png" alt=""/></span> -->
-              <span class="banner_bg"><img src="" alt="" class="banner_pic" /></span>
+              <span class="banner_bg"><img src="" alt="" class="banner_pic"></span>
               <div class="pic_mask" />
             </div>
             <div class="list_section shop_module_item js_shopModuleWrapper">
               <ul class="list_classfy">
-                <li><a href="javascript:;">全部优惠券</a></li>
-                <li><a href="javascript:;">折扣券</a></li>
-                <li><a href="javascript:;">满减券</a></li>
-                <li><a href="javascript:;">通用优惠券</a></li>
+                <li>
+                  <a href="javascript:;">{{ $t('5dd655cd.b23382') }}</a>
+                </li>
+                <li>
+                  <a href="javascript:;">{{ $t('5dd655cd.9268f9') }}</a>
+                </li>
+                <li>
+                  <a href="javascript:;">{{ $t('5dd655cd.f23195') }}</a>
+                </li>
+                <li>
+                  <a href="javascript:;">{{ $t('5dd655cd.304ec9') }}</a>
+                </li>
               </ul>
             </div>
             <div class="list_section shop_module_item js_shopModuleWrapper">
               <ul class="list_row">
                 <li>
                   <a href="javascript:;">
-                    <img alt="img" src="" />
+                    <img alt="img" src="">
                   </a>
                 </li>
               </ul>
@@ -49,15 +57,15 @@
               <el-row :gutter="20" class="list_row_col">
                 <el-col :span="14">
                   <div class="ele_1">
-                    <a href="javascript:;"><img src="" alt="img" /></a>
+                    <a href="javascript:;"><img src="" alt="img"></a>
                   </div>
                 </el-col>
                 <el-col :span="10">
                   <div class="ele_2">
-                    <a href="javascript:;"><img src="" alt="img" /></a>
+                    <a href="javascript:;"><img src="" alt="img"></a>
                   </div>
                   <div class="ele_2">
-                    <a href="javascript:;"><img src="" alt="img" /></a>
+                    <a href="javascript:;"><img src="" alt="img"></a>
                   </div>
                 </el-col>
               </el-row>
@@ -70,8 +78,8 @@
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction"> 取 消 </el-button>
-      <el-button type="primary" @click="saveAction"> 确 定 </el-button>
+      <el-button @click="cancelAction"> {{ $t('5dd655cd.c08ab9') }} </el-button>
+      <el-button type="primary" @click="saveAction"> {{ $t('5dd655cd.aa7527') }} </el-button>
     </div>
   </el-dialog>
 </template>

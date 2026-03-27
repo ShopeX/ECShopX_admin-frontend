@@ -8,26 +8,26 @@
     <div class="page-body">
       <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
         <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-          <SpFilterFormItem prop="activity_name" label="活动名称:">
-            <el-input v-model="params.activity_name" placeholder="请输入活动名称" />
+          <SpFilterFormItem prop="activity_name" :label="$t('7fa20317.1cadc0')">
+            <el-input v-model="params.activity_name" :placeholder="$t('7fa20317.7528b3')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="create_time" label="时间:" size="max">
+          <SpFilterFormItem prop="create_time" :label="$t('7fa20317.374856')" size="max">
             <el-date-picker
               v-model="params.create_time"
               clearable
               type="datetimerange"
               align="right"
               format="yyyy-MM-dd HH:mm:ss"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :range-separator="$t('7fa20317.981cbe')"
+              :start-placeholder="$t('7fa20317.b44c0f')"
+              :end-placeholder="$t('7fa20317.1d468b')"
               prefix-icon="null"
               :default-time="defaultTime"
               :picker-options="pickerOptions"
             />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="is_success" label="仅成团订单:">
-            <el-select v-model="params.is_success" clearable placeholder="请选择">
+          <SpFilterFormItem prop="is_success" :label="$t('7fa20317.d2452d')">
+            <el-select v-model="params.is_success" clearable :placeholder="$t('7fa20317.708c9d')">
               <el-option
                 v-for="item in processArr"
                 :key="item.value"
@@ -41,7 +41,7 @@
 
         <div class="action-container">
           <el-button type="primary" plain icon="el-plus-circle" @click="exportCommunityOrder">
-            导出活动销售数据
+            {{ $t('7fa20317.2b8052') }}
           </el-button>
         </div>
 
@@ -58,16 +58,16 @@
             :data="tableList"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column type="selection" align="center" label="全选" />
+            <el-table-column type="selection" align="center" :label="$t('7fa20317.66eeac')" />
             <el-table-column width="100" prop="activity_id" label="ID" />
 
-            <el-table-column width="220" prop="activity_name" label="活动名称" />
-            <el-table-column prop="total_fee" width="120" label="实际收入（¥）">
+            <el-table-column width="220" prop="activity_name" :label="$t('7fa20317.39834b')" />
+            <el-table-column prop="total_fee" width="120" :label="$t('7fa20317.622d65')">
               <template slot-scope="scope">
                 {{ (scope.row.total_fee / 100).toFixed(2) }}
               </template>
             </el-table-column>
-            <el-table-column prop="total_fee" min-width="150" label="有效期">
+            <el-table-column prop="total_fee" min-width="150" :label="$t('7fa20317.bb114a')">
               <template slot-scope="scope">
                 <div>{{ scope.row.start_time }}</div>
                 <div>~</div>
@@ -75,11 +75,19 @@
               </template>
             </el-table-column>
 
-            <el-table-column width="220" prop="activity_process_msg" label="状态" />
+            <el-table-column
+              width="220"
+              prop="activity_process_msg"
+              :label="$t('7fa20317.3fea7c')"
+            />
 
-            <el-table-column width="200" prop="activity_delivery_status_msg" label="发货状态" />
+            <el-table-column
+              width="200"
+              prop="activity_delivery_status_msg"
+              :label="$t('7fa20317.c3c7a1')"
+            />
 
-            <el-table-column label="操作" min-width="150">
+            <el-table-column :label="$t('7fa20317.2b6bc0')" min-width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
@@ -90,7 +98,7 @@
                     type="text"
                     @click="send(scope.row)"
                   >
-                    发货
+                    {{ $t('7fa20317.045315') }}
                   </el-button>
                 </div>
               </template>
@@ -122,6 +130,7 @@ import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/u
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import moment from 'moment'
 import { DISTRIBUTION_TYPE, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
+import { i18n } from '@/i18n'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -137,32 +146,14 @@ export default {
       },
       activity_id: [],
       activity_status: [
-        {
-          title: '全部',
-          value: ''
-        },
-        {
-          title: '未开始',
-          value: 'waiting'
-        },
-        {
-          title: '进行中',
-          value: 'ongoing'
-        },
-        {
-          title: '已结束',
-          value: 'end'
-        }
+        { title: i18n.t('7fa20317.a8b0c2'), value: '' },
+        { title: i18n.t('7fa20317.dd4e55'), value: 'waiting' },
+        { title: i18n.t('7fa20317.fb852f'), value: 'ongoing' },
+        { title: i18n.t('7fa20317.047fab'), value: 'end' }
       ],
       processArr: [
-        {
-          title: '是',
-          value: 1
-        },
-        {
-          title: '否',
-          value: 0
-        }
+        { title: i18n.t('7fa20317.0a60ac'), value: 1 },
+        { title: i18n.t('7fa20317.c9744f'), value: 0 }
       ],
       pickerOptions: PICKER_DATE_OPTIONS,
       exportData: {},
@@ -216,7 +207,7 @@ export default {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
-              message: '已加入执行队列，请在设置-导出列表中下载'
+              message: this.$t('7fa20317.3e1ddd')
             })
             this.$export_open('normal_community_order')
             return
@@ -227,7 +218,7 @@ export default {
           } else {
             this.$message({
               type: 'error',
-              message: '无内容可导出 或 执行失败，请检查重试'
+              message: this.$t('7fa20317.89ae53')
             })
             return
           }
@@ -237,7 +228,7 @@ export default {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
-              message: '已加入执行队列，请在设置-导出列表中下载'
+              message: this.$t('7fa20317.3e1ddd')
             })
             this.$export_open('normal_community_order')
             return
@@ -248,7 +239,7 @@ export default {
           } else {
             this.$message({
               type: 'error',
-              message: '无内容可导出 或 执行失败，请检查重试'
+              message: this.$t('7fa20317.89ae53')
             })
             return
           }
@@ -280,17 +271,16 @@ export default {
     },
 
     send(row) {
-      var msg = '此操作发货, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('7fa20317.d56ebc'), this.$t('7fa20317.02d981'), {
+        cancelButtonText: this.$t('7fa20317.625fb2'),
+        confirmButtonText: this.$t('7fa20317.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             communityDeliver({ activity_id: row.activity_id }).then((response) => {
               this.fetchList()
               this.$message({
-                message: '发货成功',
+                message: this.$t('7fa20317.2c8dba'),
                 type: 'success',
                 duration: 5 * 1000
               })

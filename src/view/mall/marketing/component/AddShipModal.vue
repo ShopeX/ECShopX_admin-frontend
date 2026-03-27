@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="通知消息"
+    :title="$t('9c4b2ce5.59a702')"
     :visible.sync="visible"
     width="30%"
     :close-on-click-modal="false"
@@ -21,20 +21,28 @@
       :rules="rules"
       ref="form"
     >
-      <el-form-item :label="info.mer_name + '分账占比'" prop="headquarters_proportion">
+      <el-form-item :label="info.mer_name + $t('9c4b2ce5.3ab164')" prop="headquarters_proportion">
         <el-input v-model="form.headquarters_proportion" style="width: 70%">
           <i slot="suffix">%</i>
         </el-input>
       </el-form-item>
-      <el-form-item :label="info.username + '分账占比'" prop="dealer_proportion">
+      <el-form-item :label="info.username + $t('9c4b2ce5.3ab164')" prop="dealer_proportion">
         <el-input v-model="form.dealer_proportion" style="width: 70%">
           <i slot="suffix">%</i>
         </el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" size="small" @click="handleDialogChange">确 定</el-button>
-      <el-button type="primary" size="small" plain @click="handleDialogClose">取 消</el-button>
+      <el-button type="primary" size="small" @click="handleDialogChange">
+{{
+        $t('9c4b2ce5.aa7527')
+      }}
+</el-button>
+      <el-button type="primary" size="small" plain @click="handleDialogClose">
+{{
+        $t('9c4b2ce5.c08ab9')
+      }}
+</el-button>
     </div>
   </el-dialog>
 </template>
@@ -84,7 +92,7 @@ export default {
         this.$emit('handleClick', false)
         // 跳转到列表页
         this.$message({
-          message: '操作成功',
+          message: this.$t('9c4b2ce5.33130f'),
           type: 'success'
         })
       })
@@ -99,14 +107,14 @@ export default {
       let sum = Number(headquarters_proportion) + Number(dealer_proportion)
       const reg = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!value) {
-        callback(new Error('请输入'))
+        callback(new Error(this.$t('9c4b2ce5.02cc4f')))
       } else {
         if (!reg.test(value)) {
-          callback(new Error('请输入正确格式，最多保留两位小数'))
+          callback(new Error(this.$t('9c4b2ce5.cc1ce5')))
         } else if (Number(value) > 100) {
-          callback(new Error('分账比例不能超过100'))
+          callback(new Error(this.$t('9c4b2ce5.d19795')))
         } else if (headquarters_proportion && dealer_proportion && sum > 100) {
-          callback(new Error('请输入正确分账占比'))
+          callback(new Error(this.$t('9c4b2ce5.91f96d')))
         } else {
           callback()
         }

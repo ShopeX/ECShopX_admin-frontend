@@ -8,13 +8,13 @@
     <div style="margin-bottom: 15px">
       <div>
         <el-button icon="el-icon-plus" type="primary" @click="handleCreate">
-          添加门店角色
+          {{ $t('bedd692a.ff62dd') }}
         </el-button>
       </div>
       <!-- 数据表格 -->
       <el-table v-loading="tableLoading" :data="list" style="width: 100%">
-        <el-table-column prop="role_name" label="角色" width="200px" />
-        <el-table-column prop="rule_ids" label="角色权限">
+        <el-table-column prop="role_name" :label="$t('bedd692a.464f3d')" width="200px" />
+        <el-table-column prop="rule_ids" :label="$t('bedd692a.86a1be')">
           <template slot-scope="scope">
             <div v-if="scope.row.rule_ids">
               <span v-for="(item, index) in scope.row.rule_ids" :key="index">
@@ -23,7 +23,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column :label="$t('bedd692a.2b6bc0')" width="200px">
           <template slot-scope="scope">
             <el-button circle type="primary" icon="el-icon-edit" @click="handleUpdate(scope.row)" />
             <el-button
@@ -55,10 +55,10 @@
         width="45%"
       >
         <el-form ref="dataForm" :model="data" label-width="100px">
-          <el-form-item label="角色名称">
+          <el-form-item :label="$t('bedd692a.10a6f1')">
             <el-input v-model="data.role_name" placeholder />
           </el-form-item>
-          <el-form-item label="权限">
+          <el-form-item :label="$t('bedd692a.ba6e91')">
             <el-checkbox-group v-model="data.rule_ids">
               <el-checkbox v-for="(item, index) in roleList" :key="index" :label="item.key">
                 {{ item.name }}
@@ -67,13 +67,13 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button v-if="operate == 'create'" type="primary" @click="createDistributorRole"
-            >确 定</el-button
-          >
-          <el-button v-if="operate == 'update'" type="primary" @click="updateDistributorRole"
-            >确 定</el-button
-          >
+          <el-button @click="handleClose">{{ $t('bedd692a.c08ab9') }}</el-button>
+          <el-button v-if="operate == 'create'" type="primary" @click="createDistributorRole">{{
+            $t('bedd692a.aa7527')
+          }}</el-button>
+          <el-button v-if="operate == 'update'" type="primary" @click="updateDistributorRole">{{
+            $t('bedd692a.aa7527')
+          }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -106,7 +106,7 @@ export default {
         role_name: '',
         rule_ids: []
       },
-      dialogTitle: '添加门店角色',
+      dialogTitle: '',
       operate: 'update'
     }
   },
@@ -121,6 +121,7 @@ export default {
     handleCreate() {
       this.dialogVisible = true
       this.operate = 'create'
+      this.dialogTitle = this.$t('bedd692a.ff62dd')
     },
     handleUpdate(row) {
       this.dialogVisible = true
@@ -128,12 +129,12 @@ export default {
       this.data.rule_ids = row.rule_ids
       this.data.role_name = row.role_name
       this.data = Object.assign({}, row)
-      this.dialogTitle = '修改门店角色'
+      this.dialogTitle = this.$t('bedd692a.8d7970')
     },
     handleDelete(row) {
-      this.$confirm('此操作将永久删除该店铺发票信息, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('bedd692a.edc438'), this.$t('60e84c78.02d981'), {
+        confirmButtonText: this.$t('bedd692a.aa7527'),
+        cancelButtonText: this.$t('bedd692a.c08ab9'),
         type: 'warning'
       })
         .then(() => {
@@ -141,12 +142,12 @@ export default {
             if (response.data.data.status) {
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: this.$t('bedd692a.fc9bdd')
               })
             } else {
               this.$message({
                 type: 'error',
-                message: '删除失败!'
+                message: this.$t('bedd692a.9cf7a3')
               })
             }
             this.getDistributorRoleList()
@@ -155,7 +156,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('bedd692a.c34281')
           })
         })
     },
@@ -172,12 +173,12 @@ export default {
       createRole(this.data).then((response) => {
         if (response.data.data.salesman_role_id) {
           this.$message({
-            message: '添加成功',
+            message: this.$t('bedd692a.3fdaea'),
             type: 'success'
           })
         } else {
           this.$message({
-            message: '添加失败',
+            message: this.$t('bedd692a.6452a0'),
             type: 'error'
           })
         }
@@ -189,12 +190,12 @@ export default {
       updateRole(this.data.salesman_role_id, this.data).then((response) => {
         if (response.data.data.salesman_role_id) {
           this.$message({
-            message: '修改成功',
+            message: this.$t('bedd692a.69be67'),
             type: 'success'
           })
         } else {
           this.$message({
-            message: '修改失败',
+            message: this.$t('bedd692a.5badb3'),
             type: 'error'
           })
         }

@@ -22,7 +22,11 @@
             label-width="100px"
           />
           <div class="section-footer with-border content-center">
-            <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+            <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+              $t('3f24b454.be5fbb')
+            }}
+</el-button>
           </div>
         </div>
 
@@ -36,7 +40,11 @@
             label-width="100px"
           />
           <div class="section-footer with-border content-center">
-            <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+            <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+              $t('3f24b454.be5fbb')
+            }}
+</el-button>
           </div>
         </div>
 
@@ -50,7 +58,11 @@
             label-width="100px"
           />
           <div class="section-footer with-border content-center">
-            <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+            <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+              $t('3f24b454.be5fbb')
+            }}
+</el-button>
           </div>
         </div>
       </el-tab-pane>
@@ -93,13 +105,19 @@ export default {
           checkword: '',
           is_open: false
         }
-      },
-      tabList: [
-        { name: '快递鸟', activeName: 'kdniao' },
-        { name: '快递100', activeName: 'kuaidi100' },
-        { name: '顺丰BSP', activeName: 'sfbsp' }
-      ],
-      kdniaoFormItems: [
+      }
+    }
+  },
+  computed: {
+    tabList() {
+      return [
+        { name: this.$t('3f24b454.0c00a8'), activeName: 'kdniao' },
+        { name: this.$t('3f24b454.c653e7'), activeName: 'kuaidi100' },
+        { name: this.$t('3f24b454.eda877'), activeName: 'sfbsp' }
+      ]
+    },
+    kdniaoFormItems() {
+      return [
         {
           fieldName: 'EBusinessID',
           label: 'EBusinessID',
@@ -118,19 +136,19 @@ export default {
         },
         {
           fieldName: 'request_type',
-          label: '扣量方式选择',
+          label: this.$t('3f24b454.7e5c88'),
           component: 'radio',
           componentProps: {
             options: [
-              { label: '免费版', value: '1002' },
-              { label: '增值版（按单）', value: '8001' },
-              { label: '增值版（按次）', value: '8002' }
+              { label: this.$t('3f24b454.0357cd'), value: '1002' },
+              { label: this.$t('3f24b454.22e0d3'), value: '8001' },
+              { label: this.$t('3f24b454.348d08'), value: '8002' }
             ]
           }
         },
         {
           fieldName: 'is_open',
-          label: '是否启用',
+          label: this.$t('3f24b454.53c3dd'),
           component: 'switch',
           componentProps: {
             activeColor: '#13ce66',
@@ -139,7 +157,7 @@ export default {
         },
         {
           fieldName: 'description',
-          label: '功能说明',
+          label: this.$t('3f24b454.104456'),
           component: (context) => {
             const { h } = context
             return h(
@@ -152,12 +170,14 @@ export default {
                   target: '_blank'
                 }
               },
-              '快递鸟快递物流跟踪'
+              this.$t('3f24b454.495f1e')
             )
           }
         }
-      ],
-      kuaidi100FormItems: [
+      ]
+    },
+    kuaidi100FormItems() {
+      return [
         {
           fieldName: 'app_key',
           label: 'Key',
@@ -176,7 +196,7 @@ export default {
         },
         {
           fieldName: 'is_open',
-          label: '是否启用',
+          label: this.$t('3f24b454.53c3dd'),
           component: 'switch',
           componentProps: {
             activeColor: '#13ce66',
@@ -185,7 +205,7 @@ export default {
         },
         {
           fieldName: 'description',
-          label: '功能说明',
+          label: this.$t('3f24b454.104456'),
           component: (context) => {
             const { h } = context
             return h(
@@ -198,15 +218,17 @@ export default {
                   target: '_blank'
                 }
               },
-              '快递100实时快递查询'
+              this.$t('3f24b454.65b40f')
             )
           }
         }
-      ],
-      sfbspFormItems: [
+      ]
+    },
+    sfbspFormItems() {
+      return [
         {
           fieldName: 'url',
-          label: '接入地址',
+          label: this.$t('3f24b454.f682f8'),
           component: 'input',
           componentProps: {
             style: { width: '300px' }
@@ -214,7 +236,7 @@ export default {
         },
         {
           fieldName: 'accesscode',
-          label: '接入编码',
+          label: this.$t('3f24b454.1312b0'),
           component: 'input',
           componentProps: {
             style: { width: '300px' }
@@ -230,7 +252,7 @@ export default {
         },
         {
           fieldName: 'is_open',
-          label: '是否启用',
+          label: this.$t('3f24b454.53c3dd'),
           component: 'switch',
           componentProps: {
             activeColor: '#13ce66',
@@ -291,7 +313,7 @@ export default {
 
       api(query)
         .then(() => {
-          this.$message({ type: 'success', message: '保存成功' })
+          this.$message({ type: 'success', message: this.$t('3f24b454.3b1083') })
         })
         .finally(() => {
           this.loading = false

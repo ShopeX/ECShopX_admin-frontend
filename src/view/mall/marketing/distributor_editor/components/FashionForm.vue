@@ -6,23 +6,23 @@
 <template>
   <el-card v-if="isOpen">
     <div slot="header">
-      <div>分账</div>
+      <div>{{ $t('146ac763.98818a') }}</div>
     </div>
     <el-row>
       <el-col :span="8">
-        <el-form-item label="是否分账">
+        <el-form-item :label="$t('146ac763.9b712b')">
           <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
-        <el-form-item label="平台服务费">
+        <el-form-item :label="$t('146ac763.0b9237')">
           <el-input v-model="form.rate" />
         </el-form-item>
       </el-col>
       <el-col :span="16" class="flex">
-        <div>% 平台向商户收取的服务费率(0.00 ~ 30.00)</div>
+        <div>{{ $t('146ac763.f00f97') }}</div>
       </el-col>
     </el-row>
   </el-card>

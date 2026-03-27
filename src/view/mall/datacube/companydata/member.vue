@@ -26,16 +26,16 @@
       </el-form-item>
     </el-form> -->
     <SpFilterForm :model="params" @onSearch="getCompanyDataList(activeName)" @onReset="onReset">
-      <SpFilterFormItem prop="vdate" label="选择日期:">
+      <SpFilterFormItem prop="vdate" :label="$t('6bed2575.12bf61')">
         <el-date-picker
           v-model="params.vdate"
           type="daterange"
           alue-format="yyyy-MM-dd"
           align="right"
           unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('6bed2575.981cbe')"
+          :start-placeholder="$t('6bed2575.b44c0f')"
+          :end-placeholder="$t('6bed2575.1d468b')"
           style="width: 100%"
           :picker-options="pickerOptions"
           value-format="yyyy-MM-dd"
@@ -50,7 +50,7 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="会员数" name="member_count">
+      <el-tab-pane :label="$t('6bed2575.e3c2e0')" name="member_count">
         <section>
           <canvas id="member_count" height="120" />
         </section>
@@ -58,8 +58,8 @@
     </el-tabs>
     <template>
       <el-table :data="allListData" stripe border style="width: 100%">
-        <el-table-column prop="count_date" label="日期" fixed />
-        <el-table-column prop="member_count" label="会员数" />
+        <el-table-column prop="count_date" :label="$t('6bed2575.4ff1e7')" fixed />
+        <el-table-column prop="member_count" :label="$t('6bed2575.e3c2e0')" />
       </el-table>
     </template>
   </SpPage>
@@ -68,6 +68,7 @@
 import { mapGetters } from 'vuex'
 import chart from 'chart.js'
 import { getCompanyData } from '../../../../api/datacube'
+import { i18n } from '@/i18n'
 export default {
   data() {
     return {
@@ -82,7 +83,7 @@ export default {
       dataTimeArr: [],
       dataInfo: {
         member_count: {
-          label: '会员数',
+          label: i18n.t('6bed2575.e3c2e0'),
           data_list: [],
           total_num: 0
         }
@@ -99,7 +100,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: i18n.t('6bed2575.56ee10'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -109,7 +110,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: i18n.t('6bed2575.335dfc'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -119,7 +120,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('6bed2575.d96eb4'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -182,7 +183,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取统计信息出错'
+            message: this.$t('6bed2575.5b0398')
           })
         })
     },
@@ -205,7 +206,7 @@ export default {
           responsive: true,
           title: {
             display: true,
-            text: '合计(' + this.dataInfo[pane_name].total_num + ')'
+            text: this.$t('6bed2575.2ab764') + this.dataInfo[pane_name].total_num + ')'
           },
           tooltips: {
             mode: 'index',

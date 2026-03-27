@@ -136,9 +136,9 @@ export default {
           props: {
             value: this.dateRange,
             type: 'datetimerange',
-            rangeSeparator: '至',
-            startPlaceholder: '开始日期',
-            endPlaceholder: '结束日期',
+            rangeSeparator: this.$t('bb4b0675.981cbe'),
+            startPlaceholder: this.$t('bb4b0675.b44c0f'),
+            endPlaceholder: this.$t('bb4b0675.1d468b'),
             format: 'yyyy-MM-dd HH:mm:ss',
             valueFormat: 'timestamp',
             clearable: true,
@@ -159,7 +159,7 @@ export default {
     },
     // 渲染数字范围输入框
     renderNumberRange() {
-      const unit = (this.item && this.item.unit) || '元'
+      const unit = (this.item && this.item.unit) || this.$t('bb4b0675.c16655')
       return h('div', { class: 'flex items-center' }, [
         h('el-input-number', {
           props: {
@@ -176,7 +176,7 @@ export default {
           }
         }),
         h('span', { class: 'mx-2' }, unit),
-        h('span', { class: 'mx-2' }, '至'),
+        h('span', { class: 'mx-2' }, this.$t('bb4b0675.981cbe')),
         h('el-input-number', {
           props: {
             value: this.maxValue,
@@ -209,10 +209,10 @@ export default {
               click: this.selectGoods
             }
           },
-          '选择商品'
+          this.$t('bb4b0675.43d1e2')
         ),
         this.selectedGoods.length > 0
-          ? h('span', { class: 'ml-2.5' }, `已选择${this.selectedGoods.length}件商品`)
+          ? h('span', { class: 'ml-2.5' }, this.$t('bb4b0675.14699a', [this.selectedGoods.length]))
           : null
       ])
     },

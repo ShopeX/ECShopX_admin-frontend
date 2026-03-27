@@ -20,31 +20,35 @@
         <el-input
           v-model="params.keywords"
           class="input-b"
-          placeholder="国家名称"
+          :placeholder="$t('27a4c620.46c890')"
           @change="origincountrySearch"
         >
           <el-button slot="append" icon="el-icon-search" @click="origincountrySearch" />
         </el-input>
         <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-          新增国家
+          {{ $t('27a4c620.58ea46') }}
         </el-button>
       </el-col>
     </el-row>
 
     <el-card>
-      <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
-        <el-table-column label="操作" width="150">
+      <el-table v-loading="loading" :data="list" :element-loading-text="$t('27a4c620.f09b12')">
+        <el-table-column :label="$t('27a4c620.2b6bc0')" width="150">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)">
+              {{ $t('27a4c620.95b351') }}
+            </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              {{ $t('27a4c620.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="国家" width="150">
+        <el-table-column prop="attribute_name" :label="$t('27a4c620.ee3f55')" width="150">
           <template slot-scope="scope">
             <div>{{ scope.row.origincountry_name }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="国旗">
+        <el-table-column :label="$t('27a4c620.9f6d3a')">
           <template slot-scope="scope">
             <el-image
               style="width: 40px; height: 40px"
@@ -77,24 +81,24 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <sideBar :visible.sync="show_sideBar" :title="'新增产地国家'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('27a4c620.95678a')">
       <el-form>
-        <el-form-item label="国家名称">
+        <el-form-item :label="$t('27a4c620.46c890')">
           <el-input v-model="form.origincountry_name" maxlength="20" />
         </el-form-item>
-        <el-form-item label="国旗">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
+        <el-form-item :label="$t('27a4c620.9f6d3a')">
+          <div class="frm-tips">{{ $t('27a4c620.876be1') }}</div>
           <div class="upload-box" @click="handleImgPicker">
             <img
               v-if="form.origincountry_img_url"
               :src="form.origincountry_img_url"
               class="avatar"
-            />
+            >
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="save"> 提交 </el-button>
+          <el-button type="primary" @click="save"> {{ $t('27a4c620.939d53') }} </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -164,11 +168,11 @@ export default {
     },
     // 删除
     handleDelete(data) {
-      this.$confirm('确认删除该国家么？')
+      this.$confirm(this.$t('27a4c620.105f08'))
         .then((_) => {
           delOrigincountry(data.row.origincountry_id, []).then((res) => {
             this.list.splice(data.$index, 1)
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('27a4c620.33130f') })
           })
         })
         .catch((_) => {})
@@ -189,19 +193,19 @@ export default {
     // 保存数据
     save() {
       if (!this.form.origincountry_name) {
-        this.$message({ type: 'error', message: '请填写国家名称' })
+        this.$message({ type: 'error', message: this.$t('27a4c620.f9836f') })
       }
 
       if (!this.form.origincountry_id) {
         addOrigincountry(this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('27a4c620.33130f') })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
         updateOrigincountry(this.form.origincountry_id, this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('27a4c620.33130f') })
           this.getList()
         })
       }

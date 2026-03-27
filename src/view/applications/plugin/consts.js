@@ -4,51 +4,51 @@
  */
 export const APPLICATION_LIST = [
   {
-    title: 'Adapay分账',
+    title: 'eb6cf69a.f4f827',
     key: 'adapay',
-    desc: '商派 ECShopX 集成汇付分账，作为合规、安全、灵活的聚合支付解决方案，通过多级账户管理、聚合支付、高效结算等多维度助力电商实现平台化、数字化。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.666db7',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '积分商城',
+    title: 'eb6cf69a.a13364',
     key: 'point',
-    desc: '积分商城是一个通过让用户兑换商品，提升积分价值的营销工具，帮助商户增强用户粘性，让客户保持活跃，促进用户下单，提高转化及复购。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.73d241',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '内购商城',
+    title: 'eb6cf69a.4e3d12',
     key: 'neigou',
-    desc: '品牌商家与企业进行合作，为企业提供商品的内部购买优惠福利。通过企业员工裂变亲友新客，提升下单转化效率，实现资金快速流转。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.f4274d',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '导购',
+    title: 'eb6cf69a.c60b43',
     key: 'yingxiao',
-    desc: '基于企业微信的营销工具，帮助品牌建立1对1的服务关系，可视化客户画，标准化的生命周期沟通，精准的产品推荐，提升工作效率和销售转化率。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.b8ab5b',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '高性能秒杀',
+    title: 'eb6cf69a.e56480',
     key: 'miaosha',
-    desc: '促进客户购买品牌商品而开展的营销活动，通过商品低价让利与限时限量的稀缺效应，吸引客户抢购秒杀品，同时有机会对这部分客户进行转化，在品牌下产生更多消费。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.f8ca6a',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '银联商务分账',
+    title: 'eb6cf69a.a31ca3',
     key: 'yinlian',
-    desc: '针对银联直联商户接入的银联支付产品，为每笔支付交易提供本金和手续费的分账，交易资金直接结算至分账对象的账户。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.cddf91',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '移动收银',
+    title: 'eb6cf69a.fa7f2e',
     key: 'yidongshouyin',
-    desc: '面向轻库存管理类型的线下门店连锁客户，减少门店硬软件投入成本，并提升门店移动作业的便捷性，并实现线上线下门店一体化。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.44d767',
+    button: 'eb6cf69a.aaa445'
   },
   {
-    title: '供应商管理',
+    title: 'eb6cf69a.c791ee',
     key: 'supplier',
-    desc: '通过供应链整合(S)，提供海量货源给到平台，赋能渠道（门店），结合互联网技术，打造全新的S2B2C平台。',
-    button: '订购咨询'
+    desc: 'eb6cf69a.b533ca',
+    button: 'eb6cf69a.aaa445'
   }
 ]

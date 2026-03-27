@@ -8,7 +8,7 @@
     <div class="zyk_withdraw_audit">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>提现审核</span>
+          <span>{{ $t('38eed5f9.91287f') }}</span>
         </div>
         <div class="content">
           <div class="toolbar">
@@ -18,7 +18,7 @@
               @click="handleExport"
               :loading="exportLoading"
             >
-              导出数据
+              {{ $t('38eed5f9.c7f0d5') }}
             </el-button>
           </div>
           <div class="list">
@@ -75,22 +75,28 @@ export default {
     async handleAudit(row, action) {
       try {
         // 弹出确认对话框
-        const confirmText = action === 'approve' ? '确认通过此提现申请？' : '确认拒绝此提现申请？'
-        const actionText = action === 'approve' ? '通过' : '拒绝'
+        const confirmText =
+          action === 'approve' ? this.$t('38eed5f9.0a5f82') : this.$t('38eed5f9.edc5c6')
+        const actionText =
+          action === 'approve' ? this.$t('38eed5f9.23c1f3') : this.$t('38eed5f9.7173f8')
 
-        await this.$confirm(confirmText, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        await this.$confirm(confirmText, this.$t('38eed5f9.02d981'), {
+          confirmButtonText: this.$t('38eed5f9.38cf16'),
+          cancelButtonText: this.$t('38eed5f9.625fb2'),
           type: action === 'approve' ? 'success' : 'warning'
         })
 
         // 弹出备注输入框
-        const { value: remark } = await this.$prompt('请输入审核备注', '审核备注', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPattern: /.+/,
-          inputErrorMessage: '备注不能为空'
-        })
+        const { value: remark } = await this.$prompt(
+          this.$t('38eed5f9.8044cf'),
+          this.$t('38eed5f9.200d69'),
+          {
+            confirmButtonText: this.$t('38eed5f9.38cf16'),
+            cancelButtonText: this.$t('38eed5f9.625fb2'),
+            inputPattern: /.+/,
+            inputErrorMessage: this.$t('38eed5f9.aa94a1')
+          }
+        )
 
         // 调用审核接口
         const params = {
@@ -102,16 +108,16 @@ export default {
         const result = await this.$api.bspay.withdrawAudit(params)
 
         if (result.status) {
-          this.$message.success(`${actionText}成功`)
+          this.$message.success(actionText + this.$t('38eed5f9.330363'))
           // 刷新列表
           this.$refs.finder.refresh(true)
         } else {
-          this.$message.error(`${actionText}失败`)
+          this.$message.error(actionText + this.$t('38eed5f9.acd5cb'))
         }
       } catch (error) {
         if (error !== 'cancel') {
-          console.error('审核失败:', error)
-          this.$message.error('审核失败')
+          console.error('Audit failed:', error)
+          this.$message.error(this.$t('38eed5f9.fe3661'))
         }
       }
     },
@@ -131,20 +137,23 @@ export default {
         if (response.status) {
           // 如果返回了文件URL，直接下载
           if (response.data && response.data.file_url) {
-            this.downloadFile(response.data.file_url, response.data.file_name || '提现数据.xlsx')
-            this.$message.success('导出成功')
+            this.downloadFile(
+              response.data.file_url,
+              response.data.file_name || this.$t('38eed5f9.97b6c4')
+            )
+            this.$message.success(this.$t('38eed5f9.105c8a'))
           } else {
             // 否则提示用户去导出列表下载
-            this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+            this.$message.success(this.$t('38eed5f9.3e1ddd'))
             // 打开导出列表弹窗
             this.$export_open('bspay_withdraw')
           }
         } else {
-          this.$message.error(response.message || '导出失败')
+          this.$message.error(response.message || this.$t('38eed5f9.dd51ab'))
         }
       } catch (error) {
-        console.error('导出失败:', error)
-        this.$message.error('导出失败')
+        console.error('Export failed:', error)
+        this.$message.error(this.$t('38eed5f9.dd51ab'))
       } finally {
         this.exportLoading = false
       }

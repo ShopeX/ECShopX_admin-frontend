@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'setting',
       icon: 'setting-config',
       keepAlive: true,
-      title: '设置'
+      title: 'ece0a36b.e366cc'
     },
     name: 'merchantSetting',
     path: '/merchant/setting',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'Merchantstaff',
           icon: 'icon-staff',
-          title: '店铺管理员',
+          title: 'ece0a36b.3282f2',
           permissions: ['setting.Merchantstaff']
         }
       },
@@ -34,7 +34,7 @@ const routes = [
         meta: {
           aliasName: 'merchant_setting_staff_selfdeliverystaff',
           icon: 'icon-delivery',
-          title: '商户配送员',
+          title: 'ece0a36b.c37f09',
           permissions: ['setting.merchant_setting_staff_selfdeliverystaff']
         }
       },
@@ -45,7 +45,7 @@ const routes = [
         meta: {
           aliasName: 'account',
           icon: 'icon-account',
-          title: '账号管理',
+          title: 'ece0a36b.b829fe',
           permissions: ['setting.account']
         }
       },
@@ -57,7 +57,7 @@ const routes = [
         meta: {
           aliasName: 'datapassapply',
           icon: 'icon-apply',
-          title: '权限审批',
+          title: 'ece0a36b.54d3e9',
           permissions: ['setting.datapassapply']
         },
         children: [
@@ -65,7 +65,7 @@ const routes = [
             path: 'approve/:id?',
             component: () => import('@/views/settings/systemConfig/authorityapproval/approve'),
             meta: {
-              title: '审批详情',
+              title: 'ece0a36b.dad44e',
               hidden: true
             }
           }
@@ -78,7 +78,7 @@ const routes = [
         meta: {
           aliasName: 'baseexport',
           icon: 'icon-export',
-          title: '导出列表',
+          title: 'ece0a36b.d12fb1',
           permissions: ['setting.baseexport']
         }
       },
@@ -89,7 +89,7 @@ const routes = [
         meta: {
           aliasName: 'operatorlogs',
           icon: 'icon-log',
-          title: '操作日志',
+          title: 'ece0a36b.cda84b',
           permissions: ['setting.operatorlogs']
         }
       },
@@ -102,7 +102,7 @@ const routes = [
         meta: {
           aliasName: 'datapassapprove',
           icon: 'icon-approve',
-          title: '权限申请',
+          title: 'ece0a36b.74236b',
           permissions: ['setting.datapassapprove']
         }
       }

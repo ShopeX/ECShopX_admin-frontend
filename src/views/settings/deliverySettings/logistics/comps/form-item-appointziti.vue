@@ -25,7 +25,7 @@
   <div class="fi-connect-appointziti">
     <el-time-select
       v-model="data"
-      placeholder="预约时间"
+      :placeholder="$t('23e3017b.652e09')"
       :picker-options="{
         start: '00:00',
         step: '00:30',
@@ -33,7 +33,7 @@
       }"
       @change="onChange"
     />
-    <span>前下单，可预约当天自提</span>
+    <span>{{ $t('23e3017b.0d4bc4') }}</span>
   </div>
 </template>
 
@@ -76,10 +76,10 @@ export default {
       this.isErrorKey = ''
       if (areaNo && !phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入固定电话')
+        throw new Error(this.$t('23e3017b.b75945'))
       } else if (!phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入联系电话')
+        throw new Error(this.$t('23e3017b.7b540b'))
       }
     }
   }

@@ -5,53 +5,49 @@
 
 <template>
   <el-form ref="form" :model="form" class="box-set page-memberpreference" label-width="120px">
-    <el-card header="基础信息" shadow="naver">
-      <el-form-item
-        label="名称"
-        prop="marketing_name"
-        :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
-      >
+    <el-card :header="$t('89f4b371.6ea1fe')" shadow="naver">
+      <el-form-item :label="$t('89f4b371.d7ec2d')" prop="marketing_name" :rules="nameRules">
         <el-col :span="20">
           <el-input
             v-model="form.marketing_name"
             :disabled="form.status == 'waiting' ? false : true"
             :maxlength="30"
-            placeholder="最多30个字"
+            :placeholder="$t('89f4b371.017ce7')"
           />
         </el-col>
       </el-form-item>
-      <el-form-item label="适用会员">
+      <el-form-item :label="$t('89f4b371.6dbb6f')">
         <el-checkbox-group v-model="validGrade" :disabled="form.status == 'waiting' ? false : true">
           <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
             {{ grade.grade_name }}
           </el-checkbox>
           <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type">
-            付费{{ vipdata.grade_name }}
+            {{ $t('89f4b371.310f84') }}{{ vipdata.grade_name }}
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="有效期">
+      <el-form-item :label="$t('89f4b371.bb114a')">
         <el-col :span="20">
           <el-date-picker
             v-model="activity_date"
             :disabled="form.status == 'waiting' ? false : true"
             type="datetimerange"
-            range-separator="至"
-            start-placeholder="生效时间"
-            end-placeholder="过期时间"
+            :range-separator="$t('89f4b371.981cbe')"
+            :start-placeholder="$t('89f4b371.fc92e9')"
+            :end-placeholder="$t('89f4b371.1fa23f')"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
           />
         </el-col>
       </el-form-item>
     </el-card>
-    <el-card header="选择商品" shadow="naver">
-      <el-form-item label="适用商品">
+    <el-card :header="$t('89f4b371.43d1e2')" shadow="naver">
+      <el-form-item :label="$t('89f4b371.409ea3')">
         <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
-          <el-radio label="goods"> 指定商品适用 </el-radio>
-          <el-radio label="category"> 指定分类适用 </el-radio>
-          <el-radio label="tag"> 指定商品标签适用 </el-radio>
-          <el-radio label="brand"> 指定品牌适用 </el-radio>
+          <el-radio label="goods"> {{ $t('89f4b371.1e0568') }} </el-radio>
+          <el-radio label="category"> {{ $t('89f4b371.4e4c10') }} </el-radio>
+          <el-radio label="tag"> {{ $t('89f4b371.d61cbb') }} </el-radio>
+          <el-radio label="brand"> {{ $t('89f4b371.8f5e18') }} </el-radio>
         </el-radio-group>
       </el-form-item>
       <div v-if="!zdItemHidden" style="position: relative">
@@ -64,9 +60,11 @@
               :auto-upload="false"
               :show-file-list="false"
             >
-              <el-button type="primary"> 批量上传 </el-button>
+              <el-button type="primary"> {{ $t('89f4b371.c3202e') }} </el-button>
             </el-upload>
-            <el-button type="primary" @click="uploadHandleTemplate()"> 下载模板 </el-button>
+            <el-button type="primary" @click="uploadHandleTemplate()">
+              {{ $t('89f4b371.c3f9a1') }}
+            </el-button>
           </template>
         </SkuSelector>
       </div>
@@ -87,7 +85,7 @@
       </el-col>
       <template v-if="!tagHidden">
         <div class="selected-tags view-flex">
-          <div class="label">已选中标签：</div>
+          <div class="label">{{ $t('89f4b371.e98819') }}</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(tag, index) in tag.currentTags"
@@ -117,7 +115,7 @@
       </template>
       <template v-if="!brandHidden">
         <div class="selected-tags view-flex">
-          <div class="label">已选中品牌：</div>
+          <div class="label">{{ $t('89f4b371.f5bf1f') }}</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(brand, index) in brand.currentBrands"
@@ -148,9 +146,9 @@
     </el-card>
     <div class="content-center">
       <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
-        保存
+        {{ $t('89f4b371.be5fbb') }}
       </el-button>
-      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button @click.native="handleCancel"> {{ $t('89f4b371.5f4112') }} </el-button>
     </div>
   </el-form>
 </template>
@@ -261,6 +259,11 @@ export default {
       }
     }
   },
+  computed: {
+    nameRules() {
+      return [{ required: true, message: this.$t('89f4b371.813065'), trigger: 'blur' }]
+    }
+  },
   watch: {
     'form.item_ids': {
       handler: function (val) {
@@ -343,7 +346,7 @@ export default {
         this.form.start_time = this.activity_date[0]
         this.form.end_time = this.activity_date[1]
       } else {
-        this.$message.error('有效期必填!')
+        this.$message.error(this.$t('89f4b371.bddcb9'))
         return
       }
 
@@ -374,7 +377,7 @@ export default {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('89f4b371.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -383,7 +386,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('89f4b371.73b0d9'))
             return false
           }
         })
@@ -392,7 +395,7 @@ export default {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('89f4b371.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -401,7 +404,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('89f4b371.73b0d9'))
             return false
           }
         })
@@ -531,7 +534,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品!'
+          message: this.$t('89f4b371.c5f66d')
         })
       }
     },
@@ -571,7 +574,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('89f4b371.3e5ac0')
         })
         return false
       }
@@ -623,7 +626,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('89f4b371.3e5ac0')
         })
         return false
       }
@@ -774,7 +777,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      let params = { file_type: 'marketing_goods', file_name: this.$t('89f4b371.e07423') }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -787,7 +790,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('89f4b371.bfd8d5')
           })
         }
       })
@@ -800,7 +803,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('89f4b371.a7699b')
         })
 
         let { data } = response.data
@@ -813,7 +816,7 @@ export default {
           setTimeout(() => {
             this.$message({
               showClose: true,
-              message: `以下商品编号不存在：${str}`,
+              message: `${this.$t('89f4b371.ef474d')}${str}`,
               type: 'error',
               duration: 5000
             })

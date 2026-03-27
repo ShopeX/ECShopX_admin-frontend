@@ -6,13 +6,13 @@
 <template>
   <el-dialog
     class="store-dialog"
-    title="选择店铺"
+    :title="$t('1e6dbbf7.afa2e6')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input v-model="name" placeholder="输入店铺名称" clearable>
+      <el-input v-model="name" :placeholder="$t('1e6dbbf7.240fdb')" clearable>
         <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
       <!-- <el-switch v-model="is_distributor" active-text="店铺" inactive-text="门店" @change="handleIconClick"></el-switch> -->
@@ -29,10 +29,18 @@
       @select-all="selectAll"
     >
       <el-table-column type="selection" :reserve-selection="true" width="50" />
-      <el-table-column prop="name" label="名称" />
-      <el-table-column prop="contact" label="联系人" />
+      <el-table-column prop="name" :label="$t('1e6dbbf7.d7ec2d')" />
+      <el-table-column prop="distributor_category_name" :label="$t('1e6dbbf7.2419d0')" />
+      <el-table-column prop="contact" :label="$t('1e6dbbf7.52409d')" />
+      <el-table-column prop="is_valid" :label="$t('1e6dbbf7.3fea7c')">
+        <template slot-scope="scope">
+          <span v-if="scope.row.is_valid === 'true'">{{ $t('1e6dbbf7.7854b5') }}</span>
+          <span v-else-if="scope.row.is_valid === 'false'">{{ $t('1e6dbbf7.710ad0') }}</span>
+          <span v-else-if="scope.row.is_valid === 'delete'">{{ $t('1e6dbbf7.0044f6') }}</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="store_name" label="门店"></el-table-column> -->
-      <el-table-column prop="address" label="地址" show-overflow-tooltip />
+      <el-table-column prop="address" :label="$t('1e6dbbf7.765048')" show-overflow-tooltip />
     </el-table>
     <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
@@ -43,8 +51,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('1e6dbbf7.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('1e6dbbf7.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -124,6 +132,7 @@ export default {
     sourceType(newVal, oldVal) {
       console.log(newVal)
       if (newVal) {
+        // Handle sourceType change if needed
       }
     }
   },

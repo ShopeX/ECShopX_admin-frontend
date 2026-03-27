@@ -11,51 +11,51 @@
     >
       <el-row>
         <el-col>
-          <el-select v-model="params.status" placeholder="请选择">
+          <el-select v-model="params.status" :placeholder="$t('73ceba4e.708c9d')">
             <el-option
               v-for="item in stateOptions"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.labelKey)"
               :value="item.value"
             />
           </el-select>
-          <el-input v-model="params.title" class="input-b" placeholder="请输入任务名称">
+          <el-input v-model="params.title" class="input-b" :placeholder="$t('73ceba4e.64615c')">
             <el-button slot="append" icon="el-icon-search" @click="handelClickSearch" />
           </el-input>
           <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handelClickAdd">
-            新增任务
+            {{ $t('73ceba4e.3c6fb7') }}
           </el-button>
         </el-col>
       </el-row>
       <!-- table -->
       <el-card>
         <el-table v-loading="loadingTable" :data="list" style="width: 100%">
-          <el-table-column prop="task_name" label="任务名称" />
-          <el-table-column prop="created" label="任务时间">
+          <el-table-column prop="task_name" :label="$t('73ceba4e.78caf7')" />
+          <el-table-column prop="created" :label="$t('73ceba4e.b341f9')">
             <template slot-scope="scope">
               {{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}～{{
                 scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss')
               }}
             </template>
           </el-table-column>
-          <el-table-column prop="withdraw" label="任务状态">
+          <el-table-column prop="withdraw" :label="$t('73ceba4e.bc7e74')">
             <template slot-scope="scope">
-              {{ scope.row.status | sendingState }}
+              {{ sendingStateLabel(scope.row.status) }}
             </template>
           </el-table-column>
-          <el-table-column fixed="left" label="操作" width="200">
+          <el-table-column fixed="left" :label="$t('73ceba4e.2b6bc0')" width="200">
             <template slot-scope="scope">
               <el-button
                 type="text"
                 @click="() => $router.push({ path: matchRoutePath('editor/' + scope.row.task_id) })"
               >
-                编辑
+                {{ $t('73ceba4e.95b351') }}
               </el-button>
               <el-button type="text" @click="cancleSalesperosnTaskAction(scope.row)">
-                终止
+                {{ $t('73ceba4e.ff6c6a') }}
               </el-button>
               <el-button type="text" @click="salesperosnTaskStatisticsAction(scope.row)">
-                统计
+                {{ $t('73ceba4e.d7656a') }}
               </el-button>
             </template>
           </el-table-column>
@@ -83,20 +83,6 @@ import { mapGetters } from 'vuex'
 import { getSalesperosnTask, cancleSalesperosnTask } from '@/api/shop'
 
 export default {
-  filters: {
-    sendingState(v) {
-      if (v == 'waiting') {
-        return '未开始'
-      }
-      if (v == 'ongoing') {
-        return '进行中'
-      }
-      if (v == 'end') {
-        return '已结束'
-      }
-      return '已终止'
-    }
-  },
   provide() {
     return {
       refresh: this.refresh
@@ -106,26 +92,11 @@ export default {
     return {
       loadingTable: false,
       stateOptions: [
-        {
-          value: 'all',
-          label: '全部'
-        },
-        {
-          value: 'waiting',
-          label: '未开始'
-        },
-        {
-          value: 'ongoing',
-          label: '进行中'
-        },
-        {
-          value: 'end',
-          label: '已结束'
-        },
-        {
-          value: 'close',
-          label: '已终止'
-        }
+        { value: 'all', labelKey: '73ceba4e.a8b0c2' },
+        { value: 'waiting', labelKey: '73ceba4e.dd4e55' },
+        { value: 'ongoing', labelKey: '73ceba4e.fb852f' },
+        { value: 'end', labelKey: '73ceba4e.047fab' },
+        { value: 'close', labelKey: '73ceba4e.255412' }
       ],
       list: [],
       total_count: 0,
@@ -168,25 +139,31 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor') })
     },
     cancleSalesperosnTaskAction(row) {
-      this.$confirm('此操作将终止该任务, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('73ceba4e.00a590'), this.$t('60e84c78.02d981'), {
+        confirmButtonText: this.$t('73ceba4e.38cf16'),
+        cancelButtonText: this.$t('73ceba4e.625fb2'),
         type: 'warning'
       }).then(() => {
         cancleSalesperosnTask(row.task_id)
           .then((response) => {
             this.$message({
               type: 'success',
-              message: '终止任务成功'
+              message: this.$t('73ceba4e.b06ade')
             })
           })
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '取消终止任务'
+              message: this.$t('73ceba4e.da3938')
             })
           })
       })
+    },
+    sendingStateLabel(v) {
+      if (v === 'waiting') return this.$t('73ceba4e.dd4e55')
+      if (v === 'ongoing') return this.$t('73ceba4e.fb852f')
+      if (v === 'end') return this.$t('73ceba4e.047fab')
+      return this.$t('73ceba4e.255412')
     },
     salesperosnTaskStatisticsAction(row) {
       this.$router.push({

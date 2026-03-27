@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    :title="type != 'show' ? '选择内购企业' : '查看内购企业'"
+    :title="type != 'show' ? $t('ac2a6290.2fcd25') : $t('ac2a6290.60d2a3')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
@@ -13,10 +13,14 @@
     <div style="margin-bottom: 15px">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="distributor_id">
-          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+          <SpSelectShop
+            v-model="params.distributor_id"
+            clearable
+            :placeholder="$t('ac2a6290.708c9d')"
+          />
         </SpFilterFormItem>
         <SpFilterFormItem prop="name">
-          <el-input v-model="params.name" placeholder="请输入企业名称" />
+          <el-input v-model="params.name" :placeholder="$t('ac2a6290.8ded4d')" />
         </SpFilterFormItem>
       </SpFilterForm>
     </div>
@@ -35,14 +39,14 @@
         type="selection"
         width="55"
       />
-      <el-table-column prop="id" label="企业ID" />
-      <el-table-column prop="name" label="企业名称" />
-      <el-table-column v-if="type != 'show'" prop="auth_type" label="登录类型">
+      <el-table-column prop="id" :label="$t('ac2a6290.5a83cb')" />
+      <el-table-column prop="name" :label="$t('ac2a6290.f47e27')" />
+      <el-table-column v-if="type != 'show'" prop="auth_type" :label="$t('ac2a6290.78cbe8')">
         <template slot-scope="scope">
-          <div>{{ VALIDATE_TYPES.find((item) => item.value == scope.row.auth_type)?.name }}</div>
+          <div>{{ getValidateTypeName(scope.row.auth_type) }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="distributor_name" label="来源店铺" />
+      <el-table-column prop="distributor_name" :label="$t('ac2a6290.53cc55')" />
     </el-table>
     <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
@@ -53,8 +57,10 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button v-if="type != 'show'" type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('ac2a6290.c08ab9') }}</el-button>
+      <el-button v-if="type != 'show'" type="primary" @click="saveStoreAction">{{
+        $t('ac2a6290.aa7527')
+      }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -87,11 +93,11 @@ export default {
   },
   data() {
     const VALIDATE_TYPES = [
-      { name: '全部', value: '' },
-      { name: '手机号', value: 'mobile' },
-      { name: '账号密码', value: 'account' },
-      { name: '邮箱', value: 'email' },
-      { name: '二维码', value: 'qr_code' }
+      { nameKey: 'ac2a6290.a8b0c2', value: '' },
+      { nameKey: 'ac2a6290.8098e2', value: 'mobile' },
+      { nameKey: 'ac2a6290.bc1f2d', value: 'account' },
+      { nameKey: 'ac2a6290.3bc5e6', value: 'email' },
+      { nameKey: 'ac2a6290.22b03c', value: 'qr_code' }
     ]
     const initialParams = {
       page: 1,
@@ -131,6 +137,10 @@ export default {
     }
   },
   methods: {
+    getValidateTypeName(authType) {
+      const item = this.VALIDATE_TYPES.find((i) => i.value === authType)
+      return item ? this.$t(item.nameKey) : ''
+    },
     getRowKeys(val) {
       return val.id
     },
@@ -174,7 +184,7 @@ export default {
     saveStoreAction() {
       if (this.multipleSelection.length === 0) {
         this.$message({
-          message: '请选择企业',
+          message: this.$t('ac2a6290.321fa5'),
           type: 'warning'
         })
         return

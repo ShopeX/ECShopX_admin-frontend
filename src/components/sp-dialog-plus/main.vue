@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
+
 export default {
   name: 'SpDialogPlus',
 
@@ -57,15 +59,13 @@ export default {
     buttonCancel: {
       type: Object,
       default: () => ({
-        visible: true,
-        text: '取消'
+        visible: true
       })
     },
     buttonConfirm: {
       type: Object,
       default: () => ({
-        visible: true,
-        text: '确定'
+        visible: true
       })
     },
     width: {
@@ -94,14 +94,14 @@ export default {
     computedButtonCancel() {
       return {
         visible: true,
-        text: '取消',
+        text: i18n.t('d6ce3fc7.625fb2'),
         ...this.buttonCancel
       }
     },
     computedButtonConfirm() {
       return {
         visible: true,
-        text: '确定',
+        text: i18n.t('d6ce3fc7.38cf16'),
         ...this.buttonConfirm
       }
     }

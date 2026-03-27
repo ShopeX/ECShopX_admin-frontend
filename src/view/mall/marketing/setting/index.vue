@@ -29,8 +29,8 @@ export default {
     return {
       activeName: 'class',
       tabList: [
-        { name: '商家分类', activeName: 'class' },
-        { name: '基础配置', activeName: 'base' }
+        { name: this.$t('81ec8afa.4542a1'), activeName: 'class' },
+        { name: this.$t('81ec8afa.b6453a'), activeName: 'base' }
       ]
     }
   }

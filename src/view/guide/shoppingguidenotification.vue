@@ -8,42 +8,42 @@
     <div v-if="$route.path.indexOf('editor') === -1" class="shoppingguidenotification">
       <el-row>
         <el-col>
-          <el-select v-model="searchData.status" placeholder="请选择">
+          <el-select v-model="searchData.status" :placeholder="$t('ad92ee13.708c9d')">
             <el-option
               v-for="item in stateOptions"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.labelKey)"
               :value="item.value"
             />
           </el-select>
-          <el-input v-model="searchData.title" class="input-b" placeholder="请输入通知名称">
+          <el-input v-model="searchData.title" class="input-b" :placeholder="$t('ad92ee13.9ae35b')">
             <el-button slot="append" icon="el-icon-search" @click="handelClickSearch" />
           </el-input>
           <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handelClickAdd">
-            新增通知
+            {{ $t('ad92ee13.cd5ec8') }}
           </el-button>
         </el-col>
       </el-row>
       <!-- table -->
       <el-card>
         <el-table v-loading="loadingTable" :data="tableData" style="width: 100%">
-          <el-table-column prop="title" label="通知标题" />
-          <el-table-column prop="created" label="创建时间">
+          <el-table-column prop="title" :label="$t('ad92ee13.0b311d')" />
+          <el-table-column prop="created" :label="$t('ad92ee13.eca37c')">
             <template slot-scope="scope">
               {{ timestampToTime(scope.row.created) }}
             </template>
           </el-table-column>
-          <el-table-column prop="updated" label="最后一次发送时间">
+          <el-table-column prop="updated" :label="$t('ad92ee13.ecc5fd')">
             <template slot-scope="scope">
               {{ timestampToTime(scope.row.last_sent_time) }}
             </template>
           </el-table-column>
-          <el-table-column prop="withdraw" label="发送状态">
+          <el-table-column prop="withdraw" :label="$t('ad92ee13.d48fc2')">
             <template slot-scope="scope">
               {{ scope.row.status | sendingState }}
             </template>
           </el-table-column>
-          <el-table-column fixed="left" label="操作" width="200">
+          <el-table-column fixed="left" :label="$t('ad92ee13.2b6bc0')" width="200">
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -55,7 +55,7 @@
                     })
                 "
               >
-                编辑
+                {{ $t('ad92ee13.95b351') }}
               </el-button>
               <el-button
                 v-if="scope.row.status != 1"
@@ -67,7 +67,7 @@
                   }
                 "
               >
-                查看
+                {{ $t('ad92ee13.607e7a') }}
               </el-button>
               <el-button
                 v-if="scope.row.status != 2"
@@ -79,14 +79,14 @@
                   }
                 "
               >
-                发送
+                {{ $t('ad92ee13.1535fc') }}
               </el-button>
               <el-button
                 v-if="scope.row.status == 2"
                 type="text"
                 @click="handelClickRevoke(scope.row)"
               >
-                撤回发送
+                {{ $t('ad92ee13.49a6ba') }}
               </el-button>
             </template>
           </el-table-column>
@@ -106,7 +106,7 @@
       </el-card>
       <!-- 查看 -->
       <el-dialog
-        title="查看通知发送状态"
+        :title="$t('ad92ee13.506313')"
         :visible.sync="showSeeModule"
         width="700"
         :before-close="
@@ -116,14 +116,14 @@
         "
       >
         <el-form v-loading="loading" :model="seeDataForm" label-width="100px">
-          <el-form-item label="通知时间：">
+          <el-form-item :label="$t('ad92ee13.a5b128')">
             {{ seeDataForm.last_sent_time | formatDataTime }}
-            {{ seeDataForm.status | sendingState }}
+            {{ sendingStateLabel(seeDataForm.status) }}
           </el-form-item>
-          <el-form-item v-if="seeDataForm.all_distributor == 1" label="通知店铺：">
-            全部
+          <el-form-item v-if="seeDataForm.all_distributor == 1" :label="$t('ad92ee13.e6d4d8')">
+            {{ $t('ad92ee13.a8b0c2') }}
           </el-form-item>
-          <el-form-item v-if="seeDataForm.all_distributor == 0" label="通知店铺：">
+          <el-form-item v-if="seeDataForm.all_distributor == 0" :label="$t('ad92ee13.e6d4d8')">
             <el-tag v-for="(item, index) in seeDataForm.distributors" :key="index" size="size">
               {{ item.name }}
             </el-tag>
@@ -133,7 +133,7 @@
       <!-- 发送通知 -->
       <el-dialog
         v-loading="loading"
-        title="发送通知"
+        :title="$t('ad92ee13.fd6d4c')"
         :visible.sync="showSendModule"
         width="700"
         :before-close="
@@ -143,15 +143,15 @@
         "
       >
         <div class="flex">
-          <div class="label">选择通知门店：</div>
+          <div class="label">{{ $t('ad92ee13.92d278') }}</div>
           <div>
-            <el-radio v-model="sendDataForm.radio" label="1"> 全部门店 </el-radio>
-            <el-radio v-model="sendDataForm.radio" label="2"> 选择门店 </el-radio>
+            <el-radio v-model="sendDataForm.radio" label="1">{{ $t('ad92ee13.a48948') }}</el-radio>
+            <el-radio v-model="sendDataForm.radio" label="2">{{ $t('ad92ee13.86c570') }}</el-radio>
           </div>
         </div>
         <div class="flex ma-t">
-          <div class="label">通知门店：</div>
-          <div v-if="sendDataForm.radio == 1">全部</div>
+          <div class="label">{{ $t('ad92ee13.f9dd4c') }}</div>
+          <div v-if="sendDataForm.radio == 1">{{ $t('ad92ee13.a8b0c2') }}</div>
           <div v-if="sendDataForm.radio == 2">
             <div>
               <ul class="flex">
@@ -169,13 +169,15 @@
                 }
               "
             >
-              选择店铺
+              {{ $t('ad92ee13.afa2e6') }}
             </el-button>
           </div>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="showSendModule = false">取 消</el-button>
-          <el-button type="primary" @click="handelClickSendOut">确 定</el-button>
+          <el-button @click="showSendModule = false">{{ $t('ad92ee13.c08ab9') }}</el-button>
+          <el-button type="primary" @click="handelClickSendOut">{{
+            $t('ad92ee13.aa7527')
+          }}</el-button>
         </span>
       </el-dialog>
       <DistributorSelect
@@ -204,17 +206,6 @@ export default {
   components: {
     DistributorSelect
   },
-  filters: {
-    sendingState(v) {
-      if (v == 1) {
-        return '未发送'
-      }
-      if (v == 2) {
-        return ' 已发送'
-      }
-      return '已撤回'
-    }
-  },
   provide() {
     return {
       refresh: this.fetchList
@@ -225,22 +216,10 @@ export default {
       loadingTable: false,
       loading: false,
       stateOptions: [
-        {
-          value: '0',
-          label: '全部'
-        },
-        {
-          value: '1',
-          label: '已发送'
-        },
-        {
-          value: '2',
-          label: '未发送'
-        },
-        {
-          value: '3',
-          label: '已撤回'
-        }
+        { value: '0', labelKey: 'ad92ee13.a8b0c2' },
+        { value: '1', labelKey: 'ad92ee13.93d159' },
+        { value: '2', labelKey: 'ad92ee13.73e127' },
+        { value: '3', labelKey: 'ad92ee13.b3f168' }
       ],
       searchData: {
         status: '0', //状体
@@ -364,18 +343,23 @@ export default {
 
         this.$message({
           type: 'success',
-          message: '撤回成功!'
+          message: this.$t('ad92ee13.fb2597')
         })
       })
     },
     checkWithdrawnotice(callback) {
-      this.$confirm('撤回后，对应店铺的导购将无法再看到次通知?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('ad92ee13.a9c58c'), this.$t('60e84c78.02d981'), {
+        confirmButtonText: this.$t('73ceba4e.38cf16'),
+        cancelButtonText: this.$t('73ceba4e.625fb2'),
         type: 'warning'
       }).then(() => {
         callback()
       })
+    },
+    sendingStateLabel(v) {
+      if (v == 1) return this.$t('ad92ee13.73e127')
+      if (v == 2) return this.$t('ad92ee13.93d159')
+      return this.$t('ad92ee13.b3f168')
     },
 
     /**
@@ -406,7 +390,7 @@ export default {
       this.loading = true
 
       if (params.distributor_id !== 'all' && this.distributor_id.length === 0) {
-        this.$message.error('请选择店铺')
+        this.$message.error(this.$t('ad92ee13.06accf'))
         return
       }
       this.loading = false
@@ -419,7 +403,7 @@ export default {
       let { data } = await setSalespersonoticeSendnotice(params)
 
       this.$message({
-        message: '发送成功',
+        message: this.$t('ad92ee13.9db9a7'),
         type: 'success'
       })
 

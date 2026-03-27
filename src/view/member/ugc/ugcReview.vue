@@ -7,7 +7,7 @@
   <SpPage>
     <el-row :gutter="20" class="action-container">
       <el-col :span="18">
-        <el-button type="primary" @click="auditHandle"> 批量审核 </el-button>
+        <el-button type="primary" @click="auditHandle">{{ $t('cadc1ce1.9fface') }}</el-button>
       </el-col>
 
       <el-col :span="6">
@@ -20,12 +20,12 @@
             slot="prepend"
             v-model="searchtype"
             class="barSelect"
-            placeholder="请选择"
+            :placeholder="$t('cadc1ce1.708c9d')"
             @change="changeName"
           >
-            <el-option label="用户昵称" value="nickname" />
-            <el-option label="用户手机号" value="mobile" />
-            <el-option label="标题关键字" value="content" />
+            <el-option :label="$t('cadc1ce1.9a56bb')" value="nickname" />
+            <el-option :label="$t('cadc1ce1.18b642')" value="mobile" />
+            <el-option :label="$t('cadc1ce1.e16f84')" value="content" />
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="searchData('searchkey')" />
         </el-input>
@@ -33,7 +33,7 @@
     </el-row>
 
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="全部状态" name="first">
+      <el-tab-pane :label="$t('cadc1ce1.443483')" name="first">
         <reviewlist
           ref="notestable"
           :tmp-data="reviewList"
@@ -43,7 +43,7 @@
           @viewDetails="viewDetails"
         />
       </el-tab-pane>
-      <el-tab-pane label="待审核" name="second">
+      <el-tab-pane :label="$t('cadc1ce1.5cb424')" name="second">
         <reviewlist
           ref="notestable"
           :tmp-data="reviewList"
@@ -53,7 +53,7 @@
           @viewDetails="viewDetails"
         />
       </el-tab-pane>
-      <el-tab-pane label="已通过" name="third">
+      <el-tab-pane :label="$t('cadc1ce1.ecfa64')" name="third">
         <reviewlist
           ref="notestable"
           :tmp-data="reviewList"
@@ -63,7 +63,7 @@
           @viewDetails="viewDetails"
         />
       </el-tab-pane>
-      <el-tab-pane label="已拒绝" name="fourth">
+      <el-tab-pane :label="$t('cadc1ce1.81233d')" name="fourth">
         <reviewlist
           ref="notestable"
           :tmp-data="reviewList"
@@ -137,7 +137,7 @@ export default {
       id_set: [],
       searchkey: '',
       searchtype: 'nickname',
-      searPlace: '请输入昵称',
+      searPlace: '',
       auditdiff: false,
       auditDialogShow: false,
       dufStatus: null,
@@ -146,6 +146,7 @@ export default {
     }
   },
   mounted() {
+    this.$data.searPlace = this.researchMsg(this.$data.searchtype)
     this.getDataList()
   },
   methods: {
@@ -159,11 +160,11 @@ export default {
       this.getDataList()
     },
     researchMsg(type) {
-      var msg = '请输入昵称'
+      var msg = this.$t('cadc1ce1.916ff9')
       if (type == 'content') {
-        msg = '请输入关键字'
+        msg = this.$t('cadc1ce1.db91cb')
       } else if (type == 'mobile') {
-        msg = '请输入手机号'
+        msg = this.$t('cadc1ce1.6e4f4b')
       }
       this.params.nickname = null
       this.params.content = null
@@ -265,7 +266,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择评论'
+          message: this.$t('cadc1ce1.429f88')
         })
       }
     },

@@ -14,9 +14,13 @@
       <el-tab-pane v-for="item in pane_list" :key="item.name" :label="item.label" :name="item.name">
         <div class="tip-info">
           <p>
-            上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
+            {{ $t('f4f9c6d7.7b5c77') }}<strong>{{ $t('f4f9c6d7.d99268') }}</strong
+            >。
           </p>
-          <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
+          <p>
+            {{ $t('f4f9c6d7.41c5ec') }}<strong>{{ $t('f4f9c6d7.d99268') }}</strong
+            >{{ $t('f4f9c6d7.40d0ad') }}
+          </p>
         </div>
         <el-form ref="form" label-width="100px">
           <div class="content-bottom-padded">
@@ -28,46 +32,52 @@
               :auto-upload="false"
               :show-file-list="false"
             >
-              <el-button size="small" type="primary"> 点击上传 </el-button>
+              <el-button size="small" type="primary">{{ $t('f4f9c6d7.2c808b') }}</el-button>
             </el-upload>
             <el-button size="small" type="primary" @click="uploadHandleTemplate()">
-              下载模版
+              {{ $t('f4f9c6d7.402a67') }}
             </el-button>
           </div>
           <el-table
             v-loading="loading"
             :data="uploadList"
             :height="wheight - 240"
-            element-loading-text="数据加载中"
+            :element-loading-text="$t('f4f9c6d7.f09b12')"
           >
-            <el-table-column prop="file_name" label="上传文件" min-width="100" />
-            <el-table-column prop="created_date" label="上传时间" min-width="80" />
-            <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
-            <el-table-column label="处理状态" min-width="50">
+            <el-table-column prop="file_name" :label="$t('f4f9c6d7.a6fc9e')" min-width="100" />
+            <el-table-column prop="created_date" :label="$t('f4f9c6d7.cae255')" min-width="80" />
+            <el-table-column
+              prop="file_size_format"
+              :label="$t('f4f9c6d7.396b7d')"
+              min-width="60"
+            />
+            <el-table-column :label="$t('f4f9c6d7.21b314')" min-width="50">
               <template slot-scope="scope">
-                <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
-                <span v-if="scope.row.handle_status == 'processing'">处理中</span>
-                <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
+                <span v-if="scope.row.handle_status == 'wait'">{{ $t('f4f9c6d7.1e57c1') }}</span>
+                <span v-if="scope.row.handle_status == 'processing'">{{
+                  $t('f4f9c6d7.5d459d')
+                }}</span>
+                <span v-if="scope.row.handle_status == 'finish'">{{ $t('f4f9c6d7.7be39b') }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="finish_date" label="处理完成时间" />
-            <el-table-column label="处理成功">
+            <el-table-column prop="finish_date" :label="$t('f4f9c6d7.475dea')" />
+            <el-table-column :label="$t('f4f9c6d7.3ba621')">
               <template slot-scope="scope">
                 <span v-if="scope.row.handle_message"
-                  >{{ scope.row.handle_message.successLine }}行</span
+                  >{{ scope.row.handle_message.successLine }}{{ $t('f4f9c6d7.2d5aef') }}</span
                 >
               </template>
             </el-table-column>
-            <el-table-column label="处理失败">
+            <el-table-column :label="$t('f4f9c6d7.1012e0')">
               <template slot-scope="scope">
                 <span v-if="scope.row.handle_message"
-                  >{{ scope.row.handle_message.errorLine }}行</span
+                  >{{ scope.row.handle_message.errorLine }}{{ $t('f4f9c6d7.2d5aef') }}</span
                 >
                 <a
                   v-if="scope.row.handle_message && scope.row.handle_message.errorLine > 0"
                   type="primary"
                   @click="exportErrorFile(scope.row.id, scope.row.file_type)"
-                  >下载错误详情</a
+                  >{{ $t('f4f9c6d7.3798d3') }}</a
                 >
               </template>
             </el-table-column>
@@ -97,13 +107,6 @@ import {
 export default {
   data() {
     return {
-      pane_list: [
-        { name: 'member_consume', label: '上传消费金额' },
-        { name: 'member_info', label: '上传新会员' },
-        { name: 'member_update', label: '更新会员' },
-        { name: 'selform_registration_record', label: '上传报名审核结果' }
-        // { name: 'community_chief', label: '上传团长信息' },
-      ],
       loading: false,
       total_count: 0,
       pageSize: 20,
@@ -113,11 +116,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    pane_list() {
+      if (this.VERSION_SHUYUN()) {
+        return [{ name: 'selform_registration_record', label: this.$t('f4f9c6d7.08b465') }]
+      }
+      return [
+        { name: 'member_consume', label: this.$t('f4f9c6d7.8ae64d') },
+        { name: 'member_info', label: this.$t('f4f9c6d7.6eaa98') },
+        { name: 'member_update', label: this.$t('f4f9c6d7.f7fc5b') },
+        { name: 'selform_registration_record', label: this.$t('f4f9c6d7.08b465') }
+      ]
+    }
   },
   created() {
     if (this.VERSION_SHUYUN()) {
-      this.pane_list = [{ name: 'selform_registration_record', label: '上传报名审核结果' }]
       this.activeName = 'selform_registration_record'
     }
   },
@@ -133,20 +146,20 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('f4f9c6d7.7bbfaa')
         })
         this.getUploadList()
       })
     },
     uploadHandleTemplate() {
       if (this.activeName == 'member_info') {
-        var fileName = '新增会员信息'
+        var fileName = this.$t('f4f9c6d7.b554c4')
       } else if (this.activeName == 'member_update') {
-        var fileName = '更新会员信息'
+        var fileName = this.$t('f4f9c6d7.1b0fc1')
       } else if (this.activeName == 'member_consume') {
-        var fileName = '新增消费金额'
+        var fileName = this.$t('f4f9c6d7.aa8b44')
       } else if (this.activeName == 'selform_registration_record') {
-        var fileName = '上传报名审核结果'
+        var fileName = this.$t('f4f9c6d7.08b465')
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {
@@ -160,7 +173,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('f4f9c6d7.bfd8d5')
           })
         }
       })
@@ -178,7 +191,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('f4f9c6d7.bfd8d5')
           })
         }
       })

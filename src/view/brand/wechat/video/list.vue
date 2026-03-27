@@ -5,13 +5,15 @@
 
 <template>
   <div class="video_pick_panel section-white">
-    <el-button type="primary" icon="plus" @click="addVideo"> 上传视频 </el-button>
+    <el-button type="primary" icon="plus" @click="addVideo">
+      {{ $t('b98c3984.afddcb') }}
+    </el-button>
     <div v-loading="loading" class="video_pick">
       <ul class="clearfix">
         <li v-for="(videoitem, index) in videoList.item" :key="index" class="video_item">
           <div class="video_item_bd">
             <video class="video-html" :src="videoitem.url" controls="controls">
-              您的浏览器不支持 video 标签。
+              {{ $t('b98c3984.4cacc1') }}
             </video>
             <div class="check_content">
               <span class="video_name" :title="videoitem.name">{{ videoitem.name }}</span>
@@ -21,7 +23,12 @@
             <el-row>
               <el-col :span="24">
                 <div class="opr_item" @click="removeItem(videoitem, index)">
-                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="$t('b98c3984.2f4aad')"
+                    placement="top"
+                  >
                     <i class="el-icon-delete" />
                   </el-tooltip>
                 </div>
@@ -43,20 +50,24 @@
         @size-change="handleSizeChange"
       />
     </div>
-    <el-dialog title="上传视频文件" :visible.sync="uploadDialog" :before-close="handleCancel">
+    <el-dialog
+      :title="$t('b98c3984.ce87fd')"
+      :visible.sync="uploadDialog"
+      :before-close="handleCancel"
+    >
       <template>
         <el-form ref="form" :model="videoForm" class="demo-ruleForm" label-width="90px">
-          <el-form-item label="视频标题">
+          <el-form-item :label="$t('b98c3984.3226c4')">
             <el-col :span="14">
               <el-input v-model="videoForm.title" maxlength="20" />
             </el-col>
           </el-form-item>
-          <el-form-item label="视频描述">
+          <el-form-item :label="$t('b98c3984.8ce215')">
             <el-col :span="14">
               <el-input v-model="videoForm.description" maxlength="20" />
             </el-col>
           </el-form-item>
-          <el-form-item label="视频文件">
+          <el-form-item :label="$t('b98c3984.32651e')">
             <el-col :span="14">
               <el-upload
                 class="upload-demo"
@@ -65,8 +76,10 @@
                 :show-file-list="false"
                 :on-change="uploadVideo"
               >
-                <el-button size="small" type="primary" :loading="isLoadData"> 上传视频 </el-button>
-                <div slot="tip" class="el-upload__tip">只能上传MP4文件，且不超过15M</div>
+                <el-button size="small" type="primary" :loading="isLoadData">
+                  {{ $t('b98c3984.afddcb') }}
+                </el-button>
+                <div slot="tip" class="el-upload__tip">{{ $t('b98c3984.8120d7') }}</div>
               </el-upload>
             </el-col>
           </el-form-item>
@@ -121,23 +134,23 @@ export default {
     uploadVideo(file, filelist) {
       if (this.videoForm.title.length <= 0) {
         this.$message({
-          message: '视频标题必填',
+          message: this.$t('b98c3984.06955b'),
           type: 'error'
         })
         return
       }
       if (this.videoForm.description.length <= 0) {
         this.$message({
-          message: '视频描述必填',
+          message: this.$t('b98c3984.717049'),
           type: 'error'
         })
         return
       }
 
-      let check = true //validatUploadVideo(file)
+      let check = true
       if (check !== true) {
         this.$message({
-          message: '请选择视频',
+          message: this.$t('b98c3984.6f9fe0'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -174,26 +187,25 @@ export default {
       }
     },
     removeItem(item, index) {
-      this.$confirm('确定删除此视频吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('b98c3984.378a60'), this.$t('b98c3984.02d981'), {
+        confirmButtonText: this.$t('b98c3984.38cf16'),
+        cancelButtonText: this.$t('b98c3984.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.videoList.item.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('b98c3984.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
           })
-          //删除操作
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('b98c3984.2111cc')
           })
         })
     },

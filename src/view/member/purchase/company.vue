@@ -26,14 +26,14 @@
 <template>
   <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="name" label="企业名称:">
-        <el-input v-model="queryForm.name" placeholder="请输入企业名称" />
+      <SpFilterFormItem prop="name" :label="$t('63ede0f6.1a1bc7')">
+        <el-input v-model="queryForm.name" :placeholder="$t('63ede0f6.8ded4d')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="enterprise_sn" label="企业编码:">
-        <el-input v-model="queryForm.enterprise_sn" placeholder="请输入企业编码" />
+      <SpFilterFormItem prop="enterprise_sn" :label="$t('63ede0f6.f969ea')">
+        <el-input v-model="queryForm.enterprise_sn" :placeholder="$t('63ede0f6.5ee937')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="auth_type" label="验证方式:">
-        <el-select v-model="queryForm.auth_type" placeholder="请选择验证方式">
+      <SpFilterFormItem prop="auth_type" :label="$t('63ede0f6.b28abf')">
+        <el-select v-model="queryForm.auth_type" :placeholder="$t('63ede0f6.370e61')">
           <el-option
             v-for="(item, index) in validateTypeList"
             :key="index"
@@ -42,14 +42,18 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-        <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+      <SpFilterFormItem prop="distributor_id" :label="$t('63ede0f6.16f2bc')">
+        <SpSelectShop
+          v-model="queryForm.distributor_id"
+          clearable
+          :placeholder="$t('63ede0f6.708c9d')"
+        />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
       <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCompany">
-        添加企业
+        {{ $t('63ede0f6.0b1ff3') }}
       </el-button>
     </div>
 
@@ -68,7 +72,7 @@
       ref="addDialogRef"
       v-model="addDialog"
       class="dg-create-company"
-      :title="companyForm.id ? '编辑企业' : '添加企业'"
+      :title="companyForm.id ? $t('63ede0f6.610002') : $t('63ede0f6.0b1ff3')"
       :modal="false"
       :form="companyForm"
       :form-list="companyFormList"
@@ -77,13 +81,15 @@
       @onSubmit="onCompanyFormSubmit"
     />
 
-    <el-dialog :title="'企业二维码-' + qrcodeName" :visible.sync="qrDialog" width="30%">
-      <span
-        >用户扫描该二维码打开小程序时会跳过白名单身份验证步骤，在继续完成授权手机号登录后即可获得相应企业的“员工”身份；已是该企业员工的用户不受影响。</span
-      >
+    <el-dialog
+      :title="$t('63ede0f6.897af2') + '-' + qrcodeName"
+      :visible.sync="qrDialog"
+      width="30%"
+    >
+      <span>{{ $t('63ede0f6.85d62d') }}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="qrDialog = false">取 消</el-button>
-        <el-button type="primary" @click="handleDownload">下载二维码</el-button>
+        <el-button @click="qrDialog = false">{{ $t('63ede0f6.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleDownload">{{ $t('63ede0f6.feea92') }}</el-button>
       </span>
     </el-dialog>
 
@@ -91,8 +97,8 @@
       ref="sendEmailRef"
       v-model="sendEmailDialog"
       class="dg-create-company"
-      title="发件测试"
-      confirm-btn-text="发送验证码"
+      :title="$t('63ede0f6.eed806')"
+      :confirm-btn-text="$t('63ede0f6.c5c358')"
       :confirm-status="sendEmaiLoading"
       :modal="false"
       :form="sendEmailForm"
@@ -108,20 +114,23 @@
 import { createSetting } from '@shopex-ui/finder'
 import { getUrlPathByLoginType } from '@/utils'
 import { VALIDATE_TYPES } from './consts'
+import { i18n } from '@/i18n'
 
 export default {
   name: '',
   data() {
+    const t = (key) => i18n.t(key)
+    const self = this
     const isShow = () => {
-      return this.companyForm.auth_type == 'email'
+      return self.companyForm.auth_type == 'email'
     }
 
     const validator = (rule, value, callback) => {
-      const { auth_type } = this.companyForm
+      const { auth_type } = self.companyForm
       if (auth_type != 'email' || (auth_type == 'email' && !!value)) {
         callback()
       } else {
-        callback('不能为空')
+        callback(t('63ede0f6.281bad'))
       }
     }
 
@@ -146,7 +155,7 @@ export default {
           component: () => {
             return (
               <el-alert
-                title='请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。'
+                title={t('63ede0f6.639e7b')}
                 type='warning'
                 closable={false}
               ></el-alert>
@@ -154,18 +163,18 @@ export default {
           }
         },
         {
-          label: '收件地址',
+          label: t('63ede0f6.b5f0bd'),
           key: 'email',
           type: 'input',
-          placeholder: '用于接受验证码的邮箱地址',
+          placeholder: t('63ede0f6.a18c29'),
           required: true,
-          message: '收件地址不能为空'
+          message: t('63ede0f6.211d59')
         }
       ],
       setting: createSetting({
         actions: [
           {
-            name: '编辑',
+            name: () => t('63ede0f6.95b351'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -183,7 +192,7 @@ export default {
             }
           },
           {
-            name: '查看',
+            name: () => t('63ede0f6.607e7a'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -201,7 +210,7 @@ export default {
             }
           },
           {
-            name: '发件测试',
+            name: () => t('63ede0f6.eed806'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -219,7 +228,7 @@ export default {
             }
           },
           {
-            name: '二维码',
+            name: () => t('63ede0f6.22b03c'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -241,7 +250,7 @@ export default {
             }
           },
           {
-            name: '查看员工列表',
+            name: () => t('63ede0f6.a6b8e9'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -261,9 +270,9 @@ export default {
           }
         ],
         columns: [
-          { name: '企业ID', key: 'id' },
+          { name: t('63ede0f6.5a83cb'), key: 'id' },
           {
-            name: '企业Logo',
+            name: t('63ede0f6.390b03'),
             key: 'logo',
             render: (h, { row }) => {
               if (row.logo) {
@@ -285,15 +294,15 @@ export default {
             }
           },
           {
-            name: '企业名称',
+            name: t('63ede0f6.f47e27'),
             key: 'name'
           },
           {
-            name: '企业编码',
+            name: t('63ede0f6.705f0a'),
             key: 'enterprise_sn'
           },
           {
-            name: '排序',
+            name: t('63ede0f6.c360e9'),
             key: 'sort',
             showType: 'pop-editable',
             componentProps: {
@@ -309,15 +318,15 @@ export default {
             }
           },
           {
-            name: '登录类型',
+            name: t('63ede0f6.78cbe8'),
             key: 'auth_type',
             formatter: (value, { auth_type }, col) => {
-              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
-              return authType
+              const authType = self.validateTypeList.find((item) => item.value == auth_type)
+              return authType ? authType.name : ''
             }
           },
           {
-            name: '状态',
+            name: t('63ede0f6.3fea7c'),
             key: 'disabled',
             render: (h, { row }) =>
               h('el-switch', {
@@ -328,7 +337,7 @@ export default {
                 },
                 on: {
                   change: async (e) => {
-                    await this.$api.member.updateCompanyStatus({
+                    await self.$api.member.updateCompanyStatus({
                       enterprise_id: row.id,
                       disabled: e
                     })
@@ -338,12 +347,11 @@ export default {
               })
           },
           {
-            name: '来源店铺',
+            name: t('63ede0f6.16f2bc'),
             key: 'distributor_name'
           }
         ]
       }),
-      validateTypeList: VALIDATE_TYPES,
       addDialog: false,
       qrDialog: false,
       addDialogLoading: false,
@@ -365,125 +373,133 @@ export default {
       },
       companyFormList: [
         {
-          label: '企业名称',
+          label: t('63ede0f6.f47e27'),
           key: 'name',
           type: 'input',
-          placeholder: '请输入企业名称',
+          placeholder: t('63ede0f6.8ded4d'),
           required: true,
-          message: '不能为空'
+          message: t('63ede0f6.281bad')
         },
         {
-          label: '企业编码',
+          label: t('63ede0f6.705f0a'),
           key: 'enterprise_sn',
           type: 'input',
-          placeholder: '请输入企业编码',
+          placeholder: t('63ede0f6.5ee937'),
           required: true,
-          message: '不能为空'
+          message: t('63ede0f6.281bad')
         },
         {
-          label: '排序',
+          label: t('63ede0f6.c360e9'),
           key: 'sort',
           component: () => (
             <SpInput
-              v-model={this.companyForm.sort}
+              v-model={self.companyForm.sort}
               class='sort-input'
               width='100px'
-              suffix='选择器中的企业展示顺序，数字越小越靠前'
+              suffix={t('63ede0f6.916a52')}
             />
           )
         },
         {
-          label: '登录类型',
+          label: t('63ede0f6.78cbe8'),
           key: 'auth_type',
           type: 'radio',
           options: [
-            { label: 'mobile', name: '手机号' },
-            { label: 'account', name: '账号' },
-            { label: 'email', name: '邮箱' },
-            { label: 'qr_code', name: '二维码' }
+            { label: 'mobile', name: t('63ede0f6.8098e2') },
+            { label: 'account', name: t('63ede0f6.7035c6') },
+            { label: 'email', name: t('63ede0f6.3bc5e6') },
+            { label: 'qr_code', name: t('63ede0f6.22b03c') }
           ],
           validator: (rule, value, callback) => {
             if (value) {
               callback()
             } else {
-              callback('不能为空')
+              callback(t('63ede0f6.281bad'))
             }
           }
         },
         {
-          label: '发件邮箱',
+          label: t('63ede0f6.5fbb35'),
           key: 'email_user',
           type: 'input',
-          placeholder: '请输入发件邮箱',
+          placeholder: t('63ede0f6.27044b'),
           isShow,
           validator
         },
         {
-          label: 'SMTP服务器',
+          label: t('63ede0f6.4723b1'),
           key: 'relay_host',
           type: 'input',
-          placeholder: '请输入SMTP服务器',
+          placeholder: t('63ede0f6.90ca32'),
           isShow,
           validator
         },
         {
-          label: '端口',
+          label: t('63ede0f6.c76cfe'),
           key: 'smtp_port',
           type: 'input',
-          placeholder: '请输入邮箱端口',
+          placeholder: t('63ede0f6.4a0798'),
           isShow,
           validator
         },
         {
-          label: '密码',
+          label: t('63ede0f6.a81052'),
           key: 'email_password',
           type: 'input',
-          placeholder: '请输入邮箱密码',
+          placeholder: t('63ede0f6.f35263'),
           isShow,
           validator
         },
         {
-          label: '员工收件邮箱后缀',
+          label: t('63ede0f6.9c53cd'),
           key: 'email_suffix',
           type: 'input',
-          placeholder: '请输入员工收件邮箱后缀',
+          placeholder: t('63ede0f6.d3b119'),
           isShow,
           validator
         },
         {
-          label: '是否验证白名单',
+          label: t('63ede0f6.487b6c'),
           key: 'is_employee_check_enabled',
           type: 'switch',
-          isShow: () => this.companyForm.auth_type == 'qr_code'
+          isShow: () => self.companyForm.auth_type == 'qr_code'
         },
         {
-          label: '企业Logo',
+          label: t('63ede0f6.390b03'),
           key: 'logo',
-          component: () => <SpImagePicker v-model={this.companyForm.logo} />,
+          component: () => <SpImagePicker v-model={self.companyForm.logo} />,
           validator: (rule, value, callback) => {
             if (value) {
               callback()
             } else {
-              callback('请选择企业')
+              callback(t('63ede0f6.321fa5'))
             }
           },
-          tip: '建议尺寸100*100，支持 png、jpg 格式，不超过2M'
+          tip: t('63ede0f6.203143')
         },
         {
-          label: '企业二维码海报',
+          label: t('63ede0f6.fbf272'),
           key: 'qr_code_bg_image',
-          component: () => <SpImagePicker v-model={this.companyForm.qr_code_bg_image} />,
-          isShow: () => this.companyForm.auth_type == 'qr_code',
-          // validator: (rule, value, callback) => {
-          //   if (value || this.companyForm.auth_type != 'qr_code') {
-          //     callback()
-          //   } else {
-          //     callback('请选择企业')
-          //   }
-          // },
-          tip: '员工邀请亲友海报：建议上传尺寸540*960且格式为png、jpg图片，文件大小为2M内'
+          component: () => <SpImagePicker v-model={self.companyForm.qr_code_bg_image} />,
+          isShow: () => self.companyForm.auth_type == 'qr_code',
+          tip: t('63ede0f6.9ce120')
         }
       ]
+    }
+  },
+  computed: {
+    validateTypeList() {
+      const keys = {
+        '': '63ede0f6.a8b0c2',
+        mobile: '63ede0f6.8098e2',
+        account: '63ede0f6.bc1f2d',
+        email: '63ede0f6.3bc5e6',
+        qr_code: '63ede0f6.22b03c'
+      }
+      return VALIDATE_TYPES.map((item) => ({
+        ...item,
+        name: this.$t(keys[item.value] || '63ede0f6.a8b0c2')
+      }))
     }
   },
   created() {},
@@ -564,7 +580,7 @@ export default {
           // 确保文字位置在 canvas 范围内
           if (textX >= 0 && textX <= canvas.width && textY >= 0 && textY <= canvas.height) {
             // 绘制文字
-            ctx.fillText('扫码进入小程序', textX, textY)
+            ctx.fillText(this.$t('63ede0f6.ef2e3d'), textX, textY)
           } else {
             console.error('文字位置超出 canvas 范围')
           }
@@ -615,7 +631,7 @@ export default {
           email
         })
         this.sendEmaiLoading = false
-        this.$message.success('邮件已发送')
+        this.$message.success(this.$t('63ede0f6.aea7be'))
       } catch (error) {
         this.sendEmaiLoading = false
       }

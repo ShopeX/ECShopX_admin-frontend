@@ -3,60 +3,36 @@
  * See LICENSE file for license details.
  */
 .wgt-slider {
-  &.padded {
-    padding: 10px 0;
-  }
-  .wgt-hd {
-    padding: 10px;
-    .title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-    }
-    .sub-title {
-      color: #666;
-      margin-left: 4px;
-    }
-  }
-  .wgt-bd {
-    position: relative;
-    &.spaced {
-      padding: 0 10px;
-      .slider-container {
-        right: 10px;
-        left: 10px;
-      }
-      .slider-pagination {
-        right: 10px;
-        left: 10px;
-      }
-    }
-    &.padded {
-      padding: 0 10px;
-    }
-  }
+  position: relative;
+
   .slider-item {
     overflow: hidden;
+
     &.rounded {
       border-radius: 8px;
     }
+
     &.padded {
       padding: 0 10px;
     }
+
     .slider-item-content {
       position: absolute;
       width: 100%;
       height: 100%;
     }
+
     .image-item-img {
       width: 100%;
       height: 100%;
     }
+
     .image-item-video {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .overlay-item {
       position: absolute;
       bottom: 0;
@@ -64,28 +40,45 @@
       z-index: 10;
       pointer-events: none;
     }
+
     .overlay-content {
       position: absolute;
       bottom: 0;
       left: 0;
       z-index: 20;
       pointer-events: auto;
+
       .over-lay {
         width: 100%;
         height: 100%;
+
         &.transparent-transition {
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
         }
+
         &.transparent-transition-active {
           opacity: 1;
         }
       }
     }
   }
+
   .placeholder-item {
     visibility: hidden;
   }
+
+  .wgt-bd {
+    position: relative;
+  }
+
+  .wgt-bd-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
   /* 第一屏为视频时占位块：宽 100% 高按 9:16，撑开 .wgt-bd */
   .placeholder-video-ratio {
     width: 100%;
@@ -93,43 +86,45 @@
     height: 0;
     display: block;
   }
+
   .slider-container {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+
     .sp-image {
       &.rounded {
         border-radius: 8px;
       }
     }
   }
+
   .el-carousel__container {
     height: 100%;
   }
+
   .slider-pagination {
-    z-index: 1000;
     display: flex;
-    margin: 0 4px;
-    padding: 8px 0;
-    &.cover {
+    height: 28px;
+    align-items: center;
+
+    &.cover-slider {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      margin: 0 14px;
-    }
-    &.cover-padded {
-      margin-top: 0;
     }
 
     &.left {
       justify-content: flex-start;
     }
+
     &.center {
       justify-content: center;
     }
+
     &.right {
       justify-content: flex-end;
     }
@@ -138,15 +133,18 @@
       .dot-item {
         background: rgba(0, 0, 0, 0.4);
       }
+
       .pagination-count {
         background: rgba(0, 0, 0, 0.4);
         color: #fff;
       }
     }
+
     &.light {
       .dot-item {
         background: rgba(255, 255, 255, 0.7);
       }
+
       .pagination-count {
         background: rgba(255, 255, 255, 0.7);
         color: #555;
@@ -159,10 +157,12 @@
         height: 4px;
         margin: 0 4px;
         border-radius: 2px;
+
         &.active {
-          background: #d42f29;
+          background: var(--primary);
         }
       }
+
       .pagination-count {
         font-size: 12px;
         line-height: 14px;
@@ -170,16 +170,19 @@
         border-radius: 2px;
       }
     }
+
     &.circle {
       .dot-item {
         width: 8px;
         height: 8px;
         border-radius: 4px;
         margin: 0 4px;
+
         &.active {
-          background: #d42f29;
+          background: var(--primary);
         }
       }
+
       .pagination-count {
         width: 24px;
         height: 24px;
@@ -193,4 +196,5 @@
       }
     }
   }
+
 }

@@ -3,22 +3,26 @@
   See LICENSE file for license details.
 -->
 
-<style lang="scss">
+<style lang="scss" scoped>
 .picker-video {
   &-hd {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+
     .btn-actions {
       display: flex;
     }
+
     .btn-upload {
       margin-right: 10px;
     }
   }
+
   &-bd {
     display: flex;
     padding: 0 0 10px 10px;
+
     .lf-container {
       width: 220px;
       background: #f5f5f5;
@@ -26,24 +30,31 @@
       margin-right: 8px;
       padding: 8px;
     }
+
     .rg-container {
       flex: 1;
     }
   }
+
   .catgory-item {
     height: 30px;
     line-height: 30px;
     padding: 0 6px;
+
     &:hover {
       color: rgb(255, 255, 255);
       background-color: rgba(0, 0, 0, 0.4);
     }
+
     &.active {
       color: rgb(255, 255, 255);
       background-color: var(--primary);
     }
   }
+
   .image-item {
+    position: relative;
+
     &-wrap {
       display: inline-block;
       position: relative;
@@ -60,16 +71,19 @@
     height: 90px;
     position: relative;
     box-sizing: border-box;
+
     .image-modal {
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
+
       &:hover {
         .image-meta {
           display: block;
         }
+
         .el-icon-link {
           display: block;
         }
@@ -85,6 +99,7 @@
       background-color: rgba(0, 0, 0, 0.4);
       display: none;
     }
+
     .el-icon-link {
       position: absolute;
       top: 2px;
@@ -93,17 +108,21 @@
       color: #666;
     }
   }
+
   .image-title-wrap {
     width: 160px;
+
     &__title {
       font-size: 12px;
       @include text-overflow();
     }
   }
+
   .el-pagination {
     margin-top: 8px;
     text-align: right;
   }
+
   .image-box-selected {
     position: absolute;
     box-sizing: border-box;
@@ -115,6 +134,7 @@
     color: #fff;
     overflow: hidden;
     pointer-events: none;
+
     &__right-angle {
       position: absolute;
       top: -21px;
@@ -125,43 +145,57 @@
       transform: rotate(45deg);
       background: var(--primary);
     }
+
     &__text {
       position: absolute;
       top: -2px;
       right: 3px;
     }
+
     .icon-check {
       position: relative;
       top: -2px;
       right: -2px;
     }
   }
+
   .image-list {
     height: 452px;
   }
+
   .cropper-container {
     width: 498px;
     height: 498px;
     position: relative;
+
     .cropper-actions {
       position: absolute;
       bottom: 0;
       left: 10px;
+
       .iconfont {
         font-size: 18px;
         color: #fff;
         margin-right: 6px;
       }
+
       .icon-search-minus,
       .icon-search-plus {
         font-size: 19px;
       }
     }
   }
-  .picker-video-player {
-    .vjs-big-play-button {
-      display: none;
-    }
+}
+
+.picker-video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .vjs-big-play-button {
+    display: none;
   }
 }
 </style>
@@ -169,17 +203,10 @@
   <div class="picker-video">
     <div class="picker-video-hd">
       <div class="btn-actions">
-        <el-upload
-          class="btn-upload"
-          action=""
-          accept="video/mp4,.mov"
-          :show-file-list="false"
-          :http-request="handleUpload"
-          :before-upload="beforeAvatarUpload"
-          :on-success="handleAvatarSuccess"
-          :on-error="uploadError"
-        >
-          <el-button>上传视频</el-button>
+        <el-upload class="btn-upload" action="" accept="video/mp4,.mov" :show-file-list="false"
+          :http-request="handleUpload" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
+          :on-error="uploadError">
+          <el-button>{{ i18n.t('24acd55e.afddcb') }}</el-button>
         </el-upload>
       </div>
       <!-- <div>
@@ -189,28 +216,21 @@
     <div class="picker-video-bd">
       <div class="rg-container">
         <div v-loading="loading" class="image-list">
-          <div
-            v-for="(item, index) in list"
-            :key="`image-item-wrap__${index}`"
-            class="image-item-wrap"
-          >
+          <div v-for="(item, index) in list" :key="`image-item-wrap__${index}`" class="image-item-wrap">
             <div class="image-item" :style="{ color: '#fff' }">
-              <video-player
-                class="picker-video-player"
-                :options="{
-                  // preload: 'auto',
-                  aspectRatio: '16:9',
-                  fluid: true,
-                  sources: [
-                    {
-                      type: item.image_type,
-                      src: item.url
-                    }
-                  ],
-                  notSupportedMessage: '此视频暂无法播放，请稍后再试',
-                  controlBar: false
-                }"
-              />
+              <video-player class="picker-video-player" :options="{
+                // preload: 'auto',
+                aspectRatio: '16:9',
+                fluid: true,
+                sources: [
+                  {
+                    type: item.image_type,
+                    src: item.url
+                  }
+                ],
+                notSupportedMessage: i18n.t('24acd55e.01c0da'),
+                controlBar: false
+              }" />
               <div class="image-modal" @click="handleClickItem(item)">
                 <i class="el-icon-link" @click.stop="handleCopy(item.url)" />
               </div>
@@ -220,10 +240,7 @@
                 {{ item.image_name }}
               </p>
             </div>
-            <div
-              v-show="multiple ? isActive(item) > -1 : isActive(item)"
-              class="image-box-selected"
-            >
+            <div v-show="multiple ? isActive(item) > -1 : isActive(item)" class="image-box-selected">
               <div class="image-box-selected__right-angle" />
               <div class="image-box-selected__text">
                 <span v-show="multiple">{{ isActive(item) + 1 }}</span>
@@ -231,15 +248,10 @@
               </div>
             </div>
           </div>
-          <el-empty v-if="list.length == 0" description="暂无数据" />
+          <el-empty v-if="list.length == 0" :description="i18n.t('24acd55e.21efd8')" />
         </div>
-        <el-pagination
-          layout="total, prev, pager, next"
-          :current-page.sync="pageCur"
-          :page-size="pageSize"
-          :total="pageCount"
-          @current-change="goPage"
-        />
+        <el-pagination layout="total, prev, pager, next" :current-page.sync="pageCur" :page-size="pageSize"
+          :total="pageCount" @current-change="goPage" />
       </div>
     </div>
   </div>
@@ -248,6 +260,7 @@
 <script>
 import UploadUtil from '@/utils/uploadUtil'
 import { isObject, isArray } from '@/utils'
+import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -258,9 +271,13 @@ export default {
     title: '我的视频'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = i18n.t('24acd55e.718023')
+  },
   data() {
     const { multiple = false, data } = this.value
     return {
+      i18n,
       pageSize: 20,
       multiple,
       list: [],
@@ -360,11 +377,11 @@ export default {
       const isMP4 = file.type === 'video/mp4'
       const isLt5M = file.size / 1024 / 1024 < 50
       if (!isMP4) {
-        this.$message.error('上传视频只能是 mp4 格式!')
+        this.$message.error(i18n.t('24acd55e.6c6cbc'))
         return
       }
       if (!isLt5M) {
-        this.$message.error('上传图片大小不能超过 50MB!')
+        this.$message.error(i18n.t('24acd55e.9bdfc4'))
         return
       }
       this.localpostData.fname = file.name
@@ -379,7 +396,7 @@ export default {
         storage: 'videos' //图片id必填
       }
       await this.$api.qiniu.uploadQiniuPic(uploadParams)
-      this.$message.success('上传成功')
+      this.$message.success(i18n.t('24acd55e.a7699b'))
       this.refresh(true)
     },
     // 自定义上传
@@ -401,7 +418,7 @@ export default {
     async handleCopy(url) {
       await this.$copyText(url)
       this.$notify.success({
-        message: '链接复制成功',
+        message: i18n.t('24acd55e.c13172'),
         showClose: true
       })
     }

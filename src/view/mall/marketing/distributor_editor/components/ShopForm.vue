@@ -39,26 +39,27 @@
   <el-card class="shop-location el-card--normal">
     <div slot="header">
       <div>
-        店铺位置<span class="frm-tips">
-          （店铺定位后保存店铺经纬度，才可以开启自提，否则店铺不支持自提功能）
+        {{ $t('7e8fe20b.e243d4')
+        }}<span class="frm-tips">
+          {{ $t('7e8fe20b.cdd17f') }}
         </span>
       </div>
     </div>
     <el-form label-width="120px">
-      <el-form-item class="form-item-region" label="店铺经纬度">
-        <el-input v-model="content.baseForm.lng" readonly placeholder="经度" />
+      <el-form-item class="form-item-region" :label="$t('7e8fe20b.db4b0d')">
+        <el-input v-model="content.baseForm.lng" readonly :placeholder="$t('7e8fe20b.3d18ca')" />
         <span class="separator">-</span>
-        <el-input v-model="content.baseForm.lat" readonly placeholder="纬度" />
+        <el-input v-model="content.baseForm.lat" readonly :placeholder="$t('7e8fe20b.6acaee')" />
       </el-form-item>
 
-      <el-form-item class="form-item-region" label="地理位置">
+      <el-form-item class="form-item-region" :label="$t('7e8fe20b.fc82aa')">
         <el-cascader v-model="content.baseForm.regions_id" class="regions" :options="regions" />
         <el-input
           v-model="content.baseForm.address"
           class="address"
-          placeholder="请输入详细地址（去除省市县）"
+          :placeholder="$t('7e8fe20b.f375e0')"
         />
-        <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
+        <el-button type="primary" @click="searchKeyword()"> {{ $t('7e8fe20b.83546a') }} </el-button>
       </el-form-item>
 
       <el-form-item>
@@ -67,7 +68,9 @@
 
       <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
         <el-col>
-          <el-button type="primary" @click="importPosition(poi_info)"> 导入该位置信息 </el-button>
+          <el-button type="primary" @click="importPosition(poi_info)">
+            {{ $t('7e8fe20b.e6c071') }}
+          </el-button>
         </el-col>
         <el-col>{{ poi_info.name }}</el-col>
         <div class="frm-tips">
@@ -185,7 +188,7 @@ export default {
             map: map
           })
           if (!pois) {
-            return that.$message.error('您输入的位置有误')
+            return that.$message.error(that.$t('7e8fe20b.3015aa'))
           }
           var latlngBounds = new qq.maps.LatLngBounds()
           for (var i = 0, l = pois.length; i < l; i++) {
@@ -216,8 +219,8 @@ export default {
         },
         //若服务请求失败，则运行以下函数
         error: function () {
-          this.$message({
-            message: '未查询到数据',
+          that.$message({
+            message: that.$t('7e8fe20b.c954c4'),
             type: 'error'
           })
         }
@@ -231,11 +234,11 @@ export default {
       //设置搜索的范围和关键字等属性
       const { regions_id, address } = this.content.baseForm
       if (regions_id.length == 0) {
-        this.$message.error('请选择地区')
+        this.$message.error(this.$t('7e8fe20b.ad1a24'))
         return
       }
       if (!address) {
-        this.$message.error('请输入具体位置')
+        this.$message.error(this.$t('7e8fe20b.ef5ed8'))
         return
       }
 

@@ -5,10 +5,10 @@
 
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('e3e3f6d5.e366cc') }}</div>
     <div class="section-body">
       <el-form>
-        <el-form-item label="导航设置">
+        <el-form-item :label="$t('e3e3f6d5.ec6f17')">
           <draggable
             v-model="t_data.data"
             class="content-bottom-padded"
@@ -22,13 +22,17 @@
             >
               <el-input
                 v-model="item.tab"
-                placeholder="请输入导航名"
+                :placeholder="$t('e3e3f6d5.810cf7')"
                 size="small"
                 style="width: 200px"
               />
               <div class="goods-title" @click="editLink(index)">
-                <template v-if="item.linkPage === 'goods'"> 【商品】{{ item.title }} </template>
-                <template v-if="item.linkPage === 'store'"> 【店铺】{{ item.name }} </template>
+                <template v-if="item.linkPage === 'goods'">
+                  {{ $t('e3e3f6d5.516f1d') }}{{ item.title }}
+                </template>
+                <template v-if="item.linkPage === 'store'">
+                  {{ $t('e3e3f6d5.d0e883') }}{{ item.name }}
+                </template>
               </div>
               <div class="setting-remove" @click="removeItem(index)">
                 <i class="el-icon-delete" />
@@ -40,12 +44,9 @@
             class="iconfont icon-cog banner-button-uploader"
             @click="setNav"
           >
-            设置导航
+            {{ $t('e3e3f6d5.ae81ab') }}
           </el-button>
-          <p class="desc">
-            (
-            导航说明：导航菜单数量限制为8，不过建议根据实际菜单名称的长度，选择性显示导航菜单数量。)
-          </p>
+          <p class="desc">({{ $t('e3e3f6d5.0630c9') }})</p>
         </el-form-item>
       </el-form>
       <linkSetter

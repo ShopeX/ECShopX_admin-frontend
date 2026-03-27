@@ -35,8 +35,8 @@
               <el-image :src="require(`@/assets/img/ectapp/${item.key}.png`)" />
             </div>
             <div>
-              <div class="app-name">{{ item.title }}</div>
-              <div class="app-desc">{{ item.desc }}</div>
+              <div class="app-name">{{ $t(item.title) }}</div>
+              <div class="app-desc">{{ $t(item.desc) }}</div>
               <div class="app-action">
                 <el-button
                   v-if="!appStatus[item.key]"
@@ -44,9 +44,9 @@
                   plain
                   @click="onClickItem(item)"
                 >
-                  {{ item.button }}
+                  {{ $t(item.button) }}
                 </el-button>
-                <el-button v-else type="primary">已开通</el-button>
+                <el-button v-else type="primary">{{ $t('de4a0dff.3caba8') }}</el-button>
               </div>
             </div>
           </div>

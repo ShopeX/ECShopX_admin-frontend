@@ -1,7 +1,7 @@
 <template>
   <el-dialog :visible="dialogVisible" :fullscreen="true" @close="handleClose" append-to-body>
     <div>
-      <h1>图片裁剪</h1>
+      <h1>{{ $t('a696d8cc.1cb6db') }}</h1>
     </div>
 
     <div class="flex justify-center h-[calc(100vh-95px)]">
@@ -20,12 +20,12 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <el-radio-group v-model="aspectRatio" @change="handleAspectRatioChange">
-                <el-radio-button label="free">自由</el-radio-button>
+                <el-radio-button label="free">{{ $t('a696d8cc.0aaabc') }}</el-radio-button>
                 <el-radio-button label="1:1">1:1</el-radio-button>
                 <el-radio-button label="4:3">4:3</el-radio-button>
                 <el-radio-button label="16:9">16:9</el-radio-button>
               </el-radio-group>
-              <el-button @click="resetCropper" class="!ml-4">重置</el-button>
+              <el-button @click="resetCropper" class="!ml-4">{{ $t('a696d8cc.4b9c32') }}</el-button>
             </div>
 
             <div v-if="imageList.length > 1" class="flex items-center justify-center gap-4">
@@ -35,7 +35,7 @@
                 @click="goToImage(currentIndex - 1)"
                 icon="el-icon-arrow-left"
               >
-                上一张
+                {{ $t('a696d8cc.1d7cad') }}
               </el-button>
 
               <span class="text-sm text-gray-600"
@@ -47,35 +47,37 @@
                 :disabled="currentIndex === imageList.length - 1"
                 @click="goToImage(currentIndex + 1)"
               >
-                下一张
-                <i class="el-icon-arrow-right"></i>
+                {{ $t('a696d8cc.78374b') }}
+                <i class="el-icon-arrow-right" />
               </el-button>
             </div>
 
             <div class="flex items-center gap-2">
-              <el-button @click="handleClose"> 取消 </el-button>
-              <el-button type="primary" @click="handleSave" :loading="uploading"> 确认 </el-button>
+              <el-button @click="handleClose"> {{ $t('a696d8cc.625fb2') }} </el-button>
+              <el-button type="primary" @click="handleSave" :loading="uploading">
+                {{ $t('a696d8cc.e83a25') }}
+              </el-button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="w-80 border-l border-gray-200 p-6 overflow-y-auto">
-        <h3 class="mb-6">图片信息</h3>
+        <h3 class="mb-6">{{ $t('a696d8cc.5eacfe') }}</h3>
         <div>
-          <label class="text-sm mb-2 block">文件名</label>
+          <label class="text-sm mb-2 block">{{ $t('a696d8cc.29139c') }}</label>
           <div class="text-sm bg-gray-100 border border-gray-200 rounded px-3 py-2 mb-5">
             {{ currentImage?.image_name }}
           </div>
         </div>
 
         <div>
-          <label class="text-sm mb-2 block">替换文本</label>
+          <label class="text-sm mb-2 block">{{ $t('a696d8cc.dbe982') }}</label>
           <div class="flex items-center mb-5">
             <el-input
               v-model="formData.newImageName"
               type="text"
-              placeholder="请输入新的文件名"
+              :placeholder="$t('a696d8cc.d66416')"
               :maxlength="50"
               size="small"
               class="text-sm flex-1"
@@ -87,7 +89,7 @@
         </div>
 
         <div>
-          <label class="text-sm mb-2 block">详细信息</label>
+          <label class="text-sm mb-2 block">{{ $t('a696d8cc.4bcc9a') }}</label>
           <span>
             {{ getImageType(imageFileInfo?.type) }} / {{ imageFileInfo?.width }} ×
             {{ imageFileInfo?.height }} / {{ formatFileSize(imageFileInfo?.size) }}
@@ -101,13 +103,13 @@
               :disabled="aspectRatio !== 'free'"
               @change="handleLockAspectRatioChange"
             >
-              锁定纵横比
+              {{ $t('a696d8cc.77612d') }}
             </el-checkbox>
           </div>
 
           <div class="space-y-3">
             <div>
-              <label class="text-sm mb-1 block">宽度 (px)</label>
+              <label class="text-sm mb-1 block">{{ $t('a696d8cc.d66218') }}</label>
               <el-input
                 v-model="inputWidth"
                 type="number"
@@ -115,12 +117,11 @@
                 :max="maxWidth"
                 size="small"
                 @change="handleWidthChange"
-              >
-              </el-input>
+              />
             </div>
 
             <div>
-              <label class="text-sm mb-1 block">高度 (px)</label>
+              <label class="text-sm mb-1 block">{{ $t('a696d8cc.683c14') }}</label>
               <el-input
                 v-model="inputHeight"
                 type="number"
@@ -128,23 +129,20 @@
                 :max="maxHeight"
                 size="small"
                 @change="handleHeightChange"
-              >
-              </el-input>
+              />
             </div>
 
             <div v-if="cropCoordinates">
-              <label class="text-sm mb-1 block">X坐标</label>
+              <label class="text-sm mb-1 block">{{ $t('a696d8cc.f30659') }}</label>
               <div class="flex space-x-2">
-                <el-input :value="currentX" type="number" readonly size="small" class="flex-1">
-                </el-input>
+                <el-input :value="currentX" type="number" readonly size="small" class="flex-1" />
               </div>
             </div>
 
             <div v-if="cropCoordinates">
-              <label class="text-sm mb-1 block">Y坐标</label>
+              <label class="text-sm mb-1 block">{{ $t('a696d8cc.17a0bb') }}</label>
               <div class="flex space-x-2">
-                <el-input :value="currentY" type="number" readonly size="small" class="flex-1">
-                </el-input>
+                <el-input :value="currentY" type="number" readonly size="small" class="flex-1" />
               </div>
             </div>
           </div>
@@ -650,7 +648,7 @@ export default {
           })
           this.handleClose()
         } catch (error) {
-          this.$message.error('保存失败: ' + error.message)
+          this.$message.error(this.$t('a696d8cc.6de920') + ': ' + error.message)
         } finally {
           this.uploading = false
         }

@@ -18,18 +18,18 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
-            图片导航
+            {{ $t('fbbcb9a8.8ae4a2') }}
           </template>
           <template v-if="item.name === 'slider'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
-            轮播
+            {{ $t('fbbcb9a8.a5987d') }}
           </template>
         </div>
       </draggable>
       <el-button type="text" @click="handleShowConfig">
-        <i class="iconfont icon-cog" /> 小程序设置
+        <i class="iconfont icon-cog" /> {{ $t('fbbcb9a8.cc2d92') }}
       </el-button>
     </section>
     <section class="section section-white view-warp">
@@ -44,7 +44,7 @@
                 ') no-repeat bottom; background-size: 100% auto;'
               "
             >
-              <span>标题</span>
+              <span>{{ $t('fbbcb9a8.32c65d') }}</span>
             </div>
           </div>
           <draggable
@@ -102,17 +102,17 @@
                       item.selectedIconPath ||
                       'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  />
+                  >
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  />
+                  >
                 </template>
                 <div class="tab-text">
-                  {{ item.text }}
+                  {{ item.textKey ? $t(item.textKey) : item.text }}
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@
       <div class="setting-view">
         <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
-          请选择左侧挂件
+          {{ $t('fbbcb9a8.f646bd') }}
         </div>
         <navigationEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
         <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
@@ -130,7 +130,9 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">
+        {{ $t('fbbcb9a8.be5fbb') }}
+      </el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -153,9 +155,9 @@
       @closeStoreDialog="closeDialog"
     />
     <couponPicker :visible="couponsVisible" @pickCoupon="pickCoupon" @closeDialog="closeDialog" />
-    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="20">
+    <sideBar :visible.sync="show_sideBar" :title="$t('fbbcb9a8.cc2d92')" width="20">
       <el-form label-width="120px">
-        <el-form-item label="开启热门推荐">
+        <el-form-item :label="$t('fbbcb9a8.05ee0e')">
           <el-switch
             v-model="isOpenFaverite"
             :active-value="true"
@@ -164,7 +166,7 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item label="开启小程序定位">
+        <el-form-item :label="$t('fbbcb9a8.b41a1e')">
           <el-switch
             v-model="isOpenLocation"
             :active-value="true"
@@ -173,7 +175,7 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item label="开启扫码功能">
+        <el-form-item :label="$t('fbbcb9a8.a085b1')">
           <el-switch
             v-model="isOpenLocation"
             :active-value="true"
@@ -395,6 +397,7 @@ export default {
         data: [
           {
             pagePath: '/pages/index',
+            textKey: 'fbbcb9a8.db1c89',
             text: '首页',
             name: 'home',
             iconPath: '',
@@ -402,6 +405,7 @@ export default {
           },
           {
             pagePath: '/pages/category/index',
+            textKey: 'fbbcb9a8.d0771a',
             text: '分类',
             name: 'category',
             iconPath: '',
@@ -409,6 +413,7 @@ export default {
           },
           {
             pagePath: '/pages/cart/espier-index',
+            textKey: 'fbbcb9a8.c017be',
             text: '购物车',
             name: 'cart',
             iconPath: '',
@@ -416,6 +421,7 @@ export default {
           },
           {
             pagePath: '/pages/member/index',
+            textKey: 'fbbcb9a8.07b181',
             text: '我的',
             name: 'member',
             iconPath: '',
@@ -537,7 +543,7 @@ export default {
     },
     // 删除当前组件
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('fbbcb9a8.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
@@ -626,7 +632,7 @@ export default {
         if (!store.id) {
           this.relItemsIds.splice(0)
           this.$message({
-            message: '请选择店铺',
+            message: this.$t('fbbcb9a8.06accf'),
             type: 'error'
           })
           return
@@ -742,7 +748,7 @@ export default {
       const tabBar = await savePageParams(param)
       if (template && tabBar) {
         this.$message({
-          message: '保存成功',
+          message: this.$t('fbbcb9a8.3b1083'),
           type: 'success'
         })
       }

@@ -12,7 +12,7 @@ const routes = [
       aliasName: 'marketing',
       icon: 'sales-report',
       keepAlive: true,
-      title: '营销'
+      title: 'f58886c3.916801'
     },
     name: 'shopadminMarketing',
     path: '/shopadmin/marketing',
@@ -24,7 +24,7 @@ const routes = [
         meta: {
           aliasName: 'membermarketing',
           icon: 'icon-coupon',
-          title: '优惠券管理',
+          title: 'f58886c3.e3440a',
           permissions: ['marketing.coupon.membermarketing']
         },
         children: [
@@ -32,7 +32,7 @@ const routes = [
             path: 'editor',
             component: () => import('@/view/member/cardticket/edit'),
             meta: {
-              title: '编辑优惠券',
+              title: 'f58886c3.87b8c5',
               hidden: true
             }
           },
@@ -40,7 +40,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/member/cardticket/detail'),
             meta: {
-              title: '优惠券详情',
+              title: 'f58886c3.cb7034',
               hidden: true
             }
           }
@@ -53,7 +53,7 @@ const routes = [
         meta: {
           aliasName: 'coupongive',
           icon: 'icon-give',
-          title: '发券记录',
+          title: 'f58886c3.725e84',
           permissions: ['marketing.coupon.coupongive']
         },
         children: [
@@ -61,7 +61,7 @@ const routes = [
             path: 'detail/:id',
             component: () => import('@/view/member/coupon/giveErrorLog'),
             meta: {
-              title: '发放错误日志',
+              title: 'f58886c3.0901bf',
               hidden: true
             }
           }
@@ -74,7 +74,7 @@ const routes = [
         meta: {
           aliasName: 'marketingspluspricebuy',
           icon: 'icon-plus',
-          title: '加价购',
+          title: 'f58886c3.54e654',
           permissions: ['marketing.marketingspluspricebuy']
         },
         children: [
@@ -82,7 +82,7 @@ const routes = [
             path: 'editor/:marketing_id?',
             component: () => import('@/view/member/promotions/pluspricebuy/add'),
             meta: {
-              title: '编辑加价购',
+              title: 'f58886c3.26b2e2',
               hidden: true
             }
           }
@@ -95,7 +95,7 @@ const routes = [
         meta: {
           aliasName: 'marketingpackage',
           icon: 'icon-package',
-          title: '组合购',
+          title: 'f58886c3.3e9a00',
           permissions: ['marketing.marketingpackage']
         },
         children: [
@@ -112,7 +112,7 @@ const routes = [
         meta: {
           aliasName: 'limitedtimesale',
           icon: 'icon-time',
-          title: '限时特惠',
+          title: 'f58886c3.a0aaca',
           permissions: ['marketing.limitedtimesale']
         },
         children: [
@@ -120,7 +120,7 @@ const routes = [
             path: 'editor/:seckill_id?',
             component: () => import('@/view/member/promotions/limitedtimesale/add'),
             meta: {
-              title: '编辑限时特惠',
+              title: 'f58886c3.cccaa4',
               hidden: true
             }
           }
@@ -133,7 +133,7 @@ const routes = [
         meta: {
           aliasName: 'goodslimit',
           icon: 'icon-limit',
-          title: '商品限购',
+          title: 'f58886c3.44d46e',
           permissions: ['marketing.goodslimit']
         },
         children: [
@@ -141,7 +141,7 @@ const routes = [
             path: 'editor/:limit_id?',
             component: () => import('@/view/member/promotions/goodslimit/add'),
             meta: {
-              title: '编辑商品限购',
+              title: 'f58886c3.203870',
               hidden: true
             }
           }
@@ -154,7 +154,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsfulldiscount',
           icon: 'icon-discount',
-          title: '满折',
+          title: 'f58886c3.1c120b',
           permissions: ['marketing.marketingsfulldiscount']
         },
         children: [
@@ -171,7 +171,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsfullminus',
           icon: 'icon-minus',
-          title: '满减',
+          title: 'f58886c3.94b1fd',
           permissions: ['marketing.marketingsfullminus']
         },
         children: [
@@ -179,7 +179,7 @@ const routes = [
             path: 'editor/:marketing_id?',
             component: () => import('@/view/member/promotions/fullminus/add'),
             meta: {
-              title: '编辑满减',
+              title: 'f58886c3.a39453',
               hidden: true
             }
           }
@@ -192,7 +192,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsfullgift',
           icon: 'icon-gift',
-          title: '满赠管理',
+          title: 'f58886c3.1a4f21',
           permissions: ['marketing.marketingsfullgift']
         },
         children: [
@@ -200,7 +200,7 @@ const routes = [
             path: 'editor/:marketing_id?',
             component: () => import('@/view/member/promotions/fullgift/add'),
             meta: {
-              title: '编辑满赠',
+              title: 'f58886c3.595788',
               hidden: true
             }
           }
@@ -213,7 +213,7 @@ const routes = [
         meta: {
           aliasName: 'marketingseckill',
           icon: 'icon-seckill',
-          title: '限时秒杀',
+          title: 'f58886c3.92325c',
           permissions: ['shopadmin.marketing.marketingseckill']
         },
         children: [
@@ -221,7 +221,7 @@ const routes = [
             path: 'editor/:seckill_id?',
             component: () => import('@/view/member/promotions/seckill/add'),
             meta: {
-              title: '编辑秒杀',
+              title: 'f58886c3.7a075e',
               hidden: true
             }
           }
@@ -234,7 +234,7 @@ const routes = [
         meta: {
           aliasName: 'communitychief',
           icon: 'icon-chief',
-          title: '团长管理',
+          title: 'f58886c3.0303d0',
           permissions: ['marketing.community.communitychief']
         },
         children: [
@@ -242,7 +242,7 @@ const routes = [
             path: 'detail/:apply_id',
             component: () => import('@/view/mall/community/chiefDetail'),
             meta: {
-              title: '团长详情',
+              title: 'f58886c3.782c47',
               hidden: true
             }
           },
@@ -250,7 +250,7 @@ const routes = [
             path: 'approve',
             component: () => import('@/view/mall/community/chiefApprove'),
             meta: {
-              title: '团长审核',
+              title: 'f58886c3.e6c6bd',
               hidden: true
             }
           }
@@ -263,7 +263,7 @@ const routes = [
         meta: {
           aliasName: 'communityactivity',
           icon: 'icon-activity',
-          title: '活动管理',
+          title: 'f58886c3.d285a2',
           permissions: ['marketing.community.communityactivity']
         }
       },
@@ -274,7 +274,7 @@ const routes = [
         meta: {
           aliasName: 'communityorder',
           icon: 'icon-order',
-          title: '订单管理',
+          title: 'f58886c3.afcd11',
           permissions: ['marketing.community.communityorder']
         },
         children: [
@@ -282,7 +282,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/trade/order/detail'),
             meta: {
-              title: '订单详情',
+              title: 'f58886c3.8054f7',
               hidden: true
             }
           },
@@ -290,7 +290,7 @@ const routes = [
             path: 'process/:itemId?',
             component: () => import('@/view/mall/trade/order/process'),
             meta: {
-              title: '订单处理',
+              title: 'f58886c3.afbe0f',
               hidden: true
             }
           }
@@ -303,7 +303,7 @@ const routes = [
         meta: {
           aliasName: 'communitygoods',
           icon: 'icon-goods',
-          title: '活动商品',
+          title: 'f58886c3.42f9f7',
           permissions: ['marketing.community.communitygoods']
         }
       },
@@ -315,7 +315,7 @@ const routes = [
         meta: {
           aliasName: 'communitysetting',
           icon: 'icon-setting',
-          title: '活动配置',
+          title: 'f58886c3.b24f85',
           permissions: ['marketing.community.communitysetting']
         }
       },
@@ -326,7 +326,7 @@ const routes = [
         meta: {
           aliasName: 'communityachievement',
           icon: 'icon-achievement',
-          title: '团长业绩',
+          title: 'f58886c3.09cfa9',
           permissions: ['marketing.community.achievement']
         }
       },
@@ -337,7 +337,7 @@ const routes = [
         meta: {
           aliasName: 'withdraw',
           icon: 'icon-withdraw',
-          title: '提现申请',
+          title: 'f58886c3.33011e',
           permissions: ['marketing.community.withdraw']
         }
       },
@@ -348,7 +348,7 @@ const routes = [
         meta: {
           aliasName: 'employeepurchase',
           icon: 'icon-employee',
-          title: '内购',
+          title: 'f58886c3.d0465c',
           permissions: ['shopadmin.marketing.employee.purchase']
         },
         children: [
@@ -356,7 +356,7 @@ const routes = [
             path: '/',
             component: () => import('@/view/marketing/employee/list'),
             meta: {
-              title: '内购列表',
+              title: 'f58886c3.bf673c',
               hidden: true
             }
           },
@@ -364,7 +364,7 @@ const routes = [
             path: 'create/:id?',
             component: () => import('@/view/marketing/employee/purchase'),
             meta: {
-              title: '创建内购',
+              title: 'f58886c3.f652be',
               hidden: true
             }
           },
@@ -372,7 +372,7 @@ const routes = [
             path: 'result/:id',
             component: () => import('@/view/marketing/employee/result'),
             meta: {
-              title: '内购结果',
+              title: 'f58886c3.63ecba',
               hidden: true
             }
           },
@@ -380,7 +380,7 @@ const routes = [
             path: 'goods/:id',
             component: () => import('@/view/marketing/employee/addGoods'),
             meta: {
-              title: '添加商品',
+              title: 'f58886c3.fa3aee',
               hidden: true
             }
           },
@@ -388,7 +388,7 @@ const routes = [
             path: 'dependents/:id',
             component: () => import('@/view/marketing/employee/dependents'),
             meta: {
-              title: '家属管理',
+              title: 'f58886c3.b08ef3',
               hidden: true
             }
           }
@@ -401,7 +401,7 @@ const routes = [
         meta: {
           aliasName: 'purchase',
           icon: 'icon-purchase',
-          title: '员工内购',
+          title: 'f58886c3.6e5918',
           permissions: ['shopadmin.marketing.purchase']
         },
         children: [
@@ -409,7 +409,7 @@ const routes = [
             path: 'editor',
             component: () => import('@/view/member/promotions/purchase/editor'),
             meta: {
-              title: '编辑内购',
+              title: 'f58886c3.e90d30',
               hidden: true
             }
           },
@@ -417,7 +417,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/member/promotions/purchase/detail'),
             meta: {
-              title: '内购详情',
+              title: 'f58886c3.62c605',
               hidden: true
             }
           },
@@ -425,7 +425,7 @@ const routes = [
             path: 'dependents',
             component: () => import('@/view/member/promotions/purchase/dependents'),
             meta: {
-              title: '家属管理',
+              title: 'f58886c3.b08ef3',
               hidden: true
             }
           }
@@ -438,7 +438,7 @@ const routes = [
         meta: {
           aliasName: 'registrationactivity',
           icon: 'icon-registration',
-          title: '全部活动',
+          title: 'f58886c3.5e06be',
           permissions: ['shopadmin.marketing.apply.registrationactivity']
         },
         children: [
@@ -446,7 +446,7 @@ const routes = [
             path: 'editor',
             component: () => import('@/view/member/selfservice/registrationactivityadd'),
             meta: {
-              title: '编辑活动',
+              title: 'f58886c3.9bd915',
               hidden: true
             }
           }
@@ -459,7 +459,7 @@ const routes = [
         meta: {
           aliasName: 'registrationrecord',
           icon: 'icon-record',
-          title: '报名记录',
+          title: 'f58886c3.42a5b5',
           permissions: ['shopadmin.marketing.apply.registrationrecord']
         },
         children: [
@@ -467,7 +467,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/member/selfservice/registrationrecordetail'),
             meta: {
-              title: '记录详情',
+              title: 'f58886c3.7424a4',
               hidden: true
             }
           },
@@ -475,7 +475,7 @@ const routes = [
             path: 'editor',
             component: () => import('@/view/member/selfservice/regRecordUpload'),
             meta: {
-              title: '记录编辑',
+              title: 'f58886c3.f880b2',
               hidden: true
             }
           }

@@ -6,7 +6,7 @@
 <template>
   <div class="links">
     <ul>
-      <template v-for="item in links">
+      <template v-for="item in linksTranslated">
         <li
           v-if="item.value !== 'store'"
           :key="item.value"
@@ -47,83 +47,39 @@ export default {
   },
   data() {
     return {
-      links: [
-        {
-          label: '商品',
-          value: 'goods'
-        },
-        {
-          label: '店铺',
-          value: 'store'
-        },
-        {
-          label: '销售分类',
-          value: 'sale_category'
-        },
-        {
-          label: '管理分类',
-          value: 'management_category'
-        },
-        {
-          label: '商品标签',
-          value: 'tag'
-        },
-        {
-          label: '文章',
-          value: 'article'
-        },
-        {
-          label: '软文',
-          value: 'planting'
-        },
-        {
-          label: '页面',
-          value: 'link'
-        },
-        // {
-        //   label: '营销',
-        //   value: 'marketing'
-        // },
-        {
-          label: '活动报名',
-          value: 'regactivity'
-        },
-        {
-          label: '内购活动',
-          value: 'purchase_activity'
-        },
-        {
-          label: '秒杀',
-          value: 'seckill'
-        },
-        {
-          label: '自定义页面',
-          value: 'custom_page'
-        },
-        {
-          label: '直播',
-          value: 'liverooms'
-        },
-        {
-          label: '外部小程序',
-          value: 'other_wxapp'
-        }
-      ],
       current: ''
     }
   },
-  created() {
-    if (this.showlinks.length) {
-      this.links = this.links.filter((item) => {
-        return this.showlinks.includes(item.value)
-      })
+  computed: {
+    linksTranslated() {
+      const t = this.$t.bind(this)
+      let links = [
+        { label: t('ce0d67f5.9897d8'), value: 'goods' },
+        { label: t('ce0d67f5.295713'), value: 'store' },
+        { label: t('ce0d67f5.392d49'), value: 'sale_category' },
+        { label: t('ce0d67f5.b3ed9f'), value: 'management_category' },
+        { label: t('ce0d67f5.0f394b'), value: 'tag' },
+        { label: t('ce0d67f5.c75625'), value: 'article' },
+        { label: t('ce0d67f5.e8f87a'), value: 'planting' },
+        { label: t('ce0d67f5.59ceff'), value: 'link' },
+        { label: t('ce0d67f5.2bc045'), value: 'regactivity' },
+        { label: t('ce0d67f5.dc7202'), value: 'purchase_activity' },
+        { label: t('ce0d67f5.55c758'), value: 'seckill' },
+        { label: t('ce0d67f5.cee6eb'), value: 'custom_page' },
+        { label: t('ce0d67f5.7bbe8e'), value: 'liverooms' },
+        { label: t('ce0d67f5.f5a0d7'), value: 'other_wxapp' }
+      ]
+      if (this.showlinks && this.showlinks.length) {
+        links = links.filter((item) => this.showlinks.includes(item.value))
+      }
+      if (this.$route.path === '/store/storemanager/marketingdistributor') {
+        links = links.filter((item) => item.value !== 'custom_page')
+      }
+      return links
     }
   },
+  created() {},
   mounted() {
-    if (this.$route.path === '/store/storemanager/marketingdistributor') {
-      let index = this.links.findIndex((n) => n.value == 'custom_page')
-      this.links.splice(index, 1)
-    }
     this.current = this.type
   },
   methods: {

@@ -40,13 +40,13 @@
   <div class="sp-countdown">
     <div class="count-down-timer">
       <div class="timer">{{ day }}</div>
-      <div class="dot">天</div>
+      <div class="dot">{{ $t('25b83a9f.249aba') }}</div>
       <div class="timer">{{ hour }}</div>
-      <div class="dot">时</div>
+      <div class="dot">{{ $t('25b83a9f.609b5f') }}</div>
       <div class="timer">{{ min }}</div>
-      <div class="dot">分</div>
+      <div class="dot">{{ $t('25b83a9f.daf783') }}</div>
       <div class="timer">{{ sec }}</div>
-      <div class="dot">秒</div>
+      <div class="dot">{{ $t('25b83a9f.0c1fec') }}</div>
       <div class="describe">{{ describe }}</div>
     </div>
   </div>

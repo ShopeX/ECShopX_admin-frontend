@@ -75,18 +75,18 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset" :label-width="110">
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="params.mobile" placeholder="请输入手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('ff557c54.ce2bf3')">
+          <el-input v-model="params.mobile" :placeholder="$t('ff557c54.6e4f4b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_SHUYUN()" prop="username" label="微信昵称:">
-          <el-input v-model="params.username" placeholder="请输入微信昵称" />
+        <SpFilterFormItem v-if="!VERSION_SHUYUN()" prop="username" :label="$t('ff557c54.652ced')">
+          <el-input v-model="params.username" :placeholder="$t('ff557c54.32b6e8')" />
         </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!VERSION_IN_PURCHASE()"
           prop="vip_grade"
-          :label="!VERSION_SHUYUN() ? '会员身份:' : '付费会员等级:'"
+          :label="!VERSION_SHUYUN() ? $t('ff557c54.71d220') : $t('ff557c54.939890')"
         >
-          <el-select v-model="params.vip_grade" clearable placeholder="请选择">
+          <el-select v-model="params.vip_grade" clearable :placeholder="$t('ff557c54.708c9d')">
             <el-option
               v-for="item in vipGrade"
               :key="item.lv_type"
@@ -95,8 +95,12 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="grade_id" label="会员等级:">
-          <el-select v-model="params.grade_id" clearable placeholder="请选择">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="grade_id"
+          :label="$t('ff557c54.3b387e')"
+        >
+          <el-select v-model="params.grade_id" clearable :placeholder="$t('ff557c54.708c9d')">
             <el-option
               v-for="item in levelData"
               :key="item.grade_id"
@@ -105,10 +109,14 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="reg_salesperson" label="注册导购:">
-          <el-input v-model="params.reg_salesperson" placeholder="输入导购手机号" />
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="reg_salesperson"
+          :label="$t('ff557c54.645caa')"
+        >
+          <el-input v-model="params.reg_salesperson" :placeholder="$t('ff557c54.6ebdc6')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="created" label="注册日期:">
+        <SpFilterFormItem prop="created" :label="$t('ff557c54.38d169')">
           <el-date-picker
             v-model="created"
             unlink-panels
@@ -116,9 +124,9 @@
             align="right"
             format="yyyy-MM-dd"
             value-format="yyyy-MM-dd"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('ff557c54.981cbe')"
+            :start-placeholder="$t('ff557c54.b44c0f')"
+            :end-placeholder="$t('ff557c54.1d468b')"
             prefix-icon="null"
             :picker-options="pickerOptions"
             @change="dateChange"
@@ -127,35 +135,47 @@
         <!-- <SpFilterFormItem prop="wechat_nickname" label="微信昵称:">
             <el-input v-model="params.wechat_nickname" placeholder="请输入微信昵称" />
           </SpFilterFormItem> -->
-        <SpFilterFormItem prop="remarks" label="备注:">
-          <el-input v-model="params.remarks" placeholder="备注" />
+        <SpFilterFormItem prop="remarks" :label="$t('ff557c54.55bea7')">
+          <el-input v-model="params.remarks" :placeholder="$t('ff557c54.2432b5')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="have_consume" label="购买记录:">
-          <el-select v-model="params.have_consume" placeholder="请选择" clearable>
-            <el-option label="有记录" value="true" />
-            <el-option label="无记录" value="false" />
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="have_consume"
+          :label="$t('ff557c54.51a5cd')"
+        >
+          <el-select v-model="params.have_consume" :placeholder="$t('ff557c54.708c9d')" clearable>
+            <el-option :label="$t('ff557c54.e64690')" value="true" />
+            <el-option :label="$t('ff557c54.edd98a')" value="false" />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="role" label="角色:">
-          <el-select v-model="params.role" placeholder="请选择" clearable>
+        <SpFilterFormItem prop="role" :label="$t('ff557c54.e1f833')">
+          <el-select v-model="params.role" :placeholder="$t('ff557c54.708c9d')" clearable>
             <el-option
               v-for="item in roleList"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.label)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="reg_distributor" label="注册店铺:">
-          <SpSelectShop v-model="params.reg_distributor" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="reg_distributor" :label="$t('ff557c54.163992')">
+          <SpSelectShop
+            v-model="params.reg_distributor"
+            clearable
+            :placeholder="$t('ff557c54.708c9d')"
+          />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="store_name" label="归属店铺:">
-          <SpSelectShop v-model="params.store_name" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="store_name" :label="$t('ff557c54.69837d')">
+          <SpSelectShop
+            v-model="params.store_name"
+            clearable
+            :placeholder="$t('ff557c54.708c9d')"
+          />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="employee_number" label="归属导购:">
-          <el-input v-model="params.employee_number" placeholder="输入导购手机号" />
+        <SpFilterFormItem prop="employee_number" :label="$t('ff557c54.ee1fb4')">
+          <el-input v-model="params.employee_number" :placeholder="$t('ff557c54.6ebdc6')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="birthday" label="生日:">
+        <SpFilterFormItem prop="birthday" :label="$t('ff557c54.803b81')">
           <el-date-picker
             v-model="birthday"
             unlink-panels
@@ -163,20 +183,20 @@
             align="right"
             format="yyyy-MM-dd"
             value-format="yyyy-MM-dd"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('ff557c54.981cbe')"
+            :start-placeholder="$t('ff557c54.b44c0f')"
+            :end-placeholder="$t('ff557c54.1d468b')"
             prefix-icon="null"
             :picker-options="pickerOptions"
             @change="birthdayChange"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="tag_id" label="标签:">
+        <SpFilterFormItem prop="tag_id" :label="$t('ff557c54.4d4b82')">
           <div class="flex items-center gap-2">
             <el-input
               readonly
               :value="tagSelectValue"
-              placeholder="请选择人群标签"
+              :placeholder="$t('ff557c54.278c26')"
               style="flex: 1"
               @click.native="showCrowdTagDialog = true"
             >
@@ -200,29 +220,37 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" @click="showTagDialog = true"> 打标签 </el-button>
+        <el-button type="primary" @click="showTagDialog = true">
+{{
+          $t('ff557c54.fedbca')
+        }}
+</el-button>
         <el-button v-if="!VERSION_IN_PURCHASE()" type="primary" @click="onSelectCoupon">
-          发放优惠券
+          {{ $t('ff557c54.afa583') }}
         </el-button>
         <el-button v-if="!IS_DISTRIBUTOR()" type="primary" @click="batchActionDialog('send_sms')">
-          群发短信
+          {{ $t('ff557c54.43e10b') }}
         </el-button>
         <el-button
           v-if="!IS_DISTRIBUTOR() && !VERSION_IN_PURCHASE()"
           type="primary"
           @click="handleVipGradeDelay(false)"
         >
-          付费会员延期
+          {{ $t('ff557c54.54dfae') }}
         </el-button>
         <el-button
           v-if="!IS_DISTRIBUTOR() && !VERSION_IN_PURCHASE() && !VERSION_SHUYUN()"
           type="primary"
           @click="batchActionDialog('set_grade')"
         >
-          会员等级设置
+          {{ $t('ff557c54.1eaeee') }}
         </el-button>
-        <el-button type="primary" @click="batchActionDialog('change_shop')"> 更换店铺 </el-button>
-        <el-button type="primary" @click="exportData"> 导出 </el-button>
+        <el-button type="primary" @click="batchActionDialog('change_shop')">
+{{
+          $t('ff557c54.2b518f')
+        }}
+</el-button>
+        <el-button type="primary" @click="exportData">{{ $t('ff557c54.55405e') }}</el-button>
       </div>
 
       <SpFinder
@@ -241,7 +269,11 @@
         @selection-change="handleSelectionChange"
       />
 
-      <el-dialog title="会员下载" :visible.sync="downloadView" :close-on-click-modal="false">
+      <el-dialog
+        :title="$t('ff557c54.d6d933')"
+        :visible.sync="downloadView"
+        :close-on-click-modal="false"
+      >
         <template v-if="downloadUrl">
           <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
@@ -261,41 +293,37 @@
                 focus
                 type="textarea"
                 :rows="4"
-                placeholder="请输入短信内容"
+                :placeholder="$t('ff557c54.56ad80')"
                 @blur="checkNum"
               />
               <span>{{ sms_content.length }}</span>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="onSmsSends"> 确定发送 </el-button>
+              <el-button type="primary" @click="onSmsSends">{{ $t('ff557c54.3ceeb0') }}</el-button>
             </el-form-item>
           </el-form>
           <template>
             <el-alert
-              title="短信基础"
+              :title="$t('ff557c54.5703c0')"
               type="info"
-              description="1、短信字符<=67个字符，按照70个字符一条短信计算；短信内容中，汉字、字母、符号、数字、空格全按一个字符算，不分半角、全角。含有标签（如短信签名、商品名、链接）的短信以实际发送时字符数计算；超过规定的67个字符的短信内容将会被拆分为两条或多条短信
-                              2、短信内容禁止有‘测试，test，错乱字符’等，这类短信会被拦截不予发送。
-                              3、短信接收不到原因：手机号黑名单发送不了；内容不正规不允发送；时间段导致延迟；被手机拦截软件拦截；该手机号短信接收上限；该手机号状态不正常（欠费，停机，空号，信号不正常）详询客服
-                              4、 短信内容切记出现敏感类字眼，如出现有的话，系统是发送不出去被拦截掉的哦。
-                              5、 短信内容当中不允许出现两个【】或 ⎣⎤ 括弧"
+              :description="$t('ff557c54.7620dc')"
             />
             <el-alert
-              title="营销短信（手动输入的短信）"
+              :title="$t('ff557c54.fe1e74')"
               type="info"
-              description="营销短信发送时间为8：00~21:00，双十一双十二大促期间，短信发送时间可24小时。"
+              :description="$t('ff557c54.3dd7a6')"
             />
             <el-alert
-              title="短信限制注意事项"
+              :title="$t('ff557c54.d2a1b2')"
               type="info"
-              description="1、通知短信加营销短信同一号码月限制50条。2、相同内容，相同手机号，日限制2条，第3条会被拦截。"
+              :description="$t('ff557c54.c06d10')"
             />
           </template>
         </template>
 
         <template v-if="params.action_type == 'vip_delay'">
           <el-form label-width="100px">
-            <el-form-item class="content-center" label="付费会员类型">
+            <el-form-item class="content-center" :label="$t('ff557c54.ae0bd7')">
               <el-row>
                 <el-col :span="8">
                   <el-select v-model="vipGradeDelay.vip_grade_id" style="width: 100%">
@@ -309,17 +337,17 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item class="content-center" label="延期条件">
+            <el-form-item class="content-center" :label="$t('ff557c54.480f8d')">
               <el-row>
                 <el-col :span="8">
                   <el-select v-model="vipGradeDelay.filter" style="width: 100%">
-                    <el-option key="users" label="指定会员 或 指定条件" value="users" />
-                    <el-option key="expired" label="付费会员已失效" value="expired" />
+                    <el-option key="users" :label="$t('ff557c54.715055')" value="users" />
+                    <el-option key="expired" :label="$t('ff557c54.f659da')" value="expired" />
                   </el-select>
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item class="content-center" label="延期天数">
+            <el-form-item class="content-center" :label="$t('ff557c54.e279cb')">
               <el-row>
                 <el-col :span="8">
                   <el-input v-model="vipGradeDelay.add_day" />
@@ -327,14 +355,18 @@
               </el-row>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="handleVipGradeDelay(true)"> 确定延期 </el-button>
+              <el-button type="primary" @click="handleVipGradeDelay(true)">
+{{
+                $t('ff557c54.bb47cb')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
 
         <template v-if="params.action_type == 'set_grade'">
           <el-form label-width="100px">
-            <el-form-item class="content-center" label="会员等级">
+            <el-form-item class="content-center" :label="$t('ff557c54.6c1583')">
               <el-row>
                 <el-col :span="8">
                   <el-select v-model="gradeForm.grade_id" style="width: 100%">
@@ -348,7 +380,7 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item class="content-center" label="备注">
+            <el-form-item class="content-center" :label="$t('ff557c54.2432b5')">
               <el-row>
                 <el-col :span="20">
                   <el-input v-model="gradeForm.remarks" focus type="textarea" :rows="3" />
@@ -356,7 +388,11 @@
               </el-row>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="gradeUpdateSubmit"> 确定修改 </el-button>
+              <el-button type="primary" @click="gradeUpdateSubmit">
+{{
+                $t('ff557c54.49d2ff')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -366,7 +402,7 @@
             <el-input
               v-model="salesmanPaging.mobile"
               class="input-m"
-              placeholder="导购手机号"
+              :placeholder="$t('ff557c54.d3ef8d')"
               clearable
             >
               <el-button slot="append" icon="el-icon-search" @click="salesmanSearch" />
@@ -374,7 +410,7 @@
             <el-input
               v-model="salesmanPaging.name"
               class="input-m"
-              placeholder="导购姓名"
+              :placeholder="$t('ff557c54.cf6d0a')"
               clearable
             >
               <el-button slot="append" icon="el-icon-search" @click="salesmanSearch" />
@@ -387,8 +423,8 @@
             @row-click="handleSalesmanChange"
           >
             <el-table-column label="ID" prop="salesperson_id" />
-            <el-table-column label="导购员" prop="salesman_name" />
-            <el-table-column label="手机号" prop="mobile" />
+            <el-table-column :label="$t('ff557c54.a6d9eb')" prop="salesman_name" />
+            <el-table-column :label="$t('ff557c54.8098e2')" prop="mobile" />
           </el-table>
           <el-pagination
             class="content-center content-padded"
@@ -402,8 +438,16 @@
             @current-change="handleCurrentChange"
           />
           <div class="content-padded content-center">
-            <el-button type="default" @click="dialogIsShow = false"> 取消 </el-button>
-            <el-button type="primary" @click="setSalesman(true)"> 确定 </el-button>
+            <el-button type="default" @click="dialogIsShow = false">
+{{
+              $t('ff557c54.625fb2')
+            }}
+</el-button>
+            <el-button type="primary" @click="setSalesman(true)">
+{{
+              $t('ff557c54.38cf16')
+            }}
+</el-button>
           </div>
         </template>
 
@@ -431,7 +475,7 @@
                     v-model="basicInfo[key]"
                     style="width: 100%"
                     type="date"
-                    placeholder="选择日期"
+                    :placeholder="$t('ff557c54.2bebdd')"
                     :disabled="datapass_block == 1"
                     :clearable="false"
                     :editable="false"
@@ -447,7 +491,7 @@
                     :disabled="datapass_block == 1"
                   >
                     <el-option
-                      v-for="sex in sexoption"
+                      v-for="sex in sexoptionList"
                       :key="sex.value"
                       :label="sex.label"
                       :value="sex.value"
@@ -474,7 +518,7 @@
                     filterable
                     allow-create
                     default-first-option
-                    placeholder="请选择爱好"
+                    :placeholder="$t('ff557c54.f3f8dd')"
                   >
                     <el-option
                       v-for="ha_item in item.items"
@@ -487,40 +531,48 @@
               </template>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="infoUpdateSubmit"> 确定修改 </el-button>
+              <el-button type="primary" @click="infoUpdateSubmit">
+{{
+                $t('ff557c54.49d2ff')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
       </el-dialog>
 
       <el-dialog
-        title="修改会员手机号"
+        :title="$t('ff557c54.c62ca6')"
         class="right-dialog"
         :visible.sync="editMobileDialog"
         :before-close="handleCancelLabelsDialog"
       >
         <template>
           <el-form>
-            <el-form-item label-width="100px" label="会员名称">
+            <el-form-item label-width="100px" :label="$t('ff557c54.5b0f22')">
               {{ form.username }}
             </el-form-item>
-            <el-form-item label-width="100px" label="原手机号">
+            <el-form-item label-width="100px" :label="$t('ff557c54.1c6fb6')">
               {{ form.oldMobile }}
             </el-form-item>
-            <el-form-item label-width="100px" label="新手机号">
-              <el-input v-model="form.newMobile" placeholder="手机号" />
+            <el-form-item label-width="100px" :label="$t('ff557c54.0c228e')">
+              <el-input v-model="form.newMobile" :placeholder="$t('ff557c54.8098e2')" />
             </el-form-item>
             <el-form-item class="content-center ml-[30px]">
-              <el-button type="primary" @click="onEditMobileSubmit"> 确定添加 </el-button>
+              <el-button type="primary" @click="onEditMobileSubmit">
+{{
+                $t('ff557c54.b04fcb')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
         <template>
           <el-table v-loading="loading" :data="operateLog" height="580" border>
-            <el-table-column prop="old_data" label="原手机号" />
-            <el-table-column prop="new_data" label="修改后手机号" />
-            <el-table-column prop="operater" label="操作员" />
-            <el-table-column prop="created" label="操作时间">
+            <el-table-column prop="old_data" :label="$t('ff557c54.1c6fb6')" />
+            <el-table-column prop="new_data" :label="$t('ff557c54.5c725a')" />
+            <el-table-column prop="operater" :label="$t('ff557c54.676e59')" />
+            <el-table-column prop="created" :label="$t('ff557c54.7e951d')">
               <template slot-scope="scope">
                 <span>{{ scope.row.created | formatTimestamp }}</span>
               </template>
@@ -541,7 +593,11 @@
               <el-input v-model="remarksForm.input" :placeholder="remarksForm.placeholder" />
             </el-form-item>
             <el-form-item class="content-center ml-[50px]">
-              <el-button type="primary" @click="editRemarks()"> 确定 </el-button>
+              <el-button type="primary" @click="editRemarks()">
+{{
+                $t('ff557c54.38cf16')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -549,13 +605,13 @@
 
       <!-- 调整上下级弹框 -->
       <el-dialog
-        title="调整上级"
+        :title="$t('ff557c54.23ced7')"
         :visible.sync="editSuperiorVisible"
         :before-close="handleCancelSuperior"
       >
         <el-row :gutter="10">
           <el-col :md="8" :lg="10">
-            <el-input v-model="identifierModal" placeholder="请输入手机号">
+            <el-input v-model="identifierModal" :placeholder="$t('ff557c54.6e4f4b')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearchModal" />
             </el-input>
           </el-col>
@@ -566,18 +622,21 @@
           :data="modalList"
           style="width: 100%"
           :height="400"
-          element-loading-text="数据加载中..."
+          :element-loading-text="$t('ff557c54.6d7faa')"
           highlight-current-row
           @current-change="handleCurrentChangeUpLV"
         >
           <el-table-column type="index" width="50" />
-          <el-table-column prop="username" label="姓名" />
-          <el-table-column prop="mobile" label="手机号" />
-          <!-- <el-table-column prop="promoter_grade_name" label="推广员等级" /> -->
-          <el-table-column prop="disabled" label="状态">
+          <el-table-column prop="username" :label="$t('ff557c54.60d045')" />
+          <el-table-column prop="mobile" :label="$t('ff557c54.8098e2')" />
+          <el-table-column prop="disabled" :label="$t('ff557c54.3fea7c')">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini"> 有效 </el-tag>
-              <el-tag v-else type="info" size="mini"> 无效 </el-tag>
+              <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
+{{
+                $t('ff557c54.c6cc39')
+              }}
+</el-tag>
+              <el-tag v-else type="info" size="mini">{{ $t('ff557c54.1abbb1') }}</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -591,8 +650,12 @@
           />
         </div>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button @click.native="handleCancelSuperior"> 取消 </el-button>
-          <el-button type="primary" @click="submitSuperiorAction"> 确定 </el-button>
+          <el-button @click.native="handleCancelSuperior">{{ $t('ff557c54.625fb2') }}</el-button>
+          <el-button type="primary" @click="submitSuperiorAction">
+{{
+            $t('ff557c54.38cf16')
+          }}
+</el-button>
         </div>
       </el-dialog>
 
@@ -607,11 +670,15 @@
       </template>
 
       <!-- 批量打标签弹框 -->
-      <CompTagsMore title="批量打标签" :visible.sync="showTagDialog" @confirm="handleTagConfirm" />
+      <CompTagsMore
+        :title="$t('ff557c54.4f1e39')"
+        :visible.sync="showTagDialog"
+        @confirm="handleTagConfirm"
+      />
 
       <!-- 人群达标标签选择弹框 -->
       <CompTagsMore
-        title="标签选择"
+        :title="$t('ff557c54.fb7b49')"
         :visible.sync="showCrowdTagDialog"
         :selected-tags="selectedCrowdTags"
         @confirm="handleCrowdTagConfirm"
@@ -759,7 +826,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: this.$t('ff557c54.56ee10'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -768,7 +835,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: this.$t('ff557c54.335dfc'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -777,7 +844,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: this.$t('ff557c54.d96eb4'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -788,18 +855,9 @@ export default {
         ]
       },
       sexoption: [
-        {
-          value: '0',
-          label: '未知'
-        },
-        {
-          value: '1',
-          label: '男'
-        },
-        {
-          value: '2',
-          label: '女'
-        }
+        { value: '0', label: '未知' },
+        { value: '1', label: '男' },
+        { value: '2', label: '女' }
       ],
       membersSetting: [],
       basicInfo: {
@@ -845,6 +903,13 @@ export default {
     setting() {
       return finderSetting(this)
     },
+    sexoptionList() {
+      return [
+        { value: '0', label: this.$t('ff557c54.1622dc') },
+        { value: '1', label: this.$t('ff557c54.36a490') },
+        { value: '2', label: this.$t('ff557c54.87c835') }
+      ]
+    },
     // 标签选择器显示值
     tagSelectValue() {
       if (this.selectedCrowdTags.length === 0) {
@@ -853,7 +918,7 @@ export default {
       if (this.selectedCrowdTags.length === 1) {
         return this.selectedCrowdTags[0].tag_name
       }
-      return `已选择${this.selectedCrowdTags.length}个标签`
+      return this.$t('ff557c54.731737', { count: this.selectedCrowdTags.length })
     },
     // 清除按钮是否显示
     clearTagBtnVisible() {
@@ -897,7 +962,7 @@ export default {
     },
     gradeUpdate(row) {
       this.params.action_type = 'set_grade'
-      this.dialogTitle = '修改指定会员等级'
+      this.dialogTitle = this.$t('ff557c54.1f7120')
       this.dialogIsShow = true
       this.gradeForm.user_id = row.user_id
       this.gradeForm.grade_id = row.grade_id
@@ -907,7 +972,7 @@ export default {
     },
     infoUpdate(value) {
       this.params.action_type = 'basic_info'
-      this.dialogTitle = '修改会员基础信息'
+      this.dialogTitle = this.$t('ff557c54.523fb8')
       this.dialogIsShow = true
       this.basicInfo.user_id = value.user_id
       this.basicInfo.username = value.username
@@ -941,7 +1006,7 @@ export default {
     },
     infoUpdateSubmit() {
       updateMemberBasicInfo(this.basicInfo).then((res) => {
-        this.$message({ type: 'success', message: '修改成功' })
+        this.$message({ type: 'success', message: this.$t('ff557c54.69be67') })
         this.$refs.finder.refresh()
         this.dialogIsShow = false
       })
@@ -950,19 +1015,19 @@ export default {
       if (!this.gradeForm.grade_id) {
         this.$message({
           type: 'error',
-          message: '没有指定等级'
+          message: this.$t('ff557c54.ccd519')
         })
         return
       }
       if (this.is_batch === false) {
         updateMemberGrade(this.gradeForm).then((res) => {
-          this.$message({ type: 'success', message: '修改成功' })
+          this.$message({ type: 'success', message: this.$t('ff557c54.69be67') })
           this.$refs.finder.refresh()
           this.dialogIsShow = false
         })
       } else {
         this.params.grade_form = JSON.stringify(this.gradeForm)
-        this.batchAction('是否给全部会员指定会员等级?')
+        this.batchAction(this.$t('ff557c54.13daef'))
       }
     },
     editRemarks() {
@@ -975,7 +1040,7 @@ export default {
         params.name = this.remarksForm.input
       }
       updateMemberInfo({ ...params }).then((res) => {
-        this.$message({ type: 'success', message: '更新成功' })
+        this.$message({ type: 'success', message: this.$t('ff557c54.55aa63') })
         this.isEditRemarks = false
         this.$refs.finder.refresh()
       })
@@ -985,18 +1050,18 @@ export default {
       if (val == 'remarks') {
         this.remarksForm = {
           user_id: row.user_id,
-          title: '修改会员备注',
-          label: '备注',
-          placeholder: '请输入备注',
+          title: this.$t('ff557c54.29e3df'),
+          label: this.$t('ff557c54.2432b5'),
+          placeholder: this.$t('ff557c54.3cac63'),
           type: 'remarks',
           input: row.remarks
         }
       } else {
         this.remarksForm = {
           user_id: row.user_id,
-          title: '修改会员用户名',
-          label: '用户名',
-          placeholder: '请输入用户名',
+          title: this.$t('ff557c54.559382'),
+          label: this.$t('ff557c54.819767'),
+          placeholder: this.$t('ff557c54.08b1fa'),
           type: 'name',
           input: row.name
         }
@@ -1191,7 +1256,7 @@ export default {
         if (this.vipGradeDelay.add_day <= 0) {
           this.$message({
             type: 'error',
-            message: '请输入正确的延期天数'
+            message: this.$t('ff557c54.1220ce')
           })
           return
         }
@@ -1199,14 +1264,14 @@ export default {
           this.params.user_id = this.user_id
         }
         this.params.vip_grade_form = JSON.stringify(this.vipGradeDelay)
-        this.batchAction('是否给全部会员进行付费会员延期?')
+        this.batchAction(this.$t('ff557c54.a423a5'))
       } else {
         this.params.action_type = 'vip_delay'
-        this.dialogTitle = '付费会员延期'
+        this.dialogTitle = this.$t('ff557c54.54dfae')
         if (this.vipGrade.length <= 0) {
           this.$message({
             type: 'error',
-            message: '无付费会员'
+            message: this.$t('ff557c54.f4dcc8')
           })
           return
         }
@@ -1216,8 +1281,8 @@ export default {
     },
     checkNum() {
       if (this.sms_content.length > 67) {
-        this.$alert('当前短信内容字数超出67，将会分成多条发送', '', {
-          confirmButtonText: '确定'
+        this.$alert(this.$t('ff557c54.878c9e'), '', {
+          confirmButtonText: this.$t('ff557c54.38cf16')
         })
       }
     },
@@ -1225,31 +1290,31 @@ export default {
       if (!this.sms_content) {
         this.$message({
           type: 'error',
-          message: '短信内容不能为空'
+          message: this.$t('ff557c54.27a383')
         })
         return
       }
       this.params.sms_content = this.sms_content
 
       if (this.user_id.length > 0) {
-        this.$confirm('确定发送该条短信给会员?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('ff557c54.5d25ed'), this.$t('ff557c54.02d981'), {
+          confirmButtonText: this.$t('ff557c54.38cf16'),
+          cancelButtonText: this.$t('ff557c54.625fb2'),
           type: 'warning'
         })
           .then(() => {
             this.params.action_type = 'send_sms'
-            this.batchAction('确定发送该条短信给会员?')
+            this.batchAction(this.$t('ff557c54.5d25ed'))
           })
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消发送'
+              message: this.$t('ff557c54.a8344d')
             })
           })
       } else {
         this.params.action_type = 'send_sms'
-        this.batchAction('是否给全部会员发短信?')
+        this.batchAction(this.$t('ff557c54.ae5d50'))
       }
     },
     clearParams() {
@@ -1277,9 +1342,9 @@ export default {
           }
         })
       } else {
-        this.$confirm(message, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(message, this.$t('ff557c54.02d981'), {
+          confirmButtonText: this.$t('ff557c54.38cf16'),
+          cancelButtonText: this.$t('ff557c54.625fb2'),
           type: 'warning'
         })
           .then(() => {
@@ -1303,7 +1368,7 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('ff557c54.2111cc')
             })
             this.params.tag_ids = []
             this.params.couponsids = []
@@ -1324,20 +1389,20 @@ export default {
       if (!this.form.newMobile) {
         this.$message({
           type: 'error',
-          message: '请填写手机号码'
+          message: this.$t('ff557c54.395447')
         })
         return
       }
-      this.$confirm('确定要修改该会员手机号？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('ff557c54.fb25bd'), this.$t('ff557c54.02d981'), {
+        cancelButtonText: this.$t('ff557c54.625fb2'),
+        confirmButtonText: this.$t('ff557c54.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             updateMemberMobile(this.form).then((res) => {
               this.$message({
                 type: 'success',
-                message: '修改手机号成功'
+                message: this.$t('ff557c54.57ee28')
               })
               this.$refs.finder.refresh()
               this.editMobileDialog = false
@@ -1372,7 +1437,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('ff557c54.3e1ddd')
           })
           this.$export_open('member')
           return
@@ -1383,7 +1448,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('ff557c54.89ae53')
           })
           return
         }
@@ -1415,10 +1480,10 @@ export default {
     },
     acitonDisabled(index, row) {
       if (row.is_disabled === true) {
-        var msg = '此操作将会禁用该会员，是否继续?'
-        this.$confirm(msg, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        var msg = this.$t('ff557c54.556277')
+        this.$confirm(msg, this.$t('ff557c54.02d981'), {
+          confirmButtonText: this.$t('ff557c54.38cf16'),
+          cancelButtonText: this.$t('ff557c54.625fb2'),
           type: 'warning'
         }).then(() => {
           let params = {
@@ -1442,10 +1507,10 @@ export default {
     switchChief(index, row) {
       console.log(row.is_chief)
       if (row.is_chief == 1) {
-        var msg = '此操作将设置为团长，是否继续?'
-        this.$confirm(msg, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        var msg = this.$t('ff557c54.5cb062')
+        this.$confirm(msg, this.$t('ff557c54.02d981'), {
+          confirmButtonText: this.$t('ff557c54.38cf16'),
+          cancelButtonText: this.$t('ff557c54.625fb2'),
           type: 'warning'
         }).then(() => {
           let params = {
@@ -1457,7 +1522,7 @@ export default {
           })
         })
       } else {
-        this.$message({ type: 'error', message: '取消团长，请联系管理员' })
+        this.$message({ type: 'error', message: this.$t('ff557c54.3666db') })
         this.$refs.finder.refresh()
         // let params = {
         //   'user_id': row.user_id,
@@ -1474,7 +1539,7 @@ export default {
         tag_id: tagId,
         user_id: userId
       })
-      this.$message({ type: 'success', message: '修改成功' })
+      this.$message({ type: 'success', message: this.$t('ff557c54.69be67') })
       this.$refs.finder.refresh()
     },
     changeStaffCouponsPage(currentPage) {
@@ -1545,7 +1610,7 @@ export default {
           new_user_id: this.currentRow
         })
         this.$message({
-          message: '调整上下级成功',
+          message: this.$t('ff557c54.2b8558'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -1585,7 +1650,7 @@ export default {
           })
           this.$message({
             type: 'success',
-            message: '更换店铺成功'
+            message: this.$t('ff557c54.9c4b8a')
           })
           this.$refs.finder.refresh()
           return
@@ -1598,18 +1663,18 @@ export default {
       this.dialogIsShow = true
       if (actiontype == 'send_sms') {
         this.sms_content = ''
-        this.dialogTitle = '群发短信'
+        this.dialogTitle = this.$t('ff557c54.43e10b')
       } else if (actiontype == 'vip_delay') {
-        this.dialogTitle = '付费会员延期'
+        this.dialogTitle = this.$t('ff557c54.54dfae')
       } else if (actiontype == 'set_grade') {
         this.gradeForm.user_id = ''
         this.gradeForm.grade_id = ''
         this.gradeForm.old_grade_id = ''
         this.gradeForm.remarks = ''
         this.is_batch = true
-        this.dialogTitle = '修改会员等级'
+        this.dialogTitle = this.$t('ff557c54.306c74')
       } else if (actiontype == 'set_saleman') {
-        this.dialogTitle = '设置导购员'
+        this.dialogTitle = this.$t('ff557c54.0c4f72')
       }
     },
 
@@ -1631,7 +1696,7 @@ export default {
       if (this.params.tag_ids.length <= 0) {
         this.$message({
           type: 'error',
-          message: '没有选中标签'
+          message: this.$t('ff557c54.19cf67')
         })
         return
       }
@@ -1644,7 +1709,7 @@ export default {
       if (!tags || tags.length == 0) {
         this.$message({
           type: 'error',
-          message: '请选择标签'
+          message: this.$t('ff557c54.ce7cf5')
         })
         return
       }

@@ -45,17 +45,18 @@ export default {
   data() {
     return {
       visible: false,
-      info: {},
-
-      search_options: [
-        { label: '等待中', value: '1' },
-        { label: '群发成功', value: '2' },
-        { label: '群发失败', value: '3' },
-        { label: '已撤销', value: '4' }
-      ]
+      info: {}
     }
   },
   computed: {
+    search_options() {
+      return [
+        { label: this.$t('2736c8ab.65dd9e'), value: '1' },
+        { label: this.$t('2736c8ab.4e9e4e'), value: '2' },
+        { label: this.$t('2736c8ab.fb96e4'), value: '3' },
+        { label: this.$t('2736c8ab.50239f'), value: '4' }
+      ]
+    },
     setting() {
       return setting_(this)
     }
@@ -69,14 +70,14 @@ export default {
     },
     afterSearch() {},
     async deleteSMS(id) {
-      const message = '选择确定后，群发定时任务将会撤销。'
+      const message = this.$t('2736c8ab.0a4df9')
       this.$confirm(message, '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('2736c8ab.38cf16'),
+        cancelButtonText: this.$t('2736c8ab.625fb2'),
         type: 'warning'
       }).then(async () => {
         const result = await deleteTaskSms({ id })
-        this.$message.success('撤销成功')
+        this.$message.success(this.$t('2736c8ab.8e05b0'))
         this.$refs.finder.refresh(true)
       })
     },

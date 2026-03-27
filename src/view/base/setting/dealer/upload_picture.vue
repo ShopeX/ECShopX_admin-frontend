@@ -15,10 +15,7 @@
       <!-- 企业信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span
-            >企业信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、&lt;、
-            &gt;）</span
-          >
+          <span>{{ $t('8ee30f4c.8cedf1') }}</span>
         </div>
         <div class="content">
           <div class="wrap">
@@ -28,12 +25,12 @@
                 v-if="form.social_credit_code_url"
                 :src="form.social_credit_code_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>* 三证合一码</span>
+                <span>{{ $t('8ee30f4c.f8ad8a') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="企业商户必传，小微商户不传"
+                  :content="$t('8ee30f4c.6ff214')"
                   placement="right-end"
                   effect="light"
                 >
@@ -47,8 +44,8 @@
                 v-if="form.legal_certId_front_url"
                 :src="form.legal_certId_front_url"
                 class="avatar"
-              />
-              <span>* 法人/小微负责人身份证正面</span>
+              >
+              <span>{{ $t('8ee30f4c.3b8889') }}</span>
             </el-form-item>
             <el-form-item prop="legal_cert_id_back_url">
               <image-upload type="03" @successHandle="successHandle" />
@@ -56,18 +53,18 @@
                 v-if="form.legal_cert_id_back_url"
                 :src="form.legal_cert_id_back_url"
                 class="avatar"
-              />
-              <span>* 法人/小微负责人身份证反面</span>
+              >
+              <span>{{ $t('8ee30f4c.41d556') }}</span>
             </el-form-item>
 
             <el-form-item prop="store_url">
               <image-upload type="04" @successHandle="successHandle" />
-              <img v-if="form.store_url" :src="form.store_url" class="avatar" />
+              <img v-if="form.store_url" :src="form.store_url" class="avatar">
               <div class="row">
-                <span>门店</span>
+                <span>{{ $t('8ee30f4c.a7da92') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="若入驻的费率类型为线下时必传"
+                  :content="$t('8ee30f4c.9f8190')"
                   placement="right-end"
                   effect="light"
                 >
@@ -82,17 +79,17 @@
                 v-if="form.cert_front_image_url"
                 :src="form.cert_front_image_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>股东身份证正面</span>
+                <span>{{ $t('8ee30f4c.54b5e6') }}</span>
               </div>
             </el-form-item>
 
             <el-form-item prop="cert_back_image_url">
               <image-upload type="07" @successHandle="successHandle" />
-              <img v-if="form.cert_back_image_url" :src="form.cert_back_image_url" class="avatar" />
+              <img v-if="form.cert_back_image_url" :src="form.cert_back_image_url" class="avatar">
               <div class="row">
-                <span>股东身份证反面</span>
+                <span>{{ $t('8ee30f4c.74953d') }}</span>
               </div>
             </el-form-item>
           </div>
@@ -101,10 +98,7 @@
       <!-- 结算卡图片信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span
-            >结算卡图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、&lt;、
-            &gt;）</span
-          >
+          <span>{{ $t('8ee30f4c.3e1e1a') }}</span>
         </div>
         <div class="content">
           <div class="wrap">
@@ -114,9 +108,9 @@
                 v-if="form.account_opening_permit_url"
                 :src="form.account_opening_permit_url"
                 class="avatar"
-              />
+              >
               <div class="row" style="margin-top: 10px; line-height: 20px">
-                <span>* 开户许可证/小微负责人<br />银行卡正面照</span>
+                <span v-html="$t('8ee30f4c.1cb8d7')" />
               </div>
             </el-form-item>
 
@@ -126,9 +120,9 @@
                 v-if="form.settle_account_certificate_url"
                 :src="form.settle_account_certificate_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>结算账号开户证明</span>
+                <span>{{ $t('8ee30f4c.c9e980') }}</span>
               </div>
             </el-form-item>
           </div>
@@ -137,18 +131,15 @@
       <!-- 其他图片信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span
-            >其他图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、&lt;、
-            &gt;））</span
-          >
+          <span>{{ $t('8ee30f4c.674392') }}</span>
         </div>
         <div class="content">
           <div class="wrap">
             <el-form-item prop="web_pic_url">
               <image-upload type="09" @successHandle="successHandle" />
-              <img v-if="form.web_pic_url" :src="form.web_pic_url" class="avatar" />
+              <img v-if="form.web_pic_url" :src="form.web_pic_url" class="avatar">
               <div class="row">
-                <span>网站截图</span>
+                <span>{{ $t('8ee30f4c.b78de5') }}</span>
               </div>
             </el-form-item>
 
@@ -158,12 +149,12 @@
                 v-if="form.industry_qualify_doc_license_url"
                 :src="form.industry_qualify_doc_license_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>行业资质文件</span>
+                <span>{{ $t('8ee30f4c.94edf5') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="特殊行业需上传（如：游戏类、直播类、小说图书类）"
+                  :content="$t('8ee30f4c.e3be07')"
                   placement="right-end"
                   effect="light"
                 >
@@ -178,18 +169,18 @@
                 v-if="form.icp_registration_license_url"
                 :src="form.icp_registration_license_url"
                 class="avatar"
-              />
-              <span>ICP备案许可证明/许可证编码</span>
+              >
+              <span>{{ $t('8ee30f4c.6a3236') }}</span>
             </el-form-item>
 
             <el-form-item prop="lease_contract_url">
               <image-upload type="12" @successHandle="successHandle" />
-              <img v-if="form.lease_contract_url" :src="form.lease_contract_url" class="avatar" />
+              <img v-if="form.lease_contract_url" :src="form.lease_contract_url" class="avatar">
               <div class="row">
-                <span>租赁合同</span>
+                <span>{{ $t('8ee30f4c.b63f94') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="如经营场所照片无法体现经营内容时上传"
+                  :content="$t('8ee30f4c.b2a63a')"
                   placement="right-end"
                   effect="light"
                 >
@@ -204,12 +195,12 @@
                 v-if="form.transaction_test_record_url"
                 :src="form.transaction_test_record_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>交易测试记录</span>
+                <span>{{ $t('8ee30f4c.75e222') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="商户在业务网址或商城地址上测试的交易记录截图"
+                  :content="$t('8ee30f4c.b7475c')"
                   placement="right-end"
                   effect="light"
                 >
@@ -224,12 +215,12 @@
                 v-if="form.buss_support_materials_url"
                 :src="form.buss_support_materials_url"
                 class="avatar"
-              />
+              >
               <div class="row">
-                <span>业务场景证明材料</span>
+                <span>{{ $t('8ee30f4c.8ff681') }}</span>
                 <el-tooltip
                   :style="{ 'margin-left': 10 + 'px' }"
-                  content="如经营场所照片无法体现经营内容时上传"
+                  :content="$t('8ee30f4c.b2a63a')"
                   placement="right-end"
                   effect="light"
                 >
@@ -243,24 +234,24 @@
       <!-- 其他信息填写 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>其他信息</span>
+          <span>{{ $t('8ee30f4c.febe40') }}</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="商城地址" prop="business_add" label-width="100px">
+            <el-form-item :label="$t('8ee30f4c.8283e5')" prop="business_add" label-width="100px">
               <el-input v-model="form.business_add" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="股东身份证姓名" prop="cert_name" label-width="100px">
+            <el-form-item :label="$t('8ee30f4c.03ce2d')" prop="cert_name" label-width="100px">
               <el-input v-model="form.cert_name" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="股东身份证号" prop="cert_id" label-width="100px">
+            <el-form-item :label="$t('8ee30f4c.a5dd77')" prop="cert_id" label-width="100px">
               <div class="flex">
                 <el-input v-model="form.cert_id" placeholder="" />
-                <el-tooltip content="身份证信息字母X需大写" placement="top-end" effect="light">
+                <el-tooltip :content="$t('8ee30f4c.43e031')" placement="top-end" effect="light">
                   <i class="el-icon-warning-outline" />
                 </el-tooltip>
               </div>
@@ -268,23 +259,30 @@
           </el-col>
           <el-col :span="10">
             <el-form-item
-              label="行业资质文件类型"
+              :label="$t('8ee30f4c.4e17b1')"
               prop="industry_qualify_doc_type"
               label-width="140px"
             >
-              <el-select v-model="form.industry_qualify_doc_type" placeholder="请选择活动区域">
-                <el-option label="无" value="" />
-                <el-option label="游戏类" value="1" />
-                <el-option label="直播类" value="2" />
-                <el-option label="小说图书类" value="3" />
-                <el-option label="其他" value="4" />
+              <el-select
+                v-model="form.industry_qualify_doc_type"
+                :placeholder="$t('8ee30f4c.00a0a7')"
+              >
+                <el-option :label="$t('8ee30f4c.d81bb2')" value="" />
+                <el-option :label="$t('8ee30f4c.ee9b1e')" value="1" />
+                <el-option :label="$t('8ee30f4c.d52f0c')" value="2" />
+                <el-option :label="$t('8ee30f4c.92c2c6')" value="3" />
+                <el-option :label="$t('8ee30f4c.0d98c7')" value="4" />
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button type="primary" @click="submitForm('ruleForm')"> 提交审核 </el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">
+{{
+          $t('8ee30f4c.646db0')
+        }}
+</el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -303,8 +301,8 @@
     />
     <check-box
       :visible="checkBoxConfig.visible"
-      :message="checkBoxConfig.message"
-      :info="checkBoxConfig.info"
+      :message="$t('8ee30f4c.8af517')"
+      :info="checkBoxInfo"
       :is_sms="checkBoxConfig.is_sms"
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
@@ -324,6 +322,11 @@ export default {
     loadingBtn,
     checkBox
   },
+  computed: {
+    checkBoxInfo() {
+      return [{ type: 'checkbox', value: this.$t('8ee30f4c.c3edab') }]
+    }
+  },
   data() {
     return {
       isGetImage: false,
@@ -334,7 +337,7 @@ export default {
       checkBoxConfig: {
         visible: false,
         message: '请确认信息无误！',
-        info: [{ type: 'checkbox', value: '审核结果将有短信提醒发送至注册手机号' }],
+        info: [{ type: 'checkbox', valueKey: '8ee30f4c.c3edab' }],
         is_sms: true
       },
       currentStatus: {
@@ -368,10 +371,26 @@ export default {
       },
       apiData: {},
       rules: {
-        social_credit_code_url: { required: true, message: '请选择', trigger: 'change' },
-        legal_certId_front_url: { required: true, message: '请选择', trigger: 'change' },
-        legal_cert_id_back_url: { required: true, message: '请选择', trigger: 'change' },
-        account_opening_permit_url: { required: true, message: '请选择', trigger: 'change' }
+        social_credit_code_url: {
+          required: true,
+          message: () => this.$t('8ee30f4c.708c9d'),
+          trigger: 'change'
+        },
+        legal_certId_front_url: {
+          required: true,
+          message: () => this.$t('8ee30f4c.708c9d'),
+          trigger: 'change'
+        },
+        legal_cert_id_back_url: {
+          required: true,
+          message: () => this.$t('8ee30f4c.708c9d'),
+          trigger: 'change'
+        },
+        account_opening_permit_url: {
+          required: true,
+          message: () => this.$t('8ee30f4c.708c9d'),
+          trigger: 'change'
+        }
       }
     }
   },
@@ -392,14 +411,14 @@ export default {
             resultStatus: 'succeeded',
             time: SubmitLicense.update_time,
             info: '',
-            title: '证照信息'
+            title: this.$t('8ee30f4c.8f14f8')
           }
         } else if (SubmitLicense.audit_status == 'R') {
           this.currentStatus = {
             resultStatus: 'failed',
             time: SubmitLicense.update_time,
             info: SubmitLicense.audit_desc,
-            title: '证照信息'
+            title: this.$t('8ee30f4c.8f14f8')
           }
         }
       }
@@ -473,7 +492,7 @@ export default {
           this.apiData.buss_support_materials_url = file_url
           break
       }
-      this.$message.success('上传成功')
+      this.$message.success(this.$t('8ee30f4c.a7699b'))
     },
     submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
@@ -503,7 +522,7 @@ export default {
             resultStatus: 'pending',
             time: '',
             info: '',
-            title: '证照信息'
+            title: this.$t('8ee30f4c.8f14f8')
           }
         }
         this.checkBoxVisibleHandle()

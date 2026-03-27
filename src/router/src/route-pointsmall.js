@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '积分商城'
+const name = '99756e5a.a13364'
 import Layout from '@/view/layout' // 主框架
 
 export default {

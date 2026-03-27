@@ -12,13 +12,13 @@
           <el-input
             v-model="params.keywords"
             class="input-b"
-            placeholder="策略名称"
+            :placeholder="$t('747889dc.53cf41')"
             @change="origincountrySearch"
           >
             <el-button slot="append" icon="el-icon-search" @click="origincountrySearch" />
           </el-input>
           <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-            新增策略
+            {{ $t('747889dc.e8075e') }}
           </el-button>
         </el-col>
       </el-row>
@@ -28,17 +28,19 @@
           v-loading="loading"
           :data="list"
           :height="wheight - 300"
-          element-loading-text="数据加载中"
+          :element-loading-text="$t('747889dc.f09b12')"
         >
-          <el-table-column label="操作" width="150">
+          <el-table-column :label="$t('747889dc.2b6bc0')" width="150">
             <template slot-scope="scope">
               <el-button type="text" @click="handleEdit(scope.$index, scope.row, true)">
-                编辑
+                {{ $t('747889dc.95b351') }}
               </el-button>
-              <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+              <el-button type="text" @click="handleDelete(scope)">
+                {{ $t('747889dc.2f4aad') }}
+              </el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="attribute_name" label="策略名称" width="300">
+          <el-table-column prop="attribute_name" :label="$t('747889dc.53cf41')" width="300">
             <template slot-scope="scope">
               <div>{{ scope.row.taxstrategy_name }}</div>
             </template>
@@ -111,11 +113,11 @@ export default {
 
     // 删除
     handleDelete(data) {
-      this.$confirm('确认删除该策略么？')
+      this.$confirm(this.$t('747889dc.142b48'))
         .then((_) => {
           delTaxstrategy(data.row.id, []).then((res) => {
             this.list.splice(data.$index, 1)
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('2d1c35f7.33130f') })
           })
         })
         .catch((_) => {})

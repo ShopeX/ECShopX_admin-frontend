@@ -38,7 +38,7 @@ export default {
       return (
         <el-select v-model={this.value[key]} size='mini' onChange={(e) => onchange(e, this)}>
           {options.map((op) => (
-            <el-option label={op.label} value={op.value} />
+            <el-option label={this.$t(op.label)} value={op.value} />
           ))}
         </el-select>
       )
@@ -65,7 +65,7 @@ export default {
                 this.value[key] = ''
               }}
             >
-              重置
+              {this.$t('8b258060.4b9c32')}
             </el-button>
             <div class='color-swatch' style={{ backgroundColor: displayColor }}>
               <el-color-picker v-model={this.value[key]} size='small' />
@@ -90,7 +90,7 @@ export default {
       return (
         <el-radio-group v-model={this.value[key]}>
           {options.map((op) => (
-            <el-radio label={op.label}>{op.name}</el-radio>
+            <el-radio label={op.label}>{this.$t(op.name)}</el-radio>
           ))}
         </el-radio-group>
       )
@@ -99,7 +99,7 @@ export default {
       return (
         <el-radio-group v-model={this.value[key]} size='mini' onChange={(e) => onchange(e, this)}>
           {options.map((op) => (
-            <el-radio-button label={op.label}>{op.name}</el-radio-button>
+            <el-radio-button label={op.label}>{this.$t(op.name)}</el-radio-button>
           ))}
         </el-radio-group>
       )
@@ -109,7 +109,7 @@ export default {
         <el-checkbox-group min={min} v-model={this.value[key]} onChange={(e) => onchange(e, this)}>
           {options.map((op) => (
             <el-checkbox label={op.label} key={op.label}>
-              {op.name}
+              {this.$t(op.name)}
             </el-checkbox>
           ))}
         </el-checkbox-group>
@@ -135,6 +135,7 @@ export default {
         'bgPic',
         'backgroundImg',
         'newNavigateStyle',
+        'immersiveScrollBgColor',
         'newPageBackgroundStyle',
         'limitedTimeBackground',
         'navitembordercolor',
@@ -292,11 +293,11 @@ export default {
               }
             ]}
           >
-            {hasLabel && <div class='cell-label'>{item.label}</div>}
+            {hasLabel && <div class='cell-label'>{this.$t(item.label)}</div>}
             <div class='cell-value'>
               <div class='cell-value-content'>{renderComp(item)}</div>
               {(item.tip || item.tips) && (
-                <div class='cell-value-tip' domPropsInnerHTML={item.tip || item.tips} />
+                <div class='cell-value-tip' domPropsInnerHTML={this.$t(item.tip || item.tips)} />
               )}
             </div>
           </div>
@@ -309,7 +310,7 @@ export default {
 
       return groups.map(({ groupName, items }) => (
         <div class='setting-group' key={groupName}>
-          <div class='setting-group-header'>{groupName}</div>
+          <div class='setting-group-header'>{this.$t(groupName)}</div>
           <div class='setting-group-content'>{renderSettings(items)}</div>
         </div>
       ))
@@ -324,23 +325,23 @@ export default {
         {/* 商品挂件布局选择器 */}
         {this.isGoodsWidget && (
           <div class='layout-selector-wrapper'>
-            <div class='layout-selector-label'>商品排列</div>
+            <div class='layout-selector-label'>{this.$t('8b258060.b9e017')}</div>
             <CompLayoutSelector
               value={this.layoutValue}
               on-input={(val) => {
                 this.layoutValue = val
               }}
               options={[
-                { label: '默认排列', value: 'default' },
-                { label: '一行一个', value: 'one' },
-                { label: '一行两个', value: 'two' },
-                { label: '一行三个', value: 'three' }
+                { label: this.$t('8b258060.323bad'), value: 'default' },
+                { label: this.$t('8b258060.93c144'), value: 'one' },
+                { label: this.$t('8b258060.412d79'), value: 'two' },
+                { label: this.$t('8b258060.41061c'), value: 'three' }
               ]}
             />
           </div>
         )}
         <el-tabs v-model={this.activeTab} class='attr-panel-tabs'>
-          <el-tab-pane label='内容设置' name='content'>
+          <el-tab-pane label={this.$t('8b258060.c6b063')} name='content'>
             <div class='attr-panel-content'>
               {hasContentGroups && renderGroupedSettings(this.groupedSettings.content)}
               {this.groupedSettings.contentUngrouped.length > 0 &&
@@ -350,7 +351,7 @@ export default {
                 renderSettings(this.contentSettings)}
             </div>
           </el-tab-pane>
-          <el-tab-pane label='样式设置' name='style'>
+          <el-tab-pane label={this.$t('8b258060.4bd8b8')} name='style'>
             <div class='attr-panel-content'>
               {hasStyleGroups && renderGroupedSettings(this.groupedSettings.style)}
               {this.groupedSettings.styleUngrouped.length > 0 &&

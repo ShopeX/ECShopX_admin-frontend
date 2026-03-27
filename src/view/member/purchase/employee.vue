@@ -8,24 +8,24 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="queryForm.mobile" placeholder="请输入手机号码" />
+        <SpFilterFormItem prop="mobile" :label="$t('5a5739e5.ce2bf3')">
+          <el-input v-model="queryForm.mobile" :placeholder="$t('5a5739e5.ff95a4')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="account" label="账号:">
-          <el-input v-model="queryForm.account" placeholder="请输入账号" />
+        <SpFilterFormItem prop="account" :label="$t('5a5739e5.9c3929')">
+          <el-input v-model="queryForm.account" :placeholder="$t('5a5739e5.f821a7')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="email" label="邮箱:">
-          <el-input v-model="queryForm.email" placeholder="请输入邮箱" />
+        <SpFilterFormItem prop="email" :label="$t('5a5739e5.cc8ae2')">
+          <el-input v-model="queryForm.email" :placeholder="$t('5a5739e5.dbf6d0')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="member_mobile" label="会员手机号:">
-          <el-input v-model="queryForm.member_mobile" placeholder="请输入会员手机号" />
+        <SpFilterFormItem prop="member_mobile" :label="$t('5a5739e5.468c2b')">
+          <el-input v-model="queryForm.member_mobile" :placeholder="$t('5a5739e5.c0e45d')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="enterprise_id" label="企业:" size="max">
+        <SpFilterFormItem prop="enterprise_id" :label="$t('5a5739e5.3c0a34')" size="max">
           <el-select
             v-model="queryForm.enterprise_id"
             v-scroll="() => pagesQuery.nextPage()"
             multiple
-            placeholder="请选择"
+            :placeholder="$t('5a5739e5.708c9d')"
           >
             <el-option
               v-for="(item, index) in enterpriseList"
@@ -35,19 +35,25 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-          <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="distributor_id" :label="$t('5a5739e5.16f2bc')">
+          <SpSelectShop
+            v-model="queryForm.distributor_id"
+            clearable
+            :placeholder="$t('5a5739e5.708c9d')"
+          />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addEmployee">
-          添加员工
+          {{ $t('5a5739e5.2ef46a') }}
         </el-button>
         <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
-          导入员工
+          {{ $t('5a5739e5.4580b9') }}
         </el-button>
-        <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
+        <el-button type="primary" plain @click="handleExport">
+          {{ $t('5a5739e5.55405e') }}
+        </el-button>
       </div>
 
       <SpFinder
@@ -64,7 +70,7 @@
       <SpDialog
         ref="addDialogRef"
         v-model="addDialog"
-        :title="employeeForm.id ? '编辑员工' : '添加员工'"
+        :title="employeeForm.id ? $t('5a5739e5.53f6b9') : $t('5a5739e5.2ef46a')"
         :modal="false"
         :form="employeeForm"
         :form-list="employeeFormList"
@@ -79,10 +85,13 @@
 import { createSetting } from '@shopex-ui/finder'
 import Pages from '@/utils/pages'
 import { VALIDATE_TYPES } from './consts'
+import { i18n } from '@/i18n'
 
 export default {
   name: '',
   data() {
+    const t = (key) => i18n.t(key)
+    const self = this
     return {
       queryForm: {
         mobile: '',
@@ -96,88 +105,61 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '编辑',
+            name: () => t('5a5739e5.95b351'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
               //平台：来源店铺是非平台则隐藏
-              return !(this.IS_ADMIN() && row.distributor_id != '0')
+              return !(self.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
-                Object.keys(this.employeeForm).forEach((key) => (this.employeeForm[key] = row[key]))
-                this.addDialog = true
+                Object.keys(self.employeeForm).forEach((key) => (self.employeeForm[key] = row[key]))
+                self.addDialog = true
               }
             }
           },
           {
-            name: '删除',
+            name: () => t('5a5739e5.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'text',
             //平台：来源店铺是非平台则隐藏
             visible: (row) => {
-              return !(this.IS_ADMIN() && row.distributor_id != '0')
+              return !(self.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认是否删除？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
+                await self.$confirm(t('5a5739e5.f29cc1'), t('5a5739e5.02d981'), {
+                  confirmButtonText: t('5a5739e5.38cf16'),
+                  cancelButtonText: t('5a5739e5.625fb2')
                 })
-                await this.$api.member.deleteEmployee(row.id)
-                this.$refs['finder'].refresh()
+                await self.$api.member.deleteEmployee(row.id)
+                self.$refs['finder'].refresh()
               }
             }
           }
         ],
         columns: [
-          { name: '手机号', key: 'mobile' },
+          { name: t('5a5739e5.8098e2'), key: 'mobile' },
+          { name: t('5a5739e5.60d045'), key: 'name' },
           {
-            name: '姓名',
-            key: 'name'
-          },
-          {
-            name: '登录类型',
+            name: t('5a5739e5.78cbe8'),
             key: 'auth_type',
             formatter: (value, { auth_type }, col) => {
-              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
-              return authType
+              const authType = self.validateTypeList.find((item) => item.value == auth_type)
+              return authType ? authType.name : ''
             }
           },
-          {
-            name: '账号',
-            key: 'account'
-          },
-          {
-            name: '密码',
-            key: 'auth_code'
-          },
-          {
-            name: '邮箱',
-            key: 'email'
-          },
-          {
-            name: '来源店铺',
-            key: 'distributor_name'
-          },
-          {
-            name: '企业ID',
-            key: 'enterprise_id'
-          },
-          {
-            name: '企业名称',
-            key: 'enterprise_name'
-          },
-          {
-            name: '企业编码',
-            key: 'enterprise_sn'
-          },
-          {
-            name: '会员手机号',
-            key: 'member_mobile'
-          }
+          { name: t('5a5739e5.7035c6'), key: 'account' },
+          { name: t('5a5739e5.a81052'), key: 'auth_code' },
+          { name: t('5a5739e5.3bc5e6'), key: 'email' },
+          { name: t('5a5739e5.53cc55'), key: 'distributor_name' },
+          { name: t('5a5739e5.5a83cb'), key: 'enterprise_id' },
+          { name: t('5a5739e5.f47e27'), key: 'enterprise_name' },
+          { name: t('5a5739e5.705f0a'), key: 'enterprise_sn' },
+          { name: t('5a5739e5.6a52ee'), key: 'member_mobile' }
         ]
       }),
       addDialog: false,
@@ -194,108 +176,77 @@ export default {
       },
       employeeFormList: [
         {
-          label: '选择企业',
+          label: t('5a5739e5.0067d7'),
           key: 'enterprise_id',
           component: () => (
             <el-select
-              v-model={this.employeeForm.enterprise_id}
-              v-scroll={() => this.pages.nextPage()}
+              v-model={self.employeeForm.enterprise_id}
+              v-scroll={() => self.pages.nextPage()}
               filterable
             >
-              {this.companyList.map((item, index) => (
+              {self.companyList.map((item, index) => (
                 <el-option key={`company-item__${index}`} label={item.name} value={item.id} />
               ))}
             </el-select>
           ),
           validator: (rule, value, callback) => {
-            if (value) {
-              callback()
-            } else {
-              callback('请选择企业')
-            }
+            if (value) callback()
+            else callback(t('5a5739e5.321fa5'))
           }
         },
         {
-          label: '姓名',
+          label: t('5a5739e5.60d045'),
           key: 'name',
           type: 'input',
           required: true,
-          message: '不能为空'
+          message: t('5a5739e5.281bad')
         },
         {
-          label: '手机号',
+          label: t('5a5739e5.8098e2'),
           key: 'mobile',
           type: 'input',
-          isShow: () => {
-            return this.authType == 'mobile' || this.authType == 'qr_code'
-          },
+          isShow: () => self.authType == 'mobile' || self.authType == 'qr_code',
           validator: (rule, value, callback) => {
-            if (this.authType == 'mobile' || this.authType == 'qr_code') {
-              if (value) {
-                callback()
-              } else {
-                callback('不能为空')
-              }
-            } else {
-              callback()
-            }
+            if (self.authType == 'mobile' || self.authType == 'qr_code') {
+              if (value) callback()
+              else callback(t('5a5739e5.281bad'))
+            } else callback()
           }
         },
         {
-          label: '账号',
+          label: t('5a5739e5.7035c6'),
           key: 'account',
           type: 'input',
-          isShow: () => {
-            return this.authType == 'account'
-          },
+          isShow: () => self.authType == 'account',
           validator: (rule, value, callback) => {
-            if (this.authType == 'account') {
-              if (value) {
-                callback()
-              } else {
-                callback('不能为空')
-              }
-            } else {
-              callback()
-            }
+            if (self.authType == 'account') {
+              if (value) callback()
+              else callback(t('5a5739e5.281bad'))
+            } else callback()
           }
         },
         {
-          label: '密码',
+          label: t('5a5739e5.a81052'),
           key: 'auth_code',
           type: 'input',
-          isShow: () => {
-            return this.authType == 'account'
-          },
+          isShow: () => self.authType == 'account',
           validator: (rule, value, callback) => {
-            if (this.authType == 'account') {
-              if (value) {
-                callback()
-              } else {
-                callback('不能为空')
-              }
-            } else {
-              callback()
-            }
+            if (self.authType == 'account') {
+              if (value) callback()
+              else callback(t('5a5739e5.281bad'))
+            } else callback()
           }
         },
         {
-          label: '邮箱',
+          label: t('5a5739e5.cc8ae2'),
           key: 'email',
           type: 'input',
-          isShow: () => {
-            return this.authType == 'email'
-          },
+          isShow: () => self.authType == 'email',
           validator: (rule, value, callback) => {
-            if (this.authType == 'email') {
-              if (value) {
-                callback()
-              } else {
-                callback('不能为空')
-              }
-            } else {
-              callback()
-            }
+            if (self.authType == 'email') {
+              if (value) callback()
+              else callback(t('5a5739e5.281bad'))
+            } else callback()
           }
         }
       ]
@@ -306,6 +257,19 @@ export default {
       const { auth_type } =
         this.companyList.find((item) => item.id == this.employeeForm.enterprise_id) || {}
       return auth_type
+    },
+    validateTypeList() {
+      const keys = {
+        '': '5a5739e5.a8b0c2',
+        mobile: '5a5739e5.8098e2',
+        account: '5a5739e5.bc1f2d',
+        email: '5a5739e5.3bc5e6',
+        qr_code: '5a5739e5.22b03c'
+      }
+      return VALIDATE_TYPES.map((item) => ({
+        ...item,
+        name: this.$t(keys[item.value] || '5a5739e5.a8b0c2')
+      }))
     }
   },
   created() {
@@ -341,7 +305,7 @@ export default {
       if (response.status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('5a5739e5.3e1ddd')
         })
         this.$export_open('employee_purchase_employees')
         return
@@ -352,7 +316,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '无内容可导出 或 执行失败，请检查重试'
+          message: this.$t('5a5739e5.89ae53')
         })
         return
       }

@@ -7,17 +7,15 @@
   <SpPage>
     <el-row :gutter="20">
       <el-col :span="2">
-        <div class="p-title">笔记角标管理</div>
+        <div class="p-title">{{ $t('4add4f82.eaa5bb') }}</div>
       </el-col>
       <el-col :span="22">
-        <div class="tips">
-          在此配置完成角标后，可在笔记中选择角标。<br />一篇笔记仅能与一个角标关联，关联后将在笔记列表页下的笔记右上角展示角标。
-        </div>
+        <div class="tips" v-html="$t('4add4f82.f9313e')" />
       </el-col>
     </el-row>
     <el-row class="margin-col">
       <el-col>
-        <el-button type="primary" @click="handleEdit(true)"> 新建角标 </el-button>
+        <el-button type="primary" @click="handleEdit(true)">{{ $t('4add4f82.09a879') }}</el-button>
       </el-col>
     </el-row>
 
@@ -45,31 +43,31 @@
     <el-dialog
       :before-close="handleEdit"
       :visible.sync="editFlagShow"
-      :title="ruleForm.badge_id ? '编辑角标' : '新建角标'"
+      :title="ruleForm.badge_id ? $t('4add4f82.b57f38') : $t('4add4f82.09a879')"
       width="30%"
     >
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
-        <el-form-item prop="badge_name" label="角标名称">
+        <el-form-item prop="badge_name" :label="$t('4add4f82.ec6ceb')">
           <el-input
             v-model="ruleForm.badge_name"
-            placeholder="角标名称"
+            :placeholder="$t('4add4f82.ec6ceb')"
             maxlength="20"
             :show-word-limit="true"
           />
         </el-form-item>
 
-        <el-form-item prop="badge_memo" label="备注">
+        <el-form-item prop="badge_memo" :label="$t('e240ae54.2432b5')">
           <el-input
             v-model="ruleForm.badge_memo"
             maxlength="50"
-            placeholder="请输入备注"
+            :placeholder="$t('4add4f82.3cac63')"
             :show-word-limit="true"
           />
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="updataFalg"> 确认 </el-button>
-          <el-button @click="handleEdit(false)"> 取消 </el-button>
+          <el-button type="primary" @click="updataFalg">{{ $t('09b91dec.e83a25') }}</el-button>
+          <el-button @click="handleEdit(false)">{{ $t('09b91dec.625fb2') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -115,16 +113,20 @@ export default {
         badge_name: null,
         badge_memo: null
       },
-      rules: {
-        badge_name: [
-          { required: true, message: '请输入角标名称', trigger: 'blur' },
-          { max: 20, message: '长度不超过20个字符', trigger: 'blur' }
-        ],
-        badge_memo: [{ max: 50, message: '长度不超过50个字符', trigger: 'blur' }]
-      },
       editFlagShow: false,
       dufStatus: null,
       auditDialogShow: false
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        badge_name: [
+          { required: true, message: this.$t('4add4f82.1b1a37'), trigger: 'blur' },
+          { max: 20, message: this.$t('4add4f82.74d186'), trigger: 'blur' }
+        ],
+        badge_memo: [{ max: 50, message: this.$t('4add4f82.40fd7e'), trigger: 'blur' }]
+      }
     }
   },
   mounted() {
@@ -217,9 +219,9 @@ export default {
     },
     delFalg(badge_id) {
       var params = { badge_id: [badge_id] }
-      this.$confirm('此操作将永久删除该角标, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('4add4f82.cbae1a'), this.$t('4add4f82.02d981'), {
+        confirmButtonText: this.$t('4add4f82.38cf16'),
+        cancelButtonText: this.$t('09b91dec.625fb2'),
         type: 'warning'
       }).then(() => {
         badgeDelete(params).then((res) => {
@@ -254,7 +256,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择话题'
+          message: this.$t('4add4f82.858c49')
         })
       }
     },

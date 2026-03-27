@@ -5,21 +5,21 @@
 
 <template>
   <el-dialog v-bind="$attrs" :visible.sync="dialogVisible" class="info-tip-modal-wrapper">
-    <div class="top-info">请复制下方信息给商户，以登录商户后台继续操作。</div>
+    <div class="top-info">{{ $t('7f8f7c71.3ec8b0') }}</div>
     <div class="tip-item">
-      <span class="title">地址：</span>
+      <span class="title">{{ $t('7f8f7c71.df3833') }}</span>
       <span>{{ address }}</span>
     </div>
     <div class="tip-item">
-      <span class="title">帐号：</span>
+      <span class="title">{{ $t('7f8f7c71.ddf8fc') }}</span>
       <span>{{ username }}</span>
     </div>
     <div class="tip-item">
-      <span class="title">密码：</span>
+      <span class="title">{{ $t('7f8f7c71.9b55a2') }}</span>
       <span class="password">{{ password }}</span>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="copyInfo">复制登录信息</el-button>
+      <el-button type="primary" @click="copyInfo">{{ $t('7f8f7c71.1c2fd6') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -59,14 +59,16 @@ export default {
     },
     copyInfo() {
       let textarea = document.createElement('textarea')
-      textarea.value = `地址：${this.address}\n帐号：${this.username}\n密码：${this.password}`
+      textarea.value = `${this.$t('7f8f7c71.df3833')}${this.address}\n${this.$t(
+        '7f8f7c71.ddf8fc'
+      )}${this.username}\n${this.$t('7f8f7c71.9b55a2')}${this.password}`
       textarea.readOnly = 'readOnly'
       document.body.appendChild(textarea)
       textarea.select()
       let result = document.execCommand('copy')
       if (result) {
         this.$message({
-          message: '复制信息成功',
+          message: this.$t('7f8f7c71.575ada'),
           type: 'success'
         })
       }

@@ -110,9 +110,9 @@
       v-model="localValue"
       @onAddItem="handleClickAdd"
       type="text"
-      btn-text="添加轮播项"
+      :btn-text="i18n.t('31fb3272.4cd62d')"
       :show-title="true"
-      title="轮播项"
+      :title="i18n.t('31fb3272.3db933')"
       @move="handleMove"
     >
       <template slot="body" slot-scope="scope">
@@ -139,7 +139,11 @@
               <!-- <p class="label">
                 模式
               </p> -->
-              <div>{{ scope.data.media_type == 'video' ? '视频' : '图片' }}</div>
+              <div>
+                {{
+                  scope.data.media_type == 'video' ? i18n.t('31fb3272.7fcf42') : i18n.t('31fb3272.20def7')
+                }}
+              </div>
               <!-- <el-radio-group size="mini" v-model="scope.data.media_type"
                 @change="handleChangeType(scope.index, $event)">
                 <el-radio-button label="img">图片</el-radio-button>
@@ -155,7 +159,7 @@
                 class="zone-item-link-no"
                 @click="onSetHotZone(scope.data, scope.index)"
               >
-                选择路径
+                {{ i18n.t('31fb3272.e3cf91') }}
               </div>
               <div class="zone-item" v-if="scope.data.media_type === 'img'">
                 <span
@@ -194,6 +198,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import CompTodoList from '../../comps/comp-todoList'
 import CompButton from '../../comps/comp-button'
@@ -225,7 +230,7 @@ export default {
     height: Number
   },
   data() {
-    return {
+    return {i18n,
       localValue: [],
       dialog: false,
       currentIndex: 0,
@@ -253,7 +258,7 @@ export default {
   methods: {
     async onSetHotZone(item, index) {
       useDialog(null, {
-        title: `轮播项${index + 1}`,
+        title: i18n.t('31fb3272.fc96a3', [index + 1]),
         width: '860px',
         top: '4vh',
         class: 'attr_slider_dialog',
@@ -265,12 +270,12 @@ export default {
         component: () => import('./sliderDialog.vue'),
         actions: [
           {
-            label: '关闭',
+            label: i18n.t('31fb3272.b15d91'),
             key: 'close',
             type: 'default',
             size: 'small'
           },
-          { label: '确定', key: 'save', type: 'primary', size: 'small' }
+          { label: i18n.t('31fb3272.38cf16'), key: 'save', type: 'primary', size: 'small' }
         ]
       }).then(async (args) => {
         if (!args) return

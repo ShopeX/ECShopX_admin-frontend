@@ -8,28 +8,32 @@
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
     <div class="action-container">
-      <el-button type="primary" icon="plus" @click="openDialog()"> 添加活动集合 </el-button>
+      <el-button type="primary" icon="plus" @click="openDialog()">
+        {{ $t('fde6e25d.d38e65') }}
+      </el-button>
     </div>
 
     <el-table border v-loading="loading" :data="list">
-      <el-table-column prop="collection_id" label="集合ID" width="100" />
-      <el-table-column prop="collection_name" label="集合名称" />
-      <el-table-column prop="description" label="描述" />
-      <el-table-column label="是否启用" width="120">
+      <el-table-column prop="collection_id" :label="$t('fde6e25d.26cf62')" width="100" />
+      <el-table-column prop="collection_name" :label="$t('fde6e25d.fd4fcb')" />
+      <el-table-column prop="description" :label="$t('fde6e25d.3bdd08')" />
+      <el-table-column :label="$t('fde6e25d.53c3dd')" width="120">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_open == '0' || !scope.row.is_open" type="info"> 禁用 </el-tag>
-          <el-tag v-else type="success"> 启用 </el-tag>
+          <el-tag v-if="scope.row.is_open == '0' || !scope.row.is_open" type="info">
+            {{ $t('fde6e25d.710ad0') }}
+          </el-tag>
+          <el-tag v-else type="success"> {{ $t('fde6e25d.7854b5') }} </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="180">
+      <el-table-column :label="$t('fde6e25d.eca37c')" width="180">
         <template slot-scope="scope">
           {{ formatDate(scope.row.created_time) }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="200">
+      <el-table-column :label="$t('fde6e25d.2b6bc0')" min-width="200">
         <template slot-scope="scope">
           <el-button type="primary" plain round size="mini" @click="openDialog(scope.row)">
-            编辑
+            {{ $t('fde6e25d.95b351') }}
           </el-button>
           <el-button
             type="danger"
@@ -38,7 +42,7 @@
             size="mini"
             @click="delCollection(scope.row.collection_id)"
           >
-            删除
+            {{ $t('fde6e25d.2f4aad') }}
           </el-button>
         </template>
       </el-table-column>
@@ -56,31 +60,31 @@
     </div>
 
     <el-dialog
-      :title="dialogTitle"
+      :title="dialogTitleI18n"
       :visible.sync="collection_dialog"
       :close-on-click-modal="false"
       :before-close="handleCancel"
       width="600px"
     >
       <el-form :model="collectionForm" label-width="120px">
-        <el-form-item label="集合名称" required>
-          <el-input v-model="collectionForm.collection_name" placeholder="请输入集合名称" />
+        <el-form-item :label="$t('fde6e25d.fd4fcb')" required>
+          <el-input v-model="collectionForm.collection_name" :placeholder="$t('fde6e25d.55f14c')" />
         </el-form-item>
-        <el-form-item label="集合描述">
+        <el-form-item :label="$t('fde6e25d.f85b91')">
           <el-input
             v-model="collectionForm.description"
             type="textarea"
             :rows="3"
-            placeholder="请输入集合描述"
+            :placeholder="$t('fde6e25d.d51833')"
           />
         </el-form-item>
-        <el-form-item label="是否启用">
+        <el-form-item :label="$t('fde6e25d.53c3dd')">
           <el-switch v-model="collectionForm.is_open" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="saveCollection"> 确认保存 </el-button>
+        <el-button @click="handleCancel"> {{ $t('fde6e25d.625fb2') }} </el-button>
+        <el-button type="primary" @click="saveCollection"> {{ $t('fde6e25d.babc8f') }} </el-button>
       </div>
     </el-dialog>
   </SpPage>
@@ -99,7 +103,7 @@ export default {
   data() {
     return {
       collection_dialog: false,
-      dialogTitle: '新增活动集合',
+      dialogMode: 'new',
       loading: false,
       total_count: 0,
       params: {
@@ -132,9 +136,9 @@ export default {
           description: detail.description || '',
           is_open: detail.is_open == 1 || detail.is_open === true
         }
-        this.dialogTitle = '编辑活动集合'
+        this.dialogMode = 'edit'
       } else {
-        this.dialogTitle = '新增活动集合'
+        this.dialogMode = 'new'
         this.collectionForm = {
           collection_id: '',
           collection_name: '',
@@ -145,7 +149,7 @@ export default {
     },
     async saveCollection() {
       if (!this.collectionForm.collection_name || !this.collectionForm.collection_name.trim()) {
-        this.$message.error('请输入集合名称')
+        this.$message.error(this.$t('fde6e25d.55f14c'))
         return
       }
 
@@ -156,7 +160,7 @@ export default {
       }
 
       try {
-        if (this.dialogTitle == '编辑活动集合') {
+        if (this.dialogMode === 'edit') {
           await editActivityCollection(this.collectionForm.collection_id, params)
         } else {
           await createActivityCollection(params)
@@ -165,11 +169,11 @@ export default {
         this.fetchCollectionList()
         this.$message({
           type: 'success',
-          message: '保存成功'
+          message: this.$t('fde6e25d.3b1083')
         })
       } catch (error) {
         console.error(error)
-        this.$message.error('保存失败')
+        this.$message.error(this.$t('fde6e25d.6de920'))
       }
     },
     fetchCollectionList() {
@@ -185,24 +189,24 @@ export default {
         .catch((error) => {
           console.error(error)
           this.loading = false
-          this.$message.error('获取列表失败')
+          this.$message.error(this.$t('fde6e25d.fe9d24'))
         })
     },
     delCollection(id) {
-      this.$confirm('确认删除该活动集合吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('fde6e25d.b97aaa'), this.$t('fde6e25d.02d981'), {
+        confirmButtonText: this.$t('fde6e25d.38cf16'),
+        cancelButtonText: this.$t('fde6e25d.625fb2'),
         type: 'warning'
       })
         .then(() => {
           delActivityCollection(id)
             .then(() => {
-              this.$message({ type: 'success', message: '删除成功' })
+              this.$message({ type: 'success', message: this.$t('fde6e25d.0007d1') })
               this.fetchCollectionList()
             })
             .catch((error) => {
               console.error(error)
-              this.$message.error('删除失败')
+              this.$message.error(this.$t('fde6e25d.acf066'))
             })
         })
         .catch(() => {})

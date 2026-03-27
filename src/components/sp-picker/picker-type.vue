@@ -123,7 +123,6 @@ export default {
       ...ctx.data,
       value: ctx.data.attrs.value
     }
-    console.log(`picker type data:`, data, type)
     return h(resolvePicker(type), data, ctx.children)
   },
 

@@ -13,9 +13,13 @@
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <div class="tip-info">
         <p>
-          上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
+          {{ $t('f68ac74d.7b5c77') }}<strong>{{ $t('f68ac74d.d99268') }}</strong
+          >。
         </p>
-        <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
+        <p>
+          {{ $t('f68ac74d.41c5ec') }}<strong>{{ $t('f68ac74d.d99268') }}</strong
+          >{{ $t('f68ac74d.40d0ad') }}
+        </p>
       </div>
       <el-form ref="form" label-width="100px">
         <div class="content-bottom-padded">
@@ -27,41 +31,47 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button size="small" type="primary"> 点击上传 </el-button>
+            <el-button size="small" type="primary">{{ $t('f68ac74d.2c808b') }}</el-button>
           </el-upload>
           <el-button size="small" type="primary" @click="uploadHandleTemplate()">
-            下载模版
+            {{ $t('f68ac74d.402a67') }}
           </el-button>
         </div>
-        <el-table v-loading="loading" :data="uploadList" element-loading-text="数据加载中">
-          <el-table-column prop="file_name" label="上传文件" min-width="100" />
-          <el-table-column prop="created_date" label="上传时间" min-width="80" />
-          <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
-          <el-table-column label="处理状态" min-width="50">
+        <el-table
+          v-loading="loading"
+          :data="uploadList"
+          :element-loading-text="$t('f68ac74d.f09b12')"
+        >
+          <el-table-column prop="file_name" :label="$t('f68ac74d.a6fc9e')" min-width="100" />
+          <el-table-column prop="created_date" :label="$t('f68ac74d.cae255')" min-width="80" />
+          <el-table-column prop="file_size_format" :label="$t('f68ac74d.396b7d')" min-width="60" />
+          <el-table-column :label="$t('f68ac74d.21b314')" min-width="50">
             <template slot-scope="scope">
-              <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
-              <span v-if="scope.row.handle_status == 'processing'">处理中</span>
-              <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
+              <span v-if="scope.row.handle_status == 'wait'">{{ $t('f68ac74d.1e57c1') }}</span>
+              <span v-if="scope.row.handle_status == 'processing'">{{
+                $t('f68ac74d.5d459d')
+              }}</span>
+              <span v-if="scope.row.handle_status == 'finish'">{{ $t('f68ac74d.7be39b') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="finish_date" label="处理完成时间" />
-          <el-table-column label="处理成功">
+          <el-table-column prop="finish_date" :label="$t('f68ac74d.475dea')" />
+          <el-table-column :label="$t('f68ac74d.3ba621')">
             <template slot-scope="scope">
               <span v-if="scope.row.handle_message"
-                >{{ scope.row.handle_message.successLine }}行</span
+                >{{ scope.row.handle_message.successLine }}{{ $t('f68ac74d.2d5aef') }}</span
               >
             </template>
           </el-table-column>
-          <el-table-column label="处理失败">
+          <el-table-column :label="$t('f68ac74d.1012e0')">
             <template slot-scope="scope">
               <span v-if="scope.row.handle_message"
-                >{{ scope.row.handle_message.errorLine }}行</span
+                >{{ scope.row.handle_message.errorLine }}{{ $t('f68ac74d.2d5aef') }}</span
               >
               <a
                 v-if="scope.row.handle_message && scope.row.handle_message.errorLine > 0"
                 type="primary"
                 @click="exportErrorFile(scope.row.id, scope.row.file_type)"
-                >下载错误详情</a
+                >{{ $t('f68ac74d.3798d3') }}</a
               >
             </template>
           </el-table-column>
@@ -110,18 +120,18 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('f68ac74d.7bbfaa')
         })
         this.getUploadList()
       })
     },
     uploadHandleTemplate() {
       if (this.activeName == 'member_info') {
-        var fileName = '新增会员信息'
+        var fileName = this.$t('f68ac74d.b554c4')
       } else if (this.activeName == 'member_update') {
-        var fileName = '更新会员信息'
+        var fileName = this.$t('f68ac74d.1b0fc1')
       } else if (this.activeName == 'community_chief') {
-        var fileName = '上传团长信息'
+        var fileName = this.$t('f68ac74d.733c3a')
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {
@@ -135,7 +145,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('f68ac74d.bfd8d5')
           })
         }
       })
@@ -153,7 +163,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('f68ac74d.bfd8d5')
           })
         }
       })

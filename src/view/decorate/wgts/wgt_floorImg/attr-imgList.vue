@@ -20,12 +20,12 @@
     <CompTodoList v-model="value" :min="3" :max="20" @onAddItem="handleClickAdd">
       <template slot="body" slot-scope="scope">
         <div class="img-item--wrap">
-          <el-input v-model="scope.data.ImgTitle" placeholder="图片标题" />
+          <el-input v-model="scope.data.ImgTitle" :placeholder="i18n.t('3b92144e.c6c745')" />
           <div class="img-item--picker">
             <SpImagePicker v-model="scope.data.imgUrl" size="small" />
             <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
           </div>
-          <div class="cell-value-tip">建议尺寸:（宽度128px，高度自适应）</div>
+          <div class="cell-value-tip">{{ i18n.t('3b92144e.0f0308') }}</div>
         </div>
       </template>
     </CompTodoList>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompPickerLink from '../../comps/comp-pickerLink'
@@ -63,7 +64,7 @@ export default {
   },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       localValue: []
     }
   },

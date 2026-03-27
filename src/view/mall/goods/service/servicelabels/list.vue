@@ -6,40 +6,36 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-alert
-        title="添加基础物料，方便您个性化的添加各类服务商品(不仅仅是商品)！"
-        type="warning"
-        show-icon
-      />
+      <el-alert :title="$t('b65a927c.6f32fc')" type="warning" show-icon />
     </div>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" size="mini" @click="addServiceLabels">
-          添加基础物料
+          {{ $t('b65a927c.b0a7ff') }}
         </el-button>
       </el-col>
       <el-col :span="12">
-        <el-input v-model="labelsName" placeholder="基础物料名称" size="mini">
+        <el-input v-model="labelsName" :placeholder="$t('b65a927c.69ae78')" size="mini">
           <el-button slot="append" icon="el-icon-search" @click="labelsSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="serviceLabelsList" :height="wheight - 270">
-      <el-table-column prop="labelName" label="物料名称" />
-      <el-table-column width="120" prop="serviceType" label="系统类型">
+      <el-table-column prop="labelName" :label="$t('b65a927c.901fca')" />
+      <el-table-column width="120" prop="serviceType" :label="$t('b65a927c.996dc3')">
         <template slot-scope="scope">
-          <span v-if="scope.row.serviceType === 'point'">积分</span>
-          <span v-if="scope.row.serviceType === 'deposit'">储值</span>
-          <span v-if="scope.row.serviceType === 'timescard'">次卡</span>
+          <span v-if="scope.row.serviceType === 'point'">{{ $t('b65a927c.9f68a8') }}</span>
+          <span v-if="scope.row.serviceType === 'deposit'">{{ $t('b65a927c.0ae749') }}</span>
+          <span v-if="scope.row.serviceType === 'timescard'">{{ $t('b65a927c.cc572d') }}</span>
         </template>
       </el-table-column>
       <el-table-column
         width="150"
         prop="labelPrice"
-        label="物料价格(元)"
+        :label="$t('b65a927c.43fcf7')"
         :formatter="priceformatter"
       />
-      <el-table-column width="120" label="操作">
+      <el-table-column width="120" :label="$t('b65a927c.2b6bc0')">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i
@@ -78,7 +74,7 @@
     >
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="90px">
-          <el-form-item label="系统类型">
+          <el-form-item :label="$t('b65a927c.996dc3')">
             <el-col :span="14">
               <el-select v-model="form.service_type">
                 <el-option
@@ -90,28 +86,28 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="物料名称">
+          <el-form-item :label="$t('b65a927c.901fca')">
             <el-col :span="14">
               <el-input
                 v-model="form.label_name"
                 :maxlength="20"
-                placeholder="基础物料名称，如 积分、预存款、经验值、佣金等等"
+                :placeholder="$t('b65a927c.dad414')"
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="物料价格">
+          <el-form-item :label="$t('b65a927c.43fcf7')">
             <el-col :span="6">
               <el-input
                 v-model="form.label_price"
                 type="number"
                 required
                 min="0"
-                placeholder="基础物料的价格"
+                :placeholder="$t('b65a927c.c7ff77')"
               />
             </el-col>
-            <el-col :span="1"> &nbsp;元 </el-col>
+            <el-col :span="1"> &nbsp;{{ $t('b65a927c.c16655') }} </el-col>
           </el-form-item>
-          <el-form-item label="物料描述">
+          <el-form-item :label="$t('b65a927c.aae11e')">
             <el-col :span="14">
               <el-input v-model="form.label_desc" type="textarea" :maxlength="255" />
             </el-col>
@@ -119,27 +115,35 @@
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitServiceLabelsAction"> 保存 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('b65a927c.625fb2') }} </el-button>
+        <el-button type="primary" @click="submitServiceLabelsAction">
+          {{ $t('b65a927c.be5fbb') }}
+        </el-button>
       </div>
     </el-dialog>
     <!-- 添加、编辑基础物料-结束 -->
     <!-- 基础物料详情-开始 -->
-    <el-dialog title="基础物料详情" :visible.sync="serviceLabelsDetailVisible">
+    <el-dialog :title="$t('b65a927c.fd1456')" :visible.sync="serviceLabelsDetailVisible">
       <template>
         <el-row class="row-bg">
           <el-col :span="6">
-            <div class="grid-content">基础类型</div>
+            <div class="grid-content">{{ $t('b65a927c.28672e') }}</div>
           </el-col>
           <el-col :span="12">
-            <div v-if="serviceLabelsDetailData.service_type === 'point'">积分类型</div>
-            <div v-if="serviceLabelsDetailData.service_type === 'deposit'">储值类型</div>
-            <div v-if="serviceLabelsDetailData.service_type === 'timescard'">次卡类型</div>
+            <div v-if="serviceLabelsDetailData.service_type === 'point'">
+              {{ $t('b65a927c.4ab744') }}
+            </div>
+            <div v-if="serviceLabelsDetailData.service_type === 'deposit'">
+              {{ $t('b65a927c.86268f') }}
+            </div>
+            <div v-if="serviceLabelsDetailData.service_type === 'timescard'">
+              {{ $t('b65a927c.443835') }}
+            </div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="6">
-            <div class="grid-content">物料名称</div>
+            <div class="grid-content">{{ $t('b65a927c.901fca') }}</div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content">
@@ -149,7 +153,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="6">
-            <div class="grid-content">物料价格</div>
+            <div class="grid-content">{{ $t('b65a927c.43fcf7') }}</div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content">
@@ -159,7 +163,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="6">
-            <div class="grid-content">物料描述</div>
+            <div class="grid-content">{{ $t('b65a927c.aae11e') }}</div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content">
@@ -175,7 +179,7 @@
             serviceLabelsDetailData = {}
           "
         >
-          取消
+          {{ $t('b65a927c.625fb2') }}
         </el-button>
       </div>
     </el-dialog>
@@ -201,20 +205,6 @@ export default {
       editServiceLabelsVisible: false,
       editServiceLabelsTitle: '',
 
-      serviceTypes: [
-        // {
-        //   value: 'deposit',
-        //   label: '储值类型'
-        // },
-        // {
-        //   value: 'point',
-        //   label: '积分类型'
-        // },
-        {
-          value: 'timescard',
-          label: '次卡类型'
-        }
-      ],
       form: {
         service_type: 'timescard',
         label_name: '',
@@ -238,7 +228,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    serviceTypes() {
+      return [{ value: 'timescard', label: this.$t('b65a927c.443835') }]
+    }
   },
   watch: {
     getStatus(val) {
@@ -271,13 +264,13 @@ export default {
     },
     addServiceLabels() {
       // 添加物料弹框
-      this.editServiceLabelsTitle = '添加基础物料'
+      this.editServiceLabelsTitle = this.$t('b65a927c.b0a7ff')
       this.editServiceLabelsVisible = true
       this.isEdit = false
     },
     editServiceLabelsAction(index, row) {
       // 编辑物料弹框
-      this.editServiceLabelsTitle = '编辑基础物料'
+      this.editServiceLabelsTitle = this.$t('b65a927c.e8a683')
       this.editServiceLabelsVisible = true
       this.isEdit = true
       this.form.service_type = row.serviceType
@@ -331,16 +324,16 @@ export default {
       })
     },
     deleteServiceLabelsAction(index, row) {
-      this.$confirm('此操作将删除该基础物料, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('b65a927c.561290'), this.$t('b65a927c.02d981'), {
+        confirmButtonText: this.$t('b65a927c.38cf16'),
+        cancelButtonText: this.$t('b65a927c.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteServiceLabels(row.labelId).then((response) => {
             this.serviceLabelsList.splice(index, 1)
             this.$message({
-              message: '删除基础物料成功',
+              message: this.$t('b65a927c.a226c8'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -349,7 +342,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('b65a927c.2111cc')
           })
         })
     },

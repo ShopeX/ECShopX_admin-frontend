@@ -7,13 +7,13 @@
   <SpPage>
     <PersonInfo
       :info="approvel_info"
-      title="详细信息"
+      :title="$t('6079b525.4bcc9a')"
       :operator-info="operator_info"
       :distributor-ids="distributorIds"
       :role-data="roleData"
     />
     <el-card v-if="approvel_info.status == '1'">
-      <div class="cus-title">操作日志</div>
+      <div class="cus-title">{{ $t('6079b525.cda84b') }}</div>
       <el-timeline :reverse="false" class="cus-timeline">
         <el-timeline-item
           v-for="(item, index) in logList"
@@ -26,7 +26,7 @@
     </el-card>
 
     <el-card v-if="approvel_info.status == '2'">
-      <div class="cus-title">驳回原因</div>
+      <div class="cus-title">{{ $t('6079b525.6d8614') }}</div>
       <el-row>
         <el-col :span="24" style="margin-left: 20px">
           <span>{{ approvel_info.remarks || '-' }}</span>
@@ -41,7 +41,7 @@
         class="btn"
         @click="handleDialogOpen(1)"
       >
-        通过
+        {{ $t('6079b525.23c1f3') }}
       </el-button>
       <el-button
         v-if="approvel_info.status == '0'"
@@ -49,7 +49,7 @@
         class="btn"
         @click="handleDialogOpen(2)"
       >
-        驳回
+        {{ $t('6079b525.325254') }}
       </el-button>
       <el-button
         v-if="approvel_info.status == '1' && approvel_info.is_closed == 0"
@@ -58,7 +58,7 @@
         class="btn"
         @click="handleDialogOpen(3)"
       >
-        关闭权限
+        {{ $t('6079b525.279dc2') }}
       </el-button>
       <el-button
         v-if="approvel_info.status == '1' && approvel_info.is_closed == 1"
@@ -67,12 +67,12 @@
         class="btn"
         @click="handleDialogOpen(4)"
       >
-        打开权限
+        {{ $t('6079b525.494a4b') }}
       </el-button>
     </div>
 
     <el-dialog
-      title="审批弹框"
+      :title="$t('6079b525.45fa1c')"
       :visible.sync="visibleModal"
       width="30%"
       :close-on-click-modal="false"
@@ -86,14 +86,14 @@
         :rows="5"
         :maxlength="100"
         :show-word-limit="true"
-        placeholder="请填写审批意见"
+        :placeholder="$t('6079b525.c4c230')"
       />
       <div slot="footer" class="dialog-footer">
         <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
-          text="确 定"
+          :text="$t('6079b525.aa7527')"
           @clickHandle="handleDialogChange('loadingBtn')"
         />
       </div>
@@ -164,7 +164,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取详情出错'
+            message: this.$t('6079b525.25bc43')
           })
         })
     },
@@ -182,7 +182,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取日志出错'
+            message: this.$t('6079b525.ae6e5b')
           })
         })
     },
@@ -191,13 +191,13 @@ export default {
       const { username, login_name } = this.operator_info
       this.approveType = status
       if (status === 1) {
-        this.visibleContent = `请确认是否通过${login_name}的查看脱敏权限的申请`
+        this.visibleContent = this.$t('6079b525.5939b2', { name: login_name })
       } else if (status === 2) {
-        this.visibleContent = `请确认是否驳回${login_name}的查看脱敏数据的申请`
+        this.visibleContent = this.$t('6079b525.0e344e', { name: login_name })
       } else if (status === 3) {
-        this.visibleContent = `请确认是否关闭${login_name}的查看脱敏数据的权限`
+        this.visibleContent = this.$t('6079b525.e1ff6d', { name: login_name })
       } else if (status === 4) {
-        this.visibleContent = `请确认是否打开${login_name}的查看脱敏数据的权限`
+        this.visibleContent = this.$t('6079b525.aecfb1', { name: login_name })
       }
       this.visibleModal = true
     },
@@ -224,7 +224,7 @@ export default {
       }
       api(this.pass_id, parmas).then((res) => {
         this.$message({
-          message: '操作成功',
+          message: this.$t('6079b525.33130f'),
           type: 'success'
         })
         this.getDetail(this.pass_id)

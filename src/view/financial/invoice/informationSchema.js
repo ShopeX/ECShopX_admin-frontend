@@ -11,7 +11,7 @@ export const tableSchema = (vm) =>
   createSetting({
     actions: [
       {
-        name: '编辑',
+        name: vm.$t('bf37b718.95b351'),
         key: 'edit',
         type: 'button',
         buttonType: 'text',
@@ -30,17 +30,17 @@ export const tableSchema = (vm) =>
     ],
     columns: [
       {
-        name: '开票方名称',
+        name: vm.$t('bf37b718.29b041'),
         key: 'seller_company_name',
         width: '140'
       },
       {
-        name: '开票方税号',
+        name: vm.$t('bf37b718.ca2be5'),
         key: 'seller_tax_no',
         width: '140'
       },
       {
-        name: '开票方电话',
+        name: vm.$t('bf37b718.eff7dc'),
         key: 'seller_phone',
         width: '140'
       },
@@ -50,27 +50,27 @@ export const tableSchema = (vm) =>
       //   width: '120'
       // },
       {
-        name: '开票人',
+        name: vm.$t('bf37b718.68346c'),
         key: 'seller_name',
         width: '100'
       },
       {
-        name: '收款人',
+        name: vm.$t('bf37b718.ba2c38'),
         key: 'payee',
         width: '100'
       },
       {
-        name: '复核人',
+        name: vm.$t('bf37b718.24045b'),
         key: 'reviewer',
         width: '100'
       },
       {
-        name: '开票方地址',
+        name: vm.$t('bf37b718.210c86'),
         key: 'seller_address',
         width: '140'
       },
       {
-        name: '添加时间',
+        name: vm.$t('bf37b718.ffc7ed'),
         key: 'created',
         render(h, { row }) {
           return <span> {moment(row.created_at * 1000).format('yyyy-MM-DD HH:mm:ss')} </span>
@@ -89,57 +89,57 @@ export const formSchema = (vm) =>
       //   options: [{ name: '平台', label: 'online' }]
       // },
       {
-        label: '开票人',
+        label: vm.$t('bf37b718.68346c'),
         key: 'seller_name',
         type: 'input'
       },
       {
-        label: '收款人',
+        label: vm.$t('bf37b718.ba2c38'),
         key: 'payee',
         type: 'input'
       },
       {
-        label: '复核人',
+        label: vm.$t('bf37b718.24045b'),
         key: 'reviewer',
         type: 'input'
       },
       {
-        label: '开票方名称',
+        label: vm.$t('bf37b718.29b041'),
         key: 'seller_company_name',
         type: 'input',
         required: true
       },
       {
-        label: '开票方税号',
+        label: vm.$t('bf37b718.ca2be5'),
         key: 'seller_tax_no',
         type: 'input',
         required: true
       },
       {
-        label: '开票方银行',
+        label: vm.$t('bf37b718.b6c084'),
         key: 'seller_bank_name',
         type: 'input',
         required: true
       },
       {
-        label: '开票方银行账号',
+        label: vm.$t('bf37b718.0f7f38'),
         key: 'seller_bank_account',
         type: 'input',
         required: true
       },
       {
-        label: '开票方联系电话',
+        label: vm.$t('bf37b718.f42347'),
         key: 'seller_phone',
         type: 'input',
         required: true
       },
       {
-        label: '开票方联系地址',
+        label: vm.$t('bf37b718.f3d911'),
         key: 'seller_address',
         type: 'input',
         required: true,
         maxlength: '255',
-        tip: '联系地址文字长度，请不要超过255个字'
+        tip: vm.$t('bf37b718.2e9c59')
       }
     ],
     vm

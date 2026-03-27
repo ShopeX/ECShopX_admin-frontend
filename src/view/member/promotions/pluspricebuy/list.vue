@@ -15,26 +15,26 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="create_time" :label="$t('ff141a64.374856')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="根据添加时间筛选"
+            :placeholder="$t('ff141a64.e08045')"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_type" label="商品类型:">
-          <el-select v-model="params.item_type" placeholder="商品类型">
-            <el-option label="全部" value="0" />
-            <el-option label="服务类商品" value="service" />
-            <el-option label="实体类商品" value="normal" />
+        <SpFilterFormItem prop="item_type" :label="$t('ff141a64.a852ea')">
+          <el-select v-model="params.item_type" :placeholder="$t('ff141a64.2af133')">
+            <el-option :label="$t('ff141a64.a8b0c2')" value="0" />
+            <el-option :label="$t('ff141a64.fcd4d7')" value="service" />
+            <el-option :label="$t('ff141a64.ddf672')" value="normal" />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
-          添加加价购促销
+          {{ $t('ff141a64.47907d') }}
         </el-button>
       </div>
 
@@ -51,98 +51,102 @@
             style="width: 100%"
             :height="wheight - 190"
             border
-            element-loading-text="数据加载中"
+            :element-loading-text="$t('ff141a64.f09b12')"
           >
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <el-form label-position="left" inline class="demo-table-expand">
-                  <el-form-item label="适用会员">
+                  <el-form-item :label="$t('ff141a64.6dbb6f')">
                     <el-tag v-for="(item, index) in scope.row.member_grade" :key="index">
                       {{ item }}
                     </el-tag>
                   </el-form-item>
-                  <el-form-item label="创建时间">
+                  <el-form-item :label="$t('ff141a64.eca37c')">
                     <span>{{ scope.row.created_date }}</span>
                   </el-form-item>
-                  <el-form-item label="适用商品">
+                  <el-form-item :label="$t('ff141a64.409ea3')">
                     <div v-for="(item, index) in scope.row.items" :key="index">
                       {{ item.item_name }}
                     </div>
                   </el-form-item>
-                  <el-form-item v-if="scope.row.source_id == '0'" label="适用店铺">
+                  <el-form-item v-if="scope.row.source_id == '0'" :label="$t('ff141a64.eb4307')">
                     <span v-if="scope.row.use_shop">
                       <div v-for="(item, index) in scope.row.shops" :key="index">
                         {{ item.shop_name }}
                       </div>
                     </span>
-                    <span v-else> <div>全部店铺</div> </span>
+                    <span v-else>
+                      <div>{{ $t('ff141a64.77678b') }}</div>
+                    </span>
                   </el-form-item>
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column prop="marketing_id" width="60" label="编号" />
-            <el-table-column prop="marketing_name" min-width="150" label="促销名称" />
-            <el-table-column prop="source_name" label="店铺" />
-            <el-table-column label="规则" min-width="150">
+            <el-table-column prop="marketing_id" width="60" :label="$t('ff141a64.c515f3')" />
+            <el-table-column prop="marketing_name" min-width="150" :label="$t('ff141a64.9cc7a7')" />
+            <el-table-column prop="source_name" :label="$t('ff141a64.295713')" />
+            <el-table-column :label="$t('ff141a64.b0fae0')" min-width="150">
               <template slot-scope="scope">
                 <div v-for="(item, index) in scope.row.condition_value" :key="index">
                   <span v-if="scope.row.condition_type == 'quantity'">
-                    消费满{{ item.full }}件,加价购(<el-button
-                      type="text"
-                      @click="viewGiftItemList(scope.row)"
-                      >加购商品</el-button
+                    {{ $t('ff141a64.13dc43') }}{{ item.full }}{{ $t('ff141a64.f7edf5') }},{{
+                      $t('ff141a64.54e654')
+                    }}(<el-button type="text" @click="viewGiftItemList(scope.row)">{{
+                      $t('ff141a64.81459a')
+                    }}</el-button
                     >)
                   </span>
                   <span v-if="scope.row.condition_type == 'totalfee'">
-                    消费满{{ item.full }}元,加价购(<el-button
-                      type="text"
-                      @click="viewGiftItemList(scope.row)"
-                      >加购商品</el-button
+                    {{ $t('ff141a64.13dc43') }}{{ item.full }}{{ $t('ff141a64.c16655') }},{{
+                      $t('ff141a64.54e654')
+                    }}(<el-button type="text" @click="viewGiftItemList(scope.row)">{{
+                      $t('ff141a64.81459a')
+                    }}</el-button
                     >)
                   </span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="used_platform" min-width="100" label="适用平台">
+            <el-table-column prop="used_platform" min-width="100" :label="$t('ff141a64.b90304')">
               <template slot-scope="scope">
-                <span v-if="scope.row.used_platform == 0">全场可用</span>
-                <span v-if="scope.row.used_platform == 1">只用于pc端</span>
-                <span v-if="scope.row.used_platform == 2">小程序端</span>
-                <span v-if="scope.row.used_platform == 3">h5端</span>
+                <span v-if="scope.row.used_platform == 0">{{ $t('ff141a64.6e78ce') }}</span>
+                <span v-if="scope.row.used_platform == 1">{{ $t('ff141a64.bb114a') }}</span>
+                <span v-if="scope.row.used_platform == 2">{{ $t('ff141a64.3fea7c') }}</span>
+                <span v-if="scope.row.used_platform == 3">{{ $t('ff141a64.fb852f') }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="total_fee" min-width="150" label="有效期">
+            <el-table-column prop="total_fee" min-width="150" :label="$t('ff141a64.dd4e55')">
               <template slot-scope="scope">
                 <div>{{ scope.row.start_date }}</div>
                 <div>~{{ scope.row.end_date }}</div>
               </template>
             </el-table-column>
-            <el-table-column min-width="70" label="状态">
+            <el-table-column min-width="70" :label="$t('ff141a64.047fab')">
               <template slot-scope="scope">
-                <span v-if="scope.row.status == 'ongoing'">进行中</span>
-                <span v-if="scope.row.status == 'waiting'">未开始</span>
-                <span v-if="scope.row.status == 'end'">已结束</span>
+                <span v-if="scope.row.status == 'ongoing'">{{ $t('ff141a64.2b6bc0') }}</span>
+                <span v-if="scope.row.status == 'waiting'">{{ $t('ff141a64.f13684') }}</span>
+                <span v-if="scope.row.status == 'end'">{{ $t('ff141a64.ff6c6a') }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" min-width="150">
+            <el-table-column :label="$t('ff141a64.5b48db')" min-width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button type="text" @click="viewItemList(scope.row.marketing_id)">
-                    查看商品
+                    {{ $t('ff141a64.0becf0') }}
                   </el-button>
                   <el-button
                     v-if="endActionVisible(scope.row)"
                     type="text"
                     @click="updateStatusCommunityAction(scope.row)"
                   >
-                    终止
+                    {{ $t('ff141a64.6489ff') }}
                   </el-button>
                   <el-button
                     v-if="scope.row.status != 'waiting'"
                     type="text"
                     @click="viewDetail(scope.row)"
                   >
-                    查看详情
+                    {{ $t('ff141a64.3ae7e4') }}
                   </el-button>
                   <i
                     v-if="scope.row.status == 'waiting'"
@@ -173,7 +177,7 @@
         </el-tab-pane>
       </el-tabs>
       <el-dialog
-        title="活动商品列表"
+        :title="$t('ff141a64.d43d09')"
         :visible.sync="activityItemDialog"
         :before-close="handleCancel"
         width="70%"
@@ -181,16 +185,16 @@
         <template>
           <el-table v-loading="ItemLoading" :data="activityItemListsData">
             <el-table-column prop="item_id" label="id" width="60" />
-            <el-table-column prop="pics[0]" label="图片" width="80">
+            <el-table-column prop="pics[0]" :label="$t('ff141a64.20def7')" width="80">
               <template slot-scope="scope">
-                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50" />
+                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50">
               </template>
             </el-table-column>
-            <el-table-column prop="item_name" label="名称" />
-            <el-table-column prop="price" label="价格" width="100">
+            <el-table-column prop="item_name" :label="$t('ff141a64.d7ec2d')" />
+            <el-table-column prop="price" :label="$t('ff141a64.0e9fd9')" width="100">
               <template slot-scope="scope"> {{ cursymbol }}{{ scope.row.price / 100 }} </template>
             </el-table-column>
-            <el-table-column prop="store" label="库存" width="70" />
+            <el-table-column prop="store" :label="$t('ff141a64.0eac88')" width="70" />
           </el-table>
           <div
             v-if="activityItemTotalCount > activityItemParams.pageSize"
@@ -207,17 +211,17 @@
         </template>
       </el-dialog>
       <el-dialog
-        title="加价购赠品"
+        :title="$t('ff141a64.f7d8de')"
         :visible.sync="purchaseRulesDialog"
         :before-close="handleCancel"
         width="70%"
       >
         <template>
           <el-table v-loading="ItemLoading" :data="purchaseRules">
-            <el-table-column prop="price" label="加价金额" width="100">
+            <el-table-column prop="price" :label="$t('ff141a64.d7abf8')" width="100">
               <template slot-scope="scope"> ￥{{ scope.row.price }} </template>
             </el-table-column>
-            <el-table-column prop="pics[0]" label="可购买的商品">
+            <el-table-column prop="pics[0]" :label="$t('ff141a64.696d24')">
               <template slot-scope="scope">
                 <div v-for="(newitem, index) in scope.row.gift_item" :key="index">
                   {{ newitem.item_name }} x {{ newitem.gift_num }}
@@ -270,16 +274,19 @@ export default {
       purchaseRulesDialog: false,
       ItemLoading: false,
       purchaseRules: [],
-      tabList: [
-        { name: '全部', activeName: 'all' },
-        { name: '待开始', activeName: 'waiting' },
-        { name: '进行中', activeName: 'ongoing' },
-        { name: '已结束', activeName: 'end' }
-      ]
+      tabList: []
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    tabList() {
+      return [
+        { name: this.$t('ff141a64.a8b0c2'), activeName: 'all' },
+        { name: this.$t('ff141a64.1568ba'), activeName: 'waiting' },
+        { name: this.$t('ff141a64.2b6bc0'), activeName: 'ongoing' },
+        { name: this.$t('ff141a64.ff6c6a'), activeName: 'end' }
+      ]
+    }
   },
   mounted() {
     this.fetchList()
@@ -395,10 +402,10 @@ export default {
       this.purchaseRules = row.gifts
     },
     updateStatusCommunityAction(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('ff141a64.01be42')
+      this.$confirm(msg, this.$t('ff141a64.02d981'), {
+        cancelButtonText: this.$t('ff141a64.625fb2'),
+        confirmButtonText: this.$t('ff141a64.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -406,7 +413,7 @@ export default {
               (response) => {
                 this.fetchList()
                 this.$message({
-                  message: '修改活动状态成功',
+                  message: this.$t('ff141a64.b69694'),
                   type: 'success',
                   duration: 5 * 1000
                 })

@@ -126,18 +126,18 @@
 <template>
   <div class="comp-baseform">
     <div class="form-block-head clearfix">
-      <div class="block-head-hd">基础信息</div>
+      <div class="block-head-hd">{{ $t('a2236866.6ea1fe') }}</div>
     </div>
     <div class="form-block-body">
       <el-form :model="value" label-position="right" label-width="80px">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="商品标题" required>
+            <el-form-item :label="$t('a2236866.07ec01')" required>
               <el-input v-model="value.itemName" :maxlength="100" placeholder="" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="副标题">
+            <el-form-item :label="$t('a2236866.72cf37')">
               <el-input v-model="value.brief" :maxlength="30" placeholder="" />
             </el-form-item>
           </el-col>
@@ -176,29 +176,29 @@
             </el-form-item>
           </el-col> -->
           <el-col :span="8">
-            <el-form-item label="计量单位">
+            <el-form-item :label="$t('a2236866.251549')">
               <el-input v-model="value.itemUnit" :maxlength="60" placeholder="" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="排序编号">
+            <el-form-item :label="$t('a2236866.e8373a')">
               <el-input v-model="value.sort" placeholder="" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="产地">
+            <el-form-item :label="$t('a2236866.2b6d31')">
               <el-cascader
                 v-model="value.regionsId"
                 class="width-full"
-                placeholder="选择地区"
+                :placeholder="$t('a2236866.e9a36d')"
                 :options="regions"
               />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="商品税率">
+            <el-form-item :label="$t('a2236866.ffe9c6')">
               <el-input v-model="value.taxRate" placeholder="" />
             </el-form-item>
           </el-col>
@@ -223,23 +223,27 @@
             </el-form-item>
           </el-col> -->
           <el-col v-if="!isCross" :span="8">
-            <el-form-item label="赠品">
+            <el-form-item :label="$t('a2236866.d017cc')">
               <el-switch v-model="value.isGift" active-color="#13ce66" inactive-color="#ff4949" />
               <span>
                 <i class="el-alert__icon el-icon-info" />
-                开启后前台不可购买
+                {{ $t('a2236866.66619b') }}
               </span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item label="商品图" required>
+            <el-form-item :label="$t('a2236866.5352d4')" required>
               <div class="goodsimages-hd">
                 <span class="tipinfo">
-                  <i class="el-alert__icon el-icon-info" />选中以下图片生成分享码
+                  <i class="el-alert__icon el-icon-info" />{{ $t('a2236866.db2e07') }}
                 </span>
-                <el-checkbox :value="isAllCheck" @change="handleAllSelect"> 全选 </el-checkbox>
+                <el-checkbox :value="isAllCheck" @change="handleAllSelect">
+{{
+                  $t('a2236866.66eeac')
+                }}
+</el-checkbox>
               </div>
               <div class="goodsimages-bd pics-box">
                 <ul class="goodspic-wrap">
@@ -273,23 +277,19 @@
                 </ul>
               </div>
               <div class="goodsimages-ft frm-tips">
-                <p>
-                  1.
-                  最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
-                  * 500px）
-                </p>
-                <p>2. 拖动图片进行可排序</p>
-                <p>3. 相册图朋友圈分享是否生成小程序码</p>
+                <p>1. {{ $t('a2236866.f0e1d4') }}</p>
+                <p>{{ $t('a2236866.2eceaf') }}</p>
+                <p>{{ $t('a2236866.01dc47') }}</p>
               </div>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="16">
-            <el-form-item label="上传视频">
+            <el-form-item :label="$t('a2236866.afddcb')">
               <videoPicker class="video-picker" :data="value.itemVideo" @change="pickVideo" />
               <el-button v-if="value.itemVideo.media_id" type="text" @click="deleteVideo">
-                删除
+                {{ $t('a2236866.2f4aad') }}
               </el-button>
             </el-form-item>
           </el-col>
@@ -375,7 +375,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请先添加运费模板'
+          message: this.$t('a2236866.e9d74f')
         })
       }
 
@@ -422,7 +422,7 @@ export default {
     },
     pickPics(data) {
       if (this.value.pics.length + data.length >= 10) {
-        this.$message.error('最多上传9张图片!')
+        this.$message.error(this.$t('a2236866.4352be'))
         return false
       } else {
         if (data.length != 0) {

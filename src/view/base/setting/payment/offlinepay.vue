@@ -10,7 +10,7 @@
 
     <div v-if="form.is_open">
       <div class="action-container">
-        <el-button type="primary" @click="addDeliveryman">添加收款账户</el-button>
+        <el-button type="primary" @click="addDeliveryman">{{ $t('6c1afa3c.89beb5') }}</el-button>
       </div>
 
       <SpFinder
@@ -52,43 +52,43 @@ export default {
       },
       formList: [
         {
-          label: '支付方式名称',
+          label: this.$t('6c1afa3c.9593e2'),
           key: 'pay_name',
           type: 'input',
           required: true,
-          message: '不能为空'
+          message: this.$t('6c1afa3c.281bad')
         },
         {
-          label: '收款说明',
+          label: this.$t('6c1afa3c.be8f34'),
           key: 'pay_tips',
           type: 'textarea',
           width: '600px'
         },
         {
-          label: '付款说明',
+          label: this.$t('6c1afa3c.c4b7b7'),
           key: 'pay_desc',
           type: 'textarea',
           width: '600px'
         },
         {
-          label: '订单自动取消',
+          label: this.$t('6c1afa3c.756fb3'),
           key: 'auto_cancel_time',
           component: ({ key }, value) => {
             return (
               <div>
-                未付款订单，将在
+                {this.$t('6c1afa3c.1f092f')}
                 <el-input
                   type='number'
                   min='0'
                   style='width: 100px;margin-left: 10px;'
                   v-model={value[key]}
                 />
-                （小时）之后取消
+                {this.$t('6c1afa3c.baa02a')}
               </div>
             )
           },
           required: true,
-          message: '不能为空'
+          message: this.$t('6c1afa3c.281bad')
         },
         // {
         //   label: '是否需要财务审核',
@@ -109,58 +109,64 @@ export default {
         // },
 
         {
-          label: '是否开启',
+          label: this.$t('6c1afa3c.780afe'),
           key: 'is_open',
           type: 'switch'
         }
       ],
       deliveryman: false,
       addLoading: false,
-      editTitle: '添加收款账户',
+      editTitle: this.$t ? this.$t('6c1afa3c.89beb5') : '添加收款账户',
       params: {},
       options: [
         {
           value: 'order',
-          label: '按单笔订单'
+          label: this.$t ? this.$t('6c1afa3c.ed776f') : '按单笔订单'
         },
         {
           value: 'amount',
-          label: '按订单金额比例'
+          label: this.$t ? this.$t('6c1afa3c.705abf') : '按订单金额比例'
         }
       ],
       setting: {
         columns: [
-          { name: '收款人户名', key: 'bank_account_name' },
-          { name: '银行账号', key: 'bank_account_no' },
-          { name: '开户银行', key: 'bank_name' },
-          { name: '银联号', key: 'china_ums_no' },
+          { name: this.$t('6c1afa3c.84fc41'), key: 'bank_account_name' },
+          { name: this.$t('6c1afa3c.954218'), key: 'bank_account_no' },
+          { name: this.$t('6c1afa3c.cc5ca0'), key: 'bank_name' },
+          { name: this.$t('6c1afa3c.4402fa'), key: 'china_ums_no' },
           {
-            name: '银行LOGO',
+            name: this.$t('6c1afa3c.e277b7'),
             width: 100,
             key: 'pic',
             render: (h, { row }) => {
               return <SpImage src={row.pic} width={60} height={60} />
             }
           },
-          { name: '备注', key: 'remark' },
+          { name: this.$t('6c1afa3c.2432b5'), key: 'remark' },
           {
-            name: '是否默认',
+            name: this.$t('6c1afa3c.d1c357'),
             width: 100,
             key: 'staff_attribute',
             render: (h, { row }) => {
-              return <span>{row.is_default === 'true' ? '是' : '否'}</span>
+              return (
+                <span>
+                  {row.is_default === 'true'
+                    ? this.$t('6c1afa3c.0a60ac')
+                    : this.$t('6c1afa3c.c9744f')}
+                </span>
+              )
             }
           }
         ],
         actions: [
           {
-            name: '编辑',
+            name: this.$t('6c1afa3c.95b351'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: ([row]) => {
-                this.editTitle = '编辑收款账户'
+                this.editTitle = this.$t('6c1afa3c.27e12d')
                 this.deliveryman = true
 
                 this.addForm = {
@@ -170,15 +176,15 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: this.$t('6c1afa3c.2f4aad'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认删除？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
+                await this.$confirm(this.$t('6c1afa3c.b28efa'), this.$t('6c1afa3c.02d981'), {
+                  confirmButtonText: this.$t('6c1afa3c.38cf16'),
+                  cancelButtonText: this.$t('6c1afa3c.625fb2')
                 })
                 await this.$api.offline.deleteOfflineAccount(row.id)
                 this.$refs['finder'].refresh()
@@ -199,66 +205,66 @@ export default {
       },
       addFormList: [
         {
-          label: '收款人户名',
+          label: this.$t('6c1afa3c.84fc41'),
           key: 'bank_account_name',
-          placeholder: '请输入收款人户名',
+          placeholder: this.$t('6c1afa3c.2eb695'),
           type: 'input',
           required: true,
-          message: '收款人户名不能为空'
+          message: this.$t('6c1afa3c.a4a208')
         },
         {
-          label: '银行账号',
+          label: this.$t('6c1afa3c.954218'),
           key: 'bank_account_no',
-          placeholder: '请输入银行账号',
+          placeholder: this.$t('6c1afa3c.f9aa7d'),
           type: 'input',
           required: true,
-          message: '银行账号不能为空'
+          message: this.$t('6c1afa3c.d81e7c')
         },
         {
-          label: '开户银行',
+          label: this.$t('6c1afa3c.cc5ca0'),
           key: 'bank_name',
-          placeholder: '请输入开户银行',
+          placeholder: this.$t('6c1afa3c.46222a'),
           type: 'input',
           required: true,
-          message: '开户银行不能为空'
+          message: this.$t('6c1afa3c.0630e3')
         },
         {
-          label: '银联号',
+          label: this.$t('6c1afa3c.4402fa'),
           key: 'china_ums_no',
-          placeholder: '请输入银联号',
+          placeholder: this.$t('6c1afa3c.e44953'),
           type: 'input',
           required: true,
-          message: '银联号不能为空'
+          message: this.$t('6c1afa3c.d414ff')
         },
         {
-          label: '银行LOGO',
+          label: this.$t('6c1afa3c.e277b7'),
           key: 'pic',
-          tip: '支持png、jpg、gif、jpeg等格式文件',
+          tip: this.$t('6c1afa3c.9068dc'),
           required: true,
-          message: '请上传银行LOGO',
+          message: this.$t('6c1afa3c.b1498f'),
           component: ({ key }, value) => {
             return <SpImagePicker v-model={value[key]} />
           }
         },
         {
-          label: '备注',
+          label: this.$t('6c1afa3c.2432b5'),
           key: 'remark',
-          placeholder: '请输入备注',
+          placeholder: this.$t('6c1afa3c.3cac63'),
           type: 'input'
         },
         {
-          label: '是否默认',
+          label: this.$t('6c1afa3c.d1c357'),
           key: 'is_default',
           type: 'radio',
           required: true,
           options: [
             {
               label: 'true',
-              name: '是'
+              name: this.$t('6c1afa3c.0a60ac')
             },
             {
               label: 'false',
-              name: '否'
+              name: this.$t('6c1afa3c.c9744f')
             }
           ]
         }
@@ -284,7 +290,7 @@ export default {
         is_open: this.form.is_open ? 'true' : 'false'
       }
       await this.$api.trade.setPaymentSetting(params)
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('6c1afa3c.3b1083'))
     },
     onSearch() {
       this.$refs['finder'].refresh()
@@ -298,7 +304,7 @@ export default {
     },
     addDeliveryman() {
       this.deliveryman = true
-      this.editTitle = '添加收款账户'
+      this.editTitle = this.$t('6c1afa3c.89beb5')
       this.addForm = {
         bank_account_name: '',
         bank_account_no: '',
@@ -317,12 +323,12 @@ export default {
 
       if (params.id) {
         await this.$api.offline.updateOfflineAccount(params)
-        this.$message.success('编辑成功')
+        this.$message.success(this.$t('6c1afa3c.3bb47b'))
         this.deliveryman = false
         this.onSearch()
       } else {
         await this.$api.offline.createOfflineAccount(this.addForm)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('6c1afa3c.3b1083'))
         this.deliveryman = false
         this.onSearch()
       }

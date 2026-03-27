@@ -5,57 +5,63 @@
 
 <template>
   <section class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('e2d47062.e366cc') }}</div>
     <div class="section-body">
       <el-form label-position="top">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('e2d47062.32c65d')">
           <el-input v-model="base.title" />
         </el-form-item>
-        <el-form-item label="副标题">
+        <el-form-item :label="$t('e2d47062.72cf37')">
           <el-input v-model="base.subtitle" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('e2d47062.4707ba')">
           <el-input v-model="base.padded" type="number" />
         </el-form-item>
-        <el-form-item label="左偏移">
+        <el-form-item :label="$t('e2d47062.d9caa8')">
           <el-switch v-model="config.offset" />
         </el-form-item>
-        <el-form-item label="全屏宽">
+        <el-form-item :label="$t('e2d47062.8a59ff')">
           <el-switch v-model="config.fullscreen" />
         </el-form-item>
-        <el-form-item label="展示图">
+        <el-form-item :label="$t('e2d47062.364e87')">
           <div v-for="(item, index) in data" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
             </div>
             <div @click="handleImgChange(index)">
-              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader" />
+              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader">
               <div v-else class="banner-uploader">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('e2d47062.ce6855') }}
               </div>
             </div>
             <div v-if="show_goods" class="uploader-setting">
               <div class="goods-select" @click="editLink(index)">
                 <div v-if="item.id" class="link-content">
-                  <template v-if="item.linkPage === 'goods'"> 【商品】{{ item.title }} </template>
-                  <template v-if="item.linkPage === 'store'"> 【店铺】{{ item.title }} </template>
+                  <template v-if="item.linkPage === 'goods'">
+                    {{ $t('e2d47062.516f1d') }}{{ item.title }}
+                  </template>
+                  <template v-if="item.linkPage === 'store'">
+                    {{ $t('e2d47062.d0e883') }}{{ item.title }}
+                  </template>
                   <template v-if="item.linkPage === 'custom_page'">
-                    【自定义页】{{ item.title }}
+                    {{ $t('e2d47062.b98089') }}{{ item.title }}
                   </template>
                   <template v-if="item.linkPage === 'category'">
-                    【分类】{{ item.title }}
+                    {{ $t('e2d47062.196c46') }}{{ item.title }}
                   </template>
                   {{ item.title }}
                 </div>
-                <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
+                <div v-else class="content-center">
+                  <i class="el-icon-link" />{{ $t('e2d47062.4f2c29') }}
+                </div>
               </div>
             </div>
           </div>
         </el-form-item>
       </el-form>
       <div class="content-center">
-        <div class="frm-tips">支持图片格式：jpg/png</div>
+        <div class="frm-tips">{{ $t('e2d47062.789f83') }}</div>
         <!-- <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div> -->
         <el-button
           :disabled="data.length >= num"
@@ -63,7 +69,7 @@
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          {{ text }}
+          {{ displayText }}
         </el-button>
       </div>
       <imgPicker
@@ -126,7 +132,15 @@ export default {
     },
     text: {
       type: String,
-      default: '添加轮播图'
+      default: ''
+    }
+  },
+  computed: {
+    displayText() {
+      if (!this.text) return this.$t('e2d47062.22134f')
+      if (typeof this.text === 'string' && /^[a-f0-9]{8}\.[a-f0-9]{6}$/.test(this.text))
+        return this.$t(this.text)
+      return this.text
     }
   },
   data() {
@@ -231,7 +245,7 @@ export default {
       }
       if (this.data.length > this.num) {
         this.$message({
-          message: `最多添加${this.num}个图片`,
+          message: this.$t('e2d47062.21d2d5') + this.num + this.$t('e2d47062.8c3bf0'),
           type: 'error',
           duration: 5 * 1000
         })

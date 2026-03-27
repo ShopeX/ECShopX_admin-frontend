@@ -6,8 +6,8 @@
 <template>
   <div class="unbind-box section-white content-padded">
     <div class="content-center">
-      <p>您尚未绑定认证服务号，无法使用该功能。</p>
-      <el-button type="primary" @click="toBind"> 去绑定 </el-button>
+      <p>{{ $t('70d7a0e0.a997a9') }}</p>
+      <el-button type="primary" @click="toBind"> {{ $t('70d7a0e0.d4594e') }} </el-button>
     </div>
   </div>
 </template>

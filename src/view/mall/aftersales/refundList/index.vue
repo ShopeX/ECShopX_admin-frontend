@@ -22,6 +22,7 @@
   </SpPage>
 </template>
 <script>
+import { i18n } from '@/i18n'
 import order from './components/order'
 import orderlog from './components/orderlog'
 export default {
@@ -33,8 +34,8 @@ export default {
     return {
       activeName: 'order',
       tabList: [
-        { name: '退款单', activeName: 'order' },
-        { name: '退款失败日志', activeName: 'orderlog' }
+        { name: i18n.t('05ee9c47.51e9e1'), activeName: 'order' },
+        { name: i18n.t('05ee9c47.ea0ea2'), activeName: 'orderlog' }
       ]
     }
   },

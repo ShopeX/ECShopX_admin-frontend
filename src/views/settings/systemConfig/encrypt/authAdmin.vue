@@ -13,7 +13,7 @@
             v-model="form.reason"
             type="textarea"
             :autosize="{ minRows: 5, maxRows: 7 }"
-            placeholder="请填写申请理由（非必填）"
+            :placeholder="$t('d593459e.af88e3')"
             maxlength="100"
             show-word-limit
           />
@@ -21,21 +21,23 @@
       </el-row>
       <el-row :gutter="20" class="form">
         <el-col :span="24">
-          <i class="el-icon-alarm-clock icon-time" /> 重复时间：
-          <el-select v-model="form.date_type" placeholder="请选择">
-            <el-option label="每天" value="0" />
-            <el-option label="周一到周五" value="1" />
+          <i class="el-icon-alarm-clock icon-time" /> {{ $t('d593459e.2abd15') }}
+          <el-select v-model="form.date_type" :placeholder="$t('d593459e.708c9d')">
+            <el-option :label="$t('d593459e.78623e')" value="0" />
+            <el-option :label="$t('d593459e.ebd0a9')" value="1" />
           </el-select>
-          <el-checkbox v-model="form.isDay" style="margin: 0 20px"> 全天 </el-checkbox>
+          <el-checkbox v-model="form.isDay" style="margin: 0 20px">
+            {{ $t('d593459e.bd4357') }}
+          </el-checkbox>
           <el-col :span="24" style="margin-top: 20px; padding-left: 20px">
             <el-date-picker
               v-model="form.time"
               style="width: 384px"
               type="daterange"
-              range-separator="至"
+              :range-separator="$t('d593459e.981cbe')"
               value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :start-placeholder="$t('d593459e.b44c0f')"
+              :end-placeholder="$t('d593459e.1d468b')"
               :picker-options="pickerOptions"
               @change="timeChange"
             />
@@ -49,27 +51,34 @@
             style="width: 384px"
             format="HH:mm"
             value-format="HH:mm"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            placeholder="选择时间范围"
+            :range-separator="$t('d593459e.981cbe')"
+            :start-placeholder="$t('d593459e.592c59')"
+            :end-placeholder="$t('d593459e.f78277')"
+            :placeholder="$t('d593459e.6ae9ce')"
           />
         </el-col>
       </el-row>
       <el-row>
         <el-col v-if="!form.isDay" :span="16">
-          每{{ form.date_type == 0 ? '天' : '周一到周五' }} {{ form.range[0] }} 至
-          {{ form.range[1] }} 有权限，生效时间：{{ form.start_time }} 结束时间：{{ form.end_time }}
+          {{ $t('d593459e.a7e221')
+          }}{{ form.date_type == 0 ? $t('d593459e.249aba') : $t('d593459e.ebd0a9') }}
+          {{ form.range[0] }} {{ $t('d593459e.981cbe') }} {{ form.range[1] }}
+          {{ $t('d593459e.23aa00') }}{{ form.start_time }} {{ $t('d593459e.590dbb')
+          }}{{ form.end_time }}
         </el-col>
 
         <el-col v-else :span="16" class="tips">
-          每{{ form.date_type == 0 ? '天' : '周一到周五' }} 有权限，生效时间：{{
-            form.start_time
-          }}
-          结束时间：{{ form.end_time }}
+          {{ $t('d593459e.a7e221')
+          }}{{ form.date_type == 0 ? $t('d593459e.249aba') : $t('d593459e.ebd0a9') }}
+          {{ $t('d593459e.23aa00') }}{{ form.start_time }} {{ $t('d593459e.590dbb')
+          }}{{ form.end_time }}
         </el-col>
         <el-col :span="24" style="text-align: left">
-          <el-button type="primary" style="margin-top: 20px" @click="submit"> 提 交 </el-button>
+          <el-button type="primary" style="margin-top: 20px" @click="submit">
+{{
+            $t('d593459e.4372a5')
+          }}
+</el-button>
         </el-col>
         <!-- <div style="text-align: right; width: 80%"> -->
 
@@ -144,7 +153,7 @@ export default {
 
       const { status, message } = await this.$api.encrypt.createEncrypt(obj)
       if (status) {
-        this.$message.success('提交成功')
+        this.$message.success(this.$t('d593459e.23b62e'))
         this.$refs.finder.refresh(true)
         this.getDate()
         this.getRange()
@@ -155,8 +164,8 @@ export default {
       }
     },
     open(message) {
-      this.$confirm(message, '提示', {
-        confirmButtonText: '确定',
+      this.$confirm(message, this.$t('d593459e.02d981'), {
+        confirmButtonText: this.$t('d593459e.38cf16'),
         showCancelButton: false,
         dangerouslyUseHTMLString: true,
         type: 'warning',

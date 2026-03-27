@@ -5,34 +5,34 @@
 
 <template>
   <section v-if="name === 'imgHotzone'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('879af10c.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('879af10c.32c65d')">
           <el-input v-model="base.title" />
         </el-form-item>
-        <el-form-item label="副标题">
+        <el-form-item :label="$t('879af10c.72cf37')">
           <el-input v-model="base.subtitle" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('879af10c.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="展示图">
+        <el-form-item :label="$t('879af10c.364e87')">
           <div class="setting-item slider">
             <div v-if="config.imgUrl" class="upload-box">
               <img
                 :src="wximageurl + config.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
-              />
+              >
             </div>
             <div v-else class="banner-uploader" @click="handleImgChange">
-              <i class="el-icon-camera" />上传图片
+              <i class="el-icon-camera" />{{ $t('879af10c.ce6855') }}
             </div>
           </div>
         </el-form-item>
         <!-- res: {{res}} -->
-        <el-form-item label="热区">
+        <el-form-item :label="$t('879af10c.50da72')">
           <hotzone
             class="hotzone"
             :image="config.imgUrl"
@@ -55,28 +55,42 @@
                   }
                 "
               >
-                <el-radio :label="0"> 选择路径 </el-radio>
-                <el-radio :label="1"> H5链接 </el-radio>
+                <el-radio :label="0"> {{ $t('879af10c.e3cf91') }} </el-radio>
+                <el-radio :label="1"> {{ $t('879af10c.4e99fd') }} </el-radio>
               </el-radio-group>
               <div v-if="item.linkType == 0" class="goods-select" @click="handleGoodsChange(index)">
                 <div v-if="item.id" class="link-content">
-                  <template v-if="item.linkPage === 'goods'"> 商品： </template>
-                  <template v-if="item.linkPage === 'category'"> 分类： </template>
-                  <template v-if="item.linkPage === 'article'"> 文章： </template>
-                  <template v-if="item.linkPage === 'planting'"> 软文： </template>
-                  <template v-if="item.linkPage === 'link'"> 页面： </template>
-                  <template v-if="item.linkPage === 'marketing'"> 营销： </template>
-                  <template v-if="item.linkPage === 'custom_page'"> 自定义页面： </template>
+                  <template v-if="item.linkPage === 'goods'">
+                    {{ $t('879af10c.10fe9c') }}
+                  </template>
+                  <template v-if="item.linkPage === 'category'">
+                    {{ $t('879af10c.e7d2e8') }}
+                  </template>
+                  <template v-if="item.linkPage === 'article'">
+                    {{ $t('879af10c.8cb9b8') }}
+                  </template>
+                  <template v-if="item.linkPage === 'planting'">
+                    {{ $t('879af10c.9dcd91') }}
+                  </template>
+                  <template v-if="item.linkPage === 'link'"> {{ $t('879af10c.ffd741') }} </template>
+                  <template v-if="item.linkPage === 'marketing'">
+                    {{ $t('879af10c.c78a2f') }}
+                  </template>
+                  <template v-if="item.linkPage === 'custom_page'">
+                    {{ $t('879af10c.15ed03') }}
+                  </template>
                   {{ item.title }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                  <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                    $t('879af10c.4f2c29')
+                  }}
                 </div>
               </div>
               <div v-else>
                 <el-input
                   v-model="item.linkUrl"
-                  placeholder="请输入自定义链接"
+                  :placeholder="$t('879af10c.af90b2')"
                   @change="onInputChange"
                 />
               </div>

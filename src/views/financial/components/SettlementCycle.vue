@@ -17,16 +17,16 @@
 </style>
 <template>
   <div class="comp-cycle">
-    <span class="label">每</span>
+    <span class="label">{{ $t('8516cca2.a7e221') }}</span>
     <el-input
       v-model="cycle"
       :class="cycleClass"
       type="text"
       clearable
-      placeholder="请输入结算周期数"
+      :placeholder="$t('8516cca2.9e91bf')"
       @change="onChange"
     />
-    <el-select v-model="unit" clearable placeholder="请选择" @change="onChange">
+    <el-select v-model="unit" clearable :placeholder="$t('8516cca2.708c9d')" @change="onChange">
       <el-option
         v-for="item in units"
         :key="item.value"
@@ -46,9 +46,9 @@ export default {
     const { cycle = '', unit = '' } = this.value
     return {
       units: [
-        { label: '天', value: 'day' },
-        { label: '周', value: 'week' },
-        { label: '月', value: 'month' }
+        { label: this.$t('8516cca2.249aba'), value: 'day' },
+        { label: this.$t('8516cca2.a657f4'), value: 'week' },
+        { label: this.$t('8516cca2.e42b99'), value: 'month' }
       ],
       cycle,
       unit

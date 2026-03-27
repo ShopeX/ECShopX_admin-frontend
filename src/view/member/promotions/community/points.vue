@@ -11,13 +11,14 @@
         <div class="view-flex-item">
           <i class="iconfont icon-wallet" />
           <div>
-            <span>积分总额</span> <span class="money mark">{{ totalPoints }}</span>
+            <span>{{ $t('eaf690f0.521856') }}</span>
+            <span class="money mark">{{ totalPoints }}</span>
           </div>
         </div>
         <div class="view-flex-item">
           <i class="iconfont icon-credit-card1" />
           <div>
-            有效积分<span class="money mark">{{ validPoint }}</span>
+            {{ $t('eaf690f0.140315') }}<span class="money mark">{{ validPoint }}</span>
           </div>
         </div>
       </div>
@@ -27,7 +28,7 @@
             v-model="create_time"
             value-format="yyyy/MM/dd"
             type="daterange"
-            placeholder="选择日期范围"
+            :placeholder="$t('eaf690f0.4b8cb9')"
             style="width: 100%"
             @change="dateChange"
           />
@@ -35,7 +36,7 @@
         <el-col :span="6">
           <el-select
             v-model="journal_type"
-            placeholder="交易类型"
+            :placeholder="$t('eaf690f0.806363')"
             clearable
             style="width: 100%"
             @change="filterTag"
@@ -49,31 +50,33 @@
           </el-select>
         </el-col>
         <el-col :span="6">
-          <el-button type="primary" @click="handleChangePoint(false)"> 调整积分 </el-button>
+          <el-button type="primary" @click="handleChangePoint(false)">
+            {{ $t('eaf690f0.979034') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="dataList" :height="wheight - 320">
-        <el-table-column label="交易类型">
+        <el-table-column :label="$t('eaf690f0.806363')">
           <template slot-scope="scope">
-            <span v-if="scope.row.journal_type == '1'">入账</span>
-            <span v-else-if="scope.row.journal_type == '2'">全额退还</span>
-            <span v-else-if="scope.row.journal_type == '3'">部分退还</span>
-            <span v-else-if="scope.row.journal_type == '4'">出账</span>
+            <span v-if="scope.row.journal_type == '1'">{{ $t('eaf690f0.5922f2') }}</span>
+            <span v-else-if="scope.row.journal_type == '2'">{{ $t('eaf690f0.bd863a') }}</span>
+            <span v-else-if="scope.row.journal_type == '3'">{{ $t('eaf690f0.2cd83a') }}</span>
+            <span v-else-if="scope.row.journal_type == '4'">{{ $t('eaf690f0.272069') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="order_id" label="积分来源">
+        <el-table-column prop="order_id" :label="$t('eaf690f0.b0780b')">
           <template slot-scope="scope">
-            <span v-if="scope.row.order_id == '-1'">手动调整</span>
-            <span v-else-if="scope.row.journal_type == '1' && scope.row.order_id.length !== 16"
-              >积分兑换拒绝</span
-            >
-            <span v-else-if="scope.row.journal_type != '1' && scope.row.order_id.length !== 16"
-              >积分兑换</span
-            >
+            <span v-if="scope.row.order_id == '-1'">{{ $t('eaf690f0.33da57') }}</span>
+            <span v-else-if="scope.row.journal_type == '1' && scope.row.order_id.length !== 16">{{
+              $t('eaf690f0.10b552')
+            }}</span>
+            <span v-else-if="scope.row.journal_type != '1' && scope.row.order_id.length !== 16">{{
+              $t('eaf690f0.7a395c')
+            }}</span>
             <span v-else>{{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="money" label="积分">
+        <el-table-column prop="money" :label="$t('eaf690f0.9f68a8')">
           <template slot-scope="scope">
             <span v-if="scope.row.journal_type == '1'"
               ><el-tag type="success">{{ scope.row.income }}</el-tag></span
@@ -83,8 +86,8 @@
             >
           </template>
         </el-table-column>
-        <el-table-column prop="point_desc" label="积分描述" />
-        <el-table-column prop="created_date" label="创建时间" />
+        <el-table-column prop="point_desc" :label="$t('eaf690f0.22677e')" />
+        <el-table-column prop="created_date" :label="$t('eaf690f0.eca37c')" />
       </el-table>
       <div v-if="total_count > params.pageSize" class="mt-4 text-right">
         <el-pagination
@@ -108,7 +111,7 @@ export default {
   data() {
     return {
       activeName: 'all',
-      tabPaneLabel: '积分记录',
+      tabPaneLabel: '',
       create_time: '',
       loading: false,
       dataList: [],
@@ -117,10 +120,7 @@ export default {
         page: 1,
         pageSize: 20
       },
-      typeFilters: [
-        { text: '入账', value: '1' },
-        { text: '出账', value: '4' }
-      ],
+      typeFilters: [],
       date_begin: '',
       date_end: '',
       community_id: 0,
@@ -131,7 +131,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    typeFilters() {
+      return [
+        { text: this.$t('eaf690f0.5922f2'), value: '1' },
+        { text: this.$t('eaf690f0.272069'), value: '4' }
+      ]
+    }
   },
   mounted() {
     if (this.$route.query.community_id) {
@@ -139,6 +145,8 @@ export default {
     }
     if (this.$route.query.name) {
       this.tabPaneLabel = this.$route.query.name
+    } else {
+      this.tabPaneLabel = this.$t('eaf690f0.dc8c37')
     }
     this.getlist()
   },
@@ -154,16 +162,16 @@ export default {
       this.getlist()
     },
     handleChangePoint() {
-      this.$prompt('请输入调整的积分值', '调整积分', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$prompt(this.$t('eaf690f0.ef45f4'), this.$t('eaf690f0.979034'), {
+        confirmButtonText: this.$t('eaf690f0.38cf16'),
+        cancelButtonText: this.$t('eaf690f0.625fb2')
       })
         .then(({ value }) => {
           changeCommunityPoint({ community_id: this.community_id, point: value }).then((res) => {
             if (value > 0) {
-              this.$message({ type: 'success', message: '新增积分: ' + value })
+              this.$message({ type: 'success', message: this.$t('eaf690f0.887aac') + value })
             } else {
-              this.$message({ type: 'success', message: '扣减积分: ' + value })
+              this.$message({ type: 'success', message: this.$t('eaf690f0.e6e1a2') + value })
             }
             this.params.page = 1
             this.getParams()
@@ -171,7 +179,7 @@ export default {
           })
         })
         .catch(() => {
-          this.$message({ type: 'info', message: '已取消' })
+          this.$message({ type: 'info', message: this.$t('eaf690f0.2111cc') })
         })
     },
     dateChange(val) {

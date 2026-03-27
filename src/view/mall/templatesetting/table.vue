@@ -14,7 +14,8 @@
     <el-table-column prop="date">
       <template slot="header" slot-scope="slot">
         <div class="first_header">
-          <span>积分区间</span><span>*</span><span>最多添加5个区间</span>
+          <span>{{ $t('38beb246.5953c2') }}</span
+          ><span>*</span><span>{{ $t('38beb246.730d5c') }}</span>
         </div>
       </template>
       <template slot-scope="scope">
@@ -37,35 +38,38 @@
           :class="{ haveError: scope.row.isHaveError && scope.row.score2 === '' }"
           @blur="handleBlur(scope.row, scope.$index)"
         />
-        <span>积分</span>
+        <span>{{ $t('38beb246.9f68a8') }}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="name" label="操作" width="200">
+    <el-table-column prop="name" :label="$t('38beb246.2b6bc0')" width="200">
       <template slot="header" slot-scope="slot">
         <div class="second_header">
-          <span>操作</span>
+          <span>{{ $t('38beb246.2b6bc0') }}</span>
         </div>
       </template>
       <template slot-scope="scope">
-        <a :class="{ disabled: dataSource.length === 1 }" @click="handleDelete(scope)">删除</a>
+        <a :class="{ disabled: dataSource.length === 1 }" @click="handleDelete(scope)">{{
+          $t('38beb246.2f4aad')
+        }}</a>
       </template>
     </el-table-column>
     <template v-if="dataSource.length < 5" slot="append">
       <div class="footer" :class="{ noValue: !dataSource.length }">
-        <span @click="handleAddScore">添加积分筛选区间</span>
+        <span @click="handleAddScore">{{ $t('38beb246.1d2f5b') }}</span>
       </div>
     </template>
   </el-table>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 export default {
   props: ['value'],
   data() {
     const _this = this
     return {
       dataSource: _this.value || [],
-      titleCustom: '积分区间*最多添加5个区间'
+      titleCustom: i18n.t('38beb246.d9d361')
     }
   },
   methods: {
@@ -92,7 +96,7 @@ export default {
     },
     handleDelete: function (row) {
       if (this.dataSource.length === 1) {
-        this.$message.info('少于一行无法删除!')
+        this.$message.info(this.$t('38beb246.fb8021'))
         return
       }
       const { $index } = row

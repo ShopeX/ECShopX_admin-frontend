@@ -12,11 +12,11 @@
           <el-date-picker
             v-model="create_time"
             type="daterange"
-            start-placeholder="开始日期"
-            ange-separator="至"
-            end-placeholder="结束日期"
+            :start-placeholder="$t('829ad9f2.b44c0f')"
+            range-separator="-"
+            :end-placeholder="$t('829ad9f2.1d468b')"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('829ad9f2.4b8cb9')"
             @change="dateChange"
           />
           <!-- <el-select v-model="order_class" @change="TypeHandle" placeholder="请选择订单类型">
@@ -38,13 +38,13 @@
             <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
           </el-input> -->
           <el-col :span="8">
-            <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
+            <el-input v-model="identifier" class="input-m" :placeholder="$t('829ad9f2.f4b2e7')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
           <el-select
             v-model="invoice_status"
-            placeholder="开票状态"
+            :placeholder="$t('829ad9f2.2af9f7')"
             @change="invoiceStatusChange"
             clearable
           >
@@ -60,15 +60,19 @@
           <el-col>
             <el-button-group>
               <el-button type="primary" @click="exportData('normal_master_order')">
-                导出主订单
+                {{ $t('829ad9f2.538414') }}
               </el-button>
-              <el-button type="primary" @click="exportData('normal_order')"> 导出子订单 </el-button>
+              <el-button type="primary" @click="exportData('normal_order')">
+{{
+                $t('829ad9f2.82b914')
+              }}
+</el-button>
             </el-button-group>
             <el-popover
               placement="top-start"
               width="200"
               trigger="hover"
-              content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+              :content="$t('829ad9f2.676480')"
             >
               <i slot="reference" class="el-icon-question" />
             </el-popover>
@@ -77,29 +81,33 @@
           </el-upload> -->
           </el-col>
         </el-row>
-        <el-dialog title="订单下载" :visible.sync="downloadView" :close-on-click-modal="false">
+        <el-dialog
+          :title="$t('829ad9f2.2cf869')"
+          :visible.sync="downloadView"
+          :close-on-click-modal="false"
+        >
           <template v-if="downloadUrl">
             <a :href="downloadUrl" download>{{ downloadName }}</a>
           </template>
         </el-dialog>
 
         <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-          <el-tab-pane label="全部" name="all" />
-          <el-tab-pane label="待发货" name="notship" />
-          <el-tab-pane label="待退款" name="cancelapply" />
-          <el-tab-pane label="待收货" name="shipping" />
+          <el-tab-pane :label="$t('829ad9f2.a8b0c2')" name="all" />
+          <el-tab-pane :label="$t('829ad9f2.d8476e')" name="notship" />
+          <el-tab-pane :label="$t('829ad9f2.6b715b')" name="cancelapply" />
+          <el-tab-pane :label="$t('829ad9f2.4933ca')" name="shipping" />
           <!-- <el-tab-pane label="待自提" name="ziti"></el-tab-pane> -->
-          <el-tab-pane label="未支付" name="notpay" />
-          <el-tab-pane label="已取消/已关闭" name="cancel" />
-          <el-tab-pane label="已完成" name="finish" />
+          <el-tab-pane :label="$t('829ad9f2.608afd')" name="notpay" />
+          <el-tab-pane :label="$t('829ad9f2.3e6db1')" name="cancel" />
+          <el-tab-pane :label="$t('829ad9f2.fad522')" name="finish" />
           <!-- <el-tab-pane label="已完成未开票" name="done_noinvoice"></el-tab-pane>
           <el-tab-pane label="已完成已开票" name="done_invoice"></el-tab-pane> -->
-          <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
-            <el-table-column width="280" prop="order_id" label="订单信息">
+          <el-table v-loading="loading" :data="list" :element-loading-text="$t('829ad9f2.f09b12')">
+            <el-table-column width="280" prop="order_id" :label="$t('829ad9f2.a6d10d')">
               <template slot-scope="scope">
                 <div class="order-num">
                   {{ scope.row.order_id }}
-                  <el-tooltip effect="dark" content="复制" placement="top-start">
+                  <el-tooltip effect="dark" :content="$t('829ad9f2.79d3ab')" placement="top-start">
                     <i
                       v-clipboard:copy="scope.row.order_id"
                       v-clipboard:success="onCopy"
@@ -108,26 +116,26 @@
                   </el-tooltip>
                 </div>
                 <div v-if="scope.row.distributor_name" class="order-store">
-                  <el-tooltip effect="dark" content="店铺名" placement="top-start">
+                  <el-tooltip effect="dark" :content="$t('829ad9f2.8a0cc2')" placement="top-start">
                     <i class="el-icon-office-building" />
                   </el-tooltip>
                   {{ scope.row.distributor_name }}
                 </div>
                 <div class="order-time">
-                  <el-tooltip effect="dark" content="下单时间" placement="top-start">
+                  <el-tooltip effect="dark" :content="$t('829ad9f2.2240cc')" placement="top-start">
                     <i class="el-icon-time" />
                   </el-tooltip>
                   {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
                 </div>
               </template>
             </el-table-column>
-            <el-table-column width="80" label="运费">
+            <el-table-column width="80" :label="$t('829ad9f2.9a935b')">
               <template slot-scope="scope">
                 <span v-if="scope.row.freight_type == 'cash'"
                   ><span class="cur">{{ scope.row.fee_symbol }}</span
                   >{{ scope.row.freight_fee / 100 }}</span
                 >
-                <span v-else>{{ scope.row.freight_fee }}积分</span>
+                <span v-else>{{ scope.row.freight_fee }}{{ $t('829ad9f2.9f68a8') }}</span>
               </template>
             </el-table-column>
             <!--
@@ -142,23 +150,23 @@
               <span class="cur">{{scope.row.fee_symbol}}</span>{{scope.row.total_fee / 100}}
             </template>
           </el-table-column> -->
-            <el-table-column prop="point" width="200" label="商品价格">
+            <el-table-column prop="point" width="200" :label="$t('829ad9f2.9cf4c6')">
               <template slot-scope="scope">
-                {{ scope.row.item_point }}积分
+                {{ scope.row.item_point }}{{ $t('829ad9f2.9f68a8') }}
                 <span v-if="scope.row.item_fee > 0"
                   >+<span class="cur">{{ scope.row.fee_symbol }}</span
                   >{{ scope.row.item_fee / 100 }}</span
                 >
               </template>
             </el-table-column>
-            <el-table-column prop="mobile" width="160" label="联系手机">
+            <el-table-column prop="mobile" width="160" :label="$t('829ad9f2.057157')">
               <template slot-scope="scope">
                 <i class="el-icon-mobile" />
                 {{ scope.row.mobile }}
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
-                  content="复制"
+                  :content="$t('829ad9f2.79d3ab')"
                   placement="top-start"
                 >
                   <i
@@ -194,21 +202,31 @@
               v-if="activeName == 'all'"
               width="120"
               prop="order_status"
-              label="状态"
+              :label="$t('829ad9f2.3fea7c')"
             >
               <template slot-scope="scope">
                 <!-- 订单状态 -->
-                <span v-if="scope.row.order_status == 'PAYED'">已支付</span>
-                <span v-if="scope.row.order_status == 'NOTPAY'">未支付</span>
-                <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
+                <span v-if="scope.row.order_status == 'PAYED'">{{ $t('829ad9f2.8d02a5') }}</span>
+                <span v-if="scope.row.order_status == 'NOTPAY'">{{ $t('829ad9f2.608afd') }}</span>
+                <span v-if="scope.row.order_status_des == 'CANCEL'">{{
+                  $t('829ad9f2.2111cc')
+                }}</span>
                 <span v-if="scope.row.order_status_des == 'CLOSED'">{{
                   scope.row.order_status_msg
                 }}</span>
-                <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">待收货</span>
-                <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">已退款</span>
-                <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">等待成团</span>
-                <span v-if="scope.row.order_status == 'PART_PAYMENT'">部分付款</span>
-                <span v-if="scope.row.order_status == 'DONE'">已完成</span>
+                <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">{{
+                  $t('829ad9f2.4933ca')
+                }}</span>
+                <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">{{
+                  $t('829ad9f2.e85018')
+                }}</span>
+                <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">{{
+                  $t('829ad9f2.425a40')
+                }}</span>
+                <span v-if="scope.row.order_status == 'PART_PAYMENT'">{{
+                  $t('829ad9f2.38b508')
+                }}</span>
+                <span v-if="scope.row.order_status == 'DONE'">{{ $t('829ad9f2.fad522') }}</span>
                 <template
                   v-if="
                     scope.row.order_status != 'CANCEL' &&
@@ -217,11 +235,15 @@
                   "
                 >
                   <!-- 发货状态 -->
-                  <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
-                  <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
+                  <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">{{
+                    $t('829ad9f2.57a640')
+                  }}</span>
+                  <span v-if="scope.row.delivery_status == 'PARTAIL'">{{
+                    $t('829ad9f2.5296ac')
+                  }}</span>
                   <span
                     v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
-                    >待自提</span
+                    >{{ $t('829ad9f2.25d532') }}</span
                   >
                   <span
                     v-if="
@@ -229,12 +251,12 @@
                       scope.row.delivery_status == 'PENDING' &&
                       scope.row.order_status !== 'PART_PAYMENT'
                     "
-                    >待发货</span
+                    >{{ $t('829ad9f2.d8476e') }}</span
                   >
                 </template>
               </template>
             </el-table-column>
-            <el-table-column prop="invoice_status" label="开票状态">
+            <el-table-column prop="invoice_status" :label="$t('829ad9f2.2af9f7')">
               <template slot-scope="scope">
                 <span v-if="scope.row.invoice_status === 'success'" style="color: green">
                   {{ open_status_map[scope.row.invoice_status] }}
@@ -256,7 +278,7 @@
               <template v-else>-</template>
             </template>
           </el-table-column> -->
-            <el-table-column width="200" label="操作">
+            <el-table-column width="200" :label="$t('829ad9f2.2b6bc0')">
               <template slot-scope="scope">
                 <el-button type="text">
                   <router-link
@@ -265,7 +287,7 @@
                       query: { orderId: scope.row.order_id, resource: $route.path }
                     }"
                   >
-                    详情
+                    {{ $t('829ad9f2.f26225') }}
                   </router-link>
                 </el-button>
                 <el-button
@@ -277,7 +299,7 @@
                   type="text"
                   @click="cancelOrderAction(scope.row.order_id)"
                 >
-                  取消订单
+                  {{ $t('829ad9f2.b21b5e') }}
                 </el-button>
                 <el-button
                   v-if="
@@ -289,7 +311,7 @@
                   type="text"
                   @click="writeoffOrderAction(scope.row.order_id)"
                 >
-                  核销
+                  {{ $t('829ad9f2.e7d31e') }}
                 </el-button>
                 <template
                   v-if="
@@ -307,7 +329,7 @@
                     type="text"
                     @click="deliveryAction(scope.row)"
                   >
-                    发货
+                    {{ $t('829ad9f2.045315') }}
                   </el-button>
                   <el-button
                     v-if="
@@ -316,7 +338,7 @@
                     type="text"
                     @click="confirmCancelOrderAction(scope.row.order_id)"
                   >
-                    退款
+                    {{ $t('829ad9f2.44c198') }}
                   </el-button>
                 </template>
                 <el-button
@@ -324,7 +346,7 @@
                   type="text"
                   @click="IsInvoiced(scope.row, 0)"
                 >
-                  待开票
+                  {{ $t('829ad9f2.963609') }}
                 </el-button>
               </template>
             </el-table-column>
@@ -358,37 +380,37 @@
               class="demo-ruleForm"
               label-width="100px"
             >
-              <el-form-item label="订单号">
+              <el-form-item :label="$t('829ad9f2.1e8dc2')">
                 <el-col :span="20">
                   {{ deliveryData.orderInfo.order_id }}
                 </el-col>
               </el-form-item>
-              <el-form-item label="发货类型">
+              <el-form-item :label="$t('829ad9f2.b01994')">
                 <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
-                  <el-radio label="batch"> 整单发货 </el-radio>
-                  <el-radio label="sep"> 拆分发货 </el-radio>
+                  <el-radio label="batch">{{ $t('829ad9f2.afb426') }}</el-radio>
+                  <el-radio label="sep">{{ $t('829ad9f2.95d243') }}</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="商品信息">
+              <el-form-item :label="$t('829ad9f2.b433e6')">
                 <el-col :span="30">
                   <el-table :data="deliveryData.orderInfo.items">
-                    <el-table-column prop="item_name" label="商品名" width="180" />
-                    <el-table-column prop="num" label="数量" width="180" />
-                    <el-table-column label="总价">
+                    <el-table-column prop="item_name" :label="$t('829ad9f2.de5472')" width="180" />
+                    <el-table-column prop="num" :label="$t('829ad9f2.0bf60b')" width="180" />
+                    <el-table-column :label="$t('829ad9f2.4df53f')">
                       <template slot-scope="scope">
-                        <span>{{ scope.row.item_point }}积分</span>
+                        <span>{{ scope.row.item_point }}{{ $t('829ad9f2.9f68a8') }}</span>
                         <span v-if="scope.row.item_fee > 0"
                           >+{{ scope.row.fee_symbol }}{{ scope.row.item_fee / 100 }}</span
                         >
                       </template>
                     </el-table-column>
                     <template v-if="deliveryForm.delivery_type == 'sep'">
-                      <el-table-column label="快递公司" width="200">
+                      <el-table-column :label="$t('829ad9f2.f3af96')" width="200">
                         <template slot-scope="scope">
                           <el-select
                             v-model="scope.row.delivery_corp"
                             filterable
-                            placeholder="请选择快递公司，可搜索"
+                            :placeholder="$t('829ad9f2.32e586')"
                           >
                             <el-option
                               v-for="item in dlycorps"
@@ -399,12 +421,12 @@
                           </el-select>
                         </template>
                       </el-table-column>
-                      <el-table-column label="物流单号" width="200">
+                      <el-table-column :label="$t('829ad9f2.0bb075')" width="200">
                         <template slot-scope="scope">
                           <el-input
                             v-model="scope.row.delivery_code"
                             :maxlength="20"
-                            placeholder="物流公司单号"
+                            :placeholder="$t('829ad9f2.0e9f1e')"
                           />
                         </template>
                       </el-table-column>
@@ -413,12 +435,12 @@
                 </el-col>
               </el-form-item>
               <template v-if="deliveryForm.delivery_type == 'batch'">
-                <el-form-item label="快递公司">
+                <el-form-item :label="$t('829ad9f2.f3af96')">
                   <el-col>
                     <el-select
                       v-model="deliveryForm.delivery_corp"
                       filterable
-                      placeholder="请选择快递公司，可搜索"
+                      :placeholder="$t('829ad9f2.32e586')"
                     >
                       <el-option
                         v-for="item in dlycorps"
@@ -429,12 +451,12 @@
                     </el-select>
                   </el-col>
                 </el-form-item>
-                <el-form-item label="物流单号">
+                <el-form-item :label="$t('829ad9f2.0bb075')">
                   <el-col :span="14">
                     <el-input
                       v-model="deliveryForm.delivery_code"
                       :maxlength="20"
-                      placeholder="物流公司单号"
+                      :placeholder="$t('829ad9f2.0e9f1e')"
                     />
                   </el-col>
                 </el-form-item>
@@ -442,8 +464,12 @@
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleCancel"> 取消 </el-button>
-            <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
+            <el-button @click.native="handleCancel">{{ $t('829ad9f2.625fb2') }}</el-button>
+            <el-button type="primary" @click="submitDeliveryAction">
+{{
+              $t('829ad9f2.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <el-dialog
@@ -459,56 +485,62 @@
               class="demo-ruleForm"
               label-width="100px"
             >
-              <el-form-item label="订单号">
+              <el-form-item :label="$t('829ad9f2.1e8dc2')">
                 <el-col :span="20">
                   {{ deliveryData.orderInfo.order_id }}
                 </el-col>
               </el-form-item>
-              <el-form-item label="发货类型">
+              <el-form-item :label="$t('829ad9f2.b01994')">
                 <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
-                  <el-radio label="batch"> 整单发货 </el-radio>
-                  <el-radio label="sep"> 拆分发货 </el-radio>
+                  <el-radio label="batch">{{ $t('829ad9f2.afb426') }}</el-radio>
+                  <el-radio label="sep">{{ $t('829ad9f2.95d243') }}</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="商品信息">
+              <el-form-item :label="$t('829ad9f2.b433e6')">
                 <el-table :data="deliveryData.orderInfo.items">
-                  <el-table-column prop="item_name" label="商品名" width="180" />
-                  <el-table-column prop="num" label="数量" width="180" />
-                  <el-table-column prop="delivery_item_num" label="已发货数量" width="180" />
+                  <el-table-column prop="item_name" :label="$t('829ad9f2.de5472')" width="180" />
+                  <el-table-column prop="num" :label="$t('829ad9f2.0bf60b')" width="180" />
+                  <el-table-column
+                    prop="delivery_item_num"
+                    :label="$t('829ad9f2.745165')"
+                    width="180"
+                  />
 
-                  <el-table-column label="总支付价">
+                  <el-table-column :label="$t('829ad9f2.fadbf7')">
                     <template slot-scope="scope">
-                      <span>{{ scope.row.item_point }}积分</span>
+                      <span>{{ scope.row.item_point }}{{ $t('829ad9f2.9f68a8') }}</span>
                       <span v-if="scope.row.item_fee > 0"
                         >+{{ scope.row.fee_symbol }}{{ scope.row.item_fee / 100 }}</span
                       >
                     </template>
                   </el-table-column>
                   <template v-if="deliveryForm.delivery_type == 'sep'">
-                    <el-table-column label="发货数量" width="200">
+                    <el-table-column :label="$t('829ad9f2.4f5a46')" width="200">
                       <template slot-scope="scope">
                         <el-input-number
                           v-if="scope.row.num - scope.row.delivery_item_num != 0"
                           v-model="scope.row.delivery_num"
-                          placeholder="发货数量"
+                          :placeholder="$t('829ad9f2.4f5a46')"
                           controls-position="right"
                           :min="0"
                           :max="scope.row.num - scope.row.delivery_item_num"
                         />
                         <!-- <el-input v-model="scope.row.delivery_num" :maxlength=20 placeholder="发货数量"></el-input> -->
-                        <span v-if="scope.row.num - scope.row.delivery_item_num == 0">已发完</span>
+                        <span v-if="scope.row.num - scope.row.delivery_item_num == 0">{{
+                          $t('829ad9f2.82446c')
+                        }}</span>
                       </template>
                     </el-table-column>
                   </template>
                 </el-table>
               </el-form-item>
 
-              <el-form-item label="快递公司">
+              <el-form-item :label="$t('829ad9f2.f3af96')">
                 <el-col>
                   <el-select
                     v-model="deliveryForm.delivery_corp"
                     filterable
-                    placeholder="请选择快递公司，可搜索"
+                    :placeholder="$t('829ad9f2.32e586')"
                   >
                     <el-option
                       v-for="item in dlycorps"
@@ -519,26 +551,30 @@
                   </el-select>
                 </el-col>
               </el-form-item>
-              <el-form-item label="物流单号">
+              <el-form-item :label="$t('829ad9f2.0bb075')">
                 <el-col :span="14">
                   <el-input
                     v-model="deliveryForm.delivery_code"
                     :maxlength="20"
-                    placeholder="物流公司单号"
+                    :placeholder="$t('829ad9f2.0e9f1e')"
                   />
                 </el-col>
               </el-form-item>
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleCancel"> 取消 </el-button>
-            <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
+            <el-button @click.native="handleCancel">{{ $t('829ad9f2.625fb2') }}</el-button>
+            <el-button type="primary" @click="submitDeliveryAction">
+{{
+              $t('829ad9f2.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
 
         <!-- 取消订单退款审核-开始 -->
         <el-dialog
-          title="取消订单退款审核"
+          :title="$t('829ad9f2.763eea')"
           :visible.sync="cancelVisible"
           :before-close="handleCancelOrderCancel"
           width="57%"
@@ -546,63 +582,90 @@
           <template>
             <el-row :gutter="100">
               <el-col :span="24">
-                <span class="grid-content">订单号:{{ cancelData.order_id }}</span>
+                <span class="grid-content"
+                  >{{ $t('829ad9f2.070dce') }}{{ cancelData.order_id }}</span
+                >
               </el-col>
               <el-col :span="24">
-                <span v-if="cancelData.cancel_from == 'buyer'">取消来源:消费者申请</span>
-                <span v-else>取消来源:系统自动取消</span>
+                <span v-if="cancelData.cancel_from == 'buyer'">{{ $t('829ad9f2.497ac9') }}</span>
+                <span v-else>{{ $t('829ad9f2.f01ac7') }}</span>
               </el-col>
               <el-col :span="24">
-                <span>申请时间:{{ cancelData.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+                <span
+                  >{{ $t('829ad9f2.796c1b')
+                  }}{{ cancelData.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span
+                >
               </el-col>
               <el-col :span="24">
-                <span>退款状态:</span>
-                <span v-if="cancelData.refund_status == 'WAIT_CHECK'">待审核</span>
-                <span v-if="cancelData.refund_status == 'FAILS'">退款失败</span>
-                <span v-if="cancelData.refund_status == 'SUCCESS'">退款成功</span>
-                <span v-if="cancelData.refund_status == 'SHOP_CHECK_FAILS'">商家审核不通过</span>
-                <span v-if="cancelData.refund_status == 'WAIT_REFUND'">等待退款</span>
+                <span>{{ $t('829ad9f2.a2f94f') }}</span>
+                <span v-if="cancelData.refund_status == 'WAIT_CHECK'">{{
+                  $t('829ad9f2.5cb424')
+                }}</span>
+                <span v-if="cancelData.refund_status == 'FAILS'">{{ $t('829ad9f2.7c2544') }}</span>
+                <span v-if="cancelData.refund_status == 'SUCCESS'">{{
+                  $t('829ad9f2.d58cbd')
+                }}</span>
+                <span v-if="cancelData.refund_status == 'SHOP_CHECK_FAILS'">{{
+                  $t('829ad9f2.0e14e3')
+                }}</span>
+                <span v-if="cancelData.refund_status == 'WAIT_REFUND'">{{
+                  $t('829ad9f2.12e196')
+                }}</span>
               </el-col>
               <el-col :span="24">
-                <span>处理进度:</span>
-                <span v-if="cancelData.progress == '0'">待处理</span>
-                <span v-if="cancelData.progress == '1'">已取消</span>
-                <span v-if="cancelData.progress == '2'">退款中</span>
-                <span v-if="cancelData.progress == '3'">已完成</span>
+                <span>{{ $t('829ad9f2.7f1328') }}</span>
+                <span v-if="cancelData.progress == '0'">{{ $t('829ad9f2.047109') }}</span>
+                <span v-if="cancelData.progress == '1'">{{ $t('829ad9f2.2111cc') }}</span>
+                <span v-if="cancelData.progress == '2'">{{ $t('829ad9f2.07e608') }}</span>
+                <span v-if="cancelData.progress == '3'">{{ $t('829ad9f2.fad522') }}</span>
               </el-col>
               <el-col :span="24">
-                <span>退款积分:{{ cancelData.point }}积分</span>
+                <span
+                  >{{ $t('829ad9f2.27a09b') }}{{ cancelData.point
+                  }}{{ $t('829ad9f2.9f68a8') }}</span
+                >
               </el-col>
               <el-col :span="24">
-                <span>退款金额:{{ cancelData.fee_symbol }}{{ cancelData.total_fee / 100 }}</span>
+                <span
+                  >{{ $t('829ad9f2.b772c7') }}{{ cancelData.fee_symbol
+                  }}{{ cancelData.total_fee / 100 }}</span
+                >
               </el-col>
               <el-col :span="24">
-                <span v-if="cancelData.pay_type == 'wxpay'">支付方式:微信支付</span>
+                <span v-if="cancelData.pay_type == 'wxpay'">{{ $t('829ad9f2.f5041a') }}</span>
               </el-col>
               <el-col :span="24">
-                <span>取消原因:{{ cancelData.cancel_reason }}</span>
+                <span>{{ $t('829ad9f2.27910a') }}{{ cancelData.cancel_reason }}</span>
               </el-col>
             </el-row>
             <el-divider />
             <el-form ref="cancelForm" :model="cancelForm" class="" label-width="100px">
-              <el-form-item label="处理结果:">
+              <el-form-item :label="$t('829ad9f2.de455e')">
                 <el-row>
                   <el-col :span="20">
                     <template>
-                      <el-radio v-model="cancelForm.check_cancel" label="0"> 不同意 </el-radio>
-                      <el-radio v-model="cancelForm.check_cancel" label="1"> 同意 </el-radio>
+                      <el-radio v-model="cancelForm.check_cancel" label="0">
+{{
+                        $t('829ad9f2.1bf19c')
+                      }}
+</el-radio>
+                      <el-radio v-model="cancelForm.check_cancel" label="1">
+{{
+                        $t('829ad9f2.e61f2c')
+                      }}
+</el-radio>
                     </template>
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-form-item v-if="cancelForm.check_cancel == '0'" label="拒绝原因:">
+              <el-form-item v-if="cancelForm.check_cancel == '0'" :label="$t('829ad9f2.de77c5')">
                 <el-row>
                   <el-col :span="24">
                     <el-input
                       v-model="cancelForm.shop_reject_reason"
                       type="textarea"
                       :rows="3"
-                      placeholder="请输入拒绝原因"
+                      :placeholder="$t('829ad9f2.fc955a')"
                     />
                   </el-col>
                 </el-row>
@@ -610,38 +673,46 @@
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleCancelOrderCancel"> 取消 </el-button>
-            <el-button type="primary" @click="submitCancelConfirmAction"> 确定 </el-button>
+            <el-button @click.native="handleCancelOrderCancel">
+{{
+              $t('829ad9f2.625fb2')
+            }}
+</el-button>
+            <el-button type="primary" @click="submitCancelConfirmAction">
+{{
+              $t('829ad9f2.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <!-- 取消订单 -->
         <el-dialog
-          title="取消订单"
+          :title="$t('829ad9f2.b21b5e')"
           :visible.sync="cancelOrderVisible"
           :before-close="handleCancelOrder"
           width="57%"
         >
           <template>
             <el-form ref="cancelForm" :model="cancelOrderForm" class="" label-width="100px">
-              <el-form-item label="订单号:">
+              <el-form-item :label="$t('829ad9f2.070dce')">
                 <el-col :span="20">
                   {{ cancelOrderData.orderInfo.order_id }}
                 </el-col>
               </el-form-item>
-              <el-form-item label="取消原因:">
+              <el-form-item :label="$t('829ad9f2.27910a')">
                 <el-row>
                   <el-col :span="20">
                     <template>
                       <el-select
                         v-model="cancel_order"
                         filterable
-                        placeholder="请选择取消订单原因"
+                        :placeholder="$t('829ad9f2.bc4a11')"
                         @change="cancelReasonSelect"
                       >
                         <el-option
                           v-for="item in order_cancel_reason"
                           :key="item.value"
-                          :label="item.name"
+                          :label="$t(item.name)"
                           :value="item.value"
                         />
                       </el-select>
@@ -652,7 +723,7 @@
                         :rows="3"
                         resize="none"
                         style="width: 200px; margin-top: 10px"
-                        placeholder="请填写取消订单原因"
+                        :placeholder="$t('829ad9f2.c6af7d')"
                       />
                     </template>
                   </el-col>
@@ -661,48 +732,59 @@
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleCancelOrder"> 取消 </el-button>
-            <el-button type="primary" @click="submitCancelOrderConfirmAction"> 确定 </el-button>
+            <el-button @click.native="handleCancelOrder">{{ $t('829ad9f2.625fb2') }}</el-button>
+            <el-button type="primary" @click="submitCancelOrderConfirmAction">
+{{
+              $t('829ad9f2.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <!-- 自提订单核销 -->
         <el-dialog
-          title="自提订单核销"
+          :title="$t('829ad9f2.bdc4b9')"
           :visible.sync="writeoffOrderVisible"
           :before-close="handleWriteoffOrder"
           width="57%"
         >
           <template>
             <el-form ref="cancelForm" :model="writeoffOrderForm" class="" label-width="100px">
-              <el-form-item label="订单号:">
+              <el-form-item :label="$t('829ad9f2.070dce')">
                 <el-col :span="20">
                   {{ writeoffOrderData.order_id }}
                 </el-col>
               </el-form-item>
-              <el-form-item label="商品:">
+              <el-form-item :label="$t('829ad9f2.2083dd')">
                 <el-col v-for="item in writeoffOrderData.items" :key="item.item_id">
                   {{ item.item_name }} {{ item.item_spec_desc }} × {{ item.num }}
                 </el-col>
               </el-form-item>
-              <el-form-item v-if="writeoffOrderData.pickupcode_status" label="提货码:">
+              <el-form-item
+                v-if="writeoffOrderData.pickupcode_status"
+                :label="$t('829ad9f2.a5a7dd')"
+              >
                 <el-input
                   v-model="writeoffOrderForm.pickupcode"
                   :maxlength="6"
                   type="text"
-                  placeholder="请输入提货码"
+                  :placeholder="$t('829ad9f2.ba231e')"
                   style="width: 180px"
                 />
               </el-form-item>
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleWriteoffOrder"> 取消 </el-button>
-            <el-button type="primary" @click="submitWriteoffOrderConfirmAction"> 确定 </el-button>
+            <el-button @click.native="handleWriteoffOrder">{{ $t('829ad9f2.625fb2') }}</el-button>
+            <el-button type="primary" @click="submitWriteoffOrderConfirmAction">
+{{
+              $t('829ad9f2.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <!-- 自提订单核销完成 -->
         <el-dialog
-          title="自提核销"
+          :title="$t('829ad9f2.ae62ca')"
           :visible.sync="writeoffOrderSuccVisible"
           :before-close="handleWriteoffOrderSucc"
           width="57%"
@@ -711,7 +793,11 @@
             <span>{{ writeoffOrderSucc.msg }}</span>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleWriteoffOrderSucc"> 知道了 </el-button>
+            <el-button @click.native="handleWriteoffOrderSucc">
+{{
+              $t('829ad9f2.ce2695')
+            }}
+</el-button>
           </div>
         </el-dialog>
       </div>
@@ -761,21 +847,21 @@ export default {
         pageSize: 20,
         order_class_exclude: 'drug'
       },
-      order_class_array: [{ name: '积分商城订单', value: 'pointsmall' }],
+      order_class_array: [{ name: '829ad9f2.6530f7', value: 'pointsmall' }],
       cancelOrderInput: false,
       order_cancel_reason: [
-        { name: '客户现在不想购买', value: 1 },
-        { name: '客户商品价格较贵', value: 2 },
-        { name: '客户价格波动', value: 3 },
-        { name: '客户商品缺货', value: 4 },
-        { name: '客户重复下单', value: 5 },
-        { name: '客户订单商品选择有误', value: 6 },
-        { name: '客户支付方式选择有误', value: 7 },
-        { name: '客户收货信息填写有误', value: 8 },
-        { name: '客户发票信息填写有误', value: 9 },
-        { name: '客户无法支付订单', value: 10 },
-        { name: '客户长时间未付款', value: 11 },
-        { name: '客户其他原因', value: 12 }
+        { name: '829ad9f2.8f038a', value: 1 },
+        { name: '829ad9f2.5e58ba', value: 2 },
+        { name: '829ad9f2.151111', value: 3 },
+        { name: '829ad9f2.baa450', value: 4 },
+        { name: '829ad9f2.3013ee', value: 5 },
+        { name: '829ad9f2.e7197e', value: 6 },
+        { name: '829ad9f2.74c00b', value: 7 },
+        { name: '829ad9f2.16264a', value: 8 },
+        { name: '829ad9f2.13bea0', value: 9 },
+        { name: '829ad9f2.0e6c86', value: 10 },
+        { name: '829ad9f2.e21052', value: 11 },
+        { name: '829ad9f2.94490e', value: 12 }
       ],
       open_status_map,
       open_status_arr,
@@ -872,7 +958,7 @@ export default {
     },
     onCopy() {
       this.$notify({
-        message: '复制成功',
+        message: this.$t('829ad9f2.20a495'),
         type: 'success'
       })
     },
@@ -996,14 +1082,14 @@ export default {
       console.log(order_id, 'order_id')
       this.selectItemType = data.delivery_type
       // this.selectItemType = 'new'
-      this.deliveryTitle = '发货'
+      this.deliveryTitle = this.$t('829ad9f2.045315')
       getLogisticsList().then((res) => {
         this.dlycorps = res.data.data.list
       })
       getOrderDetail(order_id).then((response) => {
         this.deliveryData = response.data.data
         if (this.deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
-          this.$message.error('客户已经申请退款，请先处理退款操作再决定是否发货!')
+          this.$message.error(this.$t('829ad9f2.e406db'))
           return false
         }
 
@@ -1042,10 +1128,10 @@ export default {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'SUCCESS' || cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()
-          this.$message.success('审核成功!')
+          this.$message.success(this.$t('829ad9f2.388738'))
           this.getOrders(this.params)
         } else {
-          this.$message.success('驳回成功')
+          this.$message.success(this.$t('829ad9f2.af3280'))
           this.getOrders(this.params)
           return false
         }
@@ -1088,10 +1174,10 @@ export default {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()
-          this.$message.success('发货成功!')
+          this.$message.success(this.$t('829ad9f2.de3b52'))
           this.getOrders(this.params)
         } else {
-          this.$message.error('发货失败!')
+          this.$message.error(this.$t('829ad9f2.2249c1'))
           return false
         }
       })
@@ -1103,7 +1189,7 @@ export default {
         this.cancelOrderData = response.data.data
         console.log(this.cancelOrderData)
         if (this.cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
-          this.$message.error('该订单已取消!')
+          this.$message.error(this.$t('829ad9f2.8f8a2c'))
           return false
         }
         this.cancelOrderVisible = true
@@ -1128,21 +1214,21 @@ export default {
     },
     submitCancelOrderConfirmAction() {
       if (this.cancelOrderForm.cancel_reason == 0) {
-        this.$message.error('请选择取消原因!')
+        this.$message.error(this.$t('829ad9f2.1be7fb'))
         return false
       }
       if (this.cancelOrderForm.cancel_reason == 12 && this.cancelOrderForm.other_reason == '') {
-        this.$message.error('请输入取消原因!')
+        this.$message.error(this.$t('829ad9f2.d31b9c'))
         return false
       }
       cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'WAIT_CHECK' || cancelOrderStatus == 'SUCCESS') {
           this.handleCancelOrder()
-          this.$message.success('取消订单成功!')
+          this.$message.success(this.$t('829ad9f2.86a02e'))
           this.getOrders(this.params)
         } else {
-          this.$message.success('取消订单失败!')
+          this.$message.success(this.$t('829ad9f2.dc8eed'))
           this.getOrders(this.params)
           return false
         }
@@ -1153,7 +1239,7 @@ export default {
       getWriteoff(order_id).then((response) => {
         this.writeoffOrderData = response.data.data
         if (this.writeoffOrderData.ziti_status == 'DONE') {
-          this.$message.error('该订单已核销!')
+          this.$message.error(this.$t('829ad9f2.c9045d'))
           return false
         }
         this.writeoffOrderVisible = true
@@ -1172,7 +1258,7 @@ export default {
         this.writeoffOrderData.pickupcode_status == 1 &&
         this.writeoffOrderForm.pickupcode == ''
       ) {
-        this.$message.error('请输入提货码!')
+        this.$message.error(this.$t('829ad9f2.080282'))
         return false
       }
       doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
@@ -1181,9 +1267,10 @@ export default {
         if (writeoffStatus == 'DONE') {
           this.handleWriteoffOrder()
           this.writeoffOrderSuccVisible = true
-          this.writeoffOrderSucc.msg = '订单' + order_id + '核销成功'
+          this.writeoffOrderSucc.msg =
+            this.$t('829ad9f2.4c117f') + order_id + this.$t('829ad9f2.065407')
         } else {
-          this.$message.success('自提订单核销失败!')
+          this.$message.success(this.$t('829ad9f2.47c5ff'))
           return false
         }
       })
@@ -1202,7 +1289,7 @@ export default {
       if (this.params.order_type != 'normal') {
         this.$message({
           type: 'error',
-          message: '暂不支持该类型订单导出'
+          message: this.$t('829ad9f2.08bd5c')
         })
         return
       }
@@ -1210,7 +1297,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('829ad9f2.3e1ddd')
           })
           this.$export_open(type)
           return
@@ -1221,7 +1308,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('829ad9f2.89ae53')
           })
           return
         }
@@ -1234,7 +1321,7 @@ export default {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
-              message: '已加入执行队列，请在设置-导出列表中下载'
+              message: this.$t('829ad9f2.3e1ddd')
             })
             this.$export_open('normal_order')
             return
@@ -1245,7 +1332,7 @@ export default {
           } else {
             this.$message({
               type: 'error',
-              message: '无内容可导出 或 执行失败，请检查重试'
+              message: this.$t('829ad9f2.89ae53')
             })
             return
           }
@@ -1255,13 +1342,13 @@ export default {
       if (!row.invoice) {
         this.$message({
           type: 'info',
-          message: '此订单无发票信息'
+          message: this.$t('829ad9f2.df2bb8')
         })
         return
       }
-      this.$confirm('确定更新该订单开票状态？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('829ad9f2.23d4a7'), this.$t('8312e7f7.02d981'), {
+        cancelButtonText: this.$t('829ad9f2.625fb2'),
+        confirmButtonText: this.$t('829ad9f2.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -1273,13 +1360,13 @@ export default {
               if (response.data.data.success) {
                 this.$message({
                   type: 'success',
-                  message: '已更新开票状态'
+                  message: this.$t('829ad9f2.ee73ff')
                 })
                 this.getOrders(this.params)
               } else {
                 this.$message({
                   type: 'error',
-                  message: '更新开票状态失败'
+                  message: this.$t('829ad9f2.34b438')
                 })
               }
             })
@@ -1293,14 +1380,14 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('829ad9f2.7bbfaa')
         })
       })
     }
   }
 }
 </script>
-<style>
+<style lang="scss">
 .el-row {
   margin-bottom: 20px;
   &:last-child {

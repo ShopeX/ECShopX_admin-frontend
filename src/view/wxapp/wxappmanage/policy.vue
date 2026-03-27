@@ -40,117 +40,92 @@
 </style>
 <template>
   <div class="page-wxapp-policy">
-    <div class="hd">用户隐私保护指引</div>
+    <div class="hd">{{ $t('9b898f75.d8c536') }}</div>
     <div class="bd">
-      <h3>《{{ weappName }}小程序隐私保护指引》</h3>
-      <p>
-        本指引是{{
-          weappName
-        }}小程序开发者商派软件有限公司（以下简称“开发者”）为处理你的个人信息而制定。
-      </p>
-      <br />
-      <h4>1. 开发者处理的信息</h4>
-      <p>根据法律规定，开发者仅处理实现小程序功能所必要的信息。</p>
+      <h3>《{{ weappName }}}{{ $t('9b898f75.c3907b') }}》</h3>
+      <p>{{ $t('9b898f75.b7a241') }}{{ weappName }}{{ $t('9b898f75.dee550') }}</p>
+      <br>
+      <h4>1. {{ $t('9b898f75.e155b6') }}</h4>
+      <p>{{ $t('9b898f75.583ee9') }}</p>
       <div class="policy-container mtp-10">
         <!-- {{policyObject}} -->
         <div v-for="(key, index) in privacyList" :key="`policy-item__${index}`" class="policy-item">
-          为了
+          {{ $t('9b898f75.665751') }}
           <el-input
             v-model="policyObject[key]"
             size="small"
-            placeholder="请输入内容"
+            :placeholder="$t('9b898f75.a11cc7')"
             style="width: 480px"
             maxlength="30"
             show-word-limit
-          />，开发者将在获取你的明示同意后，收集你的{{ getPrivacyDesc(key) }}
+          />{{ $t('9b898f75.9afc01') }}{{ getPrivacyDesc(key) }}
         </div>
       </div>
-      <br />
-      <h4>2. 第三方服务商信息</h4>
-      <p>
-        {{
-          weappName
-        }}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。
-      </p>
-      <br />
-      <h4>3. 你的权益</h4>
-      <p>
-        3.1
-        关于收集你的位置信息，你可以通过以下路径：小程序主页右上角..."-”设置”-点击特定信息-点击"不允许”，撤回对开发者的授权。
-      </p>
-      <p>
-        3.2 关于收集你的微信昵称、头像、收集你的地址，你可以通过以下路径:小程序主页右上角..."
-        -“设置"一“小程序已获取的信息"-点击特定信息-点击“通知开发者删除"，开发者承诺收到通知后将删除信息。
-      </p>
-      <p>
-        3.3 关于你的个人信息，
-        你可以通过以下方式与开发者联系，行使查阅、复制、更正、删除等法定权利。
-      </p>
+      <br>
+      <h4>2. {{ $t('9b898f75.20bac6') }}</h4>
+      <p>{{ weappName }}{{ $t('9b898f75.ac8f57') }}</p>
+      <br>
+      <h4>3. {{ $t('9b898f75.8b8558') }}</h4>
+      <p>3.1 {{ $t('9b898f75.b51d5e') }}{{ $t('9b898f75.c59c80') }}</p>
+      <p>3.2 {{ $t('9b898f75.e1a763') }}</p>
+      <p>3.3 {{ $t('9b898f75.fdb543') }}</p>
       <div class="mtp-10">
         <el-input
           v-model="contactValue"
           size="small"
-          :placeholder="`请输入${contactOptions[contact]}`"
+          :placeholder="contactPlaceholder"
           class="input-with-select"
           style="width: 300px"
         >
-          <el-select slot="prepend" v-model="contact" placeholder="请选择">
+          <el-select slot="prepend" v-model="contact" :placeholder="$t('9b898f75.708c9d')">
             <el-option
               v-for="(value, key) in contactOptions"
               :key="`option-item__${key}`"
-              :label="value"
+              :label="$t(value)"
               :value="key"
             />
           </el-select>
         </el-input>
       </div>
-      <br />
-      <h4>4. 开发者对信息的存储</h4>
+      <br>
+      <h4>4. {{ $t('9b898f75.f339ef') }}</h4>
       <!-- <p>{{weappName}}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。</p> -->
       <div class="mtp-10">
         <div>
-          <el-radio v-model="storeType" label="1"> 固定存储期限 </el-radio>
+          <el-radio v-model="storeType" label="1">{{ $t('9b898f75.3a8eca') }}</el-radio>
           <el-date-picker
             v-model="ownerSetting.store_expire_timestamp"
             type="date"
             size="small"
-            placeholder="选择日期"
+            :placeholder="$t('9b898f75.2bebdd')"
           />
         </div>
         <div class="mtp-10">
           <el-radio v-model="storeType" label="2">
-            开发者承诺，除法律法规另有规定外，开发者对你的信息的保存期限应当为实现处理目的所必要的最短时间。
+            {{ $t('9b898f75.d16688') }}
           </el-radio>
         </div>
       </div>
-      <br />
-      <h4>5. 信息的使用规则</h4>
-      <p>5.1 开发者将会在本指引所明示的用途内使用收集的信息</p>
-      <p>
-        5.2 如开发者使用你的信息超出本指引目的或合理范围，开发者必须在变更使用目的或范围前，再次以
-      </p>
+      <br>
+      <h4>5. {{ $t('9b898f75.03b799') }}</h4>
+      <p>5.1 {{ $t('9b898f75.975f2d') }}</p>
+      <p>5.2 {{ $t('9b898f75.506c4f') }}</p>
       <div class="mtp-10">
         <el-input
           v-model="ownerSetting.notice_method"
-          placeholder="请填写通知方式"
+          :placeholder="$t('9b898f75.948dd7')"
           size="small"
           style="width: 300px"
         />
-        方式告知并征得你的明示同意。
+        {{ $t('9b898f75.96941c') }}
       </div>
-      <br />
-      <h4>6. 信息对外提供</h4>
-      <p>
-        6.1
-        开发者承诺，不会主动共享或转让你的信息至任何第三方，如存在确需共享或转让时，开发者应当直接征得或确认第三方征得你的单独同意。
-      </p>
-      <p>
-        6.2
-        开发者承诺，不会对外公开披露你的信息，如必须公开披露时，开发者应当向你告知公开披露的目的、披露信息的类型及可能涉及的信息，并征得你的单独同意。
-      </p>
-      <br />
-      <h4>7. 补充文档</h4>
-      <p>了解更多个人信息处理规则可查看补充文档，稳定格式只支持.txt，大小不超过100kb</p>
+      <br>
+      <h4>6. {{ $t('9b898f75.ea657d') }}</h4>
+      <p>6.1 {{ $t('9b898f75.f818c0') }}</p>
+      <p>6.2 {{ $t('9b898f75.017801') }}</p>
+      <br>
+      <h4>7. {{ $t('9b898f75.816c4f') }}</h4>
+      <p>{{ $t('9b898f75.399604') }}</p>
       <div class="upload-block">
         <el-upload
           action=""
@@ -159,13 +134,13 @@
           :show-file-list="false"
           style="display: inline-block; margin-right: 20px"
         >
-          <el-button type="primary"> 点击上传 </el-button>
+          <el-button type="primary">{{ $t('9b898f75.2c808b') }}</el-button>
         </el-upload>
         <span>{{ fileName }}</span>
       </div>
     </div>
     <div class="ft">
-      <el-button type="primary" @click="savePolicyConfig"> 确定并生成协议 </el-button>
+      <el-button type="primary" @click="savePolicyConfig">{{ $t('9b898f75.ddb83a') }}</el-button>
     </div>
   </div>
 </template>
@@ -187,10 +162,10 @@ export default {
       storeType: '1',
       fileName: '',
       contactOptions: {
-        contact_phone: '手机号',
-        contact_email: '邮箱',
-        contact_qq: 'QQ号',
-        contact_weixin: '微信号'
+        contact_phone: '9b898f75.8098e2',
+        contact_email: '9b898f75.3bc5e6',
+        contact_qq: '9b898f75.adc249',
+        contact_weixin: '9b898f75.bcaaee'
       },
       ownerSetting: {
         contact_phone: '',
@@ -201,6 +176,11 @@ export default {
         ext_file_media_id: '',
         notice_method: ''
       }
+    }
+  },
+  computed: {
+    contactPlaceholder() {
+      return this.$t('9b898f75.02cc4f') + this.$t(this.contactOptions[this.contact])
     }
   },
   created() {
@@ -270,7 +250,7 @@ export default {
         file: file.raw
       })
       this.fileName = file.name
-      this.$message.success('文件上传成功')
+      this.$message.success(this.$t('9b898f75.679c4b'))
       this.ownerSetting.ext_file_media_id = ext_file_media_id
     },
     async savePolicyConfig() {
@@ -323,11 +303,15 @@ export default {
 
       const fd = settingList.find((item) => item.privacy_text == '')
       if (fd) {
-        this.$message.error(`请填写收集${this.getPrivacyDesc(fd.privacy_key)}的原因`)
+        this.$message.error(
+          this.$t('9b898f75.bbb73f') +
+            this.getPrivacyDesc(fd.privacy_key) +
+            this.$t('9b898f75.fd46bb')
+        )
         return
       }
       if (!this.ownerSetting.notice_method) {
-        this.$message.error('请填写通知方式')
+        this.$message.error(this.$t('9b898f75.948dd7'))
         return
       }
 
@@ -336,7 +320,7 @@ export default {
         owner_setting: JSON.stringify(this.ownerSetting),
         setting_list: JSON.stringify(settingList)
       })
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('9b898f75.3b1083'))
       this.$router.go(-1)
     },
     getPrivacyDesc(key) {

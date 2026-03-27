@@ -8,22 +8,22 @@
     <SpPage>
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-input v-model="params.title" placeholder="活动名称">
+          <el-input v-model="params.title" :placeholder="$t('145d1eab.39834b')">
             <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
           </el-input>
         </el-col>
         <el-col :span="4">
           <el-select
             v-model="params.activity_status"
-            placeholder="活动状态"
+            :placeholder="$t('145d1eab.1181a5')"
             clearable
             style="width: 100%"
             @change="dataSearch"
           >
-            <el-option label="全部" value="0" />
-            <el-option label="未开始" value="waiting" />
-            <el-option label="进行中" value="ongoing" />
-            <el-option label="已结束" value="it_has_ended" />
+            <el-option :label="$t('145d1eab.a8b0c2')" value="0" />
+            <el-option :label="$t('145d1eab.dd4e55')" value="waiting" />
+            <el-option :label="$t('145d1eab.fb852f')" value="ongoing" />
+            <el-option :label="$t('145d1eab.047fab')" value="it_has_ended" />
           </el-select>
         </el-col>
         <el-col :span="4">
@@ -31,48 +31,54 @@
             v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="添加时间筛选"
+            :placeholder="$t('145d1eab.5d92ab')"
             style="width: 100%"
             @change="dateChange"
           />
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="plus" @click="addActivityData"> 添加活动 </el-button>
+          <el-button type="primary" icon="plus" @click="addActivityData">
+            {{ $t('145d1eab.23b46b') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
         <el-table-column prop="activity_id" label="ID" width="50" />
-        <el-table-column label="活动名称" width="150">
-          <template slot-scope="scope"> {{ scope.row.title }}<br /> </template>
+        <el-table-column :label="$t('145d1eab.39834b')" width="150">
+          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
         </el-table-column>
-        <el-table-column label="活动时间" width="190">
+        <el-table-column :label="$t('145d1eab.c799f5')" width="190">
           <template slot-scope="scope">
             {{ scope.row.begin_date }} <span class="text-muted">~</span> {{ scope.row.end_date }}
             <span class="text-muted" />
           </template>
         </el-table-column>
-        <el-table-column prop="activity_status" label="活动状态" width="150">
+        <el-table-column prop="activity_status" :label="$t('145d1eab.1181a5')" width="150">
           <template slot-scope="scope">
-            <span v-if="scope.row.activity_status == 'waiting'">待开始</span>
-            <span v-else-if="scope.row.activity_status == 'ongoing'">进行中</span>
-            <span v-else-if="scope.row.activity_status == 'it_has_ended'">已结束</span>
+            <span v-if="scope.row.activity_status == 'waiting'">{{ $t('145d1eab.dd4e55') }}</span>
+            <span v-else-if="scope.row.activity_status == 'ongoing'">{{
+              $t('145d1eab.fb852f')
+            }}</span>
+            <span v-else-if="scope.row.activity_status == 'it_has_ended'">{{
+              $t('145d1eab.047fab')
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column :label="$t('145d1eab.2b6bc0')" width="200">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.activity_status !== 'it_has_ended'"
               type="text"
               @click="editCommunityAction(scope.$index, scope.row)"
             >
-              编辑活动
+              {{ $t('145d1eab.9bd915') }}
             </el-button>
             <el-button
               v-if="scope.row.activity_status == 'ongoing'"
               type="text"
               @click="updateStatusCommunityAction(scope.row)"
             >
-              终止活动
+              {{ $t('145d1eab.6489ff') }}
             </el-button>
           </template>
         </el-table-column>
@@ -170,18 +176,17 @@ export default {
       })
     },
     updateStatusCommunityAction(row) {
-      console.log(row, 1)
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('145d1eab.01be42')
+      this.$confirm(msg, this.$t('145d1eab.02d981'), {
+        cancelButtonText: this.$t('145d1eab.625fb2'),
+        confirmButtonText: this.$t('145d1eab.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             pointupvaluationUpdateStatus({ activity_id: row.activity_id }).then((response) => {
               this.getList()
               this.$message({
-                message: '修改活动状态成功',
+                message: this.$t('145d1eab.b69694'),
                 type: 'success',
                 duration: 5 * 1000
               })

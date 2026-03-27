@@ -12,16 +12,16 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('65a0769c.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="添加时间筛选"
+          :placeholder="$t('65a0769c.5d92ab')"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="back_status" label="回盘状态:">
-        <el-select v-model="params.back_status" placeholder="请选择回盘状态">
+      <SpFilterFormItem prop="back_status" :label="$t('65a0769c.b08748')">
+        <el-select v-model="params.back_status" :placeholder="$t('65a0769c.b8bdeb')">
           <el-option
             v-for="(item, index) in backStatusList"
             :key="index"
@@ -33,30 +33,30 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+      <el-button type="primary" plain @click="exportData"> {{ $t('65a0769c.55405e') }} </el-button>
     </div>
 
     <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
-      <el-table-column prop="id" label="指令ID" width="100" />
-      <el-table-column prop="total_fee" label="订单金额">
+      <el-table-column prop="id" :label="$t('65a0769c.662bb7')" width="100" />
+      <el-table-column prop="total_fee" :label="$t('65a0769c.b1862e')">
         <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="actual_fee" label="实际金额">
+      <el-table-column prop="actual_fee" :label="$t('65a0769c.dff07e')">
         <template slot-scope="scope"> ￥{{ scope.row.actual_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="division_fee" label="分账金额">
+      <el-table-column prop="division_fee" :label="$t('65a0769c.1e61f1')">
         <template slot-scope="scope"> ￥{{ scope.row.division_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="backsucc_fee" label="回盘成功金额">
+      <el-table-column prop="backsucc_fee" :label="$t('65a0769c.096168')">
         <template slot-scope="scope"> ￥{{ scope.row.backsucc_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="rate_fee" label="业务处理费">
+      <el-table-column prop="rate_fee" :label="$t('65a0769c.b5de6a')">
         <template slot-scope="scope"> ￥{{ scope.row.rate_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="back_status" width="100" label="回盘状态">
+      <el-table-column prop="back_status" width="100" :label="$t('65a0769c.0c35e5')">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.back_status == '0'" size="mini" type="info" effect="plain">
-            未处理
+            {{ $t('65a0769c.2839c8') }}
           </el-tag>
           <el-tag
             v-else-if="scope.row.back_status == '1'"
@@ -64,20 +64,20 @@
             type="success"
             effect="plain"
           >
-            处理中
+            {{ $t('65a0769c.5d459d') }}
           </el-tag>
           <el-tag v-else-if="scope.row.back_status == '2'" size="mini" type="success" effect="dark">
-            成功
+            {{ $t('65a0769c.330363') }}
           </el-tag>
           <el-tag v-else-if="scope.row.back_status == '3'" size="mini" type="danger" effect="dark">
-            部分成功
+            {{ $t('65a0769c.983b68') }}
           </el-tag>
           <el-tag v-else-if="scope.row.back_status == '4'" size="mini" type="info" effect="dark">
-            失败
+            {{ $t('65a0769c.acd5cb') }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="create_time" label="创建时间" width="200">
+      <el-table-column prop="create_time" :label="$t('65a0769c.eca37c')" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
@@ -102,6 +102,7 @@
 import { mapGetters } from 'vuex'
 import exportTip from '@/components/export_tips'
 import mixin, { pageMixin } from '@/mixins'
+import { i18n } from '@/i18n'
 
 export default {
   components: {
@@ -120,11 +121,11 @@ export default {
         ...initialParams
       },
       backStatusList: [
-        { name: '全部', value: '' },
-        { name: '未处理', value: '0' },
-        { name: '处理中', value: '1' },
-        { name: '成功', value: '2' },
-        { name: '失败', value: '4' }
+        { name: i18n.t('65a0769c.a8b0c2'), value: '' },
+        { name: i18n.t('65a0769c.2839c8'), value: '0' },
+        { name: i18n.t('65a0769c.5d459d'), value: '1' },
+        { name: i18n.t('65a0769c.330363'), value: '2' },
+        { name: i18n.t('65a0769c.acd5cb'), value: '4' }
       ]
     }
   },
@@ -187,7 +188,7 @@ export default {
       if (status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('65a0769c.3e1ddd')
         })
         return
       } else if (url) {

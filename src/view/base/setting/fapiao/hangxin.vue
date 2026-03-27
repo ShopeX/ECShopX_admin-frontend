@@ -5,41 +5,45 @@
 
 <template>
   <el-form ref="form" label-width="120px">
-    <el-form-item label="航信开关">
+    <el-form-item :label="$t('fe598db4.c02ec9')">
       <el-switch
         v-model="form.hangxin_switch"
         :width="60"
         active-value="true"
         inactive-value="false"
         inactive-color="#ccc"
-        active-text="开启"
-        inactive-text="关闭"
+        :active-text="$t('fe598db4.cc42dd')"
+        :inactive-text="$t('fe598db4.b15d91')"
         active-color="#13ce66"
       />
     </el-form-item>
 
-    <el-form-item label="开票方识别号1">
-      <el-input v-model="form.NSRSBH" style="width: 300px" placeholder="纳税人识别号..." />
+    <el-form-item :label="$t('fe598db4.69d3e4')">
+      <el-input v-model="form.NSRSBH" style="width: 300px" :placeholder="$t('fe598db4.fa7f31')" />
     </el-form-item>
-    <el-form-item label="唯一流水号2">
-      <el-input v-model="form.FPQQLSH" style="width: 300px" placeholder="发票请求唯一流水号..." />
+    <el-form-item :label="$t('fe598db4.a52099')">
+      <el-input v-model="form.FPQQLSH" style="width: 300px" :placeholder="$t('fe598db4.8a9ef0')" />
     </el-form-item>
-    <el-form-item label="平台编码3">
-      <el-input v-model="form.DSPTBM" style="width: 300px" placeholder="平台编码..." />
+    <el-form-item :label="$t('fe598db4.6671e1')">
+      <el-input v-model="form.DSPTBM" style="width: 300px" :placeholder="$t('fe598db4.c721ec')" />
     </el-form-item>
-    <el-form-item label="销货方识别号4">
-      <el-input v-model="form.XHF_NSRSBH" style="width: 300px" placeholder="销货方识别号..." />
+    <el-form-item :label="$t('fe598db4.66c92c')">
+      <el-input
+        v-model="form.XHF_NSRSBH"
+        style="width: 300px"
+        :placeholder="$t('fe598db4.fbfb6e')"
+      />
     </el-form-item>
-    <el-form-item label="纳税人授权码5">
+    <el-form-item :label="$t('fe598db4.d618f1')">
       <el-input
         v-model="form.authorizationCode"
         style="width: 300px"
-        placeholder="纳税人授权码..."
+        :placeholder="$t('fe598db4.1ba9bd')"
       />
     </el-form-item>
 
     <div class="section-footer with-border content-center">
-      <el-button type="primary" @click="onSubmit"> 航信配置保存 </el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('fe598db4.59e7e6') }}</el-button>
     </div>
   </el-form>
 </template>
@@ -70,7 +74,7 @@ export default {
     onSubmit() {
       saveFapiaoset(this.form)
         .then((response) => {
-          this.$message({ message: '保存成功', type: 'success' })
+          this.$message({ message: this.$t('fe598db4.3b1083'), type: 'success' })
           this.getInfo()
         })
         .catch()

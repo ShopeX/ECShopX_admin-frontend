@@ -8,8 +8,8 @@
 </style>
 <template>
   <CompButton
-    placeholder="选择店铺"
-    format="{0}个店铺"
+    :placeholder="i18n.t('f55802e1.afa2e6')"
+    :format="i18n.t('f55802e1.ca9969')"
     :value="value.length"
     :view-btn="false"
     @click="handleClickAdd"
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import CompButton from '../../comps/comp-button'
 import { cloneDeep } from 'lodash'
 export default {
@@ -25,7 +26,7 @@ export default {
   components: { CompButton },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       localValue: null
     }
   },

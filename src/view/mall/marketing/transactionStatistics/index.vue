@@ -8,30 +8,30 @@
   <div class="page-transactionStatistics">
     <el-card class="box-card" shadow="never">
       <div slot="header" class="header_">
-        <div>平台账户收入</div>
+        <div>{{ $t('68f8d259.5d8376') }}</div>
         <div class="why" @mouseenter="mouseenterHandle(1)" @mouseout="mouseoverHandle(1)">
-          <img src="../../../../assets/img/wenhao.png" alt="" />
+          <img src="../../../../assets/img/wenhao.png" alt="">
 
           <div v-if="tips_1" class="tips">
             <div class="tips_content">
-              <h4 class="title">平台总计收入（含退款）</h4>
-              <h5 class="value">分账手续费统计（含退款）</h5>
+              <h4 class="title">{{ $t('68f8d259.f255d7') }}</h4>
+              <h5 class="value">{{ $t('68f8d259.9bc6b1') }}</h5>
             </div>
             <div class="tips_content">
-              <h4 class="title">平台总退款金额</h4>
-              <h5 class="value">分账手续费总退款金额（已退款成功）</h5>
+              <h4 class="title">{{ $t('68f8d259.c0a2bf') }}</h4>
+              <h5 class="value">{{ $t('68f8d259.68a9a2') }}</h5>
             </div>
             <div class="tips_content">
-              <h4 class="title">平台未结算金额</h4>
-              <h5 class="value">订单为过售后期进行分账的手续费（不含全额退款成功及退款中）</h5>
+              <h4 class="title">{{ $t('68f8d259.fb6bad') }}</h4>
+              <h5 class="value">{{ $t('68f8d259.933c03') }}</h5>
             </div>
             <div class="tips_content">
-              <h4 class="title">平台已结算金额</h4>
-              <h5 class="value">已进行分账且成功的手续费金额</h5>
+              <h4 class="title">{{ $t('68f8d259.8ea2af') }}</h4>
+              <h5 class="value">{{ $t('68f8d259.647cdf') }}</h5>
             </div>
             <div class="tips_content">
-              <h4 class="title">当前可提现余额</h4>
-              <h5 class="value">汇付平台账户中当前余额</h5>
+              <h4 class="title">{{ $t('68f8d259.504406') }}</h4>
+              <h5 class="value">{{ $t('68f8d259.174856') }}</h5>
             </div>
           </div>
         </div>
@@ -41,31 +41,31 @@
           <p class="money">
             {{ incomeList.income }}
           </p>
-          <p>平台总计收入（含退款）</p>
+          <p>{{ $t('68f8d259.f255d7') }}</p>
         </div>
         <div class="item">
           <p class="money">
             {{ incomeList.refund }}
           </p>
-          <p>平台总退款金额</p>
+          <p>{{ $t('68f8d259.c0a2bf') }}</p>
         </div>
         <div class="item">
           <p class="money">
             {{ incomeList.unsettled_funds }}
           </p>
-          <p>平台未结算金额</p>
+          <p>{{ $t('68f8d259.fb6bad') }}</p>
         </div>
         <div class="item">
           <p class="money">
             {{ incomeList.settlement_funds }}
           </p>
-          <p>平台已结算金额</p>
+          <p>{{ $t('68f8d259.8ea2af') }}</p>
         </div>
         <div class="item">
           <p class="money">
             {{ incomeList.withdrawal_balance }}
           </p>
-          <p>当前可提现余额</p>
+          <p>{{ $t('68f8d259.504406') }}</p>
         </div>
         <!-- <div class="item">1</div>
         <div class="item">1</div>
@@ -82,9 +82,9 @@
               type="daterange"
               alue-format="yyyy-MM-dd"
               :picker-options="pickerOptions"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :range-separator="$t('68f8d259.981cbe')"
+              :start-placeholder="$t('68f8d259.b44c0f')"
+              :end-placeholder="$t('68f8d259.1d468b')"
               align="right"
               value-format="yyyy-MM-dd"
               @change="changeDateHandle"
@@ -93,14 +93,19 @@
           <div>
             <el-cascader
               v-model="select_regions_value"
-              placeholder="省/市/区"
+              :placeholder="$t('68f8d259.40735e')"
               :options="regions"
               clearable
               @change="RegionChangeSearch"
             />
           </div>
           <div v-if="shopValues.length >= 0">
-            <el-select v-model="shopValue" clearable placeholder="请选择" @change="selectChange">
+            <el-select
+              v-model="shopValue"
+              clearable
+              :placeholder="$t('68f8d259.708c9d')"
+              @change="selectChange"
+            >
               <el-option
                 v-for="item in shopValues"
                 :key="item.distributor_id"
@@ -112,39 +117,41 @@
         </div>
         <div class="right">
           <div class="btn">
-            <el-button type="primary" size="mini" @click="exportHandle"> 导出 </el-button>
+            <el-button type="primary" size="mini" @click="exportHandle">
+              {{ $t('68f8d259.55405e') }}
+            </el-button>
           </div>
           <div class="why" @mouseenter="mouseenterHandle(2)" @mouseout="mouseoverHandle(2)">
-            <img src="../../../../assets/img/wenhao.png" alt="" />
+            <img src="../../../../assets/img/wenhao.png" alt="">
 
             <div v-if="tips_2" class="tips">
               <div class="tips_content">
-                <h4 class="title">当前可提现金额</h4>
-                <h5 class="value">当前店铺在支付平台账户中余额</h5>
+                <h4 class="title">{{ $t('68f8d259.9c893e') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.7c8121') }}</h5>
               </div>
               <div class="tips_content">
-                <h4 class="title">交易总笔数</h4>
-                <h5 class="value">当前时间段内交易总笔数（含退款）</h5>
+                <h4 class="title">{{ $t('68f8d259.d081a0') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.8d0ff0') }}</h5>
               </div>
               <div class="tips_content">
-                <h4 class="title">总交易金额</h4>
-                <h5 class="value">当前时间段内总支付金额（含退款）</h5>
+                <h4 class="title">{{ $t('68f8d259.713028') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.d0bb57') }}</h5>
               </div>
               <div class="tips_content">
-                <h4 class="title">已退款总笔数&退款总金额</h4>
-                <h5 class="value">已退总笔数：当前时间段内退款成功总笔数</h5>
-                <h5 class="value">退款总金额：当前时间段内退款成功总额</h5>
+                <h4 class="title">{{ $t('68f8d259.78a45b') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.33b8bb') }}</h5>
+                <h5 class="value">{{ $t('68f8d259.810a55') }}</h5>
               </div>
               <div class="tips_content">
-                <h4 class="title">在退总笔数&在退总金额</h4>
-                <h5 class="value">在退总笔数：当前时间段内退款中总笔数</h5>
-                <h5 class="value">在退总金额：当前时间段内退款中总金额</h5>
+                <h4 class="title">{{ $t('68f8d259.544fc7') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.88bc75') }}</h5>
+                <h5 class="value">{{ $t('68f8d259.4cd4d4') }}</h5>
               </div>
 
               <div class="tips_content">
-                <h4 class="title">已结算手续费总额&未结算手续费总额</h4>
-                <h5 class="value">已结算手续费总额：当前时间段内已分账到平台账户中金额</h5>
-                <h5 class="value">未结算手续费总额：当前时间段内未分账到平台账户中金额</h5>
+                <h4 class="title">{{ $t('68f8d259.bf6103') }}</h4>
+                <h5 class="value">{{ $t('68f8d259.1f4df7') }}</h5>
+                <h5 class="value">{{ $t('68f8d259.0d33c0') }}</h5>
               </div>
             </div>
           </div>
@@ -152,20 +159,20 @@
       </div>
       <div class="content2">
         <el-table v-loading="loading" :data="tableData" style="width: 100%">
-          <el-table-column prop="distributor_name" label="店铺名称" width="180" />
-          <el-table-column prop="withdrawal_balance" label="当前可提现金额">
+          <el-table-column prop="distributor_name" :label="$t('68f8d259.0d4934')" width="180" />
+          <el-table-column prop="withdrawal_balance" :label="$t('68f8d259.9c893e')">
             <template slot-scope="scope">
               {{ scope.row.withdrawal_balance && formatMoney(scope.row.withdrawal_balance / 100) }}
             </template>
           </el-table-column>
-          <el-table-column prop="order_count" label="交易总笔数" />
-          <el-table-column prop="order_total_fee" label="总交易金额">
+          <el-table-column prop="order_count" :label="$t('68f8d259.d081a0')" />
+          <el-table-column prop="order_total_fee" :label="$t('68f8d259.713028')">
             <template slot-scope="scope">
               {{ scope.row.order_total_fee && formatMoney(scope.row.order_total_fee / 100) }}
             </template>
           </el-table-column>
-          <el-table-column prop="order_refund_count" label="已退款总笔数" />
-          <el-table-column prop="order_refund_total_fee" label="退款总金额">
+          <el-table-column prop="order_refund_count" :label="$t('68f8d259.441bb3')" />
+          <el-table-column prop="order_refund_total_fee" :label="$t('68f8d259.753b42')">
             <template slot-scope="scope">
               {{
                 scope.row.order_refund_total_fee &&
@@ -173,8 +180,8 @@
               }}
             </template>
           </el-table-column>
-          <el-table-column prop="order_refunding_count" label="在退总笔数" />
-          <el-table-column prop="order_refunding_total_fee" label="在退总金额">
+          <el-table-column prop="order_refunding_count" :label="$t('68f8d259.102e13')" />
+          <el-table-column prop="order_refunding_total_fee" :label="$t('68f8d259.1ff25c')">
             <template slot-scope="scope">
               <span class="red">
                 {{
@@ -184,7 +191,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="order_profit_sharing_charge" label="已结算手续费总额">
+          <el-table-column prop="order_profit_sharing_charge" :label="$t('68f8d259.1b1138')">
             <template slot-scope="scope">
               {{
                 scope.row.order_profit_sharing_charge &&
@@ -192,7 +199,7 @@
               }}
             </template>
           </el-table-column>
-          <el-table-column prop="order_un_profit_sharing_charge" label="未结算手续费总额">
+          <el-table-column prop="order_un_profit_sharing_charge" :label="$t('68f8d259.ae7769')">
             <template slot-scope="scope">
               {{
                 scope.row.order_un_profit_sharing_charge &&
@@ -257,7 +264,7 @@ export default {
         },
         shortcuts: [
           {
-            text: '今天',
+            text: this.$t('68f8d259.800dfd'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -267,7 +274,7 @@ export default {
             }
           },
           {
-            text: '最近 7 天',
+            text: this.$t('68f8d259.8e5943'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -277,7 +284,7 @@ export default {
             }
           },
           {
-            text: '最近 15 天',
+            text: this.$t('68f8d259.700e21'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -287,7 +294,7 @@ export default {
             }
           },
           {
-            text: '最近 30 天',
+            text: this.$t('68f8d259.b16818'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -297,7 +304,7 @@ export default {
             }
           },
           {
-            text: '最近 90 天',
+            text: this.$t('68f8d259.aa7dd9'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -370,7 +377,7 @@ export default {
       this.tableData = result.data.data.list.data
       this.total_count = result.data.data.list.total_count
       if (this.total_count <= 0) {
-        this.$message.error('暂无数据')
+        this.$message.error(this.$t('68f8d259.21efd8'))
       }
     },
     mouseenterHandle(type) {
@@ -394,7 +401,7 @@ export default {
         let timeDay =
           (new Date(this.dateValue[1]) - new Date(this.dateValue[0])) / (1000 * 60 * 60 * 24)
         if (timeDay > 90) {
-          this.$message.error('所选日期不能大于90天')
+          this.$message.error(this.$t('68f8d259.cb0fbd'))
           this.dateValue = [this.getNowFormatDate, this.getNowFormatDate]
           this.get_config()
         } else {
@@ -446,7 +453,7 @@ export default {
         this.shopValues = result.data.data.list
       } catch (err) {
         this.$message({
-          message: '获取店铺失败',
+          message: this.$t('68f8d259.6f300e'),
           type: 'error'
         })
       }
@@ -454,7 +461,7 @@ export default {
     formatMoney(num) {
       var result = parseFloat(num)
       if (isNaN(result)) {
-        console('传递参数错误，请检查！')
+        console.error('Invalid params')
         return false
       }
       result = Math.round(num * 100) / 100
@@ -496,7 +503,7 @@ export default {
       // }
       const result = await exportData(params)
       if (result.data.data.status) {
-        return this.$message.success('导出成功')
+        return this.$message.success(this.$t('68f8d259.105c8a'))
       }
     }
   }

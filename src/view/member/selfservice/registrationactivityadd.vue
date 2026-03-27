@@ -11,32 +11,32 @@
       label-width="150px"
       label-position="right"
       class="demo-ruleForm"
-      :rules="rules"
+      :rules="formRules"
     >
-      <el-card header="基础信息" shadow="naver">
-        <el-form-item label="活动名称" prop="activity_name">
+      <el-card :header="$t('3aa73191.6ea1fe')" shadow="naver">
+        <el-form-item :label="$t('3aa73191.39834b')" prop="activity_name">
           <el-col :span="15">
             <el-input
               v-model.trim="form.activity_name"
               :maxlength="30"
-              placeholder="请输入活动名称"
+              :placeholder="$t('3aa73191.7528b3')"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动有效时间" prop="activity_time">
+        <el-form-item :label="$t('3aa73191.08256c')" prop="activity_time">
           <el-col :span="10">
             <el-date-picker
               v-model="activity_date"
               type="datetimerange"
-              range-separator="至"
-              start-placeholder="生效时间"
-              end-placeholder="过期时间"
+              :range-separator="$t('3aa73191.981cbe')"
+              :start-placeholder="$t('3aa73191.fc92e9')"
+              :end-placeholder="$t('3aa73191.1fa23f')"
               format="yyyy/MM/dd HH:mm:ss"
               value-format="timestamp"
               :default-time="['00:00:00', '23:59:59']"
             />
           </el-col>
-          <el-form-item label="前端是否展示" prop="is_activitytime_show">
+          <el-form-item :label="$t('3aa73191.63cd0e')" prop="is_activitytime_show">
             <el-switch
               v-model="is_activitytime_show"
               active-color="#13ce66"
@@ -46,17 +46,17 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="活动城市" prop="areaList">
+        <el-form-item :label="$t('3aa73191.90d78c')" prop="areaList">
           <el-col :span="10">
             <el-cascader
               v-model="form.areaList"
-              placeholder="请选择"
+              :placeholder="$t('ac2a6290.708c9d')"
               clearable
               :options="regions"
               style="width: 60%"
             />
           </el-col>
-          <el-form-item label="前端是否展示" prop="is_activitycity_show">
+          <el-form-item :label="$t('3aa73191.63cd0e')" prop="is_activitycity_show">
             <el-switch
               v-model="is_activitycity_show"
               active-color="#13ce66"
@@ -66,11 +66,15 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="活动地点" prop="place">
+        <el-form-item :label="$t('3aa73191.9ce624')" prop="place">
           <el-col :span="10">
-            <el-input v-model.trim="form.place" :maxlength="30" placeholder="请输入活动地点" />
+            <el-input
+              v-model.trim="form.place"
+              :maxlength="30"
+              :placeholder="$t('3aa73191.90a1ac')"
+            />
           </el-col>
-          <el-form-item label="前端是否展示" prop="is_activityplace_show">
+          <el-form-item :label="$t('3aa73191.63cd0e')" prop="is_activityplace_show">
             <el-switch
               v-model="is_activityplace_show"
               active-color="#13ce66"
@@ -80,11 +84,15 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="详细地址" prop="address">
+        <el-form-item :label="$t('3aa73191.61a0ec')" prop="address">
           <el-col :span="10">
-            <el-input v-model.trim="form.address" :maxlength="30" placeholder="请输入详细地址" />
+            <el-input
+              v-model.trim="form.address"
+              :maxlength="30"
+              :placeholder="$t('3aa73191.80d685')"
+            />
           </el-col>
-          <el-form-item label="前端是否展示" prop="is_activityaddress_show">
+          <el-form-item :label="$t('3aa73191.63cd0e')" prop="is_activityaddress_show">
             <el-switch
               v-model="is_activityaddress_show"
               active-color="#13ce66"
@@ -94,12 +102,16 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="列表活动简介" prop="intro">
+        <el-form-item :label="$t('3aa73191.b1c2ae')" prop="intro">
           <el-col :span="10">
-            <el-input v-model.trim="form.intro" :maxlength="30" placeholder="请输入列表活动简介" />
+            <el-input
+              v-model.trim="form.intro"
+              :maxlength="30"
+              :placeholder="$t('3aa73191.76c101')"
+            />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动轮播图" prop="picsList">
+        <el-form-item :label="$t('3aa73191.0c3532')" prop="picsList">
           <el-col>
             <!-- <div>
               <imgBox
@@ -118,7 +130,7 @@
                     @mouseenter="picsEnter(index)"
                     @mouseleave="picsLeave"
                   >
-                    <img :src="wximageurl + item" />
+                    <img :src="wximageurl + item">
                     <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
                       <div class="el-icon-delete" @click="removePicsImg(index)" />
                       <div class="el-icon-rank" />
@@ -131,14 +143,13 @@
               </div>
             </div>
             <div class="frm-tips">
-              建议尺寸:750*750，文件格式为：png、jpeg、bmp、 jpg大小不超
-              2M，小程序卡片分享与报名活动列表取详情第一张图展示
+              {{ $t('3aa73191.db00ef') }}
             </div>
           </el-col>
         </el-form-item>
       </el-card>
-      <el-card header="活动规则" shadow="naver">
-        <el-form-item label="获取积分" prop="gift_points_switch">
+      <el-card :header="$t('3aa73191.02a217')" shadow="naver">
+        <el-form-item :label="$t('3aa73191.c07abe')" prop="gift_points_switch">
           <el-switch
             v-model="form.gift_points_switch"
             active-color="#13ce66"
@@ -147,16 +158,16 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="获取积分值" prop="gift_points">
+        <el-form-item :label="$t('3aa73191.5a28f0')" prop="gift_points">
           <el-col :span="10">
             <el-input
               v-model.trim="form.gift_points"
               :maxlength="30"
-              placeholder="请输入奖励积分"
+              :placeholder="$t('3aa73191.7470c5')"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="可重复报名" prop="is_allow_duplicate">
+        <el-form-item :label="$t('3aa73191.9f1f24')" prop="is_allow_duplicate">
           <el-switch
             v-model="form.is_allow_duplicate"
             active-color="#13ce66"
@@ -165,7 +176,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="是否审核" prop="is_need_check">
+        <el-form-item :label="$t('3aa73191.31c852')" prop="is_need_check">
           <el-switch
             v-model="form.is_need_check"
             active-color="#13ce66"
@@ -174,7 +185,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="线下核销" prop="is_offline_verify">
+        <el-form-item :label="$t('3aa73191.16fc22')" prop="is_offline_verify">
           <el-switch
             v-model="form.is_offline_verify"
             active-color="#13ce66"
@@ -183,7 +194,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="允许取消报名" prop="is_allow_cancel">
+        <el-form-item :label="$t('3aa73191.991c49')" prop="is_allow_cancel">
           <el-switch
             v-model="form.is_allow_cancel"
             active-color="#13ce66"
@@ -192,20 +203,20 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="活动群组编号" prop="group_no">
+        <el-form-item :label="$t('3aa73191.e234d2')" prop="group_no">
           <el-col :span="10">
-            <el-input v-model.trim="form.group_no" placeholder="请输入活动群组编号" />
+            <el-input v-model.trim="form.group_no" :placeholder="$t('3aa73191.8f4500')" />
           </el-col>
         </el-form-item>
-        <el-form-item label="进内购企业白名单" prop="is_white_list">
+        <el-form-item :label="$t('3aa73191.0fb1ea')" prop="is_white_list">
           <el-radio-group v-model="form.is_white_list" @change="whiteListChange">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">{{ $t('15ecc99b.0a60ac') }}</el-radio>
+            <el-radio :label="0">{{ $t('15ecc99b.c9744f') }}</el-radio>
           </el-radio-group>
-          <div>开启后报名人员名单进入店铺企业员工白名单</div>
+          <div>{{ $t('3aa73191.6433a7') }}</div>
         </el-form-item>
-        <el-form-item v-if="form.is_white_list == 1" label="选择企业">
-          <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
+        <el-form-item v-if="form.is_white_list == 1" :label="$t('3aa73191.0067d7')">
+          <el-button type="primary" @click="onShowChange">{{ $t('3aa73191.0067d7') }}</el-button>
           <SpFinder
             v-if="enterprise_list.length > 0"
             ref="finder"
@@ -217,7 +228,7 @@
             :show-pager="false"
           />
         </el-form-item>
-        <el-form-item label="适用会员">
+        <el-form-item :label="$t('3aa73191.6dbb6f')">
           <el-checkbox-group v-model="memberLevelList">
             <el-checkbox
               v-for="grade in memberGrade"
@@ -231,19 +242,23 @@
               :key="vipdata.lv_type"
               :label="vipdata.lv_type + ''"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('3aa73191.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="适用店铺">
+        <el-form-item :label="$t('3aa73191.eb4307')">
           <el-form-item prop="useAllDistributor">
             <el-radio-group v-model="useAllDistributor" @change="shopTypeChange">
-              <el-radio :label="true"> 全部店铺适用 </el-radio>
-              <el-radio :label="false"> 指定店铺适用 </el-radio>
+              <el-radio :label="true">{{ $t('3aa73191.87e0ad') }}</el-radio>
+              <el-radio :label="false">{{ $t('3aa73191.3640e1') }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!useAllDistributor">
-            <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
+            <el-button type="primary" @click="addDistributorAction">
+{{
+              $t('3aa73191.afa2e6')
+            }}
+</el-button>
             <SpFinder
               v-if="distributor_list?.length > 0"
               ref="finder"
@@ -256,17 +271,13 @@
             />
           </div>
         </el-form-item>
-        <el-form-item
-          label="选择报名问卷模板"
-          prop="temp_id"
-          :rules="{
-            required: form.temp_id == '0' ? false : true,
-            message: '请选择报名问卷模板',
-            trigger: 'blur'
-          }"
-        >
+        <el-form-item :label="$t('3aa73191.b0a4df')" prop="temp_id" :rules="tempIdRules">
           <el-col :span="15">
-            <el-select v-model="form.temp_id" placeholder="请选择" @change="selectTempId">
+            <el-select
+              v-model="form.temp_id"
+              :placeholder="$t('ac2a6290.708c9d')"
+              @change="selectTempId"
+            >
               <el-option
                 v-for="item in temp_options"
                 :key="item.value"
@@ -276,32 +287,36 @@
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="提交报名人数" prop="join_limit">
+        <el-form-item :label="$t('3aa73191.f6fd53')" prop="join_limit">
           <el-col :span="10">
-            <el-input v-model.trim="form.join_limit" type="number" placeholder="人数" />
+            <el-input
+              v-model.trim="form.join_limit"
+              type="number"
+              :placeholder="$t('3aa73191.3640d2')"
+            />
           </el-col>
         </el-form-item>
-        <el-form-item label="报名结束语" prop="join_tips">
+        <el-form-item :label="$t('3aa73191.a667e2')" prop="join_tips">
           <el-col :span="10">
             <el-input
               v-model.trim="form.join_tips"
-              placeholder="报名结束语"
+              :placeholder="$t('3aa73191.a667e2')"
               type="textarea"
               :rows="2"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="报名结束语说明" prop="submit_form_tips">
+        <el-form-item :label="$t('3aa73191.81dc8d')" prop="submit_form_tips">
           <el-col :span="10">
             <el-input
               v-model.trim="form.submit_form_tips"
-              placeholder="报名结束语说明"
+              :placeholder="$t('3aa73191.81dc8d')"
               type="textarea"
               :rows="4"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="是否开启短信通知" prop="is_sms_notice">
+        <el-form-item :label="$t('3aa73191.529f73')" prop="is_sms_notice">
           <el-col :span="15">
             <div class="clearfix">
               <el-switch
@@ -311,13 +326,13 @@
               />
               <el-card v-if="form.is_sms_notice" class="box-card">
                 <div class="text item">
-                  您参与的"活动名称"活动，已经"审核结果"(允许参与 或 已拒绝)
+                  {{ $t('3aa73191.9ac58c') }}
                 </div>
               </el-card>
             </div>
           </el-col>
         </el-form-item>
-        <el-form-item label="是否开启小程序通知" prop="is_wxapp_notice">
+        <el-form-item :label="$t('3aa73191.1decc2')" prop="is_wxapp_notice">
           <el-col :span="15">
             <div class="clearfix">
               <el-switch
@@ -327,18 +342,18 @@
               />
               <el-card v-if="form.is_wxapp_notice" class="box-card">
                 <div slot="header" class="clearfix">
-                  <span>报名结果通知</span>
+                  <span>{{ $t('3aa73191.7f813d') }}</span>
                 </div>
-                <div class="text item">活动名称：{{ form.activity_name }}</div>
-                <div class="text item">报名结果：报名已通过(或 报名被拒绝)</div>
+                <div class="text item">{{ $t('3aa73191.39834b') }}：{{ form.activity_name }}</div>
+                <div class="text item">{{ $t('3aa73191.bfb9ff') }}</div>
               </el-card>
             </div>
           </el-col>
         </el-form-item>
       </el-card>
-      <el-card header="活动详情" shadow="naver">
+      <el-card :header="$t('3aa73191.4553b4')" shadow="naver">
         <el-radio-group v-model="mode">
-          <el-radio :label="'richText'"> 富文本 </el-radio>
+          <el-radio :label="'richText'">{{ $t('3aa73191.e2591e') }}</el-radio>
           <!-- <el-radio :label="'component'"> 组件式 </el-radio> -->
         </el-radio-group>
         <div v-if="mode === 'richText'" style="margin-top: 20px">
@@ -369,10 +384,10 @@
       </el-card>
       <div>
         <el-button @click.native="handleCancel">
-          {{ pageType === 'edit' ? '取消' : '返回' }}
+          {{ pageType === 'edit' ? $t('8da83775.625fb2') : $t('3aa73191.5f4112') }}
         </el-button>
         <el-button v-if="pageType != 'detail'" type="primary" @click="submitAction">
-          保存
+          {{ $t('8da83775.be5fbb') }}
         </el-button>
       </div>
     </el-form>
@@ -488,29 +503,44 @@ export default {
         draggable: '.goodspic'
       },
       picsCurrent: -1,
-      pageType: '',
-      rules: {
-        activity_name: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-        is_allow_duplicate: [{ required: true, message: '请选择', trigger: 'change' }],
-        is_need_check: [{ required: true, message: '请选择', trigger: 'change' }],
-        is_offline_verify: [{ required: true, message: '请选择', trigger: 'change' }],
-        is_allow_cancel: [{ required: true, message: '请选择', trigger: 'blur' }],
-        is_white_list: [{ required: true, message: '请选择', trigger: 'blur' }],
-        join_limit: [{ required: true, message: '请输入报名次数', trigger: 'blur' }]
-      }
+      pageType: ''
     }
   },
   computed: {
+    formRules() {
+      return {
+        activity_name: [{ required: true, message: this.$t('3aa73191.7528b3'), trigger: 'blur' }],
+        is_allow_duplicate: [
+          { required: true, message: this.$t('ac2a6290.708c9d'), trigger: 'change' }
+        ],
+        is_need_check: [{ required: true, message: this.$t('ac2a6290.708c9d'), trigger: 'change' }],
+        is_offline_verify: [
+          { required: true, message: this.$t('ac2a6290.708c9d'), trigger: 'change' }
+        ],
+        is_allow_cancel: [{ required: true, message: this.$t('ac2a6290.708c9d'), trigger: 'blur' }],
+        is_white_list: [{ required: true, message: this.$t('ac2a6290.708c9d'), trigger: 'blur' }],
+        join_limit: [{ required: true, message: this.$t('3aa73191.1fbfd9'), trigger: 'blur' }]
+      }
+    },
+    tempIdRules() {
+      return [
+        {
+          required: this.form.temp_id !== '0',
+          message: this.$t('3aa73191.23bf6a'),
+          trigger: 'blur'
+        }
+      ]
+    },
     shopSetting() {
       return createSetting({
         columns: [
-          { name: 'ID', key: 'distributor_id' },
-          { name: '名称', key: 'name' },
-          { name: 'address', key: '地址' }
+          { name: this.$t('1ad8a87f.b718ad'), key: 'distributor_id' },
+          { name: this.$t('3aa73191.d7ec2d'), key: 'name' },
+          { name: this.$t('3aa73191.765048'), key: '地址' }
         ],
         actions: [
           {
-            name: '删除',
+            name: this.$t('8da83775.2f4aad'),
             key: 'detete',
             type: 'button',
             buttonType: 'text',
@@ -527,30 +557,30 @@ export default {
       })
     },
     setting() {
+      const VALIDATE_TYPES = [
+        { nameKey: 'ac2a6290.a8b0c2', value: '' },
+        { nameKey: 'ac2a6290.8098e2', value: 'mobile' },
+        { nameKey: 'ac2a6290.bc1f2d', value: 'account' },
+        { nameKey: 'ac2a6290.3bc5e6', value: 'email' },
+        { nameKey: 'ac2a6290.22b03c', value: 'qr_code' }
+      ]
       return createSetting({
         columns: [
-          { name: '企业ID', key: 'id' },
-          { name: '企业名称', key: 'name' },
+          { name: this.$t('3aa73191.5a83cb'), key: 'id' },
+          { name: this.$t('3aa73191.f47e27'), key: 'name' },
           {
-            name: '登录类型',
+            name: this.$t('3aa73191.78cbe8'),
             key: 'auth_type',
-            formatter: (value, { auth_type }, col) => {
-              const VALIDATE_TYPES = [
-                { name: '全部', value: '' },
-                { name: '手机号', value: 'mobile' },
-                { name: '账号密码', value: 'account' },
-                { name: '邮箱', value: 'email' },
-                { name: '二维码', value: 'qr_code' }
-              ]
-              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
-              return authType
+            formatter: (value, { auth_type }) => {
+              const item = VALIDATE_TYPES.find((i) => i.value === auth_type)
+              return item ? this.$t(item.nameKey) : ''
             }
           },
-          { name: '来源店铺', key: 'distributor_name' }
+          { name: this.$t('3aa73191.53cc55'), key: 'distributor_name' }
         ],
         actions: [
           {
-            name: '删除',
+            name: this.$t('8da83775.2f4aad'),
             key: 'detete',
             type: 'button',
             buttonType: 'text',
@@ -659,16 +689,16 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (!this.useAllDistributor && this.distributor_list.length == 0) {
-            return this.$message.error('请选择店铺')
+            return this.$message.error(this.$t('3aa73191.06accf'))
           }
           if (this.form.is_white_list && this.enterprise_list.length == 0) {
-            return this.$message.error('请选择企业')
+            return this.$message.error(this.$t('3aa73191.321fa5'))
           }
           if (this.form.activity_id) {
             regActivityUpdate(params).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('c831a478.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -682,7 +712,7 @@ export default {
             regActivityAdd(params).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '添加成功',
+                  message: this.$t('c831a478.3fdaea'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -715,7 +745,7 @@ export default {
           })
         })
         this.temp_options.unshift({
-          label: '无',
+          label: this.$t('3aa73191.d81bb2'),
           value: '0'
         })
         this.loading = false

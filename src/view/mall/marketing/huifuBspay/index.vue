@@ -10,8 +10,12 @@
         <el-form ref="myForm" :model="params" label-width="80px">
           <el-row>
             <el-col :span="8">
-              <el-form-item label="审批状态">
-                <el-select v-model="params.status" placeholder="请选择审批状态" class="input-m">
+              <el-form-item :label="$t('f07e83f6.d352ae')">
+                <el-select
+                  v-model="params.status"
+                  :placeholder="$t('f07e83f6.a7dd1f')"
+                  class="input-m"
+                >
                   <el-option
                     v-for="(item, index) in approveStatusList"
                     :key="index"
@@ -22,24 +26,24 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="商户名称">
+              <el-form-item :label="$t('f07e83f6.e6f169')">
                 <el-input
                   v-model="params.user_name"
                   class="input-m"
-                  placeholder="请输入"
+                  :placeholder="$t('f07e83f6.02cc4f')"
                   clearable
                 />
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="申请日期">
+              <el-form-item :label="$t('f07e83f6.4c9c23')">
                 <el-date-picker
                   v-model="created"
                   type="daterange"
                   format="yyyy-MM-dd"
                   value-format="yyyy-MM-dd"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :start-placeholder="$t('f07e83f6.b44c0f')"
+                  :end-placeholder="$t('f07e83f6.1d468b')"
                   @change="dateChange"
                 />
               </el-form-item>
@@ -48,8 +52,10 @@
           <el-row>
             <el-col :span="12" :offset="12" style="text-align: right">
               <el-form-item>
-                <el-button type="primary" @click="searchData"> 搜索 </el-button>
-                <el-button @click="resetForm('myForm')"> 重置 </el-button>
+                <el-button type="primary" @click="searchData">
+                  {{ $t('f07e83f6.e5f71f') }}
+                </el-button>
+                <el-button @click="resetForm('myForm')"> {{ $t('f07e83f6.4b9c32') }} </el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -64,26 +70,31 @@
                 class="cus-row-img"
                 src="@/assets/img/adapay/distributor.png"
                 alt=""
-              />
+              >
               <img
                 v-if="item.operator_type === 'merchant'"
                 class="cus-row-img"
                 src="@/assets/img/adapay/dealer.png"
                 alt=""
-              />
+              >
             </el-col>
             <el-col :span="13">
               <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
                 <span class="cus-row-name">{{ item.user_name }}</span>
               </router-link>
               <div class="cus-row-time">
-                <span>申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span>
-                <span>所属地区：{{ item.address || '-' }}</span>
                 <span
-                  >所属来源：
-                  <span v-if="item.operator_type === 'supplier'">供应商</span>
-                  <span v-if="item.operator_type === 'distributor'">店铺</span>
-                  <span v-if="item.operator_type === 'merchant'">商户</span>
+                  >{{ $t('f07e83f6.402d96')
+                  }}{{ item.created ? createTimeFilter(item.created) : '-' }}</span
+                >
+                <span>{{ $t('f07e83f6.801525') }}{{ item.address || '-' }}</span>
+                <span>
+                  {{ $t('f07e83f6.ab1d93') }}
+                  <span v-if="item.operator_type === 'supplier'">{{ $t('f07e83f6.bab268') }}</span>
+                  <span v-if="item.operator_type === 'distributor'">{{
+                    $t('f07e83f6.295713')
+                  }}</span>
+                  <span v-if="item.operator_type === 'merchant'">{{ $t('f07e83f6.9f1ea3') }}</span>
                 </span>
               </div>
             </el-col>
@@ -93,22 +104,22 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 100px; height: 84px"
-              />
+              >
               <img
                 v-if="item.status === 'REJECT'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 90px; height: 89px"
-              />
+              >
             </el-col>
             <el-col class="cus-row-btn" :span="3" :offset="item.status === 'WAIT_APPROVE' ? 5 : 0">
               <router-link
                 v-if="item.status === 'WAIT_APPROVE'"
                 :to="{ path: matchRoutePath('approve'), query: { id: item.id } }"
               >
-                <el-button type="primary"> 审批 </el-button>
+                <el-button type="primary"> {{ $t('f07e83f6.0273ba') }} </el-button>
               </router-link>
-              <el-button v-else type="info" plain disabled> 已审批 </el-button>
+              <el-button v-else type="info" plain disabled> {{ $t('f07e83f6.618acb') }} </el-button>
             </el-col>
           </el-row>
         </div>
@@ -149,14 +160,18 @@ export default {
         time_end: ''
       },
       regions_value: [],
-      approveStatusList: [
-        { name: '全部', value: '' },
-        { name: '待审批', value: 'WAIT_APPROVE' },
-        { name: '审批成功', value: 'APPROVED' },
-        { name: '审批失败', value: 'REJECT' }
-      ],
       total_count: 0,
       list: []
+    }
+  },
+  computed: {
+    approveStatusList() {
+      return [
+        { name: this.$t('f07e83f6.a8b0c2'), value: '' },
+        { name: this.$t('f07e83f6.b0bf01'), value: 'WAIT_APPROVE' },
+        { name: this.$t('f07e83f6.6e6732'), value: 'APPROVED' },
+        { name: this.$t('f07e83f6.9a27ff'), value: 'REJECT' }
+      ]
     }
   },
   mounted() {

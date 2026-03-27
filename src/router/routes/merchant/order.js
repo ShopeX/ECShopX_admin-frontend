@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'order',
       icon: 'order',
       keepAlive: true,
-      title: '交易'
+      title: '031da93d.2685c0'
     },
     name: 'merchantOrder',
     path: '/merchant/order',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'tradenormalorders',
           icon: 'icon-order',
-          title: '实物订单',
+          title: '031da93d.72ab0d',
           permissions: ['order.tradenormalorders']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/trade/order/detail'),
             meta: {
-              title: '订单详情',
+              title: '031da93d.8054f7',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'process/:itemId?',
             component: () => import('@/view/mall/trade/order/process'),
             meta: {
-              title: '订单处理',
+              title: '031da93d.afbe0f',
               hidden: true
             }
           }
@@ -52,7 +52,7 @@ const routes = [
         meta: {
           aliasName: 'aftersaleslist',
           icon: 'icon-aftersales',
-          title: '售后列表',
+          title: '031da93d.75bfab',
           permissions: ['order.aftersaleslist']
         },
         children: [
@@ -60,7 +60,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/aftersales/detail'),
             meta: {
-              title: '售后详情',
+              title: '031da93d.70536c',
               hidden: true
             }
           }
@@ -73,7 +73,7 @@ const routes = [
         meta: {
           aliasName: 'tradepayment',
           icon: 'icon-payment',
-          title: '交易单',
+          title: '031da93d.8ab066',
           permissions: ['order.tradepayment']
         }
       },
@@ -84,7 +84,7 @@ const routes = [
         meta: {
           aliasName: 'aftersalesrefundlist',
           icon: 'icon-refund',
-          title: '退款单',
+          title: '031da93d.51e9e1',
           permissions: ['order.aftersalesrefundlist']
         },
         children: [
@@ -92,7 +92,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/aftersales/refundDetail'),
             meta: {
-              title: '退款详情',
+              title: '031da93d.94b1b9',
               hidden: true
             }
           }
@@ -105,7 +105,7 @@ const routes = [
         meta: {
           aliasName: 'Refunderrorlogs',
           icon: 'icon-error',
-          title: '退款失败日志',
+          title: '031da93d.ea0ea2',
           permissions: ['order.Refunderrorlogs']
         }
       }

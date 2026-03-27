@@ -64,17 +64,19 @@
       <section class="color-style-warp" :style="'height: ' + (wheight - 160) + 'px;'">
         <div class="form-header">
           <el-form class="view-flex-item" :inline="true" label-width="80px">
-            <el-form-item label="主色调">
+            <el-form-item :label="$t('449f917f.23b6ab')">
               <el-color-picker v-model="form.data[0].primary" />
             </el-form-item>
-            <el-form-item label="辅色调">
+            <el-form-item :label="$t('449f917f.ed87f3')">
               <el-color-picker v-model="form.data[0].accent" />
             </el-form-item>
-            <el-form-item label="会员色">
+            <el-form-item :label="$t('449f917f.f55a99')">
               <el-color-picker v-model="form.data[0].marketing" />
             </el-form-item>
           </el-form>
-          <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+          <el-button class="btn-save" type="primary" @click="saveConfig">
+            {{ $t('449f917f.be5fbb') }}
+          </el-button>
         </div>
         <div class="pages-view-warp">
           <div
@@ -90,7 +92,7 @@
                   : 'background:' + form.data[0].marketing
               "
             >
-              <img :src="item.img" />
+              <img :src="item.img">
               <div
                 v-if="index == 5"
                 class="ab-view"
@@ -304,7 +306,7 @@ export default {
       saveALiPageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('449f917f.3b1083'),
             type: 'success'
           })
         }

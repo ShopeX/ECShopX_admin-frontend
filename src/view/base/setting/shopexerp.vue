@@ -5,26 +5,26 @@
 
 <template>
   <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-    <el-tab-pane label="商派ERP配置" name="shopexerp">
+    <el-tab-pane :label="$t('ef95ad08.6ca8b9')" name="shopexerp">
       <el-form ref="form" label-width="180px">
-        <el-form-item label="节点号">
+        <el-form-item :label="$t('ef95ad08.cdd576')">
           <el-input v-model="form.node_id" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="是否启用">
+        <el-form-item :label="$t('ef95ad08.53c3dd')">
           <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
         </el-form-item>
         <div class="clearfix">
           <h2 class="f_l">
-            <span>开放数据接口配置：</span>
+            <span>{{ $t('ef95ad08.2b0201') }}</span>
           </h2>
         </div>
-        <el-form-item label="访问来源标识">
+        <el-form-item :label="$t('ef95ad08.d63013')">
           <el-input v-model="form.openapi_flag" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="接口调用私钥">
+        <el-form-item :label="$t('ef95ad08.60aa47')">
           <el-input v-model="form.openapi_token" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="是否启用开放数据接口">
+        <el-form-item :label="$t('ef95ad08.2ca5da')">
           <el-switch
             v-model="form.is_openapi_open"
             active-color="#13ce66"
@@ -32,7 +32,11 @@
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+            $t('ef95ad08.be5fbb')
+          }}
+</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -73,7 +77,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('ef95ad08.3b1083')
           })
           this.loading = false
         })

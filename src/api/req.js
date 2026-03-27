@@ -6,6 +6,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import store from '@/store'
 import Router from '@/router/index'
+import { i18n } from '@/i18n'
 // import S from '@/spx'
 import { refreshToken } from '@/api/auth'
 
@@ -37,7 +38,7 @@ function errorToast(data) {
   //Token has expired
   if (err == 'Token has expired') {
     Vue.prototype.$message({
-      message: '当前页面已过期',
+      message: i18n.t('4d9ffcb1.bd5806'),
       type: 'error',
       onClose: async () => {
         Router.push({ path: '/auth/login', replace: true })

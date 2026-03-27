@@ -5,7 +5,7 @@
 import { IS_SUPPLIER } from '@/utils'
 
 // 交易路由
-const name = '交易'
+const name = '9fe5c87d.2685c0'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -14,7 +14,7 @@ export default {
   children: [
     {
       path: 'tradenormalorders',
-      name: `全部订单`,
+      name: '9fe5c87d.dbb4d8',
       component: () => {
         if (IS_SUPPLIER()) {
           return import('@/view/mall/supplier/supplier_orders')
@@ -46,12 +46,12 @@ export default {
     },
     {
       path: 'normalordersupload',
-      name: `批量发货`,
+      name: '9fe5c87d.425991',
       component: () => import('@/view/mall/trade/normalorders/ordersupload')
     },
     {
       path: 'aftersaleslist',
-      name: `售后列表`,
+      name: '9fe5c87d.75bfab',
       component: () => import('@/view/mall/aftersales/list'),
       children: [
         {
@@ -62,7 +62,7 @@ export default {
     },
     {
       path: 'shippingtemplates',
-      name: `运费模板`,
+      name: '9fe5c87d.416fd4',
       component: () => import('@/view/mall/trade/shipping/templates'),
       children: [
         {
@@ -73,7 +73,7 @@ export default {
     },
     {
       path: 'logistics',
-      name: `配送管理`,
+      name: '9fe5c87d.61b678',
       component: () => import('@/views/settings/deliverySettings/logistics/index'),
       children: [
         {
@@ -84,7 +84,7 @@ export default {
     },
     {
       path: 'aftersalesrefundlist',
-      name: `退款单`,
+      name: '9fe5c87d.51e9e1',
       component: () => import('@/view/mall/aftersales/refundList'),
       children: [
         {
@@ -95,7 +95,7 @@ export default {
     },
     {
       path: 'Refunderrorlogs',
-      name: `退款失败日志`,
+      name: '9fe5c87d.ea0ea2',
       component: () => import('@/view/mall/trade/refunderrorlogs')
     }
   ]

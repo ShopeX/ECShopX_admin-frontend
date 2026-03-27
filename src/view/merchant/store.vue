@@ -88,20 +88,20 @@
       ref="form"
       v-model="form"
       show-message
-      label-width="100px"
+      label-width="130px"
       :form-list="formList"
       :submit="false"
     />
 
     <div class="footer-container">
-      <el-button @click.native="handleCancel"> 取消</el-button>
+      <el-button @click.native="handleCancel">{{ $t('027707af.625fb2') }}</el-button>
       <el-button
         v-if="!VERSION_STANDARD() || (!IS_DISTRIBUTOR() && VERSION_STANDARD())"
         type="primary"
         :loading="submitLoading"
         @click="onFormSubmit"
       >
-        {{ submitLoading ? '提交中' : '保存' }}
+        {{ submitLoading ? $t('027707af.7ef44a') : $t('027707af.be5fbb') }}
       </el-button>
     </div>
   </SpPage>
@@ -119,19 +119,20 @@ export default {
   data() {
     let distributionTypeOptions = [
       {
-        title: '自营',
+        title: this.$t('027707af.491c0c'),
         value: 0
       }
     ]
     if (!this.VERSION_STANDARD()) {
       distributionTypeOptions.push({
-        title: '加盟',
+        title: this.$t('027707af.059670'),
         value: 1
       })
     }
     return {
       form: {
         distribution_type: 0, // 店铺类型： 0=自营；1=加盟
+        distributor_category_id: '',
         merchant_id: '',
         shop_code: '',
         name: '',
@@ -141,6 +142,7 @@ export default {
         startTime: '',
         endTime: '',
         is_delivery: false,
+        show_mobile: 1,
         is_audit_goods: false,
         auto_sync_goods: false,
         is_require_subdistrict: false,
@@ -153,6 +155,9 @@ export default {
         address: '',
         is_dada: false,
         is_self_delivery: true,
+        is_valid: 'true',
+        show_salesperson: 0,
+        fixed_salesperson_qrcode_url: '',
         freight_time: 1,
         business: '',
         is_ziti: false,
@@ -175,22 +180,34 @@ export default {
       offline_freight_status: false,
       formList: [
         {
-          label: '店铺类型',
+          label: this.$t('027707af.1dbb0d'),
           type: 'group',
           isShow: ({ key }, value) => this.IS_ADMIN() && this.distributor_self == 0
         },
         {
-          label: '店铺类型',
+          label: this.$t('027707af.1dbb0d'),
           key: 'distribution_type',
           type: 'select',
+          display: 'inline',
           clearable: false,
           options: distributionTypeOptions,
           isShow: ({ key }, value) => this.IS_ADMIN() && this.distributor_self == 0
         },
         {
-          label: '所属商户',
+          label: this.$t('027707af.2419d0'),
+          key: 'distributor_category_id',
+          type: 'select',
+          display: 'inline',
+          clearable: true,
+          options: [],
+          placeholder: this.$t('027707af.459c3e'),
+          isShow: ({ key }, value) => this.IS_ADMIN() && this.distributor_self == 0
+        },
+        {
+          label: this.$t('027707af.1eaa17'),
           key: 'merchant_id',
           type: 'select',
+          display: 'inline',
           component: ({ key }, value) => {
             return (
               <el-select
@@ -208,7 +225,7 @@ export default {
                 loading={this.remoteLoading}
                 remote
                 remote-method={(e) => this.onRemoteGetMerchant(e)}
-                placeholder='输入商户名称搜索'
+                placeholder={this.$t('027707af.84d4a2')}
               >
                 {this.merchantList.map((item, index) => (
                   <el-option
@@ -225,71 +242,71 @@ export default {
           },
           validator: (rule, value, callback) => {
             if (this.form.distribution_type == 1 && !value) {
-              callback(new Error('请选择商户'))
+              callback(new Error(this.$t('027707af.24a64e')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '基础信息',
+          label: this.$t('027707af.6ea1fe'),
           type: 'group'
         },
         {
-          label: '店铺号',
+          label: this.$t('027707af.f6d738'),
           key: 'shop_code',
           type: 'input',
           display: 'inline',
-          placeholder: '请输入店铺号(字母、数字)',
+          placeholder: this.$t('027707af.30c679'),
           required: true,
           validator: (rule, value, callback) => {
             if (!value) {
-              callback(new Error('店铺号不能为空'))
+              callback(new Error(this.$t('027707af.6acf55')))
             } else if (!/^[A-Za-z0-9\-]+$/.test(value)) {
-              callback(new Error('请输入字母、数字'))
+              callback(new Error(this.$t('027707af.ec77cf')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '店铺名称',
+          label: this.$t('027707af.0d4934'),
           key: 'name',
           type: 'input',
           display: 'inline',
-          placeholder: '请输入店铺名称',
+          placeholder: this.$t('027707af.867738'),
           required: true,
-          message: '店铺名称不能为空'
+          message: this.$t('027707af.097cc0')
         },
         {
-          label: '联系人姓名',
+          label: this.$t('027707af.986d36'),
           key: 'contact',
           type: 'input',
           display: 'inline',
           disabled: () => this.datapass_block == 1,
-          placeholder: '请输入联系人姓名',
+          placeholder: this.$t('027707af.e30625'),
           required: true,
-          message: '联系人不能为空'
+          message: this.$t('027707af.bfc304')
         },
         {
-          label: '联系方式',
+          label: this.$t('027707af.b58943'),
           key: 'mobile',
           type: 'input',
           display: 'inline',
           disabled: () => this.datapass_block == 1,
-          placeholder: '请输入联系人手机号',
+          placeholder: this.$t('027707af.2b28a8'),
           required: true,
-          message: '联系方式不能为空'
+          message: this.$t('027707af.264639')
         },
         {
-          label: '固定座机',
+          label: this.$t('027707af.699886'),
           key: 'contract_phone',
           type: 'input',
           display: 'inline',
-          placeholder: '请输入联系人座机号'
+          placeholder: this.$t('027707af.cb842c')
         },
         {
-          label: '经营时间',
+          label: this.$t('027707af.a2bed2'),
           // key: 'contract_phone',
           display: 'inline',
           component: ({ key }, value) => {
@@ -299,7 +316,7 @@ export default {
                   v-model={value['startTime']}
                   class='start-time'
                   popper-class='merchant-store-time-select'
-                  placeholder='起始时间'
+                  placeholder={this.$t('027707af.26dac3')}
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
@@ -311,7 +328,7 @@ export default {
                   v-model={value['endTime']}
                   class='end-time'
                   popper-class='merchant-store-time-select'
-                  placeholder='结束时间'
+                  placeholder={this.$t('027707af.f78277')}
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
@@ -324,50 +341,65 @@ export default {
           }
         },
         {
-          label: '是否快递',
+          label: this.$t('027707af.2e552e'),
           key: 'is_delivery',
           type: 'switch',
           display: 'inline'
         },
         {
-          label: '审核商品',
+          label: this.$t('027707af.371f30'),
+          key: 'show_mobile',
+          type: 'switch',
+          display: 'inline',
+          component: ({ key }, value) => {
+            return (
+              <el-switch
+                v-model={value[key]}
+                active-value={1}
+                inactive-value={0}
+              />
+            )
+          }
+        },
+        {
+          label: this.$t('027707af.48f0ee'),
           key: 'is_audit_goods',
           type: 'switch',
           display: 'inline',
           width: '360px',
-          tip: '开启后，店铺添加的自有商品，需要平台审核通过后才可以上架',
+          tip: this.$t('027707af.c46414'),
           isShow: ({ key }, value) => !this.VERSION_STANDARD() && value.distribution_type == 0
         },
         {
-          label: '同步商品',
+          label: this.$t('027707af.5aa3a7'),
           key: 'auto_sync_goods',
           type: 'switch',
           display: 'inline',
-          tip: '自动同步商品至店铺',
+          tip: this.$t('027707af.8d61d8'),
           isShow: ({ key }, value) =>
             this.VERSION_STANDARD() && !this.IS_DISTRIBUTOR() && this.distributor_self == 0
         },
         {
-          label: '街道居委',
+          label: this.$t('027707af.6e548b'),
           key: 'is_require_subdistrict',
           type: 'switch',
           display: 'inline',
-          tip: '下单是否需要选择街道居委'
+          tip: this.$t('027707af.1ef2d0')
         },
         {
-          label: '楼号房号',
+          label: this.$t('027707af.a4e97c'),
           key: 'is_require_building',
           type: 'switch',
           display: 'inline',
-          tip: '下单是否需要填写楼号房号'
+          tip: this.$t('027707af.e2f9a1')
         },
         {
-          label: '店铺图片',
+          label: this.$t('027707af.0a151e'),
           type: 'group',
-          tip: '（只能上传jpg/png文件，且不超过2M）'
+          tip: this.$t('027707af.1431d1')
         },
         {
-          label: '店铺Logo',
+          label: this.$t('027707af.332050'),
           key: 'logo',
           display: 'inline',
           component: ({ key }, value) => {
@@ -375,7 +407,7 @@ export default {
           }
         },
         {
-          label: '店铺背景',
+          label: this.$t('027707af.51de63'),
           key: 'banner',
           display: 'inline',
           component: ({ key }, value) => {
@@ -383,24 +415,24 @@ export default {
           }
         },
         {
-          label: '店铺位置',
+          label: this.$t('027707af.e243d4'),
           type: 'group',
-          tip: '（店铺定位后保存店铺经纬度，才可以开启自提，否则店铺不支持自提功能）'
+          tip: this.$t('027707af.cdd17f')
         },
         {
-          label: '店铺经纬度',
+          label: this.$t('027707af.db4b0d'),
           component: ({ key }, value) => {
             return (
               <div class='lng-lat-block'>
-                <el-input v-model={value.lng} readonly placeholder='经度' />
+                <el-input v-model={value.lng} readonly placeholder={this.$t('027707af.3d18ca')} />
                 <span class='separator'>-</span>
-                <el-input v-model={value.lat} readonly placeholder='纬度' />
+                <el-input v-model={value.lat} readonly placeholder={this.$t('027707af.6acaee')} />
               </div>
             )
           }
         },
         {
-          label: '地理位置',
+          label: this.$t('027707af.fc82aa'),
           key: 'address',
           width: '1000px',
           component: ({ key }, value) => {
@@ -415,18 +447,21 @@ export default {
                       'is-error': !value['address']
                     }
                   ]}
-                  placeholder='请输入详细地址（去除省市县）'
+                  placeholder={this.$t('027707af.f375e0')}
                 />
-                <el-input v-model={value['house_number']} placeholder='门牌号' />
+                <el-input
+                  v-model={value['house_number']}
+                  placeholder={this.$t('027707af.7672fd')}
+                />
                 <el-button type='primary' on-click={this.searchKeyword}>
-                  搜索定位
+                  {this.$t('027707af.83546a')}
                 </el-button>
               </div>
             )
           },
           validator: (rule, value, callback) => {
             if (!this.form.address) {
-              callback(new Error('详细地址不能为空'))
+              callback(new Error(this.$t('027707af.a95544')))
             } else {
               callback()
             }
@@ -437,21 +472,85 @@ export default {
           component: ({ key }, value) => <div id='qqmap_container' />
         },
         {
-          label: '送货上门',
-          type: 'group',
-          tip: '（需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持送货上门）',
-          isShow: this.dadaEnable
+          label: this.$t('027707af.6d7cb8'),
+          key: 'is_valid',
+          type: 'radio',
+          tip: this.$t('027707af.3c751e'),
+          options: [
+            { name: this.$t('027707af.7854b5'), label: 'true' },
+            { name: this.$t('027707af.710ad0'), label: 'false' },
+            { name: this.$t('027707af.0044f6'), label: 'delete' }
+          ]
         },
         {
-          label: '送货上门',
+          label: this.$t('027707af.0581a1'),
+          key: 'show_salesperson',
+          type: 'switch',
+          display: 'inline',
+          component: ({ key }, value) => {
+            return (
+              <el-switch
+                v-model={value[key]}
+                active-value={1}
+                inactive-value={0}
+                on-change={(val) => {
+                  if (val === 0) {
+                    value.fixed_salesperson_qrcode_url = ''
+                    value.salesperson_type = 1
+                  }
+                }}
+              />
+            )
+          },
+          tip: this.$t('027707af.9cbc57')
+        },
+        {
+          label: this.$t('027707af.32d834'),
+          key: 'salesperson_type',
+          type: 'radio',
+          display: 'inline',
+          options: [
+            { name: this.$t('027707af.9cfec5'), label: 1 },
+            { name: this.$t('027707af.29189f'), label: 2 }
+          ],
+          isShow: ({ key }, value) => value.show_salesperson !== 0
+        },
+        {
+          label: this.$t('027707af.80384a'),
+          key: 'fixed_salesperson_qrcode_url',
+          display: 'inline',
+          component: ({ key }, value) => {
+            return <SpImagePicker v-model={value[key]} />
+          },
+          validator: (rule, value, callback) => {
+            if (this.form.show_salesperson === 1 && this.form.salesperson_type === 1) {
+              if (!value) {
+                callback(new Error(this.$t('027707af.e90339')))
+              } else {
+                callback()
+              }
+            } else {
+              callback()
+            }
+          },
+          isShow: ({ key }, value) => value.show_salesperson === 1 && value.salesperson_type === 1
+        },
+        {
+          label: this.$t('027707af.6a9e57'),
+          type: 'group',
+          tip: this.$t('027707af.408f9b'),
+          isShow: () => this.dadaEnable
+        },
+        {
+          label: this.$t('027707af.6a9e57'),
           key: 'is_dada',
           type: 'switch',
           width: 'auto',
-          tip: '开启后有店铺订单时需要该店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
-          isShow: this.dadaEnable
+          tip: this.$t('027707af.ed46b7'),
+          isShow: () => this.dadaEnable
         },
         {
-          label: '送货方式',
+          label: this.$t('027707af.c3bf69'),
           key: 'is_self_delivery',
           // type: 'radio',
           // options: [
@@ -464,10 +563,10 @@ export default {
             return (
               <div style='margin-top: 14px;display:flex'>
                 <el-radio v-model={value[key]} label={true}>
-                  商家自配送
+                  {this.$t('027707af.0e903e')}
                 </el-radio>
                 <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>
-                  达达同城配
+                  {this.$t('027707af.bcb155')}
                 </el-radio>
               </div>
             )
@@ -479,15 +578,20 @@ export default {
           component: ({ key }, value) => {
             return (
               <div style='margin-left: 27px;display:flex'>
-                立即配送，预计
-                <el-input-number v-model={value[key]} placeholder='请输入内容' step={1} min={1} />
-                小时后送达（下单时间往后延多少小时）
+                {this.$t('027707af.c05ed6')}
+                <el-input-number
+                  v-model={value[key]}
+                  placeholder={this.$t('027707af.a11cc7')}
+                  step={1}
+                  min={1}
+                />
+                {this.$t('027707af.eb7e64')}
               </div>
             )
           }
         },
         {
-          label: '业务类型',
+          label: this.$t('027707af.09ab42'),
           key: 'business',
           type: 'select',
           options: [],
@@ -496,7 +600,7 @@ export default {
             console.log('value:', value)
             if (!this.form.is_self_delivery && value?.is_dada) {
               if (!value) {
-                callback(new Error('业务类型必填'))
+                callback(new Error(this.$t('027707af.bf756d')))
               } else {
                 callback()
               }
@@ -506,15 +610,15 @@ export default {
           }
         },
         {
-          label: '到店自提',
+          label: this.$t('027707af.93ab28'),
           type: 'group'
         },
         {
-          label: '到店自提',
+          label: this.$t('027707af.93ab28'),
           key: 'is_ziti',
           type: 'switch',
           width: 'auto',
-          tip: '启用到店自提功能后，买家下单时可选择下方地址自提，下单后你需要尽快将商品配送至指定自提点；下方自提地址共享该店铺库存。'
+          tip: this.$t('027707af.c3a20c')
         },
         {
           label: '',
@@ -523,25 +627,25 @@ export default {
           isShow: ({ key }, value) => value.is_ziti
         },
         {
-          label: '到店退货',
+          label: this.$t('027707af.11b600'),
           type: 'group'
         },
         {
-          label: '本店订单',
+          label: this.$t('027707af.6dc5f4'),
           key: 'offline_aftersales',
           type: 'switch',
           width: 'auto',
-          tip: '启用后本店订单买家发起退货退款申请时可选择到店退货，关闭时本店订单仅可使用快递退货；商家发起的售后订单不受此规则限制。'
+          tip: this.$t('027707af.53dbe3')
         },
         {
-          label: '本店退货点',
+          label: this.$t('027707af.efdb86'),
           width: 'auto',
           component: ({ key }, value) => (
             <RefundGoodsAddress v-model={value['offline_aftersales_address']} />
           )
         },
         {
-          label: '可退货店铺',
+          label: this.$t('027707af.6105a8'),
           width: '1000px',
           component: ({ key }, value) => (
             <RefundGoodsStore
@@ -551,23 +655,23 @@ export default {
           )
         },
         {
-          label: '其他店铺订单',
+          label: this.$t('027707af.7c8532'),
           key: 'offline_aftersales_other',
           type: 'switch',
           width: 'auto',
-          tip: '启用后其他店铺在设置可退货店铺时可选择本店（即本店可接收其他店铺订单到店退货）；商家发起的售后订单不受此规则限制。'
+          tip: this.$t('027707af.2c41e6')
         },
         //平台开了才能操作，否则置灰
         {
-          label: '消费者退货退款时可退运费',
+          label: this.$t('027707af.32f43e'),
           key: 'is_refund_freight',
           type: 'switch',
           disabled: () => this.offline_freight_status,
           width: 'auto',
-          tip: '启用后本店订单买家发起退货退款时可退运费。'
+          tip: this.$t('027707af.434c77')
         },
         {
-          label: '旺店通ERP',
+          label: this.$t('027707af.a891b2'),
           type: 'group'
         },
         {
@@ -578,22 +682,22 @@ export default {
           placeholder: ''
         },
         {
-          label: '聚水潭ERP',
+          label: this.$t('027707af.318bb2'),
           type: 'group'
         },
         {
-          label: '店铺编号',
+          label: this.$t('027707af.a3068b'),
           key: 'jst_shop_id',
           type: 'input',
           display: 'inline',
           placeholder: ''
         },
         {
-          label: '店铺介绍',
+          label: this.$t('027707af.fb0e24'),
           type: 'group'
         },
         {
-          label: '店铺介绍',
+          label: this.$t('027707af.fb0e24'),
           key: 'introduce',
           type: 'textarea',
           placeholder: '',
@@ -601,6 +705,7 @@ export default {
         }
       ],
       merchantList: [],
+      categoryList: [],
       remoteLoading: false,
       regions: district,
       submitLoading: false,
@@ -634,6 +739,7 @@ export default {
     }
     this.getStoreInfo()
     this.getOrderSetting()
+    this.getCategoryList()
   },
   mounted() {},
   methods: {
@@ -672,11 +778,11 @@ export default {
       //设置搜索的范围和关键字等属性
       const { regions_id, address } = this.form
       if (regions_id.length == 0) {
-        this.$message.error('请选择地区')
+        this.$message.error(this.$t('027707af.ad1a24'))
         return
       }
       if (!address) {
-        this.$message.error('请输入具体位置')
+        this.$message.error(this.$t('027707af.ef5ed8'))
         return
       }
       const [province, city, country] = getRegionNameById(regions_id, district)
@@ -729,6 +835,26 @@ export default {
       })
       this.dadaEnable = is_open === '1'
     },
+    async getCategoryList() {
+      try {
+        const res = await this.$api.store.getStoreCategoryList({
+          page: 1,
+          pageSize: 1000
+        })
+        this.categoryList = res.list || []
+        // 更新 formList 中的选项
+        this.formList.forEach((item) => {
+          if (item.key === 'distributor_category_id') {
+            item.options = this.categoryList.map((category) => ({
+              value: category.category_id,
+              title: category.category_name
+            }))
+          }
+        })
+      } catch (error) {
+        console.error('获取门店分类列表失败:', error)
+      }
+    },
     async getStoreInfo() {
       const { distributor_id } = this.$route.query
       if (distributor_id || this.IS_DISTRIBUTOR()) {
@@ -757,6 +883,7 @@ export default {
         this.datapass_block = res.datapass_block
         this.form = {
           distribution_type: res.distribution_type,
+          distributor_category_id: res.distributor_category_id,
           merchant_id: res.merchant_id,
           shop_code: res.shop_code,
           name: res.name,
@@ -766,6 +893,7 @@ export default {
           startTime,
           endTime,
           is_delivery: res.is_delivery,
+          show_mobile: res.show_mobile,
           is_audit_goods: res.is_audit_goods,
           auto_sync_goods: res.auto_sync_goods,
           is_require_subdistrict: res.is_require_subdistrict,
@@ -779,6 +907,13 @@ export default {
           house_number: res.house_number,
           is_dada: res.is_dada == 1 || res.is_self_delivery,
           is_self_delivery: res.is_self_delivery,
+          is_valid: res.is_valid,
+          // show_salesperson: 0=关闭, 1=固定码, 2=导购
+          // 前端开关: 0=关闭, 1=开启
+          // salesperson_type: 1=上传企微码, 2=导购码
+          show_salesperson: res.show_salesperson === 0 ? 0 : 1,
+          salesperson_type: res.show_salesperson === 1 ? 1 : (res.show_salesperson === 2 ? 2 : 1),
+          fixed_salesperson_qrcode_url: res.fixed_salesperson_qrcode_url || '',
           freight_time: res.freight_time,
           business: res.business,
           is_ziti: res.is_ziti,
@@ -858,6 +993,28 @@ export default {
       } else {
         delete params.is_audit_goods
       }
+      if (!params.distributor_category_id) {
+        delete params.distributor_category_id
+      }
+
+      // 处理 show_salesperson 的值
+      if (this.form.show_salesperson === 0) {
+        // 关闭时，show_salesperson 为 0
+        params.show_salesperson = 0
+        delete params.fixed_salesperson_qrcode_url
+        delete params.salesperson_type
+      } else if (this.form.show_salesperson === 1) {
+        // 开启时，根据 salesperson_type 设置 show_salesperson
+        if (this.form.salesperson_type === 1) {
+          // 上传企微码
+          params.show_salesperson = 1
+        } else if (this.form.salesperson_type === 2) {
+          // 导购码
+          params.show_salesperson = 2
+          delete params.fixed_salesperson_qrcode_url
+        }
+        delete params.salesperson_type
+      }
 
       if (this.form.is_dada) {
         if (this.form.is_self_delivery) {
@@ -876,7 +1033,7 @@ export default {
         if (distributor_id) {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)
           this.submitLoading = false
-          this.$message.success('修改店铺成功')
+          this.$message.success(this.$t('027707af.c83614'))
         } else {
           const ids = this.$refs['daoDianZiti'].finderData.map((item) => item.id)
           await this.$api.marketing.saveDistributorInfo({
@@ -884,7 +1041,7 @@ export default {
             pickup_location: ids
           })
           this.submitLoading = false
-          this.$message.success('保存店铺成功')
+          this.$message.success(this.$t('027707af.931e30'))
         }
         if (!this.IS_DISTRIBUTOR()) {
           this.$router.go(-1)

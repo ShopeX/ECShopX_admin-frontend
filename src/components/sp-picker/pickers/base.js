@@ -68,7 +68,7 @@ export default {
         const { num, islimitImgType = false } = this.value
         if (num) {
           if (this.localVal.data.length > num) {
-            throw new Error(`最多选择${num}条数据`)
+            throw new Error(this.$t('40cc67c2.a0672e') + num + this.$t('40cc67c2.f932ef'))
           }
         }
         if (islimitImgType) {
@@ -79,7 +79,7 @@ export default {
               similarCount += 1
             }
             if (similarCount > 1) {
-              throw new Error(`最多关联一个图片类型规格`)
+              throw new Error(this.$t('40cc67c2.1979f8'))
             }
           })
           console.log(similarCount)

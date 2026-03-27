@@ -8,13 +8,21 @@
     <el-table ref="keytable" v-loading="loading" :data="tmpData" @selection-change="checkChange">
       <el-table-column type="selection" width="55" :selectable="whereDisable" />
 
-      <el-table-column label="敏感词" prop="text" />
+      <el-table-column :label="$t('4e0e02bc.39791b')" prop="text" />
 
-      <el-table-column label="操作" width="160" align="center">
+      <el-table-column :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row, 'edit')"> 编辑 </el-button>
+          <el-button type="text" @click="handleEdit(scope.row, 'edit')">
+{{
+            $t('e240ae54.95b351')
+          }}
+</el-button>
 
-          <el-button type="text" @click="handleEdit(scope.row, 'del')"> 删除 </el-button>
+          <el-button type="text" @click="handleEdit(scope.row, 'del')">
+{{
+            $t('e240ae54.2f4aad')
+          }}
+</el-button>
         </template>
       </el-table-column>
     </el-table>

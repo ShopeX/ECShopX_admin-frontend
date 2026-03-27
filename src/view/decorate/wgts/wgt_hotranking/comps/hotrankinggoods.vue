@@ -8,7 +8,7 @@
           :src="value.titleText.image"
           class="header-image"
           alt=""
-        />
+        >
         <span
           v-if="value.titleText && value.titleText.type === 'text' && value.titleText.text"
           :style="{ color: value.titleColor }"
@@ -22,7 +22,7 @@
         class="header-more"
         :style="{ color: value.moreBtn.color }"
       >
-        查看更多<el-icon class="el-icon-arrow-right" />
+        {{ i18n.t('e968027c.90ef7c') }}<el-icon class="el-icon-arrow-right" />
       </div>
     </div>
 
@@ -41,7 +41,7 @@
 
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
           <!-- 满减标签 -->
           <div v-if="getPromotionText(item)" class="promotion-label">
             {{ getPromotionText(item) }}
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
+
 export default {
   name: 'HotRankingGoods',
   props: {
@@ -77,6 +79,9 @@ export default {
       type: Object,
       default: () => ({})
     }
+  },
+  data() {
+    return { i18n }
   },
   computed: {
     topGoods() {

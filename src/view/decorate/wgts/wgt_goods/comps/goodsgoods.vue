@@ -8,7 +8,7 @@
           :src="value.titleText.image"
           class="header-image"
           alt=""
-        />
+        >
         <span
           v-if="value.titleText && value.titleText.type === 'text' && value.titleText.text"
           :style="{ color: value.titleColor }"
@@ -22,7 +22,7 @@
         class="header-more"
         :style="{ color: value.moreBtn.color }"
       >
-        查看更多<el-icon class="el-icon-arrow-right" />
+        {{ i18n.t('e5a1185d.90ef7c') }}<el-icon class="el-icon-arrow-right" />
       </div>
     </div>
 
@@ -31,7 +31,7 @@
       <div v-for="(item, index) in goodsList" :key="`goods-${index}`" class="goods-goods-item">
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
+          <img :src="getItemImg(item)" class="goods-image" alt="">
           <!-- 满减标签 -->
           <div v-if="getPromotionText(item)" class="promotion-label">
             {{ getPromotionText(item) }}
@@ -42,8 +42,13 @@
         <div class="goods-info">
           <div class="goods-name">{{ item.item_name || '' }}</div>
           <div class="goods-price">
-            <span class="price-unit">¥</span>
-            <span class="price-text">{{ formatPrice(item.price) }}</span>
+            <template v-if="value.dataType === 'pointsmall_items'">
+              <span class="price-text">{{ formatPointPrice(item) }}</span>
+            </template>
+            <template v-else>
+              <span class="price-unit">¥</span>
+              <span class="price-text">{{ formatPrice(item.price) }}</span>
+            </template>
           </div>
         </div>
       </div>
@@ -51,9 +56,13 @@
   </div>
 </template>
 
-<script>
+<script>import { i18n } from '@/i18n'
+
 export default {
   name: 'GoodsGoods',
+  data() {
+    return { i18n }
+  },
   props: {
     value: {
       type: Object,
@@ -77,6 +86,19 @@ export default {
     }
   },
   methods: {
+    getItemImg(item) {
+      if (item.main_img) return item.main_img
+      const first = item.pics && item.pics[0]
+      return first ? (typeof first === 'string' ? first : first.url || '') : ''
+    },
+    /** 积分商品展示：纯积分显示「5000积分」，积分+现金显示「5000积分+0.1元」 */
+    formatPointPrice(item) {
+      const point = item.point != null ? item.point : 0
+      const pointStr = point + i18n.t('5c0a1eb5.9f68a8')
+      const price = item.price != null && item.price !== '' ? Number(item.price) : 0
+      if (!price || price === 0) return pointStr
+      return pointStr + '+' + this.formatPrice(price) + '元'
+    },
     // 格式化价格（除以100）
     formatPrice(price) {
       if (!price) return '0.00'

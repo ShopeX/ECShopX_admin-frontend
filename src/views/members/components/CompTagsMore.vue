@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      :title="title"
+      :title="title || $t('ee0ad640.4f1e39')"
       :visible.sync="dialogVisible"
       width="800px"
       :close-on-click-modal="false"
@@ -49,11 +49,11 @@
           class="text-[#409EFF]"
           v-if="!IS_DISTRIBUTOR()"
         >
-          新建标签组
+          {{ $t('ee0ad640.19214e') }}
         </el-button>
         <div>
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button type="primary" @click="handleConfirm">确 定</el-button>
+          <el-button @click="handleClose">{{ $t('ee0ad640.c08ab9') }}</el-button>
+          <el-button type="primary" @click="handleConfirm">{{ $t('ee0ad640.aa7527') }}</el-button>
         </div>
       </div>
     </el-dialog>
@@ -80,7 +80,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '批量打标签'
+      default: ''
     },
     visible: {
       type: Boolean,
@@ -194,7 +194,7 @@ export default {
         await this.$api.member.createTagGroup(submitData)
         this.$message({
           type: 'success',
-          message: '创建成功'
+          message: this.$t('ee0ad640.04a691')
         })
         this.addTagDialogVisible = false
         await this.loadTagCategories()
@@ -235,7 +235,7 @@ export default {
         await this.loadTagCategories()
         this.$message({
           type: 'success',
-          message: '添加标签成功'
+          message: this.$t('ee0ad640.78ec37')
         })
       } catch (error) {
         console.log(error)

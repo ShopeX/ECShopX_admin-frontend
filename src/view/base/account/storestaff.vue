@@ -6,47 +6,47 @@
 <template>
   <SpPage>
     <div class="action-container">
-      <el-button type="primary" icon="plus" @click="addLabels"> 添加店铺员工 </el-button>
+      <el-button type="primary" icon="plus" @click="addLabels">
+        {{ $t('ab2cdfe4.214d48') }}
+      </el-button>
     </div>
     <tips class="action-container">
       <ul>
         <li v-if="VERSION_PLATFORM()">
-          平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。前往：<el-link
-            :href="origin + '/merchant/login'"
-            target="_blank"
-            type="primary"
-          >
-            商户后台 </el-link
+          {{ $t('ab2cdfe4.a36767')
+          }}<el-link :href="origin + '/merchant/login'" target="_blank" type="primary">
+            {{ $t('ab2cdfe4.a792da') }}
+</el-link
           >。
         </li>
-        <li>每个店铺仅可设置一个超级管理员账号，但一个账号可以同时是多个店铺的超级管理员。</li>
+        <li>{{ $t('ab2cdfe4.09136f') }}</li>
         <li>
-          店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子账号，并通过角色控制子账号权限范围。前往：<el-link
-            :href="origin + '/shopadmin/login'"
-            target="_blank"
-            type="primary"
-          >
-            店铺后台 </el-link
+          {{ $t('ab2cdfe4.92eb56')
+          }}<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">
+            {{ $t('ab2cdfe4.95ee58') }}
+</el-link
           >。
         </li>
       </ul>
     </tips>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="login_name" label="登录账号:">
-        <el-input v-model="params.login_name" placeholder="请输入账号名" />
+      <SpFilterFormItem prop="login_name" :label="$t('ab2cdfe4.8c2e31')">
+        <el-input v-model="params.login_name" :placeholder="$t('ab2cdfe4.3103ef')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="params.mobile" placeholder="请输入手机号" />
+      <SpFilterFormItem prop="mobile" :label="$t('ab2cdfe4.ce2bf3')">
+        <el-input v-model="params.mobile" :placeholder="$t('ab2cdfe4.6e4f4b')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="username" label="姓名:">
-        <el-input v-model="params.username" placeholder="请输入姓名" />
+      <SpFilterFormItem prop="username" :label="$t('ab2cdfe4.75d152')">
+        <el-input v-model="params.username" :placeholder="$t('ab2cdfe4.8093e3')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="accountsList">
-      <el-table-column label="操作" width="100px">
+      <el-table-column :label="$t('ab2cdfe4.2b6bc0')" width="100px">
         <template slot-scope="scope">
-          <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="editAction(scope.$index, scope.row)">
+            {{ $t('ab2cdfe4.95b351') }}
+          </el-button>
           <!--<el-button
             type="text"
             @click="deleteAccountAction(scope.$index, scope.row)"
@@ -61,20 +61,24 @@
           <el-tag v-if="scope.row.is_distributor_main" size="mini" type="danger"> 管理员 </el-tag>
         </template>
       </el-table-column> -->
-      <el-table-column prop="login_name" label="登录账号" />
-      <el-table-column prop="mobile" label="手机号" />
-      <el-table-column prop="username" label="姓名" />
-      <el-table-column label="店铺名称">
+      <el-table-column prop="login_name" :label="$t('ab2cdfe4.bb2cdf')" />
+      <el-table-column prop="mobile" :label="$t('ab2cdfe4.8098e2')" />
+      <el-table-column prop="username" :label="$t('ab2cdfe4.60d045')" />
+      <el-table-column :label="$t('ab2cdfe4.0d4934')">
         <template slot-scope="scope">
           <el-tag v-for="item in scope.row.distributor_ids" :key="item.distributor_id" size="mini">
             {{ item.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column v-if="login_type == 'distributor'" prop="roles" label="角色">
+      <el-table-column
+        v-if="login_type == 'distributor'"
+        prop="roles"
+        :label="$t('ab2cdfe4.464f3d')"
+      >
         <template slot-scope="scope">
           <el-tag v-if="scope.row.is_distributor_main == true" size="mini" type="danger">
-            管理员
+            {{ $t('ab2cdfe4.b1dae9') }}
           </el-tag>
           <el-tag
             v-for="item in scope.row.role_data"
@@ -87,7 +91,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="is_disable" label="禁用" width="80">
+      <el-table-column prop="is_disable" :label="$t('ab2cdfe4.710ad0')" width="80">
         <template
           v-if="login_type != 'distributor' || scope.row.is_distributor_main == false"
           slot-scope="scope"
@@ -116,35 +120,39 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
-          <el-form-item label="登录账号">
+          <el-form-item :label="$t('ab2cdfe4.bb2cdf')">
             <el-col :span="10">
               <el-input
                 v-if="!editLoginName"
                 v-model="form.login_name"
                 :minlength="4"
                 :maxlength="16"
-                placeholder="请输入员工登录账号"
+                :placeholder="$t('ab2cdfe4.2b668a')"
               />
               <el-input v-else v-model="form.login_name" :disabled="true" />
             </el-col>
-            <p class="frm-tips">账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线</p>
+            <p class="frm-tips">{{ $t('ab2cdfe4.d59d95') }}</p>
           </el-form-item>
-          <el-form-item label="手机号">
+          <el-form-item :label="$t('ab2cdfe4.8098e2')">
             <el-col :span="10">
-              <el-input v-model="form.mobile" :maxlength="11" placeholder="请输入11位手机号" />
+              <el-input
+                v-model="form.mobile"
+                :maxlength="11"
+                :placeholder="$t('ab2cdfe4.fed6c9')"
+              />
             </el-col>
           </el-form-item>
-          <el-form-item label="姓名">
+          <el-form-item :label="$t('ab2cdfe4.60d045')">
             <el-col :span="10">
-              <el-input v-model="form.username" required placeholder="请填写姓名" />
+              <el-input v-model="form.username" required :placeholder="$t('ab2cdfe4.629b2e')" />
             </el-col>
           </el-form-item>
-          <el-form-item label="登录密码">
+          <el-form-item :label="$t('ab2cdfe4.2646b8')">
             <el-col :span="10">
               <el-input v-model="form.password" :maxlength="255" />
             </el-col>
           </el-form-item>
-          <el-form-item label="所属店铺">
+          <el-form-item :label="$t('ab2cdfe4.baad7e')">
             <el-tag
               v-for="(item, index) in relDistributors"
               :key="item.distributor_id"
@@ -156,13 +164,13 @@
               {{ item.name }}
             </el-tag>
             <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
-              + 点击搜索店铺
+              {{ $t('ab2cdfe4.a5d26b') }}
             </el-button>
-            <p class="frm-tips">一个店铺只能有一个超级管理员</p>
+            <p class="frm-tips">{{ $t('ab2cdfe4.2242ee') }}</p>
           </el-form-item>
           <el-form-item
             v-if="login_type == 'distributor' && is_distributor_main != true"
-            label="角色"
+            :label="$t('ab2cdfe4.464f3d')"
           >
             <el-checkbox-group v-model="form.role_id">
               <el-checkbox
@@ -193,8 +201,8 @@
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitAction"> 保存 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('ab2cdfe4.625fb2') }} </el-button>
+        <el-button type="primary" @click="submitAction"> {{ $t('ab2cdfe4.be5fbb') }} </el-button>
       </div>
     </el-dialog>
     <template v-if="DistributorVisible">
@@ -337,7 +345,7 @@ export default {
     addLabels() {
       // 添加物料弹框
       this.handleCancel()
-      this.editTitle = '添加店铺员工'
+      this.editTitle = this.$t('ab2cdfe4.214d48')
       this.editVisible = true
       this.isEdit = false
       this.form.username = ''
@@ -350,7 +358,7 @@ export default {
     editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
-      this.editTitle = '编辑店铺员工'
+      this.editTitle = this.$t('ab2cdfe4.7697b1')
       this.editVisible = true
       this.isEdit = true
       this.form.username = row.username
@@ -384,24 +392,24 @@ export default {
           })
         })
       } else {
-        this.$message({ type: 'error', message: '必须关联店铺' })
+        this.$message({ type: 'error', message: this.$t('ab2cdfe4.eb0268') })
         return false
       }
 
       if (this.loginType === 'distributor' && this.form.role_id.length <= 0) {
-        this.$message({ type: 'error', message: '至少关联一个角色' })
+        this.$message({ type: 'error', message: this.$t('ab2cdfe4.31f03c') })
         return false
       }
       if (this.operator_id) {
         updateAccountInfo(this.operator_id, this.form).then((response) => {
-          this.$message.success('保存成功')
+          this.$message.success(this.$t('ab2cdfe4.3b1083'))
           this.detailData = response.data.data
           this.editVisible = false
           this.fetchList()
         })
       } else {
         createAccount(this.form).then((response) => {
-          this.$message.success('保存成功')
+          this.$message.success(this.$t('ab2cdfe4.3b1083'))
           this.detailData = response.data.data
           this.editVisible = false
           this.fetchList()
@@ -434,9 +442,9 @@ export default {
       })
     },
     deleteAccountAction(index, row) {
-      this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('ab2cdfe4.80ae2a'), this.$t('ab2cdfe4.02d981'), {
+        confirmButtonText: this.$t('ab2cdfe4.38cf16'),
+        cancelButtonText: this.$t('ab2cdfe4.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -444,7 +452,7 @@ export default {
             .then((response) => {
               this.accountsList.splice(index, 1)
               this.$message({
-                message: '删除成功',
+                message: this.$t('ab2cdfe4.0007d1'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -452,23 +460,23 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除失败'
+                message: this.$t('ab2cdfe4.acf066')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('ab2cdfe4.2111cc')
           })
         })
     },
     acitonDisabled(index, row) {
       if (row.is_disabled === true) {
-        var msg = '此操作将会禁用该账号，是否继续?'
-        this.$confirm(msg, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        var msg = this.$t('ab2cdfe4.a26113')
+        this.$confirm(msg, this.$t('ab2cdfe4.02d981'), {
+          confirmButtonText: this.$t('ab2cdfe4.38cf16'),
+          cancelButtonText: this.$t('ab2cdfe4.625fb2'),
           type: 'warning'
         }).then(() => {
           let params = {

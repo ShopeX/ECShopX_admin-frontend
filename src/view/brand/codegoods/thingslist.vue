@@ -6,9 +6,11 @@
 <template>
   <div class="">
     <div class="view-flex view-flex-middle content-bottom-padded">
-      <div class="view-flex-item">当前共 {{ total_count }} 款商品</div>
+      <div class="view-flex-item">
+        {{ $t('ba32d41d.678473') }} {{ total_count }} {{ $t('ba32d41d.81f47a') }}
+      </div>
       <div>
-        <el-button @click="addCodeThings"> 创建商品 </el-button>
+        <el-button @click="addCodeThings"> {{ $t('ba32d41d.ec6dce') }} </el-button>
       </div>
     </div>
     <el-row :gutter="20">
@@ -16,7 +18,7 @@
         <div class="list-item view-flex">
           <div class="view-flex view-flex-item">
             <div class="thumbnail">
-              <img :src="wximageurl + item.pic" />
+              <img :src="wximageurl + item.pic">
             </div>
             <div>
               <div class="item-title">
@@ -26,7 +28,9 @@
                 {{ item.created | datetime('YYYY-MM-DD HH:mm:ss') }}
               </div>
               <div class="item-batch">
-                共{{ item.batch_total_count }}个批次 合计{{ item.batch_total_quantity }}件
+                {{ $t('ba32d41d.fbd2b1') }}{{ item.batch_total_count }}{{ $t('ba32d41d.911e83') }}
+                {{ $t('ba32d41d.450efd') }}{{ item.batch_total_quantity
+                }}{{ $t('ba32d41d.f7edf5') }}
               </div>
             </div>
           </div>
@@ -37,25 +41,25 @@
                 query: { thing_id: item.thing_id }
               }"
             >
-              <el-tooltip effect="light" content="批次信息" placement="top">
+              <el-tooltip effect="light" :content="$t('ba32d41d.656222')" placement="top">
                 <i class="iconfont icon-eye" />
               </el-tooltip>
             </router-link>
             <router-link
               :to="{ path: '/brand/onecode/things', query: { thing_id: item.thing_id } }"
             >
-              <el-tooltip effect="light" content="物品编辑" placement="top">
+              <el-tooltip effect="light" :content="$t('ba32d41d.bb5539')" placement="top">
                 <i class="iconfont icon-pen" />
               </el-tooltip>
             </router-link>
             <router-link
               :to="{ path: '/brand/onecode/batchs', query: { thing_id: item.thing_id } }"
             >
-              <el-tooltip effect="light" content="新建批次，下载码" placement="top">
+              <el-tooltip effect="light" :content="$t('ba32d41d.39dece')" placement="top">
                 <i class="iconfont icon-download" />
               </el-tooltip>
             </router-link>
-            <el-tooltip effect="light" content="删除物品" placement="top">
+            <el-tooltip effect="light" :content="$t('ba32d41d.2b3378')" placement="top">
               <i class="el-icon-delete-solid" @click="deleteThingsAction(item.thing_id)" />
             </el-tooltip>
           </div>
@@ -103,7 +107,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取物品信息出错'
+            message: this.$t('ba32d41d.badd26')
           })
         })
     },
@@ -119,21 +123,21 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取物品列表列表信息出错'
+            message: this.$t('ba32d41d.1caaf5')
           })
         })
     },
     deleteThingsAction(thing_id) {
-      this.$confirm('此操作将删除该物品, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('ba32d41d.e5a5b9'), this.$t('ba32d41d.02d981'), {
+        confirmButtonText: this.$t('ba32d41d.38cf16'),
+        cancelButtonText: this.$t('ba32d41d.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteThings(thing_id)
             .then((response) => {
               this.$message({
-                message: '删除物品成功',
+                message: this.$t('ba32d41d.6a6e33'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -142,14 +146,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除物品失败'
+                message: this.$t('ba32d41d.5649b5')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('ba32d41d.2111cc')
           })
         })
     },

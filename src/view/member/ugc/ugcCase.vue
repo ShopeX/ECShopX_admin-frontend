@@ -7,18 +7,16 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="2">
-        <div class="p-title">敏感词管理</div>
+        <div class="p-title">{{ $t('5a009ac5.4d4c0d') }}</div>
       </el-col>
       <el-col :span="22">
-        <div class="tips">
-          设置敏感词列表，敏感词优先级高于机器审核。<br />用户未来创建的含有敏感词的笔记将显示为***。
-        </div>
+        <div class="tips" v-html="$t('5a009ac5.977ec6')" />
       </el-col>
     </el-row>
     <el-row class="margin-col">
       <el-col>
-        <el-button type="primary" @click="addkey"> 新建敏感词 </el-button>
-        <el-button @click="handleDelete"> 删除敏感词 </el-button>
+        <el-button type="primary" @click="addkey">{{ $t('5a009ac5.49711c') }}</el-button>
+        <el-button @click="handleDelete">{{ $t('5a009ac5.8f2456') }}</el-button>
       </el-col>
     </el-row>
 
@@ -45,38 +43,38 @@
     <el-dialog
       :before-close="editFlagHide"
       :visible.sync="editFlagShow"
-      title="新建/编辑敏感词"
+      :title="$t('5a009ac5.6544f2')"
       :show-close="false"
       width="30%"
     >
-      <div class="dialog-tips">已经存在的笔记将不受影响，<br />请前往笔记列表页手动筛选。</div>
+      <div class="dialog-tips" v-html="$t('5a009ac5.ad25de')" />
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
-        <el-form-item prop="text" label="敏感词">
+        <el-form-item prop="text" :label="$t('4e0e02bc.39791b')">
           <el-input
             v-model="ruleForm.text"
-            placeholder="请填写敏感词"
+            :placeholder="$t('5a009ac5.eae818')"
             maxlength="10"
             :show-word-limit="true"
           />
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="primary" @click="updataKey"> 确认 </el-button>
-        <el-button @click="editFlagHide"> 取消 </el-button>
+        <el-button type="primary" @click="updataKey">{{ $t('09b91dec.e83a25') }}</el-button>
+        <el-button @click="editFlagHide">{{ $t('09b91dec.625fb2') }}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog
       :before-close="delFlagHide"
       :visible.sync="delFlagShow"
-      title="删除敏感词"
+      :title="$t('5a009ac5.8f2456')"
       :show-close="false"
       width="30%"
     >
-      <div class="cont">注意！删除敏感词不会自动将包含敏感词的笔记重新发布，请人工操作。</div>
+      <div class="cont">{{ $t('5a009ac5.544ff8') }}</div>
       <div slot="footer">
-        <el-button type="primary" @click="deleteKey"> 确认 </el-button>
-        <el-button @click="delFlagHide"> 取消 </el-button>
+        <el-button type="primary" @click="deleteKey">{{ $t('09b91dec.e83a25') }}</el-button>
+        <el-button @click="delFlagHide">{{ $t('09b91dec.625fb2') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -115,15 +113,19 @@ export default {
       ruleForm: {
         text: null
       },
-      rules: {
-        text: [
-          { required: true, message: '请输入敏感词', trigger: 'blur' },
-          { max: 10, message: '长度不超过10个字符', trigger: 'blur' }
-        ]
-      },
       aloneKey: false,
       editFlagShow: false,
       delFlagShow: false
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        text: [
+          { required: true, message: this.$t('5a009ac5.c4c9c0'), trigger: 'blur' },
+          { max: 10, message: this.$t('5a009ac5.b040d7'), trigger: 'blur' }
+        ]
+      }
     }
   },
   mounted() {
@@ -163,7 +165,7 @@ export default {
     },
     updataKey() {
       const { ruleForm } = this.$data
-      var message = ruleForm.id ? '更新成功' : '创建成功'
+      var message = ruleForm.id ? this.$t('5a009ac5.8a3f2e') : this.$t('5a009ac5.dc91b7')
       console.log('编辑更新敏感词', this.$data.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
@@ -194,7 +196,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择敏感词'
+          message: this.$t('5a009ac5.634a8f')
         })
       }
     },
@@ -203,7 +205,7 @@ export default {
       console.log('删除敏感词', id_set)
       this.$message({
         type: 'success',
-        message: '删除敏感词成功'
+        message: this.$t('5a009ac5.7e2d4a')
       })
       this.delFlagHide()
     }

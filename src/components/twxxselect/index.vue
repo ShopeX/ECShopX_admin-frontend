@@ -5,19 +5,19 @@
 
 <template>
   <el-dialog
-    title="选择图文消息"
+    :title="$t('f9b4b391.07672d')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     width="726px"
     :before-close="cancelAction"
   >
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="已发送" name="first">
+      <el-tab-pane :label="$t('f9b4b391.93d159')" name="first">
         <ul class="select_list">
           <li v-for="(item, index) in dataList">
             <el-row>
               <el-col :span="18" class="frm-tips">
-                <input type="radio" name="sendItem" :value="index" />&nbsp;{{ item.title }}
+                <input type="radio" name="sendItem" :value="index">&nbsp;{{ item.title }}
               </el-col>
               <el-col :span="6" class="tr">
                 <span class="frm-tips">{{ item.date }}</span>
@@ -26,13 +26,13 @@
           </li>
         </ul>
       </el-tab-pane>
-      <el-tab-pane label="素材库" name="second">
-        <el-input icon="el-icon-search" placeholder="搜索相关文章" style="width: 50%" />
+      <el-tab-pane :label="$t('f9b4b391.5e0fcc')" name="second">
+        <el-input icon="el-icon-search" :placeholder="$t('f9b4b391.f8164c')" style="width: 50%" />
         <ul class="select_list">
           <li v-for="(item, index) in scDataList">
             <el-row>
               <el-col :span="18" class="frm-tips">
-                <input type="radio" name="scItem" :value="index" />&nbsp;{{ item.title }}
+                <input type="radio" name="scItem" :value="index">&nbsp;{{ item.title }}
               </el-col>
               <el-col :span="6" class="tr">
                 <span class="frm-tips">{{ item.date }}</span>
@@ -41,16 +41,16 @@
           </li>
         </ul>
       </el-tab-pane>
-      <el-tab-pane label="历史消息" name="thrie" vi-if="showHistory">
+      <el-tab-pane :label="$t('f9b4b391.5ea196')" name="thrie" vi-if="showHistory">
         <div class="history_msg clearfix">
           <div class="preview_area f_l">
             <div class="preview_box">
-              <img :src="demoimg" />
+              <img :src="demoimg">
             </div>
-            <p>公众帐号历史消息列表示例</p>
+            <p>{{ $t('f9b4b391.9b80e6') }}</p>
           </div>
           <div class="form_area f_l">
-            <el-checkbox v-model="historyItem.url"> 跳转到历史消息列表 </el-checkbox>
+            <el-checkbox v-model="historyItem.url">{{ $t('f9b4b391.67ba0d') }}</el-checkbox>
           </div>
         </div>
       </el-tab-pane>
@@ -67,8 +67,8 @@
       />
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction"> 取 消 </el-button>
-      <el-button type="primary" @click="saveAction"> 确 定 </el-button>
+      <el-button @click="cancelAction">{{ $t('f9b4b391.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveAction">{{ $t('f9b4b391.aa7527') }}</el-button>
     </div>
   </el-dialog>
 </template>

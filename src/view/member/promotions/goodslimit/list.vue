@@ -9,7 +9,7 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addLimitPromotion">
-          添加限购商品活动
+          {{ $t('c693e930.c82ab1') }}
         </el-button>
       </div>
 
@@ -25,29 +25,29 @@
             :data="tableList"
             border
             style="width: 100%"
-            element-loading-text="数据加载中"
+            :element-loading-text="$t('c693e930.f09b12')"
           >
-            <el-table-column prop="limit_id" width="60" label="编号" />
-            <el-table-column prop="limit_name" label="活动名称" />
-            <el-table-column prop="source_name" label="店铺" />
-            <el-table-column label="开始时间" width="200">
+            <el-table-column prop="limit_id" width="60" :label="$t('c693e930.c515f3')" />
+            <el-table-column prop="limit_name" :label="$t('c693e930.39834b')" />
+            <el-table-column prop="source_name" :label="$t('c693e930.295713')" />
+            <el-table-column :label="$t('c693e930.592c59')" width="200">
               <template slot-scope="scope">
                 <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="结束时间" width="200">
+            <el-table-column :label="$t('c693e930.f78277')" width="200">
               <template slot-scope="scope">
                 <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="类型" width="120">
+            <el-table-column :label="$t('c693e930.226b09')" width="120">
               <template slot-scope="scope">
-                <span v-if="scope.row.status == 'waiting'">待开始</span>
-                <span v-if="scope.row.status == 'ongoing'">进行中</span>
-                <span v-if="scope.row.status == 'end'">已结束</span>
+                <span v-if="scope.row.status == 'waiting'">{{ $t('c693e930.1568ba') }}</span>
+                <span v-if="scope.row.status == 'ongoing'">{{ $t('c693e930.fb852f') }}</span>
+                <span v-if="scope.row.status == 'end'">{{ $t('c693e930.047fab') }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="150">
+            <el-table-column :label="$t('c693e930.2b6bc0')" width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
@@ -55,15 +55,17 @@
                     type="text"
                     @click="closeLimitPromotion(scope.row)"
                   >
-                    取消
+                    {{ $t('c693e930.625fb2') }}
                   </el-button>
-                  <el-button type="text" @click="showLimitPromotion(scope.row)"> 查看 </el-button>
+                  <el-button type="text" @click="showLimitPromotion(scope.row)">
+                    {{ $t('c693e930.607e7a') }}
+                  </el-button>
                   <el-button
                     v-if="editlActionVisible(scope.row)"
                     type="text"
                     @click="updateLimitPromotion(scope.row)"
                   >
-                    编辑
+                    {{ $t('c693e930.95b351') }}
                   </el-button>
                 </div>
               </template>
@@ -105,12 +107,16 @@ export default {
       params: {
         ...initialParams
       },
-      loading: false,
-      tabList: [
-        { name: '全部', activeName: 'all' },
-        { name: '待开始', activeName: 'waiting' },
-        { name: '进行中', activeName: 'ongoing' },
-        { name: '已结束', activeName: 'end' }
+      loading: false
+    }
+  },
+  computed: {
+    tabList() {
+      return [
+        { name: this.$t('c693e930.a8b0c2'), activeName: 'all' },
+        { name: this.$t('c693e930.1568ba'), activeName: 'waiting' },
+        { name: this.$t('c693e930.fb852f'), activeName: 'ongoing' },
+        { name: this.$t('c693e930.047fab'), activeName: 'end' }
       ]
     }
   },
@@ -180,17 +186,17 @@ export default {
       })
     },
     closeLimitPromotion(row) {
-      let that = this
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const that = this
+      const msg = this.$t('c693e930.01be42')
+      this.$confirm(msg, this.$t('c693e930.02d981'), {
+        cancelButtonText: this.$t('c693e930.625fb2'),
+        confirmButtonText: this.$t('c693e930.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             cancelLimitPromotions(row.limit_id).then((res) => {
               this.$message({
-                message: '取消成功',
+                message: this.$t('c693e930.285f58'),
                 type: 'success',
                 duration: 2 * 1000,
                 onClose() {

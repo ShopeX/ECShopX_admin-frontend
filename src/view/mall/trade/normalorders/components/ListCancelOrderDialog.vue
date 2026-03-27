@@ -4,23 +4,28 @@
 -->
 
 <template>
-  <el-dialog title="取消订单" :visible.sync="visible" :before-close="handleCancelOrder" width="57%">
+  <el-dialog
+    :title="$t('9fa12ae2.b21b5e')"
+    :visible.sync="visible"
+    :before-close="handleCancelOrder"
+    width="57%"
+  >
     <template>
       <el-form ref="cancelForm" :model="cancelOrderForm" class="" label-width="100px">
-        <el-form-item label="订单号:">
+        <el-form-item :label="$t('9fa12ae2.070dce')">
           <!-- <el-col :span="20">{{ cancelOrderData.orderInfo.order_id }}</el-col> -->
           <el-col :span="20">
             {{ info.order_id }}
           </el-col>
         </el-form-item>
-        <el-form-item label="取消原因:">
+        <el-form-item :label="$t('9fa12ae2.27910a')">
           <el-row>
             <el-col :span="20">
               <template>
                 <el-select
                   v-model="cancel_order"
                   filterable
-                  placeholder="请选择取消订单原因"
+                  :placeholder="$t('9fa12ae2.bc4a11')"
                   @change="cancelReasonSelect"
                 >
                   <el-option
@@ -37,7 +42,7 @@
                   :rows="3"
                   resize="none"
                   style="width: 200px; margin-top: 10px"
-                  placeholder="请填写取消订单原因"
+                  :placeholder="$t('9fa12ae2.c6af7d')"
                 />
               </template>
             </el-col>
@@ -46,8 +51,10 @@
       </el-form>
     </template>
     <div slot="footer" class="dialog-footer">
-      <el-button @click.native="handleCancelOrder"> 取消 </el-button>
-      <el-button type="primary" @click="submitCancelOrderConfirmAction"> 确定 </el-button>
+      <el-button @click.native="handleCancelOrder"> {{ $t('9fa12ae2.625fb2') }} </el-button>
+      <el-button type="primary" @click="submitCancelOrderConfirmAction">
+        {{ $t('9fa12ae2.38cf16') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -59,18 +66,18 @@ export default {
   data() {
     return {
       order_cancel_reason: [
-        { name: '客户现在不想购买', value: 1 },
-        { name: '客户商品价格较贵', value: 2 },
-        { name: '客户价格波动', value: 3 },
-        { name: '客户商品缺货', value: 4 },
-        { name: '客户重复下单', value: 5 },
-        { name: '客户订单商品选择有误', value: 6 },
-        { name: '客户支付方式选择有误', value: 7 },
-        { name: '客户收货信息填写有误', value: 8 },
-        { name: '客户发票信息填写有误', value: 9 },
-        { name: '客户无法支付订单', value: 10 },
-        { name: '客户长时间未付款', value: 11 },
-        { name: '客户其他原因', value: 12 }
+        { name: this.$t('9fa12ae2.8f038a'), value: 1 },
+        { name: this.$t('9fa12ae2.5e58ba'), value: 2 },
+        { name: this.$t('9fa12ae2.151111'), value: 3 },
+        { name: this.$t('9fa12ae2.baa450'), value: 4 },
+        { name: this.$t('9fa12ae2.3013ee'), value: 5 },
+        { name: this.$t('9fa12ae2.e7197e'), value: 6 },
+        { name: this.$t('9fa12ae2.74c00b'), value: 7 },
+        { name: this.$t('9fa12ae2.16264a'), value: 8 },
+        { name: this.$t('9fa12ae2.13bea0'), value: 9 },
+        { name: this.$t('9fa12ae2.0e6c86'), value: 10 },
+        { name: this.$t('9fa12ae2.e21052'), value: 11 },
+        { name: this.$t('9fa12ae2.94490e'), value: 12 }
       ],
       cancel_order: '',
       cancelOrderForm: {
@@ -112,12 +119,12 @@ export default {
     },
     submitCancelOrderConfirmAction() {
       if (this.cancelOrderForm.cancel_reason == 0) {
-        this.$message.error('请选择取消原因!')
+        this.$message.error(this.$t('9fa12ae2.1be7fb'))
         return false
       }
 
       if (this.cancelOrderForm.cancel_reason == 12 && this.cancelOrderForm.other_reason == '') {
-        this.$message.error('请输入取消原因!')
+        this.$message.error(this.$t('9fa12ae2.d31b9c'))
         return false
       }
       this.cancelOrderForm.order_id = this.info.order_id
@@ -126,9 +133,9 @@ export default {
         // debugger
         if (cancelOrderStatus == 'WAIT_CHECK') {
           this.handleCancelOrder()
-          this.$message.success('取消订单成功!')
+          this.$message.success(this.$t('8906cb64.86a02e'))
         } else {
-          this.$message.error('取消订单失败!')
+          this.$message.error(this.$t('8906cb64.dc8eed'))
           this.$emit('refreshList')
           return false
         }

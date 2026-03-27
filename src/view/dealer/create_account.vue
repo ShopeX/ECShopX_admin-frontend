@@ -7,7 +7,11 @@
   <SpPage>
     <div v-if="processed == '未填'" class="zyk_page_register_Info_edit">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane v-if="member_type == 'corp' || allShow" name="corp" label="企业">
+        <el-tab-pane
+          v-if="member_type == 'corp' || allShow"
+          name="corp"
+          :label="$t('baa166cc.04c9e3')"
+        >
           <el-form
             ref="ruleForm"
             :model="form"
@@ -18,49 +22,49 @@
             <!-- 企业信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>企业信息</span>
+                <span>{{ $t('baa166cc.54796d') }}</span>
               </div>
 
               <div class="content">
                 <el-row :gutter="20">
                   <el-col :span="8">
-                    <el-form-item label="企业名称" prop="name">
+                    <el-form-item :label="$t('baa166cc.f47e27')" prop="name">
                       <el-input v-model="form.name" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="营业执照号" prop="social_credit_code">
+                    <el-form-item :label="$t('baa166cc.b9bf38')" prop="social_credit_code">
                       <el-input v-model="form.social_credit_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="商户有效日期" prop="social_credit_code_expires">
+                    <el-form-item :label="$t('baa166cc.1fcd91')" prop="social_credit_code_expires">
                       <el-date-picker
                         v-model="form.social_credit_code_expires"
                         type="date"
                         value-format="yyyyMMdd"
-                        placeholder="选择日期"
+                        :placeholder="$t('baa166cc.2bebdd')"
                         style="width: 100%"
                       />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业电话" prop="telphone">
+                    <el-form-item :label="$t('baa166cc.3d9d21')" prop="telphone">
                       <el-input v-model="form.telphone" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业邮箱" prop="email">
+                    <el-form-item :label="$t('baa166cc.d7c0a1')" prop="email">
                       <el-input v-model="form.email" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="邮编" prop="zip_code">
+                    <el-form-item :label="$t('baa166cc.4d8e09')" prop="zip_code">
                       <el-input v-model="form.zip_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="所在省市" prop="area">
+                    <el-form-item :label="$t('baa166cc.c63fa8')" prop="area">
                       <el-cascader
                         v-model="form.area"
                         style="width: 100%"
@@ -75,18 +79,18 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业地址" prop="address">
+                    <el-form-item :label="$t('baa166cc.400147')" prop="address">
                       <el-input v-model="form.address" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
-                    <el-form-item label="经营范围" prop="business_scope">
+                    <el-form-item :label="$t('baa166cc.04228b')" prop="business_scope">
                       <el-input
                         v-model="form.business_scope"
                         maxlength="500"
                         show-word-limit
                         type="textarea"
-                        placeholder="请输入内容"
+                        :placeholder="$t('baa166cc.a11cc7')"
                         rows="7"
                       />
                     </el-form-item>
@@ -97,20 +101,20 @@
             <!-- 法人信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>法人信息</span>
+                <span>{{ $t('baa166cc.77d3e2') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="法人姓名" prop="legal_person">
+                  <el-form-item :label="$t('baa166cc.2fe17a')" prop="legal_person">
                     <el-input v-model="form.legal_person" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人身份证号码" prop="legal_cert_id">
+                  <el-form-item :label="$t('baa166cc.1415b3')" prop="legal_cert_id">
                     <div class="flex">
                       <el-input v-model="form.legal_cert_id" />
                       <el-tooltip
-                        content="身份证信息字母X需大写"
+                        :content="$t('baa166cc.43e031')"
                         placement="top-end"
                         effect="light"
                       >
@@ -120,17 +124,17 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人手机号码" prop="legal_mp">
+                  <el-form-item :label="$t('baa166cc.187a35')" prop="legal_mp">
                     <el-input v-model="form.legal_mp" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人证件有效期" prop="legal_cert_id_expires">
+                  <el-form-item :label="$t('baa166cc.a79a87')" prop="legal_cert_id_expires">
                     <el-date-picker
                       v-model="form.legal_cert_id_expires"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('baa166cc.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
@@ -140,18 +144,18 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('baa166cc.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="结算银行账户类型" prop="bank_acct_type">
+                  <el-form-item :label="$t('baa166cc.32734c')" prop="bank_acct_type">
                     <el-radio-group v-model="form.bank_acct_type">
-                      <el-radio label="1">对公</el-radio>
-                      <el-radio label="2">对私</el-radio>
+                      <el-radio label="1">{{ $t('baa166cc.18ba13') }}</el-radio>
+                      <el-radio label="2">{{ $t('baa166cc.f0bf8a') }}</el-radio>
                     </el-radio-group>
                     <el-tooltip
                       :style="{ 'margin-left': 30 + 'px' }"
-                      content="提现到账银行卡账户类型"
+                      :content="$t('baa166cc.8597fb')"
                       placement="top-end"
                       effect="light"
                     >
@@ -160,7 +164,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡所属银行" prop="bank_name">
+                  <el-form-item :label="$t('baa166cc.0a3e82')" prop="bank_name">
                     <div class="flex">
                       <el-autocomplete
                         v-model="form.bank_name"
@@ -168,19 +172,19 @@
                         prefix-icon="el-icon-search"
                         class="inline-input"
                         :fetch-suggestions="querySearch"
-                        placeholder="请输入选择内容"
+                        :placeholder="$t('baa166cc.473e86')"
                         @select="handleSelectBank"
                       />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡开户名" prop="card_name">
+                  <el-form-item :label="$t('baa166cc.748b0c')" prop="card_name">
                     <el-input v-model="form.card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡号" prop="card_no">
+                  <el-form-item :label="$t('baa166cc.88174a')" prop="card_no">
                     <el-input v-model="form.card_no" />
                   </el-form-item>
                 </el-col>
@@ -188,10 +192,10 @@
             </el-card>
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>其他信息</span>
+                <span>{{ $t('baa166cc.febe40') }}</span>
               </div>
               <div class="other_content">
-                <el-form-item label="上传附件" prop="attach_file">
+                <el-form-item :label="$t('baa166cc.0063c5')" prop="attach_file">
                   <el-upload
                     class="upload-demo"
                     drag
@@ -204,7 +208,9 @@
                   >
                     <i class="el-icon-upload" />
                     <div v-if="form.attach_file_name">{{ form.attach_file_name }}</div>
-                    <div v-else class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                    <div v-else class="el-upload__text">
+                      {{ $t('baa166cc.1ef03f') }}<em>{{ $t('baa166cc.2c808b') }}</em>
+                    </div>
                   </el-upload>
                 </el-form-item>
                 <el-form-item>
@@ -232,7 +238,11 @@
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane v-if="member_type == 'person' || allShow" name="person" label="个人">
+        <el-tab-pane
+          v-if="member_type == 'person' || allShow"
+          name="person"
+          :label="$t('baa166cc.6a0e04')"
+        >
           <el-form
             ref="personForm"
             :model="personForm"
@@ -243,23 +253,23 @@
             <!-- 基本信息-->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>基本信息</span>
+                <span>{{ $t('baa166cc.9e5ffa') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="用户姓名" prop="user_name">
+                  <el-form-item :label="$t('baa166cc.d5b5b5')" prop="user_name">
                     <el-input v-model="personForm.user_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="用户手机号码" prop="tel_no">
+                  <el-form-item :label="$t('baa166cc.dde968')" prop="tel_no">
                     <div class="flex">
                       <el-input v-model="personForm.tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="用户身份证号码" prop="cert_id">
+                  <el-form-item :label="$t('baa166cc.a692a6')" prop="cert_id">
                     <el-input v-model="personForm.cert_id" />
                   </el-form-item>
                 </el-col>
@@ -273,28 +283,28 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('baa166cc.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="开户人姓名" prop="bank_card_name">
+                  <el-form-item :label="$t('baa166cc.e3f6a6')" prop="bank_card_name">
                     <el-input v-model="personForm.bank_card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="银行预留手机号" prop="bank_tel_no">
+                  <el-form-item :label="$t('baa166cc.a0b7da')" prop="bank_tel_no">
                     <div class="flex">
                       <el-input v-model="personForm.bank_tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="银行账号" prop="bank_card_id">
+                  <el-form-item :label="$t('baa166cc.954218')" prop="bank_card_id">
                     <el-input v-model="personForm.bank_card_id" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="开户人证件号码" prop="bank_cert_id">
+                  <el-form-item :label="$t('baa166cc.c503f0')" prop="bank_cert_id">
                     <el-input v-model="personForm.bank_cert_id" />
                   </el-form-item>
                 </el-col>
@@ -310,7 +320,7 @@
             ref="loadingBtn"
             size="medium"
             type="primary"
-            text="提交审核"
+            :text="$t('baa166cc.646db0')"
             @clickHandle="submit"
           />
         </div>
@@ -490,7 +500,7 @@ export default {
             resultStatus: 'failed',
             time: update_time,
             info: audit_desc,
-            title: '开户'
+            title: this.$t('baa166cc.a7cd73')
           }
           break
         case 'C': // 开户成功
@@ -499,7 +509,7 @@ export default {
             resultStatus: 'netin',
             time: update_time,
             info: audit_desc,
-            title: '开户'
+            title: this.$t('baa166cc.a7cd73')
           }
           break
       }
@@ -527,28 +537,28 @@ export default {
             // 更新
             const { status } = await this.$api.adapay.accountUpdateCorp(this.form)
             if (status) {
-              this.$message.success('提交成功')
+              this.$message.success(this.$t('baa166cc.23b62e'))
               this.currentStatus = {
                 resultStatus: 'pending',
                 time: '',
                 info: '',
-                title: '开户'
+                title: this.$t('baa166cc.a7cd73')
               }
               this.processed = '已填'
             } else {
-              this.$message.error('失败')
+              this.$message.error(this.$t('baa166cc.acd5cb'))
             }
           } else {
             // 创建
             try {
               const { status } = await createCorp(this.form)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('baa166cc.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('baa166cc.a7cd73')
                 }
                 this.processed = '已填'
                 this.$refs[ref].closeLoading()
@@ -558,7 +568,7 @@ export default {
             }
           }
         } else {
-          this.$message.error('请完善您的信息~')
+          this.$message.error(this.$t('baa166cc.42ef0e'))
           this.$refs.loadingBtn.loading = false
 
           // return false
@@ -575,12 +585,12 @@ export default {
             try {
               const { status } = await this.$api.adapay.accountPersonUpdate(this.personForm)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('baa166cc.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('baa166cc.a7cd73')
                 }
                 this.processed = '已填'
               }
@@ -593,12 +603,12 @@ export default {
             try {
               const { status } = await this.$api.adapay.accountCreatePerson(this.personForm)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('baa166cc.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('baa166cc.a7cd73')
                 }
                 this.processed = '已填'
                 this.$refs[ref].closeLoading()
@@ -608,7 +618,7 @@ export default {
             }
           }
         } else {
-          this.$message.error('请完善您的信息哦~')
+          this.$message.error(this.$t('baa166cc.e08d23'))
           this.$refs[ref].closeLoading()
 
           return false
@@ -627,10 +637,10 @@ export default {
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
       if (!isZip) {
-        this.$message.error('文件类型应为Zip')
+        this.$message.error(this.$t('baa166cc.644239'))
       }
       if (!isLt2M) {
-        this.$message.error('上传文件不能超过 8MB!')
+        this.$message.error(this.$t('baa166cc.c5f04b'))
       }
       return isZip && isLt2M
     },

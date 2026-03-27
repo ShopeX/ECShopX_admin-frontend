@@ -81,10 +81,6 @@
       margin: 0 5px;
       .attr-panel-cell {
         margin: 0 10px 8px 10px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
         &:last-child {
           margin-bottom: 0;
         }

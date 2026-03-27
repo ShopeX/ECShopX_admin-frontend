@@ -7,9 +7,9 @@
   <SpPage class="section section-white">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('4b43f5ef.625fb2') }} </el-button>
         <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
-          {{ submitLoading ? '提交中' : '保存' }}
+          {{ submitLoading ? $t('4b43f5ef.7ef44a') : $t('4b43f5ef.be5fbb') }}
         </el-button>
       </div>
     </template>
@@ -22,7 +22,7 @@
       class="demo-ruleForm"
     >
       <template v-if="!isEditor || (isEditor && !form.item_main_cat_id)">
-        <el-card v-loading="mainCateLoader" shadow="never" header="选择管理分类">
+        <el-card v-loading="mainCateLoader" shadow="never" :header="$t('4b43f5ef.c50637')">
           <el-cascader
             v-model="selectedMainCategory"
             :options="mainCategory"
@@ -32,7 +32,7 @@
         </el-card>
       </template>
       <div v-else v-loading="loader" class="content-padded flex items-center">
-        <div>管理分类：</div>
+        <div>{{ $t('4b43f5ef.ca079c') }}</div>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
           <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
             {{ item }}
@@ -42,7 +42,7 @@
       <template v-if="(!isEditor && selectedMainCategory.length > 0) || isEditor">
         <el-card v-loading="loader" shadow="never">
           <div slot="header" class="clearfix">
-            <span>基础信息</span>
+            <span>{{ $t('4b43f5ef.6ea1fe') }}</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -55,18 +55,18 @@
             <div v-show="panel.base" class="form-collapse">
               <el-row :gutter="20">
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="*商品标题">
+                  <el-form-item :label="$t('4b43f5ef.3ac6c1')">
                     <el-input v-model="form.item_name" :maxlength="100" placeholder="" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="副标题">
+                  <el-form-item :label="$t('4b43f5ef.72cf37')">
                     <el-input v-model="form.brief" :maxlength="30" placeholder="" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="*运费模板">
-                    <el-select v-model="form.templates_id" placeholder="请选择">
+                  <el-form-item :label="$t('4b43f5ef.a1f07e')">
+                    <el-select v-model="form.templates_id" :placeholder="$t('4b43f5ef.708c9d')">
                       <el-option
                         v-for="item in templatesList"
                         :key="item.template_id"
@@ -77,14 +77,14 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="*品牌">
+                  <el-form-item :label="$t('4b43f5ef.07595d')">
                     <el-select
                       v-model="form.brand_id"
                       remote
                       filterable
                       :remote-method="getBrandList"
                       clearable
-                      placeholder="请选择"
+                      :placeholder="$t('4b43f5ef.708c9d')"
                     >
                       <el-option
                         v-for="item in brandList"
@@ -96,20 +96,20 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="计量单位">
+                  <el-form-item :label="$t('4b43f5ef.251549')">
                     <el-input v-model="form.item_unit" :maxlength="60" placeholder="" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="排序编号">
+                  <el-form-item :label="$t('4b43f5ef.e8373a')">
                     <el-input v-model="form.sort" placeholder="" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="产地">
+                  <el-form-item :label="$t('4b43f5ef.2b6d31')">
                     <el-cascader
                       v-model="select_regions_value"
-                      placeholder="选择地区"
+                      :placeholder="$t('4b43f5ef.e9a36d')"
                       :options="regions"
                       @change="regionChange"
                     />
@@ -130,12 +130,12 @@
                   </el-form-item>
                 </el-col> -->
                 <el-col :xs="24" :sm="12" :md="12">
-                  <el-form-item label="*商品销售分类" label-width="110px">
+                  <el-form-item :label="$t('4b43f5ef.728f47')" label-width="110px">
                     <treeselect
                       v-model="form.item_category"
-                      no-children-text="没有子选项"
-                      no-options-text="等待加载..."
-                      no-results-text="没有匹配的结果"
+                      :no-children-text="$t('4b43f5ef.6ef104')"
+                      :no-options-text="$t('4b43f5ef.4b327e')"
+                      :no-results-text="$t('4b43f5ef.f46047')"
                       :options="categoryList"
                       :show-count="true"
                       :multiple="true"
@@ -156,7 +156,7 @@
                 </el-col>
                 -->
                 <el-col :xs="24">
-                  <el-form-item label="*商品图">
+                  <el-form-item :label="$t('4b43f5ef.9dcb7e')">
                     <div>
                       <div class="pics-box">
                         <ul class="goodspic-wrap">
@@ -168,7 +168,7 @@
                               @mouseenter="picsEnter(index)"
                               @mouseleave="picsLeave"
                             >
-                              <img :src="wximageurl + item" />
+                              <img :src="wximageurl + item">
                               <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
                                 <!-- <div class="el-icon-delete" /> -->
                                 <SpIcon name="delete" @click="removePicsImg(index)" />
@@ -188,19 +188,18 @@
                       <div class="frm-tips">
                         <p>
                           1.
-                          最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
-                          * 500px）
+                          {{ $t('4b43f5ef.f0e1d4') }}
                         </p>
-                        <p>2. 拖动图片进行可排序</p>
+                        <p>{{ $t('4b43f5ef.2eceaf') }}</p>
                       </div>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24">
-                  <el-form-item label="上传视频">
+                  <el-form-item :label="$t('4b43f5ef.afddcb')">
                     <videoPicker :data="itemVideo" @change="pickVideo" />
                     <el-button v-if="itemVideo.media_id" type="text" @click="deleteVideo">
-                      删除
+                      {{ $t('4b43f5ef.2f4aad') }}
                     </el-button>
                   </el-form-item>
                 </el-col>
@@ -220,7 +219,7 @@
         </el-card> -->
         <el-card v-loading="loader" shadow="never">
           <div slot="header" class="clearfix">
-            <span>商品参数</span>
+            <span>{{ $t('4b43f5ef.8686bb') }}</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -244,7 +243,7 @@
                     <el-select
                       v-if="item.children.length > 0"
                       v-model="form.item_params[index].attribute_value_id"
-                      placeholder="请选择"
+                      :placeholder="$t('4b43f5ef.708c9d')"
                       @change="paramsChange"
                     >
                       <el-option
@@ -268,25 +267,23 @@
         </el-card>
         <el-card v-loading="loader" shadow="never">
           <div slot="header" class="flex">
-            <div class="view-flex-item">商品规格</div>
+            <div class="view-flex-item">{{ $t('4b43f5ef.5fceb3') }}</div>
             <template v-if="!isEditor">
-              <span v-if="skus.length === 0" class="small mark"
-                >添加多规格商品请先为当前管理分类绑定规格!</span
-              >
+              <span v-if="skus.length === 0" class="small mark">{{ $t('4b43f5ef.fdd179') }}</span>
               <template v-if="skus.length > 0">
                 <el-switch
                   v-model="form.nospec"
                   style="margin-left: 30px"
                   active-color="#13ce66"
                   inactive-color="#efefef"
-                  active-text="统一规格"
-                  inactive-text="多规格"
+                  :active-text="$t('4b43f5ef.fb49c4')"
+                  :inactive-text="$t('4b43f5ef.5d60de')"
                 />
               </template>
             </template>
             <template v-if="!form.nospec">
               <span style="margin-left: 30px">
-                <span style="margin-right: 10px">是否在商详页成列图片规格</span>
+                <span style="margin-right: 10px">{{ $t('4b43f5ef.b51e8b') }}</span>
                 <el-switch
                   v-model="form.is_show_specimg"
                   active-color="#13ce66"
@@ -298,36 +295,36 @@
           <template v-if="form.nospec">
             <el-row :gutter="20">
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="商品状态" :render-header="renderRequire">
-                  <el-select v-model="form.approve_status" placeholder="请选择">
+                <el-form-item :label="$t('4b43f5ef.ce0008')" :render-header="renderRequire">
+                  <el-select v-model="form.approve_status" :placeholder="$t('4b43f5ef.708c9d')">
                     <el-option
                       v-for="item in statusOption"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       :value="item.value"
                     />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="库存">
+                <el-form-item :label="$t('4b43f5ef.0eac88')">
                   <el-input v-model="form.store" type="number" required min="0" placeholder="" />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="商品货号">
+                <el-form-item :label="$t('4b43f5ef.e9de29')">
                   <el-input v-model="form.item_bn" :maxlength="60" placeholder="" />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="重量">
+                <el-form-item :label="$t('4b43f5ef.fcd943')">
                   <el-input v-model="form.weight" type="number" required min="0" placeholder="">
                     <template slot="append"> kg </template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="体积">
+                <el-form-item :label="$t('4b43f5ef.972d5f')">
                   <el-input v-model="form.volume" type="number" required min="0" placeholder="">
                     <template slot="append"> m³ </template>
                   </el-input>
@@ -339,14 +336,14 @@
                 </el-form-item>
               </el-col> -->
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="成本价">
+                <el-form-item :label="$t('4b43f5ef.2e2ce2')">
                   <el-input v-model="form.cost_price" type="number" required min="0" placeholder="">
                     <template slot="prepend"> ¥ </template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="市场价">
+                <el-form-item :label="$t('4b43f5ef.818fc4')">
                   <el-input
                     v-model="form.market_price"
                     type="number"
@@ -359,26 +356,26 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="条形码">
+                <el-form-item :label="$t('4b43f5ef.1e8836')">
                   <el-input v-model="form.barcode" required min="0" placeholder="" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="支付方式" :render-header="renderRequire">
-                  <el-select v-model="form.pay_class" placeholder="请选择">
+                <el-form-item :label="$t('4b43f5ef.0c9d2b')" :render-header="renderRequire">
+                  <el-select v-model="form.pay_class" :placeholder="$t('4b43f5ef.708c9d')">
                     <el-option
                       v-for="item in payClass"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       :value="item.value"
                     />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="销售价">
+                <el-form-item :label="$t('4b43f5ef.e29575')">
                   <el-input
                     v-if="form.pay_class === 'online' || form.pay_class === 'mix'"
                     v-model="form.price"
@@ -393,7 +390,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="积分价格">
+                <el-form-item :label="$t('4b43f5ef.bf6d40')">
                   <el-input
                     v-if="form.pay_class === 'point' || form.pay_class === 'mix'"
                     v-model="form.point"
@@ -402,7 +399,7 @@
                     min="0"
                     placeholder=""
                   >
-                    <template slot="append"> 积分 </template>
+                    <template slot="append"> {{ $t('4b43f5ef.9f68a8') }} </template>
                   </el-input>
                   <span v-if="!form.pay_class || form.pay_class === 'online'">-</span>
                 </el-form-item>
@@ -442,10 +439,10 @@
               </div>
             </el-card>
             <div v-if="specImages.length > 0" class="content-bottom-padded">
-              <div class="content-padded h3">设置规格图片</div>
+              <div class="content-padded h3">{{ $t('4b43f5ef.693413') }}</div>
               <el-table :data="specImages" :header-cell-style="{ background: '#f5f7fa' }">
-                <el-table-column label="规格" prop="item_spec" width="240" />
-                <el-table-column label="规格图">
+                <el-table-column :label="$t('4b43f5ef.ea887b')" prop="item_spec" width="240" />
+                <el-table-column :label="$t('4b43f5ef.22826b')">
                   <template slot-scope="scope">
                     <imgBox
                       v-for="(item, index) in scope.row.item_image_url"
@@ -468,27 +465,36 @@
                 </el-table-column>
               </el-table>
             </div>
-            <div class="content-padded h3">设置规格</div>
+            <div class="content-padded h3">{{ $t('4b43f5ef.29725a') }}</div>
             <el-table :data="bulkFilling" :show-header="false" :highlight-current-row="false">
               <el-table-column>
                 <template slot-scope="scope">
-                  {{ scope.row.custom_attribute_value || scope.row.item_spec }}
+                  {{
+                    scope.row.custom_attribute_value ||
+                    (scope.row.item_spec === '批量填充'
+                      ? $t('4b43f5ef.d87166')
+                      : scope.row.item_spec)
+                  }}
                 </template>
               </el-table-column>
-              <el-table-column label="*状态">
+              <el-table-column :label="$t('4b43f5ef.47f00b')">
                 <template slot-scope="scope">
-                  <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
+                  <el-select
+                    v-model="scope.row.approve_status"
+                    size="mini"
+                    :placeholder="$t('4b43f5ef.708c9d')"
+                  >
                     <el-option
                       v-for="item in statusOption"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       size="mini"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="库存">
+              <el-table-column :label="$t('4b43f5ef.0eac88')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.store"
@@ -500,7 +506,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="货号">
+              <el-table-column :label="$t('4b43f5ef.9b979b')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.item_bn"
@@ -510,12 +516,12 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="重量">
+              <el-table-column :label="$t('4b43f5ef.fcd943')">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
                 </template>
               </el-table-column>
-              <el-table-column label="体积">
+              <el-table-column :label="$t('4b43f5ef.972d5f')">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
                 </template>
@@ -525,7 +531,7 @@
                   <el-input type="number" required min="0" v-model="scope.row.price" size="mini" placeholder=""></el-input>
                 </template>
               </el-table-column> -->
-              <el-table-column label="成本价">
+              <el-table-column :label="$t('4b43f5ef.2e2ce2')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.cost_price"
@@ -537,7 +543,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="市场价">
+              <el-table-column :label="$t('4b43f5ef.818fc4')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.market_price"
@@ -549,20 +555,24 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="*支付方式">
+              <el-table-column :label="$t('4b43f5ef.0c9d2b')">
                 <template slot-scope="scope">
-                  <el-select v-model="scope.row.pay_class" size="mini" placeholder="请选择">
+                  <el-select
+                    v-model="scope.row.pay_class"
+                    size="mini"
+                    :placeholder="$t('4b43f5ef.708c9d')"
+                  >
                     <el-option
                       v-for="item in payClass"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       size="mini"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="销售价">
+              <el-table-column :label="$t('4b43f5ef.e29575')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
@@ -576,7 +586,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column label="积分价格">
+              <el-table-column :label="$t('4b43f5ef.bf6d40')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
@@ -590,7 +600,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'online'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column label="条形码">
+              <el-table-column :label="$t('4b43f5ef.1e8836')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.barcode"
@@ -604,7 +614,9 @@
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini" @click="fillSku"> 填充 </el-button>
+                  <el-button type="primary" size="mini" @click="fillSku">
+                    {{ $t('4b43f5ef.756e44') }}
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -613,32 +625,32 @@
               :header-cell-style="{ background: '#f5f7fa' }"
               style="width: 100%"
             >
-              <el-table-column label="规格值">
+              <el-table-column :label="$t('4b43f5ef.94d502')">
                 <template slot-scope="scope">
                   <span v-for="(item, index) in scope.row.item_spec" :key="index">
                     {{ item.spec_custom_value_name || item.spec_value_name }}
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column label="状态" :render-header="renderRequire">
+              <el-table-column :label="$t('4b43f5ef.3fea7c')" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-select
                     v-model="scope.row.approve_status"
                     size="mini"
-                    placeholder="请选择"
+                    :placeholder="$t('4b43f5ef.708c9d')"
                     @change="upadateState(scope.row)"
                   >
                     <el-option
                       v-for="item in statusOption"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       size="mini"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="库存" :render-header="renderRequire">
+              <el-table-column :label="$t('4b43f5ef.0eac88')" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.store"
@@ -651,7 +663,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="货号">
+              <el-table-column :label="$t('4b43f5ef.9b979b')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.item_bn"
@@ -662,7 +674,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="重量(kg)">
+              <el-table-column :label="$t('4b43f5ef.8c0d75')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.weight"
@@ -673,7 +685,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="体积(m³)">
+              <el-table-column :label="$t('4b43f5ef.3b35fa')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.volume"
@@ -685,11 +697,11 @@
                 </template>
               </el-table-column>
               <!-- <el-table-column label="销售价" :render-header="renderRequire">
-                <template slot-scope="scope">
-                  <el-input type="number" required min="0" v-model="scope.row.price" size="mini" placeholder="" @change="upadateState(scope.row)"></el-input>
-                </template>
-              </el-table-column> -->
-              <el-table-column label="成本价">
+              <template slot-scope="scope">
+                <el-input type="number" required min="0" v-model="scope.row.price" size="mini" placeholder="" @change="upadateState(scope.row)"></el-input>
+              </template>
+            </el-table-column> -->
+              <el-table-column :label="$t('4b43f5ef.2e2ce2')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.cost_price"
@@ -702,7 +714,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="市场价">
+              <el-table-column :label="$t('4b43f5ef.818fc4')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.market_price"
@@ -715,25 +727,25 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="支付方式" :render-header="renderRequire">
+              <el-table-column :label="$t('4b43f5ef.0c9d2b')" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-select
                     v-model="scope.row.pay_class"
                     size="mini"
-                    placeholder="请选择"
+                    :placeholder="$t('4b43f5ef.708c9d')"
                     @change="upadateState(scope.row)"
                   >
                     <el-option
                       v-for="item in payClass"
                       :key="item.value"
-                      :label="item.title"
+                      :label="$t(item.title)"
                       size="mini"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="销售价">
+              <el-table-column :label="$t('4b43f5ef.e29575')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
@@ -748,7 +760,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column label="积分价格(积分)">
+              <el-table-column :label="$t('4b43f5ef.d42050')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
@@ -763,7 +775,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'online'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column label="条形码">
+              <el-table-column :label="$t('4b43f5ef.1e8836')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.barcode"
@@ -778,7 +790,9 @@
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
-                  <el-button type="text" @click="clearSku(scope.$index)"> 清除 </el-button>
+                  <el-button type="text" @click="clearSku(scope.$index)">
+                    {{ $t('4b43f5ef.4403fc') }}
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -813,11 +827,11 @@
           </el-form-item>
         </el-card> -->
 
-        <el-card v-loading="loader" header="图文详情" shadow="never">
-          <el-form-item label="模式">
+        <el-card v-loading="loader" :header="$t('4b43f5ef.7db2d6')" shadow="never">
+          <el-form-item :label="$t('4b43f5ef.f0789e')">
             <el-radio-group v-model="mode">
-              <el-radio :label="'richText'"> 富文本 </el-radio>
-              <el-radio :label="'component'"> 组件式 </el-radio>
+              <el-radio :label="'richText'"> {{ $t('4b43f5ef.e2591e') }} </el-radio>
+              <el-radio :label="'component'"> {{ $t('4b43f5ef.b09ce9') }} </el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="mode === 'richText'">
@@ -892,36 +906,15 @@ export default {
       is_new: false,
       isGetVideo: false,
       statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
+        { title: '4b43f5ef.9b7481', value: 'onsale' },
+        { title: '4b43f5ef.2c50a0', value: 'offline_sale' },
+        { title: '4b43f5ef.acf86b', value: 'only_show' },
+        { title: '4b43f5ef.ae83a3', value: 'instock' }
       ],
       payClass: [
-        {
-          title: '积分支付',
-          value: 'point'
-        },
-        {
-          title: '在线支付',
-          value: 'online'
-        },
-        {
-          title: '混合支付',
-          value: 'mix'
-        }
+        { title: '4b43f5ef.accd19', value: 'point' },
+        { title: '4b43f5ef.fe94ed', value: 'online' },
+        { title: '4b43f5ef.30bee6', value: 'mix' }
       ],
       categoryList: [],
       brandList: [],
@@ -1374,7 +1367,7 @@ export default {
       }
       if (this.form.type === 1 && !this.form.origincountry_id) {
         this.submitLoading = false
-        this.$message({ message: '请选择产地国', type: 'error' })
+        this.$message({ message: this.$t('4b43f5ef.4f9c70'), type: 'error' })
         return
       }
       this.form.spec_images = JSON.stringify(this.specImages)
@@ -1383,7 +1376,7 @@ export default {
         updateItems(this.form.item_id, this.form)
           .then((response) => {
             this.$message({
-              message: '更新成功',
+              message: this.$t('4b43f5ef.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -1401,7 +1394,7 @@ export default {
         createItems(this.form)
           .then((response) => {
             this.$message({
-              message: '添加成功',
+              message: this.$t('4b43f5ef.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -1453,7 +1446,7 @@ export default {
           if (imgHtml) {
             // 将图片HTML追加到现有内容中
             this.form.intro = this.form.intro + imgHtml
-            this.$message.success('图片插入成功')
+            this.$message.success(this.$t('4b43f5ef.cc33a9'))
           }
         }
       } catch (error) {
@@ -1492,7 +1485,7 @@ export default {
       try {
         const remaining = 9 - this.picsOldLen
         if (remaining <= 0) {
-          this.$message.error('最多上传9张图片!')
+          this.$message.error(this.$t('4b43f5ef.4352be'))
           return
         }
 
@@ -1525,7 +1518,7 @@ export default {
         this.currentSku = index
         const remaining = 5 - this.specImages[index].item_image_url.length
         if (remaining <= 0) {
-          this.$message.error('最多添加5张图片!')
+          this.$message.error(this.$t('4b43f5ef.5bd788'))
           this.currentSku = -1
           return
         }
@@ -1570,9 +1563,9 @@ export default {
       store.dispatch('setPage', list)
     },
     clearSku(index) {
-      this.$confirm('确定清除当前规格的数据吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('4b43f5ef.3dd6cf'), this.$t('4b43f5ef.02d981'), {
+        confirmButtonText: this.$t('4b43f5ef.38cf16'),
+        cancelButtonText: this.$t('4b43f5ef.625fb2'),
         type: 'warning'
       }).then(() => {
         let skuItem = this.specItems[this.currentPage - 1][index]
@@ -1812,7 +1805,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '请先添加运费模板'
+            message: this.$t('4b43f5ef.e9d74f')
           })
           this.$router.push({ path: this.matchInternalRoute('shippingtemplates') })
         }
@@ -1854,9 +1847,9 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
-      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('4b43f5ef.3ba67c'), this.$t('4b43f5ef.02d981'), {
+        confirmButtonText: this.$t('4b43f5ef.38cf16'),
+        cancelButtonText: this.$t('4b43f5ef.625fb2'),
         type: 'warning'
       })
         .then((res) => {

@@ -25,32 +25,32 @@
     >
       <el-row>
         <el-col :span="3">
-          可提现:&nbsp;<span>{{ count.cashWithdrawalRebate / 100 }}</span
-          >元
+          {{ $t('56b6e44f.6d318d') }}&nbsp;<span>{{ count.cashWithdrawalRebate / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          已提现:&nbsp;<span>{{ count.payedRebate / 100 }}</span
-          >元
+          {{ $t('56b6e44f.5924da') }}&nbsp;<span>{{ count.payedRebate / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          申请提现:&nbsp;<span>{{ count.freezeCashWithdrawalRebate / 100 }}</span
-          >元
+          {{ $t('56b6e44f.69a03c') }}&nbsp;<span>{{ count.freezeCashWithdrawalRebate / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          未结算:&nbsp;<span>{{ count.noCloseRebate / 100 }}</span
-          >元
+          {{ $t('56b6e44f.1cd7cd') }}&nbsp;<span>{{ count.noCloseRebate / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          佣金总额:&nbsp;<span>{{ count.rebateTotal / 100 }}</span
-          >元
+          {{ $t('56b6e44f.51771a') }}&nbsp;<span>{{ count.rebateTotal / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          积分总额:&nbsp;<span>{{ count.pointTotal }}</span
-          >积分
+          {{ $t('56b6e44f.6b53f6') }}&nbsp;<span>{{ count.pointTotal }}</span
+          >{{ $t('56b6e44f.9f68a8') }}
         </el-col>
         <el-col :span="3">
-          商品总额:&nbsp;<span>{{ count.itemTotalPrice / 100 }}</span
-          >元
+          {{ $t('56b6e44f.6eb0c2') }}&nbsp;<span>{{ count.itemTotalPrice / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
       </el-row>
     </div>
@@ -80,12 +80,14 @@
           申请提现:&nbsp;<span>{{ count.freezeCashWithdrawalRebate / 100 }}</span>元
         </el-col> -->
         <el-col :span="3">
-          未结算:&nbsp;<span>{{ count.countDataShop.rebate_sum_noclose / 100 }}</span
-          >元
+          {{ $t('56b6e44f.1cd7cd') }}&nbsp;<span>{{
+            count.countDataShop.rebate_sum_noclose / 100
+          }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <el-col :span="3">
-          佣金总额:&nbsp;<span>{{ count.countDataShop.rebate_sum / 100 }}</span
-          >元
+          {{ $t('56b6e44f.51771a') }}&nbsp;<span>{{ count.countDataShop.rebate_sum / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
         <!-- <el-col
           :span="3"
@@ -93,8 +95,8 @@
           积分总额:&nbsp;<span>{{ count.pointTotal }}</span>积分
         </el-col> -->
         <el-col :span="3">
-          商品总额:&nbsp;<span>{{ count.countDataShop.price_sum / 100 }}</span
-          >元
+          {{ $t('56b6e44f.6eb0c2') }}&nbsp;<span>{{ count.countDataShop.price_sum / 100 }}</span
+          >{{ $t('1c4551e3.c16655') }}
         </el-col>
       </el-row>
     </div>
@@ -106,7 +108,7 @@
         :name="item.activeName"
       >
         <el-table v-loading="loading" :data="list" border :height="wheight - 240">
-          <el-table-column prop="order_id" label="订单号" min-width="84">
+          <el-table-column prop="order_id" :label="$t('56b6e44f.1e8dc2')" min-width="84">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -121,20 +123,20 @@
               </router-link>
             </template>
           </el-table-column>
-          <el-table-column label="返佣来源" min-width="64">
+          <el-table-column :label="$t('56b6e44f.44f369')" min-width="64">
             <template slot-scope="scope">
-              <span v-if="scope.row.source == 'order'">提成</span>
-              <span v-if="scope.row.source == 'order_team'">津贴</span>
+              <span v-if="scope.row.source == 'order'">{{ $t('56b6e44f.de03c4') }}</span>
+              <span v-if="scope.row.source == 'order_team'">{{ $t('56b6e44f.80d90d') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="商品价格" min-width="64">
+          <el-table-column :label="$t('56b6e44f.9cf4c6')" min-width="64">
             <template slot-scope="scope">
-              <span> {{ scope.row.price / 100 }} </span> 元
+              <span> {{ scope.row.price / 100 }} </span> {{ $t('1c4551e3.c16655') }}
             </template>
           </el-table-column>
-          <el-table-column label="返佣金额" min-width="60">
+          <el-table-column :label="$t('56b6e44f.205250')" min-width="60">
             <template slot-scope="scope">
-              <span> {{ scope.row.rebate / 100 }} </span> 元
+              <span> {{ scope.row.rebate / 100 }} </span> {{ $t('1c4551e3.c16655') }}
             </template>
           </el-table-column>
           <!-- <el-table-column label="返佣积分" min-width="60">
@@ -142,15 +144,31 @@
               <span> {{ scope.row.rebate_point }}积分 </span>
             </template>
           </el-table-column> -->
-          <el-table-column prop="is_close" label="是否已结算" min-width="50">
+          <el-table-column prop="is_close" :label="$t('56b6e44f.b5aa25')" min-width="50">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.is_close == true" type="warning"> 已结算 </el-tag>
-              <el-tag v-else type="info"> 未结算 </el-tag>
+              <el-tag v-if="scope.row.is_close == true" type="warning">
+{{
+                $t('56b6e44f.139304')
+              }}
+</el-tag>
+              <el-tag v-else type="info">{{ $t('56b6e44f.facb53') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column v-if="loginType == 'distributor'" prop="store_name" label="店铺" />
-          <el-table-column v-if="loginType == 'distributor'" prop="user_id" label="业务员ID" />
-          <el-table-column v-if="loginType == 'distributor'" prop="title" label="订单内容" />
+          <el-table-column
+            v-if="loginType == 'distributor'"
+            prop="store_name"
+            :label="$t('56b6e44f.295713')"
+          />
+          <el-table-column
+            v-if="loginType == 'distributor'"
+            prop="user_id"
+            :label="$t('56b6e44f.155c65')"
+          />
+          <el-table-column
+            v-if="loginType == 'distributor'"
+            prop="title"
+            :label="$t('56b6e44f.4ff6b5')"
+          />
         </el-table>
         <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
@@ -174,9 +192,9 @@ export default {
   data() {
     return {
       tabList: [
-        { name: '全部', value: null, activeName: 'first' },
-        { name: '已结算', value: 'true', activeName: 'second' },
-        { name: '未结算', value: 'false', activeName: 'third' }
+        { name: this.$t('56b6e44f.a8b0c2'), value: null, activeName: 'first' },
+        { name: this.$t('56b6e44f.139304'), value: 'true', activeName: 'second' },
+        { name: this.$t('56b6e44f.facb53'), value: 'false', activeName: 'third' }
       ],
       activeName: 'first',
       total_count: 0,

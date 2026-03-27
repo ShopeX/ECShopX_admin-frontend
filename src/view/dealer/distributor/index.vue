@@ -58,42 +58,59 @@ export default {
       city: '',
       area: '',
       regions: district,
-      checkedRegions: [],
-      statusList: [
-        { label: '未入网', value: 1 },
-        { label: '待审核', value: 2 },
-        { label: '入网成功', value: 3 }
-      ]
+      checkedRegions: []
     }
   },
   computed: {
+    statusList() {
+      return [
+        { label: this.$t('6ee7ef2f.14f778'), value: 1 },
+        { label: this.$t('6ee7ef2f.5cb424'), value: 2 },
+        { label: this.$t('6ee7ef2f.4ad6e4'), value: 3 }
+      ]
+    },
     setting() {
       return createSetting({
         columns: [
-          { name: '店铺名称', key: 'name' },
-          { name: '负责人', key: 'contact' },
-          { name: '联系方式', key: 'mobile' },
-          { name: '经营地址', key: 'address' },
+          { name: this.$t('6ee7ef2f.0d4934'), key: 'name' },
+          { name: this.$t('6ee7ef2f.b29725'), key: 'contact' },
+          { name: this.$t('6ee7ef2f.b58943'), key: 'mobile' },
+          { name: this.$t('6ee7ef2f.0ed872'), key: 'address' },
           {
-            name: '状态',
+            name: this.$t('6ee7ef2f.3fea7c'),
             key: '',
             formatter: (h, { audit_state }) =>
-              (audit_state == '1' && '未入网') ||
-              (audit_state == '2' && '待审核') ||
-              (audit_state == '3' && '入网成功')
+              (audit_state == '1' && this.$t('6ee7ef2f.14f778')) ||
+              (audit_state == '2' && this.$t('6ee7ef2f.5cb424')) ||
+              (audit_state == '3' && this.$t('6ee7ef2f.4ad6e4'))
           }
         ],
         search: [
-          { type: 'input', key: 'name', name: '店铺名称', placeholder: '请输入店铺名称' },
-          { type: 'input', key: 'contact', name: '负责人', placeholder: '请输入负责人' },
-          { type: 'input', key: 'mobile', name: '联系方式', placeholder: '请输入联系方式' },
-          { key: 'address', name: '经营地址', slot: 'address' },
+          {
+            type: 'input',
+            key: 'name',
+            name: this.$t('6ee7ef2f.0d4934'),
+            placeholder: this.$t('6ee7ef2f.867738')
+          },
+          {
+            type: 'input',
+            key: 'contact',
+            name: this.$t('6ee7ef2f.b29725'),
+            placeholder: this.$t('6ee7ef2f.3f15b8')
+          },
+          {
+            type: 'input',
+            key: 'mobile',
+            name: this.$t('6ee7ef2f.b58943'),
+            placeholder: this.$t('6ee7ef2f.8f7e96')
+          },
+          { key: 'address', name: this.$t('6ee7ef2f.0ed872'), slot: 'address' },
           {
             type: 'select',
             key: 'audit_state',
             options: this.statusList,
-            name: '状态',
-            placeholder: '请选择'
+            name: this.$t('6ee7ef2f.3fea7c'),
+            placeholder: this.$t('6ee7ef2f.708c9d')
           }
         ]
       })

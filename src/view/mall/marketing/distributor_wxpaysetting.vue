@@ -6,7 +6,7 @@
 <template>
   <SpPage class="mb-2.5">
     <div class="mb-5 p-4 bg-gray-100 rounded">
-      <span class="font-medium text-gray-600">当前店铺名称：</span>
+      <span class="font-medium text-gray-600">{{ $t('38a9041d.9d15be') }}</span>
       <span class="text-gray-800 text-sm">{{ name }}</span>
     </div>
     <SpFormPlus
@@ -18,7 +18,9 @@
       :show-default-actions="false"
     />
     <div class="mt-5 pt-5 border-t border-gray-200 text-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+        {{ $t('38a9041d.be5fbb') }}
+      </el-button>
     </div>
   </SpPage>
 </template>
@@ -55,91 +57,91 @@ export default {
       const formItems = [
         {
           fieldName: 'app_id',
-          label: '公众账号ID',
+          label: this.$t('38a9041d.be151f'),
           component: 'input',
           formItemClass: 'w-3/4',
           value: this.form.app_id,
           componentProps: {
-            placeholder: '请输入公众账号ID',
+            placeholder: this.$t('38a9041d.09b451'),
             style: { width: '300px' }
           },
-          tip: '微信支付分配的公众账号ID（企业号corpid即为此appId）',
-          rules: [{ required: true, message: '请输入公众账号ID', trigger: 'blur' }]
+          tip: this.$t('38a9041d.dd851e'),
+          rules: [{ required: true, message: this.$t('38a9041d.09b451'), trigger: 'blur' }]
         },
         {
           fieldName: 'app_app_id',
-          label: 'APP应用ID',
+          label: this.$t('38a9041d.47e254'),
           component: 'input',
           formItemClass: 'w-3/4',
           value: this.form.app_app_id,
           componentProps: {
-            placeholder: '请输入APP应用ID',
+            placeholder: this.$t('38a9041d.46311b'),
             style: { width: '300px' }
           },
-          tip: '微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）'
+          tip: this.$t('38a9041d.460b81')
         },
         {
           fieldName: 'merchant_id',
-          label: '商户号',
+          label: this.$t('38a9041d.f173b7'),
           component: 'input',
           formItemClass: 'w-3/4',
           componentProps: {
-            placeholder: '请输入商户号',
+            placeholder: this.$t('38a9041d.b9a935'),
             style: { width: '300px' }
           },
-          rules: [{ required: true, message: '请输入商户号', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('38a9041d.b9a935'), trigger: 'blur' }]
         },
         {
           fieldName: 'key',
-          label: 'API密钥',
+          label: this.$t('38a9041d.6f5c56'),
           component: 'input',
           formItemClass: 'w-3/4',
           componentProps: {
-            placeholder: '请输入API密钥',
+            placeholder: this.$t('38a9041d.f160f3'),
             style: { width: '300px' }
           },
-          rules: [{ required: true, message: '请输入API密钥', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('38a9041d.f160f3'), trigger: 'blur' }]
         },
         {
           fieldName: 'is_servicer',
-          label: '是否特约商户',
+          label: this.$t('38a9041d.a5e041'),
           component: 'switch',
           value: this.form.is_servicer,
           componentProps: {
             activeColor: '#13ce66',
             inactiveColor: '#ff4949'
           },
-          tip: '如是特约商户，请联系您的服务商获取如下两个参数'
+          tip: this.$t('38a9041d.167466')
         },
         {
           fieldName: 'servicer_app_id',
-          label: '服务商APPID',
+          label: this.$t('38a9041d.e2febe'),
           component: 'input',
           formItemClass: 'w-3/4',
           value: this.form.servicer_app_id,
           componentProps: {
-            placeholder: '请输入服务商APPID',
+            placeholder: this.$t('38a9041d.ea377b'),
             style: { width: '300px' }
           }
         },
         {
           fieldName: 'servicer_merchant_id',
-          label: '服务商商户号',
+          label: this.$t('38a9041d.13f855'),
           component: 'input',
           formItemClass: 'w-3/4',
           value: this.form.servicer_merchant_id,
           componentProps: {
-            placeholder: '请输入服务商商户号',
+            placeholder: this.$t('38a9041d.d40bb8'),
             style: { width: '300px' }
           }
         },
         {
           fieldName: 'cert',
-          label: '商户证书',
+          label: this.$t('38a9041d.9fa3f8'),
           component: 'upload',
           componentProps: {
             title: this.form.cert_name,
-            buttonSize: '点击上传',
+            buttonSize: this.$t('38a9041d.2c808b'),
             size: 'middle',
             autoUpload: false,
             multiple: false,
@@ -154,15 +156,15 @@ export default {
               })
             }
           },
-          tip: '微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_cert.pem',
+          tip: this.$t('38a9041d.c58e48'),
           rules: [
             {
               required: true,
-              message: '请上传商户证书',
+              message: this.$t('38a9041d.538a0f'),
               trigger: 'change',
               validator: (rule, value, callback) => {
                 if (!this.form.cert && !this.form.cert_name) {
-                  callback(new Error('请上传商户证书'))
+                  callback(new Error(this.$t('38a9041d.538a0f')))
                 } else {
                   callback()
                 }
@@ -172,11 +174,11 @@ export default {
         },
         {
           fieldName: 'cert_key',
-          label: '商户证书秘钥',
+          label: this.$t('38a9041d.34c0ad'),
           component: 'upload',
           componentProps: {
             title: this.form.cert_key_name,
-            buttonSize: '点击上传',
+            buttonSize: this.$t('38a9041d.2c808b'),
             size: 'middle',
             autoUpload: false,
             multiple: false,
@@ -191,15 +193,15 @@ export default {
               })
             }
           },
-          tip: '微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_key.pem',
+          tip: this.$t('38a9041d.2af448'),
           rules: [
             {
               required: true,
-              message: '请上传商户证书秘钥',
+              message: this.$t('38a9041d.a56677'),
               trigger: 'change',
               validator: (rule, value, callback) => {
                 if (!this.form.cert_key && !this.form.cert_key_name) {
-                  callback(new Error('请上传商户证书秘钥'))
+                  callback(new Error(this.$t('38a9041d.a56677')))
                 } else {
                   callback()
                 }
@@ -254,7 +256,7 @@ export default {
       delete params.cert_key_url
       try {
         await setPaymentSetting(params)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('38a9041d.3b1083'))
         this.getConfig()
       } catch (error) {
         console.log(error)

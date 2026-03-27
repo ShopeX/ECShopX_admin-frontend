@@ -20,7 +20,7 @@ export const createTbAddForm = (vm) =>
                     vm.syncSpuToLocal()
                   }}
                 >
-                  淘宝增量同步
+                  {vm.$t('149970ec.25faf6')}
                 </el-button>
                 <el-button
                   type='primary'
@@ -29,11 +29,11 @@ export const createTbAddForm = (vm) =>
                     if (vm.selectedSpu.length > 0) {
                       vm.setCategory()
                     } else {
-                      vm.$message.warning('请先选择商品')
+                      vm.$message.warning(vm.$t('149970ec.9f5a62'))
                     }
                   }}
                 >
-                  设置管理分类
+                  {vm.$t('149970ec.2ce315')}
                 </el-button>
               </div>
               <SpFinder
@@ -43,36 +43,36 @@ export const createTbAddForm = (vm) =>
                 rowKey='outer_id'
                 setting={{
                   search: [
-                    { key: 'spu_code', name: 'SPU编号' },
-                    { key: 'title', name: '商品名称' },
+                    { key: 'spu_code', name: vm.$t('149970ec.44bb10') },
+                    { key: 'title', name: vm.$t('149970ec.1fd1d5') },
                     {
                       key: 'is_set_cid',
-                      name: '配置管理分类',
+                      name: vm.$t('149970ec.685b30'),
                       type: 'select',
                       options: [
                         {
-                          label: '已配置',
+                          label: vm.$t('149970ec.da208e'),
                           value: 1
                         },
                         {
-                          label: '未配置',
+                          label: vm.$t('149970ec.71dc8f'),
                           value: 0
                         }
                       ]
                     },
                     {
                       key: 'list_time',
-                      name: '上架时间',
+                      name: vm.$t('149970ec.e2c409'),
                       slot: 'list_time'
                     }
                   ],
                   columns: [
-                    { name: 'SPU编码', key: 'outer_id', width: 100 },
-                    { name: '商品名称', key: 'title' },
-                    { name: '管理分类', key: 'category_name', width: 180 },
-                    { name: '销售价', key: 'price', width: 100 },
-                    { name: '库存', key: 'num', width: 120 },
-                    { name: '淘宝上架时间', key: 'list_time', width: 180 }
+                    { name: vm.$t('149970ec.18ea2a'), key: 'outer_id', width: 100 },
+                    { name: vm.$t('149970ec.1fd1d5'), key: 'title' },
+                    { name: vm.$t('149970ec.b3ed9f'), key: 'category_name', width: 180 },
+                    { name: vm.$t('149970ec.e29575'), key: 'price', width: 100 },
+                    { name: vm.$t('149970ec.0eac88'), key: 'num', width: 120 },
+                    { name: vm.$t('149970ec.8299f0'), key: 'list_time', width: 180 }
                   ]
                 }}
                 attrs={{
@@ -103,9 +103,9 @@ export const createTbAddForm = (vm) =>
                   v-model={vm.list_time}
                   slot='list_time'
                   type='datetimerange'
-                  range-separator='至'
-                  start-placeholder='开始时间'
-                  end-placeholder='结束时间'
+                  range-separator={vm.$t('149970ec.981cbe')}
+                  start-placeholder={vm.$t('149970ec.592c59')}
+                  end-placeholder={vm.$t('149970ec.f78277')}
                   value-format='yyyy-MM-dd HH:mm:ss'
                   default-time={['00:00:00', '23:59:59']}
                 />
@@ -118,7 +118,7 @@ export const createTbAddForm = (vm) =>
                     vm.onTbAddSubmit()
                   }}
                 >
-                  同步商品池
+                  {vm.$t('149970ec.7d77bf')}
                 </el-button>
               </div>
             </div>

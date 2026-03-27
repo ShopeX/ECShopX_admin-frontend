@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-html[lang='en-CN'] {
+html[lang='en'] {
   .shop-left {
     .option-item {
       margin-right: 10px;
@@ -43,20 +43,15 @@ html[lang='en-CN'] {
     .third-menu-item {
       padding-left: 20px !important;
     }
-    .el-submenu {
-      margin-bottom: 15px;
-    }
     .el-menu-item,
     .el-submenu__title {
       word-break: normal;
-      height: auto;
       white-space: normal;
       padding: 5px 0;
-      line-height: 1.2;
+      line-height: initial;
       width: 100%;
     }
     .el-menu-item {
-      font-size: 12px;
       margin-bottom: 5px;
     }
     .el-submenu__title {

@@ -7,7 +7,7 @@
   <div>
     <el-row :gutter="10">
       <el-col :md="8" :lg="7">
-        <el-input v-model="mobile" placeholder="手机号" clearable>
+        <el-input v-model="mobile" :placeholder="$t('2681119d.8098e2')" clearable>
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
@@ -16,15 +16,15 @@
           v-model="datetime"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="选择日期范围"
+          :placeholder="$t('2681119d.4b8cb9')"
           style="width: 100%"
           @change="dateChange"
         />
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="checkInList" :height="wheight - 80">
-      <el-table-column prop="user_name" label="会员" width="170" />
-      <el-table-column prop="create_time" label="签到时间" width="100" />
+      <el-table-column prop="user_name" :label="$t('2681119d.4d9dd5')" width="170" />
+      <el-table-column prop="create_time" :label="$t('2681119d.a232e7')" width="100" />
     </el-table>
     <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination

@@ -6,9 +6,9 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="概况" name="indexPage" />
-      <el-tab-pane label="访问分析" name="accessPage" />
-      <el-tab-pane label="用户画像" name="userPage" />
+      <el-tab-pane :label="$t('a16b36ea.8457e1')" name="indexPage" />
+      <el-tab-pane :label="$t('a16b36ea.af530f')" name="accessPage" />
+      <el-tab-pane :label="$t('a16b36ea.8857b8')" name="userPage" />
     </el-tabs>
   </div>
 </template>

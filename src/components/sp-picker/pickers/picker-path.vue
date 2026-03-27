@@ -18,92 +18,93 @@
     <!-- {{ value }} -->
     <el-tabs v-if="value.guide" v-model="tabValue" :tab-position="'left'">
       <template v-if="value.guide == 'share_page'">
-        <el-tab-pane label="商品详情" name="goods">
+        <el-tab-pane :label="$t('d81d8932.b4f5db')" name="goods">
           <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="自定义页面" name="custom_page">
+        <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
           <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="优惠券" name="coupon">
+        <el-tab-pane :label="$t('d81d8932.2f3635')" name="coupon">
           <PickerCoupon v-if="tabValue == 'coupon'" ref="coupon" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="页面" name="link">
+        <el-tab-pane :label="$t('d81d8932.59ceff')" name="link">
           <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
         </el-tab-pane>
       </template>
       <template v-else>
-        <el-tab-pane label="商品" name="goods">
+        <el-tab-pane :label="$t('d81d8932.9897d8')" name="goods">
           <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="管理分类" name="category">
+        <el-tab-pane :label="$t('d81d8932.b3ed9f')" name="category">
           <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="软文" name="planting">
+        <el-tab-pane :label="$t('d81d8932.e8f87a')" name="planting">
           <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
         </el-tab-pane>
-        <el-tab-pane label="自定义页面" name="custom_page">
+        <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
           <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
         </el-tab-pane>
       </template>
     </el-tabs>
     <el-tabs v-else v-model="tabValue" :tab-position="'left'">
-      <el-tab-pane label="商品" name="goods">
+      <el-tab-pane :label="$t('d81d8932.9897d8')" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
       </el-tab-pane>
-      <el-tab-pane v-if="VERSION_PLATFORM()" label="店铺" name="store">
+      <el-tab-pane v-if="VERSION_PLATFORM()" :label="$t('d81d8932.295713')" name="store">
         <PickerShop v-if="tabValue == 'store'" ref="store" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="销售分类" name="sale_category">
+      <el-tab-pane :label="$t('d81d8932.392d49')" name="sale_category">
         <PickerSaleCategory v-if="tabValue == 'sale_category'" ref="sale_category" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="管理分类" name="category">
+      <el-tab-pane :label="$t('d81d8932.b3ed9f')" name="category">
         <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="商品标签" name="tag">
+      <el-tab-pane :label="$t('d81d8932.0f394b')" name="tag">
         <PickerTag v-if="tabValue == 'tag'" ref="tag" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="文章" name="article">
+      <el-tab-pane :label="$t('d81d8932.c75625')" name="article">
         <PickerArticle v-if="tabValue == 'article'" ref="article" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="软文" name="planting">
+      <el-tab-pane :label="$t('d81d8932.e8f87a')" name="planting">
         <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="页面" name="link">
+      <el-tab-pane :label="$t('d81d8932.59ceff')" name="link">
         <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
       </el-tab-pane>
-      <!-- <el-tab-pane label="营销" name="marketing">
-        <PickerMarketing v-if="tabValue == 'marketing'" ref="marketing" :value="value" />
-      </el-tab-pane> -->
-      <el-tab-pane label="活动报名" name="regactivity">
+      <el-tab-pane :label="$t('d81d8932.2bc045')" name="regactivity">
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="内购活动" name="purchase_activity">
+      <el-tab-pane :label="$t('d81d8932.dc7202')" name="purchase_activity">
         <PickerPurchaseActivity
           v-if="tabValue == 'purchase_activity'"
           ref="purchase_activity"
           :value="value"
         />
       </el-tab-pane>
-      <el-tab-pane label="秒杀" name="seckill">
+      <el-tab-pane v-if="false" :label="$t('d81d8932.55c758')" name="seckill">
         <PickerSeckill v-if="tabValue == 'seckill'" ref="seckill" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="自定义页面" name="custom_page">
+      <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
         <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="直播" name="live">
+      <el-tab-pane :label="$t('d81d8932.7bbe8e')" name="live">
         <PickerLive v-if="tabValue == 'live'" ref="live" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="外部小程序" name="other_wxapp">
+      <el-tab-pane :label="$t('d81d8932.f5a0d7')" name="other_wxapp">
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="抽奖活动" name="lottery">
+      <el-tab-pane :label="$t('d81d8932.283be6')" name="lottery">
         <PickerLottery v-if="tabValue == 'lottery'" ref="lottery" :value="value" />
       </el-tab-pane>
-      <!-- <el-tab-pane label="商家" name="shop_tag">
-        <PickerShopTag v-if="tabValue == 'shop_tag'" ref="shop_tag" :value="value" />
-      </el-tab-pane> -->
-      <el-tab-pane label="分享页" name="share_page">
+      <el-tab-pane :label="$t('d81d8932.787963')" name="share_page">
         <PickerSharePage v-if="tabValue == 'share_page'" ref="share_page" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane :label="$t('d81d8932.e7dea7')" name="customer_service">
+        <PickerCustomerService
+          v-if="tabValue == 'customer_service'"
+          ref="customer_service"
+          :value="value"
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -133,6 +134,7 @@ import PickerShopTag from './picker-shoptag'
 import PickerLottery from './picker-lottery'
 import PickerSharePage from './picker-share-page'
 import PickerCoupon from './picker-coupon'
+import PickerCustomerService from './picker-customer-service'
 
 export default {
   name: 'PickerPath',
@@ -156,22 +158,24 @@ export default {
     PickerShopTag,
     PickerLottery,
     PickerSharePage,
-    PickerCoupon
+    PickerCoupon,
+    PickerCustomerService
   },
   // extends: BasePicker,
   config: {
-    title: '设置路径'
+    title: 'd81d8932.4f2c29'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('d81d8932.4f2c29')
+    this.pathValue = this.value
+  },
   data() {
     const { tab } = this.value
     return {
       pathValue: null,
       tabValue: tab || 'goods'
     }
-  },
-  created() {
-    this.pathValue = this.value
   },
   methods: {
     getVal() {
@@ -238,6 +242,12 @@ export default {
           })
         },
         link: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'title'
+          })
+        },
+        customer_service: () => {
           return pickBy(data, {
             id: 'id',
             title: 'title'

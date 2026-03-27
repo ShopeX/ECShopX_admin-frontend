@@ -4,42 +4,46 @@
 -->
 
 <template>
-  <el-card header="设置" class="footer-style-wrap">
+  <el-card :header="$t('9495eced.e366cc')" class="footer-style-wrap">
     <el-form label-width="80px">
       <div v-for="(item, index) in t_data" class="view-flex">
-        <el-form-item label="文字内容" style="flex: 2">
-          <el-input v-model="item.content" placeholder="文字内容" style="width: 100%" />
+        <el-form-item :label="$t('9495eced.edb5ac')" style="flex: 2">
+          <el-input
+            v-model="item.content"
+            :placeholder="$t('9495eced.edb5ac')"
+            style="width: 100%"
+          />
         </el-form-item>
-        <el-form-item label="文字链接" style="flex: 2">
-          <el-input v-model="item.url" placeholder="文字链接" style="width: 100%" />
+        <el-form-item :label="$t('9495eced.1e1fc1')" style="flex: 2">
+          <el-input v-model="item.url" :placeholder="$t('9495eced.1e1fc1')" style="width: 100%" />
         </el-form-item>
-        <el-form-item label="字号" style="flex: 1">
-          <el-select v-model="item.fontsize" placeholder="字号">
+        <el-form-item :label="$t('9495eced.fc55af')" style="flex: 1">
+          <el-select v-model="item.fontsize" :placeholder="$t('9495eced.fc55af')">
             <el-option
               v-for="(option, index) in fontSizes"
               :key="index"
-              :label="option.label"
+              :label="$t(option.label)"
               :value="option.value"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="位置" style="flex: 1">
-          <el-select v-model="item.position" placeholder="位置">
+        <el-form-item :label="$t('9495eced.d4d2a6')" style="flex: 1">
+          <el-select v-model="item.position" :placeholder="$t('9495eced.d4d2a6')">
             <el-option
               v-for="(option, index) in position"
               :key="index"
-              :label="option.label"
+              :label="$t(option.label)"
               :value="option.value"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="文字颜色" style="flex: 1">
+        <el-form-item :label="$t('9495eced.7ec907')" style="flex: 1">
           <el-color-picker v-model="item.color" />
         </el-form-item>
         <div class="el-icon-close" @click="handleRemove(index)" />
       </div>
       <el-button type="primary" plain icon="el-icon-circle-plus" @click="handleClick">
-        添加内容项
+        {{ $t('9495eced.a7511a') }}
       </el-button>
     </el-form>
   </el-card>
@@ -56,29 +60,29 @@ export default {
       t_data: this.info,
       fontSizes: [
         {
-          label: '12号',
+          label: '9495eced.185abb',
           value: '12'
         },
         {
-          label: '14号',
+          label: '9495eced.a3c3fc',
           value: '14'
         },
         {
-          label: '16号',
+          label: '9495eced.0e4221',
           value: '16'
         }
       ],
       position: [
         {
-          label: '居左',
+          label: '9495eced.316a63',
           value: 'left'
         },
         {
-          label: '居中',
+          label: '9495eced.0bbc2e',
           value: 'center'
         },
         {
-          label: '居右',
+          label: '9495eced.e2aaec',
           value: 'right'
         }
       ]

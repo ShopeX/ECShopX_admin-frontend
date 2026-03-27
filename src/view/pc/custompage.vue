@@ -8,24 +8,32 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
+          <el-button type="primary" icon="plus" @click="openDialog()">
+{{
+            $t('44440ad6.4c503b')
+          }}
+</el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="list" :height="wheight - 140">
-        <el-table-column prop="id" label="页面id" />
-        <el-table-column prop="page_name" label="页面名称" />
-        <el-table-column label="是否启用">
+        <el-table-column prop="id" :label="$t('44440ad6.6872c7')" />
+        <el-table-column prop="page_name" :label="$t('44440ad6.b78454')" />
+        <el-table-column :label="$t('44440ad6.53c3dd')">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.is_open == '0'" type="info"> 禁用 </el-tag>
-            <el-tag v-else type="warning"> 启用 </el-tag>
+            <el-tag v-if="scope.row.is_open == '0'" type="info">{{ $t('44440ad6.710ad0') }}</el-tag>
+            <el-tag v-else type="warning">{{ $t('44440ad6.7854b5') }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="100">
+        <el-table-column :label="$t('44440ad6.2b6bc0')" min-width="100">
           <template slot-scope="scope">
-            <a href="javascript:void(0)" @click="delPage(scope.row.id)">删除</a>
-            <a href="javascript:void(0)" @click="openDialog(scope.row)">编辑</a>
+            <a href="javascript:void(0)" @click="delPage(scope.row.id)">{{
+              $t('44440ad6.2f4aad')
+            }}</a>
+            <a href="javascript:void(0)" @click="openDialog(scope.row)">{{
+              $t('44440ad6.95b351')
+            }}</a>
             <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
-              页面装修
+              {{ $t('44440ad6.6343df') }}
             </el-button>
           </template>
         </el-table-column>
@@ -47,28 +55,32 @@
         :before-close="handleCancel"
       >
         <el-form v-model="pageForm" label-width="200px">
-          <el-form-item label="页面名称">
-            <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
-          </el-form-item>
-          <el-form-item label="页面描述">
+          <el-form-item :label="$t('44440ad6.b78454')">
             <el-input
-              v-model="pageForm.page_description"
-              placeholder="页面描述"
+              v-model="pageForm.page_name"
+              :placeholder="$t('44440ad6.b78454')"
               style="width: 55%"
             />
           </el-form-item>
-          <el-form-item label="是否启用">
+          <el-form-item :label="$t('44440ad6.abf8f4')">
+            <el-input
+              v-model="pageForm.page_description"
+              :placeholder="$t('44440ad6.abf8f4')"
+              style="width: 55%"
+            />
+          </el-form-item>
+          <el-form-item :label="$t('44440ad6.53c3dd')">
             <el-switch v-model="pageForm.is_open" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button type="primary" @click="savePage"> 确认保存 </el-button>
+          <el-button type="primary" @click="savePage">{{ $t('44440ad6.babc8f') }}</el-button>
         </div>
       </el-dialog>
       <el-dialog
         :visible.sync="template_dialog"
         width="80%"
-        title="编辑页面"
+        :title="$t('44440ad6.49bcb8')"
         fullscreen
         lock-scroll
       >
@@ -96,7 +108,7 @@ export default {
       template_dialog: false,
       page_dialog: false,
       total_count: 0,
-      dialogTitle: '新增页面',
+      dialogTitle: '',
       loading: false,
       params: {
         page: 1,
@@ -133,9 +145,9 @@ export default {
       this.fetchPageList()
     },
     delPage(id) {
-      this.$confirm('确认删除当前页面吗？').then((_) => {
+      this.$confirm(this.$t('44440ad6.682fb3')).then((_) => {
         delCustomPage(id).then((res) => {
-          this.$message({ type: 'success', message: '操作成功！' })
+          this.$message({ type: 'success', message: this.$t('44440ad6.3b6eb9') })
           this.fetchPageList()
         })
       })
@@ -147,32 +159,32 @@ export default {
         if (detail.is_open == 1) {
           this.pageForm.is_open = true
         }
-        this.dialogTitle = '编辑页面'
+        this.dialogTitle = this.$t('44440ad6.49bcb8')
       } else {
-        this.dialogTitle = '新增页面'
+        this.dialogTitle = this.$t('44440ad6.0024d3')
         this.pageForm = { id: '', page_name: '', page_description: '', is_open: true }
       }
     },
     savePage() {
       let { page_name, page_description, is_open, id } = this.pageForm
       const params = { page_name, page_description, is_open, template_name: this.template_name }
-      if (this.dialogTitle == '编辑页面') {
+      if (this.dialogTitle == this.$t('44440ad6.49bcb8')) {
         editCustomPage(id, params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
             type: 'success',
-            message: '保存页面成功'
+            message: this.$t('44440ad6.800bb4')
           })
         })
       }
-      if (this.dialogTitle == '新增页面') {
+      if (this.dialogTitle == this.$t('44440ad6.0024d3')) {
         createCustomPage(params).then((res) => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
             type: 'success',
-            message: '保存页面成功'
+            message: this.$t('44440ad6.800bb4')
           })
         })
       }

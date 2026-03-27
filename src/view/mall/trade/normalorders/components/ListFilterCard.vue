@@ -8,28 +8,28 @@
     <el-form :inline="true" :model="orderForm" label-width="120px">
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item label="手机号/订单号:">
+          <el-form-item :label="$t('cb8b59e7.b5e148')">
             <el-input
               v-model="orderForm.ordernumber"
-              placeholder="请输入订单编号/客户手机号码"
+              :placeholder="$t('cb8b59e7.32f4ee')"
               :size="size"
             />
           </el-form-item>
         </el-col>
         <el-col v-if="$store.getters.login_type != 'merchant'" :span="8">
-          <el-form-item label="导购手机号:">
+          <el-form-item :label="$t('cb8b59e7.7c0d05')">
             <el-input
               v-model="orderForm.salesman_mobile"
-              placeholder="请输入导购手机号"
+              :placeholder="$t('cb8b59e7.27cab4')"
               :size="size"
             />
           </el-form-item>
         </el-col>
         <el-col v-if="!isMicorMall" :span="8">
-          <el-form-item label="配送类型:">
+          <el-form-item :label="$t('cb8b59e7.e9d70f')">
             <el-select
               v-model="orderForm.receipt_type"
-              placeholder="请选择配送类型"
+              :placeholder="$t('cb8b59e7.8b474e')"
               :size="size"
               @change="handleSubmit"
             >
@@ -43,21 +43,21 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="订单来源:">
+          <el-form-item :label="$t('cb8b59e7.b36ea7')">
             <el-autocomplete
               v-model="orderForm.source"
               :size="size"
               :fetch-suggestions="querySearch"
-              placeholder="请输入来源"
+              :placeholder="$t('cb8b59e7.4b525f')"
               @select="sourceSearch"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="订单状态:">
+          <el-form-item :label="$t('cb8b59e7.7816f5')">
             <el-select
               v-model="orderForm.order_status"
-              placeholder="请选择订单状态"
+              :placeholder="$t('cb8b59e7.c47867')"
               :size="size"
               @change="handleSubmit"
             >
@@ -71,10 +71,10 @@
           </el-form-item>
         </el-col>
         <el-col v-if="$store.getters.login_type != 'merchant'" :span="8">
-          <el-form-item label="订单类型:">
+          <el-form-item :label="$t('cb8b59e7.0e83be')">
             <el-select
               v-model="orderForm.order_class"
-              placeholder="请选择订单类型"
+              :placeholder="$t('cb8b59e7.249ee7')"
               :size="size"
               @change="handleSubmit"
             >
@@ -88,10 +88,10 @@
           </el-form-item>
         </el-col>
         <el-col v-if="!isMicorMall" :span="8">
-          <el-form-item label="开票状态:">
+          <el-form-item :label="$t('cb8b59e7.dfc420')">
             <el-select
               v-model="orderForm.is_invoiced"
-              placeholder="请选择开票状态"
+              :placeholder="$t('cb8b59e7.d25a8e')"
               :size="size"
               @change="handleSubmit"
             >
@@ -105,26 +105,26 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="下单时间:">
+          <el-form-item :label="$t('cb8b59e7.43c297')">
             <el-date-picker
               v-model="orderForm.create_time"
               :size="size"
               type="daterange"
-              start-placeholder="开始日期"
-              ange-separator="至"
-              end-placeholder="结束日期"
+              :start-placeholder="$t('cb8b59e7.b44c0f')"
+              :range-separator="$t('cb8b59e7.981cbe')"
+              :end-placeholder="$t('cb8b59e7.1d468b')"
               value-format="yyyy/MM/dd HH:mm:ss"
-              placeholder="选择日期范围"
+              :placeholder="$t('cb8b59e7.4b8cb9')"
               :default-time="['00:00:00', '23:59:59']"
               @change="dateChange"
             />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="订单分类:">
+          <el-form-item :label="$t('cb8b59e7.e56a5e')">
             <el-select
               v-model="orderForm.distributor_type"
-              placeholder="请选择订单分类"
+              :placeholder="$t('cb8b59e7.edc8a9')"
               :size="size"
               @change="handleSubmit"
             >
@@ -140,7 +140,7 @@
       </el-row>
       <el-row v-if="!isMicorMall || loginType != 'distributor'">
         <el-col :span="12">
-          <el-form-item label="选择店铺:">
+          <el-form-item :label="$t('cb8b59e7.6580fe')">
             <shop-select ref="shopSelect" :size="size" distributors @update="storeSearch" />
           </el-form-item>
         </el-col>
@@ -148,8 +148,10 @@
       <el-row :gutter="20">
         <el-col :span="6" :push="17">
           <div class="flex-right">
-            <el-button type="primary" :size="size" @click="handleSubmit"> 搜索 </el-button>
-            <el-button :size="size" @click="handleReset"> 重置 </el-button>
+            <el-button type="primary" :size="size" @click="handleSubmit">
+              {{ $t('cb8b59e7.e5f71f') }}
+            </el-button>
+            <el-button :size="size" @click="handleReset"> {{ $t('cb8b59e7.4b9c32') }} </el-button>
           </div>
         </el-col>
       </el-row>
@@ -186,48 +188,42 @@ export default {
       size: '',
 
       invoice_status_list: [
-        { name: '全部', value: '' },
-        { name: '未开票', value: 0 },
-        { name: '已开票', value: 1 }
+        { name: this.$t('cb8b59e7.a8b0c2'), value: '' },
+        { name: this.$t('cb8b59e7.5613ba'), value: 0 },
+        { name: this.$t('cb8b59e7.ca4355'), value: 1 }
       ],
       distribution_list: [
-        { name: '全部', value: '' },
-        { name: '普通快递', value: 'logistics' },
-        { name: '同城配', value: 'dada' },
-        { name: '客户自提', value: 'ziti' }
+        { name: this.$t('cb8b59e7.a8b0c2'), value: '' },
+        { name: this.$t('cb8b59e7.249bfe'), value: 'logistics' },
+        { name: this.$t('cb8b59e7.583dcd'), value: 'dada' },
+        { name: this.$t('cb8b59e7.3f6ca2'), value: 'ziti' }
       ],
       order_class_array: [
-        { name: '全部', value: '' },
-        { name: '团购订单', value: 'groups' },
-        { name: '秒杀订单', value: 'seckill' },
-        // { name: "导购订单", value: "shopguide" },
-        // { name: "跨境订单", value: "crossborder" },
-        // { name: "助力订单", value: "bargain" },
-        // { name: "社区订单", value: "community" },
-        { name: '普通订单', value: 'normal' }
-        // { name: "服务类订单", value: "services" },
-        // { name: "兑换订单", value: "excard"}
+        { name: this.$t('cb8b59e7.a8b0c2'), value: '' },
+        { name: this.$t('cb8b59e7.9b251e'), value: 'groups' },
+        { name: this.$t('cb8b59e7.ee8bc9'), value: 'seckill' },
+        { name: this.$t('cb8b59e7.e7978e'), value: 'normal' }
       ],
       distributor_type_list: [
-        { name: '全部', value: '' },
-        { name: '自营订单', value: 'self' },
-        { name: '商家订单', value: 'shop' }
+        { name: this.$t('cb8b59e7.a8b0c2'), value: '' },
+        { name: this.$t('cb8b59e7.a509ca'), value: 'self' },
+        { name: this.$t('cb8b59e7.d25231'), value: 'shop' }
       ],
       order_status_list: [
-        { name: '全部', value: '' },
-        { name: '待支付', value: 'notpay' },
-        { name: '待发货', value: 'notship' },
-        { name: '待收货', value: 'shipping' },
-        { name: '待退款', value: 'cancelapply' },
-        { name: '待自提', value: 'ziti' },
-        { name: '已取消', value: 'cancel' },
-        { name: '已完成', value: 'finish' },
-        { name: '待接单', value: 'dada_0' },
-        { name: '待骑士接单', value: 'dada_1' },
-        { name: '待取货', value: 'dada_2' },
-        { name: '骑士到店', value: 'dada_100' },
-        { name: '配送中', value: 'dada_3' },
-        { name: '未妥投', value: 'dada_9' }
+        { name: this.$t('cb8b59e7.a8b0c2'), value: '' },
+        { name: this.$t('cb8b59e7.9246fe'), value: 'notpay' },
+        { name: this.$t('cb8b59e7.d8476e'), value: 'notship' },
+        { name: this.$t('cb8b59e7.4933ca'), value: 'shipping' },
+        { name: this.$t('cb8b59e7.6b715b'), value: 'cancelapply' },
+        { name: this.$t('cb8b59e7.25d532'), value: 'ziti' },
+        { name: this.$t('cb8b59e7.2111cc'), value: 'cancel' },
+        { name: this.$t('cb8b59e7.fad522'), value: 'finish' },
+        { name: this.$t('cb8b59e7.1ef6f1'), value: 'dada_0' },
+        { name: this.$t('cb8b59e7.f8c921'), value: 'dada_1' },
+        { name: this.$t('cb8b59e7.186671'), value: 'dada_2' },
+        { name: this.$t('cb8b59e7.b5b1a5'), value: 'dada_100' },
+        { name: this.$t('cb8b59e7.739c91'), value: 'dada_3' },
+        { name: this.$t('cb8b59e7.ed23e1'), value: 'dada_9' }
       ],
       //来源数据
       source_list: []

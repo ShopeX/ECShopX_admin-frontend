@@ -6,23 +6,23 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="总览" name="all">
+      <el-tab-pane :label="$t('45e1eee6.08806e')" name="all">
         <total-view />
       </el-tab-pane>
-      <el-tab-pane label="交易记录" name="transactionRecord">
+      <el-tab-pane :label="$t('45e1eee6.07b42e')" name="transactionRecord">
         <transaction-record :get-status="trade" />
       </el-tab-pane>
-      <el-tab-pane label="储值面额" name="storedValue">
+      <el-tab-pane :label="$t('45e1eee6.7953e0')" name="storedValue">
         <stored-value :get-status="rechargeRule" />
       </el-tab-pane>
-      <el-tab-pane label="充值协议" name="rechargeAgreement">
+      <el-tab-pane :label="$t('45e1eee6.0de4fa')" name="rechargeAgreement">
         <recharge-agreement :get-status="rechargeAgreement" />
       </el-tab-pane>
-      <el-tab-pane label="充值送积分翻倍" name="rechargeMultiple">
+      <el-tab-pane :label="$t('45e1eee6.ef4269')" name="rechargeMultiple">
         <recharge-multiple :get-status="rechargeMultiple" />
       </el-tab-pane>
       <!--
-      <el-tab-pane label="吸储排行" name="storageRanking">
+      <el-tab-pane :label="$t('45e1eee6.bc6f71')" name="storageRanking">
         <storage-ranking :get-status="storageRanking"></storage-ranking>
       </el-tab-pane>
       -->

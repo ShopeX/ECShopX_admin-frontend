@@ -36,25 +36,27 @@
 
     <!-- 背景设置 -->
     <div class="comps_style-item comps_style-bg">
-      <div class="im-tt">背景</div>
+      <div class="im-tt">{{ $t('68f836e2.8e1b94') }}</div>
       <div class="im-bd">
         <div class="background-type-selector">
           <el-radio-group v-model="form.bgType" size="mini" @change="handleChange">
-            <el-radio-button label="color">背景颜色</el-radio-button>
-            <el-radio-button label="pic">背景图片</el-radio-button>
-            <el-radio-button label="gradient">渐变背景</el-radio-button>
+            <el-radio-button label="color">{{ $t('68f836e2.4573a7') }}</el-radio-button>
+            <el-radio-button label="pic">{{ $t('68f836e2.d74849') }}</el-radio-button>
+            <el-radio-button label="gradient">{{ $t('68f836e2.97fe4b') }}</el-radio-button>
           </el-radio-group>
         </div>
         <div class="background-content">
           <div v-if="form.bgType === 'color'" class="color-section">
             <div class="color-item">
-              <span class="color-label">背景颜色</span>
+              <span class="color-label">{{ $t('68f836e2.4573a7') }}</span>
               <div class="color-controls">
                 <span class="color-code">{{ displayBgColor }}</span>
                 <div class="color-controls-item">
-                  <el-button type="text" size="mini" class="reset-btn" @click="onResetBgColor"
-                    >重置</el-button
-                  >
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetBgColor">
+{{
+                    $t('68f836e2.4b9c32')
+                  }}
+</el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayBgColor }">
                     <el-color-picker v-model="form.bgColor" size="small" @change="handleChange" />
                   </div>
@@ -64,13 +66,15 @@
           </div>
           <div v-if="form.bgType === 'gradient'" class="gradient-section">
             <div class="gradient-item">
-              <span class="color-label">起始颜色</span>
+              <span class="color-label">{{ $t('68f836e2.e7d2b3') }}</span>
               <div class="color-controls">
                 <span class="color-code">{{ displayStartColor }}</span>
                 <div class="color-controls-item">
-                  <el-button type="text" size="mini" class="reset-btn" @click="onResetStartColor"
-                    >重置</el-button
-                  >
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetStartColor">
+{{
+                    $t('68f836e2.4b9c32')
+                  }}
+</el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayStartColor }">
                     <el-color-picker
                       v-model="form.startColor"
@@ -82,13 +86,15 @@
               </div>
             </div>
             <div class="gradient-item">
-              <span class="color-label">结束颜色</span>
+              <span class="color-label">{{ $t('68f836e2.8ea65e') }}</span>
               <div class="color-controls">
                 <span class="color-code">{{ displayEndColor }}</span>
                 <div class="color-controls-item">
-                  <el-button type="text" size="mini" class="reset-btn" @click="onResetEndColor"
-                    >重置</el-button
-                  >
+                  <el-button type="text" size="mini" class="reset-btn" @click="onResetEndColor">
+{{
+                    $t('68f836e2.4b9c32')
+                  }}
+</el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayEndColor }">
                     <el-color-picker v-model="form.endColor" size="small" @change="handleChange" />
                   </div>
@@ -97,7 +103,12 @@
             </div>
           </div>
           <div v-if="form.bgType === 'pic'" class="image-section">
-            <SpImagePicker v-model="form.bgPic" size="small" class="video-link" text="背景图" />
+            <SpImagePicker
+              v-model="form.bgPic"
+              size="small"
+              class="video-link"
+              :text="$t('68f836e2.543aa6')"
+            />
           </div>
         </div>
       </div>
@@ -166,17 +177,17 @@ export default {
     // 内边距字段配置
     paddingFields() {
       return [
-        { key: 'paddedt', label: '上', show: this.showTop },
-        { key: 'paddedb', label: '下', show: this.showBottom },
-        { key: 'paddedl', label: '左', show: this.showLeft },
-        { key: 'paddedr', label: '右', show: this.showRight }
+        { key: 'paddedt', label: this.$t('68f836e2.af767b'), show: this.showTop },
+        { key: 'paddedb', label: this.$t('68f836e2.3850a1'), show: this.showBottom },
+        { key: 'paddedl', label: this.$t('68f836e2.d2aff1'), show: this.showLeft },
+        { key: 'paddedr', label: this.$t('68f836e2.4d9c32'), show: this.showRight }
       ]
     },
     // 组合内边距字段配置
     combinedPaddingFields() {
       return [
-        { key: 'paddedtb', label: '上下', show: this.showTB },
-        { key: 'paddedlr', label: '左右', show: this.showLR }
+        { key: 'paddedtb', label: this.$t('68f836e2.81f8a5'), show: this.showTB },
+        { key: 'paddedlr', label: this.$t('68f836e2.bb72c5'), show: this.showLR }
       ]
     },
 

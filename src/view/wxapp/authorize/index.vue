@@ -10,7 +10,7 @@
         <div v-if="wxapp_id && detail && detail.weapp && detail.weappTemplate">
           <div class="content-center">
             <div v-if="detail.head_img">
-              <img class="app-img" :src="wximageurl + detail.head_img" height="60" />
+              <img class="app-img" :src="wximageurl + detail.head_img" height="60">
             </div>
             <div v-else>
               <i class="el-icon-picture fa-3x" aria-hidden="true" />
@@ -24,77 +24,81 @@
                 class="demo-qrcode"
                 @click="downloadWxaCode"
               >
-                <img src="@/assets/img/code.png" alt="" />
+                <img src="@/assets/img/code.png" alt="">
               </div>
             </div>
           </div>
           <ul class="info-list">
             <li class="info-item">
-              <div class="label">模板</div>
+              <div class="label">{{ $t('324626d5.59cf15') }}</div>
               <div class="content">
                 <div class="content-item">
                   {{ detail.weappTemplate.name }}
                 </div>
-                <div>线上版本：{{ detail.weapp.release_ver }}</div>
+                <div>{{ $t('324626d5.28ea5c') }}{{ detail.weapp.release_ver }}</div>
               </div>
             </li>
             <li class="info-item">
-              <div class="label">版本</div>
+              <div class="label">{{ $t('324626d5.fe2df0') }}</div>
               <div class="content">
                 <div class="content-item">
                   {{ detail.weappTemplate.version }}
                 </div>
                 <div>
                   <div v-if="detail.weappTemplate.template_id > detail.weapp.template_id">
-                    请更新到最新版本
+                    {{ $t('324626d5.4c753a') }}
                   </div>
-                  <div v-else>当前已是最新版本</div>
+                  <div v-else>{{ $t('324626d5.c8b977') }}</div>
                 </div>
               </div>
             </li>
             <li class="info-item">
-              <div class="label">上架状态</div>
+              <div class="label">{{ $t('324626d5.dc0a7b') }}</div>
               <div class="content">
                 <div class="content-item">
-                  <span v-if="detail.weapp.release_status == '1'">已上架</span>
-                  <span v-else type="gray">未上架</span>
+                  <span v-if="detail.weapp.release_status == '1'">{{ $t('324626d5.2390fa') }}</span>
+                  <span v-else type="gray">{{ $t('324626d5.25744b') }}</span>
                 </div>
               </div>
             </li>
             <li v-if="detail.weapp.release_status != '1'" class="info-item">
-              <div class="label">审核状态</div>
+              <div class="label">{{ $t('324626d5.b6d0e9') }}</div>
               <div class="content">
                 <div class="content-item">
-                  <span v-if="detail.weapp.audit_status == '1'">审核失败</span>
+                  <span v-if="detail.weapp.audit_status == '1'">{{ $t('324626d5.fe3661') }}</span>
                   <!--审核成功并且已经上架则不需要显示-->
                   <span
                     v-else-if="
                       detail.weapp.audit_status == '0' && detail.weapp.release_status != '1'
                     "
                     type="success"
-                    >审核成功</span
+                    >{{ $t('324626d5.94129a') }}</span
                   >
-                  <span v-else-if="detail.weapp.audit_status == '3'" type="success">待提交</span>
-                  <span v-else-if="detail.weapp.audit_status == '2'" type="primary">审核中</span>
+                  <span v-else-if="detail.weapp.audit_status == '3'" type="success">{{
+                    $t('324626d5.a9c09d')
+                  }}</span>
+                  <span v-else-if="detail.weapp.audit_status == '2'" type="primary">{{
+                    $t('324626d5.b720a6')
+                  }}</span>
                 </div>
               </div>
             </li>
             <li v-if="detail.weapp.audit_status == '1' && detail.weapp.reason" class="info-item">
-              <div class="label">审核失败原因</div>
+              <div class="label">{{ $t('324626d5.ec85ac') }}</div>
               <div class="content">
                 <div class="content-item" v-html="detail.weapp.reason" />
               </div>
             </li>
           </ul>
           <div class="content-center">
-            <el-button type="success" @click="config"> 配置 </el-button>
+            <el-button type="success" @click="config">{{ $t('324626d5.224e2c') }}</el-button>
             <!--<el-checkbox v-model="form.params.autoPublish" @change="configSave">自动发布</el-checkbox>-->
             <el-button
               v-if="detail.weappTemplate.template_id > detail.weapp.template_id"
               type="success"
               @click="handleAddWxaAction"
             >
-              上传代码
+              {{ $t('324626d5.9725db') }}
             </el-button>
             <!-- <el-button type="success" v-if="detail.weappTemplate.template_id > detail.weapp.template_id" @click="handleAddWxaActionSubmitReview">上传代码</el-button> -->
             <el-button
@@ -102,28 +106,28 @@
               type="success"
               @click="handleAddWxaActionSubmitReview"
             >
-              提交审核
+              {{ $t('324626d5.646db0') }}
             </el-button>
             <el-button
               v-else-if="isForceUpdate || detail.weapp.audit_status === 1"
               type="success"
               @click="handleAddWxaAction"
             >
-              重新提交
+              {{ $t('324626d5.ece899') }}
             </el-button>
             <el-button
               v-if="detail.weapp.audit_status === 2"
               type="info"
               @click="handleUndocodeaudit"
             >
-              审核撤回
+              {{ $t('324626d5.71bb0e') }}
             </el-button>
             <el-button
               v-if="detail.weapp.audit_status === 0"
               type="warning"
               @click="handleRevertcoderelease"
             >
-              回退版本
+              {{ $t('324626d5.8e3b19') }}
             </el-button>
             <!--只有在审核中才需要查看体验二维码-->
             <el-button
@@ -131,22 +135,22 @@
               type="info"
               @click="downloadTextWxaCode"
             >
-              体验二维码
+              {{ $t('324626d5.b330d1') }}
             </el-button>
-            <el-button type="success" @click="tryRelease"> 尝试发布 </el-button>
-            <el-button type="primary" @click="handleBind"> 更新授权 </el-button>
-            <el-button type="success" @click="domain"> 域名 </el-button>
+            <el-button type="success" @click="tryRelease">{{ $t('324626d5.c4a378') }}</el-button>
+            <el-button type="primary" @click="handleBind">{{ $t('324626d5.af3ef9') }}</el-button>
+            <el-button type="success" @click="domain">{{ $t('324626d5.190980') }}</el-button>
             <el-button v-if="system_is_saas == 'false'" type="success" @click="handleEditTemplate">
-              编辑模板
+              {{ $t('324626d5.c6aa35') }}
             </el-button>
             <el-button v-if="system_is_saas == 'false'" type="primary" @click="getdomain">
-              小程序合法域名
+              {{ $t('324626d5.cec2be') }}
             </el-button>
             <router-link
               :to="`/wxapp/manage/editauthorize/policy?app_id=${detail.authorizer_appid}&nick_name=${detail.nick_name}`"
               style="margin-left: 5px"
             >
-              <el-button type="success"> 用户隐私保护指引 </el-button>
+              <el-button type="success">{{ $t('324626d5.d8c536') }}</el-button>
             </router-link>
           </div>
         </div>
@@ -154,65 +158,73 @@
           <div>
             <i class="iconfont icon-info-circle" style="font-size: 70px" />
           </div>
-          <div class="content-padded">未绑定小程序</div>
-          <el-button type="primary" @click="handleBind"> 授权小程序 </el-button>
+          <div class="content-padded">{{ $t('324626d5.6a7b6f') }}</div>
+          <el-button type="primary" @click="handleBind">{{ $t('324626d5.d7a8d8') }}</el-button>
         </div>
       </section>
-      <el-dialog title="小程序码" :visible.sync="wxaCodeVisible">
+      <el-dialog :title="$t('324626d5.b85b43')" :visible.sync="wxaCodeVisible">
         <div class="content-center">
-          <img :src="wxaCodeImage" />
+          <img :src="wxaCodeImage">
         </div>
       </el-dialog>
-      <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
+      <el-dialog
+        :title="$t('324626d5.224e2c')"
+        class="right-dialog"
+        :visible.sync="wxaConfigVisible"
+      >
         <el-form ref="form" :model="form" label-position="left" label-width="180px">
           <div class="section-body">
-            <el-form-item label="自动发布：">
+            <el-form-item :label="$t('324626d5.778a32')">
               <el-switch v-model="form.auto_publish" :active-value="1" :inactive-value="0" />
             </el-form-item>
-            <el-form-item label="appsecret：">
+            <el-form-item :label="$t('324626d5.bfb460')">
               <el-col :span="18">
                 <el-input
                   v-model="form.authorizer_appsecret"
-                  placeholder="请输入小程序appsecret"
+                  :placeholder="$t('324626d5.ede01a')"
                   show-password
                 />
               </el-col>
             </el-form-item>
           </div>
           <div class="section-footer with-border content-center">
-            <el-button type="primary" @click="configSave"> 保 存 </el-button>
+            <el-button type="primary" @click="configSave">{{ $t('324626d5.56df61') }}</el-button>
           </div>
         </el-form>
       </el-dialog>
 
-      <el-dialog title="域名" class="right-dialog" :visible.sync="wxaDomainVisible">
+      <el-dialog
+        :title="$t('324626d5.190980')"
+        class="right-dialog"
+        :visible.sync="wxaDomainVisible"
+      >
         <p class="frm-tips">
-          对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内
+          {{ $t('324626d5.08b0a3') }}
         </p>
         <el-form label-width="160px" size="mini">
           <el-collapse accordion>
-            <el-collapse-item title="当前小程序域名" name="1">
-              <el-form-item label="request合法域名:">
+            <el-collapse-item :title="$t('324626d5.000854')" name="1">
+              <el-form-item :label="$t('324626d5.d6838c')">
                 <div v-for="requestdomain in domainform.wxDomain.requestdomain">
                   {{ requestdomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="socket合法域名:">
+              <el-form-item :label="$t('324626d5.f0fbad')">
                 <div v-for="wsrequestdomain in domainform.wxDomain.wsrequestdomain">
                   {{ wsrequestdomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="uploadFile合法域名:">
+              <el-form-item :label="$t('324626d5.32ce31')">
                 <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">
                   {{ uploaddomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="downloadFile合法域名:">
+              <el-form-item :label="$t('324626d5.87fd72')">
                 <div v-for="downloaddomain in domainform.wxDomain.downloaddomain">
                   {{ downloaddomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="业务域名:">
+              <el-form-item :label="$t('324626d5.935eba')">
                 <div v-for="webviewdomain in domainform.wxDomain.webviewdomain">
                   {{ webviewdomain }}
                 </div>
@@ -221,28 +233,28 @@
           </el-collapse>
 
           <el-collapse accordion>
-            <el-collapse-item title="本地配置的域名" name="2">
-              <el-form-item label="request合法域名:">
+            <el-collapse-item :title="$t('324626d5.a6a9a0')" name="2">
+              <el-form-item :label="$t('324626d5.d6838c')">
                 <div v-for="requestdomain in domainform.localDomain.requestdomain">
                   {{ requestdomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="socket合法域名:">
+              <el-form-item :label="$t('324626d5.f0fbad')">
                 <div v-for="wsrequestdomain in domainform.localDomain.wsrequestdomain">
                   {{ wsrequestdomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="uploadFile合法域名:">
+              <el-form-item :label="$t('324626d5.32ce31')">
                 <div v-for="uploaddomain in domainform.localDomain.uploaddomain">
                   {{ uploaddomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="downloadFile合法域名:">
+              <el-form-item :label="$t('324626d5.87fd72')">
                 <div v-for="downloaddomain in domainform.localDomain.downloaddomain">
                   {{ downloaddomain }}
                 </div>
               </el-form-item>
-              <el-form-item label="业务域名:">
+              <el-form-item :label="$t('324626d5.935eba')">
                 <div v-for="webviewdomain in domainform.localDomain.webviewdomain">
                   {{ webviewdomain }}
                 </div>
@@ -251,13 +263,13 @@
           </el-collapse>
         </el-form>
         <div class="section-footer with-border content-center">
-          <el-button type="primary" @click="domainSave"> 推 送 </el-button>
+          <el-button type="primary" @click="domainSave">{{ $t('324626d5.abaacf') }}</el-button>
         </div>
       </el-dialog>
 
       <!--编辑模板-->
       <el-dialog
-        title="编辑模板"
+        :title="$t('324626d5.c6aa35')"
         width="60%"
         :visible.sync="TemplateEditDialog"
         :before-close="handleCancelLabelsDialog"
@@ -266,90 +278,102 @@
           <el-form ref="form" :model="weappTemplate" class="demo-ruleForm" label-width="200px">
             <el-form-item
               class="content-left"
-              label="小程序唯一标示(英文)"
+              :label="$t('324626d5.9b3bf3')"
               prop="key_name"
-              :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
+              :rules="[{ required: true, message: this.$t('324626d5.dc34dd'), trigger: 'blur' }]"
             >
               <el-input
                 v-if="weappTemplate.id"
                 v-model="weappTemplate.key_name"
-                placeholder="例如：yykweishop"
+                :placeholder="$t('324626d5.05b056')"
                 disabled
               />
-              <el-input v-else v-model="weappTemplate.key_name" placeholder="例如：yykweishop" />
+              <el-input
+                v-else
+                v-model="weappTemplate.key_name"
+                :placeholder="$t('324626d5.05b056')"
+              />
             </el-form-item>
-            <el-form-item class="content-left" label="小程序模板名称">
-              <el-input v-model="weappTemplate.name" placeholder="例如：yykweishop" disabled />
+            <el-form-item class="content-left" :label="$t('324626d5.a83ca1')">
+              <el-input
+                v-model="weappTemplate.name"
+                :placeholder="$t('324626d5.05b056')"
+                disabled
+              />
             </el-form-item>
-            <el-form-item class="content-left" label="模板id">
-              <el-input v-model="weappTemplate.template_id" placeholder="例如：30" />
+            <el-form-item class="content-left" :label="$t('324626d5.162795')">
+              <el-input v-model="weappTemplate.template_id" :placeholder="$t('324626d5.8c804d')" />
             </el-form-item>
-            <el-form-item class="content-left" label="模板版本">
-              <el-input v-model="weappTemplate.version" placeholder="例如：v2.0" />
+            <el-form-item class="content-left" :label="$t('324626d5.554773')">
+              <el-input v-model="weappTemplate.version" :placeholder="$t('324626d5.c7f359')" />
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="saveTemplate"> 确定保存 </el-button>
+              <el-button type="primary" @click="saveTemplate">
+{{
+                $t('324626d5.b75381')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>
       </el-dialog>
 
       <!--    设置小程序合法域名-->
-      <el-dialog title="设置小程序合法域名" width="60%" :visible.sync="domainDialog">
+      <el-dialog :title="$t('324626d5.2db6d5')" width="60%" :visible.sync="domainDialog">
         <el-alert
-          title="请添加每个域名后回车"
+          :title="$t('324626d5.35a81a')"
           description="mmbiz.qpic.cn,wx.qlogo.cn"
           type="info"
           show-icon
           :closable="false"
         />
-        <br />
+        <br>
         <el-form v-loading="domainloading" label-width="200px">
-          <el-form-item label="request合法域名">
+          <el-form-item :label="$t('324626d5.f554f2')">
             <el-input
               v-model="domainData.requestdomain"
               type="textarea"
               :rows="3"
-              placeholder="请输入合法域名"
+              :placeholder="$t('324626d5.445694')"
               prop="domain.requestdomain"
-              :rules="[{ required: true, message: 'request合法域名', trigger: 'blur' }]"
+              :rules="[{ required: true, message: this.$t('324626d5.f554f2'), trigger: 'blur' }]"
             />
           </el-form-item>
-          <el-form-item label="socket合法域名">
+          <el-form-item :label="$t('324626d5.0885a7')">
             <el-input
               v-model="domainData.wsrequestdomain"
               type="textarea"
               :rows="3"
-              placeholder="请输入合法域名"
+              :placeholder="$t('324626d5.445694')"
             />
           </el-form-item>
-          <el-form-item label="uploadFile合法域名">
+          <el-form-item :label="$t('324626d5.fe5685')">
             <el-input
               v-model="domainData.uploaddomain"
               type="textarea"
               :rows="3"
-              placeholder="请输入合法域名"
+              :placeholder="$t('324626d5.445694')"
             />
           </el-form-item>
-          <el-form-item label="downloadFile合法域名">
+          <el-form-item :label="$t('324626d5.41a6be')">
             <el-input
               v-model="domainData.downloaddomain"
               type="textarea"
               :rows="6"
-              placeholder="请输入合法域名"
+              :placeholder="$t('324626d5.445694')"
             />
           </el-form-item>
-          <el-form-item label="业务合法域名">
+          <el-form-item :label="$t('324626d5.0e758a')">
             <el-input
               v-model="domainData.webviewdomain"
               type="textarea"
               :rows="6"
-              placeholder="请输入合法域名"
+              :placeholder="$t('324626d5.445694')"
             />
           </el-form-item>
         </el-form>
         <span slot="footer">
-          <el-button type="primary" @click="setdomain">确 定</el-button>
+          <el-button type="primary" @click="setdomain">{{ $t('324626d5.aa7527') }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -453,7 +477,7 @@ export default {
       }
       submitWxa(params).then((response) => {
         this.$message({
-          message: '上传代码成功',
+          message: this.$t('324626d5.cfb4ab'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -511,9 +535,13 @@ export default {
       setdomain({ domain: this.domainData }).then((res) => {
         if (res.data.data.status === true) {
           this.domainDialog = false
-          this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
+          this.$message({
+            message: this.$t('324626d5.3b1083'),
+            type: 'success',
+            duration: 2 * 1000
+          })
         } else {
-          this.$message({ message: '保存异常', type: 'error', duration: 2 * 1000 })
+          this.$message({ message: this.$t('324626d5.ece8fd'), type: 'error', duration: 2 * 1000 })
         }
       })
     },
@@ -541,19 +569,15 @@ export default {
     },
     // 撤销审核
     handleUndocodeaudit() {
-      this.$confirm(
-        '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次, 是否撤销审核?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      )
+      this.$confirm(this.$t('324626d5.2980fc'), this.$t('324626d5.02d981'), {
+        confirmButtonText: this.$t('324626d5.38cf16'),
+        cancelButtonText: this.$t('324626d5.625fb2'),
+        type: 'warning'
+      })
         .then(() => {
           undocodeaudit({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
-              message: '撤销成功',
+              message: this.$t('324626d5.8e05b0'),
               type: 'success',
               duration: 2 * 1000
             })
@@ -563,21 +587,21 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('324626d5.2111cc')
           })
         })
     },
     // 回退版本
     handleRevertcoderelease() {
-      this.$confirm('回退到上一个小程序版本, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('324626d5.47323e'), this.$t('324626d5.02d981'), {
+        confirmButtonText: this.$t('324626d5.38cf16'),
+        cancelButtonText: this.$t('324626d5.625fb2'),
         type: 'warning'
       })
         .then(() => {
           revertcoderelease({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
-              message: '回退成功',
+              message: this.$t('324626d5.742b8f'),
               type: 'success',
               duration: 2 * 1000
             })
@@ -587,7 +611,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('324626d5.2111cc')
           })
         })
     },
@@ -597,7 +621,7 @@ export default {
       this.submitWeappForm.templateName = this.detail.weapp.template_name
       submitOnlyCode(this.submitWeappForm).then((response) => {
         this.$message({
-          message: '上传代码成功，可查看体验版',
+          message: this.$t('324626d5.16f184'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -610,7 +634,7 @@ export default {
       this.submitWeappForm.templateName = this.detail.weapp.template_name
       submitReview(this.submitWeappForm).then((response) => {
         this.$message({
-          message: '提交成功，等待微信审核',
+          message: this.$t('324626d5.d3ae9f'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -624,15 +648,15 @@ export default {
       this.submitWeappForm.templateName = this.detail.weapp.template_name
 
       if (this.isForceUpdate) {
-        this.$confirm('将重新提交小程序, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('324626d5.34138b'), this.$t('324626d5.02d981'), {
+          confirmButtonText: this.$t('324626d5.38cf16'),
+          cancelButtonText: this.$t('324626d5.625fb2'),
           type: 'warning'
         })
           .then(() => {
             submitWxa(this.submitWeappForm).then((response) => {
               this.$message({
-                message: '上传并提交成功，等待微信审核',
+                message: this.$t('324626d5.cd764b'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -642,13 +666,13 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('324626d5.2111cc')
             })
           })
       } else {
         submitWxa(this.submitWeappForm).then((response) => {
           this.$message({
-            message: '上传并提交成功，等待微信审核',
+            message: this.$t('324626d5.cd764b'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -695,7 +719,7 @@ export default {
       configSubmitHandle(this.wxapp_id, params).then((response) => {
         this.wxaConfigVisible = false
         this.$message({
-          message: '配置成功',
+          message: this.$t('324626d5.a6d385'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -722,7 +746,7 @@ export default {
       saveDomain(params).then((response) => {
         this.wxaDomainVisible = false
         this.$message({
-          message: '推送成功',
+          message: this.$t('324626d5.3aefb5'),
           type: 'success',
           duration: 5 * 1000
         })

@@ -38,10 +38,10 @@ import RowGoods from '../../comps/goods-layout/rowgoods.vue'
 import ColumnGoods from '../../comps/goods-layout/columngoods.vue'
 import GridGoods from '../../comps/goods-layout/gridgoods.vue'
 import { getOuterStyle, getInnerStyle } from '../../comps/style-utils'
-
+import { i18n } from '@/i18n'
 export default {
   name: 'Speedkill',
-  wgtName: '秒杀',
+  wgtName: i18n.t('d36dbb01.55c758'),
   wgtDesc: '',
   wgtIcon: 'wgt-store',
   wgtType: 2,

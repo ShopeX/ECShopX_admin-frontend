@@ -7,7 +7,7 @@
   <div>
     <el-card class="mycard">
       <div v-if="info.entry_apply_info.operator_type === 'distributor'" slot="header">
-        分帐信息
+        {{ $t('bf851fbe.1f0739') }}
         <el-popover v-if="subTitle" placement="top-start" width="400" trigger="hover">
           <i slot="reference" class="el-icon-question" />
           <pre slot="" style="white-space: pre-line">
@@ -40,11 +40,11 @@
             </el-form-item>
           </el-col> -->
           <el-col v-if="info.entry_apply_info.operator_type === 'distributor'" :span="12">
-            <el-form-item label="总部分账占比" prop="headquarters_proportion">
+            <el-form-item :label="$t('bf851fbe.08605d')" prop="headquarters_proportion">
               <el-input
                 v-model="form.headquarters_proportion"
                 :clearable="true"
-                placeholder="请输入"
+                :placeholder="$t('bf851fbe.02cc4f')"
                 style="width: 100%"
               >
                 <span slot="suffix">%</span>
@@ -55,11 +55,11 @@
             v-if="info.is_rel_dealer && info.entry_apply_info.operator_type === 'distributor'"
             :span="12"
           >
-            <el-form-item label="经销商分账占比" prop="dealer_proportion">
+            <el-form-item :label="$t('bf851fbe.b61188')" prop="dealer_proportion">
               <el-input
                 v-model="form.dealer_proportion"
                 :clearable="true"
-                placeholder="请输入"
+                :placeholder="$t('bf851fbe.02cc4f')"
                 style="width: 100%"
               >
                 <span slot="suffix">%</span>
@@ -70,11 +70,11 @@
             v-if="info.is_rel_merchant && info.entry_apply_info.operator_type === 'distributor'"
             :span="12"
           >
-            <el-form-item label="商户分账占比" prop="merchant_proportion">
+            <el-form-item :label="$t('bf851fbe.03698c')" prop="merchant_proportion">
               <el-input
                 v-model="form.merchant_proportion"
                 :clearable="true"
-                placeholder="请输入"
+                :placeholder="$t('bf851fbe.02cc4f')"
                 style="width: 100%"
               >
                 <span slot="suffix">%</span>
@@ -88,14 +88,16 @@
             :disabled="isdisabled"
             @click="handleDialogOpen('form', 'APPROVED')"
           >
-            通过
+            {{ $t('bf851fbe.23c1f3') }}
           </el-button>
-          <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')"> 驳回 </el-button>
+          <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')">
+            {{ $t('bf851fbe.325254') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <el-dialog
-      title="审批弹框"
+      :title="$t('bf851fbe.45fa1c')"
       :visible.sync="dialogFormVisible"
       width="30%"
       :modal="false"
@@ -109,14 +111,14 @@
         :rows="5"
         :maxlength="300"
         :show-word-limit="true"
-        placeholder="请填写审批意见"
+        :placeholder="$t('bf851fbe.c4c230')"
       />
       <div slot="footer" class="dialog-footer">
         <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
-          text="确 定"
+          :text="$t('bf851fbe.aa7527')"
           @clickHandle="handleDialogChange('loadingBtn')"
         />
       </div>
@@ -194,7 +196,7 @@ export default {
           this.$emit('handleClose', 'update')
           // 跳转到列表页
           this.$message({
-            message: '操作成功',
+            message: this.$t('bf851fbe.33130f'),
             type: 'success'
           })
           this.$refs[ref].closeLoading()
@@ -211,12 +213,12 @@ export default {
       if (status === 'APPROVED') {
         this.$refs['form'].validate(async (vaild) => {
           if (vaild) {
-            this.visibleContent = `请确认是否通过${user_name}的开户申请`
+            this.visibleContent = this.$t('bf851fbe.c13dbc', { name: user_name })
             this.dialogFormVisible = true
           }
         })
       } else {
-        this.visibleContent = `请确认是否驳回${user_name}的开户申请`
+        this.visibleContent = this.$t('bf851fbe.b337a2', { name: user_name })
         this.dialogFormVisible = true
       }
     },
@@ -240,15 +242,15 @@ export default {
       }
       const reg = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!value) {
-        callback(new Error('请输入'))
+        callback(new Error(this.$t('bf851fbe.02cc4f')))
       } else {
         if (!reg.test(value)) {
-          callback(new Error('请输入正确格式，最多保留两位小数'))
+          callback(new Error(this.$t('bf851fbe.cc1ce5')))
         } else if (Number(value) > 100) {
           // 店铺类型为直营店的时候 能输入100
-          callback(new Error('分账比例不能超过100'))
+          callback(new Error(this.$t('bf851fbe.d19795')))
         } else if ((operator_type === 'dealer' || is_rel_dealer) && sum > 100) {
-          callback(new Error('分账占比和不能大于100，请核实后再试'))
+          callback(new Error(this.$t('bf851fbe.d7d7ed')))
         } else {
           callback()
         }

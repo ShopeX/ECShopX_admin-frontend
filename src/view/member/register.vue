@@ -7,19 +7,19 @@
   <SpPage class="memberReg">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane label="注册项配置" name="first">
+      <el-tab-pane :label="$t('8da83775.3a4128')" name="first">
         <el-card class="box-card">
           <div slot="header" class="between">
-            <span>会员中心个人信息录入项配置</span>
+            <span>{{ $t('8da83775.d3c31d') }}</span>
             <div>
               <el-button v-if="!VERSION_SHUYUN()" type="primary" @click="showAddDialog()">
-                新增配置
+                {{ $t('8da83775.80e2ca') }}
               </el-button>
             </div>
           </div>
           <el-table v-loading="isLoading" :data="tableData">
-            <el-table-column label="信息" prop="label" />
-            <el-table-column label="是否启用">
+            <el-table-column :label="$t('8da83775.d8c7e0')" prop="label" />
+            <el-table-column :label="$t('8da83775.53c3dd')">
               <template slot-scope="scope">
                 <el-switch
                   :value="!!scope.row.is_open"
@@ -36,22 +36,24 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="信息格式">
+            <el-table-column :label="$t('8da83775.aba785')">
               <template slot-scope="scope">
-                {{ scope.row.field_type | filterType }}
+                {{ getTypeLabel(scope.row.field_type) }}
               </template>
             </el-table-column>
-            <el-table-column label="提示文案" prop="alert_required_message" />
-            <el-table-column label="操作">
+            <el-table-column :label="$t('8da83775.9df451')" prop="alert_required_message" />
+            <el-table-column :label="$t('8da83775.2b6bc0')">
               <template slot-scope="scope">
-                <el-button type="text" @click="showAddDialog(scope.row)"> 编辑 </el-button>
+                <el-button type="text" @click="showAddDialog(scope.row)">
+                  {{ $t('8da83775.95b351') }}
+                </el-button>
                 <el-button
                   v-if="!VERSION_SHUYUN() && !scope.row.is_default"
                   type="text"
                   class="delete"
                   @click="deleteField(scope.row)"
                 >
-                  删除
+                  {{ $t('8da83775.2f4aad') }}
                 </el-button>
               </template>
             </el-table-column>
@@ -68,28 +70,28 @@
           />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="注册协议与隐私政策配置" class="paneSecond" name="second">
+      <el-tab-pane :label="$t('8da83775.f33fb2')" class="paneSecond" name="second">
         <div class="mainSecond">
           <el-form
             ref="privacy"
             :model="privacyForm"
-            :rles="rules"
+            :rules="rules"
             :label-position="formLabelPosition"
             label-width="100px"
           >
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
-                  <el-form-item label="注册协议标题" prop="member_register.title">
+                  <el-form-item :label="$t('8da83775.206057')" prop="member_register.title">
                     <el-input
                       v-model="privacyForm.member_register.title"
-                      placeholder="注册协议标题"
+                      :placeholder="$t('8da83775.206057')"
                       style="width: 500px"
                       show-word-limit
                       maxlength="30"
                     />
                   </el-form-item>
-                  <el-form-item label="注册协议" prop="member_register.content">
+                  <el-form-item :label="$t('8da83775.3c0397')" prop="member_register.content">
                     <SpRichText v-model="privacyForm.member_register.content" />
                   </el-form-item>
                 </div>
@@ -98,16 +100,16 @@
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
-                  <el-form-item label="隐私政策标题" prop="privacy.title">
+                  <el-form-item :label="$t('8da83775.f0002d')" prop="privacy.title">
                     <el-input
                       v-model="privacyForm.privacy.title"
-                      placeholder="隐私政策标题"
+                      :placeholder="$t('8da83775.f0002d')"
                       style="width: 500px"
                       show-word-limit
                       maxlength="30"
                     />
                   </el-form-item>
-                  <el-form-item label="隐私政策" prop="privacy.content">
+                  <el-form-item :label="$t('8da83775.cc953a')" prop="privacy.content">
                     <SpRichText v-model="privacyForm.privacy.content" />
                   </el-form-item>
                 </div>
@@ -115,11 +117,11 @@
             </div>
           </el-form>
           <div class="section-footer with-border content-center">
-            <el-button type="primary" @click="saveContent"> 保存 </el-button>
+            <el-button type="primary" @click="saveContent"> {{ $t('8da83775.be5fbb') }} </el-button>
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="互联网诊疗风险告知及知情同意书配置" class="paneSecond" name="third">
+      <el-tab-pane :label="$t('8da83775.2d5360')" class="paneSecond" name="third">
         <div class="mainSecond">
           <el-form
             ref="medicine"
@@ -131,14 +133,14 @@
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
-                  <el-form-item label="互联网诊疗风险告及知情同意书" prop="title">
+                  <el-form-item :label="$t('8da83775.78423a')" prop="title">
                     <el-input
                       v-model="medicineForm.title"
-                      placeholder="互联网诊疗风险告及知情同意书"
+                      :placeholder="$t('8da83775.78423a')"
                       style="width: 500px"
                     />
                   </el-form-item>
-                  <el-form-item label="互联网诊疗风险告及知情同意书" prop="content">
+                  <el-form-item :label="$t('8da83775.78423a')" prop="content">
                     <SpRichText v-model="medicineForm.content" />
                   </el-form-item>
                 </div>
@@ -146,7 +148,9 @@
             </div>
           </el-form>
           <div class="section-footer with-border content-center">
-            <el-button type="primary" @click="saveMedicineContent"> 保存 </el-button>
+            <el-button type="primary" @click="saveMedicineContent">
+              {{ $t('8da83775.be5fbb') }}
+            </el-button>
           </div>
         </div>
       </el-tab-pane>
@@ -159,20 +163,20 @@
         class="editform"
         label-width="120px"
       >
-        <el-form-item label="配置标题" prop="label">
+        <el-form-item :label="$t('8da83775.9c6a53')" prop="label">
           <el-input v-model="editform.label" type="text" maxlength="200" show-word-limit />
         </el-form-item>
-        <el-form-item label="信息格式">
+        <el-form-item :label="$t('8da83775.aba785')">
           <el-select v-model="editform.field_type" @change="fieldTypeChange">
             <el-option
               v-for="item in formTypeList"
               :key="item.type"
-              :label="item.name"
+              :label="$t(item.labelKey)"
               :value="item.type"
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="editform.field_type === 2" label="数值范围" prop="range">
+        <el-form-item v-if="editform.field_type === 2" :label="$t('8da83775.b7d43b')" prop="range">
           <el-row class="rangRow">
             <el-col :span="11">
               <el-input v-model="editform.range.start" type="number" />
@@ -185,14 +189,19 @@
         </el-form-item>
         <el-form-item
           v-if="editform.field_type === 4 || editform.field_type === 5"
-          label="选项内容"
+          :label="$t('8da83775.e7f1b8')"
           class="select"
           prop="select"
         >
-          <el-input v-model="selectValue.label" placeholder="内容" type="text" show-word-limit>
+          <el-input
+            v-model="selectValue.label"
+            :placeholder="$t('8da83775.2d711b')"
+            type="text"
+            show-word-limit
+          >
             <template slot="append">
               <el-button type="primary" :disabled="!isSelectValue" @click="saveSelect">
-                确认
+                {{ $t('8da83775.e83a25') }}
               </el-button>
             </template>
           </el-input>
@@ -209,7 +218,7 @@
             </el-tag>
           </div>
         </el-form-item>
-        <el-form-item label="提示文案" prop="alert_required_message">
+        <el-form-item :label="$t('8da83775.9df451')" prop="alert_required_message">
           <el-input
             v-model="editform.alert_required_message"
             type="text"
@@ -218,8 +227,8 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="saveForm"> 确认 </el-button>
-          <el-button @click="cancelEdit"> 取消 </el-button>
+          <el-button type="primary" @click="saveForm"> {{ $t('8da83775.e83a25') }} </el-button>
+          <el-button @click="cancelEdit"> {{ $t('8da83775.625fb2') }} </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -241,49 +250,24 @@ import {
 import { getRulesInfo, putRulesInfo } from '@/api/shop'
 
 const typeList = [
-  {
-    name: '文本',
-    type: 1
-  },
-  {
-    name: '数字',
-    type: 2
-  },
-  {
-    name: '日期',
-    type: 3
-  },
-  {
-    name: '单选',
-    type: 4
-  },
-  {
-    name: '复选框',
-    type: 5
-  },
-  {
-    name: '手机号',
-    type: 6
-  }
+  { name: '文本', type: 1, labelKey: '8da83775.97d076' },
+  { name: '数字', type: 2, labelKey: '8da83775.55d479' },
+  { name: '日期', type: 3, labelKey: '8da83775.4ff1e7' },
+  { name: '单选', type: 4, labelKey: '8da83775.9fd1b7' },
+  { name: '复选框', type: 5, labelKey: '8da83775.db98f8' },
+  { name: '手机号', type: 6, labelKey: '8da83775.8098e2' }
 ]
 export default {
   filters: {
     filterType(val) {
       const data = typeList.find((item) => item.type === val)
-      return data.name
+      return data ? data.name : ''
     }
   },
   data() {
-    const validRange = (rule, value, callback) => {
-      if (!value.start || !value.end || value.start >= value.end) {
-        callback(new Error('请输入正确的数字范围'))
-      } else {
-        callback()
-      }
-    }
     return {
       activeName: 'first',
-      pageTitle: '会员中心个人信息录入项配置',
+      pageTitle: '',
       settingStatus: false,
       showAdd: false,
       isLoading: false,
@@ -328,22 +312,6 @@ export default {
           content: ''
         }
       },
-      editformRules: {
-        label: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        alert_required_message: [{ required: true, message: '请输入提示语', trigger: 'blur' }],
-        range: [{ required: true, validator: validRange, trigger: 'blur' }],
-        radio_list: [{ required: true, message: '请添加选项', trigger: 'blur' }]
-      },
-      rules: {
-        'privacy.title': [{ required: true, message: '请输入协议标题', trigger: 'blur' }],
-        'member_register.title': [{ required: true, message: '请输入协议标题', trigger: 'blur' }],
-        'privacy.content': [{ required: true, message: '请输入充值协议', trigger: 'blur' }],
-        'member_register.content': [{ required: true, message: '请输入注册协议', trigger: 'blur' }]
-      },
-      rules2: {
-        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        content: [{ required: true, message: '请输入意向书', trigger: 'blur' }]
-      },
       modalTitle: '',
       medicineForm: {
         title: '',
@@ -352,6 +320,36 @@ export default {
     }
   },
   computed: {
+    editformRules() {
+      return {
+        label: [{ required: true, message: this.$t('8da83775.b91aba'), trigger: 'blur' }],
+        alert_required_message: [
+          { required: true, message: this.$t('8da83775.46ba1b'), trigger: 'blur' }
+        ],
+        range: [{ required: true, validator: this.validRange, trigger: 'blur' }],
+        radio_list: [{ required: true, message: this.$t('8da83775.0c6dc4'), trigger: 'blur' }]
+      }
+    },
+    rules() {
+      return {
+        'privacy.title': [{ required: true, message: this.$t('8da83775.6d1a0f'), trigger: 'blur' }],
+        'member_register.title': [
+          { required: true, message: this.$t('8da83775.6d1a0f'), trigger: 'blur' }
+        ],
+        'privacy.content': [
+          { required: true, message: this.$t('8da83775.bb76f9'), trigger: 'blur' }
+        ],
+        'member_register.content': [
+          { required: true, message: this.$t('8da83775.78e455'), trigger: 'blur' }
+        ]
+      }
+    },
+    rules2() {
+      return {
+        title: [{ required: true, message: this.$t('8da83775.b91aba'), trigger: 'blur' }],
+        content: [{ required: true, message: this.$t('8da83775.4fa229'), trigger: 'blur' }]
+      }
+    },
     formLabelPosition() {
       const lang = this.$store?.state?.system?.lang
       return ['en', 'ar'].includes(lang) ? 'top' : ''
@@ -361,11 +359,23 @@ export default {
     }
   },
   mounted() {
+    this.pageTitle = this.$t('8da83775.d3c31d')
     this.getFormItems()
     this.getShopRules()
     this.getMemberFieldSetting()
   },
   methods: {
+    validRange(rule, value, callback) {
+      if (!value.start || !value.end || value.start >= value.end) {
+        callback(new Error(this.$t('8da83775.96641a')))
+      } else {
+        callback()
+      }
+    },
+    getTypeLabel(fieldType) {
+      const item = typeList.find((i) => i.type === fieldType)
+      return item ? this.$t(item.labelKey) : ''
+    },
     //选择商品分页
     pageChange(val) {
       this.pageParam.page = val
@@ -456,7 +466,7 @@ export default {
       const { selectValue, editform } = this
       if (!selectValue.label) {
         this.$message({
-          message: '请填写正确的值',
+          message: this.$t('8da83775.5117bc'),
           type: 'warning'
         })
         return
@@ -503,24 +513,24 @@ export default {
           range,
           radio_list: [...validate_condition]
         }
-        this.modalTitle = '编辑配置'
+        this.modalTitle = this.$t('8da83775.664d9f')
       } else {
-        this.modalTitle = '新增配置'
+        this.modalTitle = this.$t('8da83775.80e2ca')
       }
       this.showAdd = true
     },
     // 删除规则
     deleteField(data) {
       const { id } = data
-      this.$confirm('此操作将删除此规则, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('8da83775.22442b'), this.$t('8da83775.02d981'), {
+        confirmButtonText: this.$t('8da83775.38cf16'),
+        cancelButtonText: this.$t('8da83775.625fb2'),
         type: 'warning'
       }).then(async () => {
         await deleteRegForm({ id })
         this.$message({
           type: 'success',
-          message: '删除成功!'
+          message: this.$t('8da83775.fc9bdd')
         })
         this.getFormItems(true)
       })
@@ -536,11 +546,10 @@ export default {
       this.getFormItems()
     },
     handleClick(tab, event) {
-      console.log(tab, event, this.activeName)
       const titleMap = {
-        first: '会员中心个人信息录入项配置',
-        second: '注册协议与隐私政策配置',
-        third: '互联网诊疗风险告知及知情同意书配置'
+        first: this.$t('8da83775.d3c31d'),
+        second: this.$t('8da83775.f33fb2'),
+        third: this.$t('8da83775.2d5360')
       }
       this.pageTitle = titleMap[this.activeName]
     },
@@ -563,7 +572,7 @@ export default {
             ]
           }).then((response) => {
             this.$message({
-              message: '保存成功',
+              message: this.$t('8da83775.3b1083'),
               type: 'success'
             })
             this.getShopRules('medicine')
@@ -587,7 +596,7 @@ export default {
             ]
           }).then((response) => {
             this.$message({
-              message: '保存成功',
+              message: this.$t('8da83775.3b1083'),
               type: 'success'
             })
             this.getShopRules()

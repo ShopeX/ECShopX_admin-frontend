@@ -5,29 +5,31 @@
 
 <template>
   <section class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('22f1944e.e366cc') }}</div>
     <div class="section-body">
       <el-form>
-        <el-form-item label="展示图">
+        <el-form-item :label="$t('22f1944e.364e87')">
           <div v-for="(item, index) in t_data.data" class="setting-item slider">
             <div v-if="!num" class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
             </div>
             <div @click="handleImgChange(index)">
-              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader" />
+              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader">
               <div v-else class="banner-uploader">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('22f1944e.ce6855') }}
               </div>
             </div>
             <div v-if="show_goods" class="uploader-setting">
               <div class="goods-select" @click="handleGoodsChange(index)">
                 <div v-if="item.goodsId" class="link-content">
-                  <template>商品：</template>
+                  <template>{{ $t('22f1944e.10fe9c') }}</template>
                   {{ item.title }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                  <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                    $t('22f1944e.4f2c29')
+                  }}
                 </div>
               </div>
             </div>
@@ -48,7 +50,7 @@
       />
     </div>
     <div v-if="!num || (num && t_data.data.length < 4)" class="content-center">
-      <div class="frm-tips">只能上传jpg/png文件（建议尺寸：1220px * 500px）</div>
+      <div class="frm-tips">{{ $t('22f1944e.1b6cc2') }}</div>
       <!-- <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div> -->
       <el-button
         :disabled="data.length >= 5"
@@ -56,7 +58,7 @@
         class="iconfont icon-plus-circle banner-button-uploader"
         @click="addItem"
       >
-        {{ text }}
+        {{ displayText }}
       </el-button>
     </div>
   </section>
@@ -91,7 +93,14 @@ export default {
     },
     text: {
       type: String,
-      default: '添加轮播图'
+      default: ''
+    }
+  },
+  computed: {
+    displayText() {
+      if (!this.text) return this.$t('22f1944e.22134f')
+      if (/^[a-f0-9]{8}\.[a-f0-9]{6}$/.test(this.text)) return this.$t(this.text)
+      return this.text
     }
   },
   data() {
@@ -165,7 +174,7 @@ export default {
 
       if (this.t_data.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('22f1944e.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })

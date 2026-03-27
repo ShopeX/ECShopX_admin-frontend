@@ -5,17 +5,19 @@
 
 <template>
   <el-card class="cus-card">
-    <div class="cus-title">详细信息</div>
+    <div class="cus-title">{{ $t('4113c984.4bcc9a') }}</div>
     <div class="avater-box">
       <div class="flex-avater-box">
-        <img class="avater-img" src="@/assets/img/adapay/authory_avater.png" alt="" />
+        <img class="avater-img" src="@/assets/img/adapay/authory_avater.png" alt="">
         <span class="cus-username">{{ operatorInfo.login_name }}</span>
         <el-tag
           :type="operatorInfo.operator_type === 'staff' ? 'success' : 'warning'"
           size="medium"
           style="margin-left: 25px"
         >
-          {{ operatorInfo.operator_type === 'staff' ? '平台管理员' : '店铺管理员' }}
+          {{
+            operatorInfo.operator_type === 'staff' ? $t('4113c984.fc79d4') : $t('4113c984.3282f2')
+          }}
         </el-tag>
       </div>
       <img
@@ -23,29 +25,29 @@
         src="@/assets/img/adapay/pass.png"
         style="width: 64px; height: 64px"
         alt=""
-      />
+      >
       <img
         v-if="info.status == '2'"
         src="@/assets/img/adapay/reject.png"
         alt=""
         style="width: 70px; height: 69px"
-      />
+      >
     </div>
     <el-row class="cus-info-box">
       <el-col :span="24">
-        <span class="cus-label">姓名：</span>
+        <span class="cus-label">{{ $t('4113c984.f5d015') }}</span>
         <span>{{ operatorInfo.username }}</span>
       </el-col>
       <el-col :span="24">
-        <span class="cus-label">手机号：</span>
+        <span class="cus-label">{{ $t('4113c984.41fe81') }}</span>
         <span>{{ operatorInfo.mobile }}</span>
       </el-col>
       <el-col :span="24">
-        <span class="cus-label">申请时间：</span>
+        <span class="cus-label">{{ $t('4113c984.402d96') }}</span>
         <span>{{ timeFilter(info.create_time) }}</span>
       </el-col>
       <el-col :span="24">
-        <span class="cus-label">所属店铺：</span>
+        <span class="cus-label">{{ $t('4113c984.468a5c') }}</span>
         <el-tag
           v-for="item in distributorIds"
           :key="item.name"
@@ -57,7 +59,7 @@
         </el-tag>
       </el-col>
       <el-col v-if="operatorInfo.operator_type === 'staff'" :span="24">
-        <span class="cus-label">角色：</span>
+        <span class="cus-label">{{ $t('4113c984.20f32e') }}</span>
         <el-tag
           v-for="item in roleData"
           :key="item.role_name"
@@ -69,15 +71,15 @@
         </el-tag>
       </el-col>
       <el-col :span="24">
-        <span class="cus-label">申请说明：</span>
+        <span class="cus-label">{{ $t('4113c984.56d702') }}</span>
         <span>{{ info.reason || '-' }}</span>
       </el-col>
       <el-col :span="24" class="cus-time">
-        <span class="cus-label">申请开通时间：</span>
-        <span>{{ info.range ? '每个工作日' + info.range : '全天' }}</span>
-        <span class="cus-label">生效时间：</span>
+        <span class="cus-label">{{ $t('4113c984.fdaccb') }}</span>
+        <span>{{ info.range ? $t('4113c984.1a5086') + info.range : $t('4113c984.bd4357') }}</span>
+        <span class="cus-label">{{ $t('4113c984.2e451c') }}</span>
         <span>{{ info.start_time }}</span>
-        <span class="cus-label">结束时间：</span>
+        <span class="cus-label">{{ $t('4113c984.590dbb') }}</span>
         <span>{{ info.end_time }}</span>
       </el-col>
     </el-row>

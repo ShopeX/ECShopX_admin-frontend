@@ -8,10 +8,10 @@
     <el-row v-if="$store.getters.login_type != 'distributor'">
       <el-col>
         <el-button type="primary" :disabled="isDisable" @click="updateCategory">
-          保存管理分类
+          {{ $t('fbbf67c9.408d93') }}
         </el-button>
         <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)">
-          新增管理分类
+          {{ $t('fbbf67c9.f4ff5a') }}
         </el-button>
       </el-col>
     </el-row>
@@ -24,7 +24,7 @@
         :height="wheight - 180"
         :tree-props="{ children: 'children' }"
       >
-        <el-table-column label="分类名称" min-width="280">
+        <el-table-column :label="$t('fbbf67c9.04d7d8')" min-width="280">
           <template slot-scope="scope">
             <el-input
               v-if="$store.getters.login_type != 'distributor'"
@@ -35,7 +35,7 @@
             <span v-else class="input-b" size="mini">{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" sortable width="150">
+        <el-table-column prop="sort" :label="$t('fbbf67c9.53eb44')" sortable width="150">
           <template slot-scope="scope">
             <el-input
               v-if="$store.getters.login_type != 'distributor'"
@@ -47,7 +47,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="created" label="创建时间" width="120">
+        <el-table-column prop="created" :label="$t('fbbf67c9.eca37c')" width="120">
           <template slot-scope="scope">
             {{ scope.row.created | datetime }}
           </template>
@@ -61,7 +61,11 @@
             <span v-else>无</span>
           </template>
         </el-table-column> -->
-        <el-table-column v-if="$store.getters.login_type != 'distributor'" width="340" label="操作">
+        <el-table-column
+          v-if="$store.getters.login_type != 'distributor'"
+          width="340"
+          :label="$t('642aeb32.2b6bc0')"
+        >
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -70,7 +74,7 @@
                   query: { main_cat_id: scope.row.category_id }
                 }"
               >
-                查看商品
+                {{ $t('fbbf67c9.f13684') }}
               </router-link>
             </el-button>
             <el-button
@@ -78,30 +82,32 @@
               type="text"
               @click="handleDialogAttr(scope.row, 'item_params', scope.$index)"
             >
-              关联参数
+              {{ $t('fbbf67c9.804a1f') }}
             </el-button>
             <el-button
               v-if="scope.row.category_level == 3"
               type="text"
               @click="handleDialogAttr(scope.row, 'item_spec', scope.$index)"
             >
-              关联规格
+              {{ $t('fbbf67c9.ea4da6') }}
             </el-button>
             <!-- <el-button type="text" v-if="scope.row.category_level == 3" @click="handleProfitPrice(scope.row)">分润配置</el-button> -->
             <el-button v-if="scope.row.category_level < 3" type="text" @click="append(scope.row)">
-              新增子类
+              {{ $t('fbbf67c9.82537d') }}
             </el-button>
             <!-- <el-button type="text" @click="taxRateSet(scope.row)">跨境税率设置</el-button> -->
-            <el-button type="text" @click="deleteCategory(scope.row)"> 删除 </el-button>
+            <el-button type="text" @click="deleteCategory(scope.row)">
+              {{ $t('fbbf67c9.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
     <!--修改跨境税率-->
-    <sideBar :visible.sync="show_sideBar" :title="'设置税率'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('fbbf67c9.2d0302')">
       <el-form>
-        <el-form-item label="跨境税率">
+        <el-form-item :label="$t('fbbf67c9.1556e0')">
           <el-input-number
             v-model="crossborder_tax_rate"
             controls-position="right"
@@ -114,7 +120,7 @@
           <span style="margin-left: 5px">%</span>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="saveTaxRate"> 提交 </el-button>
+          <el-button type="primary" @click="saveTaxRate"> {{ $t('fbbf67c9.939d53') }} </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -126,14 +132,14 @@
       @closeImgDialog="closeImgDialog"
     />
     <el-dialog
-      :title="currentAttrType == 'item_params' ? '关联参数' : '关联规格'"
+      :title="currentAttrType == 'item_params' ? $t('fbbf67c9.804a1f') : $t('fbbf67c9.ea4da6')"
       :visible.sync="relAttrvisible"
       :before-close="handleCancel"
     >
       <el-alert
-        title="关联说明"
+        :title="$t('fbbf67c9.9763f9')"
         type="info"
-        description="类目最多关联20个商品参数和3个规格，并且只能关联一个图片属性规格"
+        :description="$t('fbbf67c9.307381')"
         show-icon
       />
       <el-row v-loading="dialogLoading" :gutter="10">
@@ -158,7 +164,7 @@
                 >
               </template>
             </el-table-column>
-            <el-table-column prop="attribute_name" label="全部">
+            <el-table-column prop="attribute_name" :label="$t('fbbf67c9.a8b0c2')">
               <template slot-scope="props">
                 <span v-if="props.row.attribute_memo"
                   >{{ props.row.attribute_name }}【{{ props.row.attribute_memo }}】</span
@@ -169,7 +175,7 @@
                   size="mini"
                   type="success"
                 >
-                  图片
+                  {{ $t('fbbf67c9.20def7') }}
                 </el-tag>
               </template>
             </el-table-column>
@@ -191,7 +197,7 @@
           <el-table :data="checkGoodsAttr" style="width: 100%">
             <el-table-column
               prop="attribute_name"
-              :label="'已选择(' + this.checkGoodsAttr.length + ')'"
+              :label="$t('fbbf67c9.17f5b7', { count: this.checkGoodsAttr.length })"
             >
               <template slot-scope="props">
                 <span v-if="props.row.attribute_memo"
@@ -203,7 +209,7 @@
                   size="mini"
                   type="success"
                 >
-                  图片
+                  {{ $t('fbbf67c9.20def7') }}
                 </el-tag>
               </template>
             </el-table-column>
@@ -211,8 +217,8 @@
         </el-col>
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel">取 消</el-button>
-        <el-button type="primary" @click="saveCategoryAttr">确 定</el-button>
+        <el-button @click="handleCancel">{{ $t('fbbf67c9.c08ab9') }}</el-button>
+        <el-button type="primary" @click="saveCategoryAttr">{{ $t('fbbf67c9.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -284,10 +290,9 @@ export default {
       this.crossborder_tax_rate = data.crossborder_tax_rate
     },
     saveTaxRate() {
-      console.log('保存税率')
       updateCategory(this.category_id, { crossborder_tax_rate: this.crossborder_tax_rate }).then(
         (res) => {
-          this.$message({ type: 'success', message: '保存成功' })
+          this.$message({ type: 'success', message: this.$t('fbbf67c9.3b1083') })
           this.show_sideBar = false
           this.category_id = 0
           this.crossborder_tax_rate = ''
@@ -320,7 +325,7 @@ export default {
       this.getGoodsAttr(checkIds)
     },
     selectAll(data) {
-      this.$message({ type: 'error', message: '绑定不支持全选' })
+      this.$message({ type: 'error', message: this.$t('fbbf67c9.17430f') })
       this.toggleRowSelection()
     },
     toggleRowSelection() {
@@ -346,7 +351,7 @@ export default {
           findIndex = index
         } else {
           if (item.is_image === 'true' && row.is_image === 'true') {
-            this.$message({ type: 'error', message: '只能绑定一个图片类型规格' })
+            this.$message({ type: 'error', message: this.$t('fbbf67c9.be80e6') })
             this.toggleRowSelection()
             visible = 0
           }
@@ -361,13 +366,13 @@ export default {
       if (this.currentAttrType == 'item_params') {
         if (this.checkGoodsAttr.length >= 20 && findIndex == -1) {
           this.toggleRowSelection()
-          this.$message({ type: 'error', message: '最多关联20个商品参数' })
+          this.$message({ type: 'error', message: this.$t('fbbf67c9.06ae72') })
           return false
         }
       } else {
         if (this.checkGoodsAttr.length >= 3 && findIndex == -1) {
           this.toggleRowSelection()
-          this.$message({ type: 'error', message: '最多关联3个规格' })
+          this.$message({ type: 'error', message: this.$t('fbbf67c9.96fc5c') })
           return false
         }
       }
@@ -431,7 +436,7 @@ export default {
 
       if (this.currentCategory.category_id) {
         updateCategory(this.currentCategory.category_id, selectionData).then((res) => {
-          this.$message({ type: 'success', message: '保存成功' })
+          this.$message({ type: 'success', message: this.$t('fbbf67c9.3b1083') })
           this.handleCancel()
           this.getCategory()
         })
@@ -464,7 +469,7 @@ export default {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
             this.$message({
               type: 'error',
-              message: '同级类目名称不能相同'
+              message: this.$t('fbbf67c9.ecae17')
             })
             return false
           }
@@ -482,7 +487,7 @@ export default {
             ) {
               this.$message({
                 type: 'error',
-                message: '同级类目名称不能相同'
+                message: this.$t('fbbf67c9.ecae17')
               })
               return false
             }
@@ -500,15 +505,15 @@ export default {
       saveCategory({ form: form }).then((response) => {
         this.$message({
           type: 'success',
-          message: '保存类目成功'
+          message: this.$t('fbbf67c9.509818')
         })
         this.getCategory()
       })
     },
     deleteCategory(data) {
-      this.$confirm('此操作将删除该类目, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('fbbf67c9.763293'), this.$t('fbbf67c9.02d981'), {
+        confirmButtonText: this.$t('fbbf67c9.38cf16'),
+        cancelButtonText: this.$t('fbbf67c9.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -516,7 +521,7 @@ export default {
             deleteCategory(data.category_id).then((response) => {
               this.$message({
                 type: 'success',
-                message: '删除类目成功'
+                message: this.$t('fbbf67c9.c2329a')
               })
               this.getCategory()
             })
@@ -548,7 +553,7 @@ export default {
           console.log(e)
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('fbbf67c9.2111cc')
           })
         })
     },
@@ -608,7 +613,7 @@ export default {
         if (catNameLength > 50) {
           this.$message({
             type: 'error',
-            message: '类目名称长度最多25个汉字或50个字符'
+            message: this.$t('fbbf67c9.2f5f1d')
           })
           return false
         }
@@ -616,7 +621,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '类目不能为空'
+          message: this.$t('fbbf67c9.799c40')
         })
         return false
       }

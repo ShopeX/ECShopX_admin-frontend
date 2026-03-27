@@ -23,7 +23,11 @@
           <!-- 操作按钮 -->
           <div class="action-container">
             <div style="height: 20px" />
-            <el-button type="primary" plain @click="addHandle">添加活动</el-button>
+            <el-button type="primary" plain @click="addHandle">
+{{
+              $t('f178a6ca.23b46b')
+            }}
+</el-button>
           </div>
 
           <!-- 选择tab -->
@@ -41,7 +45,7 @@
       <SpDialog
         ref="pushLiveCouponDialogRef"
         v-model="lotteryDialogShow"
-        title="活动统计"
+        :title="$t('f178a6ca.642149')"
         :modal="false"
         class="base-form"
         :form="form"
@@ -56,14 +60,13 @@
 import { tableSchema, statisticsFormSchema } from './schema'
 import api from '@/api'
 
-import { audit_status, status_info_map } from './constants.js'
+import { audit_status as getAuditStatus, status_info_map } from './constants.js'
 
 export default {
   data() {
     return {
       areas: [],
       activeName: 'all',
-      audit_status,
       lotteryDialogShow: false,
       form: {},
       dialogData:null,
@@ -71,6 +74,9 @@ export default {
     }
   },
   computed: {
+    audit_status() {
+      return getAuditStatus(this.$t)
+    },
     tableSchema() {
       return tableSchema(this)
     },
@@ -112,9 +118,9 @@ export default {
         activity_id: row.id
       }).then((res) => {
         this.refresh()
-        this.$message.success('终止成功')
+        this.$message.success(this.$t('f178a6ca.dfb1d0'))
       }).catch(err => {
-        this.$message.error('操作失败')
+        this.$message.error(this.$t('f178a6ca.5fa802'))
       })
     },
     // 复制抽奖活动，跳转时通过查询参数携带活动ID
@@ -143,7 +149,7 @@ export default {
           path: '/companydata/report/baseexport?tab=export_luckdraw_log',
         })
       }).catch(err => {
-        this.$message.error('导出失败')
+        this.$message.error(this.$t('f178a6ca.dd51ab'))
       })
     },
     beforeSearch(params) {

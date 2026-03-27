@@ -27,20 +27,20 @@
   <SpPage>
     <SpPlatformTip v-if="!VERSION_SHUYUN()" />
     <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="card">
-      <el-tab-pane label="助力活动管理" name="list">
+      <el-tab-pane :label="$t('a483cf85.4ccc19')" name="list">
         <el-table v-loading="loading" :data="dataList" :height="wheight - 230">
-          <el-table-column prop="title" label="活动名称" />
-          <el-table-column label="活动时间" width="180">
+          <el-table-column prop="title" :label="$t('a483cf85.39834b')" />
+          <el-table-column :label="$t('a483cf85.c799f5')" width="180">
             <template slot-scope="scope">
-              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br />
+              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br>
               {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </template>
           </el-table-column>
-          <el-table-column prop="item_name" label="产品名称" />
-          <el-table-column label="产品原价" align="center">
+          <el-table-column prop="item_name" :label="$t('a483cf85.ff6855')" />
+          <el-table-column :label="$t('a483cf85.5c4bd5')" align="center">
             <template slot-scope="scope"> ￥{{ scope.row.mkt_price / 100 }} </template>
           </el-table-column>
-          <el-table-column label="产品底价" align="center">
+          <el-table-column :label="$t('a483cf85.70d74a')" align="center">
             <template slot-scope="scope"> ￥{{ scope.row.price / 100 }} </template>
           </el-table-column>
           <!-- <el-table-column label="助力范围" align="center">
@@ -48,14 +48,14 @@
               ￥[{{scope.row.bargain_range.min / 100}} ~ {{scope.row.bargain_range.max / 100}}]
             </template>
           </el-table-column> -->
-          <el-table-column label="助力人数" align="center">
+          <el-table-column :label="$t('a483cf85.bfea22')" align="center">
             <template slot-scope="scope">
               {{ scope.row.people_range.min }} ~ {{ scope.row.people_range.max }}
             </template>
           </el-table-column>
-          <el-table-column prop="limit_num" label="产品数量" align="center" />
-          <el-table-column prop="order_num" label="已购数量" align="center" />
-          <el-table-column label="操作">
+          <el-table-column prop="limit_num" :label="$t('a483cf85.82330c')" align="center" />
+          <el-table-column prop="order_num" :label="$t('a483cf85.80e92c')" align="center" />
+          <el-table-column :label="$t('a483cf85.2b6bc0')">
             <template slot-scope="scope">
               <i
                 v-if="!scope.row.is_expired"
@@ -67,7 +67,7 @@
                 class="el-icon-delete"
                 style="margin-left: 10px"
                 @click="terminateBargainsAction(scope.$index, scope.row)"
-                >废除</i
+                >{{ $t('a483cf85.487e61') }}</i
               >
               <i
                 class="mark el-icon-delete"
@@ -86,13 +86,13 @@
           />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="助力广告图" name="image">
+      <el-tab-pane :label="$t('a483cf85.185952')" name="image">
         <el-form ref="form" label-position="left">
           <el-form-item>
-            <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：617px * 214px）</div>
+            <div class="frm-tips">{{ $t('a483cf85.c03a1e') }}</div>
             <div>
               <div class="upload-box" @click="handleImgChange">
-                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic" />
+                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic">
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -105,7 +105,7 @@
           </el-form-item>
         </el-form>
         <div class="section-footer with-border content-center" style="width: 100%">
-          <el-button type="primary" @click="saveAdPic"> 保 存 </el-button>
+          <el-button type="primary" @click="saveAdPic"> {{ $t('a483cf85.56df61') }} </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -165,7 +165,7 @@ export default {
         updateParamsById(query).then((response) => {
           // this.getAdPic()
           this.$message({
-            message: '保存成功',
+            message: this.$t('a483cf85.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -184,7 +184,7 @@ export default {
             // this.getAdPic()
             this.submit = false
             this.$message({
-              message: '保存成功',
+              message: this.$t('a483cf85.3b1083'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -219,15 +219,15 @@ export default {
       })
     },
     deleteBargainsAction(index, row) {
-      this.$confirm('此操作将删除该助力活动, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('a483cf85.398e70'), this.$t('a483cf85.02d981'), {
+        confirmButtonText: this.$t('a483cf85.38cf16'),
+        cancelButtonText: this.$t('a483cf85.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteBargains(row.bargain_id).then((response) => {
             this.$message({
-              message: '删除助力活动成功',
+              message: this.$t('a483cf85.e7ea3e'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -237,20 +237,20 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('a483cf85.2111cc')
           })
         })
     },
     terminateBargainsAction(index, row) {
-      this.$confirm('此操作将废除该助力活动, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('a483cf85.524771'), this.$t('a483cf85.02d981'), {
+        confirmButtonText: this.$t('a483cf85.38cf16'),
+        cancelButtonText: this.$t('a483cf85.625fb2'),
         type: 'warning'
       })
         .then(() => {
           terminateBargains(row.bargain_id).then((response) => {
             this.$message({
-              message: '废除助力活动成功',
+              message: this.$t('a483cf85.55ba0b'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -260,7 +260,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('a483cf85.2111cc')
           })
         })
     },
@@ -276,7 +276,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取活动列表出错'
+            message: this.$t('a483cf85.45e4ed')
           })
         })
     },

@@ -37,7 +37,7 @@
           </div>
           <!-- 左侧热图区 -->
           <div class="floor-left__footer">
-            <img :src="dataForm.leftImg.url" />
+            <img :src="dataForm.leftImg.url">
           </div>
         </div>
         <!-- 商品列表 -->
@@ -58,7 +58,7 @@
                     <p>{{ item.price | price }}</p>
                   </div>
                   <div class="goods-footer__submit">
-                    <el-button size="mini" type="danger"> 加入购物车 </el-button>
+                    <el-button size="mini" type="danger">{{ $t('0d376b91.62d369') }}</el-button>
                   </div>
                 </div>
               </div>
@@ -68,10 +68,10 @@
         <!-- 右侧热图区 -->
         <div class="floor-right">
           <div class="floor-right__top">
-            <img :src="dataForm.rightImg1.url" />
+            <img :src="dataForm.rightImg1.url">
           </div>
           <div class="floor-right__footer">
-            <img :src="dataForm.rightImg2.url" />
+            <img :src="dataForm.rightImg2.url">
           </div>
         </div>
       </div>

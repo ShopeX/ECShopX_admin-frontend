@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '报表'
+const name = 'a0e9996b.fc00f3'
 import Layout from '@/view/layout' // 主框架
 
 export default {

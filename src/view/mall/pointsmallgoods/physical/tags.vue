@@ -8,26 +8,31 @@
     <el-row :gutter="20">
       <el-col :span="3">
         <el-button type="primary" icon="plus" style="width: 100%" size="mini" @click="addTemplate">
-          添加标签
+          {{ $t('642aeb32.736eaa') }}
         </el-button>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="params.tag_name" placeholder="标签名" style="width: 100%" size="mini">
+        <el-input
+          v-model="params.tag_name"
+          :placeholder="$t('642aeb32.0718bf')"
+          style="width: 100%"
+          size="mini"
+        >
           <el-button slot="append" icon="el-icon-search" @click="searchData" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="tagsList" :height="wheight - 130">
       <el-table-column prop="tag_id" label="ID" width="100" />
-      <el-table-column prop="tag_name" label="标签名称" width="250">
+      <el-table-column prop="tag_name" :label="$t('642aeb32.341fe8')" width="250">
         <template slot-scope="scope">
           <el-tag :color="scope.row.tag_color" size="mini" style="color: #ffffff">
             {{ scope.row.tag_name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="description" label="标签描述" width="250" />
-      <el-table-column label="操作">
+      <el-table-column prop="description" :label="$t('642aeb32.da5bf4')" width="250" />
+      <el-table-column :label="$t('642aeb32.2b6bc0')">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="el-icon-edit-outline" @click="editAction(scope.$index, scope.row)" />
@@ -46,42 +51,42 @@
       />
     </div>
     <el-dialog
-      title="添加、编辑标签"
+      :title="$t('642aeb32.8aa239')"
       width="40%"
       :visible.sync="memberTagDialog"
       :before-close="handleCancelLabelsDialog"
     >
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
-          <el-form-item label="预览最终结果">
+          <el-form-item :label="$t('642aeb32.abd688')">
             <el-tag :color="form.tag_color" size="mini" :style="'color:' + form.font_color">
               {{ form.tag_name }}
             </el-tag>
           </el-form-item>
           <el-form-item
             class="content-left"
-            label="标签名称"
+            :label="$t('642aeb32.341fe8')"
             prop="tag_name"
-            :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
+            :rules="[{ required: true, message: this.$t('642aeb32.6f81f3'), trigger: 'blur' }]"
           >
-            <el-input v-model="form.tag_name" placeholder="请输入标签名称" />
+            <el-input v-model="form.tag_name" :placeholder="$t('642aeb32.6f81f3')" />
           </el-form-item>
-          <el-form-item class="content-left" label="标签说明">
+          <el-form-item class="content-left" :label="$t('642aeb32.beff13')">
             <el-input
               v-model="form.description"
               type="textarea"
               :rows="3"
-              placeholder="请输入标签说明"
+              :placeholder="$t('642aeb32.92f284')"
             />
           </el-form-item>
-          <el-form-item class="content-left" label="标签颜色">
+          <el-form-item class="content-left" :label="$t('642aeb32.0a6bfb')">
             <el-color-picker v-model="form.tag_color" show-alpha :predefine="predefineColors" />
           </el-form-item>
-          <el-form-item class="content-left" label="字体颜色">
+          <el-form-item class="content-left" :label="$t('642aeb32.690660')">
             <el-color-picker v-model="form.font_color" show-alpha :predefine="predefineColors" />
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button type="primary" @click="saveTagData"> 确定保存 </el-button>
+            <el-button type="primary" @click="saveTagData"> {{ $t('642aeb32.b75381') }} </el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -157,14 +162,14 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取列表信息出错'
+            message: this.$t('642aeb32.f40299')
           })
         })
     },
     deleteAction(index, row) {
-      this.$confirm('此操作将删除数据, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('642aeb32.38c88c'), this.$t('642aeb32.02d981'), {
+        confirmButtonText: this.$t('642aeb32.38cf16'),
+        cancelButtonText: this.$t('642aeb32.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -172,7 +177,7 @@ export default {
             .then((response) => {
               this.tagsList.splice(index, 1)
               this.$message({
-                message: '删除成功',
+                message: this.$t('642aeb32.0007d1'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -180,14 +185,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除失败'
+                message: this.$t('642aeb32.acf066')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('642aeb32.2111cc')
           })
         })
     },
@@ -214,7 +219,7 @@ export default {
           if (res.data.data) {
             this.$message({
               type: 'success',
-              message: '保存成功'
+              message: this.$t('642aeb32.3b1083')
             })
             this.getDataList()
           }
@@ -224,7 +229,7 @@ export default {
           if (res.data.data) {
             this.$message({
               type: 'success',
-              message: '保存成功'
+              message: this.$t('642aeb32.3b1083')
             })
             this.getDataList()
           }

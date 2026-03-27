@@ -7,11 +7,11 @@
   <div class="goodsShareSetting">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" />
     <el-form ref="form" label-width="180px" :rules="rules" :model="form">
-      <el-form-item label="商品分享是否限制">
+      <el-form-item :label="$t('557fe6e8.549fe0')">
         <el-switch v-model="form.is_open" />
       </el-form-item>
       <template v-if="form.is_open">
-        <el-form-item label="可分享会员等级" prop="valid_grade">
+        <el-form-item :label="$t('557fe6e8.b5be5a')" prop="valid_grade">
           <el-checkbox-group v-model="form.valid_grade">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -25,23 +25,23 @@
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="分享限制提示语" prop="msg">
+        <el-form-item :label="$t('557fe6e8.38f33c')" prop="msg">
           <el-input
             v-model="form.msg"
             style="width: 260px"
             type="text"
-            placeholder="请输入分享限制提示语"
+            :placeholder="$t('557fe6e8.0875c1')"
           />
         </el-form-item>
-        <el-form-item label="提示后跳转页面路径" prop="page">
+        <el-form-item :label="$t('557fe6e8.4e9fc2')" prop="page">
           <div class="path" @click="showSetLink">
             <span v-show="form.page.linkPage" class="pathTitle">{{ linkPage }}:</span>
-            {{ form.page.title ? form.page.title : '设置路径' }}
+            {{ form.page.title ? form.page.title : $t('557fe6e8.4f2c29') }}
           </div>
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save">{{ $t('557fe6e8.be5fbb') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -70,29 +70,32 @@ export default {
         msg: '当前等级无法分享',
         page: {}
       },
-      rules: {
-        valid_grade: [{ required: true, message: '请选择可以分享的会员等级', trigger: 'blur' }],
-        msg: [{ required: true, message: '请输入分享限制提示语', trigger: 'blur' }],
-        page: [{ required: true, message: '请选择跳转页面路径', trigger: 'change' }]
-      },
       vipGrade: [],
       memberGrade: []
     }
   },
   computed: {
-    linkPage({ form }) {
-      const { page } = form
-      const types = {
-        goods: '商品',
-        category: '分类',
-        article: '文章',
-        planting: '软文',
-        link: '页面',
-        marketing: '营销',
-        custom_page: '自定义页面',
-        other_wxapp: '小程序'
+    rules() {
+      return {
+        valid_grade: [{ required: true, message: this.$t('557fe6e8.6ae643'), trigger: 'blur' }],
+        msg: [{ required: true, message: this.$t('557fe6e8.0875c1'), trigger: 'blur' }],
+        page: [{ required: true, message: this.$t('557fe6e8.54d9e4'), trigger: 'change' }]
       }
-      return types[page.linkPage]
+    },
+    linkPage() {
+      const { page } = this.form
+      const types = {
+        goods: '557fe6e8.9897d8',
+        category: '557fe6e8.d0771a',
+        article: '557fe6e8.c75625',
+        planting: '557fe6e8.e8f87a',
+        link: '557fe6e8.59ceff',
+        marketing: '557fe6e8.916801',
+        custom_page: '557fe6e8.cee6eb',
+        other_wxapp: '557fe6e8.0ed510'
+      }
+      const key = types[page.linkPage]
+      return key ? this.$t(key) : ''
     }
   },
   mounted() {
@@ -138,7 +141,7 @@ export default {
           const { form } = this
           const data = await saveShareSetting(form)
           if (data.data.data.status) {
-            this.$message.success('保存成功')
+            this.$message.success(this.$t('557fe6e8.3b1083'))
             this.getShareSettingInfo()
           }
         }

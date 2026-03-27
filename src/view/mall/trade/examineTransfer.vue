@@ -7,16 +7,16 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="bank_account_name" label="收款账户名:">
-          <el-input v-model="params.bank_account_name" placeholder="请输入收款账户名" />
+        <SpFilterFormItem prop="bank_account_name" :label="$t('77050e4f.87e5cd')">
+          <el-input v-model="params.bank_account_name" :placeholder="$t('77050e4f.fcfe07')" />
         </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="user_mobile" label="手机号:">
           <el-input v-model="params.user_mobile" placeholder="请输入手机号" />
         </SpFilterFormItem> -->
-        <SpFilterFormItem prop="order_id" label="订单号:">
-          <el-input v-model="params.order_id" placeholder="请输入订单号" />
+        <SpFilterFormItem prop="order_id" :label="$t('77050e4f.070dce')">
+          <el-input v-model="params.order_id" :placeholder="$t('77050e4f.e9e836')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="check_status" label="状态:">
+        <SpFilterFormItem prop="check_status" :label="$t('77050e4f.13b5c7')">
           <el-select v-model="params.check_status">
             <el-option
               v-for="item in checkStatusOptions"
@@ -26,7 +26,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="bank_name" label="收款银行:">
+        <SpFilterFormItem prop="bank_name" :label="$t('77050e4f.e29149')">
           <el-select v-model="params.bank_name">
             <el-option
               v-for="item in bankList"
@@ -42,18 +42,18 @@
         <SpFilterFormItem prop="pay_account_no" label="付款卡号:">
           <el-input v-model="params.pay_account_no" placeholder="请输入付款卡号" />
         </SpFilterFormItem> -->
-        <SpFilterFormItem prop="create_time" label="日期范围:">
+        <SpFilterFormItem prop="create_time" :label="$t('77050e4f.8d3bf9')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('77050e4f.4b8cb9')"
           />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+        <el-button type="primary" plain @click="exportData">{{ $t('77050e4f.55405e') }}</el-button>
       </div>
 
       <SpFinder
@@ -79,7 +79,11 @@
         @onSubmit="onAddSubmit"
       />
 
-      <el-dialog title="交易单下载" :visible.sync="downloadView" :close-on-click-modal="false">
+      <el-dialog
+        :title="$t('77050e4f.2f9864')"
+        :visible.sync="downloadView"
+        :close-on-click-modal="false"
+      >
         <template v-if="downloadUrl">
           <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
@@ -117,48 +121,36 @@ export default {
       downloadName: '',
       itemInfo: {},
       payStatusMap: {
-        SUCCESS: '支付成功',
-        NOTPAY: '未支付',
-        CLOSED: '已关闭',
-        REVOKED: '已撤销',
-        PAYERROR: '支付失败',
-        REFUND_PROCESS: '退款处理中',
-        REFUND_SUCCESS: '退款成功',
-        REFUND_FAIL: '退款失败'
+        SUCCESS: this.$t('77050e4f.eb5dc9'),
+        NOTPAY: this.$t('77050e4f.608afd'),
+        CLOSED: this.$t('77050e4f.9c5850'),
+        REVOKED: this.$t('77050e4f.50239f'),
+        PAYERROR: this.$t('77050e4f.4548cc'),
+        REFUND_PROCESS: this.$t('77050e4f.73ce8f'),
+        REFUND_SUCCESS: this.$t('77050e4f.d58cbd'),
+        REFUND_FAIL: this.$t('77050e4f.7c2544')
       },
       checkStatusOptions: [
-        {
-          value: '0',
-          label: '待处理'
-        },
-        {
-          value: '1',
-          label: '已审核'
-        },
-        {
-          value: '2',
-          label: '已拒绝'
-        },
-        {
-          value: '9',
-          label: '已取消'
-        }
+        { value: '0', label: this.$t('77050e4f.047109') },
+        { value: '1', label: this.$t('77050e4f.9d5b9b') },
+        { value: '2', label: this.$t('77050e4f.81233d') },
+        { value: '9', label: this.$t('77050e4f.2111cc') }
       ],
       goodSetting: {
         columns: [
-          { name: 'SKU编码', key: 'item_bn', width: 110 },
-          { name: '商品名称', key: 'item_name', width: 110 },
+          { name: this.$t('77050e4f.b54bd0'), key: 'item_bn', width: 110 },
+          { name: this.$t('77050e4f.1fd1d5'), key: 'item_name', width: 110 },
           {
-            name: '单价',
+            name: this.$t('77050e4f.da4abd'),
             key: 'price',
             width: 110,
             render: (h, { row }) => {
               return <span>¥{(row.price / 100).toFixed(2)}</span>
             }
           },
-          { name: '数量', key: 'num', width: 100 },
+          { name: this.$t('77050e4f.0bf60b'), key: 'num', width: 100 },
           {
-            name: '小计（¥）',
+            name: this.$t('77050e4f.5746e7'),
             width: 110,
             key: 'item_fee',
             render: (h, { row }) => {
@@ -166,7 +158,7 @@ export default {
             }
           },
           {
-            name: '积分抵扣（¥）',
+            name: this.$t('77050e4f.2ecbc8'),
             width: 110,
             key: 'point_fee',
             render: (h, { row }) => {
@@ -174,7 +166,7 @@ export default {
             }
           },
           {
-            name: '总支付金额（¥）',
+            name: this.$t('77050e4f.38283c'),
             width: 110,
             key: 'total_fee',
             render: (h, { row }) => {
@@ -182,7 +174,7 @@ export default {
             }
           },
           {
-            name: '总优惠（¥）',
+            name: this.$t('77050e4f.aae045'),
             width: 110,
             key: 'discount_fee',
             render: (h, { row }) => {
@@ -193,25 +185,25 @@ export default {
       },
       setting: {
         columns: [
-          { name: '收款账户名', key: 'bank_account_name', width: 110 },
-          { name: '收款银行名称', key: 'bank_name', width: 110 },
-          { name: '收款银行账号', key: 'bank_account_no', width: 110 },
+          { name: this.$t('77050e4f.9a4638'), key: 'bank_account_name', width: 110 },
+          { name: this.$t('77050e4f.d64589'), key: 'bank_name', width: 110 },
+          { name: this.$t('77050e4f.27d6ee'), key: 'bank_account_no', width: 110 },
           {
-            name: '订单总金额',
+            name: this.$t('77050e4f.025570'),
             width: 110,
             key: 'total_fee',
             render: (h, { row }) => {
               return <span>¥{(row.total_fee / 100).toFixed(2)}</span>
             }
           },
-          { name: '订单编号', key: 'order_id', width: 150 },
+          { name: this.$t('77050e4f.3e8657'), key: 'order_id', width: 150 },
           {
-            name: '审核意见',
+            name: this.$t('77050e4f.ab1bcd'),
             width: 150,
             key: 'remark'
           },
           {
-            name: '审批状态',
+            name: this.$t('77050e4f.d352ae'),
             width: 150,
             key: 'check_status',
             render: (h, { row }) => {
@@ -219,7 +211,7 @@ export default {
             }
           },
           {
-            name: '创建时间',
+            name: this.$t('77050e4f.eca37c'),
             width: 150,
             key: 'create_time',
             render: (h, { row }) => {
@@ -227,7 +219,7 @@ export default {
             }
           },
           {
-            name: '审核时间',
+            name: this.$t('77050e4f.e6f070'),
             width: 150,
             key: 'update_time',
             render: (h, { row }) => {
@@ -237,7 +229,7 @@ export default {
         ],
         actions: [
           {
-            name: '转账确认',
+            name: this.$t('77050e4f.024210'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -246,7 +238,7 @@ export default {
             },
             action: {
               handler: ([row]) => {
-                this.editTitle = '转账确认审核'
+                this.editTitle = this.$t('77050e4f.f8fbc4')
                 this.getItemDetail(row)
                 this.deliveryman = true
                 this.isLook = false
@@ -254,7 +246,7 @@ export default {
             }
           },
           {
-            name: '详情',
+            name: this.$t('77050e4f.f26225'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -263,7 +255,7 @@ export default {
             },
             action: {
               handler: ([row]) => {
-                this.editTitle = '转账审核详情'
+                this.editTitle = this.$t('77050e4f.7b8fa1')
                 this.getItemDetail(row)
                 this.deliveryman = true
                 this.isLook = true
@@ -271,7 +263,7 @@ export default {
             }
           },
           {
-            name: '操作日志',
+            name: this.$t('77050e4f.cda84b'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -301,26 +293,26 @@ export default {
         {
           component: () => (
             <div>
-              <el-descriptions title='用户信息' column={3}>
-                <el-descriptions-item label='订单号'>
+              <el-descriptions title={this.$t('77050e4f.6e3541')} column={3}>
+                <el-descriptions-item label={this.$t('77050e4f.1e8dc2')}>
                   {this.itemInfo?.order_info?.order_id}
                 </el-descriptions-item>
-                <el-descriptions-item label='下单时间'>
+                <el-descriptions-item label={this.$t('77050e4f.2240cc')}>
                   {this.itemInfo?.create_time &&
                     moment(this.itemInfo?.order_info?.create_time * 1000).format(
                       'YYYY-MM-DD HH:mm:ss'
                     )}
                 </el-descriptions-item>
-                <el-descriptions-item label='会员手机号'>
+                <el-descriptions-item label={this.$t('77050e4f.6a52ee')}>
                   {this.itemInfo?.order_info?.mobile}
                 </el-descriptions-item>
-                <el-descriptions-item label='运费'>
+                <el-descriptions-item label={this.$t('77050e4f.9a935b')}>
                   ¥
                   {this.itemInfo?.order_info?.freight_fee
                     ? (this.itemInfo?.order_info?.freight_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='订单金额'>
+                <el-descriptions-item label={this.$t('77050e4f.b1862e')}>
                   {this.itemInfo?.order_info?.order_type != 'bargain'
                     ? this.itemInfo?.order_info?.item_fee
                       ? `¥${(this.itemInfo?.order_info?.item_fee / 100).toFixed(2)}`
@@ -329,36 +321,36 @@ export default {
                     ? `¥${(this.itemInfo?.order_info?.item_price / 100).toFixed(2)}`
                     : '￥0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='会员优惠'>
+                <el-descriptions-item label={this.$t('77050e4f.f77b16')}>
                   ￥
                   {this.itemInfo?.order_info?.member_discount
                     ? (this.itemInfo?.order_info?.member_discount / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='优惠卷减免'>
+                <el-descriptions-item label={this.$t('77050e4f.56cfd0')}>
                   ￥
                   {this.itemInfo?.order_info?.coupon_discount
                     ? (this.itemInfo?.order_info?.coupon_discount / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='优惠总金额'>
+                <el-descriptions-item label={this.$t('77050e4f.f5a188')}>
                   ￥
                   {this.itemInfo?.order_info?.discount_fee
                     ? (this.itemInfo?.order_info?.discount_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='积分抵扣金额'>
+                <el-descriptions-item label={this.$t('77050e4f.e1174c')}>
                   ￥
                   {this.itemInfo?.order_info?.point_fee
                     ? (this.itemInfo?.order_info?.point_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='应付总金额'>
+                <el-descriptions-item label={this.$t('77050e4f.6ce4a1')}>
                   {this.itemInfo?.order_info?.total_fee
                     ? (this.itemInfo?.order_info?.total_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='实付总金额'>
+                <el-descriptions-item label={this.$t('77050e4f.f379ed')}>
                   ￥
                   {this.itemInfo?.tradeInfo?.payType === 'point'
                     ? '0.00'
@@ -368,12 +360,12 @@ export default {
                     ? (this.itemInfo?.order_info?.total_fee / 100).toFixed(2)
                     : '0.00'}
                 </el-descriptions-item>
-                <el-descriptions-item label='支付状态'>
+                <el-descriptions-item label={this.$t('77050e4f.510fa2')}>
                   {PAY_STATUS[this.itemInfo?.tradeInfo?.tradeState]}
                 </el-descriptions-item>
               </el-descriptions>
 
-              <div class='good-info-title'>商品信息</div>
+              <div class='good-info-title'>{this.$t('77050e4f.b433e6')}</div>
 
               <SpFinder
                 ref='goodfinder'
@@ -398,7 +390,7 @@ export default {
                   {this.itemInfo?.china_ums_no}
                 </el-descriptions-item>
               </el-descriptions> */}
-              <el-descriptions title='付款账户信息' column={2}>
+              <el-descriptions title={this.$t('77050e4f.eb79a6')} column={2}>
                 {/* <el-descriptions-item label='付款银行'>
                   {this.itemInfo?.pay_account_bank}
                 </el-descriptions-item>
@@ -408,16 +400,16 @@ export default {
                 <el-descriptions-item label='付款账户名'>
                   {this.itemInfo?.bank_name}
                 </el-descriptions-item> */}
-                <el-descriptions-item label='交易流水号'>
+                <el-descriptions-item label={this.$t('77050e4f.fa68e9')}>
                   {this.itemInfo?.pay_sn}
                 </el-descriptions-item>
-                <el-descriptions-item label='转账金额'>
+                <el-descriptions-item label={this.$t('77050e4f.48852f')}>
                   {(this.itemInfo?.pay_fee / 100).toFixed(2)}
                 </el-descriptions-item>
-                <el-descriptions-item label='支付备注' span={2}>
+                <el-descriptions-item label={this.$t('77050e4f.2fdfec')} span={2}>
                   {this.itemInfo?.transfer_remark}
                 </el-descriptions-item>
-                <el-descriptions-item label='凭证图片集合' span={2}>
+                <el-descriptions-item label={this.$t('77050e4f.769514')} span={2}>
                   {Array.isArray(this.itemInfo?.voucher_pic) &&
                     this.itemInfo?.voucher_pic.length > 0 &&
                     this.itemInfo?.voucher_pic.map((urlitem) => (
@@ -429,16 +421,16 @@ export default {
                     ))}
                 </el-descriptions-item>
               </el-descriptions>
-              <div class='modal-header el-descriptions__title'>订单信息</div>
+              <div class='modal-header el-descriptions__title'>{this.$t('77050e4f.a6d10d')}</div>
             </div>
           )
         },
         {
-          label: '收款账户名',
+          label: this.$t('77050e4f.9a4638'),
           key: 'bank_account_id',
           type: 'select',
           required: true,
-          message: '收款账户名不能为空',
+          message: this.$t('77050e4f.f1cf1d'),
           options: [
             // { title: '可售', value: 1 },
             // { title: '不可售', value: 0 }
@@ -451,47 +443,40 @@ export default {
           }
         },
         {
-          label: '收款银行名称',
-
+          label: this.$t('77050e4f.d64589'),
           component: () => <span>{this.addForm.bank_name || '-'}</span>,
           display: 'inline'
         },
         {
-          label: '收款银行账号',
+          label: this.$t('77050e4f.27d6ee'),
           key: 'bank_name',
           component: () => <span>{this.addForm.bank_account_no || '-'}</span>,
           display: 'inline'
         },
         {
-          label: '收款银联号',
+          label: this.$t('77050e4f.efce56'),
           key: 'china_ums_no',
           component: () => <span>{this.addForm.china_ums_no || '-'}</span>,
           display: 'inline'
         },
 
         {
-          label: '审核',
+          label: this.$t('77050e4f.cf13b1'),
           key: 'check_status',
           type: 'radio',
           required: true,
           options: [
-            {
-              label: '1',
-              name: '审核通过'
-            },
-            {
-              label: '2',
-              name: '审核拒绝'
-            }
+            { label: '1', name: this.$t('77050e4f.871a30') },
+            { label: '2', name: this.$t('77050e4f.146bb2') }
           ]
         },
         {
-          label: '审核备注',
+          label: this.$t('77050e4f.200d69'),
           key: 'remark',
           type: 'textarea',
           maxlength: 500,
           required: false,
-          message: '审核备注不能为空'
+          message: this.$t('77050e4f.91ef19')
         }
       ]
     }
@@ -597,7 +582,7 @@ export default {
       // return
       try {
         await this.$api.trade.offlineCheck(params)
-        this.$message.success('审核成功')
+        this.$message.success(this.$t('77050e4f.94129a'))
         this.deliveryman = false
         this.confirmStatus = false
         this.onSearch()
@@ -612,7 +597,7 @@ export default {
       if (status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('77050e4f.3e1ddd')
         })
         this.$export_open('offline_payment')
         return
@@ -623,7 +608,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '无内容可导出 或 执行失败，请检查重试'
+          message: this.$t('77050e4f.89ae53')
         })
         return
       }

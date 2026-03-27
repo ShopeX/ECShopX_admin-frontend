@@ -122,6 +122,7 @@ export default {
     }
   },
   created() {
+    this.$options.config.title = this.$t('d4086997.f13684')
     this.localValue = cloneDeep(this.value.data)
   },
   methods: {
@@ -139,7 +140,7 @@ export default {
       <div class={['picker-edit-board', this.value?.class]}>
         <div>
           <el-button type='primary' on-click={this.onAddItem}>
-            添加
+            {this.$t('d4086997.b58c75')}
           </el-button>
         </div>
         <draggable

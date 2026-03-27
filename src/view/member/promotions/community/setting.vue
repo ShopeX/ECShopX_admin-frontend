@@ -4,60 +4,60 @@
 -->
 
 <template>
-  <SpPage title="社区拼团商城客服设置">
+  <SpPage :title="$t('8ab980b4.d5df93')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('8ab980b4.56df61') }} </el-button>
       </div>
     </template>
     <div class="section section-white">
       <el-form ref="form" :model="form" label-position="left" label-width="120px">
         <div class="section-body">
-          <el-form-item label="社区拼团商城客服">
+          <el-form-item :label="$t('8ab980b4.00e156')">
             <el-switch
               v-model="form.customer_switch"
               :width="50"
               active-value="true"
               inactive-value="false"
-              active-text="开启"
-              inactive-text="关闭"
+              :active-text="$t('8ab980b4.cc42dd')"
+              :inactive-text="$t('8ab980b4.b15d91')"
               active-color="#13ce66"
             />
           </el-form-item>
-          <el-form-item label="支持支付宝提现">
+          <el-form-item :label="$t('8ab980b4.d63ad0')">
             <el-switch
               v-model="form.withdraw_bank.alipay"
               :width="50"
               active-value="true"
               inactive-value="false"
-              active-text="开启"
-              inactive-text="关闭"
+              :active-text="$t('8ab980b4.cc42dd')"
+              :inactive-text="$t('8ab980b4.b15d91')"
               active-color="#13ce66"
             />
           </el-form-item>
-          <el-form-item label="支持微信提现">
+          <el-form-item :label="$t('8ab980b4.3db6fb')">
             <el-switch
               v-model="form.withdraw_bank.wechatpay"
               :width="50"
               active-value="true"
               inactive-value="false"
-              active-text="开启"
-              inactive-text="关闭"
+              :active-text="$t('8ab980b4.cc42dd')"
+              :inactive-text="$t('8ab980b4.b15d91')"
               active-color="#13ce66"
             />
           </el-form-item>
-          <el-form-item label="支持银行卡提现">
+          <el-form-item :label="$t('8ab980b4.50d97d')">
             <el-switch
               v-model="form.withdraw_bank.bankpay"
               :width="50"
               active-value="true"
               inactive-value="false"
-              active-text="开启"
-              inactive-text="关闭"
+              :active-text="$t('8ab980b4.cc42dd')"
+              :inactive-text="$t('8ab980b4.b15d91')"
               active-color="#13ce66"
             />
           </el-form-item>
-          <el-form-item label="积分兑换比例">
+          <el-form-item :label="$t('8ab980b4.a49cea')">
             <el-input
               v-model="form.community_config.point_ratio"
               type="number"
@@ -66,15 +66,15 @@
               placeholder=""
               style="width: 100px"
             />
-            积分兑换1元人民币
+            {{ $t('8ab980b4.5d0ee9') }}
           </el-form-item>
-          <el-form-item label="积分说明">
+          <el-form-item :label="$t('8ab980b4.ea0d21')">
             <SpRichText v-model="form.community_config.point_desc" />
           </el-form-item>
-          <el-form-item label="积分提现说明">
+          <el-form-item :label="$t('8ab980b4.72505d')">
             <SpRichText v-model="form.community_config.withdraw_desc" />
           </el-form-item>
-          <el-form-item label="客服电话">
+          <el-form-item :label="$t('8ab980b4.e84643')">
             <el-input
               v-model="form.consumer_hotline"
               type="number"
@@ -131,7 +131,7 @@ export default {
         this.form.customer_switch = 0
       }
       setCompanySetting(this.form).then((res) => {
-        this.$message({ message: '操作成功', type: 'success' })
+        this.$message({ message: this.$t('8ab980b4.33130f'), type: 'success' })
         this.getConfig()
       })
     },

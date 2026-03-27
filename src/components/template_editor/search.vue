@@ -5,13 +5,13 @@
 
 <template>
   <section v-if="name === 'search'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('32c52750.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="钉在顶部">
+        <el-form-item :label="$t('32c52750.816458')">
           <el-switch v-model="config.fixTop" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('32c52750.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <!-- <el-form-item label="开启扫码" v-if="pageType !== 'salesindex'">

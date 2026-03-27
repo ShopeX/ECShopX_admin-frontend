@@ -15,38 +15,48 @@
           </el-radio-group>
         </el-form-item>
         -->
-        <el-form-item label="提现限制">
-          用户最少申请提现
-          <el-input v-model="form.limit_rebate" placeholder="多少" style="width: 80px" /> 元
+        <el-form-item :label="$t('664b0a1e.ee25bb')">
+          {{ $t('664b0a1e.10c96e') }}
+          <el-input
+            v-model="form.limit_rebate"
+            :placeholder="$t('664b0a1e.22266f')"
+            style="width: 80px"
+          />
+          {{ $t('664b0a1e.c16655') }}
         </el-form-item>
-        <el-form-item label="结算限制">
-          订单完成
-          <el-input v-model="form.limit_time" placeholder="多少" style="width: 80px" /> 天后结算
+        <el-form-item :label="$t('664b0a1e.c6ef82')">
+          {{ $t('664b0a1e.c1a80c') }}
+          <el-input
+            v-model="form.limit_time"
+            :placeholder="$t('664b0a1e.22266f')"
+            style="width: 80px"
+          />
+          {{ $t('664b0a1e.49f897') }}
         </el-form-item>
-        <el-form-item label="退换货收货人或单位">
+        <el-form-item :label="$t('664b0a1e.7c4898')">
           <el-input
             v-model="form.return_name"
-            placeholder="退换货收货人或单位"
+            :placeholder="$t('664b0a1e.7c4898')"
             style="width: 280px"
           />
         </el-form-item>
-        <el-form-item label="退换货地址">
+        <el-form-item :label="$t('664b0a1e.114351')">
           <el-input
             v-model="form.return_address"
-            placeholder="配置退换货地址"
+            :placeholder="$t('664b0a1e.4a9179')"
             style="width: 280px"
           />
         </el-form-item>
-        <el-form-item label="退换货联系方式">
+        <el-form-item :label="$t('664b0a1e.36abca')">
           <el-input
             v-model="form.return_phone"
-            placeholder="配置退换货联系方式"
+            :placeholder="$t('664b0a1e.4e2665')"
             style="width: 280px"
           />
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('664b0a1e.be5fbb') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -76,7 +86,7 @@ export default {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '保存配置成功'
+            message: this.$t('664b0a1e.ae9a55')
           })
         }
         this.getData()

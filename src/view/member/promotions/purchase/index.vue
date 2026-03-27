@@ -20,26 +20,26 @@
     >
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addPurchase">
-          新增活动
+          {{ $t('b8fcd182.6f0c8f') }}
         </el-button>
       </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="activity_status" label="活动状态:">
+        <SpFilterFormItem prop="activity_status" :label="$t('b8fcd182.1743c9')">
           <el-select
             v-model="params.activity_status"
-            placeholder="请选择活动状态"
+            :placeholder="$t('b8fcd182.017a35')"
             clearable
             style="width: 100%"
           >
-            <el-option label="全部" value="0" />
-            <el-option label="未开始" value="waiting" />
-            <el-option label="进行中" value="ongoing" />
-            <el-option label="已结束" value="it_has_ended" />
+            <el-option :label="$t('b8fcd182.a8b0c2')" value="0" />
+            <el-option :label="$t('b8fcd182.dd4e55')" value="waiting" />
+            <el-option :label="$t('b8fcd182.fb852f')" value="ongoing" />
+            <el-option :label="$t('b8fcd182.047fab')" value="it_has_ended" />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="activity_status" label="活动名称:">
-          <el-input v-model="params.purchase_name" placeholder="请输入活动名称" />
+        <SpFilterFormItem prop="activity_status" :label="$t('b8fcd182.1cadc0')">
+          <el-input v-model="params.purchase_name" :placeholder="$t('b8fcd182.7528b3')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -49,23 +49,23 @@
         :data="tableList"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="purchase_id" label="活动ID" />
-        <el-table-column prop="purchase_name" label="活动名称" />
-        <el-table-column prop="employee_limitfee" label="员工额度" />
-        <el-table-column prop="dependents_limitfee" label="亲友额度" />
-        <el-table-column prop="activity_status" label="活动状态">
+        <el-table-column prop="purchase_id" :label="$t('b8fcd182.be3322')" />
+        <el-table-column prop="purchase_name" :label="$t('b8fcd182.39834b')" />
+        <el-table-column prop="employee_limitfee" :label="$t('b8fcd182.358678')" />
+        <el-table-column prop="dependents_limitfee" :label="$t('b8fcd182.82087c')" />
+        <el-table-column prop="activity_status" :label="$t('b8fcd182.1181a5')">
           <template slot-scope="scope">
-            {{ scope.row.activity_status | formatStatus }}
+            {{ formatStatus(scope.row.activity_status) }}
           </template>
         </el-table-column>
-        <el-table-column width="301" label="活动有效期">
+        <el-table-column width="301" :label="$t('b8fcd182.e7adc9')">
           <template slot-scope="scope">
             {{ scope.row.begin_date }}
             <template v-if="scope.row.end_date"> ~ </template>
             {{ scope.row.end_date }}
           </template>
         </el-table-column>
-        <el-table-column width="150" label="操作">
+        <el-table-column width="150" :label="$t('b8fcd182.2b6bc0')">
           <template slot-scope="scope">
             <div class="operating-icons">
               <el-button type="text">
@@ -77,7 +77,7 @@
                     }
                   }"
                 >
-                  查看
+                  {{ $t('b8fcd182.607e7a') }}
                 </router-link>
               </el-button>
               <el-button v-if="scope.row.activity_status == 'waiting'" type="text">
@@ -87,7 +87,7 @@
                     query: { id: scope.row.purchase_id }
                   }"
                 >
-                  编辑
+                  {{ $t('b8fcd182.95b351') }}
                 </router-link>
               </el-button>
               <el-button
@@ -95,7 +95,7 @@
                 type="text"
                 @click="deleteCard(scope.row.purchase_id, scope.$index)"
               >
-                <span style="color: #f56c6c">终止活动</span>
+                <span style="color: #f56c6c">{{ $t('b8fcd182.6489ff') }}</span>
               </el-button>
               <el-button type="text">
                 <router-link
@@ -106,7 +106,7 @@
                     }
                   }"
                 >
-                  亲友数据
+                  {{ $t('b8fcd182.0a822f') }}
                 </router-link>
               </el-button>
             </div>
@@ -135,23 +135,6 @@ import { mapGetters } from 'vuex'
 import { endPurchase } from '@/api/purchase'
 import { pageMixin } from '@/mixins'
 export default {
-  filters: {
-    formatStatus(status) {
-      var str = ''
-      switch (status) {
-        case 'waiting':
-          str = '未开始'
-          break
-        case 'ongoing':
-          str = '进行中'
-          break
-        case 'it_has_ended':
-          str = '已结束'
-          break
-      }
-      return str
-    }
-  },
   mixins: [pageMixin],
   provide() {
     return {
@@ -221,16 +204,16 @@ export default {
     },
     deleteCard(id, index) {
       const that = this
-      this.$confirm('确定要终止该活动？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('b8fcd182.726586'), this.$t('b8fcd182.02d981'), {
+        cancelButtonText: this.$t('b8fcd182.625fb2'),
+        confirmButtonText: this.$t('b8fcd182.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             endPurchase({ purchase_id: id })
             this.$message({
               type: 'success',
-              message: '终止成功',
+              message: this.$t('b8fcd182.dfb1d0'),
               onClose() {
                 that.fetchList()
               }
@@ -242,6 +225,15 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
+    },
+    formatStatus(status) {
+      if (!status) return ''
+      const map = {
+        waiting: 'b8fcd182.dd4e55',
+        ongoing: 'b8fcd182.fb852f',
+        it_has_ended: 'b8fcd182.047fab'
+      }
+      return this.$t(map[status] || '')
     }
   }
 }

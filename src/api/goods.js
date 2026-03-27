@@ -744,3 +744,27 @@ export function kjlUnBindItem(params) {
     params
   })
 }
+
+// 获取销售分类前端展示开关状态
+export function getSaleableFilter() {
+  return fetch({
+    url: '/goods/category/saleable-filter/get',
+    method: 'get'
+  })
+}
+
+// 设置销售分类前端展示开关状态
+export function setSaleableFilter(params) {
+  return fetch({
+    url: '/goods/category/saleable-filter',
+    method: 'post',
+    params
+  })
+}
+// 触发B2B商品拉取
+export function updateBatchGoods() {
+  return fetch({
+    url: '/goods/b2b/sync',
+    method: 'post'
+  })
+}

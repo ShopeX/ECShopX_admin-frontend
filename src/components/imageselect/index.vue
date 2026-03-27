@@ -6,7 +6,7 @@
 <template>
   <el-dialog
     class="img_dialog"
-    title="选择图片"
+    :title="$t('70861180.ba9fc4')"
     :visible="showDialog"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -18,7 +18,7 @@
       <el-row>
         <el-col>
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="本地上传" name="localimages">
+            <el-tab-pane :label="$t('70861180.b4af78')" name="localimages">
               <div v-loading="loading" class="inner_main">
                 <div class="img_pick_area">
                   <div class="sub_title_bar in_dialog">
@@ -35,7 +35,7 @@
                         :on-success="handleAvatarSuccess"
                         :on-error="uploadError"
                       >
-                        <el-button type="primary"> 本地上传 </el-button>
+                        <el-button type="primary"> {{ $t('70861180.b4af78') }} </el-button>
                       </el-upload>
                     </div>
                   </div>
@@ -61,7 +61,7 @@
                             "
                           >
                             <div class="pic_box">
-                              <img :src="item.image_full_url" class="pic" />
+                              <img :src="item.image_full_url" class="pic">
                             </div>
                             <span class="lbl_content">{{ item.image_name }}</span>
                             <div class="selected_mask">
@@ -87,8 +87,10 @@
                 </div>
 
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="cancelAction"> 取 消 </el-button>
-                  <el-button type="primary" @click="localsaveAction"> 确 定 </el-button>
+                  <el-button @click="cancelAction"> {{ $t('70861180.c08ab9') }} </el-button>
+                  <el-button type="primary" @click="localsaveAction">
+                    {{ $t('70861180.aa7527') }}
+                  </el-button>
                 </div>
               </div>
             </el-tab-pane>

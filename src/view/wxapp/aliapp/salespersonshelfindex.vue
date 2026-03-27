@@ -9,7 +9,7 @@
       <el-dialog
         :visible.sync="template_dialog"
         width="80%"
-        title="编辑页面"
+        :title="$t('8312e9a5.49bcb8')"
         fullscreen
         lock-scroll
       >

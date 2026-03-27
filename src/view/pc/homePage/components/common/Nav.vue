@@ -7,13 +7,13 @@
   <div :class="['nav-sub', store && 'nav-sub-store']">
     <div :class="['nav-sub-wrapper', 'w']">
       <div class="nav-list1">
-        <div v-if="store" class="title">店铺首页</div>
+        <div v-if="store" class="title">{{ $t('2409599c.e8f64a') }}</div>
         <div
           v-else
           class="title"
           :class="{ expand: setting && setting.config.category == 'expand' }"
         >
-          所有商品分类
+          {{ $t('2409599c.156940') }}
           <ul class="cate-pop">
             <template v-for="(item, index) in cateList" v-if="index < 12">
               <li>

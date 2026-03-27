@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="text-xs text-gray-400 text-right px-2">
-        更新时间：{{ data.updated | datetime('YYYY-MM-DD HH:mm:ss') }}
+        {{ $t('6dc09c0b.780fb9') }}{{ data.updated | datetime('YYYY-MM-DD HH:mm:ss') }}
       </div>
     </div>
     <div class="sp-content-card__footer">
@@ -39,7 +39,7 @@
           v-clipboard:success="
             () =>
               $notify.success({
-                message: '复制成功'
+                message: this.$t('6dc09c0b.20a495')
               })
           "
           icon="iconfont icon-copy text-xs"
@@ -47,7 +47,7 @@
           size="mini"
           class="text-gray-400"
         >
-          复制文章链接
+          {{ $t('6dc09c0b.99a5da') }}
         </el-button>
       </div>
       <div class="flex h-10">
@@ -61,7 +61,7 @@
             class="text-gray-400"
             @click="handlePublishOrWithdraw"
           >
-            {{ data.release_status ? '撤回' : '发布' }}
+            {{ data.release_status ? $t('6dc09c0b.230505') : $t('6dc09c0b.83611a') }}
           </el-button>
         </div>
         <div
@@ -75,16 +75,20 @@
                 controls-position="right"
                 :min="1"
               />
-              <el-button type="primary" @click="handleSort"> 确定 </el-button>
+              <el-button type="primary" @click="handleSort">
+                {{ $t('6dc09c0b.38cf16') }}
+              </el-button>
             </div>
             <div slot="reference">
-              <el-button type="text-default" size="mini" class="text-gray-400"> 排序 </el-button>
+              <el-button type="text-default" size="mini" class="text-gray-400">
+                {{ $t('6dc09c0b.c360e9') }}
+              </el-button>
             </div>
           </el-popover>
         </div>
         <div class="flex-1 text-xs text-center h-full leading-10">
           <el-button type="text-default" size="mini" class="text-gray-400" @click="handleDelete">
-            删除
+            {{ $t('6dc09c0b.2f4aad') }}
           </el-button>
         </div>
       </div>

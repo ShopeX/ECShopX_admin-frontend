@@ -7,25 +7,29 @@
   <SpRouterView>
     <SpPage>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="params.mobile" placeholder="请输入客户手机号码" />
+        <SpFilterFormItem prop="mobile" :label="$t('c95ea121.ce2bf3')">
+          <el-input v-model="params.mobile" :placeholder="$t('c95ea121.c746c6')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="order_id" label="订单号:">
-          <el-input v-model="params.order_id" placeholder="请输入订单号" />
+        <SpFilterFormItem prop="order_id" :label="$t('c95ea121.070dce')">
+          <el-input v-model="params.order_id" :placeholder="$t('c95ea121.e9e836')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送方式:">
-          <el-select v-model="params.receipt_type" clearable placeholder="请选择">
+        <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" :label="$t('c95ea121.b6ae11')">
+          <el-select v-model="params.receipt_type" clearable :placeholder="$t('c95ea121.708c9d')">
             <el-option
               v-for="item in distributionType"
               :key="item.value"
               size="mini"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source_id" label="订单来源:">
-          <el-select v-model="params.source_id" clearable placeholder="请选择">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="source_id"
+          :label="$t('c95ea121.b36ea7')"
+        >
+          <el-select v-model="params.source_id" clearable :placeholder="$t('c95ea121.708c9d')">
             <el-option
               v-for="item in orderSourceList"
               :key="item.value"
@@ -38,17 +42,21 @@
         <SpFilterFormItem
           v-if="VERSION_STANDARD() || IS_ADMIN()"
           prop="supplier_name"
-          label="来源供应商:"
+          :label="$t('c95ea121.a54fd2')"
         >
-          <el-input v-model="params.supplier_name" placeholder="来源供应商" />
+          <el-input v-model="params.supplier_name" :placeholder="$t('c95ea121.55c61d')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="order_class" label="订单类型:">
-          <el-select v-model="params.order_class" clearable placeholder="请选择">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="order_class"
+          :label="$t('c95ea121.0e83be')"
+        >
+          <el-select v-model="params.order_class" clearable :placeholder="$t('c95ea121.708c9d')">
             <el-option
               v-for="item in orderType"
               :key="item.value"
               size="mini"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
@@ -57,22 +65,38 @@
         <SpFilterFormItem
           v-if="is_pharma_industry"
           prop="is_prescription_order"
-          label="是否处方药:"
+          :label="$t('c95ea121.b7a604')"
         >
-          <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
-            <el-option label="全部" value="" />
-            <el-option label="是" value="1" />
-            <el-option label="否" value="0" />
+          <el-select
+            v-model="params.is_prescription_order"
+            clearable
+            :placeholder="$t('c95ea121.708c9d')"
+          >
+            <el-option :label="$t('c95ea121.a8b0c2')" value="" />
+            <el-option :label="$t('c95ea121.0a60ac')" value="1" />
+            <el-option :label="$t('c95ea121.c9744f')" value="0" />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="is_pharma_industry" prop="serial_no" label="处方编号:">
-          <el-input v-model="params.serial_no" placeholder="请输入处方编号" />
+        <SpFilterFormItem v-if="is_pharma_industry" prop="serial_no" :label="$t('c95ea121.4465a6')">
+          <el-input v-model="params.serial_no" :placeholder="$t('c95ea121.43d6ec')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="就诊人:">
-          <el-input v-model="params.user_family_name" placeholder="请输入就诊人" />
+        <SpFilterFormItem
+          v-if="is_pharma_industry"
+          prop="user_family_name"
+          :label="$t('c95ea121.f3f325')"
+        >
+          <el-input v-model="params.user_family_name" :placeholder="$t('c95ea121.e5d7bb')" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="delivery_staff_id" label="配送员:">
-          <el-select v-model="params.delivery_staff_id" clearable placeholder="请选择">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE()"
+          prop="delivery_staff_id"
+          :label="$t('c95ea121.7f6b70')"
+        >
+          <el-select
+            v-model="params.delivery_staff_id"
+            clearable
+            :placeholder="$t('c95ea121.708c9d')"
+          >
             <el-option
               v-for="item in deliveryPersonnel"
               :key="item.value"
@@ -85,8 +109,8 @@
         <!-- <SpFilterFormItem prop="salespersonname" label="业务员:">
           <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
         </SpFilterFormItem> -->
-        <SpFilterFormItem prop="role" label="角色:">
-          <el-select v-model="params.role" placeholder="请选择" clearable>
+        <SpFilterFormItem prop="role" :label="$t('c95ea121.e1f833')">
+          <el-select v-model="params.role" :placeholder="$t('c95ea121.708c9d')" clearable>
             <el-option
               v-for="item in roleList"
               :key="item.value"
@@ -95,16 +119,16 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
+        <SpFilterFormItem prop="create_time" :label="$t('c95ea121.43c297')" size="max">
           <el-date-picker
             v-model="params.create_time"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('c95ea121.981cbe')"
+            :start-placeholder="$t('c95ea121.b44c0f')"
+            :end-placeholder="$t('c95ea121.1d468b')"
             prefix-icon="null"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
@@ -113,28 +137,28 @@
         <SpFilterFormItem
           v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
           prop="invoice_status"
-          label="开票状态:"
+          :label="$t('c95ea121.dfc420')"
         >
-          <el-select v-model="params.invoice_status" clearable placeholder="请选择">
+          <el-select v-model="params.invoice_status" clearable :placeholder="$t('c95ea121.708c9d')">
             <el-option
               v-for="item in invoiceStatusArr"
               :key="item.value"
               size="mini"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="delivery_time" label="发货时间:" size="max">
+        <SpFilterFormItem prop="delivery_time" :label="$t('c95ea121.21524c')" size="max">
           <el-date-picker
             v-model="params.delivery_time"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('c95ea121.981cbe')"
+            :start-placeholder="$t('c95ea121.b44c0f')"
+            :end-placeholder="$t('c95ea121.1d468b')"
             prefix-icon="null"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
@@ -143,14 +167,14 @@
         <SpFilterFormItem
           v-if="!(VERSION_SHUYUN() || VERSION_B2C())"
           prop="order_holder"
-          label="订单分类:"
+          :label="$t('c95ea121.e56a5e')"
         >
-          <el-select v-model="params.order_holder" clearable placeholder="请选择">
+          <el-select v-model="params.order_holder" clearable :placeholder="$t('c95ea121.708c9d')">
             <el-option
               v-for="item in orderCategory"
               :key="item.value"
               size="mini"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
@@ -162,14 +186,18 @@
             !VERSION_IN_PURCHASE()
           "
           prop="distributor_id"
-          label="来源店铺:"
+          :label="$t('c95ea121.16f2bc')"
         >
-          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+          <SpSelectShop
+            v-model="params.distributor_id"
+            clearable
+            :placeholder="$t('c95ea121.708c9d')"
+          />
         </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!VERSION_SHUYUN() && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
           prop="subDistrict"
-          label="选择街道:"
+          :label="$t('c95ea121.d3063b')"
         >
           <el-cascader
             v-model="params.subDistrict"
@@ -197,18 +225,26 @@
       <div class="action-container">
         <el-dropdown @command="handleExport">
           <el-button type="primary" plain>
-            导出<i class="el-icon-arrow-down el-icon--right" />
+            {{ $t('c95ea121.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="exportInvoice"> 发票订单 </el-dropdown-item>
-            <el-dropdown-item command="exportDataMaster">主订单 </el-dropdown-item>
-            <el-dropdown-item command="exportDataNormal">子订单 </el-dropdown-item>
+            <el-dropdown-item command="exportInvoice">{{ $t('c95ea121.a17c19') }}</el-dropdown-item>
+            <el-dropdown-item command="exportDataMaster">
+{{
+              $t('c95ea121.d4d21f')
+            }}
+</el-dropdown-item>
+            <el-dropdown-item command="exportDataNormal">
+{{
+              $t('c95ea121.a19dd9')
+            }}
+</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-tooltip
           v-if="IS_SUPPLIER()"
           effect="light"
-          content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
+          :content="$t('c95ea121.29119c')"
           placement="top-start"
         >
           <el-upload
@@ -218,7 +254,7 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="primary" plain> 批量发货 </el-button>
+            <el-button type="primary" plain>{{ $t('c95ea121.425991') }}</el-button>
           </el-upload>
         </el-tooltip>
         <el-upload
@@ -228,10 +264,14 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button type="primary" plain> 批量取消 </el-button>
+          <el-button type="primary" plain>{{ $t('c95ea121.321129') }}</el-button>
         </el-upload>
         <!-- v-if="IS_DISTRIBUTOR() || IS_MERCHANT()" -->
-        <el-button type="primary" plain @click="assignPersonnel(true)"> 分配配送员 </el-button>
+        <el-button type="primary" plain @click="assignPersonnel(true)">
+{{
+          $t('c95ea121.531827')
+        }}
+</el-button>
         <!-- <el-upload
         action=""
         class="btn-upload"
@@ -240,7 +280,11 @@
         :show-file-list="false"
       > -->
         <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN()" -->
-        <el-button type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
+        <el-button type="primary" plain @click="assignPersonnel(false)">
+{{
+          $t('c95ea121.204fe4')
+        }}
+</el-button>
         <!-- </el-upload> -->
       </div>
 
@@ -248,7 +292,7 @@
         <el-tab-pane
           v-for="item in orderStatus"
           :key="item.value"
-          :label="item.title"
+          :label="$t(item.title)"
           :name="item.value"
         />
         <el-table
@@ -257,11 +301,11 @@
           :data="tableList"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column width="180" prop="order_id" label="订单号">
+          <el-table-column width="180" prop="order_id" :label="$t('c95ea121.1e8dc2')">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
-                <el-tooltip effect="dark" content="复制" placement="top-start">
+                <el-tooltip effect="dark" :content="$t('c95ea121.79d3ab')" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.order_id"
                     v-clipboard:success="onCopySuccess"
@@ -270,13 +314,13 @@
                 </el-tooltip>
               </div>
               <div class="order-store">
-                <el-tooltip effect="dark" content="来源店铺" placement="top-start">
+                <el-tooltip effect="dark" :content="$t('c95ea121.53cc55')" placement="top-start">
                   <i class="el-icon-office-building" />
                 </el-tooltip>
                 {{ scope.row.distributor_name }}
               </div>
               <div class="order-time">
-                <el-tooltip effect="dark" content="下单时间" placement="top-start">
+                <el-tooltip effect="dark" :content="$t('c95ea121.2240cc')" placement="top-start">
                   <i class="el-icon-time" />
                 </el-tooltip>
                 {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -293,9 +337,18 @@
           <!--            {{ scope.row.supplier_info.username }}-->
           <!--          </template>-->
           <!--        </el-table-column>-->
-          <el-table-column width="120" label="订单分类" header-align="center" prop="order_holder">
+          <el-table-column
+            width="120"
+            :label="$t('c95ea121.350fd3')"
+            header-align="center"
+            prop="order_holder"
+          >
             <template slot-scope="scope">
-              {{ getOrderCategoryName(scope.row.order_holder) }}
+              {{
+                getOrderCategoryName(scope.row.order_holder)
+                  ? $t(getOrderCategoryName(scope.row.order_holder))
+                  : ''
+              }}
             </template>
           </el-table-column>
           <!-- <el-table-column width="160" label="订单总金额（¥）" align="right" header-align="center">
@@ -306,7 +359,7 @@
           <el-table-column
             prop="total_fee"
             width="120"
-            label="实付金额（¥）"
+            :label="$t('c95ea121.fddcee')"
             align="right"
             header-align="center"
           >
@@ -317,7 +370,7 @@
           <el-table-column
             prop="point_fee"
             width="120"
-            label="积分抵扣"
+            :label="$t('c95ea121.d443a9')"
             align="right"
             header-align="center"
           >
@@ -328,7 +381,7 @@
           <el-table-column
             prop="cost_fee"
             width="120"
-            label="结算价（¥）"
+            :label="$t('c95ea121.17b4aa')"
             align="right"
             header-align="center"
           >
@@ -336,7 +389,12 @@
               {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
+          <el-table-column
+            width="100"
+            :label="$t('c95ea121.4dd437')"
+            align="right"
+            header-align="center"
+          >
             <template slot-scope="scope">
               {{ (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2) }}
             </template>
@@ -349,7 +407,7 @@
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
-                  content="复制"
+                  :content="$t('c95ea121.79d3ab')"
                   placement="top-start"
                 >
                   <i
@@ -364,7 +422,7 @@
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
-                  content="复制"
+                  :content="$t('c95ea121.79d3ab')"
                   placement="top-start"
                 >
                   <i
@@ -376,12 +434,12 @@
               </div>
             </template>
           </el-table-column> -->
-          <el-table-column prop="invoice_status" label="发票状态">
+          <el-table-column prop="invoice_status" :label="$t('c95ea121.a03d7f')">
             <template slot-scope="scope">
               {{ openStatus?.find((item) => item.value === scope.row.invoice_status)?.title }}
             </template>
           </el-table-column>
-          <el-table-column prop="mobile" label="客户手机号" width="140">
+          <el-table-column prop="mobile" :label="$t('c95ea121.a32da1')" width="140">
             <template slot-scope="scope">
               <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
                 <router-link
@@ -404,7 +462,7 @@
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
-                  content="复制"
+                  :content="$t('c95ea121.79d3ab')"
                   placement="top-start"
                 >
                   <i
@@ -419,7 +477,7 @@
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
-                  content="复制"
+                  :content="$t('c95ea121.79d3ab')"
                   placement="top-start"
                 >
                   <i
@@ -431,8 +489,12 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column prop="distributor_name" label="来源店铺" />
-          <el-table-column prop="work_userid" label="导购" v-if="VERSION_STANDARD()">
+          <el-table-column prop="distributor_name" :label="$t('c95ea121.53cc55')" />
+          <el-table-column
+            prop="work_userid"
+            :label="$t('c95ea121.c60b43')"
+            v-if="VERSION_STANDARD()"
+          >
             <template slot-scope="scope">
               {{ scope.row.salesman_info?.work_userid }}
             </template>
@@ -441,58 +503,59 @@
       </el-table-column> -->
           <!-- <el-table-column prop="receiver_name" label="收货人" /> -->
           <template v-if="login_type != 'merchant'">
-            <el-table-column v-if="!isMicorMall" label="订单类型">
+            <el-table-column v-if="!isMicorMall" :label="$t('c95ea121.5cd56b')">
               <template slot-scope="scope">
                 {{ getOrderType(scope.row) }}
               </template>
             </el-table-column>
           </template>
-          <el-table-column prop="order_status" label="订单状态">
+          <el-table-column prop="order_status" :label="$t('c95ea121.86f6cf')">
             <template slot-scope="scope">
               {{ scope.row.order_status_msg }}
             </template>
           </el-table-column>
           <!-- <el-table-column prop="salespersonname " label="业务员"></el-table-column> -->
-          <el-table-column label="配送方式">
+          <el-table-column :label="$t('c95ea121.edfe4c')">
             <template slot-scope="scope">
               {{ getDistributionType(scope.row) }}
             </template>
           </el-table-column>
 
-          <el-table-column label="配送状态">
+          <el-table-column :label="$t('c95ea121.553e84')">
             <template slot-scope="scope">
               {{ getDistributionStatus(scope.row) }}
             </template>
           </el-table-column>
 
-          <el-table-column label="配送员">
+          <el-table-column :label="$t('c95ea121.b7765e')">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_name }}
             </template>
           </el-table-column>
 
-          <el-table-column label="配送费">
+          <el-table-column :label="$t('c95ea121.1138a9')">
             <template slot-scope="scope">
               {{
-                scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元'
+                scope.row.self_delivery_operator_name &&
+                scope.row.self_delivery_fee / 100 + $t('c95ea121.c16655')
               }}
             </template>
           </el-table-column>
 
-          <el-table-column label="配送员电话" width="140">
+          <el-table-column :label="$t('c95ea121.f3fa72')" width="140">
             <template slot-scope="scope">
               {{ scope.row.self_delivery_operator_mobile }}
             </template>
           </el-table-column>
           <el-table-column type="selection" width="55" fixed="left" />
           <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-          <el-table-column label="操作" fixed="left">
+          <el-table-column :label="$t('c95ea121.2b6bc0')" fixed="left">
             <template slot-scope="scope">
               <el-button type="text" style="margin-right: 8px">
                 <router-link
                   :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
                 >
-                  详情
+                  {{ $t('c95ea121.f26225') }}
                 </router-link>
               </el-button>
               <el-popover placement="right" trigger="hover">
@@ -501,7 +564,7 @@
                     <router-link
                       :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
                     >
-                      日志
+                      {{ $t('c95ea121.456d29') }}
                     </router-link>
                   </el-button>
                   <template v-for="(btn, index) in scope.row.actionBtns">
@@ -510,12 +573,12 @@
                       type="text"
                       @click="handleAction(scope.row, btn)"
                     >
-                      {{ btn.name }}
+                      {{ $t(btn.name) }}
                     </el-button>
                   </template>
                 </div>
                 <el-button slot="reference" type="text">
-                  更多<i class="el-icon-d-arrow-right" />
+                  {{ $t('c95ea121.0ec9ea') }}<i class="el-icon-d-arrow-right" />
                 </el-button>
               </el-popover>
             </template>
@@ -539,7 +602,7 @@
       <SpDialog
         ref="remarkDialogRef"
         v-model="remarkDialog"
-        :title="`修改备注【订单:${remarkForm.orderId}】`"
+        :title="`${$t('c95ea121.b1bfe2')}【${$t('c95ea121.4c117f')}:${remarkForm.orderId}】`"
         :form="remarkForm"
         :form-list="remarkFormList"
         @onSubmit="onRemarkSubmit"
@@ -550,7 +613,7 @@
         ref="cancelOrderDialogRef"
         v-model="cancelOrderDialog"
         class="dialog-cancelorder"
-        :title="`取消订单【订单:${cancelOrderForm.order_id}】`"
+        :title="`${$t('c95ea121.b21b5e')}【${$t('c95ea121.4c117f')}:${cancelOrderForm.order_id}】`"
         :loading="cancelOrderForm.loading"
         :form="cancelOrderForm"
         :form-list="cancelOrderFormList"
@@ -563,7 +626,7 @@
         v-model="deliverGoodsDialog"
         width="1000px"
         :confirm-status="confirmStatus"
-        :title="`发货【订单:${deliverGoodsForm.order_id}】`"
+        :title="`${$t('c95ea121.045315')}【${$t('c95ea121.4c117f')}:${deliverGoodsForm.order_id}】`"
         :form="deliverGoodsForm"
         :form-list="deliverGoodsFormList"
         @onSubmit="deliverGoodsSubmit"
@@ -574,7 +637,9 @@
         ref="updateDeliverGoodsDialogRef"
         v-model="updateDeliverGoodsDialog"
         width="1000px"
-        :title="`更新发货【订单:${updateDeliverGoodsForm.order_id}】`"
+        :title="`${$t('c95ea121.59d9e1')}【${$t('c95ea121.4c117f')}:${
+          updateDeliverGoodsForm.order_id
+        }】`"
         :form="updateDeliverGoodsForm"
         :form-list="updateDeliverGoodsFormList"
         @onSubmit="updateDeliverGoodsSubmit"
@@ -584,7 +649,7 @@
       <SpDialog
         ref="writeOffDialogRef"
         v-model="writeOffDialog"
-        :title="`核销【订单:${writeOffForm.order_id}】`"
+        :title="`${$t('c95ea121.e7d31e')}【${$t('c95ea121.4c117f')}:${writeOffForm.order_id}】`"
         :form="writeOffForm"
         :form-list="writeOffFormList"
         @onSubmit="writeOffSubmit"
@@ -594,7 +659,7 @@
       <SpDialog
         ref="refundRef"
         v-model="refundDialog"
-        :title="`退款【订单:${refundForm.order_id}】`"
+        :title="`${$t('c95ea121.44c198')}【${$t('c95ea121.4c117f')}:${refundForm.order_id}】`"
         :form="refundForm"
         :form-list="refundFormList"
         @onSubmit="refundSubmit"
@@ -608,7 +673,7 @@
         class="dialog-changeprice"
         :loading="changePriceForm.loading"
         :destroy-on-close="true"
-        :title="`订单改价【订单:${changePriceForm.order_id}】`"
+        :title="`${$t('c95ea121.30913f')}【${$t('c95ea121.4c117f')}:${changePriceForm.order_id}】`"
         :form="changePriceForm"
         :form-list="changePriceFormList"
         @onSubmit="changePriceSubmit"
@@ -618,7 +683,7 @@
       <SpDialog
         ref="personnel"
         v-model="personnelDialog"
-        :title="statusPersonnel ? '分配配送员' : '取消配送'"
+        :title="statusPersonnel ? $t('c95ea121.531827') : $t('c95ea121.204fe4')"
         :form="personnelForm"
         :form-list="personnelFormList"
         @onSubmit="onPersonnelSubmit"
@@ -725,13 +790,13 @@ export default {
       remarkDialog: false,
       remarkFormList: [
         {
-          label: '备注信息:',
+          label: this.$t('c95ea121.703f63'),
           key: 'remark',
           type: 'textarea',
           maxlength: 150,
-          placeholder: '请输入对此订单需要备注的内容',
+          placeholder: this.$t('c95ea121.bd36b6'),
           required: true,
-          message: '不能为空'
+          message: this.$t('c95ea121.281bad')
         }
       ],
       remarkForm: {
@@ -742,11 +807,7 @@ export default {
       cancelOrderDialog: false,
       cancelOrderFormList: [
         {
-          component: () => (
-            <div class='tip-bar'>
-              订单取消后，消费者在商城中看到的订单状态将变更为已取消，无法对其进行支付操作。
-            </div>
-          )
+          component: () => <div class='tip-bar'>{this.$t('c95ea121.ef5069')}</div>
         },
         {
           label: '',
@@ -758,26 +819,26 @@ export default {
           )
         },
         {
-          label: '取消原因:',
+          label: this.$t('c95ea121.27910a'),
           key: 'cancel_reason',
-          placeholder: '请选择取消订单原因',
+          placeholder: this.$t('c95ea121.bc4a11'),
           type: 'select',
           options: [
-            { title: '客户现在不想购买', value: 1 },
-            { title: '客户商品价格较贵', value: 2 },
-            { title: '客户价格波动', value: 3 },
-            { title: '客户商品缺货', value: 4 },
-            { title: '客户重复下单', value: 5 },
-            { title: '客户订单商品选择有误', value: 6 },
-            { title: '客户支付方式选择有误', value: 7 },
-            { title: '客户收货信息填写有误', value: 8 },
-            { title: '客户发票信息填写有误', value: 9 },
-            { title: '客户无法支付订单', value: 10 },
-            { title: '客户长时间未付款', value: 11 },
-            { title: '客户其他原因', value: 12 }
+            { title: this.$t('c95ea121.8f038a'), value: 1 },
+            { title: this.$t('c95ea121.5e58ba'), value: 2 },
+            { title: this.$t('c95ea121.151111'), value: 3 },
+            { title: this.$t('c95ea121.baa450'), value: 4 },
+            { title: this.$t('c95ea121.3013ee'), value: 5 },
+            { title: this.$t('c95ea121.e7197e'), value: 6 },
+            { title: this.$t('c95ea121.74c00b'), value: 7 },
+            { title: this.$t('c95ea121.16264a'), value: 8 },
+            { title: this.$t('c95ea121.13bea0'), value: 9 },
+            { title: this.$t('c95ea121.0e6c86'), value: 10 },
+            { title: this.$t('c95ea121.e21052'), value: 11 },
+            { title: this.$t('c95ea121.94490e'), value: 12 }
           ],
           required: true,
-          message: '不能为空',
+          message: this.$t('c95ea121.281bad'),
           onChange: (e) => {
             if (e == 12) {
               this.cancelOrderFormList[3].isShow = true
@@ -787,14 +848,14 @@ export default {
           }
         },
         {
-          label: '其他原因:',
+          label: this.$t('c95ea121.748ea8'),
           key: 'other_reason',
           type: 'input',
-          placeholder: '请填写取消订单原因',
+          placeholder: this.$t('c95ea121.c6af7d'),
           isShow: false,
           validator: (rule, value, callback) => {
             if (this.cancelOrderForm.cancel_reason == 12 && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('c95ea121.281bad')))
             } else {
               callback()
             }
@@ -816,26 +877,28 @@ export default {
 
       deliverGoodsFormList: [
         {
-          label: '发货方式',
+          label: this.$t('c95ea121.084920'),
           key: 'delivery_way',
           type: 'radio',
           disabled: true,
           options: [
-            { label: '1', name: '快递' },
-            { label: '2', name: '商家自配送' }
+            { label: '1', name: this.$t('c95ea121.705d54') },
+            { label: '2', name: this.$t('c95ea121.0e903e') }
           ],
           onChange: (e) => {
             if (e == '1') {
               this.deliverGoodsFormList[1].options = [
-                { label: 'batch', name: '整单发货' },
-                { label: 'sep', name: '拆分发货' }
+                { label: 'batch', name: this.$t('c95ea121.afb426') },
+                { label: 'sep', name: this.$t('c95ea121.95d243') }
               ]
               this.deliverGoodsFormList[3].options = this.logisticsList.filter(
                 (item) => item.value != 'SELF_DELIVERY'
               )
               this.deliverGoodsForm.delivery_corp = ''
             } else {
-              this.deliverGoodsFormList[1].options = [{ label: 'batch', name: '整单发货' }]
+              this.deliverGoodsFormList[1].options = [
+                { label: 'batch', name: this.$t('c95ea121.afb426') }
+              ]
               this.deliverGoodsForm.delivery_type = 'batch'
               this.deliverGoodsFormList[3].options = this.logisticsList.filter(
                 (item) => item.value == 'SELF_DELIVERY'
@@ -845,13 +908,13 @@ export default {
           }
         },
         {
-          label: '发货类型',
+          label: this.$t('c95ea121.b01994'),
           key: 'delivery_type',
           type: 'radio',
           disabled: false,
           options: [
-            { label: 'batch', name: '整单发货' },
-            { label: 'sep', name: '拆分发货' }
+            { label: 'batch', name: this.$t('c95ea121.afb426') },
+            { label: 'sep', name: this.$t('c95ea121.95d243') }
           ],
           onChange: (e) => {
             if (e == 'sep') {
@@ -866,26 +929,26 @@ export default {
           key: 'items',
           type: 'table',
           options: [
-            { title: '商品名', key: 'item_name' },
+            { title: this.$t('c95ea121.de5472'), key: 'item_name' },
             {
-              title: '商品类型',
+              title: this.$t('c95ea121.2af133'),
               key: 'item_holder',
               render: (row, column, cell) => {
                 return this.goodCategoryMap[row.item_holder]
               }
             },
             {
-              title: '来源供应商',
+              title: this.$t('c95ea121.55c61d'),
               key: 'supplier_name',
               width: 100,
               isShow: ({ key }, value) => {
                 return this.VERSION_STANDARD() || this.IS_ADMIN()
               }
             },
-            { title: '数量', key: 'num', width: 60 },
-            { title: '已发货数量', key: 'delivery_item_num', width: 100 },
+            { title: this.$t('c95ea121.0bf60b'), key: 'num', width: 60 },
+            { title: this.$t('c95ea121.745165'), key: 'delivery_item_num', width: 100 },
             {
-              title: '总支付价（¥）',
+              title: this.$t('c95ea121.e95382'),
               key: 'total_fee',
               render: (row, column, cell) => {
                 return (row.total_fee / 100).toFixed(2)
@@ -893,7 +956,7 @@ export default {
               width: 120
             },
             {
-              title: '成本价（¥）',
+              title: this.$t('c95ea121.066804'),
               key: 'cost_price',
               width: 100,
               render: (row, column, cell) => {
@@ -901,7 +964,7 @@ export default {
               }
             },
             {
-              title: '发货数量',
+              title: this.$t('c95ea121.4f5a46'),
               key: 'item_num',
               width: 160,
               render: (row, column, cell) => {
@@ -924,36 +987,36 @@ export default {
           ]
         },
         {
-          label: '快递公司',
+          label: this.$t('c95ea121.f3af96'),
           key: 'delivery_corp',
-          placeholder: '请选择快递公司',
+          placeholder: this.$t('c95ea121.8367e8'),
           type: 'select',
           options: [],
           required: true,
-          message: '不能为空'
+          message: this.$t('c95ea121.281bad')
         },
         {
-          label: '物流单号',
+          label: this.$t('c95ea121.0bb075'),
           key: 'delivery_code',
           type: 'input',
-          placeholder: '物流公司单号',
+          placeholder: this.$t('c95ea121.0e9f1e'),
           required: true,
           isShow: ({ key }, value) => {
             return value['delivery_way'] == '1'
           },
-          message: '不能为空'
+          message: this.$t('c95ea121.281bad')
         },
         {
-          label: '配送员',
+          label: this.$t('c95ea121.b7765e'),
           key: 'self_delivery_operator_id',
-          placeholder: '请选择配送员',
+          placeholder: this.$t('c95ea121.531b32'),
           type: 'select',
           options: [],
           required: true,
           isShow: ({ key }, value) => {
             return value['delivery_way'] == '2'
           },
-          message: '不能为空',
+          message: this.$t('c95ea121.281bad'),
           onChange: (e) => {
             console.log(e)
             let targetItem =
@@ -964,7 +1027,7 @@ export default {
           }
         },
         {
-          label: '配送员手机号',
+          label: this.$t('c95ea121.ec9c94'),
           key: 'self_delivery_operator_mobile',
           type: 'input',
           display: 'inline',
@@ -975,7 +1038,7 @@ export default {
           disabled: true
         },
         {
-          label: '配送员编号',
+          label: this.$t('c95ea121.fb92e9'),
           key: 'self_delivery_operator_staffno',
           display: 'inline',
           type: 'input',
@@ -986,19 +1049,19 @@ export default {
           disabled: true
         },
         {
-          label: '配送状态',
+          label: this.$t('c95ea121.553e84'),
           key: 'self_delivery_status',
-          placeholder: '请选择配送状态',
+          placeholder: this.$t('c95ea121.99ad85'),
           type: 'select',
-          options: [{ title: '配送中', value: 'DELIVERING' }],
+          options: [{ title: this.$t('c95ea121.739c91'), value: 'DELIVERING' }],
           required: true,
           isShow: ({ key }, value) => {
             return value['delivery_way'] == '2'
           },
-          message: '不能为空'
+          message: this.$t('c95ea121.281bad')
         },
         {
-          label: '配送备注',
+          label: this.$t('c95ea121.6d9262'),
           key: 'delivery_remark',
           type: 'input',
           isShow: ({ key }, value) => {
@@ -1006,13 +1069,13 @@ export default {
           }
         },
         {
-          label: '分类图片',
+          label: this.$t('c95ea121.b34dc8'),
           key: 'delivery_pics',
           isShow: ({ key }, value) => {
             return value['delivery_way'] == '2'
           },
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} drag max={9} />,
-          tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码`
+          tip: this.$t('c95ea121.6a7999')
         }
       ],
       deliverGoodsForm: {
@@ -1038,10 +1101,10 @@ export default {
           key: 'items',
           type: 'table',
           options: [
-            { title: '商品名', key: 'item_name' },
-            { title: '数量', key: 'num', width: 60 },
-            { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 }
+            { title: this.$t('c95ea121.de5472'), key: 'item_name' },
+            { title: this.$t('c95ea121.0bf60b'), key: 'num', width: 60 },
+            { title: this.$t('c95ea121.745165'), key: 'delivery_item_num', width: 100 },
+            { title: this.$t('c95ea121.e95382'), key: 'price', width: 120 }
           ]
         }
       ],
@@ -1054,40 +1117,42 @@ export default {
       refundDialog: false,
       refundFormList: [
         {
-          label: '取消来源',
+          label: this.$t('c95ea121.60d99e'),
           key: 'source',
           type: 'text'
         },
         {
-          label: '申请时间',
+          label: this.$t('c95ea121.5ba072'),
           key: 'applyTime',
           type: 'text'
         },
         {
-          label: '退款状态',
+          label: this.$t('c95ea121.db7c80'),
           key: 'refundStatus',
           type: 'text'
         },
         {
-          label: '处理进度',
+          label: this.$t('c95ea121.93b365'),
           key: 'process',
           type: 'text'
         },
         {
-          label: '退款金额',
+          label: this.$t('c95ea121.a0cd4c'),
           key: 'refundPrice',
           type: 'text'
         },
         {
-          label: '是否退运费',
+          label: this.$t('c95ea121.84a92e'),
           key: 'freight_fee',
           type: 'text',
           component: ({ key }, value) => {
-            return <div>{value[key] > 0 ? '是' : '否'}</div>
+            return (
+              <div>{value[key] > 0 ? this.$t('c95ea121.0a60ac') : this.$t('c95ea121.c9744f')}</div>
+            )
           }
         },
         {
-          label: '退运费金额',
+          label: this.$t('c95ea121.406376'),
           key: 'freight_fee',
           type: 'text',
           component: ({ key }, value) => {
@@ -1095,22 +1160,22 @@ export default {
           }
         },
         {
-          label: '支付方式',
+          label: this.$t('c95ea121.0c9d2b'),
           key: 'payType',
           type: 'text'
         },
         {
-          label: '取消原因',
+          label: this.$t('c95ea121.4a3df6'),
           key: 'reason',
           type: 'text'
         },
         {
-          label: '处理结果',
+          label: this.$t('c95ea121.9eb71d'),
           key: 'check_cancel',
           type: 'radio',
           options: [
-            { label: '0', name: '不同意' },
-            { label: '1', name: '同意' }
+            { label: '0', name: this.$t('c95ea121.1bf19c') },
+            { label: '1', name: this.$t('c95ea121.e61f2c') }
           ],
           onChange: (e) => {
             if (e == '0') {
@@ -1121,16 +1186,16 @@ export default {
           }
         },
         {
-          label: '拒绝原因',
+          label: this.$t('c95ea121.f48f94'),
           key: 'shop_reject_reason',
           type: 'input',
-          placeholder: '请输入拒绝原因',
+          placeholder: this.$t('c95ea121.fc955a'),
           isShow: () => {
             return this.refundForm.check_cancel == '0'
           },
           validator: (rule, value, callback) => {
             if (this.refundFormList.check_cancel == '0' && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('c95ea121.281bad')))
             } else {
               callback()
             }
@@ -1152,28 +1217,28 @@ export default {
       changePriceDialog: false,
       changePriceFormList: [
         {
-          component: () => (
-            <div class='tip-bar'>
-              仅未支付订单可修改价格，改价后请联系买家刷新订单并核实订单金额后再支付。
-            </div>
-          )
+          component: () => <div class='tip-bar'>{this.$t('c95ea121.596d85')}</div>
         },
         {
           component: () => (
             <div class='receive-info'>
               <div class='receive-item'>
-                <label class='item-label'>买家：</label>
+                <label class='item-label'>{this.$t('c95ea121.60db2a')}</label>
                 {`${this.changePriceForm.buy_member} | ${this.changePriceForm.buy_mobile}`}
               </div>
               <div class='receive-item'>
-                <label class='item-label'>{`${
-                  this.changePriceForm.isZiti ? '提货人：' : '收货人：'
-                }`}</label>
+                <label class='item-label'>
+                  {this.changePriceForm.isZiti
+                    ? this.$t('c95ea121.6b1044')
+                    : this.$t('c95ea121.02ddb4')}
+                </label>
                 {`${this.changePriceForm.receive_name} | ${this.changePriceForm.receive_mobile}`}
               </div>
               <div class='receive-item'>
                 <label class='item-label'>
-                  {`${this.changePriceForm.isZiti ? '自提地址：' : '收货地址：'}`}
+                  {this.changePriceForm.isZiti
+                    ? this.$t('c95ea121.d87411')
+                    : this.$t('c95ea121.e512d6')}
                 </label>
                 {this.changePriceForm.receive_address}
               </div>
@@ -1224,21 +1289,21 @@ export default {
       },
       personnelFormList: [
         {
-          label: '订单号',
+          label: this.$t('d41d8cd9.p1q2r3'),
           key: 'order_id',
-          placeholder: '请输入订单号',
+          placeholder: this.$t('d41d8cd9.s4t5u6'),
           type: 'input',
           disabled: true,
           required: true,
-          message: '订单号不能为空'
+          message: this.$t('d41d8cd9.v7w8x9')
         },
         {
-          label: '配送员',
+          label: this.$t('d41d8cd9.y0z1a2'),
           key: 'self_delivery_operator_id',
           type: 'select',
           options: [],
           required: true,
-          message: '配送员不能为空',
+          message: this.$t('d41d8cd9.b3c4d5'),
           isShow: () => {
             return this.statusPersonnel
           }
@@ -1259,30 +1324,30 @@ export default {
       },
       updateDeliverGoodsFormList: [
         {
-          label: '快递公司',
+          label: this.$t('d41d8cd9.e6f7g8'),
           key: 'delivery_corp',
-          placeholder: '请选择快递公司',
+          placeholder: this.$t('d41d8cd9.h9i0j1'),
           type: 'select',
           options: [],
           disabled: true
         },
         {
-          label: '发货单号',
+          label: this.$t('d41d8cd9.k2l3m4'),
           key: 'orders_delivery_id',
           type: 'input',
           placeholder: ' ',
           disabled: true
         },
         {
-          label: '配送员',
+          label: this.$t('d41d8cd9.y0z1a2'),
           key: 'self_delivery_operator_id',
-          placeholder: '请选择配送员',
+          placeholder: this.$t('d41d8cd9.n5o6p7'),
           type: 'select',
           display: 'inline',
           disabled: true,
           options: [],
           required: true,
-          message: '不能为空',
+          message: this.$t('d41d8cd9.n7o8p9'),
           onChange: (e) => {
             console.log(e)
             let targetItem =
@@ -1294,7 +1359,7 @@ export default {
           }
         },
         {
-          label: '配送员手机号',
+          label: this.$t('d41d8cd9.q8r9s0'),
           key: 'self_delivery_operator_mobile',
           type: 'input',
           display: 'inline',
@@ -1302,24 +1367,24 @@ export default {
           disabled: true
         },
         {
-          label: '配送状态',
+          label: this.$t('d41d8cd9.t1u2v3'),
           key: 'self_delivery_status',
-          placeholder: '请选择配送状态',
+          placeholder: this.$t('d41d8cd9.w4x5y6'),
           type: 'select',
           options: [],
           required: true,
-          message: '不能为空'
+          message: this.$t('d41d8cd9.n7o8p9')
         },
         {
-          label: '配送备注',
+          label: this.$t('d41d8cd9.z7a8b9'),
           key: 'delivery_remark',
           type: 'input'
         },
         {
-          label: '分类图片',
+          label: this.$t('d41d8cd9.c0d1e2'),
           key: 'delivery_pics',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} drag max={9} />,
-          tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码`
+          tip: this.$t('d41d8cd9.f3g4h5')
         }
       ],
       selectList: [],
@@ -1335,8 +1400,8 @@ export default {
     'deliverGoodsForm.delivery_way'(e) {
       if (e == '1') {
         this.deliverGoodsFormList[1].options = [
-          { label: 'batch', name: '整单发货' },
-          { label: 'sep', name: '拆分发货' }
+          { label: 'batch', name: this.$t('c95ea121.afb426') },
+          { label: 'sep', name: this.$t('c95ea121.95d243') }
         ]
         this.deliverGoodsFormList[3].options = this.logisticsList.filter(
           (item) => item.value != 'SELF_DELIVERY'
@@ -1346,7 +1411,9 @@ export default {
         this.deliverGoodsFormList[8].required = false
         this.deliverGoodsFormList[4].required = true
       } else {
-        this.deliverGoodsFormList[1].options = [{ label: 'batch', name: '整单发货' }]
+        this.deliverGoodsFormList[1].options = [
+          { label: 'batch', name: this.$t('c95ea121.afb426') }
+        ]
         this.deliverGoodsForm.delivery_type = 'batch'
         this.deliverGoodsFormList[3].options = this.logisticsList.filter(
           (item) => item.value == 'SELF_DELIVERY'
@@ -1432,7 +1499,7 @@ export default {
     // 分配配送员
     assignPersonnel(val) {
       if (this.selectList.length != 1) {
-        return this.$message.error('请选择一个订单！')
+        return this.$message.error(this.$t('c95ea121.8e1023'))
       }
 
       const { order_id, self_delivery_status, distributor_id, self_delivery_operator_id } =
@@ -1442,14 +1509,14 @@ export default {
         // 已接单，配送中才能取消配送
         this.personnelFormList[1].required = false
         if (!['RECEIVEORDER', 'DELIVERING'].includes(self_delivery_status)) {
-          return this.$message.error('该订单无法取消配送！')
+          return this.$message.error(this.$t('c95ea121.6220dd'))
         }
       } else {
         // if (!['CONFIRMING', 'PACKAGED'].includes(self_delivery_status)) {
-        //   return this.$message.error('该订单无法分配配送员！')
+        //   return this.$message.error(this.$t('c95ea121.dedc31'))
         // }
         if (self_delivery_operator_id != 0) {
-          return this.$message.error('该订单无法分配配送员！')
+          return this.$message.error(this.$t('c95ea121.dedc31'))
         }
       }
 
@@ -1469,14 +1536,14 @@ export default {
       if (this.statusPersonnel) {
         await this.$api.trade.orderDeliverystaffConfirm(this.personnelForm)
         this.$message({
-          message: '分配成功',
+          message: this.$t('c95ea121.f54845'),
           type: 'success'
         })
         this.personnelDialog = false
       } else {
         await this.$api.trade.orderCancelDeliverystaff({ order_id: this.personnelForm.order_id })
         this.$message({
-          message: '取消成功',
+          message: this.$t('c95ea121.285f58'),
           type: 'success'
         })
         this.personnelDialog = false
@@ -1566,10 +1633,10 @@ export default {
                   (order_holder == 'distributor' && IS_DISTRIBUTOR()) ||
                   (IS_ADMIN() && order_holder != 'distributor')
                 ) {
-                  actionBtns.push({ name: '取消订单', key: 'cancel' })
+                  actionBtns.push({ name: 'c95ea121.b21b5e', key: 'cancel' })
                 }
               } else {
-                actionBtns.push({ name: '取消订单', key: 'cancel' })
+                actionBtns.push({ name: 'c95ea121.b21b5e', key: 'cancel' })
               }
             }
           }
@@ -1577,7 +1644,7 @@ export default {
           if (order_status == 'PAYED' && receipt_type == 'ziti' && ziti_status == 'PENDING') {
             //商家自提订单只有在店铺端（暂时与后端商量是去除这个判断，后续有问题在看具体怎么处理）
             // if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
-            actionBtns.push({ name: '核销', key: 'writeOff' })
+            actionBtns.push({ name: 'c95ea121.e7d31e', key: 'writeOff' })
             // }
           }
 
@@ -1588,11 +1655,11 @@ export default {
             delivery_status != 'DONE' &&
             dada.dada_status == '0'
           ) {
-            actionBtns.push({ name: '接单', key: 'takeOrder' })
+            actionBtns.push({ name: 'c95ea121.7d4577', key: 'takeOrder' })
           }
 
           if (isDada && pay_status == 'PAYED' && dada.dada_status == '9') {
-            actionBtns.push({ name: '确认退回', key: 'orderSendBack' })
+            actionBtns.push({ name: 'c95ea121.f1557d', key: 'orderSendBack' })
           }
 
           if (
@@ -1606,15 +1673,15 @@ export default {
             !this.jstErpSetting?.is_open
             // && this.login_type == 'supplier'
           ) {
-            actionBtns.push({ name: '发货', key: 'deliverGoods' })
+            actionBtns.push({ name: 'c95ea121.045315', key: 'deliverGoods' })
           }
 
           if (cancel_status == 'WAIT_PROCESS' && order_status == 'PAYED') {
-            actionBtns.push({ name: '退款', key: 'refund' })
+            actionBtns.push({ name: 'c95ea121.44c198', key: 'refund' })
           }
 
           if (is_invoiced == '0' && invoice) {
-            actionBtns.push({ name: '待开票', key: 'waitInvoice' })
+            actionBtns.push({ name: 'c95ea121.963609', key: 'waitInvoice' })
           }
 
           if (
@@ -1622,7 +1689,7 @@ export default {
             order_status == 'WAIT_BUYER_CONFIRM' &&
             self_delivery_status != 'DONE'
           ) {
-            actionBtns.push({ name: '更新发货', key: 'updatedelivery' })
+            actionBtns.push({ name: 'c95ea121.59d9e1', key: 'updatedelivery' })
           }
 
           if (
@@ -1630,10 +1697,10 @@ export default {
             ['CONFIRMING', 'RECEIVEORDER'].includes(self_delivery_status) &&
             order_status === 'PAYED'
           ) {
-            actionBtns.push({ name: '已打包', key: 'confirmpackag' })
+            actionBtns.push({ name: 'c95ea121.891cb5', key: 'confirmpackag' })
           }
 
-          actionBtns.push({ name: '备注', key: 'remark' })
+          actionBtns.push({ name: 'c95ea121.2432b5', key: 'remark' })
         } else if (order_holder == 'supplier') {
           //供应商订单有取消和备注
           if (
@@ -1644,29 +1711,29 @@ export default {
           ) {
             // 非同城配的取消订单按钮
             if (!isDada || (isDada && ['0', '1'].includes(dada.data_status))) {
-              actionBtns.push({ name: '取消订单', key: 'cancel' })
+              actionBtns.push({ name: 'c95ea121.b21b5e', key: 'cancel' })
             }
           }
 
-          actionBtns.push({ name: '备注', key: 'remark' })
+          actionBtns.push({ name: 'c95ea121.2432b5', key: 'remark' })
         }
 
         if (order_status == 'NOTPAY') {
           if (VERSION_PLATFORM()) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
-              actionBtns.push({ name: '改价', key: 'changePrice' })
+              actionBtns.push({ name: 'c95ea121.bb6d2b', key: 'changePrice' })
             }
           } else if (!VERSION_IN_PURCHASE()) {
-            actionBtns.push({ name: '改价', key: 'changePrice' })
+            actionBtns.push({ name: 'c95ea121.bb6d2b', key: 'changePrice' })
           }
         }
         if (can_apply_aftersales == 1) {
           if (VERSION_PLATFORM()) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
-              actionBtns.push({ name: '申请售后', key: 'salesAfter' })
+              actionBtns.push({ name: 'c95ea121.45eb0c', key: 'salesAfter' })
             }
           } else if (!VERSION_IN_PURCHASE()) {
-            actionBtns.push({ name: '申请售后', key: 'salesAfter' })
+            actionBtns.push({ name: 'c95ea121.45eb0c', key: 'salesAfter' })
           }
         }
 
@@ -1690,7 +1757,7 @@ export default {
     },
     getOrderType({ order_class, type }) {
       if (order_class == 'normal') {
-        return type == '1' ? '跨境订单' : '普通订单'
+        return type == '1' ? this.$t('c95ea121.443aa4') : this.$t('c95ea121.e7978e')
       }
       const fd = ORDER_TYPE.find((item) => item.value == order_class)
 
@@ -1734,7 +1801,7 @@ export default {
         }
       })
       this.deliverGoodsFormList[3].options = this.logisticsList
-      this.logisticsList.push({ title: '商家自配送', value: 'SELF_DELIVERY' })
+      this.logisticsList.push({ title: this.$t('c95ea121.0e903e'), value: 'SELF_DELIVERY' })
       this.updateDeliverGoodsFormList[0].options = this.logisticsList
     },
     async handleAction(
@@ -1774,7 +1841,7 @@ export default {
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
         if (this.isBindOMS && this.IS_ADMIN()) {
-          return this.$message.warning('请至OMS处理订单发货')
+          return this.$message.warning(this.$t('c95ea121.72b354'))
         }
 
         await this.accountManagement(distributor_id)
@@ -1841,22 +1908,22 @@ export default {
         })
         this.writeOffDialog = true
       } else if (key == 'takeOrder') {
-        this.$confirm('请在接单前确认商品当前库存', '接单提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('c95ea121.f3e80d'), this.$t('c95ea121.c1b226'), {
+          confirmButtonText: this.$t('c95ea121.38cf16'),
+          cancelButtonText: this.$t('c95ea121.625fb2'),
           type: 'warning'
         }).then(async () => {
           await this.$api.trade.doBusinessReceipt(order_id)
-          this.$message.success('接单成功')
+          this.$message.success(this.$t('c95ea121.740ca1'))
         })
       } else if (key == 'orderSendBack') {
-        this.$confirm('确认退回', '确认退回提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('c95ea121.f1557d'), this.$t('c95ea121.df2e45'), {
+          confirmButtonText: this.$t('c95ea121.38cf16'),
+          cancelButtonText: this.$t('c95ea121.625fb2'),
           type: 'warning'
         }).then(async () => {
           await this.$api.trade.confirmBack(order_id)
-          this.$message.success('退回成功')
+          this.$message.success(this.$t('c95ea121.2ab3ab'))
         })
       } else if (key == 'refund') {
         this.$refs['refundRef'].resetForm()
@@ -1875,7 +1942,7 @@ export default {
         this.refundForm = {
           ...this.refundForm,
           order_id,
-          source: cancel_from == 'buyer' ? '消费者申请' : '系统自动取消',
+          source: cancel_from == 'buyer' ? this.$t('c95ea121.a54c66') : this.$t('c95ea121.ca6dd8'),
           applyTime: moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
           refundStatus: REFUND_STATUS[refund_status],
           process: REFUND_PROCESS[progress],
@@ -1884,9 +1951,9 @@ export default {
           reason: cancel_reason
         }
       } else if (key == 'waitInvoice') {
-        this.$confirm('确定更新该订单开票状态？', '提示', {
-          cancelButtonText: '取消',
-          confirmButtonText: '确定',
+        this.$confirm(this.$t('c95ea121.23d4a7'), this.$t('c95ea121.02d981'), {
+          cancelButtonText: this.$t('c95ea121.625fb2'),
+          confirmButtonText: this.$t('c95ea121.38cf16'),
           type: 'warning'
         }).then(async () => {
           const { success } = await this.$api.trade.isInvoiced({
@@ -1895,9 +1962,9 @@ export default {
           })
           this.fetchList()
           if (success) {
-            this.$message.success('已更新开票状态')
+            this.$message.success(this.$t('c95ea121.ee73ff'))
           } else {
-            this.$message.error('更新开票状态失败')
+            this.$message.error(this.$t('c95ea121.34b438'))
           }
         })
       } else if (key == 'changePrice') {
@@ -1996,22 +2063,24 @@ export default {
         this.updateDeliverGoodsForm.delivery_code = delivery_code
         this.updateDeliverGoodsForm.self_delivery_status = ''
         if (self_delivery_status == 'CONFIRMING') {
-          this.updateDeliverGoodsFormList[4].options = [{ title: '配送中', value: 'DELIVERING' }]
+          this.updateDeliverGoodsFormList[4].options = [
+            { title: this.$t('c95ea121.739c91'), value: 'DELIVERING' }
+          ]
           this.updateDeliverGoodsFormList[2].disabled = false
         } else {
           this.updateDeliverGoodsFormList[2].disabled = true
           this.updateDeliverGoodsFormList[4].options = [
-            { title: '已送达', value: 'DONE' },
-            { title: '已取消', value: 'CONFIRMING' }
+            { title: this.$t('c95ea121.f87f48'), value: 'DONE' },
+            { title: this.$t('c95ea121.2111cc'), value: 'CONFIRMING' }
           ]
         }
       } else if (key == 'confirmpackag') {
-        this.$confirm('是否确认打包', '商品打包', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
+        this.$confirm(this.$t('c95ea121.607845'), this.$t('c95ea121.de6f83'), {
+          confirmButtonText: this.$t('c95ea121.38cf16'),
+          cancelButtonText: this.$t('c95ea121.625fb2')
         }).then(async () => {
           await this.$api.trade.confirmpackag({ order_id })
-          this.$message.success('打包成功')
+          this.$message.success(this.$t('c95ea121.9a94fc'))
           this.fetchList()
         })
       }
@@ -2021,7 +2090,7 @@ export default {
     },
     async onRemarkSubmit() {
       await this.$api.order.remarks(this.remarkForm)
-      this.$message.success('订单备注修改成功!')
+      this.$message.success(this.$t('c95ea121.c75e91'))
       this.remarkDialog = false
       this.fetchList()
     },
@@ -2030,7 +2099,7 @@ export default {
       console.log(this.cancelOrderForm)
       await this.$api.trade.cancelOrderConfirm(order_id, this.cancelOrderForm)
       this.cancelOrderDialog = false
-      this.$message.success('订单取消成功!')
+      this.$message.success(this.$t('c95ea121.c771bd'))
       // await this.$confirm('订单已取消', '确认信息', {
       //   distinguishCancelAndClose: true,
       //   confirmButtonText: '确定',
@@ -2059,7 +2128,7 @@ export default {
       }
 
       const res = await this.$api.trade.updateLogistics(orders_delivery_id, params)
-      this.$message.success('更新成功!')
+      this.$message.success(this.$t('c95ea121.a3869d'))
       this.updateDeliverGoodsDialog = false
       this.fetchList()
     },
@@ -2116,18 +2185,18 @@ export default {
       })
       this.fetchList()
       if (delivery_status && delivery_status != 'PENDING') {
-        this.$message.success('发货成功!')
+        this.$message.success(this.$t('c95ea121.de3b52'))
       } else {
-        this.$message.error('发货失败!')
+        this.$message.error(this.$t('c95ea121.2249c1'))
       }
     },
     async writeOffSubmit() {
       const { order_id } = this.writeOffForm
       const { ziti_status } = await this.$api.trade.doWriteoff(order_id, this.writeOffForm)
       if (ziti_status == 'DONE') {
-        this.$message.success('自提订单核销成功!')
+        this.$message.success(this.$t('c95ea121.b8ba0a'))
       } else {
-        this.$message.error('自提订单核销失败!')
+        this.$message.error(this.$t('c95ea121.47c5ff'))
       }
       this.writeOffDialog = false
     },
@@ -2139,11 +2208,11 @@ export default {
         shop_reject_reason
       })
       if (refund_status == 'AUDIT_SUCCESS') {
-        this.$message.success('审核通过!')
+        this.$message.success(this.$t('c95ea121.a41119'))
       } else if (refund_status == 'SHOP_CHECK_FAILS') {
-        this.$message.success('审核已拒绝!')
+        this.$message.success(this.$t('c95ea121.ff3161'))
       } else {
-        this.$message.error('审核失败!')
+        this.$message.error(this.$t('c95ea121.f74090'))
       }
       this.refundDialog = false
     },
@@ -2185,13 +2254,13 @@ export default {
         .then((response) => {
           const { status, url, filename } = response.data.data
           if (status) {
-            this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+            this.$message.success(this.$t('c95ea121.3e1ddd'))
             this.$export_open('invoice')
             return
           } else if (url) {
             window.open(url)
           } else {
-            this.$message.error('无内容可导出或执行失败，请检查重试')
+            this.$message.error(this.$t('c95ea121.c849e4'))
             return
           }
         })
@@ -2240,13 +2309,13 @@ export default {
       orderExport(params).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
-          this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+          this.$message.success(this.$t('c95ea121.3e1ddd'))
           this.$export_open(type)
           return
         } else if (url) {
           window.open(url)
         } else {
-          this.$message.error('无内容可导出或执行失败，请检查重试')
+          this.$message.error(this.$t('c95ea121.c849e4'))
           return
         }
       })
@@ -2258,7 +2327,7 @@ export default {
         file: file.raw
       }
       await this.$api.common.handleUploadFile(params)
-      this.$message.success('上传成功，等待处理')
+      this.$message.success(this.$t('c95ea121.7bbfaa'))
       this.fetchList()
     },
     async uploadHandlePatchCancel(file) {
@@ -2268,19 +2337,19 @@ export default {
         file: file.raw
       }
       await this.$api.common.handleUploadFile(params)
-      this.$message.success('上传成功，等待处理')
+      this.$message.success(this.$t('c95ea121.7bbfaa'))
       this.fetchList()
     },
     async getPickupcodeSetting() {
       const { pickupcode_status } = await this.$api.company.getPickupcodeSetting()
       if (!pickupcode_status) return
       this.writeOffFormList.push({
-        label: '提货码:',
+        label: this.$t('c95ea121.a5a7dd'),
         key: 'pickupcode',
         type: 'input',
-        placeholder: '请输入提货码',
+        placeholder: this.$t('c95ea121.ba231e'),
         required: true,
-        message: '不能为空'
+        message: this.$t('c95ea121.281bad')
       })
     },
     onChangeTableView({ items, item_fee_new, freight_fee, total_fee, item_total_fee }) {

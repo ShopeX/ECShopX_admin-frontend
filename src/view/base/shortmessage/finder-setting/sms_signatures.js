@@ -18,41 +18,41 @@ export default (vm) => {
   const formatStatus = (status) => {
     switch (status) {
       case '0':
-        return `企事业单位的全称或简称`
+        return vm.$t('ed356575.7d9f89')
       case '1':
-        return `工信部备案网站的全称或简称`
+        return vm.$t('ed356575.72f646')
       case '2':
-        return `App 应用的全称或简称`
+        return vm.$t('ed356575.f2945a')
       case '3':
-        return `公众号或小程序的全称或简称`
+        return vm.$t('ed356575.788dc8')
       case '4':
-        return `电商平台店铺名的全称或简称`
+        return vm.$t('ed356575.af36b9')
       case '5':
-        return `商标名的全称或简称`
+        return vm.$t('ed356575.fc430f')
     }
   }
   const a = (status) => {
     switch (status) {
       case 0:
-        return `审核中`
+        return vm.$t('ed356575.b720a6')
       case 1:
-        return `审核通过`
+        return vm.$t('ed356575.871a30')
       case 2:
-        return `审核失败`
+        return vm.$t('ed356575.3c6210')
     }
   }
   return createSetting({
     search: [
-      { key: 'status', name: '审核状态', type: 'select', options: vm.search_options },
-      { key: 'sign_name', name: '签名名称' }
+      { key: 'status', name: vm.$t('ed356575.b6d0e9'), type: 'select', options: vm.search_options },
+      { key: 'sign_name', name: vm.$t('ed356575.59592b') }
     ],
     columns: [
-      { name: '签名名称', key: 'sign_name' },
-      { name: '签名来源', key: 'sign_source', formatter: formatStatus },
-      { name: '申请说明', key: 'remark' },
-      { name: '创建时间', key: 'created', formatter: formatDate, width: '160px' },
+      { name: vm.$t('ed356575.59592b'), key: 'sign_name' },
+      { name: vm.$t('ed356575.7f3b15'), key: 'sign_source', formatter: formatStatus },
+      { name: vm.$t('ed356575.9206ad'), key: 'remark' },
+      { name: vm.$t('ed356575.eca37c'), key: 'created', formatter: formatDate, width: '160px' },
       {
-        name: '审核状态',
+        name: vm.$t('ed356575.b6d0e9'),
         key: 'status',
         width: '100px',
         render: (h, { row }) =>
@@ -70,9 +70,9 @@ export default (vm) => {
               h(
                 'span',
                 {},
-                (row.status == '0' && '审核中') ||
-                  (row.status == '1' && '审核通过') ||
-                  (row.status == '2' && '审核失败 ')
+                (row.status == '0' && vm.$t('ed356575.b720a6')) ||
+                  (row.status == '1' && vm.$t('ed356575.871a30')) ||
+                  (row.status == '2' && vm.$t('ed356575.3c6210'))
               ),
               row.status == 2 &&
                 row.reason &&
@@ -94,7 +94,7 @@ export default (vm) => {
     ],
     actions: [
       {
-        name: '详情',
+        name: vm.$t('ed356575.f26225'),
         key: 'detail',
         type: 'button',
         buttonType: 'text',
@@ -109,7 +109,7 @@ export default (vm) => {
         }
       },
       {
-        name: '编辑',
+        name: vm.$t('ed356575.95b351'),
         key: 'editor',
         type: 'button',
         buttonType: 'text',
@@ -127,7 +127,7 @@ export default (vm) => {
         }
       },
       {
-        name: '删除',
+        name: vm.$t('ed356575.2f4aad'),
         key: 'delete',
         type: 'button',
         buttonType: 'text',

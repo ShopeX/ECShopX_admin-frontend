@@ -4,10 +4,10 @@
 -->
 
 <template>
-  <CustomCard title="物流信息">
+  <CustomCard :title="$t('068002ef.24bc07')">
     <div>
       <div v-if="orderInfo.receipt_type == 'ziti'">
-        <h4>自提地址：</h4>
+        <h4>{{ $t('068002ef.d87411') }}</h4>
       </div>
       <div v-if="orderInfo.receipt_type == 'ziti'">
         {{ distributor.store_name }}
@@ -15,7 +15,7 @@
       </div>
       <div v-if="orderInfo.receiver_address" class="flex-center">
         <div class="content-right">
-          <h4>收货人信息：</h4>
+          <h4>{{ $t('068002ef.0dd68e') }}</h4>
         </div>
         <div>
           {{ orderInfo.receiver_name }} , {{ orderInfo.receiver_mobile }} ,
@@ -47,10 +47,10 @@ export default {
     const self = this
     return {
       columns: [
-        { name: '发货时间', field: 'delivery_time' },
-        { name: '物流单号', field: 'delivery_code' },
-        { name: '快递公司', field: 'delivery_corp_name' },
-        { name: '物流编码', field: 'delivery_corp' }
+        { name: self.$t('068002ef.bfd255'), field: 'delivery_time' },
+        { name: self.$t('068002ef.0bb075'), field: 'delivery_code' },
+        { name: self.$t('068002ef.f3af96'), field: 'delivery_corp_name' },
+        { name: self.$t('068002ef.28acd4'), field: 'delivery_corp' }
       ],
       dataSource: self.deliveryData
     }

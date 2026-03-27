@@ -18,7 +18,7 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button type="primary" @click="saveConfig"> 保存 </el-button>
+      <el-button type="primary" @click="saveConfig">{{ $t('25ab646b.be5fbb') }}</el-button>
     </section>
   </div>
 </template>
@@ -82,7 +82,7 @@ export default {
       savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('25ab646b.3b1083'),
             type: 'success'
           })
         }

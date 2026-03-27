@@ -6,42 +6,42 @@
 <template>
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="activity_name" label="活动名称:">
-        <el-input v-model="params.activity_name" placeholder="活动名称" />
+      <SpFilterFormItem prop="activity_name" :label="$t('6b57cb80.1cadc0')">
+        <el-input v-model="params.activity_name" :placeholder="$t('6b57cb80.39834b')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="params.mobile" placeholder="手机号" />
+      <SpFilterFormItem prop="mobile" :label="$t('6b57cb80.ce2bf3')">
+        <el-input v-model="params.mobile" :placeholder="$t('6b57cb80.8098e2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="时间:">
+      <SpFilterFormItem prop="create_time" :label="$t('6b57cb80.374856')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="根据添加时间筛选"
+          :placeholder="$t('6b57cb80.e08045')"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor" label="店铺名称:">
+      <SpFilterFormItem prop="distributor" :label="$t('6b57cb80.4de1b7')">
         <el-autocomplete
           v-model="params.distributor.name"
           :fetch-suggestions="queryStoreSearch"
-          placeholder="请输入店铺名称"
+          :placeholder="$t('6b57cb80.867738')"
           @select="handleSelectStore"
         />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="tableList" style="width: 100%">
-      <el-table-column prop="record_id" label="核销编号" />
-      <el-table-column prop="activity_name" label="活动名称" />
-      <el-table-column prop="tem_name" label="报名表单" />
-      <el-table-column prop="record_no" label="报名编号" />
-      <el-table-column prop="mobile" label="报名用户" />
-      <el-table-column label="核销时间" width="300">
+      <el-table-column prop="record_id" :label="$t('6b57cb80.a742f5')" />
+      <el-table-column prop="activity_name" :label="$t('6b57cb80.39834b')" />
+      <el-table-column prop="tem_name" :label="$t('6b57cb80.112a9c')" />
+      <el-table-column prop="record_no" :label="$t('6b57cb80.6c5f80')" />
+      <el-table-column prop="mobile" :label="$t('6b57cb80.c9c642')" />
+      <el-table-column :label="$t('6b57cb80.dcb837')" width="300">
         <template slot-scope="scope">
           {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
         </template>
       </el-table-column>
-      <el-table-column prop="verify_operator" label="核销员" />
+      <el-table-column prop="verify_operator" :label="$t('6b57cb80.ec69fc')" />
     </el-table>
     <div class="content-center content-top-padded">
       <el-pagination

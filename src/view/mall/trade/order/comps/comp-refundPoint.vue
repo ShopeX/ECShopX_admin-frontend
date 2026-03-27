@@ -13,7 +13,7 @@
 <template>
   <div class="comp-refund-amount">
     <el-input v-model="fee" type="text" @change="onChangeFee" />
-    <div class="refund-amount-tip">实际可退积分：{{ getTotalFee() }}</div>
+    <div class="refund-amount-tip">{{ $t('2a4a2da7.a81a1b') }}{{ getTotalFee() }}</div>
   </div>
 </template>
 

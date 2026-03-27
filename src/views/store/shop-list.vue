@@ -7,7 +7,9 @@
   <div class="flex flex-col h-full bg-gray-50">
     <LayoutHeader>
       <SpImage class="ml-5" :src="logo" height="26" fit="contain" />
-      <div class="light flex h-full items-center text-xl ml-2 text-[#333]">店铺列表</div>
+      <div class="light flex h-full items-center text-xl ml-2 text-[#333]">
+        {{ $t('16bb187d.a4d703') }}
+      </div>
     </LayoutHeader>
     <div class="flex-1 w-[1000px] mx-auto pt-10">
       <SpFinder no-selection :show-pager="false" :setting="setting" :data="storeList" />
@@ -29,9 +31,9 @@ export default {
     return {
       setting: createSetting({
         columns: [
-          { name: '店铺名称', key: 'name' },
+          { name: this.$t('16bb187d.0d4934'), key: 'name' },
           {
-            name: '是否启用',
+            name: this.$t('16bb187d.53c3dd'),
             key: 'name',
             width: 120,
             render: (h, { row }) => {
@@ -42,13 +44,13 @@ export default {
                     type: row.is_valid == 'true' ? 'success' : 'danger'
                   }
                 },
-                row.is_valid == 'true' ? '启用' : '禁用'
+                row.is_valid == 'true' ? this.$t('16bb187d.7854b5') : this.$t('16bb187d.710ad0')
               )
             }
           },
-          { name: '店铺地址', key: 'store_address' },
+          { name: this.$t('16bb187d.9198af'), key: 'store_address' },
           {
-            name: '创建时间',
+            name: this.$t('16bb187d.eca37c'),
             key: 'created',
             width: 180,
             formatter: (value, row, col) => {
@@ -58,7 +60,7 @@ export default {
         ],
         actions: [
           {
-            name: '进入店铺',
+            name: this.$t('16bb187d.8f822c'),
             key: 'create',
             type: 'button',
             buttonType: 'text',
@@ -74,7 +76,7 @@ export default {
                   this.$store.commit('user/setShopId', { shopId: row.distributor_id })
                   window.location.href = '/shopadmin'
                 } else {
-                  this.$message.error('进入店铺失败，请稍后重试')
+                  this.$message.error(this.$t('16bb187d.4a3301'))
                 }
               }
             },

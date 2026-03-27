@@ -12,25 +12,25 @@
       :height="wheight - 170"
     >
       <el-table-column width="50" prop="template_id" label="ID" />
-      <el-table-column prop="name" label="运费模板名称" />
-      <el-table-column prop="area" label="配送地区">
+      <el-table-column prop="name" :label="$t('920c3d68.621f21')" />
+      <el-table-column prop="area" :label="$t('920c3d68.087003')">
         <template slot-scope="scope">
           {{ scope.row.area | formatCityData }}
         </template>
       </el-table-column>
-      <el-table-column width="100" prop="fee" label="运费" />
-      <el-table-column width="70" label="状态">
+      <el-table-column width="100" prop="fee" :label="$t('e224c0e0.9a935b')" />
+      <el-table-column width="70" :label="$t('920c3d68.3fea7c')">
         <template slot-scope="scope">
-          <span v-if="scope.row.status == true">启用</span>
-          <span v-else>关闭</span>
+          <span v-if="scope.row.status == true">{{ $t('920c3d68.7854b5') }}</span>
+          <span v-else>{{ $t('920c3d68.b15d91') }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" label="最后修改时间">
+      <el-table-column width="120" :label="$t('920c3d68.4b9676')">
         <template slot-scope="scope">
           <span>{{ scope.row.updated_at | datetime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column :label="$t('920c3d68.2b6bc0')" width="100">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="el-icon-edit-outline" @click="editTemplatesAction(scope.$index, scope.row)" />
@@ -97,7 +97,7 @@ export default {
             template_id: response.data.data.list[item].template_id,
             name: response.data.data.list[item].name,
             area: '0',
-            fee: '包邮',
+            fee: this.$t('041d0986.56f046'),
             status: response.data.data.list[item].status,
             updated_at: response.data.data.list[item].update_time
           })
@@ -110,16 +110,16 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + row.template_id })
     },
     deleteTemplatesAction(index, row) {
-      this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('920c3d68.e0d827'), this.$t('920c3d68.02d981'), {
+        confirmButtonText: this.$t('920c3d68.38cf16'),
+        cancelButtonText: this.$t('920c3d68.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteShippingTemplates(row.template_id).then((response) => {
             this.buyerTemplatesList.splice(index, 1)
             this.$message({
-              message: '删除运费模板成功',
+              message: this.$t('920c3d68.9f3fee'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -128,7 +128,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('920c3d68.2111cc')
           })
         })
     }

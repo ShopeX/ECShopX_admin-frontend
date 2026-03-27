@@ -5,32 +5,34 @@
 
 <template>
   <SpPage class="MerchantsEditor">
-    <h5>选择商户类型</h5>
+    <h5>{{ $t('e8e4e935.e9b5ee') }}</h5>
     <el-divider />
     <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
-      form.settled_type == 'enterprise' ? '企业' : '个体户'
+      form.settled_type == 'enterprise' ? $t('e8e4e935.04c9e3') : $t('e8e4e935.a41061')
     }}</span>
     <el-select
       v-else
       v-model="form.settled_type"
-      placeholder="请选择"
+      :placeholder="$t('e8e4e935.708c9d')"
       :disabled="disabled || editDisabled"
     >
-      <el-option label="企业" value="enterprise" />
-      <el-option label="个体户" value="soletrader" />
+      <el-option :label="$t('e8e4e935.04c9e3')" value="enterprise" />
+      <el-option :label="$t('e8e4e935.a41061')" value="soletrader" />
     </el-select>
     <el-divider />
     <el-form v-if="form.settled_type" ref="form" :model="form" :rules="rules" label-width="130px">
       <!-- 企业信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span class="theme">企业信息</span>
+          <span class="theme">{{ $t('e8e4e935.54796d') }}</span>
         </div>
         <section>
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item
-                :label="form.settled_type == 'enterprise' ? '企业全称' : '商户名称'"
+                :label="
+                  form.settled_type == 'enterprise' ? $t('e8e4e935.0b66da') : $t('e8e4e935.e6f169')
+                "
                 prop="merchant_name"
               >
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
@@ -44,7 +46,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="统一社会信用代码" prop="social_credit_code_id">
+              <el-form-item :label="$t('e8e4e935.25c0bd')" prop="social_credit_code_id">
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.social_credit_code_id
                 }}</span>
@@ -56,7 +58,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="所在省市区" prop="regions_id">
+              <el-form-item :label="$t('e8e4e935.8c74f2')" prop="regions_id">
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.regions.join('/')
                 }}</span>
@@ -73,7 +75,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="详细地址" prop="address">
+              <el-form-item :label="$t('e8e4e935.61a0ec')" prop="address">
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.address
                 }}</span>
@@ -82,7 +84,9 @@
             </el-col>
             <el-col :span="8">
               <el-form-item
-                :label="form.settled_type == 'enterprise' ? '法人姓名' : '负责人姓名'"
+                :label="
+                  form.settled_type == 'enterprise' ? $t('e8e4e935.2fe17a') : $t('e8e4e935.610859')
+                "
                 prop="legal_name"
               >
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
@@ -93,7 +97,9 @@
             </el-col>
             <el-col :span="8">
               <el-form-item
-                :label="form.settled_type == 'enterprise' ? '法人身份证号' : '负责人身份证号'"
+                :label="
+                  form.settled_type == 'enterprise' ? $t('e8e4e935.e8b4af') : $t('e8e4e935.cb32ae')
+                "
                 prop="legal_cert_id"
               >
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
@@ -104,7 +110,9 @@
             </el-col>
             <el-col :span="8">
               <el-form-item
-                :label="form.settled_type == 'enterprise' ? '法人手机号' : '负责人手机号'"
+                :label="
+                  form.settled_type == 'enterprise' ? $t('e8e4e935.f50f83') : $t('e8e4e935.8de58d')
+                "
                 prop="legal_mobile"
               >
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
@@ -114,7 +122,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="联系邮箱" prop="email">
+              <el-form-item :label="$t('e8e4e935.a6695e')" prop="email">
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.email
                 }}</span>
@@ -127,27 +135,27 @@
       <!-- 结算信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span class="theme">结算账户信息 </span>
+          <span class="theme">{{ $t('e8e4e935.99f89b') }} </span>
           <span style="fons-size: 10px; color: #999">
-            （结算银行卡姓名要与{{
-              form.settled_type == 'enterprise' ? '法人' : '负责人'
-            }}姓名一致）</span
+            （{{ $t('e8e4e935.618c5d')
+            }}{{ form.settled_type == 'enterprise' ? $t('e8e4e935.e1a437') : $t('e8e4e935.b29725')
+            }}{{ $t('e8e4e935.5e9df0') }}）</span
           >
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="结算银行账户类型" prop="bank_acct_type">
+            <el-form-item :label="$t('e8e4e935.32734c')" prop="bank_acct_type">
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
-                form.bank_acct_type == '1' ? '对公' : '对私'
+                form.bank_acct_type == '1' ? $t('e8e4e935.18ba13') : $t('e8e4e935.f0bf8a')
               }}</span>
               <template v-else>
                 <el-radio-group v-model="form.bank_acct_type" :disabled="disabled">
-                  <el-radio label="1"> 对公 </el-radio>
-                  <el-radio label="2"> 对私 </el-radio>
+                  <el-radio label="1"> {{ $t('e8e4e935.18ba13') }} </el-radio>
+                  <el-radio label="2"> {{ $t('e8e4e935.f0bf8a') }} </el-radio>
                 </el-radio-group>
                 <el-tooltip
                   :style="{ 'margin-left': 30 + 'px' }"
-                  content="提现到账银行卡账户类型"
+                  :content="$t('e8e4e935.8597fb')"
                   placement="top-end"
                   effect="light"
                 >
@@ -157,7 +165,7 @@
             </el-form-item>
           </el-col>
           <el-col v-if="form.bank_acct_type == '2'" :span="8">
-            <el-form-item label="银行预留手机号" prop="bank_mobile">
+            <el-form-item :label="$t('e8e4e935.a0b7da')" prop="bank_mobile">
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.bank_mobile
               }}</span>
@@ -165,7 +173,7 @@
             </el-form-item>
           </el-col>
           <el-col v-else :span="8">
-            <el-form-item label="结算银行卡所属银行" prop="bank_name">
+            <el-form-item :label="$t('e8e4e935.0a3e82')" prop="bank_name">
               <div class="flex">
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.bank_name
@@ -178,14 +186,14 @@
                   prefix-icon="el-icon-search"
                   class="inline-input"
                   :fetch-suggestions="querySearch"
-                  placeholder="请输入选择内容"
+                  :placeholder="$t('e8e4e935.473e86')"
                   @select="handleSelectBank"
                 />
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结算银行卡号" prop="card_id_mask">
+            <el-form-item :label="$t('e8e4e935.88174a')" prop="card_id_mask">
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.card_id_mask
               }}</span>
@@ -197,18 +205,18 @@
       <!-- 入驻信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span class="theme">入驻信息 </span>
+          <span class="theme">{{ $t('e8e4e935.e48700') }} </span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="商户类型" prop="merchant_type">
+            <el-form-item :label="$t('e8e4e935.4709c8')" prop="merchant_type">
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.merchant_type_parent_name
               }}</span>
               <el-select
                 v-else
                 v-model="form.merchant_type"
-                placeholder="请选择"
+                :placeholder="$t('e8e4e935.708c9d')"
                 style="width: 100%"
                 :disabled="disabled"
                 @change="merchantType_change"
@@ -223,14 +231,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="经营范围" prop="merchant_type_id">
+            <el-form-item :label="$t('e8e4e935.04228b')" prop="merchant_type_id">
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.merchant_type_name
               }}</span>
               <el-select
                 v-else
                 v-model="form.merchant_type_id"
-                placeholder="请选择"
+                :placeholder="$t('e8e4e935.708c9d')"
                 style="width: 100%"
                 :disabled="disabled"
               >
@@ -244,23 +252,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="审核商品" prop="audit_goods">
+            <el-form-item :label="$t('e8e4e935.48f0ee')" prop="audit_goods">
               <span v-if="$route.query.type == 'detail'">{{
-                form.audit_goods == 'true' ? '是' : '否'
+                form.audit_goods == 'true' ? $t('e8e4e935.0a60ac') : $t('e8e4e935.c9744f')
               }}</span>
               <el-select
                 v-else
                 v-model="form.audit_goods"
                 style="width: 60%"
-                placeholder="请选择"
+                :placeholder="$t('e8e4e935.708c9d')"
                 :disabled="$route.query.type == 'verify' ? verifyDisabled : disabled"
               >
-                <el-option label="是" value="true" />
-                <el-option label="否" value="false" />
+                <el-option :label="$t('e8e4e935.0a60ac')" value="true" />
+                <el-option :label="$t('e8e4e935.c9744f')" value="false" />
               </el-select>
               <el-tooltip
                 :style="{ 'margin-left': 30 + 'px' }"
-                content="商户上架商品是否通过平台审核"
+                :content="$t('e8e4e935.403026')"
                 placement="top-end"
                 effect="light"
               >
@@ -273,15 +281,15 @@
       <!-- 证照信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span class="theme">证照信息 </span>
+          <span class="theme">{{ $t('e8e4e935.8f14f8') }} </span>
         </div>
         <div class="wrap">
           <el-form-item prop="license_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('license_url')">
-              <img v-if="form.license_url" class="avatar" :src="form.license_url" />
+              <img v-if="form.license_url" class="avatar" :src="form.license_url">
               <i v-else slot="default" class="el-icon-plus" />
             </div>
-            <p><span style="color: red">*</span> 营业执照</p>
+            <p><span style="color: red">*</span> {{ $t('e8e4e935.e0b8cc') }}</p>
           </el-form-item>
           <el-form-item prop="legal_certid_front_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('legal_certid_front_url')">
@@ -289,12 +297,13 @@
                 v-if="form.legal_certid_front_url"
                 class="avatar"
                 :src="form.legal_certid_front_url"
-              />
+              >
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>
               <span style="color: red">*</span>
-              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证人像面
+              {{ form.settled_type == 'enterprise' ? $t('e8e4e935.e1a437') : $t('e8e4e935.b29725')
+              }}{{ $t('e8e4e935.c4a042') }}
             </p>
           </el-form-item>
           <el-form-item prop="legal_cert_id_back_url" label-width="30px">
@@ -303,27 +312,28 @@
                 v-if="form.legal_cert_id_back_url"
                 class="avatar"
                 :src="form.legal_cert_id_back_url"
-              />
+              >
               <i v-else slot="default" class="el-icon-plus" />
             </div>
             <p>
               <span style="color: red">*</span>
-              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证国徽面
+              {{ form.settled_type == 'enterprise' ? $t('e8e4e935.e1a437') : $t('e8e4e935.b29725')
+              }}{{ $t('e8e4e935.267438') }}
             </p>
           </el-form-item>
           <el-form-item prop="bank_card_front_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('bank_card_front_url')">
-              <img v-if="form.bank_card_front_url" class="avatar" :src="form.bank_card_front_url" />
+              <img v-if="form.bank_card_front_url" class="avatar" :src="form.bank_card_front_url">
               <i v-else slot="default" class="el-icon-plus" />
             </div>
-            <p>结算银行卡正面照</p>
+            <p>{{ $t('e8e4e935.a7a1aa') }}</p>
           </el-form-item>
           <el-form-item prop="contract_url" label-width="30px">
             <div class="upload-box" @click="handleImgPicker('contract_url')">
-              <img v-if="form.contract_url" class="avatar" :src="form.contract_url" />
+              <img v-if="form.contract_url" class="avatar" :src="form.contract_url">
               <i v-else slot="default" class="el-icon-plus" />
             </div>
-            <p>合同</p>
+            <p>{{ $t('e8e4e935.f5dc10') }}</p>
           </el-form-item>
         </div>
       </el-card>
@@ -334,14 +344,14 @@
         shadow="never"
       >
         <div slot="header" class="clearfix">
-          <span class="theme">账号信息 </span>
+          <span class="theme">{{ $t('e8e4e935.53cab4') }} </span>
         </div>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item label="生成账号" prop="createAccount">
+            <el-form-item :label="$t('e8e4e935.c41aeb')" prop="createAccount">
               <el-tooltip
                 :style="{ 'margin-right': 30 + 'px' }"
-                content="商户网址、账号密码、店铺网址将发送至此手机号上，且商户账号为此号码"
+                :content="$t('e8e4e935.f5dfab')"
                 placement="top-end"
                 effect="light"
               >
@@ -349,15 +359,19 @@
               </el-tooltip>
               <el-radio-group v-model="form.createAccount" :disabled="disabled">
                 <el-radio label="1">
-                  {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手机号
+                  {{
+                    form.settled_type == 'enterprise'
+                      ? $t('e8e4e935.e1a437')
+                      : $t('e8e4e935.b29725')
+                  }}{{ $t('e8e4e935.8098e2') }}
                 </el-radio>
-                <el-radio label="2"> 其他 </el-radio>
+                <el-radio label="2"> {{ $t('e8e4e935.0d98c7') }} </el-radio>
               </el-radio-group>
               <template v-if="form.createAccount == '2'">
                 <el-form-item prop="mobile">
                   <el-input
                     v-model="form.mobile"
-                    placeholder="请填写手机号"
+                    :placeholder="$t('e8e4e935.2628fc')"
                     :disabled="disabled"
                     style="width: 300px"
                   />
@@ -366,14 +380,16 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="短信发送时间" prop="settled_succ_sendsms">
+            <el-form-item :label="$t('e8e4e935.11d8b6')" prop="settled_succ_sendsms">
               <el-radio-group v-model="form.settled_succ_sendsms" :disabled="disabled">
-                <el-radio label="1"> 立即发送 </el-radio>
-                <el-radio label="2"> 商家H5确认入驻协议后 </el-radio>
+                <el-radio label="1"> {{ $t('e8e4e935.1176c5') }} </el-radio>
+                <el-radio label="2"> {{ $t('e8e4e935.ec3a35') }} </el-radio>
               </el-radio-group>
               <label v-if="form.settled_succ_sendsms == 2" class="h5_link">
                 <span>{{ h5url }}</span>
-                <a v-clipboard:copy="h5url" v-clipboard:success="onCopy"> 复制链接</a>
+                <a v-clipboard:copy="h5url" v-clipboard:success="onCopy">
+                  {{ $t('e8e4e935.879058') }}</a
+                >
               </label>
             </el-form-item>
           </el-col>
@@ -383,10 +399,11 @@
       <template v-if="audit_status && audit_status != '1'">
         <p>
           <span :class="['audit_status', audit_status == '2' ? 'success' : 'fail']" />{{
-            (audit_status == '2' && '通过') || (audit_status == '3' && '拒绝')
+            (audit_status == '2' && $t('e8e4e935.23c1f3')) ||
+            (audit_status == '3' && $t('e8e4e935.7173f8'))
           }}
         </p>
-        <p>审批备注: {{ audit_memo || '-' }}</p>
+        <p>{{ $t('e8e4e935.4985b0') }}: {{ audit_memo || '-' }}</p>
       </template>
 
       <!-- 按钮 -->
@@ -398,7 +415,7 @@
       >
         <el-form-item label-width="0px" style="text-align: center; margin-top: 60px">
           <el-button type="primary" style="padding: 10px 50px" @click="submitFn('form')">
-            保存
+            {{ $t('e8e4e935.be5fbb') }}
           </el-button>
         </el-form-item>
       </template>
@@ -411,7 +428,7 @@
               :disabled="datapass_block != 0"
               @click="fnPass"
             >
-              通过
+              {{ $t('e8e4e935.23c1f3') }}
             </el-button>
             <el-button
               type="danger"
@@ -419,11 +436,13 @@
               :disabled="datapass_block != 0"
               @click="fnReject"
             >
-              驳回
+              {{ $t('e8e4e935.325254') }}
             </el-button>
           </template>
           <template v-else>
-            <el-button type="info" style="padding: 10px 50px"> 已审批 </el-button>
+            <el-button type="info" style="padding: 10px 50px">
+              {{ $t('e8e4e935.618acb') }}
+            </el-button>
           </template>
         </el-form-item>
       </template>
@@ -445,7 +464,7 @@
     />
     <InfoTipModal
       :visible.sync="infoTipVisible"
-      title="商户入驻成功"
+      :title="$t('e8e4e935.463e67')"
       width="33%"
       :username="tip.username"
       :password="tip.password"
@@ -575,26 +594,30 @@ export default {
         // 会回显时需要
         merchant_type_parent_name: '',
         merchant_type_name: ''
-      },
-      rules: {
-        merchant_name: [requiredRules('企业全称')],
-        social_credit_code_id: [requiredRules('统一社会信用代码'), MaxRules(18)],
-        regions_id: [requiredRules('所在省市区', 'change')],
-        address: [requiredRules('详细地址')],
-        legal_name: [requiredRules('法人姓名')],
-        legal_cert_id: [requiredRules('法人身份证号'), MaxRules(18)],
-        legal_mobile: [requiredRules('法人手机号'), MaxRules(11)],
+      }
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        merchant_name: [requiredRules(this.$t('e8e4e935.0b66da'))],
+        social_credit_code_id: [requiredRules(this.$t('e8e4e935.25c0bd')), MaxRules(18)],
+        regions_id: [requiredRules(this.$t('e8e4e935.8c74f2'), 'change')],
+        address: [requiredRules(this.$t('e8e4e935.61a0ec'))],
+        legal_name: [requiredRules(this.$t('e8e4e935.2fe17a'))],
+        legal_cert_id: [requiredRules(this.$t('e8e4e935.e8b4af')), MaxRules(18)],
+        legal_mobile: [requiredRules(this.$t('e8e4e935.f50f83')), MaxRules(11)],
         bank_mobile: [MaxRules('11')],
         card_id_mask: [MaxRules('19')],
-        merchant_type: [requiredRules('商户类型', 'change')],
-        merchant_type_id: [requiredRules('经营类型', 'change')],
-        audit_goods: requiredRules('是否审核商品', 'change'),
-        license_url: requiredRules('营业执照', 'change'),
-        legal_certid_front_url: requiredRules('法人手持身份证人像面', 'change'),
-        legal_cert_id_back_url: requiredRules('法人手持身份证国徽面', 'change'),
-        createAccount: requiredRules('生成账号', 'change'),
-        mobile: requiredRules('手机号'),
-        settled_succ_sendsms: requiredRules('短信发送时间', 'change')
+        merchant_type: [requiredRules(this.$t('e8e4e935.4709c8'), 'change')],
+        merchant_type_id: [requiredRules(this.$t('e8e4e935.15151f'), 'change')],
+        audit_goods: requiredRules(this.$t('e8e4e935.be5d9e'), 'change'),
+        license_url: requiredRules(this.$t('e8e4e935.e0b8cc'), 'change'),
+        legal_certid_front_url: requiredRules(this.$t('e8e4e935.4161c3'), 'change'),
+        legal_cert_id_back_url: requiredRules(this.$t('e8e4e935.845be5'), 'change'),
+        createAccount: requiredRules(this.$t('e8e4e935.c41aeb'), 'change'),
+        mobile: requiredRules(this.$t('e8e4e935.8098e2')),
+        settled_succ_sendsms: requiredRules(this.$t('e8e4e935.11d8b6'), 'change')
       }
     }
   },
@@ -645,7 +668,7 @@ export default {
     },
     onCopy() {
       this.$notify({
-        message: '复制成功',
+        message: this.$t('e8e4e935.20a495'),
         type: 'success'
       })
     },
@@ -654,7 +677,7 @@ export default {
         const result = await getTheMerchantInfo()
         this.disabled = true
         this.resultHandler(result)
-        console.log('商户端')
+        console.log('Merchant')
         this.$route.query.type = 'detail'
         return
       }
@@ -755,13 +778,13 @@ export default {
           const { type, merchantId } = this.$route.query
           const result = await addTheBusinessman(this.form, type == 'edit' ? merchantId : null)
           if (result.data.data.status) {
-            this.$message.success('保存成功')
+            this.$message.success(this.$t('e8e4e935.3b1083'))
             this.isEditCheckBox = true
             this.$router.go(-1)
           }
 
           if (type === 'add' && result.data.data.mobile && result.data.data.password) {
-            this.$message.success('保存成功')
+            this.$message.success(this.$t('e8e4e935.3b1083'))
             this.infoTipVisible = true
             this.isEditCheckBox = true
             this.tip = {
@@ -779,12 +802,12 @@ export default {
     },
     fnPass() {
       this.checkBoxConfig.visible = true
-      this.checkBoxConfig.message = this.checkBoxMessage('通过')
+      this.checkBoxConfig.message = this.checkBoxMessage(this.$t('e8e4e935.23c1f3'))
       this.currentCheckBoxStatus = true
     },
     fnReject() {
       this.checkBoxConfig.visible = true
-      this.checkBoxConfig.message = this.checkBoxMessage('驳回')
+      this.checkBoxConfig.message = this.checkBoxMessage(this.$t('e8e4e935.325254'))
       this.currentCheckBoxStatus = false
     },
     /* -------------------------checkbox------------------------- */
@@ -799,7 +822,7 @@ export default {
       }
       const result = await setCheckTheEntryOfMerchants(obj)
       if (result.data.data.status) {
-        this.$message.success('审批成功')
+        this.$message.success(this.$t('e8e4e935.6e6732'))
         this.checkBoxVisibleHandle()
         this.init()
       }
@@ -894,7 +917,10 @@ export default {
       })
     },
     checkBoxMessage(status) {
-      return `请确认是否${status} 【${this.form.merchant_name}】 的入驻申请，<br/>最终审核结果将有短信提醒发送至其注册手机号<br/>（短信费用将在短信余额中扣除）。`
+      return this.$t('e8e4e935.605550', {
+        status,
+        name: this.form.merchant_name
+      })
     },
     async getAreaList() {
       const result = await getArea()
@@ -905,9 +931,9 @@ export default {
     const { type } = this.$route.query
     console.log(to, type)
     if (type == 'add' || (type == 'edit' && !this.isEditCheckBox)) {
-      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('e8e4e935.3ba67c'), this.$t('e8e4e935.02d981'), {
+        confirmButtonText: this.$t('e8e4e935.38cf16'),
+        cancelButtonText: this.$t('e8e4e935.625fb2'),
         type: 'warning'
       })
         .then((res) => {

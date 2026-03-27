@@ -9,16 +9,24 @@
       <el-tab-pane label="销售中心开发设置" name="first"> -->
     <el-card>
       <div slot="header">
-        <span>销售中心开发设置</span>
+        <span>{{ $t('e02a3841.98b5d0') }}</span>
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">KEY</span>
-        <el-input v-model="shopForm.app_key" placeholder="请输入内容" :disabled="true" />
+        <el-input
+          v-model="shopForm.app_key"
+          :placeholder="$t('e02a3841.a11cc7')"
+          :disabled="true"
+        />
         <!-- <el-button @click="generateKey">随机生成</el-button> -->
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">SECRET</span>
-        <el-input v-model="shopForm.app_secret" placeholder="请输入SECRET" :disabled="true" />
+        <el-input
+          v-model="shopForm.app_secret"
+          :placeholder="$t('e02a3841.3e8c6e')"
+          :disabled="true"
+        />
         <!-- <el-button @click="generateSecret">随机生成</el-button> -->
       </div>
       <!-- <div class="content-padded message-autograph">
@@ -30,21 +38,29 @@
     <!-- <el-tab-pane label="营销中心开发设置" name="secord"> -->
     <el-card>
       <div slot="header">
-        <span>营销中心开发设置</span>
+        <span>{{ $t('e02a3841.6819be') }}</span>
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">BASE_URL</span>
-        <el-input v-model="shopForm.external_base_uri" placeholder="请输入内容" :disabled="true" />
+        <el-input
+          v-model="shopForm.external_base_uri"
+          :placeholder="$t('e02a3841.a11cc7')"
+          :disabled="true"
+        />
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">KEY</span>
-        <el-input v-model="shopForm.external_app_key" placeholder="请输入内容" :disabled="true" />
+        <el-input
+          v-model="shopForm.external_app_key"
+          :placeholder="$t('e02a3841.a11cc7')"
+          :disabled="true"
+        />
       </div>
       <div class="content-padded message-autograph">
         <span class="width_100">SECRET</span>
         <el-input
           v-model="shopForm.external_app_secret"
-          placeholder="请输入SECRET"
+          :placeholder="$t('e02a3841.3e8c6e')"
           :disabled="true"
         />
       </div>
@@ -119,7 +135,7 @@ export default {
       saveShopSetting(this.shopForm).then((_) => {
         this.$message({
           type: 'success',
-          message: '保存销售中心开发设置成功'
+          message: this.$t('e02a3841.66ea83')
         })
       })
     },
@@ -127,7 +143,7 @@ export default {
       saveSalesSetting(this.salesForm).then((_) => {
         this.$message({
           type: 'success',
-          message: '保存营销中心开发设置成功'
+          message: this.$t('e02a3841.6d470c')
         })
       })
     }

@@ -25,14 +25,14 @@
         <div class="cont">
           <div v-if="notesModalType == 'pass'" class="info" v-html="passInfo" />
           <div v-if="notesModalType == 'refuse'" class="refuse-info">
-            <div class="text">拒绝原因</div>
+            <div class="text">{{ $t('9e8ad576.f48f94') }}</div>
             <el-input
               v-model="refuse_reason"
               type="textarea"
               :rows="2"
               maxlength="50"
               :show-word-limit="true"
-              placeholder="非必填项，请填写不超过50字。"
+              :placeholder="$t('9e8ad576.714fa9')"
             />
           </div>
 
@@ -44,8 +44,8 @@
         </div>
       </div>
       <div slot="footer">
-        <el-button type="primary" @click="handleAudit"> 确认 </el-button>
-        <el-button @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button type="primary" @click="handleAudit">{{ $t('9e8ad576.e83a25') }}</el-button>
+        <el-button @click="handleCancelLabelsDialog">{{ $t('9e8ad576.625fb2') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -97,60 +97,69 @@ export default {
       //console.log('auditInit',auditType,auditdiff,dufStatus);
       switch (auditType) {
         case 'note':
-          dialogTitle = '笔记审核'
-          passInfo =
-            '若笔记再三确认后无任何违规或敏感内容，点击「确认」后将：</br></br>1. 笔记状态将变为已通过，但可再次修改审核状态；</br>2. 若用户修改笔记，则该笔记需要再次审核。'
-          passTips =
-            '我已确认所选的笔记中 <span class="underline red">含有「非待审核」的笔记</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已通过」，小程序端将显示笔记。</span>'
+          dialogTitle = this.$t('9e8ad576.32a1ad')
+          passInfo = this.$t('9e8ad576.faeb3f')
+          passTips = this.$t('9e8ad576.0913e2')
           if (notesModalType == 'refuse') {
-            passTips =
-              '我已确认所选的笔记中 <span class="underline red">含有「非待审核」的笔记</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已拒绝」，小程序端将屏蔽笔记。</span>'
+            passTips = this.$t('9e8ad576.5989d6')
           }
-          resultInfo = { pass_text: '发布所选', refuse_text: '下架所选' }
+          resultInfo = {
+            pass_text: this.$t('9e8ad576.a63017'),
+            refuse_text: this.$t('9e8ad576.d5915d')
+          }
           break
         case 'tag':
-          dialogTitle = 'Tag审核'
-          passInfo =
-            '若Tag再三确认后无任何违规或敏感内容，点击「确认」后将：</br></br>1. Tag状态将变为已通过，但可再次修改审核状态；</br>2. 用户不可修改Tag。'
-          passTips =
-            '我已确认所选的Tag中 <span class="underline red">含有「非待审核」的Tag</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已通过」，小程序端将显示Tag。</span>'
-          resultInfo = { pass_text: '通过该Tag', refuse_text: '拒绝该Tag' }
+          dialogTitle = this.$t('9e8ad576.2779f4')
+          passInfo = this.$t('9e8ad576.f6428f')
+          passTips = this.$t('9e8ad576.5394a5')
+          resultInfo = {
+            pass_text: this.$t('9e8ad576.8d264d'),
+            refuse_text: this.$t('9e8ad576.c31391')
+          }
           if (notesModalType == 'refuse') {
-            passTips =
-              '我已确认所选的Tag中 <span class="underline red">含有「待审核」的Tag</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已拒绝」，小程序端将屏蔽Tag。</span>'
+            passTips = this.$t('9e8ad576.8903bf')
           }
           if (auditdiff) {
-            resultInfo = { pass_text: '通过所有', refuse_text: '拒绝所有' }
+            resultInfo = {
+              pass_text: this.$t('9e8ad576.7c64aa'),
+              refuse_text: this.$t('9e8ad576.05bb42')
+            }
           }
           break
         case 'topic':
-          dialogTitle = '关联话题审核'
-          passInfo =
-            '若话题内容再三确认后无任何违规或敏感内容，点击「确认」后将：</br></br>1. 话题状态将变为已通过，但可再次修改审核状态；</br>2. 用户更换话题不会影响该话题的状态。'
-          passTips =
-            '我已确认所选的话题中<span class="underline red">含有「非待审核」的话题</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已通过」，小程序端将显示话题。</span>'
-          resultInfo = { pass_text: '通过该话题', refuse_text: '拒绝该话题' }
+          dialogTitle = this.$t('9e8ad576.910f09')
+          passInfo = this.$t('9e8ad576.d3abe6')
+          passTips = this.$t('9e8ad576.9130ff')
+          resultInfo = {
+            pass_text: this.$t('9e8ad576.fe6d3b'),
+            refuse_text: this.$t('9e8ad576.f9890e')
+          }
           if (notesModalType == 'refuse') {
-            passTips =
-              '我已确认所选的话题中 <span class="underline red">含有「待审核」与「已通过」的话题</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已拒绝」，小程序端将屏蔽话题。</span>'
+            passTips = this.$t('9e8ad576.845a32')
           }
           if (auditdiff) {
-            resultInfo = { pass_text: '通过所有', refuse_text: '拒绝所有' }
+            resultInfo = {
+              pass_text: this.$t('9e8ad576.7c64aa'),
+              refuse_text: this.$t('9e8ad576.05bb42')
+            }
           }
           break
         case 'review':
-          dialogTitle = '评论审核'
-          passInfo =
-            '若评论再三确认后无任何违规或敏感内容，点击「确认」后将：</br></br>1. 评论状态将变为已通过，但可再次修改审核状态；</br>2. 用户不可修改评论。'
-          passTips =
-            '我已确认所选的评论中<span class="underline red">含有「非待审核」的评论</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已通过」，小程序端将显示评论。</span>'
-          resultInfo = { pass_text: '通过该评论', refuse_text: '拒绝该评论' }
+          dialogTitle = this.$t('9e8ad576.52f2a0')
+          passInfo = this.$t('9e8ad576.28f24d')
+          passTips = this.$t('9e8ad576.eea022')
+          resultInfo = {
+            pass_text: this.$t('9e8ad576.2bf3cf'),
+            refuse_text: this.$t('9e8ad576.1a96ca')
+          }
           if (notesModalType == 'refuse') {
-            passTips =
-              '我已确认所选的评论中 <span class="underline red">含有「待审核」的评论</span> ，</br> 并将通过此操作<span class="underline">变更状态为「已拒绝」，小程序端将屏蔽评论。</span>'
+            passTips = this.$t('9e8ad576.905935')
           }
           if (auditdiff) {
-            resultInfo = { pass_text: '通过所有', refuse_text: '拒绝所有' }
+            resultInfo = {
+              pass_text: this.$t('9e8ad576.7c64aa'),
+              refuse_text: this.$t('9e8ad576.05bb42')
+            }
           }
           break
       }
@@ -170,7 +179,7 @@ export default {
       if (auditdiff && !checkHint) {
         this.$message({
           type: 'error',
-          message: '请勾选审核状态知晓条目'
+          message: this.$t('9e8ad576.5576b1')
         })
         return false
       }

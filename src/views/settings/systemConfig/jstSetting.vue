@@ -14,7 +14,11 @@
       :show-default-actions="false"
     />
     <div class="section-footer with-border content-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('20f6ad88.be5fbb')
+      }}
+</el-button>
     </div>
   </SpPage>
 </template>
@@ -40,7 +44,7 @@ export default {
       return [
         {
           fieldName: 'shop_callback_url',
-          label: '店铺消息推送',
+          label: vm.$t('20f6ad88.3a8461'),
           component: ({ value, h, formData }) => {
             return h('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } }, [
               h('span', value || ''),
@@ -70,14 +74,14 @@ export default {
                     }
                   }
                 },
-                '点我复制'
+                vm.$t('20f6ad88.9d1e84')
               )
             ])
           }
         },
         {
           fieldName: 'shop_id',
-          label: '店铺编号',
+          label: vm.$t('20f6ad88.a3068b'),
           component: 'input',
           componentProps: {
             style: { width: '300px' }
@@ -97,7 +101,9 @@ export default {
                   click: () => vm.handleBind()
                 }
               },
-              formData && formData.access_token ? '更新授权' : '去授权'
+              formData && formData.access_token
+                ? vm.$t('20f6ad88.af3ef9')
+                : vm.$t('20f6ad88.4a1c90')
             )
           },
           isShow: (value) => {
@@ -106,7 +112,7 @@ export default {
         },
         {
           fieldName: 'is_open',
-          label: '是否启用',
+          label: vm.$t('20f6ad88.53c3dd'),
           component: 'switch',
           componentProps: {
             activeColor: '#13ce66',
@@ -135,7 +141,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('20f6ad88.3b1083')
           })
           this.loading = false
         })
@@ -150,7 +156,7 @@ export default {
     },
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('20f6ad88.20a495'),
         showClose: true
       })
     }

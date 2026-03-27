@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      title="选择商户"
+      :title="$t('423ebb4e.b5252d')"
       :visible.sync="visible"
       class="couponSelect"
       :before-close="cancelHandle"
@@ -15,18 +15,22 @@
       :append-to-body="true"
     >
       <div class="query">
-        <el-select v-model="query.operator_type" placeholder="请选择商户类型" style="width: 200px">
-          <el-option label="全部类型" value="all" />
-          <el-option label="店铺" value="distributor" />
-          <el-option label="经销商" value="dealer" />
+        <el-select
+          v-model="query.operator_type"
+          :placeholder="$t('423ebb4e.3add4b')"
+          style="width: 200px"
+        >
+          <el-option :label="$t('423ebb4e.c079e7')" value="all" />
+          <el-option :label="$t('423ebb4e.295713')" value="distributor" />
+          <el-option :label="$t('423ebb4e.9019dc')" value="dealer" />
         </el-select>
         <el-input
-          placeholder="请输入商户名称/负责人姓名/地址"
+          :placeholder="$t('423ebb4e.6dbc56')"
           style="width: 400px"
           v-model="query.keywords"
           class="input-with-select"
         >
-          <el-button slot="append" @click="queryHandle">查询</el-button>
+          <el-button slot="append" @click="queryHandle">{{ $t('423ebb4e.bee912') }}</el-button>
         </el-input>
       </div>
       <div class="list">
@@ -41,15 +45,17 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column :reserve-selection="true" type="selection" width="55" />
-          <el-table-column prop="user_name" label="商户名称" width="220" />
-          <el-table-column prop="scope" label="商户类型" width="220">
+          <el-table-column prop="user_name" :label="$t('423ebb4e.e6f169')" width="220" />
+          <el-table-column prop="scope" :label="$t('423ebb4e.4709c8')" width="220">
             <template slot-scope="scope">
-              <span v-if="scope.row.operator_type == 'distributor'">店铺</span>
-              <span v-else>经销商</span>
+              <span v-if="scope.row.operator_type == 'distributor'">{{
+                $t('423ebb4e.295713')
+              }}</span>
+              <span v-else>{{ $t('423ebb4e.9019dc') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="legal_person" label="负责人" width="120" />
-          <el-table-column prop="location" label="地址" />
+          <el-table-column prop="legal_person" :label="$t('423ebb4e.b29725')" width="120" />
+          <el-table-column prop="location" :label="$t('423ebb4e.765048')" />
         </el-table>
       </div>
       <el-pagination
@@ -64,8 +70,8 @@
         :total="total"
       />
       <div class="btn">
-        <el-button @click="cancelHandle(true)">取消</el-button>
-        <el-button type="primary" @click="confirm">确定</el-button>
+        <el-button @click="cancelHandle(true)">{{ $t('423ebb4e.625fb2') }}</el-button>
+        <el-button type="primary" @click="confirm">{{ $t('423ebb4e.38cf16') }}</el-button>
       </div>
     </el-dialog>
   </div>

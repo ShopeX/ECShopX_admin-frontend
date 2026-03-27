@@ -30,7 +30,7 @@
               class="store-logo"
               :src="store.logo || 'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'"
               alt=""
-            />
+            >
             <div class="store-name">
               <p class="name">
                 {{ store.name }}
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="picture">
-            <img :src="base.imgUrl" alt="" />
+            <img :src="base.imgUrl" alt="">
           </div>
           <div class="store-items">
             <div v-for="item in store.items.slice(0, 4)" :key="item.goodsId" class="store-item">
@@ -50,7 +50,7 @@
                 :src="item.imgUrl"
                 alt=""
                 :style="{ 'border-color': base.borderColor || '#000' }"
-              />
+              >
               <div class="store-item-amount">
                 <span class="price">¥{{ item.price / 100 }}</span>
               </div>

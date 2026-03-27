@@ -5,15 +5,15 @@
 
 <template>
   <section v-if="name === 'hotTopic' || name === 'banner'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('a1c933eb.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('a1c933eb.32c65d')">
             <el-input v-model="base.title" />
           </el-form-item>
 
-          <el-form-item label="组件间距">
+          <el-form-item :label="$t('a1c933eb.4707ba')">
             <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
         </template>
@@ -24,23 +24,37 @@
           </div>
           <template v-if="type === 'wxapp'">
             <div class="uploader-setting">
-              <el-form-item :label="'话题' + (index + 1)">
+              <el-form-item :label="$t('a1c933eb.b00a65') + (index + 1)">
                 <el-input v-model="item.topic" />
               </el-form-item>
 
               <el-form-item>
                 <div class="goods-select" @click="handleGoodsChange(index)">
                   <div v-if="item.id" class="link-content">
-                    <template v-if="item.linkPage === 'goods'"> 商品： </template>
-                    <template v-if="item.linkPage === 'category'"> 分类： </template>
-                    <template v-if="item.linkPage === 'article'"> 文章： </template>
-                    <template v-if="item.linkPage === 'planting'"> 软文： </template>
-                    <template v-if="item.linkPage === 'link'"> 页面： </template>
-                    <template v-if="item.linkPage === 'marketing'"> 营销： </template>
+                    <template v-if="item.linkPage === 'goods'">
+                      {{ $t('a1c933eb.10fe9c') }}
+                    </template>
+                    <template v-if="item.linkPage === 'category'">
+                      {{ $t('a1c933eb.e7d2e8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'article'">
+                      {{ $t('a1c933eb.8cb9b8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'planting'">
+                      {{ $t('a1c933eb.9dcd91') }}
+                    </template>
+                    <template v-if="item.linkPage === 'link'">
+                      {{ $t('a1c933eb.ffd741') }}
+                    </template>
+                    <template v-if="item.linkPage === 'marketing'">
+                      {{ $t('a1c933eb.c78a2f') }}
+                    </template>
                     {{ item.title }}
                   </div>
                   <div v-else class="content-center">
-                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                      $t('a1c933eb.4f2c29')
+                    }}
                   </div>
                 </div>
               </el-form-item>
@@ -54,7 +68,7 @@
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          添加话题
+          {{ $t('a1c933eb.81a65b') }}
         </el-button>
       </div>
     </div>

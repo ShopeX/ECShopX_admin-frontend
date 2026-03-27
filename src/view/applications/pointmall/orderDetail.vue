@@ -6,20 +6,20 @@
 <template>
   <div class="section-white">
     <div v-loading="loading" class="detail-info">
-      <h3 class="title">订单详情</h3>
+      <h3 class="title">{{ $t('3a4ee48b.8054f7') }}</h3>
       <el-card shadow="never">
         <div slot="header" class="clearfix">
-          <h3>订单基本信息</h3>
+          <h3>{{ $t('3a4ee48b.168447') }}</h3>
         </div>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>订单号：</h4>
+            <h4>{{ $t('3a4ee48b.a1e65c') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.order_id }}
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>订单类型：</h4>
+            <h4>{{ $t('3a4ee48b.0dc090') }}</h4>
           </el-col>
           <el-col :span="5">
             <!-- <span v-if="orderInfo.order_class=='groups'"> 拼团 </span>
@@ -27,25 +27,25 @@
           <span v-if="orderInfo.order_type=='normal'"> 实体订单<span v-if="orderInfo.type=='1'">-跨境订单</span></span>
           <span v-if="orderInfo.order_type=='service'"> 服务类订单 </span>
           <span v-if="orderInfo.order_type=='bargain'"> 助力订单 </span> -->
-            <span> 积分订单 </span>
+            <span> {{ $t('3a4ee48b.b2f2ee') }} </span>
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>订单状态：</h4>
+            <h4>{{ $t('3a4ee48b.5287da') }}</h4>
           </el-col>
           <el-col :span="5">
             <span v-if="orderInfo.order_class == 'drug'">
-              <el-tag v-if="orderInfo.order_status_des == 'CANCEL'" type="danger" size="mini"
-                >已取消</el-tag
-              >
-              <el-tag v-else-if="orderInfo.order_status_des == 'CLOSED'" type="info" size="mini"
-                >已关闭</el-tag
-              >
+              <el-tag v-if="orderInfo.order_status_des == 'CANCEL'" type="danger" size="mini">{{
+                $t('3a4ee48b.2111cc')
+              }}</el-tag>
+              <el-tag v-else-if="orderInfo.order_status_des == 'CLOSED'" type="info" size="mini">{{
+                $t('3a4ee48b.9c5850')
+              }}</el-tag>
               <template v-if="orderInfo.order_status_des != 'CANCEL'">
                 <!-- 发货状态 -->
-                <el-tag v-if="orderInfo.ziti_status == 'APPROVE'" type="success" size="mini"
-                  >审核通过</el-tag
-                >
-                <el-tag v-else type="primary" size="mini">待审核</el-tag>
+                <el-tag v-if="orderInfo.ziti_status == 'APPROVE'" type="success" size="mini">{{
+                  $t('3a4ee48b.871a30')
+                }}</el-tag>
+                <el-tag v-else type="primary" size="mini">{{ $t('3a4ee48b.5cb424') }}</el-tag>
               </template>
             </span>
             <span v-else-if="orderInfo.order_type == 'bargain'">
@@ -53,32 +53,40 @@
                 v-if="scope.row.order_status == 'DONE' || scope.row.order_status == 'PAYED'"
                 type="success"
                 size="mini"
-                >已完成</el-tag
+                >{{ $t('3a4ee48b.fad522') }}</el-tag
               >
-              <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini">未支付</el-tag>
+              <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini">{{
+                $t('3a4ee48b.608afd')
+              }}</el-tag>
               <el-tag
                 v-else-if="scope.row.order_status == 'CLOSED' || scope.row.order_status == 'CANCEL'"
                 type="danger"
                 size="mini"
-                >已取消</el-tag
+                >{{ $t('3a4ee48b.2111cc') }}</el-tag
               >
               <el-tag
                 v-else-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'"
                 type="warning"
                 size="mini"
-                >等待拼团成功</el-tag
+                >{{ $t('3a4ee48b.c2335d') }}</el-tag
               >
               <el-tag
                 v-else-if="scope.row.order_status == 'REFUND_PROCESS'"
                 type="warning"
                 size="mini"
-                >退款处理中</el-tag
+                >{{ $t('3a4ee48b.73ce8f') }}</el-tag
               >
-              <el-tag v-else-if="scope.row.order_status == 'REFUND_SUCCESS'" type="info" size="mini"
-                >退款成功</el-tag
+              <el-tag
+                v-else-if="scope.row.order_status == 'REFUND_SUCCESS'"
+                type="info"
+                size="mini"
+                >{{ $t('3a4ee48b.d58cbd') }}</el-tag
               >
-              <el-tag v-else-if="scope.row.order_status == 'REFUND_FAIL'" type="danger" size="mini"
-                >退款失败</el-tag
+              <el-tag
+                v-else-if="scope.row.order_status == 'REFUND_FAIL'"
+                type="danger"
+                size="mini"
+                >{{ $t('3a4ee48b.7c2544') }}</el-tag
               >
             </span>
             <el-tag v-else>
@@ -88,33 +96,33 @@
         </el-row>
         <el-row v-if="memberInfo">
           <el-col :span="3" class="content-right">
-            <h4>会员姓名：</h4>
+            <h4>{{ $t('3a4ee48b.a75b05') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ memberInfo.username }}
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>会员手机：</h4>
+            <h4>{{ $t('3a4ee48b.924f2c') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ memberInfo.mobile }}
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>会员等级：</h4>
+            <h4>{{ $t('3a4ee48b.3b9de0') }}</h4>
           </el-col>
           <el-col v-if="memberInfo.vipgrade && memberInfo.vipgrade.is_vip" :span="5">
             {{ memberInfo.vipgrade.grade_name }}
           </el-col>
           <el-col v-else :span="5">
-            {{ memberInfo.gradeInfo ? memberInfo.gradeInfo.grade_name : '无' }}
+            {{ memberInfo.gradeInfo ? memberInfo.gradeInfo.grade_name : $t('3a4ee48b.d81bb2') }}
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>商品价格：</h4>
+            <h4>{{ $t('3a4ee48b.fd57fd') }}</h4>
           </el-col>
           <el-col :span="5">
-            {{ orderInfo.item_point }}积分
+            {{ orderInfo.item_point }}{{ $t('3a4ee48b.9f68a8') }}
             <span v-if="orderInfo.item_fee > 0"
               >+{{ orderInfo.fee_symbol }}{{ orderInfo.item_fee / 100 }}</span
             >
@@ -122,7 +130,7 @@
           <!-- <el-col :span="3" class="content-right"><h4>会员折扣：</h4></el-col>
           <el-col :span="5">- {{orderInfo.fee_symbol}}{{orderInfo.member_discount/100}}</el-col> -->
           <el-col :span="3" class="content-right">
-            <h4>货币：</h4>
+            <h4>{{ $t('3a4ee48b.c36d2b') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.fee_type }}
@@ -130,16 +138,16 @@
         </el-row>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>运费：</h4>
+            <h4>{{ $t('3a4ee48b.94a6a5') }}</h4>
           </el-col>
           <el-col v-if="orderInfo.freight_type == 'cash'" :span="5">
             {{ orderInfo.fee_symbol }}{{ orderInfo.freight_fee / 100 }}
           </el-col>
-          <el-col v-else :span="5"> {{ orderInfo.freight_fee }}积分 </el-col>
+          <el-col v-else :span="5"> {{ orderInfo.freight_fee }}{{ $t('3a4ee48b.9f68a8') }} </el-col>
           <!-- <el-col :span="3" class="content-right"><h4>优惠券减免：</h4></el-col>
           <el-col :span="5">- {{orderInfo.fee_symbol}}{{orderInfo.coupon_discount/100}}</el-col> -->
           <el-col :span="3" class="content-right">
-            <h4>货币汇率：</h4>
+            <h4>{{ $t('3a4ee48b.c185fb') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.fee_rate }}
@@ -149,7 +157,7 @@
           <!-- <el-col :span="3" class="content-right"><h4>优惠总金额：</h4></el-col>
           <el-col :span="13">-{{orderInfo.fee_symbol}}{{orderInfo.discount_fee ? orderInfo.discount_fee/100 : 0}}<span class="frm-tips">(包含优惠券，满折，满减等优惠金额)</span></el-col> -->
           <el-col :span="3" class="content-right">
-            <h4>下单时间：</h4>
+            <h4>{{ $t('3a4ee48b.15f438') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -157,19 +165,21 @@
         </el-row>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>应付总金额：</h4>
+            <h4>{{ $t('3a4ee48b.8509c3') }}</h4>
           </el-col>
           <el-col :span="5">
-            {{ orderInfo.point }}积分<span v-if="orderInfo.total_fee > 0">
+            {{ orderInfo.point }}{{ $t('3a4ee48b.9f68a8')
+            }}<span v-if="orderInfo.total_fee > 0">
               + {{ orderInfo.fee_symbol }}{{ orderInfo.total_fee / 100 }}</span
             >
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>实付总金额：</h4>
+            <h4>{{ $t('3a4ee48b.3259bb') }}</h4>
           </el-col>
           <el-col v-if="orderInfo.pay_status == 'NOTPAY'" :span="5"> ￥0 </el-col>
           <el-col v-else :span="5">
-            {{ orderInfo.point }}积分<span v-if="orderInfo.total_fee > 0">
+            {{ orderInfo.point }}{{ $t('3a4ee48b.9f68a8')
+            }}<span v-if="orderInfo.total_fee > 0">
               + {{ orderInfo.fee_symbol }}{{ orderInfo.total_fee / 100 }}</span
             >
           </el-col>
@@ -177,7 +187,7 @@
           <!-- <el-col :span="3" class="content-right" v-if="tradeInfo.payType =='point'"><h4>积分支付：</h4></el-col>
           <el-col :span="5" v-if="tradeInfo.payType =='point'">{{orderInfo.point}}</el-col> -->
           <el-col :span="3" class="content-right">
-            <h4>更新时间：</h4>
+            <h4>{{ $t('3a4ee48b.780fb9') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.update_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -185,21 +195,21 @@
         </el-row>
         <el-row v-if="orderInfo.order_type == 'service'">
           <el-col v-if="orderInfo.store_name" :span="3" class="content-right">
-            <h4>店铺名称：</h4>
+            <h4>{{ $t('3a4ee48b.260ff8') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.store_name }}
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>订单来源：</h4>
+            <h4>{{ $t('3a4ee48b.74885e') }}</h4>
           </el-col>
           <el-col :span="5">
-            <span v-if="orderInfo.order_source == 'member'">自主下单</span>
-            <span v-else-if="orderInfo.order_source == 'shop'">代客下单</span>
+            <span v-if="orderInfo.order_source == 'member'">{{ $t('3a4ee48b.28af8b') }}</span>
+            <span v-else-if="orderInfo.order_source == 'shop'">{{ $t('3a4ee48b.d736b9') }}</span>
           </el-col>
           <div v-if="orderInfo.order_type == 'service' && orderInfo.operator_desc != ''">
             <el-col :span="3" class="content-right">
-              <h4>操作员：</h4>
+              <h4>{{ $t('3a4ee48b.956826') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.operator_desc }}
@@ -208,7 +218,7 @@
         </el-row>
         <el-row v-if="orderInfo.remark">
           <el-col :span="3" class="content-right">
-            <h4>订单备注：</h4>
+            <h4>{{ $t('3a4ee48b.cf7f83') }}</h4>
           </el-col>
           <el-col :span="12">
             {{ orderInfo.remark }}
@@ -224,13 +234,13 @@
           "
         >
           <el-col :span="3" class="content-right">
-            <h4>取消原因：</h4>
+            <h4>{{ $t('3a4ee48b.a6dbda') }}</h4>
           </el-col>
-          <el-col :span="12"> 未支付自动取消 </el-col>
+          <el-col :span="12"> {{ $t('3a4ee48b.fa0b1d') }} </el-col>
         </el-row>
         <el-row v-if="cancelData && cancelData.cancel_from == 'buyer' && cancelData.cancel_reason">
           <el-col :span="3" class="content-right">
-            <h4>申请取消原因：</h4>
+            <h4>{{ $t('3a4ee48b.9934dc') }}</h4>
           </el-col>
           <el-col :span="12">
             {{ cancelData.cancel_reason }}
@@ -238,7 +248,7 @@
         </el-row>
         <el-row v-if="cancelData && cancelData.cancel_from == 'shop' && cancelData.cancel_reason">
           <el-col :span="3" class="content-right">
-            <h4>商家取消原因：</h4>
+            <h4>{{ $t('3a4ee48b.2683a3') }}</h4>
           </el-col>
           <el-col :span="12">
             {{ cancelData.cancel_reason }}
@@ -247,7 +257,7 @@
       </el-card>
       <el-card v-if="orderInfo.discount_info && orderInfo.discount_info.length > 0" shadow="never">
         <div slot="header" class="clearfix">
-          <h3>优惠明细</h3>
+          <h3>{{ $t('3a4ee48b.954493') }}</h3>
         </div>
         <el-row v-for="(item, index) in orderInfo.discount_info" :key="index">
           <template v-if="item.discount_fee > 0">
@@ -260,7 +270,8 @@
           -->
             <el-col :span="3" class="content-right"> {{ item.info }}： </el-col>
             <el-col v-if="item.discount_fee > 0" :span="20">
-              优惠{{ orderInfo.fee_symbol }}{{ item.discount_fee / 100 }} &nbsp;&nbsp;
+              {{ $t('3a4ee48b.f06ebf') }}{{ orderInfo.fee_symbol
+              }}{{ item.discount_fee / 100 }} &nbsp;&nbsp;
               <span class="frm-tips">{{ item.rule }}</span>
             </el-col>
           </template>
@@ -354,33 +365,35 @@
 
       <el-card v-if="tradeList.length > 0" shadow="never">
         <div slot="header" class="clearfix">
-          <h3>支付信息</h3>
+          <h3>{{ $t('3a4ee48b.02b157') }}</h3>
         </div>
         <div v-for="(item, index) in tradeList" :key="index" class="section-body">
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>交易单号：</h4>
+              <h4>{{ $t('3a4ee48b.84fd75') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ item.tradeId }}
             </el-col>
             <el-col :span="3" class="content-right">
-              <h4>支付状态：</h4>
+              <h4>{{ $t('3a4ee48b.97f903') }}</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="item.tradeState == 'SUCCESS'"> 支付成功</span>
-              <span v-else-if="item.tradeState == 'REFUND'">转入退款</span>
-              <span v-else-if="item.tradeState == 'CANCEL_CLOSED'">已取消</span>
-              <span v-else-if="item.tradeState == 'REFUND_SUCCESS'">退款成功</span>
-              <span v-else-if="item.tradeState == 'NOTPAY'">未支付</span>
-              <span v-if="item.tradeState == 'CLOSED'"> 已关闭</span>
-              <span v-else-if="item.tradeState == 'REVOKED'">已撤销</span>
-              <span v-else-if="item.tradeState == 'PAYERROR'"
-                >支付失败(其他原因，如银行返回失败)</span
-              >
+              <span v-if="item.tradeState == 'SUCCESS'"> {{ $t('3a4ee48b.eb5dc9') }}</span>
+              <span v-else-if="item.tradeState == 'REFUND'">{{ $t('3a4ee48b.8e2b9d') }}</span>
+              <span v-else-if="item.tradeState == 'CANCEL_CLOSED'">{{
+                $t('3a4ee48b.2111cc')
+              }}</span>
+              <span v-else-if="item.tradeState == 'REFUND_SUCCESS'">{{
+                $t('3a4ee48b.d58cbd')
+              }}</span>
+              <span v-else-if="item.tradeState == 'NOTPAY'">{{ $t('3a4ee48b.608afd') }}</span>
+              <span v-if="item.tradeState == 'CLOSED'"> {{ $t('3a4ee48b.9c5850') }}</span>
+              <span v-else-if="item.tradeState == 'REVOKED'">{{ $t('3a4ee48b.50239f') }}</span>
+              <span v-else-if="item.tradeState == 'PAYERROR'">{{ $t('3a4ee48b.8e51b3') }}</span>
             </el-col>
             <el-col :span="3" class="content-right">
-              <h4>交易流水号：</h4>
+              <h4>{{ $t('3a4ee48b.92b053') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ item.transactionId }}
@@ -388,46 +401,46 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>实付金额(RMB)：</h4>
+              <h4>{{ $t('3a4ee48b.277d4a') }}</h4>
             </el-col>
             <el-col v-if="item.payType == 'point'" :span="5"> 0 </el-col>
             <el-col v-else :span="5"> ￥{{ item.payFee / 100 }} </el-col>
             <div v-if="item.payType == 'point'">
               <el-col :span="3" class="content-right">
-                <h4>支付积分：</h4>
+                <h4>{{ $t('3a4ee48b.dcb6f2') }}</h4>
               </el-col>
               <el-col :span="5">
                 {{ item.payFee }}
               </el-col>
             </div>
             <el-col :span="3" class="content-right">
-              <h4>支付类型：</h4>
+              <h4>{{ $t('3a4ee48b.be82f5') }}</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="item.payType == 'amorepay'"> 微信支付</span>
-              <span v-if="item.payType == 'wxpaypc'"> 微信PC支付</span>
-              <span v-if="item.payType == 'wxpay'"> 微信支付</span>
-              <span v-if="item.payType == 'wxpayh5'"> 微信H5支付</span>
-              <span v-if="item.payType == 'alipay'"> 支付宝支付</span>
-              <span v-if="item.payType == 'alipayh5'"> 支付宝H5支付</span>
-              <span v-else-if="item.payType == 'deposit'"> 余额支付</span>
-              <span v-else-if="item.payType == 'point'"> 积分支付</span>
-              <span v-else-if="item.payType == 'pos'"> POS银行卡支付</span>
+              <span v-if="item.payType == 'amorepay'"> {{ $t('3a4ee48b.bffe28') }}</span>
+              <span v-if="item.payType == 'wxpaypc'"> {{ $t('3a4ee48b.67a318') }}</span>
+              <span v-if="item.payType == 'wxpay'"> {{ $t('3a4ee48b.bffe28') }}</span>
+              <span v-if="item.payType == 'wxpayh5'"> {{ $t('3a4ee48b.df7033') }}</span>
+              <span v-if="item.payType == 'alipay'"> {{ $t('3a4ee48b.e3b206') }}</span>
+              <span v-if="item.payType == 'alipayh5'"> {{ $t('3a4ee48b.5a3c52') }}</span>
+              <span v-else-if="item.payType == 'deposit'"> {{ $t('3a4ee48b.89ac23') }}</span>
+              <span v-else-if="item.payType == 'point'"> {{ $t('3a4ee48b.accd19') }}</span>
+              <span v-else-if="item.payType == 'pos'"> {{ $t('3a4ee48b.d37dec') }}</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col v-if="item.couponFee > 0" :span="3" class="content-right">
-              <h4>微信卡包代金券：</h4>
+              <h4>{{ $t('3a4ee48b.7b64af') }}</h4>
             </el-col>
             <el-col v-if="item.couponFee > 0" :span="5"> ¥{{ item.couponFee / 100 }} </el-col>
             <el-col :span="3" class="content-right">
-              <h4>交易时间：</h4>
+              <h4>{{ $t('3a4ee48b.3e65b0') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ item.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
             </el-col>
             <el-col :span="3" class="content-right">
-              <h4>交易结束时间：</h4>
+              <h4>{{ $t('3a4ee48b.256eb8') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ item.timeExpire | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -437,30 +450,31 @@
       </el-card>
       <el-card v-if="orderInfo.invoice" shadow="never">
         <div slot="header" class="clearfix">
-          <h3>发票信息</h3>
+          <h3>{{ $t('3a4ee48b.714483') }}</h3>
         </div>
         <div class="section-body">
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>发票抬头：</h4>
+              <h4>{{ $t('3a4ee48b.16090b') }}</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="orderInfo.invoice.title == 'individual'"> 个人 </span
-              ><span v-else> 公司 </span>
+              <span v-if="orderInfo.invoice.title == 'individual'">
+                {{ $t('3a4ee48b.6a0e04') }} </span
+              ><span v-else> {{ $t('3a4ee48b.41716f') }} </span>
             </el-col>
           </el-row>
           <el-row v-if="orderInfo.invoice.title != 'individual'">
             <el-col :span="3" class="content-right">
-              <h4>发票类型：</h4>
+              <h4>{{ $t('3a4ee48b.782482') }}</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="orderInfo.invoice.type == 'normal'"> 普票 </span
-              ><span v-else> 专票 </span>
+              <span v-if="orderInfo.invoice.type == 'normal'"> {{ $t('3a4ee48b.56b771') }} </span
+              ><span v-else> {{ $t('3a4ee48b.96d7f2') }} </span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>抬头名称：</h4>
+              <h4>{{ $t('3a4ee48b.6f36dd') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.content }}
@@ -468,7 +482,7 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>抬头税号：</h4>
+              <h4>{{ $t('3a4ee48b.426388') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.registration_number }}
@@ -476,7 +490,7 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>公司地址：</h4>
+              <h4>{{ $t('3a4ee48b.727725') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.company_address }}
@@ -484,7 +498,7 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>公司号码：</h4>
+              <h4>{{ $t('3a4ee48b.639baa') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.company_phone }}
@@ -492,7 +506,7 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>银行名称：</h4>
+              <h4>{{ $t('3a4ee48b.60e8fe') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.bankname }}
@@ -500,7 +514,7 @@
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
-              <h4>银行账号：</h4>
+              <h4>{{ $t('3a4ee48b.24e797') }}</h4>
             </el-col>
             <el-col :span="5">
               {{ orderInfo.invoice.bankaccount }}
@@ -510,15 +524,15 @@
       </el-card>
       <el-card shadow="never">
         <div slot="header" class="clearfix">
-          <h3>商品清单</h3>
+          <h3>{{ $t('3a4ee48b.08ea4e') }}</h3>
         </div>
         <div v-if="orderInfo.order_type == 'service' || orderInfo.order_type == 'bargain'">
           <el-row>
-            <el-col :span="3" class="content-right"> 商品名称： </el-col>
+            <el-col :span="3" class="content-right"> {{ $t('3a4ee48b.90f08f') }} </el-col>
             <el-col :span="5">
               {{ orderInfo.title }}
             </el-col>
-            <el-col :span="3" class="content-right"> 商品数量： </el-col>
+            <el-col :span="3" class="content-right"> {{ $t('3a4ee48b.65b739') }} </el-col>
             <el-col :span="5">
               {{ orderInfo.item_num }}
             </el-col>
@@ -526,46 +540,51 @@
         </div>
         <div v-else-if="orderInfo.order_type == 'normal'">
           <el-table :data="orderInfo.items" style="width: 100%">
-            <el-table-column class="goods-img" prop="pic" label="商品图片" width="120">
+            <el-table-column
+              class="goods-img"
+              prop="pic"
+              :label="$t('3a4ee48b.9b94b1')"
+              width="120"
+            >
               <template slot-scope="scope">
                 <span
                   ><img
                     class="item-image"
                     :src="wximageurl + scope.row.pic"
                     :alt="scope.row.item_name"
-                /></span>
+                ></span>
               </template>
             </el-table-column>
-            <el-table-column prop="item_name" label="商品名称" width="180">
+            <el-table-column prop="item_name" :label="$t('3a4ee48b.90f08f')" width="180">
               <template slot-scope="scope">
                 {{ scope.row.item_name
                 }}<el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
-                  赠品
+                  {{ $t('3a4ee48b.d017cc') }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="item_spec_desc" label="规格" width="180">
+            <el-table-column prop="item_spec_desc" :label="$t('3a4ee48b.ea887b')" width="180">
               <template slot-scope="scope">
-                {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
+                {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : $t('3a4ee48b.048df4') }}
               </template>
             </el-table-column>
-            <el-table-column prop="price" label="单价" width="180">
+            <el-table-column prop="price" :label="$t('3a4ee48b.da4abd')" width="180">
               <template slot-scope="scope">
-                <span>{{ scope.row.item_point }}积分</span>
+                <span>{{ scope.row.item_point }}{{ $t('3a4ee48b.9f68a8') }}</span>
                 <span v-if="scope.row.price > 0">
                   + {{ scope.row.fee_symbol }}{{ scope.row.price / 100 }}</span
                 >
               </template>
             </el-table-column>
-            <el-table-column prop="num" label="数量" width="180" />
+            <el-table-column prop="num" :label="$t('3a4ee48b.0bf60b')" width="180" />
             <!-- <el-table-column  label="总原价(元)">
               <template slot-scope="scope">
                 <span>{{scope.row.fee_symbol}}{{scope.row.item_fee / 100}}</span>
               </template>
             </el-table-column> -->
-            <el-table-column label="总支付价">
+            <el-table-column :label="$t('3a4ee48b.fadbf7')">
               <template slot-scope="scope">
-                <span>{{ scope.row.point }}积分</span>
+                <span>{{ scope.row.point }}{{ $t('3a4ee48b.9f68a8') }}</span>
                 <span v-if="scope.row.total_fee > 0">
                   + {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}</span
                 >
@@ -577,29 +596,29 @@
               </template>
             </el-table-column> -->
 
-            <el-table-column label="货币">
+            <el-table-column :label="$t('3a4ee48b.8392ba')">
               <template slot-scope="scope">
                 <span>{{ scope.row.fee_type }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="货币汇率">
+            <el-table-column :label="$t('3a4ee48b.f8d735')">
               <template slot-scope="scope">
                 <span>{{ scope.row.fee_rate }}</span>
               </template>
             </el-table-column>
             <template v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp">
-              <el-table-column label="发货状态">
+              <el-table-column :label="$t('3a4ee48b.c3c7a1')">
                 <template slot-scope="scope">
-                  <span>已发货</span>
+                  <span>{{ $t('3a4ee48b.355409') }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="快递公司">
+              <el-table-column :label="$t('3a4ee48b.f3af96')">
                 <template slot-scope="scope">
                   <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                     <el-select
                       v-model="scope.row.delivery_corp"
                       filterable
-                      placeholder="请选择快递公司，可搜索"
+                      :placeholder="$t('3a4ee48b.32e586')"
                     >
                       <el-option
                         v-for="item in dlycorps"
@@ -612,13 +631,13 @@
                   <span v-else>{{ scope.row.delivery_corp_name }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="快递单号">
+              <el-table-column :label="$t('3a4ee48b.3c016d')">
                 <template slot-scope="scope">
                   <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                     <el-input
                       v-model="scope.row.delivery_code"
                       :maxlength="20"
-                      placeholder="物流公司单号"
+                      :placeholder="$t('3a4ee48b.0e9f1e')"
                     />
                   </span>
                   <span v-else>{{ scope.row.delivery_code }}</span>
@@ -630,51 +649,51 @@
       </el-card>
       <el-card v-if="orderInfo.order_class == 'drug'" shadow="never">
         <div slot="header" class="clearfix">
-          <h3>用药人信息</h3>
+          <h3>{{ $t('3a4ee48b.e7914f') }}</h3>
         </div>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>用药人身份证：</h4>
+            <h4>{{ $t('3a4ee48b.9a9bc7') }}</h4>
           </el-col>
           <el-col :span="5">
             {{
               orderInfo.third_params.drug_buyer_id_card
                 ? orderInfo.third_params.drug_buyer_id_card
-                : '未填写身份证信息'
+                : $t('3a4ee48b.80f60b')
             }}
           </el-col>
           <div v-if="orderInfo.ziti_status != 'APPROVE' && orderInfo.order_status != 'CANCEL'">
             <el-col :span="3" class="content-right">
-              <h4>审核处理：</h4>
+              <h4>{{ $t('3a4ee48b.654d42') }}</h4>
             </el-col>
             <el-col :span="10">
-              <el-radio v-model="form.status" label="true"> 审核通过 </el-radio>
-              <el-radio v-model="form.status" label="false"> 审核拒绝 </el-radio>
+              <el-radio v-model="form.status" label="true"> {{ $t('3a4ee48b.871a30') }} </el-radio>
+              <el-radio v-model="form.status" label="false"> {{ $t('3a4ee48b.146bb2') }} </el-radio>
             </el-col>
           </div>
         </el-row>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>用药人姓名：</h4>
+            <h4>{{ $t('3a4ee48b.aa1bbd') }}</h4>
           </el-col>
           <el-col :span="5">
             {{
               orderInfo.third_params.drug_buyer_name
                 ? orderInfo.third_params.drug_buyer_name
-                : '未填写用药人姓名'
+                : $t('3a4ee48b.125171')
             }}
           </el-col>
           <div v-if="orderInfo.ziti_status != 'APPROVE' && orderInfo.order_status != 'CANCEL'">
             <div v-if="form.status == 'false'">
               <el-col :span="3" class="content-right">
-                <h4>拒绝原因：</h4>
+                <h4>{{ $t('3a4ee48b.2624eb') }}</h4>
               </el-col>
               <el-col :span="10">
                 <el-input
                   v-model="form.reject_reason"
                   type="textarea"
                   :autosize="{ minRows: 2, maxRows: 4 }"
-                  placeholder="请输入审核拒绝原因"
+                  :placeholder="$t('3a4ee48b.a6e70a')"
                 />
               </el-col>
             </div>
@@ -688,7 +707,7 @@
                 "
               >
                 <el-col :span="3" class="content-right">
-                  <h4>自提门店：</h4>
+                  <h4>{{ $t('3a4ee48b.bda45f') }}</h4>
                 </el-col>
                 <el-col :span="10">
                   <el-select
@@ -696,7 +715,7 @@
                     filterable
                     remote
                     reserve-keyword
-                    placeholder="门店名称关键字"
+                    :placeholder="$t('3a4ee48b.b69011')"
                     :remote-method="remoteMethod"
                   >
                     <el-option
@@ -725,11 +744,11 @@
         </el-row>
         <el-row>
           <el-col :span="3" class="content-right">
-            <h4>纸质处方单：</h4>
+            <h4>{{ $t('3a4ee48b.372e0e') }}：</h4>
           </el-col>
           <el-col :span="20">
             <span v-for="(item, index) in orderInfo.third_params.drug_list_image">
-              <img class="item-image" :src="item.url" @click="imagedetail(item.url)" />
+              <img class="item-image" :src="item.url" @click="imagedetail(item.url)">
             </span>
           </el-col>
         </el-row>
@@ -737,29 +756,31 @@
           <el-col :span="11"> &nbsp; </el-col>
           <div v-if="orderInfo.ziti_status != 'APPROVE' && orderInfo.order_status != 'CANCEL'">
             <el-col :span="10">
-              <el-button type="primary" @click="process"> 提交审核 </el-button>
+              <el-button type="primary" @click="process"> {{ $t('3a4ee48b.646db0') }} </el-button>
             </el-col>
           </div>
         </el-row>
       </el-card>
       <el-dialog
         v-if="orderInfo.order_class == 'drug'"
-        title="纸质处方单"
+        :title="$t('3a4ee48b.372e0e')"
         :visible.sync="dialogVisible"
         width="80%"
       >
-        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%" />
+        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%">
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
+          <el-button type="primary" @click="dialogVisible = false">{{
+            $t('3a4ee48b.b15d91')
+          }}</el-button>
         </span>
       </el-dialog>
       <el-card v-if="orderInfo.receipt_type || orderInfo.order_type == 'bargain'" shadow="never">
         <div slot="header" class="clearfix">
-          <h3>物流信息</h3>
+          <h3>{{ $t('3a4ee48b.24bc07') }}</h3>
         </div>
         <el-row>
           <el-col v-if="orderInfo.receipt_type == 'ziti'" :span="3" class="content-right">
-            <h4>自提地址：</h4>
+            <h4>{{ $t('3a4ee48b.d87411') }}</h4>
           </el-col>
           <el-col v-if="orderInfo.receipt_type == 'ziti'" :span="12">
             {{ distributor.store_name }}
@@ -767,7 +788,7 @@
           </el-col>
           <div v-if="orderInfo.receiver_address">
             <el-col :span="3" class="content-right">
-              <h4>收货人信息：</h4>
+              <h4>{{ $t('3a4ee48b.0dd68e') }}</h4>
             </el-col>
             <el-col :span="12">
               {{ orderInfo.receiver_name }} , {{ orderInfo.receiver_mobile }} ,
@@ -778,13 +799,13 @@
         </el-row>
         <el-row v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_code">
           <el-col :span="3" class="content-right">
-            <h4>快递公司：</h4>
+            <h4>{{ $t('3a4ee48b.f3af96') }}：</h4>
           </el-col>
           <el-col v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" :span="3">
             <el-select
               v-model="orderInfo.delivery_corp"
               filterable
-              placeholder="请选择快递公司，可搜索"
+              :placeholder="$t('3a4ee48b.32e586')"
             >
               <el-option
                 v-for="item in dlycorps"
@@ -802,24 +823,24 @@
               size="mini"
               @click="deliveryDesc"
             >
-              查看物流详情
+              {{ $t('3a4ee48b.6298b4') }}
             </el-button>
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>快递单号：</h4>
+            <h4>{{ $t('3a4ee48b.3c016d') }}：</h4>
           </el-col>
           <el-col v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" :span="5">
             <el-input
               v-model="orderInfo.delivery_code"
               :maxlength="20"
-              placeholder="物流公司单号"
+              :placeholder="$t('3a4ee48b.0e9f1e')"
             />
           </el-col>
           <el-col v-else :span="5">
             {{ orderInfo.delivery_code }}
           </el-col>
           <el-col :span="3" class="content-right">
-            <h4>发货时间：</h4>
+            <h4>{{ $t('3a4ee48b.8fca68') }}</h4>
           </el-col>
           <el-col :span="5">
             {{ orderInfo.delivery_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -837,17 +858,17 @@
         </el-row> -->
       </el-card>
       <el-dialog
-        title="物流详情"
+        :title="$t('3a4ee48b.6298b4')"
         class="right-dialog"
         :visible.sync="dialog"
         :before-close="handleCancelLabelsDialog"
       >
         <div v-if="this.activities.length > 0" class="block">
           <div class="radio">
-            排序：
+            {{ $t('3a4ee48b.899c0c') }}
             <el-radio-group v-model="reverse">
-              <el-radio :label="true"> 正序 </el-radio>
-              <el-radio :label="false"> 倒序 </el-radio>
+              <el-radio :label="true"> {{ $t('3a4ee48b.825f53') }} </el-radio>
+              <el-radio :label="false"> {{ $t('3a4ee48b.58883c') }} </el-radio>
             </el-radio-group>
           </div>
           <el-timeline :reverse="reverse">
@@ -860,9 +881,9 @@
             </el-timeline-item>
           </el-timeline>
         </div>
-        <div v-else class="block">暂无信息</div>
+        <div v-else class="block">{{ $t('3a4ee48b.5cc4af') }}</div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialog = false">关 闭</el-button>
+          <el-button @click="dialog = false">{{ $t('3a4ee48b.9d2578') }}</el-button>
         </span>
       </el-dialog>
       <!-- <el-card v-if="typeof(profit.order_id) != 'undefined'" shadow="never">
@@ -899,7 +920,7 @@
         </el-row>
       </el-card> -->
       <div class="section-footer content-padded content-center with-border">
-        <el-button @click="retrunClick"> 返回 </el-button>
+        <el-button @click="retrunClick"> {{ $t('3a4ee48b.5f4112') }} </el-button>
       </div>
     </div>
   </div>
@@ -1028,7 +1049,7 @@ export default {
     },
     process() {
       processDrugOrders(this.order_id, this.form).then((res) => {
-        this.$message({ type: 'success', message: '审核成功' })
+        this.$message({ type: 'success', message: this.$t('3a4ee48b.94129a') })
         this.getDetail()
       })
     },
@@ -1079,10 +1100,10 @@ export default {
       updateDelivery(this.order_id, this.deliveryForm).then((response) => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
-          this.$message.success('修改物流信息成功!')
+          this.$message.success(this.$t('3a4ee48b.687286'))
           this.getDetail()
         } else {
-          this.$message.error('修改物流信息失败!')
+          this.$message.error(this.$t('3a4ee48b.c3691c'))
           return false
         }
       })

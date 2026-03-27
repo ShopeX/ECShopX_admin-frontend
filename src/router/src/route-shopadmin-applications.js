@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '应用'
+const name = '2829eafb.5b0520'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout' //
 
@@ -12,12 +12,12 @@ export default {
   children: [
     {
       path: 'adapay/adapay_member_entry',
-      name: '进件管理',
+      name: '2829eafb.d38018',
       component: () => import('@/view/dealer/create_account')
     },
     {
       path: 'adapay/adapay_trades',
-      name: '分账',
+      name: '2829eafb.98818a',
       component: () => import('@/view/mall/sub_account/sub_account'),
       children: [
         {
@@ -28,22 +28,22 @@ export default {
     },
     {
       path: 'adapay/adapay_cash',
-      name: '提现',
+      name: '2829eafb.db7971',
       component: () => import('@/view/mall/withdraw/withdraw')
     },
     {
       path: 'adapay/adapay_member_info',
-      name: '进件信息',
+      name: '2829eafb.7d9c7d',
       component: () => import('@/view/mall/marketing/distributor_details')
     },
     {
       path: 'bspay/user',
-      name: '进件管理',
+      name: '2829eafb.d38018',
       component: () => import('@/view/dealer/bspay_create_user')
     },
     {
       path: 'bspay/trades',
-      name: '分账明细',
+      name: '2829eafb.85b2f8',
       component: () => import('@/view/mall/bspay_sub_account/sub_account'),
       children: [
         {
@@ -54,7 +54,7 @@ export default {
     },
     {
       path: 'ec/purchaseactivity',
-      name: `员工内购`,
+      name: '2829eafb.6e5918',
       component: SubLayout,
       children: [
         {
@@ -96,24 +96,24 @@ export default {
     },
     {
       path: 'ec/employee',
-      name: '员工管理',
+      name: '2829eafb.b33603',
       component: () => import('@/view/member/purchase/employee'),
       children: [
         {
           path: 'import',
-          name: `白名单导入`,
+          name: '2829eafb.eba44e',
           component: () => import('@/view/member/purchase/employeeImport')
         }
       ]
     },
     {
       path: 'ec/company',
-      name: '企业管理',
+      name: '2829eafb.07c516',
       component: () => import('@/view/member/purchase/company')
     },
     {
       path: 'ec/purchaseorder',
-      name: `内购订单`,
+      name: '2829eafb.d753bc',
       component: () => import('@/view/order/entitytrade/purchase'),
       children: [
         {

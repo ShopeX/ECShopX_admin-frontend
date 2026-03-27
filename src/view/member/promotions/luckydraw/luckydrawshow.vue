@@ -5,9 +5,9 @@
 
 <template>
   <el-col class="section section-white" :span="12">
-    <div class="section-header with-border">开奖图片上传</div>
+    <div class="section-header with-border">{{ $t('7a96016f.626555') }}</div>
     <el-form label-width="100px" style="margin-top: 25px">
-      <el-form-item label="中奖图片">
+      <el-form-item :label="$t('7a96016f.7f32d0')">
         <el-col :span="10">
           <div v-for="(item, index) in data" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
@@ -18,11 +18,11 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader"
               @click="handleImgChange(index)"
-            />
+            >
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br />
-                上传图片
+                <i class="el-icon-camera" /><br>
+                {{ $t('7a96016f.ce6855') }}
               </div>
             </div>
           </div>
@@ -36,21 +36,21 @@
       />
     </el-form>
     <div class="content-center">
-      <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+      <div class="frm-tips">{{ $t('7a96016f.d5a0d5') }}</div>
       <el-button
         :disabled="data.length >= 5"
         type="default"
         class="iconfont icon-plus-circle banner-button-uploader"
         @click="addItem"
       >
-        添加轮播图
+        {{ $t('7a96016f.22134f') }}
       </el-button>
     </div>
-    <br />
+    <br>
     <div class="section-footer with-border content-center">
-      <el-button type="primary" @click="save"> 保存 </el-button>
+      <el-button type="primary" @click="save"> {{ $t('7a96016f.be5fbb') }} </el-button>
     </div>
-    <br />
+    <br>
   </el-col>
 </template>
 
@@ -79,7 +79,7 @@ export default {
     save() {
       setLuckydrawShow(this.data).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('7a96016f.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -99,7 +99,7 @@ export default {
       }
       if (this.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('7a96016f.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })

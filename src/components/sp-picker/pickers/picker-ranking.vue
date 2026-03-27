@@ -21,7 +21,7 @@
   <div class="picker-ranking">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入榜单名称" />
+        <el-input v-model="formData.keywords" :placeholder="$t('7857ad5f.270f1f')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -32,28 +32,7 @@
       }"
       url="/goods/ranking/list"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '榜单ID', key: 'id', width: '80' },
-          { name: '榜单名称', key: 'name' },
-          {
-            name: '榜单类型',
-            key: 'type',
-            width: '120',
-            formatter: (value, row, col) => {
-              return this.typeList[value] || value
-            }
-          },
-          {
-            name: '状态',
-            key: 'status',
-            width: '100',
-            formatter: (value, row, col) => {
-              return value == 1 ? '启用' : '禁用'
-            }
-          }
-        ]
-      }"
+      :setting="rankingSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -83,14 +62,43 @@ export default {
     const formData = Object.assign(defaultParams, queryParams)
     return {
       formData,
-      multiple: this.value?.multiple ?? true,
-      typeList: {
-        category_ranking: '品类榜单',
-        platform_ranking: '平台榜单'
+      multiple: this.value?.multiple ?? true
+    }
+  },
+  computed: {
+    rankingSetting() {
+      const t = this.$t.bind(this)
+      const typeList = {
+        category_ranking: t('7857ad5f.4abc55'),
+        platform_ranking: t('7857ad5f.b7986d')
+      }
+      return {
+        columns: [
+          { name: t('7857ad5f.962772'), key: 'id', width: '80' },
+          { name: t('7857ad5f.7cdb40'), key: 'name' },
+          {
+            name: t('7857ad5f.169b81'),
+            key: 'type',
+            width: '120',
+            formatter: (value, row, col) => {
+              return typeList[value] || value
+            }
+          },
+          {
+            name: t('7857ad5f.3fea7c'),
+            key: 'status',
+            width: '100',
+            formatter: (value, row, col) => {
+              return value == 1 ? t('7857ad5f.7854b5') : t('7857ad5f.710ad0')
+            }
+          }
+        ]
       }
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('7857ad5f.74143d')
+  },
   methods: {
     beforeSearch(params) {
       params = {

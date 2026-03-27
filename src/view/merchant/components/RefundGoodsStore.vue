@@ -18,9 +18,9 @@
 </style>
 <template>
   <div class="refund-goods-store">
-    <div class="tip">本店订单买家发起退货退款申请时可选择此列表店铺的退货点完成到店退货。</div>
+    <div class="tip">{{ $t('73f755c3.0e97ba') }}</div>
     <div class="refund-store">
-      <el-button type="text" @click="onSelectShop">选择店铺</el-button>
+      <el-button type="text" @click="onSelectShop">{{ $t('73f755c3.afa2e6') }}</el-button>
       <SpFinder
         ref="finder"
         no-selection
@@ -43,7 +43,7 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '移除',
+            name: this.$t('73f755c3.86048b'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -58,7 +58,7 @@ export default {
             }
           }
         ],
-        columns: [{ name: '店铺名称', key: 'name', width: '700px' }]
+        columns: [{ name: this.$t('73f755c3.0d4934'), key: 'name', width: '700px' }]
       })
     }
   },

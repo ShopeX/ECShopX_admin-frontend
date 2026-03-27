@@ -4,10 +4,14 @@
 -->
 
 <template>
-  <SpPage title="登录页配置">
+  <SpPage :title="$t('fe5e608b.2efe2e')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" :loading="loading" @click="onSubmit"> 保存 </el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">
+{{
+          $t('fe5e608b.be5fbb')
+        }}
+</el-button>
       </div>
     </template>
     <Form />
@@ -16,6 +20,7 @@
 
 <script>
 import { useForm } from '@/composables'
+import { i18n } from '@/i18n'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -25,7 +30,7 @@ const [Form, FormApi] = useForm({
         size: 'small'
       },
       fieldName: 'logo',
-      label: '商城Logo'
+      label: i18n.t('fe5e608b.8c53d5')
     },
     {
       component: 'ImagePicker',
@@ -33,7 +38,7 @@ const [Form, FormApi] = useForm({
         size: 'small'
       },
       fieldName: 'background',
-      label: '背景图'
+      label: i18n.t('fe5e608b.543aa6')
     }
   ],
   showDefaultActions: false
@@ -63,7 +68,7 @@ export default {
       this.loading = true
       const params = FormApi.getFieldsValue()
       await this.$api.webtemplate.saveLoginPageSetting(params)
-      this.$message.success('保存成功！')
+      this.$message.success(this.$t('fe5e608b.fbd249'))
       this.loading = false
     }
   }

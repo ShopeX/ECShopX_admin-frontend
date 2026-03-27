@@ -9,58 +9,58 @@
       <el-form ref="ruleForm" :model="form" class="demo-ruleForm" label-width="100px">
         <el-card class="box-card" shadow="never">
           <div slot="header" class="clearfix">
-            <span>交易单</span>
+            <span>{{ $t('aab9b30d.8ab066') }}</span>
           </div>
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="订单号" prop="order_id">
+              <el-form-item :label="$t('aab9b30d.1e8dc2')" prop="order_id">
                 <el-input v-model="form.order_id" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="交易流水号" prop="trade_id">
+              <el-form-item :label="$t('aab9b30d.fa68e9')" prop="trade_id">
                 <el-input v-model="form.trade_id" />
               </el-form-item>
             </el-col>
             <el-col v-if="$store.getters.login_type != 'distributor'" :span="8">
-              <el-form-item label="店铺名称" prop="distributor_name">
+              <el-form-item :label="$t('aab9b30d.0d4934')" prop="distributor_name">
                 <el-input v-model="form.distributor_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="支付方式" prop="pay_type">
+              <el-form-item :label="$t('aab9b30d.0c9d2b')" prop="pay_type">
                 <el-select v-model="form.pay_type" style="width: 100%">
-                  <el-option label="微信小程序支付" value="wx_lite" />
+                  <el-option :label="$t('aab9b30d.18796a')" value="wx_lite" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="交易状态" prop="status">
+              <el-form-item :label="$t('aab9b30d.209f63')" prop="status">
                 <el-select v-model="form.status" style="width: 100%">
-                  <el-option label="支付完成" value="SUCCESS" />
-                  <el-option label="部分退款" value="PARTIAL_REFUND" />
-                  <el-option label="全额退款" value="FULL_REFUND" />
+                  <el-option :label="$t('aab9b30d.21d63b')" value="SUCCESS" />
+                  <el-option :label="$t('aab9b30d.cfcaaa')" value="PARTIAL_REFUND" />
+                  <el-option :label="$t('aab9b30d.3b5a4d')" value="FULL_REFUND" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="是否分账" prop="adapay_div_status">
+              <el-form-item :label="$t('aab9b30d.9b712b')" prop="adapay_div_status">
                 <el-select v-model="form.adapay_div_status" style="width: 100%">
-                  <el-option label="未分账" value="NOTDIV" />
-                  <el-option label="已分账" value="DIVED" />
+                  <el-option :label="$t('aab9b30d.3d8a78')" value="NOTDIV" />
+                  <el-option :label="$t('aab9b30d.6b086e')" value="DIVED" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col v-if="$store.getters.login_type == 'admin'" :span="8">
-              <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
+              <el-form-item :label="$t('aab9b30d.6e640f')" prop="adapay_fee_mode">
                 <el-select v-model="form.adapay_fee_mode" style="width: 100%">
-                  <el-option label="内扣" value="I" />
-                  <el-option label="外扣" value="O" />
+                  <el-option :label="$t('aab9b30d.75d29a')" value="I" />
+                  <el-option :label="$t('aab9b30d.6c1506')" value="O" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="时间范围" prop="time">
+              <el-form-item :label="$t('aab9b30d.cd649f')" prop="time">
                 <el-date-picker
                   v-model="form.time"
                   value-format="timestamp"
@@ -68,44 +68,48 @@
                   type="daterange"
                   :default-time="['00:00:00', '23:59:59']"
                   range-separator="-"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :start-placeholder="$t('aab9b30d.b44c0f')"
+                  :end-placeholder="$t('aab9b30d.1d468b')"
                   @change="timeHandle"
                 />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="分账状态" prop="can_div">
+              <el-form-item :label="$t('aab9b30d.73cd01')" prop="can_div">
                 <el-select v-model="form.can_div" style="width: 100%">
-                  <el-option label="可分账" value="true" />
-                  <el-option label="不可分账" value="false" />
+                  <el-option :label="$t('aab9b30d.882957')" value="true" />
+                  <el-option :label="$t('aab9b30d.97f98c')" value="false" />
                 </el-select>
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item style="text-align: right">
-            <el-button type="primary" size="medium" @click="queryHandle"> 查询 </el-button>
-            <el-button type="info" size="medium" @click="resetForm('ruleForm')"> 清空 </el-button>
+            <el-button type="primary" size="medium" @click="queryHandle">
+              {{ $t('aab9b30d.bee912') }}
+            </el-button>
+            <el-button type="info" size="medium" @click="resetForm('ruleForm')">
+              {{ $t('aab9b30d.288f0c') }}
+            </el-button>
           </el-form-item>
           <el-row :gutter="20" class="group">
             <el-col v-if="$store.getters.login_type != 'distributor'" :span="6" class="item">
-              <p class="title">订单总额</p>
+              <p class="title">{{ $t('aab9b30d.d39323') }}</p>
               <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
             </el-col>
             <el-col :span="6" class="item">
-              <p class="title">交易总额</p>
+              <p class="title">{{ $t('aab9b30d.8c022f') }}</p>
               <p class="money">￥ {{ (total.payFee / 100) | formatNumMoney }}</p>
             </el-col>
             <el-col v-if="$store.getters.login_type == 'distributor'" :span="6" class="item">
-              <p class="title">支付总额</p>
+              <p class="title">{{ $t('aab9b30d.600ffa') }}</p>
               <p class="money">￥ {{ (total.totalFee / 100) | formatNumMoney }}</p>
             </el-col>
             <el-col :span="6" class="item">
-              <p class="title">分账总额</p>
+              <p class="title">{{ $t('aab9b30d.564dc6') }}</p>
               <p class="money">￥ {{ (total.divFee / 100) | formatNumMoney }}</p>
             </el-col>
             <el-col v-if="$store.getters.login_type == 'admin'" :span="6" class="item">
-              <p class="title">手续费总额</p>
+              <p class="title">{{ $t('aab9b30d.fdab98') }}</p>
               <p class="money">￥ {{ (total.adapayFee / 100) | formatNumMoney }}</p>
             </el-col>
           </el-row>
@@ -120,110 +124,127 @@
                 :show-file-list="false"
               >
                 <el-button type="primary">
-                  导入<i class="el-icon-upload el-icon--right" />
+                  {{ $t('aab9b30d.8d9a07') }}<i class="el-icon-upload el-icon--right" />
                 </el-button>
               </el-upload>
             </el-row>
             <el-table v-loading="loading" :data="list" style="width: 100%">
-              <el-table-column label="订单号" prop="orderId" />
+              <el-table-column :label="$t('aab9b30d.1e8dc2')" prop="orderId" />
               <template v-if="$store.getters.login_type != 'distributor'">
-                <el-table-column label="商铺名称" prop="distributor_name" />
+                <el-table-column :label="$t('aab9b30d.b39afc')" prop="distributor_name" />
               </template>
               <template>
-                <el-table-column label="交易流水号" prop="tradeId" />
-                <el-table-column label="支付方式">
+                <el-table-column :label="$t('aab9b30d.fa68e9')" prop="tradeId" />
+                <el-table-column :label="$t('aab9b30d.0c9d2b')">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.payType == 'wxpay'">微信支付</span>
-                    <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
-                    <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
-                    <span v-if="scope.row.payType == 'wxpaypc'">微信PC支付</span>
-                    <span v-if="scope.row.payType == 'wxpaypos'">微信POS支付</span>
-                    <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
-                    <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
-                    <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-                    <span v-if="scope.row.payType == 'alipaypos'">支付宝POS支付</span>
-                    <span v-if="scope.row.payType == 'deposit'">余额支付</span>
-                    <span v-if="scope.row.payType == 'point'">积分支付</span>
-                    <span v-if="scope.row.payType == 'pos'">POS银行卡支付</span>
-                    <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
-                      >微信支付</span
+                    <span v-if="scope.row.payType == 'wxpay'">{{ $t('aab9b30d.bffe28') }}</span>
+                    <span v-if="scope.row.payType == 'wxpayapp'">{{ $t('aab9b30d.3c2c77') }}</span>
+                    <span v-if="scope.row.payType == 'wxpayh5'">{{ $t('aab9b30d.df7033') }}</span>
+                    <span v-if="scope.row.payType == 'wxpaypc'">{{ $t('aab9b30d.67a318') }}</span>
+                    <span v-if="scope.row.payType == 'wxpaypos'">{{ $t('aab9b30d.c8a8cb') }}</span>
+                    <span v-if="scope.row.payType == 'alipayapp'">{{ $t('aab9b30d.2ac4fe') }}</span>
+                    <span v-if="scope.row.payType == 'alipay'">{{ $t('aab9b30d.e3b206') }}</span>
+                    <span v-if="scope.row.payType == 'alipayh5'">{{ $t('aab9b30d.5a3c52') }}</span>
+                    <span v-if="scope.row.payType == 'alipaypos'">{{ $t('aab9b30d.bc475f') }}</span>
+                    <span v-if="scope.row.payType == 'deposit'">{{ $t('aab9b30d.89ac23') }}</span>
+                    <span v-if="scope.row.payType == 'point'">{{ $t('aab9b30d.accd19') }}</span>
+                    <span v-if="scope.row.payType == 'pos'">{{ $t('aab9b30d.d37dec') }}</span>
+                    <span
+                      v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
+                      >{{ $t('aab9b30d.bffe28') }}</span
                     >
                   </template>
                 </el-table-column>
               </template>
 
-              <el-table-column v-if="$store.getters.login_type != 'distributor'" label="订单金额">
+              <el-table-column
+                v-if="$store.getters.login_type != 'distributor'"
+                :label="$t('aab9b30d.b1862e')"
+              >
                 <template slot-scope="scope">
                   <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
                 </template>
               </el-table-column>
-              <el-table-column v-if="$store.getters.login_type == 'distributor'" label="交易金额">
+              <el-table-column
+                v-if="$store.getters.login_type == 'distributor'"
+                :label="$t('aab9b30d.7184d3')"
+              >
                 <template slot-scope="scope">
                   <span>{{ (scope.row.totalFee / 100) | formatNumMoney }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="交易状态" prop="tradeState">
+              <el-table-column :label="$t('aab9b30d.209f63')" prop="tradeState">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.tradeState == 'SUCCESS'">支付完成</span>
-                  <span v-else-if="scope.row.tradeState == 'PARTIAL_REFUND'">部分退款</span>
-                  <span v-else-if="scope.row.tradeState == 'FULL_REFUND'">全额退款</span>
+                  <span v-if="scope.row.tradeState == 'SUCCESS'">{{ $t('aab9b30d.21d63b') }}</span>
+                  <span v-else-if="scope.row.tradeState == 'PARTIAL_REFUND'">{{
+                    $t('aab9b30d.cfcaaa')
+                  }}</span>
+                  <span v-else-if="scope.row.tradeState == 'FULL_REFUND'">{{
+                    $t('aab9b30d.3b5a4d')
+                  }}</span>
                   <!-- <span v-else-if="scope.row.tradeState =='CLOSED'">已关闭</span>
                   <span v-else-if="scope.row.tradeState =='REVOKED'">已撤销</span>
                   <span v-else-if="scope.row.tradeState =='PAYERROR'">支付失败</span> -->
                 </template>
               </el-table-column>
-              <el-table-column label="退款金额">
+              <el-table-column :label="$t('aab9b30d.a0cd4c')">
                 <template slot-scope="scope">
                   <span>{{ (scope.row.refundedFee / 100) | formatNumMoney }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="分账类型">
+              <el-table-column :label="$t('aab9b30d.b39fe6')">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.payType == 'adapay'">线上</span>
-                  <span v-else>线下</span>
+                  <span v-if="scope.row.payType == 'adapay'">{{ $t('aab9b30d.ea512c') }}</span>
+                  <span v-else>{{ $t('aab9b30d.75ab31') }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="分账状态">
+              <el-table-column :label="$t('aab9b30d.73cd01')">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.canDiv === true">可分账</span>
-                  <span v-else>不可分账</span>
+                  <span v-if="scope.row.canDiv === true">{{ $t('aab9b30d.882957') }}</span>
+                  <span v-else>{{ $t('aab9b30d.97f98c') }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="是否分账">
+              <el-table-column :label="$t('aab9b30d.9b712b')">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.adapayDivStatus == 'NOTDIV'">未分账</span>
-                  <span v-else-if="scope.row.adapayDivStatus == 'DIVED'">已分账</span>
+                  <span v-if="scope.row.adapayDivStatus == 'NOTDIV'">{{
+                    $t('aab9b30d.3d8a78')
+                  }}</span>
+                  <span v-else-if="scope.row.adapayDivStatus == 'DIVED'">{{
+                    $t('aab9b30d.6b086e')
+                  }}</span>
                 </template>
               </el-table-column>
               <template v-if="$store.getters.login_type == 'admin'">
-                <el-table-column label="手续费扣费方式" prop="adapayFeeMode">
+                <el-table-column :label="$t('aab9b30d.6e640f')" prop="adapayFeeMode">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.adapayFeeMode == 'I'">内扣</span>
-                    <span v-else-if="scope.row.adapayFeeMode == 'O'">外扣</span>
+                    <span v-if="scope.row.adapayFeeMode == 'I'">{{ $t('aab9b30d.75d29a') }}</span>
+                    <span v-else-if="scope.row.adapayFeeMode == 'O'">{{
+                      $t('aab9b30d.6c1506')
+                    }}</span>
                     <span v-else>-</span>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="手续费">
+                <el-table-column :label="$t('aab9b30d.03c168')">
                   <template slot-scope="scope">
                     <span>{{ (scope.row.adapayFee / 100) | formatNumMoney }}</span>
                   </template>
                 </el-table-column>
               </template>
-              <el-table-column label="分账金额">
+              <el-table-column :label="$t('aab9b30d.1e61f1')">
                 <template slot-scope="scope">
                   <span>{{ (scope.row.divFee / 100) | formatNumMoney }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="创建日期" prop="timeStart">
+              <el-table-column :label="$t('aab9b30d.696f5a')" prop="timeStart">
                 <template slot-scope="scope">
                   <span>{{ scope.row.timeStart | formatTimestamp }}</span>
                 </template>
               </el-table-column>
-              <el-table-column fixed="left" label="操作" width="100">
+              <el-table-column fixed="left" :label="$t('aab9b30d.2b6bc0')" width="100">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="goDetail(scope.row.tradeId)">
-                    查看
+                    {{ $t('aab9b30d.607e7a') }}
                   </el-button>
                 </template>
               </el-table-column>
@@ -315,7 +336,7 @@ export default {
       await this.$api.common.handleUploadFile(params)
       this.$message({
         type: 'success',
-        message: '上传成功，等待处理'
+        message: this.$t('aab9b30d.7bbfaa')
       })
       this.getSub_account()
     },
@@ -370,9 +391,9 @@ export default {
         ...this.time
       })
       if (status) {
-        this.$message.success(`已加入执行队列，请在设置-导出列表中下载`)
+        this.$message.success(this.$t('d41d8cd9.g1h2i3'))
       } else {
-        this.$message.error(`导出失败`)
+        this.$message.error(this.$t('d41d8cd9.l2m3n4'))
       }
     }
   }

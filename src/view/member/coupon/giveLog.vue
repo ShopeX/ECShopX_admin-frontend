@@ -7,23 +7,27 @@
   <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1">
       <el-table v-loading="loading" border :data="giveLogList" :height="wheight - 90">
-        <el-table-column width="140" label="操作">
+        <el-table-column width="140" :label="$t('b7927d9a.2b6bc0')">
           <template slot-scope="scope">
-            <el-button type="text" @click="onDetail(scope.row)">发送失败详情</el-button>
+            <el-button type="text" @click="onDetail(scope.row)">
+{{
+              $t('b7927d9a.75ad4a')
+            }}
+</el-button>
           </template>
         </el-table-column>
-        <el-table-column width="220" label="发放时间">
+        <el-table-column width="220" :label="$t('b7927d9a.0de30c')">
           <template slot-scope="scope">
             <i class="el-icon-time" /> {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
-        <el-table-column prop="sender" label="操作员">
+        <el-table-column prop="sender" :label="$t('b7927d9a.676e59')">
           <template slot-scope="scope">
             <i class="el-icon-user" /> {{ scope.row.sender }}
           </template>
         </el-table-column>
-        <el-table-column prop="number" width="80" label="赠送数量" />
-        <el-table-column prop="error" width="80" label="失败数量" />
+        <el-table-column prop="number" width="80" :label="$t('b7927d9a.591bf1')" />
+        <el-table-column prop="error" width="80" :label="$t('b7927d9a.21a0bb')" />
       </el-table>
       <div class="mt-4 text-right">
         <el-pagination
@@ -77,7 +81,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取优惠券发放列表信息出错'
+            message: this.$t('b7927d9a.1c02d7')
           })
         })
     },

@@ -9,40 +9,48 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="field_title" label="活动名称:">
-          <el-input v-model="params.field_title" placeholder="活动名称" />
+        <SpFilterFormItem prop="field_title" :label="$t('15ecc99b.1cadc0')">
+          <el-input v-model="params.field_title" :placeholder="$t('15ecc99b.39834b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="status" label="状态:">
-          <el-select v-model="params.status" placeholder="状态">
+        <SpFilterFormItem prop="status" :label="$t('15ecc99b.13b5c7')">
+          <el-select v-model="params.status" :placeholder="$t('15ecc99b.3fea7c')">
             <el-option
               v-for="(item, index) in statusOption"
               :key="index"
-              :label="item.name"
+              :label="$t(item.nameKey)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="create_time" :label="$t('6b57cb80.374856')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="根据添加时间筛选"
+            :placeholder="$t('6b57cb80.e08045')"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="distributor_id" label="店铺名称:">
-          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="distributor_id" :label="$t('6b57cb80.4de1b7')">
+          <SpSelectShop
+            v-model="params.distributor_id"
+            clearable
+            :placeholder="$t('ac2a6290.708c9d')"
+          />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
-          活动添加
+          {{ $t('15ecc99b.e8c939') }}
         </el-button>
       </div>
 
       <el-table v-loading="loading" border :data="tableList" style="width: 100%">
-        <el-table-column label="操作" fixed="left" :width="IS_DISTRIBUTOR() ? 150 : 250">
+        <el-table-column
+          :label="$t('8da83775.2b6bc0')"
+          fixed="left"
+          :width="IS_DISTRIBUTOR() ? 150 : 250"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="
@@ -52,53 +60,52 @@
               type="text"
               @click="onOperationChange(scope.row, 'edit')"
             >
-              编辑
+              {{ $t('15ecc99b.95b351') }}
             </el-button>
             <el-button
               v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()"
               type="text"
               @click="onOperationChange(scope.row, 'detail')"
             >
-              查看
+              {{ $t('15ecc99b.607e7a') }}
             </el-button>
             <el-button
               v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()"
               type="text"
               @click="onStopChange(scope.row)"
             >
-              终止
+              {{ $t('15ecc99b.ff6c6a') }}
             </el-button>
-            <!-- <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button> -->
             <el-button type="text" @click="onOperationChange(scope.row, 'record')">
-              报名记录
+              {{ $t('15ecc99b.42a5b5') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="activity_id" label="编号" width="100" />
-        <el-table-column prop="activity_name" label="活动名称" width="200" />
-        <el-table-column label="是否核销" width="120">
+        <el-table-column prop="activity_id" :label="$t('15ecc99b.c515f3')" width="100" />
+        <el-table-column prop="activity_name" :label="$t('15ecc99b.39834b')" width="200" />
+        <el-table-column :label="$t('15ecc99b.8c5a3c')" width="120">
           <template slot-scope="scope">
-            {{ scope.row.is_offline_verify == 1 ? '是' : '否' }}
+            {{ scope.row.is_offline_verify == 1 ? $t('15ecc99b.0a60ac') : $t('15ecc99b.c9744f') }}
           </template>
         </el-table-column>
-        <el-table-column prop="gift_points" label="获取积分" width="120" />
-        <el-table-column label="进白名单" width="120">
+        <el-table-column prop="gift_points" :label="$t('15ecc99b.c07abe')" width="120" />
+        <el-table-column :label="$t('15ecc99b.ac7bd3')" width="120">
           <template slot-scope="scope">
-            {{ scope.row.is_white_list == 1 ? '是' : '否' }}
+            {{ scope.row.is_white_list == 1 ? $t('15ecc99b.0a60ac') : $t('15ecc99b.c9744f') }}
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" width="300">
+        <el-table-column :label="$t('15ecc99b.c799f5')" width="300">
           <template slot-scope="scope">
             {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
           </template>
         </el-table-column>
-        <el-table-column label="报名人数" width="120">
+        <el-table-column :label="$t('15ecc99b.a06b35')" width="120">
           <template slot-scope="scope">
             {{ scope.row.total_join_num || 0 }}
           </template>
         </el-table-column>
-        <el-table-column prop="status_name" label="状态" width="120" />
-        <el-table-column prop="distributor_name" label="店铺" width="120" />
+        <el-table-column prop="status_name" :label="$t('15ecc99b.3fea7c')" width="120" />
+        <el-table-column prop="distributor_name" :label="$t('15ecc99b.295713')" width="120" />
       </el-table>
       <div class="content-center content-top-padded">
         <el-pagination
@@ -149,10 +156,10 @@ export default {
       },
       loading: false,
       statusOption: [
-        { name: '全部', value: '' },
-        { name: '待开始', value: 'waiting' },
-        { name: '进行中', value: 'ongoing' },
-        { name: '已结束', value: 'end' }
+        { nameKey: 'ac2a6290.a8b0c2', value: '' },
+        { nameKey: '15ecc99b.1568ba', value: 'waiting' },
+        { nameKey: '15ecc99b.fb852f', value: 'ongoing' },
+        { nameKey: '15ecc99b.047fab', value: 'end' }
       ],
       shopList: [],
       dialogData: {},
@@ -239,17 +246,16 @@ export default {
       }
     },
     onStopChange(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('15ecc99b.01be42'), this.$t('8da83775.02d981'), {
+        cancelButtonText: this.$t('8da83775.625fb2'),
+        confirmButtonText: this.$t('8da83775.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             regActivityInvalid({ activity_id: row.activity_id }).then((res) => {
               this.fetchList()
               this.$message({
-                message: '修改活动状态成功',
+                message: this.$t('15ecc99b.b69694'),
                 type: 'success',
                 duration: 5 * 1000
               })

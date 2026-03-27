@@ -12,18 +12,22 @@
       label-position="left"
       class="demo-ruleForm"
     >
-      <el-card v-loading="loader" shadow="never" header="税费策略">
+      <el-card v-loading="loader" shadow="never" :header="$t('f2badbf0.eff9c6')">
         <el-col :xs="24" :sm="12" :md="8">
-          <el-form-item label="规则名称">
-            <el-input v-model="form.taxstrategy_name" :maxlength="30" placeholder="请输入内容" />
+          <el-form-item :label="$t('f2badbf0.870802')">
+            <el-input
+              v-model="form.taxstrategy_name"
+              :maxlength="30"
+              :placeholder="$t('f2badbf0.a11cc7')"
+            />
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :sm="24" :md="24">
-          <el-button type="primary" @click="addRule"> 添加规则 </el-button>
+          <el-button type="primary" @click="addRule"> {{ $t('f2badbf0.49818f') }} </el-button>
           <div style="height: 20px" />
           <div v-for="(row, key) in form.taxstrategy_content">
-            <el-form-item label="规则">
+            <el-form-item :label="$t('f2badbf0.b0fae0')">
               <div style="display: flex">
                 {{ key + 1 }}
                 <el-input-number
@@ -45,7 +49,7 @@
                   :step="0.1"
                   :min="0"
                 />
-                元，税率
+                {{ $t('f2badbf0.aef70c') }}
                 <el-input-number
                   v-model="row.tax_rate"
                   style="margin: 0 5px"
@@ -63,7 +67,7 @@
                   type="danger"
                   @click="delRule(key)"
                 >
-                  删除
+                  {{ $t('f2badbf0.2f4aad') }}
                 </el-button>
               </div>
             </el-form-item>
@@ -74,7 +78,7 @@
       <div class="section-footer with-border content-center">
         <!--        <el-button @click.native="handleCancel">取消</el-button>-->
         <el-button type="primary" :loading="submitLoading" @click="save">
-          {{ submitLoading ? '提交中' : '保存' }}
+          {{ submitLoading ? $t('f2badbf0.7ef44a') : $t('f2badbf0.be5fbb') }}
         </el-button>
       </div>
     </el-form>
@@ -140,7 +144,7 @@ export default {
       if (this.form.taxstrategy_content.length < sum) {
         this.form.taxstrategy_content.push({ start: 0, end: 0, tax_rate: 0 })
       } else {
-        this.$message({ type: 'error', message: `最多添加${sum}条规则` })
+        this.$message({ type: 'error', message: this.$t('f2badbf0.020a52') })
       }
     },
     // 删除规则
@@ -168,7 +172,7 @@ export default {
         ...this.form,
         taxstrategy_content: _taxContent
       }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('2d1c35f7.33130f') })
         this.submitLoading = false
         this.loader = false
         _this.refresh()
@@ -186,7 +190,7 @@ export default {
         ...this.form,
         taxstrategy_content: _taxContent
       }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('2d1c35f7.33130f') })
         this.submitLoading = false
         this.loader = false
         _this.refresh()

@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '站点'
+const name = '2fbaef93.236ed6'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,85 +11,85 @@ export default {
   children: [
     {
       path: 'forms/selformelementsetting',
-      name: `表单元素配置`,
+      name: '2fbaef93.e32fd0',
       component: () => import('@/view/member/selfservice/formsettinglist'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: `表单元素配置-编辑`,
+          name: '2fbaef93.c7d5c2',
           component: () => import('@/view/member/selfservice/formsettingadd')
         }
       ]
     },
     {
       path: 'forms/selformtempsetting',
-      name: `表单模板配置`,
+      name: '2fbaef93.a1cd27',
       component: () => import('@/view/member/selfservice/formtemplatelist'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: `表单模板配置-编辑`,
+          name: '2fbaef93.2b9acd',
           component: () => import('@/view/member/selfservice/formtemplateadd')
         }
       ]
     },
     {
       path: 'article/planting',
-      name: `软文`,
+      name: '2fbaef93.e8f87a',
       component: () => import('@/view/content/soft-article'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: '软文-编辑',
+          name: '2fbaef93.328f76',
           component: () => import('@/view/content/soft-article-id')
         }
       ]
     },
     {
       path: 'shopscreen/shopscreen_category',
-      name: `大屏设置-自定义分类`,
+      name: '2fbaef93.93d0e7',
       component: () => import('@/view/shopscreen/category')
     },
     {
       path: 'shopscreen/bigScreenAd',
-      name: `大屏设置-待机广告`,
+      name: '2fbaef93.7af20f',
       component: () => import('@/view/shopscreen/bigScreenAd')
     },
     {
       path: 'shopscreen/homeCarousel',
-      name: `大屏设置-首页轮播图`,
+      name: '2fbaef93.7e928d',
       component: () => import('@/view/shopscreen/homeCarousel')
     },
     {
       path: 'shopscreen/searchKeyWords',
-      name: `大屏设置-关键词设置`,
+      name: '2fbaef93.3b71e9',
       component: () => import('@/view/shopscreen/searchKeyWords')
     },
     {
       path: 'article/articlecolumns',
-      name: `软文栏目`,
+      name: '2fbaef93.cae32f',
       component: () => import('@/view/base/article/columns')
     },
     {
       path: 'text/basearticle',
-      name: `文章管理`,
+      name: '2fbaef93.f43570',
       component: () => import('@/view/base/article/index'),
       children: [
         {
           path: 'editor',
-          name: '软文-编辑',
+          name: '2fbaef93.328f76',
           component: () => import('@/view/base/article/editor')
         }
       ]
     },
     {
       path: 'text/articlegeneralcolumns',
-      name: `文章栏目`,
+      name: '2fbaef93.309b9a',
       component: () => import('@/view/base/article/generalcolumns')
     },
     {
       path: 'ugc/ugcindex',
-      name: `笔记管理`,
+      name: '2fbaef93.1c9adf',
       component: () => import('@/view/member/ugc/ugcIndex'),
       children: [
         {
@@ -100,42 +100,42 @@ export default {
     },
     {
       path: 'ugc/ugcflags',
-      name: `角标管理`,
+      name: '2fbaef93.6864e1',
       component: () => import('@/view/member/ugc/ugcFlags')
     },
     {
       path: 'ugc/ugctags',
-      name: `TAG管理`,
+      name: '2fbaef93.0b9559',
       component: () => import('@/view/member/ugc/ugcTags')
     },
     {
       path: 'ugc/ugctopic',
-      name: `笔记话题设置`,
+      name: '2fbaef93.60d8eb',
       component: () => import('@/view/member/ugc/ugcTopic')
     },
     {
       path: 'ugc/ugcreview',
-      name: `评论管理`,
+      name: '2fbaef93.11c261',
       component: () => import('@/view/member/ugc/ugcReview')
     },
     {
       path: 'ugc/ugcpoint',
-      name: `积分管理`,
+      name: '2fbaef93.46e7aa',
       component: () => import('@/view/member/ugc/ugcPoint')
     },
     {
       path: 'share/sharesetting',
-      name: `分享设置`,
+      name: '2fbaef93.b3cec2',
       component: () => import('@/view/base/setting/sharesetting')
     },
     {
       path: 'evaluate/rate',
-      name: `商品评价`,
+      name: '2fbaef93.d58254',
       component: () => import('@/view/goods/rate')
     },
     {
       path: 'material/brandmaterial',
-      name: `素材管理`,
+      name: '2fbaef93.b49e2f',
       component: () => import('@/views/content/aterialmanagement'),
       children: [
         {
@@ -151,22 +151,22 @@ export default {
     // },
     {
       path: 'wechat/brandmenu',
-      name: `服务号管理-自定义菜单`,
+      name: '2fbaef93.81cde1',
       component: () => import('@/view/brand/wechat/custommenu')
     },
     {
       path: 'wechat/brandfans',
-      name: `服务号管理-粉丝管理`,
+      name: '2fbaef93.442d3c',
       component: () => import('@/view/brand/wechat/fans')
     },
     {
       path: 'wechat/brandreply',
-      name: `服务号管理-消息回复`,
+      name: '2fbaef93.4c0bb8',
       component: () => import('@/view/brand/wechat/reply')
     },
     {
       path: 'aliminiapp',
-      name: `支付宝小程序设置`,
+      name: '2fbaef93.9fd626',
       component: () => import('@/view/wxapp/aliminiapp/setting')
     }
   ]

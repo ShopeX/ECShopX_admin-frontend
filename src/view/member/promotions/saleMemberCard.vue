@@ -7,38 +7,36 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item label="是否开启：" prop="ad_title">
+        <el-form-item :label="$t('8804b0ee.9f0f3f')" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
             active-value="true"
             inactive-value="false"
             inactive-color="#ccc"
-            active-text="开启"
-            inactive-text="关闭"
+            :active-text="$t('8804b0ee.cc42dd')"
+            :inactive-text="$t('8804b0ee.b15d91')"
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item label="注册引导广告标题：" prop="ad_title">
+        <el-form-item :label="$t('8804b0ee.6ed28f')" prop="ad_title">
           <el-input
             v-model="form.ad_title"
-            :placeholder="
-              !VERSION_B2C() ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
-            "
+            :placeholder="registerAdTitlePlaceholder"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="注册引导图片：">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
-          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
+        <el-form-item :label="$t('8804b0ee.60079e')">
+          <div class="frm-tips">{{ $t('8804b0ee.6113fc') }}</div>
+          <div class="frm-tips">{{ $t('8804b0ee.3b1660') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200" />
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
         </el-form-item>
-        <el-form-item label="请选择赠送会员卡类型：">
+        <el-form-item :label="$t('8804b0ee.01976e')">
           <el-radio-group v-model="membercards.index_value" @change="vipGradeChange">
             <el-radio
               v-for="(item, index) in vipGrade"
@@ -50,18 +48,18 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="priceList.length > 0" label="请选择赠送会员卡：">
+        <el-form-item v-if="priceList.length > 0" :label="$t('8804b0ee.e04052')">
           <!-- {{ membercards }}
           {{ priceList }} -->
           <el-radio-group v-model="membercards.card_type">
             <el-radio v-for="(item, index) in priceList" :key="index" :label="item.name">
-              {{ item.desc }}({{ item.price }}元)
+              {{ item.desc }}({{ item.price }}{{ $t('8804b0ee.c16655') }})
             </el-radio>
           </el-radio-group>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('8804b0ee.56df61') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -95,6 +93,11 @@ export default {
         card_type: '',
         index_value: 0
       }
+    }
+  },
+  computed: {
+    registerAdTitlePlaceholder() {
+      return !this.VERSION_B2C() ? this.$t('8804b0ee.194ebe') : this.$t('8804b0ee.29ec5d')
     }
   },
   watch: {
@@ -139,7 +142,7 @@ export default {
       this.form.promotions_value.membercard = this.membercards
       saveRegisterPromotions(this.form).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('8804b0ee.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })

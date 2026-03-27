@@ -14,13 +14,13 @@
               class="cus-approve-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            />
+            >
             <img
               v-if="operator_type === 'distributor'"
               class="cus-approve-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            />
+            >
           </el-col>
         </el-col>
         <el-col :span="20">
@@ -53,12 +53,14 @@
               <i class="el-icon-phone cus-icon" />
               <span>{{
                 (operator_type === 'distributor' ? distributor_info.mobile : dealer_info.mobile) +
-                  '（企业电话）' || '-'
+                  $t('d41d8cd9.z0a1b2') || '-'
               }}</span>
             </div>
             <div v-if="operator_type === 'distributor'" class="cus-approve-pfonts cus-margin-50">
               <i class="el-icon-message cus-icon" />
-              <span>{{ entry_info.email ? `${entry_info.email}（企业邮箱）` : '-' }}</span>
+              <span>{{
+                entry_info.email ? `${entry_info.email}${$t('d41d8cd9.c3d4e5')}` : '-'
+              }}</span>
             </div>
           </div>
         </el-col>
@@ -77,14 +79,23 @@
     </el-card>
     <el-card>
       <el-tabs v-model="activeName">
-        <el-tab-pane v-if="operator_type === 'distributor'" label="基本信息" name="first">
-          <BaseModal :span="20" :label-list="baseInfo" :info="distributor_info" title="地理位置" />
+        <el-tab-pane
+          v-if="operator_type === 'distributor'"
+          :label="$t('f3a67ede.9e5ffa')"
+          name="first"
+        >
+          <BaseModal
+            :span="20"
+            :label-list="baseInfo"
+            :info="distributor_info"
+            :title="$t('f3a67ede.fc82aa')"
+          />
           <el-card v-if="infoList.is_rel_dealer">
-            <div slot="header">其他信息</div>
+            <div slot="header">{{ $t('f3a67ede.febe40') }}</div>
             <div class="body">
               <el-row>
                 <el-col :span="4" style="text-align: right; padding-right: 10px">
-                  关联经销商:
+                  {{ $t('f3a67ede.6d1c63') }}:
                 </el-col>
                 <el-col :span="20" class="cus-btn">
                   <span>{{ dealer_info.username }}</span>
@@ -93,9 +104,9 @@
             </div>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane v-if="operator_type === 'dealer'" label="开户信息" name="first">
+        <el-tab-pane v-if="operator_type === 'dealer'" :label="$t('f3a67ede.ac7b4c')" name="first">
           <el-row style="height: 350px" type="flex" justify="center" align="middle">
-            <span style="color: #ccc">--暂无开户信息--</span>
+            <span style="color: #ccc">--{{ $t('f3a67ede.8f8983') }}--</span>
             <!-- <el-col :span='4' style="text-align:right;padding-right:10px">关联店铺：</el-col>
             <el-col :span='20' style="color: #1480e3" class="cus-btn">
               <el-button type='text' @click="handleDialogopen(true)">查看详情</el-button>
@@ -104,24 +115,24 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
-    <drawer :visible-drawer="visibleDrawer" title="入户审批" @close="onHandleDrawer">
+    <drawer :visible-drawer="visibleDrawer" :title="$t('f3a67ede.227727')" @close="onHandleDrawer">
       <div>
         <RegisterInfo
           :list="user_type === 'indv' ? personInfo : enterPersonInfo"
           :info="entry_info"
-          title="证件信息"
+          :title="$t('f3a67ede.ae5576')"
         />
         <RegisterInfo
           v-if="user_type === 'indv'"
           :list="accountList"
           :info="entry_info"
-          title="结算账户信息"
+          :title="$t('f3a67ede.99f89b')"
         />
         <RegisterInfo
           v-if="user_type === 'ent'"
           :list="card_type == '1' ? enterPrivateAccountList : enterAccountList"
           :info="entry_info"
-          title="结算账户信息"
+          :title="$t('f3a67ede.99f89b')"
         />
         <AccountInfo
           v-if="status === 'WAIT_APPROVE'"
@@ -134,26 +145,26 @@
           :list="splitAccountList"
           :info="split_ledger_info"
           :sub-title="subTitle"
-          title="分账信息"
+          :title="$t('3083129c.adb36c')"
         />
         <RegisterInfo
           v-if="status !== 'WAIT_APPROVE' && upDistributorFlag == 'merchant'"
           :list="merchantSplitAccountList"
           :info="split_ledger_info"
           :sub-title="subTitle"
-          title="分账信息"
+          :title="$t('3083129c.adb36c')"
         />
         <RegisterInfo
           v-if="status !== 'WAIT_APPROVE' && upDistributorFlag == 'distributor' && isBool"
           :list="enterSplitAccountList"
           :info="split_ledger_info"
           :sub-title="subTitle"
-          title="分账信息"
+          :title="$t('3083129c.adb36c')"
         />
       </div>
     </drawer>
     <el-dialog
-      title="关联店铺"
+      :title="$t('f3a67ede.5c16c5')"
       :visible.sync="visibleModal"
       width="60%"
       :close-on-click-modal="false"
@@ -214,119 +225,35 @@ export default {
       tagsList: [],
       regions_value: [],
       split_ledger_info: {},
-      approveStatusList: [
-        { name: '全部', value: '' },
-        { name: '待审批', value: '待审批' },
-        { name: '已审批', value: '已审批' },
-        { name: '通过', value: '通过' },
-        { name: '不通过', value: '不通过' }
-      ],
+      approveStatusList: [],
       total_count: 0,
       list: [],
-      baseInfo: [
-        { name: '地理位置', field: 'store_address' },
-        { name: '地图定位', field: 'qqmapimg', type: 'pic' },
-        { name: '店铺经纬度', field: '', filter: this.addressFilter }
-      ],
-      enterPersonInfo: [
-        // 企业证件信息
-        { name: '企业名称', field: 'reg_name' },
-        // { name: '企业电话', field: 'telphone' },
-        { name: '统一社会信用代码', field: 'license_code' },
-        { name: '成立日期', field: 'license_begin_date' },
-        {
-          name: '营业期限是否为长期',
-          field: 'license_validity_type',
-          filter: this.legalCertTypeFilter
-        },
-        { name: '营业期限', field: 'license_end_date' },
-        { name: '住所省市区', field: 'reg_area' },
-        { name: '住所详细地址', field: 'reg_detail' },
-
-        { name: '法人姓名', field: 'legal_name' },
-        { name: '法人身份证号码', field: 'legal_cert_no' },
-        { name: '法人证件开始有效期', field: 'legal_cert_begin_date' },
-        {
-          name: '有效期是否为长期',
-          field: 'legal_cert_validity_type',
-          filter: this.legalCertTypeFilter
-        },
-        { name: '身份证结束有效期', field: 'legal_cert_end_date' },
-        { name: '法人手机号码', field: 'contact_mobile' },
-        { name: '企业类型', field: 'ent_type_value' }
-        // { name: '企业地址', field: 'address' },
-        // { name: '经营范围', field: 'business_scope' },
-        // { name: '邮箱', field: 'email' },
-        // { name: '邮编', field: 'zip_code' }
-      ],
-      enterAccountList: [
-        // 企业对公结算信息
-        { name: '银行卡号', field: 'card_no' },
-        { name: '开户行所在省市', field: 'card_area' },
-        { name: '银行号', field: 'bank_code' },
-        { name: '支行名称', field: 'branch_name' },
-        { name: '银行卡绑定手机号', field: 'mp' }
-      ],
-      enterPrivateAccountList: [
-        // 企业对私法人结算信息
-        { name: '银行卡号', field: 'card_no' },
-        { name: '开户行所在省市', field: 'card_area' },
-        { name: '银行卡绑定手机号', field: 'mp' }
-      ],
-      enterSplitAccountList: [
-        // 企业分账信息
-        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
-        { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
-        { name: '审批状态', field: 'status', filter: this.statusFilter },
-        { name: '审批备注', field: 'comments' }
-      ],
-      splitAccountList: [
-        // 企业分账信息
-        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
-        { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
-        { name: '经销商分账占比', field: 'dealer_proportion', filter: this.dealerFilter },
-        { name: '审批状态', field: 'status', filter: this.statusFilter },
-        { name: '审批备注', field: 'comments' }
-      ],
-      merchantSplitAccountList: [
-        // 企业分账信息
-        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
-        { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
-        { name: '商户分账占比', field: 'merchant_proportion', filter: this.merchartFilter },
-        { name: '审批状态', field: 'status', filter: this.statusFilter },
-        { name: '审批备注', field: 'comments' }
-      ],
-      adminSplitAccountList: [
-        // 企业分账信息
-        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
-        // { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
-        // { name: '商户分账占比', field: 'merchant_proportion', filter: this.merchartFilter },
-        { name: '审批状态', field: 'status', filter: this.statusFilter },
-        { name: '审批备注', field: 'comments' }
-      ],
-      personInfo: [
-        // 个人证件信息
-        { name: '用户姓名', field: 'name' },
-        { name: '用户手机号码', field: 'mobile_no' },
-        { name: '用户身份证号码', field: 'cert_no' },
-        { name: '身份证开始有效期', field: 'cert_begin_date' },
-        { name: '有效期是否为长期', field: 'cert_validity_type', filter: this.certTypeFilter },
-        { name: '身份证结束有效期', field: 'cert_end_date' }
-      ],
-      accountList: [
-        // 个人结算信息
-        { name: '开户人姓名', field: 'card_name' },
-        { name: '银行预留手机号', field: 'mp' },
-        { name: '结算银行卡号', field: 'card_no' },
-        { name: '开户人证件号码', field: 'cert_no' },
-        { name: '开户行所在省市', field: 'card_area' }
-      ]
+      baseInfo: [],
+      enterPersonInfo: [],
+      enterAccountList: [],
+      enterPrivateAccountList: [],
+      enterSplitAccountList: [],
+      splitAccountList: [],
+      merchantSplitAccountList: [],
+      adminSplitAccountList: [],
+      personInfo: [],
+      accountList: []
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    approveStatusList() {
+      return [
+        { name: this.$t('f3a67ede.a8b0c2'), value: '' },
+        { name: this.$t('f3a67ede.b0bf01'), value: this.$t('f3a67ede.b0bf01') },
+        { name: this.$t('3083129c.618acb'), value: this.$t('3083129c.618acb') },
+        { name: this.$t('f3a67ede.23c1f3'), value: this.$t('f3a67ede.23c1f3') },
+        { name: this.$t('f3a67ede.dec062'), value: this.$t('f3a67ede.dec062') }
+      ]
+    }
   },
   mounted() {
+    this.initInfoLists()
     if (this.$route.query.id) {
       const { id } = this.$route.query || {}
       this.id = id
@@ -336,6 +263,105 @@ export default {
     }
   },
   methods: {
+    initInfoLists() {
+      this.baseInfo = [
+        { name: this.$t('f3a67ede.fc82aa'), field: 'store_address' },
+        { name: this.$t('f3a67ede.86188c'), field: 'qqmapimg', type: 'pic' },
+        { name: this.$t('f3a67ede.db4b0d'), field: '', filter: this.addressFilter }
+      ]
+      this.enterPersonInfo = [
+        { name: this.$t('f3a67ede.f47e27'), field: 'reg_name' },
+        { name: this.$t('f3a67ede.25c0bd'), field: 'license_code' },
+        { name: this.$t('f3a67ede.590847'), field: 'license_begin_date' },
+        {
+          name: this.$t('f3a67ede.0202dc'),
+          field: 'license_validity_type',
+          filter: this.legalCertTypeFilter
+        },
+        { name: this.$t('f3a67ede.c857f2'), field: 'license_end_date' },
+        { name: this.$t('f3a67ede.e069d9'), field: 'reg_area' },
+        { name: this.$t('f3a67ede.a80b29'), field: 'reg_detail' },
+        { name: this.$t('f3a67ede.2fe17a'), field: 'legal_name' },
+        { name: this.$t('f3a67ede.1415b3'), field: 'legal_cert_no' },
+        { name: this.$t('f3a67ede.f2501c'), field: 'legal_cert_begin_date' },
+        {
+          name: this.$t('f3a67ede.15ed38'),
+          field: 'legal_cert_validity_type',
+          filter: this.legalCertTypeFilter
+        },
+        { name: this.$t('f3a67ede.4301ec'), field: 'legal_cert_end_date' },
+        { name: this.$t('f3a67ede.187a35'), field: 'contact_mobile' },
+        { name: this.$t('f3a67ede.b5a728'), field: 'ent_type_value' }
+      ]
+      this.enterAccountList = [
+        { name: this.$t('f3a67ede.d98e9d'), field: 'card_no' },
+        { name: this.$t('f3a67ede.3d9865'), field: 'card_area' },
+        { name: this.$t('f3a67ede.fb4d4e'), field: 'bank_code' },
+        { name: this.$t('f3a67ede.80c6d8'), field: 'branch_name' },
+        { name: this.$t('f3a67ede.534a1d'), field: 'mp' }
+      ]
+      this.enterPrivateAccountList = [
+        { name: this.$t('f3a67ede.d98e9d'), field: 'card_no' },
+        { name: this.$t('f3a67ede.3d9865'), field: 'card_area' },
+        { name: this.$t('f3a67ede.534a1d'), field: 'mp' }
+      ]
+      this.enterSplitAccountList = [
+        {
+          name: this.$t('f3a67ede.08605d'),
+          field: 'headquarters_proportion',
+          filter: this.headquartersFilter
+        },
+        { name: this.$t('f3a67ede.d352ae'), field: 'status', filter: this.statusFilter },
+        { name: this.$t('f3a67ede.4985b0'), field: 'comments' }
+      ]
+      this.splitAccountList = [
+        {
+          name: this.$t('f3a67ede.08605d'),
+          field: 'headquarters_proportion',
+          filter: this.headquartersFilter
+        },
+        { name: this.$t('f3a67ede.b61188'), field: 'dealer_proportion', filter: this.dealerFilter },
+        { name: this.$t('f3a67ede.d352ae'), field: 'status', filter: this.statusFilter },
+        { name: this.$t('f3a67ede.4985b0'), field: 'comments' }
+      ]
+      this.merchantSplitAccountList = [
+        {
+          name: this.$t('f3a67ede.08605d'),
+          field: 'headquarters_proportion',
+          filter: this.headquartersFilter
+        },
+        {
+          name: this.$t('f3a67ede.03698c'),
+          field: 'merchant_proportion',
+          filter: this.merchartFilter
+        },
+        { name: this.$t('f3a67ede.d352ae'), field: 'status', filter: this.statusFilter },
+        { name: this.$t('f3a67ede.4985b0'), field: 'comments' }
+      ]
+      this.adminSplitAccountList = [
+        { name: this.$t('f3a67ede.d352ae'), field: 'status', filter: this.statusFilter },
+        { name: this.$t('f3a67ede.4985b0'), field: 'comments' }
+      ]
+      this.personInfo = [
+        { name: this.$t('f3a67ede.d5b5b5'), field: 'name' },
+        { name: this.$t('f3a67ede.dde968'), field: 'mobile_no' },
+        { name: this.$t('f3a67ede.a692a6'), field: 'cert_no' },
+        { name: this.$t('f3a67ede.a71128'), field: 'cert_begin_date' },
+        {
+          name: this.$t('f3a67ede.15ed38'),
+          field: 'cert_validity_type',
+          filter: this.certTypeFilter
+        },
+        { name: this.$t('f3a67ede.4301ec'), field: 'cert_end_date' }
+      ]
+      this.accountList = [
+        { name: this.$t('f3a67ede.e3f6a6'), field: 'card_name' },
+        { name: this.$t('f3a67ede.a0b7da'), field: 'mp' },
+        { name: this.$t('f3a67ede.88174a'), field: 'card_no' },
+        { name: this.$t('f3a67ede.c503f0'), field: 'cert_no' },
+        { name: this.$t('f3a67ede.3d9865'), field: 'card_area' }
+      ]
+    },
     getDetail(id) {
       this.$api.bspay
         .getSubApproveDetail(id)
@@ -383,43 +409,28 @@ export default {
           // }
           let isBool =
             entry_apply_info.operator_type === 'distributor' && !is_rel_dealer && !is_rel_merchant
-          this.subTitle = isBool
-            ? `分账金额计算公式内扣：
-            总部：（交易金额-手续费）*总部分账占比；
-            店铺：订单金额-手续费-总部分账金额。
-            外扣：
-            总部：交易金额*总部分账占比；
-            店铺：订单金额-总部分账金额。`
-            : ` 分账金额计算公式：
-            内扣：
-            总部：（交易金额-手续费）*总部分账占比；
-            经销商:（交易金额-手续费）*经销商分账占比；
-            店铺：订单金额-手续费-总部分账金额-经销商分账金额。
-            外扣：
-            总部：交易金额*总部分账占比；
-            经销商:交易金额*经销商分账占比；
-            店铺：订单金额-总部分账金额-经销商分账金额。`
+          this.subTitle = isBool ? this.$t('d41d8cd9.f6g7h8') : this.$t('d41d8cd9.i9j0k1')
           this.isBool = isBool
           const { auto_sync_goods, is_ziti, is_delivery, company_dada_open } =
             distributor_info || {}
           if (auto_sync_goods) {
-            this.tagsList.push({ name: '自动上架商品', type: 'danger' })
+            this.tagsList.push({ name: this.$t('f3a67ede.d35f24'), type: 'danger' })
           }
           if (is_ziti) {
-            this.tagsList.push({ name: '支持自提', type: '' })
+            this.tagsList.push({ name: this.$t('f3a67ede.49a523'), type: '' })
           }
           if (is_delivery) {
-            this.tagsList.push({ name: '支持快递', type: 'success' })
+            this.tagsList.push({ name: this.$t('f3a67ede.0051b8'), type: 'success' })
           }
           if (company_dada_open) {
-            this.tagsList.push({ name: '同城配', type: 'warning' })
+            this.tagsList.push({ name: this.$t('f3a67ede.583dcd'), type: 'warning' })
           }
         })
         .catch((error) => {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取门店详情出错'
+            message: this.$t('f3a67ede.816eba')
           })
         })
     },
@@ -437,13 +448,13 @@ export default {
       let returnValue = ''
       switch (this.entry_apply_info.status) {
         case 'WAIT_APPROVE':
-          returnValue = '待审批'
+          returnValue = this.$t('f3a67ede.b0bf01')
           break
         case 'APPROVED':
-          returnValue = '审核通过'
+          returnValue = this.$t('f3a67ede.871a30')
           break
         case 'REJECT':
-          returnValue = '审核失败'
+          returnValue = this.$t('f3a67ede.fe3661')
           break
         default:
           returnValue = '-'
@@ -495,10 +506,10 @@ export default {
       let returnValue = ''
       switch (card_type) {
         case '0':
-          returnValue = '对公'
+          returnValue = this.$t('f3a67ede.18ba13')
           break
         case '1':
-          returnValue = '对私法人'
+          returnValue = this.$t('f3a67ede.7aa562')
           break
       }
       return returnValue
@@ -509,10 +520,10 @@ export default {
       let returnValue = ''
       switch (cert_validity_type) {
         case 0:
-          returnValue = '非长期'
+          returnValue = this.$t('f3a67ede.4949ff')
           break
         case 1:
-          returnValue = '长期'
+          returnValue = this.$t('f3a67ede.06c398')
           break
       }
       return returnValue
@@ -522,10 +533,10 @@ export default {
       let returnValue = ''
       switch (legal_cert_validity_type) {
         case 0:
-          returnValue = '非长期'
+          returnValue = this.$t('f3a67ede.4949ff')
           break
         case 1:
-          returnValue = '长期'
+          returnValue = this.$t('f3a67ede.06c398')
           break
       }
       return returnValue

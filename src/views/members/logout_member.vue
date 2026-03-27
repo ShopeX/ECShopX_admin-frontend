@@ -7,7 +7,7 @@
   <SpPage class="closeAccount">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="注销配置" name="first">
+      <el-tab-pane :label="$t('8f1ab541.e5bdf5')" name="first">
         <SpFormPlus
           ref="logoutConfigForm"
           class="mt-10"
@@ -18,7 +18,7 @@
         />
       </el-tab-pane>
 
-      <el-tab-pane label="注销协议" name="second">
+      <el-tab-pane :label="$t('8f1ab541.c67871')" name="second">
         <SpFormPlus
           ref="privacyForm"
           class="mt-10"
@@ -40,7 +40,7 @@ export default {
       activeName: 'first',
       // 注销配置表单数据
       logoutConfigData: {
-        title: '订单完成之前，无法注销会员。如有疑问，请联系客服',
+        title: '',
         new_rights: '0'
       },
       // 注销协议表单数据
@@ -54,21 +54,22 @@ export default {
   computed: {
     // 注销配置表单配置
     logoutConfigItems() {
+      const t = this.$t.bind(this)
       return [
         {
           fieldName: 'title',
           formItemClass: 'w-2/3',
-          label: '注销提示文案',
+          label: t('8f1ab541.57409a'),
           component: 'input',
           componentProps: {
             type: 'textarea',
-            placeholder: '请输入内容',
+            placeholder: t('8f1ab541.a11cc7'),
             maxlength: 50,
             showWordLimit: true,
             autosize: { minRows: 3 },
             style: { width: '500px' }
           },
-          tip: `有未完成的订单用户点击注销会员时提示`
+          tip: t('8f1ab541.480c4d')
         },
         ...(this.VERSION_IN_PURCHASE()
           ? []
@@ -76,29 +77,30 @@ export default {
               {
                 fieldName: 'new_rights',
                 formItemClass: 'w-2/3',
-                label: '享受新人权益',
+                label: t('8f1ab541.d1001e'),
                 component: 'select',
                 componentProps: {
-                  placeholder: '请选择',
+                  placeholder: t('8f1ab541.708c9d'),
                   options: [
-                    { label: '是', value: '1' },
-                    { label: '否', value: '0' }
+                    { label: t('8f1ab541.0a60ac'), value: '1' },
+                    { label: t('8f1ab541.c9744f'), value: '0' }
                   ]
                 },
-                tip: `用户注销会员后重新注册是否享受新人权益`
+                tip: t('8f1ab541.1b0b6a')
               }
             ])
       ]
     },
     // 注销协议表单配置
     privacyFormItems() {
+      const t = this.$t.bind(this)
       return [
         {
           formItemClass: 'w-2/3',
           component: () => (
             <el-alert
               class='leading-normal'
-              title='注销协议内容修改后，提交后对线上客户生效；注销协议在客户注销账号时须同意才可继续注销。'
+              title={t('8f1ab541.1b5a56')}
               type='warning'
               show-icon
               closable={false}
@@ -108,28 +110,28 @@ export default {
         {
           fieldName: 'update_date',
           formItemClass: 'w-1/3',
-          label: '更新日期',
+          label: t('8f1ab541.a5de87'),
           component: 'datepicker',
           componentProps: {
             format: 'yyyy-MM-dd',
             valueFormat: 'yyyy-MM-dd',
-            placeholder: '选择日期'
+            placeholder: t('8f1ab541.2bebdd')
           }
         },
         {
           fieldName: 'take_effect_date',
           formItemClass: 'w-1/3',
-          label: '生效日期',
+          label: t('8f1ab541.0d53fa'),
           component: 'datepicker',
           componentProps: {
             format: 'yyyy-MM-dd',
             valueFormat: 'yyyy-MM-dd',
-            placeholder: '选择日期'
+            placeholder: t('8f1ab541.2bebdd')
           }
         },
         {
           fieldName: 'content',
-          label: '内容',
+          label: t('8f1ab541.2d711b'),
           component: ({ h, value, onInput }) => {
             return h('SpRichText', {
               props: {
@@ -146,7 +148,7 @@ export default {
               required: true,
               validator: (rule, value, callback) => {
                 if (!value || value.length === 0) {
-                  callback(new Error('请填写内容'))
+                  callback(new Error(t('8f1ab541.ad9c40')))
                 } else {
                   callback()
                 }
@@ -171,6 +173,8 @@ export default {
             title: member_logout_config.title,
             new_rights: member_logout_config.new_rights || '0'
           }
+        } else {
+          this.logoutConfigData.title = this.$t('8f1ab541.99ad59')
         }
 
         if (member_logout?.content) {
@@ -194,7 +198,7 @@ export default {
           }
         ]
       })
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('8f1ab541.3b1083'))
     },
     // 保存注销协议
     async handleSubmitPrivacy() {
@@ -208,7 +212,7 @@ export default {
           }
         ]
       })
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('8f1ab541.3b1083'))
     },
     // 提交处理
     async handleSubmit(formName, type, status) {
@@ -227,7 +231,7 @@ export default {
           }
         } else {
           if (!this.privacyData.content || this.privacyData.content.length === 0) {
-            return this.$message.error('请填写内容')
+            return this.$message.error(this.$t('8f1ab541.ad9c40'))
           }
           submitData = {
             type,
@@ -239,7 +243,7 @@ export default {
           data: [submitData]
         })
 
-        this.$message.success('提交成功')
+        this.$message.success(this.$t('8f1ab541.23b62e'))
         console.log('提交结果:', result)
       } catch (error) {
         console.error('表单验证失败:', error)

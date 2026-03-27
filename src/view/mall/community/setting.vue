@@ -14,10 +14,10 @@
 <template>
   <SpPage>
     <el-tabs type="card">
-      <el-tab-pane label="社区团配置">
+      <el-tab-pane :label="$t('580ee024.9f50b5')">
         <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
       </el-tab-pane>
-      <el-tab-pane label="团长注册项配置">
+      <el-tab-pane :label="$t('580ee024.44f092')">
         <SpFinder
           ref="finder"
           no-selection
@@ -29,7 +29,7 @@
         <SpDialog
           ref="registerDialogRef"
           v-model="registerDialog"
-          :title="`${registerForm.id ? '编辑配置' : '添加配置'}`"
+          :title="registerForm.id ? $t('580ee024.5117bc') : $t('580ee024.11e5e6')"
           :form="registerForm"
           :form-list="registerFormList"
           @onSubmit="onResisterSubmit"
@@ -43,6 +43,7 @@
 import { mapGetters } from 'vuex'
 import { createSetting } from '@shopex-ui/finder'
 import invitationCode from './comps/invitationCode'
+import { i18n } from '@/i18n'
 export default {
   components: {
     invitationCode
@@ -59,72 +60,72 @@ export default {
       },
       formList: [
         {
-          label: '成团条件',
+          label: i18n.t('580ee024.f19a0a'),
           key: 'condition_type',
           type: 'radio',
           options: [
-            { label: 'num', name: '按商品数量' },
-            { label: 'money', name: '按成团金额' }
+            { label: 'num', name: i18n.t('580ee024.ddab8f') },
+            { label: 'money', name: i18n.t('580ee024.88a7bd') }
           ],
-          tip: '说明：按活动商品设置的起订量成团，0为不限制',
+          tip: i18n.t('580ee024.ad18f6'),
           onChange: (e) => {
             if (e == 'num') {
-              this.formList[0].tip = '说明：按活动商品设置的起订量成团，0为不限制'
+              this.formList[0].tip = i18n.t('580ee024.ad18f6')
               this.formList[1].isShow = false
             } else {
-              this.formList[0].tip = '说明：整团成团最低金额，0为不限制'
+              this.formList[0].tip = i18n.t('580ee024.26ddc2')
               this.formList[1].isShow = true
             }
           }
         },
         {
-          label: '最低成团金额(元)',
+          label: i18n.t('580ee024.bedf3a'),
           key: 'condition_money',
           type: 'input',
-          placeholder: '请输入成团金额',
+          placeholder: i18n.t('580ee024.dec47c'),
           required: true,
-          message: '不能为空',
+          message: i18n.t('580ee024.281bad'),
           isShow: false
         },
         {
-          label: '团长邀请码',
+          label: i18n.t('580ee024.b144d3'),
           key: 'invitation_code',
           component: () => <invitationCode info={this.wxCode} />
           // component: () => import("./comps/invitationCode.vue")
         },
         {
-          label: '团长申请页',
+          label: i18n.t('580ee024.ddc682'),
           key: 'chief_desc',
           type: 'text'
         },
         {
-          label: '佣金设置',
+          label: i18n.t('580ee024.d7564d'),
           key: 'rebate_ratio',
           type: 'input',
           append: '%',
-          placeholder: '佣金比列',
-          tip: '团长根据成团金额按百分比例获取佣金，设置为0时则不计算佣金'
+          placeholder: i18n.t('580ee024.127fb3'),
+          tip: i18n.t('580ee024.e0b288')
         },
         {
-          label: '团长注册协议',
+          label: i18n.t('580ee024.dd530f'),
           key: 'aggrement',
           type: 'richText',
           required: true,
-          message: '不能为空'
+          message: i18n.t('580ee024.281bad')
         },
         {
-          label: '申请页说明',
+          label: i18n.t('580ee024.11a242'),
           key: 'explanation',
           type: 'richText',
           required: true,
-          message: '不能为空'
+          message: i18n.t('580ee024.281bad')
         }
       ],
       tableData: [],
       setting: createSetting({
         actions: [
           {
-            name: '新增配置',
+            name: i18n.t('580ee024.80e2ca'),
             key: 'detail',
             type: 'button',
             slot: 'header',
@@ -143,7 +144,7 @@ export default {
             }
           },
           {
-            name: '编辑',
+            name: i18n.t('580ee024.95b351'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -158,13 +159,13 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: i18n.t('580ee024.2f4aad'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$confirm('是否删除', '提示')
+                await this.$confirm(this.$t('580ee024.247048'), this.$t('580ee024.02d981'))
                 await this.$api.community.deleteCommunityField(row.id)
                 this.$refs.finder.refresh()
               }
@@ -172,9 +173,9 @@ export default {
           }
         ],
         columns: [
-          { name: '信息', key: 'label' },
+          { name: i18n.t('580ee024.d8c7e0'), key: 'label' },
           {
-            name: '是否启用',
+            name: i18n.t('580ee024.53c3dd'),
             key: 'is_open',
             render: (h, { row }) =>
               h('el-switch', {
@@ -195,7 +196,7 @@ export default {
               })
           },
           {
-            name: '必填',
+            name: i18n.t('580ee024.537b39'),
             key: 'is_required',
             render: (h, { row }) =>
               h('el-switch', {
@@ -216,7 +217,7 @@ export default {
               })
           },
           {
-            name: '可修改',
+            name: i18n.t('580ee024.60d801'),
             key: 'is_edit',
             render: (h, { row }) =>
               h('el-switch', {
@@ -236,8 +237,8 @@ export default {
                 }
               })
           },
-          { name: '信息格式', key: 'field_type_desc' },
-          { name: '提示文案', key: 'alert_required_message' }
+          { name: i18n.t('580ee024.aba785'), key: 'field_type_desc' },
+          { name: i18n.t('580ee024.9df451'), key: 'alert_required_message' }
         ]
       }),
       registerDialog: false,
@@ -249,29 +250,29 @@ export default {
       },
       registerFormList: [
         {
-          label: '配置标题',
+          label: i18n.t('580ee024.9c6a53'),
           key: 'label',
           type: 'input',
-          placeholder: '请输入标题',
+          placeholder: i18n.t('580ee024.96641a'),
           required: true,
-          message: '不能为空'
+          message: i18n.t('580ee024.281bad')
         },
         {
-          label: '信息格式',
+          label: i18n.t('580ee024.aba785'),
           key: 'field_type',
-          placeholder: '请选择信息格式',
+          placeholder: i18n.t('580ee024.8d77f8'),
           type: 'select',
           options: [
-            { title: '文本', value: 1 },
+            { title: i18n.t('580ee024.97d076'), value: 1 },
             // { title: '数字', value: 2 },
-            { title: '日期', value: 3 },
+            { title: i18n.t('580ee024.4ff1e7'), value: 3 },
             // { title: '单选项', value: 4 },
             // { title: '复选框', value: 5 },
-            { title: '手机号', value: 6 },
-            { title: '图片', value: 7 }
+            { title: i18n.t('580ee024.8098e2'), value: 6 },
+            { title: i18n.t('580ee024.20def7'), value: 7 }
           ],
           required: true,
-          message: '不能为空',
+          message: i18n.t('580ee024.281bad'),
           onChange: (e) => {
             if (e == 12) {
               this.cancelOrderFormList[1].isShow = true
@@ -281,12 +282,12 @@ export default {
           }
         },
         {
-          label: '提示文案',
+          label: i18n.t('580ee024.9df451'),
           key: 'alert_required_message',
           type: 'input',
-          placeholder: '请输入提示文案',
+          placeholder: i18n.t('580ee024.eb7d66'),
           required: true,
-          message: '不能为空'
+          message: i18n.t('580ee024.281bad')
         }
       ],
       wxCode: ''
@@ -311,7 +312,7 @@ export default {
         aggrement,
         explanation
       })
-      this.$message.success('修改成功')
+      this.$message.success(this.$t('580ee024.69be67'))
     },
     async getActivitySetting() {
       const { condition_money, condition_type, aggrement, explanation, rebate_ratio } =
@@ -319,14 +320,13 @@ export default {
       this.form = {
         condition_type,
         condition_money,
-        chief_desc:
-          '您可在模板编辑-热区图组件-设置路径，选择团长申请页面路径供用户在店铺首页进入团长申请页面',
+        chief_desc: this.$t('580ee024.7e29e8'),
         rebate_ratio,
         aggrement,
         explanation
       }
       if (condition_type == 'money') {
-        this.formList[0].tip = '说明：整团成团最低金额，0为不限制'
+        this.formList[0].tip = i18n.t('580ee024.26ddc2')
         this.formList[1].isShow = true
       }
     },

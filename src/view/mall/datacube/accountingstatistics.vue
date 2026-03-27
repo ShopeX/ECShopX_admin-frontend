@@ -11,12 +11,12 @@
           <el-col :span="5" class="admin-total-num-box">
             <p class="admin-total-num-top-fonts">¥ {{ totalList.income }}</p>
             <p class="admin-total-num-bot-fonts">
-              店铺总计收入(不含退款)
+              {{ $t('c8d3d7a6.2d4a71') }}
               <el-popover
                 placement="bottom"
                 width="200"
                 trigger="hover"
-                content="分账金额统计(不含退款)"
+                :content="$t('c8d3d7a6.d7e9bf')"
               >
                 <i
                   slot="reference"
@@ -29,12 +29,12 @@
           <el-col :span="5" class="admin-total-num-box">
             <p class="admin-total-num-top-fonts">¥ {{ totalList.refund }}</p>
             <p class="admin-total-num-bot-fonts">
-              店铺总退款金额
+              {{ $t('c8d3d7a6.125cc4') }}
               <el-popover
                 placement="bottom"
                 width="220"
                 trigger="hover"
-                content="店铺总退款金额(已退款成功)"
+                :content="$t('c8d3d7a6.89233f')"
               >
                 <i
                   slot="reference"
@@ -47,12 +47,12 @@
           <el-col :span="5" class="admin-total-num-box">
             <p class="admin-total-num-top-fonts">¥ {{ totalList.unsettled_funds }}</p>
             <p class="admin-total-num-bot-fonts">
-              店铺未结算金额
+              {{ $t('c8d3d7a6.a9caf3') }}
               <el-popover
                 placement="bottom"
                 width="420"
                 trigger="hover"
-                content="订单未过售后期进行分账的金额(不含全额退款成功及退款中)"
+                :content="$t('c8d3d7a6.c91d49')"
               >
                 <i
                   slot="reference"
@@ -65,12 +65,12 @@
           <el-col :span="5" class="admin-total-num-box">
             <p class="admin-total-num-top-fonts">¥ {{ totalList.settlement_funds }}</p>
             <p class="admin-total-num-bot-fonts">
-              店铺已结算金额
+              {{ $t('c8d3d7a6.538778') }}
               <el-popover
                 placement="bottom"
                 width="230"
                 trigger="hover"
-                content="已进行分账且成功金额的总额"
+                :content="$t('c8d3d7a6.c384c8')"
               >
                 <i
                   slot="reference"
@@ -83,12 +83,12 @@
           <el-col :span="4" class="admin-total-num-box">
             <p class="admin-total-num-top-fonts">¥ {{ totalList.withdrawal_balance }}</p>
             <p class="admin-total-num-bot-fonts">
-              当前可提现余额
+              {{ $t('c8d3d7a6.504406') }}
               <el-popover
                 placement="bottom"
                 width="200"
                 trigger="hover"
-                content="汇付店铺账户中当前余额"
+                :content="$t('c8d3d7a6.4d4ef5')"
               >
                 <i
                   slot="reference"
@@ -104,16 +104,16 @@
         <el-form :model="formData" label-width="100px">
           <el-row style="marginbottom: 0px">
             <el-col :span="12">
-              <el-form-item label="日期范围">
+              <el-form-item :label="$t('c8d3d7a6.786622')">
                 <el-date-picker
                   v-model="rangeData"
                   type="daterange"
                   alue-format="yyyy-MM-dd"
                   align="right"
                   unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :range-separator="$t('c8d3d7a6.981cbe')"
+                  :start-placeholder="$t('c8d3d7a6.b44c0f')"
+                  :end-placeholder="$t('c8d3d7a6.1d468b')"
                   style="width: 100%"
                   :picker-options="pickerOptions"
                   value-format="yyyy-MM-dd"
@@ -124,7 +124,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="结算状态">
+              <el-form-item :label="$t('c8d3d7a6.50cdff')">
                 <el-select v-model="formData.profitsharing_status" style="width: 100%" size="small">
                   <el-option
                     v-for="item in profitOptions"
@@ -136,12 +136,16 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="订单编号">
-                <el-input v-model="formData.order_id" size="small" placeholder="请输入订单编号" />
+              <el-form-item :label="$t('c8d3d7a6.3e8657')">
+                <el-input
+                  v-model="formData.order_id"
+                  size="small"
+                  :placeholder="$t('c8d3d7a6.ca1eab')"
+                />
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="支付类型">
+              <el-form-item :label="$t('c8d3d7a6.99aa6c')">
                 <el-select v-model="formData.app_pay_type" size="small" style="width: 100%">
                   <el-option
                     v-for="item in payOptions"
@@ -153,7 +157,7 @@
               </el-form-item>
             </el-col>
             <el-col v-if="loginType !== 'distributor'" :span="12">
-              <el-form-item label="选择店铺">
+              <el-form-item :label="$t('c8d3d7a6.afa2e6')">
                 <shop-select
                   ref="shopSelect"
                   size="small"
@@ -166,7 +170,7 @@
               </el-form-item>
             </el-col>
             <!-- <el-col :span="6">
-              <el-form-item label="订单状态">
+              <el-form-item :label="$t('c8d3d7a6.86f6cf')">
                 <el-select size='small' v-model="formData.order_status" style="width: 100%;">
                   <el-option
                     v-for="item in statusOption"
@@ -184,9 +188,9 @@
               style="margin-left: 10px"
             >
               <div class="flex-right">
-                <el-button size="small" @click="handleReset"> 重置 </el-button>
+                <el-button size="small" @click="handleReset">{{ $t('c8d3d7a6.4b9c32') }}</el-button>
                 <el-button size="small" type="primary" @click="getCompanyDataList">
-                  搜索
+                  {{ $t('c8d3d7a6.e5f71f') }}
                 </el-button>
               </div>
             </el-col>
@@ -194,9 +198,9 @@
           <el-row v-if="loginType !== 'distributor'" :gutter="20">
             <el-col :span="4" :push="20">
               <div class="flex-right">
-                <el-button size="small" @click="handleReset"> 重置 </el-button>
+                <el-button size="small" @click="handleReset">{{ $t('c8d3d7a6.4b9c32') }}</el-button>
                 <el-button size="small" type="primary" @click="getCompanyDataList">
-                  搜索
+                  {{ $t('c8d3d7a6.e5f71f') }}
                 </el-button>
               </div>
             </el-col>
@@ -209,40 +213,40 @@
             <p class="total-num-top-fonts">
               {{ allAccountList.order_count }}
             </p>
-            <p class="total-num-bot-fonts">交易总笔数</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.d081a0') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">¥ {{ allAccountList.order_total_fee }}</p>
-            <p class="total-num-bot-fonts">总计交易金额(含退款)</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.723b8c') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">
               {{ allAccountList.order_refund_count }}
             </p>
-            <p class="total-num-bot-fonts">已退款总笔数</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.441bb3') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">¥ {{ allAccountList.order_refund_total_fee }}</p>
-            <p class="total-num-bot-fonts">退款总金额(退款成功)</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.36930f') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">
               {{ allAccountList.order_refunding_count }}
             </p>
-            <p class="total-num-bot-fonts">在退总笔数</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.102e13') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">¥ {{ allAccountList.order_refunding_total_fee }}</p>
-            <p class="total-num-bot-fonts">在退总金额(退款中)</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.400668') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">¥ {{ allAccountList.order_profit_sharing_charge }}</p>
-            <p class="total-num-bot-fonts">已结算手续费总额</p>
+            <p class="total-num-bot-fonts">{{ $t('c8d3d7a6.1b1138') }}</p>
           </el-col>
           <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">¥ {{ allAccountList.order_un_profit_sharing_charge }}</p>
             <p class="total-num-bot-fonts">
-              未结算手续费总额
+              {{ $t('c8d3d7a6.ae7769') }}
               <el-popover
                 v-if="loginType !== 'distributor'"
                 placement="left"
@@ -250,23 +254,23 @@
                 trigger="hover"
               >
                 <div class="popover-box">
-                  <h3>根据上面筛选条件进行统计</h3>
-                  <h3>交易总笔数</h3>
-                  <p>当前筛选条件下交易总笔数</p>
-                  <h3>总计交易金额</h3>
-                  <p>当前筛选条件下交易金额(包含所有退款状态)</p>
-                  <h3>已退总笔数</h3>
-                  <p>当前筛选条件下退款成功笔数(多笔部分退款按退款成功次数记录)</p>
-                  <h3>退款总金额(退款成功)</h3>
-                  <p>仅记录当前筛选条件下退款成功总金额</p>
-                  <h3>在退总笔数</h3>
-                  <p>当前筛选条件下退款中总笔数</p>
-                  <h3>在退总金额(退款中)</h3>
-                  <p>当前筛选条件下退款中总金额</p>
-                  <h3>未结算手续费总额</h3>
-                  <p>当前筛选条件下未结算状态中手续费总额</p>
-                  <h3>已结算手续费总额</h3>
-                  <p>当前筛选条件下已结算状态中手续费总额</p>
+                  <h3>{{ $t('c8d3d7a6.b2bfc6') }}</h3>
+                  <h3>{{ $t('c8d3d7a6.d081a0') }}</h3>
+                  <p>{{ $t('c8d3d7a6.883e2d') }}</p>
+                  <h3>{{ $t('c8d3d7a6.200189') }}</h3>
+                  <p>{{ $t('c8d3d7a6.2afe56') }}</p>
+                  <h3>{{ $t('c8d3d7a6.1502ed') }}</h3>
+                  <p>{{ $t('c8d3d7a6.02809d') }}</p>
+                  <h3>{{ $t('c8d3d7a6.36930f') }}</h3>
+                  <p>{{ $t('c8d3d7a6.b53921') }}</p>
+                  <h3>{{ $t('c8d3d7a6.102e13') }}</h3>
+                  <p>{{ $t('c8d3d7a6.cc2a4b') }}</p>
+                  <h3>{{ $t('c8d3d7a6.400668') }}</h3>
+                  <p>{{ $t('c8d3d7a6.85435c') }}</p>
+                  <h3>{{ $t('c8d3d7a6.ae7769') }}</h3>
+                  <p>{{ $t('c8d3d7a6.768cf4') }}</p>
+                  <h3>{{ $t('c8d3d7a6.1b1138') }}</h3>
+                  <p>{{ $t('c8d3d7a6.3d47f7') }}</p>
                 </div>
                 <i
                   slot="reference"
@@ -280,67 +284,71 @@
       </el-card>
       <el-card>
         <el-row type="flex" justify="end">
-          <el-button size="small" type="primary" @click="onExportExcel()"> 导出 </el-button>
+          <el-button size="small" type="primary" @click="onExportExcel()">
+{{
+            $t('c8d3d7a6.55405e')
+          }}
+</el-button>
         </el-row>
         <el-table v-loading="loading" :data="tableDataList" stripe border style="width: 100%">
-          <el-table-column prop="create_time" label="日期" width="180" />
-          <el-table-column prop="order_id" label="订单号" width="180" />
+          <el-table-column prop="create_time" :label="$t('c8d3d7a6.4ff1e7')" width="180" />
+          <el-table-column prop="order_id" :label="$t('c8d3d7a6.1e8dc2')" width="180" />
           <el-table-column
             v-if="loginType === 'distributor'"
             prop="app_pay_type_desc"
-            label="支付类型"
+            :label="$t('c8d3d7a6.99aa6c')"
             width="150"
           />
-          <el-table-column prop="profitsharing_status" label="结算状态">
+          <el-table-column prop="profitsharing_status" :label="$t('c8d3d7a6.50cdff')">
             <template slot-scope="scope">
               {{
                 scope.row.profitsharing_status === '1' || scope.row.profitsharing_status === 1
-                  ? '未结算'
-                  : '已结算'
+                  ? $t('c8d3d7a6.facb53')
+                  : $t('c8d3d7a6.139304')
               }}
             </template>
           </el-table-column>
-          <el-table-column label="交易金额(含退款)" width="170">
+          <el-table-column :label="$t('c8d3d7a6.0b3745')" width="170">
             <template slot-scope="scope">
               <p style="color: #67c23a">￥{{ (scope.row.total_fee / 100).toFixed(2) }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="平台手续费(含退款)" width="170">
+          <el-table-column :label="$t('c8d3d7a6.15858a')" width="170">
             <template slot-scope="scope"> ￥{{ (scope.row.charge / 100).toFixed(2) }} </template>
           </el-table-column>
           <el-table-column
             v-if="loginType !== 'distributor'"
             prop="distributor_name"
-            label="店铺名称"
+            :label="$t('c8d3d7a6.0d4934')"
             width="180"
           />
-          <el-table-column label="退款金额" width="160">
+          <el-table-column :label="$t('c8d3d7a6.a0cd4c')" width="160">
             <template slot-scope="scope">
               <p style="color: #d9001b">￥{{ (scope.row.refund_fee / 100).toFixed(2) }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="order_status" label="订单状态">
+          <el-table-column prop="order_status" :label="$t('c8d3d7a6.86f6cf')">
             <template slot-scope="scope">
               {{
-                (scope.row.order_status === 'refunding' && '退款中') ||
-                (scope.row.order_status === 'pay' && '支付成功  ') ||
-                (scope.row.order_status === 'refundsuccess' && '退款成功') ||
-                (scope.row.order_status === 'refundfail' && '退款失败') ||
-                (scope.row.order_status === 'NOTPAY' && '未支付') ||
-                (scope.row.order_status === 'PART_PAYMENT' && '部分付款') ||
-                (scope.row.order_status === 'WAIT_GROUPS_SUCCESS' && '等待拼团成功') ||
-                (scope.row.order_status === 'PAYED' && '已支付') ||
-                (scope.row.order_status === 'CANCEL' && '已取消') ||
-                (scope.row.order_status === 'WAIT_BUYER_CONFIRM' && '待用户收货')
+                (scope.row.order_status === 'refunding' && $t('c8d3d7a6.07e608')) ||
+                (scope.row.order_status === 'pay' && $t('c8d3d7a6.26fcbb')) ||
+                (scope.row.order_status === 'refundsuccess' && $t('c8d3d7a6.d58cbd')) ||
+                (scope.row.order_status === 'refundfail' && $t('c8d3d7a6.7c2544')) ||
+                (scope.row.order_status === 'NOTPAY' && $t('c8d3d7a6.608afd')) ||
+                (scope.row.order_status === 'PART_PAYMENT' && $t('c8d3d7a6.38b508')) ||
+                (scope.row.order_status === 'WAIT_GROUPS_SUCCESS' && $t('c8d3d7a6.c2335d')) ||
+                (scope.row.order_status === 'PAYED' && $t('c8d3d7a6.8d02a5')) ||
+                (scope.row.order_status === 'CANCEL' && $t('c8d3d7a6.2111cc')) ||
+                (scope.row.order_status === 'WAIT_BUYER_CONFIRM' && $t('c8d3d7a6.d76c15'))
               }}
             </template>
           </el-table-column>
-          <el-table-column fixed="left" label="操作" width="100">
+          <el-table-column fixed="left" :label="$t('c8d3d7a6.2b6bc0')" width="100">
             <template slot-scope="scope">
               <router-link
                 :to="{ path: matchRoutePath('detail'), query: { orderId: scope.row.order_id } }"
               >
-                详情
+                {{ $t('c8d3d7a6.f26225') }}
               </router-link>
             </template>
           </el-table-column>
@@ -367,6 +375,8 @@ import { GetAccountStatisList, onOrderExportData } from '@/api/datacube'
 import { getStoreAccount } from '@/api/fenzhang'
 import shopSelect from '@/components/shopSelect2'
 import moment from 'moment'
+import { i18n } from '@/i18n'
+
 export default {
   components: {
     shopSelect
@@ -396,34 +406,31 @@ export default {
         order_status: ''
       },
       profitOptions: [
-        // 结算状态
-        { label: '全部', value: 0 },
-        { label: '已结算', value: 2 },
-        { label: '未结算', value: 1 }
+        { label: i18n.t('c8d3d7a6.a8b0c2'), value: 0 },
+        { label: i18n.t('c8d3d7a6.139304'), value: 2 },
+        { label: i18n.t('c8d3d7a6.facb53'), value: 1 }
       ],
       payOptions: [
-        // 支付类型
-        { label: '全部', value: '' },
-        { label: '微信正扫', value: '01' },
-        { label: '支付宝正扫', value: '02' },
-        { label: '银联正扫', value: '03' },
-        { label: '微信公众号', value: '05' },
-        { label: '支付宝小程序/生活号', value: '06' },
-        { label: '微信小程序', value: '07' },
-        { label: '微信正扫(直连)', value: '08' },
-        { label: '微信app支付(直连)', value: '09' },
-        { label: '银联app支付', value: '10' },
-        { label: 'apple支付', value: '11' },
-        { label: '微信H5支付(直连)', value: '12' },
-        { label: '支付宝app支付(直连)', value: '13' }
+        { label: i18n.t('c8d3d7a6.a8b0c2'), value: '' },
+        { label: i18n.t('c8d3d7a6.886e9a'), value: '01' },
+        { label: i18n.t('c8d3d7a6.8f5c72'), value: '02' },
+        { label: i18n.t('c8d3d7a6.00a20f'), value: '03' },
+        { label: i18n.t('c8d3d7a6.44a38b'), value: '05' },
+        { label: i18n.t('c8d3d7a6.248467'), value: '06' },
+        { label: i18n.t('c8d3d7a6.439845'), value: '07' },
+        { label: i18n.t('c8d3d7a6.7a0d24'), value: '08' },
+        { label: i18n.t('c8d3d7a6.b991ed'), value: '09' },
+        { label: i18n.t('c8d3d7a6.1ee1f8'), value: '10' },
+        { label: i18n.t('c8d3d7a6.088101'), value: '11' },
+        { label: i18n.t('c8d3d7a6.8b025e'), value: '12' },
+        { label: i18n.t('c8d3d7a6.108884'), value: '13' }
       ],
       statusOption: [
-        // 订单状态
-        { label: '全部', value: '' },
-        { label: '退款中', value: 'refunding' },
-        { label: '支付成功', value: 'pay' },
-        { label: '退款成功', value: 'refundsuccess' },
-        { label: '退款失败', value: 'refundfail' }
+        { label: i18n.t('c8d3d7a6.a8b0c2'), value: '' },
+        { label: i18n.t('c8d3d7a6.07e608'), value: 'refunding' },
+        { label: i18n.t('c8d3d7a6.eb5dc9'), value: 'pay' },
+        { label: i18n.t('c8d3d7a6.d58cbd'), value: 'refundsuccess' },
+        { label: i18n.t('c8d3d7a6.7c2544'), value: 'refundfail' }
       ],
       tableDataList: [],
       allAccountList: {},
@@ -447,7 +454,7 @@ export default {
         },
         shortcuts: [
           {
-            text: '最近一个月',
+            text: i18n.t('c8d3d7a6.335dfc'),
             onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
@@ -456,7 +463,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('c8d3d7a6.d96eb4'),
             onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
@@ -495,7 +502,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取统计信息出错'
+            message: this.$t('c8d3d7a6.5b0398')
           })
         })
     },
@@ -540,13 +547,13 @@ export default {
         if (status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('c8d3d7a6.3e1ddd')
           })
           return
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('c8d3d7a6.89ae53')
           })
           return
         }

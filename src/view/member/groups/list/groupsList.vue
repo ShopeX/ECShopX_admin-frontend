@@ -6,14 +6,14 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="groupList" :height="wheight - 240">
-      <el-table-column label="操作" width="250">
+      <el-table-column :label="$t('50c0b86d.2b6bc0')" width="250">
         <template slot-scope="scope">
           <el-button
             size="mini"
             icon="edit"
             @click="showGroupsActivityDataAction(scope.$index, scope.row)"
           >
-            活动数据
+            {{ $t('50c0b86d.ee30fd') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 1"
@@ -21,21 +21,21 @@
             icon="edit"
             @click="editGroupsAction(scope.$index, scope.row)"
           >
-            编辑
+            {{ $t('50c0b86d.95b351') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 2"
             size="mini"
             @click="showGroupsAction(scope.$index, scope.row)"
           >
-            查看
+            {{ $t('50c0b86d.607e7a') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 2"
             size="mini"
             @click="finishGroupsAction(scope.$index, scope.row)"
           >
-            终止
+            {{ $t('50c0b86d.ff6c6a') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 1 || scope.row.activity_status == 3"
@@ -43,36 +43,36 @@
             type="danger"
             @click="deleteGroupsAction(scope.$index, scope.row)"
           >
-            删 除
+            {{ $t('50c0b86d.3f6975') }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="act_name" label="拼团名称" />
-      <el-table-column label="商品类型" width="150">
+      <el-table-column prop="act_name" :label="$t('50c0b86d.08e705')" />
+      <el-table-column :label="$t('50c0b86d.2af133')" width="150">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.group_goods_type == 'services'" type="success">
-            服务类商品
+            {{ $t('50c0b86d.fcd4d7') }}
           </el-tag>
-          <el-tag v-else> 实体类商品 </el-tag>
+          <el-tag v-else> {{ $t('50c0b86d.ddf672') }} </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="goods_name" label="拼团商品" />
-      <el-table-column label="拼团有效期">
+      <el-table-column prop="goods_name" :label="$t('50c0b86d.f95101')" />
+      <el-table-column :label="$t('50c0b86d.eae73d')">
         <template slot-scope="scope">
           {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
           {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column prop="act_price" label="拼团价格" width="100">
+      <el-table-column prop="act_price" :label="$t('50c0b86d.8c918e')" width="100">
         <template slot-scope="scope">
           <span>{{ cursymbol + scope.row.act_price / 100 }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="disabled" label="状态" width="100">
+      <el-table-column prop="disabled" :label="$t('50c0b86d.3fea7c')" width="100">
         <template slot-scope="scope">
-          <span v-if="scope.row.activity_status == 1">未开始</span>
-          <span v-else-if="scope.row.activity_status == 2">进行中</span>
-          <span v-else>已结束</span>
+          <span v-if="scope.row.activity_status == 1">{{ $t('50c0b86d.dd4e55') }}</span>
+          <span v-else-if="scope.row.activity_status == 2">{{ $t('50c0b86d.fb852f') }}</span>
+          <span v-else>{{ $t('50c0b86d.047fab') }}</span>
         </template>
       </el-table-column>
     </el-table>

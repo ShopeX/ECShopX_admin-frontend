@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div>消费送礼</div>
+  <div>{{ $t('bd3870d7.a9d275') }}</div>
 </template>
 
 <script>

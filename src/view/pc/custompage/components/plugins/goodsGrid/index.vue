@@ -16,7 +16,7 @@
           <div style="">
             <div class="good-img">
               <!-- <a @click="openProduct(item.item_id)"> -->
-              <img :src="item.imgUrl" />
+              <img :src="item.imgUrl">
               <!-- </a> -->
             </div>
             <h6 class="good-title" v-html="item.title">
@@ -28,9 +28,13 @@
             <div class="good-price pr">
               <div :class="[this.usage === 'store' ? 'ds' : 'ds-n', 'pa']">
                 <!-- <a @click="openProduct(item.item_id)"> -->
-                <y-button text="查看详情" style="margin: 0 5px" />
+                <y-button :text="$t('0e8393a4.5b48db')" style="margin: 0 5px" />
                 <!-- </a> -->
-                <y-button text="加入购物车" style="margin: 0 5px" class-style="main-btn" />
+                <y-button
+                  :text="$t('0e8393a4.62d369')"
+                  style="margin: 0 5px"
+                  class-style="main-btn"
+                />
               </div>
               <p>¥ {{ (Number(item.price) / 100).toFixed(2) }}</p>
             </div>

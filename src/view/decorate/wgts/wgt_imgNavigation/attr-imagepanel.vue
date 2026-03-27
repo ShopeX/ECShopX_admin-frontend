@@ -8,7 +8,7 @@
     <CompTodoList v-model="value" :max="5" @onAddItem="handleClickAdd">
       <template slot="body" slot-scope="scope">
         <div class="nav-item--wrap">
-          <el-input v-model="scope.data.content" placeholder="导航名称" />
+          <el-input v-model="scope.data.content" :placeholder="$t('73d80883.8585af')" />
           <div class="nav-item--picker">
             <SpImagePicker v-model="scope.data.imgUrl" size="small" />
             <CompPickerLink
@@ -21,17 +21,17 @@
             />
           </div>
           <div v-if="isBusinessShow" class="cell-value-tip">
-            商家：
+            {{ $t('73d80883.52458a') }}
             <CompButton
-              placeholder="选择店铺签"
-              format="{0}个店铺签"
+              :placeholder="$t('73d80883.f5ddb8')"
+              :format="$t('73d80883.4a3a7c')"
               :value="scope.data.seletedTags.length"
               :view-btn="false"
               @remove="onRemoveItem(scope.index)"
               @click="onAddLabel(scope.index)"
             />
           </div>
-          <div class="cell-value-tip">建议尺寸:（128px * 128px）</div>
+          <div class="cell-value-tip">{{ $t('73d80883.c7e1f0') }}</div>
         </div>
       </template>
     </CompTodoList>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import CompPickerLink from '../../comps/comp-pickerLink'
 import CompTodoList from '../../comps/comp-todoList'
@@ -53,7 +54,7 @@ export default {
   methods: {
     handleClickAdd() {
       this.value.push({
-        content: '导航名称',
+        content: i18n.t('73d80883.8585af'),
         seletedTags: [],
         imgUrl: ''
       })

@@ -4,17 +4,21 @@
 -->
 <template>
   <div class="flex items-center flex-wrap leading-[22px]">
-    <div v-if="!readonly" class="mr-2.5 mb-2.5">
+    <div v-if="!readonly && !selectOnly" class="mr-2.5 mb-2.5">
       <el-input
         v-if="showInput"
         v-model="value"
-        placeholder="请输入内容"
+        :placeholder="$t('93ba5178.a11cc7')"
         size="mini"
         maxlength="10"
         show-word-limit
         @change="changeInput"
       />
-      <el-button v-else size="mini" type="info" plain @click="addLabel"> + 添加 </el-button>
+      <el-button v-else size="mini" type="info" plain @click="addLabel">
+{{
+        $t('93ba5178.ed7823')
+      }}
+</el-button>
     </div>
     <div
       v-for="(item, index) in list"
@@ -54,6 +58,11 @@ export default {
       default: 'medium'
     },
     noBackground: {
+      type: Boolean,
+      default: false
+    },
+    /** 仅选择：不显示「+ 添加」，只能从已有标签中勾选 */
+    selectOnly: {
       type: Boolean,
       default: false
     }

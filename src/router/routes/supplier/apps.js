@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'supplierapplications',
       icon: 'app-store',
       keepAlive: true,
-      title: '应用'
+      title: 'df3e4f24.5b0520'
     },
     name: 'supplierApplications',
     path: '/supplier/applications',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'user',
           icon: 'icon-user',
-          title: '进件管理',
+          title: 'df3e4f24.d38018',
           permissions: ['supplierapplications.supplierapplicationsbspay.user']
         }
       },
@@ -34,7 +34,7 @@ const routes = [
         meta: {
           aliasName: 'trades',
           icon: 'icon-trades',
-          title: '分账明细',
+          title: 'df3e4f24.85b2f8',
           permissions: ['supplierapplications.supplierapplicationsbspay.trades']
         },
         children: [
@@ -42,7 +42,7 @@ const routes = [
             path: 'detail/:order_id',
             component: () => import('@/view/mall/bspay_sub_account/detail'),
             meta: {
-              title: '分账明细详情',
+              title: 'df3e4f24.ee8348',
               hidden: true
             }
           }

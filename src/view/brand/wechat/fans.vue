@@ -9,39 +9,40 @@
       <div class="section-white content-padded">
         <el-row type="flex" justify="space-between">
           <el-col :span="8">
-            <el-input v-model="nickname" placeholder="用户昵称" class="search-input" /><el-button
-              type="primary"
-              icon="el-icon-search"
-              class="search-btn"
-              @click="search"
-            />
+            <el-input
+              v-model="nickname"
+              :placeholder="$t('8d0b08f5.9a56bb')"
+              class="search-input"
+            /><el-button type="primary" icon="el-icon-search" class="search-btn" @click="search" />
           </el-col>
           <el-col :span="14" class="content-right">
             <el-button type="primary" :loading="syncFansLoading" @click="syncFans">
-              同步微信粉丝
+              {{ $t('8d0b08f5.18110b') }}
             </el-button>
             <el-button type="primary" :loading="syncTagLoading" @click="syncTags">
-              同步微信标签
+              {{ $t('8d0b08f5.24ab08') }}
             </el-button>
             <el-popover v-model="createPop" placement="bottom" width="300" trigger="click">
               <div class="tag-pop">
-                <div class="pop-title">标签名称</div>
+                <div class="pop-title">{{ $t('8d0b08f5.341fe8') }}</div>
                 <div class="pop-input">
                   <el-input ref="tagName" :maxlength="6" />
                 </div>
                 <el-row :gutter="10">
                   <el-col :span="12">
                     <el-button type="primary" style="width: 100%" @click="createTag">
-                      确定
+                      {{ $t('8d0b08f5.38cf16') }}
                     </el-button>
                   </el-col>
                   <el-col :span="12">
-                    <el-button style="width: 100%" @click="createPop = false"> 取消 </el-button>
+                    <el-button style="width: 100%" @click="createPop = false">
+                      {{ $t('8d0b08f5.625fb2') }}
+                    </el-button>
                   </el-col>
                 </el-row>
               </div>
               <el-button slot="reference" type="primary">
-                <i class="el-icon-plus" /> 新建标签
+                <i class="el-icon-plus" /> {{ $t('8d0b08f5.ef1797') }}
               </el-button>
             </el-popover>
           </el-col>
@@ -49,11 +50,11 @@
         <div class="fans-list-header">
           <el-row>
             <el-col :span="12">
-              <span>{{ tagname ? tagname : '全部用户' }}</span>
+              <span>{{ tagname ? tagname : $t('8d0b08f5.19cc56') }}</span>
               <template v-if="tagname">
                 <el-popover v-model="renamePop" placement="bottom" width="300" trigger="click">
                   <div class="tag-pop">
-                    <div class="pop-title">标签名称</div>
+                    <div class="pop-title">{{ $t('8d0b08f5.341fe8') }}</div>
                     <div class="pop-input">
                       <el-input v-model="renameTag" :maxlength="6" />
                     </div>
@@ -65,20 +66,22 @@
                           :loading="renameLoading"
                           @click="updateTagName"
                         >
-                          确定
+                          {{ $t('8d0b08f5.38cf16') }}
                         </el-button>
                       </el-col>
                       <el-col :span="12">
-                        <el-button style="width: 100%" @click="renamePop = false"> 取消 </el-button>
+                        <el-button style="width: 100%" @click="renamePop = false">
+                          {{ $t('8d0b08f5.625fb2') }}
+                        </el-button>
                       </el-col>
                     </el-row>
                   </div>
-                  <a slot="reference" href="#">重命名</a>
+                  <a slot="reference" href="#">{{ $t('8d0b08f5.c8ce4b') }}</a>
                 </el-popover>
                 <el-popover v-model="removePop" placement="bottom" width="300" trigger="click">
                   <div class="tag-pop">
                     <div class="pop-title">
-                      删除标签后，该标签下的所有用户将失去该标签属性。是否确定删除？
+                      {{ $t('8d0b08f5.0d0f63') }}
                     </div>
                     <el-row :gutter="10">
                       <el-col :span="12">
@@ -88,15 +91,17 @@
                           :loading="removeLoading"
                           @click="removeTag"
                         >
-                          确定
+                          {{ $t('8d0b08f5.38cf16') }}
                         </el-button>
                       </el-col>
                       <el-col :span="12">
-                        <el-button style="width: 100%" @click="removePop = false"> 取消 </el-button>
+                        <el-button style="width: 100%" @click="removePop = false">
+                          {{ $t('8d0b08f5.625fb2') }}
+                        </el-button>
                       </el-col>
                     </el-row>
                   </div>
-                  <a slot="reference" href="#">删除</a>
+                  <a slot="reference" href="#">{{ $t('8d0b08f5.2f4aad') }}</a>
                 </el-popover>
               </template>
             </el-col>
@@ -119,16 +124,18 @@
                   <el-row :gutter="10">
                     <el-col :span="12">
                       <el-button type="primary" style="width: 100%" @click="editTag(-1)">
-                        确定
+                        {{ $t('8d0b08f5.38cf16') }}
                       </el-button>
                     </el-col>
                     <el-col :span="12">
-                      <el-button style="width: 100%" @click="tagsPop = false"> 取消 </el-button>
+                      <el-button style="width: 100%" @click="tagsPop = false">
+                        {{ $t('8d0b08f5.625fb2') }}
+                      </el-button>
                     </el-col>
                   </el-row>
                 </div>
                 <el-button slot="reference" :disabled="fansOpenids.length > 0 ? false : true">
-                  打标签
+                  {{ $t('8d0b08f5.fedbca') }}
                 </el-button>
               </el-popover>
             </el-col>
@@ -141,9 +148,9 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="46" />
-          <el-table-column prop="headimgurl" label="用户信息" width="80">
+          <el-table-column prop="headimgurl" :label="$t('8d0b08f5.6e3541')" width="80">
             <template slot-scope="scope">
-              <img class="fan-avatar" :src="scope.row.headimgurl" alt="" />
+              <img class="fan-avatar" :src="scope.row.headimgurl" alt="">
             </template>
           </el-table-column>
           <el-table-column label="">
@@ -152,7 +159,7 @@
                 scope.row.remark
                   ? scope.row.remark + ' (' + scope.row.nickname + ')'
                   : scope.row.nickname
-              }}<br />
+              }}<br>
               <el-popover
                 ref="tag"
                 v-model="scope.row.tagpop"
@@ -176,12 +183,12 @@
                   <el-row :gutter="10">
                     <el-col :span="12">
                       <el-button type="primary" style="width: 100%" @click="editTag(scope.$index)">
-                        确定
+                        {{ $t('8d0b08f5.38cf16') }}
                       </el-button>
                     </el-col>
                     <el-col :span="12">
                       <el-button style="width: 100%" @click="scope.row.tagpop = false">
-                        取消
+                        {{ $t('8d0b08f5.625fb2') }}
                       </el-button>
                     </el-col>
                   </el-row>
@@ -191,11 +198,11 @@
               <template v-if="scope.row.tags.length > 0">
                 <span v-for="item in scope.row.tags" class="tag-item">{{ item.tag_name }}</span>
               </template>
-              <template v-else> 无标签 </template>
+              <template v-else> {{ $t('8d0b08f5.3f9afc') }} </template>
               <i v-popover:tag class="el-icon-caret-bottom tag-pop-handler" />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="120">
+          <el-table-column :label="$t('8d0b08f5.2b6bc0')" width="120">
             <template slot-scope="scope">
               <el-popover
                 ref="remark"
@@ -205,7 +212,7 @@
                 trigger="click"
               >
                 <div class="tag-pop">
-                  <div class="pop-title">备注名称</div>
+                  <div class="pop-title">{{ $t('8d0b08f5.a0b316') }}</div>
                   <div class="pop-input">
                     <el-input v-model="tempRemark" />
                   </div>
@@ -216,19 +223,19 @@
                         style="width: 100%"
                         @click="editRemark(scope.$index)"
                       >
-                        确定
+                        {{ $t('8d0b08f5.38cf16') }}
                       </el-button>
                     </el-col>
                     <el-col :span="12">
                       <el-button style="width: 100%" @click="scope.row.remarkpop = false">
-                        取消
+                        {{ $t('8d0b08f5.625fb2') }}
                       </el-button>
                     </el-col>
                   </el-row>
                 </div>
               </el-popover>
               <el-button v-popover:remark @click="bindRemark(scope.row.remark)">
-                修改备注
+                {{ $t('8d0b08f5.b1bfe2') }}
               </el-button>
             </template>
           </el-table-column>
@@ -247,7 +254,7 @@
     <el-col :span="6">
       <div class="tags section-white">
         <div class="tags-header" :class="{ current: tagname === '' }" @click="tagFilter">
-          全部用户 <span class="tags-num">({{ total_count }})</span>
+          {{ $t('8d0b08f5.19cc56') }} <span class="tags-num">({{ total_count }})</span>
         </div>
         <div class="tags-body">
           <ul class="tags-list">

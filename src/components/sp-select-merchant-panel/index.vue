@@ -47,8 +47,8 @@
 <template>
   <div class="sp-select-shop-panel">
     <div class="filter-tools">
-      <el-input v-model="keywords" placeholder="请输入商户名称搜索" @change="fetch" />
-      <el-button type="text" @click="reset"> 重置 </el-button>
+      <el-input v-model="keywords" :placeholder="$t('ab61763f.8d6381')" @change="fetch" />
+      <el-button type="text" @click="reset"> {{ $t('ab61763f.4b9c32') }} </el-button>
     </div>
     <div>
       <el-table
@@ -68,7 +68,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column prop="merchant_name" label="商户名称" width="500" />
+        <el-table-column prop="merchant_name" :label="$t('ab61763f.e6f169')" width="500" />
       </el-table>
     </div>
     <div>

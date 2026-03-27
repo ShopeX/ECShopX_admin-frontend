@@ -6,12 +6,12 @@
 <template>
   <div>
     <el-dialog
-      title="官方号设置"
+      :title="$t('2fc73439.c194c5')"
       :before-close="handleCancelLabelsDialog"
       :visible.sync="dialogIsShow"
       width="30%"
     >
-      <div class="tips">所有官方笔记都将改下设置的账户名称及头像进行展示。</div>
+      <div class="tips">{{ $t('2fc73439.680f8e') }}</div>
       <el-form
         ref="dataForm"
         v-loading="formLoad"
@@ -22,7 +22,7 @@
       >
         <el-row>
           <el-col>
-            <el-form-item label="账户名称" prop="nickname" class="last-ipt">
+            <el-form-item :label="$t('2fc73439.fec615')" prop="nickname" class="last-ipt">
               <el-input
                 v-model="ruleForm.nickname"
                 maxlength="20"
@@ -32,7 +32,7 @@
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="账户头像" prop="avatar" class="last-ipt">
+            <el-form-item :label="$t('2fc73439.51357e')" prop="avatar" class="last-ipt">
               <div :class="['img-wrap', ruleForm.avatar ? 'mask' : null]">
                 <el-image
                   v-if="ruleForm.avatar"
@@ -52,8 +52,8 @@
       </el-form>
 
       <div slot="footer">
-        <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
-        <el-button @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button type="primary" @click="confirmHandle">{{ $t('2fc73439.e83a25') }}</el-button>
+        <el-button @click="handleCancelLabelsDialog">{{ $t('2fc73439.625fb2') }}</el-button>
       </div>
     </el-dialog>
     <imgPicker
@@ -82,13 +82,17 @@ export default {
         nickname: null,
         avatar: null
       },
-      rules: {
-        nickname: [{ required: true, message: '请填写账户名称', trigger: 'blur' }],
-        avatar: [{ required: true, message: '请选择账户头像', trigger: 'blur' }]
-      },
       picsDialog: false,
       isGetPics: false,
       multiple: false
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        nickname: [{ required: true, message: this.$t('2fc73439.5867c8'), trigger: 'blur' }],
+        avatar: [{ required: true, message: this.$t('2fc73439.736179'), trigger: 'blur' }]
+      }
     }
   },
   mounted() {

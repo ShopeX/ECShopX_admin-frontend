@@ -5,10 +5,10 @@
 
 <template lang="html">
   <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-    <el-tab-pane :label="title + '-卡券领取记录'" name="first">
+    <el-tab-pane :label="title + $t('58e31c14.6daed7')" name="first">
       <receive :get-status="receive" />
     </el-tab-pane>
-    <el-tab-pane :label="title + '-卡券使用记录'" name="second">
+    <el-tab-pane :label="title + $t('58e31c14.7a2076')" name="second">
       <used :get-status="used" />
     </el-tab-pane>
   </el-tabs>

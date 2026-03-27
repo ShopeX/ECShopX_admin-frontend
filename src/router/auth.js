@@ -16,7 +16,7 @@ let auth = {
     {
       path: pathPrefix ? `/${pathPrefix}/auth/:auth_type` : '/auth/:auth_type',
       component: authloading,
-      name: '绑定'
+      name: 'f98d9cde.f4f12c'
     }
   ]
 }

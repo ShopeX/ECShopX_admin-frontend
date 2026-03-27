@@ -6,7 +6,7 @@
 <template>
   <SpPage class="mb-2.5">
     <div class="mb-5 p-4 bg-gray-100 rounded">
-      <span class="font-medium text-gray-600">当前店铺名称：</span>
+      <span class="font-medium text-gray-600">{{ $t('7a42c841.9d15be') }}</span>
       <span class="text-gray-800 text-sm">{{ name }}</span>
     </div>
     <SpFormPlus
@@ -19,16 +19,19 @@
     />
     <div class="mt-5 p-4 rounded" style="background-color: #fff6f7">
       <span class="text-gray-500 text-xs leading-6">
-        温馨提示：您绑定的企业支付宝账号必须开通<a
+        {{ $t('7a42c841.1fd9ff')
+        }}<a
           href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001"
           target="_blank"
           class="text-blue-500 no-underline"
-          >手机网站支付</a
+          >{{ $t('7a42c841.953f30') }}</a
         >
       </span>
     </div>
     <div class="mt-5 pt-5 border-t border-gray-200 text-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+        {{ $t('7a42c841.be5fbb') }}
+      </el-button>
     </div>
   </SpPage>
 </template>
@@ -53,41 +56,41 @@ export default {
       formItems: [
         {
           fieldName: 'app_id',
-          label: '合作者PID',
+          label: this.$t('7a42c841.edbcda'),
           component: 'input',
           formItemClass: 'w-3/4',
           componentProps: {
-            placeholder: '请输入合作者PID',
+            placeholder: this.$t('7a42c841.0541f0'),
             style: { width: '300px' }
           },
           tip: 'APPID',
-          rules: [{ required: true, message: '请输入合作者PID', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('7a42c841.0541f0'), trigger: 'blur' }]
         },
         {
           fieldName: 'ali_public_key',
-          label: '支付宝公钥',
+          label: this.$t('7a42c841.c8ad33'),
           component: 'input',
           formItemClass: 'w-3/4',
           componentProps: {
             type: 'textarea',
-            placeholder: '请输入支付宝公钥',
+            placeholder: this.$t('7a42c841.0797c6'),
             rows: 5
           },
-          tip: 'RSA2(SHA256)密钥 支付宝公钥',
-          rules: [{ required: true, message: '请输入支付宝公钥', trigger: 'blur' }]
+          tip: this.$t('7a42c841.28b4cb'),
+          rules: [{ required: true, message: this.$t('7a42c841.0797c6'), trigger: 'blur' }]
         },
         {
           fieldName: 'private_key',
-          label: '应用私钥',
+          label: this.$t('7a42c841.7e99e0'),
           component: 'input',
           formItemClass: 'w-3/4',
           componentProps: {
             type: 'textarea',
-            placeholder: '请输入应用私钥',
+            placeholder: this.$t('7a42c841.cb68a9'),
             rows: 5
           },
-          tip: 'RSA2(SHA256)密钥 自己私钥',
-          rules: [{ required: true, message: '请输入应用私钥', trigger: 'blur' }]
+          tip: this.$t('7a42c841.2b4b9b'),
+          rules: [{ required: true, message: this.$t('7a42c841.cb68a9'), trigger: 'blur' }]
         }
       ]
     }
@@ -127,7 +130,7 @@ export default {
       }
       try {
         await setPaymentSetting(query)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('7a42c841.3b1083'))
         this.getConfig()
       } catch (error) {
         console.log(error)

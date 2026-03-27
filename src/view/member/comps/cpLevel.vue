@@ -9,8 +9,8 @@
       <div :key="index" class="level-item">
         <div class="section-header with-border clearfix">
           <h3 class="f_l">
-            <span v-if="index == 0">第一等级（最低等级）</span
-            ><span v-else>第{{ index | numberToCharacter }}等级</span>
+            <span v-if="index == 0">{{ $t('11dd4b4a.de985e') }}</span
+            ><span v-else>{{ getLevelLabel(index) }}</span>
           </h3>
           <span
             v-if="!item.default_grade && item.member_count == 0 && levelData.length - 1 == index"
@@ -47,15 +47,15 @@
             /> -->
             <SpImagePicker v-model="item.background_pic_url" size="big" />
 
-            <p class="content-center">卡封面（建议尺寸：600px * 375px）</p>
+            <p class="content-center">{{ $t('11dd4b4a.76d1bc') }}</p>
           </div>
           <div class="item-content f_l">
             <div style="display: flex; align-items: center">
-              <span class="txt">等级名称</span
+              <span class="txt">{{ $t('11dd4b4a.9d05c7') }}</span
               ><el-input
                 v-model="item.grade_name"
                 :maxlength="32"
-                placeholder="最多填写32个字符"
+                :placeholder="$t('11dd4b4a.cdc01b')"
                 :name="index + ''"
                 :disabled="VERSION_SHUYUN()"
                 @blur="nameblur"
@@ -63,33 +63,33 @@
             </div>
             <!-- TODO:数云是否需要等级背景 -->
             <div style="display: flex">
-              <span class="txt">等级背景</span>
+              <span class="txt">{{ $t('11dd4b4a.3334e5') }}</span>
               <SpImagePicker v-model="item.grade_background" />
             </div>
             <div>
-              <span class="txt">等级编码</span
-              ><el-input v-model="item.dm_grade_code" placeholder="请输入内容" />
+              <span class="txt">{{ $t('11dd4b4a.43559d') }}</span
+              ><el-input v-model="item.dm_grade_code" :placeholder="$t('11dd4b4a.a11cc7')" />
             </div>
             <div v-if="!VERSION_SHUYUN()" class="clearfix">
-              <span class="txt f_l">升级条件</span>
-              <span v-if="item.default_grade" class="txt-none">无</span>
+              <span class="txt f_l">{{ $t('11dd4b4a.f41256') }}</span>
+              <span v-if="item.default_grade" class="txt-none">{{ $t('11dd4b4a.d81bb2') }}</span>
               <template v-else>
                 <div class="f_l">
                   <template>
                     <div style="margin-bottom: 5px">
-                      累积消费金额&nbsp;<el-input
+                      {{ $t('11dd4b4a.33202f') }}&nbsp;<el-input
                         v-model="item.promotion_condition.total_consumption"
                         style="width: 80px"
                         :name="index + ''"
                         @blur="promotionConditionsBlur"
-                      />&nbsp;元
+                      />&nbsp;{{ $t('11dd4b4a.c16655') }}
                     </div>
                   </template>
                 </div>
               </template>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">会员折扣</span>
+              <span class="txt f_l">{{ $t('11dd4b4a.eababe') }}</span>
               <div class="f_l">
                 <template>
                   <div style="margin-bottom: 5px">
@@ -98,21 +98,21 @@
                       style="width: 80px"
                       :name="index + ''"
                       @blur="discountBlur"
-                    />&nbsp;折
+                    />&nbsp;{{ $t('11dd4b4a.96c015') }}
                   </div>
                 </template>
                 <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
               </div>
             </div>
             <div class="clearfix">
-              <span class="txt f_l">等级说明</span>
+              <span class="txt f_l">{{ $t('11dd4b4a.d57830') }}</span>
               <div class="f_l">
                 <template>
                   <div style="margin-bottom: 5px">
                     <SpRichText v-model="item.description" />
                   </div>
                 </template>
-                &nbsp;<span class="frm-tips">（注：等级说明在c端展示！）</span>
+                &nbsp;<span class="frm-tips">{{ $t('11dd4b4a.7a807c') }}</span>
               </div>
             </div>
             <!-- ----------------------------------------------卷包功能-------------------------------------------- -->
@@ -121,22 +121,23 @@
                 <template>
                   <el-tooltip placement="top" width="350">
                     <div slot="content" class="tips">
-                      <p>客户开通会员后，系统将自动发送优惠券包</p>
+                      <p>{{ $t('11dd4b4a.bc76d3') }}</p>
                     </div>
                     <el-button
                       style="border: none; font-size: 14px; width: 100px"
                       class="btn"
                       icon="el-icon-warning-outline"
                     >
-                      优惠劵包
+                      {{ $t('11dd4b4a.9ea8d6') }}
                     </el-button>
                   </el-tooltip>
-                  <el-button @click="pickHanle(index)"> 选择优惠券包 </el-button>
+                  <el-button @click="pickHanle(index)">{{ $t('11dd4b4a.df19a7') }}</el-button>
                   <template
                     v-if="item.voucher_package !== undefined && item.voucher_package.length > 0"
                   >
                     <span style="margin-left: 30px"
-                      >已选 {{ item.voucher_package.length }} 个劵包</span
+                      >{{ $t('11dd4b4a.7bf54e') }} {{ item.voucher_package.length }}
+                      {{ $t('11dd4b4a.6dd3e5') }}</span
                     >
                   </template>
                 </template>
@@ -145,7 +146,7 @@
             <!-- ----------------------------------------------卷包功能-------------------------------------------- -->
 
             <div v-if="item.crm_open == 'true'" class="clearfix">
-              <span class="txt f_l">等级ID</span>
+              <span class="txt f_l">{{ $t('11dd4b4a.7d603f') }}</span>
               <div class="f_l">
                 <template>
                   <div style="margin-bottom: 5px">
@@ -246,6 +247,23 @@ export default {
     this.getGradeList()
   },
   methods: {
+    getLevelLabel(index) {
+      if (index === 0) return this.$t('11dd4b4a.de985e')
+      const ordinalKeys = [
+        '11dd4b4a.2d8be2',
+        '11dd4b4a.e662ff',
+        '11dd4b4a.21716c',
+        '11dd4b4a.1fcc29',
+        '11dd4b4a.61b453',
+        '11dd4b4a.aad691',
+        '11dd4b4a.edf1ac',
+        '11dd4b4a.9b4851',
+        '11dd4b4a.181245',
+        '11dd4b4a.6863d8'
+      ]
+      const ordinal = index <= 10 ? this.$t(ordinalKeys[index - 1]) : index + 1
+      return this.$t('11dd4b4a.6911fb', [ordinal])
+    },
     pickHanle(packageId) {
       this.packageId = packageId
       this.visible = true
@@ -268,7 +286,7 @@ export default {
 
       updateGrade(this.params).then((res) => {
         if (res.data.data.status) {
-          this.$message.success('保存成功')
+          this.$message.success(this.$t('11dd4b4a.3b1083'))
         }
       })
     },
@@ -292,7 +310,7 @@ export default {
     // },
     nameblur(e) {
       if (e.target.value == '') {
-        this.$message({ message: '请输入等级名称', type: 'error' })
+        this.$message({ message: this.$t('11dd4b4a.775081'), type: 'error' })
         return
       }
     },
@@ -303,17 +321,17 @@ export default {
       var reg = /(^[1-9]\d*$)/
       if (index > 0) {
         if (value == '') {
-          this.$message({ message: '请输入升级条件', type: 'error' })
+          this.$message({ message: this.$t('11dd4b4a.ed17f5'), type: 'error' })
           return
         }
         if (!reg.test(value)) {
-          this.$message({ message: '累积消费金额为大于0的正整数', type: 'error' })
+          this.$message({ message: this.$t('11dd4b4a.ed7313'), type: 'error' })
           return
         }
         if (
           Number(value) <= Number(this.levelData[index - 1].promotion_condition.total_consumption)
         ) {
-          this.$message({ message: '累积消费金额不能小于等于上一级消费金额', type: 'error' })
+          this.$message({ message: this.$t('11dd4b4a.50b3a6'), type: 'error' })
           return
         }
       }
@@ -324,7 +342,7 @@ export default {
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
       if (this.levelData[index].discount_checked) {
         if (value == '' && this.VERSION_SHUYUN()) {
-          this.$message({ message: '请输入会员折扣', type: 'error' })
+          this.$message({ message: this.$t('11dd4b4a.47ef84'), type: 'error' })
           return
         }
         // if (!reg.test(value) && this.VERSION_SHUYUN()) {
@@ -342,7 +360,7 @@ export default {
     },
     addGrade() {
       if (this.levelData.length >= 10) {
-        this.$message({ message: '最多添加10个等级', type: 'error' })
+        this.$message({ message: this.$t('11dd4b4a.852f97'), type: 'error' })
         return
       }
       let crmopen = this.levelData[0].crm_open
@@ -378,31 +396,31 @@ export default {
       for (var i = 0; i < this.levelData.length; i++) {
         if (this.levelData[i].grade_name == '') {
           isflag = true
-          this.$message({ message: '请输入等级名称', type: 'error' })
+          this.$message({ message: this.$t('11dd4b4a.775081'), type: 'error' })
           break
         }
         if (i > 0) {
           if (this.levelData[i].promotion_condition.total_consumption == '') {
             isflag = true
-            this.$message({ message: '请输入升级条件', type: 'error' })
+            this.$message({ message: this.$t('11dd4b4a.ed17f5'), type: 'error' })
             break
           } else if (!conditionReg.test(this.levelData[i].promotion_condition.total_consumption)) {
             isflag = true
-            this.$message({ message: '累积消费金额为大于0的正整数', type: 'error' })
+            this.$message({ message: this.$t('11dd4b4a.ed7313'), type: 'error' })
             break
           } else if (
             Number(this.levelData[i].promotion_condition.total_consumption) <=
             Number(this.levelData[i - 1].promotion_condition.total_consumption)
           ) {
             isflag = true
-            this.$message({ message: '累积消费金额不能小于等于上一级消费金额', type: 'error' })
+            this.$message({ message: this.$t('11dd4b4a.50b3a6'), type: 'error' })
             break
           }
         }
         if (this.levelData[i].discount_checked) {
           if (this.levelData[i].privileges.discount == '' && this.VERSION_SHUYUN()) {
             isflag = true
-            this.$message({ message: '请输入会员折扣', type: 'error' })
+            this.$message({ message: this.$t('11dd4b4a.47ef84'), type: 'error' })
             break
           } else if (
             !discountReg.test(this.levelData[i].privileges.discount) &&

@@ -9,7 +9,7 @@
             :src="value.titleImage"
             class="header-image"
             alt=""
-          />
+          >
           <span
             v-if="value.titleType === 'text' && value.titleText"
             class="header-text"
@@ -24,7 +24,7 @@
           <template v-if="countdownInfo.type === 'countdown'">
             <span class="countdown-item">
               <span class="countdown-number">{{ countdownInfo.days }}</span>
-              <span class="countdown-unit">天</span>
+              <span class="countdown-unit">{{ i18n.t('12ac1b87.249aba') }}</span>
             </span>
             <span class="countdown-item">
               <span class="countdown-number">{{ countdownInfo.hours }}</span>
@@ -41,7 +41,7 @@
           <!-- 状态2: 今明开抢 -->
           <template v-else-if="countdownInfo.type === 'todayOrTomorrow'">
             <div class="start-time-box">
-              {{ countdownInfo.text }}
+              {{ i18n.t(countdownInfo.text) }}
               <span class="start-time-text">{{ countdownInfo.time }}</span>
             </div>
           </template>
@@ -56,7 +56,7 @@
       </div>
       <!-- 查看更多 -->
       <div v-if="value.showMoreBtn" class="header-more" :style="{ color: value.moreBtnColor }">
-        查看更多<el-icon class="el-icon-arrow-right" />
+        {{ i18n.t('12ac1b87.90ef7c') }}<el-icon class="el-icon-arrow-right" />
       </div>
     </div>
 
@@ -69,19 +69,22 @@
       >
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
           <!-- 补贴标签 -->
           <div v-if="getSubsidyAmount(item) > 0" class="subsidy-label">
             <el-image :src="seckillIcon" class="subsidy-icon" alt="" />
-            <span>已补贴{{ getSubsidyAmount(item) }}元</span>
+            <span
+              >{{ i18n.t('12ac1b87.c2be5c') }}{{ getSubsidyAmount(item)
+              }}{{ i18n.t('12ac1b87.c16655') }}</span
+            >
           </div>
         </div>
 
         <!-- 商品信息 -->
         <div class="goods-info">
-          <div class="goods-name">{{ item.item_name || '商品名称最多...' }}</div>
+          <div class="goods-name">{{ item.item_name || i18n.t('12ac1b87.b20296') }}</div>
           <div class="goods-price">
-            <span class="price-label">秒杀价</span>
+            <span class="price-label">{{ i18n.t('12ac1b87.c0a30e') }}</span>
             <span class="price-symbol">¥</span>
             <span class="price-value">{{ formatPrice(item.activity_price || item.price) }}</span>
           </div>
@@ -92,6 +95,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import seckillIcon from '@/assets/imgs/wgt/seckill.png'
 
 export default {
@@ -111,7 +115,7 @@ export default {
     }
   },
   data() {
-    return {
+    return {i18n,
       countdownInfo: null,
       countdownTimer: null,
       seckillIcon: seckillIcon
@@ -224,14 +228,14 @@ export default {
         // 今天开抢
         this.countdownInfo = {
           type: 'todayOrTomorrow',
-          text: '今日开抢',
+          text: '12ac1b87.4739d2',
           time: timeStr
         }
       } else if (startDateOnly.getTime() === tomorrowStart.getTime()) {
         // 明天开抢
         this.countdownInfo = {
           type: 'todayOrTomorrow',
-          text: '明日开抢',
+          text: '12ac1b87.b151a1',
           time: timeStr
         }
       } else {

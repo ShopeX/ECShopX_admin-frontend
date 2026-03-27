@@ -146,8 +146,8 @@
       /> -->
       </svg>
       <div class="text-center absolute bottom-[120px] left-1/2 -translate-x-1/2">
-        <h1 class="text-[26px] text-gray-900">404 : 未找到访问页面</h1>
-        <el-button type="primary" @click="goBack">返回</el-button>
+        <h1 class="text-[26px] text-gray-900">{{ $t('f4b370c1.42ad06') }}</h1>
+        <el-button type="primary" @click="goBack">{{ $t('f4b370c1.5f4112') }}</el-button>
       </div>
     </div>
   </SpPage>

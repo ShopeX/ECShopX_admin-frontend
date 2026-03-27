@@ -2,17 +2,19 @@
   <div class="comp-background-outer">
     <div class="background-type-selector">
       <el-radio-group v-model="backgroundType" size="mini" @change="handleTypeChange">
-        <el-radio-button label="color">背景颜色1</el-radio-button>
-        <el-radio-button label="image">背景图片</el-radio-button>
+        <el-radio-button label="color">{{ $t('272c17f4.65935a') }}</el-radio-button>
+        <el-radio-button label="image">{{ $t('272c17f4.d74849') }}</el-radio-button>
       </el-radio-group>
     </div>
     <div class="background-content">
       <div v-if="backgroundType === 'color'" class="color-section">
         <div class="color-picker-wrapper">
           <span class="color-code">{{ displayColor }}</span>
-          <el-button type="text" size="mini" class="reset-btn" @click="handleResetColor"
-            >重置</el-button
-          >
+          <el-button type="text" size="mini" class="reset-btn" @click="handleResetColor">
+{{
+            $t('272c17f4.4b9c32')
+          }}
+</el-button>
           <div class="color-swatch" :style="{ backgroundColor: displayColor }">
             <el-color-picker v-model="localValue.color" size="small" @change="handleChange" />
           </div>

@@ -5,14 +5,14 @@
 
 <template>
   <section v-if="name === 'navigation'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('a0725930.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('a0725930.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="导航项">
-          <div v-for="(item, index) in data" class="setting-item">
+        <el-form-item :label="$t('a0725930.ae5ff3')">
+          <div v-for="(item, index) in data" :key="index" class="setting-item">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
             </div>
@@ -22,39 +22,51 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader square"
               @click="handleImgChange(index)"
-            />
+            >
             <div v-else class="banner-uploader square" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br />
-                上传图片
+                <i class="el-icon-camera" /><br>
+                {{ $t('a0725930.ce6855') }}
               </div>
             </div>
             <div class="uploader-setting">
-              <el-input v-model="item.content" placeholder="导航名称" />
+              <el-input v-model="item.content" :placeholder="$t('a0725930.8585af')" />
               <div class="goods-select" @click="handleGoodsChange(index)">
                 <div v-if="item.id" class="link-content">
-                  <template v-if="item.linkPage === 'goods'"> 商品： </template>
-                  <template v-if="item.linkPage === 'category'"> 分类： </template>
-                  <template v-if="item.linkPage === 'article'"> 文章： </template>
-                  <template v-if="item.linkPage === 'planting'"> 软文： </template>
-                  <template v-if="item.linkPage === 'link'"> 页面： </template>
-                  <template v-if="item.linkPage === 'marketing'"> 营销： </template>
+                  <template v-if="item.linkPage === 'goods'">
+                    {{ $t('a0725930.10fe9c') }}
+                  </template>
+                  <template v-if="item.linkPage === 'category'">
+                    {{ $t('a0725930.e7d2e8') }}
+                  </template>
+                  <template v-if="item.linkPage === 'article'">
+                    {{ $t('a0725930.8cb9b8') }}
+                  </template>
+                  <template v-if="item.linkPage === 'planting'">
+                    {{ $t('a0725930.9dcd91') }}
+                  </template>
+                  <template v-if="item.linkPage === 'link'"> {{ $t('a0725930.ffd741') }} </template>
+                  <template v-if="item.linkPage === 'marketing'">
+                    {{ $t('a0725930.c78a2f') }}
+                  </template>
                   {{ item.title }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                  <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                    $t('a0725930.4f2c29')
+                  }}
                 </div>
               </div>
             </div>
           </div>
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+          <div class="frm-tips">{{ $t('a0725930.d5a0d5') }}</div>
           <el-button
             :disabled="data.length >= 5"
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
             @click="addItem"
           >
-            添加项目
+            {{ $t('a0725930.49d57f') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -115,7 +127,7 @@ export default {
       }
       if (this.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('a0725930.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })

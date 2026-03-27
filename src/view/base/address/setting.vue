@@ -9,13 +9,21 @@
       <el-form v-model="form" label-width="200px">
         <el-row :gutter="20">
           <el-col v-for="(item, index) in form" :key="index" :span="10">
-            <el-form-item label="收货人">
-              <el-input v-model="item.username" placeholder="姓名" style="width: 55%" />
+            <el-form-item :label="$t('a5bbd9ef.6aea70')">
+              <el-input
+                v-model="item.username"
+                :placeholder="$t('a5bbd9ef.60d045')"
+                style="width: 55%"
+              />
             </el-form-item>
-            <el-form-item label="手机号码">
-              <el-input v-model="item.telephone" placeholder="11位手机号" style="width: 55%" />
+            <el-form-item :label="$t('a5bbd9ef.92448a')">
+              <el-input
+                v-model="item.telephone"
+                :placeholder="$t('a5bbd9ef.7e03bb')"
+                style="width: 55%"
+              />
             </el-form-item>
-            <el-form-item label="地区信息">
+            <el-form-item :label="$t('a5bbd9ef.dd73ba')">
               <el-cascader
                 v-model="item.regions_id"
                 :options="regions"
@@ -23,14 +31,16 @@
                 @change="handleRegionChange"
               />
             </el-form-item>
-            <el-form-item label="详细地址">
-              <el-input v-model="item.adrdetail" placeholder="详细地址" />
+            <el-form-item :label="$t('a5bbd9ef.61a0ec')">
+              <el-input v-model="item.adrdetail" :placeholder="$t('a5bbd9ef.61a0ec')" />
             </el-form-item>
-            <el-form-item label="邮政编码">
-              <el-input v-model="item.postalCode" placeholder="邮政编码" />
+            <el-form-item :label="$t('a5bbd9ef.b4a39e')">
+              <el-input v-model="item.postalCode" :placeholder="$t('a5bbd9ef.b4a39e')" />
             </el-form-item>
             <el-form-item v-if="index === 1">
-              <el-button type="text" @click="delAddress(index)"> 删除 </el-button>
+              <el-button type="text" @click="delAddress(index)">
+                {{ $t('a5bbd9ef.2f4aad') }}
+              </el-button>
             </el-form-item>
           </el-col>
           <el-col v-if="isShow" :span="2">
@@ -40,7 +50,7 @@
           </el-col>
         </el-row>
       </el-form>
-      <el-button type="primary" @click="saveAddress"> 确认保存 </el-button>
+      <el-button type="primary" @click="saveAddress"> {{ $t('a5bbd9ef.babc8f') }} </el-button>
     </div>
     <router-view />
   </div>

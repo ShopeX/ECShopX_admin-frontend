@@ -4,7 +4,12 @@
 -->
 
 <template>
-  <CustomCard title="支付清单" :info="info" :data-source="tradeInfo" :is-common="true" />
+  <CustomCard
+    :title="$t('912c5906.a58517')"
+    :info="info"
+    :data-source="tradeInfo"
+    :is-common="true"
+  />
 </template>
 
 <script>
@@ -21,42 +26,41 @@ export default {
     return {
       info: [
         [
-          { name: '交易单号', field: 'tradeId' },
-          { name: '交易流水号', field: 'transactionId' },
-          { name: '商品总额', field: '', filter: self.orderTotalFilter },
+          { name: self.$t('912c5906.2caf6a'), field: 'tradeId' },
+          { name: self.$t('912c5906.fa68e9'), field: 'transactionId' },
+          { name: self.$t('912c5906.64b8dd'), field: '', filter: self.orderTotalFilter },
           {
-            name: '运费',
+            name: self.$t('912c5906.9a935b'),
             field: '',
             filter: self.orderFreightFilter
           }
         ],
         [
-          { name: '会员优惠', field: '', filter: self.memberDiscountFilter },
+          { name: self.$t('912c5906.f77b16'), field: '', filter: self.memberDiscountFilter },
           {
-            name: '优惠券减免',
+            name: self.$t('912c5906.187825'),
             field: '',
             filter: self.couponsReductionFilter
           },
           {
-            name: '优惠总金额',
+            name: self.$t('912c5906.f5a188'),
             field: '',
             filter: self.disCountTotalMoney
           }
-          // { name: "积分抵扣", field: "point_use", filter: self.pointFilter }
         ],
         [
-          { name: '应付总金额', field: '', filter: self.totalFilter },
-          { name: '实付总金额', field: '', filter: self.realTotalFilter },
-          { name: '支付方式', field: 'payType', filter: self.payTypeFilter },
+          { name: self.$t('912c5906.6ce4a1'), field: '', filter: self.totalFilter },
+          { name: self.$t('912c5906.f379ed'), field: '', filter: self.realTotalFilter },
+          { name: self.$t('912c5906.0c9d2b'), field: 'payType', filter: self.payTypeFilter },
           {
-            name: '支付状态',
+            name: self.$t('912c5906.510fa2'),
             field: 'tradeState',
             filter: self.tradeStateFilter
           }
         ],
         [
-          { name: '交易时间', field: 'timeStart', filter: dateFilter },
-          { name: '交易结束时间', field: 'timeExpire', filter: dateFilter }
+          { name: self.$t('912c5906.f8de2c'), field: 'timeStart', filter: dateFilter },
+          { name: self.$t('912c5906.011077'), field: 'timeExpire', filter: dateFilter }
         ]
       ]
     }
@@ -105,31 +109,31 @@ export default {
       let returnValue = ''
       switch (item) {
         case 'SUCCESS':
-          returnValue = '支付成功'
+          returnValue = this.$t('912c5906.eb5dc9')
           break
         case 'REFUND':
-          returnValue = '转入退款'
+          returnValue = this.$t('912c5906.8e2b9d')
           break
         case 'CANCEL_CLOSED':
-          returnValue = '已取消'
+          returnValue = this.$t('912c5906.2111cc')
           break
         case 'REFUND_SUCCESS':
-          returnValue = '退款成功'
+          returnValue = this.$t('912c5906.d58cbd')
           break
         case 'NOTPAY':
-          returnValue = '未支付'
+          returnValue = this.$t('912c5906.608afd')
           break
         case 'CLOSED':
-          returnValue = '已关闭'
+          returnValue = this.$t('912c5906.9c5850')
           break
         case 'REVOKED':
-          returnValue = '已撤销'
+          returnValue = this.$t('912c5906.50239f')
           break
         case 'PAYERROR':
-          returnValue = '支付失败(其他原因，如银行返回失败)'
+          returnValue = this.$t('912c5906.8e51b3')
           break
         default:
-          returnValue = '未知'
+          returnValue = this.$t('912c5906.1622dc')
           break
       }
       return returnValue
@@ -138,40 +142,40 @@ export default {
       let returnValue = ''
       switch (item) {
         case 'amorepay':
-          returnValue = '微信支付'
+          returnValue = this.$t('912c5906.bffe28')
           break
         case 'wxpaypc':
-          returnValue = '微信PC支付'
+          returnValue = this.$t('912c5906.67a318')
           break
         case 'wxpay':
-          returnValue = '微信支付'
+          returnValue = this.$t('912c5906.bffe28')
           break
         case 'wxpayh5':
-          returnValue = '微信H5支付'
+          returnValue = this.$t('912c5906.df7033')
           break
         case 'alipay':
-          returnValue = '支付宝支付'
+          returnValue = this.$t('912c5906.e3b206')
           break
         case 'alipayh5':
-          returnValue = '支付宝H5支付'
+          returnValue = this.$t('912c5906.5a3c52')
           break
         case 'deposit':
-          returnValue = '余额支付'
+          returnValue = this.$t('912c5906.89ac23')
           break
         case 'point':
-          returnValue = '积分支付'
+          returnValue = this.$t('912c5906.accd19')
           break
         case 'pos':
-          returnValue = 'POS银行卡支付'
+          returnValue = this.$t('912c5906.d37dec')
           break
         case 'wxpaypos':
-          returnValue = '微信扫码支付'
+          returnValue = this.$t('912c5906.777d5d')
           break
         case 'alipaypos':
-          returnValue = '支付宝扫码支付'
+          returnValue = this.$t('912c5906.bd7030')
           break
         default:
-          returnValue = '实体订单'
+          returnValue = this.$t('14e217b9.7a83f9')
           break
       }
       return returnValue

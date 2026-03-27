@@ -61,14 +61,18 @@
       <!--      </div>-->
 
       <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="keywords" label="商品标题:">
-          <el-input v-model="searchParams.keywords" placeholder="商品标题或副标题关键词" />
+        <SpFilterFormItem prop="keywords" :label="$t('d41d8cd9.16eddb')">
+          <el-input v-model="searchParams.keywords" :placeholder="$t('d41d8cd9.231f0b')" />
         </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
         <!--          <el-input v-model="searchParams.supplier_goods_bn" placeholder="请输入供应商货号" />-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="approve_status" label="商品状态:">
-          <el-select v-model="searchParams.approve_status" clearable placeholder="请选择">
+        <SpFilterFormItem prop="approve_status" :label="$t('d41d8cd9.2253ba')">
+          <el-select
+            v-model="searchParams.approve_status"
+            clearable
+            :placeholder="$t('d41d8cd9.708c9d')"
+          >
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -78,16 +82,16 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="main_cat_id" label="管理分类:">
+        <SpFilterFormItem prop="main_cat_id" :label="$t('d41d8cd9.e73602')">
           <el-cascader
             v-model="searchParams.main_cat_id"
-            placeholder="请选择"
+            :placeholder="$t('d41d8cd9.708c9d')"
             clearable
             :options="itemCategoryList"
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="销售分类:">
+        <SpFilterFormItem prop="category" :label="$t('d41d8cd9.7ef1b3')">
           <el-cascader
             v-model="searchParams.category"
             :options="categoryList"
@@ -107,8 +111,12 @@
             <el-option value="rejected" label="审核拒绝" />
           </el-select>
         </SpFilterFormItem> -->
-        <SpFilterFormItem prop="templates_id" label="运费模板:">
-          <el-select v-model="searchParams.templates_id" placeholder="请选择" clearable>
+        <SpFilterFormItem prop="templates_id" :label="$t('d41d8cd9.63fc58')">
+          <el-select
+            v-model="searchParams.templates_id"
+            :placeholder="$t('d41d8cd9.708c9d')"
+            clearable
+          >
             <el-option
               v-for="item in templatesList"
               :key="item.template_id"
@@ -120,10 +128,10 @@
         <!--        <SpFilterFormItem prop="tax_rate_code" label="税率编码:">-->
         <!--          <el-input v-model="searchParams.tax_rate_code" placeholder="商品编号或条形码" />-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="brand_id" label="品牌:">
+        <SpFilterFormItem prop="brand_id" :label="$t('d41d8cd9.dab469')">
           <el-select
             v-model="searchParams.brand_id"
-            placeholder="商品/商标关键词"
+            :placeholder="$t('d41d8cd9.2dd7e1')"
             remote
             filterable
             clearable
@@ -137,8 +145,8 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
-          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
+        <SpFilterFormItem prop="goods_bn" :label="$t('d41d8cd9.288587')">
+          <el-input v-model="searchParams.goods_bn" :placeholder="$t('d41d8cd9.36438f')" />
         </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="regions_id" label="商品产地:">-->
         <!--          <el-cascader-->
@@ -155,30 +163,30 @@
         <!--            <el-option value="default_date" label="默认发货日期" />-->
         <!--          </el-select>-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="item_bn" label="SKU编码:">
-          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
+        <SpFilterFormItem prop="item_bn" :label="$t('d41d8cd9.8dd62f')">
+          <el-input v-model="searchParams.item_bn" :placeholder="$t('d41d8cd9.983e9f')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="商品标签:">
+        <SpFilterFormItem prop="item_bn" :label="$t('d41d8cd9.951f47')">
           <el-cascader
             v-model="searchParams.tag_id"
             size="small"
-            placeholder="选择标签"
+            :placeholder="$t('d41d8cd9.f9b05d')"
             :options="tagList"
             :props="{ value: 'tag_id', label: 'tag_name' }"
             clearable
           />
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
+        <SpFilterFormItem prop="regions_id" :label="$t('d41d8cd9.efcb2d')">
           <el-cascader
             v-model="searchParams.regions_id"
-            placeholder="请选择"
+            :placeholder="$t('d41d8cd9.708c9d')"
             clearable
             :options="regions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
-          <el-input v-model="searchParams.supplier_name" placeholder="请输入所属供应商" />
+        <SpFilterFormItem prop="supplier_name" :label="$t('d41d8cd9.7054f6')">
+          <el-input v-model="searchParams.supplier_name" :placeholder="$t('d41d8cd9.5765f1')" />
         </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />
@@ -187,50 +195,61 @@
 
       <div class="action-container">
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
-          更改销售分类
+          {{ $t('d41d8cd9.51af77') }}
         </el-button>
-        <el-button type="primary" plain @click="changeGoodsLabel"> 标签 </el-button>
+        <el-button type="primary" plain @click="changeGoodsLabel">
+          {{ $t('d41d8cd9.14d342') }}
+        </el-button>
         <el-button v-if="IS_SUPPLIER()" type="primary" plain @click="changeFreightTemplate">
-          更改运费模板
+          {{ $t('d41d8cd9.a7aae3') }}
         </el-button>
         <el-button v-if="!IS_ADMIN()" type="primary" plain @click="onBatchSubmitItems">
-          批量提交
+          {{ $t('d41d8cd9.80f065') }}
         </el-button>
-        <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
+        <el-button type="primary" plain @click="changeItemsStore">
+          {{ $t('d41d8cd9.0648ad') }}
+        </el-button>
         <!-- <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
         <el-button type="primary" plain @click="() => changeHaltTheSales('start')">
           开售
         </el-button> -->
-        <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
+        <el-button type="primary" plain @click="batchChangeStore">
+          {{ $t('d41d8cd9.836304') }}
+        </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
 
         <el-dropdown @command="handleExport">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导出<i class="el-icon-arrow-down el-icon--right" />
+            {{ $t('d41d8cd9.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="exportItemsData">商品信息 </el-dropdown-item>
+            <el-dropdown-item command="exportItemsData"
+              >
+{{ $t('d41d8cd9.b433e6') }}
+            </el-dropdown-item>
             <el-dropdown-item
               command="exportItemsTagData"
               v-if="$store.getters.login_type != 'supplier'"
             >
-              商品标签
+              {{ $t('d41d8cd9.0f394b') }}
             </el-dropdown-item>
-            <el-dropdown-item command="wxa" v-if="!IS_SUPPLIER()"> 小程序码 </el-dropdown-item>
-            <el-dropdown-item command="h5"> H5二维码 </el-dropdown-item>
+            <el-dropdown-item command="wxa" v-if="!IS_SUPPLIER()">
+              {{ $t('d41d8cd9.b85b43') }}
+            </el-dropdown-item>
+            <el-dropdown-item command="h5"> {{ $t('d41d8cd9.cde87b') }} </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
         <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            同步商品<i class="el-icon-arrow-down el-icon--right" />
+            {{ $t('d41d8cd9.5aa3a7') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <span @click="() => syncToShop()">同步至店铺</span>
+              <span @click="() => syncToShop()">{{ $t('d41d8cd9.2b7f47') }}</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <span @click="syncToShop('all')"> 同步至所有店铺 </span>
+              <span @click="syncToShop('all')"> {{ $t('d41d8cd9.b634bc') }} </span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -245,9 +264,11 @@
         >
           <div v-if="activeName == 'second'" class="tab-tools">
             <div class="warn-input">
-              <label class="label">预警数量:</label>
+              <label class="label">{{ $t('d41d8cd9.7bee86') }}</label>
               <el-input v-model="warning_store" size="small" value="warning_store" />
-              <el-button type="text" @click="setWarningStore"> 保存 </el-button>
+              <el-button type="text" @click="setWarningStore">
+                {{ $t('d41d8cd9.be5fbb') }}
+              </el-button>
             </div>
           </div>
         </el-tab-pane>
@@ -270,14 +291,14 @@
       <!-- 设置会员价 -->
       <SpDrawer
         v-model="showMemberPriceDrawer"
-        title="设置价格"
+        :title="$t('d41d8cd9.fb2f7a')"
         :width="800"
-        confirm-text="保存"
+        :confirm-text="$t('d41d8cd9.be5fbb')"
         @confirm="onSaveMemberPrice"
       >
         <el-table v-loading="skuLoading" border :data="specItems" height="100%">
-          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="市场价" prop="market_price" width="160">
+          <el-table-column :label="$t('d41d8cd9.ea887b')" prop="item_spec_desc" min-width="120" />
+          <el-table-column :label="$t('d41d8cd9.818fc4')" prop="market_price" width="160">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.market_price"
@@ -289,7 +310,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="销售价" width="160">
+          <el-table-column :label="$t('d41d8cd9.e29575')" width="160">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.price"
@@ -301,7 +322,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="成本价" width="160">
+          <el-table-column :label="$t('d41d8cd9.2e2ce2')" width="160">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.cost_price"
@@ -313,7 +334,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="会员">
+          <el-table-column :label="$t('d41d8cd9.4d9dd5')">
             <el-table-column v-for="(item, index) in grade" :key="index" :label="item.grade_name">
               <template slot-scope="scope">
                 <el-input-number
@@ -326,7 +347,7 @@
               </template>
             </el-table-column>
           </el-table-column>
-          <el-table-column label="付费会员">
+          <el-table-column :label="$t('d41d8cd9.bc0883')">
             <el-table-column
               v-for="(item, index) in vipGrade"
               :key="index"
@@ -349,13 +370,13 @@
       <!-- 设置商品库存 -->
       <SpDrawer
         v-model="showItemStoreDrawer"
-        title="设置商品库存"
+        :title="$t('d41d8cd9.b20f18')"
         :width="800"
         @confirm="onSaveItemStore"
       >
         <el-table v-loading="skuLoading" border :data="storeItemsList" height="100%">
-          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="库存">
+          <el-table-column :label="$t('d41d8cd9.ea887b')" prop="item_spec_desc" min-width="120" />
+          <el-table-column :label="$t('d41d8cd9.0eac88')">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.store"
@@ -373,7 +394,7 @@
       <SpDialog
         ref="saleCategoryDialogRef"
         v-model="saleCategoryDialog"
-        title="更改销售分类"
+        :title="$t('dc9cefd6.51af77')"
         :form="saleCategoryForm"
         :form-list="saleCategoryFormList"
         @onSubmit="onSaleCategorySubmit"
@@ -383,7 +404,7 @@
       <SpDialog
         ref="freightTemplateDialogRef"
         v-model="freightTemplateDialog"
-        title="更改运费模板"
+        :title="$t('d41d8cd9.a7aae3')"
         :form="freightTemplateForm"
         :form-list="freightTemplateFormList"
         @onSubmit="onFreightTemplateSubmit"
@@ -392,7 +413,7 @@
       <SpDialog
         ref="sendNumDialogRef"
         v-model="batchChangeStateDialog"
-        title="更改商品状态"
+        :title="$t('d41d8cd9.836304')"
         :width="'500px'"
         :form="batchChangeStateForm"
         :form-list="batchChangeStateFormList"
@@ -403,7 +424,7 @@
       <SpDialog
         ref="storeItemDialogRef"
         v-model="storeItemDialog"
-        title="批量修改库存"
+        :title="$t('d41d8cd9.ad7f06')"
         :form="storeItemForm"
         :form-list="storeItemFormList"
         @onSubmit="onStoreItemSubmit"
@@ -423,26 +444,26 @@
       <SpDialog
         ref="labelDialogRef"
         v-model="labelDialog"
-        title="标签"
+        :title="$t('d41d8cd9.14d342')"
         :modal="false"
         :form="labelForm"
         :form-list="labelFormList"
         @onSubmit="onLabelFormSubmit"
       />
 
-      <el-dialog title="设置商品佣金" width="600px" :visible.sync="commissionDialog">
+      <el-dialog :title="$t('d41d8cd9.d513d9')" width="600px" :visible.sync="commissionDialog">
         <el-form ref="form" :model="commissionForm" label-width="150px">
-          <el-form-item label="平台佣金比例:">
+          <el-form-item :label="$t('d41d8cd9.43ae04')">
             <el-input v-model="commissionForm.commission_ratio" maxlength="5" style="width: 160px">
               <template slot="append">%</template>
             </el-input>
-            <div class="frm-tips">* 0-100之间，最多两位小数</div>
+            <div class="frm-tips">{{ $t('d41d8cd9.e3c004') }}</div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :loading="formLoading" @click="commissionSubmit">
-              保存设置
+              {{ $t('d41d8cd9.4323be') }}
             </el-button>
-            <el-button @click="commissionDialog = false">取消</el-button>
+            <el-button @click="commissionDialog = false">{{ $t('d41d8cd9.625fb2') }}</el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -459,32 +480,38 @@
         "
       >
         <el-table v-loading="skuLoading" border :data="itemSkuList" height="100%">
-          <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="供应商货号" prop="supplier_goods_bn" min-width="120" />
-          <el-table-column label="sku编码" prop="item_bn" min-width="120" />
-          <el-table-column label="税率编码" prop="tax_rate_code" min-width="120" />
-          <el-table-column label="税率" prop="tax_rate" min-width="120">
+          <el-table-column :label="$t('d41d8cd9.ea887b')" prop="item_spec_desc" min-width="120" />
+          <el-table-column
+            :label="$t('d41d8cd9.88d456')"
+            prop="supplier_goods_bn"
+            min-width="120"
+          />
+          <el-table-column :label="$t('d41d8cd9.0888fc')" prop="item_bn" min-width="120" />
+          <el-table-column :label="$t('d41d8cd9.c927ea')" prop="tax_rate_code" min-width="120" />
+          <el-table-column :label="$t('d41d8cd9.2a79a7')" prop="tax_rate" min-width="120">
             <template slot-scope="scope">
               <span>{{ `${scope.row.tax_rate}%` }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="库存" prop="store" min-width="120" />
+          <el-table-column :label="$t('d41d8cd9.0eac88')" prop="store" min-width="120" />
         </el-table>
       </SpDrawer>
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl" />
+          <img class="page-code-img" :src="appCodeUrl">
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
-              下载码
+              {{ $t('d41d8cd9.99e985') }}
             </el-button>
-            <el-button v-clipboard:copy="curPageUrl" type="primary" plain> 复制链接 </el-button>
+            <el-button v-clipboard:copy="curPageUrl" type="primary" plain>
+              {{ $t('d41d8cd9.879058') }}
+            </el-button>
           </div>
         </div>
 
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="sunCode = false">确 定</el-button>
+          <el-button type="primary" @click="sunCode = false">{{ $t('d41d8cd9.aa7527') }}</el-button>
         </span>
       </el-dialog>
     </SpRouterView>
@@ -501,40 +528,40 @@ export default {
   data() {
     const loginType = this.$store.getters.login_type
     let updateStatusOption = [
-      { title: '前台可销售', value: 'onsale' },
-      { title: '前台不展示', value: 'offline_sale' },
-      { title: '前台仅展示', value: 'only_show' },
-      { title: '不可销售', value: 'instock' }
+      { title: this.$t('d41d8cd9.9b7481'), value: 'onsale' },
+      { title: this.$t('d41d8cd9.2c50a0'), value: 'offline_sale' },
+      { title: this.$t('d41d8cd9.acf86b'), value: 'only_show' },
+      { title: this.$t('d41d8cd9.ae83a3'), value: 'instock' }
     ]
     let statusOption
     if (loginType == 'distributor') {
       statusOption = [
-        { title: '全部', value: '' },
-        { title: '审核驳回', value: 'rejected' },
-        { title: '等待审核', value: 'processing' },
-        { title: '前台可销售', value: 'onsale' },
-        { title: '前台不展示', value: 'offline_sale' },
-        { title: '前台仅展示', value: 'only_show' },
-        { title: '不可销售', value: 'instock' }
+        { title: this.$t('d41d8cd9.a8b0c2'), value: '' },
+        { title: this.$t('d41d8cd9.a77aa8'), value: 'rejected' },
+        { title: this.$t('d41d8cd9.f6324c'), value: 'processing' },
+        { title: this.$t('d41d8cd9.9b7481'), value: 'onsale' },
+        { title: this.$t('d41d8cd9.2c50a0'), value: 'offline_sale' },
+        { title: this.$t('d41d8cd9.acf86b'), value: 'only_show' },
+        { title: this.$t('d41d8cd9.ae83a3'), value: 'instock' }
       ]
     } else {
-      statusOption = [{ title: '全部', value: '' }, ...updateStatusOption]
+      statusOption = [{ title: this.$t('d41d8cd9.a8b0c2'), value: '' }, ...updateStatusOption]
     }
 
     let tabList = []
     if (IS_SUPPLIER()) {
       tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        { name: '待提交', value: 'submiting', activeName: 'submiting' },
-        { name: '待审核', value: 'processing', activeName: 'processing' },
-        { name: '已通过', value: 'approved', activeName: 'approved' },
-        { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
+        { name: this.$t('d41d8cd9.794a4e'), value: 'all', activeName: 'first' },
+        { name: this.$t('d41d8cd9.a9c09d'), value: 'submiting', activeName: 'submiting' },
+        { name: this.$t('d41d8cd9.5cb424'), value: 'processing', activeName: 'processing' },
+        { name: this.$t('d41d8cd9.ecfa64'), value: 'approved', activeName: 'approved' },
+        { name: this.$t('d41d8cd9.81233d'), value: 'rejected', activeName: 'rejected' },
+        { name: this.$t('d41d8cd9.5a867d'), value: 'true', activeName: 'second' }
       ]
     } else {
       tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
+        { name: this.$t('d41d8cd9.794a4e'), value: 'all', activeName: 'first' },
+        { name: this.$t('d41d8cd9.5a867d'), value: 'true', activeName: 'second' }
       ]
     }
     return {
@@ -631,10 +658,10 @@ export default {
       batchChangeStateDialog: false,
       batchChangeStateFormList: [
         {
-          label: '商品状态',
+          label: this.$t('d41d8cd9.2253ba').replace(':', ''),
           key: 'status',
           type: 'select',
-          message: '不能为空',
+          message: this.$t('d41d8cd9.281bad'),
           options: updateStatusOption
         }
       ],
@@ -661,7 +688,7 @@ export default {
       },
       labelFormList: [
         {
-          label: '已选标签',
+          label: this.$t('d41d8cd9.4a0bfa'),
           key: '',
           component: ({ key }, value) => (
             <div>
@@ -680,7 +707,7 @@ export default {
           )
         },
         {
-          label: '所有标签',
+          label: this.$t('d41d8cd9.bbb504'),
           key: '',
           component: ({ key }, value) => (
             <div>
@@ -710,7 +737,7 @@ export default {
       },
       saleCategoryFormList: [
         {
-          label: '销售分类',
+          label: this.$t('dc9cefd6.392d49'),
           key: 'category_id',
           component: ({ key }, value) => (
             <el-cascader
@@ -736,7 +763,7 @@ export default {
       },
       freightTemplateFormList: [
         {
-          label: '运费模板',
+          label: this.$t('d41d8cd9.63fc58').replace(':', ''),
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
@@ -754,7 +781,7 @@ export default {
       },
       storeItemFormList: [
         {
-          label: '库存',
+          label: this.$t('d41d8cd9.0eac88'),
           key: 'storeNum',
           component: ({ key }, value) => (
             <el-input-number
@@ -773,7 +800,7 @@ export default {
       tableList: {
         actions: [
           {
-            name: '编辑',
+            name: this.$t('d41d8cd9.95b351'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
@@ -793,7 +820,7 @@ export default {
             }
           },
           {
-            name: '查看',
+            name: this.$t('d41d8cd9.607e7a'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
@@ -814,7 +841,7 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: this.$t('d41d8cd9.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'text',
@@ -825,9 +852,9 @@ export default {
             action: {
               type: 'link',
               handler: async ([row]) => {
-                await this.$confirm('此操作将删除该商品, 是否继续?', '提示')
+                await this.$confirm(this.$t('d41d8cd9.e569b1'), this.$t('d41d8cd9.02d981'))
                 await this.$api.goods.deleteItems(row.item_id)
-                this.$message.success('删除商品成功')
+                this.$message.success(this.$t('d41d8cd9.a8504b'))
                 setTimeout(() => {
                   this.$refs['finder'].refresh(true)
                 }, 200)
@@ -835,7 +862,7 @@ export default {
             }
           },
           {
-            name: '复制商品',
+            name: this.$t('d41d8cd9.8978ed'),
             key: 'copy',
             type: 'button',
             buttonType: 'text',
@@ -870,7 +897,7 @@ export default {
           //   }
           // },
           {
-            name: '设置价格',
+            name: this.$t('d41d8cd9.fb2f7a'),
             key: 'setup_price',
             type: 'button',
             buttonType: 'text',
@@ -883,7 +910,7 @@ export default {
             }
           },
           {
-            name: '标签',
+            name: this.$t('d41d8cd9.14d342'),
             key: 'label',
             type: 'button',
             buttonType: 'text',
@@ -905,7 +932,7 @@ export default {
             }
           },
           {
-            name: '更改库存',
+            name: this.$t('d41d8cd9.9461f8'),
             key: 'change_store',
             type: 'button',
             buttonType: 'text',
@@ -918,7 +945,7 @@ export default {
             }
           },
           {
-            name: '复制链接',
+            name: this.$t('d41d8cd9.879058'),
             key: 'link',
             type: 'button',
             buttonType: 'text',
@@ -926,15 +953,15 @@ export default {
               type: 'link',
               handler: async ([row]) => {
                 this.$copyText(
-                  `${process.env.VUE_APP_H5_HOST}/pages/item/espier-detail?id=${row.item_id}`
+                  `${process.env.VUE_APP_H5_HOST}/subpages/item/espier-detail?id=${row.item_id}`
                 ).then(() => {
-                  this.$message.success('复制成功')
+                  this.$message.success(this.$t('d41d8cd9.20a495'))
                 })
               }
             }
           },
           {
-            name: '投放',
+            name: this.$t('d41d8cd9.536ff1'),
             key: 'put',
             type: 'button',
             buttonType: 'text',
@@ -946,7 +973,7 @@ export default {
             }
           },
           {
-            name: '下架',
+            name: this.$t('d41d8cd9.d2379a'),
             key: 'offline',
             type: 'button',
             buttonType: 'text',
@@ -962,13 +989,13 @@ export default {
                   status: 'instock',
                   operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
                 })
-                this.$message.success('操作成功')
+                this.$message.success(this.$t('d41d8cd9.33130f'))
                 this.$refs['finder'].refresh()
               }
             }
           },
           {
-            name: '上架',
+            name: this.$t('d41d8cd9.4a5098'),
             key: 'online',
             type: 'button',
             buttonType: 'text',
@@ -984,17 +1011,17 @@ export default {
                   status: 'onsale',
                   operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
                 })
-                this.$message.success('操作成功')
+                this.$message.success(this.$t('d41d8cd9.33130f'))
                 this.$refs['finder'].refresh()
               }
             }
           }
         ],
         columns: [
-          { name: '供应商品ID', key: 'supplier_item_id', width: 120 },
-          { name: '平台商品ID', key: 'goods_id', width: 120 },
+          { name: this.$t('d41d8cd9.b9c2e7'), key: 'supplier_item_id', width: 120 },
+          { name: this.$t('d41d8cd9.3e8e2c'), key: 'goods_id', width: 120 },
           {
-            name: '商品',
+            name: this.$t('d41d8cd9.9897d8'),
             key: 'itemName',
             width: 280,
             render: (h, scope) => {
@@ -1012,7 +1039,7 @@ export default {
                           this.handleViewSkuInfo(scope.row)
                         }}
                       >
-                        多
+                        {this.$t('d41d8cd9.7b1568')}
                         <i
                           class='ecx-icon icon-sousuo'
                           style='font-size: 12px; margin-left: 2px;'
@@ -1027,17 +1054,21 @@ export default {
                         type='primary'
                         style='margin-left: 4px; cursor: default;'
                       >
-                        赠
+                        {this.$t('d41d8cd9.l4m5n6')}
                       </el-tag>
                     )}
                   </div>
                   <div style='color: #666;'>
-                    {`SPU编码：${scope.row.goods_bn}`}
-                    <el-tooltip effect='dark' content='复制' placement='top-start'>
+                    {`${this.$t('d41d8cd9.o7p8q9')}${scope.row.goods_bn}`}
+                    <el-tooltip
+                      effect='dark'
+                      content={this.$t('d41d8cd9.79d3ab')}
+                      placement='top-start'
+                    >
                       <i
                         on-click={() => {
                           this.$copyText(scope.row.goods_bn).then(() => {
-                            this.$message.success('复制成功')
+                            this.$message.success(this.$t('d41d8cd9.20a495'))
                           })
                         }}
                         class='el-icon-document-copy'
@@ -1050,7 +1081,7 @@ export default {
             }
           },
           {
-            name: '标签',
+            name: this.$t('d41d8cd9.14d342'),
             width: 120,
             key: 'tagList',
             render: (h, scope) => (
@@ -1079,13 +1110,13 @@ export default {
           //   headerAlign: 'center'
           // },
           {
-            name: '库存',
+            name: this.$t('d41d8cd9.0eac88'),
             key: 'store',
             align: 'right',
             headerAlign: 'center'
           },
           {
-            name: 'sku编码',
+            name: this.$t('d41d8cd9.0888fc'),
             key: 'item_bn',
             width: 150,
             align: 'right',
@@ -1101,7 +1132,7 @@ export default {
           //   headerAlign: 'center'
           // },
           {
-            name: '排序编号',
+            name: this.$t('d41d8cd9.e8373a'),
             key: 'sort',
             width: 120,
             showType: 'editable',
@@ -1114,7 +1145,7 @@ export default {
             }
           },
           {
-            name: '市场价（¥）',
+            name: this.$t('d41d8cd9.5cd87e'),
             key: 'market_price',
             width: 100,
             formatter: (value, row, col) => {
@@ -1124,7 +1155,7 @@ export default {
             headerAlign: 'center'
           },
           {
-            name: '销售价（¥）',
+            name: this.$t('d41d8cd9.cf0170'),
             key: 'price',
             width: 100,
             formatter: (value, row, col) => {
@@ -1134,7 +1165,7 @@ export default {
             headerAlign: 'center'
           },
           {
-            name: '成本价（¥）',
+            name: this.$t('d41d8cd9.066804'),
             key: 'cost_price',
             width: 100,
             formatter: (value, row, col) => {
@@ -1144,14 +1175,14 @@ export default {
             headerAlign: 'center'
           },
           {
-            name: '毛利率（%)',
+            name: this.$t('d41d8cd9.4d02c7'),
             key: 'gross_profit_rate',
             width: 100,
             align: 'right',
             headerAlign: 'center'
           },
           {
-            name: '来源供应商',
+            name: this.$t('d41d8cd9.55c61d'),
             key: 'supplier_name',
             width: 100
           },
@@ -1163,7 +1194,7 @@ export default {
           //   }
           // },
           {
-            name: '商品状态',
+            name: this.$t('d41d8cd9.2253ba').replace(':', ''),
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {
@@ -1183,9 +1214,9 @@ export default {
           //     </div>
           //   )
           // },
-          { name: '销售分类', key: 'itemCatName', minWidth: 120 },
+          { name: this.$t('d41d8cd9.7ef1b3').replace(':', ''), key: 'itemCatName', minWidth: 120 },
           {
-            name: '创建时间',
+            name: this.$t('d41d8cd9.eca37c'),
             key: 'created',
             width: 160,
             formatter: (value, row, col) => {
@@ -1193,7 +1224,7 @@ export default {
             }
           },
           {
-            name: '审核时间',
+            name: this.$t('d41d8cd9.e6f070'),
             key: 'audit_date',
             width: 160,
             formatter: (value, row, col) => {
@@ -1201,7 +1232,7 @@ export default {
             }
           },
           {
-            name: '更新时间',
+            name: this.$t('d41d8cd9.a001a2'),
             key: 'updated',
             width: 160,
             formatter: (value, row, col) => {
@@ -1272,7 +1303,7 @@ export default {
         status: this.batchChangeStateForm.status
       })
 
-      this.$message.success('修改成功')
+      this.$message.success(this.$t('d41d8cd9.69be67'))
       this.$refs['finder'].refresh()
       this.batchChangeStateDialog = false
     },
@@ -1300,7 +1331,7 @@ export default {
       this.skuLoading = false
     },
     handleShow({ goods_id, itemName }) {
-      const page = 'pages/item/espier-detail'
+      const page = 'subpages/item/espier-detail'
       this.curPageUrl = `${page}?id=${goods_id}`
       let params = {
         wxaAppId: this.appID,
@@ -1310,7 +1341,7 @@ export default {
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
         // this.$message.success('投放成功')
-        this.sunCodeTitle = itemName + '---商品太阳码'
+        this.sunCodeTitle = itemName + '---' + this.$t('d41d8cd9.r0s1t2')
         this.sunCode = true
       })
     },
@@ -1370,7 +1401,7 @@ export default {
       param.mprice = JSON.stringify(skus)
       this.showMemberPriceDrawer = false
       await this.$api.goods.updateGoodsPrice(param)
-      this.$message.success('更新成功')
+      this.$message.success(this.$t('d41d8cd9.55aa63'))
       this.$refs['finder'].refresh()
     },
     async onSaveItemStore() {
@@ -1379,7 +1410,7 @@ export default {
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       }
       await this.$api.goods.updateItemsStore(params)
-      this.$message.success('修改成功')
+      this.$message.success(this.$t('d41d8cd9.69be67'))
       this.$refs['finder'].refresh()
       this.showItemStoreDrawer = false
     },
@@ -1404,7 +1435,7 @@ export default {
         this.saleCategoryForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.saleCategoryDialog = true
       } else {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('dc9cefd6.ace302'))
       }
     },
     async onSaleCategorySubmit() {
@@ -1413,7 +1444,7 @@ export default {
         return item[item.length - 1]
       })
       await this.$api.goods.setItemsCategory({ item_id, category_id: _category_id })
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('dc9cefd6.33130f'))
       this.saleCategoryDialog = false
       this.$refs['finder'].refresh()
     },
@@ -1421,7 +1452,7 @@ export default {
       if (this.selectionItems.length === 0) {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品'
+          message: this.$t('d41d8cd9.ace302')
         })
         return false
       }
@@ -1432,7 +1463,7 @@ export default {
         this.freightTemplateForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.freightTemplateDialog = true
       } else {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('d41d8cd9.ace302'))
       }
     },
     async onFreightTemplateSubmit() {
@@ -1441,7 +1472,7 @@ export default {
         templates_id,
         item_id
       })
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
       this.freightTemplateDialog = false
       this.$refs['finder'].refresh()
     },
@@ -1450,7 +1481,7 @@ export default {
         this.storeItemForm.item_id = this.selectionItems.map((item) => item.item_id)
         this.storeItemDialog = true
       } else {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('d41d8cd9.ace302'))
       }
     },
     async onStoreItemSubmit() {
@@ -1463,29 +1494,39 @@ export default {
         items: JSON.stringify(data),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
       this.storeItemDialog = false
       this.$refs['finder'].refresh()
     },
     async changeHaltTheSales(status) {
       if (this.selectionItems.length > 0) {
-        await this.$confirm(`${status == 'stop' ? '停售' : '开售'}选中商品, 是否继续?`, '提示')
+        await this.$confirm(
+          `${status == 'stop' ? this.$t('d41d8cd9.u3v4w5') : this.$t('d41d8cd9.x6y7z8')}${this.$t(
+            'd41d8cd9.a9b0c1'
+          )}`,
+          this.$t('d41d8cd9.q9r0s1')
+        )
         const params = {
           goods_id: this.selectionItems.map((item) => item.goods_id),
           is_market: status == 'stop' ? '0' : '1',
           operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
         }
         await this.$api.goods.updateGoodsInfo(params)
-        this.$message.success('操作成功')
+        this.$message.success(this.$t('d41d8cd9.33130f'))
         this.$refs['finder'].refresh()
       } else {
-        await this.$confirm(`${status == 'stop' ? '停售' : '开售'}所有商品, 是否继续?`, '提示')
+        await this.$confirm(
+          `${status == 'stop' ? this.$t('d41d8cd9.u3v4w5') : this.$t('d41d8cd9.x6y7z8')}${this.$t(
+            'd41d8cd9.d2e3f4'
+          )}`,
+          this.$t('d41d8cd9.q9r0s1')
+        )
         const params = {
           is_market: status == 'stop' ? '0' : '1',
           operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
         }
         await this.$api.goods.updateGoodsInfo(params)
-        this.$message.success('操作成功')
+        this.$message.success(this.$t('d41d8cd9.33130f'))
         this.$refs['finder'].refresh()
       }
     },
@@ -1493,7 +1534,7 @@ export default {
       if (this.selectionItems.length > 0) {
         this.changePriceDialog = true
       } else {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('d41d8cd9.ace302'))
       }
     },
     async onChangePriceSubmit() {},
@@ -1505,7 +1546,7 @@ export default {
         })
         this.labelDialog = true
       } else {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('d41d8cd9.ace302'))
       }
     },
     async commissionSubmit() {
@@ -1514,7 +1555,7 @@ export default {
         await this.$api.goods.setCommissionRatio(this.commissionForm)
         this.commissionDialog = false
         this.$refs['finder'].refresh()
-        this.$message.success('操作成功')
+        this.$message.success(this.$t('d41d8cd9.33130f'))
       } catch (e) {
         console.log(e)
       }
@@ -1528,7 +1569,7 @@ export default {
         tag_ids: tagIds
       })
       this.labelDialog = false
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
       this.$refs['finder'].refresh()
     },
     // 获取地区列表
@@ -1540,11 +1581,13 @@ export default {
     async syncToShop(isAll) {
       let distributorIds = '_all'
       if (!isAll) {
-        const { data } = await this.$picker.shop()
+        const { data } = await this.$picker.shop({
+          queryParams: { is_valid: 'true' }
+        })
         distributorIds = data.map((item) => item.distributor_id)
       }
       if (this.selectionItems.length == 0) {
-        await this.$confirm('是否将所有商品的都同步至店铺?', '提示')
+        await this.$confirm(this.$t('d41d8cd9.a4ddd6'), this.$t('d41d8cd9.02d981'))
         await this.$api.marketing.saveDistributorItems({
           distributor_ids: distributorIds,
           item_ids: '_all',
@@ -1559,24 +1602,24 @@ export default {
           is_can_sale: false
         })
       }
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
     },
     // 批量提交
     async onBatchSubmitItems() {
       if (this.selectionItems.length == 0) {
-        this.$message.error('请选择至少一个商品')
+        this.$message.error(this.$t('d41d8cd9.ace302'))
         return
       }
-      await this.$confirm('确认是否批量提交？', '批量提交', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('d41d8cd9.5576f9'), this.$t('d41d8cd9.80f065'), {
+        confirmButtonText: this.$t('d41d8cd9.38cf16'),
+        cancelButtonText: this.$t('d41d8cd9.625fb2')
       })
       await this.$api.goods.updateGoodsInfo({
         goods_id: this.selectionItems.map((item) => item.item_id),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: 'processing'
       })
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
     },
     handleDownload(name) {
       var a = document.createElement('a')
@@ -1618,10 +1661,10 @@ export default {
       }
       const { status } = await this.$api.goods.exportItemsData(exportParams)
       if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$message.success(this.$t('d41d8cd9.3e1ddd'))
         this.$export_open('items')
       } else {
-        this.$message.error('导出失败')
+        this.$message.error(this.$t('d41d8cd9.dd51ab'))
       }
     },
     async exportItemsTagData() {
@@ -1633,10 +1676,10 @@ export default {
       }
       const { status } = await this.$api.goods.exportItemsTagData(exportParams)
       if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$message.success(this.$t('d41d8cd9.3e1ddd'))
         this.$export_open('normal_items_tag')
       } else {
-        this.$message.error('导出失败')
+        this.$message.error(this.$t('d41d8cd9.dd51ab'))
       }
     },
     async exportItemsWxappCode(exportType) {
@@ -1652,10 +1695,10 @@ export default {
         export_type: exportType
       })
       if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$message.success(this.$t('d41d8cd9.3e1ddd'))
         this.$export_open('itemcode')
       } else {
-        this.$message.error('导出失败')
+        this.$message.error(this.$t('d41d8cd9.dd51ab'))
       }
     },
 
@@ -1682,7 +1725,7 @@ export default {
         [priceType]: priceMap[priceType],
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
-      this.$message.success('操作成功')
+      this.$message.success(this.$t('d41d8cd9.33130f'))
     },
 
     async setWarningStore() {
@@ -1720,7 +1763,7 @@ export default {
         page: 1,
         pageSize: 1000
       })
-      this.itemSkuDrawerTitle = `商品【${item.item_name}】`
+      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.g5h6i7')}${item.item_name}】`
       this.itemSkuList = list || []
       this.showItemSkuDrawer = true
       this.itemSkuList = list

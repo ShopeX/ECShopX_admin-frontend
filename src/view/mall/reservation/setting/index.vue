@@ -7,14 +7,14 @@
   <div class="section section-white">
     <el-form ref="form" :label-position="'left'" :model="form" :rules="rules" label-width="160px">
       <div class="section-body">
-        <el-form-item label="预约模式设置" prop="modelSetting">
+        <el-form-item :label="$t('01253601.ac3adf')" prop="modelSetting">
           <el-radio-group v-model="form.reservationMode">
             <el-radio v-for="item in reservationModes" :key="item.value" :label="item.value">
               {{ item.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="预约时间间隔" prop="interval">
+        <el-form-item :label="$t('01253601.279335')" prop="interval">
           <el-select v-model="form.interval">
             <el-option
               v-for="item in timeIntervals"
@@ -26,20 +26,27 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="资源位名称" prop="resourceName">
-          <el-input v-model="form.resourceName" placeholder="计师" style="width: 240px" />
+        <el-form-item :label="$t('01253601.1a971a')" prop="resourceName">
+          <el-input
+            v-model="form.resourceName"
+            :placeholder="$t('01253601.e2138b')"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="预约周期" prop="maxLimitDay">
-          最多提前 <el-input v-model="form.maxLimitDay" style="width: 80px" /> 天可预约
+        <el-form-item :label="$t('01253601.4e56e7')" prop="maxLimitDay">
+          {{ $t('01253601.aa251f') }} <el-input v-model="form.maxLimitDay" style="width: 80px" />
+          {{ $t('01253601.fadb0f') }}
         </el-form-item>
         <el-form-item label="" prop="minLimitHour">
-          最少提前 <el-input v-model="form.minLimitHour" style="width: 80px" /> 分钟可预约
+          {{ $t('01253601.53fcd5') }} <el-input v-model="form.minLimitHour" style="width: 80px" />
+          {{ $t('01253601.f303ee') }}
         </el-form-item>
-        <el-form-item label="取消预约条件" prop="cancelMinute">
-          到店前 <el-input v-model="form.cancelMinute" style="width: 80px" /> 分钟可取消预约
-          (必须大于最小预约周期)
+        <el-form-item :label="$t('01253601.ea472f')" prop="cancelMinute">
+          {{ $t('01253601.931ff2') }} <el-input v-model="form.cancelMinute" style="width: 80px" />
+          {{ $t('01253601.e2492c') }}
+          {{ $t('01253601.526456') }}
         </el-form-item>
-        <el-form-item label="预约条件" prop="condition">
+        <el-form-item :label="$t('01253601.1df6fc')" prop="condition">
           <el-select v-model="form.condition">
             <el-option
               v-for="item in conditions"
@@ -49,26 +56,29 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="预约短信提醒" prop="sms_delay">
-          提前 <el-input v-model="form.sms_delay" style="width: 80px" /> 小时发送短信提醒
+        <el-form-item :label="$t('01253601.a8db01')" prop="sms_delay">
+          {{ $t('01253601.10ab23') }} <el-input v-model="form.sms_delay" style="width: 80px" />
+          {{ $t('01253601.d720c5') }}
         </el-form-item>
-        <el-form-item label="预约限制" prop="limitType">
+        <el-form-item :label="$t('01253601.5d90ff')" prop="limitType">
           <el-radio-group v-model="form.limitType" @change="limitChange">
             <el-radio v-for="item in limitType" :key="item.value" :label="item.value">
               {{ item.label }}
             </el-radio>
           </el-radio-group>
-          <br />
+          <br>
           <span v-if="form.limitType == 'limit_days'">
-            <el-input v-model="form.limit" style="width: 80px" />天内可预约1次(从预约日开始算)
+            <el-input v-model="form.limit" style="width: 80px" />{{ $t('01253601.2ecb00') }}
           </span>
           <span v-if="form.limitType == 'limit_nums'">
-            1天内可预约 <el-input v-model="form.limit" style="width: 80px" />次
+            {{ $t('01253601.54dd6f') }} <el-input v-model="form.limit" style="width: 80px" />{{
+              $t('01253601.7229ec')
+            }}
           </span>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('01253601.be5fbb') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -79,7 +89,7 @@ export default {
   data() {
     var modelChecked = (rule, val, callback) => {
       if (val.length <= 0) {
-        return callback(new Error('请选择预约模式'))
+        return callback(new Error(this.$t('01253601.5e2e72')))
       }
       callback()
     }
@@ -88,14 +98,14 @@ export default {
       let limit = this.form.limit
       if (value === 'limit_nums') {
         if (!reg.test(limit)) {
-          callback(new Error('预约次数限制必须是数字'))
+          callback(new Error(this.$t('01253601.d7c181')))
         } else {
           console.log()
           callback()
         }
       } else if (value === 'limit_days') {
         if (!reg.test(limit)) {
-          callback(new Error('预约天数限制必须是数字'))
+          callback(new Error(this.$t('01253601.3526ce')))
         } else {
           callback()
         }
@@ -104,7 +114,7 @@ export default {
     var maxLimitChecked = (rule, value, callback) => {
       let reg = /^\d*$/
       if (!reg.test(value)) {
-        callback(new Error('最多提前天数必须为整数'))
+        callback(new Error(this.$t('01253601.e2cd91')))
       } else {
         callback()
       }
@@ -112,7 +122,7 @@ export default {
     var minLimitChecked = (rule, value, callback) => {
       let reg = /^\d*$/
       if (!reg.test(value)) {
-        callback(new Error('最少提前分钟数必须为整数'))
+        callback(new Error(this.$t('01253601.5ff9d4')))
       } else {
         callback()
       }
@@ -120,7 +130,7 @@ export default {
     var smsDelayChecked = (rule, value, callback) => {
       let reg = /^\d*$/
       if (!reg.test(value)) {
-        callback(new Error('预约短信通知提醒必须为整数'))
+        callback(new Error(this.$t('01253601.60caae')))
       } else {
         callback()
       }
@@ -128,21 +138,21 @@ export default {
     var cancelMinuteChecked = (rule, value, callback) => {
       let reg = /^\d*$/
       if (!reg.test(value)) {
-        callback(new Error('取消预约条件必须为整数'))
+        callback(new Error(this.$t('01253601.67d6fd')))
       } else {
         callback()
       }
     }
     return {
       timeIntervals: [
-        { value: 15, label: '15分钟' },
-        { value: 30, label: '30分钟' },
-        { value: 60, label: '60分钟' },
-        { value: 90, label: '90分钟' }
+        { value: 15, label: this.$t('01253601.f511e9') },
+        { value: 30, label: this.$t('01253601.751a79') },
+        { value: 60, label: this.$t('01253601.743a81') },
+        { value: 90, label: this.$t('01253601.7c4d81') }
       ],
-      conditions: [{ value: 1, label: '免费预约' }],
+      conditions: [{ value: 1, label: this.$t('01253601.cf3a90') }],
       reservationModes: [
-        { value: 1, label: '门店＋时间+资源位＋服务项目' }
+        { value: 1, label: this.$t('01253601.0a6c5f') }
         //{ value: 2, label: '门店＋时间＋服务项目'}
       ],
       form: {
@@ -151,7 +161,7 @@ export default {
         maxLimitDay: 10,
         minLimitHour: 30,
         condition: 1,
-        resourceName: '资源位',
+        resourceName: this.$t('01253601.34cc0e'),
         cancelMinute: 60,
         limitType: 'not_open',
         sms_delay: 1,
@@ -159,19 +169,19 @@ export default {
       },
       rules: {
         modelSetting: [{ required: true, validator: modelChecked, trigger: 'blur' }],
-        interval: [{ required: true, message: '预约时间间隔不能为空', trigger: 'blur' }],
-        resourceName: [{ required: true, message: '资源位名称不能为空', trigger: 'blur' }],
+        interval: [{ required: true, message: this.$t('01253601.e5f6ff'), trigger: 'blur' }],
+        resourceName: [{ required: true, message: this.$t('01253601.f6cfeb'), trigger: 'blur' }],
         maxLimitDay: [{ required: true, validator: maxLimitChecked, trigger: 'blur' }],
         minLimitHour: [{ required: true, validator: minLimitChecked, trigger: 'blur' }],
         cancelMinute: [{ required: true, validator: cancelMinuteChecked, trigger: 'blur' }],
-        condition: [{ required: true, message: '预约条件不能为空', trigger: 'blur' }],
+        condition: [{ required: true, message: this.$t('01253601.09854f'), trigger: 'blur' }],
         sms_delay: [{ required: true, validator: smsDelayChecked, trigger: 'blur' }],
         limitType: [{ required: true, validator: limitTypeChecked, trigger: 'blur' }]
       },
       limitType: [
-        { value: 'not_open', label: '不开启限制' },
-        { value: 'limit_days', label: '天数限制' },
-        { value: 'limit_nums', label: '次数限制' }
+        { value: 'not_open', label: this.$t('01253601.89b508') },
+        { value: 'limit_days', label: this.$t('01253601.215c4c') },
+        { value: 'limit_nums', label: this.$t('01253601.a3d686') }
       ]
     }
   },
@@ -184,7 +194,7 @@ export default {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '保存预约配置成功'
+            message: this.$t('01253601.756e9d')
           })
         }
         this.getData()

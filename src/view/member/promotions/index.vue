@@ -7,13 +7,13 @@
   <SpPage>
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="基础注册促销" name="first">
+      <el-tab-pane :label="$t('dfc4d05a.d8bc17')" name="first">
         <general :active-name="activeName" />
       </el-tab-pane>
-      <el-tab-pane label="赠送(付费会员卡)" name="third">
+      <el-tab-pane :label="$t('dfc4d05a.262138')" name="third">
         <sale-member-card :active-name="activeName" />
       </el-tab-pane>
-      <el-tab-pane label="注册送积分" name="fourth">
+      <el-tab-pane :label="$t('dfc4d05a.450ff4')" name="fourth">
         <point :active-name="activeName" />
       </el-tab-pane>
     </el-tabs>

@@ -12,16 +12,16 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('d6b9cf0a.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="添加时间筛选"
+          :placeholder="$t('d6b9cf0a.5d92ab')"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="status" label="处理状态:">
-        <el-select v-model="params.status" placeholder="请选择处理状态">
+      <SpFilterFormItem prop="status" :label="$t('d6b9cf0a.da9d4c')">
+        <el-select v-model="params.status" :placeholder="$t('d6b9cf0a.9e471b')">
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
@@ -33,34 +33,34 @@
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
-      <el-table-column prop="division_id" label="指令ID" width="180" />
-      <el-table-column prop="total_fee" label="订单金额">
+      <el-table-column prop="division_id" :label="$t('d6b9cf0a.662bb7')" width="180" />
+      <el-table-column prop="total_fee" :label="$t('d6b9cf0a.b1862e')">
         <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="actual_fee" label="实际金额">
+      <el-table-column prop="actual_fee" :label="$t('d6b9cf0a.dff07e')">
         <template slot-scope="scope"> ￥{{ scope.row.actual_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="division_fee" label="分账金额">
+      <el-table-column prop="division_fee" :label="$t('d6b9cf0a.1e61f1')">
         <template slot-scope="scope"> ￥{{ scope.row.division_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="error_desc" label="错误描述" />
-      <el-table-column prop="create_time" label="创建时间" width="200">
+      <el-table-column prop="error_desc" :label="$t('d6b9cf0a.f23a26')" />
+      <el-table-column prop="create_time" :label="$t('d6b9cf0a.eca37c')" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="is_resubmit" label="是否已重新提交" width="120">
+      <el-table-column prop="is_resubmit" :label="$t('d6b9cf0a.8ad7ca')" width="120">
         <template slot-scope="scope">
-          <span v-if="scope.row.is_resubmit == '1'"> 已提交</span>
-          <span v-else-if="scope.row.is_resubmit == '2'"> 待处理</span>
-          <span v-else> 未提交</span>
+          <span v-if="scope.row.is_resubmit == '1'"> {{ $t('d6b9cf0a.f5e626') }}</span>
+          <span v-else-if="scope.row.is_resubmit == '2'"> {{ $t('d6b9cf0a.047109') }}</span>
+          <span v-else> {{ $t('d6b9cf0a.c3ef66') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column :label="$t('d6b9cf0a.2b6bc0')" width="100">
         <template slot-scope="scope">
           <el-link v-if="scope.row.is_resubmit === '0'">
             <el-button type="primary" size="mini" @click="refundResubmit(scope.row)">
-              重新提交
+              {{ $t('d6b9cf0a.ece899') }}
             </el-button>
           </el-link>
         </template>
@@ -84,6 +84,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
+import { i18n } from '@/i18n'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -99,10 +100,10 @@ export default {
         ...initialParams
       },
       statusList: [
-        { name: '全部', value: 'all' },
-        { name: '已提交', value: 'is_resubmit' },
-        { name: '未提交', value: 'not' },
-        { name: '待处理', value: 'waiting' }
+        { name: i18n.t('d6b9cf0a.a8b0c2'), value: 'all' },
+        { name: i18n.t('d6b9cf0a.f5e626'), value: 'is_resubmit' },
+        { name: i18n.t('d6b9cf0a.c3ef66'), value: 'not' },
+        { name: i18n.t('d6b9cf0a.047109'), value: 'waiting' }
       ]
     }
   },
@@ -150,7 +151,7 @@ export default {
     },
     async refundResubmit(row) {
       await this.$api.trade.chinaumsDivisionErrorlogResubmit(row.id)
-      this.$message.success('提交成功!')
+      this.$message.success(this.$t('d6b9cf0a.814952'))
       this.onSearch()
     },
     onSearch() {

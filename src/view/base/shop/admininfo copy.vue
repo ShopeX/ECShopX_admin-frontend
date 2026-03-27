@@ -4,16 +4,16 @@
 -->
 
 <template>
-  <el-card shadow="never" header="账号信息">
+  <el-card shadow="never" :header="$t('b0145cf3.53cab4')">
     <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
-        <el-form-item label="账户">
+        <el-form-item :label="$t('b0145cf3.7116e7')">
           {{ id }}
         </el-form-item>
-        <el-form-item label="昵称">
+        <el-form-item :label="$t('b0145cf3.23eb0e')">
           <el-input v-model="form.username" type="text" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="头像">
+        <el-form-item :label="$t('b0145cf3.4c50ee')">
           <imgBox :img-url="form.head_portrait" inline @click="handleImgChange" />
           <imgPicker
             :dialog-visible="imgDialog"
@@ -24,32 +24,32 @@
         </el-form-item>
 
         <template v-if="change_pwd">
-          <el-form-item label="修改密码">
+          <el-form-item :label="$t('b0145cf3.7fc88a')">
             <el-input
               v-model="form.pwd"
               :type="new_input_type"
               style="width: 300px"
-              placeholder="请输入新密码"
+              :placeholder="$t('b0145cf3.abdd7e')"
             >
               <i
                 slot="suffix"
-                title="隐藏密码"
+                :title="$t('b0145cf3.dd909a')"
                 style="cursor: pointer"
                 class="el-icon-view"
                 @click="changeNewPass"
               />
             </el-input>
           </el-form-item>
-          <el-form-item label="确认密码">
+          <el-form-item :label="$t('b0145cf3.3fbdde')">
             <el-input
               v-model="form.repwd"
               :type="input_type"
               style="width: 300px"
-              placeholder="请输入确认密码"
+              :placeholder="$t('b0145cf3.a7a9a2')"
             >
               <i
                 slot="suffix"
-                title="隐藏密码"
+                :title="$t('b0145cf3.dd909a')"
                 style="cursor: pointer"
                 class="el-icon-view"
                 @click="changePass"
@@ -58,18 +58,22 @@
           </el-form-item>
         </template>
         <template v-else>
-          <el-form-item label="修改密码">
+          <el-form-item :label="$t('b0145cf3.7fc88a')">
             <span class="frm-tips"
-              >超级管理员需通过商派账号中心进行
-              <a href="https://account.shopex.cn/account/security" target="_blank"
-                >修改密码</a
-              ></span
+              >{{ $t('b0145cf3.3d509c') }}
+              <a href="https://account.shopex.cn/account/security" target="_blank">{{
+                $t('b0145cf3.7fc88a')
+              }}</a></span
             >
           </el-form-item>
         </template>
       </div>
       <div class="section-footer content-center">
-        <el-button type="primary" :loading="loading" @click="onSubmit"> 保存 </el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">
+{{
+          $t('b0145cf3.be5fbb')
+        }}
+</el-button>
       </div>
     </el-form>
   </el-card>
@@ -126,7 +130,7 @@ export default {
       updateAdminInfo(this.form).then((response) => {
         if (response.data.data) {
           this.$message({
-            message: '更新成功',
+            message: this.$t('b0145cf3.55aa63'),
             type: 'success',
             onClose() {
               that.loading = false

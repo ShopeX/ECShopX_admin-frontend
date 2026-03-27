@@ -6,28 +6,34 @@
 <template>
   <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="role_name" label="角色名称:">
-        <el-input v-model="params.role_name" placeholder="请输入角色名称" />
+      <SpFilterFormItem prop="role_name" :label="$t('5a3a4a5f.6e75d5')">
+        <el-input v-model="params.role_name" :placeholder="$t('5a3a4a5f.2a92f5')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
+      <el-button type="primary" icon="plus" @click="addRoleLabels">
+        {{ $t('5a3a4a5f.596b04') }}
+      </el-button>
     </div>
 
     <el-table v-loading="loading" border :data="rolesList">
-      <el-table-column prop="role_name" label="角色名称" />
-      <el-table-column prop="permission" label="角色权限">
+      <el-table-column prop="role_name" :label="$t('5a3a4a5f.10a6f1')" />
+      <el-table-column prop="permission" :label="$t('5a3a4a5f.86a1be')">
         <template slot-scope="scope">
           <el-tree :data="scope.row.permission_tree" :props="defaultProps" />
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('5a3a4a5f.2b6bc0')">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">
+{{
+              $t('5a3a4a5f.95b351')
+            }}
+</el-button>
             <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)">
-              删除
+              {{ $t('5a3a4a5f.2f4aad') }}
             </el-button>
           </div>
         </template>
@@ -46,16 +52,16 @@
     <el-dialog :title="editRoleTitle" :visible.sync="editRoleVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="90px">
-          <el-form-item label="角色名称">
+          <el-form-item :label="$t('5a3a4a5f.10a6f1')">
             <el-col :span="14">
               <el-input
                 v-model="form.role_name"
                 :maxlength="20"
-                placeholder="订单管理员、商品管理员、等等"
+                :placeholder="$t('5a3a4a5f.395730')"
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="角色权限">
+          <el-form-item :label="$t('5a3a4a5f.86a1be')">
             <el-tree
               ref="tree"
               :data="menu"
@@ -68,8 +74,10 @@
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitRoleAction"> 保存 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('5a3a4a5f.625fb2') }} </el-button>
+        <el-button type="primary" @click="submitRoleAction">
+          {{ $t('5a3a4a5f.be5fbb') }}
+        </el-button>
       </div>
     </el-dialog>
     <!-- 添加、编辑基础物料-结束 -->
@@ -124,7 +132,7 @@ export default {
     },
     addRoleLabels() {
       // 添加物料弹框
-      this.editRoleTitle = '角色添加'
+      this.editRoleTitle = this.$t('5a3a4a5f.d36f39')
       this.editRoleVisible = true
       this.isEdit = false
       this.form.role_name = ''
@@ -138,7 +146,7 @@ export default {
     },
     editRoleAction(index, row) {
       // 编辑物料弹框
-      this.editRoleTitle = '角色编辑'
+      this.editRoleTitle = this.$t('5a3a4a5f.b0acd5')
       this.editRoleVisible = true
       this.isEdit = true
       this.form.role_name = row.role_name
@@ -195,21 +203,21 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '页面已过期，请刷新重试'
+            message: this.$t('5a3a4a5f.929b60')
           })
         })
     },
     deleteRoleAction(index, row) {
-      this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('5a3a4a5f.82cd52'), this.$t('5a3a4a5f.02d981'), {
+        confirmButtonText: this.$t('5a3a4a5f.38cf16'),
+        cancelButtonText: this.$t('5a3a4a5f.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteRole(row.role_id).then((response) => {
             this.rolesList.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('5a3a4a5f.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -218,7 +226,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('5a3a4a5f.2111cc')
           })
         })
     }

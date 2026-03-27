@@ -6,13 +6,13 @@
 <template>
   <div class="section-white content-padded">
     <el-form :ref="form" v-model="form" class="add-form">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.active_name" placeholder="请填写活动名称" />
+      <el-form-item :label="$t('8e88d5e8.39834b')">
+        <el-input v-model="form.active_name" :placeholder="$t('8e88d5e8.7e726b')" />
       </el-form-item>
-      <el-form-item label="指定会员">
+      <el-form-item :label="$t('8e88d5e8.a4a94f')">
         <el-input
           v-model="form.member"
-          placeholder="请输入会员手机号"
+          :placeholder="$t('8e88d5e8.c0e45d')"
           disabled
           style="width: 420px"
         /><!-- &nbsp;<span class="frm-tips">多个手机号逗号（英文字符）分隔</span> -->
@@ -24,9 +24,12 @@
                 :indeterminate="isIndeterminate"
                 @change="handleCheckAllChange"
               >
-                全选 </el-checkbox
-              ><span style="line-height: 36px">（选择会员手机号）</span>
-              <el-button type="text" class="f_r" @click="showAddMobile"> 添加手机号 </el-button>
+                {{ $t('8e88d5e8.66eeac') }}
+</el-checkbox
+              ><span style="line-height: 36px">{{ $t('8e88d5e8.816fa4') }}</span>
+              <el-button type="text" class="f_r" @click="showAddMobile">
+                {{ $t('8e88d5e8.3a126e') }}
+              </el-button>
             </div>
             <el-checkbox-group v-model="checkedMobile" @change="handleCheckedMobileChange">
               <div>
@@ -38,39 +41,41 @@
           </el-card>
         </div>
       </el-form-item>
-      <el-form-item label="短信提醒">
+      <el-form-item :label="$t('8e88d5e8.ea549e')">
         <el-switch v-model="form.message_remind" active-color="#13ce66" inactive-color="#ff4949" />
       </el-form-item>
-      <el-form-item label="设置礼品">
-        <el-button type="primary" @click="addGift"> 添加礼品 </el-button>
+      <el-form-item :label="$t('8e88d5e8.047ac1')">
+        <el-button type="primary" @click="addGift"> {{ $t('8e88d5e8.874fa7') }} </el-button>
         <el-table :data="form.activeData" class="table">
-          <el-table-column prop="name" label="礼品名称" />
-          <el-table-column prop="type" label="类型" />
-          <el-table-column prop="worth" label="价值" />
-          <el-table-column prop="validity" label="有效期" />
-          <el-table-column prop="num" label="发放数量" />
-          <el-table-column label="操作">
+          <el-table-column prop="name" :label="$t('8e88d5e8.e8d2de')" />
+          <el-table-column prop="type" :label="$t('8e88d5e8.226b09')" />
+          <el-table-column prop="worth" :label="$t('8e88d5e8.021ac9')" />
+          <el-table-column prop="validity" :label="$t('8e88d5e8.bb114a')" />
+          <el-table-column prop="num" :label="$t('8e88d5e8.c3c2e5')" />
+          <el-table-column :label="$t('8e88d5e8.2b6bc0')">
             <template slot-scope="scope">
-              <el-button type="text"> 编辑 </el-button>
-              <el-button type="text" @click="remove(scope.row, scope.$index)"> 删除 </el-button>
+              <el-button type="text"> {{ $t('8e88d5e8.95b351') }} </el-button>
+              <el-button type="text" @click="remove(scope.row, scope.$index)">
+                {{ $t('8e88d5e8.2f4aad') }}
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-form-item>
     </el-form>
     <div class="section-footer content-center">
-      <el-button type="primary"> 保存 </el-button>
+      <el-button type="primary"> {{ $t('8e88d5e8.be5fbb') }} </el-button>
     </div>
     <gift-dialog :switch-on="isopen" @closeDialog="closeDialog" />
 
-    <el-dialog title="添加手机号" :visible.sync="addmobileVisible">
+    <el-dialog :title="$t('8e88d5e8.3a126e')" :visible.sync="addmobileVisible">
       <div>
-        <span>手机号：</span
-        ><el-input v-model="mobile" placeholder="请输入手机号" style="width: 240px" />
+        <span>{{ $t('8e88d5e8.41fe81') }}</span
+        ><el-input v-model="mobile" :placeholder="$t('8e88d5e8.6e4f4b')" style="width: 240px" />
       </div>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button @click="addmobileVisible = false"> 取消 </el-button>
-        <el-button type="primary" @click="addMobile"> 确定 </el-button>
+        <el-button @click="addmobileVisible = false"> {{ $t('8e88d5e8.625fb2') }} </el-button>
+        <el-button type="primary" @click="addMobile"> {{ $t('8e88d5e8.38cf16') }} </el-button>
       </div>
     </el-dialog>
   </div>

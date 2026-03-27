@@ -15,7 +15,7 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" />
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addGroups">
-          新增拼团活动
+          {{ $t('7b2e18b1.2f73d2') }}
         </el-button>
       </div>
 
@@ -53,12 +53,16 @@ export default {
     return {
       loading: false,
       view: 0,
-      activeName: 'first',
-      tabList: [
-        { name: '全部', activeName: 'first' },
-        { name: '未开始', activeName: 'second' },
-        { name: '进行中', activeName: 'third' },
-        { name: '已结束', activeName: 'fourth' }
+      activeName: 'first'
+    }
+  },
+  computed: {
+    tabList() {
+      return [
+        { name: this.$t('7b2e18b1.a8b0c2'), activeName: 'first' },
+        { name: this.$t('7b2e18b1.dd4e55'), activeName: 'second' },
+        { name: this.$t('7b2e18b1.fb852f'), activeName: 'third' },
+        { name: this.$t('7b2e18b1.047fab'), activeName: 'fourth' }
       ]
     }
   },

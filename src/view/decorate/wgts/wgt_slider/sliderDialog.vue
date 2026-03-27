@@ -52,7 +52,7 @@
               src: videoUrlStr
             }
           ],
-          notSupportedMessage: '此视频暂无法播放，请稍后再试',
+          notSupportedMessage: i18n.t('d7d37966.01c0da'),
           controlBar: false
         }"
       />
@@ -75,20 +75,24 @@
       :form-list="sliderFormList"
       :submit="false"
       label-width="110px"
+      label-position="left"
     />
   </div>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import hotzone from 'vue-hotzone'
 import CompPickerLink from '../../comps/comp-pickerLink'
 import { cloneDeep } from 'lodash'
 import { getImageAttribute, getVideoAttribute } from './utils'
 import SpForm from '@/components/sp-form'
+import SpImagePicker from '@/components/sp-image-picker/index.vue'
 export default {
   name: 'SliderDialog',
   components: {
     SpForm,
+    SpImagePicker,
     hotzone,
     CompPickerLink
   },
@@ -99,7 +103,7 @@ export default {
     height: Number
   },
   data() {
-    return {
+    return {i18n,
       sliderForm: null,
       h: '0px',
       isRemoving: false,
@@ -210,6 +214,9 @@ export default {
         this.$set(this.sliderForm, 'overlay', '')
         this.$set(this.sliderForm, 'overlayHotData', [])
       }
+    },
+    onChangeVideoLink(e) {
+      this.$set(this.sliderForm, 'data', { ...(this.sliderForm.data || {}), ...e })
     }
   },
   computed: {
@@ -228,23 +235,27 @@ export default {
       const { media_type, hotData = [], overlayHotData = [] } = this.sliderForm
       return [
         {
-          label: '内容类型',
+          label: i18n.t('d7d37966.701f7f'),
           key: 'media_type',
           type: 'radio',
+          width:'100%',
+          
           options: [
             {
               label: 'img',
-              name: '图片'
+              name: i18n.t('d7d37966.20def7')
             },
             {
               label: 'video',
-              name: '视频'
+              name: i18n.t('d7d37966.7fcf42')
             }
           ]
         },
         {
-          label: media_type == 'video' ? '视频' : '图片',
+          label: media_type == 'video' ? i18n.t('d7d37966.7fcf42') : i18n.t('d7d37966.20def7'),
           key: 'videoUrl',
+          
+          width:'100%',
           component: ({ key }) => {
             return (
               <div class='video-list'>
@@ -257,15 +268,22 @@ export default {
                       v-model={this.sliderForm.imgUrl}
                       size='small'
                       class='video-link'
-                      text={media_type == 'video' ? '封面' : '图片'}
+                      text={
+                        media_type == 'video'
+                          ? i18n.t('d7d37966.412310')
+                          : i18n.t('d7d37966.20def7')
+                      }
                     />
-                    <div>建议尺寸：（宽度640px，高度自适应）</div>
+                    <div>{i18n.t('d7d37966.e76dee')}</div>
                     <div class='zone-list-hotdata'>
                       {hotData?.map((item, index) => {
                         return (
                           <div class='zone-item'>
                             <div class='zone-item-label'>
-                              <span>热区{index + 1}</span>
+                              <span>
+                                {i18n.t('d7d37966.50da72')}
+                                {index + 1}
+                              </span>
 
                               <el-button
                                 type='text'
@@ -274,7 +292,7 @@ export default {
                                   this.handleRemove(index, 'img')
                                 }}
                               >
-                                删除
+                                {i18n.t('d7d37966.2f4aad')}
                               </el-button>
                             </div>
                             <CompPickerLink
@@ -295,30 +313,64 @@ export default {
           }
         },
         {
-          label: '入场自动播放',
+          label: i18n.t('58595357.e3cf91'),
+          key: 'videoLinkPage',
+          component: () => (
+            <CompPickerLink
+              isShowH5Link={false}
+              value={this.sliderForm.data || {}}
+              wgtType='hotzone'
+              class='zone-item-picker'
+              on-change={(e) => this.onChangeVideoLink(e)}
+            />
+          ),
+          isShow: media_type == 'video'
+        },
+        {
+          label: i18n.t('d7d37966.641cfa'),
+          key: 'imgUrl',
+          width:'100%',
+          
+          component: () => (
+            <SpImagePicker
+              v-model={this.sliderForm.imgUrl}
+              size='small'
+              class='video-link'
+            />
+          ),
+          isShow: media_type == 'video'
+        },
+        {
+          label: i18n.t('d7d37966.b8cfcd'),
           key: 'autoplay',
+          width:'100%',
+          
           type: 'switch',
           isShow: media_type == 'video'
         },
         {
-          label: '离场视频交互',
+          label: i18n.t('d7d37966.b46893'),
           key: 'interact',
+          width:'100%',
+          
           type: 'radio',
           options: [
             {
               label: 'reset',
-              name: '重置'
+              name: i18n.t('d7d37966.4b9c32')
             },
             {
               label: 'pause',
-              name: '暂停'
+              name: i18n.t('d7d37966.8d63ef')
             }
           ],
           isShow: media_type == 'video'
         },
         {
-          label: media_type == 'video' ? '视频叠层' : '图片叠层',
+          label: media_type == 'video' ? i18n.t('d7d37966.17aaa3') : i18n.t('d7d37966.680a76'),
           key: 'overlay',
+          width:'100%',
+          
           component: ({ key }) => {
             return (
               <div class='overlay-list'>
@@ -330,13 +382,16 @@ export default {
                     this.changeOverlay(e)
                   }}
                 />
-                <div>建议尺寸：（宽度640px，高度自适应）</div>
+                <div>{i18n.t('d7d37966.e76dee')}</div>
                 <div class='zone-list-overlaydata'>
                   {overlayHotData?.map((item, index) => {
                     return (
                       <div class='zone-item'>
                         <div class='zone-item-label'>
-                          <span>叠层热区{index + 1}</span>
+                          <span>
+                            {i18n.t('d7d37966.5cefe9')}
+                            {index + 1}
+                          </span>
                           <el-button
                             type='text'
                             size='small'
@@ -344,7 +399,7 @@ export default {
                               this.handleRemove(index, 'overlay')
                             }}
                           >
-                            删除
+                            {i18n.t('d7d37966.2f4aad')}
                           </el-button>
                         </div>
                         <CompPickerLink
@@ -363,31 +418,37 @@ export default {
           }
         },
         {
-          label: '叠层宽度',
+          label: i18n.t('d7d37966.68f333'),
           key: 'overlayWidth',
+          width:'100%',
+          
           isShow: this.sliderForm.overlay,
-          tip: '单位为 %',
+          tip: i18n.t('d7d37966.dddfd9'),
           type: 'slider',
           maxlength: 10,
           showInput: true,
-          placeholder: '请输入宽度'
+          placeholder: i18n.t('d7d37966.8bc93d')
         },
         {
-          label: '叠层下边距离',
+          label: i18n.t('d7d37966.7c2c35'),
           key: 'overlaybuttom',
+          width:'100%',
+          
           isShow: this.sliderForm.overlay,
           type: 'slider',
-          tip: '单位为 %',
+          tip: i18n.t('d7d37966.dddfd9'),
           showInput: true,
           maxlength: 10,
-          placeholder: '请输入下边距离'
+          placeholder: i18n.t('d7d37966.76c356')
         },
         {
-          label: '叠层左边距离',
+          label: i18n.t('d7d37966.d1d8cd'),
           key: 'overlayLeft',
+          width:'100%',
+          
           isShow: this.sliderForm.overlay,
           showInput: true,
-          tip: '单位为 %',
+          tip: i18n.t('d7d37966.dddfd9'),
           type: 'slider',
           maxlength: 10
         }
@@ -410,6 +471,10 @@ export default {
         // 保证热区数组存在，避免后续访问 .length 或 .push 报错
         if (!Array.isArray(this.sliderForm.hotData)) this.sliderForm.hotData = []
         if (!Array.isArray(this.sliderForm.overlayHotData)) this.sliderForm.overlayHotData = []
+        // 视频类型保证 data（选择路径）存在
+        if (this.sliderForm.media_type === 'video' && !this.sliderForm.data) {
+          this.$set(this.sliderForm, 'data', { linkPage: '', title: '', id: '' })
+        }
         this.h = this.height || 375
       },
       deep: true,
@@ -548,7 +613,6 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 5px;
-      margin-left: -80px;
 
       .zone-item {
         margin-bottom: 5px;
@@ -575,9 +639,9 @@ export default {
 </style>
 <style lang="scss">
 .wgts-slider-dialog {
-  .hz-u-img {
+  .hz-u-img{
     object-fit: cover;
-    max-height: calc(72vh - 60px) !important;
+    max-height: calc(72vh - 60px)!important;
   }
 }
 </style>

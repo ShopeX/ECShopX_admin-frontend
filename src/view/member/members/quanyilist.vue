@@ -22,47 +22,55 @@
   <div class="section-white">
     <el-row class="content-bottom-padded" :gutter="20">
       <el-col :span="3">
-        <el-button type="primary" icon="plus" @click="addResource"> 添加权益 </el-button>
+        <el-button type="primary" icon="plus" @click="addResource">
+{{
+          $t('67f91254.ba6956')
+        }}
+</el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="rightsList" border>
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <div v-for="info in scope.row.label_infos">
-            <span>包含物料：</span
+          <div v-for="(info, idx) in scope.row.label_infos" :key="idx">
+            <span>{{ $t('67f91254.b87551') }}</span
             ><el-tag type="success">
               {{ info.label_name }}
             </el-tag>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="rights_name" label="名称" min-width="140" />
-      <el-table-column prop="rights_from" label="来源" min-width="100" />
-      <el-table-column prop="operator_desc" label="代客下单操作员" />
-      <el-table-column prop="total_num" label="总数量">
+      <el-table-column prop="rights_name" :label="$t('67f91254.d7ec2d')" min-width="140" />
+      <el-table-column prop="rights_from" :label="$t('67f91254.26ca20')" min-width="100" />
+      <el-table-column prop="operator_desc" :label="$t('67f91254.0cba5b')" />
+      <el-table-column prop="total_num" :label="$t('67f91254.8887e3')">
         <template slot-scope="scope">
           <span v-if="scope.row.is_not_limit_num == 2">{{ scope.row.total_num }}</span>
-          <span v-if="scope.row.is_not_limit_num == 1">无限次</span>
+          <span v-if="scope.row.is_not_limit_num == 1">{{ $t('67f91254.53e5df') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="total_consum_num" label="已核销数量" />
-      <el-table-column label="过期时间">
+      <el-table-column prop="total_consum_num" :label="$t('67f91254.d6004a')" />
+      <el-table-column :label="$t('67f91254.1fa23f')">
         <template slot-scope="scope">
           <span>{{ scope.row.end_time | datetime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态">
+      <el-table-column :label="$t('67f91254.3fea7c')">
         <template slot-scope="scope">
           <template v-if="scope.row.is_not_limit_num == 2">
             <el-tag v-if="scope.row.total_num == scope.row.total_consum_num" size="mini">
-              已用完
+              {{ $t('67f91254.535023') }}
             </el-tag>
           </template>
           <template v-if="scope.row.is_not_limit_num == 1">
-            <el-tag size="mini"> 无限次 </el-tag>
+            <el-tag size="mini">{{ $t('67f91254.53e5df') }}</el-tag>
           </template>
-          <el-tag v-else-if="scope.row.is_valid == '1'" type="success" size="mini"> 有效 </el-tag>
-          <el-tag v-else size="mini"> 已过期 </el-tag>
+          <el-tag v-else-if="scope.row.is_valid == '1'" type="success" size="mini">
+{{
+            $t('67f91254.c6cc39')
+          }}
+</el-tag>
+          <el-tag v-else size="mini">{{ $t('67f91254.4d5ccd') }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -75,7 +83,7 @@
     </div>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
-      title="添加权益"
+      :title="$t('67f91254.ba6956')"
       class="right-dialog"
       :visible.sync="addRightsDialog"
       :before-close="handleCancelLabelsDialog"
@@ -87,10 +95,10 @@
               <el-input v-model="mobile"  placeholder="请输入添加权益用户的手机号"></el-input>
             </el-col>
           </el-form-item> -->
-          <el-form-item label-width="100px" label="选择权益商品">
+          <el-form-item label-width="100px" :label="$t('67f91254.015d03')">
             <el-transfer
               v-model="addRightsItems"
-              :titles="['商品列表', '已选中']"
+              :titles="[$t('67f91254.437974'), $t('67f91254.543b04')]"
               :data="goodsList"
             >
               <div slot="left-footer" class="transfer-footer">
@@ -107,7 +115,7 @@
             </el-transfer>
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button type="primary" @click="onSubmit"> 确定添加 </el-button>
+            <el-button type="primary" @click="onSubmit">{{ $t('67f91254.b04fcb') }}</el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -176,7 +184,7 @@ export default {
         this.addRightsItems = []
         this.$message({
           type: 'success',
-          message: '添加权益成功'
+          message: this.$t('67f91254.d71d42')
         })
         this.getRightsList()
         this.addRightsDialog = false

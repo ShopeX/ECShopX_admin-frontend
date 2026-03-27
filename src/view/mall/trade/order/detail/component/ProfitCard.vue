@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <CustomCard title="分润信息">
+  <CustomCard :title="$t('a29ce79c.ee6cce')">
     <el-row v-for="(row, index) in baseInfo" :key="index">
       <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="6">
         <div class="flex">
@@ -31,11 +31,11 @@ export default {
       baseInfo: [
         [
           {
-            name: '分润门店类型',
+            name: self.$t('a29ce79c.c60180'),
             field: 'profit_type',
             filter: self.typeFilter
           },
-          { name: '分润总金额', field: '', filter: self.totalFilter }
+          { name: self.$t('a29ce79c.15ac30'), field: '', filter: self.totalFilter }
         ]
       ]
     }
@@ -51,11 +51,11 @@ export default {
     typeFilter: function (item) {
       let returnValue = ''
       if (this.profit.profit_type == 1) {
-        returnValue = '总部分润'
+        returnValue = this.$t('a29ce79c.43d81b')
       } else if (this.profit.profit_type == 2) {
-        returnValue = '自营门店分润'
+        returnValue = this.$t('a29ce79c.7635bc')
       } else if (this.profit.profit_type == 3) {
-        returnValue = '加盟门店分润'
+        returnValue = this.$t('a29ce79c.3c78d2')
       }
       return returnValue
     }

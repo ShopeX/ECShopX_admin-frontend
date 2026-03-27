@@ -6,8 +6,8 @@
 <template>
   <div class="wxalink">
     <div class="line">
-      <div class="name">小程序名称</div>
-      <el-select v-model="app_id" placeholder="请选择" @change="selectChange">
+      <div class="name">{{ $t('e4e3a61b.d34f1f') }}</div>
+      <el-select v-model="app_id" :placeholder="$t('e4e3a61b.708c9d')" @change="selectChange">
         <el-option
           v-for="(item, index) in options"
           :key="`${item.value}${index}`"
@@ -17,10 +17,10 @@
       </el-select>
     </div>
     <div class="line">
-      <div class="name">页面名称</div>
+      <div class="name">{{ $t('e4e3a61b.b78454') }}</div>
       <el-input v-model="route_name" />
     </div>
-    <el-button type="primary" @click="search"> 搜 索 </el-button>
+    <el-button type="primary" @click="search"> {{ $t('e4e3a61b.36343f') }} </el-button>
   </div>
 </template>
 

@@ -30,22 +30,24 @@
 <template>
   <el-card class="el-card--normal">
     <div slot="header">
-      <div>店铺图片<span class="frm-tips">（只能上传jpg/png文件，且不超过2M）</span></div>
+      <div>
+        {{ $t('996865f0.0a151e') }}<span class="frm-tips">{{ $t('996865f0.1431d1') }}</span>
+      </div>
     </div>
     <el-form label-width="120px" :inline="true">
-      <el-form-item label="店铺Logo">
+      <el-form-item :label="$t('996865f0.332050')">
         <div class="upload-box" @click="handleImgPicker('logo')">
-          <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar" />
+          <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar">
           <i v-else class="el-icon-camera" />
         </div>
-        <div class="form-item-tip">推荐尺寸：140px * 140px</div>
+        <div class="form-item-tip">{{ $t('996865f0.42e8d1') }}</div>
       </el-form-item>
-      <el-form-item label="商铺背景">
+      <el-form-item :label="$t('996865f0.648aec')">
         <div class="upload-box" @click="handleImgPicker('banner')">
-          <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar" />
+          <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar">
           <i v-else class="el-icon-camera" />
         </div>
-        <div class="form-item-tip">推荐尺寸：400px * 260px</div>
+        <div class="form-item-tip">{{ $t('996865f0.186818') }}</div>
       </el-form-item>
     </el-form>
 

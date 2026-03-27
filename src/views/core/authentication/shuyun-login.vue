@@ -25,7 +25,7 @@ export default {
       let { code } = this.$route.query
       this.code = code
       if (!this.code) {
-        this.$message.error('登录失败，缺失code！')
+        this.$message.error(this.$t('c97126a1.bf6e3f'))
         return
       }
       this.handleLogin()
@@ -39,7 +39,7 @@ export default {
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: 'admin' })
-          this.$message.success('登录成功')
+          this.$message.success(this.$t('24b2720c.71fa3b'))
           await this.$store.dispatch('user/fetchAccessMenus')
           await this.$store.dispatch('user/fetchAccountInfo')
           setTimeout(() => {

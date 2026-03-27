@@ -3,17 +3,18 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrGoods from './attr-goods'
 import CompPickerLink from '../../comps/comp-pickerLink'
 
 const config = {
   name: 'goodsScroll',
   setting: [
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
-    { label: '直接加购', key: 'addCart', component: 'switch', value: false },
-    { label: '显示价格', key: 'showPrice', component: 'switch', value: true },
+    { label: i18n.t('e6a33596.4707ba'), key: 'padded', component: 'switch', value: true },
+    { label: i18n.t('e6a33596.319337'), key: 'addCart', component: 'switch', value: false },
+    { label: i18n.t('e6a33596.ba302e'), key: 'showPrice', component: 'switch', value: true },
     {
-      label: '商品类型',
+      label: i18n.t('e6a33596.2af133'),
       key: 'goodsSetting',
       component: function (h, { key }) {
         return <AttrGoods type={this.value[key].type} v-model={this.value[key]} />
@@ -23,7 +24,7 @@ const config = {
           {
             imgUrl: '',
             content: '',
-            title: '商品名称',
+            title: 'e6a33596.1fd1d5',
             id: '',
             price: 8888,
             market_price: 10
@@ -32,7 +33,7 @@ const config = {
         secKillGoods: [
           {
             imgUrl: '',
-            title: '商品名称',
+            title: 'e6a33596.1fd1d5',
             id: '',
             price: 8888
           }
@@ -40,7 +41,7 @@ const config = {
         limitSecKillGoods: [
           {
             imgUrl: '',
-            title: '商品名称',
+            title: 'e6a33596.1fd1d5',
             id: '',
             price: 8888
           }
@@ -51,7 +52,7 @@ const config = {
       }
     },
     {
-      label: '开启排行榜',
+      label: i18n.t('e6a33596.aaa49b'),
       key: 'leaderboard',
       component: 'switch',
       value: true,
@@ -60,7 +61,7 @@ const config = {
       }
     },
     {
-      label: '更多链接',
+      label: i18n.t('e6a33596.eec533'),
       key: 'moreLink',
       component: function (h, { key }) {
         return <CompPickerLink v-model={this.value[key]} style='margin-top: 7px;' />
@@ -68,13 +69,13 @@ const config = {
       value: {}
     },
     {
-      label: '更多图片',
+      label: i18n.t('e6a33596.0ecbd5'),
       key: 'backgroundImg',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' style='margin-top: 10px;' />
       },
       value: '',
-      tip: `建议尺寸:（宽度130px，高度200px）`
+      tip: 'e6a33596.f1e36f'
     }
   ],
   transformIn: (v) => {

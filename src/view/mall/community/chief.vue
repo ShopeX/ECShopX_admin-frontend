@@ -13,18 +13,20 @@
   <SpRouterView>
     <SpPage>
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="name" label="团长姓名:">
-          <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
+        <SpFilterFormItem prop="name" :label="$t('c96a5149.1e5021')">
+          <el-input v-model="formQuery.name" :placeholder="$t('c96a5149.9d2c66')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('c96a5149.ce2bf3')">
+          <el-input v-model="formQuery.mobile" :placeholder="$t('c96a5149.999e78')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" icon="el-plus-circle" @click="chiefupload"> 团长导入 </el-button>
+        <el-button type="primary" icon="el-plus-circle" @click="chiefupload">
+          {{ $t('c96a5149.5ad881') }}
+        </el-button>
         <el-button type="primary" icon="el-plus-circle" @click="handleApprove">
-          团长审批
+          {{ $t('c96a5149.794efd') }}
         </el-button>
       </div>
 
@@ -42,7 +44,7 @@
       <SpDialog
         ref="resloveDialogRef"
         v-model="resloveDialog"
-        :title="`审批`"
+        :title="$t('c96a5149.0273ba')"
         :form="resloveForm"
         :form-list="resloveFormList"
         @onSubmit="onResloveSubmit"
@@ -55,6 +57,7 @@
 import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
+import { i18n } from '@/i18n'
 export default {
   name: '',
   data() {
@@ -66,7 +69,7 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '查看',
+            name: i18n.t('c96a5149.607e7a'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -81,15 +84,15 @@ export default {
           }
         ],
         columns: [
-          { name: '团长', key: 'chief_name' },
-          { name: '手机号', key: 'chief_mobile' },
+          { name: i18n.t('c96a5149.15d03b'), key: 'chief_name' },
+          { name: i18n.t('c96a5149.8098e2'), key: 'chief_mobile' },
           {
-            name: '来源',
+            name: i18n.t('c96a5149.26ca20'),
             key: 'chief_mobile',
             render: (h, { row }) => h('span', {}, this.getSource(row.source))
           },
           {
-            name: '申请时间',
+            name: i18n.t('c96a5149.5ba072'),
             key: 'created_at',
             render: (h, { row }) =>
               h('span', {}, moment(row.created_at * 1000).format('YYYY-MM-DD HH:mm:ss'))
@@ -104,12 +107,12 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批',
+          label: i18n.t('c96a5149.0273ba'),
           key: 'approve_status',
           type: 'radio',
           options: [
-            { label: 1, name: '同意' },
-            { label: 2, name: '不同意' }
+            { label: 1, name: i18n.t('c96a5149.e61f2c') },
+            { label: 2, name: i18n.t('c96a5149.1bf19c') }
           ],
           onChange: (e) => {
             if (e == 2) {
@@ -120,14 +123,14 @@ export default {
           }
         },
         {
-          label: '拒绝原因',
+          label: i18n.t('c96a5149.f48f94'),
           key: 'refuse_reason',
           type: 'input',
-          placeholder: '请输入拒绝原因',
+          placeholder: i18n.t('c96a5149.fc955a'),
           isShow: false,
           validator: (rule, value, callback) => {
             if (this.resloveForm.approve_status == 2 && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(i18n.t('c96a5149.281bad')))
             } else {
               callback()
             }
@@ -160,9 +163,9 @@ export default {
     },
     getSource(status) {
       if (status == '0') {
-        return '手动导入'
+        return this.$t('c96a5149.b4c3b2')
       } else if (status == '1') {
-        return '主动申请'
+        return this.$t('c96a5149.562b1a')
       }
     },
     handleApprove() {
@@ -173,10 +176,10 @@ export default {
     },
     async chiefupload() {
       await this.$dialog.open({
-        title: '团长导入',
+        title: this.$t('c96a5149.5ad881'),
         content: () => import('@/views/core/upload/upload-chief'),
         buttonCancel: {
-          text: '关闭'
+          text: this.$t('c96a5149.b15d91')
         },
         buttonConfirm: {
           visible: false

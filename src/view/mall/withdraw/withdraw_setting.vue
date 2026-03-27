@@ -4,17 +4,20 @@
 -->
 
 <template>
-  <SpPage title="提现设置">
+  <SpPage :title="$t('aeec1e55.b33aa1')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="info" size="medium" @click="getConfig">取消</el-button>
-        <!-- <el-button type="primary" size="medium" v-debounce:ruleForm="confirm">确认</el-button> -->
+        <el-button type="info" size="medium" @click="getConfig">
+{{
+          $t('aeec1e55.625fb2')
+        }}
+</el-button>
 
         <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
-          text="保存"
+          :text="$t('aeec1e55.be5fbb')"
           @clickHandle="confirm('ruleForm', 'loadingBtn')"
         />
       </div>
@@ -32,18 +35,18 @@
             label-width="140px"
             :rules="rules"
           >
-            <el-form-item label="提现类型" prop="auto_draw_cash" label-width="100px">
+            <el-form-item :label="$t('aeec1e55.79b414')" prop="auto_draw_cash" label-width="100px">
               <el-radio-group v-model="form.auto_draw_cash">
-                <el-radio label="Y">自动提现</el-radio>
-                <el-radio label="N">手动提现</el-radio>
+                <el-radio label="Y">{{ $t('aeec1e55.232926') }}</el-radio>
+                <el-radio label="N">{{ $t('aeec1e55.8eca60') }}</el-radio>
               </el-radio-group>
             </el-form-item>
             <div class="rules">
               <template v-if="form.auto_draw_cash == 'Y'">
-                <el-form-item label="提现规则" prop="auto_type" class="noBottom">
+                <el-form-item :label="$t('aeec1e55.7f7096')" prop="auto_type" class="noBottom">
                   <el-radio-group v-model="form.auto_type" @change="tabHandle">
-                    <el-radio label="month">每月提取时间</el-radio>
-                    <el-radio label="day">每日提取时间</el-radio>
+                    <el-radio label="month">{{ $t('aeec1e55.c4d129') }}</el-radio>
+                    <el-radio label="day">{{ $t('aeec1e55.44f946') }}</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item v-if="form.auto_type == 'month'" prop="auto_day" class="noBottom">
@@ -53,14 +56,14 @@
                     type="date"
                     format="dd"
                     value-format="dd"
-                    placeholder="请选择每月日期"
+                    :placeholder="$t('aeec1e55.52f74c')"
                   />
                   <el-time-picker
                     v-model="form.auto_time"
                     style="width: 120px"
                     format="HH:mm"
                     value-format="HH:mm"
-                    placeholder="选择时间"
+                    :placeholder="$t('aeec1e55.2c825a')"
                   />
                 </el-form-item>
                 <el-form-item v-if="form.auto_type == 'day'" prop="auto_time" class="noBottom">
@@ -69,29 +72,29 @@
                     style="width: 300px"
                     format="HH:mm"
                     value-format="HH:mm"
-                    placeholder="请选择每日提取时间"
+                    :placeholder="$t('aeec1e55.a1672f')"
                   />
                 </el-form-item>
                 <el-form-item>
-                  <div class="tips">提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。</div>
+                  <div class="tips">{{ $t('aeec1e55.56ee17') }}</div>
                 </el-form-item>
 
-                <el-form-item label="提现金额" prop="min_cash">
-                  <span class="tips">当可提现余额大于 </span>
+                <el-form-item :label="$t('7f31cab4.292a28')" prop="min_cash">
+                  <span class="tips">{{ $t('aeec1e55.1763c2') }}</span>
                   <el-input
                     v-model.number="form.min_cash"
                     style="width: 200px"
                     type="number"
                     min="0"
                   >
-                    <template slot="append">元</template>
+                    <template slot="append">{{ $t('aeec1e55.c16655') }}</template>
                   </el-input>
-                  <span class="tips"> 可提现</span>
+                  <span class="tips">{{ $t('aeec1e55.d96d6f') }}</span>
                 </el-form-item>
-                <el-form-item label="提现类型" prop="cash_type">
+                <el-form-item :label="$t('aeec1e55.79b414')" prop="cash_type">
                   <el-select
                     v-model="form.cash_type"
-                    placeholder="请选择提现类型"
+                    :placeholder="$t('aeec1e55.88c618')"
                     style="width: 300px"
                   >
                     <el-option
@@ -103,27 +106,27 @@
                   </el-select>
                 </el-form-item>
               </template>
-              <el-form-item label="商户暂冻金额" prop="draw_limit">
+              <el-form-item :label="$t('aeec1e55.21e0e9')" prop="draw_limit">
                 <el-input
                   v-model="form.draw_limit"
-                  placeholder="请输入"
+                  :placeholder="$t('aeec1e55.02cc4f')"
                   style="width: 300px"
                   type="number"
                   min="0"
                 >
-                  <template slot="append">元</template>
+                  <template slot="append">{{ $t('aeec1e55.c16655') }}</template>
                 </el-input>
               </el-form-item>
-              <el-form-item label="不适用商户" class="noBottom">
+              <el-form-item :label="$t('aeec1e55.16914d')" class="noBottom">
                 <el-radio-group v-model="isAllShop">
-                  <el-radio label="Y">无</el-radio>
-                  <el-radio label="N">指定商户</el-radio>
+                  <el-radio label="Y">{{ $t('aeec1e55.d81bb2') }}</el-radio>
+                  <el-radio label="N">{{ $t('aeec1e55.b22c01') }}</el-radio>
                 </el-radio-group>
               </el-form-item>
               <template v-if="isAllShop == 'N'">
                 <el-form-item>
                   <el-button type="primary" size="mini" @click="seletedShopHandle">
-                    选择商户
+                    {{ $t('aeec1e55.b5252d') }}
                   </el-button>
                 </el-form-item>
                 <selector-table
@@ -153,7 +156,7 @@
 
 <script>
 import loadingBtn from '@/components/loading-btn'
-import { MaxRules, requiredRules } from '@/view/base/setting/dealer/tools'
+import { MaxRules } from '@/view/base/setting/dealer/tools'
 import withdrawShop from '@/components/withdrawShop'
 import selectorTable from './cpn/table.vue'
 export default {
@@ -179,14 +182,20 @@ export default {
         draw_limit_list: [] // 不适用商户
       },
       rules: {
-        auto_draw_cash: [requiredRules('是否自动提现')],
-        auto_type: [requiredRules('自动提现类型', 'change')],
-        auto_day: [requiredRules('自动提现日期')],
-        auto_time: [requiredRules('自动提现时间')],
-        min_cash: [requiredRules('提现金额')],
-        cash_type: [requiredRules('取现类型', 'change')],
-        draw_limit: requiredRules('商户暂冻金额'),
-        isAllShop: [requiredRules('不适用商户')]
+        auto_draw_cash: [
+          { required: true, message: () => this.$t('aeec1e55.aded40'), trigger: 'blur' }
+        ],
+        auto_type: [
+          { required: true, message: () => this.$t('aeec1e55.cdf692'), trigger: 'change' }
+        ],
+        auto_day: [{ required: true, message: () => this.$t('aeec1e55.ba1490'), trigger: 'blur' }],
+        auto_time: [{ required: true, message: () => this.$t('aeec1e55.6e5e4f'), trigger: 'blur' }],
+        min_cash: [{ required: true, message: () => this.$t('aeec1e55.d7b3e3'), trigger: 'blur' }],
+        cash_type: [
+          { required: true, message: () => this.$t('aeec1e55.ced632'), trigger: 'change' }
+        ],
+        draw_limit: { required: true, message: () => this.$t('aeec1e55.a31457'), trigger: 'blur' },
+        isAllShop: [{ required: true, message: () => this.$t('aeec1e55.c3fdb4'), trigger: 'blur' }]
       }
     }
   },
@@ -251,7 +260,7 @@ export default {
 
             const { status } = await this.$api.adapay.saveDrawSetting(obj)
             if (status) {
-              this.$message.success('设置成功')
+              this.$message.success(this.$t('aeec1e55.f6088e'))
               this.$refs[ref].closeLoading()
               this.getConfig()
             }

@@ -13,61 +13,61 @@
               <el-option v-for="(item, index) in distributorList" :key="index" :label="item.name" :value="item.distributor_id"> </el-option>
             </el-select>
           </el-form-item> -->
-          <el-form-item label="标题" placeholder="请输入标题">
-            <el-input v-model="base.title" />
+          <el-form-item :label="$t('7a67bff9.32c65d')">
+            <el-input v-model="base.title" :placeholder="$t('7a67bff9.96641a')" />
           </el-form-item>
-          <el-form-item label="副标题" placeholder="请输入副标题">
-            <el-input v-model="base.subtitle" />
+          <el-form-item :label="$t('7a67bff9.72cf37')">
+            <el-input v-model="base.subtitle" :placeholder="$t('7a67bff9.031313')" />
           </el-form-item>
-          <el-form-item label="组件间距">
+          <el-form-item :label="$t('7a67bff9.4707ba')">
             <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="圆角图片">
+          <el-form-item :label="$t('7a67bff9.2e70e6')">
             <el-switch v-model="config.rounded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="图片间隔">
+          <el-form-item :label="$t('7a67bff9.822ac9')">
             <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="指示点样式">
+          <el-form-item :label="$t('7a67bff9.9a9056')">
             <el-switch
               v-model="config.dot"
-              active-text="点"
-              inactive-text="数字"
+              :active-text="$t('7a67bff9.be604f')"
+              :inactive-text="$t('7a67bff9.55d479')"
               active-color="#27cc6a"
               inactive-color="#ffa100"
             />
           </el-form-item>
-          <el-form-item label="指示点覆盖">
+          <el-form-item :label="$t('7a67bff9.175553')">
             <el-switch v-model="config.dotCover" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="指示点位置">
+          <el-form-item :label="$t('7a67bff9.a8a94d')">
             <el-radio-group v-model="config.dotLocation">
-              <el-radio label="left"> 居左 </el-radio>
-              <el-radio label="center"> 居中 </el-radio>
-              <el-radio label="right"> 居右 </el-radio>
+              <el-radio label="left"> {{ $t('7a67bff9.316a63') }} </el-radio>
+              <el-radio label="center"> {{ $t('7a67bff9.0bbc2e') }} </el-radio>
+              <el-radio label="right"> {{ $t('7a67bff9.e2aaec') }} </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="指示点形状">
+          <el-form-item :label="$t('7a67bff9.11333d')">
             <el-radio-group v-model="config.shape">
-              <el-radio label="circle"> 圆形 </el-radio>
-              <el-radio label="rectangle"> 长方型 </el-radio>
+              <el-radio label="circle"> {{ $t('7a67bff9.2db0fc') }} </el-radio>
+              <el-radio label="rectangle"> {{ $t('7a67bff9.2fce58') }} </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="指示点颜色">
+          <el-form-item :label="$t('7a67bff9.14db62')">
             <el-radio-group v-model="config.dotColor">
-              <el-radio label="dark"> 深色 </el-radio>
-              <el-radio label="light"> 亮色 </el-radio>
+              <el-radio label="dark"> {{ $t('7a67bff9.41e8e8') }} </el-radio>
+              <el-radio label="light"> {{ $t('7a67bff9.a32b3b') }} </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="轮播项间距">
+          <el-form-item :label="$t('7a67bff9.817dc9')">
             <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="开启图片描述">
+          <el-form-item :label="$t('7a67bff9.774334')">
             <el-switch v-model="config.content" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
         </template>
 
-        <el-form-item label="轮播项">
+        <el-form-item :label="$t('7a67bff9.3db933')">
           <div v-for="(item, index) in data" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
@@ -79,22 +79,26 @@
                 :src="item.url"
                 class="banner-uploader"
                 @click="handleImgChange(index)"
-              />
+              >
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('7a67bff9.ce6855') }}
               </div>
               <div class="uploader-setting">
                 <el-input
                   v-if="config.content"
                   v-model="item.desc"
                   type="textarea"
-                  placeholder="文字描述"
+                  :placeholder="$t('7a67bff9.191be5')"
                 />
                 <div class="goods-select" @click="handleGoodsChange(index)">
-                  <div v-if="item.title" class="link-content">商品：{{ item.title }}</div>
+                  <div v-if="item.title" class="link-content">
+                    {{ $t('7a67bff9.10fe9c') }}{{ item.title }}
+                  </div>
                   <div v-else class="content-center">
-                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                      $t('7a67bff9.4f2c29')
+                    }}
                   </div>
                 </div>
               </div>
@@ -103,14 +107,14 @@
         </el-form-item>
       </el-form>
       <div class="content-center">
-        <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+        <div class="frm-tips">{{ $t('7a67bff9.d5a0d5') }}</div>
         <el-button
           :disabled="data.length >= 5"
           type="default"
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          添加轮播图
+          {{ $t('7a67bff9.22134f') }}
         </el-button>
       </div>
     </div>
@@ -136,7 +140,7 @@
       "
     />
     <div class="section-footer with-border content-center" style="width: 100%">
-      <el-button type="primary" @click="sumbit"> 保存 </el-button>
+      <el-button type="primary" @click="sumbit"> {{ $t('7a67bff9.be5fbb') }} </el-button>
     </div>
   </section>
 </template>
@@ -258,7 +262,7 @@ export default {
       }
       if (this.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('7a67bff9.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -308,7 +312,7 @@ export default {
       }
       postShopScreenSlider(obj).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('7a67bff9.3b1083'),
           type: 'success'
         })
       })

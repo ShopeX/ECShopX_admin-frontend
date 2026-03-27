@@ -5,30 +5,33 @@
 
 <template>
   <div>
-    <span>时间筛选：</span>
+    <span>{{ $t('79d48f9d.94a73a') }}</span>
     <el-select v-model="timeType" type="timeType" @change="typeChange">
-      <el-option label="最近7天" :value="1" />
-      <el-option label="最近30天" :value="2" />
-      <el-option label="自然天" :value="3" />
-      <el-option label="今日实时" :value="4" />
-      <el-option label="自定义" :value="5" /> </el-select
+      <el-option :label="$t('79d48f9d.73bef6')" :value="1" />
+      <el-option :label="$t('79d48f9d.63f66f')" :value="2" />
+      <el-option :label="$t('79d48f9d.457a6d')" :value="3" />
+      <el-option :label="$t('79d48f9d.4e2196')" :value="4" />
+      <el-option :label="$t('79d48f9d.f1d4ff')" :value="5" />
+</el-select
     >&nbsp;
     <span v-if="isNeardate"
       >{{ typeText
-      }}<span v-if="isRealTime" class="refresh" @click="getRealTime">&nbsp;刷新</span></span
+      }}<span v-if="isRealTime" class="refresh" @click="getRealTime"
+        >&nbsp;{{ $t('79d48f9d.694fc5') }}</span
+      ></span
     >
     <el-date-picker
       v-if="ischooseDay"
       v-model="chooseDate"
       type="date"
-      placeholder="选择日期"
+      :placeholder="$t('79d48f9d.2bebdd')"
       :picker-options="pickerOptions"
     />
     <el-date-picker
       v-if="iscustom"
       v-model="customDate"
       type="daterange"
-      placeholder="选择日期范围"
+      :placeholder="$t('79d48f9d.4b8cb9')"
       :picker-options="pickerOptions2"
     />
   </div>

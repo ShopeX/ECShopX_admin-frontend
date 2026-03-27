@@ -5,16 +5,16 @@
 
 <template>
   <el-table ref="Table" :data="seletedBusiness" tooltip-effect="dark" style="width: 100%" border>
-    <el-table-column prop="user_name" label="商户名称" width="220" />
-    <el-table-column prop="location" label="地址" />
-    <el-table-column label="暂冻金额">
+    <el-table-column prop="user_name" :label="$t('ae5eae00.e6f169')" width="220" />
+    <el-table-column prop="location" :label="$t('ae5eae00.765048')" />
+    <el-table-column :label="$t('ae5eae00.3b757d')">
       <template slot-scope="scope">
         <el-input style="width: 200px" type="number" min="1" v-model.number="scope.row.draw_limit">
-          <template slot="append">元</template>
+          <template slot="append">{{ $t('ae5eae00.c16655') }}</template>
         </el-input>
       </template>
     </el-table-column>
-    <el-table-column fixed="left" label="操作" width="100">
+    <el-table-column fixed="left" :label="$t('ae5eae00.2b6bc0')" width="100">
       <template slot-scope="scope">
         <el-button
           style="color: #409eff"
@@ -22,7 +22,7 @@
           type="text"
           size="small"
         >
-          移除
+          {{ $t('ae5eae00.86048b') }}
         </el-button>
       </template>
     </el-table-column>

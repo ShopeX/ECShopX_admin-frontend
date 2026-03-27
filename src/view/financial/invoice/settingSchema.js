@@ -9,111 +9,111 @@ export const formSchema = (vm) =>
     [
       {
         type: 'group',
-        label: '发票设置'
+        label: vm.$t('fad40c6c.764f07')
       },
       {
-        label: '开票渠道',
+        label: vm.$t('fad40c6c.352b0b'),
         key: 'invoice_method',
         type: 'radio',
         defaultValue: 'offline',
         options: [
-          { name: '线下开票', label: 'offline' },
-          { name: '线上百望开票', label: 'online' }
+          { name: vm.$t('fad40c6c.6be6e5'), label: 'offline' },
+          { name: vm.$t('fad40c6c.1f931c'), label: 'online' }
         ]
       },
       {
-        label: '开票方类型',
+        label: vm.$t('fad40c6c.6d568f'),
         key: 'invoice_seller_type',
         type: 'radio',
         defaultValue: '1',
-        options: [
-          { name: '平台', label: '1' }
-          // { name: '店铺', label: '2' },
-          // { name: '商城', label: '3' },
-        ]
+        options: [{ name: vm.$t('fad40c6c.498128'), label: '1' }]
       },
       {
-        label: '开票申请方式',
+        label: vm.$t('fad40c6c.4f0df7'),
         key: 'apply_type',
         type: 'radio',
         defaultValue: '1',
         options: [
-          { name: '结算页可申请开票', label: '1' },
-          { name: '已支付订单可申请开票', label: '2' }
+          { name: vm.$t('fad40c6c.4fffa8'), label: '1' },
+          { name: vm.$t('fad40c6c.8501fa'), label: '2' }
         ]
       },
       {
-        label: '运费是否开票',
+        label: vm.$t('fad40c6c.c2058f'),
         key: 'freight_invoice',
         type: 'radio',
         defaultValue: '2',
         options: [
-          { name: '运费支持开票', label: '2' },
-          { name: '运费不支持开票', label: '1' }
+          { name: vm.$t('fad40c6c.d93212'), label: '2' },
+          { name: vm.$t('fad40c6c.b479c1'), label: '1' }
         ]
       },
       {
-        label: '运费开票名称',
+        label: vm.$t('fad40c6c.0bca8f'),
         key: 'freight_name',
         type: 'input',
-        tip: '为空时默认运费开票名称，如果填写名称按填写名称展示在发票上'
+        tip: vm.$t('fad40c6c.28168e')
       },
       {
-        label: '运费税率',
+        label: vm.$t('fad40c6c.1a29c6'),
         key: 'freight_tax_rate',
         type: 'input',
         component({ key }, value) {
           return (
-            <el-input clearable type='number' placeholder='请输入内容' v-model={value[key]} min='0'>
+            <el-input
+              clearable
+              type='number'
+              placeholder={vm.$t('fad40c6c.a11cc7')}
+              v-model={value[key]}
+              min='0'
+            >
               <template slot='append'>%</template>
             </el-input>
           )
         }
       },
       {
-        label: '开票维度',
+        label: vm.$t('fad40c6c.0199a1'),
         key: 'invoice_limit',
         type: 'radio',
         defaultValue: 'order',
-        options: [
-          { name: '按订单开票', label: 'order' }
-          // { name: 'SKU维度', label: 'item' },
-        ]
+        options: [{ name: vm.$t('fad40c6c.1dece7'), label: 'order' }]
       },
       {
-        label: '可开票期限',
+        label: vm.$t('fad40c6c.cb46d8'),
         key: 'invoice_open_term',
         component({ key }, value) {
           return (
             <div>
-              订单商品签收后，且在订单创建&nbsp;{' '}
-              <el-input v-model={value[key]} type='number' min='0' /> &nbsp;(月)内支持申请开票
+              {vm.$t('fad40c6c.6a6e36')}&nbsp;{' '}
+              <el-input v-model={value[key]} type='number' min='0' /> &nbsp;
+              {vm.$t('fad40c6c.17eae8')}
             </div>
           )
         }
       },
       {
-        label: '专用发票展示',
+        label: vm.$t('fad40c6c.c3dbd7'),
         key: 'special_invoice',
         type: 'radio',
         defaultValue: '1',
         options: [
-          { name: '企业抬头可选择专用发票', label: '1' },
-          { name: '企业抬头不可以选择专用发票（前端此选项不展示，默认为普通发票）', label: '2' }
+          { name: vm.$t('fad40c6c.995978'), label: '1' },
+          { name: vm.$t('fad40c6c.32e37f'), label: '2' }
         ]
       },
       {
-        label: '申请开票节点',
+        label: vm.$t('fad40c6c.c73b4e'),
         key: 'apply_node',
         type: 'radio',
         defaultValue: '2',
         options: [
-          { name: '订单过了售后期', label: '2' },
-          { name: '订单确认收货', label: '1' }
+          { name: vm.$t('fad40c6c.d3247f'), label: '2' },
+          { name: vm.$t('fad40c6c.37c61f'), label: '1' }
         ]
       },
       {
-        label: '是否启用开票',
+        label: vm.$t('fad40c6c.4e3867'),
         key: 'invoice_status',
         type: 'switch'
       }

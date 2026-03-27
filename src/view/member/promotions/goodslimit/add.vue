@@ -4,33 +4,37 @@
 -->
 
 <template>
-  <SpPage title="设置规则名称">
+  <SpPage :title="$t('f5a87ec7.bfa895')">
     <el-form ref="form" :model="form" class="box-set" label-width="120px">
       <el-card shadow="naver">
         <el-form-item
-          label="名称"
+          :label="$t('f5a87ec7.d7ec2d')"
           prop="limit_name"
-          :rules="{ required: true, message: '请填写规则名称', trigger: 'blur' }"
+          :rules="{ required: true, message: this.$t('f5a87ec7.411cac'), trigger: 'blur' }"
         >
           <el-col :span="20">
-            <el-input v-model="form.limit_name" :maxlength="30" placeholder="最多30个字" />
+            <el-input
+              v-model="form.limit_name"
+              :maxlength="30"
+              :placeholder="$t('f5a87ec7.017ce7')"
+            />
           </el-col>
         </el-form-item>
-        <el-form-item label="购买规则">
+        <el-form-item :label="$t('f5a87ec7.5a0c6c')">
           <el-input v-model="rule.day" :maxlength="30" class="inline-input" style="width: 100px" />
-          天，购买
+          {{ $t('f5a87ec7.7c55f8') }}
           <el-input
             v-model="rule.limit"
             :maxlength="30"
             class="inline-input"
             style="width: 100px"
           />
-          件
+          {{ $t('f5a87ec7.f7edf5') }}
           <p class="frm-tips">
-            天数设置0视为此次活动有效期内，例如：0天，购买1件是指活动有效期内只能购买一件商品
+            {{ $t('f5a87ec7.dc6744') }}
           </p>
         </el-form-item>
-        <el-form-item label="适用会员">
+        <el-form-item :label="$t('f5a87ec7.6dbb6f')">
           <el-checkbox-group v-model="validGrade">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -40,31 +44,31 @@
               :key="vipdata.lv_type"
               :label="vipdata.lv_type"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('f5a87ec7.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="有效期">
+        <el-form-item :label="$t('f5a87ec7.bb114a')">
           <el-col :span="20">
             <el-date-picker
               v-model="activity_date"
               type="datetimerange"
-              range-separator="至"
-              start-placeholder="生效时间"
-              end-placeholder="过期时间"
+              :range-separator="$t('f5a87ec7.981cbe')"
+              :start-placeholder="$t('f5a87ec7.fc92e9')"
+              :end-placeholder="$t('f5a87ec7.1fa23f')"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
             />
           </el-col>
         </el-form-item>
       </el-card>
-      <el-card header="选择限购商品" shadow="naver">
-        <el-form-item label="适用商品">
+      <el-card :header="$t('f5a87ec7.ffbe83')" shadow="naver">
+        <el-form-item :label="$t('f5a87ec7.409ea3')">
           <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
-            <el-radio label="goods"> 指定商品适用 </el-radio>
-            <el-radio label="category"> 指定分类适用 </el-radio>
-            <el-radio label="tag"> 指定商品标签适用 </el-radio>
-            <el-radio label="brand"> 指定品牌适用 </el-radio>
+            <el-radio label="goods"> {{ $t('f5a87ec7.1e0568') }} </el-radio>
+            <el-radio label="category"> {{ $t('f5a87ec7.4e4c10') }} </el-radio>
+            <el-radio label="tag"> {{ $t('f5a87ec7.d61cbb') }} </el-radio>
+            <el-radio label="brand"> {{ $t('f5a87ec7.8f5e18') }} </el-radio>
           </el-radio-group>
         </el-form-item>
         <div v-if="!zdItemHidden" style="position: relative">
@@ -77,10 +81,10 @@
               :auto-upload="false"
               :show-file-list="false"
             >
-              <el-button type="primary"> 批量上传 </el-button>
+              <el-button type="primary"> {{ $t('f5a87ec7.c3202e') }} </el-button>
             </el-upload>
             <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
-              下载模板
+              {{ $t('f5a87ec7.c3f9a1') }}
             </el-button>
           </div>
         </div>
@@ -88,7 +92,7 @@
           <div v-if="!categoryHidden" style="height: 350px">
             <treeselect
               v-model="form.item_category"
-              no-results-text="暂无结果"
+              :no-results-text="$t('f5a87ec7.0ee4df')"
               :options="categoryList"
               :show-count="true"
               :multiple="true"
@@ -101,7 +105,7 @@
         </el-col>
         <template v-if="!tagHidden">
           <div class="selected-tags view-flex">
-            <div class="label">已选中标签：</div>
+            <div class="label">{{ $t('f5a87ec7.e98819') }}</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(tag, index) in tag.currentTags"
@@ -131,7 +135,7 @@
         </template>
         <template v-if="!brandHidden">
           <div class="selected-tags view-flex">
-            <div class="label">已选中品牌：</div>
+            <div class="label">{{ $t('f5a87ec7.f5bf1f') }}</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(brand, index) in brand.currentBrands"
@@ -192,9 +196,9 @@
     </el-form>
     <div slot="page-footer" class="text-center">
       <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
-        保存
+        {{ $t('f5a87ec7.be5fbb') }}
       </el-button>
-      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button @click.native="handleCancel"> {{ $t('f5a87ec7.5f4112') }} </el-button>
     </div>
   </SpPage>
 </template>
@@ -320,7 +324,7 @@ export default {
           .then((response) => {
             this.loading = false
             this.$message({
-              message: '修改成功',
+              message: this.$t('f5a87ec7.69be67'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -335,7 +339,7 @@ export default {
           .then((response) => {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('f5a87ec7.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -475,7 +479,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品!'
+          message: this.$t('f5a87ec7.c5f66d')
         })
       }
     },
@@ -515,7 +519,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('f5a87ec7.3e5ac0')
         })
         return false
       }
@@ -567,7 +571,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('f5a87ec7.3e5ac0')
         })
         return false
       }
@@ -718,7 +722,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      let params = { file_type: 'marketing_goods', file_name: this.$t('f5a87ec7.e07423') }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -731,7 +735,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('f5a87ec7.bfd8d5')
           })
         }
       })
@@ -744,7 +748,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('f5a87ec7.a7699b')
         })
 
         let { data } = response.data
@@ -757,7 +761,7 @@ export default {
           setTimeout(() => {
             this.$message({
               showClose: true,
-              message: `以下商品编号不存在：${str}`,
+              message: `${this.$t('f5a87ec7.ef474d')}${str}`,
               type: 'error',
               duration: 5000
             })

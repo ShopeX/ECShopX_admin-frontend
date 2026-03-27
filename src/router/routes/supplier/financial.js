@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'supplierfinancial',
       icon: 'funds',
       keepAlive: true,
-      title: '财务'
+      title: '98f1dc59.b8fe8d'
     },
     name: 'supplierfinancial',
     path: '/supplier/financial',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'supplierfinancialsettlementsummary_supplier',
           icon: 'pay-circle',
-          title: '供应商结算汇总',
+          title: '98f1dc59.4c48e9',
           permissions: [
             'supplierfinancial.supplierfinancialsettlement.supplierfinancialsettlementsummary_supplier'
           ]

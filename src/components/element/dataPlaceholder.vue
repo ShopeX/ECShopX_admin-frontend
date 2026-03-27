@@ -7,7 +7,7 @@
   <div class="data-placeholder" :style="'height:' + height">
     <div class="placeholder-content">
       <i class="iconfont icon-route" />
-      <div>暂无数据</div>
+      <div>{{ $t('c59fb0a2.21efd8') }}</div>
     </div>
   </div>
 </template>

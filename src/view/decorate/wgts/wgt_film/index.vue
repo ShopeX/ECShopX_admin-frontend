@@ -47,30 +47,18 @@
   >
     <div class="wgt-bd">
       <!-- 挂件自定义部分 -->
-      <video-player
-        :options="{
-          aspectRatio: aspectRatio,
-          sources: [
-            {
-              type: 'video/mp4',
-              src: sourceUrl
-            }
-          ],
-          notSupportedMessage: '添加视频源',
-          suppressNotSupportedError: true,
-          controlBar: false
-        }"
-      />
+      <video-player :options="videoOptions" />
     </div>
   </div>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import config, { proportions } from './config'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Film',
-  wgtName: '视频',
+  wgtName: i18n.t('cd407b12.7fcf42'),
   wgtDesc: '',
   wgtIcon: 'video-two',
   config: config,
@@ -93,6 +81,15 @@ export default {
     sourceUrl() {
       const { data } = this.value
       return data?.url || ''
+    },
+    videoOptions() {
+      return {
+        aspectRatio: this.aspectRatio,
+        sources: [{ type: 'video/mp4', src: this.sourceUrl }],
+        notSupportedMessage: i18n.t('cd407b12.63ca71'),
+        suppressNotSupportedError: true,
+        controlBar: false
+      }
     }
   },
   created() {},

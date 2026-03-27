@@ -10,8 +10,14 @@
     </div>
     <div v-for="(item, index) in modelInfo" :key="index" style="font-size: 14px; color: #999">
       <p>
-        警示：{{
-          item.package_title + ' 内 ' + item.title + ' 优惠券 ' + item.grade_name + ' 不可领取 '
+        {{ $t('41fe0fdd.6cc7df')
+        }}{{
+          item.package_title +
+          $t('41fe0fdd.15e61a') +
+          item.title +
+          $t('41fe0fdd.a9668d') +
+          item.grade_name +
+          $t('41fe0fdd.a3b5b0')
         }}
       </p>
     </div>

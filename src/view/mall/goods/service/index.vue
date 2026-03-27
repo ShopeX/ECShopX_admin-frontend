@@ -11,10 +11,10 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="基础物料" name="first">
+      <el-tab-pane :label="$t('1af8c5ce.138860')" name="first">
         <service :get-status="service" />
       </el-tab-pane>
-      <el-tab-pane label="商品" name="second">
+      <el-tab-pane :label="$t('1af8c5ce.9897d8')" name="second">
         <goods ref="goods" :get-status="goods" />
       </el-tab-pane>
     </el-tabs>

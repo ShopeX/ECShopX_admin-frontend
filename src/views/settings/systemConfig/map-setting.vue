@@ -37,26 +37,26 @@ export default {
           component: () => {
             return (
               <div class='head-tips'>
-                腾讯位置服务Key获取路径：
+                {this.$t('caf9668f.626669')}
                 <el-link
                   href='https://developer.amap.com/?ref=http%3A%2F%2Flbs.gaode.com%2Fdev%2F'
                   target='_blank'
                   type='primary'
                 >
-                  腾讯位置服务控制台
+                  {this.$t('caf9668f.e4f07d')}
                 </el-link>
-                ，进入【应用管理】--【我的应用】--【创建应用】。
+                {this.$t('caf9668f.654d54')}
               </div>
             )
           }
         },
         {
           fieldName: 'app_key',
-          label: '地图Key',
+          label: this.$t('caf9668f.2c2f75'),
           component: 'input',
           formItemClass: 'w-1/2',
-          rules: [{ required: true, message: '请输入', trigger: 'blur' }],
-          tip: 'Key不填写或填写错误将导致该功能无法使用，请确保填写正确。',
+          rules: [{ required: true, message: this.$t('caf9668f.02cc4f'), trigger: 'blur' }],
+          tip: this.$t('caf9668f.fcdf2b'),
           componentProps: {
             type: 'text',
             autocomplete: 'off'
@@ -64,9 +64,9 @@ export default {
         },
         {
           fieldName: 'app_secret',
-          label: '密钥',
+          label: this.$t('caf9668f.cdb81c'),
           formItemClass: 'w-1/2',
-          rules: [{ required: false, message: '请输入', trigger: 'blur' }],
+          rules: [{ required: false, message: this.$t('caf9668f.02cc4f'), trigger: 'blur' }],
           component: ({ value, onInput, h }) => {
             return (
               <el-input
@@ -106,7 +106,7 @@ export default {
         is_default: 1
       })
       this.loading = false
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('caf9668f.3b1083'))
     }
   }
 }

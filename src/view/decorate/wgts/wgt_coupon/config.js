@@ -1,3 +1,4 @@
+import { i18n } from '@/i18n'
 import { pickBy } from '@/utils'
 import moment from 'moment'
 import CompBtn from '../../comps/comp_btn.vue'
@@ -8,7 +9,7 @@ const config = {
   name: 'couponCard',
   setting: [
     {
-      label: '自定义挂件名称',
+      label: i18n.t('7c96f122.aebb0a'),
       key: 'wgtCustName',
       component: 'input',
       value: ''
@@ -32,14 +33,14 @@ const config = {
     //   }
     // },
     {
-      label: '数据设置',
+      label: i18n.t('7c96f122.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         const self = this
         return (
           <CompButton
-            placeholder='选择优惠券'
-            format='{0}个优惠券'
+            placeholder={i18n.t('7c96f122.45bcee')}
+            format={i18n.t('7c96f122.9ff61b')}
             value={self.value[key]?.length || 0}
             viewBtn={false}
             on-click={async () => {
@@ -144,13 +145,13 @@ const config = {
     //   value: { type: 'solid', color: '', startColor: '', endColor: '' }
     // },
     {
-      label: '面额颜色',
+      label: i18n.t('7c96f122.5f2e38'),
       key: 'amountColor',
       component: 'color',
       value: '#D4003B'
     },
     {
-      label: '领取按钮',
+      label: i18n.t('7c96f122.2a5a4c'),
       key: 'receiveBtn',
       component: function (h, { key }) {
         return <CompBtn v-model={this.value[key]} showImage={false} />
@@ -167,6 +168,7 @@ const config = {
     // 使用公共函数处理 base 中的样式数据转换
     const transformedBase = transformInBase(base, ['outerMargin', 'innerPadding'])
     return {
+      id: v?.id,
       name,
       ...transformedBase,
       data,
@@ -179,6 +181,7 @@ const config = {
   },
   transformOut: (v) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 outerMargin 转换，同时保留其他字段

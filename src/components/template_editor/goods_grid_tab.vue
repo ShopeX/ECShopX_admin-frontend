@@ -5,19 +5,19 @@
 
 <template>
   <section v-if="name === 'goodsGridTab'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('16920dd5.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="130px" :label-position="usage == 'mobile' ? 'left' : 'top'">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('16920dd5.32c65d')">
           <el-input v-model="base.title" type="text" maxlength="20" show-word-limit />
         </el-form-item>
-        <el-form-item v-if="show_subtitle" label="副标题">
+        <el-form-item v-if="show_subtitle" :label="$t('16920dd5.72cf37')">
           <el-input v-model="base.subtitle" maxlength="20" show-word-limit />
         </el-form-item>
-        <el-form-item v-if="show_space" label="组件间距">
+        <el-form-item v-if="show_space" :label="$t('16920dd5.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item v-if="usage == 'pc'" label="组件间距">
+        <el-form-item v-if="usage == 'pc'" :label="$t('16920dd5.4707ba')">
           <el-input v-model="base.padded" type="number" />
         </el-form-item>
         <!-- <el-form-item label="样式" v-if="show_style">
@@ -26,21 +26,21 @@
             <el-radio :label="'grids'"><i class="style-icon iconfont icon-th"></i></el-radio>
           </el-radio-group>
         </el-form-item> -->
-        <el-form-item v-if="show_price" label="显示价格">
+        <el-form-item v-if="show_price" :label="$t('16920dd5.ba302e')">
           <el-switch v-model="config.showPrice" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item v-if="config.style !== 'grids' && show_brand" label="显示品牌">
+        <el-form-item v-if="config.style !== 'grids' && show_brand" :label="$t('16920dd5.02af2a')">
           <el-switch v-model="config.brand" active-color="#27cc6a" inactive-color="#efefef" />
-          <span class="muted content-padded">显示品牌需配置商品品牌logo</span>
+          <span class="muted content-padded">{{ $t('16920dd5.248261') }}</span>
         </el-form-item>
-        <el-form-item label="商品分类">
+        <el-form-item :label="$t('16920dd5.c3ece5')">
           <el-button
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
             size="mini"
             @click="addTab"
           >
-            添加标签
+            {{ $t('16920dd5.736eaa') }}
           </el-button>
           <el-tabs v-model="editableTabsValue" closable @tab-remove="removeTab">
             <el-tab-pane
@@ -51,7 +51,7 @@
               :name="'tab' + (index + 1)"
             >
               <el-form-item
-                label="Tab名称"
+                :label="$t('16920dd5.152f1c')"
                 label-width="80px"
                 style="margin: 10px 0; max-width: 500px"
               >
@@ -63,11 +63,9 @@
                 class="iconfont icon-cog banner-button-uploader"
                 @click="setGoods(index)"
               >
-                编辑商品
+                {{ $t('16920dd5.7d3792') }}
               </el-button>
-              <span style="font-size: 12px; margin-left: 20px"
-                >最多可选择100件商品；左侧实时预览内仅展示前50件；下方商品拖动以排序。</span
-              >
+              <span style="font-size: 12px; margin-left: 20px">{{ $t('16920dd5.d58793') }}</span>
               <el-row
                 v-if="list[index].goodsList.length > 0"
                 :gutter="20"
@@ -84,7 +82,7 @@
                     @mouseover.native="mouseoverHandle(index_y)"
                     @mouseleave.native="mouseleaveHandle()"
                   >
-                    <img class="thumbnail" :src="wximageurl + item_y.imgUrl" alt="" />
+                    <img class="thumbnail" :src="wximageurl + item_y.imgUrl" alt="">
                     <div class="title">
                       {{ item_y.title }}
                     </div>
@@ -101,19 +99,35 @@
           </el-tabs>
         </el-form-item>
 
-        <el-form-item v-if="config.moreLink" label="「查看更多」链接">
+        <el-form-item v-if="config.moreLink" :label="$t('16920dd5.15d47a')">
           <div class="goods-select" @click="handleMoreLink">
             <div v-if="config.moreLink.title" class="link-content">
-              <template v-if="config.moreLink.linkPage === 'goods'"> 商品： </template>
-              <template v-if="config.moreLink.linkPage === 'category'"> 分类： </template>
-              <template v-if="config.moreLink.linkPage === 'article'"> 文章： </template>
-              <template v-if="config.moreLink.linkPage === 'planting'"> 软文： </template>
-              <template v-if="config.moreLink.linkPage === 'link'"> 页面： </template>
-              <template v-if="config.moreLink.linkPage === 'marketing'"> 营销： </template>
-              <template v-if="config.moreLink.linkPage === 'custom_page'"> 自定义页面： </template>
+              <template v-if="config.moreLink.linkPage === 'goods'">
+                {{ $t('16920dd5.10fe9c') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'category'">
+                {{ $t('16920dd5.e7d2e8') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'article'">
+                {{ $t('16920dd5.8cb9b8') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'planting'">
+                {{ $t('16920dd5.9dcd91') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'link'">
+                {{ $t('16920dd5.ffd741') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'marketing'">
+                {{ $t('16920dd5.c78a2f') }}
+              </template>
+              <template v-if="config.moreLink.linkPage === 'custom_page'">
+                {{ $t('16920dd5.15ed03') }}
+              </template>
               {{ config.moreLink.title }}
             </div>
-            <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
+            <div v-else class="content-center">
+              <i class="el-icon-link" />{{ $t('16920dd5.4f2c29') }}
+            </div>
           </div>
         </el-form-item>
       </el-form>

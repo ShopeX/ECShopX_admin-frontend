@@ -6,8 +6,8 @@
 <template>
   <SpPage>
     <div class="flex items-center mb-5">
-      <span class="font-bold mr-5">第三方审核对接设置</span>
-      <span class="text-gray-500 text-sm">请填写对接所需要的内容并点击保存</span>
+      <span class="font-bold mr-5">{{ $t('72c2aff7.e2eb60') }}</span>
+      <span class="text-gray-500 text-sm">{{ $t('72c2aff7.802d25') }}</span>
     </div>
 
     <el-card class="mb-5">
@@ -24,7 +24,7 @@
 
     <el-row class="btn-bar">
       <el-col>
-        <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
+        <el-button type="primary" @click="confirmHandle">{{ $t('72c2aff7.e83a25') }}</el-button>
       </el-col>
     </el-row>
   </SpPage>
@@ -54,23 +54,23 @@ export default {
       return [
         {
           fieldName: 'enable',
-          label: '开启第三方审核',
+          label: this.$t('72c2aff7.327b5d'),
           component: 'switch',
           componentProps: {
             'active-color': '#13ce66'
           },
-          tip: '开启后用户的笔记首先会经过机审。'
+          tip: this.$t('72c2aff7.9273a7')
         },
         {
           fieldName: 'url',
-          label: 'API接入地址',
+          label: this.$t('72c2aff7.7ab31a'),
           component: 'input',
           componentProps: {
             style: { width: '300px' },
             size: 'small'
           },
-          tip: '内容检测API配置管理服务',
-          rules: [{ required: true, message: '请填写接入地址', trigger: 'blur' }]
+          tip: this.$t('72c2aff7.ea02d0'),
+          rules: [{ required: true, message: this.$t('72c2aff7.129c4f'), trigger: 'blur' }]
         },
         {
           fieldName: 'appid',
@@ -80,7 +80,7 @@ export default {
             style: { width: '300px' },
             size: 'small'
           },
-          rules: [{ required: true, message: '请填写AccessKeyID', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('72c2aff7.598115'), trigger: 'blur' }]
         },
         {
           fieldName: 'appsecret',
@@ -90,7 +90,7 @@ export default {
             style: { width: '300px' },
             size: 'small'
           },
-          rules: [{ required: true, message: '请填写AccessKeySecret', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('72c2aff7.2ade58'), trigger: 'blur' }]
         }
       ]
     }

@@ -7,29 +7,41 @@
   <div class="extMiniLinkDetail">
     <el-card class="elCard">
       <div slot="header">
-        <h3>源源客会员服务</h3>
-        <h5>配置外部小程序页面路径，供跳转到外部小程序使用。</h5>
+        <h3>{{ $t('965e5755.f015a4') }}</h3>
+        <h5>{{ $t('965e5755.060fc4') }}</h5>
       </div>
       <div class="search">
         <div class="left">
-          <el-input v-model="params.route_name" class="appName" placeholder="请输入页面名称" />
-          <el-button class="button" type="primary" @click="getList"> 查询 </el-button>
-          <el-button class="button" type="default" @click="reset"> 重置 </el-button>
+          <el-input
+            v-model="params.route_name"
+            class="appName"
+            :placeholder="$t('965e5755.7d5cc3')"
+          />
+          <el-button class="button" type="primary" @click="getList">
+{{
+            $t('965e5755.bee912')
+          }}
+</el-button>
+          <el-button class="button" type="default" @click="reset">
+{{
+            $t('965e5755.4b9c32')
+          }}
+</el-button>
         </div>
-        <el-button type="primary" @click="showEditModal()"> 新增 </el-button>
+        <el-button type="primary" @click="showEditModal()">{{ $t('965e5755.66ab5e') }}</el-button>
       </div>
       <el-table v-loading="tableLoading" stripe border :data="list">
-        <el-table-column prop="created_at" label="创建日期" />
-        <el-table-column prop="route_name" label="页面名称" />
-        <el-table-column prop="route_info" label="页面路径" />
-        <el-table-column prop="route_desc" label="描述" />
-        <el-table-column label="操作">
+        <el-table-column prop="created_at" :label="$t('965e5755.696f5a')" />
+        <el-table-column prop="route_name" :label="$t('965e5755.b78454')" />
+        <el-table-column prop="route_info" :label="$t('965e5755.e3a8a6')" />
+        <el-table-column prop="route_desc" :label="$t('965e5755.3bdd08')" />
+        <el-table-column :label="$t('965e5755.2b6bc0')">
           <template slot-scope="scope">
             <el-button class="actBtn" type="text" @click="showEditModal(scope.row)">
-              编辑
+              {{ $t('965e5755.95b351') }}
             </el-button>
             <el-button class="actBtn" type="text" @click="removeCurrent(scope.row)">
-              删除
+              {{ $t('965e5755.2f4aad') }}
             </el-button>
           </template>
         </el-table-column>
@@ -61,17 +73,17 @@
         :rules="rules"
         :model="editInfo"
       >
-        <el-form-item label="页面名称" prop="route_name">
+        <el-form-item :label="$t('965e5755.b78454')" prop="route_name">
           <el-input v-model="editInfo.route_name" />
         </el-form-item>
-        <el-form-item label="页面路径" prop="route_info">
+        <el-form-item :label="$t('965e5755.e3a8a6')" prop="route_info">
           <el-input v-model="editInfo.route_info" />
         </el-form-item>
-        <el-form-item label="描述">
+        <el-form-item :label="$t('965e5755.3bdd08')">
           <el-input
             v-model="editInfo.route_desc"
             type="textarea"
-            placeholder="请输入内容（非必填）"
+            :placeholder="$t('965e5755.d51187')"
             resize="none"
             maxlength="30"
             show-word-limit
@@ -80,9 +92,9 @@
         </el-form-item>
       </el-form>
       <div class="btns">
-        <el-button class="btn" @click="closeModal"> 取 消 </el-button>
+        <el-button class="btn" @click="closeModal">{{ $t('965e5755.c08ab9') }}</el-button>
         <el-button class="btn" type="primary" :loading="isHttping" @click.stop="editWxConfig">
-          确 定
+          {{ $t('965e5755.aa7527') }}
         </el-button>
       </div>
     </el-dialog>
@@ -104,28 +116,13 @@ export default {
         wx_external_config_id: ''
       },
       // 规则
-      rules: {
-        route_name: [
-          {
-            required: true,
-            message: '请输入页面名称',
-            trigger: 'blur'
-          }
-        ],
-        route_info: [
-          {
-            required: true,
-            message: '请输入页面路径',
-            trigger: 'blur'
-          }
-        ]
-      },
+      rules: {},
       // 列表
       list: [],
       // 数据总数
       total_count: 0,
       // modal title
-      modalTitle: '添加页面',
+      modalTitle: '',
       // 是否显示modal
       showModal: false,
       // 是否请求中
@@ -137,6 +134,26 @@ export default {
         route_name: '',
         route_info: '',
         route_desc: ''
+      }
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        route_name: [
+          {
+            required: true,
+            message: this.$t('965e5755.7d5cc3'),
+            trigger: 'blur'
+          }
+        ],
+        route_info: [
+          {
+            required: true,
+            message: this.$t('965e5755.8481eb'),
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -163,7 +180,7 @@ export default {
     // 显示modal事件
     showEditModal(info = {}) {
       if (info && info.wx_external_config_id) {
-        this.modalTitle = '修改页面'
+        this.modalTitle = this.$t('965e5755.460e7a')
         this.editInfo = {
           route_name: info.route_name,
           route_info: info.route_info,
@@ -173,8 +190,8 @@ export default {
         }
       } else {
         this.editInfo.wx_external_config_id = this.params.wx_external_config_id
+        this.modalTitle = this.$t('965e5755.4c503b')
       }
-      this.modalTitle = '添加页面'
       this.showModal = true
     },
     // 关闭modal事件
@@ -190,11 +207,11 @@ export default {
     // 删除当前页面路径
     removeCurrent(info) {
       const _self = this
-      this.$confirm('删除当前页面路径？')
+      this.$confirm(this.$t('965e5755.f17cd3'))
         .then((_) => {
           removeWxLink({ id: info.wx_external_routes_id }).then((response) => {
             this.$message({
-              message: '删除成功',
+              message: this.$t('965e5755.0007d1'),
               type: 'success',
               onClose() {
                 if (_self.total_count % _self.params.page_size == 1 && _self.params.page > 1) {

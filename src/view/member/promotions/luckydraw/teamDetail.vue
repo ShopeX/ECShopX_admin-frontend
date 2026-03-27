@@ -12,32 +12,36 @@
       border
       height="580"
     >
-      <el-table-column prop="member_info" label="会员">
+      <el-table-column prop="member_info" :label="$t('76ecc58d.4d9dd5')">
         <template slot-scope="scope">
           {{ scope.row.member_info.nickname }}
         </template>
       </el-table-column>
-      <el-table-column label="参团时间">
+      <el-table-column :label="$t('76ecc58d.fc0e0b')">
         <template slot-scope="scope">
           {{ scope.row.join_time | datetime }}
         </template>
       </el-table-column>
-      <el-table-column label="订单状态">
+      <el-table-column :label="$t('76ecc58d.86f6cf')">
         <template slot-scope="scope">
-          <span v-if="1 == teamInfo.team_status">进行中</span>
-          <span v-else-if="2 == teamInfo.team_status">拼团成功</span>
-          <span v-else>拼团失败</span>
+          <span v-if="1 == teamInfo.team_status">{{ $t('76ecc58d.fb852f') }}</span>
+          <span v-else-if="2 == teamInfo.team_status">{{ $t('76ecc58d.1e792a') }}</span>
+          <span v-else>{{ $t('76ecc58d.11afd7') }}</span>
           |
-          <span v-if="'NOTPAY' == scope.row.order_status">未支付</span>
-          <span v-else-if="'CANCEL' == scope.row.order_status">取消支付</span>
-          <span v-else-if="'DONE' == scope.row.order_status">支付成功</span>
-          <span v-else-if="'PAYED' == scope.row.order_status">支付成功</span>
-          <span v-else-if="'REFUND_PROCESS' == scope.row.order_status">退款中</span>
-          <span v-else-if="'REFUND_SUCCESS' == scope.row.order_status">退款成功</span>
-          <span v-else>拼团机器人</span>
+          <span v-if="'NOTPAY' == scope.row.order_status">{{ $t('76ecc58d.608afd') }}</span>
+          <span v-else-if="'CANCEL' == scope.row.order_status">{{ $t('76ecc58d.cc30f5') }}</span>
+          <span v-else-if="'DONE' == scope.row.order_status">{{ $t('76ecc58d.eb5dc9') }}</span>
+          <span v-else-if="'PAYED' == scope.row.order_status">{{ $t('76ecc58d.eb5dc9') }}</span>
+          <span v-else-if="'REFUND_PROCESS' == scope.row.order_status">{{
+            $t('76ecc58d.07e608')
+          }}</span>
+          <span v-else-if="'REFUND_SUCCESS' == scope.row.order_status">{{
+            $t('76ecc58d.d58cbd')
+          }}</span>
+          <span v-else>{{ $t('76ecc58d.3515e2') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="订单编号">
+      <el-table-column :label="$t('76ecc58d.3e8657')">
         <template slot-scope="scope">
           <router-link
             v-if="scope.row.order_id"
@@ -46,9 +50,9 @@
               query: { orderId: scope.row.order_id, resource: '/mall/trade/service' }
             }"
           >
-            详情
+            {{ $t('76ecc58d.f26225') }}
           </router-link>
-          <span v-else>我是拼团机器人</span>
+          <span v-else>{{ $t('76ecc58d.fa0061') }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -104,7 +108,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取拼团详情失败'
+            message: this.$t('76ecc58d.7ac5b0')
           })
         })
     }

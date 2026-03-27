@@ -58,7 +58,7 @@
         >
           <div class="sp-form-plus__actions-btns">
             <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-              <span class="ml-1">保存</span>
+              <span class="ml-1">{{ $t('2d9168f2.be5fbb') }}</span>
             </el-button>
           </div>
         </div>
@@ -71,21 +71,21 @@
             <el-button type="primary" @click="handleSubmit">
               <div class="flex items-center">
                 <SpIcon name="search" :size="14" />
-                <span class="ml-1">查询</span>
+                <span class="ml-1">{{ $t('2d9168f2.bee912') }}</span>
               </div>
             </el-button>
 
             <el-button @click="handleReset">
               <div class="flex items-center">
                 <SpIcon name="refresh" :size="14" />
-                <span class="ml-1">重置</span>
+                <span class="ml-1">{{ $t('2d9168f2.4b9c32') }}</span>
               </div>
             </el-button>
           </div>
           <!-- 搜索表单的扩展按钮 -->
           <el-button type="text" @click="toggleExtend" v-if="showExtend">
             <div class="flex items-center mt-3">
-              <span>{{ extend ? '收起' : '展开' }}</span>
+              <span>{{ extend ? $t('2d9168f2.def9e9') : $t('2d9168f2.e2edde') }}</span>
             </div>
           </el-button>
         </div>

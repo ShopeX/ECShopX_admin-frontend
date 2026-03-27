@@ -8,25 +8,25 @@
     <div style="margin-bottom: 15px">
       <div>
         <el-button icon="el-icon-plus" type="primary" @click="handleCreate">
-          添加店铺发票信息
+          {{ $t('0d468884.9819a4') }}
         </el-button>
       </div>
       <!-- 数据表格 -->
       <el-table v-loading="tableLoading" :data="list" style="width: 100%">
-        <el-table-column prop="distributor_name" label="店铺名" width="200px" />
-        <el-table-column prop="invoice_head" label="发票抬头" />
-        <el-table-column prop="invoice_code" label="纳税人识别号" width="150px" />
-        <el-table-column prop="invoice_code" label="发票类型" width="200px">
+        <el-table-column prop="distributor_name" :label="$t('0d468884.8a0cc2')" width="200px" />
+        <el-table-column prop="invoice_head" :label="$t('0d468884.6cbd05')" />
+        <el-table-column prop="invoice_code" :label="$t('0d468884.a22d0a')" width="150px" />
+        <el-table-column prop="invoice_code" :label="$t('0d468884.9c1f61')" width="200px">
           <template slot-scope="scope">
-            <span v-if="1 == scope.row.invoice_type">专用增值税发票</span>
-            <span v-else-if="2 == scope.row.invoice_type">普通发票</span>
+            <span v-if="1 == scope.row.invoice_type">{{ $t('0d468884.eb6806') }}</span>
+            <span v-else-if="2 == scope.row.invoice_type">{{ $t('0d468884.747c7a') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoice_addr" label="专票注册地址" />
-        <el-table-column prop="invoice_phone_number" label="专票注册电话" width="100px" />
-        <el-table-column prop="invoice_bank_name" label="专票开户银行" width="200px" />
-        <el-table-column prop="invoice_bank_no" label="专票银行卡号" width="100px" />
-        <el-table-column label="操作" width="200px">
+        <el-table-column prop="invoice_addr" :label="$t('0d468884.508e3d')" />
+        <el-table-column prop="invoice_phone_number" :label="$t('0d468884.42c25e')" width="100px" />
+        <el-table-column prop="invoice_bank_name" :label="$t('0d468884.16844c')" width="200px" />
+        <el-table-column prop="invoice_bank_no" :label="$t('0d468884.4a9880')" width="100px" />
+        <el-table-column :label="$t('0d468884.2b6bc0')" width="200px">
           <template slot-scope="scope">
             <el-button circle type="primary" icon="el-icon-edit" @click="handleUpdate(scope.row)" />
             <el-button
@@ -52,7 +52,7 @@
       </div>
 
       <el-dialog
-        title="店铺列表"
+        :title="$t('0d468884.a4d703')"
         :visible.sync="relShop.relShopVisible"
         :before-close="handleCancel"
         width="70%"
@@ -60,8 +60,8 @@
         <template>
           <el-table v-loading="shopLoading" :data="relShop.list">
             <el-table-column prop="shop_id" label="id" width="60" />
-            <el-table-column prop="store_name" label="店铺名称" width="300" />
-            <el-table-column prop="address" label="店铺地址" />
+            <el-table-column prop="store_name" :label="$t('0d468884.0d4934')" width="300" />
+            <el-table-column prop="address" :label="$t('0d468884.9198af')" />
           </el-table>
           <div
             v-if="relShop.total_count > relShop.params.page_size"
@@ -84,7 +84,7 @@
         width="45%"
       >
         <el-form ref="dataForm" :model="data" label-width="100px">
-          <el-form-item label="店铺">
+          <el-form-item :label="$t('0d468884.295713')">
             <template v-if="rel_distributor_ids && operate == 'create'">
               <el-tag
                 v-for="(item, index) in rel_distributor_ids"
@@ -101,53 +101,53 @@
               type="text"
               @click="addStoreAction"
             >
-              添加适用店铺
+              {{ $t('0d468884.7b91b1') }}
             </el-button>
             <template v-if="operate == 'update'">
               <span>{{ shopname }}</span>
             </template>
           </el-form-item>
-          <el-form-item label="发票抬头">
+          <el-form-item :label="$t('0d468884.6cbd05')">
             <el-input v-model="data.invoice_head" placeholder="" />
           </el-form-item>
-          <el-form-item label="纳税人识别号">
+          <el-form-item :label="$t('0d468884.a22d0a')">
             <el-input v-model="data.invoice_code" placeholder="" />
           </el-form-item>
-          <el-form-item label="发票类型">
+          <el-form-item :label="$t('0d468884.9c1f61')">
             <el-radio-group v-model="data.invoice_type">
-              <el-radio :label="'1'"> 专用增值税发票 </el-radio>
+              <el-radio :label="'1'"> {{ $t('0d468884.eb6806') }} </el-radio>
               <!--              <el-radio :label="'2'">普通发票</el-radio>-->
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="专票注册地址">
+          <el-form-item :label="$t('0d468884.508e3d')">
             <el-input v-if="1 == data.invoice_type" v-model="data.invoice_addr" placeholder="" />
           </el-form-item>
-          <el-form-item label="专票注册电话">
+          <el-form-item :label="$t('0d468884.42c25e')">
             <el-input
               v-if="1 == data.invoice_type"
               v-model="data.invoice_phone_number"
               placeholder=""
             />
           </el-form-item>
-          <el-form-item label="专票开户银行">
+          <el-form-item :label="$t('0d468884.16844c')">
             <el-input
               v-if="1 == data.invoice_type"
               v-model="data.invoice_bank_name"
               placeholder=""
             />
           </el-form-item>
-          <el-form-item label="专票银行卡号">
+          <el-form-item :label="$t('0d468884.4a9880')">
             <el-input v-if="1 == data.invoice_type" v-model="data.invoice_bank_no" placeholder="" />
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button v-if="operate == 'create'" type="primary" @click="createDistributorInvoice"
-            >确 定</el-button
-          >
-          <el-button v-if="operate == 'update'" type="primary" @click="updateDistributorInvoice"
-            >确 定</el-button
-          >
+          <el-button @click="handleClose">{{ $t('0d468884.c08ab9') }}</el-button>
+          <el-button v-if="operate == 'create'" type="primary" @click="createDistributorInvoice">{{
+            $t('0d468884.aa7527')
+          }}</el-button>
+          <el-button v-if="operate == 'update'" type="primary" @click="updateDistributorInvoice">{{
+            $t('0d468884.aa7527')
+          }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -200,7 +200,7 @@ export default {
         invoice_bank_name: '',
         invoice_bank_no: ''
       },
-      dialogTitle: '添加店铺发票信息',
+      dialogTitle: this.$t('0d468884.9819a4'),
       distributors: [],
       distributor_id: 0,
       shopname: '',
@@ -234,12 +234,12 @@ export default {
       this.operate = 'update'
       this.shopname = row.distributor_name
       this.data = Object.assign({}, row)
-      this.dialogTitle = '修改店铺发票信息'
+      this.dialogTitle = this.$t('0d468884.454d9b')
     },
     handleDelete(row) {
-      this.$confirm('此操作将永久删除该店铺发票信息, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('0d468884.edc438'), this.$t('0d468884.02d981'), {
+        confirmButtonText: this.$t('0d468884.38cf16'),
+        cancelButtonText: this.$t('0d468884.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -247,12 +247,12 @@ export default {
             if (response.data.data.status) {
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: this.$t('0d468884.fc9bdd')
               })
             } else {
               this.$message({
                 type: 'error',
-                message: '删除失败!'
+                message: this.$t('0d468884.9cf7a3')
               })
             }
             this.getDistributorInvoiceList()
@@ -261,7 +261,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('0d468884.c34281')
           })
         })
     },
@@ -300,12 +300,12 @@ export default {
       createInvoice(this.data).then((response) => {
         if (response.data.data.status) {
           this.$message({
-            message: '添加成功',
+            message: this.$t('0d468884.3fdaea'),
             type: 'success'
           })
         } else {
           this.$message({
-            message: '添加失败',
+            message: this.$t('0d468884.6452a0'),
             type: 'error'
           })
         }
@@ -317,12 +317,12 @@ export default {
       updateInvoice(this.data.invoice_id, this.data).then((response) => {
         if (response.data.data.status) {
           this.$message({
-            message: '修改成功',
+            message: this.$t('0d468884.69be67'),
             type: 'success'
           })
         } else {
           this.$message({
-            message: '修改失败',
+            message: this.$t('0d468884.5badb3'),
             type: 'error'
           })
         }

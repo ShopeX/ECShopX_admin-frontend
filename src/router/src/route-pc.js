@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = 'pc装修'
+const name = 'ccbdc949.3cf479'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,29 +11,29 @@ export default {
   children: [
     {
       path: 'templatelist',
-      name: `模版列表`,
+      name: 'ccbdc949.e9ee1d',
       component: () => import('@/view/pc/pctemplate')
     },
     {
       path: 'Pctemplate',
-      name: `模版编辑`,
+      name: 'ccbdc949.729536',
       component: () => import('@/view/pc/homePage/default')
     },
     {
       path: 'design',
-      name: `模版编辑`,
+      name: 'ccbdc949.729536',
       meta: {
         hidemenu: true
       }
     },
     {
       path: 'tdkglobalset',
-      name: `全局TDK配置`,
+      name: 'ccbdc949.1ad071',
       component: () => import('@/view/pc/tdk/globalset')
     },
     {
       path: 'tdkgivenset',
-      name: `指定页面TDK配置`,
+      name: 'ccbdc949.347daf',
       component: () => import('@/view/pc/tdk/givenset')
     }
   ]

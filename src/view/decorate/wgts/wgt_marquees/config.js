@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import AttrHorizontal from './attr_horizontal'
+import { i18n } from '@/i18n'
 import AttrVertical from './attr_vertical'
 import { pickBy } from '@/utils'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
@@ -11,23 +12,29 @@ const config = {
   name: 'marquees',
   setting: [
     {
-      label: '内容',
-      group: '内容设置',
+      label: i18n.t('8fc92d38.2d711b'),
+      group: i18n.t('8fc92d38.c6b063'),
       key: 'direction',
       component: 'radiobutton',
       options: [
-        { name: '软文', label: 'vertical' },
-        { name: '文本', label: 'horizontal' }
+        { name: i18n.t('8fc92d38.e8f87a'), label: 'vertical' },
+        { name: i18n.t('8fc92d38.97d076'), label: 'horizontal' }
       ],
       value: 'vertical'
     },
-    { label: '背景颜色', key: 'bgcolor', component: 'color', value: '#ffffff', group: '内容设置' },
     {
-      label: '字体颜色',
+      label: i18n.t('8fc92d38.4573a7'),
+      key: 'bgcolor',
+      component: 'color',
+      value: '#ffffff',
+      group: i18n.t('8fc92d38.c6b063')
+    },
+    {
+      label: i18n.t('8fc92d38.690660'),
       key: 'fontcolor',
       component: 'color',
       value: '#000000',
-      group: '内容设置'
+      group: i18n.t('8fc92d38.c6b063')
     },
     {
       group: '',
@@ -39,7 +46,7 @@ const config = {
       component: function (h, { key }) {
         return <AttrHorizontal v-model={this.value[key]} />
       },
-      value: [{ title: '文本内容' }]
+      value: [{ title: '8fc92d38.cbc608' }]
     },
     {
       label: '',
@@ -50,7 +57,7 @@ const config = {
       component: function (h, { key }) {
         return <AttrVertical v-model={this.value[key]} />
       },
-      value: [{ title: '软文标题', id: '' }]
+      value: [{ title: i18n.t('8fc92d38.64cebd'), id: '' }]
     }
   ],
   transformIn: (v) => {

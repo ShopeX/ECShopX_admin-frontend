@@ -7,7 +7,7 @@
   <div>
     <el-card class="mycard">
       <div slot="header">
-        分帐信息
+        {{ $t('a4450ce9.1f0739') }}
         <el-popover v-if="subTitle" placement="top-start" width="400" trigger="hover">
           <i slot="reference" class="el-icon-question" />
           <pre slot="" style="white-space: pre-line">
@@ -18,24 +18,24 @@
       <el-form ref="form" :model="form" :rules="rules">
         <el-row class="cus-row-form">
           <el-col :span="12">
-            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
+            <el-form-item :label="$t('a4450ce9.6e640f')" prop="adapay_fee_mode">
               <el-select
                 v-model="form.adapay_fee_mode"
                 :clearable="true"
-                placeholder="请选择"
+                :placeholder="$t('a4450ce9.708c9d')"
                 style="width: 100%"
               >
-                <el-option label="内扣" value="I" />
-                <el-option label="外扣" value="O" />
+                <el-option :label="$t('a4450ce9.75d29a')" value="I" />
+                <el-option :label="$t('a4450ce9.6c1506')" value="O" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="总部分账占比" prop="headquarters_proportion">
+            <el-form-item :label="$t('a4450ce9.08605d')" prop="headquarters_proportion">
               <el-input
                 v-model="form.headquarters_proportion"
                 :clearable="true"
-                placeholder="请输入"
+                :placeholder="$t('a4450ce9.02cc4f')"
                 style="width: 100%"
               >
                 <span slot="suffix">%</span>
@@ -46,11 +46,11 @@
             v-if="info.is_rel_dealer || info.entry_apply_info.apply_type === 'dealer'"
             :span="12"
           >
-            <el-form-item label="经销商分账占比" prop="dealer_proportion">
+            <el-form-item :label="$t('a4450ce9.b61188')" prop="dealer_proportion">
               <el-input
                 v-model="form.dealer_proportion"
                 :clearable="true"
-                placeholder="请输入"
+                :placeholder="$t('a4450ce9.02cc4f')"
                 style="width: 100%"
               >
                 <span slot="suffix">%</span>
@@ -59,13 +59,17 @@
           </el-col>
         </el-row>
         <el-form-item class="cus-el-form">
-          <el-button type="primary" @click="handleDialogOpen('form', 'APPROVED')"> 通过 </el-button>
-          <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')"> 驳回 </el-button>
+          <el-button type="primary" @click="handleDialogOpen('form', 'APPROVED')">
+            {{ $t('a4450ce9.23c1f3') }}
+          </el-button>
+          <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')">
+            {{ $t('a4450ce9.325254') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <el-dialog
-      title="审批弹框"
+      :title="$t('a4450ce9.45fa1c')"
       :visible.sync="dialogFormVisible"
       width="30%"
       :modal="false"
@@ -79,14 +83,14 @@
         :rows="5"
         :maxlength="300"
         :show-word-limit="true"
-        placeholder="请填写审批意见"
+        :placeholder="$t('a4450ce9.c4c230')"
       />
       <div slot="footer" class="dialog-footer">
         <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
-          text="确 定"
+          :text="$t('a4450ce9.aa7527')"
           @clickHandle="handleDialogChange('loadingBtn')"
         />
       </div>
@@ -112,7 +116,9 @@ export default {
         headquarters_proportion: [
           { required: true, validator: this.validateNumber, trigger: 'blur' }
         ],
-        adapay_fee_mode: [{ required: true, message: '请选择', trigger: 'change' }],
+        adapay_fee_mode: [
+          { required: true, message: this.$t('a4450ce9.708c9d'), trigger: 'change' }
+        ],
         dealer_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }]
       },
       dialogFormVisible: false,
@@ -146,7 +152,7 @@ export default {
         this.$emit('handleClose', 'update')
         // 跳转到列表页
         this.$message({
-          message: '操作成功',
+          message: this.$t('a4450ce9.33130f'),
           type: 'success'
         })
         this.$refs[ref].closeLoading()
@@ -163,12 +169,12 @@ export default {
       if (status === 'APPROVED') {
         this.$refs['form'].validate(async (vaild) => {
           if (vaild) {
-            this.visibleContent = `请确认是否通过${user_name}的开户申请`
+            this.visibleContent = this.$t('a4450ce9.c13dbc', { name: user_name })
             this.dialogFormVisible = true
           }
         })
       } else {
-        this.visibleContent = `请确认是否驳回${user_name}的开户申请`
+        this.visibleContent = this.$t('a4450ce9.b337a2', { name: user_name })
         this.dialogFormVisible = true
       }
     },
@@ -192,15 +198,15 @@ export default {
       }
       const reg = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!value) {
-        callback(new Error('请输入'))
+        callback(new Error(this.$t('a4450ce9.02cc4f')))
       } else {
         if (!reg.test(value)) {
-          callback(new Error('请输入正确格式，最多保留两位小数'))
+          callback(new Error(this.$t('a4450ce9.cc1ce5')))
         } else if (Number(value) > 100) {
           // 店铺类型为直营店的时候 能输入100
-          callback(new Error('分账比例不能超过100'))
+          callback(new Error(this.$t('a4450ce9.d19795')))
         } else if ((apply_type === 'dealer' || is_rel_dealer) && sum > 100) {
-          callback(new Error('分账占比和不能大于100，请核实后再试'))
+          callback(new Error(this.$t('a4450ce9.d7d7ed')))
         } else {
           callback()
         }

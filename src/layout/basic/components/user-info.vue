@@ -11,13 +11,14 @@
       form-type="normalForm"
       :form-items="formItems"
       label-width="100px"
-      :showDefaultActions="false"
+      :show-default-actions="false"
       @submit="handleSubmit"
     />
   </div>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 export default {
   props: {
     value: {
@@ -31,8 +32,12 @@ export default {
         account: '',
         nickname: '',
         avatar: ''
-      },
-      formItems: [
+      }
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           component: ({ value }) => {
             return this.$createElement(
@@ -44,29 +49,29 @@ export default {
             )
           },
           fieldName: 'account',
-          label: '账户'
+          label: i18n.t('97f0b47f.7116e7')
         },
         {
           component: 'input',
           componentProps: {
-            placeholder: '请输入昵称',
+            placeholder: i18n.t('97f0b47f.916ff9'),
             clearable: true,
             maxlength: 20,
             showWordLimit: true
           },
           fieldName: 'nickname',
           formItemClass: 'w-2/3',
-          label: '昵称',
+          label: i18n.t('97f0b47f.23eb0e'),
           rules: [
-            { required: true, message: '请输入昵称', trigger: 'blur' },
-            { min: 2, max: 20, message: '昵称长度在 2 到 20 个字符', trigger: 'blur' }
+            { required: true, message: i18n.t('97f0b47f.916ff9'), trigger: 'blur' },
+            { min: 2, max: 20, message: i18n.t('97f0b47f.f15f1e'), trigger: 'blur' }
           ]
         },
         {
           component: 'imagepicker',
           fieldName: 'avatar',
           formItemClass: 'w-2/3',
-          label: '头像'
+          label: i18n.t('97f0b47f.4c50ee')
         }
       ]
     }
@@ -102,9 +107,9 @@ export default {
           username: formData.nickname,
           head_portrait: formData.avatar
         })
-        this.$message.success('更新成功，重新登录后生效')
+        this.$message.success(this.$t('97f0b47f.b374d9'))
       } catch (error) {
-        throw new Error('更新失败')
+        throw new Error(this.$t('97f0b47f.930442'))
       }
     }
   }

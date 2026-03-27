@@ -4,9 +4,13 @@
 -->
 
 <template>
-  <SpPage title="创建营销活动">
+  <SpPage :title="$t('ca74325b.1e5200')">
     <div slot="page-footer" class="text-center">
-      <el-button :loading="submitLoading" type="primary" @click="handleSave">保存</el-button>
+      <el-button :loading="submitLoading" type="primary" @click="handleSave">
+{{
+        $t('ca74325b.be5fbb')
+      }}
+</el-button>
     </div>
 
     <SpFormPlus
@@ -27,65 +31,26 @@ import ActivityDaterange from './components/activity-daterange'
 import SmsNotice from './components/sms-notice'
 import GiveAwayType from './components/give-away-type'
 
-const ACTIVITY_TYPE = {
-  'member_birthday': [
-    {
-      label: '生日当月1日统一发放',
-      value: 'birthday_month'
-    },
-    {
-      label: '生日当周周日统一发放',
-      value: 'birthday_week'
-    },
-    {
-      label: '生日当日统一发放',
-      value: 'birthday_day'
-    }
+const ACTIVITY_TYPE_VALUES = {
+  member_birthday: [
+    { value: 'birthday_month' },
+    { value: 'birthday_week' },
+    { value: 'birthday_day' }
   ],
-  'member_upgrade': [
-    {
-      label: '会员升级成功后发放',
-      value: 'member_upgrade'
-    }
+  member_upgrade: [{ value: 'member_upgrade' }],
+  member_vip_upgrade: [{ value: 'member_vip_upgrade' }],
+  member_anniversary: [
+    { value: 'anniversary_month' },
+    { value: 'anniversary_week' },
+    { value: 'anniversary_day' }
   ],
-  'member_vip_upgrade': [
-    {
-      label: '付费会员升级成功后发放',
-      value: 'member_vip_upgrade'
-    }
-  ],
-  'member_anniversary': [
-    {
-      label: '周年入会当月1日统一发放',
-      value: 'anniversary_month'
-    },
-    {
-      label: '周年入会当周周日统一发放',
-      value: 'anniversary_week'
-    },
-    {
-      label: '周年入会当日统一发放',
-      value: 'anniversary_day'
-    }
-  ],
-  'member_day': [
-    {
-      label: '每年',
-      value: 'every_year'
-    },
-    {
-      label: '每月',
-      value: 'every_month'
-    },
-    {
-      label: '每周',
-      value: 'every_week'
-    }
-  ]
+  member_day: [{ value: 'every_year' }, { value: 'every_month' }, { value: 'every_week' }]
 }
 
 export default {
   data() {
+    const type = this.$route.params.type
+    const firstValue = ACTIVITY_TYPE_VALUES[type] && ACTIVITY_TYPE_VALUES[type][0]
     return {
       formData: {
         title: '',
@@ -94,7 +59,7 @@ export default {
           is_forever: false
         },
         condition: {
-          type: ACTIVITY_TYPE[this.$route.params.type][0].value,
+          type: firstValue ? firstValue.value : '',
           month: '',
           day: '',
           week: ''
@@ -105,57 +70,81 @@ export default {
           wxapp_name: ''
         }
       },
-      formItems: [
-        {
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入活动名称',
-            clearable: true,
-            maxlength: 20,
-            showWordLimit: true
-          },
-          fieldName: 'title',
-          formItemClass: 'w-1/2',
-          label: '活动名称',
-          rules: [{ required: true, message: '请输入活动名称' }]
-        },
-        {
-          component: ({ h, value, onInput }) => {
-            return <ActivityDaterange value={value} on-change={onInput} />
-          },
-          fieldName: 'activity_time',
-          label: '活动时间'
-        },
-        {
-          component: ({ h, value, onInput }) => {
-            return (
-              <GiveAwayType
-                value={value}
-                options={ACTIVITY_TYPE[this.$route.params.type]}
-                on-change={onInput}
-              />
-            )
-          },
-          fieldName: 'condition',
-          label: '赠送方式'
-        },
-        {
-          component: ({ h, onInput }) => {
-            return <GiftCouponList on-change={onInput} />
-          },
-          fieldName: 'gift_coupons',
-          label: '赠送优惠券'
-        },
-        {
-          component: ({ h, value, onInput }) => {
-            return <SmsNotice value={value} on-change={onInput} />
-          },
-          fieldName: 'sms_notice',
-          label: '短信通知'
-        }
-      ],
+      formItems: [],
+      activityTypeOptions: {},
       submitLoading: false
     }
+  },
+  created() {
+    const t = this.$t.bind(this)
+    this.activityTypeOptions = {
+      member_birthday: [
+        { label: t('ca74325b.0b8db5'), value: 'birthday_month' },
+        { label: t('ca74325b.883212'), value: 'birthday_week' },
+        { label: t('ca74325b.503d48'), value: 'birthday_day' }
+      ],
+      member_upgrade: [{ label: t('ca74325b.e3e252'), value: 'member_upgrade' }],
+      member_vip_upgrade: [{ label: t('ca74325b.a2d14e'), value: 'member_vip_upgrade' }],
+      member_anniversary: [
+        { label: t('ca74325b.ce21e7'), value: 'anniversary_month' },
+        { label: t('ca74325b.e8667c'), value: 'anniversary_week' },
+        { label: t('ca74325b.5446bf'), value: 'anniversary_day' }
+      ],
+      member_day: [
+        { label: t('ca74325b.281cd3'), value: 'every_year' },
+        { label: t('ca74325b.aa3d57'), value: 'every_month' },
+        { label: t('ca74325b.09b03b'), value: 'every_week' }
+      ]
+    }
+    this.formItems = [
+      {
+        component: 'input',
+        componentProps: {
+          placeholder: t('ca74325b.7528b3'),
+          clearable: true,
+          maxlength: 20,
+          showWordLimit: true
+        },
+        fieldName: 'title',
+        formItemClass: 'w-1/2',
+        label: t('ca74325b.39834b'),
+        rules: [{ required: true, message: t('ca74325b.7528b3') }]
+      },
+      {
+        component: ({ h, value, onInput }) => {
+          return <ActivityDaterange value={value} on-change={onInput} />
+        },
+        fieldName: 'activity_time',
+        label: t('ca74325b.c799f5')
+      },
+      {
+        component: ({ h, value, onInput }) => {
+          return (
+            <GiveAwayType
+              value={value}
+              options={this.activityTypeOptions[this.$route.params.type] || []}
+              on-change={onInput}
+            />
+          )
+        },
+        fieldName: 'condition',
+        label: t('ca74325b.cfa851')
+      },
+      {
+        component: ({ h, onInput }) => {
+          return <GiftCouponList on-change={onInput} />
+        },
+        fieldName: 'gift_coupons',
+        label: t('ca74325b.91fa9b')
+      },
+      {
+        component: ({ h, value, onInput }) => {
+          return <SmsNotice value={value} on-change={onInput} />
+        },
+        fieldName: 'sms_notice',
+        label: t('ca74325b.e7d158')
+      }
+    ]
   },
   methods: {
     async handleSave() {
@@ -197,7 +186,7 @@ export default {
       try {
         await this.$api.promotions.createActivity(params)
         this.submitLoading = false
-        this.$message.success('创建成功')
+        this.$message.success(this.$t('ca74325b.04a691'))
         this.$parent.onActivated()
         this.$router.go(-2)
       } catch (error) {

@@ -33,11 +33,11 @@
     <el-card
       v-if="is_normal && baseForm.distributor_self == 0"
       class="el-card--normal"
-      header="店铺类型"
+      :header="$t('cc667c72.1dbb0d')"
     >
       <el-form ref="form" label-width="120px" :model="baseForm" :rules="rules">
-        <el-form-item label="店铺类型" prop="distribution_type">
-          <el-select v-model="baseForm.distribution_type" placeholder="请选择">
+        <el-form-item :label="$t('cc667c72.1dbb0d')" prop="distribution_type">
+          <el-select v-model="baseForm.distribution_type" :placeholder="$t('cc667c72.708c9d')">
             <el-option
               v-for="item in distributionTypeList"
               :key="item.value"
@@ -47,13 +47,17 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item v-if="baseForm.distribution_type === 1" label="所属商户" prop="merchant_id">
+        <el-form-item
+          v-if="baseForm.distribution_type === 1"
+          :label="$t('cc667c72.1eaa17')"
+          prop="merchant_id"
+        >
           <el-select
             v-model="baseForm.merchant_id"
             filterable
             remote
             reserve-keyword
-            placeholder="请输入商户名称"
+            :placeholder="$t('cc667c72.18213b')"
             :remote-method="remoteMerchantList"
             :loading="merchantLoading"
           >
@@ -76,16 +80,16 @@
 
     <DadaForm ref="dadaFormRef" @onChange="onChangeData" />
 
-    <el-card class="el-card--normal" header="到店自提">
+    <el-card class="el-card--normal" :header="$t('cc667c72.93ab28')">
       <el-form class="ziti-form" label-width="120px">
-        <el-form-item label="到店自提">
+        <el-form-item :label="$t('cc667c72.93ab28')">
           <el-switch v-model="baseForm.is_ziti" />
           <div class="form-item-tip">
-            启用到店自提功能后，买家下单时可选择下方地址自提，下单后你需要尽快将商品配送至指定自提点；下方自提地址共享该店铺库存。
+            {{ $t('cc667c72.c3a20c') }}
           </div>
         </el-form-item>
         <el-form-item v-if="baseForm.is_ziti">
-          <el-button type="text" @click="onSelectZiti">选择自提点</el-button>
+          <el-button type="text" @click="onSelectZiti">{{ $t('cc667c72.47c2de') }}</el-button>
           <!-- url="/pickuplocation/list" -->
           <!-- {{finderData}}, finderUrl: {{finderUrl}} -->
           <SpFinder
@@ -109,9 +113,9 @@
     <IntroduceForm ref="introduceFormRef" />
 
     <div class="footer-container">
-      <el-button size="large" @click="cancelSubmit"> 取消 </el-button>
+      <el-button size="large" @click="cancelSubmit"> {{ $t('cc667c72.625fb2') }} </el-button>
       <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
-        {{ submitLoading ? '提交中' : '保存' }}
+        {{ submitLoading ? $t('cc667c72.7ef44a') : $t('cc667c72.be5fbb') }}
       </el-button>
     </div>
   </div>
@@ -192,10 +196,28 @@ export default {
           hours: ''
         }
       },
-      setting: createSetting({
+      setting: null,
+      distributor_id: 0,
+      rules: {},
+      distributionTypeList: [],
+      merchantList: [],
+      merchantLoading: false,
+      zitiList: [],
+      finderData: [],
+      finderUrl: ''
+    }
+  },
+  computed: {
+    is_normal: function () {
+      return (
+        this.$store.getters.login_type === 'normal' || this.$store.getters.login_type === 'admin'
+      )
+    },
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '移除',
+            name: this.$t('cc667c72.86048b'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -220,32 +242,15 @@ export default {
           }
         ],
         columns: [
-          { name: '自提点名称', key: 'name' },
+          { name: this.$t('cc667c72.6b88c4'), key: 'name' },
           {
-            name: '地址',
+            name: this.$t('cc667c72.765048'),
             render: (h, { row }) =>
               h('span', {}, `${row.province}${row.city}${row.area}${row.address}`)
           },
-          { name: '联系电话', key: 'contract_phone' }
+          { name: this.$t('cc667c72.09a1f6'), key: 'contract_phone' }
         ]
-      }),
-      distributor_id: 0,
-      rules: {
-        merchant_id: [{ message: '请选择商户', required: true }]
-      },
-      distributionTypeList: [{ value: 0, label: '自营' }],
-      merchantList: [],
-      merchantLoading: false,
-      zitiList: [],
-      finderData: [],
-      finderUrl: ''
-    }
-  },
-  computed: {
-    is_normal: function () {
-      return (
-        this.$store.getters.login_type === 'normal' || this.$store.getters.login_type === 'admin'
-      )
+      })
     }
   },
   created() {
@@ -253,8 +258,12 @@ export default {
     this.distributor_id = distributor_id
   },
   mounted() {
+    this.distributionTypeList = [{ value: 0, label: this.$t('cc667c72.491c0c') }]
+    this.rules = {
+      merchant_id: [{ message: this.$t('cc667c72.24a64e'), required: true }]
+    }
     if (!this.VERSION_STANDARD()) {
-      this.distributionTypeList.push({ value: 1, label: '加盟' })
+      this.distributionTypeList.push({ value: 1, label: this.$t('cc667c72.059670') })
     }
 
     this.getShopInfo()
@@ -404,7 +413,7 @@ export default {
         }
       } catch (e) {
         console.error(e)
-        this.$message.error('店铺信息未填写完整')
+        this.$message.error(this.$t('cc667c72.742f99'))
         return
       }
       this.submitLoading = true
@@ -440,7 +449,7 @@ export default {
         if (distributor_id) {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)
           this.submitLoading = false
-          this.$message.success('修改店铺成功')
+          this.$message.success(this.$t('cc667c72.c83614'))
         } else {
           const ids = this.finderData.map((item) => item.id)
           await this.$api.marketing.saveDistributorInfo({
@@ -448,7 +457,7 @@ export default {
             pickup_location: ids
           })
           this.submitLoading = false
-          this.$message.success('保存店铺成功')
+          this.$message.success(this.$t('cc667c72.931e30'))
         }
         if (!IS_DISTRIBUTOR()) {
           this.$router.go(-1)

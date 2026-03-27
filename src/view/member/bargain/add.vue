@@ -6,17 +6,17 @@
 <template>
   <div class="section-white content-padded bargain-box">
     <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-      <el-form-item label="活动名称" prop="title">
+      <el-form-item :label="$t('82e97e47.39834b')" prop="title">
         <el-input v-model="form.title" :maxlength="20" style="width: 280px" />&nbsp;<span
           class="frm-tips"
           >{{ form.title.length }}/20</span
         >
       </el-form-item>
-      <el-form-item label="活动海报" prop="ad_pic">
-        <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
+      <el-form-item :label="$t('82e97e47.98fbb0')" prop="ad_pic">
+        <p class="frm-tips">{{ $t('82e97e47.c2c43a') }}</p>
         <div class="activity-poster">
           <div class="upload-box" @click="handleImgChange">
-            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
+            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </div>
         </div>
@@ -27,31 +27,31 @@
           @closeImgDialog="closeImgDialog"
         />
       </el-form-item>
-      <el-form-item label="活动时间" prop="bargains_datetime">
+      <el-form-item :label="$t('82e97e47.c799f5')" prop="bargains_datetime">
         <el-date-picker
           v-model="form.bargains_datetime_begin"
           type="datetime"
-          placeholder="选择开始日期时间"
+          :placeholder="$t('82e97e47.e19a25')"
         />
         ~
         <el-date-picker
           v-model="form.bargains_datetime_end"
           type="datetime"
-          placeholder="选择结束日期时间"
+          :placeholder="$t('82e97e47.90630e')"
         />
       </el-form-item>
-      <el-form-item label="活动规则" prop="bargain_rules">
+      <el-form-item :label="$t('82e97e47.02a217')" prop="bargain_rules">
         <el-col :span="12">
           <el-input v-model="form.bargain_rules" type="textarea" />
         </el-col>
       </el-form-item>
-      <el-form-item label="翻牌图片" prop="bargain_pics">
-        <p class="frm-tips">建议图片尺寸151px * 185px，图片大小不能超过 2MB</p>
+      <el-form-item :label="$t('82e97e47.63a4eb')" prop="bargain_pics">
+        <p class="frm-tips">{{ $t('82e97e47.e599ff') }}</p>
         <div class="pics-box">
           <div class="pics-list">
             <template v-for="(item, index) in form.help_pics">
               <div class="pics-item">
-                <img :src="wximageurl + item" />
+                <img :src="wximageurl + item">
                 <div class="bg-mask">
                   <i class="icon el-icon-edit-outline" @click="picsEdit(index)" />
                   <i class="icon el-icon-delete" @click="picsDelete(index)" />
@@ -71,19 +71,19 @@
         />
       </el-form-item>
 
-      <el-form-item label="助力产品">
+      <el-form-item :label="$t('82e97e47.4bf3a9')">
         <el-row :gutter="20">
           <el-col :span="20" style="padding-left: 0px">
             <p class="frm-tips" />
             <div class="logo-box">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
-                    <div>原价：￥{{ goods.price }}</div>
+                    <div>{{ $t('82e97e47.80193b') }}￥{{ goods.price }}</div>
                     <div v-if="goods.item_type == 'normal' || goods.store > 0">
-                      库存：{{ goods.store }}
+                      {{ $t('82e97e47.b008bd') }}{{ goods.store }}
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,9 @@
                   <i class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
-              <el-button size="small" type="primary" @click="changeItem"> 选择商品 </el-button>
+              <el-button size="small" type="primary" @click="changeItem">
+                {{ $t('82e97e47.43d1e2') }}
+              </el-button>
             </div>
           </el-col>
         </el-row>
@@ -114,19 +116,19 @@
         <el-input v-model="form.mkt_price" style="width: 120px;"></el-input>&nbsp;元，最多保留两位小数,原价至少要比底价大￥1
       </el-form-item>-->
 
-      <el-form-item label="产品底价" prop="price">
-        <el-input v-model="form.price" style="width: 120px" />&nbsp;元，最多保留两位小数
+      <el-form-item :label="$t('82e97e47.70d74a')" prop="price">
+        <el-input v-model="form.price" style="width: 120px" />&nbsp;{{ $t('82e97e47.e33542') }}
       </el-form-item>
       <!--       <el-form-item label="助力区间" prop="price_range">
       <p class="frm-tips">助力金额最小为0，最大不能超过原价和底价之差，请合理设置</p>
         <el-input v-model="form.price_min" placeholder="最低可砍多少元" style="width: 80px;"></el-input> ~ <el-input v-model="form.price_max" placeholder="最高可砍多少元" style="width: 80px;"></el-input>&nbsp;元，最多保留两位小数
       </el-form-item> -->
-      <el-form-item label="助力人数" prop="people_range">
+      <el-form-item :label="$t('82e97e47.bfea22')" prop="people_range">
         <el-input
           v-model="form.people_min"
           type="number"
           min="1"
-          placeholder="最少人数"
+          :placeholder="$t('82e97e47.e95b5a')"
           style="width: 80px"
         />
         ~
@@ -134,7 +136,7 @@
           v-model="form.people_max"
           type="number"
           min="2"
-          placeholder="最多人数"
+          :placeholder="$t('82e97e47.1f2329')"
           style="width: 80px"
         />
       </el-form-item>
@@ -150,45 +152,45 @@
         </span>
         <imgPicker :dialog-visible="thumbDialog" :sc-status="isGetThumb" @chooseImg="pickThumb" @closeImgDialog="closeThumbDialog"></imgPicker>
       </el-form-item>-->
-      <el-form-item label="分享内容" prop="share_msg">
+      <el-form-item :label="$t('82e97e47.1d1ff8')" prop="share_msg">
         <el-input v-model="form.share_msg" style="width: 280px" />
       </el-form-item>
       <el-form-item class="content-center">
-        <el-button @click="cancel"> 返回 </el-button>
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button @click="cancel"> {{ $t('82e97e47.5f4112') }} </el-button>
+        <el-button type="primary" @click="save"> {{ $t('82e97e47.be5fbb') }} </el-button>
       </el-form-item>
     </el-form>
 
-    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
+    <el-dialog :title="$t('82e97e47.43d1e2')" :visible.sync="goodsDialogVisible" center>
       <el-button-group class="tab-group">
         <!--        <el-button class="tab-btn" @click="changeGoods('every')" :class="goodsTypeTitle==='服务类商品' ? 'on' : ''">服务类商品</el-button>-->
         <!--        <el-button class="tab-btn" @click="changeGoods('normal')" :class="goodsTypeTitle==='实体类商品' ? 'on' : ''" >实体类商品</el-button>-->
       </el-button-group>
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input v-model="itemsParams.keywords" placeholder="商品名称">
+          <el-input v-model="itemsParams.keywords" :placeholder="$t('82e97e47.1fd1d5')">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
       </el-row>
       <el-table v-loading="itemsLoading" :data="itemsList" style="width: 100%" border height="500">
-        <el-table-column prop="itemName" label="商品名称" />
-        <el-table-column label="缩略图">
+        <el-table-column prop="itemName" :label="$t('82e97e47.1fd1d5')" />
+        <el-table-column :label="$t('82e97e47.0f088d')">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]" />
+            <img width="20" :src="wximageurl + scope.row.pics[0]">
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
-        <el-table-column prop="itemName" label="状态">
+        <el-table-column prop="price" :label="$t('82e97e47.e29575')" :formatter="priceformatter" />
+        <el-table-column prop="itemName" :label="$t('82e97e47.3fea7c')">
           <template slot-scope="scope">
             <el-button
               v-if="form.item_id != scope.row.itemId"
               type="text"
               @click="chooseItem(scope.row)"
             >
-              选择
+              {{ $t('82e97e47.153fa6') }}
             </el-button>
-            <span v-else>已选择</span>
+            <span v-else>{{ $t('82e97e47.f08afd') }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -202,8 +204,10 @@
         />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">关 闭</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        <el-button @click="centerDialogVisible = false">{{ $t('82e97e47.9d2578') }}</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">{{
+          $t('82e97e47.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -221,24 +225,24 @@ export default {
   data() {
     var datetimeChecked = (rule, value, callback) => {
       if (this.form.bargains_datetime_begin == '' && this.form.bargains_datetime_end == '') {
-        return callback(new Error('请选择活动起止时间'))
+        return callback(new Error(this.$t('82e97e47.e6df0e')))
       } else if (this.form.bargains_datetime_begin == '') {
-        return callback(new Error('请选择活动开始时间'))
+        return callback(new Error(this.$t('82e97e47.af1f65')))
       } else if (this.form.bargains_datetime_end == '') {
-        return callback(new Error('请选择活动结束时间'))
+        return callback(new Error(this.$t('82e97e47.a1453a')))
       } else {
         callback()
       }
     }
     var priceRangeChecked = (rule, value, callback) => {
       if (this.form.price_min == '' && this.form.price_max == '') {
-        return callback(new Error('请输入助力区间'))
+        return callback(new Error(this.$t('82e97e47.bcecc3')))
       } else if (this.form.price_min == '') {
-        return callback(new Error('请输入最低可砍金额'))
+        return callback(new Error(this.$t('82e97e47.db6ada')))
       } else if (this.form.price_max == '') {
-        return callback(new Error('请输入最高可砍金额'))
+        return callback(new Error(this.$t('82e97e47.2855ad')))
       } else if (this.form.price_max <= this.form.price_min + 1) {
-        return callback(new Error('最大助力金额要大于最低助力金额'))
+        return callback(new Error(this.$t('82e97e47.530189')))
       } else {
         callback()
       }
@@ -246,13 +250,13 @@ export default {
     var peopleRangeChecked = (rule, value, callback) => {
       var reg = /[^\d]/
       if (!/^\+?[1-9][0-9]*$/.test(this.form.people_min)) {
-        return callback(new Error('最少助力人数必须为正整数'))
+        return callback(new Error(this.$t('82e97e47.8c8730')))
       } else if (!/^\+?[1-9][0-9]*$/.test(this.form.people_max)) {
-        return callback(new Error('最多助力人数必须为正整数'))
+        return callback(new Error(this.$t('82e97e47.efb831')))
       } else if (this.form.people_min < 1) {
-        return callback(new Error('最少助力人数要大于1且为正整数'))
+        return callback(new Error(this.$t('82e97e47.2cb4a9')))
       } else if (+this.form.people_max <= +this.form.people_min) {
-        return callback(new Error('最多助力人数要大于最少助力人数'))
+        return callback(new Error(this.$t('82e97e47.1cc35b')))
       } else {
         callback()
       }
@@ -260,11 +264,11 @@ export default {
     var mktPriceChecked = (rule, value, callback) => {
       var reg = /^(([1-9]\d*)|0)(\.\d{1,2})?$/
       if (this.form.mkt_price == '') {
-        return callback(new Error('请输入产品原价'))
+        return callback(new Error(this.$t('82e97e47.2c38c9')))
       } else if (!reg.test(this.form.mkt_price)) {
-        callback(new Error('产品原价正数，精确到小数点后2位'))
+        callback(new Error(this.$t('82e97e47.319275')))
       } else if (+this.form.mkt_price < +this.form.price) {
-        return callback(new Error('产品原价必须大于产品低价'))
+        return callback(new Error(this.$t('82e97e47.f686fe')))
       } else {
         callback()
       }
@@ -272,11 +276,11 @@ export default {
     var priceChecked = (rule, value, callback) => {
       var reg = /^(([1-9]\d*)|0)(\.\d{1,2})?$/
       if (this.form.price == '') {
-        return callback(new Error('请输入产品底价'))
+        return callback(new Error(this.$t('82e97e47.556782')))
       } else if (!reg.test(this.form.price)) {
-        callback(new Error('产品底价正数，精确到小数点后2位'))
+        callback(new Error(this.$t('82e97e47.e7784c')))
       } else if (+this.form.price > +this.form.mkt_price) {
-        return callback(new Error('产品底价必须小于产品原价'))
+        return callback(new Error(this.$t('82e97e47.31ac44')))
       } else {
         callback()
       }
@@ -295,7 +299,7 @@ export default {
         keywords: ''
       },
       itemsLoading: false,
-      goodsTypeTitle: '实体类商品',
+      goodsTypeTitle: '',
 
       imgDialog: false,
       isGetImage: false,
@@ -330,24 +334,36 @@ export default {
         share_msg: ''
       },
       rules: {
-        title: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-        ad_pic: [{ required: true, message: '请上传活动海报', trigger: 'change' }],
+        title: [{ required: true, message: () => this.$t('82e97e47.7528b3'), trigger: 'blur' }],
+        ad_pic: [{ required: true, message: () => this.$t('82e97e47.d3872a'), trigger: 'change' }],
         bargains_datetime: [{ required: true, validator: datetimeChecked, trigger: 'blur' }],
-        bargain_rules: [{ required: true, message: '请输入活动规则', trigger: 'blur' }],
-        item_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
-        item_pics: [{ required: true, message: '请上传产品图片', trigger: 'blur' }],
+        bargain_rules: [
+          { required: true, message: () => this.$t('82e97e47.d0eebd'), trigger: 'blur' }
+        ],
+        item_name: [{ required: true, message: () => this.$t('82e97e47.448ab9'), trigger: 'blur' }],
+        item_pics: [{ required: true, message: () => this.$t('82e97e47.180e73'), trigger: 'blur' }],
         mkt_price: [{ required: true, validator: mktPriceChecked, trigger: 'blur' }],
         price: [{ required: true, validator: priceChecked, trigger: 'blur' }],
         price_range: [{ required: true, validator: priceRangeChecked, trigger: 'blur' }],
         people_range: [{ required: true, validator: peopleRangeChecked, trigger: 'blur' }],
-        min_price: [{ required: true, message: '请输入最少助力金额', trigger: 'blur' }],
-        limit_num: [{ required: true, type: 'number', message: '请输入产品数量', trigger: 'blur' }],
-        item_intro: [{ required: true, message: '请输入产品详情', trigger: 'blur' }],
-        share_msg: [{ required: true, message: '请输入分享内容', trigger: 'blur' }]
+        min_price: [{ required: true, message: () => this.$t('82e97e47.cb30c0'), trigger: 'blur' }],
+        limit_num: [
+          {
+            required: true,
+            type: 'number',
+            message: () => this.$t('82e97e47.03abcd'),
+            trigger: 'blur'
+          }
+        ],
+        item_intro: [
+          { required: true, message: () => this.$t('82e97e47.495d38'), trigger: 'blur' }
+        ],
+        share_msg: [{ required: true, message: () => this.$t('82e97e47.7b4bd5'), trigger: 'blur' }]
       }
     }
   },
   mounted() {
+    this.goodsTypeTitle = this.$t('82e97e47.ddf672')
     // 编辑助力活动
     if (this.$route.params.bargain_id) {
       // 初始化助力活动详情数据
@@ -407,7 +423,7 @@ export default {
           this.itemsLoading = false
           this.$message({
             type: 'error',
-            message: '获取商品列表列表信息出错'
+            message: this.$t('82e97e47.325305')
           })
         })
     },
@@ -416,12 +432,12 @@ export default {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
           this.$delete(this.itemsParams, 'item_type')
-          this.goodsTypeTitle = '服务类商品'
+          this.goodsTypeTitle = this.$t('82e97e47.fcd4d7')
           break
         case 'normal':
           this.$set(this.itemsParams, 'item_type', 'normal')
           this.$delete(this.itemsParams, 'consume_type')
-          this.goodsTypeTitle = '实体类商品'
+          this.goodsTypeTitle = this.$t('82e97e47.ddf672')
           break
       }
       this.getGoodsList()
@@ -516,7 +532,7 @@ export default {
           }
 
           if (this.form.item_id === '') {
-            this.$message.error('请选择商品!')
+            this.$message.error(this.$t('82e97e47.56012f'))
           }
 
           var params = {
@@ -546,7 +562,7 @@ export default {
             updateBargains(this.form.bargain_id, params).then((response) => {
               if (response.data.data.bargain_id) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('82e97e47.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -555,7 +571,7 @@ export default {
                   }
                 })
               } else {
-                this.$message.error('更新助力活动失败!')
+                this.$message.error(this.$t('82e97e47.edf9fe'))
                 return false
               }
             })
@@ -563,7 +579,7 @@ export default {
             addBargins(params).then((response) => {
               if (response.data.data.bargain_id) {
                 this.$message({
-                  message: '添加成功',
+                  message: this.$t('82e97e47.3fdaea'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -572,7 +588,7 @@ export default {
                   }
                 })
               } else {
-                this.$message.error('添加助力活动失败!')
+                this.$message.error(this.$t('82e97e47.006ead'))
                 return false
               }
             })

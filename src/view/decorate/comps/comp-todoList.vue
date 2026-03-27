@@ -81,9 +81,9 @@
           <slot name="body" :data="item" :index="index" />
         </div>
       </div>
-      <el-button slot="footer" type="primary" @click="handleAddItem" class="add-btn">{{
-        btnText
-      }}</el-button>
+      <el-button slot="footer" type="primary" @click="handleAddItem" class="add-btn">
+        {{ btnText || $t('e266b10e.b58c75') }}
+      </el-button>
     </draggable>
   </div>
 </template>
@@ -110,7 +110,7 @@ export default {
     },
     btnText: {
       type: String,
-      default: '添加'
+      default: ''
     },
     isEdit: {
       type: Boolean,
@@ -133,8 +133,8 @@ export default {
   },
   watch: {
     value: {
-      handler(nVal) {
-        this.localValue = this.value
+      handler() {
+        this.localValue = Array.isArray(this.value) ? this.value : []
       },
       deep: true,
       immediate: true
@@ -150,7 +150,7 @@ export default {
   methods: {
     handleAddItem() {
       if (this.localValue.length >= this.max) {
-        this.$message.error(`最多添加${this.max}条`)
+        this.$message.error(this.$t('e266b10e.21d2d5', { max: this.max }))
         return
       }
       this.$emit('onAddItem')

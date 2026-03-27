@@ -9,17 +9,17 @@
     <el-card>
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">
-          <el-form-item label="广告素材" prop="ad_pic">
+          <el-form-item :label="$t('94b9c64d.c36afe')" prop="ad_pic">
             <el-radio-group v-model="form.material_type">
-              <el-radio :label="1"> 图片 </el-radio>
+              <el-radio :label="1">{{ $t('94b9c64d.20def7') }}</el-radio>
               <!-- <el-radio :label="2">视频</el-radio>-->
             </el-radio-group>
             <!--图片组件-->
             <div v-if="form.material_type === 1">
-              <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB（建议尺寸：750px*1334px）</p>
+              <p class="frm-tips">{{ $t('94b9c64d.68986c') }}</p>
               <div>
                 <div class="upload-box" @click="handleImgChange">
-                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar" />
+                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
@@ -28,27 +28,27 @@
             <div v-if="form.material_type === 2">
               <videoPicker :data="itemVideo" @change="pickVideo" />
               <el-button v-if="itemVideo.media_id" type="text" @click="deleteVideo">
-                删除
+                {{ $t('94b9c64d.2f4aad') }}
               </el-button>
             </div>
           </el-form-item>
 
-          <el-form-item label="是否开启">
+          <el-form-item :label="$t('94b9c64d.780afe')">
             <el-radio-group v-model="form.is_enable">
-              <el-radio :label="1"> 开启 </el-radio>
-              <el-radio :label="0"> 关闭 </el-radio>
+              <el-radio :label="1">{{ $t('94b9c64d.cc42dd') }}</el-radio>
+              <el-radio :label="0">{{ $t('94b9c64d.b15d91') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="曝光设置">
+          <el-form-item :label="$t('94b9c64d.380600')">
             <el-radio-group v-model="form.show_time">
-              <el-radio label="first"> 第一次启动时 </el-radio>
-              <el-radio label="always"> 每次启动时 </el-radio>
+              <el-radio label="first">{{ $t('94b9c64d.982129') }}</el-radio>
+              <el-radio label="always">{{ $t('94b9c64d.5c43e1') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="倒计时显示位置">
+          <el-form-item :label="$t('94b9c64d.813fe4')">
             <el-radio-group v-model="form.position">
-              <el-radio label="right_top"> 右上 </el-radio>
-              <el-radio label="right_bottom"> 右下 </el-radio>
+              <el-radio label="right_top">{{ $t('94b9c64d.eafeba') }}</el-radio>
+              <el-radio label="right_bottom">{{ $t('94b9c64d.9cd707') }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <!-- <el-form-item label="是否允许跳过">
@@ -62,32 +62,45 @@
   </el-radio-group>
   </el-form-item> -->
 
-          <el-form-item label="等待时间">
+          <el-form-item :label="$t('94b9c64d.f10491')">
             <el-input
               v-model="form.waiting_time"
               type="number"
               :min="0"
               :max="999999999"
-              placeholder="请输入整数"
+              :placeholder="$t('94b9c64d.e9fb36')"
               @input="input_waiting_time"
             >
-              <template slot="append"> 秒 </template>
+              <template slot="append">{{ $t('94b9c64d.0c1fec') }}</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="广告跳转路径">
+          <el-form-item :label="$t('94b9c64d.bf490f')">
             <!-- <el-input type="text" v-model="form.ad_url" placeholder="请输入URL" ></el-input>-->
             <div class="uploader-setting">
               <div class="goods-select">
                 <div v-if="JSON.stringify(form.ad_url) !== '{}'" class="link-content">
                   <span @click="handleGoodsChange()">
-                    <template v-if="form.ad_url.linkPage === 'goods'">商品：</template>
-                    <template v-if="form.ad_url.linkPage === 'category'">分类：</template>
-                    <template v-if="form.ad_url.linkPage === 'article'">文章：</template>
-                    <template v-if="form.ad_url.linkPage === 'planting'">软文：</template>
-                    <!--template v-if="form.ad_url.linkPage === 'planting'">种草：</template-->
-                    <template v-if="form.ad_url.linkPage === 'link'">页面：</template>
-                    <template v-if="form.ad_url.linkPage === 'marketing'">营销：</template>
-                    <template v-if="form.ad_url.linkPage === 'custom_page'">自定义页：</template>
+                    <template v-if="form.ad_url.linkPage === 'goods'">{{
+                      $t('94b9c64d.10fe9c')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'category'">{{
+                      $t('94b9c64d.e7d2e8')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'article'">{{
+                      $t('94b9c64d.8cb9b8')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'planting'">{{
+                      $t('94b9c64d.9dcd91')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'link'">{{
+                      $t('94b9c64d.ffd741')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'marketing'">{{
+                      $t('94b9c64d.c78a2f')
+                    }}</template>
+                    <template v-if="form.ad_url.linkPage === 'custom_page'">{{
+                      $t('94b9c64d.2a4e32')
+                    }}</template>
                     {{ form.ad_url.title }}
                   </span>
                   <span style="margin-left: 10px">
@@ -100,7 +113,7 @@
                   </span>
                 </div>
                 <div v-else class="content-center" @click="handleGoodsChange()">
-                  <i class="el-icon-link" />设置路径
+                  <i class="el-icon-link" />{{ $t('94b9c64d.4f2c29') }}
                 </div>
               </div>
             </div>
@@ -129,8 +142,8 @@
     </el-card>
     <template slot="page-footer">
       <div class="text-center">
-        <el-button>取消</el-button>
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button>{{ $t('94b9c64d.625fb2') }}</el-button>
+        <el-button type="primary" @click="save">{{ $t('94b9c64d.be5fbb') }}</el-button>
       </div>
     </template>
   </SpPage>
@@ -269,7 +282,7 @@ export default {
 
       // 判断秒数
       if (this.form.waiting_time <= 0 || this.form.waiting_time > 999999999) {
-        this.$message({ type: 'warning', message: '等待时间区间：0-999999999秒' })
+        this.$message({ type: 'warning', message: this.$t('94b9c64d.139d73') })
         return
       }
 
@@ -281,18 +294,18 @@ export default {
 
       // 判断素材
       if (this.form.ad_material === '') {
-        this.$message({ type: 'warning', message: '请选择素材' })
+        this.$message({ type: 'warning', message: this.$t('94b9c64d.b4c71c') })
         return
       }
       // 判断应用端
       if (this.is_app.length <= 0) {
-        this.$message({ type: 'warning', message: '请选择应用端' })
+        this.$message({ type: 'warning', message: this.$t('94b9c64d.59f26b') })
         return
       } else {
         this.form.app = this.is_app.join(',')
       }
       saveOpenScreenADSet(this.form).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('94b9c64d.33130f') })
         this.getInfo()
       })
     }

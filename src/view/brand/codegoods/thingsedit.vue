@@ -6,27 +6,27 @@
 <template>
   <section class="section section-white">
     <el-form ref="form" :model="form" label-width="100px" label-position="left">
-      <div class="section-header with-border">创建商品</div>
+      <div class="section-header with-border">{{ $t('ee880f0e.ec6dce') }}</div>
       <div class="section-body">
-        <el-form-item label="物品名称">
+        <el-form-item :label="$t('ee880f0e.6c27ed')">
           <el-row :gutter="20">
             <el-col :span="6">
               <el-input v-model="form.thing_name" type="text" placeholder="" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="官方售价">
+        <el-form-item :label="$t('ee880f0e.d82c59')">
           <el-row :gutter="20">
             <el-col :span="6">
               <el-input v-model="form.price" type="number" placeholder="" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="物品图片" prop="ad_pic">
-          <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
+        <el-form-item :label="$t('ee880f0e.3a3cf2')" prop="ad_pic">
+          <p class="frm-tips">{{ $t('ee880f0e.c2c43a') }}</p>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar" />
+              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -37,12 +37,12 @@
             @closeImgDialog="closeImgDialog"
           />
         </el-form-item>
-        <el-form-item label="物品详情">
+        <el-form-item :label="$t('ee880f0e.e2dac0')">
           <el-row :gutter="20">
             <el-col :span="20">
               <SpRichText v-model="form.intro" />
               <span class="tpl_item img" style="" @click="addImgPreview">
-                <i class="el-icon-picture" />图片
+                <i class="el-icon-picture" />{{ $t('ee880f0e.20def7') }}
               </span>
               <imgPicker
                 :dialog-visible="thumbDialog"
@@ -55,8 +55,12 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="default" @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitThingsAction"> 保存 </el-button>
+        <el-button type="default" @click.native="handleCancel">
+          {{ $t('ee880f0e.625fb2') }}
+        </el-button>
+        <el-button type="primary" @click="submitThingsAction">
+          {{ $t('ee880f0e.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
   </section>
@@ -153,10 +157,10 @@ export default {
       let that = this
       if (file && file.raw) {
         if (file.raw.type !== 'image/jpeg' && file.raw.type !== 'image/png') {
-          that.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+          that.$message.error(that.$t('ee880f0e.34e969'))
         }
         if (file.raw.size / 1024 / 1024 > 5) {
-          that.$message.error('上传图片大小不能超过 5MB!')
+          that.$message.error(that.$t('ee880f0e.50fa12'))
         }
       }
 
@@ -177,7 +181,7 @@ export default {
             console.log(error)
             this.$message({
               type: 'error',
-              message: '更新物品信息出错'
+              message: this.$t('ee880f0e.1d37de')
             })
           })
       } else {
@@ -189,7 +193,7 @@ export default {
           .catch((error) => {
             this.$message({
               type: 'error',
-              message: '保存物品信息出错'
+              message: this.$t('ee880f0e.d6a576')
             })
           })
       }

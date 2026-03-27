@@ -20,7 +20,7 @@
   <SpPage>
     <div class="page-goods-maincategory">
       <div v-if="!IS_DISTRIBUTOR()" class="action-container">
-        <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
+        <el-button type="primary" @click="addCategory"> {{ $t('2dc17300.dd920c') }} </el-button>
       </div>
 
       <el-table
@@ -32,7 +32,7 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :load="load"
       >
-        <el-table-column label="操作" width="450">
+        <el-table-column :label="$t('2dc17300.2b6bc0')" width="450">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -41,7 +41,7 @@
                   query: { main_cat_id: scope.row.category_id }
                 }"
               >
-                {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
+                {{ VERSION_PLATFORM() ? $t('2dc17300.77e29f') : $t('2dc17300.f13684') }}
               </router-link>
             </el-button>
             <el-button v-if="VERSION_PLATFORM()" type="text">
@@ -51,7 +51,7 @@
                   query: { main_cat_id: scope.row.category_id }
                 }"
               >
-                店铺商品
+                {{ $t('2dc17300.54d6cd') }}
               </router-link>
             </el-button>
             <el-button
@@ -59,14 +59,14 @@
               type="text"
               @click="onLinkGoodsParams(scope.row)"
             >
-              关联参数
+              {{ $t('2dc17300.804a1f') }}
             </el-button>
             <el-button
               v-if="scope.row.category_level == 3"
               type="text"
               @click="onLinkGoodsSku(scope.row)"
             >
-              关联规格
+              {{ $t('2dc17300.ea4da6') }}
             </el-button>
             <!-- <el-button
             v-if="scope.row.category_level == 3"
@@ -80,15 +80,17 @@
               type="text"
               @click="appendChildren(scope.row)"
             >
-              新增子类
+              {{ $t('2dc17300.82537d') }}
             </el-button>
-            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="editCategory(scope.row)">
+              {{ $t('2dc17300.95b351') }}
+            </el-button>
             <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-              删除
+              {{ $t('2dc17300.2f4aad') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="分类名称" width="280">
+        <el-table-column :label="$t('2dc17300.04d7d8')" width="280">
           <template slot-scope="scope">
             <span
               v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
@@ -97,8 +99,8 @@
             <span>{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="分类编号" prop="category_id" width="120" />
-        <el-table-column label="分类图片" width="200">
+        <el-table-column :label="$t('2dc17300.5ef9fc')" prop="category_id" width="120" />
+        <el-table-column :label="$t('2dc17300.b34dc8')" width="200">
           <template slot-scope="scope">
             <div class="img-container">
               <SpImage
@@ -110,7 +112,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" width="140">
+        <el-table-column prop="sort" :label="$t('2dc17300.53eb44')" width="140">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
@@ -121,7 +123,7 @@
       <SpDialog
         ref="categoryDialogRef"
         v-model="categoryDialog"
-        :title="categoryForm.category_id > 0 ? '编辑分类' : '添加分类'"
+        :title="categoryForm.category_id > 0 ? $t('2dc17300.55d793') : $t('2dc17300.9811be')"
         :modal="false"
         :form="categoryForm"
         :form-list="categoryFormList"
@@ -132,7 +134,7 @@
       <SpDialog
         ref="profitDialogRef"
         v-model="profitDialog"
-        :title="`分润配置`"
+        :title="$t('2dc17300.d2d71c')"
         :modal="false"
         :form="profitForm"
         :form-list="profitFormList"
@@ -163,27 +165,27 @@ export default {
       },
       categoryFormList: [
         {
-          label: '分类名称',
+          label: this.$t('2dc17300.04d7d8'),
           key: 'category_name',
           type: 'input',
-          placeholder: '请输入分类名称',
+          placeholder: this.$t('2dc17300.68363f'),
           required: true,
-          message: '不能为空'
+          message: this.$t('2dc17300.281bad')
         },
         {
-          label: '分类排序',
+          label: this.$t('2dc17300.53eb44'),
           key: 'sort',
           type: 'number'
         },
         {
-          label: '父级分类',
+          label: this.$t('2dc17300.dc1eed'),
           key: 'parent_name',
           type: 'text',
           isShow: ({ key }, value) =>
             this.categoryForm.parent_id > 0 && !this.categoryForm.category_id
         },
         {
-          label: '分类图片',
+          label: this.$t('2dc17300.b34dc8'),
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
         }
@@ -200,27 +202,26 @@ export default {
         {
           component: () => (
             <div>
-              <div style='margin-left: 8px; line-height: initial;'>导购分润计算方式: </div>
-              <div class='form-item-tip'>
-                【按比例分佣】商品最终金额 ×
-                百分比（其中商品最终金额为【支付金额-运费-商品优惠金额】）
+              <div style='margin-left: 8px; line-height: initial;'>
+                {this.$t('2dc17300.9da956')}
               </div>
-              <div class='form-item-tip'>【按金额分佣】固定金额分佣</div>
+              <div class='form-item-tip'>{this.$t('2dc17300.acd13b')}</div>
+              <div class='form-item-tip'>{this.$t('2dc17300.d72c97')}</div>
             </div>
           )
         },
         {
-          label: '分类名称',
+          label: this.$t('2dc17300.04d7d8'),
           key: 'category_name',
           type: 'text'
         },
         {
-          label: '推广分润',
+          label: this.$t('2dc17300.2602ac'),
           key: 'profit_conf_profit',
           component: ({ key }, value) => <SpInput v-model={value[key]} suffix={'%'} />
         },
         {
-          label: '拉新分润',
+          label: this.$t('2dc17300.f309a2'),
           key: 'profit_conf_popularize_profit',
           component: ({ key }, value) => <SpInput v-model={value[key]} suffix={'%'} />
         }
@@ -317,7 +318,7 @@ export default {
         })
       }
       await this.$api.goods.saveCategoryProfitPrice(params)
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('2dc17300.3b1083'))
       this.profitDialog = false
       const { resolve } = this.mapData.get(parent_id)
       const list = await this.getCategory(parent_id)
@@ -325,7 +326,7 @@ export default {
     },
     async onLinkGoodsParams({ parent_id, category_id, goods_params = [] }) {
       const { data } = await this.$picker.goodsParams({
-        dialogTitle: '关联参数',
+        dialogTitle: this.$t('2dc17300.804a1f'),
         data: JSON.parse(goods_params),
         queryParams: {
           attribute_type: 'item_params'
@@ -339,7 +340,7 @@ export default {
     },
     async onLinkGoodsSku({ parent_id, category_id, goods_spec = [] }) {
       const { data } = await this.$picker.goodsParams({
-        dialogTitle: '关联规格',
+        dialogTitle: this.$t('2dc17300.ea4da6'),
         data: JSON.parse(goods_spec),
         queryParams: {
           attribute_type: 'item_spec'
@@ -381,7 +382,7 @@ export default {
           image_url,
           category_id
         })
-        this.$message.success('编辑成功')
+        this.$message.success(this.$t('2dc17300.3bb47b'))
       } else {
         await this.$api.goods.addCategory({
           category_name,
@@ -390,18 +391,18 @@ export default {
           image_url,
           parent_id: parent_id != '0' ? parent_id : undefined
         })
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('2dc17300.3fdaea'))
       }
       this.refreshNode(parent_id)
       this.categoryDialog = false
     },
     async deleteCategory({ parent_id, category_id }) {
-      await this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('2dc17300.442ecc'), this.$t('2dc17300.02d981'), {
+        confirmButtonText: this.$t('2dc17300.38cf16'),
+        cancelButtonText: this.$t('2dc17300.625fb2')
       })
       await this.$api.goods.deleteCategory(category_id)
-      this.$message.success('删除分类成功')
+      this.$message.success(this.$t('2dc17300.1fe03c'))
       this.refreshNode(parent_id)
     },
     async refreshNode(parent_id) {

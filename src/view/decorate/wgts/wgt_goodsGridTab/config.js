@@ -3,32 +3,33 @@
  * See LICENSE file for license details.
  */
 import { pickBy, isObject } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrClass from './attr-class'
 import CompPickerLink from '../../comps/comp-pickerLink'
 
 const config = {
   name: 'goodsGridTab',
   setting: [
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
-    { label: '直接加购', key: 'addCart', component: 'switch', value: false },
-    { label: '显示价格', key: 'showPrice', component: 'switch', value: true },
-    { label: '显示品牌', key: 'brand', component: 'switch', value: true },
+    { label: i18n.t('5e607dbd.4707ba'), key: 'padded', component: 'switch', value: true },
+    { label: i18n.t('5e607dbd.319337'), key: 'addCart', component: 'switch', value: false },
+    { label: i18n.t('5e607dbd.ba302e'), key: 'showPrice', component: 'switch', value: true },
+    { label: i18n.t('5e607dbd.02af2a'), key: 'brand', component: 'switch', value: true },
     {
-      label: '商品分类',
+      label: i18n.t('5e607dbd.c3ece5'),
       key: 'list',
       component: function (h, { key }) {
         return <AttrClass v-model={this.value[key]} />
       },
       value: [
         {
-          tabTitle: '标签',
+          tabTitle: '5e607dbd.14d342',
           type: 'normal',
           goodsList: [
             {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0
@@ -37,7 +38,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0
@@ -46,7 +47,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0
@@ -55,7 +56,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0
@@ -66,7 +67,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0,
@@ -76,7 +77,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0,
@@ -86,7 +87,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0,
@@ -96,7 +97,7 @@ const config = {
               imgUrl: '',
               linkPage: '',
               content: '',
-              title: '商品名称',
+              title: '5e607dbd.1fd1d5',
               id: '',
               price: 0,
               market_price: 0,
@@ -107,7 +108,7 @@ const config = {
       ]
     },
     {
-      label: '查看更多',
+      label: i18n.t('5e607dbd.90ef7c'),
       key: 'moreLink',
       component: function (h, { key }) {
         return <CompPickerLink v-model={this.value[key]} style='margin-top: 7px;' />

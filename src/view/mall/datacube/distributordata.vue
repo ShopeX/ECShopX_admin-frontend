@@ -6,16 +6,16 @@
 <template>
   <SpPage>
     <SpFilterForm :model="params" @onSearch="getDistributorDataList(true)" @onReset="onReset">
-      <SpFilterFormItem prop="vdate" label="日期范围:">
+      <SpFilterFormItem prop="vdate" :label="$t('5d9377e9.8d3bf9')">
         <el-date-picker
           v-model="params.vdate"
           type="daterange"
           alue-format="yyyy-MM-dd"
           align="right"
           unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('5d9377e9.981cbe')"
+          :start-placeholder="$t('5d9377e9.b44c0f')"
+          :end-placeholder="$t('5d9377e9.1d468b')"
           style="width: 100%"
           :picker-options="pickerOptions"
           value-format="yyyy-MM-dd"
@@ -23,22 +23,27 @@
           @change="dateChange"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor" label="选择门店:">
+      <SpFilterFormItem prop="distributor" :label="$t('5d9377e9.a7caad')">
         <el-select
           v-model="params.distributor"
-          placeholder="请选择门店"
+          :placeholder="$t('5d9377e9.ca95a5')"
           @change="DistributorChange"
         >
           <el-option
             v-if="$store.getters.login_type == 'merchant'"
             key="2"
-            label="全部"
+            :label="$t('5d9377e9.a8b0c2')"
             value="all"
           >
-            全部
+            {{ $t('5d9377e9.a8b0c2') }}
           </el-option>
-          <el-option v-if="$store.getters.login_type != 'merchant'" key="0" label="总店" value="0">
-            总店
+          <el-option
+            v-if="$store.getters.login_type != 'merchant'"
+            key="0"
+            :label="$t('5d9377e9.0d7757')"
+            value="0"
+          >
+            {{ $t('5d9377e9.0d7757') }}
           </el-option>
 
           <el-option
@@ -58,89 +63,89 @@
       @tab-click="handleClick"
     >
       <template v-if="$store.getters.login_type == 'merchant'">
-        <el-tab-pane label="订单数" name="order">
+        <el-tab-pane :label="$t('5d9377e9.fbb493')" name="order">
           <section>
             <canvas id="canvas_order" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="售后单数" name="aftersales">
+        <el-tab-pane :label="$t('5d9377e9.f55538')" name="aftersales">
           <section>
             <canvas id="canvas_aftersales" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="退款额" name="refunded">
+        <el-tab-pane :label="$t('5d9377e9.d7cebd')" name="refunded">
           <section>
             <canvas id="canvas_refunded" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="交易额" name="amountPayed">
+        <el-tab-pane :label="$t('5d9377e9.78aff0')" name="amountPayed">
           <section>
             <canvas id="canvas_amountPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="付款订单数" name="orderPayed">
+        <el-tab-pane :label="$t('5d9377e9.7c922f')" name="orderPayed">
           <section>
             <canvas id="canvas_orderPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="GMV" name="gmv">
+        <el-tab-pane :label="$t('5d9377e9.9ca9e4')" name="gmv">
           <section>
             <canvas id="canvas_gmv" height="120" />
           </section>
         </el-tab-pane>
       </template>
       <template v-else>
-        <el-tab-pane label="会员数" name="member">
+        <el-tab-pane :label="$t('5d9377e9.e3c2e0')" name="member">
           <section>
             <canvas id="canvas_member" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="售后单数" name="aftersales">
+        <el-tab-pane :label="$t('5d9377e9.f55538')" name="aftersales">
           <section>
             <canvas id="canvas_aftersales" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="退款额" name="refunded">
+        <el-tab-pane :label="$t('5d9377e9.d7cebd')" name="refunded">
           <section>
             <canvas id="canvas_refunded" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="交易额" name="amountPayed">
+        <el-tab-pane :label="$t('5d9377e9.78aff0')" name="amountPayed">
           <section>
             <canvas id="canvas_amountPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="交易额(积分)" name="amountPointPayed">
+        <el-tab-pane :label="$t('5d9377e9.67e7ac')" name="amountPointPayed">
           <section>
             <canvas id="canvas_amountPointPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="订单数" name="order">
+        <el-tab-pane :label="$t('5d9377e9.fbb493')" name="order">
           <section>
             <canvas id="canvas_order" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="订单数(积分)" name="orderPoint">
+        <el-tab-pane :label="$t('5d9377e9.998062')" name="orderPoint">
           <section>
             <canvas id="canvas_orderPoint" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="付款订单数" name="orderPayed">
+        <el-tab-pane :label="$t('5d9377e9.7c922f')" name="orderPayed">
           <section>
             <canvas id="canvas_orderPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="付款订单数(积分)" name="orderPointPayed">
+        <el-tab-pane :label="$t('5d9377e9.fe3103')" name="orderPointPayed">
           <section>
             <canvas id="canvas_orderPointPayed" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="GMV" name="gmv">
+        <el-tab-pane :label="$t('5d9377e9.9ca9e4')" name="gmv">
           <section>
             <canvas id="canvas_gmv" height="120" />
           </section>
         </el-tab-pane>
-        <el-tab-pane label="GMV(积分)" name="gmvPoint">
+        <el-tab-pane :label="$t('5d9377e9.5c8aea')" name="gmvPoint">
           <section>
             <canvas id="canvas_gmvPoint" height="120" />
           </section>
@@ -150,39 +155,39 @@
     <template>
       <el-table :data="allListData" stripe border style="width: 100%">
         <template v-if="$store.getters.login_type == 'merchant'">
-          <el-table-column prop="count_date" label="日期" fixed />
-          <el-table-column prop="order_count" label="订单数" />
-          <el-table-column prop="aftersales_count" label="售后单数" />
-          <el-table-column label="退款额">
+          <el-table-column prop="count_date" :label="$t('5d9377e9.4ff1e7')" fixed />
+          <el-table-column prop="order_count" :label="$t('5d9377e9.fbb493')" />
+          <el-table-column prop="aftersales_count" :label="$t('5d9377e9.f55538')" />
+          <el-table-column :label="$t('5d9377e9.d7cebd')">
             <template slot-scope="scope"> ￥{{ scope.row.refunded_count / 100 }} </template>
           </el-table-column>
-          <el-table-column prop="amount_payed_count" label="交易额">
+          <el-table-column prop="amount_payed_count" :label="$t('5d9377e9.78aff0')">
             <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
           </el-table-column>
-          <el-table-column prop="order_payed_count" label="付款订单数" />
-          <el-table-column prop="gmv_count" label="GMV">
+          <el-table-column prop="order_payed_count" :label="$t('5d9377e9.7c922f')" />
+          <el-table-column prop="gmv_count" :label="$t('5d9377e9.9ca9e4')">
             <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
           </el-table-column>
         </template>
         <template v-else>
-          <el-table-column prop="count_date" label="日期" fixed />
-          <el-table-column prop="member_count" label="会员数" />
-          <el-table-column prop="aftersales_count" label="售后单数" />
-          <el-table-column label="退款额">
+          <el-table-column prop="count_date" :label="$t('5d9377e9.4ff1e7')" fixed />
+          <el-table-column prop="member_count" :label="$t('5d9377e9.e3c2e0')" />
+          <el-table-column prop="aftersales_count" :label="$t('5d9377e9.f55538')" />
+          <el-table-column :label="$t('5d9377e9.d7cebd')">
             <template slot-scope="scope"> ￥{{ scope.row.refunded_count / 100 }} </template>
           </el-table-column>
-          <el-table-column prop="amount_payed_count" label="交易额">
+          <el-table-column prop="amount_payed_count" :label="$t('5d9377e9.78aff0')">
             <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
           </el-table-column>
-          <el-table-column prop="amount_point_payed_count" label="交易额(积分)" />
-          <el-table-column prop="order_count" label="订单数" />
-          <el-table-column prop="order_point_count" label="订单数(积分)" />
-          <el-table-column prop="order_payed_count" label="付款订单数" />
-          <el-table-column prop="order_point_payed_count" label="付款订单数(积分)" />
-          <el-table-column prop="gmv_count" label="GMV">
+          <el-table-column prop="amount_point_payed_count" :label="$t('5d9377e9.67e7ac')" />
+          <el-table-column prop="order_count" :label="$t('5d9377e9.fbb493')" />
+          <el-table-column prop="order_point_count" :label="$t('5d9377e9.998062')" />
+          <el-table-column prop="order_payed_count" :label="$t('5d9377e9.7c922f')" />
+          <el-table-column prop="order_point_payed_count" :label="$t('5d9377e9.fe3103')" />
+          <el-table-column prop="gmv_count" :label="$t('5d9377e9.9ca9e4')">
             <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
           </el-table-column>
-          <el-table-column prop="gmv_point_count" label="GMV(积分)" />
+          <el-table-column prop="gmv_point_count" :label="$t('5d9377e9.5c8aea')" />
         </template>
       </el-table>
     </template>
@@ -195,6 +200,7 @@ import chart from 'chart.js'
 import { getDistributorData } from '../../../api/datacube'
 import { getDistributorList } from '../../../api/marketing'
 import templateCpn from '../../wxapp/template.vue'
+import { i18n } from '@/i18n'
 export default {
   components: { templateCpn },
   data() {
@@ -224,7 +230,10 @@ export default {
       },
       tab: {
         name: this.$store.getters.login_type !== 'merchant' ? 'member' : 'order',
-        label: this.$store.getters.login_type !== 'merchant' ? '新增会员数' : '订单数'
+        label:
+          this.$store.getters.login_type !== 'merchant'
+            ? this.$t('5d9377e9.cfe830')
+            : this.$t('5d9377e9.fbb493')
       },
       chartColors: {
         red: 'rgb(255, 99, 132)',
@@ -238,7 +247,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: i18n.t('5d9377e9.56ee10'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -253,7 +262,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: i18n.t('5d9377e9.335dfc'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -268,7 +277,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('5d9377e9.d96eb4'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -360,7 +369,7 @@ export default {
       if (this.is_distributor === false && this.params.distributor === '') {
         this.$message({
           type: 'error',
-          message: '必须选择门店'
+          message: this.$t('5d9377e9.0d3b95')
         })
         return false
       }
@@ -399,7 +408,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取统计信息出错'
+            message: this.$t('5d9377e9.5b0398')
           })
         })
     },

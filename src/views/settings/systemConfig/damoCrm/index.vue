@@ -22,43 +22,53 @@ export default {
     return {
       loading: false,
       lock: false,
-      formItems: [
+      formData: {
+        app_key: '',
+        app_secret: '',
+        ent_sign: '',
+        is_open: false
+      }
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           component: 'input',
           formItemClass: 'w-1/2',
           componentProps: {
-            placeholder: '请输入appKey',
+            placeholder: this.$t('da33b0d1.d9bebe'),
             clearable: true
           },
           fieldName: 'app_key',
-          label: 'appKey',
-          rules: [{ required: true, message: '请输入appKey', trigger: 'blur' }]
+          label: this.$t('da33b0d1.368480'),
+          rules: [{ required: true, message: this.$t('da33b0d1.d9bebe'), trigger: 'blur' }]
         },
         {
           component: 'input',
           formItemClass: 'w-1/2',
           componentProps: {
-            placeholder: '请输入appSecret',
+            placeholder: this.$t('da33b0d1.c3744f'),
             clearable: true
           },
           fieldName: 'app_secret',
-          label: 'appSecret',
-          rules: [{ required: true, message: '请输入appSecret', trigger: 'blur' }]
+          label: this.$t('da33b0d1.bf74fe'),
+          rules: [{ required: true, message: this.$t('da33b0d1.c3744f'), trigger: 'blur' }]
         },
         {
           component: 'input',
           formItemClass: 'w-1/2',
           componentProps: {
-            placeholder: '请输入企业标识',
+            placeholder: this.$t('da33b0d1.9730be'),
             clearable: true
           },
           fieldName: 'ent_sign',
-          label: '企业标识',
-          rules: [{ required: true, message: '请输入企业标识', trigger: 'blur' }]
+          label: this.$t('da33b0d1.62d025'),
+          rules: [{ required: true, message: this.$t('da33b0d1.9730be'), trigger: 'blur' }]
         },
         {
           fieldName: 'is_open',
-          label: '是否启用',
+          label: this.$t('da33b0d1.53c3dd'),
           formItemClass: 'w-1/2',
           component: 'switch',
           value: false,
@@ -67,13 +77,7 @@ export default {
             inactiveColor: '#ff4949'
           }
         }
-      ],
-      formData: {
-        app_key: '',
-        app_secret: '',
-        ent_sign: '',
-        is_open: false
-      }
+      ]
     }
   },
   mounted() {
@@ -99,7 +103,7 @@ export default {
       try {
         console.log(formData, '--')
         await this.$api.third.setDmcrmSetting(formData)
-        this.$message.success('更新成功，重新登录后生效')
+        this.$message.success(this.$t('da33b0d1.b374d9'))
       } catch (error) {
         console.log(error)
       }

@@ -7,7 +7,11 @@
   <SpPage>
     <template slot="page-footer">
       <div class="text-center">
-        <el-button :loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+        <el-button :loading="loading" type="primary" @click="onSubmit">
+{{
+          $t('fea687f2.be5fbb')
+        }}
+</el-button>
       </div>
     </template>
     <Form />
@@ -16,6 +20,7 @@
 
 <script>
 import { useForm } from '@/composables'
+import { i18n } from '@/i18n'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -31,7 +36,7 @@ const [Form, FormApi] = useForm({
         )
       },
       fieldName: 'pc_privacy_content',
-      label: 'PC商城隐私声明',
+      label: i18n.t('fea687f2.aea08c'),
       value: ''
     },
     {
@@ -46,7 +51,7 @@ const [Form, FormApi] = useForm({
         )
       },
       fieldName: 'h5_privacy_content',
-      label: 'H5商城隐私声明',
+      label: i18n.t('fea687f2.ae004d'),
       value: ''
     }
   ],
@@ -87,7 +92,7 @@ export default {
         await this.$api.system.saveWebPrivacyStatement(formData)
         this.$message({
           type: 'success',
-          message: '保存成功'
+          message: this.$t('fea687f2.3b1083')
         })
         this.loading = false
         this.getConfig()
@@ -95,7 +100,7 @@ export default {
         if (error !== false) {
           this.$message({
             type: 'error',
-            message: '保存失败'
+            message: this.$t('fea687f2.6de920')
           })
         }
         this.loading = false

@@ -52,14 +52,9 @@
       :other-config="{
         'max-height': 460
       }"
-      :data="list"
+      :data="marketingList"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: 'ID', key: 'id', width: 120 },
-          { name: '营销名称', key: 'title' }
-        ]
-      }"
+      :setting="marketingSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -86,17 +81,33 @@ export default {
       formData: {
         keywords: ''
       },
-      list: [
-        { id: 'groups_list', title: '限时团购' },
-        { id: 'coupon_list', title: '优惠券' }
-      ],
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
+  computed: {
+    marketingList() {
+      const t = this.$t.bind(this)
+      return [
+        { id: 'groups_list', title: t('9ef219f6.f38e72') },
+        { id: 'coupon_list', title: t('9ef219f6.2f3635') }
+      ]
+    },
+    marketingSetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: 'ID', key: 'id', width: 120 },
+          { name: t('9ef219f6.458296'), key: 'title' }
+        ]
+      }
+    }
+  },
+  created() {
+    this.$options.config.title = this.$t('9ef219f6.53376a')
+  },
   mounted() {
     if (this.value.data) {
-      const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
+      const selectRows = this.marketingList.filter((item) => this.value.data.includes(item.id))
       const { finderTable } = this.$refs.finder.$refs
       setTimeout(() => {
         finderTable.$refs.finderTable.setSelection(selectRows)

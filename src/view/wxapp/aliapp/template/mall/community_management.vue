@@ -5,7 +5,7 @@
 
 <template>
   <div class="section section-white content-padded content-center form-icon-tip">
-    该模板暂不需要配置
+    {{ $t('3e1b98ec.09962a') }}
   </div>
 </template>
 

@@ -7,7 +7,7 @@
   <div class="setting-manage-box">
     <el-row :gutter="20">
       <el-col :span="12">
-        门店：
+        {{ $t('2c986a36.0eff7d') }}
         <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
@@ -19,13 +19,15 @@
       </el-col>
       <el-col :span="12" class="content-right">
         <el-button type="primary" icon="plus" @click="getDefaultWorkShift">
-          配置默认排班
+          {{ $t('2c986a36.b29231') }}
         </el-button>
-        <el-button type="primary" icon="plus" @click="getShiftType"> 管理班次类型 </el-button>
+        <el-button type="primary" icon="plus" @click="getShiftType">
+          {{ $t('2c986a36.599b6d') }}
+        </el-button>
       </el-col>
     </el-row>
     <div class="content-center" style="margin-bottom: 10px">
-      <el-button type="default" @click="preWeek"> 上一周 </el-button>
+      <el-button type="default" @click="preWeek"> {{ $t('2c986a36.dd7c05') }} </el-button>
       <el-select v-model="currWeek" @change="weekChange">
         <el-option
           v-for="item in weekData"
@@ -36,11 +38,11 @@
           {{ item.name }}
         </el-option>
       </el-select>
-      <el-button type="default" @click="nextWeek"> 下一周 </el-button>
+      <el-button type="default" @click="nextWeek"> {{ $t('2c986a36.034552') }} </el-button>
     </div>
     <el-table v-loading="loading" border :data="manageData" :height="wheight - 220">
       <el-table-column prop="name" :label="resourceName" class="content-center" />
-      <el-table-column :label="sevenDays.monday.md">
+      <el-table-column :label="sevenDaysLabel.monday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.monday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.monday.ymd)"
@@ -67,7 +69,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.tuesday.md">
+      <el-table-column :label="sevenDaysLabel.tuesday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.tuesday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.tuesday.ymd)"
@@ -94,7 +96,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.wednesday.md">
+      <el-table-column :label="sevenDaysLabel.wednesday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.wednesday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.wednesday.ymd)"
@@ -121,7 +123,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.thursday.md">
+      <el-table-column :label="sevenDaysLabel.thursday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.thursday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.thursday.ymd)"
@@ -148,7 +150,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.friday.md">
+      <el-table-column :label="sevenDaysLabel.friday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.friday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.friday.ymd)"
@@ -175,7 +177,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.saturday.md">
+      <el-table-column :label="sevenDaysLabel.saturday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.saturday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.saturday.ymd)"
@@ -202,7 +204,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column :label="sevenDays.sunday.md">
+      <el-table-column :label="sevenDaysLabel.sunday.md">
         <template slot-scope="scope">
           <template v-if="!scope.row.sunday">
             <span class="type-add" @click="typeAdd(scope.row, sevenDays.sunday.ymd)"
@@ -231,7 +233,7 @@
       </el-table-column>
     </el-table>
     <el-dialog
-      title="配置默认排班"
+      :title="$t('2c986a36.b29231')"
       :visible="defaultDialogVisible"
       :close-on-click-modal="false"
       :before-close="cancel"
@@ -239,14 +241,14 @@
       <div class="type-list content-center">
         <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
-            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.77a7d2') }} {{ shopName }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.7b7b18') }} {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
         <template>
           <el-row v-for="weekitem in weekdays" :key="weekitem.name" class="type-item">
             <el-col :span="8">
-              {{ weekitem.label }}
+              {{ getWeekdayLabel(weekitem.name) }}
             </el-col>
             <el-col :span="16">
               <el-select
@@ -254,7 +256,7 @@
                 filterable
                 allow-create
                 default-first-option
-                placeholder="请选班次"
+                :placeholder="$t('2c986a36.fc4864')"
                 size="large"
               >
                 <el-option
@@ -269,8 +271,8 @@
                     >{{ item.beginTime }} ~ {{ item.endTime }}</span
                   >
                 </el-option>
-                <el-option v-else key="-1" label="休息" value="-1">
-                  <span style="float: left">休息</span>
+                <el-option v-else key="-1" :label="$t('2c986a36.3a991a')" value="-1">
+                  <span style="float: left">{{ $t('2c986a36.3a991a') }}</span>
                   <span style="float: right; color: #8492a6; font-size: 13px">00:00 ~ 23:59</span>
                 </el-option>
               </el-select>
@@ -280,13 +282,13 @@
       </div>
       <div slot="footer" class="footer-dialog content-center">
         <el-button type="primary" :disabled="isAdd" @click="addDefaultShift">
-          添加默认排班
+          {{ $t('2c986a36.265d3e') }}
         </el-button>
-        <el-button @click="cancel"> 关闭 </el-button>
+        <el-button @click="cancel"> {{ $t('2c986a36.b15d91') }} </el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="班次类型列表"
+      :title="$t('2c986a36.743522')"
       :visible="manageDialogVisible"
       :close-on-click-modal="false"
       :before-close="cancel"
@@ -294,8 +296,8 @@
       <div class="type-list content-center">
         <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
-            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.77a7d2') }} {{ shopName }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.7b7b18') }} {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
         <template v-for="(item, index) in typeList">
@@ -311,9 +313,11 @@
                 type="text"
                 @click="deleteShiftType(item.typeId)"
               >
-                删除
+                {{ $t('2c986a36.2f4aad') }}
               </el-button>
-              <el-button v-else type="text" @click="deleteShiftType(item.typeId)"> 删除 </el-button>
+              <el-button v-else type="text" @click="deleteShiftType(item.typeId)">
+                {{ $t('2c986a36.2f4aad') }}
+              </el-button>
             </el-col>
           </el-row>
         </template>
@@ -322,7 +326,7 @@
           <el-col :span="8">
             <el-input
               v-model="addItem.typeName"
-              placeholder="班次类型名称"
+              :placeholder="$t('2c986a36.c34c16')"
               :maxlength="10"
               style="width: 120px"
             />&nbsp;<span class="frm-tips">{{ addItem.typeName.length }}/10</span>
@@ -331,7 +335,7 @@
             <el-time-select
               v-model="addItem.beginTime"
               :picker-options="{ start: '00:00', step: '00:15', end: '23:59' }"
-              placeholder="开始时间"
+              :placeholder="$t('2c986a36.592c59')"
               style="width: 120px"
             />
             ~
@@ -343,20 +347,23 @@
                 end: '23:59',
                 minTime: addItem.beginTime
               }"
-              placeholder="结束时间"
+              :placeholder="$t('2c986a36.f78277')"
               style="width: 120px"
             />
-            &nbsp;&nbsp; <el-button type="text" @click="saveShiftType"> 添加 </el-button>
+            &nbsp;&nbsp;
+            <el-button type="text" @click="saveShiftType"> {{ $t('2c986a36.b58c75') }} </el-button>
           </el-col>
         </el-row>
       </div>
       <div slot="footer" class="footer-dialog content-center">
-        <el-button type="primary" :disabled="isAdd" @click="addShiftType"> 添加班次类型 </el-button>
-        <el-button @click="cancel"> 关闭 </el-button>
+        <el-button type="primary" :disabled="isAdd" @click="addShiftType">
+          {{ $t('2c986a36.9686f4') }}
+        </el-button>
+        <el-button @click="cancel"> {{ $t('2c986a36.b15d91') }} </el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="班次类型选择"
+      :title="$t('2c986a36.00756b')"
       :visible="chooseTypeDialogVisible"
       :close-on-click-modal="false"
       :before-close="chooseCancel"
@@ -364,8 +371,8 @@
       <div class="type-list type-choose-box content-center">
         <el-alert title="" type="warning" :closable="false">
           <el-row class="">
-            <el-col :span="12"> 门店名称： {{ shopName }} </el-col>
-            <el-col :span="12"> 开店时间： {{ shopHour }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.77a7d2') }} {{ shopName }} </el-col>
+            <el-col :span="12"> {{ $t('2c986a36.7b7b18') }} {{ shopHour }} </el-col>
           </el-row>
         </el-alert>
 
@@ -381,8 +388,8 @@
         </template>
       </div>
       <div slot="footer" class="footer-dialog content-center">
-        <el-button @click="chooseCancel"> 取消 </el-button>
-        <el-button type="primary" @click="saveChoose"> 确定 </el-button>
+        <el-button @click="chooseCancel"> {{ $t('2c986a36.625fb2') }} </el-button>
+        <el-button type="primary" @click="saveChoose"> {{ $t('2c986a36.38cf16') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -458,19 +465,30 @@ export default {
         pageSize: 20
       },
       weekdays: [
-        { label: '周一', name: 'monday', value: '-1' },
-        { label: '周二', name: 'tuesday', value: '-1' },
-        { label: '周三', name: 'wednesday', value: '-1' },
-        { label: '周四', name: 'thursday', value: '-1' },
-        { label: '周五', name: 'friday', value: '-1' },
-        { label: '周六', name: 'saturday', value: '-1' },
-        { label: '周日', name: 'sunday', value: '-1' }
+        { label: this.$t('d41d8cd9.y1z2a3'), name: 'monday', value: '-1' },
+        { label: this.$t('d41d8cd9.b4c5d6'), name: 'tuesday', value: '-1' },
+        { label: this.$t('d41d8cd9.e7f8g9'), name: 'wednesday', value: '-1' },
+        { label: this.$t('d41d8cd9.h0i1j2'), name: 'thursday', value: '-1' },
+        { label: this.$t('d41d8cd9.k3l4m5'), name: 'friday', value: '-1' },
+        { label: this.$t('d41d8cd9.n6o7p8'), name: 'saturday', value: '-1' },
+        { label: this.$t('d41d8cd9.q9r0s1a'), name: 'sunday', value: '-1' }
       ],
       currYear: ''
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    sevenDaysLabel() {
+      return {
+        monday: { md: this.$t('2c986a36.1603b0'), ymd: this.sevenDays.monday.ymd },
+        tuesday: { md: this.$t('2c986a36.b5a6a0'), ymd: this.sevenDays.tuesday.ymd },
+        wednesday: { md: this.$t('2c986a36.e60725'), ymd: this.sevenDays.wednesday.ymd },
+        thursday: { md: this.$t('2c986a36.170fc8'), ymd: this.sevenDays.thursday.ymd },
+        friday: { md: this.$t('2c986a36.eb79ce'), ymd: this.sevenDays.friday.ymd },
+        saturday: { md: this.$t('2c986a36.245751'), ymd: this.sevenDays.saturday.ymd },
+        sunday: { md: this.$t('2c986a36.562d74'), ymd: this.sevenDays.sunday.ymd }
+      }
+    }
   },
   watch: {
     isLoad(newValue, oldValue) {
@@ -488,6 +506,18 @@ export default {
     this.getEveryYearWeek()
   },
   methods: {
+    getWeekdayLabel(name) {
+      const map = {
+        monday: '2c986a36.1603b0',
+        tuesday: '2c986a36.b5a6a0',
+        wednesday: '2c986a36.e60725',
+        thursday: '2c986a36.170fc8',
+        friday: '2c986a36.eb79ce',
+        saturday: '2c986a36.245751',
+        sunday: '2c986a36.562d74'
+      }
+      return this.$t(map[name] || '')
+    },
     getStoreList() {
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
@@ -546,7 +576,7 @@ export default {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '配置默认排班成功'
+            message: this.$t('2c986a36.75f6c2')
           })
           this.getDefaultWorkShift()
         }
@@ -554,22 +584,22 @@ export default {
     },
     saveShiftType() {
       if (this.addItem.typeName == '') {
-        this.$message.error('班次类型名称不能为空')
+        this.$message.error(this.$t('2c986a36.136d55'))
         return
       }
       if (this.addItem.beginTime == '') {
-        this.$message.error('班次类型开始时间不能为空')
+        this.$message.error(this.$t('2c986a36.85059d'))
         return
       }
       if (this.addItem.endTime == '') {
-        this.$message.error('班次类型结束时间不能为空')
+        this.$message.error(this.$t('2c986a36.c91736'))
         return
       }
       createShiftType(this.addItem).then((res) => {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '保存排班类型成功'
+            message: this.$t('2c986a36.be1876')
           })
           this.getShiftTypeList()
         }
@@ -580,12 +610,12 @@ export default {
     deleteShiftType(typeId) {
       deleteShiftType(typeId).then((res) => {
         if (res.data.data.status == false) {
-          this.$message.error('该类型不可被删除')
+          this.$message.error(this.$t('2c986a36.2e5f36'))
           return
         } else {
           this.$message({
             type: 'success',
-            message: '删除排班类型成功'
+            message: this.$t('2c986a36.740706')
           })
         }
         this.getShiftType()
@@ -613,7 +643,7 @@ export default {
         if (res.data.data.status) {
           this.$message({
             type: 'success',
-            message: '删除该次排班成功'
+            message: this.$t('2c986a36.833ccb')
           })
           this.getWorkShiftList(this.filterSelect)
           switch (weekdaynum) {
@@ -661,7 +691,7 @@ export default {
       if (!this.relResource.shiftTypeId) {
         this.$message({
           type: 'error',
-          message: '请选择排班类型'
+          message: this.$t('2c986a36.badcdc')
         })
         return
       }
@@ -670,7 +700,7 @@ export default {
           if (res.data.data) {
             this.$message({
               type: 'success',
-              message: '更改该排班成功'
+              message: this.$t('2c986a36.e28c5b')
             })
           }
           this.getWorkShiftList(this.filterSelect)
@@ -680,7 +710,7 @@ export default {
           if (res.data.data) {
             this.$message({
               type: 'success',
-              message: '添加该排班成功'
+              message: this.$t('2c986a36.43a1ca')
             })
           }
           this.getWorkShiftList(this.filterSelect)

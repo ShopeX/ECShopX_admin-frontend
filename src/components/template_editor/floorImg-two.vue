@@ -5,23 +5,23 @@
 
 <template>
   <section v-if="name === 'floorImg-two' || name === 'banner'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('9c3a7c75.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('9c3a7c75.32c65d')">
             <el-input v-model="base.title" />
           </el-form-item>
 
-          <el-form-item label="组件间距">
+          <el-form-item :label="$t('9c3a7c75.4707ba')">
             <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="字体颜色">
+          <el-form-item :label="$t('9c3a7c75.690660')">
             <el-color-picker v-model="base.WordColor" />
           </el-form-item>
         </template>
 
-        <el-form-item label="图片列表">
+        <el-form-item :label="$t('9c3a7c75.d98b3f')">
           <div v-for="(item, index) in data" :key="index" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
@@ -33,15 +33,15 @@
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange(index)"
-              />
+              >
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('9c3a7c75.ce6855') }}
               </div>
 
               <el-form-item label="">
                 <div class="uploader-setting">
-                  <el-form-item label="图片标题">
+                  <el-form-item :label="$t('9c3a7c75.c6c745')">
                     <el-input v-model="item.ImgTitle" />
                   </el-form-item>
                   <!-- <el-form-item label="字体颜色">
@@ -53,16 +53,30 @@
               <el-form-item label="">
                 <div class="goods-select" @click="handleGoodsChange(index)">
                   <div v-if="item.id" class="link-content">
-                    <template v-if="item.linkPage === 'goods'"> 商品： </template>
-                    <template v-if="item.linkPage === 'category'"> 分类： </template>
-                    <template v-if="item.linkPage === 'article'"> 文章： </template>
-                    <template v-if="item.linkPage === 'planting'"> 软文： </template>
-                    <template v-if="item.linkPage === 'link'"> 页面： </template>
-                    <template v-if="item.linkPage === 'marketing'"> 营销： </template>
+                    <template v-if="item.linkPage === 'goods'">
+                      {{ $t('9c3a7c75.10fe9c') }}
+                    </template>
+                    <template v-if="item.linkPage === 'category'">
+                      {{ $t('9c3a7c75.e7d2e8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'article'">
+                      {{ $t('9c3a7c75.8cb9b8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'planting'">
+                      {{ $t('9c3a7c75.9dcd91') }}
+                    </template>
+                    <template v-if="item.linkPage === 'link'">
+                      {{ $t('9c3a7c75.ffd741') }}
+                    </template>
+                    <template v-if="item.linkPage === 'marketing'">
+                      {{ $t('9c3a7c75.c78a2f') }}
+                    </template>
                     {{ item.title }}
                   </div>
                   <div v-else class="content-center">
-                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                      $t('9c3a7c75.4f2c29')
+                    }}
                   </div>
                 </div>
               </el-form-item>
@@ -71,13 +85,13 @@
         </el-form-item>
       </el-form>
       <div class="content-center">
-        <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+        <div class="frm-tips">{{ $t('9c3a7c75.d5a0d5') }}</div>
         <el-button
           type="default"
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          添加轮播图
+          {{ $t('9c3a7c75.22134f') }}
         </el-button>
       </div>
     </div>

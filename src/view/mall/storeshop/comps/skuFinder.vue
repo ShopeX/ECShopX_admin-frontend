@@ -33,16 +33,16 @@ export default {
       setting: createSetting({
         columns: [
           {
-            name: '商品编码',
+            name: this.$t('9d6614b0.f9d8b1'),
             key: 'item_bn',
             width: 160
           },
           {
-            name: '规格',
+            name: this.$t('9d6614b0.ea887b'),
             key: 'item_spec_desc'
           },
           {
-            name: '库存',
+            name: this.$t('9d6614b0.0eac88'),
             key: 'store',
             width: 100,
             showType: !this.isTotalStore ? 'editable' : '',
@@ -58,7 +58,7 @@ export default {
             }
           },
           {
-            name: '商品价格（¥）',
+            name: this.$t('9d6614b0.cf187a'),
             key: 'price',
             width: 160,
             // render: (h, { row }) => h('span', {}, row.price / 100),
@@ -75,12 +75,17 @@ export default {
             }
           },
           {
-            name: '店铺销售状态',
+            name: this.$t('9d6614b0.19ff9d'),
             key: 'is_can_sale',
-            render: (h, { row }) => h('span', {}, row.is_can_sale ? '可销售' : '不可销售')
+            render: (h, { row }) =>
+              h(
+                'span',
+                {},
+                row.is_can_sale ? this.$t('9d6614b0.076778') : this.$t('9d6614b0.ae83a3')
+              )
           },
           {
-            name: '上下架操作',
+            name: this.$t('9d6614b0.c1e70a'),
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
@@ -126,10 +131,10 @@ export default {
     },
     getApproveStatus(status) {
       const approveStatus = {
-        1: '可售',
-        0: '不可售'
+        1: this.$t('9d6614b0.434e17'),
+        0: this.$t('9d6614b0.b37fb8')
       }
-      return approveStatus[status] || '不可售'
+      return approveStatus[status] || this.$t('9d6614b0.b37fb8')
     }
   }
 }

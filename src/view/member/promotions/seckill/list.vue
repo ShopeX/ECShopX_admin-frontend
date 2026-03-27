@@ -15,33 +15,38 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
-          添加活动
+          {{ $t('41b41f1c.23b46b') }}
         </el-button>
       </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="name" label="活动名称:">
-          <el-input v-model="params.name" placeholder="活动名称" />
+        <SpFilterFormItem prop="name" :label="$t('41b41f1c.1cadc0')">
+          <el-input v-model="params.name" :placeholder="$t('41b41f1c.39834b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="status" label="活动状态:">
-          <el-select v-model="params.status" placeholder="活动状态" clearable style="width: 100%">
-            <el-option label="全部" value="0" />
-            <el-option label="待开始" value="waiting" />
-            <el-option label="预热中" value="in_the_notice" />
-            <el-option label="进行中" value="in_sale" />
-            <el-option label="已结束" value="it_has_ended" />
+        <SpFilterFormItem prop="status" :label="$t('41b41f1c.1743c9')">
+          <el-select
+            v-model="params.status"
+            :placeholder="$t('41b41f1c.1181a5')"
+            clearable
+            style="width: 100%"
+          >
+            <el-option :label="$t('41b41f1c.a8b0c2')" value="0" />
+            <el-option :label="$t('41b41f1c.1568ba')" value="waiting" />
+            <el-option :label="$t('41b41f1c.7e19ab')" value="in_the_notice" />
+            <el-option :label="$t('41b41f1c.fb852f')" value="in_sale" />
+            <el-option :label="$t('41b41f1c.047fab')" value="it_has_ended" />
             <!-- <el-option
               label="已终止"
               value="close"
             /> -->
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="create_time" :label="$t('41b41f1c.374856')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="添加时间筛选"
+            :placeholder="$t('41b41f1c.5d92ab')"
             style="width: 100%; min-width: 250px"
           />
         </SpFilterFormItem>
@@ -49,47 +54,49 @@
 
       <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
         <el-table-column prop="seckill_id" label="ID" width="50" />
-        <el-table-column label="活动">
+        <el-table-column :label="$t('41b41f1c.36c6f5')">
           <template slot-scope="scope">
-            {{ scope.row.activity_name }}<br />
+            {{ scope.row.activity_name }}<br>
             <span class="text-muted">{{ scope.row.description }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="店铺">
+        <el-table-column :label="$t('41b41f1c.295713')">
           <template slot-scope="scope">
             {{ getDistributorInfo(scope.row.distributor_info) }}
           </template>
         </el-table-column>
-        <el-table-column prop="activity_release_date" label="预告时间" width="160" />
-        <el-table-column label="活动时间" width="190">
+        <el-table-column prop="activity_release_date" :label="$t('41b41f1c.292b75')" width="160" />
+        <el-table-column :label="$t('41b41f1c.c799f5')" width="190">
           <template slot-scope="scope">
-            {{ scope.row.activity_start_date }} <span class="text-muted">开始</span>
-            {{ scope.row.activity_end_date }} <span class="text-muted">结束</span>
+            {{ scope.row.activity_start_date }}
+            <span class="text-muted">{{ $t('41b41f1c.a3e3b8') }}</span>
+            {{ scope.row.activity_end_date }}
+            <span class="text-muted">{{ $t('41b41f1c.12f1d7') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="created_date" label="创建时间" width="160" />
-        <el-table-column prop="status" label="状态" width="70">
+        <el-table-column prop="created_date" :label="$t('41b41f1c.eca37c')" width="160" />
+        <el-table-column prop="status" :label="$t('41b41f1c.3fea7c')" width="70">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == 'waiting'">待开始</span>
-            <span v-else-if="scope.row.status == 'in_the_notice'">预热中</span>
-            <span v-else-if="scope.row.status == 'in_sale'">进行中</span>
-            <span v-else-if="scope.row.status == 'it_has_ended'">已结束</span>
+            <span v-if="scope.row.status == 'waiting'">{{ $t('41b41f1c.1568ba') }}</span>
+            <span v-else-if="scope.row.status == 'in_the_notice'">{{ $t('41b41f1c.7e19ab') }}</span>
+            <span v-else-if="scope.row.status == 'in_sale'">{{ $t('41b41f1c.fb852f') }}</span>
+            <span v-else-if="scope.row.status == 'it_has_ended'">{{ $t('41b41f1c.047fab') }}</span>
             <!-- <span v-else-if="scope.row.status == 'close'">已终止</span> -->
           </template>
         </el-table-column>
-        <el-table-column prop="items" label="商品" width="50">
+        <el-table-column prop="items" :label="$t('41b41f1c.9897d8')" width="50">
           <template slot-scope="scope">
             <i class="iconfont icon-search-plus" @click="viewGoodsList(scope.row.seckill_id)" />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="60">
+        <el-table-column :label="$t('41b41f1c.2b6bc0')" width="60">
           <template slot-scope="scope">
             <el-button
               v-if="overActionVisible(scope.row)"
               type="text"
               @click="updateStatusCommunityAction(scope.row)"
             >
-              终止
+              {{ $t('41b41f1c.ff6c6a') }}
             </el-button>
             <div class="operating-icons">
               <!-- <i class="iconfont icon-search-plus" @click="communityDetail(scope.$index, scope.row)"></i> -->
@@ -116,7 +123,7 @@
       </div>
 
       <el-dialog
-        title="活动商品列表"
+        :title="$t('41b41f1c.1fd1d5')"
         :visible.sync="goodsVisible"
         :before-close="handleCancel"
         width="70%"
@@ -124,17 +131,17 @@
         <template>
           <el-table v-loading="loading" :data="goodsList">
             <el-table-column prop="item_id" label="id" width="60" />
-            <el-table-column prop="item_name" label="商品名称" />
-            <el-table-column prop="item_spec_desc" label="规格" />
-            <el-table-column prop="activity_price" label="活动价" width="100">
+            <el-table-column prop="item_name" :label="$t('41b41f1c.ea887b')" />
+            <el-table-column prop="item_spec_desc" :label="$t('41b41f1c.08ee55')" />
+            <el-table-column prop="activity_price" :label="$t('41b41f1c.0eac88')" width="100">
               <template slot-scope="scope">
                 {{ cursymbol }}{{ scope.row.activity_price / 100 }}
                 <!-- <el-input v-model="scope.row.activity_price"  @change="editItemPrice(scope.$index, scope.row)"><i slot="prefix" class="el-input__icon el-icon-edit"></i><i slot="suffix" class="el-input__icon">元</i></el-input> -->
               </template>
             </el-table-column>
-            <el-table-column prop="activity_store" label="库存" width="70" />
-            <el-table-column prop="limit_num" label="限购" width="50" />
-            <el-table-column prop="sort" label="排序" width="60" />
+            <el-table-column prop="activity_store" :label="$t('41b41f1c.c41fda')" width="70" />
+            <el-table-column prop="limit_num" :label="$t('41b41f1c.c360e9')" width="50" />
+            <el-table-column prop="sort" :label="$t('41b41f1c.01be42')" width="60" />
           </el-table>
           <div v-if="goodsCount > goodsPageSize" class="content-center content-top-padded">
             <el-pagination
@@ -274,17 +281,17 @@ export default {
       this.loading = false
     },
     updateStatusCommunityAction(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('41b41f1c.02d981')
+      this.$confirm(msg, this.$t('41b41f1c.625fb2'), {
+        cancelButtonText: this.$t('41b41f1c.38cf16'),
+        confirmButtonText: this.$t('41b41f1c.b69694'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then((response) => {
               this.fetchList()
               this.$message({
-                message: '修改活动状态成功',
+                message: this.$t('41b41f1c.1c48c9'),
                 type: 'success',
                 duration: 5 * 1000
               })

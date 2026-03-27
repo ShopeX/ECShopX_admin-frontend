@@ -5,19 +5,19 @@
 
 <template>
   <div class="sms_signatures_edit">
-    <h4>添加短信模板</h4>
+    <h4>{{ $t('16099248.5f0d17') }}</h4>
     <el-form ref="form" :model="form" :rules="rules" label-width="150px" class="demo-ruleForm">
-      <el-form-item label="短信类型" prop="template_type">
+      <el-form-item :label="$t('16099248.b2b399')" prop="template_type">
         <el-radio-group v-model="form.template_type" :disabled="disabled">
-          <el-radio label="0"> 验证码（0.045元 / 条） </el-radio>
-          <el-radio label="1"> 短信通知（0.045元 / 条） </el-radio>
-          <el-radio v-if="!VERSION_IN_PURCHASE()" label="2"> 推广短信（0.055元 / 条） </el-radio>
+          <el-radio label="0">{{ $t('16099248.a58fc5') }}</el-radio>
+          <el-radio label="1">{{ $t('16099248.8958ab') }}</el-radio>
+          <el-radio v-if="!VERSION_IN_PURCHASE()" label="2">{{ $t('16099248.79b50f') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.template_type" label="短信场景" prop="scene_id">
+      <el-form-item v-if="form.template_type" :label="$t('16099248.bc50bf')" prop="scene_id">
         <el-select
           v-model="form.scene_id"
-          placeholder="请选择"
+          :placeholder="$t('16099248.708c9d')"
           style="width: 400px"
           :disabled="disabled"
         >
@@ -29,21 +29,21 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="模板名称" prop="template_name">
+      <el-form-item :label="$t('16099248.a5d1c5')" prop="template_name">
         <el-input
           v-model="form.template_name"
           :disabled="disabled"
           minlength="1"
           maxlength="30"
           show-word-limit
-          placeholder="长度限1-30个字符"
+          :placeholder="$t('16099248.837447')"
         />
       </el-form-item>
 
-      <el-form-item label="关联签名" prop="related_sign_name">
+      <el-form-item :label="$t('16099248.7a46c0')" prop="related_sign_name">
         <el-select
           v-model="form.related_sign_name"
-          placeholder="请选择"
+          :placeholder="$t('16099248.708c9d')"
           style="width: 400px"
           :disabled="disabled"
         >
@@ -55,7 +55,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="模板内容" prop="template_content">
+      <el-form-item :label="$t('16099248.03ae79')" prop="template_content">
         <nav>
           <span
             v-for="item in variables"
@@ -72,24 +72,21 @@
           :rows="8"
           maxlength="500"
           show-word-limit
-          placeholder="短信模板申请说明，请描述您的业务使用场景，长度为1-500个字符。"
+          :placeholder="$t('16099248.c6ec65')"
         />
         <ul class="tips">
+          <li>{{ $t('16099248.16c220') }}</li>
           <li>
-            短信字数含 " 签名 + 模版内容 + 变量内容”，短信 70 个字数含以内，按 1 条短信计费；超出 70
-            个字为长短信，按照 67 个字数记为 1 条短信费用。
-          </li>
-          <li>
-            短信服务的模板都需要经过审核，审核通过后才可以使用该模板，请参见
+            {{ $t('16099248.4c0843') }}
             <a
               target="_blank"
               href="https://help.aliyun.com/document_detail/108253.htm?spm=a2c4g.11186623.0.0.7c8e2918ZCtnlV"
-              >短信模板规范。</a
+              >{{ $t('16099248.3cb36d') }}</a
             >
           </li>
         </ul>
       </el-form-item>
-      <el-form-item label="申请说明" prop="remark">
+      <el-form-item :label="$t('16099248.9206ad')" prop="remark">
         <el-input
           v-model="form.remark"
           :disabled="disabled"
@@ -97,16 +94,16 @@
           :rows="4"
           maxlength="100"
           show-word-limit
-          placeholder="短信模板申请说明，请描述您的业务使用场景，长度为1-100个字符。"
+          :placeholder="$t('16099248.20a3f2')"
         />
       </el-form-item>
       <el-form-item v-if="$route.query.type !== 'detail'">
         <!-- <el-button type="primary" @click="submitForm('form')">确定</el-button> -->
         <loadingBtn ref="loadingBtn" @clickHandle="submitForm('form')" />
-        <el-button @click="fnBack"> 取消 </el-button>
+        <el-button @click="fnBack">{{ $t('16099248.625fb2') }}</el-button>
         <ul class="tips">
-          <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
-          <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
+          <li>{{ $t('16099248.aafa64') }}</li>
+          <li>{{ $t('16099248.f8f3cd') }}</li>
         </ul>
       </el-form-item>
     </el-form>
@@ -120,18 +117,22 @@
 
     <!-- result -->
     <el-dialog :visible="resultVisible" class="result" :show-close="false">
-      <el-result icon="success" title="提交成功" sub-title="请根据提示进行操作">
+      <el-result icon="success" :title="$t('16099248.23b62e')" :sub-title="$t('16099248.240e49')">
         <template slot="subTitle">
-          <h5>模板已提交审核，审核结果可在模板列表中查看。</h5>
+          <h5>{{ $t('16099248.e3c145') }}</h5>
           <ul class="tips">
-            <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
-            <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
+            <li>{{ $t('16099248.aafa64') }}</li>
+            <li>{{ $t('16099248.f8f3cd') }}</li>
           </ul>
         </template>
         <template slot="extra">
-          <el-button type="primary" size="medium" @click="fnBack"> 返回列表 </el-button>
+          <el-button type="primary" size="medium" @click="fnBack">
+{{
+            $t('16099248.adcd1d')
+          }}
+</el-button>
           <el-button v-if="!$route.query.type" size="medium" @click="fnAgain">
-            再添加一个模板
+            {{ $t('16099248.dcd9bd') }}
           </el-button>
         </template>
       </el-result>
@@ -177,12 +178,12 @@ export default {
         remark: ''
       },
       rules: {
-        template_type: [requiredRules('短信类型', 'change')],
-        scene_id: [requiredRules('短信场景'), 'change'],
-        related_sign_name: [requiredRules('关联签名'), 'change'],
-        template_name: [requiredRules('模板名称')],
-        template_content: [requiredRules('模板内容'), MaxRules(500), MinRules(1)],
-        remark: [requiredRules('申请说明'), MaxRules(200)]
+        template_type: [requiredRules(this.$t('16099248.b2b399'), 'change')],
+        scene_id: [requiredRules(this.$t('16099248.bc50bf'), 'change')],
+        related_sign_name: [requiredRules(this.$t('16099248.7a46c0'), 'change')],
+        template_name: [requiredRules(this.$t('16099248.a5d1c5'))],
+        template_content: [requiredRules(this.$t('16099248.03ae79')), MaxRules(500), MinRules(1)],
+        remark: [requiredRules(this.$t('16099248.9206ad')), MaxRules(200)]
       },
       template_type_options: [],
       variables: [], //可用的模板变量

@@ -5,7 +5,7 @@
 
 <template>
   <section v-if="name === 'tabs'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('13f63c15.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <!--<el-form-item label="背景色">
@@ -17,8 +17,8 @@
         <el-form-item label="选中颜色">
           <el-color-picker v-model="config.selectedColor"></el-color-picker>
         </el-form-item>-->
-        <el-form-item label="设置tabBar">
-          <div v-for="(item, index) in data" class="setting-item">
+        <el-form-item :label="$t('13f63c15.300cfd')">
+          <div v-for="(item, index) in data" :key="index" class="setting-item">
             <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
             </div>
@@ -32,17 +32,17 @@
               <i class="el-icon-picture muted"></i>
             </div>-->
             <div class="uploader-setting">
-              <el-input v-model="item.text" placeholder="tab名称" maxlength="" />
+              <el-input v-model="item.text" :placeholder="$t('13f63c15.cf2790')" maxlength="" />
             </div>
             <div class="uploader-setting">
               <el-select
                 v-model="item.pagePath"
-                placeholder="设置tab路径"
+                :placeholder="$t('13f63c15.19b17a')"
                 @focus="handleClick(index)"
                 @change="handleChange"
               >
                 <el-option
-                  v-for="item in pathOptions"
+                  v-for="item in pathOptionsTranslated"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -57,21 +57,25 @@
             class="iconfont icon-plus-circle banner-button-uploader"
             @click="addItem"
           >
-            添加菜单项
+            {{ $t('13f63c15.648c5e') }}
           </el-button>
           <div class="goods-select" @click="handleGoodsChange">
             <div v-if="base.title" class="link-content">
-              <template v-if="base.linkPage === 'goods'"> 商品： </template>
-              <template v-if="base.linkPage === 'category'"> 分类： </template>
-              <template v-if="base.linkPage === 'article'"> 文章： </template>
-              <template v-if="base.linkPage === 'planting'"> 软文： </template>
-              <template v-if="base.linkPage === 'link'"> 页面： </template>
-              <template v-if="base.linkPage === 'marketing'"> 营销： </template>
-              <template v-if="base.linkPage === 'custom_page'"> 自定义页面： </template>
+              <template v-if="base.linkPage === 'goods'"> {{ $t('879af10c.10fe9c') }} </template>
+              <template v-if="base.linkPage === 'category'"> {{ $t('879af10c.e7d2e8') }} </template>
+              <template v-if="base.linkPage === 'article'"> {{ $t('879af10c.8cb9b8') }} </template>
+              <template v-if="base.linkPage === 'planting'"> {{ $t('879af10c.9dcd91') }} </template>
+              <template v-if="base.linkPage === 'link'"> {{ $t('879af10c.ffd741') }} </template>
+              <template v-if="base.linkPage === 'marketing'">
+                {{ $t('879af10c.c78a2f') }}
+              </template>
+              <template v-if="base.linkPage === 'custom_page'">
+                {{ $t('879af10c.15ed03') }}
+              </template>
               {{ base.title }}
             </div>
             <div v-else class="content-center">
-              <i class="el-icon-link" @click="handleGoodsChange" />服务页面设置路径
+              <i class="el-icon-link" @click="handleGoodsChange" />{{ $t('0d8b8376.59b2ce') }}
             </div>
           </div>
         </el-form-item>
@@ -97,33 +101,18 @@ export default {
       base: {},
       current_index: '',
       iconColor: '',
-      selectedIconColor: '',
-      pathOptions: [
-        {
-          value: '/pages/index',
-          name: 'home',
-          label: '首页'
-        },
-        {
-          value: '/pages/cart/espier-index',
-          name: 'cart',
-          label: '购物车'
-        },
-        {
-          value: '/pages/category/index',
-          name: 'category',
-          label: '分类'
-        },
-        {
-          value: '/pages/member/index',
-          name: 'member',
-          label: '我的'
-        },
-        {
-          value: '/pages/custom/custom-page',
-          name: 'service',
-          label: '服务'
-        }
+      selectedIconColor: ''
+    }
+  },
+  computed: {
+    pathOptionsTranslated() {
+      const t = this.$t.bind(this)
+      return [
+        { value: '/pages/index', name: 'home', label: t('13f63c15.db1c89') },
+        { value: '/pages/cart/espier-index', name: 'cart', label: t('13f63c15.c017be') },
+        { value: '/pages/category/index', name: 'category', label: t('13f63c15.d0771a') },
+        { value: '/pages/member/index', name: 'member', label: t('13f63c15.07b181') },
+        { value: '/pages/custom/custom-page', name: 'service', label: t('0d8b8376.47d68c') }
       ]
     }
   },
@@ -161,7 +150,7 @@ export default {
       }
       if (this.data.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('13f63c15.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -185,7 +174,7 @@ export default {
       this.current = index
     },
     handleChange(value) {
-      let n = this.pathOptions.find((item) => item.value === value)
+      let n = this.pathOptionsTranslated.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }

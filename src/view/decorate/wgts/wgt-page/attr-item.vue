@@ -144,20 +144,22 @@
   <div class="wgt-page-attr-item">
     <div class="background-type-selector">
       <el-radio-group v-model="backgroundType" size="mini" @change="handleTypeChange">
-        <el-radio-button label="color">背景颜色</el-radio-button>
-        <el-radio-button label="image">背景图片</el-radio-button>
+        <el-radio-button label="color">{{ i18n.t('4d3484f7.4573a7') }}</el-radio-button>
+        <el-radio-button label="image">{{ i18n.t('4d3484f7.d74849') }}</el-radio-button>
       </el-radio-group>
     </div>
     <div class="background-content">
       <div v-if="backgroundType === 'color'" class="color-section">
         <div class="color-item">
-          <span class="color-label">背景颜色</span>
+          <span class="color-label">{{ i18n.t('4d3484f7.4573a7') }}</span>
           <div class="color-controls">
             <span class="color-code">{{ displayColor }}</span>
             <div class="color-controls-item">
-              <el-button type="text" size="mini" class="reset-btn" @click="onClickReset"
-                >重置</el-button
-              >
+              <el-button type="text" size="mini" class="reset-btn" @click="onClickReset">
+{{
+                i18n.t('4d3484f7.4b9c32')
+              }}
+</el-button>
               <div class="color-swatch" :style="{ backgroundColor: displayColor }">
                 <el-color-picker v-model="localValue.color" size="small" @change="handleChange" />
               </div>
@@ -172,6 +174,7 @@
   </div>
 </template>
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import CompPickerLink from '../../comps/comp-pickerLink'
 export default {
@@ -181,7 +184,7 @@ export default {
   },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       localValue: {
         color: '#fff',
         image: ''

@@ -2,17 +2,17 @@
   <div class="comp-btn">
     <div class="comp-btn-color">
       <div class="comp-btn-color-item">
-        <span>按钮颜色</span>
+        <span>{{ $t('1f99657e.351201') }}</span>
         <el-color-picker v-model="localValue.color" />
       </div>
       <div class="comp-btn-color-item">
-        <span>文字颜色</span>
+        <span>{{ $t('1f99657e.7ec907') }}</span>
         <el-color-picker v-model="localValue.textColor" />
       </div>
     </div>
     <div v-if="showImage" class="comp-btn-style">
       <div class="comp-btn-style-item">
-        <span>按钮图</span>
+        <span>{{ $t('1f99657e.26dc77') }}</span>
         <sp-image-picker v-model="localValue.image" size="small" />
       </div>
     </div>

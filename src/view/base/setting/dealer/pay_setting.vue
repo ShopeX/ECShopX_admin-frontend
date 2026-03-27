@@ -15,11 +15,11 @@
     >
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>支付渠道信息</span>
+          <span>{{ $t('23a1f83f.4ddb11') }}</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="费率类型" prop="fee_type">
+            <el-form-item :label="$t('23a1f83f.4e6442')" prop="fee_type">
               <el-select v-model="form.fee_type" style="width: 100%">
                 <el-option
                   v-for="value in fee_type_options"
@@ -31,8 +31,12 @@
             </el-form-item>
           </el-col>
           <el-col v-if="form.fee_type" :span="12">
-            <el-form-item label="经营类目" prop="wx_category">
-              <el-select v-model="form.wx_category" placeholder="请选择" style="width: 100%">
+            <el-form-item :label="$t('23a1f83f.ea4fcb')" prop="wx_category">
+              <el-select
+                v-model="form.wx_category"
+                :placeholder="$t('23a1f83f.708c9d')"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in category_options"
                   :key="value.id"
@@ -43,8 +47,12 @@
             </el-form-item>
           </el-col>
           <el-col v-if="form.wx_category" :span="12">
-            <el-form-item label="商户种类" prop="mer_type">
-              <el-select v-model="form.mer_type" placeholder="请选择活动区域" style="width: 100%">
+            <el-form-item :label="$t('23a1f83f.71eb6f')" prop="mer_type">
+              <el-select
+                v-model="form.mer_type"
+                :placeholder="$t('23a1f83f.00a0a7')"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in mer_type_options"
                   :key="value.code"
@@ -55,8 +63,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="入驻模式" prop="model_type">
-              <el-select v-model="form.model_type" placeholder="请选择" style="width: 100%">
+            <el-form-item :label="$t('23a1f83f.48df0d')" prop="model_type">
+              <el-select
+                v-model="form.model_type"
+                :placeholder="$t('23a1f83f.708c9d')"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in model_type_options"
                   :key="value.code"
@@ -67,11 +79,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="地区" prop="select_regions_value">
+            <el-form-item :label="$t('23a1f83f.2560b3')" prop="select_regions_value">
               <el-cascader
                 v-model="form.select_regions_value"
                 style="width: 100%"
-                placeholder="请选择省市区"
+                :placeholder="$t('23a1f83f.075488')"
                 :options="area"
                 @change="regionChange"
               />
@@ -84,57 +96,57 @@
             </el-form-item>
           </el-col> -->
           <el-col :span="12">
-            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
+            <el-form-item :label="$t('23a1f83f.6e640f')" prop="adapay_fee_mode">
               <el-select v-model="form.adapay_fee_mode" style="width: 100%">
-                <el-option label="内扣" value="I" />
-                <el-option label="外扣" value="O" />
+                <el-option :label="$t('23a1f83f.75d29a')" value="I" />
+                <el-option :label="$t('23a1f83f.6c1506')" value="O" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="支付渠道">
+            <el-form-item :label="$t('23a1f83f.13022b')">
               <el-checkbox-group v-model="channelList">
                 <el-checkbox
                   v-for="channel in payChannel"
                   :key="channel.value"
                   :label="channel.value"
                 >
-                  {{ channel.name }}
+                  {{ $t(channel.nameKey) }}
                 </el-checkbox>
               </el-checkbox-group>
               <div class="tip-msg">
-                <p>微信小程序商城：勾选微信小程序支付。</p>
-                <p>APP商城：勾选微信小程序支付、支付宝APP支付。</p>
-                <p>H5商城：勾选微信小程序支付、微信公众号支付、支付宝H5支付。</p>
-                <p>PC端web商城：勾选微信公众号支付、支付宝扫码支付。</p>
+                <p>{{ $t('23a1f83f.ede45b') }}</p>
+                <p>{{ $t('23a1f83f.5af74a') }}</p>
+                <p>{{ $t('23a1f83f.a6b214') }}</p>
+                <p>{{ $t('23a1f83f.02ddfb') }}</p>
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="微信小程序AppID">
+            <el-form-item :label="$t('23a1f83f.9f051a')">
               <el-input
                 v-model="wx_lite.appid"
-                placeholder="请输入微信小程序AppID"
+                :placeholder="$t('23a1f83f.d3f275')"
                 :disabled="channelList.indexOf('wx_lite') < 0"
                 style="width: 220px"
               />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="微信公众号AppID">
+            <el-form-item :label="$t('23a1f83f.2ae195')">
               <el-input
                 v-model="wx_pub.appid"
-                placeholder="请输入微信公众号AppID"
+                :placeholder="$t('23a1f83f.a40032')"
                 :disabled="channelList.indexOf('wx_pub') < 0"
                 style="width: 220px"
               />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="授权目录">
+            <el-form-item :label="$t('23a1f83f.036692')">
               <el-input
                 v-model="wx_pub.path"
-                placeholder="请输入授权目录"
+                :placeholder="$t('23a1f83f.85a8aa')"
                 :disabled="channelList.indexOf('wx_pub') < 0"
                 style="width: 520px"
               />
@@ -143,7 +155,7 @@
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button type="primary" @click="submitForm"> 提交审核 </el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('23a1f83f.646db0') }}</el-button>
       </el-form-item>
     </el-form>
     <Result-cpn
@@ -154,7 +166,7 @@
     />
     <check-box
       :visible="checkBoxConfig.visible"
-      :message="checkBoxConfig.message"
+      :message="$t('23a1f83f.8af517')"
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
     />
@@ -218,25 +230,28 @@ export default {
       alipay: '',
       alipay_wap: '',
       alipay_qr: '',
-      rules: {
-        fee_type: requiredRules('费率类型', 'change'),
-        model_type: requiredRules('入驻模式', 'change'),
-        mer_type: requiredRules('商户种类', 'change'),
-        select_regions_value: requiredRules('地区', 'change'),
-        // city_code:{ required: true, message: '请选择', trigger: 'change' },
-        // district_code:{ required: true, message: '请选择', trigger: 'change' },
-        wx_category: requiredRules('经营类目', 'change'),
-        // authorizer_appid: [requiredRules('微信小程序appid'), MaxRules(40)],
-        adapay_fee_mode: requiredRules('手续费扣费方式', 'change')
-      },
+      rules: {},
       payChannel: [
-        { name: '微信小程序', value: 'wx_lite' },
-        { name: '微信公众号', value: 'wx_pub' },
-        { name: '支付宝APP', value: 'alipay' },
-        { name: '支付宝H5', value: 'alipay_wap' },
-        { name: '支付宝扫码', value: 'alipay_qr' }
+        { nameKey: '23a1f83f.439845', value: 'wx_lite' },
+        { nameKey: '23a1f83f.44a38b', value: 'wx_pub' },
+        { nameKey: '23a1f83f.0c5a62', value: 'alipay' },
+        { nameKey: '23a1f83f.96d13c', value: 'alipay_wap' },
+        { nameKey: '23a1f83f.6c03fb', value: 'alipay_qr' }
       ],
       isEcho: false // 是否回显
+    }
+  },
+  computed: {
+    rules() {
+      const t = this.$t
+      return {
+        fee_type: requiredRules(t, '23a1f83f.4e6442', 'change', 'select'),
+        model_type: requiredRules(t, '23a1f83f.48df0d', 'change', 'select'),
+        mer_type: requiredRules(t, '23a1f83f.71eb6f', 'change', 'select'),
+        select_regions_value: requiredRules(t, '23a1f83f.2560b3', 'change', 'select'),
+        wx_category: requiredRules(t, '23a1f83f.ea4fcb', 'change', 'select'),
+        adapay_fee_mode: requiredRules(t, '23a1f83f.6e640f', 'change', 'select')
+      }
     }
   },
   watch: {
@@ -279,7 +294,7 @@ export default {
           time: MerchantResident.update_time,
           info: MerchantResident.wx_stat_msg,
           type: 'photo',
-          title: '入驻'
+          title: this.$t('23a1f83f.bc049b')
         }
       }
     },
@@ -307,13 +322,13 @@ export default {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           if (this.channelList.indexOf('wx_lite') > -1 && this.wx_lite.appid == '') {
-            return this.$message.error('微信小程序APPID不能为空')
+            return this.$message.error(this.$t('23a1f83f.e84ae6'))
           }
           if (this.channelList.indexOf('wx_pub') > -1) {
             if (this.wx_pub.appid == '') {
-              return this.$message.error('微信公众号APPID不能为空')
+              return this.$message.error(this.$t('23a1f83f.d98d98'))
             } else if (this.wx_pub.path == '') {
-              return this.$message.error('微信公众号授权目录不能为空')
+              return this.$message.error(this.$t('23a1f83f.65dc9e'))
             }
           }
           this.checkBoxVisibleHandle()
@@ -400,7 +415,7 @@ export default {
             resultStatus: 'pending',
             time: '',
             info: '',
-            title: '入驻'
+            title: this.$t('23a1f83f.bc049b')
           }
         }
         this.checkBoxVisibleHandle()

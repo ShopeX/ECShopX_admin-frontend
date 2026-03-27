@@ -45,28 +45,32 @@
     />
 
     <div class="action-container mt-4">
-      <el-button type="primary" @click="removeItemFromShop"> 从店铺移除 </el-button>
+      <el-button type="primary" @click="removeItemFromShop">
+        {{ $t('8c556aa3.28d855') }}
+      </el-button>
       <!-- <el-button type="primary" plain> 变更状态 </el-button> -->
-      <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
+      <el-button type="primary" @click="handleBatchDownload">
+        {{ $t('8c556aa3.1a40b3') }}
+      </el-button>
 
-      <el-button type="primary" @click="handleExport"> 导出 </el-button>
+      <el-button type="primary" @click="handleExport"> {{ $t('8c556aa3.55405e') }} </el-button>
 
       <el-dropdown @command="onPatchAction">
         <el-button type="primary">
-          批量操作<i class="el-icon-arrow-down el-icon--right" />
+          {{ $t('8c556aa3.7f7c62') }}<i class="el-icon-arrow-down el-icon--right" />
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="1">
-            <span>批量上架</span>
+            <span>{{ $t('8c556aa3.644c0d') }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="2">
-            <span>批量下架</span>
+            <span>{{ $t('8c556aa3.d5e015') }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="3">
-            <span>总部库存</span>
+            <span>{{ $t('8c556aa3.7fcc60') }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="4">
-            <span>店铺库存</span>
+            <span>{{ $t('8c556aa3.12e91b') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -104,7 +108,7 @@
       class="sku-dialog"
       width="1100px"
       destroy-on-close
-      :title="`编辑商品【${itemSkuForm.itemName}】`"
+      :title="$t('8c556aa3.7d3792') + '【' + itemSkuForm.itemName + '】'"
       :form="itemSkuForm"
       :form-list="itemSkuFormList"
       @onSubmit="onItemSkuFormSubmit"
@@ -127,21 +131,21 @@ export default {
     const loginType = this.$store.getters.login_type
     let statusOption
     let updateStatusOption = [
-      { title: '全部', value: '' },
-      { title: '前台可销售', value: 'onsale' },
-      { title: '前台不展示', value: 'offline_sale' },
-      { title: '前台仅展示', value: 'only_show' },
-      { title: '不可销售', value: 'instock' }
+      { title: this.$t('8c556aa3.a8b0c2'), value: '' },
+      { title: this.$t('8c556aa3.9b7481'), value: 'onsale' },
+      { title: this.$t('8c556aa3.2c50a0'), value: 'offline_sale' },
+      { title: this.$t('8c556aa3.acf86b'), value: 'only_show' },
+      { title: this.$t('8c556aa3.ae83a3'), value: 'instock' }
     ]
     if (loginType == 'distributor') {
       statusOption = [
-        { title: '全部', value: '' },
-        { title: '审核驳回', value: 'rejected' },
-        { title: '等待审核', value: 'processing' },
-        { title: '前台可销售', value: 'onsale' },
-        { title: '前台不展示', value: 'offline_sale' },
-        { title: '前台仅展示', value: 'only_show' },
-        { title: '不可销售', value: 'instock' }
+        { title: this.$t('8c556aa3.a8b0c2'), value: '' },
+        { title: this.$t('8c556aa3.a77aa8'), value: 'rejected' },
+        { title: this.$t('8c556aa3.f6324c'), value: 'processing' },
+        { title: this.$t('8c556aa3.9b7481'), value: 'onsale' },
+        { title: this.$t('8c556aa3.2c50a0'), value: 'offline_sale' },
+        { title: this.$t('8c556aa3.acf86b'), value: 'only_show' },
+        { title: this.$t('8c556aa3.ae83a3'), value: 'instock' }
       ]
     } else {
       statusOption = updateStatusOption
@@ -168,9 +172,9 @@ export default {
       finderData: [],
       finderUrl: '',
       tabList: [
-        { name: '全部商品', value: 'first' },
-        { name: '已上架', value: 'second' },
-        { name: '未上架', value: 'third' }
+        { name: this.$t('8c556aa3.794a4e'), value: 'first' },
+        { name: this.$t('8c556aa3.2390fa'), value: 'second' },
+        { name: this.$t('8c556aa3.25744b'), value: 'third' }
       ],
       activeTab: 'first',
       selectItems: [],
@@ -205,14 +209,14 @@ export default {
       return [
         {
           fieldName: 'distributor_id',
-          label: '店铺',
+          label: this.$t('8c556aa3.295713'),
           component: ({ value, onInput, h }) => {
             return h('SpSelectShop', {
               props: {
                 value: value,
                 clearable: true,
                 size: 'small',
-                placeholder: '请选择',
+                placeholder: this.$t('8c556aa3.708c9d'),
                 queryParams: { is_valid: true }
               },
               ref: (vm) => {
@@ -229,11 +233,28 @@ export default {
         },
         {
           fieldName: 'keywords',
-          label: '商品名称',
+          label: this.$t('8c556aa3.1fd1d5'),
           component: 'input',
           cellWidth: 1.3,
           componentProps: {
-            placeholder: '请输入商品名称'
+            placeholder: this.$t('8c556aa3.d83187')
+          }
+        },
+        {
+          fieldName: 'brand_id',
+          label: this.$t('8c556aa3.09307c'),
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('8c556aa3.2dd7e1'),
+            remote: true,
+            filterable: true,
+            clearable: true,
+            remoteMethod: this.getGoodsBranchList,
+            options: this.goodsBranchList.map((item) => ({
+              label: item.attribute_name,
+              value: item.attribute_id
+            }))
           }
         },
         {
@@ -255,39 +276,39 @@ export default {
         },
         {
           fieldName: 'item_bn',
-          label: '商品货号',
+          label: this.$t('8c556aa3.e9de29'),
           component: 'input',
           cellWidth: 1.3,
           componentProps: {
-            placeholder: '请输入商品货号'
+            placeholder: this.$t('8c556aa3.35a59c')
           }
         },
         {
           fieldName: 'barcode',
-          label: '商品条码',
+          label: this.$t('8c556aa3.f64e95'),
           component: 'input',
           cellWidth: 1.3,
           componentProps: {
-            placeholder: '请输入商品条码'
+            placeholder: this.$t('8c556aa3.f17e38')
           }
         },
         {
           fieldName: 'supplier_name',
-          label: '所属供应商',
+          label: this.$t('8c556aa3.40b1be'),
           component: 'input',
           cellWidth: 1.3,
           componentProps: {
-            placeholder: '请输入所属供应商'
+            placeholder: this.$t('8c556aa3.5765f1')
           }
         },
         {
           fieldName: 'approve_status',
-          label: '总部销售状态',
+          label: this.$t('8c556aa3.889f3e'),
           component: 'select',
           cellWidth: 1.3,
           componentProps: {
             clearable: true,
-            placeholder: '请选择',
+            placeholder: this.$t('8c556aa3.708c9d'),
             options: this.statusOption.map((item) => ({
               label: item.title,
               value: item.value
@@ -300,7 +321,7 @@ export default {
       return createSetting({
         actions: [
           {
-            name: '设置SKU',
+            name: this.$t('8c556aa3.2b158b'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -317,7 +338,7 @@ export default {
         ],
         columns: [
           {
-            name: '上下架操作',
+            name: this.$t('8c556aa3.c1e70a'),
             width: 120,
             render: (h, { row }) =>
               h('el-switch', {
@@ -335,30 +356,30 @@ export default {
                       is_can_sale: e
                     })
                     row.goods_can_sale = e
-                    this.$message.success('操作成功')
+                    this.$message.success(this.$t('8c556aa3.33130f'))
                     this.$refs.finder.refresh()
                   }
                 }
               })
           },
           {
-            name: '商品名称',
+            name: this.$t('8c556aa3.1fd1d5'),
             key: 'item_name',
             width: 160
           },
           {
-            name: 'sku编码',
+            name: this.$t('8c556aa3.0888fc'),
             key: 'item_bn',
             width: 150
           },
           {
-            name: '商品库存',
+            name: this.$t('8c556aa3.24bc52'),
             key: 'store',
             width: 90
           },
 
           {
-            name: '店铺库存',
+            name: this.$t('8c556aa3.12e91b'),
             // key: 'order_num',
             render: (h, { row }) =>
               h('el-switch', {
@@ -381,13 +402,18 @@ export default {
               })
           },
           {
-            name: '店铺销售状态',
+            name: this.$t('8c556aa3.19ff9d'),
             key: 'is_can_sale',
             width: 120,
-            render: (h, { row }) => h('span', {}, row.is_can_sale ? '可销售' : '不可销售')
+            render: (h, { row }) =>
+              h(
+                'span',
+                {},
+                row.is_can_sale ? this.$t('8c556aa3.076778') : this.$t('8c556aa3.ae83a3')
+              )
           },
           {
-            name: '总部销售状态',
+            name: this.$t('8c556aa3.889f3e'),
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {
@@ -395,7 +421,7 @@ export default {
             }
           },
           {
-            name: '市场价（¥）',
+            name: this.$t('8c556aa3.5cd87e'),
             key: 'market_price',
             width: 120,
             render: (h, { row }) => h('span', {}, row.market_price / 100)
@@ -417,7 +443,7 @@ export default {
           //   }
           // },
           {
-            name: '销售价（¥）',
+            name: this.$t('8c556aa3.cf0170'),
             key: 'price',
             width: 120,
             render: (h, { row }) => (
@@ -433,7 +459,7 @@ export default {
                       <el-input
                         v-model={this.editPrice}
                         class='edit-input'
-                        placeholder='请输入价格'
+                        placeholder={this.$t('8c556aa3.6f2838')}
                       />
                       <el-button
                         type='primary'
@@ -441,7 +467,7 @@ export default {
                         class='ml-1'
                         on-click={this.onModifyItemPrice.bind(this, row)}
                       >
-                        确定
+                        {this.$t('8c556aa3.38cf16')}
                       </el-button>
                     </div>
                     <el-button slot='reference' type='text'>
@@ -453,26 +479,26 @@ export default {
             )
           },
           {
-            name: '成本价（¥）',
+            name: this.$t('8c556aa3.066804'),
             key: 'cost_price',
             width: 120,
             render: (h, { row }) => h('span', {}, row.cost_price / 100)
           },
           {
-            name: '毛利率（%)',
+            name: this.$t('8c556aa3.4d02c7'),
             key: 'gross_profit_rate',
             width: 100,
             align: 'right',
             headerAlign: 'center'
           },
           {
-            name: '来源供应商',
+            name: this.$t('8c556aa3.55c61d'),
             key: 'supplier_name',
             width: 100
           },
-          { name: '销售分类', key: 'itemCatName', minWidth: 120 },
+          { name: this.$t('8c556aa3.392d49'), key: 'itemCatName', minWidth: 120 },
           {
-            name: '标签',
+            name: this.$t('8c556aa3.14d342'),
             width: 120,
             key: 'tagList',
             render: (h, scope) => (
@@ -495,7 +521,7 @@ export default {
             )
           },
           {
-            name: '来源店铺',
+            name: this.$t('8c556aa3.53cc55'),
             key: 'distributor_name',
             width: 160
           }
@@ -559,32 +585,30 @@ export default {
     },
     getApproveStatus(status) {
       const approveStatus = {
-        1: '可售',
-        0: '不可售'
+        1: this.$t('8c556aa3.434e17'),
+        0: this.$t('8c556aa3.b37fb8')
       }
-      return approveStatus[status] || '不可售'
+      return approveStatus[status] || this.$t('8c556aa3.b37fb8')
     },
-    // 删除商品
     async removeItemFromShop() {
       if (this.selectItems.length == 0) {
-        return this.$message.error('请至少选择一个商品')
+        return this.$message.error(this.$t('8c556aa3.20e46f'))
       }
-      await this.$confirm('请确认是否删除商品', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('8c556aa3.44d6f7'), this.$t('8c556aa3.02d981'), {
+        confirmButtonText: this.$t('8c556aa3.38cf16'),
+        cancelButtonText: this.$t('8c556aa3.625fb2')
       })
       const { distributor_id } = this.searchParams
       await this.$api.marketing.deleteDistributorItems({
         distributor_id,
         item_ids: this.selectItems.map((item) => item.goods_id)
       })
-      this.$message.success('商品删除成功')
+      this.$message.success(this.$t('8c556aa3.a6cbc7'))
       this.$refs.finder.refresh(true)
     },
-    // 批量下载商品码
     handleBatchDownload(val) {
       if (this.selectItems.length == 0) {
-        return this.$message.error('请至少选择一个商品')
+        return this.$message.error(this.$t('8c556aa3.20e46f'))
       }
       const zip = new JSZip()
       const requests = []
@@ -595,14 +619,13 @@ export default {
       })
       Promise.all(requests).then((res) => {
         res.forEach((file, index) => {
-          zip.file(`${this.selectItems[index].itemName}.png`, file, { binary: true }) // 逐个添加文件
+          zip.file(`${this.selectItems[index].itemName}.png`, file, { binary: true })
         })
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
+          FileSaver.saveAs(content, this.$t('8c556aa3.b9bca0'))
         })
       })
     },
-    // 导出
     async handleExport() {
       const exportParams = {
         ...this.searchParams,
@@ -610,7 +633,7 @@ export default {
       }
       const { status } = await this.$api.marketing.exportDistributorItems(exportParams)
       if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$message.success(this.$t('8c556aa3.3e1ddd'))
         this.$export_open('distributor_items')
       }
     },
@@ -628,7 +651,7 @@ export default {
     },
     async onPatchAction(command) {
       if (this.selectItems.length == 0) {
-        return this.$message.error('请至少选择一个商品')
+        return this.$message.error(this.$t('8c556aa3.20e46f'))
       }
       if (command == '1' || command == '2') {
         this.loading = true
@@ -638,10 +661,10 @@ export default {
             goods_id: JSON.stringify(this.selectItems.map((item) => item.goods_id)),
             is_can_sale: command == '1'
           })
-          this.$message.success('操作成功')
+          this.$message.success(this.$t('8c556aa3.33130f'))
           this.$refs.finder.refresh()
         } catch (error) {
-          this.$message.error('操作失败')
+          this.$message.error(this.$t('8c556aa3.5fa802'))
         } finally {
           this.loading = false
         }
@@ -649,7 +672,6 @@ export default {
         this.loading = true
         let remainItems = []
         if (this.IS_ADMIN() && this.VERSION_STANDARD()) {
-          //云店需要过滤供应商商品的
           remainItems = this.selectItems.filter((item) => item.supplier_id == '0')
         }
         if (!remainItems.length) {
@@ -662,10 +684,10 @@ export default {
             goods_id: JSON.stringify(remainItems.map((item) => item.goods_id)),
             is_total_store: command == '3'
           })
-          this.$message.success('操作成功')
+          this.$message.success(this.$t('8c556aa3.33130f'))
           this.$refs.finder.refresh(true)
         } catch (error) {
-          this.$message.error('操作失败')
+          this.$message.error(this.$t('8c556aa3.5fa802'))
         } finally {
           this.loading = false
         }

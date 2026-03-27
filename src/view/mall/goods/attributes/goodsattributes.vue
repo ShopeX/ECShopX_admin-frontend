@@ -15,22 +15,22 @@
     >
       <el-row>
         <el-col :span="5">
-          <div class="p-title">商品起订量设置</div>
+          <div class="p-title">{{ $t('9a3c8bf4.112540') }}</div>
         </el-col>
       </el-row>
 
       <el-card shadow="never">
         <el-row>
           <el-col>
-            <el-form-item label="总部商品起订量设置" prop="enable" class="last-ipt">
+            <el-form-item :label="$t('9a3c8bf4.996da3')" prop="enable" class="last-ipt">
               <el-switch v-model="ruleForm.enable" active-color="#13ce66" />
-              <div class="tips unit">开启，允许总部自营商品设置起订量。</div>
+              <div class="tips unit">{{ $t('9a3c8bf4.275d33') }}</div>
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="供应商商品起订量设置" prop="enable" class="last-ipt">
+            <el-form-item :label="$t('9a3c8bf4.35a61f')" prop="enable" class="last-ipt">
               <el-switch v-model="ruleForm.enables" active-color="#13ce66" />
-              <div class="tips unit">开启，允许供应商商品设置起订量。</div>
+              <div class="tips unit">{{ $t('9a3c8bf4.ad27c6') }}</div>
             </el-form-item>
           </el-col>
         </el-row>

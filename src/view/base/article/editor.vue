@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage title="添加文章">
+  <SpPage :title="$t('0b9f427f.768d47')">
     <Form @submit="onHandleSubmit" />
   </SpPage>
 </template>
@@ -17,40 +17,40 @@ const [Form, FormApi] = useForm({
     {
       component: 'imagepicker',
       componentProps: {
-        placeholder: '标题'
+        placeholder: '0b9f427f.32c65d'
       },
       fieldName: 'image_url',
-      label: '封面图片',
+      label: '0b9f427f.9cbbc8',
       value: '',
-      rules: [{ required: true, message: '请选择封面图片' }]
+      rules: [{ required: true, message: '0b9f427f.5b90d1' }]
     },
     {
       component: 'Input',
       componentProps: {
-        placeholder: '标题'
+        placeholder: '0b9f427f.32c65d'
       },
       fieldName: 'title',
       formItemClass: 'w-2/5',
-      label: '文章标题',
+      label: '0b9f427f.7526a0',
       value: '',
-      rules: [{ required: true, message: '请输入文章标题' }]
+      rules: [{ required: true, message: '0b9f427f.fc96ee' }]
     },
     {
       component: 'Select',
       componentProps: {
-        placeholder: '请选择分类',
+        placeholder: '0b9f427f.8bb820',
         options: []
       },
       fieldName: 'category_id',
       formItemClass: 'w-2/5',
-      label: '文章分类',
+      label: '0b9f427f.c1ed55',
       value: '',
       rules: [
         {
           required: true,
           validator: (rule, value, callback) => {
             if (!value) {
-              callback(new Error('请选择文章分类'))
+              callback(new Error('0b9f427f.6a5ef5'))
             }
             callback()
           }
@@ -69,9 +69,9 @@ const [Form, FormApi] = useForm({
         )
       },
       fieldName: 'content',
-      label: '文章内容',
+      label: '0b9f427f.ad531b',
       value: '',
-      rules: [{ required: true, message: '请输入文章内容' }]
+      rules: [{ required: true, message: '0b9f427f.980167' }]
     }
   ]
 })
@@ -115,7 +115,7 @@ export default {
           content: FormData.content,
           image_url: FormData.image_url
         })
-        this.$message.success('修改文章成功')
+        this.$message.success(this.$t('0b9f427f.6d2221'))
       } else {
         await this.$api.article.createArticle({
           title: FormData.title,
@@ -123,7 +123,7 @@ export default {
           content: FormData.content,
           image_url: FormData.image_url
         })
-        this.$message.success('添加文章成功')
+        this.$message.success(this.$t('0b9f427f.e04b36'))
       }
 
       setTimeout(() => {

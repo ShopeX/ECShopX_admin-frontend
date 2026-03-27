@@ -19,13 +19,15 @@
         @select-all="handleSelectionChange"
         @selection-change="handleSelectionChange"
       >
-        <template v-slot:tableTop>
+        <template #tableTop>
           <el-button
             class="add-btn"
             type="primary"
             icon="iconfont icon-xinzengcaozuo-01"
             @click="handleAdd"
-            >添加新配置</el-button
+            >
+{{ $t('125d7b63.16efde') }}
+</el-button
           >
         </template>
       </SpFinder>
@@ -172,7 +174,7 @@ export default {
     },
     editRowHandle(row) {
       console.log(row)
-      this.dialogTitle = '编辑管理分类税率配置'
+      this.dialogTitle = this.$t('125d7b63.e0189b')
       this.editRow = row
       this.dialogShow = true
       const {id,sales_party_id,tax_rate_type,category_ids,invoice_tax_rate} = row
@@ -192,7 +194,7 @@ export default {
       this.confirmStatus = true
       if(this.editRow.id){
         api.financial.updateInvoiceTax(this.editRow.id, form).then((res) => {
-          this.$message.success('更新成功')
+          this.$message.success(this.$t('1c61c845.55aa63'))
           this.dialogShow = false
           this.refresh()
         }).finally(()=>{
@@ -200,7 +202,7 @@ export default {
         })
       }else{
         api.financial.createInvoiceTax(form).then((res) => {
-          this.$message.success('创建成功')
+          this.$message.success(this.$t('1c61c845.04a691'))
           this.dialogShow = false
           this.refresh()
         }).finally(()=>{
@@ -210,7 +212,7 @@ export default {
 
     },
     handleAdd(){
-      this.dialogTitle = '新增管理分类税率配置'
+      this.dialogTitle = this.$t('125d7b63.c9bd59')
       this.dialogShow = true
       this.editRow = {}
       this.dialogForm = {
@@ -221,13 +223,13 @@ export default {
       }
     },
     deleteRowHandle(row) {
-      this.$confirm('确定删除该配置吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('125d7b63.18f960'), this.$t('125d7b63.02d981'), {
+        confirmButtonText: this.$t('125d7b63.38cf16'),
+        cancelButtonText: this.$t('125d7b63.625fb2'),
         type: 'warning'
       }).then(async () => {
         await api.trade.deleteCategoryTaxRate({ id: row.id })
-          this.$message.success('删除成功')
+          this.$message.success(this.$t('125d7b63.0007d1'))
           this.refresh()
         })
     }

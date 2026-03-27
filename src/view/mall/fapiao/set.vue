@@ -8,32 +8,40 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-button type="primary" icon="plus" @click="handleNew"> 添加配置 </el-button>
+          <el-button type="primary" icon="plus" @click="handleNew">
+{{
+            $t('f559bf82.11e5e6')
+          }}
+</el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="list" style="width: 100%" :height="wheight - 140">
         <el-table-column type="selection" width="55" />
-        <el-table-column label="操作">
+        <el-table-column :label="$t('f559bf82.2b6bc0')">
           <template slot-scope="scope">
-            <el-button type="text" @click="stopFapiao(scope.row, scope.$index)"> 暂停 </el-button>
+            <el-button type="text" @click="stopFapiao(scope.row, scope.$index)">
+{{
+              $t('f559bf82.8d63ef')
+            }}
+</el-button>
             <router-link
               :to="{
                 path: matchRoutePath('detail'),
                 query: { aftersales_bn: scope.row.aftersales_bn }
               }"
             >
-              编辑
+              {{ $t('f559bf82.95b351') }}
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="开票方名称" min-width="84" />
-        <el-table-column prop="registration_number" label="开票方税号" />
-        <el-table-column prop="company_address" label="开票方地址" />
-        <el-table-column prop="company_phone" label="开票方电话" />
-        <el-table-column prop="tax_rate" label="税率" />
-        <el-table-column prop="bankname" label="开票银行" />
-        <el-table-column prop="bankaccount" label="开票方银行账号" />
-        <el-table-column prop="user_name" label="开票人" />
+        <el-table-column prop="content" :label="$t('f559bf82.29b041')" min-width="84" />
+        <el-table-column prop="registration_number" :label="$t('f559bf82.ca2be5')" />
+        <el-table-column prop="company_address" :label="$t('f559bf82.210c86')" />
+        <el-table-column prop="company_phone" :label="$t('f559bf82.eff7dc')" />
+        <el-table-column prop="tax_rate" :label="$t('f559bf82.2a79a7')" />
+        <el-table-column prop="bankname" :label="$t('f559bf82.509a9d')" />
+        <el-table-column prop="bankaccount" :label="$t('f559bf82.0f7f38')" />
+        <el-table-column prop="user_name" :label="$t('f559bf82.68346c')" />
       </el-table>
       <div class="content-center content-padded">
         <el-pagination
@@ -137,16 +145,16 @@ export default {
     stopFapiao(item, index) {
       let params = { id: 0, delete: 1 }
       params.id = item.id
-      this.$confirm('确定暂停吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('f559bf82.ed951e'), this.$t('f559bf82.02d981'), {
+        confirmButtonText: this.$t('f559bf82.38cf16'),
+        cancelButtonText: this.$t('f559bf82.625fb2'),
         type: 'warning'
       })
         .then(() => {
           DeleteSettingData(params).then((response) => {
             this.list.splice(index, 1)
             this.$message({
-              message: '操作成功',
+              message: this.$t('f559bf82.33130f'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -156,7 +164,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('f559bf82.2111cc')
           })
         })
     },

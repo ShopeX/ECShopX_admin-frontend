@@ -6,10 +6,10 @@
 <template>
   <div class="page-login bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="300" />
+      <img src="/images/logo.png" alt="logo" width="300">
       <!-- <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">总部</div> -->
       <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
-      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">请登录</div>
+      <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>
     </div>
 
     <div class="mt-8 ml-2">
@@ -23,7 +23,7 @@
         :loading="loading"
         @click="handleLogin"
       >
-        登录
+        {{ $t('24b2720c.402d19') }}
       </el-button>
     </div>
   </div>
@@ -33,40 +33,41 @@
 import { useForm } from '@/composables'
 import Config from '@/config'
 import { getSystemTitle } from '@/utils'
+import { i18n } from '@/i18n'
 
 const [Form, FormApi] = useForm({
   formItems: [
     {
-      label: '用户名',
+      label: i18n.t('24b2720c.819767'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户名'
+        placeholder: i18n.t('24b2720c.08b1fa')
       },
       fieldName: 'account',
-      rules: [{ required: true, message: '请输入用户名' }]
+      rules: [{ required: true, message: i18n.t('24b2720c.08b1fa') }]
     },
     {
-      label: '密码',
+      label: i18n.t('24b2720c.a81052'),
       component: 'Input',
       componentProps: {
         type: 'password',
-        placeholder: '密码'
+        placeholder: i18n.t('24b2720c.a81052')
       },
       fieldName: 'pwd',
-      rules: [{ required: true, message: '请输入密码' }]
+      rules: [{ required: true, message: i18n.t('24b2720c.e39ffe') }]
     },
     {
-      label: '角色',
+      label: i18n.t('24b2720c.464f3d'),
       component: 'Select',
       componentProps: {
-        placeholder: '请输入用户名',
+        placeholder: i18n.t('24b2720c.08b1fa'),
         options: [
           {
-            label: '管理员',
+            label: i18n.t('24b2720c.b1dae9'),
             value: 'admin'
           },
           {
-            label: '员工',
+            label: i18n.t('24b2720c.2ed392'),
             value: 'staff'
           }
         ]
@@ -121,7 +122,7 @@ export default {
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: formData.loginType })
-          this.$message.success('登录成功')
+          this.$message.success(this.$t('24b2720c.71fa3b'))
           const accessMenus = await this.$store.dispatch('user/fetchAccessMenus')
           console.log('accessMenus', accessMenus)
           await this.$store.dispatch('user/fetchAccountInfo')
@@ -145,12 +146,10 @@ export default {
       }
     },
     handleError(error) {
-      console.error('表单错误:', error)
-      this.$message.error('表单验证失败，请检查输入')
+      this.$message.error(this.$t('24b2720c.653132'))
     },
     handleReset() {
-      console.log('表单重置')
-      this.$message.info('表单已重置')
+      this.$message.info(this.$t('24b2720c.a865cc'))
     }
   }
 }

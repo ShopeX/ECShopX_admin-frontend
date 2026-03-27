@@ -29,11 +29,11 @@
 
 <script>
 const platformList = [
-  { value: 'weapp', title: '微信小程序' },
-  { value: 'h5', title: 'H5' },
-  { value: 'app', title: 'APP' },
-  { value: 'pc', title: 'PC网页版' },
-  { value: 'alipay', title: '支付宝小程序' }
+  { value: 'weapp', titleKey: '19b2b717.439845' },
+  { value: 'h5', titleKey: '19b2b717.830652' },
+  { value: 'app', titleKey: '19b2b717.0bdbb2' },
+  { value: 'pc', titleKey: '19b2b717.f0497f' },
+  { value: 'alipay', titleKey: '19b2b717.42d922' }
 ]
 
 export default {
@@ -70,10 +70,10 @@ export default {
       const tips = []
       platformList.forEach((item) => {
         if (this[item.value]) {
-          tips.push(`${item.title}商城`)
+          tips.push(this.$t(item.titleKey) + this.$t('19b2b717.2c7b38'))
         }
       })
-      return `该功能支持${tips.join('，')}。`
+      return this.$t('19b2b717.042910') + tips.join('，') + this.$t('19b2b717.81197c')
     }
   }
 }

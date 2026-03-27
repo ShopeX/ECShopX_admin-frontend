@@ -54,8 +54,8 @@
 <template>
   <div class="attr-category">
     <CompButton
-      placeholder="选择店铺签"
-      format="{0}个店铺签"
+      :placeholder="i18n.t('34e0aea7.f5ddb8')"
+      :format="i18n.t('34e0aea7.4a3a7c')"
       :value="value.length"
       :view-btn="false"
       @click="onAddLabel"
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import { queryTagShop } from '@/api/marketing'
 import CompButton from '../../comps/comp-button'
@@ -101,7 +102,7 @@ export default {
   components: { CompButton },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       tagSelectVisible: false,
       localTagList: [],
       dragItemsOptions: {

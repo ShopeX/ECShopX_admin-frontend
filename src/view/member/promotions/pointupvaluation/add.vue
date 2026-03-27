@@ -6,43 +6,39 @@
 <template>
   <SpPage>
     <el-form ref="form" :model="form" class="box-set" label-width="120px">
-      <el-card header="积分升值活动" shadow="naver">
-        <el-form-item
-          label="活动名称"
-          prop="title"
-          :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
-        >
+      <el-card :header="$t('c9c68157.191931')" shadow="naver">
+        <el-form-item :label="$t('c9c68157.39834b')" prop="title" :rules="titleRules">
           <el-col :span="8">
-            <el-input v-model="form.title" :maxlength="30" placeholder="请输入活动名称" />
+            <el-input v-model="form.title" :maxlength="30" :placeholder="$t('c9c68157.7528b3')" />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动时间">
+        <el-form-item :label="$t('c9c68157.c799f5')">
           <el-date-picker
             v-model="activity_date"
             type="datetimerange"
             align="right"
             value-format="yyyy-MM-dd HH:mm:ss"
             unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('c9c68157.981cbe')"
+            :start-placeholder="$t('c9c68157.b44c0f')"
+            :end-placeholder="$t('c9c68157.1d468b')"
             :disabled="form.is_forever"
             :default-time="['00:00:00', '23:59:59']"
             :picker-options="pickerOptions2"
           />
           &nbsp;&nbsp;&nbsp;
-          <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
+          <el-checkbox v-model="form.is_forever"> {{ $t('c9c68157.1c5029') }} </el-checkbox>
         </el-form-item>
-        <el-form-item label="日期">
+        <el-form-item :label="$t('c9c68157.4ff1e7')">
           <el-radio-group v-model="condition">
-            <el-radio label="every_year"> 每年 </el-radio>
-            <el-radio label="every_month"> 每月 </el-radio>
-            <el-radio label="every_week"> 每周 </el-radio>
-            <el-radio label="date"> 指定日期 </el-radio>
+            <el-radio label="every_year"> {{ $t('c9c68157.281cd3') }} </el-radio>
+            <el-radio label="every_month"> {{ $t('c9c68157.aa3d57') }} </el-radio>
+            <el-radio label="every_week"> {{ $t('c9c68157.09b03b') }} </el-radio>
+            <el-radio label="date"> {{ $t('c9c68157.07dc14') }} </el-radio>
           </el-radio-group>
           <transition name="el-fade-in-linear">
             <div v-if="condition === 'every_year'">
-              <el-select v-model="memberDay.month" placeholder="请选择月份">
+              <el-select v-model="memberDay.month" :placeholder="$t('c9c68157.904393')">
                 <el-option
                   v-for="item in monthOptions"
                   :key="item.value"
@@ -50,7 +46,7 @@
                   :value="item.value"
                 />
               </el-select>
-              <el-select v-model="memberDay.day" placeholder="请选择日期">
+              <el-select v-model="memberDay.day" :placeholder="$t('c9c68157.aa2fb1')">
                 <el-option
                   v-for="item in dayOptions"
                   :key="item.value"
@@ -60,7 +56,7 @@
               </el-select>
             </div>
             <div v-if="condition === 'every_month'">
-              <el-select v-model="memberDay.day" placeholder="请选择日期">
+              <el-select v-model="memberDay.day" :placeholder="$t('c9c68157.aa2fb1')">
                 <el-option
                   v-for="item in dayOptions"
                   :key="item.value"
@@ -70,7 +66,7 @@
               </el-select>
             </div>
             <div v-if="condition === 'every_week'">
-              <el-select v-model="memberDay.week" placeholder="请选择星期">
+              <el-select v-model="memberDay.week" :placeholder="$t('c9c68157.2b40fa')">
                 <el-option
                   v-for="item in weekOptions"
                   :key="item.value"
@@ -85,9 +81,9 @@
                 type="daterange"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('c9c68157.981cbe')"
+                :start-placeholder="$t('c9c68157.b44c0f')"
+                :end-placeholder="$t('c9c68157.1d468b')"
                 style="width: 100%"
                 value-format="yyyy-MM-dd"
                 @change="dateChange"
@@ -95,22 +91,18 @@
             </div>
           </transition>
         </el-form-item>
-        <el-form-item
-          label="升值倍数"
-          prop="upvaluation"
-          :rules="{ required: true, message: '升值倍数必填', trigger: 'blur' }"
-        >
-          活动期内，每个积分升值为
+        <el-form-item :label="$t('c9c68157.e79791')" prop="upvaluation" :rules="upvaluationRules">
+          {{ $t('c9c68157.158fe0') }}
           <el-input
             v-model="form.upvaluation"
             :maxlength="30"
-            placeholder="请输入升值倍数"
+            :placeholder="$t('c9c68157.2f5765')"
             style="width: 150px"
           />
-          倍
+          {{ $t('c9c68157.a9071b') }}
         </el-form-item>
-        <el-form-item label="每日积分">
-          活动期内，每个客户每天最多可使用
+        <el-form-item :label="$t('c9c68157.9fd68c')">
+          {{ $t('c9c68157.a4fbed') }}
           <el-input
             v-model="form.max_up_point"
             type="number"
@@ -119,13 +111,12 @@
             :min="1"
             :max="9999999"
           />
-          积分用于积分升值活动
+          {{ $t('c9c68157.548c7a') }}
           <div style="font-size: 12px; color: #999">
-            活动期内，每个客户每天升值后积分 = 每日积分 ×
-            升值倍数，积分抵扣订单金额=（升值后积分+普通积分）× 抵扣比例
+            {{ $t('c9c68157.bf5f46') }}
           </div>
         </el-form-item>
-        <el-form-item label="适用会员">
+        <el-form-item :label="$t('c9c68157.6dbb6f')">
           <el-checkbox-group v-model="form.valid_grade">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -135,13 +126,13 @@
               :key="vipdata.lv_type"
               :label="vipdata.lv_type"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('c9c68157.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="应用场景">
+        <el-form-item :label="$t('c9c68157.3dbf0c')">
           <el-checkbox-group v-model="form.used_scene">
-            <el-checkbox v-for="(value, key) in used_scene" :key="key" :label="key">
+            <el-checkbox v-for="(value, key) in used_sceneI18n" :key="key" :label="key">
               {{ value }}
             </el-checkbox>
           </el-checkbox-group>
@@ -151,8 +142,10 @@
 
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click.native="handleCancel"> 返回 </el-button>
-        <el-button type="primary" @click="submitActivityAction()"> 保存 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('c9c68157.5f4112') }} </el-button>
+        <el-button type="primary" @click="submitActivityAction()">
+          {{ $t('c9c68157.be5fbb') }}
+        </el-button>
       </div>
     </template>
   </SpPage>
@@ -176,43 +169,6 @@ export default {
   },
   data() {
     return {
-      pickerOptions2: {
-        shortcuts: [
-          {
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
-      },
       used_scene: {
         1: '订单抵扣'
       },
@@ -247,6 +203,56 @@ export default {
       },
       activity_date: '',
       imgDialog: false
+    }
+  },
+  computed: {
+    titleRules() {
+      return [{ required: true, message: this.$t('c9c68157.813065'), trigger: 'blur' }]
+    },
+    upvaluationRules() {
+      return [{ required: true, message: this.$t('c9c68157.5a7056'), trigger: 'blur' }]
+    },
+    used_sceneI18n() {
+      return { 1: this.$t('c9c68157.5b83c1') }
+    },
+    pickerOptions2() {
+      return {
+        shortcuts: [
+          {
+            text: this.$t('c9c68157.56ee10'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('c9c68157.335dfc'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('c9c68157.d96eb4'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      }
     }
   },
   mounted() {
@@ -356,7 +362,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('c9c68157.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -365,7 +371,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('c9c68157.73b0d9'))
             return false
           }
         })
@@ -374,7 +380,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('c9c68157.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -383,7 +389,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('c9c68157.73b0d9'))
             return false
           }
         })

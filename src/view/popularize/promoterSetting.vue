@@ -22,49 +22,47 @@
   <SpPage class="section section-white">
     <el-form ref="form" :model="form" label-position="right" label-width="82px">
       <div class="section-body">
-        <el-form-item label="推广员等级">
-          <el-alert
-            title="开启推广员等级后，推广员可以通过提升等级来建立自己的推广团队，并且获取团队奖金"
-            type="info"
-            close-text=" "
-          />
+        <el-form-item :label="$t('d7e2997d.917de5')">
+          <el-alert :title="$t('d7e2997d.dc9c7f')" type="info" close-text=" " />
           <el-switch
             v-model="form.isOpenPromoterGrade"
             :width="50"
             active-value="true"
             inactive-value="false"
             inactive-color="#ccc"
-            active-text="开启"
-            inactive-text="关闭"
+            :active-text="$t('d7e2997d.cc42dd')"
+            :inactive-text="$t('d7e2997d.b15d91')"
             active-color="#13ce66"
           />
         </el-form-item>
         <template v-if="form.isOpenPromoterGrade == 'true'">
-          <el-form-item label="统计周期">
-            <el-alert
-              title="推广员升级的统计周期，累计或者月度统计（当月数据满足升级条件，不包含其他月份数据）"
-              type="info"
-              close-text=" "
-            />
+          <el-form-item :label="$t('d7e2997d.de6ecc')">
+            <el-alert :title="$t('d7e2997d.4fe9b1')" type="info" close-text=" " />
             <el-radio-group v-model="form.upgrade.stat_cycle">
-              <el-radio label="total"> 累计 </el-radio>
-              <el-radio label="month_total"> 月度统计 </el-radio>
+              <el-radio label="total">{{ $t('d7e2997d.dc5b71') }}</el-radio>
+              <el-radio label="month_total">{{ $t('d7e2997d.6243d8') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="升级条件">
-            <el-checkbox v-model="form.upgrade.filter.children_num" label="直属下线数量达到X人" />
+          <el-form-item :label="$t('d7e2997d.f41256')">
+            <el-checkbox
+              v-model="form.upgrade.filter.children_num"
+              :label="$t('d7e2997d.9cb632')"
+            />
             <el-checkbox
               v-model="form.upgrade.filter.children_sales_amount"
-              label="直属下线销售总额达到X元"
+              :label="$t('d7e2997d.8f9b46')"
             />
-            <el-checkbox v-model="form.upgrade.filter.grade_member" label="成为指定付费等级会员" />
+            <el-checkbox
+              v-model="form.upgrade.filter.grade_member"
+              :label="$t('d7e2997d.52eec0')"
+            />
           </el-form-item>
-          <el-form-item label="等级配置">
+          <el-form-item :label="$t('d7e2997d.b2b54b')">
             <el-alert
-              title="等级一，等级二，等级三......为由低到高，等级一为最低"
+              :title="$t('d7e2997d.305ed8')"
               type="info"
               close-text=" "
-              description="直接获取一级团队分红比例：表示推广员的直属上级为三级推广员，中间无二级推广员"
+              :description="$t('d7e2997d.a872a6')"
             />
             <el-row class="grade-setting-row" :gutter="20">
               <el-col
@@ -74,17 +72,17 @@
                 class="grade-setting-col"
               >
                 <el-tag>{{ item.name }}</el-tag
-                ><br />
-                <span class="title">等级名称</span>
+                ><br>
+                <span class="title">{{ $t('d7e2997d.9d05c7') }}</span>
                 <el-input
                   v-model="form.grade[key].custom_name"
-                  placeholder="自定义等级名称"
+                  :placeholder="$t('d7e2997d.f70e00')"
                   :maxlength="30"
                   :minlength="1"
                   class="grade-setting-item"
                 />
                 <div v-if="item.grade_level > 1">
-                  <span class="title">升级条件</span>
+                  <span class="title">{{ $t('d7e2997d.f41256') }}</span>
                   <el-input
                     v-if="form.upgrade.filter.children_num"
                     v-model="form.grade[key].children_num"
@@ -93,7 +91,7 @@
                     min="0"
                     class="grade-setting-item"
                   >
-                    <template slot="append"> 直属下线数量 </template>
+                    <template slot="append">{{ $t('d7e2997d.5d77a9') }}</template>
                   </el-input>
                   <el-input
                     v-if="form.upgrade.filter.children_sales_amount"
@@ -103,7 +101,7 @@
                     min="0"
                     class="grade-setting-item"
                   >
-                    <template slot="append"> 直属下线销售总额 </template>
+                    <template slot="append">{{ $t('d7e2997d.2e8f96') }}</template>
                   </el-input>
                   <el-select
                     v-show="form.upgrade.filter.grade_member"
@@ -118,7 +116,7 @@
                   </el-select>
                 </div>
                 <div v-if="item.grade_level == 2">
-                  <span class="title">团队分红比例</span>
+                  <span class="title">{{ $t('d7e2997d.d626d0') }}</span>
                   <el-input
                     v-model="form.grade[key].first_ratio"
                     class="grade-setting-item"
@@ -130,7 +128,7 @@
                   </el-input>
                 </div>
                 <div v-if="item.grade_level == 3">
-                  <span class="title">直接获取一级团队分红比例</span>
+                  <span class="title">{{ $t('d7e2997d.4512e3') }}</span>
                   <el-input
                     v-model="form.grade[key].first_ratio"
                     class="grade-setting-item"
@@ -140,7 +138,7 @@
                   >
                     <template slot="append"> % </template>
                   </el-input>
-                  <span class="title">获取二级团队分红比例</span>
+                  <span class="title">{{ $t('d7e2997d.09deba') }}</span>
                   <el-input
                     v-model="form.grade[key].second_ratio"
                     class="grade-setting-item"
@@ -157,7 +155,7 @@
         </template>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save">{{ $t('d7e2997d.56df61') }}</el-button>
       </div>
     </el-form>
   </SpPage>
@@ -179,9 +177,9 @@ export default {
           }
         },
         grade: {
-          first_grade: { name: '等级一', grade_level: 1 },
-          second_grade: { name: '等级二', grade_level: 2 },
-          third_grade: { name: '等级三', grade_level: 3 }
+          first_grade: { name: this.$t('d7e2997d.10ffb7'), grade_level: 1 },
+          second_grade: { name: this.$t('d7e2997d.cddd26'), grade_level: 2 },
+          third_grade: { name: this.$t('d7e2997d.3dca9a'), grade_level: 3 }
         }
       },
       vipGradeList: {},
@@ -206,12 +204,12 @@ export default {
     save() {
       this.isCheckedFun()
       if (this.form.isOpenPromoterGrade && this.isChecked == 3) {
-        this.$message.error('至少选择一项升级条件')
+        this.$message.error(this.$t('d7e2997d.e05a00'))
         return
       }
 
       setPromoterGradeConfig(this.form).then((res) => {
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('d7e2997d.3b1083'), type: 'success' })
       })
     },
     isCheckedFun() {

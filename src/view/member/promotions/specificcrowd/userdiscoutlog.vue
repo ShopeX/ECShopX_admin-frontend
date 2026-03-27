@@ -12,44 +12,44 @@
 <template>
   <div>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="order_id" label="订单号:">
+      <SpFilterFormItem prop="order_id" :label="$t('2c5d8582.070dce')">
         <el-input v-model="params.order_id" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
+      <SpFilterFormItem prop="mobile" :label="$t('2c5d8582.ce2bf3')">
         <el-input v-model="params.mobile" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="起始日期:">
+      <SpFilterFormItem prop="mobile" :label="$t('2c5d8582.e553cd')">
         <el-date-picker
           v-model="datedata"
           size="mini"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="选择日期范围"
+          :placeholder="$t('2c5d8582.4b8cb9')"
           @change="dateChange"
         />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button type="primary" @click="handleCancel"> 返回 </el-button>
+      <el-button type="primary" @click="handleCancel"> {{ $t('2c5d8582.5f4112') }} </el-button>
     </div>
 
     <el-table v-loading="loading" :data="tableList" :height="wheight - 150" border>
-      <el-table-column prop="order_id" label="订单号" width="170" />
-      <el-table-column prop="user_mobile" label="会员手机号" width="120" />
-      <el-table-column prop="specific_name" label="针对人群" width="120" />
-      <el-table-column prop="discount_fee" label="优惠金额" width="120">
+      <el-table-column prop="order_id" :label="$t('2c5d8582.1e8dc2')" width="170" />
+      <el-table-column prop="user_mobile" :label="$t('2c5d8582.6a52ee')" width="120" />
+      <el-table-column prop="specific_name" :label="$t('2c5d8582.0c6ddd')" width="120" />
+      <el-table-column prop="discount_fee" :label="$t('2c5d8582.5b921a')" width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.discount_fee / 100 }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="action_type" label="增/减">
+      <el-table-column prop="action_type" :label="$t('2c5d8582.0b822f')">
         <template slot-scope="scope">
           <span v-if="scope.row.action_type == 'plus'">+</span>
-          <span v-else-if="scope.row.action_type == 'less'">-(订单已取消或已退款)</span>
+          <span v-else-if="scope.row.action_type == 'less'">-({{ $t('2c5d8582.7e2300') }})</span>
         </template>
       </el-table-column>
-      <el-table-column prop="created" label="创建时间">
+      <el-table-column prop="created" :label="$t('2c5d8582.eca37c')">
         <template slot-scope="scope">
           <span>{{ scope.row.created | formatTimestamp }}</span>
         </template>

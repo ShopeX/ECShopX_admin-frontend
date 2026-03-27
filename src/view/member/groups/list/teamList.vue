@@ -6,28 +6,30 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="groupsTeamList" style="width: 100%" border height="580">
-      <el-table-column prop="username" label="团长" />
-      <el-table-column label="时间">
+      <el-table-column prop="username" :label="$t('50b00a23.15d03b')" />
+      <el-table-column :label="$t('50b00a23.19fcb9')">
         <template slot-scope="scope">
           {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
           {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column label="拼团状态" width="100">
+      <el-table-column :label="$t('50b00a23.0bedaa')" width="100">
         <template slot-scope="scope">
-          <span v-if="scope.row.team_status == 1">进行中</span>
-          <span v-else-if="scope.row.team_status == 2">成功</span>
-          <span v-else>失败</span>
+          <span v-if="scope.row.team_status == 1">{{ $t('50b00a23.fb852f') }}</span>
+          <span v-else-if="scope.row.team_status == 2">{{ $t('50b00a23.330363') }}</span>
+          <span v-else>{{ $t('50b00a23.acd5cb') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="拼团人数">
+      <el-table-column :label="$t('50b00a23.e77dad')">
         <template slot-scope="scope">
           {{ scope.row.join_person_num }}/{{ groupsActivity.person_num }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="250">
+      <el-table-column :label="$t('50b00a23.2b6bc0')" width="250">
         <template slot-scope="scope">
-          <el-button size="mini" @click="showTeamAction(scope.$index, scope.row)"> 查看 </el-button>
+          <el-button size="mini" @click="showTeamAction(scope.$index, scope.row)">
+            {{ $t('50b00a23.607e7a') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,7 +88,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取拼团活动列表失败'
+            message: this.$t('50b00a23.51081c')
           })
         })
     },

@@ -13,8 +13,8 @@
 </style>
 <template>
   <CompButton
-    placeholder="选择商品"
-    format="{0}件商品"
+    :placeholder="i18n.t('1253b8e4.43d1e2')"
+    :format="i18n.t('1253b8e4.156ada')"
     :value="goodsCount"
     @click="handleClickAdd"
     @remove="onRemoveItem"
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompButton from '../../comps/comp-button'
@@ -34,7 +35,7 @@ export default {
     distributor: Object
   },
   data() {
-    return {
+    return {i18n,
       localValue: []
     }
   },

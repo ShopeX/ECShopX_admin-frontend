@@ -13,11 +13,11 @@
   <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="name" label="团长姓名:">
-          <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
+        <SpFilterFormItem prop="name" :label="$t('38b8511c.1e5021')">
+          <el-input v-model="formQuery.name" :placeholder="$t('38b8511c.9d2c66')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('38b8511c.ce2bf3')">
+          <el-input v-model="formQuery.mobile" :placeholder="$t('38b8511c.999e78')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -44,7 +44,7 @@
       <SpDialog
         ref="resloveDialogRef"
         v-model="resloveDialog"
-        :title="`审批`"
+        :title="$t('38b8511c.0273ba')"
         :form="resloveForm"
         :form-list="resloveFormList"
         @onSubmit="onResloveSubmit"
@@ -56,6 +56,8 @@
 <script>
 import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
+import { i18n } from '@/i18n'
+
 export default {
   name: '',
   data() {
@@ -66,13 +68,13 @@ export default {
         approve_status: '-1'
       },
       stateList: [
-        { title: '全部', value: '-1' },
-        { title: '待审批', value: '0' }
+        { title: i18n.t('38b8511c.a8b0c2'), value: '-1' },
+        { title: i18n.t('38b8511c.b0bf01'), value: '0' }
       ],
       setting: createSetting({
         actions: [
           {
-            name: '查看',
+            name: i18n.t('38b8511c.607e7a'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -87,7 +89,7 @@ export default {
             }
           },
           {
-            name: '审批',
+            name: i18n.t('38b8511c.0273ba'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -103,15 +105,15 @@ export default {
           }
         ],
         columns: [
-          { name: '团长', key: 'chief_name' },
-          { name: '手机号', key: 'chief_mobile' },
+          { name: i18n.t('38b8511c.15d03b'), key: 'chief_name' },
+          { name: i18n.t('38b8511c.8098e2'), key: 'chief_mobile' },
           {
-            name: '审批状态',
+            name: i18n.t('38b8511c.d352ae'),
             key: 'approve_status',
             render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
           },
           {
-            name: '申请时间',
+            name: i18n.t('38b8511c.5ba072'),
             key: 'created_at',
             render: (h, { row }) =>
               h('span', {}, moment(row.created_at * 1000).format('YYYY-MM-DD HH:mm:ss'))
@@ -126,12 +128,12 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批:',
+          label: i18n.t('38b8511c.717b4d'),
           key: 'approve_status',
           type: 'radio',
           options: [
-            { label: 1, name: '同意' },
-            { label: 2, name: '不同意' }
+            { label: 1, name: i18n.t('38b8511c.e61f2c') },
+            { label: 2, name: i18n.t('38b8511c.1bf19c') }
           ],
           onChange: (e) => {
             if (e == 2) {
@@ -142,14 +144,14 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: i18n.t('38b8511c.de77c5'),
           key: 'refuse_reason',
           type: 'input',
-          placeholder: '请输入拒绝原因',
+          placeholder: i18n.t('38b8511c.fc955a'),
           isShow: false,
           validator: (rule, value, callback) => {
             if (this.resloveForm.approve_status == 2 && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(i18n.t('38b8511c.281bad')))
             } else {
               callback()
             }
@@ -182,11 +184,11 @@ export default {
     },
     getApproveStatus(status) {
       if (status == '0') {
-        return '未审核'
+        return this.$t('38b8511c.97a81d')
       } else if (status == '1') {
-        return '已审核'
+        return this.$t('38b8511c.9d5b9b')
       } else if (status == '2') {
-        return '已拒绝'
+        return this.$t('38b8511c.81233d')
       }
     }
   }

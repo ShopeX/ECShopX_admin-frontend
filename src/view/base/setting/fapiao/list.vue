@@ -7,10 +7,10 @@
   <div>
     <div>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="发票配置" name="first">
+        <el-tab-pane :label="$t('54a387a1.bcd859')" name="first">
           <fapiaoTemplates ref="fapiaoTemplates" :get-status="fapiaoTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="航信配置" name="second">
+        <el-tab-pane :label="$t('54a387a1.ff8708')" name="second">
           <hangxinemplates ref="hangxinemplates" :get-status="hangxinemplates" />
         </el-tab-pane>
       </el-tabs>

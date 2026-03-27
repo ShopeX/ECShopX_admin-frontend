@@ -3,11 +3,11 @@
  * See LICENSE file for license details.
  */
 export const BSPAY_PAYMENT_CHANNELS = [
-  { name: '微信支付', label: 'wx_lite' },
-  { name: '微信公众号支付', label: 'wx_pub' },
-  { name: '微信扫码支付', label: 'wx_qr' },
-  { name: '支付宝支付', label: 'alipay_wap' },
-  { name: '支付宝扫码支付', label: 'alipay_qr' }
+  { name: '8ddcacac.bffe28', label: 'wx_lite' },
+  { name: '8ddcacac.f661cb', label: 'wx_pub' },
+  { name: '8ddcacac.777d5d', label: 'wx_qr' },
+  { name: '8ddcacac.e3b206', label: 'alipay_wap' },
+  { name: '8ddcacac.bd7030', label: 'alipay_qr' }
 ]
 
 // 自动生成支付方式显示名称映射

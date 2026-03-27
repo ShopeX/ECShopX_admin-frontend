@@ -4,41 +4,45 @@
 -->
 
 <template>
-  <SpPage title="基础配置">
+  <SpPage :title="$t('cce7f45b.b6453a')">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-form ref="form" label-width="200px">
-      <el-form-item label="是否开启交易包装选项：">
+      <el-form-item :label="$t('cce7f45b.eaca25')">
         <el-switch v-model="form.config.is_open" active-color="#13ce66" inactive-color="#ff4949" />
       </el-form-item>
-      <el-form-item label="包装名称：">
+      <el-form-item :label="$t('cce7f45b.fb9895')">
         <el-input v-model="form.config.packName" style="width: 300px" />
       </el-form-item>
-      <el-form-item label="包装说明：">
+      <el-form-item :label="$t('cce7f45b.66d5ec')">
         <el-input v-model="form.config.packDes" type="textarea" style="width: 300px" />
       </el-form-item>
     </el-form>
     <div slot="page-footer" class="section-footer with-border text-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('cce7f45b.be5fbb')
+      }}
+</el-button>
     </div>
     <!-- <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="基础配置" name="base">
         <el-form ref="form" label-width="200px">
-          <el-form-item label="是否开启交易包装选项：">
+          <el-form-item :label="$t('cce7f45b.eaca25')">
             <el-switch
               v-model="form.config.is_open"
               active-color="#13ce66"
               inactive-color="#ff4949"
             />
           </el-form-item>
-          <el-form-item label="包装名称：">
+          <el-form-item :label="$t('cce7f45b.fb9895')">
             <el-input v-model="form.config.packName" style="width: 300px" />
           </el-form-item>
-          <el-form-item label="包装说明：">
+          <el-form-item :label="$t('cce7f45b.66d5ec')">
             <el-input v-model="form.config.packDes" type="textarea" style="width: 300px" />
           </el-form-item>
           <div class="section-footer with-border content-center">
-            <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+            <el-button v-loading="loading" type="primary" @click="onSubmit">{{ $t('cce7f45b.be5fbb') }}</el-button>
           </div>
         </el-form>
       </el-tab-pane>
@@ -79,7 +83,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('cce7f45b.3b1083')
           })
           this.loading = false
         })

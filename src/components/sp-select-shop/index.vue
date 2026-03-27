@@ -103,7 +103,7 @@ export default {
         if (data.length > 1) {
           const distributorIds = data.map((item) => item.distributor_id)
           this.onChange({
-            name: `已选择${data.length}个店铺`,
+            name: this.$t('d6d1dfc8.013ecd', { n: data.length }),
             value: distributorIds
           })
         } else {

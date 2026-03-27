@@ -8,23 +8,23 @@
     <el-card shadow="never">
       <div class="account-number">
         <div class="item">
-          <h4 class="account-hd">总计收入</h4>
+          <h4 class="account-hd">{{ $t('e79e4a27.90b3f7') }}</h4>
           <h5>￥ {{ totle.income }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">总退款金额</h4>
+          <h4 class="account-hd">{{ $t('e79e4a27.47a1ec') }}</h4>
           <h5>￥ {{ totle.refund }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">总提现金额</h4>
+          <h4 class="account-hd">{{ $t('e79e4a27.9d5404') }}</h4>
           <h5>￥ {{ totle.withdrawal }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">当前可提现余额</h4>
+          <h4 class="account-hd">{{ $t('e79e4a27.504406') }}</h4>
           <h5>￥ {{ totle.withdrawal_balance }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">未结算余额</h4>
+          <h4 class="account-hd">{{ $t('e79e4a27.c9dd52') }}</h4>
           <h5>￥ {{ totle.unsettled_funds }}</h5>
         </div>
       </div>
@@ -32,7 +32,7 @@
 
     <div>
       <el-form label-width="100px">
-        <el-form-item label="日期范围">
+        <el-form-item :label="$t('e79e4a27.786622')">
           <el-row :gutter="20">
             <el-col :span="9">
               <el-date-picker
@@ -41,9 +41,9 @@
                 alue-format="yyyy-MM-dd"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('e79e4a27.981cbe')"
+                :start-placeholder="$t('e79e4a27.b44c0f')"
+                :end-placeholder="$t('e79e4a27.1d468b')"
                 style="width: 100%"
                 value-format="yyyy-MM-dd"
               />
@@ -51,7 +51,7 @@
             <el-col v-if="$store.getters.login_type !== 'distributor'" :span="5">
               <el-select
                 v-model="params.distributor_id"
-                placeholder="请选择门店"
+                :placeholder="$t('e79e4a27.ca95a5')"
                 style="width: 100%"
               >
                 <el-option
@@ -64,17 +64,21 @@
               </el-select>
             </el-col>
             <el-col :span="5">
-              <el-input v-model="params.order_id" placeholder="订单号" />
+              <el-input v-model="params.order_id" :placeholder="$t('e79e4a27.1e8dc2')" />
             </el-col>
             <el-col :span="4">
-              <el-button type="primary" @click="getList(true)"> 搜索 </el-button>
+              <el-button type="primary" @click="getList(true)">
+                {{ $t('e79e4a27.e5f71f') }}
+              </el-button>
 
-              <el-button type="primary" @click="exportData()"> 导出 </el-button>
+              <el-button type="primary" @click="exportData()">
+                {{ $t('e79e4a27.55405e') }}
+              </el-button>
               <el-popover
                 placement="top-start"
                 width="200"
                 trigger="hover"
-                content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+                :content="$t('e79e4a27.c11fa3')"
               >
                 <i slot="reference" class="el-icon-question" />
               </el-popover>
@@ -83,11 +87,11 @@
         </el-form-item>
       </el-form>
       <el-table v-loading="loading" :data="allListData" stripe border style="width: 100%">
-        <el-table-column prop="trade_time" label="日期" fixed />
-        <el-table-column prop="order_id" label="订单号" />
-        <el-table-column prop="fin_type" label="类型" />
+        <el-table-column prop="trade_time" :label="$t('e79e4a27.4ff1e7')" fixed />
+        <el-table-column prop="order_id" :label="$t('e79e4a27.1e8dc2')" />
+        <el-table-column prop="fin_type" :label="$t('e79e4a27.226b09')" />
 
-        <el-table-column prop="income" label="金额">
+        <el-table-column prop="income" :label="$t('e79e4a27.4cf24a')">
           <template slot-scope="scope">
             <span v-if="scope.row.income != 0" style="color: #70b603">
               +￥{{ scope.row.income }}
@@ -177,12 +181,12 @@ export default {
       if (this.is_distributor === false && this.params.distributor === '') {
         this.$message({
           type: 'error',
-          message: '必须选择门店'
+          message: this.$t('e79e4a27.0d3b95')
         })
         return false
       }
       if (!this.vdate) {
-        Message.error('请输入日期')
+        Message.error(this.$t('e79e4a27.0947df'))
       } else {
         this.loading = true
         this.params.start_date = this.vdate[0]
@@ -215,7 +219,7 @@ export default {
       exportAccount(obj).then((res) => {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('e79e4a27.3e1ddd')
         })
       })
     }

@@ -18,7 +18,7 @@
             <div class="mask" />
             <div class="logo_area">
               <span class="logo">
-                <img :src="wximageurl + form.logo_url" />
+                <img :src="wximageurl + form.logo_url">
               </span>
               <p>{{ form.brand_name }}</p>
               <p id="js_title_preview" class="card_name">
@@ -61,11 +61,11 @@
                 </el-upload>
               </div>
             </el-form-item> -->
-            <el-form-item label="商户logo">
+            <el-form-item :label="$t('aae72239.6720f7')">
               <div>
                 <div class="upload-box" @click="handleImgChange">
                   <HoverDelete v-if="form.logo_url" @delete="form.logo_url = ''">
-                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar" />
+                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar">
                   </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
@@ -78,18 +78,18 @@
               />
             </el-form-item>
 
-            <el-form-item label="商户自定义会员卡背景图">
+            <el-form-item :label="$t('aae72239.160b30')">
               <div>
                 <div class="upload-box" @click="handleImgBgChange">
                   <HoverDelete
                     v-if="form.background_pic_url"
                     @delete="form.background_pic_url = ''"
                   >
-                    <img :src="wximageurl + form.background_pic_url" class="avatar" />
+                    <img :src="wximageurl + form.background_pic_url" class="avatar">
                   </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
-                （建议尺寸：400px * 250px）
+                {{ $t('aae72239.8631e6') }}
               </div>
               <imgPicker
                 :dialog-visible="imgBgDialog"
@@ -99,24 +99,24 @@
               />
             </el-form-item>
 
-            <el-form-item label="商户名称" prop="brand_name">
+            <el-form-item :label="$t('aae72239.e6f169')" prop="brand_name">
               <el-input
                 v-model="form.brand_name"
-                placeholder="字数上限为12个汉字"
+                :placeholder="$t('aae72239.828f69')"
                 style="width: 240px"
                 :maxlength="12"
               />&nbsp;<span class="frm-tips">{{ form.brand_name.length }}/12</span>
             </el-form-item>
-            <el-form-item label="会员卡标题" prop="title">
+            <el-form-item :label="$t('aae72239.84472a')" prop="title">
               <el-input
                 v-model="form.title"
-                placeholder="字数上限为9个汉字"
+                :placeholder="$t('aae72239.81a736')"
                 style="width: 240px"
                 :maxlength="9"
               />&nbsp;<span class="frm-tips">{{ form.title.length }}/9</span>
-              <p class="frm-tips">卡券名，字数上限为9个汉字(建议涵盖卡券属性、服务及金额)。</p>
+              <p class="frm-tips">{{ $t('aae72239.1fd9e8') }}</p>
             </el-form-item>
-            <el-form-item label="卡券颜色" prop="color" style="margin-bottom: 0">
+            <el-form-item :label="$t('aae72239.d5f303')" prop="color" style="margin-bottom: 0">
               <el-color-picker v-model="form.color" />
             </el-form-item>
             <!-- <el-form-item label="券面码型">
@@ -152,7 +152,11 @@
             </el-form-item> -->
           </div>
           <div class="section-footer with-border">
-            <el-button type="primary" @click="submitForm('form')"> 保存 </el-button>
+            <el-button type="primary" @click="submitForm('form')">
+{{
+              $t('aae72239.be5fbb')
+            }}
+</el-button>
           </div>
         </el-form>
       </section>
@@ -188,24 +192,28 @@ export default {
         color: '#409EFF',
         code_type: 'CODE_TYPE_QRCODE'
       },
-      rules: {
-        logo_url: [{ required: true, message: '请选择商户logo', trigger: 'blur' }],
-        brand_name: [{ required: true, message: '请输入商户名称', trigger: 'blur' }],
-        title: [{ required: true, message: '请输入会员卡标题', trigger: 'blur' }],
-        title: [
-          {
-            required: true,
-            max: 9,
-            message: '卡券名称不能为空且长度不超过9个汉字或18个英文字母',
-            trigger: 'blur'
-          }
-        ],
-        color: [{ required: true, message: '请选择卡券颜色', trigger: 'blur' }]
-      },
       imgDialog: false,
       isGetImage: false,
       imgBgDialog: false,
       isGetImageBg: false
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        logo_url: [{ required: true, message: this.$t('aae72239.94c205'), trigger: 'blur' }],
+        brand_name: [{ required: true, message: this.$t('aae72239.18213b'), trigger: 'blur' }],
+        title: [
+          { required: true, message: this.$t('aae72239.08cee1'), trigger: 'blur' },
+          {
+            required: true,
+            max: 9,
+            message: this.$t('aae72239.40ed3d'),
+            trigger: 'blur'
+          }
+        ],
+        color: [{ required: true, message: this.$t('aae72239.8270f1'), trigger: 'blur' }]
+      }
     }
   },
   mounted() {
@@ -224,7 +232,7 @@ export default {
           setMemberCard(params).then((res) => {
             if (res.data.data) {
               this.submitDisabled = false
-              this.$message.success('设置成功')
+              this.$message.success(this.$t('aae72239.f6088e'))
             }
           })
         } else {

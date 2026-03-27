@@ -87,10 +87,11 @@
 
 <script>
 import config from './config'
+import { i18n } from '@/i18n'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Marquees',
-  wgtName: '文字轮播',
+  wgtName: i18n.t('17b1b213.917617'),
   wgtDesc: '',
   wgtIcon: 'announcement',
   config: config,

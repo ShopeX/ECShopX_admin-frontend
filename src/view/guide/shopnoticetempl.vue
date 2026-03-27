@@ -26,17 +26,19 @@
             </div>
             <div class="notice-footer">
               <div class="footer-item">
-                <div @click="handleEdit(index)"><i class="el-icon-edit-outline" />编辑</div>
+                <div @click="handleEdit(index)">
+                  <i class="el-icon-edit-outline" />{{ $t('c2fecd2a.95b351') }}
+                </div>
               </div>
               <div v-if="dataList[item.id]" class="footer-item">
                 <div
                   v-if="1 == dataList[item.id].disabled"
                   @click="handleTemplOpen(dataList[item.id].template_id)"
                 >
-                  <i class="el-icon-delete" />开启
+                  <i class="el-icon-delete" />{{ $t('c2fecd2a.cc42dd') }}
                 </div>
                 <div v-else @click="handleTemplClose(dataList[item.id].template_id)">
-                  <i class="el-icon-delete" />关闭
+                  <i class="el-icon-delete" />{{ $t('c2fecd2a.b15d91') }}
                 </div>
               </div>
               <!-- <div class="footer-item" @click="handleTemplRemove(index)">
@@ -57,7 +59,7 @@
       <el-dialog :title="message" :visible.sync="editVisible" :before-close="handleCancel">
         <template>
           <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
-            <el-form-item label="是否开启">
+            <el-form-item :label="$t('c2fecd2a.780afe')">
               <el-switch
                 v-model="form.disabled"
                 active-color="#13ce66"
@@ -66,44 +68,48 @@
                 :inactive-value="true"
               />
             </el-form-item>
-            <el-form-item label="标题">
+            <el-form-item :label="$t('c2fecd2a.32c65d')">
               <el-input v-model="form.title" />
             </el-form-item>
-            <el-form-item label="描述">
+            <el-form-item :label="$t('c2fecd2a.3bdd08')">
               <el-input v-model="form.description" />
             </el-form-item>
-            <el-form-item label="是否放大第一个内容">
+            <el-form-item :label="$t('c2fecd2a.48e0aa')">
               <el-switch
                 v-model="form.emphasis_first_item"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
               />
             </el-form-item>
-            <el-form-item label="内容">
+            <el-form-item :label="$t('c2fecd2a.2d711b')">
               <div v-for="(item, index) in form.content" :key="index" class="form-content">
                 <div class="content-name">
-                  <el-form-item label="名称">
+                  <el-form-item :label="$t('c2fecd2a.d7ec2d')">
                     <el-input v-model="item.key" placeholder="" />
                   </el-form-item>
                 </div>
                 <div class="content-desc">
-                  <el-form-item label="描述">
+                  <el-form-item :label="$t('c2fecd2a.3bdd08')">
                     <div class="view-flex">
                       <el-input v-model="item.value" class="view-flex-item" placeholder="" />
                     </div>
                   </el-form-item>
                 </div>
-                <el-button type="text" @click="handleContentRemove(index)"> 删除 </el-button>
+                <el-button type="text" @click="handleContentRemove(index)">
+{{
+                  $t('c2fecd2a.2f4aad')
+                }}
+</el-button>
               </div>
               <el-button icon="el-icon-circle-plus" type="primary" plain @click="handleContentAdd">
-                添加内容
+                {{ $t('c2fecd2a.f75488') }}
               </el-button>
             </el-form-item>
           </el-form>
         </template>
         <div slot="footer" class="dialog-footer">
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="handleTemplAdd"> 保存 </el-button>
+          <el-button @click.native="handleCancel">{{ $t('c2fecd2a.625fb2') }}</el-button>
+          <el-button type="primary" @click="handleTemplAdd">{{ $t('c2fecd2a.be5fbb') }}</el-button>
         </div>
       </el-dialog>
       <el-pagination
@@ -147,7 +153,7 @@ export default {
       dataList: [],
       list: [
         {
-          message: '待发货通知',
+          message: this.$t('c2fecd2a.f00149'),
           id: 'waitingDeliveryNotice',
           title: '',
           description: '',
@@ -228,9 +234,8 @@ export default {
     async handleTemplAdd() {
       // 新增
       await saveWorkWechatTemplate(this.id, this.form)
-      let message = '添加成功'
       this.$message({
-        message,
+        message: this.$t('c2fecd2a.3fdaea'),
         type: 'success'
       })
       this.editVisible = false
@@ -238,7 +243,7 @@ export default {
     handleContentAdd() {
       if (this.form.content.length >= 10) {
         this.$message({
-          message: '最多添加10条内容',
+          message: this.$t('c2fecd2a.fd7f7b'),
           type: 'error'
         })
       }
@@ -249,9 +254,9 @@ export default {
       this.form.content.push(issues)
     },
     handleTemplRemove(idx) {
-      this.$confirm('确定废弃当前模版吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$confirm(this.$t('c2fecd2a.afcb4c'), this.$t('c2fecd2a.02d981'), {
+        confirmButtonText: this.$t('c2fecd2a.38cf16'),
+        cancelButtonText: this.$t('c2fecd2a.625fb2')
       })
         .then(() => {
           this.list.splice(idx, 1)
@@ -260,15 +265,14 @@ export default {
     },
     async handleTemplClose(id) {
       let that = this
-      this.$confirm('确定关闭当前模版吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$confirm(this.$t('c2fecd2a.c20fd3'), this.$t('c2fecd2a.02d981'), {
+        confirmButtonText: that.$t('c2fecd2a.38cf16'),
+        cancelButtonText: that.$t('c2fecd2a.625fb2')
       })
         .then(() => {
-          // 新增
           closeWorkWechatTemplate(id).then((res) => {
             that.$message({
-              message: '关闭成功',
+              message: that.$t('c2fecd2a.8a3140'),
               type: 'success'
             })
             that.getTemplateList()
@@ -278,15 +282,14 @@ export default {
     },
     async handleTemplOpen(id) {
       let that = this
-      this.$confirm('确定开启当前模版吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$confirm(this.$t('c2fecd2a.acb8f3'), this.$t('c2fecd2a.02d981'), {
+        confirmButtonText: that.$t('c2fecd2a.38cf16'),
+        cancelButtonText: that.$t('c2fecd2a.625fb2')
       })
         .then(() => {
-          // 新增
           openWorkWechatTemplate(id).then((res) => {
             that.$message({
-              message: '开启成功',
+              message: that.$t('c2fecd2a.5f3160'),
               type: 'success'
             })
             that.getTemplateList()
@@ -307,9 +310,9 @@ export default {
      * 删除
      * */
     handleClickDel(row) {
-      this.$confirm('确认是否删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('c2fecd2a.23f9f0'), this.$t('c2fecd2a.02d981'), {
+        confirmButtonText: this.$t('c2fecd2a.38cf16'),
+        cancelButtonText: this.$t('c2fecd2a.625fb2'),
         type: 'warning'
       })
         .then(() => {})

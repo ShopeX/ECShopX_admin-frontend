@@ -8,15 +8,23 @@
     <el-table ref="ruleTable" v-loading="loading" :data="tmpData">
       <el-table-column prop="badge_id" label="id" width="100" />
 
-      <el-table-column label="角标名称" prop="badge_name" />
+      <el-table-column :label="$t('e240ae54.ec6ceb')" prop="badge_name" />
 
-      <el-table-column label="备注" prop="badge_memo" />
+      <el-table-column :label="$t('e240ae54.2432b5')" prop="badge_memo" />
 
-      <el-table-column label="操作" width="160" align="center">
+      <el-table-column :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)">
+{{
+            $t('e240ae54.95b351')
+          }}
+</el-button>
 
-          <el-button type="text" @click="handleDel(scope.row)"> 删除 </el-button>
+          <el-button type="text" @click="handleDel(scope.row)">
+{{
+            $t('e240ae54.2f4aad')
+          }}
+</el-button>
 
           <!-- <el-button
             type="text"
@@ -42,11 +50,11 @@ export default {
   computed: {
     resetText() {
       return (row) => {
-        var text = '审核'
+        var text = this.$t('e240ae54.cf13b1')
         if (row.status == '1') {
-          text = '下架'
+          text = this.$t('e240ae54.d2379a')
         } else if (row.status == '2') {
-          text = '通过'
+          text = this.$t('e240ae54.23c1f3')
         }
         return text
       }

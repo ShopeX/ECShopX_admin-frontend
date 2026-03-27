@@ -9,21 +9,21 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <div class="action-container">
-        <el-button type="primary" @click="addActivityData"> 添加会员优先购活动 </el-button>
+        <el-button type="primary" @click="addActivityData"> {{ $t('12e0fbf0.a94fa4') }} </el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="全部" name="all" />
-        <el-tab-pane label="待开始" name="waiting" />
-        <el-tab-pane label="进行中" name="ongoing" />
-        <el-tab-pane label="已结束" name="end" />
+        <el-tab-pane :label="$t('12e0fbf0.a8b0c2')" name="all" />
+        <el-tab-pane :label="$t('12e0fbf0.1568ba')" name="waiting" />
+        <el-tab-pane :label="$t('12e0fbf0.fb852f')" name="ongoing" />
+        <el-tab-pane :label="$t('12e0fbf0.047fab')" name="end" />
         <el-table
           v-loading="loading"
           :data="list"
           style="width: 100%"
-          element-loading-text="数据加载中"
+          :element-loading-text="$t('12e0fbf0.f09b12')"
         >
-          <el-table-column label="操作" width="180">
+          <el-table-column :label="$t('12e0fbf0.2b6bc0')" width="180">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button
@@ -31,37 +31,41 @@
                   type="text"
                   @click="updateStatusCommunityAction(scope.row)"
                 >
-                  取消
+                  {{ $t('12e0fbf0.625fb2') }}
                 </el-button>
-                <el-button type="text" @click="viewDetail(scope.row)"> 查看 </el-button>
-                <el-button type="text" @click="copyActivity(scope.row)"> 复制活动 </el-button>
+                <el-button type="text" @click="viewDetail(scope.row)">
+                  {{ $t('12e0fbf0.607e7a') }}
+                </el-button>
+                <el-button type="text" @click="copyActivity(scope.row)">
+                  {{ $t('12e0fbf0.69c875') }}
+                </el-button>
                 <el-button
                   v-if="scope.row.status == 'waiting'"
                   type="text"
                   @click="updateDetail(scope.row)"
                 >
-                  编辑
+                  {{ $t('12e0fbf0.95b351') }}
                 </el-button>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="marketing_id" width="60" label="编号" />
-          <el-table-column prop="marketing_name" label="活动名称" />
-          <el-table-column label="开始时间" width="200">
+          <el-table-column prop="marketing_id" width="60" :label="$t('12e0fbf0.c515f3')" />
+          <el-table-column prop="marketing_name" :label="$t('12e0fbf0.39834b')" />
+          <el-table-column :label="$t('12e0fbf0.592c59')" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="结束时间" width="200">
+          <el-table-column :label="$t('12e0fbf0.f78277')" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="类型" width="120">
+          <el-table-column :label="$t('12e0fbf0.226b09')" width="120">
             <template slot-scope="scope">
-              <span v-if="scope.row.status == 'waiting'">待开始</span>
-              <span v-if="scope.row.status == 'ongoing'">进行中</span>
-              <span v-if="scope.row.status == 'end'">已结束</span>
+              <span v-if="scope.row.status == 'waiting'">{{ $t('12e0fbf0.1568ba') }}</span>
+              <span v-if="scope.row.status == 'ongoing'">{{ $t('12e0fbf0.fb852f') }}</span>
+              <span v-if="scope.row.status == 'end'">{{ $t('12e0fbf0.047fab') }}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -154,17 +158,17 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     deleteActivityAction(row) {
-      var msg = '你确定要删除该活动吗?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('12e0fbf0.143c34')
+      this.$confirm(msg, this.$t('12e0fbf0.02d981'), {
+        cancelButtonText: this.$t('12e0fbf0.625fb2'),
+        confirmButtonText: this.$t('12e0fbf0.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeMarketingActivity({ marketing_id: row.marketing_id }).then((res) => {
               this.getActivityLists()
               this.$message({
-                message: '删除活动成功',
+                message: this.$t('12e0fbf0.e236fe'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -268,10 +272,10 @@ export default {
       })
     },
     updateStatusCommunityAction(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('12e0fbf0.01be42')
+      this.$confirm(msg, this.$t('12e0fbf0.02d981'), {
+        cancelButtonText: this.$t('12e0fbf0.625fb2'),
+        confirmButtonText: this.$t('12e0fbf0.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -279,7 +283,7 @@ export default {
               (response) => {
                 this.getActivityLists()
                 this.$message({
-                  message: '修改活动状态成功',
+                  message: this.$t('12e0fbf0.b69694'),
                   type: 'success',
                   duration: 5 * 1000
                 })

@@ -90,12 +90,14 @@ export default {
     },
     options: {
       type: Array,
-      default: () => [
-        { label: '一行一个', value: 'one' },
-        { label: '一行两个', value: 'two' },
-        { label: '一行三个', value: 'three' },
-        { label: '可滑动', value: 'default' }
-      ]
+      default() {
+        return [
+          { label: this.$t('e2573a96.93c144'), value: 'one' },
+          { label: this.$t('e2573a96.412d79'), value: 'two' },
+          { label: this.$t('e2573a96.41061c'), value: 'three' },
+          { label: this.$t('e2573a96.736c70'), value: 'default' }
+        ]
+      }
     }
   },
   methods: {

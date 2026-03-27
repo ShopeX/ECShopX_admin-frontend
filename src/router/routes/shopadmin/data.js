@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'statistics',
       icon: 'internal-data',
       keepAlive: true,
-      title: '数据'
+      title: 'de2e3a36.0d8307'
     },
     name: 'data',
     path: '/shopadmin/data',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'distributordata',
           icon: 'pay-circle',
-          title: '店铺统计',
+          title: 'de2e3a36.63cf82',
           permissions: ['statistics.distributordata']
         },
         component: () => import('@/view/mall/datacube/distributordata')
@@ -33,7 +33,7 @@ const routes = [
         meta: {
           aliasName: 'summary',
           icon: 'pay-circle',
-          title: '结算汇总',
+          title: 'de2e3a36.070f26',
           permissions: ['statistics.settlement.summary']
         },
         component: () => import('@/view/mall/datacube/goodsdata')
@@ -44,7 +44,7 @@ const routes = [
         meta: {
           aliasName: 'shopadmin_statistics_deliverystaffstatistics',
           icon: 'pay-circle',
-          title: '配送员业绩',
+          title: 'de2e3a36.d6f79b',
           permissions: ['statistics.shopadmin_statistics_deliverystaffstatistics']
         },
         component: () => import('@/view/mall/datacube/companydata/delivery')

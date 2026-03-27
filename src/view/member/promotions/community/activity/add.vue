@@ -7,14 +7,14 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" class="box-set" label-width="100px">
       <div class="section-header with-border">
-        <div>活动商品信息</div>
+        <div>{{ $t('3c26d461.6fd631') }}</div>
       </div>
       <div class="form-wrapper clearfix">
-        <el-form-item label="活动封面">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+        <el-form-item :label="$t('3c26d461.350355')">
+          <div class="frm-tips">{{ $t('3c26d461.6113fc') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
+              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -26,37 +26,41 @@
           />
         </el-form-item>
         <el-form-item
-          label="活动名称"
+          :label="$t('3c26d461.39834b')"
           prop="activity_name"
-          :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
+          :rules="{ required: true, message: $t('3c26d461.813065'), trigger: 'blur' }"
         >
           <el-col :span="20">
-            <el-input v-model="form.activity_name" :maxlength="30" placeholder="活动名称" />
+            <el-input
+              v-model="form.activity_name"
+              :maxlength="30"
+              :placeholder="$t('3c26d461.39834b')"
+            />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动时间">
+        <el-form-item :label="$t('3c26d461.c799f5')">
           <el-col :span="20">
             <el-date-picker
               v-model="activity_date"
               type="datetimerange"
-              range-separator="至"
-              start-placeholder="生效时间"
-              end-placeholder="过期时间"
+              :range-separator="$t('3c26d461.981cbe')"
+              :start-placeholder="$t('3c26d461.fc92e9')"
+              :end-placeholder="$t('3c26d461.1fa23f')"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="取货时间" prop="delivery_date">
+        <el-form-item :label="$t('3c26d461.b432c1')" prop="delivery_date">
           <el-col :span="20">
             <el-date-picker
               v-model="form.delivery_date"
               type="datetime"
-              placeholder="选择日期时间"
+              :placeholder="$t('3c26d461.a42ae4')"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动描述">
+        <el-form-item :label="$t('3c26d461.7add39')">
           <el-col :span="20">
             <el-input v-model="form.description" type="textarea" :rows="2" placeholder="" />
           </el-col>
@@ -66,11 +70,11 @@
               <el-input v-model="form.total_num" placeholder=""></el-input>
             </el-col>
           </el-form-item-->
-        <el-form-item label="社区限制">
+        <el-form-item :label="$t('3c26d461.ed9ea7')">
           <el-col :span="20">
             <el-radio-group v-model="community" @change="communityChange">
-              <el-radio label="1"> 不限制社区 </el-radio>
-              <el-radio label="2"> 指定社区 </el-radio>
+              <el-radio label="1">{{ $t('3c26d461.56dc38') }}</el-radio>
+              <el-radio label="2">{{ $t('3c26d461.d37573') }}</el-radio>
             </el-radio-group>
             <div v-if="community == 2" style="margin-left: 1.5%">
               <template>
@@ -83,13 +87,17 @@
                   @selection-change="handleCommunitySelectionChange"
                 >
                   <el-table-column type="selection" :reserve-selection="true" width="55" />
-                  <el-table-column label="社区名称">
+                  <el-table-column :label="$t('3c26d461.d541f8')">
                     <template slot-scope="scope">
                       {{ scope.row.community_name }}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="leader_name" label="团长姓名" />
-                  <el-table-column prop="leader_mobile" label="团长手机" min-width="110" />
+                  <el-table-column prop="leader_name" :label="$t('3c26d461.07e57c')" />
+                  <el-table-column
+                    prop="leader_mobile"
+                    :label="$t('3c26d461.6621f6')"
+                    min-width="110"
+                  />
                 </el-table>
                 <div
                   v-if="communitycount > communityParams.pageSize"
@@ -109,26 +117,31 @@
         </el-form-item>
         <el-form-item v-if="form.status == 'processing'">
           <el-col :span="20">
-            <el-alert
-              title="当前活动正在进行中，只能新增商品，或者修改已有商品库存"
-              type="warning"
-            />
+            <el-alert :title="$t('3c26d461.f4bf66')" type="warning" />
           </el-col>
         </el-form-item>
-        <el-form-item label="绑定商品">
+        <el-form-item :label="$t('3c26d461.3b9737')">
           <el-col :span="23">
-            <el-button type="primary" class="el-icon-plus" @click="relItems"> 选择商品 </el-button>
+            <el-button type="primary" class="el-icon-plus" @click="relItems">
+{{
+              $t('3c26d461.43d1e2')
+            }}
+</el-button>
             <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
               <el-table-column label="ID" prop="item_id" width="60" />
-              <el-table-column label="名称" prop="item_name" />
-              <el-table-column label="活动价" width="100">
+              <el-table-column :label="$t('3c26d461.d7ec2d')" prop="item_name" />
+              <el-table-column :label="$t('3c26d461.08ee55')" width="100">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.activity_price" min="0.01" size="mini">
                     <i slot="prefix" class="el-input__icon">{{ cursymbol }}</i>
                   </el-input>
                 </template>
               </el-table-column>
-              <el-table-column v-if="vipGrade.length == 1" label="付费会员价" width="150">
+              <el-table-column
+                v-if="vipGrade.length == 1"
+                :label="$t('3c26d461.627908')"
+                width="150"
+              >
                 <template slot-scope="scope">
                   <div v-if="vipGrade[0].lv_type == 'vip'">
                     <el-input v-model="scope.row.vip_price" class="member-price" size="mini">
@@ -142,7 +155,11 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-if="vipGrade.length == 2" label="付费会员价" width="120">
+              <el-table-column
+                v-if="vipGrade.length == 2"
+                :label="$t('3c26d461.627908')"
+                width="120"
+              >
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.vip_price" class="member-price" size="mini">
                     <i slot="prefix" class="el-input__icon">vip:{{ cursymbol }}</i>
@@ -152,36 +169,40 @@
                   </el-input>
                 </template>
               </el-table-column>
-              <el-table-column v-if="vipGrade.length == 0" label="付费会员价" width="150">
-                <template slot-scope="scope"> 无付费会员等级，不需要设置价格 </template>
+              <el-table-column
+                v-if="vipGrade.length == 0"
+                :label="$t('3c26d461.627908')"
+                width="150"
+              >
+                <template slot-scope="scope">{{ $t('3c26d461.5cbf39') }}</template>
               </el-table-column>
-              <el-table-column label="库存" width="90">
+              <el-table-column :label="$t('3c26d461.0eac88')" width="90">
                 <template slot-scope="scope">
-                  已售：{{ scope.row.sales_store }}
+                  {{ $t('3c26d461.a235e5') }}{{ scope.row.sales_store }}
                   <el-input v-model="scope.row.activity_store" size="mini" width="50" />
                 </template>
               </el-table-column>
-              <el-table-column label="每人限购" width="80">
+              <el-table-column :label="$t('3c26d461.343488')" width="80">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.limit_num" size="mini" />
                 </template>
               </el-table-column>
-              <el-table-column label="初始销量" width="80">
+              <el-table-column :label="$t('3c26d461.b6ac77')" width="80">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.initial_sales" size="mini" />
                 </template>
               </el-table-column>
-              <el-table-column label="积分" width="80">
+              <el-table-column :label="$t('3c26d461.9f68a8')" width="80">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.points" size="mini" />
                 </template>
               </el-table-column>
-              <el-table-column label="排序" width="80">
+              <el-table-column :label="$t('3c26d461.c360e9')" width="80">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.sort" size="mini" />
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="50">
+              <el-table-column :label="$t('3c26d461.2b6bc0')" width="50">
                 <template slot-scope="scope">
                   <i class="el-icon-delete" @click="deleteItemRow(scope.$index, form.items)" />
                 </template>
@@ -190,9 +211,9 @@
           </el-col>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button @click.native="handleCancel"> 返回 </el-button>
+          <el-button @click.native="handleCancel">{{ $t('3c26d461.5f4112') }}</el-button>
           <el-button type="primary" :loading="loading" @click="submitActivityAction">
-            保存
+            {{ $t('3c26d461.be5fbb') }}
           </el-button>
         </el-form-item>
       </div>
@@ -384,7 +405,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('3c26d461.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -393,7 +414,7 @@ export default {
               }
             })
           } else {
-            his.$message.error('保存失败!')
+            this.$message.error(this.$t('3c26d461.73b0d9'))
             return false
           }
         })
@@ -403,7 +424,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('3c26d461.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -412,7 +433,7 @@ export default {
               }
             })
           } else {
-            his.$message.error('保存失败!')
+            this.$message.error(this.$t('3c26d461.73b0d9'))
             return false
           }
         })

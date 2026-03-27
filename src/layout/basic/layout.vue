@@ -91,7 +91,7 @@ export default {
         }
       }
       // 否则返回默认系统标题
-      return getSystemTitle()
+      return this.$t(getSystemTitle())
     }
   },
 

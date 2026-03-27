@@ -6,15 +6,15 @@
 <template>
   <section class="section section-white">
     <div class="section-header with-border">
-      <div class="section-title">支付配置</div>
+      <div class="section-title">{{ $t('186c5ea8.1c3835') }}</div>
     </div>
     <div class="section-body">
       <el-table v-loading="loading" :data="paymentData" height="580" border>
-        <el-table-column prop="name" label="支付名称" />
-        <el-table-column label="操作" width="150">
+        <el-table-column prop="name" :label="$t('186c5ea8.f16ae8')" />
+        <el-table-column :label="$t('186c5ea8.2b6bc0')" width="150">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="getDetail(scope.row.payment_type)">
-              编辑
+              {{ $t('186c5ea8.95b351') }}
             </el-button>
           </template>
         </el-table-column>

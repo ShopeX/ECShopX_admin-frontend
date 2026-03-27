@@ -12,18 +12,22 @@
             <li class="tab_nav tab_appmsg width6">
               <a :class="{ cur: currentName === 'news' }" @click="msgTypeAction('news')"
                 ><span class="msg_tab_title tab_appmsg"
-                  ><i class="icon_msg_sender" />图文消息</span
+                  ><i class="icon_msg_sender" />{{ $t('55fefa10.834a3b') }}</span
                 ></a
               >
             </li>
             <li class="tab_nav tab_appmsg width6">
               <a :class="{ cur: currentName === 'text' }" @click="msgTypeAction('text')"
-                ><span class="msg_tab_title tab_text"><i class="icon_msg_sender" />文字</span></a
+                ><span class="msg_tab_title tab_text"
+                  ><i class="icon_msg_sender" />{{ $t('55fefa10.ca746b') }}</span
+                ></a
               >
             </li>
             <li class="tab_nav tab_appmsg width6">
               <a :class="{ cur: currentName === 'image' }" @click="msgTypeAction('image')"
-                ><span class="msg_tab_title tab_img"><i class="icon_msg_sender" />图片</span></a
+                ><span class="msg_tab_title tab_img"
+                  ><i class="icon_msg_sender" />{{ $t('55fefa10.20def7') }}</span
+                ></a
               >
             </li>
           </ul>
@@ -36,7 +40,7 @@
                   <span class="create_access">
                     <a href="javascript:;" class="add_gray_wrap" @click="newsShowDialog">
                       <i class="el-icon-plus" />
-                      <strong>从素材库中选择</strong>
+                      <strong>{{ $t('55fefa10.2fa055') }}</strong>
                     </a>
                   </span>
                 </div>
@@ -47,7 +51,7 @@
                       class="add_gray_wrap"
                     >
                       <i class="el-icon-edit" />
-                      <strong>自建图文</strong>
+                      <strong>{{ $t('55fefa10.2ba6a7') }}</strong>
                     </router-link>
                   </span>
                 </div>
@@ -60,7 +64,10 @@
                   >
                     <div class="msg-content">
                       <div class="msg-info">
-                        <span>更新于 {{ data.news.content.update_time | datetime }}</span>
+                        <span
+                          >{{ $t('55fefa10.3a6d9c') }}
+                          {{ data.news.content.update_time | datetime }}</span
+                        >
                       </div>
                       <div
                         class="sub-msg-item"
@@ -80,7 +87,7 @@
                           :href="data.news.content.news_item[0].url"
                           class="edit-mask preview-mask"
                         >
-                          <div class="edit-mask-content">预览文章</div>
+                          <div class="edit-mask-content">{{ $t('55fefa10.f9d706') }}</div>
                         </a>
                         <p v-if="data.news.content.news_item.length === 1" class="msg-desc">
                           {{ data.news.content.news_item[0].digest }}
@@ -103,14 +110,16 @@
                             <a>{{ item.title }}</a>
                           </h4>
                           <a :href="item.url" class="edit-mask preview-mask">
-                            <div class="edit-mask-content">预览文章</div>
+                            <div class="edit-mask-content">{{ $t('55fefa10.f9d706') }}</div>
                           </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <a class="link" @click.prevent="removeMsg(currentName)">删除</a>
+                <a class="link" @click.prevent="removeMsg(currentName)">{{
+                  $t('55fefa10.2f4aad')
+                }}</a>
               </div>
             </div>
           </div>
@@ -139,7 +148,7 @@
                   <span class="create_access">
                     <a href="javascript:;" class="add_gray_wrap" @click="imgShowDialog">
                       <i class="el-icon-plus" />
-                      <strong>从素材库中选择</strong>
+                      <strong>{{ $t('55fefa10.2fa055') }}</strong>
                     </a>
                   </span>
                 </div>
@@ -148,7 +157,7 @@
                     <a href="javascript:;" class="add_gray_wrap">
                       <el-upload action="" :show-file-list="false" :auto-upload="false" :on-change="uploadImage">
                         <i class="el-icon-plus avatar-uploader-icon"></i>
-                        <strong>上传图片</strong>
+                        <strong>{{ $t('55fefa10.ce6855') }}</strong>
                       </el-upload>
                     </a>
                   </span>
@@ -163,7 +172,9 @@
                     />
                   </a>
                 </div>
-                <a class="link" @click.prevent="removeMsg(currentName)">删除</a>
+                <a class="link" @click.prevent="removeMsg(currentName)">{{
+                  $t('55fefa10.2f4aad')
+                }}</a>
               </div>
             </div>
           </div>
@@ -174,7 +185,7 @@
                 <span class="create_access">
                   <a href="javascript:;" class="add_gray_wrap" @click="cardShowDialog">
                     <i class="el-icon-plus" />
-                    <strong>从素材库中选择</strong>
+                    <strong>{{ $t('55fefa10.2fa055') }}</strong>
                   </a>
                 </span>
               </div>
@@ -182,7 +193,7 @@
             <div v-else class="cardmsgArea inner">
               <div class="msg_card">
                 <div class="card_content clearfix">
-                  <img class="logo f_l" :src="wximageurl + data.card.logo_url" />
+                  <img class="logo f_l" :src="wximageurl + data.card.logo_url">
                   <div class="card_info">
                     <h4 class="card_title">
                       {{ data.card.title }}
@@ -194,7 +205,9 @@
                   {{ data.card.brand_name }}
                 </p>
               </div>
-              <a class="link" @click.prevent="removeMsg(currentName)">删除</a>
+              <a class="link" @click.prevent="removeMsg(currentName)">{{
+                $t('55fefa10.2f4aad')
+              }}</a>
             </div>
           </div>
         </div>

@@ -42,9 +42,9 @@
   <div class="picker-coupon">
     <div class="filter-tools">
       <el-tabs v-model="statusFilter" @tab-click="onStatusFilterChange">
-        <el-tab-pane label="已生效" name="2" />
-        <el-tab-pane label="未生效" name="1" />
-        <el-tab-pane label="已过期" name="3" />
+        <el-tab-pane :label="$t('7039e9c5.30ce10')" name="2" />
+        <el-tab-pane :label="$t('7039e9c5.996aab')" name="1" />
+        <el-tab-pane :label="$t('7039e9c5.4d5ccd')" name="3" />
       </el-tabs>
     </div>
     <SpFinder
@@ -70,6 +70,7 @@
 import district from '@/common/district.json'
 import { CARD_TYPE } from '@/consts'
 import moment from 'moment'
+import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -77,9 +78,12 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择优惠券'
+    title: i18n.t('7039e9c5.45bcee')
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('7039e9c5.45bcee')
+  },
   data() {
     return {
       formData: {
@@ -95,10 +99,11 @@ export default {
   },
   computed: {
     finderSetting() {
+      const t = this.$t.bind(this)
       return {
         columns: [
           {
-            name: '卡券类型',
+            name: t('7039e9c5.f47182'),
             key: 'card_type',
             width: '100px',
             render: (h, { row }) =>
@@ -112,16 +117,16 @@ export default {
                 this.cardTypeFormatter(row)
               )
           },
-          { name: '卡券名称', key: 'title' },
+          { name: t('7039e9c5.b7fef7'), key: 'title' },
 
           {
-            name: '优惠券状态',
+            name: t('7039e9c5.36166e'),
             key: '_coupon_status',
             width: '100px',
             formatter: (value, row) => this.getCouponStatus(row)
           },
           {
-            name: '卡券有效期',
+            name: t('7039e9c5.d48a7a'),
             formatter: (value, { takeEffect, begin_time, end_time }, col) => {
               if (takeEffect) {
                 return takeEffect
@@ -131,7 +136,7 @@ export default {
             }
           },
           {
-            name: '可领取库存',
+            name: t('7039e9c5.4b06cf'),
             formatter: (value, { quantity, get_num }, col) => {
               if (quantity > get_num) {
                 return quantity - get_num
@@ -141,20 +146,38 @@ export default {
             },
             width: '100px'
           },
-          { name: '领取量', key: 'get_num', width: '80px' },
-          { name: '使用量', key: 'use_num', width: '80px' },
-          { name: '店铺', key: 'source_name', width: '160px' }
+          { name: t('7039e9c5.5d5aac'), key: 'get_num', width: '80px' },
+          { name: t('7039e9c5.ce2ed8'), key: 'use_num', width: '80px' },
+          {
+            name: t('9cc0c982.fea789'),
+            width: '120px',
+            formatter: (value, row) => {
+              const id = parseInt(row.source_id)
+              const name = row.source_name || row.store_name || row.shop_name
+              if (id <= 0 || !name) return t('9cc0c982.498128')
+              return name
+            }
+          },
+          {
+            name: t('9cc0c982.eb4307'),
+            width: '120px',
+            formatter: (value, row) => {
+              return row.use_all_shops == 1 ? t('9cc0c982.77678b') : t('9cc0c982.fcf7d8')
+            }
+          }
         ]
       }
     }
   },
-  created() {
-    // this.fetch()
-  },
   methods: {
     // date_status: 1=待生效 2=已生效 3=已失效
     getCouponStatus(row) {
-      const statusMap = { 1: '未生效', 2: '已生效', 3: '已过期' }
+      const t = this.$t.bind(this)
+      const statusMap = {
+        1: t('7039e9c5.996aab'),
+        2: t('7039e9c5.30ce10'),
+        3: t('7039e9c5.4d5ccd')
+      }
       const s = row?.date_status
       return s != null ? statusMap[s] || '-' : '-'
     },
@@ -166,7 +189,7 @@ export default {
         page_no: params.page,
         page_size: params.pageSize,
         end_date: 1,
-        from: 'btn',
+        // from: 'btn',
         date_status: this.statusFilter,
         is_guide: 0
       }

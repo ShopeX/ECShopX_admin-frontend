@@ -9,7 +9,7 @@
     <div class="component-body with-padding">
       <div class="navigation">
         <div v-for="(item, index) in data" :key="index" class="nav-item">
-          <img class="nav-img" :src="wximageurl + item.imgUrl" />
+          <img class="nav-img" :src="wximageurl + item.imgUrl">
           <div class="nav-name">
             {{ item.content }}
           </div>

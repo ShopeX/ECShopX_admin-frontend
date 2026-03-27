@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '应用'
+const name = '5286ac37.5b0520'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout' //
 
@@ -12,7 +12,7 @@ export default {
   children: [
     {
       path: 'adapay/adapay_trades',
-      name: '分账明细',
+      name: '5286ac37.85b2f8',
       component: () => import('@/view/mall/sub_account/sub_account'),
       children: [
         {
@@ -23,7 +23,7 @@ export default {
     },
     {
       path: 'marketing/lottery',
-      name: '抽奖活动',
+      name: '5286ac37.283be6',
       component: () => import('@/view/marketing/lottery/list.vue'),
       children: [
         {
@@ -34,22 +34,22 @@ export default {
     },
     {
       path: 'adapay/adapay_cash',
-      name: '提现',
+      name: '5286ac37.db7971',
       component: () => import('@/view/mall/withdraw/withdraw')
     },
     {
       path: 'adapay/adapay_cash_setting',
-      name: '提现设置',
+      name: '5286ac37.b33aa1',
       component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
     },
     {
       path: 'adapay/adapay_merchant_info',
-      name: `开户信息`,
+      name: '5286ac37.ac7b4c',
       component: () => import('@/view/mall/accountopeninfo')
     },
     {
       path: 'adapay/adapay_member_audit',
-      name: `开户审批`,
+      name: '5286ac37.5bf3b3',
       component: () => import('@/view/mall/marketing/openingapproval'),
       children: [
         {
@@ -60,7 +60,7 @@ export default {
     },
     {
       path: 'adapay/adapay_merchant',
-      name: '商户设置',
+      name: '5286ac37.eee869',
       component: () => import('@/view/base/setting/dealer'),
       children: [
         {
@@ -83,7 +83,7 @@ export default {
     },
     {
       path: 'jfmall/jfgoods',
-      name: `商品管理`,
+      name: '5286ac37.5782b6',
       component: () => import('@/view/applications/pointmall/list'),
       children: [
         {
@@ -92,19 +92,19 @@ export default {
         },
         {
           path: 'physicalupload',
-          name: `实体商品导入`,
+          name: '5286ac37.0d9697',
           component: () => import('@/view/applications/pointmall/goodsImport')
         },
         {
           path: 'physicalstoreupload',
-          name: `商品库存导入`,
+          name: '5286ac37.e9f31e',
           component: () => import('@/view/applications/pointmall/storeImport')
         }
       ]
     },
     {
       path: 'jfmall/jforders',
-      name: `实物订单`,
+      name: '5286ac37.72ab0d',
       component: () => import('@/view/applications/pointmall/orderList'),
       children: [
         {
@@ -115,12 +115,12 @@ export default {
     },
     {
       path: 'jfmall/jfsetting',
-      name: `基础设置`,
+      name: '5286ac37.0aeca0',
       component: () => import('@/view/applications/pointmall/setting')
     },
     {
       path: 'appsgroup/extapp',
-      name: `扩展应用`,
+      name: '5286ac37.e7a708',
       component: () => import('@/view/applications/plugin'),
       children: [
         {
@@ -131,7 +131,7 @@ export default {
     },
     {
       path: 'bspay/user_audit',
-      name: `用户进件审批`,
+      name: '5286ac37.285c7b',
       component: () => import('@/view/mall/marketing/huifuBspay'),
       children: [
         {
@@ -142,7 +142,7 @@ export default {
     },
     {
       path: 'bspay/trades',
-      name: '分账明细',
+      name: '5286ac37.85b2f8',
       component: () => import('@/view/mall/bspay_sub_account/sub_account'),
       children: [
         {
@@ -153,7 +153,7 @@ export default {
     },
     {
       path: 'ec/purchaseactivity',
-      name: `员工内购`,
+      name: '5286ac37.6e5918',
       component: SubLayout,
       children: [
         {
@@ -195,24 +195,24 @@ export default {
     },
     {
       path: 'ec/employee',
-      name: '员工管理',
+      name: '5286ac37.b33603',
       component: () => import('@/view/member/purchase/employee'),
       children: [
         {
           path: 'import',
-          name: `白名单导入`,
+          name: '5286ac37.eba44e',
           component: () => import('@/view/member/purchase/employeeImport')
         }
       ]
     },
     {
       path: 'ec/company',
-      name: '企业管理',
+      name: '5286ac37.07c516',
       component: () => import('@/view/member/purchase/company')
     },
     {
       path: 'ec/purchaseorder',
-      name: `内购订单`,
+      name: '5286ac37.d753bc',
       component: () => import('@/view/order/entitytrade/purchase'),
       children: [
         {
@@ -238,17 +238,17 @@ export default {
     },
     {
       path: 'guide/workwechat',
-      name: `企业微信设置`,
+      name: '5286ac37.fc99ea',
       component: () => import('@/view/base/setting/workwechat/workwechat')
     },
     {
       path: 'guide/salespersonshelfindex',
-      name: `导购货架首页`,
+      name: '5286ac37.af488e',
       component: () => import('@/view/wxapp/salespersonshelfindex')
     },
     {
       path: 'community/tradecommunityorders',
-      name: `社区团购订单`,
+      name: '5286ac37.991e15',
       component: () => import('@/view/mall/trade/normalorders/communityList'),
       children: [
         {
@@ -263,12 +263,12 @@ export default {
     },
     {
       path: 'community/communitysetting',
-      name: `基础配置`,
+      name: '5286ac37.b6453a',
       component: () => import('@/view/member/promotions/community/setting')
     },
     {
       path: 'community/marketingcommunity',
-      name: `社区管理`,
+      name: '5286ac37.62efd2',
       component: () => import('@/view/member/promotions/community/index'),
       children: [
         {
@@ -286,7 +286,7 @@ export default {
     },
     {
       path: 'community/marketingcommunityactivity',
-      name: `活动管理`,
+      name: '5286ac37.d285a2',
       component: () => import('@/view/member/promotions/community/activity/index'),
       children: [
         {
@@ -297,7 +297,7 @@ export default {
     },
     {
       path: 'community/marketingdeliveryorder',
-      name: `配送单`,
+      name: '5286ac37.191e34',
       component: () => import('@/view/member/promotions/community/deliveryorder'),
       children: [
         {
@@ -308,12 +308,12 @@ export default {
     },
     {
       path: 'community/communitywithdraw',
-      name: `积分提现`,
+      name: '5286ac37.ac4d53',
       component: () => import('@/view/member/promotions/community/withdraw')
     },
     {
       path: 'community/communityactivityorder',
-      name: `社区订单`,
+      name: '5286ac37.1ad244',
       component: () => import('@/view/member/promotions/community/activity/orderList'),
       children: [
         {
@@ -324,7 +324,7 @@ export default {
     },
     {
       path: 'community/chief',
-      name: `团长管理`,
+      name: '5286ac37.0303d0',
       component: () => import('@/view/mall/community/chief'),
       children: [
         {
@@ -343,17 +343,17 @@ export default {
     },
     {
       path: 'community/activity',
-      name: `活动管理`,
+      name: '5286ac37.d285a2',
       component: () => import('@/view/mall/community/activityList')
     },
     {
       path: 'community/communitygoods',
-      name: `活动商品`,
+      name: '5286ac37.42f9f7',
       component: () => import('@/view/mall/community/communitygoods')
     },
     {
       path: 'community/order',
-      name: `订单管理`,
+      name: '5286ac37.afcd11',
       component: () => import('@/view/mall/trade/normalorders/communityList'),
       children: [
         {
@@ -368,37 +368,37 @@ export default {
     },
     {
       path: 'community/setting',
-      name: `活动配置`,
+      name: '5286ac37.b24f85',
       component: () => import('@/view/mall/community/setting')
     },
     {
       path: 'community/subdistrict',
-      name: '街道社区配置',
+      name: '5286ac37.814849',
       component: () => import('@/view/mall/subdistrict/list')
     },
     {
       path: 'community/achievement',
-      name: `团长业绩`,
+      name: '5286ac37.09cfa9',
       component: () => import('@/view/mall/community/achievement')
     },
     {
       path: 'community/withdraw',
-      name: `提现申请`,
+      name: '5286ac37.33011e',
       component: () => import('@/view/mall/community/withdraw')
     },
     {
       path: 'community/adapay_cash',
-      name: '提现',
+      name: '5286ac37.db7971',
       component: () => import('@/view/mall/withdraw/withdraw')
     },
     {
       path: 'community/subdistrict',
-      name: '街道社区配置',
+      name: '5286ac37.814849',
       component: () => import('@/view/mall/subdistrict/list')
     },
     {
       path: 'community/chiefupload',
-      name: `团长导入`,
+      name: '5286ac37.5ad881',
       component: () => import('@/view/member/members/upload_chief')
     }
   ]

@@ -62,9 +62,9 @@
   <div>
     <div class="function-area-selector">
       <el-radio-group v-model="functionType" size="mini" @change="handleTypeChange">
-        <el-radio-button label="none">不展示</el-radio-button>
-        <el-radio-button label="hotzone">热区图</el-radio-button>
-        <el-radio-button label="nearby">附近门店</el-radio-button>
+        <el-radio-button label="none">{{ i18n.t('e35c6150.006e01') }}</el-radio-button>
+        <el-radio-button label="hotzone">{{ i18n.t('e35c6150.0ad6ab') }}</el-radio-button>
+        <el-radio-button label="nearby">{{ i18n.t('e35c6150.81b37c') }}</el-radio-button>
       </el-radio-group>
     </div>
     <div v-if="functionType === 'hotzone'" class="function-content">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import AttrHotSetting from './attr-hotsetting'
 
@@ -92,7 +93,7 @@ export default {
     }
   },
   data() {
-    return {
+    return {i18n,
       localValue: {
         type: 'none',
         hotzone: { imgUrl: '', data: [] }

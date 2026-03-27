@@ -6,7 +6,7 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button type="primary" @click="addDeliveryman">添加收款账户</el-button>
+      <el-button type="primary" @click="addDeliveryman">{{ $t('1037e661.89beb5') }}</el-button>
     </div>
 
     <SpFinder
@@ -23,7 +23,7 @@
       ref="addDialogRef"
       v-model="deliveryman"
       :confirm-status="addLoading"
-      :title="editTitle"
+      :title="$t(editTitle)"
       :form="addForm"
       :form-list="addFormList"
       @onSubmit="onAddSubmit"
@@ -39,42 +39,48 @@ export default {
     return {
       deliveryman: false,
       addLoading: false,
-      editTitle: '添加收款账户',
+      editTitle: '1037e661.89beb5',
       params: {},
       options: [
         {
           value: 'order',
-          label: '按单笔订单'
+          label: '1037e661.ed776f'
         },
         {
           value: 'amount',
-          label: '按订单金额比例'
+          label: '1037e661.705abf'
         }
       ],
       setting: {
         columns: [
-          { name: '收款人户名', key: 'bank_account_name' },
-          { name: '银行账号', key: 'bank_account_no' },
-          { name: '开户银行', key: 'bank_name' },
-          { name: '银联号', key: 'china_ums_no' },
+          { name: '1037e661.84fc41', key: 'bank_account_name' },
+          { name: '1037e661.954218', key: 'bank_account_no' },
+          { name: '1037e661.cc5ca0', key: 'bank_name' },
+          { name: '1037e661.4402fa', key: 'china_ums_no' },
           {
-            name: '是否默认',
+            name: '1037e661.d1c357',
             width: 100,
             key: 'staff_attribute',
             render: (h, { row }) => {
-              return <span>{row.is_default === 'true' ? '是' : '否'}</span>
+              return (
+                <span>
+                  {row.is_default === 'true'
+                    ? this.$t('1037e661.0a60ac')
+                    : this.$t('1037e661.c9744f')}
+                </span>
+              )
             }
           }
         ],
         actions: [
           {
-            name: '编辑',
+            name: '1037e661.95b351',
             key: 'detail',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: ([row]) => {
-                this.editTitle = '编辑收款账户'
+                this.editTitle = '1037e661.27e12d'
                 this.deliveryman = true
 
                 this.addForm = {
@@ -84,15 +90,15 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: '1037e661.2f4aad',
             key: 'apply',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认删除？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
+                await this.$confirm(this.$t('1037e661.b28efa'), this.$t('1037e661.02d981'), {
+                  confirmButtonText: this.$t('1037e661.38cf16'),
+                  cancelButtonText: this.$t('1037e661.625fb2')
                 })
                 await this.$api.offline.deleteOfflineAccount(row.id)
                 this.$refs['finder'].refresh()
@@ -111,50 +117,50 @@ export default {
       },
       addFormList: [
         {
-          label: '收款人户名',
+          label: '1037e661.84fc41',
           key: 'bank_account_name',
-          placeholder: '请输入收款人户名',
+          placeholder: '1037e661.2eb695',
           type: 'input',
           required: true,
-          message: '收款人户名不能为空'
+          message: '1037e661.a4a208'
         },
         {
-          label: '银行账号',
+          label: '1037e661.954218',
           key: 'bank_account_no',
-          placeholder: '请输入银行账号',
+          placeholder: '1037e661.f9aa7d',
           type: 'input',
           required: true,
-          message: '银行账号不能为空'
+          message: '1037e661.d81e7c'
         },
         {
-          label: '开户银行',
+          label: '1037e661.cc5ca0',
           key: 'bank_name',
-          placeholder: '请输入开户银行',
+          placeholder: '1037e661.46222a',
           type: 'input',
           required: true,
-          message: '开户银行不能为空'
+          message: '1037e661.0630e3'
         },
         {
-          label: '银联号',
+          label: '1037e661.4402fa',
           key: 'china_ums_no',
-          placeholder: '请输入银联号',
+          placeholder: '1037e661.e44953',
           type: 'input',
           required: true,
-          message: '银联号不能为空'
+          message: '1037e661.d414ff'
         },
         {
-          label: '是否默认',
+          label: '1037e661.d1c357',
           key: 'is_default',
           type: 'radio',
           required: true,
           options: [
             {
               label: 'true',
-              name: '是'
+              name: '1037e661.0a60ac'
             },
             {
               label: 'false',
-              name: '否'
+              name: '1037e661.c9744f'
             }
           ]
         }
@@ -177,7 +183,7 @@ export default {
     },
     addDeliveryman() {
       this.deliveryman = true
-      this.editTitle = '添加收款账户'
+      this.editTitle = '1037e661.89beb5'
       this.addForm = {
         bank_account_name: '',
         bank_account_no: '',
@@ -194,12 +200,12 @@ export default {
 
       if (params.id) {
         await this.$api.offline.updateOfflineAccount(params)
-        this.$message.success('编辑成功')
+        this.$message.success(this.$t('1037e661.3bb47b'))
         this.deliveryman = false
         this.onSearch()
       } else {
         await this.$api.offline.createOfflineAccount(this.addForm)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('1037e661.3b1083'))
         this.deliveryman = false
         this.onSearch()
       }

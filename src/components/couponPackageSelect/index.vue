@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      title="选择优惠券包"
+      :title="$t('6155a784.df19a7')"
       :visible.sync="visible"
       class="couponSelect"
       :before-close="cancelHandle"
@@ -18,11 +18,11 @@
         <div />
         <el-input
           v-model="query.title"
-          placeholder="请输入优惠券包名称"
+          :placeholder="$t('6155a784.5a2d43')"
           style="width: 300px"
           class="input-with-select"
         >
-          <el-button slot="append" @click="queryHandle"> 查询 </el-button>
+          <el-button slot="append" @click="queryHandle"> {{ $t('6155a784.bee912') }} </el-button>
         </el-input>
       </div>
       <div class="list">
@@ -37,8 +37,12 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column :reserve-selection="true" type="selection" width="55" />
-          <el-table-column prop="title" label="劵包标题" width="220" />
-          <el-table-column prop="package_describe" label="描述" show-overflow-tooltip />
+          <el-table-column prop="title" :label="$t('6155a784.d994e3')" width="220" />
+          <el-table-column
+            prop="package_describe"
+            :label="$t('6155a784.3bdd08')"
+            show-overflow-tooltip
+          />
         </el-table>
       </div>
       <el-pagination
@@ -53,15 +57,12 @@
         @current-change="handleCurrentChange"
       />
       <div class="tips" style="margin-top: 30px">
-        <p>已选择：{{ multipleSelection.length }} 包</p>
-        <p style="padding: 3px 0">
-          <i class="el-icon-warning icon" /> 若有优惠券限领 1 张，券包组合含 2 张，按优惠券规则领取
-          1 张
-        </p>
+        <p>{{ $t('6155a784.986ffb') }}{{ multipleSelection.length }}{{ $t('6155a784.ebe1f6') }}</p>
+        <p style="padding: 3px 0"><i class="el-icon-warning icon" /> {{ $t('6155a784.abfcd3') }}</p>
       </div>
       <div class="btn">
-        <el-button @click="cancelHandle(true)"> 取消 </el-button>
-        <el-button type="primary" @click="confirm"> 确定 </el-button>
+        <el-button @click="cancelHandle(true)"> {{ $t('6155a784.625fb2') }} </el-button>
+        <el-button type="primary" @click="confirm"> {{ $t('6155a784.38cf16') }} </el-button>
       </div>
     </el-dialog>
     <model

@@ -13,13 +13,17 @@
   <SpPage class="distributorAftersalesAddress">
     <SpPlatformTip h5 app alipay />
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="distributor_id" label="店铺:">
-        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+      <SpFilterFormItem prop="distributor_id" :label="$t('b30cce08.efa91f')">
+        <SpSelectShop
+          v-model="params.distributor_id"
+          clearable
+          :placeholder="$t('b30cce08.708c9d')"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="regionList" label="售后地区:">
+      <SpFilterFormItem prop="regionList" :label="$t('b30cce08.7f3dd5')">
         <el-cascader
           v-model="params.regionList"
-          placeholder="售后地区"
+          :placeholder="$t('b30cce08.b51d4f')"
           :options="regions"
           :props="{
             checkStrictly: true,
@@ -32,7 +36,7 @@
 
     <div class="action-container">
       <el-button icon="el-icon-circle-plus" type="primary" @click="handleCreate">
-        添加售后地址
+        {{ $t('b30cce08.db472b') }}
       </el-button>
     </div>
 
@@ -44,20 +48,22 @@
 
     <!-- 数据表格 -->
     <el-table v-loading="tableLoading" :data="tableList" border>
-      <el-table-column label="操作" width="120">
+      <el-table-column :label="$t('b30cce08.2b6bc0')" width="120">
         <template slot-scope="scope">
           <el-button
             v-if="datapass_block == '0'"
             type="text"
             @click="onEditSalesAfterAddress(scope.row)"
           >
-            编辑
+            {{ $t('b30cce08.95b351') }}
           </el-button>
-          <el-button type="text" @click="handleDelete(scope.row)"> 删除 </el-button>
+          <el-button type="text" @click="handleDelete(scope.row)">
+            {{ $t('b30cce08.2f4aad') }}
+          </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="店铺" />
-      <el-table-column label="售后地址">
+      <el-table-column prop="name" :label="$t('b30cce08.295713')" />
+      <el-table-column :label="$t('b30cce08.c096c4')">
         <template slot-scope="scope">
           <i class="el-icon-place" />
           {{
@@ -71,17 +77,17 @@
           }}
         </template>
       </el-table-column>
-      <el-table-column prop="contact" label="联系人" width="250">
+      <el-table-column prop="contact" :label="$t('b30cce08.52409d')" width="250">
         <template slot-scope="scope">
           <div class=""><i class="el-icon-user" /> {{ scope.row.contact }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="contact" label="联系电话" width="250">
+      <el-table-column prop="contact" :label="$t('b30cce08.09a1f6')" width="250">
         <template slot-scope="scope">
           <div class=""><i class="el-icon-mobile-phone" /> {{ scope.row.mobile }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="是否默认" width="100">
+      <el-table-column :label="$t('b30cce08.d1c357')" width="100">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.is_default"
@@ -134,7 +140,7 @@ export default {
       },
       regions: [],
       tableLoading: false,
-      dialogTitle: '添加售后地址',
+      dialogTitle: this.$t('b30cce08.db472b'),
       datapass_block: 1,
       addressDialog: false,
       addressForm: {
@@ -147,7 +153,7 @@ export default {
       },
       addressFormList: [
         {
-          label: '店铺',
+          label: this.$t('b30cce08.295713'),
           key: 'num',
           component: () => (
             <div class='distributor-tags'>
@@ -162,7 +168,7 @@ export default {
               ))}
               {!this.addressForm.address_id && (
                 <el-button type='text' on-click={this.addStoreAction}>
-                  添加适用店铺
+                  {this.$t('b30cce08.7b91b1')}
                 </el-button>
               )}
             </div>
@@ -170,14 +176,14 @@ export default {
           validator: (rule, value, callback) => {
             const { distributors } = this.addressForm
             if (distributors.length == 0) {
-              callback(new Error('请选择店铺'))
+              callback(new Error(this.$t('b30cce08.06accf')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '地区',
+          label: this.$t('b30cce08.2560b3'),
           key: 'regions_id',
           component: () => (
             <el-cascader v-model={this.addressForm.regions_id} options={this.regions} />
@@ -185,32 +191,32 @@ export default {
           validator: (rule, value, callback) => {
             const { regions_id } = this.addressForm
             if (regions_id.length == 0) {
-              callback(new Error('请选择地区'))
+              callback(new Error(this.$t('b30cce08.ad1a24')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '详细地址',
+          label: this.$t('b30cce08.61a0ec'),
           key: 'address',
           type: 'input',
           required: true,
-          message: '请输入详细地址'
+          message: this.$t('b30cce08.80d685')
         },
         {
-          label: '联系人',
+          label: this.$t('b30cce08.52409d'),
           key: 'contact',
           type: 'input',
           required: true,
-          message: '请输入联系人'
+          message: this.$t('b30cce08.9e3f21')
         },
         {
-          label: '联系方式',
+          label: this.$t('b30cce08.b58943'),
           key: 'mobile',
           type: 'input',
           required: true,
-          message: '请输入联系方式'
+          message: this.$t('b30cce08.8f7e96')
         }
       ]
     }
@@ -257,7 +263,7 @@ export default {
       contact,
       mobile
     }) {
-      this.dialogTitle = '编辑售后地址'
+      this.dialogTitle = this.$t('b30cce08.b2867a')
       const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
       this.addressForm.address_id = address_id
       this.addressForm.distributors = [res]
@@ -268,7 +274,7 @@ export default {
       this.addressDialog = true
     },
     handleCreate() {
-      this.dialogTitle = '添加售后地址'
+      this.dialogTitle = this.$t('b30cce08.db472b')
       this.addressForm.address_id = ''
       this.addressForm.distributors = []
       this.addressForm.regions_id = []
@@ -278,16 +284,16 @@ export default {
       this.addressDialog = true
     },
     async handleDelete(row) {
-      await this.$confirm('此操作将永久删除该店铺售后地址, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      await this.$confirm(this.$t('b30cce08.e853b3'), this.$t('b30cce08.02d981'), {
+        confirmButtonText: this.$t('b30cce08.38cf16'),
+        cancelButtonText: this.$t('b30cce08.625fb2'),
         type: 'warning'
       })
       const { status } = await this.$api.aftersales.deleteAftersalesAddress(row.address_id)
       if (status) {
-        this.$message.success('删除成功!')
+        this.$message.success(this.$t('b30cce08.fc9bdd'))
       } else {
-        this.$message.error('删除失败!')
+        this.$message.error(this.$t('b30cce08.9cf7a3'))
       }
       this.fetchList()
     },
@@ -322,16 +328,16 @@ export default {
         }
         const { status } = await this.$api.aftersales.updateAftersalesAddress(params)
         if (status) {
-          this.$message.success('修改成功')
+          this.$message.success(this.$t('b30cce08.69be67'))
         } else {
-          this.$message.error('修改失败')
+          this.$message.error(this.$t('b30cce08.5badb3'))
         }
       } else {
         const { status } = await this.$api.aftersales.createAftersalesAddress(params)
         if (status) {
-          this.$message.success('添加成功')
+          this.$message.success(this.$t('b30cce08.3fdaea'))
         } else {
-          this.$message.error('添加失败')
+          this.$message.error(this.$t('b30cce08.6452a0'))
         }
       }
       this.addressDialog = false
@@ -343,7 +349,7 @@ export default {
         set_default: true
       })
       if (status) {
-        this.$message.success('修改成功')
+        this.$message.success(this.$t('b30cce08.69be67'))
         this.fetchList()
       }
     },

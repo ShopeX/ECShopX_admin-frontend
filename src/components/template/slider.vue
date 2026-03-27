@@ -24,7 +24,7 @@
           (data[0] && data[0].imgUrl) ||
           'https://fakeimg.pl/320x240/EFEFEF/CCC/?text=image&font=lobster'
         "
-      />
+      >
 
       <el-carousel
         class="sliderimg"
@@ -46,7 +46,7 @@
                 item.imgUrl ||
                 'https://fakeimg.pl/320x' + config.height + '/EFEFEF/CCC/?text=image&font=lobster'
               "
-            />
+            >
             <!-- 图片文字配置 -->
             <div class="text-deploy">
               <!-- 模板1 -->

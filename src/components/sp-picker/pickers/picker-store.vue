@@ -23,18 +23,18 @@
 <template>
   <div class="picker-shop">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="keywords" label="店铺名称">
-        <el-input v-model="formData.keywords" placeholder="请输入店铺名称" />
+      <SpFilterFormItem prop="keywords" :label="$t('a523b3a5.0d4934')">
+        <el-input v-model="formData.keywords" :placeholder="$t('a523b3a5.867738')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="shop_code" label="店铺号">
-        <el-input v-model="formData.shop_code" placeholder="请输入店铺号" />
+      <SpFilterFormItem prop="shop_code" :label="$t('a523b3a5.f6d738')">
+        <el-input v-model="formData.shop_code" :placeholder="$t('a523b3a5.68f04a')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="is_valid" label="状态">
-        <el-select v-model="formData.is_valid" placeholder="请选择状态" clearable>
-          <el-option label="全部" value="" />
-          <el-option label="启用" value="true" />
-          <el-option label="禁用" value="false" />
-          <el-option label="废弃" value="delete" />
+      <SpFilterFormItem prop="is_valid" :label="$t('a523b3a5.3fea7c')">
+        <el-select v-model="formData.is_valid" :placeholder="$t('a523b3a5.e1c965')" clearable>
+          <el-option :label="$t('a523b3a5.a8b0c2')" value="" />
+          <el-option :label="$t('a523b3a5.7854b5')" value="true" />
+          <el-option :label="$t('a523b3a5.710ad0')" value="false" />
+          <el-option :label="$t('a523b3a5.0044f6')" value="delete" />
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
@@ -74,6 +74,9 @@ export default {
     title: '选择店铺'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('a523b3a5.afa2e6')
+  },
   data() {
     return {
       regionauthList: [],
@@ -93,32 +96,30 @@ export default {
   },
   computed: {
     setting() {
+      const t = this.$t.bind(this)
       const columns = [
-        { name: '店铺名称', key: 'name' },
+        { name: t('a523b3a5.0d4934'), key: 'name' },
         {
-          name: '店铺类型',
+          name: t('a523b3a5.1dbb0d'),
           key: 'distribution_type',
           width: 100,
-          formatter: (value, row, col) => {
-            if (value == '1') {
-              return '加盟'
-            } else if (value == '0') {
-              return '自营'
-            }
+          formatter: (value) => {
+            if (value == '1') return t('a523b3a5.059670')
+            if (value == '0') return t('a523b3a5.491c0c')
           },
           visible: this.VERSION_PLATFORM
         },
         {
-          name: '店铺状态',
+          name: t('a523b3a5.e28997'),
           key: 'is_valid',
           formatter: (value) =>
-            (value === 'true' && '启用') ||
-            (value === 'false' && '禁用') ||
-            (value === 'delete' && '废弃') ||
+            (value === 'true' && t('a523b3a5.7854b5')) ||
+            (value === 'false' && t('a523b3a5.710ad0')) ||
+            (value === 'delete' && t('a523b3a5.0044f6')) ||
             ''
         },
-        { name: '店铺号', key: 'shop_code' },
-        { name: '店铺地址', key: 'store_address' }
+        { name: t('a523b3a5.f6d738'), key: 'shop_code' },
+        { name: t('a523b3a5.9198af'), key: 'store_address' }
       ]
       return createSetting({
         columns: columns.filter(({ visible }) => visible !== false)
@@ -126,7 +127,7 @@ export default {
     }
   },
   created() {
-    console.log(this.value, 'this.value')
+    this.$options.config.title = this.$t('a523b3a5.afa2e6')
     this.localSelection = cloneDeep(this.value.data) || []
     // this.fetch()
   },

@@ -6,12 +6,12 @@
 <template>
   <SpPage>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane v-if="!isHfpay" label="微信支付配置" name="wxpay">
+      <el-tab-pane v-if="!isHfpay" :label="$t('10629d95.ccf3d2')" name="wxpay">
         <wxpayTemplates />
       </el-tab-pane>
       <el-tab-pane
         v-if="!isHfpay && !VERSION_IN_PURCHASE() && !VERSION_SHUYUN()"
-        label="支付宝支付配置"
+        :label="$t('10629d95.25f2a4')"
         name="alipay"
       >
         <alipayTemplates />
@@ -21,25 +21,29 @@
       </el-tab-pane> -->
       <el-tab-pane
         v-if="isHfpay && !VERSION_IN_PURCHASE() && !VERSION_SHUYUN()"
-        label="汇付天下支付配置"
+        :label="$t('10629d95.23a1a0')"
         name="hfpay"
       >
         <hfpayTemplates />
       </el-tab-pane>
       <el-tab-pane
         v-if="!isHfpay && !VERSION_IN_PURCHASE() && !VERSION_SHUYUN()"
-        label="Adapay支付配置"
+        :label="$t('10629d95.4503bd')"
         name="adapay"
       >
         <adapayTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!VERSION_SHUYUN()" label="银联商务支付配置" name="chinaumspay">
+      <el-tab-pane v-if="!VERSION_SHUYUN()" :label="$t('10629d95.13eff4')" name="chinaumspay">
         <chinaumspayTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!VERSION_SHUYUN() && !VERSION_B2C()" label="线下转帐" name="offline">
+      <el-tab-pane
+        v-if="!VERSION_SHUYUN() && !VERSION_B2C()"
+        :label="$t('10629d95.5d52db')"
+        name="offline"
+      >
         <offlinePay />
       </el-tab-pane>
-      <el-tab-pane label="汇付斗拱支付配置" name="bspay">
+      <el-tab-pane :label="$t('10629d95.fc8a0f')" name="bspay">
         <bspayTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane label="默认积分抵扣配置" name="point">

@@ -8,61 +8,73 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="110px">
       <div v-if="!form.card_id && showTab" style="margin-bottom: 20px">
         <el-radio-group v-model="form.card_type" @change="handleTypeChange">
-          <el-radio-button label="discount"> 折扣券 </el-radio-button>
-          <el-radio-button label="cash"> 满减券 </el-radio-button>
+          <el-radio-button label="discount">{{ $t('dba53da0.9268f9') }}</el-radio-button>
+          <el-radio-button label="cash">{{ $t('dba53da0.f23195') }}</el-radio-button>
           <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
-          <el-radio-button v-if="!VERSION_SHUYUN()" label="new_gift"> 兑换券 </el-radio-button>
+          <el-radio-button v-if="!VERSION_SHUYUN()" label="new_gift">
+{{
+            $t('dba53da0.8bc752')
+          }}
+</el-radio-button>
         </el-radio-group>
       </div>
       <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />
       <template v-else>
-        <el-card shadow="never" header="基础信息">
-          <el-form-item v-if="form.card_type === 'gift'" label="兑换商品名称" prop="gift">
+        <el-card shadow="never" :header="$t('dba53da0.6ea1fe')">
+          <el-form-item v-if="form.card_type === 'gift'" :label="$t('dba53da0.44da82')" prop="gift">
             <el-input
               v-model="form.gift"
               :maxlength="20"
-              placeholder="兑换商品名称"
+              :placeholder="$t('dba53da0.44da82')"
               style="width: 240px"
               @change="giftChange"
             />&nbsp;<span class="frm-tips"
               >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span
             >
           </el-form-item>
-          <el-form-item v-if="form.card_type === 'discount'" label="折扣额度" prop="discount">
+          <el-form-item
+            v-if="form.card_type === 'discount'"
+            :label="$t('dba53da0.878d1f')"
+            prop="discount"
+          >
             <el-input
               v-model="form.discount"
               :disabled="form.card_id ? true : false"
-              placeholder="只能是大于等于1,小于10的数字"
+              :placeholder="$t('dba53da0.64c7d6')"
               style="width: 240px"
               max="9.9"
               min="1"
             />
           </el-form-item>
-          <el-form-item v-if="form.card_type === 'cash'" label="减免金额" prop="reduce_cost">
+          <el-form-item
+            v-if="form.card_type === 'cash'"
+            :label="$t('dba53da0.2fc887')"
+            prop="reduce_cost"
+          >
             <el-input
               v-model="form.reduce_cost"
               type="number"
               :disabled="form.card_id ? true : false"
-              placeholder="只能是大于0的数字"
+              :placeholder="$t('dba53da0.922c27')"
               style="width: 240px"
-            />&nbsp;元
+            />&nbsp;{{ $t('dba53da0.c16655') }}
           </el-form-item>
-          <el-form-item label="发放数量" prop="quantity">
+          <el-form-item :label="$t('dba53da0.c3c2e5')" prop="quantity">
             <el-input
               v-model.number="form.quantity"
               min="1"
               :disabled="form.card_id ? true : false"
               type="number"
               oninput="value=value.replace(/[^\d.]/g,'')"
-              placeholder="只能是大于0的数字"
+              :placeholder="$t('dba53da0.922c27')"
               style="width: 20%"
-            />&nbsp;份
+            />&nbsp;{{ $t('dba53da0.2a5da6') }}
           </el-form-item>
-          <el-form-item label="券名称" prop="title">
+          <el-form-item :label="$t('dba53da0.a15f31')" prop="title">
             <el-input
               v-model="form.title"
               :disabled="form.card_id ? true : false"
-              placeholder="字数上限为9个汉字"
+              :placeholder="$t('dba53da0.81a736')"
               style="width: 240px"
               @change="titleChange"
             />&nbsp;<span class="frm-tips"
@@ -74,36 +86,36 @@
               “减免金额”及自定义内容，描述卡券提供的具体优惠
             </p> -->
           </el-form-item>
-          <el-form-item label="使用条件" prop="useCondition">
+          <el-form-item :label="$t('dba53da0.2f99a3')" prop="useCondition">
             <el-radio-group
               v-model="form.useCondition"
               :disabled="form.card_id ? true : false"
               @change="conditionChange"
             >
               <template v-if="form.card_type != 'cash'">
-                <el-radio :label="1"> 不限制 </el-radio>
+                <el-radio :label="1">{{ $t('dba53da0.c9fc99') }}</el-radio>
               </template>
               <template v-if="form.card_type !== 'gift'">
                 <el-radio :label="2">
-                  满 &nbsp;<el-input
+                  {{ $t('dba53da0.73325c') }} &nbsp;<el-input
                     v-model="form.least_cost"
                     type="number"
                     min="0"
                     :disabled="form.card_id || form.useCondition == 1 ? true : false"
                     style="width: 100px"
-                  />&nbsp; 元可用&nbsp;&nbsp;
+                  />&nbsp; {{ $t('dba53da0.a92c8d') }}&nbsp;&nbsp;
                   <template v-if="form.card_type === 'discount'">
-                    最高限额&nbsp;<el-input
+                    {{ $t('dba53da0.953241') }}&nbsp;<el-input
                       v-model="form.most_cost"
                       :disabled="form.card_id || form.useCondition == 1 ? true : false"
                       style="width: 100px"
-                    />&nbsp; 元
+                    />&nbsp; {{ $t('dba53da0.c16655') }}
                   </template>
                 </el-radio>
               </template>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="有效期" prop="date_type">
+          <el-form-item :label="$t('dba53da0.bb114a')" prop="date_type">
             <el-radio-group v-model="form.date_type" @change="changeDatetime">
               <div
                 v-if="
@@ -117,7 +129,7 @@
                   "
                   label="DATE_TYPE_FIX_TIME_RANGE"
                 >
-                  固定日期
+                  {{ $t('dba53da0.0f7001') }}
                 </el-radio>
                 <el-date-picker
                   v-model="date_range"
@@ -139,7 +151,7 @@
                       : false
                   "
                 >
-                  领取后,&nbsp;
+                  {{ $t('dba53da0.1aa2d7') }}&nbsp;
                   <el-select
                     v-model="form.begin_time"
                     :disabled="
@@ -158,7 +170,7 @@
                       :value="item.value"
                     />
                   </el-select>
-                  >&nbsp;生效，有效天数&nbsp;
+                  >&nbsp;{{ $t('dba53da0.b1aca7') }}&nbsp;
 
                   <el-input
                     v-model.number="form.days"
@@ -171,7 +183,7 @@
                         : false
                     "
                   >
-                    <template slot="append"> 天 </template>
+                    <template slot="append">{{ $t('dba53da0.249aba') }}</template>
                   </el-input>
                   <!-- <el-select
                   v-model="form.days"
@@ -191,7 +203,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select> -->
-                  统一过期时间&nbsp;<el-date-picker
+                  {{ $t('dba53da0.071599') }}&nbsp;<el-date-picker
                     v-model="form.end_time"
                     type="datetime"
                     value-format="timestamp"
@@ -208,7 +220,7 @@
               </div>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="卡券使用说明" prop="description">
+          <el-form-item :label="$t('dba53da0.f0772c')" prop="description">
             <el-input
               v-model="form.description"
               required
@@ -216,20 +228,20 @@
               :rows="6"
               resize="none"
               style="width: 600px"
-              placeholder="请填写使用本优惠券的注意事项"
+              :placeholder="$t('dba53da0.7495c2')"
               @change="descriptionChange"
             />&nbsp;<span class="frm-tips"
               >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
             >
           </el-form-item>
-          <el-form-item label="券类型" prop="coupon_type">
+          <el-form-item :label="$t('dba53da0.63629e')" prop="coupon_type">
             <el-radio-group v-model="form.coupon_type" @change="couponTypeChange">
-              <el-radio label="mall">商城券</el-radio>
-              <el-radio label="guide">导购专属券</el-radio>
+              <el-radio label="mall">{{ $t('dba53da0.026087') }}</el-radio>
+              <el-radio label="guide">{{ $t('dba53da0.fbf949') }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
-            label="导购发放数量"
+            :label="$t('dba53da0.54ba9c')"
             prop="guide_issue_quantity"
             v-if="form.coupon_type == 'guide'"
           >
@@ -237,12 +249,12 @@
               v-model.number="form.guide_issue_quantity"
               type="number"
               min="1"
-              placeholder="请输入发放数量"
+              :placeholder="$t('dba53da0.7acf30')"
               style="width: 240px"
               oninput="value=value.replace(/[^\d.]/g,'')"
             />
             <span class="frm-tips" style="margin-left: 10px; color: #909399">
-              按单个导购发放的用户领取数量限制
+              {{ $t('dba53da0.a146c1') }}
             </span>
           </el-form-item>
 
@@ -253,11 +265,11 @@
            <el-input :maxlength="255" placeholder="优惠券规则ID" v-model="form.card_rule_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_rule_code}}</span>
         </el-form-item> -->
         </el-card>
-        <el-card shadow="never" header="适用规则">
-          <el-form-item label="前台直接领取">
+        <el-card shadow="never" :header="$t('dba53da0.602ab6')">
+          <el-form-item :label="$t('dba53da0.466af0')">
             <el-switch v-model="form.receive" active-color="#13ce66" inactive-color="#d2d4db" />
           </el-form-item>
-          <el-form-item label="领券限制">
+          <el-form-item :label="$t('dba53da0.92cb2f')">
             <el-input
               v-model="form.get_limit"
               type="number"
@@ -265,21 +277,32 @@
               min="1"
               oninput="value=value.replace(/[^\d.]/g,'')"
             />
-            <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
+            <p class="frm-tips">{{ $t('dba53da0.727b1d') }}</p>
           </el-form-item>
-          <el-form-item v-if="is_distributor == false && form.card_type == 'gift'" label="适用平台">
+          <el-form-item
+            v-if="is_distributor == false && form.card_type == 'gift'"
+            :label="$t('dba53da0.b90304')"
+          >
             <el-radio-group
               v-model="form.use_platform"
               :disabled="form.card_id != ''"
               @change="usePlatformChange"
             >
-              <el-radio v-if="is_distributor == false" label="store"> 门店专用 </el-radio>
-              <el-radio v-if="form.card_type != 'gift'" label="mall"> 线上商城专用 </el-radio>
+              <el-radio v-if="is_distributor == false" label="store">
+{{
+                $t('dba53da0.1b38a1')
+              }}
+</el-radio>
+              <el-radio v-if="form.card_type != 'gift'" label="mall">
+{{
+                $t('dba53da0.4448af')
+              }}
+</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
             v-if="is_distributor == false && form.card_type == 'gift'"
-            label="核销场景"
+            :label="$t('dba53da0.b38589')"
             prop="use_scenes"
           >
             <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
@@ -287,30 +310,30 @@
                 v-if="form.card_type != 'gift' && form.use_platform == 'mall'"
                 label="ONLINE"
               >
-                线上商城使用
+                {{ $t('dba53da0.246cd4') }}
               </el-radio>
               <el-radio
                 v-if="form.card_type != 'gift' && form.use_platform == 'store'"
                 label="QUICK"
               >
-                快捷买单使用
+                {{ $t('dba53da0.528132') }}
               </el-radio>
               <el-radio v-if="form.use_platform == 'store'" label="SELF">
-                自助核销（到店使用）
+                {{ $t('dba53da0.740624') }}
               </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="form.use_scenes == 'SELF'" label="验证码">
+          <el-form-item v-if="form.use_scenes == 'SELF'" :label="$t('dba53da0.983f59')">
             <el-radio-group v-model="self_rcode" :disabled="form.card_id != ''">
-              <el-radio label="1"> 启用验证码 </el-radio>
-              <el-radio label="0"> 不启用验证码 </el-radio>
+              <el-radio label="1">{{ $t('dba53da0.dedaee') }}</el-radio>
+              <el-radio label="0">{{ $t('dba53da0.2a9882') }}</el-radio>
             </el-radio-group>
-            <br />
+            <br>
             <el-input
               v-if="self_rcode === '1'"
               v-model="form.self_consume_code"
               style="width: 220px"
-              placeholder="请输入验证码"
+              :placeholder="$t('dba53da0.d0c06a')"
               maxlength="4"
               minlength="4"
             />
@@ -318,18 +341,18 @@
         </el-card>
         <el-card
           v-if="form.use_platform == 'mall' && form.card_type != 'gift' && form.store_self == false"
-          header="商品"
+          :header="$t('dba53da0.9897d8')"
           shadow="naver"
         >
-          <el-form-item label="适用商品">
+          <el-form-item :label="$t('dba53da0.409ea3')">
             <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
-              <el-radio label="true"> 全部商品适用 </el-radio>
-              <el-radio label="false"> 指定商品适用 </el-radio>
+              <el-radio label="true">{{ $t('dba53da0.a82c05') }}</el-radio>
+              <el-radio label="false">{{ $t('dba53da0.1e0568') }}</el-radio>
               <el-radio label="category">
-                {{ is_distributor ? '指定分类适用' : '指定管理分类适用' }}
+                {{ is_distributor ? $t('dba53da0.4e4c10') : $t('dba53da0.d66fdf') }}
               </el-radio>
-              <el-radio label="tag"> 指定商品标签适用 </el-radio>
-              <el-radio label="brand"> 指定品牌适用 </el-radio>
+              <el-radio label="tag">{{ $t('dba53da0.d61cbb') }}</el-radio>
+              <el-radio label="brand">{{ $t('dba53da0.8f5e18') }}</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -343,9 +366,13 @@
                   :auto-upload="false"
                   :show-file-list="false"
                 >
-                  <el-button type="primary"> 批量上传 </el-button>
+                  <el-button type="primary">{{ $t('dba53da0.c3202e') }}</el-button>
                 </el-upload>
-                <el-button type="primary" @click="uploadHandleTemplate()"> 下载模板 </el-button>
+                <el-button type="primary" @click="uploadHandleTemplate()">
+{{
+                  $t('dba53da0.c3f9a1')
+                }}
+</el-button>
               </template>
             </SkuSelector>
           </div>
@@ -355,7 +382,7 @@
               <el-cascader
                 v-model="form.item_category"
                 style="width: 500px"
-                placeholder="请选择"
+                :placeholder="$t('dba53da0.708c9d')"
                 clearable
                 :options="categoryList"
                 :props="{
@@ -369,7 +396,7 @@
           </el-col>
           <template v-if="!tagHidden">
             <div class="selected-tags view-flex">
-              <div class="label">已选中标签：</div>
+              <div class="label">{{ $t('dba53da0.e98819') }}</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(tag, index) in tag.currentTags"
@@ -399,7 +426,7 @@
           </template>
           <template v-if="!brandHidden">
             <div class="selected-tags view-flex">
-              <div class="label">已选中品牌：</div>
+              <div class="label">{{ $t('dba53da0.f5bf1f') }}</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(brand, index) in brand.currentBrands"
@@ -430,22 +457,30 @@
         </el-card>
         <el-card
           v-if="is_distributor == false && form.use_platform == 'store'"
-          header="门店"
+          :header="$t('dba53da0.a7da92')"
           shadow="naver"
         >
-          <el-form-item label="适用门店">
+          <el-form-item :label="$t('dba53da0.a874b0')">
             <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
-              <el-radio label="true"> 全部门店适用 </el-radio>
-              <el-radio label="false"> 指定门店适用 </el-radio>
+              <el-radio label="true">{{ $t('dba53da0.fcbbf2') }}</el-radio>
+              <el-radio label="false">{{ $t('dba53da0.540e03') }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button type="primary" @click="addStoreAction"> 选择门店 </el-button>
+            <el-button type="primary" @click="addStoreAction">
+{{
+              $t('dba53da0.86c570')
+            }}
+</el-button>
             <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
               <el-table-column label="ID" prop="wxShopId" width="60" />
-              <el-table-column label="名称" prop="storeName" />
-              <el-table-column prop="address" label="地址" show-overflow-tooltip />
-              <el-table-column label="操作" width="50">
+              <el-table-column :label="$t('dba53da0.d7ec2d')" prop="storeName" />
+              <el-table-column
+                prop="address"
+                :label="$t('dba53da0.765048')"
+                show-overflow-tooltip
+              />
+              <el-table-column :label="$t('dba53da0.2b6bc0')" width="50">
                 <template slot-scope="scope">
                   <i class="el-icon-delete" @click="deleteRow(scope.$index, form.items)" />
                 </template>
@@ -456,26 +491,34 @@
 
         <el-card
           v-if="VERSION_STANDARD() && is_distributor == false && form.use_platform == 'mall'"
-          header="店铺"
+          :header="$t('dba53da0.295713')"
           shadow="naver"
         >
-          <el-form-item label="适用店铺">
+          <el-form-item :label="$t('dba53da0.eb4307')">
             <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
-              <el-radio label="true"> 全部店铺适用 </el-radio>
-              <el-radio label="false"> 指定店铺适用 </el-radio>
+              <el-radio label="true">{{ $t('dba53da0.87e0ad') }}</el-radio>
+              <el-radio label="false">{{ $t('dba53da0.3640e1') }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
+            <el-button type="primary" @click="addDistributorAction">
+{{
+              $t('dba53da0.afa2e6')
+            }}
+</el-button>
             <el-table
               v-if="distributor_info.length > 0"
               :data="distributor_info"
               style="line-height: normal"
             >
               <el-table-column label="ID" prop="distributor_id" width="60" />
-              <el-table-column label="名称" prop="name" />
-              <el-table-column prop="address" label="地址" show-overflow-tooltip />
-              <el-table-column label="操作" width="50">
+              <el-table-column :label="$t('dba53da0.d7ec2d')" prop="name" />
+              <el-table-column
+                prop="address"
+                :label="$t('dba53da0.765048')"
+                show-overflow-tooltip
+              />
+              <el-table-column :label="$t('dba53da0.2b6bc0')" width="50">
                 <template slot-scope="scope">
                   <i
                     class="el-icon-delete"
@@ -487,9 +530,9 @@
           </div>
         </el-card>
         <div class="content-center">
-          <el-button @click="cancelSubmit"> 取消 </el-button>
+          <el-button @click="cancelSubmit">{{ $t('dba53da0.625fb2') }}</el-button>
           <el-button type="primary" :disabled="submitDisabled" @click="submitForm('form')">
-            提交
+            {{ $t('dba53da0.939d53') }}
           </el-button>
         </div>
       </template>
@@ -537,120 +580,12 @@ export default {
   },
   inject: ['refresh'],
   data() {
-    let tempDays = [{ text: '当天', value: 0 }]
-    let tempRemainDays = []
-    for (let i = 1; i <= 90; i++) {
-      tempDays.push({ text: i + '天', value: i })
-      tempRemainDays.push({ text: i + '天', value: i })
-    }
-    var useConditionChecked = (rule, value, callback) => {
-      if (this.form.card_type === 'cash' && this.form.useCondition === 2) {
-        var reg = /^\d*$/
-        if (this.form.least_cost === '') {
-          callback(new Error('请填写金额'))
-        } else if (Number(this.form.least_cost) <= Number(this.form.reduce_cost)) {
-          callback(new Error('填写金额必须大于减免金额'))
-        } else {
-          callback()
-        }
-      }
-      if (this.form.card_type === 'discount' && this.form.useCondition === 2) {
-        var reg = /^\d*$/
-        if (this.form.most_cost === '') {
-          callback(new Error('请填写金额'))
-        } else if (Number(this.form.most_cost) <= Number(this.form.least_cost)) {
-          callback(new Error('最高消费限额必须大于起用金额'))
-        } else {
-          callback()
-        }
-      }
-      callback()
-    }
-    var quantityChecked = (rule, value, callback) => {
-      let reg = /^\d*$/
-      if (value === '') {
-        callback(new Error('发放数量不能为空'))
-      } else if (!reg.test(value)) {
-        callback(new Error('发放数量必须为数字'))
-      } else {
-        callback()
-      }
-    }
-    var dateChecked = (rule, value, callback) => {
-      if (value == 'DATE_TYPE_FIX_TIME_RANGE' && this.date_range == '') {
-        callback(new Error('固定日期必填'))
-      } else {
-        callback()
-      }
-    }
-    var titleChecked = (rule, value, callback) => {
-      console.log(value)
-      if (value == '') {
-        callback(new Error('券名称不能为空'))
-      } else if (this.inputValue.title_length > this.inputValue.title_max) {
-        callback(
-          new Error(
-            '券名称长度不超过' +
-              this.inputValue.title_max +
-              '个汉字或' +
-              this.inputValue.title_max * 2 +
-              '个英文字母'
-          )
-        )
-      } else {
-        callback()
-      }
-    }
-    var descriptionChecked = (rule, value, callback) => {
-      if (value == '') {
-        callback(new Error('卡券使用说明不能为空'))
-      } else if (this.inputValue.description_length > this.inputValue.description_max) {
-        callback(
-          new Error(
-            '卡券使用说明长度' +
-              this.inputValue.description_max +
-              '个汉字或' +
-              this.inputValue.description_max * 2 +
-              '个英文字母'
-          )
-        )
-      } else {
-        callback()
-      }
-    }
-    var discountChecked = (rule, value, callback) => {
-      var reg = /(^[1-9]((\.)[0-9])?$)/
-      if (value == '') {
-        callback(new Error('折扣额度不能为空'))
-      } else if (!reg.test(value)) {
-        callback(new Error('折扣额度为1-9.9之间的数字，精确到小数点后1位'))
-      } else {
-        callback()
-      }
-    }
-    var reduceCostChecked = (rule, value, callback) => {
-      if (value == '') {
-        callback(new Error('减免金额不能为空'))
-      } else if (parseFloat(value) > 0) {
-        callback()
-      } else {
-        callback(new Error('减免金额必须大于0'))
-      }
-    }
-    var useScenesChecked = (rule, value, callback) => {
-      if (value.length === 0) {
-        callback(new Error('至少选择一项使用场景'))
-      }
-      callback()
-    }
     return {
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
-      totalDays: tempDays,
-      remainDays: tempRemainDays,
       datetimeStatus: true,
       articleItemIndex: -1,
       articleOprHidden: true,
@@ -710,19 +645,6 @@ export default {
       kqhjCheckedItem: '',
       twxxCheckedItem: '',
       zdItemHidden: true,
-      rules: {
-        gift: [{ required: true, message: '兑换商品名称不能为空', trigger: 'blur' }],
-        discount: [{ type: 'number', required: true, validator: discountChecked, trigger: 'blur' }],
-        reduce_cost: [
-          { type: 'number', required: true, validator: reduceCostChecked, trigger: 'blur' }
-        ],
-        title: [{ required: true, validator: titleChecked, trigger: 'blur' }],
-        date_type: [{ required: true, validator: dateChecked, trigger: 'blur' }],
-        useCondition: [{ required: true, validator: useConditionChecked, trigger: 'blur' }],
-        description: [{ required: true, validator: descriptionChecked, trigger: 'blur' }],
-        quantity: [{ required: true, validator: quantityChecked, trigger: 'blur' }],
-        use_scenes: [{ required: true, validator: useScenesChecked, trigger: 'blur' }]
-      },
       inputValue: {
         title_length: 0,
         title_max: 9,
@@ -776,6 +698,39 @@ export default {
         brands: []
       },
       showTab: true
+    }
+  },
+  computed: {
+    totalDays() {
+      const arr = [{ text: this.$t('dba53da0.c8bc7c'), value: 0 }]
+      for (let i = 1; i <= 90; i++) {
+        arr.push({ text: i + this.$t('dba53da0.249aba'), value: i })
+      }
+      return arr
+    },
+    remainDays() {
+      const arr = []
+      for (let i = 1; i <= 90; i++) {
+        arr.push({ text: i + this.$t('dba53da0.249aba'), value: i })
+      }
+      return arr
+    },
+    rules() {
+      return {
+        gift: [{ required: true, message: this.$t('dba53da0.ae1987'), trigger: 'blur' }],
+        discount: [
+          { type: 'number', required: true, validator: this.discountChecked, trigger: 'blur' }
+        ],
+        reduce_cost: [
+          { type: 'number', required: true, validator: this.reduceCostChecked, trigger: 'blur' }
+        ],
+        title: [{ required: true, validator: this.titleChecked, trigger: 'blur' }],
+        date_type: [{ required: true, validator: this.dateChecked, trigger: 'blur' }],
+        useCondition: [{ required: true, validator: this.useConditionChecked, trigger: 'blur' }],
+        description: [{ required: true, validator: this.descriptionChecked, trigger: 'blur' }],
+        quantity: [{ required: true, validator: this.quantityChecked, trigger: 'blur' }],
+        use_scenes: [{ required: true, validator: this.useScenesChecked, trigger: 'blur' }]
+      }
     }
   },
   mounted() {
@@ -899,6 +854,103 @@ export default {
     }
   },
   methods: {
+    useConditionChecked(rule, value, callback) {
+      if (this.form.card_type === 'cash' && this.form.useCondition === 2) {
+        if (this.form.least_cost === '') {
+          callback(new Error(this.$t('dba53da0.41a4d5')))
+        } else if (Number(this.form.least_cost) <= Number(this.form.reduce_cost)) {
+          callback(new Error(this.$t('dba53da0.a90e1e')))
+        } else {
+          callback()
+        }
+      }
+      if (this.form.card_type === 'discount' && this.form.useCondition === 2) {
+        if (this.form.most_cost === '') {
+          callback(new Error(this.$t('dba53da0.41a4d5')))
+        } else if (Number(this.form.most_cost) <= Number(this.form.least_cost)) {
+          callback(new Error(this.$t('dba53da0.7afa6c')))
+        } else {
+          callback()
+        }
+      }
+      callback()
+    },
+    quantityChecked(rule, value, callback) {
+      const reg = /^\d*$/
+      if (value === '') {
+        callback(new Error(this.$t('dba53da0.7faaf9')))
+      } else if (!reg.test(value)) {
+        callback(new Error(this.$t('dba53da0.f4302e')))
+      } else {
+        callback()
+      }
+    },
+    dateChecked(rule, value, callback) {
+      if (value == 'DATE_TYPE_FIX_TIME_RANGE' && this.date_range == '') {
+        callback(new Error(this.$t('dba53da0.018459')))
+      } else {
+        callback()
+      }
+    },
+    titleChecked(rule, value, callback) {
+      if (value == '') {
+        callback(new Error(this.$t('dba53da0.e3996f')))
+      } else if (this.inputValue.title_length > this.inputValue.title_max) {
+        callback(
+          new Error(
+            this.$t('dba53da0.d74495') +
+              this.inputValue.title_max +
+              this.$t('dba53da0.1c4c48') +
+              this.inputValue.title_max * 2 +
+              this.$t('dba53da0.f8cc05')
+          )
+        )
+      } else {
+        callback()
+      }
+    },
+    descriptionChecked(rule, value, callback) {
+      if (value == '') {
+        callback(new Error(this.$t('dba53da0.8ca388')))
+      } else if (this.inputValue.description_length > this.inputValue.description_max) {
+        callback(
+          new Error(
+            this.$t('dba53da0.77034b') +
+              this.inputValue.description_max +
+              this.$t('dba53da0.1c4c48') +
+              this.inputValue.description_max * 2 +
+              this.$t('dba53da0.f8cc05')
+          )
+        )
+      } else {
+        callback()
+      }
+    },
+    discountChecked(rule, value, callback) {
+      const reg = /(^[1-9]((\.)[0-9])?$)/
+      if (value == '') {
+        callback(new Error(this.$t('dba53da0.ba0898')))
+      } else if (!reg.test(value)) {
+        callback(new Error(this.$t('dba53da0.5eefc7')))
+      } else {
+        callback()
+      }
+    },
+    reduceCostChecked(rule, value, callback) {
+      if (value == '') {
+        callback(new Error(this.$t('dba53da0.566c5c')))
+      } else if (parseFloat(value) > 0) {
+        callback()
+      } else {
+        callback(new Error(this.$t('dba53da0.0c4033')))
+      }
+    },
+    useScenesChecked(rule, value, callback) {
+      if (value.length === 0) {
+        callback(new Error(this.$t('dba53da0.06cb04')))
+      }
+      callback()
+    },
     getItems(data) {
       let ids = []
       data.forEach((item) => {
@@ -982,11 +1034,11 @@ export default {
     },
     submitForm(formName) {
       if (this.form.days <= 0) {
-        this.$message.error('有效天数必须大于0')
+        this.$message.error(this.$t('dba53da0.ea1a0b'))
         return
       }
       if (typeof this.form.days !== 'number') {
-        this.$message.error('请输入有效的数字')
+        this.$message.error(this.$t('dba53da0.fde53c'))
         return
       }
 
@@ -997,21 +1049,21 @@ export default {
       }
       if (this.form.use_scenes == 'SELF' && this.self_rcode == '1') {
         if (!this.form.self_consume_code) {
-          this.$message.error('选择自助核销并开启验证码后，验证码必填')
+          this.$message.error(this.$t('dba53da0.88ce76'))
           return
         }
         if (this.form.self_consume_code && this.form.self_consume_code.length != 4) {
-          this.$message.error('验证码必须为4个数字')
+          this.$message.error(this.$t('dba53da0.5c37f6'))
           return
         }
         let reg = /^\d*$/
         if (this.form.self_consume_code && !reg.test(this.form.self_consume_code)) {
-          this.$message.error('验证码必须为纯数字')
+          this.$message.error(this.$t('dba53da0.2f523c'))
           return
         }
       }
       if (this.form.use_all_shops === 'false' && !this.form.rel_shops_ids) {
-        this.$message.error('请添加适用门店')
+        this.$message.error(this.$t('dba53da0.ed4945'))
         return
       }
       if (this.form.use_scenes == 'SELF' && this.self_rcode == '0') {
@@ -1054,14 +1106,14 @@ export default {
               .then((res) => {
                 if (res.data.data && res.data.data.status) {
                   this.$message({
-                    message: '更新成功',
+                    message: this.$t('dba53da0.55aa63'),
                     type: 'success',
                     duration: 2 * 1000
                   })
                   this.refresh()
                   this.$router.go(-1)
                 } else {
-                  this.$message.error('更新优惠券失败!')
+                  this.$message.error(this.$t('dba53da0.445eb0'))
                   this.submitDisabled = false
                   return false
                 }
@@ -1074,14 +1126,14 @@ export default {
               .then((res) => {
                 if (res.data.data.status) {
                   this.$message({
-                    message: '添加成功',
+                    message: this.$t('dba53da0.3fdaea'),
                     type: 'success',
                     duration: 2 * 1000
                   })
                   this.refresh()
                   this.$router.go(-1)
                 } else {
-                  this.$message.error('添加优惠券失败!')
+                  this.$message.error(this.$t('dba53da0.be28db'))
                   this.submitDisabled = false
                   return false
                 }
@@ -1246,7 +1298,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品!'
+          message: this.$t('dba53da0.c5f66d')
         })
       }
     },
@@ -1338,7 +1390,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      let params = { file_type: 'marketing_goods', file_name: this.$t('dba53da0.e07423') }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -1351,7 +1403,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('dba53da0.bfd8d5')
           })
         }
       })
@@ -1364,7 +1416,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('dba53da0.a7699b')
         })
 
         let { data } = response.data
@@ -1377,7 +1429,7 @@ export default {
           setTimeout(() => {
             this.$message({
               showClose: true,
-              message: `以下商品编号不存在：${str}`,
+              message: `${this.$t('dba53da0.ef474d')}${str}`,
               type: 'error',
               duration: 5000
             })

@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '供应'
+const name = 'fd8ae37a.104fec'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,13 +11,13 @@ export default {
   children: [
     {
       path: 'supplymanage/supplier_list',
-      name: '供应商管理',
+      name: 'fd8ae37a.c791ee',
       component: () => import('@/view/mall/supplier/supplier_list')
     },
     // 供应商商品列表
     {
       path: 'supplygoods/supplier_goods_list',
-      name: `供应商商品列表`,
+      name: 'fd8ae37a.b82a7b',
       component: () => import('@/view/mall/goods/physical/supplier_goods_list'),
       children: [
         {
@@ -30,17 +30,17 @@ export default {
         },
         {
           path: 'physicalstoreupload',
-          name: `库存导入`,
+          name: 'fd8ae37a.ac5320',
           component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload')
         },
         {
           path: 'physicalprofitupload',
-          name: `分润导入`,
+          name: 'fd8ae37a.022564',
           component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload')
         },
         {
           path: 'physicalupload',
-          name: `商品导入`,
+          name: 'fd8ae37a.9745ac',
           component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
         }
       ]
@@ -48,7 +48,7 @@ export default {
     // 供应商商品审核
     {
       path: 'supplygoods/suppliergoods',
-      name: `供应商商品审核`,
+      name: 'fd8ae37a.f59744',
       component: () => import('@/view/mall/goods/physical/supplier_goods_check'),
       children: [
         {
@@ -62,7 +62,7 @@ export default {
     },
     {
       path: 'supplymanage/supplier',
-      name: `账号管理-供应商账号`,
+      name: 'fd8ae37a.923f0f',
       component: () => import('@/view/base/account/suppliers')
     }
   ]

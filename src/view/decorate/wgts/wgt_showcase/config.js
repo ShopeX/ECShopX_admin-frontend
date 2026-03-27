@@ -3,15 +3,16 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrItem from './attr-item'
 
 const config = {
   name: 'showcase',
   setting: [
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    { label: i18n.t('d78361ad.4707ba'), key: 'padded', component: 'switch', value: true },
     // { label: '图片描述', key: 'content', component: 'switch', value: true },
     {
-      label: '展示图',
+      label: i18n.t('d78361ad.364e87'),
       key: 'data',
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
@@ -21,7 +22,7 @@ const config = {
         { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
         { imgUrl: '', linkPage: '', content: '', title: '', id: '' }
       ],
-      tip: `建议尺寸:</br>大图（175px * 310px）小图（175px * 150px）`
+      tip: 'd78361ad.9b0a0f'
     }
   ],
   transformIn: (v) => {

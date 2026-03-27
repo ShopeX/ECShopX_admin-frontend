@@ -17,16 +17,16 @@
 <template>
   <div class="classify">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="name" label="内容:">
-        <el-input v-model="params.name" style="width: 300px" placeholder="请输入内容" />
+      <SpFilterFormItem prop="name" :label="$t('0b8d30ed.46253d')">
+        <el-input v-model="params.name" style="width: 300px" :placeholder="$t('0b8d30ed.a11cc7')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="control">
       <el-button plain type="primary" style="margin-right: 10px" @click="addClassify">
-        新增分类
+        {{ $t('0b8d30ed.b6cb2b') }}
       </el-button>
-      <el-tooltip content="商户类型" placement="top" effect="light">
+      <el-tooltip :content="$t('0b8d30ed.4709c8')" placement="top" effect="light">
         <i class="el-icon-question" style="color: #888" />
       </el-tooltip>
     </div>
@@ -43,13 +43,15 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         @sort-change="fnSort"
       >
-        <el-table-column prop="name" label="分类名称" />
-        <el-table-column prop="is_show" label="是否可见">
+        <el-table-column prop="name" :label="$t('0b8d30ed.04d7d8')" />
+        <el-table-column prop="is_show" :label="$t('0b8d30ed.afe561')">
           <template slot-scope="scope">
-            <span>{{ scope.row.is_show == '1' ? '可见' : '不可见' }}</span>
+            <span>{{
+              scope.row.is_show == '1' ? $t('0b8d30ed.4d681c') : $t('0b8d30ed.545a3b')
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="排序" sortable="custom">
+        <el-table-column prop="sort" :label="$t('0b8d30ed.c360e9')" sortable="custom">
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.sort"
@@ -60,18 +62,18 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="date" label="操作">
+        <el-table-column prop="date" :label="$t('0b8d30ed.2b6bc0')">
           <template slot-scope="scope">
             <template v-if="scope.row.children">
               <el-button type="text" size="small" @click.native.prevent="addRow(scope.row)">
-                新增子类
+                {{ $t('0b8d30ed.82537d') }}
               </el-button>
             </template>
             <el-button type="text" size="small" @click.native.prevent="editRow(scope.row)">
-              编辑
+              {{ $t('0b8d30ed.95b351') }}
             </el-button>
             <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.row)">
-              删除
+              {{ $t('0b8d30ed.2f4aad') }}
             </el-button>
           </template>
         </el-table-column>
@@ -164,14 +166,14 @@ export default {
     },
     async deleteRow(row) {
       const { id } = row
-      this.$confirm('确认删除吗？', '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('0b8d30ed.0947bf'), '', {
+        confirmButtonText: this.$t('0b8d30ed.38cf16'),
+        cancelButtonText: this.$t('0b8d30ed.625fb2'),
         type: 'warning'
       }).then(async () => {
         const result = await deleteMerchantsClassification(id)
         if (result.data.data.status) {
-          this.$message.success('删除成功')
+          this.$message.success(this.$t('0b8d30ed.0007d1'))
           this.onSearch()
         }
       })
@@ -188,7 +190,7 @@ export default {
         )
         console.log(result)
         if (result.data.data.status) {
-          this.$message.success('编辑成功')
+          this.$message.success(this.$t('0b8d30ed.3bb47b'))
           this.switchBoxHandle(true)
           this.onSearch()
         }
@@ -196,7 +198,7 @@ export default {
         const { name, sort, is_show, parent_id } = row
         const result = await addMerchantsClassification({ name, sort, is_show, parent_id })
         if (result.data.data.status) {
-          this.$message.success('添加成功')
+          this.$message.success(this.$t('0b8d30ed.3fdaea'))
           this.switchBoxHandle(true)
           this.onSearch()
         }

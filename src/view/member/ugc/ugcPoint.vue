@@ -4,10 +4,10 @@
 -->
 
 <template>
-  <SpPage title="评论设置">
+  <SpPage :title="$t('42850919.ff3d97')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
+        <el-button type="primary" @click="confirmHandle">{{ $t('42850919.e83a25') }}</el-button>
       </div>
     </template>
 
@@ -21,24 +21,22 @@
     >
       <el-row>
         <el-col :span="5">
-          <div class="p-title">全局积分设置</div>
+          <div class="p-title">{{ $t('42850919.2940bd') }}</div>
         </el-col>
       </el-row>
 
       <el-card shadow="never">
         <el-row>
           <el-col>
-            <el-form-item label="开启全局积分" prop="enable" label-width="110px">
+            <el-form-item :label="$t('42850919.15864b')" prop="enable" label-width="110px">
               <el-switch v-model="ruleForm.enable" active-color="#13ce66" />
-              <div class="tips unit">
-                开启后用户可通过特定行为获得积分，<br />下方所有设置将生效。
-              </div>
+              <div class="tips unit" v-html="$t('42850919.63b444')" />
             </el-form-item>
           </el-col>
 
           <el-col>
             <el-form-item
-              label="每位会员每日最多可获得"
+              :label="$t('42850919.462203')"
               prop="max_day"
               class="last-ipt"
               label-width="180px"
@@ -52,7 +50,7 @@
                 min="0"
                 max="10"
               />
-              <span class="unit">积分。</span>
+              <span class="unit">{{ $t('42850919.ee490f') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -60,17 +58,17 @@
 
       <el-row class="row-mar">
         <el-col :span="5">
-          <div class="p-title">社区积分设置</div>
+          <div class="p-title">{{ $t('42850919.26e77a') }}</div>
         </el-col>
         <el-col :span="19">
-          <div class="tips">用户在社区内产生行为所能获得积分的设置</div>
+          <div class="tips">{{ $t('42850919.715932') }}</div>
         </el-col>
       </el-row>
 
       <el-card shadow="never">
         <el-row>
           <el-col :span="14">
-            <el-form-item label="点赞笔记每次可获得" prop="like_get_once">
+            <el-form-item :label="$t('42850919.6acaba')" prop="like_get_once">
               <el-input
                 v-model="ruleForm.like_get_once"
                 :disabled="!ruleForm.enable"
@@ -79,11 +77,15 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">积分,</span>
+              <span class="unit">{{ $t('42850919.cc0c75') }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="最多" prop="like_get_max_times_day" label-width="60px">
+            <el-form-item
+              :label="$t('42850919.758ec9')"
+              prop="like_get_max_times_day"
+              label-width="60px"
+            >
               <el-input
                 v-model.number="ruleForm.like_get_max_times_day"
                 :disabled="!ruleForm.enable"
@@ -92,13 +94,13 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">次。</span>
+              <span class="unit">{{ $t('42850919.249acf') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="评论笔记每次可获得" prop="comment_get_once">
+            <el-form-item :label="$t('42850919.bb8eab')" prop="comment_get_once">
               <el-input
                 v-model="ruleForm.comment_get_once"
                 :disabled="!ruleForm.enable"
@@ -107,11 +109,15 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">积分,</span>
+              <span class="unit">{{ $t('42850919.cc0c75') }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="最多" prop="comment_get_max_times_day" label-width="60px">
+            <el-form-item
+              :label="$t('42850919.758ec9')"
+              prop="comment_get_max_times_day"
+              label-width="60px"
+            >
               <el-input
                 v-model.number="ruleForm.comment_get_max_times_day"
                 :disabled="!ruleForm.enable"
@@ -120,13 +126,13 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">次。</span>
+              <span class="unit">{{ $t('42850919.249acf') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="分享笔记每次可获得" prop="share_get_once">
+            <el-form-item :label="$t('42850919.5e5365')" prop="share_get_once">
               <el-input
                 v-model="ruleForm.share_get_once"
                 :disabled="!ruleForm.enable"
@@ -135,11 +141,15 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">积分,</span>
+              <span class="unit">{{ $t('42850919.cc0c75') }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="最多" prop="share_get_max_times_day" label-width="60px">
+            <el-form-item
+              :label="$t('42850919.758ec9')"
+              prop="share_get_max_times_day"
+              label-width="60px"
+            >
               <el-input
                 v-model.number="ruleForm.share_get_max_times_day"
                 :disabled="!ruleForm.enable"
@@ -148,13 +158,13 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">次。</span>
+              <span class="unit">{{ $t('42850919.249acf') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="收藏笔记每次可获得" prop="favorite_get_once">
+            <el-form-item :label="$t('42850919.6bde47')" prop="favorite_get_once">
               <el-input
                 v-model="ruleForm.favorite_get_once"
                 :disabled="!ruleForm.enable"
@@ -163,11 +173,15 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">积分,</span>
+              <span class="unit">{{ $t('42850919.cc0c75') }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="最多" prop="favorite_get_max_times_day" label-width="60px">
+            <el-form-item
+              :label="$t('42850919.758ec9')"
+              prop="favorite_get_max_times_day"
+              label-width="60px"
+            >
               <el-input
                 v-model.number="ruleForm.favorite_get_max_times_day"
                 :disabled="!ruleForm.enable"
@@ -176,13 +190,13 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">次。</span>
+              <span class="unit">{{ $t('42850919.249acf') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="发布笔记每次可获得" prop="create_get_once">
+            <el-form-item :label="$t('42850919.6b55fe')" prop="create_get_once">
               <el-input
                 v-model="ruleForm.create_get_once"
                 :disabled="!ruleForm.enable"
@@ -191,11 +205,15 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">积分,</span>
+              <span class="unit">{{ $t('42850919.cc0c75') }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="最多" prop="create_get_max_times_day" label-width="60px">
+            <el-form-item
+              :label="$t('42850919.758ec9')"
+              prop="create_get_max_times_day"
+              label-width="60px"
+            >
               <el-input
                 v-model.number="ruleForm.create_get_max_times_day"
                 :disabled="!ruleForm.enable"
@@ -204,7 +222,7 @@
                 size="small"
                 max="10"
               />
-              <span class="unit">次。</span>
+              <span class="unit">{{ $t('42850919.249acf') }}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -224,39 +242,6 @@ export default {
   },
   components: {},
   data() {
-    const valNumer = (rule, value, callback) => {
-      var { ruleForm } = this.$data
-      var isfloat = parseInt(value, 10) != value
-      //console.log('valNumer',value,rule)
-      if (!ruleForm.enable) {
-        callback()
-      } else if (value == null || value == '') {
-        return callback(new Error(rule.msg))
-      } else if (value < 0) {
-        return callback(new Error('不能小于0'))
-      } else if (isfloat) {
-        return callback(new Error('必须是整数'))
-      } else {
-        callback()
-      }
-    }
-    const valEnableNumer = (rule, value, callback) => {
-      var { ruleForm } = this.$data
-      var num = [
-        ruleForm.like_get_once,
-        ruleForm.comment_get_once,
-        ruleForm.share_get_once,
-        ruleForm.favorite_get_once,
-        ruleForm.create_get_once
-      ]
-      num = num.sort((a, b) => parseInt(b) - parseInt(a))
-      //console.log('valNumer farr',num,value<num[0],value,num[0])
-      if (value < parseInt(num[0])) {
-        return callback(new Error(rule.msg))
-      } else {
-        callback()
-      }
-    }
     return {
       formLoad: false,
       ruleForm: {
@@ -273,25 +258,72 @@ export default {
         create_get_once: null,
         create_get_max_times_day: null
       },
-      rules: {
+      rules: {}
+    }
+  },
+  computed: {
+    rules() {
+      const that = this
+      const valNumer = (rule, value, callback) => {
+        const { ruleForm } = that.$data
+        const isfloat = parseInt(value, 10) != value
+        if (!ruleForm.enable) {
+          callback()
+        } else if (value == null || value === '') {
+          return callback(new Error(rule.msg))
+        } else if (value < 0) {
+          return callback(new Error(that.$t('42850919.9eb26f')))
+        } else if (isfloat) {
+          return callback(new Error(that.$t('42850919.e38515')))
+        } else {
+          callback()
+        }
+      }
+      const valEnableNumer = (rule, value, callback) => {
+        const { ruleForm } = that.$data
+        const num = [
+          ruleForm.like_get_once,
+          ruleForm.comment_get_once,
+          ruleForm.share_get_once,
+          ruleForm.favorite_get_once,
+          ruleForm.create_get_once
+        ].sort((a, b) => parseInt(b) - parseInt(a))
+        if (value < parseInt(num[0])) {
+          return callback(new Error(rule.msg))
+        }
+        callback()
+      }
+      return {
         max_day: [
-          { validator: valNumer, msg: '请填写积分', trigger: 'blur' },
-          {
-            validator: valEnableNumer,
-            msg: '每日积分不可小于任一行为所获得的积分值',
-            trigger: 'blur'
-          }
+          { validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' },
+          { validator: valEnableNumer, msg: that.$t('42850919.345f28'), trigger: 'blur' }
         ],
-        like_get_once: [{ validator: valNumer, msg: '请填写积分', trigger: 'blur' }],
-        like_get_max_times_day: [{ validator: valNumer, msg: '请填写次数', trigger: 'blur' }],
-        comment_get_once: [{ validator: valNumer, msg: '请填写积分', trigger: 'blur' }],
-        comment_get_max_times_day: [{ validator: valNumer, msg: '请填写次数', trigger: 'blur' }],
-        share_get_once: [{ validator: valNumer, msg: '请填写积分', trigger: 'blur' }],
-        share_get_max_times_day: [{ validator: valNumer, msg: '请填写次数', trigger: 'blur' }],
-        favorite_get_once: [{ validator: valNumer, msg: '请填写积分', trigger: 'blur' }],
-        favorite_get_max_times_day: [{ validator: valNumer, msg: '请填写次数', trigger: 'blur' }],
-        create_get_once: [{ validator: valNumer, msg: '请填写积分', trigger: 'blur' }],
-        create_get_max_times_day: [{ validator: valNumer, msg: '请填写次数', trigger: 'blur' }]
+        like_get_once: [{ validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' }],
+        like_get_max_times_day: [
+          { validator: valNumer, msg: that.$t('42850919.3b47e1'), trigger: 'blur' }
+        ],
+        comment_get_once: [
+          { validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' }
+        ],
+        comment_get_max_times_day: [
+          { validator: valNumer, msg: that.$t('42850919.3b47e1'), trigger: 'blur' }
+        ],
+        share_get_once: [{ validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' }],
+        share_get_max_times_day: [
+          { validator: valNumer, msg: that.$t('42850919.3b47e1'), trigger: 'blur' }
+        ],
+        favorite_get_once: [
+          { validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' }
+        ],
+        favorite_get_max_times_day: [
+          { validator: valNumer, msg: that.$t('42850919.3b47e1'), trigger: 'blur' }
+        ],
+        create_get_once: [
+          { validator: valNumer, msg: that.$t('42850919.908bf7'), trigger: 'blur' }
+        ],
+        create_get_max_times_day: [
+          { validator: valNumer, msg: that.$t('42850919.3b47e1'), trigger: 'blur' }
+        ]
       }
     }
   },

@@ -7,20 +7,24 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="addCurrency"> 添加货币 </el-button>
+        <el-button type="primary" icon="plus" @click="addCurrency">
+{{
+          $t('7c0967bc.e4507b')
+        }}
+</el-button>
       </el-col>
       <el-col :span="12">
-        <el-input v-model="params.currency" placeholder="货币名称，例子：RMB">
+        <el-input v-model="params.currency" :placeholder="$t('7c0967bc.2d2c55')">
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="currencyList" :height="wheight - 160">
-      <el-table-column prop="title" label="货币名称(全名)" />
-      <el-table-column prop="currency" label="货币名称(缩写)" />
-      <el-table-column prop="symbol" label="货币符号" />
-      <el-table-column prop="rate" label="货币汇率" />
-      <el-table-column prop="is_default" label="是否为默认">
+      <el-table-column prop="title" :label="$t('7c0967bc.dfeeea')" />
+      <el-table-column prop="currency" :label="$t('7c0967bc.64bc57')" />
+      <el-table-column prop="symbol" :label="$t('7c0967bc.61134f')" />
+      <el-table-column prop="rate" :label="$t('7c0967bc.f8d735')" />
+      <el-table-column prop="is_default" :label="$t('7c0967bc.69c562')">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.is_default"
@@ -29,15 +33,19 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('7c0967bc.2b6bc0')">
         <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">
+{{
+            $t('7c0967bc.95b351')
+          }}
+</el-button>
           <el-button
             v-if="!scope.row.is_default"
             size="mini"
             @click="deleteAction(scope.$index, scope.row)"
           >
-            删除
+            {{ $t('7c0967bc.2f4aad') }}
           </el-button>
         </template>
       </el-table-column>
@@ -55,53 +63,45 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" :rules="rules" class="demo-ruleForm" label-width="220px">
-          <el-form-item label="货币名称（中文全名）" prop="title">
+          <el-form-item :label="$t('7c0967bc.7e9638')" prop="title">
             <el-col :span="10">
-              <el-input
-                v-model="form.title"
-                required
-                placeholder="货币名称（中文全名），例子：中国人民币"
-              />
+              <el-input v-model="form.title" required :placeholder="$t('7c0967bc.f84b1b')" />
             </el-col>
           </el-form-item>
-          <el-form-item label="货币名称（英文缩写）" prop="currency">
+          <el-form-item :label="$t('7c0967bc.928964')" prop="currency">
             <el-col :span="10">
-              <el-input
-                v-model="form.currency"
-                required
-                placeholder="货币名称（英文缩写），例子：RMB"
-              />
+              <el-input v-model="form.currency" required :placeholder="$t('7c0967bc.55f991')" />
             </el-col>
           </el-form-item>
-          <el-form-item label="货币符号" prop="symbol">
+          <el-form-item :label="$t('7c0967bc.61134f')" prop="symbol">
             <el-col :span="10">
-              <el-input v-model="form.symbol" required placeholder="￥" />
+              <el-input v-model="form.symbol" required :placeholder="$t('7c0967bc.0875ef')" />
             </el-col>
           </el-form-item>
-          <el-form-item label="货币汇率" prop="rate">
+          <el-form-item :label="$t('7c0967bc.f8d735')" prop="rate">
             <el-col :span="10">
               <el-input v-model="form.rate" required placeholder="1" />
             </el-col>
             <el-col v-if="form.rate && form.title" :span="10">
-              1 {{ form.title }}({{ form.symbol }}) = {{ form.rate }} 人民币(￥)
+              1 {{ form.title }}({{ form.symbol }}) = {{ form.rate }} {{ $t('7c0967bc.880692') }}
             </el-col>
             <el-col v-else-if="form.rate && form.currency" :span="10">
               1 {{ form.currency }} = {{ form.rate }} RMB
             </el-col>
           </el-form-item>
 
-          <el-form-item label="适用端" prop="rate">
+          <el-form-item :label="$t('7c0967bc.e84cc3')" prop="rate">
             <el-col :span="10">
               <el-radio v-model="form.use_platform" label="normal" value="normal">
-                实体类商城
+                {{ $t('7c0967bc.635670') }}
               </el-radio>
             </el-col>
           </el-form-item>
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitAction"> 保存 </el-button>
+        <el-button @click.native="handleCancel">{{ $t('7c0967bc.625fb2') }}</el-button>
+        <el-button type="primary" @click="submitAction">{{ $t('7c0967bc.be5fbb') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -146,10 +146,10 @@ export default {
       },
       id: 0,
       rules: {
-        title: [{ required: true, message: '请输入', trigger: 'blur' }],
-        currency: [{ required: true, message: '请输入', trigger: 'blur' }],
-        symbol: [{ required: true, message: '请输入', trigger: 'blur' }],
-        rate: [{ required: true, message: '请输入', trigger: 'blur' }]
+        title: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
+        currency: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
+        symbol: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
+        rate: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }]
       }
     }
   },
@@ -175,7 +175,7 @@ export default {
     },
     addCurrency() {
       // 添加物料弹框
-      this.editTitle = '添加货币信息'
+      this.editTitle = this.$t('7c0967bc.55f870')
       this.editVisible = true
       this.form.symbol = ''
       this.form.currency = ''
@@ -186,7 +186,7 @@ export default {
     },
     editAction(index, row) {
       // 编辑物料弹框
-      this.editTitle = '编辑货币信息'
+      this.editTitle = this.$t('7c0967bc.1c519d')
       this.editVisible = true
       this.form.currency = row.currency
       this.form.title = row.title
@@ -201,7 +201,7 @@ export default {
       if (!this.form.currency || !this.form.title || !this.form.symbol || !this.form.rate) {
         this.$message({
           type: 'error',
-          message: '表单数据必填'
+          message: this.$t('7c0967bc.d14d9c')
         })
         return
       }
@@ -210,7 +210,7 @@ export default {
       if (!reg.test(this.form.rate)) {
         this.$message({
           type: 'error',
-          message: '货币汇率最多4位小数'
+          message: this.$t('7c0967bc.99589d')
         })
         return
       }
@@ -243,16 +243,16 @@ export default {
       })
     },
     deleteAction(index, row) {
-      this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('7c0967bc.80ae2a'), this.$t('7c0967bc.02d981'), {
+        confirmButtonText: this.$t('7c0967bc.38cf16'),
+        cancelButtonText: this.$t('7c0967bc.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteCurrencyInfo(row.id).then((response) => {
             this.currencyList.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('7c0967bc.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -261,7 +261,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('7c0967bc.2111cc')
           })
         })
     },

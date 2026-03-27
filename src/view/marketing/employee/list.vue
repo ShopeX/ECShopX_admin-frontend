@@ -13,36 +13,36 @@
   <SpRouterView>
     <SpPage>
       <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="name" label="活动名称:">
-          <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
+        <SpFilterFormItem prop="name" :label="$t('bea3f44a.1cadc0')">
+          <el-input v-model="queryForm.name" :placeholder="$t('bea3f44a.51260a')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="display_time_begin" label="预热时间:">
+        <SpFilterFormItem prop="display_time_begin" :label="$t('bea3f44a.3e77c2')">
           <el-date-picker
             v-model="queryForm.display_time_begin"
             type="date"
-            placeholder="选择日期"
+            :placeholder="$t('bea3f44a.2bebdd')"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="datetime" label="购买时间:" size="max">
+        <SpFilterFormItem prop="datetime" :label="$t('bea3f44a.639213')" size="max">
           <el-date-picker
             v-model="queryForm.datetime"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('bea3f44a.981cbe')"
+            :start-placeholder="$t('bea3f44a.b44c0f')"
+            :end-placeholder="$t('bea3f44a.1d468b')"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="enterprise_id" label="参与企业:" size="max">
+        <SpFilterFormItem prop="enterprise_id" :label="$t('bea3f44a.a49095')" size="max">
           <el-select
             v-model="queryForm.enterprise_id"
             v-scroll="() => pagesQuery.nextPage()"
             multiple
-            placeholder="请选择"
+            :placeholder="$t('bea3f44a.708c9d')"
           >
             <el-option
               v-for="(item, index) in enterpriseList"
@@ -52,14 +52,18 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-          <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="distributor_id" :label="$t('bea3f44a.16f2bc')">
+          <SpSelectShop
+            v-model="queryForm.distributor_id"
+            clearable
+            :placeholder="$t('bea3f44a.708c9d')"
+          />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
-          新建活动
+          {{ $t('bea3f44a.adc8df') }}
         </el-button>
       </div>
 
@@ -111,20 +115,26 @@ export default {
       },
       defaultTime: ['00:00:00', '23:59:59'],
       pickerOptions: PICKER_DATE_OPTIONS,
-      enterpriseList: [],
-      activityStatus: [
-        { title: '全部', value: 'all' },
-        { title: '未开始', value: 'not_started' },
-        { title: '预热中', value: 'warm_up' },
-        { title: '进行中', value: 'ongoing' },
-        { title: '已暂停', value: 'pending' },
-        { title: '已取消', value: 'cancel' },
-        { title: '已结束', value: 'over' }
-      ],
-      setting: createSetting({
+      enterpriseList: []
+    }
+  },
+  computed: {
+    activityStatus() {
+      return [
+        { title: this.$t('bea3f44a.a8b0c2'), value: 'all' },
+        { title: this.$t('bea3f44a.dd4e55'), value: 'not_started' },
+        { title: this.$t('bea3f44a.7e19ab'), value: 'warm_up' },
+        { title: this.$t('bea3f44a.fb852f'), value: 'ongoing' },
+        { title: this.$t('bea3f44a.a2d930'), value: 'pending' },
+        { title: this.$t('bea3f44a.2111cc'), value: 'cancel' },
+        { title: this.$t('bea3f44a.047fab'), value: 'over' }
+      ]
+    },
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '编辑',
+            name: this.$t('bea3f44a.95b351'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -143,7 +153,7 @@ export default {
             }
           },
           {
-            name: '查看',
+            name: this.$t('bea3f44a.607e7a'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -157,7 +167,7 @@ export default {
             }
           },
           {
-            name: '商品',
+            name: this.$t('bea3f44a.9897d8'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -171,7 +181,7 @@ export default {
             }
           },
           {
-            name: '亲友数据',
+            name: this.$t('bea3f44a.0a822f'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -182,7 +192,7 @@ export default {
             }
           },
           {
-            name: '活动订单',
+            name: this.$t('bea3f44a.35420b'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -198,7 +208,7 @@ export default {
             }
           },
           {
-            name: '取消',
+            name: this.$t('bea3f44a.625fb2'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -207,14 +217,14 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认取消？`, '提示')
+                await this.$confirm(this.$t('bea3f44a.f14703'), this.$t('bea3f44a.02d981'))
                 await this.$api.marketing.cancelPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
             }
           },
           {
-            name: '提前开始',
+            name: this.$t('bea3f44a.de86a4'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -223,14 +233,14 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认开始？`, '提示')
+                await this.$confirm(this.$t('bea3f44a.93acf6'), this.$t('bea3f44a.02d981'))
                 await this.$api.marketing.aheadPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
             }
           },
           {
-            name: '开始',
+            name: this.$t('bea3f44a.a3e3b8'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -239,36 +249,34 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认开始？`, '提示')
+                await this.$confirm(this.$t('bea3f44a.93acf6'), this.$t('bea3f44a.02d981'))
                 await this.$api.marketing.activePurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
             }
           },
           {
-            name: '暂停',
+            name: this.$t('bea3f44a.8d63ef'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              // 平台端 来源店铺非平台则隐藏
               return row.status == 'ongoing' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认暂停？`, '提示')
+                await this.$confirm(this.$t('bea3f44a.687c58'), this.$t('bea3f44a.02d981'))
                 await this.$api.marketing.pendingPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
             }
           },
           {
-            name: '结束',
+            name: this.$t('bea3f44a.12f1d7'),
             key: 'modify',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              // 平台端 来源店铺非平台则隐藏
               return (
                 (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') &&
                 !(this.IS_ADMIN() && row.distributor_id != '0')
@@ -276,7 +284,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认结束？`, '提示')
+                await this.$confirm(this.$t('bea3f44a.263e04'), this.$t('bea3f44a.02d981'))
                 await this.$api.marketing.endPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
@@ -284,9 +292,9 @@ export default {
           }
         ],
         columns: [
-          { name: '活动名称', key: 'name', width: 180 },
+          { name: this.$t('bea3f44a.39834b'), key: 'name', width: 180 },
           {
-            name: '员工额度（元）',
+            name: this.$t('bea3f44a.ed13b6'),
             key: 'employee_limitfee',
             width: '120',
             formatter: (value, row, col) => {
@@ -294,7 +302,7 @@ export default {
             }
           },
           {
-            name: '亲友额度（元）',
+            name: this.$t('bea3f44a.085938'),
             key: 'relative_limitfee',
             width: '120',
             formatter: (value, row, col) => {
@@ -302,7 +310,7 @@ export default {
             }
           },
           {
-            name: '预热时间',
+            name: this.$t('bea3f44a.c9dc32'),
             key: 'display_time',
             width: '220',
             formatter: (value, row, col) => {
@@ -310,11 +318,11 @@ export default {
             }
           },
           {
-            name: '来源店铺',
+            name: this.$t('bea3f44a.53cc55'),
             key: 'distributor_name'
           },
           {
-            name: '购买时间',
+            name: this.$t('bea3f44a.059c1e'),
             key: 'employee_end_time',
             width: '320',
             formatter: (value, { employee_end_time, employee_begin_time }, col) => {
@@ -324,7 +332,7 @@ export default {
             }
           },
           {
-            name: '状态',
+            name: this.$t('bea3f44a.3fea7c'),
             key: 'status_desc'
           }
         ]

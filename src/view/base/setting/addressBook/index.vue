@@ -7,13 +7,13 @@
   <div class="addressBook">
     <div class="actButton">
       <el-button type="primary" :loading="isLoading" @click.stop="getAdressBook">
-        获取企业微信通讯录
+        {{ $t('6e18bb00.dee7b0') }}
       </el-button>
       <el-button :loading="loading.syncDepart" @click.stop="syncDepartToShop">
-        同步选中部门到店铺
+        {{ $t('6e18bb00.f658d6') }}
       </el-button>
       <el-button :loading="loading.syncMember" @click.stop="syncMemberToGuide">
-        同步选中成员到导购
+        {{ $t('6e18bb00.149434') }}
       </el-button>
     </div>
     <div v-loading="isLoading" class="main">
@@ -36,18 +36,23 @@
             <el-tooltip
               class="item"
               effect="dark"
-              content="切换直属下级全选状态"
+              :content="$t('6e18bb00.44c643')"
               placement="top-start"
             >
               <i class="el-icon-sort" @click.stop="() => checkAllChild(data)" />
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="切换子级全选状态" placement="top-start">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="$t('6e18bb00.f8508a')"
+              placement="top-start"
+            >
               <i class="iconfont icon-qiehuan" @click.stop="() => checkAllChild(data, true)" />
             </el-tooltip>
             <el-tooltip
               class="item"
               effect="dark"
-              content="同步当前部门到已有门店"
+              :content="$t('6e18bb00.bd6695')"
               placement="top-start"
             >
               <i class="iconfont icon-tongbu" @click.stop="() => syncAllCheck(node)" />
@@ -67,15 +72,19 @@
           @select-all="selectAllMember"
         >
           <el-table-column type="selection" width="55" :selectable="isSelectable" />
-          <el-table-column prop="name" label="姓名" />
-          <el-table-column prop="mobile" label="手机号" />
+          <el-table-column prop="name" :label="$t('6e18bb00.60d045')" />
+          <el-table-column prop="mobile" :label="$t('6e18bb00.8098e2')" />
         </el-table>
       </div>
     </div>
-    <el-dialog title="选择门店" custom-class="dialog" :visible.sync="dialogFormVisible">
+    <el-dialog
+      :title="$t('6e18bb00.86c570')"
+      custom-class="dialog"
+      :visible.sync="dialogFormVisible"
+    >
       <el-input
         v-model="param.name"
-        placeholder="请输入店铺名称"
+        :placeholder="$t('6e18bb00.867738')"
         clearable
         class="input-with-select"
         @clear="pageChange(1)"
@@ -84,15 +93,15 @@
       </el-input>
       <div v-loading="loading.storeList">
         <el-table :data="storeList" size="small">
-          <el-table-column prop="name" label="门店名称" />
-          <el-table-column label="操作">
+          <el-table-column prop="name" :label="$t('6e18bb00.740032')" />
+          <el-table-column :label="$t('6e18bb00.2b6bc0')">
             <template slot-scope="scope">
               <el-button
                 :loading="loading.syncClub"
                 type="text"
                 @click.stop="syncToShop(scope.row.distributor_id)"
               >
-                同步至此店铺
+                {{ $t('6e18bb00.ac6999') }}
               </el-button>
             </template>
           </el-table-column>
@@ -197,7 +206,7 @@ export default {
       // console.log(this.selectNodeKey)
       if (this.selectNodeKey.length <= 0) {
         this.$message({
-          message: '请选择部门',
+          message: this.$t('6e18bb00.71ac13'),
           type: 'error'
         })
         return
@@ -207,7 +216,7 @@ export default {
       }
       syncClubToStore(param).then((res) => {
         this.$message({
-          message: '同步部门成功',
+          message: this.$t('6e18bb00.46ab03'),
           type: 'success'
         })
       })
@@ -223,7 +232,7 @@ export default {
       syncClubToStore(param).then((res) => {
         // this.loading.syncClub = false
         this.$message({
-          message: '同步当前部门成功',
+          message: this.$t('6e18bb00.1458e2'),
           type: 'success'
         })
       })
@@ -247,7 +256,7 @@ export default {
       const list = this.selectMemberList
       if (list.length <= 0) {
         this.$message({
-          message: '请选择成员',
+          message: this.$t('6e18bb00.37635d'),
           type: 'error'
         })
         return
@@ -261,7 +270,7 @@ export default {
         syncMemberToGuide(param)
           .then((res) => {
             this.$message({
-              message: '同步会员成功',
+              message: this.$t('6e18bb00.3d11ea'),
               type: 'success'
             })
             this.loading.syncMember = false

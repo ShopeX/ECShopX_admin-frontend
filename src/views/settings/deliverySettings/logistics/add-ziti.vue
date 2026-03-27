@@ -27,7 +27,7 @@
           }
         "
       >
-        取消
+        {{ $t('c3d289d9.625fb2') }}
       </el-button>
       <el-button
         type="primary"
@@ -37,7 +37,7 @@
           }
         "
       >
-        保存
+        {{ $t('c3d289d9.be5fbb') }}
       </el-button>
     </div>
   </SpPage>
@@ -76,17 +76,21 @@ export default {
           days: 1
         },
         latestPickupTime: null
-      },
-      formList: [
+      }
+    }
+  },
+  computed: {
+    formList() {
+      return [
         {
-          label: '自提点名称',
+          label: this.$t('c3d289d9.6b88c4'),
           key: 'name',
           type: 'input',
           required: true,
-          message: '自提点名称不能为空'
+          message: this.$t('c3d289d9.da8d74')
         },
         {
-          label: '自提点地址',
+          label: this.$t('c3d289d9.b73851'),
           key: 'zitiAddress',
           component: () => (
             <FormItemZitiAddress ref='zitiaddress' v-model={this.form.zitiAddress} />
@@ -101,7 +105,7 @@ export default {
           }
         },
         {
-          label: '联系电话',
+          label: this.$t('c3d289d9.09a1f6'),
           key: 'connectPhone',
           component: () => (
             <FormItemConnectPhone ref='connectphone' v-model={this.form.connectPhone} />
@@ -116,7 +120,7 @@ export default {
           }
         },
         {
-          label: '自提时间段',
+          label: this.$t('c3d289d9.91c10c'),
           key: 'timeSlots',
           component: () => <FormItemTimeSlot ref='timeslot' v-model={this.form.timeSlots} />,
           validator: (rule, value, callback) => {
@@ -129,30 +133,30 @@ export default {
           }
         },
         {
-          label: '重复',
+          label: this.$t('c3d289d9.33e3c0'),
           key: 'workDays',
           type: 'checkbox',
           options: [
-            { label: '1', name: '周一' },
-            { label: '2', name: '周二' },
-            { label: '3', name: '周三' },
-            { label: '4', name: '周四' },
-            { label: '5', name: '周五' },
-            { label: '6', name: '周六' },
-            { label: '7', name: '周日' }
+            { label: '1', name: this.$t('c3d289d9.1603b0') },
+            { label: '2', name: this.$t('c3d289d9.b5a6a0') },
+            { label: '3', name: this.$t('c3d289d9.e60725') },
+            { label: '4', name: this.$t('c3d289d9.170fc8') },
+            { label: '5', name: this.$t('c3d289d9.eb79ce') },
+            { label: '6', name: this.$t('c3d289d9.245751') },
+            { label: '7', name: this.$t('c3d289d9.562d74') }
           ]
         },
         {
-          label: '最长预约',
+          label: this.$t('c3d289d9.2404f5'),
           key: 'waitPickupDays',
           component: () => <FormItemAppointDays v-model={this.form.waitPickupDays} />,
-          tip: '天数从第二天开始计算，如设置为可预约1天内订单，则买家最长可预约第二天上门自提；天为自然日。'
+          tip: this.$t('c3d289d9.35fca0')
         },
         {
-          label: '预约自提',
+          label: this.$t('c3d289d9.63ce89'),
           key: 'latestPickupTime',
           component: () => <FormItemAppointZiti v-model={this.form.latestPickupTime} />,
-          tip: '该时间之后，只能选择第二天的自提时间；如上面最长预约选择只能当天自提，则该时间后下单不能选择自提。'
+          tip: this.$t('c3d289d9.a70e24')
         }
       ]
     }
@@ -249,10 +253,10 @@ export default {
       const { id } = this.$route.params
       if (id) {
         await this.$api.pickuplocation.updateZitiLocation(id, params)
-        this.$message.success('自提点更新成功')
+        this.$message.success(this.$t('c3d289d9.77676e'))
       } else {
         await this.$api.pickuplocation.addZitiLocation(params)
-        this.$message.success('自提点添加成功')
+        this.$message.success(this.$t('c3d289d9.1496a0'))
       }
       this.$EventBus.$emit('event.zitilist.refresh')
       console.log(this)

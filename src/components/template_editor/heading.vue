@@ -5,35 +5,40 @@
 
 <template>
   <section v-if="name === 'heading'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('ae28a221.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('ae28a221.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="加粗">
+        <el-form-item :label="$t('ae28a221.3b8a43')">
           <el-switch v-model="config.bold" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="颜色">
+        <el-form-item :label="$t('ae28a221.6b36c6')">
           <el-color-picker v-model="config.color" />
         </el-form-item>
-        <el-form-item label="布局">
+        <el-form-item :label="$t('ae28a221.5aefca')">
           <el-radio-group v-model="config.align">
-            <el-radio label="left"> 居左 </el-radio>
-            <el-radio label="center"> 居中 </el-radio>
-            <el-radio label="right"> 居右 </el-radio>
+            <el-radio label="left">{{ $t('ae28a221.316a63') }}</el-radio>
+            <el-radio label="center">{{ $t('ae28a221.0bbc2e') }}</el-radio>
+            <el-radio label="right">{{ $t('ae28a221.e2aaec') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="字号">
-          <el-select v-model="config.size" placeholder="请选择">
-            <el-option v-for="item in options" :key="item" :label="item + '号'" :value="item" />
+        <el-form-item :label="$t('ae28a221.fc55af')">
+          <el-select v-model="config.size" :placeholder="$t('ae28a221.708c9d')">
+            <el-option
+              v-for="item in options"
+              :key="item"
+              :label="item + $t('ae28a221.f7b320')"
+              :value="item"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="斜体">
+        <el-form-item :label="$t('ae28a221.81d6da')">
           <el-switch v-model="config.italic" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="标题">
-          <el-input v-model="data[0].content" type="text" placeholder="请输入内容" />
+        <el-form-item :label="$t('ae28a221.32c65d')">
+          <el-input v-model="data[0].content" type="text" :placeholder="$t('ae28a221.a11cc7')" />
         </el-form-item>
       </el-form>
     </div>

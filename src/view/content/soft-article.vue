@@ -38,20 +38,24 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <SpFilterForm :model="searchForm" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="title" label="软文标题:">
-          <el-input v-model="searchForm.title" placeholder="请输入软文标题" />
+        <SpFilterFormItem prop="title" :label="$t('5f65b998.fcaf13')">
+          <el-input v-model="searchForm.title" :placeholder="$t('5f65b998.182ff4')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button icon="plus" type="primary" @click="handleCreateArticle"> 添加软文 </el-button>
-        <el-button icon="plus" type="primary" @click="createArticleByAI"> AI创作 </el-button>
+        <el-button icon="plus" type="primary" @click="handleCreateArticle">
+          {{ $t('5f65b998.7bc00e') }}
+        </el-button>
+        <el-button icon="plus" type="primary" @click="createArticleByAI">
+          {{ $t('5f65b998.b956ea') }}
+        </el-button>
       </div>
 
       <el-tabs v-model="activeTab" type="card" @tab-click="onTabChange">
-        <el-tab-pane label="全部" name="all" />
-        <el-tab-pane label="待发布" name="wait" />
-        <el-tab-pane label="已发布" name="published" />
+        <el-tab-pane :label="$t('5f65b998.a8b0c2')" name="all" />
+        <el-tab-pane :label="$t('5f65b998.0737ae')" name="wait" />
+        <el-tab-pane :label="$t('5f65b998.dca0c1')" name="published" />
       </el-tabs>
 
       <SpPagination ref="paginationRef" auto-fetch :fetch="fetchList">
@@ -78,7 +82,7 @@
       <!-- AI创作 -->
       <SpDrawer
         v-model="drawerShow"
-        :title="'AI创作'"
+        :title="$t('5f65b998.b956ea')"
         :width="650"
         @confirm="
           () => {
@@ -123,72 +127,71 @@ export default {
       },
       aiArticleFormList: [
         {
-          label: '选择软文频道',
+          label: this.$t('5f65b998.d8d7c5'),
           key: 'channel',
           type: 'select',
           required: true,
-          placeholder: '请选择软文频道',
+          placeholder: this.$t('5f65b998.0b5eb8'),
           options: []
         },
         {
-          label: '行业',
+          label: this.$t('5f65b998.6adafe'),
           key: 'industry',
           type: 'select',
           required: true,
-          placeholder: '请选择软文频道',
+          placeholder: this.$t('5f65b998.0b5eb8'),
           options: [
-            { title: '运动服饰', value: '运动服饰' },
-            { title: '护肤', value: '护肤' }
+            { title: this.$t('5f65b998.cef92e'), value: '运动服饰' },
+            { title: this.$t('5f65b998.b4ef24'), value: '护肤' }
           ]
         },
         {
-          label: '推广商品',
+          label: this.$t('5f65b998.7f8121'),
           key: 'goods',
           component: ({ key }, form) => {
-            // 这里用自定义商品选择组件
             return (
               <div>
                 <el-button disabled={form[key].length >= 3} onClick={this.onSelectGoods}>
-                  选择商品
+                  {this.$t('5f65b998.43d1e2')}
                 </el-button>
                 <SpGoodsGroup v-model={form[key]} style='margin-top: 10px;' />
               </div>
             )
           },
-          tip: '最多添加3个商品'
+          tip: this.$t('5f65b998.014e2a')
         },
         {
-          label: '作者人设',
+          label: this.$t('5f65b998.6a26ff'),
           key: 'author_type',
           type: 'select',
           options: [
-            { title: '运动达人', value: '运动达人' },
-            { title: '潮流小主', value: '潮流小主' },
-            { title: '自定义', value: '自定义' }
+            { title: this.$t('5f65b998.a81daf'), value: '运动达人' },
+            { title: this.$t('5f65b998.f7aa08'), value: '潮流小主' },
+            { title: this.$t('5f65b998.f1d4ff'), value: '自定义' }
           ]
         },
         {
           label: '',
           key: 'author_type_customer',
           type: 'input',
-          placeholder: '请输入',
+          placeholder: this.$t('5f65b998.02cc4f'),
           isShow: ({ key }, form) => form.author_type === '自定义'
         },
         {
-          label: '创作主题描述',
+          label: this.$t('5f65b998.71348d'),
           key: 'topic_type',
           type: 'select',
           options: [
-            { title: '产品测评', value: '产品测评' },
-            { title: '季节性推荐', value: '季节性推荐' },
-            { title: '自定义', value: '自定义' }
+            { title: this.$t('5f65b998.e4386d'), value: '产品测评' },
+            { title: this.$t('5f65b998.e34c93'), value: '季节性推荐' },
+            { title: this.$t('5f65b998.f1d4ff'), value: '自定义' }
           ]
         },
         {
           label: '',
           key: 'topic_type_customer',
           type: 'textarea',
-          placeholder: '请输入',
+          placeholder: this.$t('5f65b998.02cc4f'),
           isShow: ({ key }, form) => form.topic_type === '自定义'
         }
       ],
@@ -229,9 +232,9 @@ export default {
     },
     async handleDeleteArticle({ article_id }) {
       try {
-        await this.$confirm('确认删除当前软文吗？', '提示')
+        await this.$confirm(this.$t('5f65b998.da19c4'), this.$t('5f65b998.02d981'))
         await this.$api.article.deleteArticle(article_id)
-        this.$message.success('删除成功')
+        this.$message.success(this.$t('5f65b998.0007d1'))
         this.$refs['paginationRef'].refresh()
       } catch (error) {}
     },
@@ -249,8 +252,8 @@ export default {
     async handlePublishOrWithdraw({ article_id, release_status }) {
       try {
         await this.$confirm(
-          release_status ? '确定撤回本篇软文吗？' : '确定发布本篇软文吗？',
-          '提示'
+          release_status ? this.$t('5f65b998.033518') : this.$t('5f65b998.af1f19'),
+          this.$t('5f65b998.02d981')
         )
         await this.$api.article.updateArticleSortOrStatus({
           inputdata: [
@@ -260,7 +263,9 @@ export default {
             }
           ]
         })
-        this.$message.success(release_status ? '撤回成功' : '发布成功')
+        this.$message.success(
+          release_status ? this.$t('5f65b998.52bb3c') : this.$t('5f65b998.2fff07')
+        )
         this.$refs['paginationRef'].refresh()
       } catch (error) {}
     },
@@ -305,7 +310,7 @@ export default {
         (item) => !this.aiArticleForm.goods.find((m) => m.item_id === item.item_id)
       )
       if (this.aiArticleForm.goods.concat(filterData).length > 3) {
-        this.$message.error('最多添加3个商品')
+        this.$message.error(this.$t('5f65b998.014e2a'))
         return
       }
       this.aiArticleForm.goods = this.aiArticleForm.goods.concat(filterData)
@@ -338,7 +343,7 @@ export default {
       }
       await this.$api.article.createArticleByAI(params)
       this.drawerShow = false
-      this.$message.success('提交成功，AI生成软文预计需要3分钟，请稍后在待发布中查看。')
+      this.$message.success(this.$t('5f65b998.432843'))
       this.$refs['paginationRef'].refresh(true)
     }
   }

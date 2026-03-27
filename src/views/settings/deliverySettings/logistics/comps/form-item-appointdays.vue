@@ -34,10 +34,18 @@
 <template>
   <div class="fi-connect-appointdays">
     <div class="appoint-item">
-      <el-radio v-model="data.value" label="current" @change="onChange">只能当天自提</el-radio>
+      <el-radio v-model="data.value" label="current" @change="onChange">
+{{
+        $t('97d0899b.2982d7')
+      }}
+</el-radio>
     </div>
     <div class="appoint-item">
-      <el-radio v-model="data.value" label="days" @change="onChange">可预约</el-radio>
+      <el-radio v-model="data.value" label="days" @change="onChange">
+{{
+        $t('97d0899b.e10228')
+      }}
+</el-radio>
       <el-select v-model="data.days" clearable @change="onChange">
         <el-option label="1" value="1" />
         <el-option label="2" value="2" />
@@ -50,7 +58,7 @@
         <el-option label="9" value="9" />
         <el-option label="10" value="10" />
       </el-select>
-      <span>天内订单</span>
+      <span>{{ $t('97d0899b.26b346') }}</span>
     </div>
   </div>
 </template>
@@ -99,10 +107,10 @@ export default {
       this.isErrorKey = ''
       if (areaNo && !phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入固定电话')
+        throw new Error(this.$t('97d0899b.b75945'))
       } else if (!phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入联系电话')
+        throw new Error(this.$t('97d0899b.7b540b'))
       }
     }
   }

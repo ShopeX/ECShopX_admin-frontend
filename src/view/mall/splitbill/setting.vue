@@ -5,19 +5,19 @@
 
 <template>
   <el-form label-width="200px" label-suffix="：" class="fenzhang">
-    <el-form-item label="是否开启分账">
+    <el-form-item :label="$t('f11d0f32.bfdeb8')">
       <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
     </el-form-item>
-    <el-form-item label="分账业务模式">
+    <el-form-item :label="$t('f11d0f32.e5848a')">
       <el-radio-group v-model="form.business_type" class="businessType">
-        <el-radio class="radio" label="1"> 平台/总部统一收款后分账 </el-radio>
+        <el-radio class="radio" label="1"> {{ $t('f11d0f32.3c4deb') }} </el-radio>
         <!-- <el-radio class="radio" label="2">店铺独立收款后分账（店铺未开通商户号则无法交易）</el-radio>
         <el-radio class="radio" label="3">混合模式（默认店铺收款，未开通则由平台统一收款）</el-radio> -->
       </el-radio-group>
     </el-form-item>
     <div class="itemTitle">
-      <h3>分账参数</h3>
-      <el-form-item label="平台服务费">
+      <h3>{{ $t('f11d0f32.1b9324') }}</h3>
+      <el-form-item :label="$t('f11d0f32.0b9237')">
         <el-input-number
           v-model.lazy="form.rate"
           class="first"
@@ -27,17 +27,17 @@
           size="mini"
           controls-position="right"
         />%
-        <span class="frm-tips">平台向商户收取的服务费率（0.00-30.00）</span>
+        <span class="frm-tips">{{ $t('f11d0f32.2c173b') }}</span>
       </el-form-item>
       <!-- <el-form-item label="分销员分账">
         <el-checkbox v-model="form.is_open_distributor" ></el-checkbox>
         <span class="frm-tips">分销员是否通过分账方式发放佣金</span>
       </el-form-item> -->
 
-      <h4>分账功能说明：</h4>
+      <h4>{{ $t('f11d0f32.822224') }}</h4>
 
       <div class="frm-tips">
-        开启分账前确认已经与支付公司签约及开通相关权限，并在支付设置页面配置了相关信息
+        {{ $t('f11d0f32.b618fc') }}
       </div>
     </div>
     <!-- <div class="itemTitle" v-if="form.business_type !== 1">
@@ -56,7 +56,9 @@
       </el-form-item> 
     </div> -->
     <div class="section-footer with-border content-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+        {{ $t('f11d0f32.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>
@@ -67,7 +69,6 @@ import { getSetting, saveSetting } from '@/api/fenzhang'
 export default {
   name: 'Fenzhang',
   data() {
-    1
     return {
       form: {
         // 是否开启分账
@@ -113,7 +114,7 @@ export default {
       const res = await saveSetting(params)
       this.$message({
         type: 'success',
-        message: '保存成功'
+        message: this.$t('f11d0f32.3b1083')
       })
     }
   }

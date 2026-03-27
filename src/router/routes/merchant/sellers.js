@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'sellers',
       icon: 'shop',
       keepAlive: true,
-      title: '商家'
+      title: '088817ee.0f09a8'
     },
     name: 'merchantSellers',
     path: '/merchant/sellers',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'merchantinfo',
           icon: 'icon-merchant',
-          title: '商家信息',
+          title: '088817ee.82e4c8',
           permissions: ['sellers.merchantinfo']
         }
       },
@@ -34,7 +34,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistributor',
           icon: 'icon-shop',
-          title: '店铺列表',
+          title: '088817ee.a4d703',
           permissions: ['sellers.marketingdistributor']
         },
         children: [
@@ -42,7 +42,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/merchant/store'),
             meta: {
-              title: '编辑店铺',
+              title: '088817ee.922ec0',
               hidden: true
             }
           },
@@ -50,7 +50,7 @@ const routes = [
             path: 'template/:distributor_id?',
             component: () => import('@/view/mall/marketing/distributor_template'),
             meta: {
-              title: '店铺模板',
+              title: '088817ee.5da484',
               hidden: true
             }
           },
@@ -58,7 +58,7 @@ const routes = [
             path: 'details/:id?',
             component: () => import('@/view/mall/marketing/distributor_details'),
             meta: {
-              title: '店铺详情',
+              title: '088817ee.9d54ec',
               hidden: true
             }
           },
@@ -66,7 +66,7 @@ const routes = [
             path: 'wxpaysetting',
             component: () => import('@/view/mall/marketing/distributor_wxpaysetting'),
             meta: {
-              title: '微信支付设置',
+              title: '088817ee.bd5e8a',
               hidden: true
             }
           },
@@ -74,7 +74,7 @@ const routes = [
             path: 'alipaysetting',
             component: () => import('@/view/mall/marketing/distributor_alipaysetting'),
             meta: {
-              title: '支付宝设置',
+              title: '088817ee.135e7b',
               hidden: true
             }
           }
@@ -87,7 +87,7 @@ const routes = [
         meta: {
           aliasName: 'distributoraftersalesaddress',
           icon: 'icon-address',
-          title: '售后地址',
+          title: '088817ee.c096c4',
           permissions: ['sellers.distributoraftersalesaddress']
         }
       },
@@ -98,7 +98,7 @@ const routes = [
         meta: {
           aliasName: 'popularizegoods',
           icon: 'icon-goods',
-          title: '分销商品池',
+          title: '088817ee.ad8ef8',
           permissions: ['sellers.popularizegoods']
         }
       },
@@ -109,7 +109,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsalesman',
           icon: 'icon-salesman',
-          title: '业务员',
+          title: '088817ee.808d6c',
           permissions: ['sellers.marketingsalesman']
         },
         children: [
@@ -117,7 +117,7 @@ const routes = [
             path: 'children',
             component: () => import('@/view/guide/children'),
             meta: {
-              title: '业务员下级',
+              title: '088817ee.a6ebab',
               hidden: true
             }
           }
@@ -130,7 +130,7 @@ const routes = [
         meta: {
           aliasName: 'popularizedata',
           icon: 'icon-data',
-          title: '业务员业绩',
+          title: '088817ee.b0bf8e',
           permissions: ['sellers.popularizedata']
         },
         children: [
@@ -138,7 +138,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/popularize/brokerageLog'),
             meta: {
-              title: '业绩详情',
+              title: '088817ee.20cd45',
               hidden: true
             }
           }
@@ -151,7 +151,7 @@ const routes = [
         meta: {
           aliasName: 'popularizewithdraw',
           icon: 'icon-withdraw',
-          title: '业务员提现',
+          title: '088817ee.f8e42e',
           permissions: ['sellers.popularizewithdraw']
         }
       }

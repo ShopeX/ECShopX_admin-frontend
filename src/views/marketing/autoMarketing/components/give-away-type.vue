@@ -14,7 +14,7 @@
     <div v-if="localValue.type === 'every_year'" class="every-year flex items-center">
       <el-select
         v-model="localValue.month"
-        placeholder="请选择月份"
+        :placeholder="$t('93ec80b5.904393')"
         style="width: 160px; margin-right: 10px"
       >
         <el-option
@@ -24,7 +24,7 @@
           :value="item.value"
         />
       </el-select>
-      <el-select v-model="localValue.day" placeholder="请选择日期" style="width: 160px">
+      <el-select v-model="localValue.day" :placeholder="$t('93ec80b5.aa2fb1')" style="width: 160px">
         <el-option
           v-for="item in dayOptions"
           :key="item.value"
@@ -35,7 +35,7 @@
     </div>
 
     <div v-if="localValue.type === 'every_month'" class="every-month">
-      <el-select v-model="localValue.day" placeholder="请选择日期" style="width: 160px">
+      <el-select v-model="localValue.day" :placeholder="$t('93ec80b5.aa2fb1')" style="width: 160px">
         <el-option
           v-for="item in dayOptions"
           :key="item.value"
@@ -46,7 +46,11 @@
     </div>
 
     <div v-if="localValue.type === 'every_week'" class="every-week">
-      <el-select v-model="localValue.week" placeholder="请选择星期" style="width: 160px">
+      <el-select
+        v-model="localValue.week"
+        :placeholder="$t('93ec80b5.2b40fa')"
+        style="width: 160px"
+      >
         <el-option
           v-for="item in weekOptions"
           :key="item.value"
@@ -71,14 +75,6 @@ export default {
     }
   },
   data() {
-    const _monthOptions = [],
-      _dayOptions = []
-    for (let i = 0; i < 12; i++) {
-      _monthOptions.push({ value: i + 1, label: `${i + 1}月` })
-    }
-    for (let i = 0; i < 31; i++) {
-      _dayOptions.push({ value: i + 1, label: `${i + 1}日` })
-    }
     return {
       localValue: {
         type: this.value?.type,
@@ -86,17 +82,29 @@ export default {
         day: this.value?.day,
         week: this.value?.week
       },
-      weekOptions: [
-        { value: 1, label: '星期一' },
-        { value: 2, label: '星期二' },
-        { value: 3, label: '星期三' },
-        { value: 4, label: '星期四' },
-        { value: 5, label: '星期五' },
-        { value: 6, label: '星期六' },
-        { value: 7, label: '星期日' }
-      ],
-      monthOptions: _monthOptions,
-      dayOptions: _dayOptions
+      weekOptions: [],
+      monthOptions: [],
+      dayOptions: []
+    }
+  },
+  created() {
+    const t = this.$t.bind(this)
+    this.weekOptions = [
+      { value: 1, label: t('93ec80b5.5ce438') },
+      { value: 2, label: t('93ec80b5.34e521') },
+      { value: 3, label: t('93ec80b5.711d99') },
+      { value: 4, label: t('93ec80b5.3df6af') },
+      { value: 5, label: t('93ec80b5.450ea3') },
+      { value: 6, label: t('93ec80b5.1ae72f') },
+      { value: 7, label: t('93ec80b5.67b195') }
+    ]
+    this.monthOptions = []
+    for (let i = 0; i < 12; i++) {
+      this.monthOptions.push({ value: i + 1, label: t('93ec80b5.0bb91f', [i + 1]) })
+    }
+    this.dayOptions = []
+    for (let i = 0; i < 31; i++) {
+      this.dayOptions.push({ value: i + 1, label: t('93ec80b5.61de59', [i + 1]) })
     }
   },
   watch: {

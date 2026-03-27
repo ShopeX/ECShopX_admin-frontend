@@ -7,7 +7,7 @@
   <div class="reservation-box">
     <el-row :gutter="20">
       <el-col :span="10">
-        门店：
+        {{ $t('d41d8cd9.j8k9l0') }}
         <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
@@ -21,16 +21,16 @@
       </el-col>
       <el-col :span="14" class="content-right">
         <el-radio-group v-model="dateType" size="mini" @change="dateChange">
-          <el-radio-button label="1"> 今天 </el-radio-button>
-          <el-radio-button label="2"> 明天 </el-radio-button>
-          <el-radio-button label="3"> 后天 </el-radio-button>
-          <el-radio-button label="4"> 自定义 </el-radio-button>
+          <el-radio-button label="1"> {{ $t('d41d8cd9.m1n2o3') }} </el-radio-button>
+          <el-radio-button label="2"> {{ $t('d41d8cd9.p4q5r6') }} </el-radio-button>
+          <el-radio-button label="3"> {{ $t('d41d8cd9.s7t8u9') }} </el-radio-button>
+          <el-radio-button label="4"> {{ $t('d41d8cd9.v0w1x2') }} </el-radio-button>
         </el-radio-group>
         <el-date-picker
           v-if="dateType == '4'"
           v-model="dateDay"
           type="date"
-          placeholder="请选择日期"
+          :placeholder="$t('e94dda11.aa2fb1')"
           :picker-options="pickerOptions"
           @change="customChange"
         />
@@ -60,18 +60,18 @@
                 <template v-if="item.begin == subItem.beginTime">
                   <el-tooltip effect="light" placement="top">
                     <div v-if="subItem.status == 'system'" slot="content">
-                      系统占位 <br /><br />
-                      占用时间：{{ subItem.beginTime }}~{{ subItem.endTime }}
+                      {{ $t('d41d8cd9.y3z4a5') }} <br><br>
+                      {{ $t('d41d8cd9.b6c7d8') }}{{ subItem.beginTime }}~{{ subItem.endTime }}
                     </div>
                     <div v-else slot="content">
-                      预约人：{{ subItem.userName }} <br /><br />
-                      预约手机：{{ subItem.mobile }} <br /><br />
-                      预约项目：{{ subItem.labelName }} <br /><br />
-                      到店时间：{{ subItem.beginTime }}
+                      {{ $t('d41d8cd9.e9f0g1') }}{{ subItem.userName }} <br><br>
+                      {{ $t('d41d8cd9.h2i3j4') }}{{ subItem.mobile }} <br><br>
+                      {{ $t('d41d8cd9.k5l6m7') }}{{ subItem.labelName }} <br><br>
+                      {{ $t('d41d8cd9.n8o9p0') }}{{ subItem.beginTime }}
                     </div>
                     <span v-if="subItem.userName">{{ subItem.userName }}</span>
                     <span v-else-if="subItem.mobile">{{ subItem.mobile }}</span>
-                    <span v-else>系统占位</span>
+                    <span v-else>{{ $t('d41d8cd9.y3z4a5') }}</span>
                   </el-tooltip>
                 </template>
               </template>
@@ -96,32 +96,32 @@
       />
     </div>
     <el-dialog
-      title="代客预约"
+      :title="$t('e94dda11.9344c8')"
       width="20%"
       :visible.sync="chooseTypeDialogVisible"
       :close-on-click-modal="false"
     >
       <div class="type-list type-choose-box">
         <el-form v-model="formData" label-width="120px">
-          <el-form-item label="预约方式" prop="">
+          <el-form-item :label="$t('e94dda11.1f9ce4')" prop="">
             <el-radio-group v-model="formData.instead">
-              <el-radio label="system"> 系统占位 </el-radio>
-              <el-radio label="user"> 代客预约 </el-radio>
+              <el-radio label="system"> {{ $t('d41d8cd9.y3z4a5') }} </el-radio>
+              <el-radio label="user"> {{ $t('d41d8cd9.q1r2s3') }} </el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="formData.instead == 'user'">
-            <el-form-item label="客户手机号:" prop="">
+            <el-form-item :label="$t('e94dda11.7f9759')" prop="">
               <el-input
                 v-model="formData.mobile"
                 size="40"
-                placeholder="客户手机号"
+                :placeholder="$t('e94dda11.a32da1')"
                 :maxlength="11"
                 :minlength="11"
                 style="width: 120px"
                 @blur="getMemberData"
               />
             </el-form-item>
-            <el-form-item v-if="labelList" label="预约项目:" prop="">
+            <el-form-item v-if="labelList" :label="$t('e94dda11.aab61c')" prop="">
               <el-select v-model="formData.rightsId" size="40">
                 <el-option
                   v-for="item in labelList"
@@ -140,8 +140,8 @@
         </el-form>
       </div>
       <div slot="footer" class="footer-dialog content-center">
-        <el-button @click="chooseCancel"> 取消 </el-button>
-        <el-button type="primary" @click="reservationSave"> 确定 </el-button>
+        <el-button @click="chooseCancel"> {{ $t('d41d8cd9.t4u5v6') }} </el-button>
+        <el-button type="primary" @click="reservationSave"> {{ $t('d41d8cd9.w7x8y9') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -340,14 +340,14 @@ export default {
         if (!this.formData.mobile) {
           this.$message({
             type: 'error',
-            message: '请输入会员手机号'
+            message: this.$t('e94dda11.c0e45d')
           })
           return
         }
         let reg = /^1[3|4|5|7|8][0-9]\d{8}$/
         if (!reg.test(this.formData.mobile)) {
           this.$message({
-            message: '请输入正确的手机号',
+            message: this.$t('e94dda11.a32ab5'),
             type: 'error'
           })
           return
@@ -355,7 +355,7 @@ export default {
         if (!this.formData.rightsId) {
           this.$message({
             type: 'error',
-            message: '请选择会员拥有的权益'
+            message: this.$t('e94dda11.791cbc')
           })
           return
         }
@@ -381,7 +381,7 @@ export default {
         if (res.data.status) {
           this.$message({
             type: 'success',
-            message: '代客预约成功'
+            message: this.$t('e94dda11.8f1b38')
           })
         }
         this.chooseTypeDialogVisible = false
@@ -429,7 +429,7 @@ export default {
       getRightsList(params).then((res) => {
         if (res.data.data.length == 0) {
           this.$message({
-            message: '该用户无可预约权益',
+            message: this.$t('e94dda11.020625'),
             type: 'error'
           })
           return

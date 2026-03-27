@@ -8,17 +8,18 @@
     <div class="alisms_baseConfig">
       <tips>
         <p>
-          短信服务由阿里云提供，是广大企业客户快速触达手机用户所优选使用的通信能力，国内验证短信秒级触达，到达率最高可达99%。开始使用前您需要<a
+          {{ $t('8cc9220c.26cd59')
+          }}<a
             href="https://www.aliyun.com/product/sms?spm=a2c4g.11186623.0.0.659712cdoHMKdV"
             target="_blank"
-            >前往阿里云购买服务。</a
+            >{{ $t('8cc9220c.57a9aa') }}</a
           >
         </p>
       </tips>
       <el-form label-width="200px" :model="form">
         <section class="card">
           <nav>
-            <el-form-item label="启用:" label-width="60px">
+            <el-form-item :label="$t('8cc9220c.9e44e3')" label-width="60px">
               <el-switch
                 v-model="info.status"
                 active-color="#13ce66"
@@ -26,12 +27,12 @@
                 style="margin-left: 40px; margin-right: 20px"
                 @change="fnSwitch"
               />
-              <span v-if="info.status">已启用</span>
-              <span v-else>未启用</span>
+              <span v-if="info.status">{{ $t('8cc9220c.53ace4') }}</span>
+              <span v-else>{{ $t('8cc9220c.463776') }}</span>
             </el-form-item>
           </nav>
           <div class="content">
-            <div class="title">基础配置</div>
+            <div class="title">{{ $t('8cc9220c.b6453a') }}</div>
             <div class="info">
               <div class="left">
                 <el-form-item label="AccessKey ID：">
@@ -41,30 +42,34 @@
                   <span>{{ form.accesskey_secret }}</span>
                 </el-form-item>
 
-                <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank"
-                  >如何获取 AccessKey ID 和 AccessKey Secret。</a
-                >
+                <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">{{
+                  $t('8cc9220c.81fbaa')
+                }}</a>
               </div>
               <div class="right">
-                <el-button type="primary" class="btn" plain @click="fnEdit"> 编辑 </el-button>
+                <el-button type="primary" class="btn" plain @click="fnEdit">
+{{
+                  $t('8cc9220c.95b351')
+                }}
+</el-button>
               </div>
             </div>
           </div>
         </section>
-        <section v-for="item in cardData" :key="item.title" class="card">
+        <section v-for="item in cardData" :key="item.titleKey" class="card">
           <div class="content">
             <div class="title">
-              {{ item.title }}
+              {{ $t(item.titleKey) }}
             </div>
             <div class="info">
               <div class="left">
-                <el-form-item :label="item.info">
+                <el-form-item :label="$t(item.infoKey)">
                   <span>{{ info[item.label] || 0 }}</span>
                 </el-form-item>
               </div>
               <div class="right">
                 <el-button type="primary" class="btn" plain @click="fnGo(item.tabName)">
-                  {{ item.btn }}
+                  {{ $t(item.btnKey) }}
                 </el-button>
               </div>
             </div>
@@ -74,7 +79,7 @@
       <!-- 添加短信 -->
 
       <el-dialog
-        title="阿里云短信服务基础配置"
+        :title="$t('8cc9220c.40d841')"
         :visible="visible"
         width="30%"
         :before-close="handleClose"
@@ -88,13 +93,13 @@
           label-width="140px"
         />
         <div style="margin-top: 10px">
-          <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank"
-            >如何获取 AccessKey ID 和 AccessKey Secret。</a
-          >
+          <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">{{
+            $t('8cc9220c.81fbaa')
+          }}</a>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button type="primary" @click="fnPass">确 定</el-button>
+          <el-button @click="handleClose">{{ $t('8cc9220c.c08ab9') }}</el-button>
+          <el-button type="primary" @click="fnPass">{{ $t('8cc9220c.aa7527') }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -120,23 +125,23 @@ export default {
       },
       cardData: [
         {
-          title: '自动发送短信',
-          info: '自动发送短信场景 (个)：',
-          btn: '管理短信',
+          titleKey: '8cc9220c.a894ba',
+          infoKey: '8cc9220c.ec93d6',
+          btnKey: '8cc9220c.a3d64c',
           label: 'scene_num',
           tabName: 'send_sms'
         },
         {
-          title: '短信签名',
-          info: '已有短信签名 (个)：',
-          btn: '管理签名',
+          titleKey: '8cc9220c.f32c04',
+          infoKey: '8cc9220c.8ff2c7',
+          btnKey: '8cc9220c.fe318d',
           label: 'sign_num',
           tabName: 'sms_signatures'
         },
         {
-          title: '短信模板',
-          info: '已有短信模板 (个)：',
-          btn: '管理模板',
+          titleKey: '8cc9220c.dbe8ba',
+          infoKey: '8cc9220c.2c52cd',
+          btnKey: '8cc9220c.8a71f7',
           label: 'template_num',
           tabName: 'sms_template'
         }
@@ -158,7 +163,7 @@ export default {
           label: 'AccessKey ID',
           component: 'input',
           componentProps: {
-            placeholder: '阿里云RAM用户的 AccessKey ID'
+            placeholder: this.$t('8cc9220c.2b2afe')
           },
           rules: [requiredRules('Accesskey ID', 'change')]
         },
@@ -167,7 +172,7 @@ export default {
           label: 'Accesskey Secret',
           component: 'input',
           componentProps: {
-            placeholder: '阿里云RAM用户的 Accesskey Secret'
+            placeholder: this.$t('8cc9220c.d5ffd7')
           },
           rules: [requiredRules('Accesskey secret', 'change')]
         }
@@ -192,7 +197,7 @@ export default {
       try {
         await this.$refs.form.validate()
         await setSmsConfig(this.form)
-        this.$message.success('成功')
+        this.$message.success(this.$t('8cc9220c.330363'))
         this.handleClose()
         this.init()
       } catch (error) {
@@ -200,17 +205,17 @@ export default {
       }
     },
     async fnSwitch(status) {
-      let message = '关闭阿里云短信后，商派短信将会自动开启。'
+      let message = this.$t('8cc9220c.cdb1c2')
       if (status) {
-        message = '开启阿里云短信后，商派短信将会自动关闭。'
+        message = this.$t('8cc9220c.d3496b')
         this.$confirm(message, '', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: this.$t('8cc9220c.38cf16'),
+          cancelButtonText: this.$t('8cc9220c.625fb2'),
           type: 'warning'
         })
           .then(async () => {
             const result = await setAlisms({ status })
-            this.$message.success('成功')
+            this.$message.success(this.$t('8cc9220c.330363'))
             this.init()
           })
           .catch(() => {
@@ -218,13 +223,13 @@ export default {
           })
       } else {
         this.$confirm(message, '', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: this.$t('8cc9220c.38cf16'),
+          cancelButtonText: this.$t('8cc9220c.625fb2'),
           type: 'warning'
         })
           .then(async () => {
             const result = await setAlisms({ status })
-            this.$message.success('成功')
+            this.$message.success(this.$t('8cc9220c.330363'))
             this.init()
           })
           .catch(() => {

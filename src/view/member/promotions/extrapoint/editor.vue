@@ -6,48 +6,48 @@
 <template>
   <SpPage>
     <el-form ref="form" :model="form" class="box-set" label-width="120px">
-      <el-card header="指定日期额外积分" shadow="naver">
+      <el-card :header="$t('d3536ac7.64540c')" shadow="naver">
         <el-form-item
-          label="活动名称"
+          :label="$t('d3536ac7.39834b')"
           prop="title"
-          :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
+          :rules="{ required: true, message: this.$t('d3536ac7.813065'), trigger: 'blur' }"
         >
           <el-col :span="8">
             <el-input
               v-model="form.title"
               :disabled="hasSaveButton ? false : true"
               :maxlength="30"
-              placeholder="请输入活动名称"
+              :placeholder="$t('d3536ac7.7528b3')"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动时间">
+        <el-form-item :label="$t('d3536ac7.c799f5')">
           <el-date-picker
             v-model="activity_date"
             type="datetimerange"
             align="right"
             value-format="yyyy-MM-dd HH:mm:ss"
             unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('d3536ac7.981cbe')"
+            :start-placeholder="$t('d3536ac7.b44c0f')"
+            :end-placeholder="$t('d3536ac7.1d468b')"
             :disabled="!hasSaveButton || form.is_forever ? true : false"
             :default-time="['00:00:00', '23:59:59']"
             :picker-options="pickerOptions2"
           />
           &nbsp;&nbsp;&nbsp;
-          <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
+          <el-checkbox v-model="form.is_forever"> {{ $t('d3536ac7.1c5029') }} </el-checkbox>
         </el-form-item>
-        <el-form-item label="日期">
+        <el-form-item :label="$t('d3536ac7.4ff1e7')">
           <el-radio-group v-model="condition" :disabled="hasSaveButton ? false : true">
-            <el-radio label="every_year"> 每年 </el-radio>
-            <el-radio label="every_month"> 每月 </el-radio>
-            <el-radio label="every_week"> 每周 </el-radio>
-            <el-radio label="date"> 指定日期 </el-radio>
+            <el-radio label="every_year"> {{ $t('d3536ac7.281cd3') }} </el-radio>
+            <el-radio label="every_month"> {{ $t('d3536ac7.aa3d57') }} </el-radio>
+            <el-radio label="every_week"> {{ $t('d3536ac7.09b03b') }} </el-radio>
+            <el-radio label="date"> {{ $t('d3536ac7.07dc14') }} </el-radio>
           </el-radio-group>
           <transition name="el-fade-in-linear">
             <div v-if="condition === 'every_year'">
-              <el-select v-model="memberDay.month" placeholder="请选择月份">
+              <el-select v-model="memberDay.month" :placeholder="$t('d3536ac7.904393')">
                 <el-option
                   v-for="item in monthOptions"
                   :key="item.value"
@@ -55,7 +55,7 @@
                   :value="item.value"
                 />
               </el-select>
-              <el-select v-model="memberDay.day" placeholder="请选择日期">
+              <el-select v-model="memberDay.day" :placeholder="$t('d3536ac7.aa2fb1')">
                 <el-option
                   v-for="item in dayOptions"
                   :key="item.value"
@@ -65,7 +65,7 @@
               </el-select>
             </div>
             <div v-if="condition === 'every_month'">
-              <el-select v-model="memberDay.day" placeholder="请选择日期">
+              <el-select v-model="memberDay.day" :placeholder="$t('d3536ac7.aa2fb1')">
                 <el-option
                   v-for="item in dayOptions"
                   :key="item.value"
@@ -75,7 +75,7 @@
               </el-select>
             </div>
             <div v-if="condition === 'every_week'">
-              <el-select v-model="memberDay.week" placeholder="请选择星期">
+              <el-select v-model="memberDay.week" :placeholder="$t('d3536ac7.2b40fa')">
                 <el-option
                   v-for="item in weekOptions"
                   :key="item.value"
@@ -90,9 +90,9 @@
                 type="daterange"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('d3536ac7.981cbe')"
+                :start-placeholder="$t('d3536ac7.b44c0f')"
+                :end-placeholder="$t('d3536ac7.1d468b')"
                 style="width: 100%"
                 value-format="yyyy-MM-dd"
                 @change="dateChange"
@@ -101,37 +101,37 @@
           </transition>
         </el-form-item>
         <el-form-item
-          label="积分倍数"
+          :label="$t('d3536ac7.80defc')"
           prop="condition_value"
-          :rules="{ required: true, message: '升值倍数必填', trigger: 'blur' }"
+          :rules="{ required: true, message: this.$t('d3536ac7.5a7056'), trigger: 'blur' }"
         >
-          活动期内，到账积分为获得基础积分的
+          {{ $t('d3536ac7.273748') }}
           <el-input
             v-model="form.condition_value"
             type="number"
             :maxlength="30"
-            placeholder="请输入升值倍数"
+            :placeholder="$t('d3536ac7.2f5765')"
             style="width: 150px"
             :min="1"
             :disabled="hasSaveButton ? false : true"
           />
-          倍
+          {{ $t('d3536ac7.a9071b') }}
           <!-- （基础积分+（N-1）倍基础积分） -->
         </el-form-item>
 
-        <el-form-item label="类型">
+        <el-form-item :label="$t('d3536ac7.226b09')">
           <el-radio-group v-model="condition_type">
-            <el-radio label="multiple"> 倍数 </el-radio>
+            <el-radio label="multiple"> {{ $t('d3536ac7.ea1b17') }} </el-radio>
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="满足条件">
+        <el-form-item :label="$t('d3536ac7.a319c8')">
           <el-radio-group v-model="has_trigger_amount" :disabled="hasSaveButton ? false : true">
-            <el-radio label="1"> 是 </el-radio>
-            <el-radio label="0"> 否 </el-radio>
+            <el-radio label="1"> {{ $t('d3536ac7.0a60ac') }} </el-radio>
+            <el-radio label="0"> {{ $t('d3536ac7.c9744f') }} </el-radio>
           </el-radio-group>
           <p v-if="has_trigger_amount == '1'" class="frm-tips">
-            订单金额满
+            {{ $t('d3536ac7.21c1bd') }}
             <el-input
               v-model="form.trigger_amount"
               type="number"
@@ -140,11 +140,11 @@
               :min="0"
               :disabled="hasSaveButton ? false : true"
             />
-            元时，可享受该活动（不含运费）
+            {{ $t('d3536ac7.2e8061') }}
           </p>
         </el-form-item>
 
-        <el-form-item label="适用会员">
+        <el-form-item :label="$t('d3536ac7.6dbb6f')">
           <el-checkbox-group v-model="form.valid_grade" :disabled="hasSaveButton ? false : true">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -154,22 +154,28 @@
               :key="vipdata.lv_type"
               :label="vipdata.lv_type"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('d3536ac7.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="店铺选择">
+        <el-form-item :label="$t('d3536ac7.e55d92')">
           <el-radio-group v-model="form.use_shop" :disabled="hasSaveButton ? false : true">
-            <el-radio label="0"> 全店铺适用 </el-radio>
-            <el-radio label="1"> 指定店铺适用 </el-radio>
+            <el-radio label="0"> {{ $t('d3536ac7.65cb09') }} </el-radio>
+            <el-radio label="1"> {{ $t('d3536ac7.3640e1') }} </el-radio>
           </el-radio-group>
-          <el-card v-if="form.use_shop == '1'" header="绑定店铺" shadow="naver">
-            <el-button type="primary" @click="relStoresClick"> 选择店铺 </el-button>
+          <el-card v-if="form.use_shop == '1'" :header="$t('d3536ac7.7318a6')" shadow="naver">
+            <el-button type="primary" @click="relStoresClick">
+              {{ $t('d3536ac7.afa2e6') }}
+            </el-button>
             <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
-              <el-table-column label="ID" prop="distributor_id" width="60" />
-              <el-table-column label="名称" prop="name" />
-              <el-table-column prop="address" label="地址" show-overflow-tooltip />
-              <el-table-column label="操作" width="50">
+              <el-table-column :label="$t('d3536ac7.b718ad')" prop="distributor_id" width="60" />
+              <el-table-column :label="$t('d3536ac7.d7ec2d')" prop="name" />
+              <el-table-column
+                prop="address"
+                :label="$t('d3536ac7.765048')"
+                show-overflow-tooltip
+              />
+              <el-table-column :label="$t('d3536ac7.2b6bc0')" width="50">
                 <template slot-scope="scope">
                   <i class="el-icon-delete" @click="deleteStoreRow(scope.$index, form.items)" />
                 </template>
@@ -190,9 +196,9 @@
 
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click.native="handleCancel"> 返回 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('d3536ac7.5f4112') }} </el-button>
         <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
-          保存
+          {{ $t('d3536ac7.be5fbb') }}
         </el-button>
       </div>
     </template>
@@ -215,43 +221,6 @@ export default {
   },
   data() {
     return {
-      pickerOptions2: {
-        shortcuts: [
-          {
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date()
-              end.setHours(23, 59, 59, 0)
-              const start = new Date()
-              start.setHours(0, 0, 0, 0)
-              end.setTime(end.getTime() + 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
-      },
       used_scene: {
         1: '订单抵扣'
       },
@@ -297,6 +266,48 @@ export default {
       setStatus: false,
       storeVisible: false,
       hasSaveButton: true
+    }
+  },
+  computed: {
+    pickerOptions2() {
+      const t = this.$t.bind(this)
+      return {
+        shortcuts: [
+          {
+            text: t('d3536ac7.56ee10'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: t('d3536ac7.335dfc'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: t('d3536ac7.d96eb4'),
+            onClick(picker) {
+              const end = new Date()
+              end.setHours(23, 59, 59, 0)
+              const start = new Date()
+              start.setHours(0, 0, 0, 0)
+              end.setTime(end.getTime() + 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      }
     }
   },
   watch: {
@@ -427,7 +438,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('d3536ac7.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -436,7 +447,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('d3536ac7.73b0d9'))
             return false
           }
         })
@@ -445,7 +456,7 @@ export default {
           if (res.data.data.activity_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('d3536ac7.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -454,7 +465,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('d3536ac7.73b0d9'))
             return false
           }
         })

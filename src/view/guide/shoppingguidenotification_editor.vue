@@ -6,15 +6,15 @@
 <template>
   <div>
     <el-form :model="dataForm" label-width="80px">
-      <el-form-item label="标题">
+      <el-form-item :label="$t('2547a1d3.32c65d')">
         <el-input v-model="dataForm.title" />
       </el-form-item>
-      <el-form-item label="内容">
+      <el-form-item :label="$t('2547a1d3.2d711b')">
         <SpRichText v-model="dataForm.content" />
       </el-form-item>
     </el-form>
     <div style="text-align: center">
-      <el-button type="primary" @click="handelClickSubmit"> 保存 </el-button>
+      <el-button type="primary" @click="handelClickSubmit">{{ $t('2547a1d3.be5fbb') }}</el-button>
     </div>
   </div>
 </template>
@@ -61,12 +61,12 @@ export default {
       if (!this.notice_id) {
         // 新增
         await setSalespersonoticeNotice(params)
-        message = '添加成功'
+        message = this.$t('2547a1d3.3fdaea')
       } else {
         // 修改
         params.notice_id = this.notice_id
         await editSalespersonoticeNotice(params)
-        message = '修成成功'
+        message = this.$t('2547a1d3.69be67')
       }
       this.$message({
         message,

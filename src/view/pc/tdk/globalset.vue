@@ -4,10 +4,14 @@
 -->
 
 <template>
-  <SpPage title="SEO配置">
+  <SpPage :title="$t('5f8c2276.e807b2')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" :loading="loading" @click="onSubmit"> 保存 </el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">
+{{
+          $t('5f8c2276.be5fbb')
+        }}
+</el-button>
       </div>
     </template>
     <Form />
@@ -22,13 +26,13 @@ const [Form, FormApi] = useForm({
       component: 'Input',
       fieldName: 'title',
       formItemClass: 'w-2/5',
-      label: '页面标题'
+      label: '5f8c2276.8d6b59'
     },
     {
       component: 'Input',
       fieldName: 'mate_description',
       formItemClass: 'w-2/5',
-      label: '页面描述'
+      label: '5f8c2276.abf8f4'
     },
     {
       component: 'Input',
@@ -38,8 +42,8 @@ const [Form, FormApi] = useForm({
       },
       fieldName: 'mate_keywords',
       formItemClass: 'w-2/5',
-      label: '关键词',
-      tip: '关键词之间请用半角”,”分隔'
+      label: '5f8c2276.9699a5',
+      tip: '5f8c2276.c0a63b'
     }
   ],
   showDefaultActions: false
@@ -78,7 +82,7 @@ export default {
       }
       this.$api.tdkset.saveTdkglobalset(params)
       this.loading = false
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('5f8c2276.3b1083'))
     }
   }
 }

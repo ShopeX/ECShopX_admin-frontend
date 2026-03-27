@@ -21,43 +21,43 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/mall' }"> 商城 </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/mall' }"> {{ $t('dbc8a05e.2c7b38') }} </el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/mall/marketing/distributor' }">
-        店铺管理
+        {{ $t('dbc8a05e.9be38c') }}
       </el-breadcrumb-item>
-      <el-breadcrumb-item>店铺详情</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ $t('dbc8a05e.9d54ec') }}</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="time-box basic">
       <el-row>
         <el-col :span="4">
-          可提现:&nbsp;<span>{{ count.cashWithdrawalRebate / 100 }}</span
-          >元
+          {{ $t('dbc8a05e.6d318d') }}&nbsp;<span>{{ count.cashWithdrawalRebate / 100 }}</span
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
         <el-col :span="4">
-          已提现:&nbsp;<span>{{
+          {{ $t('dbc8a05e.5924da') }}&nbsp;<span>{{
             (count.rebateTotal -
               count.cashWithdrawalRebate -
               count.freezeCashWithdrawalRebate -
               count.noCloseRebate) /
             100
           }}</span
-          >元
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
         <el-col :span="4">
-          申请提现:&nbsp;<span>{{ count.freezeCashWithdrawalRebate / 100 }}</span
-          >元
+          {{ $t('dbc8a05e.69a03c') }}&nbsp;<span>{{ count.freezeCashWithdrawalRebate / 100 }}</span
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
         <el-col :span="4">
-          未结算:&nbsp;<span>{{ count.noCloseRebate / 100 }}</span
-          >元
+          {{ $t('dbc8a05e.1cd7cd') }}&nbsp;<span>{{ count.noCloseRebate / 100 }}</span
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
         <el-col :span="4">
-          佣金总额:&nbsp;<span>{{ count.rebateTotal / 100 }}</span
-          >元
+          {{ $t('dbc8a05e.51771a') }}&nbsp;<span>{{ count.rebateTotal / 100 }}</span
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
         <el-col :span="4">
-          商品总额:&nbsp;<span>{{ count.itemTotalPrice / 100 }}</span
-          >元
+          {{ $t('dbc8a05e.6eb0c2') }}&nbsp;<span>{{ count.itemTotalPrice / 100 }}</span
+          >{{ $t('dbc8a05e.c16655') }}
         </el-col>
       </el-row>
     </div>
@@ -69,7 +69,7 @@
         :name="item.activeName"
       >
         <el-table v-loading="loading" :data="list" height="550" border>
-          <el-table-column prop="order_id" label="店铺关联订单" min-width="84">
+          <el-table-column prop="order_id" :label="$t('dbc8a05e.42353e')" min-width="84">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -85,26 +85,32 @@
               </router-link>
             </template>
           </el-table-column>
-          <el-table-column prop="distributor_mobile" label="店铺手机号" min-width="64" />
-          <el-table-column prop="item_name" label="店铺商品" />
-          <el-table-column prop="num" label="商品数量" min-width="48" />
-          <el-table-column label="商品佣金" min-width="60">
+          <el-table-column
+            prop="distributor_mobile"
+            :label="$t('dbc8a05e.69e563')"
+            min-width="64"
+          />
+          <el-table-column prop="item_name" :label="$t('dbc8a05e.54d6cd')" />
+          <el-table-column prop="num" :label="$t('dbc8a05e.06612d')" min-width="48" />
+          <el-table-column :label="$t('dbc8a05e.d07413')" min-width="60">
             <template slot-scope="scope">
-              <span> {{ scope.row.rebate / 100 }} </span> 元
+              <span> {{ scope.row.rebate / 100 }} </span> {{ $t('dbc8a05e.c16655') }}
             </template>
           </el-table-column>
-          <el-table-column label="总佣金" min-width="60">
+          <el-table-column :label="$t('dbc8a05e.28313c')" min-width="60">
             <template slot-scope="scope">
-              <span> {{ scope.row.total_rebate / 100 }} </span> 元
+              <span> {{ scope.row.total_rebate / 100 }} </span> {{ $t('dbc8a05e.c16655') }}
             </template>
           </el-table-column>
-          <el-table-column prop="is_close" label="是否已结算" min-width="50">
+          <el-table-column prop="is_close" :label="$t('dbc8a05e.b5aa25')" min-width="50">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.is_close == true" type="warning"> 已结算 </el-tag>
-              <el-tag v-else type="info"> 未结算 </el-tag>
+              <el-tag v-if="scope.row.is_close == true" type="warning">
+                {{ $t('dbc8a05e.139304') }}
+              </el-tag>
+              <el-tag v-else type="info"> {{ $t('dbc8a05e.facb53') }} </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="plan_close_date" label="预计结算时间" />
+          <el-table-column prop="plan_close_date" :label="$t('dbc8a05e.8b1d87')" />
         </el-table>
         <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
@@ -126,9 +132,9 @@ export default {
   data() {
     return {
       tabList: [
-        { name: '全部', value: null, activeName: 'first' },
-        { name: '已结算', value: 'true', activeName: 'second' },
-        { name: '未结算', value: 'false', activeName: 'third' }
+        { name: this.$t('dbc8a05e.a8b0c2'), value: null, activeName: 'first' },
+        { name: this.$t('dbc8a05e.139304'), value: 'true', activeName: 'second' },
+        { name: this.$t('dbc8a05e.facb53'), value: 'false', activeName: 'third' }
       ],
       activeName: 'first',
       total_count: 0,

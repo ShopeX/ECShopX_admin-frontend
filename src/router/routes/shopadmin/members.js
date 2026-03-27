@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'member',
       icon: 'light-member',
       keepAlive: true,
-      title: '会员'
+      title: '844e05b4.4d9dd5'
     },
     name: 'shopadminMember',
     path: '/shopadmin/member',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'members-lists',
           icon: 'icon-member',
-          title: '会员列表',
+          title: '844e05b4.5386bb',
           permissions: ['member.member-list-view.members-lists']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'detail/:user_id?',
             component: () => import('@/view/member/members/detail'),
             meta: {
-              title: '会员详情',
+              title: '844e05b4.9fee8f',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'chiefupload',
             component: () => import('@/view/member/members/upload_chief'),
             meta: {
-              title: '会员导入',
+              title: '844e05b4.bc15f6',
               hidden: true
             }
           }
@@ -52,7 +52,7 @@ const routes = [
         meta: {
           aliasName: 'managetag',
           icon: 'icon-tag',
-          title: '会员标签',
+          title: '844e05b4.3cc026',
           permissions: ['member.Managetag']
         }
       },
@@ -63,7 +63,7 @@ const routes = [
         meta: {
           aliasName: 'purchaseemployee',
           icon: 'icon-employee',
-          title: '员工管理',
+          title: '844e05b4.b33603',
           permissions: ['shopadmin.member.purchase.employee']
         },
         children: [
@@ -71,7 +71,7 @@ const routes = [
             path: 'import',
             component: () => import('@/view/member/purchase/employeeImport'),
             meta: {
-              title: '白名单导入',
+              title: '844e05b4.eba44e',
               hidden: true
             }
           }
@@ -84,7 +84,7 @@ const routes = [
         meta: {
           aliasName: 'purchasecompany',
           icon: 'icon-company',
-          title: '企业管理',
+          title: '844e05b4.07c516',
           permissions: ['shopadmin.member.purchase.company']
         }
       }

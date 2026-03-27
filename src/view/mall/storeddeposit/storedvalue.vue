@@ -6,65 +6,69 @@
 <template>
   <div class="section-white content-padded">
     <div class="content-bottom-padded">
-      <el-button type="primary" @click="showDialog"> 添加面额({{ dataList.length }}/14) </el-button>
+      <el-button type="primary" @click="showDialog">
+{{
+        $t('4171686f.5b102f', [dataList.length])
+      }}
+</el-button>
     </div>
     <el-table v-loading="loading" :data="dataList" :height="wheight - 200">
-      <el-table-column prop="money" label="固定面额数(元)" />
-      <el-table-column label="赠送">
+      <el-table-column prop="money" :label="$t('4171686f.3df354')" />
+      <el-table-column :label="$t('4171686f.34ce20')">
         <template slot-scope="scope">
-          <span v-if="scope.row.ruleType == 'money'">充值送钱</span>
-          <span v-if="scope.row.ruleType == 'point'">充值送积分</span>
+          <span v-if="scope.row.ruleType == 'money'">{{ $t('4171686f.da5072') }}</span>
+          <span v-if="scope.row.ruleType == 'point'">{{ $t('4171686f.d81f65') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="赠送说明">
+      <el-table-column :label="$t('4171686f.03c8c2')">
         <template slot-scope="scope">
-          <span v-if="scope.row.ruleType == 'money'"
-            >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}元</span
-          >
-          <span v-if="scope.row.ruleType == 'point'"
-            >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}积分</span
-          >
+          <span v-if="scope.row.ruleType == 'money'">{{
+            $t('4171686f.48e45e', [scope.row.money, scope.row.ruleData])
+          }}</span>
+          <span v-if="scope.row.ruleType == 'point'">{{
+            $t('4171686f.1874c6', [scope.row.money, scope.row.ruleData])
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('4171686f.2b6bc0')">
         <template slot-scope="scope">
-          <a href="#" @click="edit(scope.row, scope.$index)">编辑</a>
-          <a href="#" @click="remove(scope.row, scope.$index)">删除</a>
+          <a href="#" @click="edit(scope.row, scope.$index)">{{ $t('4171686f.95b351') }}</a>
+          <a href="#" @click="remove(scope.row, scope.$index)">{{ $t('4171686f.2f4aad') }}</a>
         </template>
       </el-table-column>
     </el-table>
     <el-dialog
-      title="添加面额"
+      :title="$t('4171686f.164405')"
       :visible="dialogVisible"
       :close-on-click-modal="false"
       :before-close="cancelAction"
     >
       <div>
         <el-form ref="form" :rules="rules" :model="form" label-width="120px">
-          <el-form-item label="固定面额数(元)" prop="fixed_money">
+          <el-form-item :label="$t('4171686f.3df354')" prop="fixed_money">
             <el-input v-model="form.fixed_money" style="width: 240px" />
           </el-form-item>
-          <el-form-item label="赠送">
+          <el-form-item :label="$t('4171686f.34ce20')">
             <el-select v-model="form.rule_type">
               <el-option
                 v-for="(item, index) in giftType"
                 :key="item.rule_type"
-                :label="item.text"
+                :label="$t(item.textKey)"
                 :value="item.rule_type"
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-show="form.rule_type == 'money'" label="赠送金额(元)">
+          <el-form-item v-show="form.rule_type == 'money'" :label="$t('4171686f.2b0313')">
             <el-input v-model="form.rule_data" style="width: 200px" />
           </el-form-item>
-          <el-form-item v-show="form.rule_type == 'point'" label="赠送积分(分)">
+          <el-form-item v-show="form.rule_type == 'point'" :label="$t('4171686f.6d3bc6')">
             <el-input v-model="form.rule_data" style="width: 200px" />
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false"> 取消 </el-button>
-        <el-button type="primary" @click="add"> 确定 </el-button>
+        <el-button @click="dialogVisible = false">{{ $t('4171686f.625fb2') }}</el-button>
+        <el-button type="primary" @click="add">{{ $t('4171686f.38cf16') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -94,12 +98,14 @@ export default {
       },
       dataList: [],
       giftType: [
-        { id: 1, text: '充值送钱', rule_type: 'money' },
-        { id: 2, text: '充值送积分', rule_type: 'point' }
+        { id: 1, textKey: '4171686f.da5072', rule_type: 'money' },
+        { id: 2, textKey: '4171686f.d81f65', rule_type: 'point' }
       ],
       rules: {
-        fixed_money: [{ required: true, message: '请输入固定面额数', trigger: 'blur' }],
-        rule_data: [{ required: true, message: '请输入赠送金额', trigger: 'blur' }]
+        fixed_money: [
+          { required: true, message: () => this.$t('4171686f.5bf8a2'), trigger: 'blur' }
+        ],
+        rule_data: [{ required: true, message: () => this.$t('4171686f.b8ff00'), trigger: 'blur' }]
       }
     }
   },
@@ -119,7 +125,7 @@ export default {
       this.form.fixed_money = ''
       this.form.rule_data = ''
       if (this.dataList.length >= 14) {
-        this.$message({ message: '最多添加14个面额', type: 'error' })
+        this.$message({ message: this.$t('4171686f.339154'), type: 'error' })
         return
       }
       this.dialogVisible = true
@@ -134,7 +140,7 @@ export default {
     remove(row, index) {
       deleteRechargeRuleById(row.id).then((res) => {
         this.$message({
-          message: '删除成功',
+          message: this.$t('4171686f.0007d1'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -162,7 +168,7 @@ export default {
           if (this.form.id) {
             editRechargeRuleById(this.form).then((res) => {
               this.$message({
-                message: '保存成功',
+                message: this.$t('4171686f.3b1083'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -171,7 +177,7 @@ export default {
           } else {
             createRechargeRule(this.form).then((res) => {
               this.$message({
-                message: '保存成功',
+                message: this.$t('4171686f.3b1083'),
                 type: 'success',
                 duration: 5 * 1000
               })

@@ -28,8 +28,8 @@
         </el-col>
       </el-row>
     </div>
-    <div v-if="title === '分账信息'" class="btn">
-      <el-button type="info" disabled> 已审批 </el-button>
+    <div v-if="title === $t('3083129c.adb36c')" class="btn">
+      <el-button type="info" disabled> {{ $t('3083129c.618acb') }} </el-button>
     </div>
   </el-card>
 </template>

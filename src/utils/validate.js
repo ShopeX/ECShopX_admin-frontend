@@ -2,6 +2,8 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+import { i18n } from '@/i18n'
+
 export function isMobile(str) {
   // const reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
   const reg = /^(1\d{10})$/
@@ -67,10 +69,10 @@ export function validatUploadImage(file) {
   let isGIF = file.raw.type === 'image/gif'
   let isLt2M = file.raw.size / 1024 / 1024 <= MAX_IMG_SIZE
   if (!isJPG && !isPNG && !isGIF) {
-    return '上传图片只能是 JPG、PNG、GIF 格式!'
+    return i18n.t('6f8a23e8.435a6a')
   }
   if (!isLt2M) {
-    return `上传图片大小不能超过 ${MAX_IMG_SIZE}MB!`
+    return i18n.t('6f8a23e8.a3f270', { size: MAX_IMG_SIZE })
   }
   return true
 }
@@ -80,10 +82,10 @@ export function validatUploadVideo(file) {
   let isMP4 = file.raw.type === 'image/mp4'
   let isLt15M = file.raw.size / 1024 / 1024 <= 5
   if (!isMP4) {
-    return '上传视频只能是 MP4 格式!'
+    return i18n.t('6f8a23e8.33be87')
   }
   if (!isLt15M) {
-    return '上传视频大小不能超过 5MB!'
+    return i18n.t('6f8a23e8.2a0f8c')
   }
   return true
 }

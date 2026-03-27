@@ -8,37 +8,37 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row class="filter-header" :gutter="20">
         <el-col>
-          <el-input v-model="identifier" class="input-m" placeholder="订单号" />
-          <el-input v-model="brand" class="input-m" placeholder="品牌" />
-          <el-input v-model="main_category" class="input-m" placeholder="商品品类" />
+          <el-input v-model="identifier" class="input-m" :placeholder="$t('a6742d6f.1e8dc2')" />
+          <el-input v-model="brand" class="input-m" :placeholder="$t('a6742d6f.09307c')" />
+          <el-input v-model="main_category" class="input-m" :placeholder="$t('a6742d6f.63019a')" />
         </el-col>
         <el-col>
-          下单日期
+          {{ $t('a6742d6f.b81802') }}
           <el-date-picker
             v-model="create_time"
             class="input-m"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('a6742d6f.4b8cb9')"
             @change="dateChange"
           />
         </el-col>
         <el-col>
-          发货日期
+          {{ $t('a6742d6f.7c9664') }}
           <el-date-picker
             v-model="delivery_time"
             class="input-m"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('a6742d6f.4b8cb9')"
             @change="dateDeliveryChange"
           />
-          <el-button type="primary" @click="exportData"> 导出 </el-button>
+          <el-button type="primary" @click="exportData"> {{ $t('a6742d6f.55405e') }} </el-button>
           <el-popover
             placement="top-start"
             width="200"
             trigger="hover"
-            content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+            :content="$t('a6742d6f.676480')"
           >
             <i slot="reference" class="el-icon-question" />
           </el-popover>
@@ -80,7 +80,7 @@ export default {
   methods: {
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('a6742d6f.20a495'),
         showClose: true
       })
     },
@@ -132,7 +132,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('a6742d6f.3e1ddd')
           })
           return
         } else if (response.data.data.url) {
@@ -142,7 +142,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('a6742d6f.bfd8d5')
           })
         }
       })

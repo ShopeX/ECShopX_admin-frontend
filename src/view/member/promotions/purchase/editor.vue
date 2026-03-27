@@ -6,10 +6,7 @@
 <template>
   <div>
     <el-form ref="form" :rules="rules" :model="form" label-width="200px">
-      <el-form-item
-        label="活动名称："
-        :rules="[{ required: true, message: '请输入活动名称', trigger: 'blur' }]"
-      >
+      <el-form-item :label="$t('194e2303.eb2f99')" :rules="purchaseNameRules">
         <el-input
           v-model="form.purchase_name"
           style="width: 400px"
@@ -18,11 +15,8 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item
-        label="活动封面："
-        :rules="[{ required: true, message: '请输入活动封面', trigger: 'blur' }]"
-      >
-        <div class="frm-tips">建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为2M内。</div>
+      <el-form-item :label="$t('194e2303.af2830')" :rules="adPicRules">
+        <div class="frm-tips">{{ $t('194e2303.639a69') }}</div>
         <div>
           <imgBox :img-url="form.ad_pic" inline @click="handleImgChange" />
         </div>
@@ -33,24 +27,21 @@
           @closeImgDialog="closeImgDialog"
         />
       </el-form-item>
-      <el-form-item
-        label="活动时间："
-        :rules="[{ required: true, message: '请输入活动时间', trigger: 'blur' }]"
-      >
+      <el-form-item :label="$t('194e2303.9e62e9')" :rules="activityTimeRules">
         <el-col :span="20">
           <el-date-picker
             v-model="activity_date"
             type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
+            :range-separator="$t('194e2303.981cbe')"
+            :start-placeholder="$t('194e2303.592c59')"
+            :end-placeholder="$t('194e2303.f78277')"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
             :picker-options="pickerOptions"
           />
         </el-col>
       </el-form-item>
-      <el-form-item label="适用角色：">
+      <el-form-item :label="$t('194e2303.936aa4')">
         <el-checkbox-group v-model="form.used_roles">
           <el-checkbox
             v-for="roleItem in roleArr"
@@ -64,66 +55,51 @@
         </el-checkbox-group>
       </el-form-item>
       <div style="display: flex">
-        <el-form-item
-          label="员工额度："
-          :rules="{ required: true, message: '请输入员工额度', trigger: 'blur' }"
-        >
+        <el-form-item :label="$t('194e2303.aaf0b4')" :rules="employeeLimitfeeRules">
           <el-input v-model="form.employee_limitfee" style="width: 240px">
-            <template slot="append"> 元 </template>
+            <template slot="append"> {{ $t('194e2303.c16655') }} </template>
           </el-input>
         </el-form-item>
         <el-form-item v-if="form.used_roles.includes('dependents')">
-          <el-checkbox v-model="form.is_share_limitfee"> 是否共享额度 </el-checkbox>
+          <el-checkbox v-model="form.is_share_limitfee"> {{ $t('194e2303.059d81') }} </el-checkbox>
         </el-form-item>
       </div>
       <el-form-item
         v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
-        label="亲友额度："
-        :rules="{
-          required: form.used_roles.includes('dependents') && !form.is_share_limitfee,
-          message: '请输入亲友额度',
-          trigger: 'blur'
-        }"
+        :label="$t('194e2303.6ceef0')"
+        :rules="dependentsLimitfeeRules"
       >
         <el-input v-model="form.dependents_limitfee" style="width: 240px">
-          <template slot="append"> 元 </template>
+          <template slot="append"> {{ $t('194e2303.c16655') }} </template>
         </el-input>
       </el-form-item>
       <el-form-item
         v-if="form.used_roles.includes('dependents')"
-        label="员工邀请上限："
-        :rules="{
-          required: form.used_roles.includes('dependents'),
-          message: '请输入员工邀请上限',
-          trigger: 'blur'
-        }"
+        :label="$t('194e2303.552f95')"
+        :rules="dependentsLimitRules"
       >
         <el-input v-model="form.dependents_limit" style="width: 240px">
-          <template slot="append"> 人 </template>
+          <template slot="append"> {{ $t('194e2303.465afe') }} </template>
         </el-input>
       </el-form-item>
-      <el-form-item label="单笔订单最低金额：">
+      <el-form-item :label="$t('194e2303.6703e8')">
         <el-input v-model="form.minimum_amount" style="width: 240px">
-          <template slot="append"> 元 </template>
+          <template slot="append"> {{ $t('194e2303.c16655') }} </template>
         </el-input>
       </el-form-item>
-      <el-card header="活动商品" shadow="naver">
-        <el-form-item label="适用商品">
+      <el-card :header="$t('194e2303.42f9f7')" shadow="naver">
+        <el-form-item :label="$t('194e2303.409ea3')">
           <el-radio-group v-model="form.item_type" @change="itemTypeChange">
-            <el-radio label="all"> 全部商品 </el-radio>
-            <el-radio label="item"> 指定商品适用 </el-radio>
-            <el-radio label="category"> 指定分类适用 </el-radio>
-            <el-radio label="tag"> 指定商品标签适用 </el-radio>
-            <el-radio label="brand"> 指定品牌适用 </el-radio>
+            <el-radio label="all"> {{ $t('194e2303.794a4e') }} </el-radio>
+            <el-radio label="item"> {{ $t('194e2303.1e0568') }} </el-radio>
+            <el-radio label="category"> {{ $t('194e2303.4e4c10') }} </el-radio>
+            <el-radio label="tag"> {{ $t('194e2303.d61cbb') }} </el-radio>
+            <el-radio label="brand"> {{ $t('194e2303.8f5e18') }} </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="!allHiden"
-          label="每人限购："
-          :rules="{ required: true, message: '请输入每人限购', trigger: 'blur' }"
-        >
+        <el-form-item v-if="!allHiden" :label="$t('194e2303.798962')" :rules="perLimitRules">
           <el-input v-model="allLimit" style="width: 240px">
-            <template slot="append"> 件 </template>
+            <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
           </el-input>
         </el-form-item>
         <div v-if="!zdItemHidden">
@@ -136,10 +112,10 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button type="primary"> 批量上传 </el-button>
+                <el-button type="primary"> {{ $t('194e2303.c3202e') }} </el-button>
               </el-upload>
               <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
-                下载模板
+                {{ $t('194e2303.c3f9a1') }}
               </el-button>
             </div>
             <SkuSelector :data="relItems" @change="getItems" />
@@ -150,29 +126,29 @@
             style="margin-top: 10px"
             @click="dialogFormVisible = true"
           >
-            批量设置
+            {{ $t('194e2303.475dd0') }}
           </el-button>
           <el-table key="currentGoodKey" :data="good.currentGoods">
             <el-table-column prop="item_id" label="ID" width="180" />
-            <el-table-column prop="itemName" label="商品名称" width="180" />
-            <el-table-column prop="item_spec_desc" label="规格" width="180" />
-            <el-table-column prop="limit_num" label="每人限购" width="280">
+            <el-table-column prop="itemName" :label="$t('194e2303.1fd1d5')" width="180" />
+            <el-table-column prop="item_spec_desc" :label="$t('194e2303.ea887b')" width="180" />
+            <el-table-column prop="limit_num" :label="$t('194e2303.343488')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'good.currentGoods')"
                 >
-                  <template slot="append"> 件 </template>
+                  <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
                 </el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="limit_fee" label="每人限额" width="280">
+            <el-table-column prop="limit_fee" :label="$t('194e2303.8a34e8')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'good.currentGoods')"
                 >
-                  <template slot="append"> 元 </template>
+                  <template slot="append"> {{ $t('194e2303.c16655') }} </template>
                 </el-input>
               </template>
             </el-table-column>
@@ -197,28 +173,28 @@
               style="margin-top: 10px"
               @click="dialogFormVisible = true"
             >
-              批量设置
+              {{ $t('194e2303.475dd0') }}
             </el-button>
             <el-table key="categoryKey" :data="item_category">
               <el-table-column prop="category_id" label="ID" width="180" />
-              <el-table-column prop="category_name" label="分类名称" width="180" />
-              <el-table-column label="每人限购" width="280">
+              <el-table-column prop="category_name" :label="$t('194e2303.04d7d8')" width="180" />
+              <el-table-column :label="$t('194e2303.343488')" width="280">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.limit_num"
                     @input="inputChange(scope.$index, 'item_category')"
                   >
-                    <template slot="append"> 件 </template>
+                    <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
                   </el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="limit_fee" label="每人限额" width="280">
+              <el-table-column prop="limit_fee" :label="$t('194e2303.8a34e8')" width="280">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.limit_fee"
                     @input="inputChange(scope.$index, 'item_category')"
                   >
-                    <template slot="append"> 元 </template>
+                    <template slot="append"> {{ $t('194e2303.c16655') }} </template>
                   </el-input>
                 </template>
               </el-table-column>
@@ -227,7 +203,7 @@
         </el-col>
         <template v-if="!tagHidden">
           <div class="view-flex">
-            <div class="label">未选标签：</div>
+            <div class="label">{{ $t('194e2303.5de9e5') }}</div>
             <el-tag
               v-for="(tag, index) in tag.tags"
               :key="index"
@@ -241,7 +217,7 @@
             </el-tag>
           </div>
           <div class="selected-tags view-flex" style="margin-top: 10px">
-            <div class="label">已选标签：</div>
+            <div class="label">{{ $t('194e2303.12a199') }}</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(tag, index) in tag.currentTags"
@@ -261,28 +237,28 @@
             style="margin-top: 10px"
             @click="dialogFormVisible = true"
           >
-            批量设置
+            {{ $t('194e2303.475dd0') }}
           </el-button>
           <el-table key="currentTagKey" :data="tag.currentTags">
             <el-table-column prop="tag_id" label="ID" width="180" />
-            <el-table-column prop="tag_name" label="标签名称" width="180" />
-            <el-table-column prop="limit_num" label="每人限购" width="280">
+            <el-table-column prop="tag_name" :label="$t('194e2303.341fe8')" width="180" />
+            <el-table-column prop="limit_num" :label="$t('194e2303.343488')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'tag.currentTags')"
                 >
-                  <template slot="append"> 件 </template>
+                  <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
                 </el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="limit_fee" label="每人限额" width="280">
+            <el-table-column prop="limit_fee" :label="$t('194e2303.8a34e8')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'tag.currentTags')"
                 >
-                  <template slot="append"> 元 </template>
+                  <template slot="append"> {{ $t('194e2303.c16655') }} </template>
                 </el-input>
               </template>
             </el-table-column>
@@ -290,7 +266,7 @@
         </template>
         <template v-if="!brandHidden">
           <div class="view-flex">
-            <div class="label">未选品牌：</div>
+            <div class="label">{{ $t('194e2303.b941c2') }}</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(brand, index) in brand.brands"
@@ -307,7 +283,7 @@
           </div>
 
           <div class="selected-tags view-flex" style="margin-top: 10px">
-            <div class="label">已选品牌：</div>
+            <div class="label">{{ $t('194e2303.77cb15') }}</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(brand, index) in brand.currentBrands"
@@ -327,60 +303,64 @@
             style="margin-top: 10px"
             @click="dialogFormVisible = true"
           >
-            批量设置
+            {{ $t('194e2303.475dd0') }}
           </el-button>
           <el-table key="currentBrandKey" :data="brand.currentBrands">
             <el-table-column prop="attribute_id" label="ID" width="180" />
-            <el-table-column prop="attribute_name" label="品牌名称" width="180" />
-            <el-table-column prop="limit_num" label="每人限购" width="280">
+            <el-table-column prop="attribute_name" :label="$t('194e2303.4e8713')" width="180" />
+            <el-table-column prop="limit_num" :label="$t('194e2303.343488')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'brand.currentBrands')"
                 >
-                  <template slot="append"> 件 </template>
+                  <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
                 </el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="limit_fee" label="每人限额" width="280">
+            <el-table-column prop="limit_fee" :label="$t('194e2303.8a34e8')" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'brand.currentBrands')"
                 >
-                  <template slot="append"> 元 </template>
+                  <template slot="append"> {{ $t('194e2303.c16655') }} </template>
                 </el-input>
               </template>
             </el-table-column>
           </el-table>
         </template>
         <el-dialog
-          title="批量设置限购"
+          :title="$t('194e2303.c0c304')"
           :visible="dialogFormVisible"
           width="500px"
           @close="dialogClose"
         >
           <el-form key="dialogFormKey" :model="dialogForm">
-            <el-form-item label="每人限购：" style="display: flex">
+            <el-form-item :label="$t('194e2303.798962')" style="display: flex">
               <el-input v-model="dialogForm.limit_num" autocomplete="off">
-                <template slot="append"> 件 </template>
+                <template slot="append"> {{ $t('194e2303.f7edf5') }} </template>
               </el-input>
             </el-form-item>
-            <el-form-item label="每人限额：" style="display: flex">
+            <el-form-item :label="$t('194e2303.a218b2')" style="display: flex">
               <el-input v-model="dialogForm.limit_fee" autocomplete="off">
-                <template slot="append"> 元 </template>
+                <template slot="append"> {{ $t('194e2303.c16655') }} </template>
               </el-input>
             </el-form-item>
-            <div>设置后将更新所有参与活动的商品规格限购数量</div>
+            <div>{{ $t('194e2303.6214b0') }}</div>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false"> 取 消 </el-button>
-            <el-button type="primary" @click="dialogFormConfirm()"> 确 定 </el-button>
+            <el-button @click="dialogFormVisible = false"> {{ $t('194e2303.c08ab9') }} </el-button>
+            <el-button type="primary" @click="dialogFormConfirm()">
+              {{ $t('194e2303.aa7527') }}
+            </el-button>
           </div>
         </el-dialog>
       </el-card>
       <div class="content-center">
-        <el-button type="primary" @click="submitActivityAction()"> 保存 </el-button>
+        <el-button type="primary" @click="submitActivityAction()">
+          {{ $t('194e2303.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -429,10 +409,6 @@ export default {
       rules: {},
       imgDialog: false,
       isGetImage: false,
-      roleArr: [
-        { key: 'employee', name: '员工' },
-        { key: 'dependents', name: '亲友' }
-      ],
       allHiden: false,
       allLimit: '',
       zdItemHidden: true,
@@ -465,7 +441,47 @@ export default {
       itemTreeLists: []
     }
   },
-
+  computed: {
+    roleArr() {
+      return [
+        { key: 'employee', name: this.$t('194e2303.2ed392') },
+        { key: 'dependents', name: this.$t('194e2303.4eca5b') }
+      ]
+    },
+    purchaseNameRules() {
+      return [{ required: true, message: this.$t('194e2303.7528b3'), trigger: 'blur' }]
+    },
+    adPicRules() {
+      return [{ required: true, message: this.$t('194e2303.07848f'), trigger: 'blur' }]
+    },
+    activityTimeRules() {
+      return [{ required: true, message: this.$t('194e2303.696416'), trigger: 'blur' }]
+    },
+    employeeLimitfeeRules() {
+      return [{ required: true, message: this.$t('194e2303.16f734'), trigger: 'blur' }]
+    },
+    dependentsLimitfeeRules() {
+      return [
+        {
+          required: this.form.used_roles.includes('dependents') && !this.form.is_share_limitfee,
+          message: this.$t('194e2303.86602b'),
+          trigger: 'blur'
+        }
+      ]
+    },
+    dependentsLimitRules() {
+      return [
+        {
+          required: this.form.used_roles.includes('dependents'),
+          message: this.$t('194e2303.bd13b6'),
+          trigger: 'blur'
+        }
+      ]
+    },
+    perLimitRules() {
+      return [{ required: true, message: this.$t('194e2303.14d1ac'), trigger: 'blur' }]
+    }
+  },
   mounted() {
     this.fetchMainCate()
     this.getAllTagLists()
@@ -538,7 +554,7 @@ export default {
       if (data.image_type !== 'image/jpeg' && data.image_type !== 'image/png') {
         this.$message({
           type: 'warning',
-          message: '仅支持格式为png、jpg的图片'
+          message: this.$t('194e2303.9c1113')
         })
         return
       }
@@ -620,7 +636,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('194e2303.a7699b')
         })
 
         let { data } = response.data
@@ -633,7 +649,7 @@ export default {
           setTimeout(() => {
             this.$message({
               showClose: true,
-              message: `以下商品编号不存在：${str}`,
+              message: `${this.$t('194e2303.ef474d')}${str}`,
               type: 'error',
               duration: 5000
             })
@@ -655,7 +671,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'purchase_goods', file_name: '商品模板' }
+      let params = { file_type: 'purchase_goods', file_name: this.$t('194e2303.e07423') }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -668,7 +684,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('194e2303.bfd8d5')
           })
         }
       })
@@ -771,7 +787,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('194e2303.3e5ac0')
         })
         return false
       }
@@ -826,7 +842,7 @@ export default {
           if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('194e2303.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -835,7 +851,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('194e2303.73b0d9'))
             return false
           }
         })
@@ -844,7 +860,7 @@ export default {
           if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('194e2303.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -853,7 +869,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('194e2303.73b0d9'))
             return false
           }
         })

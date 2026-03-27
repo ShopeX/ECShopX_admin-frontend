@@ -13,7 +13,7 @@
             v-model="created_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('2e7c4418.4b8cb9')"
             style="width: 100%"
             @change="dateChange"
           />
@@ -22,7 +22,7 @@
           <el-input
             v-model="params.activity_name"
             clearable
-            placeholder="活动名称"
+            :placeholder="$t('2e7c4418.39834b')"
             style="width: 100%"
             @change="getList"
           />
@@ -31,7 +31,7 @@
           <el-input
             v-model="params.shop_number"
             clearable
-            placeholder="店号"
+            :placeholder="$t('2e7c4418.3833a5')"
             style="width: 100%"
             @change="getList"
           />
@@ -40,27 +40,29 @@
           <el-input
             v-model="params.site_number"
             clearable
-            placeholder="站点号"
+            :placeholder="$t('2e7c4418.dfa7e2')"
             style="width: 100%"
             @change="getList"
           />
         </el-col>
         <el-col :md="4" :lg="4">
           <el-button type="primary" @click="batchDeliveryordeStatus('SHIPPED')">
-            批量发货
+            {{ $t('2e7c4418.425991') }}
           </el-button>
         </el-col>
         <el-col :md="12" :lg="10">
-          <el-button type="primary" @click="exportData"> 导出配送单 </el-button>
-          <el-button type="primary" @click="exportDeliveryorderInfo"> 导出收货单 </el-button>
+          <el-button type="primary" @click="exportData"> {{ $t('2e7c4418.f2718e') }} </el-button>
+          <el-button type="primary" @click="exportDeliveryorderInfo">
+            {{ $t('2e7c4418.e01ce3') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="全部" name="all" />
-        <el-tab-pane label="待发货" name="PENDING" />
-        <el-tab-pane label="待收货" name="SHIPPED" />
-        <el-tab-pane label="已送达" name="DONE" />
-        <el-tab-pane label="有报损" name="BADDONE" />
+        <el-tab-pane :label="$t('2e7c4418.a8b0c2')" name="all" />
+        <el-tab-pane :label="$t('2e7c4418.d8476e')" name="PENDING" />
+        <el-tab-pane :label="$t('2e7c4418.4933ca')" name="SHIPPED" />
+        <el-tab-pane :label="$t('2e7c4418.f87f48')" name="DONE" />
+        <el-tab-pane :label="$t('2e7c4418.f41799')" name="BADDONE" />
 
         <el-table
           v-loading="loading"
@@ -69,39 +71,52 @@
           :height="wheight - 220"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" align="center" label="全选" />
-          <el-table-column prop="delivery_bn" label="批次号" min-width="120" />
-          <el-table-column prop="status" label="状态" min-width="140">
+          <el-table-column type="selection" align="center" :label="$t('2e7c4418.66eeac')" />
+          <el-table-column prop="delivery_bn" :label="$t('2e7c4418.51767c')" min-width="120" />
+          <el-table-column prop="status" :label="$t('2e7c4418.3fea7c')" min-width="140">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.status === 'PENDING'" type="info"> 待发货 </el-tag>
-              <el-tag v-if="scope.row.status === 'SHIPPED'" type="primary"> 待收货 </el-tag>
-              <el-tag v-if="scope.row.status === 'DONE'" type="success"> 已送达 </el-tag>
-              <el-tag v-if="scope.row.status === 'BADDONE'" type="danger"> 已送达，有报损 </el-tag>
+              <el-tag v-if="scope.row.status === 'PENDING'" type="info">
+                {{ $t('2e7c4418.d8476e') }}
+              </el-tag>
+              <el-tag v-if="scope.row.status === 'SHIPPED'" type="primary">
+                {{ $t('2e7c4418.4933ca') }}
+              </el-tag>
+              <el-tag v-if="scope.row.status === 'DONE'" type="success">
+                {{ $t('2e7c4418.f87f48') }}
+              </el-tag>
+              <el-tag v-if="scope.row.status === 'BADDONE'" type="danger">
+                {{ $t('2e7c4418.5dc3f1') }}
+              </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="activity_name" label="活动名称" min-width="160" />
-          <el-table-column prop="community_name" label="社区名称" min-width="140">
+          <el-table-column prop="activity_name" :label="$t('2e7c4418.39834b')" min-width="160" />
+          <el-table-column prop="community_name" :label="$t('2e7c4418.d541f8')" min-width="140">
             <template slot-scope="scope">
               <span v-if="scope.row.community_name">{{ scope.row.community_name }}</span>
-              <span v-else>未知社区</span>
+              <span v-else>{{ $t('2e7c4418.66042f') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="leader_name" label="团长姓名" />
-          <el-table-column prop="shop_number" label="店号" />
-          <el-table-column prop="site_number" label="站点号" />
-          <el-table-column label="金额">
+          <el-table-column prop="leader_name" :label="$t('2e7c4418.07e57c')" />
+          <el-table-column prop="shop_number" :label="$t('2e7c4418.3833a5')" />
+          <el-table-column prop="site_number" :label="$t('2e7c4418.dfa7e2')" />
+          <el-table-column :label="$t('2e7c4418.4cf24a')">
             <template slot-scope="scope">
               <span>¥{{ scope.row.total_fee / 100 }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="item_order_num" label="订单数" />
-          <el-table-column prop="item_total_num" label="商品数量" />
-          <el-table-column prop="created_time" label="创建时间" min-width="160">
+          <el-table-column prop="item_order_num" :label="$t('2e7c4418.fbb493')" />
+          <el-table-column prop="item_total_num" :label="$t('2e7c4418.06612d')" />
+          <el-table-column prop="created_time" :label="$t('2e7c4418.eca37c')" min-width="160">
             <template slot-scope="scope">
               <span>{{ scope.row.created_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="操作" min-width="120" fixed="left">
+          <el-table-column
+            prop="status"
+            :label="$t('2e7c4418.2b6bc0')"
+            min-width="120"
+            fixed="left"
+          >
             <template slot-scope="scope">
               <el-button
                 v-if="scope.row.status == 'PENDING'"
@@ -109,10 +124,10 @@
                 type="text"
                 @click="shippedHandle(scope.row)"
               >
-                发货
+                {{ $t('2e7c4418.045315') }}
               </el-button>
               <el-button size="mini" type="text" @click="deliveryorderDetail(scope.row)">
-                详情
+                {{ $t('2e7c4418.f26225') }}
               </el-button>
             </template>
           </el-table-column>
@@ -128,7 +143,11 @@
           />
         </div>
       </el-tabs>
-      <el-dialog title="配送单下载" :visible.sync="downloadView" :close-on-click-modal="false">
+      <el-dialog
+        :title="$t('2e7c4418.95b655')"
+        :visible.sync="downloadView"
+        :close-on-click-modal="false"
+      >
         <template v-if="downloadUrl">
           <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
@@ -235,7 +254,7 @@ export default {
       if (this.delivery_id.length === 0) {
         this.$message({
           type: 'error',
-          message: '请选择至少一个配送单'
+          message: this.$t('2e7c4418.2a558e')
         })
         return false
       }
@@ -254,7 +273,7 @@ export default {
       batchShippingDeliveryorder(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '操作成功',
+            message: this.$t('2e7c4418.33130f'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -264,16 +283,16 @@ export default {
     },
     // 发货确认
     shippedHandle(row) {
-      this.$confirm('是否确认已发货?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('2e7c4418.8f2605'), this.$t('2e7c4418.02d981'), {
+        confirmButtonText: this.$t('2e7c4418.38cf16'),
+        cancelButtonText: this.$t('2e7c4418.625fb2'),
         type: 'warning'
       })
         .then(() => {
           shippingDeliveryorder({ delivery_id: row.delivery_id }).then((response) => {
             this.$message({
               type: 'success',
-              message: '操作成功!'
+              message: this.$t('2e7c4418.43d829')
             })
             this.getList()
           })
@@ -281,7 +300,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('2e7c4418.c34281')
           })
         })
     },

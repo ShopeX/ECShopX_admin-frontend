@@ -5,18 +5,18 @@
 
 <template>
   <el-col class="section section-white" :span="12">
-    <div class="section-header with-border">抽奖规则配置</div>
+    <div class="section-header with-border">{{ $t('2224c124.359c54') }}</div>
     <div class="section-white content-padded">
       <el-form ref="form_content" label-width="80px">
-        <el-form-item label="抽奖规则" prop="content">
+        <el-form-item :label="$t('2224c124.d1e0c1')" prop="content">
           <el-input v-model="form_content.content" type="textarea" :rows="18" />
         </el-form-item>
       </el-form>
     </div>
     <div class="section-footer content-center">
-      <el-button type="primary" @click="saveContent"> 保存 </el-button>
+      <el-button type="primary" @click="saveContent"> {{ $t('2224c124.be5fbb') }} </el-button>
     </div>
-    <br />
+    <br>
   </el-col>
 </template>
 
@@ -37,7 +37,7 @@ export default {
     saveContent() {
       setLuckydrawRules(this.form_content).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('2224c124.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })

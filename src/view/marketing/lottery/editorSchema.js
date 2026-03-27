@@ -10,7 +10,7 @@ export const formList = (vm) =>
     [
       {
         type: 'group',
-        label: '活动基础配置'
+        label: vm.$t('de51ee4c.7bc81f')
       },
       // {
       //   label: '区域',
@@ -22,18 +22,18 @@ export const formList = (vm) =>
       //   options: vm?.areas || []
       // },
       {
-        label: '活动标题',
+        label: vm.$t('de51ee4c.902a3d'),
         key: 'activity_name',
         type: 'input',
         required: true,
-        placeholder: '请输入活动标题',
+        placeholder: vm.$t('de51ee4c.c0e2a5'),
         defaultValue: ''
       },
       {
-        label: '活动时间',
+        label: vm.$t('de51ee4c.c799f5'),
         key: 'start_time',
         required: true,
-        placeholder: '请选择活动时间',
+        placeholder: vm.$t('de51ee4c.d8e0d0'),
         defaultValue: '',
         component(_) {
           return (
@@ -41,9 +41,9 @@ export const formList = (vm) =>
               v-model={vm.form['start_time']}
               type='datetimerange'
               on-change={(val) => vm.handleDateInput(val)}
-              range-separator='至'
-              start-placeholder='开始时间'
-              end-placeholder='结束时间'
+              range-separator={vm.$t('bea3f44a.981cbe')}
+              start-placeholder={vm.$t('39e3acc2.592c59')}
+              end-placeholder={vm.$t('39e3acc2.f78277')}
               value-format='yyyy-MM-dd HH:mm:ss'
               default-time={['00:00:00', '23:59:59']}
             />
@@ -51,22 +51,21 @@ export const formList = (vm) =>
         }
       },
       {
-        label: '抽奖消耗',
+        label: vm.$t('de51ee4c.29da05'),
         key: 'cost_type',
         type: 'input',
         required: true,
-        placeholder: '请输入抽奖消耗',
+        placeholder: vm.$t('de51ee4c.d836a5'),
         defaultValue: '2',
         component(_) {
           return (
             <div>
               <el-radio-group v-model={vm.form['cost_type']}>
-                {/* <el-radio-button label='1'>互动分</el-radio-button> */}
-                <el-radio-button label='2'>积分</el-radio-button>
+                <el-radio-button label='2'>{vm.$t('9f64e002.9f68a8')}</el-radio-button>
               </el-radio-group>
               <el-input
                 v-model={vm.form['cost_value']}
-                placeholder='请输入分值'
+                placeholder={vm.$t('de51ee4c.4e44e6')}
                 type='number'
                 style={{ width: '120px', marginLeft: '20px' }}
                 onBlur={(val) => {
@@ -89,10 +88,10 @@ export const formList = (vm) =>
         }
       },
       {
-        label: '抽奖限额',
+        label: vm.$t('de51ee4c.00e557'),
         key: 'limit_total',
         type: 'input',
-        placeholder: '请输入抽奖限额',
+        placeholder: vm.$t('de51ee4c.e2e69f'),
         defaultValue: 1,
         required: true,
         component() {
@@ -103,7 +102,6 @@ export const formList = (vm) =>
                 style={{ width: '120px' }}
                 type='number'
                 onBlur={(val) => {
-                  console.log(val.target.value)
                   const _val = val.target.value
                   let _num = 1
                   if (_val <= 0) {
@@ -118,13 +116,12 @@ export const formList = (vm) =>
                 }}
               />
               <div style={{ marginTop: '20px' }}>
-                每日可抽奖 &nbsp;
+                {vm.$t('de51ee4c.f4df51')} &nbsp;
                 <el-input
                   v-model={vm.form['limit_day']}
                   style={{ width: '120px' }}
                   type='number'
                   onBlur={(val) => {
-                    console.log(val.target.value)
                     const _val = val.target.value
                     let _num = 1
                     if (_val <= 0) {
@@ -140,34 +137,34 @@ export const formList = (vm) =>
                     }
                   }}
                 />
-                &nbsp; 次
+                &nbsp; {vm.$t('de51ee4c.7229ec')}
               </div>
             </div>
           )
         }
       },
       {
-        label: '活动说明',
+        label: vm.$t('de51ee4c.4cfbf6'),
         key: 'intro',
         type: 'richText',
         required: true,
-        placeholder: '请输入活动说明',
+        placeholder: vm.$t('de51ee4c.950b2a'),
         defaultValue: ''
       },
       {
         type: 'group',
-        label: '抽奖配置',
+        label: vm.$t('de51ee4c.51c33b'),
         defaultValue: ''
       },
       {
-        label: '抽奖形式',
+        label: vm.$t('de51ee4c.9f0391'),
         defaultValue: 'wheel',
         required: true,
         key: 'activity_type',
         component(_) {
           return (
             <el-radio-group v-model={vm.form['activity_type']}>
-              <el-radio-button label='wheel'>大转盘</el-radio-button>
+              <el-radio-button label='wheel'>{vm.$t('dd9b5a55.5fa218')}</el-radio-button>
               {/* <el-radio-button label='slotMachine'>老虎机</el-radio-button>
               <el-radio-button label='grid'>九宫格</el-radio-button> */}
             </el-radio-group>
@@ -175,7 +172,7 @@ export const formList = (vm) =>
         }
       },
       {
-        label: '抽奖配置',
+        label: vm.$t('de51ee4c.51c33b'),
         key: 'prize_data',
         defaultValue: [],
         required: true,
@@ -192,37 +189,35 @@ export const formList = (vm) =>
             >
               <div slot='tableTop'>
                 <el-button plain onClick={() => vm.addHandle()}>
-                  添加奖项
+                  {vm.$t('de51ee4c.d2f216')}
                 </el-button>
-                <span>&nbsp;最多添加8项</span>
+                <span>&nbsp;{vm.$t('de51ee4c.5ef360')}</span>
                 <div style={{ height: '20px' }}></div>
               </div>
             </SpFinder>
           )
         },
         validator(rule, value, callback) {
-          // 统计概率 必须 <= 100
           const total = value?.reduce((acc, item) => acc + (item.prize_probability * 1 || 0), 0)
-          console.log('🚀 ~ validator ~ total:', total)
           if (total > 100 || total <= 0) {
-            callback(new Error('中奖概率必须在100%到1%之间'))
+            callback(new Error(vm.$t('de51ee4c.0649b8')))
           } else if (value?.filter((item) => item.prize_type).length <= 0) {
-            callback(new Error('请设置奖品'))
+            callback(new Error(vm.$t('de51ee4c.e4ef0f')))
           } else {
             callback()
           }
         }
       },
       {
-        label: '页面背景',
+        label: vm.$t('de51ee4c.1dff74'),
         key: 'back',
         defaultValue: '',
         component({ key }, value) {
           return (
             <div>
               <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '20px' }}>
-                <span>背景色</span>
-                <span>背景图</span>
+                <span>{vm.$t('de51ee4c.2f97db')}</span>
+                <span>{vm.$t('de51ee4c.543aa6')}</span>
                 <span
                   style={{ marginLeft: '40px' }}
                   onClick={() => {
@@ -233,7 +228,7 @@ export const formList = (vm) =>
                     }
                   }}
                 >
-                  恢复默认
+                  {vm.$t('de51ee4c.7468f3')}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '20px' }}>
@@ -258,15 +253,17 @@ export const formList = (vm) =>
         }
       },
       {
-        label: '抽奖区域',
+        label: vm.$t('de51ee4c.ffa588'),
         key: 'hotArea',
         defaultValue: null,
         component({ key }, value) {
           return (
             <div class='inputWrap'>
-              <div>{vm['hasSetHotArea'] ? '已设置' : '未设置'}</div>
+              <div>{vm['hasSetHotArea'] ? vm.$t('de51ee4c.44e607') : vm.$t('de51ee4c.fe2d26')}</div>
               <div style={{ display: 'flex', fontSize: '14px' }}>
-                <div onClick={() => (vm.hotAreasDialogShow = true)}>设置&nbsp;</div>
+                <div onClick={() => (vm.hotAreasDialogShow = true)}>
+                  {vm.$t('de51ee4c.e366cc')}&nbsp;
+                </div>
                 <div
                   onClick={() => {
                     vm.hotArea = {
@@ -278,7 +275,7 @@ export const formList = (vm) =>
                     vm.hasSetHotArea = false
                   }}
                 >
-                  恢复默认
+                  {vm.$t('de51ee4c.7468f3')}
                 </div>
               </div>
             </div>
@@ -311,15 +308,17 @@ export const formList = (vm) =>
       //   }
       // },
       {
-        label: '抽奖记录按钮',
+        label: vm.$t('de51ee4c.e3f125'),
         key: 'recordBtnStyle',
         defaultValue: '',
         component({ key }, value) {
           return (
             <div class='inputWrap'>
-              <div>{vm['hasSetRecord'] ? '已设置' : '未设置'}</div>
+              <div>{vm['hasSetRecord'] ? vm.$t('de51ee4c.44e607') : vm.$t('de51ee4c.fe2d26')}</div>
               <div style={{ display: 'flex' }}>
-                <div onClick={() => (vm.recordDialogShow = true)}>设置&nbsp;</div>
+                <div onClick={() => (vm.recordDialogShow = true)}>
+                  {vm.$t('de51ee4c.e366cc')}&nbsp;
+                </div>
               </div>
             </div>
           )
@@ -346,7 +345,7 @@ export const innerSchema = (vm) =>
   createSetting({
     actions: [
       {
-        name: '删除',
+        name: vm.$t('de51ee4c.2f4aad'),
         key: 'delete',
         type: 'button',
         buttonType: 'text',
@@ -359,7 +358,7 @@ export const innerSchema = (vm) =>
     ],
     columns: [
       {
-        name: '奖项名称',
+        name: vm.$t('de51ee4c.a927ed'),
         key: 'text',
         width: '240px',
         render(_, { row, $index }) {
@@ -371,14 +370,14 @@ export const innerSchema = (vm) =>
                 maxLength={5}
                 on-input={(val) => vm.handleInput(val, row, $index, 'text')}
                 show-word-limit
-                placeholder='请输入奖项名称,长度为5'
+                placeholder={vm.$t('de51ee4c.f91e51')}
               />
             </div>
           )
         }
       },
       {
-        name: '中奖概率',
+        name: vm.$t('de51ee4c.df4f60'),
         key: 'prize_probability',
         width: '190px',
         render(_, { row, $index }) {
@@ -387,7 +386,7 @@ export const innerSchema = (vm) =>
               <el-input
                 value={row['prize_probability']}
                 type='number'
-                placeholder='请输入0-100的整数'
+                placeholder={vm.$t('de51ee4c.f9f5e4')}
                 on-input={(val) => {
                   if (val > 100) {
                     vm.handleInput(99, row, $index, 'prize_probability')
@@ -403,7 +402,7 @@ export const innerSchema = (vm) =>
         }
       },
       {
-        name: '奖品',
+        name: vm.$t('de51ee4c.b47382'),
         key: 'prize_type',
         width: '300px',
         render(_, { row, $index }) {
@@ -411,7 +410,7 @@ export const innerSchema = (vm) =>
             <div style={{ display: 'flex', alignItems: 'center' }} key={row['prize_type']}>
               <el-select
                 value={row['prize_type']}
-                placeholder='请选择'
+                placeholder={vm.$t('de51ee4c.708c9d')}
                 style={{ width: '100px' }}
                 on-change={(val) => vm.handleInput(val, row, $index, 'prize_type')}
               >
@@ -429,19 +428,18 @@ export const innerSchema = (vm) =>
                     style={{ color: '#ff0000', marginLeft: '4px' }}
                     onClick={() => vm.onCouponSubmit(row, $index, 'prize_value')}
                   >
-                    选择
+                    {vm.$t('de51ee4c.153fa6')}
                   </span>
                 </div>
               )}
               {row['prize_type'] == 'coupons' && (
                 <div style={{ paddingLeft: '10px' }}>
                   {row['prize_value']?.title}
-                  {/* {row['prize_detail']?.title} */}
                   <span
                     style={{ color: '#ff0000', marginLeft: '4px' }}
                     onClick={() => vm.onCouponPackSubmit(row, $index, 'prize_value')}
                   >
-                    选择
+                    {vm.$t('de51ee4c.153fa6')}
                   </span>
                 </div>
               )}
@@ -457,7 +455,7 @@ export const innerSchema = (vm) =>
         }
       },
       {
-        name: '每日奖品库存',
+        name: vm.$t('de51ee4c.924543'),
         key: 'stock',
         width: '160px',
         render(_, { row, $index }) {
@@ -466,7 +464,7 @@ export const innerSchema = (vm) =>
               <div>
                 <el-input
                   value={row['stock']}
-                  placeholder='请输入正整数'
+                  placeholder={vm.$t('de51ee4c.eb99be')}
                   on-input={(val) => {
                     // 必须是正整数
                     if (val <= 0) {
@@ -488,7 +486,7 @@ export const innerSchema = (vm) =>
         }
       },
       {
-        name: '奖项底色',
+        name: vm.$t('de51ee4c.bcc437'),
         key: 'background',
         width: '80px',
         render(_, { row, $index }) {
@@ -503,7 +501,7 @@ export const innerSchema = (vm) =>
         }
       },
       {
-        name: '奖品图',
+        name: vm.$t('de51ee4c.5bef5b'),
         key: 'img',
         width: '80px',
         render(_, { row, $index }) {
@@ -526,7 +524,7 @@ export const lotteryAreaSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
-        label: '背景图片',
+        label: vm.$t('de51ee4c.d74849'),
         key: 'backImg',
         required: true,
         defaultValue: '',
@@ -539,7 +537,7 @@ export const lotteryAreaSchema = (vm) =>
         }
       },
       {
-        label: '内边距',
+        label: vm.$t('de51ee4c.841d77'),
         key: 'padding',
         required: true,
         defaultValue: 0,
@@ -547,13 +545,13 @@ export const lotteryAreaSchema = (vm) =>
           return (
             <div key='padding'>
               <el-input v-model={vm.hotArea['padding']} type='number' />
-              <div>最大不可超过50</div>
+              <div>{vm.$t('de51ee4c.631eda')}</div>
             </div>
           )
         }
       },
       {
-        label: '奖项默认底色',
+        label: vm.$t('de51ee4c.3cccd8'),
         key: 'background',
         required: true,
         defaultValue: '#ffffff',
@@ -566,16 +564,15 @@ export const lotteryAreaSchema = (vm) =>
         }
       },
       {
-        label: '抽奖按钮图片',
+        label: vm.$t('de51ee4c.da61d6'),
         key: 'img',
         required: true,
         defaultValue: '',
         component(_) {
-          console.log(vm.hotArea)
           return (
             <div>
               <SpImagePicker v-model={vm.hotArea['img']} key='img' />
-              <div>建议尺寸 160px * 160px 像素</div>
+              <div>{vm.$t('de51ee4c.e128c7')}</div>
             </div>
           )
         }
@@ -601,21 +598,22 @@ export const ruleFormSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
-        label: '按钮配色',
+        label: vm.$t('de51ee4c.6ed535'),
         key: 'rule',
         required: true,
         defaultValue: ['#000000', '#000000'],
         component(_) {
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <el-color-picker v-model={vm.ruleForm['rule'][0]} /> &nbsp;按钮底色&nbsp;
-              <el-color-picker v-model={vm.ruleForm['rule'][1]} /> &nbsp;按钮文字颜色
+              <el-color-picker v-model={vm.ruleForm['rule'][0]} /> &nbsp;{vm.$t('de51ee4c.149f64')}
+              &nbsp;
+              <el-color-picker v-model={vm.ruleForm['rule'][1]} /> &nbsp;{vm.$t('de51ee4c.89ad37')}
             </div>
           )
         }
       },
       {
-        label: '按钮图片',
+        label: vm.$t('de51ee4c.47cf22'),
         key: 'img',
         required: true,
         defaultValue: '',
@@ -623,7 +621,7 @@ export const ruleFormSchema = (vm) =>
           return (
             <div>
               <SpImagePicker v-model={vm.ruleForm['img']} />
-              <div>建议尺寸：宽度 150 像素，高度自适应</div>
+              <div>{vm.$t('de51ee4c.974a1b')}</div>
             </div>
           )
         }
@@ -637,21 +635,23 @@ export const recordFormSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
-        label: '按钮配色',
+        label: vm.$t('de51ee4c.6ed535'),
         key: 'rule',
         required: true,
         defaultValue: ['#ffffff', '#000000'],
         component(_) {
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <el-color-picker v-model={vm.recordForm['rule'][0]} /> &nbsp;按钮底色&nbsp;
-              <el-color-picker v-model={vm.recordForm['rule'][1]} /> &nbsp;按钮文字颜色
+              <el-color-picker v-model={vm.recordForm['rule'][0]} /> &nbsp;
+              {vm.$t('de51ee4c.149f64')}&nbsp;
+              <el-color-picker v-model={vm.recordForm['rule'][1]} /> &nbsp;
+              {vm.$t('de51ee4c.89ad37')}
             </div>
           )
         }
       },
       {
-        label: '按钮图片',
+        label: vm.$t('de51ee4c.47cf22'),
         key: 'img',
         required: true,
         defaultValue: '',
@@ -659,7 +659,7 @@ export const recordFormSchema = (vm) =>
           return (
             <div>
               <SpImagePicker v-model={vm.recordForm['img']} />
-              <div>建议尺寸：宽度 150 像素，高度自适应</div>
+              <div>{vm.$t('de51ee4c.974a1b')}</div>
             </div>
           )
         }

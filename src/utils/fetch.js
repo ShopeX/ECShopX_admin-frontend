@@ -7,6 +7,7 @@ import Vue from 'vue'
 import qs from 'qs'
 import store from '../store'
 import Router from '../router'
+import { i18n } from '@/i18n'
 import {
   isInSalesCenter,
   goLink,
@@ -43,7 +44,7 @@ export function errorToast(data) {
 
   const { status_code, message } = data
   if (status_code == 40101) {
-    Vue.prototype.$message.error('账号密码错误，请重新登录')
+    Vue.prototype.$message.error(i18n.t('6a105397.f78837'))
   } else if (status_code == 401) {
     // Token has expired
     if (isInSalesCenter()) {

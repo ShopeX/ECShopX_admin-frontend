@@ -7,40 +7,40 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item label="是否开启：" prop="ad_title">
+        <el-form-item :label="$t('c5261404.9f0f3f')" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
             active-value="true"
             inactive-value="false"
             inactive-color="#ccc"
-            active-text="开启"
-            inactive-text="关闭"
+            :active-text="$t('c5261404.cc42dd')"
+            :inactive-text="$t('c5261404.b15d91')"
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item label="注册赠送积分：" prop="ad_title">
+        <el-form-item :label="$t('c5261404.9c4868')" prop="ad_title">
           <el-input-number
             v-model="form.point"
             controls-position="right"
-            placeholder="注册赠送积分"
+            :placeholder="$t('c5261404.65c7ef')"
             style="width: 120px"
             :min="0"
             :max="9999999"
           />
         </el-form-item>
-        <el-form-item label="注册返上级积分：" prop="ad_title">
+        <el-form-item :label="$t('c5261404.3f4722')" prop="ad_title">
           <el-input-number
             v-model="form.rebate"
             controls-position="right"
-            placeholder="注册返上级积分"
+            :placeholder="$t('c5261404.0af7d4')"
             style="width: 120px"
             :min="0"
             :max="9999999"
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button type="primary" @click="save"> 保 存 </el-button>
+          <el-button type="primary" @click="save"> {{ $t('c5261404.56df61') }} </el-button>
         </div>
       </div>
     </el-form>
@@ -81,7 +81,7 @@ export default {
       saveRegisterPoint(this.form).then((response) => {
         this.getRegisterData()
         this.$message({
-          message: '添加成功',
+          message: this.$t('c5261404.3fdaea'),
           type: 'success'
         })
       })

@@ -12,25 +12,25 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="distributor" label="店铺名称:">
+      <SpFilterFormItem prop="distributor" :label="$t('822436ab.4de1b7')">
         <el-autocomplete
           v-model="params.distributor.name"
           :fetch-suggestions="queryStoreSearch"
-          placeholder="请输入店铺名称"
+          :placeholder="$t('822436ab.867738')"
           @select="handleSelectStore"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_bn" label="退款单号:">
-        <el-input v-model="params.refund_bn" placeholder="退款单号" />
+      <SpFilterFormItem prop="refund_bn" :label="$t('822436ab.477317')">
+        <el-input v-model="params.refund_bn" :placeholder="$t('822436ab.b0612b')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="params.order_id" placeholder="订单号" />
+      <SpFilterFormItem prop="order_id" :label="$t('822436ab.070dce')">
+        <el-input v-model="params.order_id" :placeholder="$t('822436ab.1e8dc2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="params.mobile" placeholder="手机号" />
+      <SpFilterFormItem prop="mobile" :label="$t('822436ab.ce2bf3')">
+        <el-input v-model="params.mobile" :placeholder="$t('822436ab.8098e2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_type" label="退款类型:">
-        <el-select v-model="params.refund_type" placeholder="退款类型">
+      <SpFilterFormItem prop="refund_type" :label="$t('822436ab.9db7af')">
+        <el-select v-model="params.refund_type" :placeholder="$t('822436ab.f98f05')">
           <el-option
             v-for="(item, index) in refundTypeList"
             :key="index"
@@ -39,8 +39,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_channel" label="退款方式:">
-        <el-select v-model="params.refund_channel" placeholder="退款方式">
+      <SpFilterFormItem prop="refund_channel" :label="$t('822436ab.369034')">
+        <el-select v-model="params.refund_channel" :placeholder="$t('822436ab.4178e0')">
           <el-option
             v-for="(item, index) in refundChannelList"
             :key="index"
@@ -49,8 +49,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_status" label="退款状态:">
-        <el-select v-model="params.refund_status" placeholder="退款状态">
+      <SpFilterFormItem prop="refund_status" :label="$t('822436ab.a2f94f')">
+        <el-select v-model="params.refund_status" :placeholder="$t('822436ab.db7c80')">
           <el-option
             v-for="(item, index) in refundsStatusList"
             :key="index"
@@ -59,25 +59,34 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('822436ab.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="选择日期范围"
+          :placeholder="$t('822436ab.4b8cb9')"
         />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+      <el-button type="primary" plain @click="exportData"> {{ $t('822436ab.55405e') }} </el-button>
     </div>
 
     <el-form ref="form" label-width="100px">
-      <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
-        <el-table-column label="操作" fixed="left">
+      <el-table
+        v-loading="loading"
+        border
+        :data="tableList"
+        :element-loading-text="$t('822436ab.f09b12')"
+      >
+        <el-table-column :label="$t('822436ab.2b6bc0')" fixed="left">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDetail(scope.row)">详情</el-button>
+            <el-button type="text" @click="handleDetail(scope.row)">
+{{
+              $t('822436ab.f26225')
+            }}
+</el-button>
             <el-button
               v-if="
                 scope.row.refund_status == 'AUDIT_SUCCESS' &&
@@ -88,17 +97,17 @@
               type="text"
               @click="() => handleRefund(scope.row)"
             >
-              确认退款
+              {{ $t('822436ab.538b41') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="refund_bn" min-width="220" label="退款单号">
-          <template slot-scope="scope" style="margin-left: 10px">
+        <el-table-column prop="refund_bn" min-width="220" :label="$t('822436ab.b0612b')">
+          <template slot-scope="scope">
             <el-tag v-if="scope.row.refund_type == '0'" effect="plain" type="warning" size="mini">
-              售后
+              {{ $t('822436ab.59bd68') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_type == '1'" effect="plain" size="mini">
-              售前
+              {{ $t('822436ab.63d2ec') }}
             </el-tag>
             <el-tag
               v-else-if="scope.row.refund_type == '2'"
@@ -106,7 +115,7 @@
               type="danger"
               size="mini"
             >
-              拒单
+              {{ $t('822436ab.518ce0') }}
             </el-tag>
             <div>
               <router-link
@@ -118,7 +127,7 @@
               >
                 {{ scope.row.refund_bn }}
               </router-link>
-              <el-tooltip effect="dark" content="复制" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('822436ab.79d3ab')" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.refund_bn"
                   v-clipboard:success="onCopySuccess"
@@ -127,20 +136,20 @@
               </el-tooltip>
             </div>
             <div v-if="scope.row.distributor_id !== '0'" class="order-store">
-              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('822436ab.8a0cc2')" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_info.name }}
             </div>
             <div class="order-time">
-              <el-tooltip effect="dark" content="退款申请时间" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('822436ab.2bd499')" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="aftersales_bn" width="180" label="售后单号">
+        <el-table-column prop="aftersales_bn" width="180" :label="$t('822436ab.d34f24')">
           <template slot-scope="scope">
             <div>
               <router-link
@@ -161,7 +170,7 @@
               <el-tooltip
                 v-if="scope.row.aftersales_bn"
                 effect="dark"
-                content="复制"
+                :content="$t('822436ab.79d3ab')"
                 placement="top-start"
               >
                 <i
@@ -173,7 +182,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="200" label="订单号">
+        <el-table-column min-width="200" :label="$t('822436ab.1e8dc2')">
           <template slot-scope="scope">
             <div>
               <router-link
@@ -190,7 +199,7 @@
               >
                 {{ scope.row.order_id }}
               </router-link>
-              <el-tooltip effect="dark" content="复制" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('822436ab.79d3ab')" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopySuccess"
@@ -200,96 +209,98 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="200" label="支付方式">
+        <el-table-column min-width="200" :label="$t('822436ab.0c9d2b')">
           <template slot-scope="scope">
-            <span v-if="scope.row.pay_type == 'wxpay' || scope.row.pay_type == 'adapay'"
-              >微信支付</span
-            >
-            <span v-if="scope.row.pay_type == 'wxpayapp'">微信APP支付</span>
-            <span v-if="scope.row.pay_type == 'wxpayh5'">微信H5支付</span>
-            <span v-if="scope.row.pay_type == 'wxpaypc'">微信POS支付</span>
-            <span v-if="scope.row.pay_type == 'wxpaypos'">微信PC支付</span>
-            <span v-if="scope.row.pay_type == 'alipayapp'">支付宝APP支付</span>
-            <span v-if="scope.row.pay_type == 'alipay'">支付宝支付</span>
-            <span v-if="scope.row.pay_type == 'alipayh5'">支付宝H5支付</span>
-            <span v-if="scope.row.pay_type == 'alipaypos'">支付宝POS支付</span>
-            <span v-if="scope.row.pay_type == 'deposit'">余额支付</span>
-            <span v-if="scope.row.pay_type == 'ebuy'">EBUY支付</span>
-            <span v-if="scope.row.pay_type == 'point'">积分支付</span>
-            <span v-if="scope.row.pay_type == 'pos'">POS银行卡支付</span>
-            <span v-if="scope.row.pay_type == 'hfpay'">汇付支付</span>
-            <span v-if="scope.row.pay_type == 'chinaums'">微信支付-银联</span>
-            <span v-if="scope.row.pay_type == 'offline_pay'">线下转账</span>
+            <span v-if="scope.row.pay_type == 'wxpay' || scope.row.pay_type == 'adapay'">{{
+              $t('822436ab.bffe28')
+            }}</span>
+            <span v-if="scope.row.pay_type == 'wxpayapp'">{{ $t('822436ab.3c2c77') }}</span>
+            <span v-if="scope.row.pay_type == 'wxpayh5'">{{ $t('822436ab.df7033') }}</span>
+            <span v-if="scope.row.pay_type == 'wxpaypc'">{{ $t('822436ab.c8a8cb') }}</span>
+            <span v-if="scope.row.pay_type == 'wxpaypos'">{{ $t('822436ab.67a318') }}</span>
+            <span v-if="scope.row.pay_type == 'alipayapp'">{{ $t('822436ab.2ac4fe') }}</span>
+            <span v-if="scope.row.pay_type == 'alipay'">{{ $t('822436ab.e3b206') }}</span>
+            <span v-if="scope.row.pay_type == 'alipayh5'">{{ $t('822436ab.5a3c52') }}</span>
+            <span v-if="scope.row.pay_type == 'alipaypos'">{{ $t('822436ab.bc475f') }}</span>
+            <span v-if="scope.row.pay_type == 'deposit'">{{ $t('822436ab.89ac23') }}</span>
+            <span v-if="scope.row.pay_type == 'ebuy'">{{ $t('822436ab.a2e703') }}</span>
+            <span v-if="scope.row.pay_type == 'point'">{{ $t('822436ab.accd19') }}</span>
+            <span v-if="scope.row.pay_type == 'pos'">{{ $t('822436ab.d37dec') }}</span>
+            <span v-if="scope.row.pay_type == 'hfpay'">{{ $t('822436ab.bb68ee') }}</span>
+            <span v-if="scope.row.pay_type == 'chinaums'">{{ $t('822436ab.1d7dae') }}</span>
+            <span v-if="scope.row.pay_type == 'offline_pay'">{{ $t('822436ab.2d8019') }}</span>
           </template>
         </el-table-column>
-        <el-table-column width="180" label="退款金额">
+        <el-table-column width="180" :label="$t('822436ab.a0cd4c')">
           <template slot-scope="scope">
             <div class="order-num mark">
               <span class="cur">{{ scope.row.cur_fee_symbol }}</span
               >{{ scope.row.refund_fee / 100 }}
             </div>
             <div v-if="scope.row.refund_point" class="order-num mark">
-              {{ scope.row.refund_point }}积分
+              {{ scope.row.refund_point }}{{ $t('822436ab.9f68a8') }}
             </div>
             <div v-if="scope.row.refund_success_time" class="order-time">
-              <el-tooltip effect="dark" content="退款完成时间" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('822436ab.ef5fb8')" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.refund_success_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="180" label="退款运费金额（¥）">
+        <el-table-column width="180" :label="$t('822436ab.3034f2')">
           <template slot-scope="scope">
             {{ scope.row.freight_type == 'cash' ? scope.row.freight / 100 : 0 }}
           </template>
         </el-table-column>
-        <el-table-column width="180" label="退款运费（积分）">
+        <el-table-column width="180" :label="$t('822436ab.ff5669')">
           <template slot-scope="scope">
             {{ scope.row.freight_type == 'point' ? scope.row.freight : 0 }}
           </template>
         </el-table-column>
 
         <!-- 退款方式 -->
-        <el-table-column prop="refund_channel" width="80" label="退款方式">
+        <el-table-column prop="refund_channel" width="80" :label="$t('822436ab.4178e0')">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.refund_channel == 'offline'" size="mini"> 线下退款 </el-tag>
+            <el-tag v-if="scope.row.refund_channel == 'offline'" size="mini">
+              {{ $t('822436ab.46a9a9') }}
+            </el-tag>
             <el-tag v-if="scope.row.refund_channel == 'original'" type="success" size="mini">
-              原路返回
+              {{ $t('822436ab.eef322') }}
             </el-tag>
           </template>
         </el-table-column>
         <!-- 退款状态 -->
-        <el-table-column prop="refund_status" width="100" label="退款状态">
+        <el-table-column prop="refund_status" width="100" :label="$t('822436ab.db7c80')">
           <template slot-scope="scope">
             <!-- 订单状态 -->
             <el-tag v-if="scope.row.refund_status == 'READY'" size="mini" type="info">
-              未审核
+              {{ $t('822436ab.97a81d') }}
             </el-tag>
             <el-tag
               v-else-if="scope.row.refund_status == 'AUDIT_SUCCESS'"
               size="mini"
               type="success"
             >
-              审核成功待退款
+              {{ $t('822436ab.202a8b') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_status == 'SUCCESS'" size="mini" type="success">
-              退款成功
+              {{ $t('822436ab.d58cbd') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_status == 'REFUSE'" size="mini" type="danger">
-              退款驳回
+              {{ $t('822436ab.771b8b') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_status == 'CANCEL'" size="mini" type="info">
-              撤销退款
+              {{ $t('822436ab.0a7dff') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_status == 'PROCESSING'" size="mini" type="success">
-              已发起退款等待到账
+              {{ $t('822436ab.cd3291') }}
             </el-tag>
             <el-tag v-else-if="scope.row.refund_status == 'CHANGE'" size="mini" type="danger">
-              退款异常
+              {{ $t('822436ab.c59ead') }}
             </el-tag>
             <el-tag v-if="scope.row.refund_status == 'REFUNDCLOSE'" type="info" size="mini">
-              退款关闭
+              {{ $t('822436ab.1d83a4') }}
             </el-tag>
           </template>
         </el-table-column>
@@ -311,7 +322,7 @@
     <SpDialog
       ref="refundDialogRef"
       v-model="refundDialog"
-      :title="`退款【订单：${refundForm.order_id}】`"
+      :title="$t('822436ab.d59116') + refundForm.order_id + $t('822436ab.5942e7')"
       :confirm-status="refundLoading"
       :form="refundForm"
       :form-list="refundFormList"
@@ -323,6 +334,7 @@
 import { mapGetters } from 'vuex'
 import { exportRefundList } from '@/api/aftersales'
 import mixin, { pageMixin } from '@/mixins'
+import { i18n } from '@/i18n'
 export default {
   mixins: [mixin, pageMixin],
   data() {
@@ -347,25 +359,25 @@ export default {
       loading: false,
       shopList: [],
       refundTypeList: [
-        { name: '全部', value: '' },
-        { name: '售后', value: '0' },
-        { name: '售前', value: '1' },
-        { name: '拒单', value: '2' }
+        { name: i18n.t('822436ab.a8b0c2'), value: '' },
+        { name: i18n.t('822436ab.59bd68'), value: '0' },
+        { name: i18n.t('822436ab.63d2ec'), value: '1' },
+        { name: i18n.t('822436ab.518ce0'), value: '2' }
       ],
       refundChannelList: [
-        { name: '线下退款', value: 'offline' },
-        { name: '原路返回', value: 'original' }
+        { name: i18n.t('822436ab.46a9a9'), value: 'offline' },
+        { name: i18n.t('822436ab.eef322'), value: 'original' }
       ],
       refundsStatusList: [
-        { name: '全部', value: '' },
-        { name: '未审核', value: 'READY' },
-        { name: '审核成功待退款', value: 'AUDIT_SUCCESS' },
-        { name: '退款成功', value: 'SUCCESS' },
-        { name: '退款驳回', value: 'REFUSE' },
-        { name: '撤销退款', value: 'CANCEL' },
-        { name: '已发起退款等待到账', value: 'PROCESSING' },
-        { name: '退款异常', value: 'CHANGE' },
-        { name: '退款关闭', value: 'REFUNDCLOSE' }
+        { name: i18n.t('822436ab.a8b0c2'), value: '' },
+        { name: i18n.t('822436ab.97a81d'), value: 'READY' },
+        { name: i18n.t('822436ab.202a8b'), value: 'AUDIT_SUCCESS' },
+        { name: i18n.t('822436ab.d58cbd'), value: 'SUCCESS' },
+        { name: i18n.t('822436ab.771b8b'), value: 'REFUSE' },
+        { name: i18n.t('822436ab.0a7dff'), value: 'CANCEL' },
+        { name: i18n.t('822436ab.cd3291'), value: 'PROCESSING' },
+        { name: i18n.t('822436ab.c59ead'), value: 'CHANGE' },
+        { name: i18n.t('822436ab.1d83a4'), value: 'REFUNDCLOSE' }
       ],
       refundDialog: false,
       refundLoading: false,
@@ -384,56 +396,56 @@ export default {
       jstErpSetting: {},
       refundFormList: [
         {
-          label: '退款方式',
+          label: i18n.t('822436ab.4178e0'),
           key: 'pay_type',
           type: 'radio',
           required: true,
-          options: [{ label: 'offline_pay', name: '线下转账' }]
+          options: [{ label: 'offline_pay', name: i18n.t('822436ab.2d8019') }]
         },
         {
-          label: '收款人户名',
+          label: i18n.t('822436ab.84fc41'),
           key: 'bank_account_name',
           type: 'input',
           required: true,
-          message: '请输入收款人户名'
+          message: i18n.t('822436ab.2eb695')
         },
         {
-          label: '收款银行账号',
+          label: i18n.t('822436ab.27d6ee'),
           key: 'bank_account_no',
           type: 'input',
           required: true,
-          message: '请输入银行账号'
+          message: i18n.t('822436ab.f9aa7d')
         },
         {
-          label: '开户银行',
+          label: i18n.t('822436ab.cc5ca0'),
           key: 'bank_name',
           type: 'input',
           required: true,
-          message: '请输入开户银行'
+          message: i18n.t('822436ab.46222a')
         },
         {
-          label: '退款人户名',
+          label: i18n.t('822436ab.4de280'),
           key: 'refund_account_name',
           type: 'input',
           required: true,
-          message: '请输入退款人户名'
+          message: i18n.t('822436ab.93e941')
         },
         {
-          label: '退款银行账号',
+          label: i18n.t('822436ab.abfe4d'),
           key: 'refund_account_bank',
           type: 'input',
           required: true,
-          message: '请输入退款银行账号'
+          message: i18n.t('822436ab.d459b0')
         },
         {
-          label: '退款开户银行',
+          label: i18n.t('822436ab.4968ad'),
           key: 'refund_account_no',
           type: 'input',
           required: true,
-          message: '请输入退款开户银行'
+          message: i18n.t('822436ab.fad689')
         },
         {
-          label: '退款金额',
+          label: i18n.t('822436ab.a0cd4c'),
           key: 'refund_fee',
           type: 'input',
           disabled: true
@@ -555,7 +567,7 @@ export default {
       if (status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('822436ab.3e1ddd')
         })
         this.$export_open('refund_record_count')
         return
@@ -566,7 +578,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '没有相关数据可导出'
+          message: this.$t('822436ab.bfd8d5')
         })
       }
     },

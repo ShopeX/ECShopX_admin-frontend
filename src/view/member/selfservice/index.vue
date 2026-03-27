@@ -5,10 +5,10 @@
 
 <template lang="html">
   <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-    <el-tab-pane label="表单模板" name="first">
+    <el-tab-pane :label="$t('30994dfa.59a9c2')" name="first">
       <formTemplate ref="formTemplate" :get-status="formTemplate" />
     </el-tab-pane>
-    <el-tab-pane label="表单配置项" name="second">
+    <el-tab-pane :label="$t('30994dfa.b7d38d')" name="second">
       <formSetting :get-status="formSetting" />
     </el-tab-pane>
   </el-tabs>

@@ -5,72 +5,72 @@
 
 <template>
   <section v-if="name === 'slider'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('5d2e0269.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('5d2e0269.32c65d')">
             <el-input v-model="base.title" />
           </el-form-item>
-          <el-form-item label="副标题">
+          <el-form-item :label="$t('5d2e0269.72cf37')">
             <el-input v-model="base.subtitle" />
           </el-form-item>
-          <el-form-item label="字体颜色">
+          <el-form-item :label="$t('5d2e0269.690660')">
             <el-color-picker v-model="base.WordColor" />
           </el-form-item>
 
-          <el-form-item label="轮播时间">
+          <el-form-item :label="$t('5d2e0269.8695d8')">
             <el-input-number v-model="config.interval" :min="3000" :step="1000" label="" />
           </el-form-item>
-          <el-form-item label="组件间距">
+          <el-form-item :label="$t('5d2e0269.4707ba')">
             <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="圆角图片">
+          <el-form-item :label="$t('5d2e0269.2e70e6')">
             <el-switch v-model="config.rounded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="图片间隔">
+          <el-form-item :label="$t('5d2e0269.822ac9')">
             <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="指示点样式">
+          <el-form-item :label="$t('5d2e0269.9a9056')">
             <el-switch
               v-model="config.dot"
-              active-text="点"
-              inactive-text="数字"
+              :active-text="$t('5d2e0269.be604f')"
+              :inactive-text="$t('5d2e0269.55d479')"
               active-color="#27cc6a"
               inactive-color="#ffa100"
             />
           </el-form-item>
-          <el-form-item label="指示点覆盖">
+          <el-form-item :label="$t('5d2e0269.175553')">
             <el-switch v-model="config.dotCover" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="指示点位置">
+          <el-form-item :label="$t('5d2e0269.a8a94d')">
             <el-radio-group v-model="config.dotLocation">
-              <el-radio label="left"> 居左 </el-radio>
-              <el-radio label="center"> 居中 </el-radio>
-              <el-radio label="right"> 居右 </el-radio>
+              <el-radio label="left">{{ $t('5d2e0269.316a63') }}</el-radio>
+              <el-radio label="center">{{ $t('5d2e0269.0bbc2e') }}</el-radio>
+              <el-radio label="right">{{ $t('5d2e0269.e2aaec') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="指示点形状">
+          <el-form-item :label="$t('5d2e0269.11333d')">
             <el-radio-group v-model="config.shape">
-              <el-radio label="circle"> 圆形 </el-radio>
-              <el-radio label="rectangle"> 长方型 </el-radio>
+              <el-radio label="circle">{{ $t('5d2e0269.2db0fc') }}</el-radio>
+              <el-radio label="rectangle">{{ $t('5d2e0269.2fce58') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="指示点颜色">
+          <el-form-item :label="$t('5d2e0269.14db62')">
             <el-radio-group v-model="config.dotColor">
-              <el-radio label="dark"> 深色 </el-radio>
-              <el-radio label="light"> 亮色 </el-radio>
+              <el-radio label="dark">{{ $t('5d2e0269.41e8e8') }}</el-radio>
+              <el-radio label="light">{{ $t('5d2e0269.a32b3b') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="轮播项间距">
+          <el-form-item :label="$t('5d2e0269.817dc9')">
             <el-switch v-model="config.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="开启图片描述">
+          <el-form-item :label="$t('5d2e0269.774334')">
             <el-switch v-model="config.content" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
         </template>
 
-        <el-form-item label="轮播项">
+        <el-form-item :label="$t('5d2e0269.3db933')">
           <div v-for="(item, index) in data" :key="index" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
@@ -81,37 +81,37 @@
                   :src="wximageurl + item.imgUrl"
                   class="banner-uploader"
                   @click="handleImgChange(index)"
-                />
+                >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('5d2e0269.ce6855') }}
               </div>
               <div class="uploader-setting">
                 <el-input
                   v-if="config.content"
                   v-model="item.content"
                   type="textarea"
-                  placeholder="文字描述"
+                  :placeholder="$t('5d2e0269.191be5')"
                 />
-                <el-form-item label="标题">
+                <el-form-item :label="$t('5d2e0269.32c65d')">
                   <el-input v-model="item.mainTitle" />
                 </el-form-item>
-                <el-form-item label="副标题">
+                <el-form-item :label="$t('5d2e0269.72cf37')">
                   <el-input v-model="item.subtitle" />
                 </el-form-item>
-                <el-form-item v-if="item.template != 'four'" label="副标题2">
+                <el-form-item v-if="item.template != 'four'" :label="$t('5d2e0269.e8c9ac')">
                   <el-input v-model="item.subtitleTow" />
                 </el-form-item>
-                <el-form-item label="按钮">
+                <el-form-item :label="$t('5d2e0269.fa9663')">
                   <el-input v-model="item.button" />
                 </el-form-item>
-                <el-form-item label="标题模板选择">
+                <el-form-item :label="$t('5d2e0269.df0ebf')">
                   <el-radio-group v-model="item.template">
-                    <el-radio label="one"> 模板一 </el-radio>
-                    <el-radio label="two"> 模板二 </el-radio>
-                    <el-radio label="three"> 模板三 </el-radio>
-                    <el-radio label="four"> 模板四 </el-radio>
+                    <el-radio label="one">{{ $t('5d2e0269.411958') }}</el-radio>
+                    <el-radio label="two">{{ $t('5d2e0269.c6b070') }}</el-radio>
+                    <el-radio label="three">{{ $t('5d2e0269.a4daaf') }}</el-radio>
+                    <el-radio label="four">{{ $t('5d2e0269.deb234') }}</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <!-- <el-form-item label="字体颜色">
@@ -136,7 +136,7 @@
             </template>
             <template v-if="type === 'pc'">
               <div v-if="item.url" class="upload-box">
-                <img :src="item.url" class="banner-uploader" @click="handleImgChange(index)" />
+                <img :src="item.url" class="banner-uploader" @click="handleImgChange(index)">
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />

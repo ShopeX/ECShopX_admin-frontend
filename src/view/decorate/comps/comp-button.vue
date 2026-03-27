@@ -64,8 +64,16 @@
   >
     {{ value > 0 ? getFormatValue() : placeholder }}
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item command="clear" :disabled="value == 0">清除</el-dropdown-item>
-      <el-dropdown-item v-if="viewBtn" command="view" :disabled="value == 0">查看</el-dropdown-item>
+      <el-dropdown-item command="clear" :disabled="value == 0">
+{{
+        $t('dd09cd3d.4403fc')
+      }}
+</el-dropdown-item>
+      <el-dropdown-item v-if="viewBtn" command="view" :disabled="value == 0">
+{{
+        $t('dd09cd3d.607e7a')
+      }}
+</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>

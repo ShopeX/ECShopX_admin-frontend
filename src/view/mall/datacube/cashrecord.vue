@@ -10,13 +10,13 @@
         <el-form ref="topforms" :model="topforms" :rules="topformsrules">
           <el-row type="flex" justify="space-around" style="marginbottom: 0px">
             <el-col :span="5" class="left-cols-css">
-              <p class="title-fonts">当前可提现金额</p>
+              <p class="title-fonts">{{ $t('a6226f20.9c893e') }}</p>
               <p class="title-fonts title-fonts-fs">¥ {{ withdrawal_balance }}</p>
               <el-form-item
                 v-if="distributormoneyList.withdraw_method === 2"
                 prop="withdrawal_amount"
               >
-                提现
+                {{ $t('a6226f20.db7971') }}
                 <el-input
                   v-model="topforms.withdrawal_amount"
                   size="mini"
@@ -24,13 +24,13 @@
                   style="width: 150px"
                   @input="oninput"
                 />
-                元
+                {{ $t('a6226f20.c16655') }}
               </el-form-item>
               <p v-if="distributormoneyList.withdraw_method === 2" style="margin-bottom: 15px">
-                提现限额：满
+                {{ $t('a6226f20.ee6ce8') }}
                 <span style="color: red"
                   >¥ {{ distributormoneyList.distributor_money
-                  }}<span style="color: #000"> 元，可提现</span></span
+                  }}<span style="color: #000">{{ $t('a6226f20.415e87') }}</span></span
                 >
               </p>
               <el-button
@@ -38,15 +38,13 @@
                 type="primary"
                 @click="onSumbit"
               >
-                提现
+                {{ $t('a6226f20.db7971') }}
               </el-button>
             </el-col>
             <el-col :span="16" class="right-cols-css">
-              <p>1、当前可提现金额需大于或等于提现限额才可进行提现；</p>
-              <p>2、提现操作请在10:00:00-23:59:59进行(仅可提现金额大于或等于提现限额)；</p>
-              <p>
-                3、根据支付公司逻辑，申请提现后一个工作日到账，节假日顺延具体提现信息请查询提现记录。
-              </p>
+              <p>{{ $t('a6226f20.3c35d5') }}</p>
+              <p>{{ $t('a6226f20.469b45') }}</p>
+              <p>{{ $t('a6226f20.38163d') }}</p>
             </el-col>
           </el-row>
         </el-form>
@@ -56,7 +54,7 @@
       <el-form :model="formData" label-width="100px">
         <el-row style="marginbottom: 0px">
           <el-col :span="12">
-            <el-form-item label="日期范围">
+            <el-form-item :label="$t('a6226f20.786622')">
               <el-date-picker
                 v-model="rangeData"
                 size="small"
@@ -64,9 +62,9 @@
                 alue-format="yyyy-MM-dd"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('a6226f20.981cbe')"
+                :start-placeholder="$t('a6226f20.b44c0f')"
+                :end-placeholder="$t('a6226f20.1d468b')"
                 style="width: 100%"
                 :picker-options="pickerOptions"
                 value-format="yyyy-MM-dd"
@@ -76,7 +74,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="提现状态">
+            <el-form-item :label="$t('a6226f20.0ed783')">
               <el-select v-model="formData.cash_status" size="small" style="width: 100%">
                 <el-option
                   v-for="item in options"
@@ -88,17 +86,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="提现订单号">
+            <el-form-item :label="$t('a6226f20.51c30a')">
               <el-input
                 v-model="formData.order_id"
                 style="width: 100%"
                 size="small"
-                placeholder="请输入提现订单号"
+                :placeholder="$t('a6226f20.5e4087')"
               />
             </el-form-item>
           </el-col>
           <el-col v-if="loginType !== 'distributor'" :span="12">
-            <el-form-item label="选择店铺">
+            <el-form-item :label="$t('a6226f20.afa2e6')">
               <shop-select
                 ref="shopSelect"
                 size="small"
@@ -111,9 +109,9 @@
           </el-col>
           <el-col v-if="loginType !== 'distributor'" :span="4" :push="8" style="margin-left: 10px">
             <div class="flex-right">
-              <el-button size="small" @click="handleReset"> 重置 </el-button>
+              <el-button size="small" @click="handleReset">{{ $t('a6226f20.4b9c32') }}</el-button>
               <el-button size="small" type="primary" @click="getCompanyDataList()">
-                搜索
+                {{ $t('a6226f20.e5f71f') }}
               </el-button>
             </div>
           </el-col>
@@ -121,8 +119,12 @@
         <el-row v-if="loginType === 'distributor'" :gutter="20">
           <el-col :span="4" :push="20">
             <div class="flex-right">
-              <el-button @click="handleReset"> 重置 </el-button>
-              <el-button type="primary" @click="getCompanyDataList()"> 搜索 </el-button>
+              <el-button @click="handleReset">{{ $t('a6226f20.4b9c32') }}</el-button>
+              <el-button type="primary" @click="getCompanyDataList()">
+{{
+                $t('a6226f20.e5f71f')
+              }}
+</el-button>
             </div>
           </el-col>
         </el-row>
@@ -134,59 +136,63 @@
           <p class="total-num-top-fonts">
             {{ allAccountList.count }}
           </p>
-          <p class="total-num-bot-fonts">提现笔数</p>
+          <p class="total-num-bot-fonts">{{ $t('a6226f20.8b0c51') }}</p>
         </el-col>
         <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">¥ {{ (allAccountList.total_amt / 100).toFixed(2) }}</p>
-          <p class="total-num-bot-fonts">提现总金额</p>
+          <p class="total-num-bot-fonts">{{ $t('a6226f20.7f6e2e') }}</p>
         </el-col>
         <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">
             ¥ {{ (allAccountList.finish_total_amt / 100).toFixed(2) }}
           </p>
-          <p class="total-num-bot-fonts">提现成功金额</p>
+          <p class="total-num-bot-fonts">{{ $t('a6226f20.f59dea') }}</p>
         </el-col>
         <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">¥ {{ (allAccountList.total_amting / 100).toFixed(2) }}</p>
-          <p class="total-num-bot-fonts">提现中金额</p>
+          <p class="total-num-bot-fonts">{{ $t('a6226f20.466d29') }}</p>
         </el-col>
         <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">
             ¥ {{ (allAccountList.fail_total_amt / 100).toFixed(2) }}
           </p>
-          <p class="total-num-bot-fonts">提现失败金额</p>
+          <p class="total-num-bot-fonts">{{ $t('a6226f20.5cf040') }}</p>
         </el-col>
       </el-row>
     </el-card>
     <el-card>
       <el-row type="flex" justify="end">
-        <el-button type="primary" size="small" @click="onExportExcel()"> 导出 </el-button>
+        <el-button type="primary" size="small" @click="onExportExcel()">
+{{
+          $t('a6226f20.55405e')
+        }}
+</el-button>
       </el-row>
       <el-table v-loading="loading" :data="allListData" stripe border style="width: 100%">
-        <el-table-column prop="created_at" label="日期" width="170" />
-        <el-table-column prop="order_id" label="提现订单号" width="180" />
-        <el-table-column prop="bind_card_id" label="到账银行卡号" width="180" />
-        <el-table-column label="提现金额">
+        <el-table-column prop="created_at" :label="$t('a6226f20.4ff1e7')" width="170" />
+        <el-table-column prop="order_id" :label="$t('a6226f20.51c30a')" width="180" />
+        <el-table-column prop="bind_card_id" :label="$t('a6226f20.e6f7d9')" width="180" />
+        <el-table-column :label="$t('a6226f20.292a28')">
           <template slot-scope="scope"> ￥{{ (scope.row.trans_amt / 100).toFixed(2) }} </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor'"
           prop="distributor_name"
-          label="店铺名称"
+          :label="$t('a6226f20.0d4934')"
           width="180"
         />
-        <el-table-column prop="login_name" label="操作人" width="160" />
-        <el-table-column prop="cash_status" label="提现状态">
+        <el-table-column prop="login_name" :label="$t('a6226f20.f9ac4b')" width="160" />
+        <el-table-column prop="cash_status" :label="$t('a6226f20.0ed783')">
           <template slot-scope="scope">
             {{
-              (scope.row.cash_status === '0' && '提现中') ||
-              (scope.row.cash_status === '1' && '提现中') ||
-              (scope.row.cash_status === '2' && '提现成功') ||
-              (scope.row.cash_status === '3' && '提现失败')
+              (scope.row.cash_status === '0' && $t('a6226f20.153430')) ||
+              (scope.row.cash_status === '1' && $t('a6226f20.153430')) ||
+              (scope.row.cash_status === '2' && $t('a6226f20.dca060')) ||
+              (scope.row.cash_status === '3' && $t('a6226f20.f285c5'))
             }}
           </template>
         </el-table-column>
-        <el-table-column prop="resp_desc" label="备注" width="400">
+        <el-table-column prop="resp_desc" :label="$t('a6226f20.2432b5')" width="400">
           <template slot-scope="scope">
             <p style="color: #027db4">
               {{ scope.row.resp_desc }}
@@ -214,6 +220,8 @@ import { withdrawgetList, onSumbitsData, onCashExportData } from '@/api/datacube
 import { getStoreAccount, getWithdrawset } from '@/api/fenzhang'
 import shopSelect from '@/components/shopSelect2'
 import moment, { min } from 'moment'
+import { i18n } from '@/i18n'
+
 export default {
   components: {
     shopSelect
@@ -234,10 +242,10 @@ export default {
       },
       topformsrules: {
         withdrawal_amount: [
-          { type: 'string', message: '请输入金额', required: true, trigger: 'blur' },
+          { type: 'string', message: i18n.t('a6226f20.d594b7'), required: true, trigger: 'blur' },
           {
             pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
-            message: '请输入正确格式,可保留两位小数'
+            message: i18n.t('a6226f20.00db3d')
           },
           { validator: this.validator }
         ]
@@ -254,10 +262,10 @@ export default {
         distributor_id: ''
       },
       options: [
-        { label: '全部', value: '' },
-        { label: '提现中', value: 1 },
-        { label: '提现成功', value: 2 },
-        { label: '提现失败', value: 3 }
+        { label: i18n.t('a6226f20.a8b0c2'), value: '' },
+        { label: i18n.t('a6226f20.153430'), value: 1 },
+        { label: i18n.t('a6226f20.dca060'), value: 2 },
+        { label: i18n.t('a6226f20.f285c5'), value: 3 }
       ],
       allListData: [], // table数据
       allAccountList: {}, // 提现数据统计
@@ -282,22 +290,20 @@ export default {
         },
         shortcuts: [
           {
-            text: '最近一个月',
+            text: i18n.t('a6226f20.335dfc'),
             onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 30)
-              // end_date.setTime(end_date.getTime() - 3600 * 1000 * 24 * 1);
               picker.$emit('pick', [start_date, end_date])
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('a6226f20.d96eb4'),
             onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 90)
-              // end_date.setTime(end_date.getTime() - 3600 * 1000 * 24 * 1);
               picker.$emit('pick', [start_date, end_date])
             }
           }
@@ -312,15 +318,14 @@ export default {
   methods: {
     validator(rule, value, callback) {
       if (Number(value) > Number(this.withdrawal_balance)) {
-        callback(new Error('提现金额不能大于当前可提现金额'))
+        callback(new Error(this.$t('a6226f20.2d9936')))
       } else {
         callback()
       }
     },
     onSumbit() {
-      // 设置提现金额
       if (Number(this.withdrawal_balance) < Number(this.distributormoneyList.distributor_money)) {
-        this.$message.error('不满足提现条件')
+        this.$message.error(this.$t('a6226f20.53ed3a'))
         return
       }
       const { withdrawal_amount } = this.topforms
@@ -328,18 +333,22 @@ export default {
         if (valid) {
           this.$confirm(
             `<div style='margin-left:45px'>
-              <p><i class="el-icon-warning" style='color:#E6A23C; font-size: 20px;margin-right:5px'></i>请确认您的提现金额: ¥ ${withdrawal_amount}</p>
-              <p style='font-size:12px;margin-left:30px;color:#ccc'>操作后无法撤销，请再次确认您的提现金额</p>
+              <p><i class="el-icon-warning" style='color:#E6A23C; font-size: 20px;margin-right:5px'></i>${this.$t(
+                'a6226f20.e741d2'
+              )} ¥ ${withdrawal_amount}</p>
+              <p style='font-size:12px;margin-left:30px;color:#ccc'>${this.$t(
+                'a6226f20.787531'
+              )}</p>
             </div>`,
-            '提现提示',
+            this.$t('a6226f20.79a5a0'),
             {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+              confirmButtonText: this.$t('a6226f20.38cf16'),
+              cancelButtonText: this.$t('a6226f20.625fb2'),
               dangerouslyUseHTMLString: true
             }
           ).then(() => {
             onSumbitsData({ withdrawal_amount }).then((res) => {
-              this.$message({ type: 'success', message: '提现成功!' })
+              this.$message({ type: 'success', message: this.$t('a6226f20.ad01c2') })
             })
           })
         } else {
@@ -417,13 +426,13 @@ export default {
         if (status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('a6226f20.3e1ddd')
           })
           return
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('a6226f20.89ae53')
           })
           return
         }

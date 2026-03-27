@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div style="text-align: center; height: 80px; line-height: 80px">商城固定头部</div>
+  <div style="text-align: center; height: 80px; line-height: 80px">{{ $t('e5ccb752.32c8ea') }}</div>
 </template>
 <script>
 export default {}

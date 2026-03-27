@@ -63,7 +63,10 @@
           <template v-if="resolveChildren(item.children)">
             <el-submenu :key="item.alias_name" :index="item.alias_name">
               <template slot="title">
-                <span>{{ item.name }}</span>
+                <span
+                  class="block w-full"
+                  @click="handleSubmenuTitleClick(item.alias_name, $event)"
+                >{{ item.name }}</span>
               </template>
               <!-- 三级菜单 -->
               <template v-for="child in item.children">
@@ -123,7 +126,7 @@ export default {
         }
       }
       // 否则返回默认系统标题
-      return getSystemTitle()
+      return this.$t(getSystemTitle())
     },
     activeSubIndex() {
       //通过权限标识查找三级菜单
@@ -348,7 +351,7 @@ export default {
       }
       return null
     },
-    // 展开指定的二级菜单
+    // 展开指定的二级菜单（会关闭其他二级菜单）
     openSubMenu(menuToOpen) {
       if (!menuToOpen || !this.$refs.subMenu) {
         return
@@ -384,7 +387,34 @@ export default {
         }
       }, 100)
     },
-    //统一更新菜单状态（展开和高亮）
+    // 仅确保指定二级菜单展开，不关闭其他已展开的二级菜单（用于路由切换时保持多开）
+    ensureSubMenuOpen(menuToOpen) {
+      if (!menuToOpen || !this.$refs.subMenu) return
+      if (!this.openedMenus.includes(menuToOpen)) {
+        this.openedMenus.push(menuToOpen)
+      }
+      this.$nextTick(() => {
+        const menuComponent = this.$refs.subMenu
+        if (!menuComponent) return
+        const submenuEl = this.findSubMenuElement(menuToOpen)
+        if (submenuEl) {
+          const isOpened =
+            submenuEl.classList.contains('is-opened') ||
+            submenuEl.getAttribute('aria-expanded') === 'true'
+          if (!isOpened) {
+            const titleEl = submenuEl.querySelector('.el-submenu__title')
+            if (titleEl) titleEl.click()
+          }
+        } else if (typeof menuComponent.open === 'function') {
+          try {
+            menuComponent.open(menuToOpen)
+          } catch (e) {
+            // 忽略 el-menu.open 异常
+          }
+        }
+      })
+    },
+    // 统一更新菜单状态（展开和高亮）：只确保当前路由父级展开，不折叠其他二级菜单
     updateMenuState() {
       if (this.subMenus.length === 0) {
         return
@@ -392,7 +422,7 @@ export default {
 
       const menuToOpen = this.findMenuToOpen()
       if (menuToOpen) {
-        this.openSubMenu(menuToOpen)
+        this.ensureSubMenuOpen(menuToOpen)
       }
 
       setTimeout(() => {
@@ -405,8 +435,20 @@ export default {
         this.openedMenus.push(index)
       }
     },
-    // 处理菜单折叠事件
+    // 点击二级菜单标题时：当前路由所在父级不允许收起，保持铺开
+    handleSubmenuTitleClick(aliasName, e) {
+      const menuToKeepOpen = this.findMenuToOpen()
+      if (menuToKeepOpen && aliasName === menuToKeepOpen && this.openedMenus.includes(aliasName)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    // 处理菜单折叠事件（当前路由所在父级不从 openedMenus 移除，避免被收起）
     handleMenuClose(index) {
+      const menuToKeepOpen = this.findMenuToOpen()
+      if (menuToKeepOpen && index === menuToKeepOpen) {
+        return
+      }
       const indexPos = this.openedMenus.indexOf(index)
       if (indexPos > -1) {
         this.openedMenus.splice(indexPos, 1)
@@ -498,7 +540,8 @@ export default {
 :deep(.el-menu-item) {
   border-radius: 6px;
   height: 42px;
-  line-height: 42px;
+  display: flex;
+  align-items: center;
   margin: 0 8px 2px;
   padding-right: 12px !important;
 
@@ -514,7 +557,8 @@ export default {
 :deep(.el-submenu__title) {
   border-radius: 6px;
   height: 42px;
-  line-height: 42px;
+  display: flex;
+  align-items: center;
   margin: 0 8px 2px;
   color: #666;
 }

@@ -8,39 +8,43 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="" />
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">选择店铺</div>
+        <div class="log-welcome">{{ $t('dbf2adc5.afa2e6') }}</div>
       </div>
     </div>
     <div class="log-container">
       <el-table :data="list" border style="width: 100%">
-        <el-table-column prop="name" label="店铺名称" width="180" />
-        <el-table-column label="是否启用">
+        <el-table-column prop="name" :label="$t('dbf2adc5.0d4934')" width="180" />
+        <el-table-column :label="$t('dbf2adc5.53c3dd')">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.is_valid == 'true'" type="success"> 启用 </el-tag>
-            <el-tag v-else-if="scope.row.is_valid == 'delete'" type="danger"> 废弃 </el-tag>
-            <el-tag v-else type="info"> 禁用 </el-tag>
+            <el-tag v-if="scope.row.is_valid == 'true'" type="success">
+              {{ $t('dbf2adc5.7854b5') }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.is_valid == 'delete'" type="danger">
+              {{ $t('dbf2adc5.0044f6') }}
+            </el-tag>
+            <el-tag v-else type="info"> {{ $t('dbf2adc5.710ad0') }} </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="店铺地址">
+        <el-table-column prop="name" :label="$t('dbf2adc5.9198af')">
           <template slot-scope="scope">
             {{ scope.row.store_address }}
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="创建时间">
+        <el-table-column prop="name" :label="$t('dbf2adc5.eca37c')">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="100">
+        <el-table-column :label="$t('dbf2adc5.2b6bc0')" min-width="100">
           <template slot-scope="scope">
             <el-button
               type="text"
               :disabled="scope.row.is_valid == 'delete'"
               @click="selectDistributor(scope.row)"
             >
-              进入店铺
+              {{ $t('dbf2adc5.8f822c') }}
             </el-button>
           </template>
         </el-table-column>

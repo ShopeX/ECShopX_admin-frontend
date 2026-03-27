@@ -19,7 +19,7 @@
     >
       <template slot="tableTop">
         <div class="action-container">
-          <el-button @click="addStoreValue">充值</el-button>
+          <el-button @click="addStoreValue">{{ $t('598bafdd.e50663') }}</el-button>
         </div>
       </template>
     </SpFinder>
@@ -28,7 +28,7 @@
     <SpDialog
       ref="chuzhiDialogRef"
       v-model="chuzhiDialog"
-      title="充值"
+      :title="$t('598bafdd.e50663')"
       :form="chuzhiForm"
       :form-list="chuzhiFormList"
       @onSubmit="onChuZhiFormSubmit"
@@ -42,24 +42,33 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      setting: createSetting({
+      chuzhiDialog: false,
+      chuzhiForm: {
+        money: 0
+      }
+    }
+  },
+  computed: {
+    setting() {
+      const vm = this
+      return createSetting({
         columns: [
           {
-            name: '充值时间',
+            name: vm.$t('598bafdd.7a036a'),
             key: 'timeStart',
             formatter: (value, row, col) => {
               return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
             }
           },
           {
-            name: '充值金额',
+            name: vm.$t('598bafdd.1bcb8e'),
             key: 'curPayFee',
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             }
           },
           {
-            name: '充值状态',
+            name: vm.$t('598bafdd.fafe8f'),
             key: 'tradeStatus',
             render: (h, { row }) => {
               return h(
@@ -69,20 +78,18 @@ export default {
                     type: row.tradeStatus == 'SUCCESS' ? 'success' : 'danger'
                   }
                 },
-                row.tradeStatus == 'SUCCESS' ? '充值成功' : '充值失败'
+                row.tradeStatus == 'SUCCESS' ? vm.$t('598bafdd.e64875') : vm.$t('598bafdd.d9217d')
               )
             }
           },
-          { name: '描述', key: 'detail' }
+          { name: vm.$t('598bafdd.3bdd08'), key: 'detail' }
         ]
-      }),
-      chuzhiDialog: false,
-      chuzhiForm: {
-        money: 0
-      },
-      chuzhiFormList: [
+      })
+    },
+    chuzhiFormList() {
+      return [
         {
-          label: '充值金额',
+          label: this.$t('598bafdd.1bcb8e'),
           key: 'money',
           type: 'number',
           precision: 2,

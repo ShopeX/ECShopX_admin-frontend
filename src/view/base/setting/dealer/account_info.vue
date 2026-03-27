@@ -16,28 +16,28 @@
       <!-- 企业信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>企业信息</span>
+          <span>{{ $t('9528f210.54796d') }}</span>
         </div>
 
         <div class="content">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="商户名称" prop="mer_name">
+              <el-form-item :label="$t('9528f210.e6f169')" prop="mer_name">
                 <el-input v-model="form.mer_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="商户名简称" prop="mer_short_name">
+              <el-form-item :label="$t('9528f210.d8abf5')" prop="mer_short_name">
                 <el-input v-model="form.mer_short_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="营业执照号" prop="license_code">
+              <el-form-item :label="$t('9528f210.b9bf38')" prop="license_code">
                 <div class="flex">
                   <el-input v-model="form.license_code" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
-                    content="如三证合一传三证合一码"
+                    :content="$t('9528f210.31c729')"
                     placement="top-end"
                     effect="light"
                   >
@@ -47,11 +47,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="商户有效日期" prop="mer_start_valid_date_type">
+              <el-form-item :label="$t('9528f210.1fcd91')" prop="mer_start_valid_date_type">
                 <div style="width: 100%">
                   <el-tooltip
                     :style="{ 'margin-right': 5 + 'px' }"
-                    content="长期有效：设置默认截止时间为2099年"
+                    :content="$t('9528f210.e5bad2')"
                     placement="top-end"
                     effect="light"
                   >
@@ -61,34 +61,34 @@
                     v-model="form.mer_start_valid_date_type"
                     @change="dateTypeHandle($event, 'mer')"
                   >
-                    <el-radio label="长期"> 长期有效 </el-radio>
-                    <el-radio label="短期"> 时间节点 </el-radio>
+                    <el-radio label="长期"> {{ $t('9528f210.1c5029') }} </el-radio>
+                    <el-radio label="短期"> {{ $t('9528f210.231fbd') }} </el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
             </el-col>
             <el-col v-if="form.mer_start_valid_date_type == '短期'" :span="8">
-              <el-form-item prop="mer_valid_date_full" label="商户有效日期">
+              <el-form-item prop="mer_valid_date_full" :label="$t('9528f210.1fcd91')">
                 <el-date-picker
                   v-model="form.mer_valid_date_full"
                   style="width: 100%"
                   type="daterange"
                   value-format="yyyyMMdd"
-                  placeholder="选择日期"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :placeholder="$t('9528f210.2bebdd')"
+                  :range-separator="$t('9528f210.981cbe')"
+                  :start-placeholder="$t('9528f210.b44c0f')"
+                  :end-placeholder="$t('9528f210.1d468b')"
                   @change="shortDateHandle($event, 'mer')"
                 />
               </el-form-item>
             </el-col>
             <el-col v-if="form.mer_start_valid_date_type == '长期'" :span="8">
-              <el-form-item prop="mer_valid_date_start" label="商户有效期开始日期">
+              <el-form-item prop="mer_valid_date_start" :label="$t('9528f210.074761')">
                 <el-date-picker
                   v-model="form.mer_valid_date_start"
                   style="width: 100%"
                   type="date"
-                  placeholder="请选择有效开始日期"
+                  :placeholder="$t('9528f210.bbe91d')"
                   value-format="yyyyMMdd"
                   @change="longDateStartHandle($event, 'mer')"
                 />
@@ -103,17 +103,17 @@
               </el-form-item>
             </el-col> -->
             <el-col :span="8">
-              <el-form-item label="法人/负责人姓名" prop="legal_name">
+              <el-form-item :label="$t('9528f210.ed5d39')" prop="legal_name">
                 <el-input v-model="form.legal_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="法人/负责人身份证号" prop="legal_idno">
+              <el-form-item :label="$t('9528f210.1c244d')" prop="legal_idno">
                 <div class="flex">
                   <el-input v-model="form.legal_idno" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
-                    content="身份证信息字母X需大写"
+                    :content="$t('9528f210.43e031')"
                     placement="top-end"
                     effect="light"
                   >
@@ -123,15 +123,15 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="法人/负责人手机号码" prop="legal_mp">
+              <el-form-item :label="$t('9528f210.855957')" prop="legal_mp">
                 <el-input v-model="form.legal_mp" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="法人/负责人证件有效期" prop="legal_id_expires_type">
+              <el-form-item :label="$t('9528f210.d00171')" prop="legal_id_expires_type">
                 <el-tooltip
                   :style="{ 'margin-right': 5 + 'px' }"
-                  content="长期有效：设置默认截止时间为2099年"
+                  :content="$t('9528f210.e5bad2')"
                   placement="top-end"
                   effect="light"
                 >
@@ -141,48 +141,45 @@
                   v-model="form.legal_id_expires_type"
                   @change="dateTypeHandle($event, 'legal')"
                 >
-                  <el-radio label="长期"> 长期有效 </el-radio>
-                  <el-radio label="短期"> 时间节点 </el-radio>
+                  <el-radio label="长期"> {{ $t('9528f210.1c5029') }} </el-radio>
+                  <el-radio label="短期"> {{ $t('9528f210.231fbd') }} </el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
             <el-col v-if="form.legal_id_expires_type == '短期'" :span="8">
-              <el-form-item prop="legal_id_expires_full" label="请选择法人/负责人证件有效期">
+              <el-form-item prop="legal_id_expires_full" :label="$t('9528f210.6d73a8')">
                 <el-date-picker
                   v-model="form.legal_id_expires_full"
                   style="width: 100%"
                   type="daterange"
                   value-format="yyyyMMdd"
-                  placeholder="选择日期"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :placeholder="$t('9528f210.2bebdd')"
+                  :range-separator="$t('9528f210.981cbe')"
+                  :start-placeholder="$t('9528f210.b44c0f')"
+                  :end-placeholder="$t('9528f210.1d468b')"
                   @change="shortDateHandle($event, 'legal')"
                 />
               </el-form-item>
             </el-col>
             <el-col v-if="form.legal_id_expires_type == '长期'" :span="8">
-              <el-form-item
-                prop="legal_id_expires_start"
-                label="请选择法人/负责人证件有效期开始日期"
-              >
+              <el-form-item prop="legal_id_expires_start" :label="$t('9528f210.5ea5e2')">
                 <el-date-picker
                   v-model="form.legal_id_expires_start"
                   style="width: 100%"
                   type="date"
-                  placeholder="请选择开始日期"
+                  :placeholder="$t('9528f210.18fb45')"
                   value-format="yyyyMMdd"
                   @change="longDateStartHandle($event, 'legal')"
                 />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="注册手机号" prop="usr_phone">
+              <el-form-item :label="$t('9528f210.6b2390')" prop="usr_phone">
                 <div class="flex">
                   <el-input v-model="form.usr_phone" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
-                    content="用于登录汇付商户后台"
+                    :content="$t('9528f210.949309')"
                     placement="top-end"
                     effect="light"
                   >
@@ -192,22 +189,22 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="注册地址" prop="reg_addr">
+              <el-form-item :label="$t('9528f210.6f1afa')" prop="reg_addr">
                 <el-input v-model="form.reg_addr" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="经营地址" prop="cust_addr">
+              <el-form-item :label="$t('9528f210.0ed872')" prop="cust_addr">
                 <el-input v-model="form.cust_addr" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="商户座机电话" prop="cust_tel">
+              <el-form-item :label="$t('9528f210.6027e2')" prop="cust_tel">
                 <div class="flex">
                   <el-input v-model="form.cust_tel" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
-                    content="地区代码(区号)-电话号码 比如：021-123456"
+                    :content="$t('9528f210.06dccd')"
                     placement="top-end"
                     effect="light"
                   >
@@ -222,23 +219,23 @@
       <!-- 联系人信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>联系人信息</span>
+          <span>{{ $t('9528f210.80fcdb') }}</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="联系人姓名" prop="cont_name">
+            <el-form-item :label="$t('9528f210.986d36')" prop="cont_name">
               <el-input v-model="form.cont_name" style="width: 100%" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人手机号" prop="cont_phone">
+            <el-form-item :label="$t('9528f210.d9898e')" prop="cont_phone">
               <div class="flex">
                 <el-input v-model="form.cont_phone" />
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="电子邮箱" prop="customer_email">
+            <el-form-item :label="$t('9528f210.7148d5')" prop="customer_email">
               <el-input v-model="form.customer_email" />
             </el-form-item>
           </el-col>
@@ -247,16 +244,16 @@
       <!-- 结算账户信息 -->
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>结算账户信息</span>
+          <span>{{ $t('9528f210.99f89b') }}</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="结算银行卡号" prop="card_id_mask">
+            <el-form-item :label="$t('9528f210.88174a')" prop="card_id_mask">
               <el-input v-model="form.card_id_mask" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结算银行卡所属银行" prop="bank_code">
+            <el-form-item :label="$t('9528f210.0a3e82')" prop="bank_code">
               <div class="flex">
                 <el-autocomplete
                   v-model="form.bank_name"
@@ -264,26 +261,26 @@
                   prefix-icon="el-icon-search"
                   class="inline-input"
                   :fetch-suggestions="querySearch"
-                  placeholder="请输入选择内容"
+                  :placeholder="$t('9528f210.473e86')"
                   @select="handleSelectBank"
                 />
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结算银行卡开户名" prop="card_name">
+            <el-form-item :label="$t('9528f210.748b0c')" prop="card_name">
               <el-input v-model="form.card_name" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结算银行账户类型" prop="bank_acct_type">
+            <el-form-item :label="$t('9528f210.32734c')" prop="bank_acct_type">
               <el-radio-group v-model="form.bank_acct_type">
-                <el-radio label="1"> 对公 </el-radio>
-                <el-radio label="2"> 对私 </el-radio>
+                <el-radio label="1"> {{ $t('9528f210.18ba13') }} </el-radio>
+                <el-radio label="2"> {{ $t('9528f210.f0bf8a') }} </el-radio>
               </el-radio-group>
               <el-tooltip
                 :style="{ 'margin-left': 30 + 'px' }"
-                content="小微只能是对私"
+                :content="$t('9528f210.c4afb3')"
                 placement="top-end"
                 effect="light"
               >
@@ -292,7 +289,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结算银行卡开户省市" prop="area">
+            <el-form-item :label="$t('9528f210.5ae594')" prop="area">
               <el-cascader
                 v-model="form.area"
                 style="width: 100%"
@@ -338,7 +335,7 @@
         </div>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 280px">
-        <el-button type="primary" @click="submitForm"> 提交审核 </el-button>
+        <el-button type="primary" @click="submitForm"> {{ $t('9528f210.646db0') }} </el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -395,8 +392,8 @@ export default {
       },
       checkBoxConfig: {
         visible: false,
-        message: '请确认信息无误！',
-        info: [{ type: 'checkbox', value: '审核结果将有短信提醒发送至注册手机号' }],
+        message: this.$t('9528f210.8af517'),
+        info: [{ type: 'checkbox', value: this.$t('9528f210.c3edab') }],
         is_sms: true
       },
       props_city: {
@@ -496,32 +493,31 @@ export default {
         //  isUploadFile: true
       },
       rules: {
-        mer_name: requiredRules('商户名称'),
-        mer_short_name: requiredRules('商户名简称'),
-        license_code: [requiredRules('营业执照号'), MaxRules(18)],
-        mer_start_valid_date_type: requiredRules('商户有效日期类型', 'change'),
-        mer_valid_date_full: requiredRules('商户有效日期', 'change'),
-        mer_valid_date_start: requiredRules('商户有效期开始日期', 'change'),
-        // entry_mer_type:requiredRules('商户类型','change'),
-        legal_name: [requiredRules('法人负责人姓名'), MaxRules(20)],
-        legal_idno: [requiredRules('法人负责人身份证号'), MaxRules(18)],
-        legal_mp: [requiredRules('法人/负责人手机号码'), MaxRules(11)],
-        legal_id_expires_type: requiredRules('法人/负责人身份证有效期类型', 'change'),
-        legal_id_expires_full: requiredRules('法人/负责人身份证有效期', 'change'),
-        legal_id_expires_start: requiredRules('法人/负责人身份证有效期开始日期', 'change'),
+        mer_name: requiredRules(this.$t('9528f210.e6f169')),
+        mer_short_name: requiredRules(this.$t('9528f210.d8abf5')),
+        license_code: [requiredRules(this.$t('9528f210.b9bf38')), MaxRules(18)],
+        mer_start_valid_date_type: requiredRules(this.$t('9528f210.dfbd39'), 'change'),
+        mer_valid_date_full: requiredRules(this.$t('9528f210.1fcd91'), 'change'),
+        mer_valid_date_start: requiredRules(this.$t('9528f210.074761'), 'change'),
+        legal_name: [requiredRules(this.$t('9528f210.ed5d39')), MaxRules(20)],
+        legal_idno: [requiredRules(this.$t('9528f210.1c244d')), MaxRules(18)],
+        legal_mp: [requiredRules(this.$t('9528f210.855957')), MaxRules(11)],
+        legal_id_expires_type: requiredRules(this.$t('9528f210.1ac02e'), 'change'),
+        legal_id_expires_full: requiredRules(this.$t('9528f210.d00171'), 'change'),
+        legal_id_expires_start: requiredRules(this.$t('9528f210.5ea5e2'), 'change'),
 
-        usr_phone: [requiredRules('注册手机号'), MaxRules(11)],
-        reg_addr: [requiredRules('注册地址'), MaxRules(60)],
-        cust_addr: [requiredRules('经营地址'), MaxRules(60)],
-        cust_tel: [requiredRules('商户电话（座机）'), MaxRules(20)],
-        cont_name: [requiredRules('联系人姓名'), MaxRules(20)],
-        cont_phone: [requiredRules('联系人手机号'), MaxRules(11)],
-        customer_email: [requiredRules('电子邮箱'), MaxRules(40)],
-        card_id_mask: [requiredRules('结算银行卡号'), MaxRules(40)],
-        bank_code: [requiredRules('结算银行卡所属银行', 'change')],
-        card_name: [requiredRules('结算银行卡开户姓名'), MaxRules(20)],
-        bank_acct_type: [requiredRules('结算银行账户类型', 'change')],
-        area: [requiredRules('结算银行卡开户省市', 'change')]
+        usr_phone: [requiredRules(this.$t('9528f210.6b2390')), MaxRules(11)],
+        reg_addr: [requiredRules(this.$t('9528f210.6f1afa')), MaxRules(60)],
+        cust_addr: [requiredRules(this.$t('9528f210.0ed872')), MaxRules(60)],
+        cust_tel: [requiredRules(this.$t('9528f210.33be55')), MaxRules(20)],
+        cont_name: [requiredRules(this.$t('9528f210.986d36')), MaxRules(20)],
+        cont_phone: [requiredRules(this.$t('9528f210.d9898e')), MaxRules(11)],
+        customer_email: [requiredRules(this.$t('9528f210.7148d5')), MaxRules(40)],
+        card_id_mask: [requiredRules(this.$t('9528f210.88174a')), MaxRules(40)],
+        bank_code: [requiredRules(this.$t('9528f210.0a3e82'), 'change')],
+        card_name: [requiredRules(this.$t('9528f210.748b0c')), MaxRules(20)],
+        bank_acct_type: [requiredRules(this.$t('9528f210.32734c'), 'change')],
+        area: [requiredRules(this.$t('9528f210.5ae594'), 'change')]
       },
       // personForm:{
       //   user_name:'王五', //用户姓名
@@ -572,7 +568,7 @@ export default {
       } else {
         this.processed = '已填'
         this.currentStatus = {
-          title: '开户',
+          title: this.$t('9528f210.a7cd73'),
           resultStatus: MerchantEntry.status,
           time: MerchantEntry.update_time,
           info: MerchantEntry.error_msg
@@ -629,7 +625,7 @@ export default {
           if (this.form.bank_acct_type == '2') {
             const res = this.form.legal_name == this.form.card_name
             if (!res) {
-              this.$message.error('法人/负责人姓名与结算银行卡开户名要相同')
+              this.$message.error(this.$t('9528f210.69327f'))
               return
             }
           }
@@ -733,7 +729,7 @@ export default {
           this.processed = '已填'
           this.currentStatus = {
             resultStatus: 'pending',
-            title: '开户',
+            title: this.$t('9528f210.a7cd73'),
             time: '',
             info: ''
           }

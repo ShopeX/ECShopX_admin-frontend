@@ -12,30 +12,30 @@
   <SpPage>
     <div class="page-mall-communitygoods">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="keywords" label="商品名称:">
-          <el-input v-model="params.keywords" placeholder="请输入商品名称" />
+        <SpFilterFormItem prop="keywords" :label="$t('7ee70716.752597')">
+          <el-input v-model="params.keywords" :placeholder="$t('7ee70716.d83187')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="商品编号:">
-          <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
+        <SpFilterFormItem prop="item_bn" :label="$t('7ee70716.479f77')">
+          <el-input v-model="params.item_bn" :placeholder="$t('7ee70716.800b66')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="barcode" label="条形码:">
-          <el-input v-model="params.barcode" placeholder="请输入商品编号条形码" />
+        <SpFilterFormItem prop="barcode" :label="$t('7ee70716.e2bbdf')">
+          <el-input v-model="params.barcode" :placeholder="$t('7ee70716.363c4a')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="approve_status" label="商品状态:">
-          <el-select v-model="params.approve_status" clearable placeholder="请选择">
+        <SpFilterFormItem prop="approve_status" :label="$t('7ee70716.2253ba')">
+          <el-select v-model="params.approve_status" clearable :placeholder="$t('7ee70716.708c9d')">
             <el-option
               v-for="item in statusOption"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.title)"
               size="mini"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="brand_id" label="品牌:">
+        <SpFilterFormItem prop="brand_id" :label="$t('7ee70716.dab469')">
           <el-select
             v-model="params.brand_id"
-            placeholder="请选择"
+            :placeholder="$t('7ee70716.708c9d')"
             remote
             filterable
             clearable
@@ -49,46 +49,46 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="商品分类:">
+        <SpFilterFormItem prop="category" :label="$t('7ee70716.6a8fda')">
           <el-cascader
             v-model="params.category"
-            placeholder="请选择"
+            :placeholder="$t('7ee70716.708c9d')"
             clearable
             :options="categoryList"
             :props="{ value: 'category_id', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="activity_name" label="活动:">
-          <el-input v-model="params.activity_name" placeholder="请输入商品名称" />
+        <SpFilterFormItem prop="activity_name" :label="$t('7ee70716.f8f6a0')">
+          <el-input v-model="params.activity_name" :placeholder="$t('7ee70716.d83187')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" @click="handleAddGoods"> 选择活动商品 </el-button>
+        <el-button type="primary" @click="handleAddGoods">{{ $t('7ee70716.2fba25') }}</el-button>
       </div>
 
       <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="item in activity_status"
           :key="item.value"
-          :label="item.title"
+          :label="$t(item.title)"
           :name="item.value"
         />
 
         <el-table v-loading="loading" border :data="tableList">
           <!-- <el-table-column type="selection" align="center" label="全选" /> -->
-          <el-table-column prop="goods_id" label="商品ID" />
-          <el-table-column prop="itemName" label="商品" width="300">
+          <el-table-column prop="goods_id" :label="$t('7ee70716.858526')" />
+          <el-table-column prop="itemName" :label="$t('7ee70716.9897d8')" width="300">
             <template slot-scope="scope">
               <div class="goods-title">
                 {{ scope.row.item_name }}
                 <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
-                  多规格
+                  {{ $t('7ee70716.5d60de') }}
                 </el-tag>
               </div>
               <div class="goods-code">
-                货号：{{ scope.row.item_bn }}
-                <el-tooltip effect="dark" content="复制" placement="top-start">
+                {{ $t('7ee70716.4bb294') }}{{ scope.row.item_bn }}
+                <el-tooltip effect="dark" :content="$t('7ee70716.79d3ab')" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.item_bn"
                     v-clipboard:success="onCopySuccess"
@@ -98,8 +98,8 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="起送量" prop="min_delivery_num" />
-          <el-table-column label="标签">
+          <el-table-column :label="$t('7ee70716.bfaf7d')" prop="min_delivery_num" />
+          <el-table-column :label="$t('7ee70716.14d342')">
             <template slot-scope="scope">
               <template>
                 <el-tag
@@ -115,7 +115,7 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column label="排序编号" width="100">
+          <el-table-column :label="$t('7ee70716.e8373a')" width="100">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.sort"
@@ -125,20 +125,20 @@
               />
             </template>
           </el-table-column>
-          <el-table-column prop="store" label="库存" width="80" />
-          <el-table-column prop="market_price" label="原价（¥）" width="100">
+          <el-table-column prop="store" :label="$t('7ee70716.0eac88')" width="80" />
+          <el-table-column prop="market_price" :label="$t('7ee70716.ae2748')" width="100">
             <template slot-scope="scope">
               {{ scope.row.market_price / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="销售价（¥）" width="100">
+          <el-table-column prop="price" :label="$t('7ee70716.cf0170')" width="100">
             <template slot-scope="scope">
               {{ scope.row.price / 100 }}
             </template>
           </el-table-column>
-          <el-table-column label="状态">
+          <el-table-column :label="$t('7ee70716.3fea7c')">
             <template slot-scope="scope">
-              <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
+              <span v-if="scope.row.audit_status == 'processing'">{{ $t('7ee70716.f6324c') }}</span>
               <el-popover
                 v-else-if="scope.row.audit_status == 'rejected'"
                 placement="top-start"
@@ -146,21 +146,31 @@
                 trigger="hover"
                 :content="scope.row.audit_reason"
               >
-                <el-button slot="reference" type="text"> 审核驳回 </el-button>
+                <el-button slot="reference" type="text">{{ $t('7ee70716.a77aa8') }}</el-button>
               </el-popover>
-              <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-              <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
-              <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
-              <span v-else>不可销售</span>
+              <span v-else-if="scope.row.approve_status == 'onsale'">{{
+                $t('7ee70716.959221')
+              }}</span>
+              <span v-else-if="scope.row.approve_status == 'offline_sale'">{{
+                $t('7ee70716.2c50a0')
+              }}</span>
+              <span v-else-if="scope.row.approve_status == 'only_show'">{{
+                $t('7ee70716.acf86b')
+              }}</span>
+              <span v-else>{{ $t('7ee70716.ae83a3') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="itemCatName" label="商品分类" width="150" />
+          <el-table-column prop="itemCatName" :label="$t('7ee70716.c3ece5')" width="150" />
 
-          <el-table-column fixed="left" label="操作" width="160">
+          <el-table-column fixed="left" :label="$t('7ee70716.2b6bc0')" width="160">
             <template slot-scope="scope">
-              <el-button type="text" @click="deleteItem(scope.row)"> 删除 </el-button>
+              <el-button type="text" @click="deleteItem(scope.row)">
+{{
+                $t('7ee70716.2f4aad')
+              }}
+</el-button>
               <el-button type="text" class="btn-gap" @click="modifyItem(scope.row)">
-                设置起送量
+                {{ $t('7ee70716.85d8be') }}
               </el-button>
             </template>
           </el-table-column>
@@ -184,7 +194,7 @@
       <SpDialog
         ref="sendNumDialogRef"
         v-model="sendNumDialog"
-        title="设置起送量"
+        :title="$t('7ee70716.85d8be')"
         :form="sendNumForm"
         :form-list="sendNumFormList"
         @onSubmit="onSendNumSubmit"
@@ -200,6 +210,7 @@ import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import { SALES_STATUS, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
+import { i18n } from '@/i18n'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -229,23 +240,23 @@ export default {
       categoryList: [],
       activity_status: [
         {
-          title: '全部商品',
+          title: i18n.t('7ee70716.794a4e'),
           value: 'all'
         },
         {
-          title: '活动中的商品',
+          title: i18n.t('7ee70716.91f239'),
           value: 'activing'
         }
       ],
       sendNumDialog: false,
       sendNumFormList: [
         {
-          label: '起送量',
+          label: i18n.t('7ee70716.bfaf7d'),
           key: 'num',
           type: 'input',
-          placeholder: '留空则不做起送量限制',
+          placeholder: i18n.t('7ee70716.7e7d8d'),
           required: true,
-          message: '不能为空'
+          message: i18n.t('7ee70716.281bad')
         }
       ],
       sendNumForm: {
@@ -300,9 +311,9 @@ export default {
       this.categoryList = res
     },
     async deleteItem({ item_id }) {
-      await this.$confirm('请确认是否删除商品', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('7ee70716.44d6f7'), this.$t('7ee70716.02d981'), {
+        confirmButtonText: this.$t('7ee70716.38cf16'),
+        cancelButtonText: this.$t('7ee70716.625fb2')
       })
       await this.$api.community.deleteActivityGoods(item_id)
       this.onSearch()

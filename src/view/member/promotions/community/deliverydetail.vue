@@ -6,39 +6,50 @@
 <template>
   <div class="section section-white">
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="基本信息" name="first">
+      <el-tab-pane :label="$t('b264361a.9e5ffa')" name="first">
         <el-row>
           <el-col :span="8">
-            <span>批次号：</span> <span>{{ detail.delivery_bn }}</span>
+            <span>{{ $t('b264361a.567aed') }}</span> <span>{{ detail.delivery_bn }}</span>
           </el-col>
-          <el-col :span="8"> 社区店名称：{{ detail.community_name }} </el-col>
+          <el-col :span="8"> {{ $t('b264361a.75f211') }}{{ detail.community_name }} </el-col>
           <el-col :span="8">
-            状态:
-            <el-tag v-if="detail.status === 'PENDING'" type="info"> 待发货 </el-tag>
-            <el-tag v-if="detail.status === 'SHIPPED'" type="primary"> 待收货 </el-tag>
-            <el-tag v-if="detail.status === 'DONE'" type="success"> 已送达 </el-tag>
-            <el-tag v-if="detail.status === 'BADDONE'" type="warning"> 已送达，有报损 </el-tag>
+            {{ $t('b264361a.13b5c7') }}
+            <el-tag v-if="detail.status === 'PENDING'" type="info">
+              {{ $t('b264361a.d8476e') }}
+            </el-tag>
+            <el-tag v-if="detail.status === 'SHIPPED'" type="primary">
+              {{ $t('b264361a.4933ca') }}
+            </el-tag>
+            <el-tag v-if="detail.status === 'DONE'" type="success">
+              {{ $t('b264361a.f87f48') }}
+            </el-tag>
+            <el-tag v-if="detail.status === 'BADDONE'" type="warning">
+              {{ $t('b264361a.5dc3f1') }}
+            </el-tag>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <span> 店号:</span><span>{{ detail.shop_number }}</span>
+            <span> {{ $t('b264361a.4a3bb4') }}</span
+            ><span>{{ detail.shop_number }}</span>
           </el-col>
           <el-col :span="8">
-            <span> 站点号:</span><span>{{ detail.site_number }}</span>
+            <span> {{ $t('b264361a.dd2c11') }}</span
+            ><span>{{ detail.site_number }}</span>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            创建日期：{{ detail.created_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+            {{ $t('b264361a.e74a08') }}{{ detail.created_time | datetime('YYYY-MM-DD HH:mm:ss') }}
           </el-col>
           <el-col :span="8">
-            发货时间：<span v-if="detail.shipped_time">
+            {{ $t('b264361a.8fca68')
+            }}<span v-if="detail.shipped_time">
               {{ detail.shipped_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </span>
           </el-col>
           <el-col :span="8">
-            签收时间:
+            {{ $t('b264361a.2bf74a') }}
             <span v-if="detail.finish_time">{{
               detail.finish_time | datetime('YYYY-MM-DD HH:mm:ss')
             }}</span>
@@ -46,31 +57,32 @@
         </el-row>
         <el-row>
           <el-col :span="16">
-            <span> 配送地址:</span><span>{{ detail.address }}</span>
+            <span> {{ $t('b264361a.6e370f') }}</span
+            ><span>{{ detail.address }}</span>
           </el-col>
           <el-col :span="8">
-            备注：
+            {{ $t('b264361a.751ce6') }}
             <el-input
               v-model="detail.memo"
               type="textarea"
               :rows="2"
-              placeholder="请输入备注"
+              :placeholder="$t('b264361a.3cac63')"
               @blur="handleSetMemo()"
             />
           </el-col>
         </el-row>
         <el-table v-loading="loading" :data="detail.items" border :height="wheight - 270">
-          <el-table-column type="index" width="50" label="序号" />
-          <el-table-column label="商品图片" min-width="50">
+          <el-table-column type="index" width="50" :label="$t('b264361a.faaadc')" />
+          <el-table-column :label="$t('b264361a.9b94b1')" min-width="50">
             <template slot-scope="scope">
-              <img :src="wximageurl + scope.row.item_pic" width="50" />
+              <img :src="wximageurl + scope.row.item_pic" width="50">
             </template>
           </el-table-column>
-          <el-table-column prop="item_name" label="商品名称" min-width="100" />
-          <el-table-column prop="num" label="商品数量" min-width="100" />
-          <el-table-column prop="item_bn" label="商品编号" min-width="100" />
-          <el-table-column prop="item_unit" label="单位" min-width="100" />
-          <el-table-column prop="bad_item_num" label="报损数量" min-width="100" />
+          <el-table-column prop="item_name" :label="$t('b264361a.1fd1d5')" min-width="100" />
+          <el-table-column prop="num" :label="$t('b264361a.06612d')" min-width="100" />
+          <el-table-column prop="item_bn" :label="$t('b264361a.b07bdf')" min-width="100" />
+          <el-table-column prop="item_unit" :label="$t('b264361a.f29968')" min-width="100" />
+          <el-table-column prop="bad_item_num" :label="$t('b264361a.1a9a9b')" min-width="100" />
         </el-table>
       </el-tab-pane>
     </el-tabs>
@@ -108,23 +120,23 @@ export default {
         (res) => {
           this.$message({
             type: 'success',
-            message: '备注更新成功'
+            message: this.$t('b264361a.94a22a')
           })
         }
       )
     },
     // 发货确认
     shippedHandle(row) {
-      this.$confirm('是否确认已发货?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('b264361a.8f2605'), this.$t('b264361a.02d981'), {
+        confirmButtonText: this.$t('b264361a.38cf16'),
+        cancelButtonText: this.$t('b264361a.625fb2'),
         type: 'warning'
       })
         .then(() => {
           shippingDeliveryorder({ delivery_id: row.delivery_id }).then((response) => {
             this.$message({
               type: 'success',
-              message: '操作成功'
+              message: this.$t('b264361a.33130f')
             })
             this.getList()
           })
@@ -132,7 +144,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('b264361a.c34281')
           })
         })
     },

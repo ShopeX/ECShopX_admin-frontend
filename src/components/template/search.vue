@@ -13,13 +13,13 @@
     <div class="search" :class="{ fixed: config.fixTop }">
       <div class="view-flex view-flex-middle">
         <div class="view-flex-item view-flex view-flex-middle view-flex-center search-box">
-          <i class="search-icon" /> 搜索想要的商品
+          <i class="search-icon" /> {{ $t('11807fc1.758b99') }}
         </div>
         <!-- <div v-if="res.config.scanCode" class="scancode">
           <svg class="svg-icon" aria-hidden="true">
             <use xlink:href="#icon-scan"></use>
           </svg>
-          <div>扫码购</div>
+          <div>{{ $t('11807fc1.4b5134') }}</div>
         </div> -->
       </div>
     </div>

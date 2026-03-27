@@ -32,7 +32,7 @@
   <el-drawer
     ref="drawer"
     v-bind="$attrs"
-    :title="title"
+    :title="title != null ? title : $t('9e446cfa.32c65d')"
     :visible.sync="isShow"
     :size="width"
     direction="rtl"
@@ -44,8 +44,8 @@
       <slot />
     </div>
     <div v-if="footer" class="sp-drawer__footer">
-      <el-button plain @click="onCloseDrawer">关闭</el-button>
-      <el-button type="primary" @click="onConfirmDrawer">{{ confirmText }}</el-button>
+      <el-button plain @click="onCloseDrawer">{{ $t('9e446cfa.b15d91') }}</el-button>
+      <el-button type="primary" @click="onConfirmDrawer">{{ confirmTextComputed }}</el-button>
     </div>
   </el-drawer>
 </template>
@@ -56,7 +56,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '标题'
+      default: null
     },
     width: {
       type: Number,
@@ -72,7 +72,7 @@ export default {
     },
     confirmText: {
       type: String,
-      default: '确定'
+      default: null
     }
   },
   data() {
@@ -80,7 +80,11 @@ export default {
       isShow: false
     }
   },
-  computed: {},
+  computed: {
+    confirmTextComputed() {
+      return this.confirmText != null ? this.confirmText : this.$t('9e446cfa.38cf16')
+    }
+  },
   watch: {
     value(nVal, oVal) {
       this.isShow = nVal

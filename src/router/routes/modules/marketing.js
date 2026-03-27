@@ -12,7 +12,7 @@ const routes = [
       aliasName: 'marketing',
       icon: 'sales-report',
       keepAlive: true,
-      title: '营销'
+      title: 'b213c3c4.916801'
     },
     name: 'marketing',
     path: '/marketing',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'membermarketing',
           icon: 'pay-circle',
-          title: '券管理',
+          title: 'b213c3c4.675a8b',
           permissions: ['marketing.coupon.membermarketing']
         },
         component: () => import('@/view/member/cardticket/coupon'),
@@ -44,7 +44,7 @@ const routes = [
         meta: {
           aliasName: 'couponspackage',
           icon: 'pay-circle',
-          title: '券包管理',
+          title: 'b213c3c4.53d418',
           permissions: ['marketing.coupon.couponspackage']
         },
         component: () => import('@/view/member/cardticket/couponspackage'),
@@ -65,7 +65,7 @@ const routes = [
         meta: {
           aliasName: 'coupongive',
           icon: 'pay-circle',
-          title: '发券记录',
+          title: 'b213c3c4.725e84',
           permissions: ['marketing.coupon.coupongive']
         },
         component: () => import('@/view/member/coupon/giveLog'),
@@ -83,7 +83,7 @@ const routes = [
         meta: {
           aliasName: 'couponsend',
           icon: 'pay-circle',
-          title: '群发优惠券',
+          title: 'b213c3c4.dfa362',
           permissions: ['marketing.coupon.couponsend']
         },
         component: () => import('@/views/members/member_list'),
@@ -100,7 +100,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsfulldiscount',
           icon: 'pay-circle',
-          title: '满折',
+          title: 'b213c3c4.1c120b',
           permissions: ['marketing.promotion.marketingsfulldiscount']
         },
         component: () => import('@/view/member/promotions/fulldiscount/list'),
@@ -117,7 +117,7 @@ const routes = [
         meta: {
           aliasName: 'Marketingsfullminus',
           icon: 'pay-circle',
-          title: '满减',
+          title: 'b213c3c4.94b1fd',
           permissions: ['marketing.promotion.Marketingsfullminus']
         },
         component: () => import('@/view/member/promotions/fullminus/list'),
@@ -134,7 +134,7 @@ const routes = [
         meta: {
           aliasName: 'Marketingsfullgift',
           icon: 'pay-circle',
-          title: '满赠',
+          title: 'b213c3c4.8e2405',
           permissions: ['marketing.promotion.Marketingsfullgift']
         },
         component: () => import('@/view/member/promotions/fullgift/list'),
@@ -151,7 +151,7 @@ const routes = [
         meta: {
           aliasName: 'limitedtimesale',
           icon: 'pay-circle',
-          title: '限时特惠',
+          title: 'b213c3c4.a0aaca',
           permissions: ['marketing.promotion.limitedtimesale']
         },
         component: () => import('@/view/member/promotions/limitedtimesale/list'),
@@ -168,7 +168,7 @@ const routes = [
         meta: {
           aliasName: 'marketingspluspricebuy',
           icon: 'pay-circle',
-          title: '加价购',
+          title: 'b213c3c4.54e654',
           permissions: ['marketing.promotion.marketingspluspricebuy']
         },
         component: () => import('@/view/member/promotions/pluspricebuy/list'),
@@ -185,7 +185,7 @@ const routes = [
         meta: {
           aliasName: 'marketingpackage',
           icon: 'pay-circle',
-          title: '组合购',
+          title: 'b213c3c4.3e9a00',
           permissions: ['marketing.promotion.marketingpackage']
         },
         component: () => import('@/view/member/promotions/package/list'),
@@ -202,7 +202,7 @@ const routes = [
         meta: {
           aliasName: 'marketingindex',
           icon: 'pay-circle',
-          title: '新客营销',
+          title: 'b213c3c4.668339',
           permissions: ['marketing.membermarket.marketingindex']
         },
         component: () => import('@/view/member/promotions/index')
@@ -213,7 +213,7 @@ const routes = [
         meta: {
           aliasName: 'SpecificCrowdDiscount',
           icon: 'pay-circle',
-          title: '定向营销',
+          title: 'b213c3c4.9ceb88',
           permissions: ['marketing.membermarket.SpecificCrowdDiscount']
         },
         component: () => import('@/view/member/promotions/specificcrowd/specificcrowddiscount'),
@@ -230,7 +230,7 @@ const routes = [
         meta: {
           aliasName: 'memberpreference',
           icon: 'pay-circle',
-          title: '优先购',
+          title: 'b213c3c4.064352',
           permissions: ['marketing.membermarket.memberpreference']
         },
         component: () => import('@/view/member/promotions/memberpreference/list'),
@@ -247,7 +247,7 @@ const routes = [
         meta: {
           aliasName: 'marketingactivity',
           icon: 'pay-circle',
-          title: '自动化营销',
+          title: 'b213c3c4.375821',
           permissions: ['marketing.membermarket.marketingactivity']
         },
         component: () => import('@/views/marketing/autoMarketing/activity-list'),
@@ -268,7 +268,7 @@ const routes = [
         meta: {
           aliasName: 'recommendlike',
           icon: 'pay-circle',
-          title: '商品推荐',
+          title: 'b213c3c4.5a6889',
           permissions: ['marketing.membermarket.recommendlike']
         },
         component: () => import('@/view/member/promotions/recommendlike')
@@ -279,7 +279,7 @@ const routes = [
         meta: {
           aliasName: 'pointupvaluation',
           icon: 'pay-circle',
-          title: '积分升值',
+          title: 'b213c3c4.c66d5b',
           permissions: ['marketing.membermarket.pointupvaluation']
         },
         component: () => import('@/view/member/promotions/pointupvaluation/list'),
@@ -296,7 +296,7 @@ const routes = [
         meta: {
           aliasName: 'extrapoint',
           icon: 'pay-circle',
-          title: '额外积分',
+          title: 'b213c3c4.2fac5c',
           permissions: ['marketing.membermarket.extrapoint']
         },
         component: () => import('@/view/member/promotions/extrapoint/list'),
@@ -317,7 +317,7 @@ const routes = [
         meta: {
           aliasName: 'groupsindex',
           icon: 'pay-circle',
-          title: '拼团',
+          title: 'b213c3c4.0dc5dc',
           permissions: ['marketing.fissionmarketing.groupsindex']
         },
         component: () => import('@/view/member/groups/index'),
@@ -329,7 +329,7 @@ const routes = [
           {
             path: 'detail/:team_id?',
             meta: {
-              title: `拼团-活动报名-活动报名-满赠管理-详情`
+              title: 'b213c3c4.690234'
             },
             component: () => import('@/view/member/groups/teamDetail')
           },
@@ -345,7 +345,7 @@ const routes = [
         meta: {
           aliasName: 'marketingbargain',
           icon: 'pay-circle',
-          title: '微信助力',
+          title: 'b213c3c4.d84526',
           permissions: ['marketing.fissionmarketing.marketingbargain']
         },
         component: () => import('@/view/member/bargain/index'),
@@ -362,7 +362,7 @@ const routes = [
         meta: {
           aliasName: 'popularizesetting',
           icon: 'pay-circle',
-          title: '基础设置',
+          title: 'b213c3c4.0aeca0',
           permissions: ['marketing.popularize.popularizesetting']
         },
         component: () => import('@/view/popularize/setting')
@@ -373,7 +373,7 @@ const routes = [
         meta: {
           aliasName: 'popularizelist',
           icon: 'pay-circle',
-          title: '推广员管理',
+          title: 'b213c3c4.4db9c2',
           permissions: ['marketing.popularize.popularizelist']
         },
         component: () => import('@/view/popularize/list'),
@@ -394,7 +394,7 @@ const routes = [
         meta: {
           aliasName: 'promotersetting',
           icon: 'pay-circle',
-          title: '等级管理',
+          title: 'b213c3c4.481b69',
           permissions: ['marketing.popularize.promotersetting']
         },
         component: () => import('@/view/popularize/promoterSetting')
@@ -405,7 +405,7 @@ const routes = [
         meta: {
           aliasName: 'popularizedata',
           icon: 'pay-circle',
-          title: '推广员业绩',
+          title: 'b213c3c4.251493',
           permissions: ['marketing.popularize.popularizedata']
         },
         component: () => import('@/view/popularize/data'),
@@ -422,7 +422,7 @@ const routes = [
         meta: {
           aliasName: 'popularizewithdraw',
           icon: 'pay-circle',
-          title: '提现申请',
+          title: 'b213c3c4.33011e',
           permissions: ['marketing.popularize.popularizewithdraw']
         },
         component: () => import('@/view/popularize/withdraw')
@@ -433,7 +433,7 @@ const routes = [
         meta: {
           aliasName: 'popularizegoods',
           icon: 'pay-circle',
-          title: '分销商品',
+          title: 'b213c3c4.ad8d69',
           permissions: ['marketing.popularize.popularizegoods']
         },
         component: () => import('@/view/popularize/goods')
@@ -444,7 +444,7 @@ const routes = [
         meta: {
           aliasName: 'taskbrokerage',
           icon: 'pay-circle',
-          title: '任务佣金明细',
+          title: 'b213c3c4.4b43b0',
           permissions: ['marketing.popularize.taskbrokerage']
         },
         component: () => import('@/view/popularize/taskBrokerage')
@@ -455,7 +455,7 @@ const routes = [
         meta: {
           aliasName: 'taskbrokeragecount',
           icon: 'pay-circle',
-          title: '任务佣金统计',
+          title: 'b213c3c4.98aee0',
           permissions: ['marketing.popularize.taskbrokeragecount']
         },
         component: () => import('@/view/popularize/taskBrokerageCount')
@@ -466,7 +466,7 @@ const routes = [
         meta: {
           aliasName: 'liveroomlist',
           icon: 'pay-circle',
-          title: '小程序直播',
+          title: 'b213c3c4.425999',
           permissions: ['marketing.liveroomlist']
         },
         component: () => import('@/view/mall/liveroom/list'),
@@ -474,7 +474,7 @@ const routes = [
           {
             path: 'editor/:itemId?',
             meta: {
-              title: `小程序直播-活动报名-活动报名-直播-编辑`
+              title: 'b213c3c4.1c0bf5'
             },
             component: () =>
               import(
@@ -489,7 +489,7 @@ const routes = [
         meta: {
           aliasName: 'Registrationactivity',
           icon: 'pay-circle',
-          title: '全部活动',
+          title: 'b213c3c4.5e06be',
           permissions: ['marketing.apply.Registrationactivity']
         },
         component: () => import('@/view/member/selfservice/registrationactivity'),
@@ -506,7 +506,7 @@ const routes = [
         meta: {
           aliasName: 'Registrationrecord',
           icon: 'pay-circle',
-          title: '报名记录',
+          title: 'b213c3c4.42a5b5',
           permissions: ['marketing.apply.Registrationrecord']
         },
         component: () => import('@/view/member/selfservice/registrationrecord'),
@@ -527,14 +527,14 @@ const routes = [
         meta: {
           aliasName: 'formattrs',
           icon: 'pay-circle',
-          title: '表单元素',
+          title: 'b213c3c4.f26faa',
           permissions: ['marketing.apply.formattrs']
         },
         component: () => import('@/view/member/selfservice/formsettinglist'),
         children: [
           {
             path: 'editor/:itemId?',
-            name: `表单元素配置-编辑`,
+            name: 'b213c3c4.c7d5c2',
             component: () => import('@/view/member/selfservice/formsettingadd')
           }
         ]
@@ -545,14 +545,14 @@ const routes = [
         meta: {
           aliasName: 'formtemplate',
           icon: 'pay-circle',
-          title: '表单模板',
+          title: 'b213c3c4.59a9c2',
           permissions: ['marketing.apply.formtemplate']
         },
         component: () => import('@/view/member/selfservice/formtemplatelist'),
         children: [
           {
             path: 'editor/:itemId?',
-            name: `表单模板配置-编辑`,
+            name: 'b213c3c4.2b9acd',
             component: () => import('@/view/member/selfservice/formtemplateadd')
           }
         ]
@@ -563,7 +563,7 @@ const routes = [
         meta: {
           aliasName: 'wheel',
           icon: 'pay-circle',
-          title: '大转盘',
+          title: 'b213c3c4.5fa218',
           permissions: ['marketing.wheel']
         },
         component: () => import('@/view/member/promotions/wheel/index')

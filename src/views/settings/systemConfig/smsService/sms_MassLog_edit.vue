@@ -4,30 +4,28 @@
 -->
 
 <template>
-  <el-dialog title="群发短信" :visible="visible" :before-close="handleClose">
+  <el-dialog :title="$t('e06fc114.43e10b')" :visible="visible" :before-close="handleClose">
     <tips v-if="exterior">
-      <p>
-        推广短信由 [签名+模板] 组成，当前场景仅支持「推广短信」类型的模板，如需添加模板：点这里。
-      </p>
-      <p>单次最多可向1000个手机号码发送同样内容的短信，会有一定延迟。</p>
-      <p>发送结果可在「设置-短信服务-短信发送记录-推广短信」查看。</p>
+      <p>{{ $t('e06fc114.1fbcef') }}</p>
+      <p>{{ $t('e06fc114.5018a4') }}</p>
+      <p>{{ $t('e06fc114.41149e') }}</p>
     </tips>
     <div class="sms_signatures_edit">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="任务名称" prop="task_name">
+        <el-form-item :label="$t('e06fc114.78caf7')" prop="task_name">
           <el-input
             v-model="form.task_name"
             :disabled="disabled"
             minlength="1"
             maxlength="30"
             show-word-limit
-            placeholder="长度限1-30个字符"
+            :placeholder="$t('e06fc114.837447')"
           />
         </el-form-item>
-        <el-form-item label="短信签名" prop="sign_id">
+        <el-form-item :label="$t('e06fc114.f32c04')" prop="sign_id">
           <el-select
             v-model="form.sign_id"
-            placeholder="请选择签名"
+            :placeholder="$t('e06fc114.4f0848')"
             style="width: 400px"
             :disabled="disabled"
           >
@@ -39,16 +37,18 @@
             />
           </el-select>
           <div class="subtitle">
-            没有需要的签名，马上
+            {{ $t('e06fc114.53f140') }}
             <router-link to="/setting/system-config/sms-service/sms_signatures/edit">
-              添加签名
-            </router-link>
+{{
+              $t('e06fc114.f35ff3')
+            }}
+</router-link>
           </div>
         </el-form-item>
-        <el-form-item label="短信模板" prop="template_id">
+        <el-form-item :label="$t('e06fc114.dbe8ba')" prop="template_id">
           <el-select
             v-model="form.template_id"
-            placeholder="请选择模板"
+            :placeholder="$t('e06fc114.9af823')"
             style="width: 400px"
             :disabled="disabled"
           >
@@ -60,14 +60,16 @@
             />
           </el-select>
           <div class="subtitle">
-            没有需要的签名，马上
+            {{ $t('e06fc114.53f140') }}
             <router-link to="/setting/system-config/sms-service/sms_template/edit">
-              添加模板
-            </router-link>
-            <p>仅支持推广短信类型</p>
+{{
+              $t('e06fc114.6fef15')
+            }}
+</router-link>
+            <p>{{ $t('e06fc114.35547d') }}</p>
           </div>
         </el-form-item>
-        <el-form-item label="定时发送">
+        <el-form-item :label="$t('e06fc114.74e5c0')">
           <el-switch
             v-model="form.timing"
             active-color="#13ce66"
@@ -80,12 +82,12 @@
             v-model="form.send_at"
             :disabled="disabled"
             type="datetime"
-            placeholder="选择日期时间"
+            :placeholder="$t('e06fc114.a42ae4')"
             value-format="timestamp"
             @change="dateTimeChange"
           />
           <ul class="tips">
-            <li>如需撤销，请在发送时间前5分钟操作</li>
+            <li>{{ $t('e06fc114.c74216') }}</li>
           </ul>
         </el-form-item>
       </el-form>
@@ -110,7 +112,7 @@
     </div>
     <span v-if="info.type !== 'detail'" slot="footer" class="dialog-footer">
       <loadingBtn ref="loadingBtn" @clickHandle="submitForm('form')" />
-      <el-button @click="fnBack">取消</el-button>
+      <el-button @click="fnBack">{{ $t('e06fc114.625fb2') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -161,10 +163,10 @@ export default {
         user_id: ''
       },
       rules: {
-        task_name: [requiredRules('任务名称')],
-        sign_id: [requiredRules('短信签名'), 'change'],
-        template_id: [requiredRules('短信模板', 'change')],
-        send_at: [requiredRules('发送时间'), 'change']
+        task_name: [requiredRules(this.$t('e06fc114.78caf7'))],
+        sign_id: [requiredRules(this.$t('e06fc114.f32c04'), 'change')],
+        template_id: [requiredRules(this.$t('e06fc114.dbe8ba'), 'change')],
+        send_at: [requiredRules(this.$t('e06fc114.63b34d'), 'change')]
       },
       sign_options: [],
       template_options: []
@@ -212,13 +214,13 @@ export default {
               this.submitFormResult(result)
             } else {
               // 增加
-              var message = '确定发送该短信给勾选会员？'
+              var message = this.$t('e06fc114.514321')
               if (this.user_id.length == 0) {
-                message = '确定发送该短信给全部会员？'
+                message = this.$t('e06fc114.ebc51a')
               }
               this.$confirm(message, '', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+                confirmButtonText: this.$t('e06fc114.38cf16'),
+                cancelButtonText: this.$t('e06fc114.625fb2'),
                 type: 'warning'
               })
                 .then(async () => {
@@ -242,7 +244,7 @@ export default {
     },
     submitFormResult(result) {
       if (result.data.data.status) {
-        this.$message.success('成功')
+        this.$message.success(this.$t('e06fc114.330363'))
         this.handleClose()
       }
       this.$refs['loadingBtn'].closeLoading()

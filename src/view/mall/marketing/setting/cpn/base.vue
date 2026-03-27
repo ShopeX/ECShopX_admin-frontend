@@ -6,36 +6,36 @@
 <template>
   <div class="baseSetting">
     <el-form ref="ruleForm" :model="form" label-width="150px" class="demo-ruleForm">
-      <el-form-item label="是否允许加盟商入驻">
+      <el-form-item :label="$t('e145241a.c4c576')">
         <el-radio-group v-model="form.status">
-          <el-radio :label="true"> 允许 </el-radio>
-          <el-radio :label="false"> 关闭 </el-radio>
+          <el-radio :label="true">{{ $t('e145241a.e6a5c3') }}</el-radio>
+          <el-radio :label="false">{{ $t('e145241a.b15d91') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.settled_type" label="允许加盟商入驻类型">
+      <el-form-item v-if="form.settled_type" :label="$t('e145241a.e96664')">
         <el-checkbox-group v-model="form.settled_type">
-          <el-checkbox label="enterprise"> 企业 </el-checkbox>
-          <el-checkbox label="soletrader"> 个体户 </el-checkbox>
+          <el-checkbox label="enterprise">{{ $t('e145241a.04c9e3') }}</el-checkbox>
+          <el-checkbox label="soletrader">{{ $t('e145241a.a41061') }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="商户入驻链接（H5）">
+      <el-form-item :label="$t('e145241a.69d99f')">
         <span>{{ h5url }} </span>
         <a
           v-clipboard:copy="h5url"
           v-clipboard:success="onCopy"
           style="cursor: pointer; margin-left: 30px"
         >
-          复制链接</a
+          {{ $t('e145241a.879058') }}</a
         >
       </el-form-item>
       <div class="content">
-        <p>入驻协议内容修改后，提交后对线上客户生效。</p>
-        <el-form-item label="入驻协议内容" label-width="100px">
+        <p>{{ $t('e145241a.bff7f4') }}</p>
+        <el-form-item :label="$t('e145241a.817ddd')" label-width="100px">
           <SpRichText v-model="form.content" />
         </el-form-item>
       </div>
       <el-form-item style="text-align: center; margin-top: 30px" label-width="0">
-        <el-button type="primary" @click="submitForm"> 保存 </el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('e145241a.be5fbb') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -71,13 +71,13 @@ export default {
     async submitForm() {
       const result = await saveShopConfig(this.form)
       if (result.data.data.status) {
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('e145241a.3b1083'))
         this.getConfig()
       }
     },
     onCopy() {
       this.$notify({
-        message: '复制成功',
+        message: this.$t('e145241a.20a495'),
         type: 'success'
       })
     }

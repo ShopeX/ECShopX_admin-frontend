@@ -34,19 +34,19 @@
           </template>
 
           <div class="info-item">
-            <span class="txt">注册导购</span>
+            <span class="txt">{{ $t('6f2e9aab.1df342') }}</span>
             <span>{{ member?.reg_salesperson }}</span>
           </div>
           <div class="info-item">
-            <span class="txt">注册店铺</span>
+            <span class="txt">{{ $t('6f2e9aab.c74b7d') }}</span>
             <span>{{ member?.reg_distributor }}</span>
           </div>
           <div class="info-item">
-            <span class="txt">归属导购</span>
+            <span class="txt">{{ $t('6f2e9aab.8d1f18') }}</span>
             <span>{{ member?.salesperson_info?.employee_number }}</span>
           </div>
           <div class="info-item">
-            <span class="txt">归属店铺</span>
+            <span class="txt">{{ $t('6f2e9aab.002acd') }}</span>
             <span>{{ member?.store_info?.store_name }}</span>
           </div>
         </div>

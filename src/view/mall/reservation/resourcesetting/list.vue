@@ -7,7 +7,7 @@
   <div>
     <el-row :span="20">
       <el-col :span="12">
-        门店：
+        {{ $t('6e484b97.0eff7d') }}
         <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
@@ -19,47 +19,51 @@
       </el-col>
       <el-col :span="12" class="content-right">
         <el-button type="primary" icon="plus" @click="addResource">
-          添加{{ resourceName }}
+          {{ $t('6e484b97.b58c75') }}{{ resourceName }}
         </el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="resourceLevelList" :height="wheight - 170" border>
-      <el-table-column prop="shopName" label="所属门店" />
-      <el-table-column prop="name" :label="resourceName + '名称'" />
-      <el-table-column prop="materialIds.length" label="服务项目数" />
-      <el-table-column prop="materialIds.status" label="服务项目数">
+      <el-table-column prop="shopName" :label="$t('6e484b97.a6cf26')" />
+      <el-table-column prop="name" :label="resourceName + $t('6e484b97.d7ec2d')" />
+      <el-table-column prop="materialIds.length" :label="$t('6e484b97.6222a2')" />
+      <el-table-column prop="materialIds.status" :label="$t('6e484b97.6222a2')">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status == 'active'"> 已开启 </el-tag>
-          <el-tag v-if="scope.row.status == 'invalid'" type="success"> 已关闭 </el-tag>
+          <el-tag v-if="scope.row.status == 'active'"> {{ $t('6e484b97.9db7a8') }} </el-tag>
+          <el-tag v-if="scope.row.status == 'invalid'" type="success">
+            {{ $t('6e484b97.9c5850') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('6e484b97.2b6bc0')">
         <template slot-scope="scope">
-          <a href="javascript:void(0)" @click="getDetail(scope.row.resourceLevelId)">查看</a>
+          <a href="javascript:void(0)" @click="getDetail(scope.row.resourceLevelId)">{{
+            $t('6e484b97.607e7a')
+          }}</a>
           &nbsp;
           <a
             href="javascript:void(0)"
             @click="updateResource(scope.row.resourceLevelId, scope.row.shopId)"
-            >编辑</a
+            >{{ $t('6e484b97.95b351') }}</a
           >
           &nbsp;
           <a
             href="javascript:void(0)"
             @click="deleteResource(scope.row.resourceLevelId, scope.row.shopId)"
-            >删除</a
+            >{{ $t('6e484b97.2f4aad') }}</a
           >
           &nbsp;
           <a
             v-if="scope.row.status == 'active'"
             href="javascript:void(0)"
             @click="updateStatus(scope.row.resourceLevelId, scope.row.status)"
-            >关闭</a
+            >{{ $t('6e484b97.b15d91') }}</a
           >
           <a
             v-if="scope.row.status == 'invalid'"
             href="javascript:void(0)"
             @click="updateStatus(scope.row.resourceLevelId, scope.row.status)"
-            >开启</a
+            >{{ $t('6e484b97.cc42dd') }}</a
           >
         </template>
       </el-table-column>
@@ -73,37 +77,43 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <el-dialog title="详情" :visible.sync="detailDialog" :close-on-click-modal="false">
+    <el-dialog
+      :title="$t('6e484b97.f26225')"
+      :visible.sync="detailDialog"
+      :close-on-click-modal="false"
+    >
       <el-form v-model="detailForm" label-width="160px">
-        <el-form-item label="名称：">
+        <el-form-item :label="$t('6e484b97.5b4786')">
           <span class="text-ellipsis" :title="detailForm.name">{{ detailForm.name }}</span>
         </el-form-item>
-        <el-form-item label="所属门店：">
+        <el-form-item :label="$t('6e484b97.5b124a')">
           {{ detailForm.shopName }}
         </el-form-item>
-        <el-form-item label="服务项目：">
+        <el-form-item :label="$t('6e484b97.da0075')">
           <el-row>
             <el-col v-for="item in serverproject" :key="index" :span="6" :title="item.label">
               <span>{{ item }}</span>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="简介：">
+        <el-form-item :label="$t('6e484b97.d8a65a')">
           <span class="text-ellipsis" :title="detailForm.description">{{
             detailForm.description
           }}</span>
         </el-form-item>
-        <el-form-item label="展示图：">
+        <el-form-item :label="$t('6e484b97.51ccb6')">
           <img
             v-if="detailForm.imageUrl"
             :src="detailForm.imageUrl ? wximageurl + detailForm.imageUrl : ''"
             class="avatar"
-          />
-          <span v-else>无图片</span>
+          >
+          <span v-else>{{ $t('6e484b97.5423e2') }}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button type="primary" @click="detailDialog = false"> 确定 </el-button>
+        <el-button type="primary" @click="detailDialog = false">
+          {{ $t('6e484b97.38cf16') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -177,7 +187,7 @@ export default {
           if (!expiredAt || (expiredAt && expiredAt <= this.nowTime)) {
             this.$message({
               type: 'error',
-              message: '该资源位不可被编辑，所属门店过期'
+              message: this.$t('6e484b97.1b47b6')
             })
             return
           }
@@ -186,9 +196,9 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor'), query: { id: resourceLevelId } })
     },
     deleteResource(resourceLevelId, shopId) {
-      this.$confirm('确定删除该条数据么？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('6e484b97.16c34a'), this.$t('6e484b97.02d981'), {
+        cancelButtonText: this.$t('6e484b97.625fb2'),
+        confirmButtonText: this.$t('6e484b97.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -200,7 +210,7 @@ export default {
               if (res.data.data.status) {
                 this.$message({
                   type: 'success',
-                  message: '删除成功'
+                  message: this.$t('6e484b97.0007d1')
                 })
               }
               this.getLevelList()
@@ -271,17 +281,17 @@ export default {
         resourceLevelId: id,
         status: status == 'invalid' ? 'true' : 'false'
       }
-      let msg = status == 'invalid' ? '确定开启？？' : '确定关闭？？'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      let msg = status == 'invalid' ? this.$t('6e484b97.612270') : this.$t('6e484b97.ef0a0b')
+      this.$confirm(msg, this.$t('6e484b97.02d981'), {
+        cancelButtonText: this.$t('6e484b97.625fb2'),
+        confirmButtonText: this.$t('6e484b97.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             updateResourceLevelStatus(params).then((res) => {
               this.$message({
                 type: 'success',
-                message: '修改成功'
+                message: this.$t('6e484b97.69be67')
               })
               this.getLevelList()
             })

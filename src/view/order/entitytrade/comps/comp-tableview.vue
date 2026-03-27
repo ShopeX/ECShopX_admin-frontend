@@ -84,22 +84,22 @@
       :height="280"
       border
     >
-      <el-table-column prop="itemName" label="商品">
+      <el-table-column prop="itemName" :label="$t('13e25730.9897d8')">
         <template slot-scope="scope">
           <div>{{ scope.row.item_name }}</div>
           <div class="sku-text">{{ scope.row.item_spec_desc }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="price" label="单价（¥）" width="100" />
-      <el-table-column prop="num" label="数量" width="80" />
-      <el-table-column prop="discount_fee" label="优惠（¥）" width="100" />
-      <el-table-column prop="point" label="积分抵扣（¥）" width="120" />
-      <el-table-column prop="total_fee" label="总计（¥）" width="100" />
+      <el-table-column prop="price" :label="$t('13e25730.6bf871')" width="100" />
+      <el-table-column prop="num" :label="$t('13e25730.0bf60b')" width="80" />
+      <el-table-column prop="discount_fee" :label="$t('13e25730.feab3a')" width="100" />
+      <el-table-column prop="point" :label="$t('13e25730.2ecbc8')" width="120" />
+      <el-table-column prop="total_fee" :label="$t('13e25730.95e6d7')" width="100" />
       <el-table-column width="160">
         <template #header>
           <el-dropdown @command="toggleChangePriceType">
             <span class="el-dropdown-link">
-              {{ changeType == 'change_price' ? '直接改价（¥）' : '按折扣改价（%）' }}
+              {{ changeType == 'change_price' ? $t('13e25730.f2153d') : $t('13e25730.c3d538') }}
               <i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown" class="change-price-dropdown-menu">
@@ -107,13 +107,13 @@
                 command="change_discount"
                 :class="{ active: changeType == 'change_discount' }"
               >
-                按折扣改价
+                {{ $t('13e25730.82f537') }}
               </el-dropdown-item>
               <el-dropdown-item
                 command="change_price"
                 :class="{ active: changeType == 'change_price' }"
               >
-                直接改价
+                {{ $t('13e25730.5aea83') }}
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -122,7 +122,7 @@
           <el-input
             v-if="changeType == 'change_price'"
             v-model="scope.row.change_price"
-            placeholder="直接改价"
+            :placeholder="$t('13e25730.5aea83')"
             size="small"
             @keyup.native="() => priceFormat(scope.row, scope.$index)"
             @change="() => onChangeItemPrice(scope.row)"
@@ -130,19 +130,19 @@
           <el-input
             v-if="changeType == 'change_discount'"
             v-model="scope.row.change_discount"
-            placeholder="按折扣改价"
+            :placeholder="$t('13e25730.82f537')"
             size="small"
             @keyup.native="() => discountFormat(scope.row, scope.$index)"
             @change="() => onChangeItemDiscount(scope.row)"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="total" label="商品应付金额（¥）" width="150" />
+      <el-table-column prop="total" :label="$t('13e25730.c90e66')" width="150" />
     </el-table>
     <div class="tableview-ft">
       <div class="ft-l">
         <div class="l-item">
-          <label>一键改价：</label>
+          <label>{{ $t('13e25730.61f98b') }}</label>
           <el-input
             v-model="globalChangePrice"
             class="price"
@@ -150,10 +150,10 @@
             @keyup.native="() => globalPriceFormat(globalChangePrice)"
             @change="handleChangePrice"
           />
-          <el-button type="text" @click="handleChangePrice"> 确定 </el-button>
+          <el-button type="text" @click="handleChangePrice">{{ $t('13e25730.38cf16') }}</el-button>
         </div>
         <div class="l-item">
-          <label>运费：</label
+          <label>{{ $t('13e25730.94a6a5') }}</label
           ><el-input
             v-model="globalFreightFee"
             size="small"
@@ -172,36 +172,40 @@
               }
             "
           >
-            免运费
+            {{ $t('13e25730.b00a4f') }}
           </el-button>
         </div>
         <div v-if="pointFreightFee" class="l-item">
           <div class="freight-point-discount">
-            积分抵扣运费：{{ `${pointFreightFee.toFixed(2)}` }}
+            {{ $t('13e25730.70aecb') }}{{ `${pointFreightFee.toFixed(2)}` }}
           </div>
         </div>
       </div>
       <div class="ft-r">
         <div class="r-item">
-          <label>商品应付金额：</label><span>{{ ` ¥${dItemTotalFee.toFixed(2)}` }}</span>
+          <label>{{ $t('13e25730.cd29e9') }}</label
+          ><span>{{ ` ¥${dItemTotalFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>总运费：</label><span>{{ ` ¥${dFreightFee.toFixed(2)}` }}</span>
+          <label>{{ $t('13e25730.95bac9') }}</label
+          ><span>{{ ` ¥${dFreightFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>积分抵扣运费：</label><span>{{ `-¥${pointFreightFee.toFixed(2)}` }}</span>
+          <label>{{ $t('13e25730.70aecb') }}</label
+          ><span>{{ `-¥${pointFreightFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>订单应付金额：</label><span>{{ ` ¥${dOrderFee.toFixed(2)}` }}</span>
+          <label>{{ $t('13e25730.8ebece') }}</label
+          ><span>{{ ` ¥${dOrderFee.toFixed(2)}` }}</span>
         </div>
       </div>
     </div>
     <div class="dialog-tip">
-      <p>订单应付金额 = 商品应付金额 + 运费；总运费 ＝ 运费 + 积分抵扣运费。</p>
+      <p>{{ $t('13e25730.7601db') }}</p>
       <p>
-        一键改价后的金额为商品总价，该金额会按商品单价的金额比例分摊到每个商品，不会分摊到优惠和运费。
+        {{ $t('13e25730.4983fd') }}
       </p>
-      <p>订单应付金额不能小于等于0。</p>
+      <p>{{ $t('13e25730.56e179') }}</p>
     </div>
   </div>
 </template>
@@ -316,7 +320,7 @@ export default {
     // 按直接改价
     onChangeItemPrice({ change_price, total_fee }) {
       if (parseFloat(change_price) >= parseFloat(total_fee)) {
-        this.$message.error('不能高于原订单金额')
+        this.$message.error(this.$t('13e25730.1536c9'))
         return
       }
       const items = this.tableData.map((item) => {

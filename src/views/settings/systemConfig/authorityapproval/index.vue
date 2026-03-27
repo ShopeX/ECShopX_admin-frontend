@@ -40,21 +40,27 @@ export default {
         queryTime: []
       },
       approveStatusList: [
-        { name: '全部', value: undefined },
-        { name: '待审批', value: '0' },
-        { name: '已通过', value: '1' },
-        { name: '未通过', value: '2' }
-      ],
-      setting: createSetting({
+        { i18nKey: '815d646e.a8b0c2', value: undefined },
+        { i18nKey: '815d646e.b0bf01', value: '0' },
+        { i18nKey: '815d646e.ecfa64', value: '1' },
+        { i18nKey: '815d646e.4fcdbf', value: '2' }
+      ]
+    }
+  },
+  watch: {
+    'queryParams.queryTime'(val) {
+      if (!val) this.queryParams.queryTime = []
+    }
+  },
+  computed: {
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '详情',
+            name: this.$t('815d646e.f26225'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
-            // visible: (row) => {
-            //   return row.status == '0'
-            // },
             action: {
               handler: async ([row]) => {
                 const { pass_id, operator_id } = row
@@ -68,29 +74,29 @@ export default {
         ],
         columns: [
           {
-            name: '账户名称',
+            name: this.$t('815d646e.fec615'),
             key: 'login_name'
           },
           {
-            name: '账户角色',
+            name: this.$t('815d646e.9be7c1'),
             key: 'operator_type',
             formatter: (value, row, col) => {
               return value === 'staff'
-                ? '平台管理员'
+                ? this.$t('815d646e.fc79d4')
                 : value === 'distributor'
-                ? '店铺管理员'
-                : '供应商管理员'
+                ? this.$t('815d646e.3282f2')
+                : this.$t('815d646e.40954c')
             }
           },
           {
-            name: '申请时间',
+            name: this.$t('815d646e.5ba072'),
             key: 'create_time',
             formatter: (value, row, col) => {
               return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
             }
           },
           {
-            name: '申请结果',
+            name: this.$t('815d646e.3650f5'),
             key: 'status',
             render: (h, scope) => {
               if (scope.row.status == '1' || scope.row.status == '2') {
@@ -102,7 +108,7 @@ export default {
                       size: 'small'
                     }
                   },
-                  scope.row.status == '1' ? '通过' : '拒绝'
+                  scope.row.status == '1' ? this.$t('815d646e.23c1f3') : this.$t('815d646e.7173f8')
                 )
               } else {
                 return ''
@@ -111,45 +117,38 @@ export default {
           }
         ]
       })
-    }
-  },
-  watch: {
-    'queryParams.queryTime'(val) {
-      if (!val) this.queryParams.queryTime = []
-    }
-  },
-  computed: {
+    },
     formItems() {
       return [
         {
           fieldName: 'status',
-          label: '审批状态',
+          label: this.$t('815d646e.d352ae'),
           component: 'select',
           componentProps: {
-            placeholder: '请选择审批状态',
+            placeholder: this.$t('815d646e.a7dd1f'),
             options: this.approveStatusList.map((item) => ({
-              label: item.name,
+              label: this.$t(item.i18nKey),
               value: item.value
             }))
           }
         },
         {
           fieldName: 'login_name',
-          label: '账户名称',
+          label: this.$t('815d646e.fec615'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入账户名称'
+            placeholder: this.$t('815d646e.329159')
           }
         },
         {
           fieldName: 'queryTime',
-          label: '申请日期',
+          label: this.$t('815d646e.4c9c23'),
           component: 'datetimepicker',
           cellWidth: 2,
           componentProps: {
             type: 'datetimerange',
-            startPlaceholder: '开始日期',
-            endPlaceholder: '结束日期',
+            startPlaceholder: this.$t('815d646e.b44c0f'),
+            endPlaceholder: this.$t('815d646e.1d468b'),
             defaultTime: ['00:00:00', '23:59:59'],
             valueFormat: 'timestamp',
             size: 'default',

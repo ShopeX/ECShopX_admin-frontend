@@ -13,10 +13,10 @@
         <el-step title="提交图片信息" :description="active== 4 || active==3 ?'完成':'已提交审核，请耐心等待～'">></el-step>
         <el-step title="入网完成" :description="active==4 || active==3 ?'完成':''"></el-step> -->
 
-        <el-step title="提交开户资料" />
-        <el-step title="支付渠道入驻" />
-        <el-step title="提交证照信息" />
-        <el-step title="入网完成" />
+        <el-step :title="$t('cc184734.399492')" />
+        <el-step :title="$t('cc184734.714084')" />
+        <el-step :title="$t('cc184734.4b4463')" />
+        <el-step :title="$t('cc184734.d56e1a')" />
       </el-steps>
     </div>
     <!-- <el-button style="margin-top: 12px;" @click="next">下一步</el-button> -->

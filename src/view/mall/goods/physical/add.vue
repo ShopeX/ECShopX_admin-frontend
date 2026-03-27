@@ -32,7 +32,7 @@
 <template>
   <div>
     <template v-if="!isEditor">
-      <el-card v-loading="mainCateLoader" shadow="never" header="选择管理分类">
+      <el-card v-loading="mainCateLoader" shadow="never" :header="$t('7504d59b.c50637')">
         <el-cascader
           v-model="selectedMainCategory"
           :options="mainCategory"
@@ -43,7 +43,7 @@
     </template>
     <template v-else>
       <div class="form-block-head clearfix">
-        <div class="block-head-hd">商品管理分类</div>
+        <div class="block-head-hd">{{ $t('d41d8cd9.53413a') }}</div>
       </div>
       <div class="form-block-body">
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
@@ -76,19 +76,19 @@
 
       <div class="comp-tdk">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">PC关键词搜索引擎</div>
+          <div class="block-head-hd">{{ $t('d41d8cd9.b02a70') }}</div>
         </div>
         <div class="form-block-body">
           <el-form label-position="right" label-width="80px">
-            <el-form-item label="页面标题" style="margin-bottom: 20px; width: 600px">
+            <el-form-item :label="$t('7504d59b.8d6b59')" style="margin-bottom: 20px; width: 600px">
               <el-input v-model="tdk_info.title" type="text" />
             </el-form-item>
-            <el-form-item label="页面描述" style="margin-bottom: 20px; width: 600px">
+            <el-form-item :label="$t('7504d59b.abf8f4')" style="margin-bottom: 20px; width: 600px">
               <el-input v-model="tdk_info.mate_description" type="textarea" />
             </el-form-item>
-            <el-form-item label="关键词" style="width: 600px">
+            <el-form-item :label="$t('7504d59b.9699a5')" style="width: 600px">
               <el-input v-model="tdk_info.mate_keywords" type="textarea" />
-              <span class="tip">关键词之间请用半角”,”分隔</span>
+              <span class="tip">{{ $t('7504d59b.c0a63b') }}</span>
             </el-form-item>
           </el-form>
         </div>
@@ -96,12 +96,12 @@
 
       <div class="comp-desc">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">图文详情</div>
+          <div class="block-head-hd">{{ $t('d41d8cd9.7db2d6') }}</div>
         </div>
         <div class="form-block-body">
           <el-radio-group v-model="mode" class="mode-text">
-            <el-radio :label="'richText'"> 富文本 </el-radio>
-            <el-radio :label="'component'"> 组件式 </el-radio>
+            <el-radio :label="'richText'"> {{ $t('d41d8cd9.e2591e') }} </el-radio>
+            <el-radio :label="'component'"> {{ $t('d41d8cd9.b09ce9') }} </el-radio>
           </el-radio-group>
           <div v-if="mode === 'richText'" class="richText-block">
             <div class="ricktext-con">
@@ -133,14 +133,14 @@
       </div>
 
       <div class="footer-container">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('d41d8cd9.625fb2') }} </el-button>
         <el-button
           v-if="!VERSION_STANDARD() || (!IS_DISTRIBUTOR() && VERSION_STANDARD())"
           type="primary"
           :loading="submitLoading"
           @click="handleSave"
         >
-          {{ submitLoading ? '提交中' : '保存' }}
+          {{ submitLoading ? $t('7504d59b.7ef44a') : $t('7504d59b.be5fbb') }}
         </el-button>
       </div>
     </template>
@@ -171,9 +171,9 @@ export default {
   inject: ['refresh'],
   beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
-      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('7504d59b.3ba67c'), this.$t('7504d59b.02d981'), {
+        confirmButtonText: this.$t('7504d59b.38cf16'),
+        cancelButtonText: this.$t('7504d59b.625fb2'),
         type: 'warning'
       })
         .then((res) => {
@@ -348,7 +348,7 @@ export default {
         ...resTax.data.data.list,
         {
           id: '0',
-          taxstrategy_name: '不使用策略',
+          taxstrategy_name: this.$t('7504d59b.01aba9'),
           created: '0',
           updated: '0'
         }
@@ -700,9 +700,9 @@ export default {
       this.getGoodsSkus(this.cacheCreateDetail.goods_spec, [])
     },
     clearSku(index) {
-      this.$confirm('确定清除当前规格的数据吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('7504d59b.3dd6cf'), this.$t('7504d59b.02d981'), {
+        confirmButtonText: this.$t('7504d59b.38cf16'),
+        cancelButtonText: this.$t('7504d59b.625fb2'),
         type: 'warning'
       }).then(() => {
         console.log(this.specItems)
@@ -875,7 +875,7 @@ export default {
         params['intro'] = this.intro
       }
       if (Number(params.store) < 0) {
-        this.$message({ type: 'error', message: '库存需为正整数' })
+        this.$message({ type: 'error', message: this.$t('7504d59b.9a4078') })
         this.submitLoading = false
         return
       }
@@ -887,7 +887,7 @@ export default {
           }
           await updateItems(item_id, params)
           this.$message({
-            message: '更新成功',
+            message: this.$t('7504d59b.55aa63'),
             type: 'success',
             duration: 2 * 1000,
             onClose: () => {
@@ -904,7 +904,7 @@ export default {
         try {
           await createItems(params)
           this.$message({
-            message: '添加成功',
+            message: this.$t('7504d59b.3fdaea'),
             type: 'success',
             duration: 2 * 1000,
             onClose: () => {

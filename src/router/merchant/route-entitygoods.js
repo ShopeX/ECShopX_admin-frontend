@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '商品'
+const name = '6bfca2bc.9897d8'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout' // 主框架
 

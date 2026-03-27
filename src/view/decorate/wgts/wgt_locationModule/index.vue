@@ -8,7 +8,7 @@
         :src="value.leftimgUrl"
         class="nav-indicator left"
         alt=""
-      />
+      >
 
       <!-- 导航项容器 -->
       <div ref="navScroller" class="nav-scroller" :style="navItemAreaStyle" @scroll="handleScroll">
@@ -27,7 +27,7 @@
               :src="activeIndex === index ? item.navitemactiveimg || item.imgUrl : item.imgUrl"
               class="nav-item-img"
               alt=""
-            />
+            >
             <!-- 文字类型 -->
             <span v-else class="nav-item-text">{{ item.navItemName }}</span>
             <!-- 选中底线 -->
@@ -46,7 +46,7 @@
         :src="value.rightimgUrl"
         class="nav-indicator right"
         alt=""
-      />
+      >
     </div>
 
     <!-- 内容区域：展示所有导航项的内容 -->
@@ -69,20 +69,21 @@
       </div>
       <!-- 空状态 -->
       <div v-if="!navItems.length" class="empty-content">
-        <span>暂无内容</span>
+        <span>{{ i18n.t('9a50f76c.4726ff') }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import config from './config'
 import gWgts from '../index'
 import { getOuterStyle } from '../../comps/style-utils'
 
 export default {
   name: 'LocationModule',
-  wgtName: '电梯',
+  wgtName: i18n.t('9a50f76c.61be0b'),
   wgtDesc: '',
   wgtIcon: 'elevator',
   config: config,
@@ -94,6 +95,7 @@ export default {
   },
   data() {
     return {
+      i18n,
       activeIndex: 0,
       showLeftIndicator: false,
       showRightIndicator: true,
@@ -282,6 +284,7 @@ export default {
 <style lang="scss" scoped>
 .wgt-location-module {
   width: 100%;
+  min-height: 100px;
 
   .nav-wrapper {
     position: relative;

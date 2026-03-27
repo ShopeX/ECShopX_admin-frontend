@@ -6,35 +6,35 @@
 <template>
   <div class="zipei-list">
     <div class="delivery-open">
-      商家自配送是否开启：
+      {{ $t('7f1f02ed.8396f9') }}
       <el-switch v-model="is_open" active-color="#13ce66" inactive-color="#ff4949" />
     </div>
     <!-- <span class="delivery-open">平台自营店铺配送费用配置</span> -->
     <div>
       <div class="delivery-money">
-        <span>起送：</span>
+        <span>{{ $t('7f1f02ed.307486') }}</span>
         <el-input-number v-model="min_amount" :precision="2" :step="0.1" :min="0" />
-        <span>元，基础运费</span>
+        <span>{{ $t('7f1f02ed.2340d3') }}</span>
         <el-input-number v-model="freight_fee" :precision="2" :step="0.1" :min="0" />
-        <span>元</span>
+        <span>{{ $t('7f1f02ed.c16655') }}</span>
       </div>
       <div class="delivery-money">
-        <el-radio v-model="selected" label="0">满：</el-radio>
+        <el-radio v-model="selected" label="0">{{ $t('7f1f02ed.5604bc') }}</el-radio>
         <el-input-number v-model="rule[0].full" :precision="2" :step="0.1" :min="0" />
-        <span>元，实际运费</span>
+        <span>{{ $t('7f1f02ed.e1ff30') }}</span>
         <el-input-number v-model="rule[0].freight_fee" :precision="2" :step="0.1" :min="0" />
-        <span>元，输入0元时为免运费</span>
+        <span>{{ $t('7f1f02ed.bfbe7a') }}</span>
       </div>
       <div class="delivery-money">
-        <el-radio v-model="selected" label="1">满：</el-radio>
+        <el-radio v-model="selected" label="1">{{ $t('7f1f02ed.5604bc') }}</el-radio>
         <el-input-number v-model="rule[1].full" :precision="2" :step="0.1" :min="0" />
-        <span>元，实际运费</span>
+        <span>{{ $t('7f1f02ed.e1ff30') }}</span>
         <el-input-number v-model="rule[1].freight_fee" :precision="2" :step="0.1" :min="0" />
-        <span>元</span>
+        <span>{{ $t('7f1f02ed.c16655') }}</span>
       </div>
     </div>
     <div class="footer-container">
-      <el-button type="primary" @click="save"> 保存配置 </el-button>
+      <el-button type="primary" @click="save">{{ $t('7f1f02ed.ed7526') }}</el-button>
     </div>
   </div>
 </template>
@@ -109,7 +109,7 @@ export default {
         rule: this.rule
       }
       await this.$api.pickuplocation.postPickuplocationList(params)
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('7f1f02ed.3b1083'))
     }
   }
 }

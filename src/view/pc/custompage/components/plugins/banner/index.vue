@@ -23,7 +23,7 @@
             @mouseover="stopTimer"
             @mouseout="startTimer"
           >
-            <img v-if="item.imgUrl" class="img1" :src="item.imgUrl" />
+            <img v-if="item.imgUrl" class="img1" :src="item.imgUrl">
           </div>
         </transition>
       </div>

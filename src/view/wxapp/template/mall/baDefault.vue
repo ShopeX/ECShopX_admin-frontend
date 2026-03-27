@@ -18,18 +18,18 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
-            图片导航
+            {{ $t('902732c4.8ae4a2') }}
           </template>
           <template v-if="item.name === 'slider'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
-            轮播
+            {{ $t('902732c4.a5987d') }}
           </template>
         </div>
       </draggable>
       <el-button type="text" @click="handleShowConfig">
-        <i class="iconfont icon-cog" /> 小程序设置
+        <i class="iconfont icon-cog" /> {{ $t('902732c4.cc2d92') }}
       </el-button>
     </section>
     <section class="section section-white view-warp">
@@ -44,7 +44,7 @@
                 ') no-repeat bottom; background-size: 100% auto;'
               "
             >
-              <span>标题</span>
+              <span>{{ $t('902732c4.32c65d') }}</span>
             </div>
           </div>
           <draggable
@@ -63,7 +63,7 @@
             >
               <transition name="el-fade-in-linear">
                 <div v-if="editorIndex === index" @click="removeCurrent">
-                  <i class="el-icon-delete"></i>
+                  <i class="el-icon-delete" />
                 </div>
               </transition>
               <navigation
@@ -105,14 +105,14 @@
                       item.selectedIconPath ||
                       'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  />
+                  >
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  />
+                  >
                 </template>
                 <div class="tab-text">
                   {{ item.text }}
@@ -125,7 +125,7 @@
       <div class="setting-view">
         <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
-          请选择左侧挂件
+          {{ $t('902732c4.f646bd') }}
         </div>
         <navigationEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
         <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
@@ -133,7 +133,11 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">
+{{
+        $t('902732c4.be5fbb')
+      }}
+</el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -156,9 +160,9 @@
       @closeStoreDialog="closeDialog"
     />
     <couponPicker :visible="couponsVisible" @pickCoupon="pickCoupon" @closeDialog="closeDialog" />
-    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="20">
+    <sideBar :visible.sync="show_sideBar" :title="$t('902732c4.cc2d92')" width="20">
       <el-form label-width="120px">
-        <el-form-item label="开启热门推荐">
+        <el-form-item :label="$t('902732c4.05ee0e')">
           <el-switch
             v-model="isOpenFaverite"
             :active-value="true"
@@ -167,7 +171,7 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item label="开启小程序定位">
+        <el-form-item :label="$t('902732c4.b41a1e')">
           <el-switch
             v-model="isOpenLocation"
             :active-value="true"
@@ -176,9 +180,9 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item label="开启扫码功能">
+        <el-form-item :label="$t('902732c4.a085b1')">
           <el-switch
-            v-model="isOpenLocation"
+            v-model="isOpenScancode"
             :active-value="true"
             :inactive-value="false"
             active-color="#27cc6a"
@@ -540,7 +544,7 @@ export default {
     },
     // 删除当前组件
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('902732c4.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
@@ -629,7 +633,7 @@ export default {
         if (!store.id) {
           this.relItemsIds.splice(0)
           this.$message({
-            message: '请选择店铺',
+            message: this.$t('902732c4.06accf'),
             type: 'error'
           })
           return
@@ -745,7 +749,7 @@ export default {
       const tabBar = await savePageParams(param)
       if (template && tabBar) {
         this.$message({
-          message: '保存成功',
+          message: this.$t('975b4821.3b1083'),
           type: 'success'
         })
       }

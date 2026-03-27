@@ -20,12 +20,12 @@ export default (vm) => {
 
   const formatStatus = (val) => {
     const statusMap = {
-      '0': '审核中',
-      '1': '审核通过',
-      '2': '已拒绝',
-      '3': '处理中',
-      '4': '处理成功',
-      '5': '处理失败'
+      '0': vm.$t('f92af54b.b720a6'),
+      '1': vm.$t('f92af54b.871a30'),
+      '2': vm.$t('f92af54b.81233d'),
+      '3': vm.$t('f92af54b.5d459d'),
+      '4': vm.$t('f92af54b.3ba621'),
+      '5': vm.$t('f92af54b.1012e0')
     }
     return statusMap[val] || val
   }
@@ -46,16 +46,21 @@ export default (vm) => {
 
   return createSetting({
     columns: [
-      { name: '申请时间', key: 'created', width: 200, formatter: formatDate },
-      { name: '申请人账号', key: 'operator', width: 120 },
-      { name: '申请店铺', key: 'distributor_name', width: 120 },
-      { name: '店铺id', key: 'distributor_id', width: 100 },
-      { name: '申请商户', key: 'merchant_name', width: 120 },
-      { name: '商户id', key: 'merchant_id', width: 100 },
-      { name: '提现类型', key: 'withdraw_type', width: 100, formatter: formatWithdrawType },
-      { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
+      { name: vm.$t('f92af54b.5ba072'), key: 'created', width: 200, formatter: formatDate },
+      { name: vm.$t('f92af54b.d47045'), key: 'operator', width: 120 },
+      { name: vm.$t('f92af54b.bef889'), key: 'distributor_name', width: 120 },
+      { name: vm.$t('f92af54b.d1cabf'), key: 'distributor_id', width: 100 },
+      { name: vm.$t('f92af54b.9c19fb'), key: 'merchant_name', width: 120 },
+      { name: vm.$t('f92af54b.d69f24'), key: 'merchant_id', width: 100 },
       {
-        name: '查看发票',
+        name: vm.$t('f92af54b.79b414'),
+        key: 'withdraw_type',
+        width: 100,
+        formatter: formatWithdrawType
+      },
+      { name: vm.$t('f92af54b.292a28'), key: 'amount', width: 120, formatter: formatMoney },
+      {
+        name: vm.$t('f92af54b.121a39'),
         key: 'invoice_file',
         width: 100,
         render: (h, { row }) => {
@@ -73,18 +78,17 @@ export default (vm) => {
           })
         }
       },
-      { name: '审批时间', key: 'audit_time', width: 200, formatter: formatDate },
-      { name: '审核备注', key: 'audit_remark', width: 150 },
-      { name: '审核人账号', key: 'auditor', width: 120 },
-      { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
-      { name: '提现进度', key: 'failure_reason', width: 150 },
+      { name: vm.$t('f92af54b.d22bdd'), key: 'audit_time', width: 200, formatter: formatDate },
+      { name: vm.$t('f92af54b.200d69'), key: 'audit_remark', width: 150 },
+      { name: vm.$t('f92af54b.39982f'), key: 'auditor', width: 120 },
+      { name: vm.$t('f92af54b.0ed783'), key: 'status', width: 100, formatter: formatStatus },
+      { name: vm.$t('f92af54b.470717'), key: 'failure_reason', width: 150 },
       {
-        name: '操作',
+        name: vm.$t('f92af54b.2b6bc0'),
         key: 'action',
         width: 150,
         fixed: 'right',
         render: (h, { row }) => {
-          // 只有在审核中状态时才显示审核按钮
           if (row.status === '0') {
             return h('div', [
               h(
@@ -98,7 +102,7 @@ export default (vm) => {
                     click: () => vm.handleAudit(row, 'approve')
                   }
                 },
-                '通过'
+                vm.$t('f92af54b.23c1f3')
               ),
               h(
                 'el-button',
@@ -114,7 +118,7 @@ export default (vm) => {
                     click: () => vm.handleAudit(row, 'reject')
                   }
                 },
-                '拒绝'
+                vm.$t('f92af54b.7173f8')
               )
             ])
           }

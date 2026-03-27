@@ -7,22 +7,30 @@
   <div>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">性别及年龄分布</div>
+        <div class="section-title">{{ $t('efc4ad50.1ac1dd') }}</div>
       </div>
       <div class="section-header">
-        <el-select v-model="gender.currentUserType" placeholder="请选择" @change="handleGenderUser">
+        <el-select
+          v-model="gender.currentUserType"
+          :placeholder="$t('efc4ad50.708c9d')"
+          @change="handleGenderUser"
+        >
           <el-option
             v-for="item in user"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
-        <el-select v-model="gender.date" placeholder="请选择" @change="handleGenderDate">
+        <el-select
+          v-model="gender.date"
+          :placeholder="$t('efc4ad50.708c9d')"
+          @change="handleGenderDate"
+        >
           <el-option
             v-for="item in date"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -42,22 +50,30 @@
     </section>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">地区分布</div>
+        <div class="section-title">{{ $t('efc4ad50.a5f8f9') }}</div>
       </div>
       <div class="section-header">
-        <el-select v-model="area.currentUserType" placeholder="请选择" @change="handleAreaUser">
+        <el-select
+          v-model="area.currentUserType"
+          :placeholder="$t('efc4ad50.708c9d')"
+          @change="handleAreaUser"
+        >
           <el-option
             v-for="item in user"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
-        <el-select v-model="area.date" placeholder="请选择" @change="handleAreaDate">
+        <el-select
+          v-model="area.date"
+          :placeholder="$t('efc4ad50.708c9d')"
+          @change="handleAreaDate"
+        >
           <el-option
             v-for="item in date"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -68,26 +84,30 @@
     </section>
     <section class="section section-white">
       <div class="section-header">
-        <div class="section-title">终端及机型分布</div>
+        <div class="section-title">{{ $t('efc4ad50.6f0f7f') }}</div>
       </div>
       <div class="section-header">
         <el-select
           v-model="terminal.currentUserType"
-          placeholder="请选择"
+          :placeholder="$t('efc4ad50.708c9d')"
           @change="handleTerminalUser"
         >
           <el-option
             v-for="item in user"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
-        <el-select v-model="terminal.date" placeholder="请选择" @change="handleTerminalDate">
+        <el-select
+          v-model="terminal.date"
+          :placeholder="$t('efc4ad50.708c9d')"
+          @change="handleTerminalDate"
+        >
           <el-option
             v-for="item in date"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -126,25 +146,25 @@ export default {
     return {
       user: [
         {
-          label: '活跃用户数',
+          label: 'efc4ad50.47c0e9',
           value: 'visit_uv'
         },
         {
-          label: '新增用户数',
+          label: 'efc4ad50.7efef7',
           value: 'visit_uv_new'
         }
       ],
       date: [
         {
-          label: '昨天',
+          label: 'efc4ad50.2f8d6f',
           value: 'yesterday'
         },
         {
-          label: '最近7天',
+          label: 'efc4ad50.73bef6',
           value: 'weekly'
         },
         {
-          label: '最近30天',
+          label: 'efc4ad50.63f66f',
           value: 'monthly'
         }
       ],
@@ -232,7 +252,7 @@ export default {
           },
           title: {
             display: true,
-            text: '性别分布'
+            text: this.$t('efc4ad50.aaf1df')
           },
           animation: {
             animateScale: true,
@@ -266,7 +286,7 @@ export default {
           },
           title: {
             display: true,
-            text: '年龄分布'
+            text: this.$t('efc4ad50.c3e1b3')
           }
         }
       })
@@ -340,7 +360,7 @@ export default {
                 this.chartColors.orange,
                 this.chartColors.yellow
               ],
-              label: '终端分布'
+              label: this.$t('efc4ad50.608560')
             }
           ],
           labels: terminal_label
@@ -352,7 +372,7 @@ export default {
           },
           title: {
             display: true,
-            text: '终端分布'
+            text: this.$t('efc4ad50.608560')
           },
           animation: {
             animateScale: true,
@@ -378,7 +398,7 @@ export default {
                 this.chartColors.orange,
                 this.chartColors.yellow
               ],
-              label: '机型分布'
+              label: this.$t('efc4ad50.d0580b')
             }
           ],
           labels: model_label
@@ -390,7 +410,7 @@ export default {
           },
           title: {
             display: true,
-            text: '机型分布'
+            text: this.$t('efc4ad50.d0580b')
           },
           animation: {
             animateScale: true,

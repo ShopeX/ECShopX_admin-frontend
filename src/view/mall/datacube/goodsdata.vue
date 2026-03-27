@@ -6,15 +6,15 @@
 <template>
   <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="datetime" label="查询日期:">
+      <SpFilterFormItem prop="datetime" :label="$t('1f1701db.b18226')">
         <el-date-picker
           v-model="queryForm.datetime"
           type="daterange"
           format="yyyy-MM-dd"
           :clearable="false"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('1f1701db.981cbe')"
+          :start-placeholder="$t('1f1701db.b44c0f')"
+          :end-placeholder="$t('1f1701db.1d468b')"
           :default-time="defaultTime"
           :picker-options="pickerOptions"
         />
@@ -37,12 +37,14 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button v-loading="exportloading" type="primary" @click="exportData"> 导出 </el-button>
+      <el-button v-loading="exportloading" type="primary" @click="exportData">
+        {{ $t('1f1701db.55405e') }}
+      </el-button>
       <el-popover
         placement="top-start"
         width="200"
         trigger="hover"
-        content="导出任务会以队列执行，点击导出后，请至'设置-导出列表'页面中查看及下载数据"
+        :content="$t('1f1701db.676480')"
       >
         <i slot="reference" class="el-icon-question" />
       </el-popover>
@@ -62,6 +64,7 @@ import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
 import Pages from '@/utils/pages'
 import { VERSION_IN_PURCHASE } from '@/utils'
+import { i18n } from '@/i18n'
 
 export default {
   data() {
@@ -80,7 +83,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: i18n.t('1f1701db.56ee10'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 8)
@@ -88,7 +91,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: i18n.t('1f1701db.335dfc'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 31)
@@ -96,7 +99,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('1f1701db.d96eb4'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 91)
@@ -113,27 +116,27 @@ export default {
         columns: [
           { name: 'No', key: 'no' },
           {
-            name: '商品编号',
+            name: i18n.t('1f1701db.b07bdf'),
             key: 'sap_code'
           },
           {
-            name: '分类',
+            name: i18n.t('1f1701db.d0771a'),
             key: 'top_level'
           },
           {
-            name: '商品名称',
+            name: i18n.t('1f1701db.1fd1d5'),
             key: 'product'
           },
           {
-            name: '销量',
+            name: i18n.t('1f1701db.44e7eb'),
             key: 'quantity'
           },
           {
-            name: '销售额',
+            name: i18n.t('1f1701db.9ae444'),
             key: 'fix_price'
           },
           {
-            name: '实付额',
+            name: i18n.t('1f1701db.e601a9'),
             key: 'settle_price'
           }
         ]
@@ -180,10 +183,10 @@ export default {
       })
       this.exportloading = false
       if (status) {
-        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$message.success(this.$t('1f1701db.3e1ddd'))
         this.$export_open('goods_data')
       } else {
-        this.$message.error('无内容可导出 或 执行失败，请检查重试')
+        this.$message.error(this.$t('1f1701db.89ae53'))
       }
     },
     async getPurchaseActivity({ page, pageSize }) {

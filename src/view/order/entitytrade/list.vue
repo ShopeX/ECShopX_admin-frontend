@@ -7,11 +7,11 @@
   <!-- <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1"> -->
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="params.mobile" placeholder="请输入客户手机号码" />
+      <SpFilterFormItem prop="mobile" :label="$t('9cc48a0d.ce2bf3')">
+        <el-input v-model="params.mobile" :placeholder="$t('9cc48a0d.c746c6')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="params.order_id" placeholder="请输入订单号" />
+      <SpFilterFormItem prop="order_id" :label="$t('9cc48a0d.070dce')">
+        <el-input v-model="params.order_id" :placeholder="$t('9cc48a0d.e9e836')" />
       </SpFilterFormItem>
       <!-- <SpFilterFormItem
         v-if="login_type != 'merchant' && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
@@ -20,8 +20,8 @@
       >
         <el-input v-model="params.salesman_mobile" placeholder="请输入导购手机号码" />
       </SpFilterFormItem> -->
-      <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送类型:">
-        <el-select v-model="params.receipt_type" clearable placeholder="请选择">
+      <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" :label="$t('9cc48a0d.e9d70f')">
+        <el-select v-model="params.receipt_type" clearable :placeholder="$t('9cc48a0d.708c9d')">
           <el-option
             v-for="item in distributionType"
             :key="item.value"
@@ -31,8 +31,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source" label="订单来源:">
-        <el-select v-model="params.source" clearable placeholder="请选择">
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source" :label="$t('9cc48a0d.b36ea7')">
+        <el-select v-model="params.source" clearable :placeholder="$t('9cc48a0d.708c9d')">
           <el-option
             v-for="item in orderSourceList"
             :key="item.value"
@@ -42,8 +42,12 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="order_class" label="订单类型:">
-        <el-select v-model="params.order_class" clearable placeholder="请选择">
+      <SpFilterFormItem
+        v-if="!VERSION_IN_PURCHASE()"
+        prop="order_class"
+        :label="$t('9cc48a0d.0e83be')"
+      >
+        <el-select v-model="params.order_class" clearable :placeholder="$t('9cc48a0d.708c9d')">
           <el-option
             v-for="item in orderType"
             :key="item.value"
@@ -53,16 +57,16 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
+      <SpFilterFormItem prop="create_time" :label="$t('9cc48a0d.43c297')" size="max">
         <el-date-picker
           v-model="params.create_time"
           clearable
           type="datetimerange"
           align="right"
           format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('9cc48a0d.981cbe')"
+          :start-placeholder="$t('9cc48a0d.b44c0f')"
+          :end-placeholder="$t('9cc48a0d.1d468b')"
           prefix-icon="null"
           :default-time="defaultTime"
           :picker-options="pickerOptions"
@@ -71,9 +75,9 @@
       <SpFilterFormItem
         v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
         prop="is_invoiced"
-        label="开票状态:"
+        :label="$t('9cc48a0d.dfc420')"
       >
-        <el-select v-model="params.is_invoiced" clearable placeholder="请选择">
+        <el-select v-model="params.is_invoiced" clearable :placeholder="$t('9cc48a0d.708c9d')">
           <el-option
             v-for="item in invoiceStatus"
             :key="item.value"
@@ -83,16 +87,16 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="delivery_time" label="发货时间:" size="max">
+      <SpFilterFormItem prop="delivery_time" :label="$t('9cc48a0d.21524c')" size="max">
         <el-date-picker
           v-model="params.delivery_time"
           clearable
           type="datetimerange"
           align="right"
           format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('9cc48a0d.981cbe')"
+          :start-placeholder="$t('9cc48a0d.b44c0f')"
+          :end-placeholder="$t('9cc48a0d.1d468b')"
           prefix-icon="null"
           :default-time="defaultTime"
           :picker-options="pickerOptions"
@@ -101,9 +105,9 @@
       <SpFilterFormItem
         v-if="!VERSION_STANDARD() && !VERSION_IN_PURCHASE()"
         prop="distributor_type"
-        label="订单分类:"
+        :label="$t('9cc48a0d.e56a5e')"
       >
-        <el-select v-model="params.distributor_type" clearable placeholder="请选择">
+        <el-select v-model="params.distributor_type" clearable :placeholder="$t('9cc48a0d.708c9d')">
           <el-option
             v-for="item in orderCategory"
             :key="item.value"
@@ -118,11 +122,19 @@
           (!isMicorMall || login_type != 'distributor') && !VERSION_B2C() && !VERSION_IN_PURCHASE()
         "
         prop="distributor_id"
-        label="店铺:"
+        :label="$t('9cc48a0d.efa91f')"
       >
-        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+        <SpSelectShop
+          v-model="params.distributor_id"
+          clearable
+          :placeholder="$t('9cc48a0d.708c9d')"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="subDistrict" label="选择街道:">
+      <SpFilterFormItem
+        v-if="!VERSION_IN_PURCHASE()"
+        prop="subDistrict"
+        :label="$t('9cc48a0d.d3063b')"
+      >
         <el-cascader
           v-model="params.subDistrict"
           clearable
@@ -138,19 +150,23 @@
     <div class="action-container">
       <el-dropdown @command="handleExport">
         <el-button type="primary" plain>
-          导出<i class="el-icon-arrow-down el-icon--right" />
+          {{ $t('9cc48a0d.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="exportInvoice">未开票订单 </el-dropdown-item>
-          <el-dropdown-item command="exportDataMaster">主订单 </el-dropdown-item>
-          <el-dropdown-item command="exportDataNormal">子订单 </el-dropdown-item>
+          <el-dropdown-item command="exportInvoice">{{ $t('9cc48a0d.82f1ec') }}</el-dropdown-item>
+          <el-dropdown-item command="exportDataMaster">
+{{
+            $t('9cc48a0d.067570')
+          }}
+</el-dropdown-item>
+          <el-dropdown-item command="exportDataNormal">
+{{
+            $t('9cc48a0d.7863ce')
+          }}
+</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-tooltip
-        effect="light"
-        content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
-        placement="top-start"
-      >
+      <el-tooltip effect="light" :content="$t('9cc48a0d.29119c')" placement="top-start">
         <el-upload
           action=""
           class="btn-upload"
@@ -158,7 +174,7 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button type="primary" plain> 批量发货 </el-button>
+          <el-button type="primary" plain>{{ $t('9cc48a0d.6f1770') }}</el-button>
         </el-upload>
       </el-tooltip>
       <el-upload
@@ -168,7 +184,7 @@
         :auto-upload="false"
         :show-file-list="false"
       >
-        <el-button type="primary" plain> 批量取消 </el-button>
+        <el-button type="primary" plain>{{ $t('9cc48a0d.b92178') }}</el-button>
       </el-upload>
     </div>
 
@@ -180,11 +196,11 @@
         :name="item.value"
       />
       <el-table v-loading="loading" border :data="tableList">
-        <el-table-column width="220" prop="order_id" label="订单信息">
+        <el-table-column width="220" prop="order_id" :label="$t('9cc48a0d.a6d10d')">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.order_id }}
-              <el-tooltip effect="dark" content="复制" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('9cc48a0d.79d3ab')" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopySuccess"
@@ -193,13 +209,13 @@
               </el-tooltip>
             </div>
             <div v-if="scope.row.distributor_id !== '0'" class="order-store">
-              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('9cc48a0d.8a0cc2')" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_name }}
             </div>
             <div class="order-time">
-              <el-tooltip effect="dark" content="下单时间" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('9cc48a0d.2240cc')" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -207,17 +223,17 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="total_fee" width="120" label="订单金额（¥）">
+        <el-table-column prop="total_fee" width="120" :label="$t('9cc48a0d.d194d2')">
           <template slot-scope="scope">
             {{ (scope.row.total_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column width="100" label="运费（¥）">
+        <el-table-column width="100" :label="$t('9cc48a0d.4dd437')">
           <template slot-scope="scope">
             {{ (scope.row.freight_fee || 0) / 100 }}
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="客户手机号">
+        <el-table-column prop="mobile" :label="$t('9cc48a0d.a32da1')">
           <template slot-scope="scope">
             <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
               <router-link
@@ -236,7 +252,7 @@
               <el-tooltip
                 v-if="datapass_block == 0"
                 effect="dark"
-                content="复制"
+                :content="$t('9cc48a0d.79d3ab')"
                 placement="top-start"
               >
                 <i
@@ -251,7 +267,7 @@
               <el-tooltip
                 v-if="datapass_block == 0"
                 effect="dark"
-                content="复制"
+                :content="$t('9cc48a0d.79d3ab')"
                 placement="top-start"
               >
                 <i
@@ -264,32 +280,32 @@
           </template>
         </el-table-column>
         <template v-if="login_type != 'merchant'">
-          <el-table-column v-if="!isMicorMall" label="订单类型">
+          <el-table-column v-if="!isMicorMall" :label="$t('9cc48a0d.5cd56b')">
             <template slot-scope="scope">
               {{ getOrderType(scope.row) }}
             </template>
           </el-table-column>
         </template>
-        <el-table-column prop="order_status" label="订单状态">
+        <el-table-column prop="order_status" :label="$t('9cc48a0d.86f6cf')">
           <template slot-scope="scope">
             {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
 
-        <el-table-column label="配送方式">
+        <el-table-column :label="$t('9cc48a0d.edfe4c')">
           <template slot-scope="scope">
             {{ getDistributionType(scope.row) }}
           </template>
         </el-table-column>
 
         <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-        <el-table-column label="操作" fixed="left">
+        <el-table-column :label="$t('9cc48a0d.2b6bc0')" fixed="left">
           <template slot-scope="scope">
             <el-button type="text" style="margin-right: 8px">
               <router-link
                 :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
               >
-                详情
+                {{ $t('9cc48a0d.f26225') }}
               </router-link>
             </el-button>
             <el-popover placement="right" trigger="hover">
@@ -298,7 +314,7 @@
                   <router-link
                     :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
                   >
-                    日志
+                    {{ $t('9cc48a0d.456d29') }}
                   </router-link>
                 </el-button>
                 <template v-for="(btn, index) in scope.row.actionBtns">
@@ -312,7 +328,7 @@
                 </template>
               </div>
               <el-button slot="reference" type="text">
-                更多<i class="el-icon-d-arrow-right" />
+                {{ $t('9cc48a0d.0ec9ea') }}<i class="el-icon-d-arrow-right" />
               </el-button>
             </el-popover>
           </template>

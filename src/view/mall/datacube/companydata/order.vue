@@ -14,15 +14,15 @@
 <template>
   <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="datetime" label="查询日期:">
+      <SpFilterFormItem prop="datetime" :label="$t('8e2ca557.b18226')">
         <el-date-picker
           v-model="queryForm.datetime"
           type="daterange"
           align="right"
           format="yyyy-MM-dd"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('8e2ca557.981cbe')"
+          :start-placeholder="$t('8e2ca557.b44c0f')"
+          :end-placeholder="$t('8e2ca557.1d468b')"
           :clearable="false"
           :picker-options="pickerOptions"
         />
@@ -46,17 +46,29 @@
 
     <div v-loading="loading">
       <el-row :gutter="20">
-        <el-col :span="4"><el-statistic :value="total.order_count" title="订单" /></el-col>
+        <el-col :span="4"
+          >
+<el-statistic :value="total.order_count" :title="$t('8e2ca557.4c117f')"
+        />
+</el-col>
         <el-col :span="4">
-          <el-statistic :value="total.order_payed_count" title="付款订单数" />
+          <el-statistic :value="total.order_payed_count" :title="$t('8e2ca557.7c922f')" />
         </el-col>
-        <el-col :span="4"><el-statistic :value="total.aftersales_count" title="售后单数" /></el-col>
-        <el-col :span="4"><el-statistic :value="total.gmv_count / 100" title="GMV(元)" /></el-col>
+        <el-col :span="4"
+          >
+<el-statistic :value="total.aftersales_count" :title="$t('8e2ca557.f55538')"
+        />
+</el-col>
+        <el-col :span="4"
+          >
+<el-statistic :value="total.gmv_count / 100" :title="$t('8e2ca557.3e8e62')"
+        />
+</el-col>
         <el-col :span="4">
-          <el-statistic :value="total.amount_payed_count / 100" title="交易额(元)" />
+          <el-statistic :value="total.amount_payed_count / 100" :title="$t('8e2ca557.efac17')" />
         </el-col>
         <el-col :span="4">
-          <el-statistic :value="total.refunded_count / 100" title="退款额(元)" />
+          <el-statistic :value="total.refunded_count / 100" :title="$t('8e2ca557.2eff07')" />
         </el-col>
       </el-row>
 
@@ -78,6 +90,7 @@ import Pages from '@/utils/pages'
 import moment from 'moment'
 import { createSetting } from '@shopex-ui/finder'
 import { DualAxes } from '@antv/g2plot'
+import { i18n } from '@/i18n'
 export default {
   data() {
     const start = moment().subtract('8', 'day')
@@ -90,37 +103,37 @@ export default {
       setting: createSetting({
         columns: [
           {
-            name: '日期',
+            name: i18n.t('8e2ca557.4ff1e7'),
             key: 'count_date'
           },
           {
-            name: '订单数',
+            name: i18n.t('8e2ca557.fbb493'),
             key: 'order_count'
           },
           {
-            name: '付款订单数',
+            name: i18n.t('8e2ca557.7c922f'),
             key: 'order_payed_count'
           },
           {
-            name: '售后单数',
+            name: i18n.t('8e2ca557.f55538'),
             key: 'aftersales_count'
           },
           {
-            name: '交易额',
+            name: i18n.t('8e2ca557.78aff0'),
             key: 'amount_payed_count',
             formatter: (value, row, col) => {
               return value / 100
             }
           },
           {
-            name: 'GMV',
+            name: i18n.t('8e2ca557.9ca9e4'),
             key: 'gmv_count',
             formatter: (value, row, col) => {
               return value / 100
             }
           },
           {
-            name: '退款额',
+            name: i18n.t('8e2ca557.d7cebd'),
             key: 'refunded_count',
             formatter: (value, row, col) => {
               return value / 100
@@ -143,7 +156,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: i18n.t('8e2ca557.56ee10'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 8)
@@ -151,7 +164,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: i18n.t('8e2ca557.335dfc'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 31)
@@ -159,7 +172,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('8e2ca557.d96eb4'),
             onClick(picker) {
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 91)
@@ -227,26 +240,34 @@ export default {
       let orderData = []
       let amountData = []
       list.forEach((item) => {
-        orderData.push({ time: item.count_date, name: '订单', value: parseInt(item.order_count) })
         orderData.push({
           time: item.count_date,
-          name: '付款订单数',
+          name: this.$t('8e2ca557.4c117f'),
+          value: parseInt(item.order_count)
+        })
+        orderData.push({
+          time: item.count_date,
+          name: this.$t('8e2ca557.7c922f'),
           value: parseInt(item.order_payed_count)
         })
         orderData.push({
           time: item.count_date,
-          name: '售后单数',
+          name: this.$t('8e2ca557.f55538'),
           value: parseInt(item.aftersales_count)
         })
-        amountData.push({ time: item.count_date, name: 'GMV', value: parseInt(item.gmv_count) })
         amountData.push({
           time: item.count_date,
-          name: '交易额',
+          name: this.$t('8e2ca557.9ca9e4'),
+          value: parseInt(item.gmv_count)
+        })
+        amountData.push({
+          time: item.count_date,
+          name: this.$t('8e2ca557.78aff0'),
           value: parseInt(item.amount_payed_count)
         })
         amountData.push({
           time: item.count_date,
-          name: '退款额',
+          name: this.$t('8e2ca557.d7cebd'),
           value: parseInt(item.refunded_count)
         })
       })

@@ -3,110 +3,56 @@
  * See LICENSE file for license details.
  */
 export const status = [
-  {
-    value: 'all',
-    label: '全部'
-  },
-  {
-    value: 'pending',
-    label: '待开票'
-  },
-  {
-    value: 'inProgress',
-    label: '开票中'
-  },
-  {
-    value: 'success',
-    label: '开票成功'
-  },
-  {
-    value: 'failed',
-    label: '开票失败'
-  },
-  {
-    value: 'waste',
-    label: '已红冲'
-  },
-  {
-    value: 'cancel',
-    label: '取消'
-  }
+  { value: 'all', label: '625757bc.a8b0c2' },
+  { value: 'pending', label: '625757bc.963609' },
+  { value: 'inProgress', label: '625757bc.030e4d' },
+  { value: 'success', label: '625757bc.186ded' },
+  { value: 'failed', label: '625757bc.65dcda' },
+  { value: 'waste', label: '625757bc.b7fc00' },
+  { value: 'cancel', label: '625757bc.625fb2' }
 ]
 
 export const open_status_map = {
-  inProgress: '开票中',
-  success: '开票成功',
-  waste: '已红冲',
-  failed: '开票失败',
-  pending: '待开票',
-  cancel: '取消'
+  inProgress: '625757bc.030e4d',
+  success: '625757bc.186ded',
+  waste: '625757bc.b7fc00',
+  failed: '625757bc.65dcda',
+  pending: '625757bc.963609',
+  cancel: '625757bc.625fb2'
 }
 
 export const open_status_step_map = {
-  online: '线上百望开票',
-  offline: '线下开票'
+  online: '625757bc.1f931c',
+  offline: '625757bc.6be6e5'
 }
 
 export const invoice_type_code_map = {
-  '01': '专业发票',
-  '02': '电子普通发票'
+  '01': '625757bc.558f83',
+  '02': '625757bc.8a487a'
 }
 
 export const open_status_arr = [
-  {
-    value: 'pending',
-    label: '待开票',
-    title: '待开票'
-  },
-  {
-    value: 'inProgress',
-    label: '开票中',
-    title: '开票中'
-  },
-  {
-    value: 'success',
-    label: '开票成功',
-    title: '开票成功'
-  },
-  {
-    value: 'waste',
-    label: '已红冲',
-    title: '已红冲'
-  },
-  {
-    value: 'failed',
-    label: '开票失败',
-    title: '开票失败'
-  },
-  {
-    value: 'cancel',
-    label: '取消',
-    title: '取消'
-  }
+  { value: 'pending', label: '625757bc.963609', title: '625757bc.963609' },
+  { value: 'inProgress', label: '625757bc.030e4d', title: '625757bc.030e4d' },
+  { value: 'success', label: '625757bc.186ded', title: '625757bc.186ded' },
+  { value: 'waste', label: '625757bc.b7fc00', title: '625757bc.b7fc00' },
+  { value: 'failed', label: '625757bc.65dcda', title: '625757bc.65dcda' },
+  { value: 'cancel', label: '625757bc.625fb2', title: '625757bc.625fb2' }
 ]
 
 export const invoice_source_map = {
-  'user': '用户端',
-  'oms': 'OMS端'
+  user: '625757bc.52ffb1',
+  oms: '625757bc.6bd7ad'
 }
 
 export const invoice_source_arr = [
-  {
-    value: 'user',
-    label: '用户端',
-    title: '用户端'
-  },
-  {
-    value: 'oms',
-    label: 'OMS端',
-    title: 'OMS端'
-  }
+  { value: 'user', label: '625757bc.52ffb1', title: '625757bc.52ffb1' },
+  { value: 'oms', label: '625757bc.6bd7ad', title: '625757bc.6bd7ad' }
 ]
 
-// update 更新 update_remark 更新备注 create创建  resend_email 重发邮件
 export const invoice_log_type_map = {
-  update: '更新',
-  update_remark: '更新备注',
-  create: '创建',
-  resend_email: '重发邮件'
+  update: '625757bc.32ac15',
+  update_remark: '625757bc.f95807',
+  create: '625757bc.d9ac92',
+  resend_email: '625757bc.76a64e'
 }

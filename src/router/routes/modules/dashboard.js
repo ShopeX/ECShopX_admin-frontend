@@ -10,7 +10,7 @@ const routes = [
     meta: {
       aliasName: 'index',
       icon: 'all-application',
-      title: '概览'
+      title: 'a4b9392f.863853'
     },
     path: '/',
     children: [
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'index',
           icon: 'all-application',
-          title: '概览',
+          title: 'a4b9392f.863853',
           permissions: ['index']
         }
       }

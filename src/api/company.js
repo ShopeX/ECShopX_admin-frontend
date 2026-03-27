@@ -276,6 +276,22 @@ export function acceptRelation() {
   })
 }
 
+export function getShopexBindStatus() {
+  return fetch({
+    url: '/operator/shopex-bind/status',
+    method: 'get'
+  })
+}
+
+export function bindShopexAccount(params) {
+  return fetch({
+    url: '/operator/shopex-bind',
+    method: 'post',
+    params,
+    showError: false
+  })
+}
+
 export function getWebUrlSetting() {
   return fetch({
     url: '/setting/weburl',

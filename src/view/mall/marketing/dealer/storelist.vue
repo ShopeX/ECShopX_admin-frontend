@@ -48,7 +48,7 @@
           <el-row class="cus-btn">
             <el-col :span="12" :offset="12" style="text-align: right">
               <el-button type="primary" size="small" plain @click="onAddShop">
-                新增关联店铺
+                {{ $t('74751947.2db35d') }}
               </el-button>
             </el-col>
           </el-row>
@@ -60,8 +60,8 @@
             type="daterange"
             format="yyyy-MM-dd"
             value-format="yyyy-MM-dd"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :start-placeholder="$t('74751947.b44c0f')"
+            :end-placeholder="$t('74751947.1d468b')"
             @change="(val) => dateChange(val)"
           />
         </template>
@@ -91,44 +91,48 @@ export default {
       form: {},
       detailData: {},
       visibleModal: false,
-      modalContent: '',
-      statusList: [
-        { label: '未入网', value: 1 },
-        { label: '待审核', value: 2 },
-        { label: '入网成功', value: 3 }
-      ],
-      typeList: [
-        { label: '内扣', value: 'I' },
-        { label: '外扣', value: 'O' }
-      ]
+      modalContent: ''
     }
   },
   computed: {
     ...mapGetters(['wheight']),
+    statusList() {
+      return [
+        { label: this.$t('74751947.14f778'), value: 1 },
+        { label: this.$t('74751947.5cb424'), value: 2 },
+        { label: this.$t('74751947.4ad6e4'), value: 3 }
+      ]
+    },
+    typeList() {
+      return [
+        { label: this.$t('74751947.75d29a'), value: 'I' },
+        { label: this.$t('74751947.6c1506'), value: 'O' }
+      ]
+    },
     setting() {
       return createSetting({
         columns: [
-          { name: '店铺ID', key: 'distributor_id' },
-          { name: '店铺名称', key: 'name' },
-          { name: '联系人', key: 'contact' },
-          { name: '联系方式', key: 'mobile' },
+          { name: this.$t('74751947.8fdefd'), key: 'distributor_id' },
+          { name: this.$t('74751947.0d4934'), key: 'name' },
+          { name: this.$t('74751947.52409d'), key: 'contact' },
+          { name: this.$t('74751947.b58943'), key: 'mobile' },
           {
-            name: '状态',
+            name: this.$t('74751947.3fea7c'),
             key: '',
             formatter: (h, { audit_state }) =>
-              (audit_state == '2' && '待审核') ||
-              (audit_state == '3' && '入网成功') ||
-              (audit_state == '1' && '未入网')
+              (audit_state == '2' && this.$t('74751947.5cb424')) ||
+              (audit_state == '3' && this.$t('74751947.4ad6e4')) ||
+              (audit_state == '1' && this.$t('74751947.14f778'))
           },
           {
-            name: '手续费扣费方式',
+            name: this.$t('74751947.6e640f'),
             key: '',
             width: 130,
             formatter: (h, { split_ledger_info }) => {
               if (split_ledger_info && split_ledger_info.adapay_fee_mode) {
                 return (
-                  (split_ledger_info.adapay_fee_mode === 'O' && '外扣') ||
-                  (split_ledger_info.adapay_fee_mode === 'I' && '内扣')
+                  (split_ledger_info.adapay_fee_mode === 'O' && this.$t('74751947.6c1506')) ||
+                  (split_ledger_info.adapay_fee_mode === 'I' && this.$t('74751947.75d29a'))
                 )
               } else {
                 return '-'
@@ -136,7 +140,7 @@ export default {
             }
           },
           {
-            name: '总帐分账占比',
+            name: this.$t('74751947.04dc22'),
             key: '',
             width: 130,
             formatter: (h, { split_ledger_info }) => {
@@ -148,35 +152,50 @@ export default {
             }
           },
           {
-            name: '创建日期',
+            name: this.$t('74751947.696f5a'),
             key: 'created',
             formatter: (h, { created }) =>
               created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
           }
         ],
         search: [
-          { type: 'input', key: 'name', name: '店铺名称', placeholder: '请输入店铺名称' },
-          { type: 'input', key: 'contact', name: '联系人', placeholder: '请输入联系人' },
-          { type: 'input', key: 'mobile', name: '联系方式', placeholder: '请输入联系方式' },
+          {
+            type: 'input',
+            key: 'name',
+            name: this.$t('74751947.0d4934'),
+            placeholder: this.$t('74751947.867738')
+          },
+          {
+            type: 'input',
+            key: 'contact',
+            name: this.$t('74751947.52409d'),
+            placeholder: this.$t('74751947.9e3f21')
+          },
+          {
+            type: 'input',
+            key: 'mobile',
+            name: this.$t('74751947.b58943'),
+            placeholder: this.$t('74751947.8f7e96')
+          },
           {
             type: 'select',
             key: 'audit_state',
             options: this.statusList,
-            name: '状态',
-            placeholder: '请选择'
+            name: this.$t('74751947.3fea7c'),
+            placeholder: this.$t('74751947.708c9d')
           },
-          { key: 'create_time', name: '创建时间', slot: 'create_time' },
+          { key: 'create_time', name: this.$t('74751947.eca37c'), slot: 'create_time' },
           {
             type: 'select',
             key: 'adapay_fee_mode',
             options: this.typeList,
-            name: '手续费扣费方式',
-            placeholder: '请选择'
+            name: this.$t('74751947.6e640f'),
+            placeholder: this.$t('74751947.708c9d')
           }
         ],
         actions: [
           {
-            name: '解除关联',
+            name: this.$t('74751947.6e46c0'),
             key: 'relation',
             type: 'button',
             buttonType: 'text',
@@ -184,7 +203,7 @@ export default {
               return row.audit_state == 3 || row.audit_state == 1
             },
             action: {
-              handler: (row) => this.handleModalClick('解除关联', row[0])
+              handler: (row) => this.handleModalClick(this.$t('74751947.6e46c0'), row[0])
             }
           }
         ]
@@ -221,8 +240,8 @@ export default {
         this.detailData = { ...row, store_name: row.name }
         this.modalContent =
           row.audit_state == '3'
-            ? '如解除关联，已入网成功的店铺需重新设置店铺所占分帐比例。'
-            : `请确认是否解除该店铺与【${row.username}】的关联`
+            ? this.$t('74751947.712e6c')
+            : this.$t('74751947.7b7ad6', { username: row.username })
       }
       this.visibleModal = true
     },

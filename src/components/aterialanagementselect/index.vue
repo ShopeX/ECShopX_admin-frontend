@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      title="选择素材"
+      :title="$t('308d33e6.885664')"
       :visible.sync="showDialog"
       :close-on-click-modal="false"
       :before-close="cancelAction"
@@ -24,7 +24,7 @@
           >
             <div class="msg-content">
               <div class="msg-info">
-                <span>更新于 {{ item.update_time | datetime }}</span>
+                <span>{{ $t('308d33e6.3a6d9c') }} {{ item.update_time | datetime }}</span>
               </div>
               <div class="sub-msg-item" :class="{ coverMsgItem: item.content.news_item[1] }">
                 <h4 class="msg-title">
@@ -37,7 +37,7 @@
                   }"
                 />
                 <a :href="item.content.news_item[0].url" class="edit-mask preview-mask">
-                  <div class="edit-mask-content">预览文章</div>
+                  <div class="edit-mask-content">{{ $t('308d33e6.f9d706') }}</div>
                 </a>
               </div>
               <p v-if="!item.content.news_item[1]" class="msg-desc">
@@ -56,7 +56,7 @@
                     <a>{{ item.content.news_item[n].title }}</a>
                   </h4>
                   <a :href="item.content.news_item[n].url" class="edit-mask preview-mask">
-                    <div class="edit-mask-content">预览文章</div>
+                    <div class="edit-mask-content">{{ $t('308d33e6.f9d706') }}</div>
                   </a>
                 </div>
               </div>
@@ -68,8 +68,8 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelAction"> 取 消 </el-button>
-        <el-button type="primary" @click="saveAction"> 确 定 </el-button>
+        <el-button @click="cancelAction">{{ $t('308d33e6.c08ab9') }}</el-button>
+        <el-button type="primary" @click="saveAction">{{ $t('308d33e6.aa7527') }}</el-button>
       </div>
     </el-dialog>
   </div>

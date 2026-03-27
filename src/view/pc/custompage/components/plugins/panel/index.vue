@@ -9,7 +9,7 @@
     <div class="activity-panel">
       <ul class="box">
         <li v-for="(item, i) in t_data" :key="i" class="content">
-          <img v-if="item.imgUrl" class="i" :src="item.imgUrl" />
+          <img v-if="item.imgUrl" class="i" :src="item.imgUrl">
           <!-- <a class="cover-link"></a> -->
         </li>
       </ul>

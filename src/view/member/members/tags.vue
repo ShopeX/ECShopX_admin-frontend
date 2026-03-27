@@ -5,458 +5,315 @@
 
 <template>
   <SpPage>
-    <!-- <el-row :gutter="20">
-      <el-col :span="3">
-        <el-button
-          type="primary"
-          icon="plus"
-          style="width: 100%"
-          @click="addTemplate"
-        >
-          添加标签
-        </el-button>
-      </el-col>
-      <el-col :span="5">
-        <el-input
-          v-model="params.tag_name"
-          placeholder="标签名"
-          style="width: 100%"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="searchData"
-          />
-        </el-input>
-      </el-col>
-      <el-col :span="5">
-        <el-select
-          v-model="params.tag_status"
-          clearable
-          filterable
-          placeholder="类型"
-          :loading="loading"
-          @change="searchData"
-        >
-          <el-option label="商城公有" value="online"> </el-option>
-          <el-option label="员工自定义" value="self"> </el-option>
-        </el-select>
-      </el-col> -->
-    <!-- <el-col :span="5">
-        <el-select
-          v-model="params.category_id"
-          clearable
-          filterable
-          placeholder="分类"
-          :loading="loading"
-          @change="searchData"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.category_id"
-            :label="item.category_name"
-            :value="item.category_id"
-          ></el-option>
-        </el-select>
-      </el-col>
-    </el-row> -->
-
-    <SpFilterForm :model="params" @onSearch="searchData" @onReset="onSearch">
-      <SpFilterFormItem prop="tag_name" label="标签名:">
-        <el-input v-model="params.tag_name" placeholder="标签名" style="width: 100%">
-          <!-- <el-button slot="append" icon="el-icon-search" @click="searchData" /> -->
-        </el-input>
-      </SpFilterFormItem>
-    </SpFilterForm>
-
-    <div class="action-container">
-      <el-button type="primary" @click="addTemplate"> 添加标签 </el-button>
-    </div>
-
-    <el-table v-loading="loading" :data="tagsList" :height="wheight - 200">
-      <el-table-column prop="tag_id" label="ID" width="100" />
-      <el-table-column prop="tag_name" label="标签名称" width="250">
-        <template slot-scope="scope">
-          <el-tag :color="scope.row.tag_color" size="mini" :style="'color:' + scope.row.font_color">
-            {{ scope.row.tag_name }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column prop="tag_name" label="分类" width="200">
-        <template slot-scope="scope">
-          <el-select v-model="scope.row.category_id" disabled v-if="scope.row.category_id != '0'">
-            <el-option
-              v-for="item in options"
-              :key="item.category_id"
-              :label="item.category_name"
-              :value="item.category_id"
-            >
-            </el-option>
-          </el-select>
-        </template>
-      </el-table-column> -->
-      <!-- <el-table-column prop="tag_status" label="类型" width="100">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.tag_status != 'self' && scope.row.distributor_id == '0'"
-            >商城公有</el-tag
-          >
-          <el-tag v-if="scope.row.tag_status != 'self' && scope.row.distributor_id != '0'"
-            >店铺标签</el-tag
-          >
-          <el-tag v-if="scope.row.tag_status == 'self'">员工自定义</el-tag>
-        </template>
-      </el-table-column> -->
-      <el-table-column prop="self_tag_count" label="会员数" width="100" />
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <div class="operating-icons">
-            <i class="el-icon-edit-outline" @click="editAction(scope.$index, scope.row)" />
-            <i
-              class="mark el-icon-delete-solid ml-2"
-              @click="deleteAction(scope.$index, scope.row)"
-            />
-            <!-- <i class="iconfont" @click="addAction(scope.row)" v-if="scope.row.tag_status == 'self'"
-              >添加到公共库</i
-            > -->
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div
-      v-if="total_count > params.page_size"
-      class="content-center content-top-padded"
-      style="text-align: right"
-    >
-      <el-pagination
-        layout="prev, pager, next"
-        :current-page.sync="params.page"
-        :total="total_count"
-        :page-size="params.page_size"
-        @current-change="handleCurrentChange"
+    <SpRouterView>
+      <SpFormPlus
+        ref="searchForm"
+        v-model="params"
+        form-type="searchForm"
+        :inline="true"
+        label-width="100px"
+        :form-items="searchFormItems"
+        @submit="onSearch"
+        @reset="onReset"
       />
+
+    <div class="action-container mt-4">
+      <el-button type="primary" @click="onAddChange">{{ $t('45a63912.19214e') }}</el-button>
     </div>
-    <el-dialog
-      title="添加、编辑标签"
-      width="40%"
-      :visible.sync="memberTagDialog"
-      :before-close="handleCancelLabelsDialog"
-    >
-      <template>
-        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
-          <el-form-item label="预览最终结果">
-            <el-tag :color="form.tag_color" size="mini" :style="'color:' + form.font_color">
-              {{ form.tag_name }}
-            </el-tag>
-          </el-form-item>
-          <el-form-item
-            class="content-left"
-            label="标签名称"
-            prop="tag_name"
-            :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
-          >
-            <el-input v-model="form.tag_name" placeholder="请输入标签名称" />
-          </el-form-item>
-          <!-- <el-form-item
-            class="content-left"
-            label="标签分类"
-            prop="tag_name"
-            :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
-          >
-            <el-select
-              v-model="form.category_id"
-              clearable
-              filterable
-              placeholder="请输入关键词"
-              :loading="loading"
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.category_id"
-                :label="item.category_name"
-                :value="item.category_id"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item> -->
-          <el-form-item class="content-left" label="标签说明">
-            <el-input
-              v-model="form.description"
-              :disabled="form.source == 'staff' ? true : false"
-              type="textarea"
-              :rows="3"
-              placeholder="请输入标签说明"
-            />
-          </el-form-item>
-          <el-form-item class="content-left" label="标签颜色">
-            <el-color-picker v-model="form.tag_color" show-alpha :predefine="predefineColors" />
-          </el-form-item>
-          <el-form-item class="content-left" label="字体颜色">
-            <el-color-picker v-model="form.font_color" show-alpha :predefine="predefineColors" />
-          </el-form-item>
-          <el-form-item class="content-center">
-            <el-button type="primary" @click="saveTagData"> 确定保存 </el-button>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-dialog>
+
+    <SpFinder
+      ref="finder"
+      :setting="finderSetting"
+      :row-key="getRowKeys"
+      url="/member/tag-group"
+      :page-size="pageSize"
+      :show-overflow-tooltip="false"
+      no-selection
+      :hooks="{
+        beforeSearch: beforeSearch,
+        afterRequest: afterRequest
+      }"
+    />
+
+    <!-- 新建/编辑标签组弹框 -->
+    <CompAddTag
+      :visible.sync="addGroupVisible"
+      :is-edit="isEdit"
+      :form="form"
+      @submit="handleSubmit"
+      @close="addGroupVisible = false"
+    />
+    </SpRouterView>
   </SpPage>
 </template>
+
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
-import {
-  saveTag,
-  getTagList,
-  getTagInfo,
-  updateTag,
-  deleteTag,
-  getTagCategoryList
-} from '@/api/member'
+import { createSetting } from '@shopex-ui/finder'
+import CompTagList from './comps/CompTagList'
+import CompAddTag from './comps/CompAddTag'
+
 export default {
+  components: {
+    CompTagList,
+    CompAddTag
+  },
   data() {
     return {
-      isEdit: false,
-      tagsList: [],
-      loading: false,
-      total_count: 0,
+      pageSize: 20, // 每页条数
       params: {
-        page: 1,
-        page_size: 10,
-        tag_name: '',
-        // category_id: '',
-        tag_status: ''
+        keyword: ''
       },
       form: {
-        tag_id: '',
-        tag_name: '',
-        tag_color: '#ff1939',
-        font_color: '#ffffff',
-        description: ''
-        // category_id: 0
+        group_id: '',
+        group_name: '',
+        tags: [{ tag_name: '', tag_color: '', font_color: '' }]
       },
-      memberTagDialog: false,
-      predefineColors: ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585']
-      // options: []
+      isEdit: false,
+      addGroupVisible: false,
+      finderSetting: null,
+      addingTagCategoryId: null, // 正在添加标签的标签组ID
+      newTagInput: '' // 新标签输入值
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    searchFormItems() {
+      return [
+        {
+          formItemClass: 'w-2/4',
+          component: 'input',
+          componentProps: {
+            placeholder: this.$t('45a63912.3605b8'),
+            clearable: true
+          },
+          fieldName: 'keyword',
+          label: this.$t('45a63912.60224e')
+        }
+      ]
+    }
   },
   mounted() {
-    this.getDataList()
-    this.getCategorylist()
+    this.initFinderSetting()
   },
   methods: {
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getDataList()
-    },
-    addAction(row) {
-      console.log(row)
-      this.form.tag_name = row.tag_name
-      this.form.tag_color = row.tag_color ? row.tag_color : '#ff1939'
-      this.form.font_color = row.font_color ? row.font_color : '#ffffff'
-      this.form.tag_status = 'online'
-      this.memberTagDialog = true
-    },
-    addTemplate() {
-      // 添加商品
-      this.memberTagDialog = true
-      this.form = {
-        tag_id: '',
-        tag_name: '',
-        tag_color: '#ff1939',
-        description: ''
-        // category_id: 0
-      }
-      this.form = {
-        tag_id: '',
-        tag_name: '',
-        tag_color: '#ff1939',
-        font_color: '#ffffff',
-        description: ''
-      }
-    },
-    editAction(index, row) {
-      // 编辑商品弹框
-      this.form = row
-      this.memberTagDialog = true
-    },
-    preview(index, row) {
-      // 预览弹框
-      this.dialogVisible = true
-      this.dataInfo = row
-    },
-    searchData() {
-      this.params.page = 1
-      this.getDataList()
-    },
-    getDataList() {
-      this.loading = true
-      getTagList(this.params)
-        .then((response) => {
-          this.tagsList = response.data.data.list
-          // this.tagsList.forEach((item) => {
-          //   item.category_id = String(item.category_id)
-          // })
-          this.total_count = response.data.data.total_count
-          this.loading = false
-        })
-        .catch((error) => {
-          this.loading = false
-          this.$message({
-            type: 'error',
-            message: '获取列表信息出错'
-          })
-        })
-    },
-    deleteAction(index, row) {
-      this.$confirm('此操作将删除数据, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
+    initFinderSetting() {
+      const vm = this
+      this.finderSetting = createSetting({
+        columns: [
+          {
+            name: this.$t('45a63912.6c805e'),
+            key: 'group_name',
+            width: 200,
+            render: (h, { row }) => {
+              const children = [h('span', row.group_name)]
+              // 如果是企微标签，显示企微图标
+              if (row.is_wechat) {
+                children.push(
+                  h('span', {
+                    style: {
+                      display: 'inline-block',
+                      width: '20px',
+                      height: '20px',
+                      lineHeight: '20px',
+                      textAlign: 'center',
+                      backgroundColor: '#409EFF',
+                      color: '#fff',
+                      borderRadius: '2px',
+                      fontSize: '12px',
+                      marginLeft: '8px'
+                    }
+                  }, this.$t('45a63912.97401c'))
+                )
+              }
+              return h('div', children)
+            }
+          },
+          {
+            name: this.$t('45a63912.14d342'),
+            key: 'tags',
+            minWidth: 400,
+            render: (h, { row }) => {
+              return h(CompTagList, {
+                props: {
+                  'is-add': true,
+                  'list': row.tags || [],
+                },
+                on: {
+                  'add-tag': (value) => vm.handleAddTags(row, value)
+                }
+              })
+            }
+          },
+          {
+            name: this.$t('45a63912.2b6bc0'),
+            key: 'action',
+            width: 150,
+            fixed: 'right',
+            render: (h, { row }) => {
+              const actions = [
+              h('el-button', {
+                  props: {
+                    type: 'text',
+                  },
+                  on: {
+                    click: () => vm.handleEdit(row)
+                  }
+                }, vm.$t('45a63912.95b351')),
+                h('el-button', {
+                  props: {
+                    type: 'text',
+                    style: 'color: #F56C6C;'
+                  },
+                  on: {
+                    click: () => vm.handleDelete(row)
+                  }
+                }, vm.$t('45a63912.2f4aad'))
+              ]
+              return h('div', actions)
+            }
+          }
+        ]
       })
-        .then(() => {
-          deleteTag(row.tag_id)
-            .then((response) => {
-              this.tagsList.splice(index, 1)
-              this.$message({
-                message: '删除成功',
-                type: 'success',
-                duration: 5 * 1000
-              })
+    },
+    getRowKeys(row) {
+      return row.group_id || row.id
+    },
+    beforeSearch(params) {
+      // 更新 pageSize，使用用户选择的分页大小
+      if (params.pageSize) {
+        this.pageSize = params.pageSize
+      }
+      const finderParams = {
+        page: params.page || 1,
+        pageSize: params.pageSize || this.pageSize,
+        ...this.params
+      }
+      // 如果有关键词，同时搜索标签组名称和标签名称
+      if (finderParams.keyword) {
+        finderParams.group_name = finderParams.keyword
+        finderParams.tag_name = finderParams.keyword
+      }
+      delete finderParams.keyword
+      return finderParams
+    },
+    async afterRequest(response) {
+      const data = response.data.data || response.data
+      const { list, total_count } = data
+      
+      // 处理标签数据，将标签列表展开
+      const processedList = (list || []).map(item => {
+        // 如果 tags 是字符串，尝试解析
+        if (typeof item.tags === 'string') {
+          try {
+            item.tags = JSON.parse(item.tags)
+          } catch (e) {
+            item.tags = item.tags ? [item.tags] : []
+          }
+        }
+        return item
+      })
+      
+      return {
+        list: processedList,
+        count: total_count || 0
+      }
+    },
+    onSearch() {
+      this.$refs.finder.refresh(true)
+    },
+    onReset() {
+      this.params = {
+        keyword: ''
+      }
+      this.$nextTick(() => {
+        this.$refs.finder.refresh(true)
+      })
+    },
+    onAddChange() {
+      this.isEdit = false
+      this.form = {
+        group_id: '',
+        group_name: '',
+        tags: [{ tag_name: '', tag_color: '', font_color: '' }]
+      }
+      this.addGroupVisible = true
+    },
+    async handleEdit(row) {
+      this.isEdit = true
+      this.form = {
+        group_id: row.group_id,
+        group_name: row.group_name,
+        tags: row.tags
+      }
+      this.addGroupVisible = true
+    },
+    handleDelete(row) {
+      this.$confirm(
+        this.$t('45a63912.dda238'),
+        this.$t('45a63912.02d981'),
+        {
+          confirmButtonText: this.$t('45a63912.38cf16'),
+          cancelButtonText: this.$t('45a63912.625fb2'),
+          type: 'warning'
+        }
+      )
+        .then(async () => {
+          try {
+            await this.$api.member.deleteTagGroup(row.group_id)
+            this.$message({
+              type: 'success',
+              message: this.$t('45a63912.0007d1')
             })
-            .catch(() => {
-              this.$message({
-                type: 'error',
-                message: '删除失败'
-              })
-            })
+            this.$refs.finder.refresh()
+          } catch (error) {
+            console.log(error)
+          }
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('45a63912.c34281')
           })
         })
     },
-    getTaskTime(strDate) {
-      let date = new Date(strDate)
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      let str = y + '-' + m + '-' + d
-      return str
-    },
-    getTimeStr(date) {
-      return this.getTaskTime(new Date(parseInt(date) * 1000))
-    },
-    handleCancelLabelsDialog() {
-      this.memberTagDialog = false
-    },
-    saveTagData() {
-      if (this.form.tag_id) {
-        updateTag(this.form).then((res) => {
-          if (res.data.data) {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.memberTagDialog = false
-            this.getDataList()
-          }
+    async handleSubmit(submitData) {
+      try {
+        if (this.isEdit) {
+          await this.$api.member.updateTagGroup(submitData.group_id, submitData)
+        } else {
+          await this.$api.member.createTagGroup(submitData)
+        }
+        this.$message({
+          type: 'success',
+          message: this.isEdit
+            ? this.$t('45a63912.3bb47b')
+            : this.$t('45a63912.04a691')
         })
-      } else {
-        saveTag(this.form).then((res) => {
-          if (res.data.data) {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.memberTagDialog = false
-            this.getDataList()
-          }
-        })
+        this.addGroupVisible = false
+        this.$refs.finder.refresh(true)
+      } catch (error) {
+        console.log(error)
       }
     },
-    getCategorylist(name) {
-      this.loading = true
-      let param = {}
-      if (name) {
-        param.category_name = name
+    async handleAddTags(row, value) {
+      try {
+        const params = {
+          group_id: row.group_id,
+          tag_name: value,
+          tag_color: '',
+          font_color: ''
+        }
+        await this.$api.member.saveTag(params)
+        this.$message({
+          type: 'success',
+          message: this.$t('45a63912.78ec37')
+        })
+        this.$refs.finder.refresh(true)
+      } catch (error) {
+        console.log(error)
       }
-      getTagCategoryList(param).then((res) => {
-        // this.options = res.data.data.list
-        this.loading = false
-      })
     }
   }
 }
 </script>
-<style scoped lang="scss">
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-  img {
-    width: 90%;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 10px;
-  img {
-    width: 90%;
-  }
-}
-.row-bg {
-  padding: 10px 20px;
-  background-color: #f9fafc;
-}
-.service-label .el-checkbox:first-child {
-  margin-left: 15px;
-}
-.service-label .el-input:first-child {
-  margin-left: 15px;
-}
-.grid-detail {
-  max-height: 300px;
-  overflow-y: scroll;
-  margin-bottom: 20px;
-}
-.el-carousel {
-  width: 375px;
-}
-</style>
-<style lang="scss">
-.grid-detail {
-  table,
-  .detail-content-wrap,
-  .detail-content-item {
-    width: 100% !important;
-  }
-  img {
-    width: 100%;
-  }
-}
-.grid-attribute {
-  table {
-    width: 100% !important;
-  }
-}
-</style>

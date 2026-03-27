@@ -18,21 +18,7 @@
       </div> -->
     </div>
     <div v-if="data[0]">
-      <video-player
-        class="vjs-custom-skin"
-        :options="{
-          aspectRatio: aspectRatio,
-          sources: [
-            {
-              // mp4
-              type: 'video/mp4',
-              src: data[0].url
-            }
-          ],
-          notSupportedMessage: '无可播放媒体资源',
-          controlBar: false
-        }"
-      />
+      <video-player class="vjs-custom-skin" :options="videoOptions" />
     </div>
   </div>
 </template>
@@ -40,6 +26,16 @@
 <script>
 const aspectRatios = ['16:9', '9:16', '4:3', '3:4', '1:1']
 export default {
+  computed: {
+    videoOptions() {
+      return {
+        aspectRatio: this.aspectRatio,
+        sources: [{ type: 'video/mp4', src: this.data[0].url }],
+        notSupportedMessage: this.$t('310ffd4e.b0c005'),
+        controlBar: false
+      }
+    }
+  },
   props: {
     res: {
       type: Object,

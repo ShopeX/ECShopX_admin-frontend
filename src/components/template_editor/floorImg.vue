@@ -5,41 +5,41 @@
 
 <template>
   <section v-if="name === 'floorImg' || name === 'banner'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('7def7648.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('7def7648.32c65d')">
             <el-input v-model="base.title" />
           </el-form-item>
-          <el-form-item label="副标题">
+          <el-form-item :label="$t('7def7648.72cf37')">
             <el-input v-model="base.subtitle" />
           </el-form-item>
-          <el-form-item label="组件间距">
+          <el-form-item :label="$t('7def7648.4707ba')">
             <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
-          <el-form-item label="字体颜色">
+          <el-form-item :label="$t('7def7648.690660')">
             <el-color-picker v-model="base.WordColor" />
           </el-form-item>
-          <el-form-item label="显示背景图">
+          <el-form-item :label="$t('7def7648.b7e88c')">
             <el-switch v-model="base.openBackImg" active-color="#27cc6a" inactive-color="#efefef" />
           </el-form-item>
           <template v-if="base.openBackImg">
-            <el-form-item label="背景图片">
+            <el-form-item :label="$t('7def7648.d74849')">
               <img
                 v-if="base.backgroundImg"
                 :src="wximageurl + base.backgroundImg"
                 class="banner-uploader"
                 @click="handleImgChange('backImg')"
-              />
+              >
               <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
                 <i class="el-icon-camera" />
-                上传图片
+                {{ $t('7def7648.ce6855') }}
               </div>
             </el-form-item>
           </template>
         </template>
-        <el-form-item label="图片列表">
+        <el-form-item :label="$t('7def7648.d98b3f')">
           <div v-for="(item, index) in data" :key="index" class="setting-item slider">
             <div class="setting-remove" @click="removeItem(index)">
               <i class="el-icon-delete" />
@@ -51,15 +51,15 @@
                   :src="wximageurl + item.imgUrl"
                   class="banner-uploader"
                   @click="handleImgChange(index)"
-                />
+                >
                 <div v-else class="banner-uploader" @click="handleImgChange(index)">
                   <i class="el-icon-camera" />
-                  上传图片
+                  {{ $t('7def7648.ce6855') }}
                 </div>
               </el-form-item>
               <el-form-item label="">
                 <div class="uploader-setting">
-                  <el-form-item label="图片标题">
+                  <el-form-item :label="$t('7def7648.c6c745')">
                     <el-input v-model="item.ImgTitle" />
                   </el-form-item>
                   <!-- <el-form-item label="字体颜色">
@@ -70,16 +70,30 @@
               <el-form-item label="">
                 <div class="goods-select" @click="handleGoodsChange(index)">
                   <div v-if="item.id" class="link-content">
-                    <template v-if="item.linkPage === 'goods'"> 商品： </template>
-                    <template v-if="item.linkPage === 'category'"> 分类： </template>
-                    <template v-if="item.linkPage === 'article'"> 文章： </template>
-                    <template v-if="item.linkPage === 'planting'"> 软文： </template>
-                    <template v-if="item.linkPage === 'link'"> 页面： </template>
-                    <template v-if="item.linkPage === 'marketing'"> 营销： </template>
+                    <template v-if="item.linkPage === 'goods'">
+                      {{ $t('7def7648.10fe9c') }}
+                    </template>
+                    <template v-if="item.linkPage === 'category'">
+                      {{ $t('7def7648.e7d2e8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'article'">
+                      {{ $t('7def7648.8cb9b8') }}
+                    </template>
+                    <template v-if="item.linkPage === 'planting'">
+                      {{ $t('7def7648.9dcd91') }}
+                    </template>
+                    <template v-if="item.linkPage === 'link'">
+                      {{ $t('7def7648.ffd741') }}
+                    </template>
+                    <template v-if="item.linkPage === 'marketing'">
+                      {{ $t('7def7648.c78a2f') }}
+                    </template>
                     {{ item.title }}
                   </div>
                   <div v-else class="content-center">
-                    <i class="el-icon-link" @click="handleGoodsChange(index)" />设置路径
+                    <i class="el-icon-link" @click="handleGoodsChange(index)" />{{
+                      $t('7def7648.4f2c29')
+                    }}
                   </div>
                 </div>
               </el-form-item>
@@ -89,17 +103,17 @@
       </el-form>
       <div class="content-center">
         <div v-if="base.openBackImg" class="frm-tips">
-          只能上传jpg/png文件，且不超过2M （建议尺寸：160px * 160px）
+          {{ $t('7def7648.c9571f') }}
         </div>
         <div v-else class="frm-tips">
-          只能上传jpg/png文件，且不超过2M （建议尺寸：160px * 230px）
+          {{ $t('7def7648.31897e') }}
         </div>
         <el-button
           type="default"
           class="iconfont icon-plus-circle banner-button-uploader"
           @click="addItem"
         >
-          添加图片
+          {{ $t('7def7648.b89fb3') }}
         </el-button>
       </div>
     </div>

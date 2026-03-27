@@ -4,17 +4,17 @@
 -->
 
 <template>
-  <SpPage title="编辑品牌笔记">
+  <SpPage :title="$t('509e5e05.d877d7')">
     <template slot="page-footer">
       <div class="text-center">
         <el-button v-if="!ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
-          创建并发布
+          {{ $t('509e5e05.81790d') }}
         </el-button>
 
         <el-button v-if="ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
-          确定
+          {{ $t('509e5e05.38cf16') }}
         </el-button>
-        <el-button @click="handleBack"> 返回 </el-button>
+        <el-button @click="handleBack">{{ $t('509e5e05.5f4112') }}</el-button>
       </div>
     </template>
     <el-form
@@ -25,13 +25,17 @@
       class="ugc-form"
       label-width="120px"
     >
-      <el-form-item label="笔记排序" prop="p_order" class="notMBot">
+      <el-form-item :label="$t('509e5e05.6df5ba')" prop="p_order" class="notMBot">
         <el-row>
           <el-col :span="4">
-            <el-checkbox v-model="is_top" @change="serialChanges"> 置项 </el-checkbox>
+            <el-checkbox v-model="is_top" @change="serialChanges">
+{{
+              $t('509e5e05.1b8e54')
+            }}
+</el-checkbox>
           </el-col>
           <el-col :span="20">
-            <span class="text text-ml"> 最多置顶两篇笔记，置顶后将自动排序最优。 </span>
+            <span class="text text-ml">{{ $t('509e5e05.bd797f') }}</span>
           </el-col>
         </el-row>
 
@@ -47,32 +51,32 @@
             />
           </el-col>
           <el-col :span="20">
-            <span class="text text-ml"> 默认为0，排序数字越小优先级越高；相同优先级下 </span>
+            <span class="text text-ml">{{ $t('509e5e05.8a10e3') }}</span>
           </el-col>
         </el-row>
       </el-form-item>
 
-      <el-form-item label="笔记角标" prop="badges" class="bottom-bor">
+      <el-form-item :label="$t('509e5e05.2b4a6a')" prop="badges" class="bottom-bor">
         <el-row>
           <el-col :span="16">
             <div v-if="ruleForm.badges" class="badgebar">
-              <span class="text"> 已选：{{ relFlag.badge_name }} </span>
+              <span class="text">{{ $t('509e5e05.374700') }}{{ relFlag.badge_name }}</span>
               <span class="el-icon el-icon-close" @click="removeFlag" />
             </div>
-            <span v-else class="text">请选择</span>
+            <span v-else class="text">{{ $t('509e5e05.708c9d') }}</span>
           </el-col>
           <el-col :span="8" class="row-fright">
             <el-button size="small" type="primary" plain @click="flagModalHide(true)">
-              打角标
+              {{ $t('509e5e05.9ead93') }}
             </el-button>
           </el-col>
         </el-row>
       </el-form-item>
 
-      <el-form-item label="笔记标题" prop="title">
+      <el-form-item :label="$t('509e5e05.70dd91')" prop="title">
         <el-input v-model="ruleForm.title" maxlength="50" :show-word-limit="true" />
       </el-form-item>
-      <el-form-item label="笔记描述" prop="content">
+      <el-form-item :label="$t('509e5e05.eea3bc')" prop="content">
         <el-input
           v-model="ruleForm.content"
           type="textarea"
@@ -82,17 +86,18 @@
         />
       </el-form-item>
 
-      <el-form-item label="关联话题" prop="topics">
+      <el-form-item :label="$t('509e5e05.051a44')" prop="topics">
         <el-row>
           <el-col :span="16">
             <span class="text"
-              >可多选，话题可在<b @click="pageTo('/marketing/ugc/ugctopic')">笔记话题配置</b
-              >菜单中新建/修改</span
+              >{{ $t('509e5e05.e3c293')
+              }}<b @click="pageTo('/marketing/ugc/ugctopic')">{{ $t('509e5e05.801fd8') }}</b
+              >{{ $t('509e5e05.d72d54') }}</span
             >
           </el-col>
           <el-col :span="8" class="row-fright">
             <el-button size="small" type="primary" plain @click="topicModalHide(true)">
-              选择话题
+              {{ $t('509e5e05.6c83cc') }}
             </el-button>
           </el-col>
         </el-row>
@@ -106,7 +111,7 @@
         </el-row>
       </el-form-item>
 
-      <el-form-item label="笔记视频" prop="video">
+      <el-form-item :label="$t('509e5e05.e0418a')" prop="video">
         <el-row>
           <el-col :span="16">
             <SpVideoPicker v-model="ruleForm.video" />
@@ -114,14 +119,16 @@
         </el-row>
       </el-form-item>
 
-      <el-form-item label="笔记图片" prop="images">
+      <el-form-item :label="$t('509e5e05.c9c99a')" prop="images">
         <SpImagePicker v-model="ruleForm.images" drag :max="9" />
       </el-form-item>
 
-      <el-form-item label="推荐商品" prop="goods">
+      <el-form-item :label="$t('509e5e05.479ddf')" prop="goods">
         <el-row>
           <el-col :span="16">
-            <span class="text">最多可选 {{ goodslimit }} 件商品</span>
+            <span class="text"
+              >{{ $t('509e5e05.49cd1e') }} {{ goodslimit }} {{ $t('509e5e05.777ba9') }}</span
+            >
           </el-col>
         </el-row>
         <SkuSelector
@@ -133,7 +140,7 @@
         />
       </el-form-item>
 
-      <el-form-item v-if="post_info ? post_info.status : false" label="当前状态">
+      <el-form-item v-if="post_info ? post_info.status : false" :label="$t('509e5e05.6bf1f3')">
         <span class="text">
           {{ post_info.status_text }}
         </span>
@@ -183,26 +190,6 @@ export default {
     topicModal
   },
   data() {
-    const valEmoJi = (rule, value, callback) => {
-      let emoji = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
-      let isEmoji = emoji.test(value)
-      // console.log('valEmoJi',rule)
-      if (isEmoji) {
-        return callback(new Error(rule.message))
-      } else {
-        callback()
-      }
-    }
-    const valPic = (rule, value, callback) => {
-      const { ruleForm } = this.$data
-      // console.log('valPic',rule, value)
-      if (value.length < 1) {
-        this.$data.picdanger = true
-        return callback(new Error('请选择图片'))
-      } else {
-        callback()
-      }
-    }
     return {
       ruleForm: {
         p_order: 0,
@@ -217,18 +204,7 @@ export default {
         image_tag: [],
         video: ''
       },
-      rules: {
-        title: [
-          { required: true, message: '请填写标题', trigger: 'blur' },
-          {
-            validator: valEmoJi,
-            message: '标题仅支持汉字、英文、数字，不支持emoji',
-            trigger: 'blur'
-          }
-        ],
-        content: [{ required: true, message: '请填写笔记描述', trigger: 'blur' }],
-        images: [{ required: true, validator: valPic, trigger: 'blur' }]
-      },
+      rules: {},
       post_info: {},
       is_top: false,
       formLoad: false,
@@ -245,6 +221,39 @@ export default {
       flagModalShow: false,
       topicModalShow: false,
       picdanger: false
+    }
+  },
+  computed: {
+    rules() {
+      const valEmoJi = (rule, value, callback) => {
+        const emoji = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
+        if (emoji.test(value)) {
+          return callback(new Error(rule.message))
+        }
+        callback()
+      }
+      const valPic = (rule, value, callback) => {
+        if (!value || value.length < 1) {
+          this.$data.picdanger = true
+          return callback(new Error(rule.message))
+        }
+        callback()
+      }
+      return {
+        title: [
+          { required: true, message: this.$t('509e5e05.21ea5d'), trigger: 'blur' },
+          { validator: valEmoJi, message: this.$t('509e5e05.f61920'), trigger: 'blur' }
+        ],
+        content: [{ required: true, message: this.$t('509e5e05.6234ee'), trigger: 'blur' }],
+        images: [
+          {
+            required: true,
+            validator: valPic,
+            message: this.$t('509e5e05.260b4d'),
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   mounted() {
@@ -266,9 +275,9 @@ export default {
         this.serializeFrom(post_info)
         this.post_info = post_info
       } else {
-        await this.$confirm(`笔记不存在,可能已删除`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
+        await this.$confirm(this.$t('509e5e05.e030fb'), this.$t('509e5e05.02d981'), {
+          confirmButtonText: this.$t('509e5e05.38cf16'),
+          cancelButtonText: this.$t('509e5e05.625fb2')
         })
         this.$router.go(-1)
       }

@@ -7,7 +7,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="6">
-        <el-input v-model="params.order_id" placeholder="请输入订单号">
+        <el-input v-model="params.order_id" :placeholder="$t('7ecb496d.e9e836')">
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
       </el-col>
@@ -16,7 +16,7 @@
           v-model="create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="添加时间筛选"
+          :placeholder="$t('7ecb496d.5d92ab')"
           style="width: 100%"
           @change="dateChange"
         />
@@ -24,31 +24,31 @@
     </el-row>
 
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="未处理" name="waiting" />
-      <el-tab-pane label="已处理" name="is_resubmit" />
-      <el-tab-pane label="全部" name="all" />
+      <el-tab-pane :label="$t('7ecb496d.2839c8')" name="waiting" />
+      <el-tab-pane :label="$t('7ecb496d.5ad605')" name="is_resubmit" />
+      <el-tab-pane :label="$t('7ecb496d.a8b0c2')" name="all" />
 
       <el-table v-loading="loading" :data="dataList" :height="wheight - 150">
-        <el-table-column prop="order_id" label="订单号" width="180" />
-        <el-table-column prop="status" label="错误状态" width="120" />
-        <el-table-column prop="error_code" label="错误码" width="100" />
-        <el-table-column prop="error_desc" label="错误描述" />
-        <el-table-column prop="create_time" label="创建时间" width="200">
+        <el-table-column prop="order_id" :label="$t('7ecb496d.1e8dc2')" width="180" />
+        <el-table-column prop="status" :label="$t('7ecb496d.93f23e')" width="120" />
+        <el-table-column prop="error_code" :label="$t('7ecb496d.ac41cc')" width="100" />
+        <el-table-column prop="error_desc" :label="$t('7ecb496d.f23a26')" />
+        <el-table-column prop="create_time" :label="$t('7ecb496d.eca37c')" width="200">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="is_resubmit" label="是否已重新提交" width="120">
+        <el-table-column prop="is_resubmit" :label="$t('7ecb496d.8ad7ca')" width="120">
           <template slot-scope="scope">
-            <span v-if="scope.row.is_resubmit"> 已提交</span>
-            <span v-else> 未提交</span>
+            <span v-if="scope.row.is_resubmit">{{ $t('7ecb496d.f5e626') }}</span>
+            <span v-else>{{ $t('7ecb496d.c3ef66') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column :label="$t('7ecb496d.2b6bc0')" width="100">
           <template slot-scope="scope">
             <el-link v-if="scope.row.is_resubmit === false">
               <el-button type="primary" size="mini" @click="refundResubmit(scope.row)">
-                重新提交
+                {{ $t('7ecb496d.ece899') }}
               </el-button>
             </el-link>
           </template>
@@ -135,7 +135,7 @@ export default {
     },
     refundResubmit(row) {
       refundResubmit(row.id).then((res) => {
-        this.$message.success('提交成功!')
+        this.$message.success(this.$t('7ecb496d.814952'))
         this.getDataList(this.params)
       })
     },

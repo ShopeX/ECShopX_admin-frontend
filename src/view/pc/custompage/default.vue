@@ -18,31 +18,31 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
-            轮播
+            {{ $t('ff3539e3.a5987d') }}
           </template>
           <template v-if="item.name === 'goodsGrid'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-grid" />
             </svg>
-            商品栅格
+            {{ $t('ff3539e3.cc1acf') }}
           </template>
           <template v-if="item.name === 'imgHotzone'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-hotzone" />
             </svg>
-            热区图
+            {{ $t('ff3539e3.0ad6ab') }}
           </template>
           <template v-if="item.name === 'panel' && usage !== 'store'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
-            图片导航
+            {{ $t('ff3539e3.8ae4a2') }}
           </template>
           <template v-if="item.name === 'floor'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-floor" />
             </svg>
-            楼层挂件
+            {{ $t('ff3539e3.3128bc') }}
           </template>
         </div>
       </draggable>
@@ -80,7 +80,7 @@
       <div class="setting-view el-col el-col-8">
         <div v-if="editorIndex === null && editorData" class="view-placeholder">
           <i class="iconfont icon-shapes" />
-          请选择左侧挂件
+          {{ $t('ff3539e3.f646bd') }}
         </div>
         <template v-else>
           <component
@@ -94,7 +94,11 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">
+{{
+        $t('ff3539e3.be5fbb')
+      }}
+</el-button>
     </section>
   </div>
 </template>
@@ -336,7 +340,7 @@ export default {
      * 确认删除当前组件
      */
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('ff3539e3.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
@@ -364,7 +368,7 @@ export default {
       savePageParams(filter).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('ff3539e3.3b1083'),
             type: 'success'
           })
           this._getParamByTempName() // 店铺装修弹框 该页面作为组件，保存后需要更新下数据，否则再次打开弹窗不走mounted

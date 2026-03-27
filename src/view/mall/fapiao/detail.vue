@@ -7,49 +7,65 @@
   <div class="section section-white">
     <el-form ref="form" :label-position="'left'" :model="form" :rules="rules" label-width="160px">
       <div class="section-body">
-        <el-form-item label="开票方名称" prop="resourceName">
+        <el-form-item :label="$t('857fbf98.29b041')" prop="resourceName">
           <el-input
             v-model="form.resourceName"
-            placeholder="请输入开票方名称"
+            :placeholder="$t('857fbf98.d1ea11')"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="税率" prop="resourceName">
-          <el-input v-model="form.title_date" placeholder="请输入税率" style="width: 340px" />
-        </el-form-item>
-        <el-form-item label="开票方税率" prop="resourceName">
-          <el-input v-model="form.title_time" placeholder="请输入开票方税率" style="width: 340px" />
-        </el-form-item>
-        <el-form-item label="开票方银行" prop="reservationName">
-          <el-input v-model="form.title_time" placeholder="请输入开票方银行" style="width: 340px" />
-        </el-form-item>
-        <el-form-item label="开票方银行账号" prop="interval">
+        <el-form-item :label="$t('857fbf98.2a79a7')" prop="resourceName">
           <el-input
-            v-model="form.title_time"
-            placeholder="请输入开票方银行账号"
+            v-model="form.title_date"
+            :placeholder="$t('857fbf98.a4d9a2')"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="开票方联系电话" prop="resourceName">
+        <el-form-item :label="$t('857fbf98.1e3650')" prop="resourceName">
           <el-input
             v-model="form.title_time"
-            placeholder="请输入开票方联系电话"
+            :placeholder="$t('857fbf98.3fcdc5')"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="开票人" prop="resourceName">
-          <el-input v-model="form.title_time" placeholder="请输入开票人" style="width: 340px" />
-        </el-form-item>
-        <el-form-item label="开票联系地址" prop="resourceName">
+        <el-form-item :label="$t('857fbf98.b6c084')" prop="reservationName">
           <el-input
             v-model="form.title_time"
-            placeholder="请输入开票联系地址"
+            :placeholder="$t('857fbf98.ffce05')"
+            style="width: 340px"
+          />
+        </el-form-item>
+        <el-form-item :label="$t('857fbf98.0f7f38')" prop="interval">
+          <el-input
+            v-model="form.title_time"
+            :placeholder="$t('857fbf98.6bd2fe')"
+            style="width: 340px"
+          />
+        </el-form-item>
+        <el-form-item :label="$t('857fbf98.f42347')" prop="resourceName">
+          <el-input
+            v-model="form.title_time"
+            :placeholder="$t('857fbf98.e8f08c')"
+            style="width: 340px"
+          />
+        </el-form-item>
+        <el-form-item :label="$t('857fbf98.68346c')" prop="resourceName">
+          <el-input
+            v-model="form.title_time"
+            :placeholder="$t('857fbf98.4e9fd0')"
+            style="width: 340px"
+          />
+        </el-form-item>
+        <el-form-item :label="$t('857fbf98.9ed26a')" prop="resourceName">
+          <el-input
+            v-model="form.title_time"
+            :placeholder="$t('857fbf98.0125ab')"
             style="width: 340px"
           />
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('857fbf98.be5fbb') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -61,10 +77,10 @@ export default {
   data() {
     return {
       timeIntervals: [
-        { value: 15, label: '15分钟' },
-        { value: 30, label: '30分钟' },
-        { value: 60, label: '60分钟' },
-        { value: 90, label: '90分钟' }
+        { value: 15, label: this.$t('857fbf98.f511e9') },
+        { value: 30, label: this.$t('857fbf98.751a79') },
+        { value: 60, label: this.$t('857fbf98.743a81') },
+        { value: 90, label: this.$t('857fbf98.7c4d81') }
       ],
       attrList: [], //服务类目ID
       form: {
@@ -79,9 +95,9 @@ export default {
         minLimitHour: 30
       },
       rules: {
-        resourceName: [{ required: true, message: '名称不能为空', trigger: 'blur' }],
-        reservationName: [{ required: true, message: '服务类目不能为空', trigger: 'blur' }],
-        interval: [{ required: true, message: '预约时间间隔不能为空', trigger: 'blur' }],
+        resourceName: [{ required: true, message: this.$t('857fbf98.df09ff'), trigger: 'blur' }],
+        reservationName: [{ required: true, message: this.$t('857fbf98.4f848a'), trigger: 'blur' }],
+        interval: [{ required: true, message: this.$t('857fbf98.e5f6ff'), trigger: 'blur' }],
         maxLimitDay: [{ required: true, validator: maxLimitChecked, trigger: 'blur' }],
         minLimitHour: [{ required: true, validator: minLimitChecked, trigger: 'blur' }]
       }
@@ -98,7 +114,7 @@ export default {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '保存预约配置成功',
+            message: this.$t('857fbf98.756e9d'),
             duration: 2 * 1000,
             onClose() {
               that.refresh()

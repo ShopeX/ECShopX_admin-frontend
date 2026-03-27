@@ -6,42 +6,46 @@
 <template>
   <SpPage>
     <SpFilterForm :model="params" @onSearch="handleClick" @onReset="onReset">
-      <SpFilterFormItem prop="order_id" label="订单号">
-        <el-input v-model="params.order_id" size="mini" placeholder="订单号" />
+      <SpFilterFormItem prop="order_id" :label="$t('1c4551e3.1e8dc2')">
+        <el-input v-model="params.order_id" size="mini" :placeholder="$t('1c4551e3.1e8dc2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="promoter_mobile" label="推广员">
-        <el-input v-model="params.promoter_mobile" size="mini" placeholder="推广员" />
+      <SpFilterFormItem prop="promoter_mobile" :label="$t('1c4551e3.018377')">
+        <el-input
+          v-model="params.promoter_mobile"
+          size="mini"
+          :placeholder="$t('1c4551e3.018377')"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="item_name" label="商品">
-        <el-input v-model="params.item_name" size="mini" placeholder="商品" />
+      <SpFilterFormItem prop="item_name" :label="$t('1c4551e3.9897d8')">
+        <el-input v-model="params.item_name" size="mini" :placeholder="$t('1c4551e3.9897d8')" />
       </SpFilterFormItem>
-      <SpFilterFormItem label="日期" prop="search_time">
+      <SpFilterFormItem :label="$t('1c4551e3.4ff1e7')" prop="search_time">
         <el-date-picker
           v-model="search_time"
           type="daterange"
           value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('1c4551e3.981cbe')"
+          :start-placeholder="$t('1c4551e3.b44c0f')"
+          :end-placeholder="$t('1c4551e3.1d468b')"
         />
       </SpFilterFormItem>
     </SpFilterForm>
     <el-tabs v-model="params.status" type="border-card" @tab-click="handleClick">
-      <el-tab-pane name="wait" label="待统计" />
-      <el-tab-pane name="finish" label="已统计" />
-      <el-tab-pane name="close" label="关闭" />
+      <el-tab-pane name="wait" :label="$t('1c4551e3.fde8d3')" />
+      <el-tab-pane name="finish" :label="$t('1c4551e3.8a60e7')" />
+      <el-tab-pane name="close" :label="$t('1c4551e3.b15d91')" />
       <el-table
         v-loading="loading"
         :data="list"
         style="width: 100%"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('1c4551e3.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
-        <el-table-column prop="order_id" label="订单号" />
-        <el-table-column prop="promoter_mobile" label="推广员" />
-        <el-table-column prop="buy_mobile" label="购买用户" />
-        <el-table-column prop="item_name" label="商品">
+        <el-table-column prop="order_id" :label="$t('1c4551e3.1e8dc2')" />
+        <el-table-column prop="promoter_mobile" :label="$t('1c4551e3.018377')" />
+        <el-table-column prop="buy_mobile" :label="$t('1c4551e3.0e0d76')" />
+        <el-table-column prop="item_name" :label="$t('1c4551e3.9897d8')">
           <template slot-scope="scope">
             {{ scope.row.item_name
             }}<el-tag v-if="scope.row.item_spec_desc" size="mini" effect="plain">
@@ -49,17 +53,30 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="销售总额" min-width="80">
+        <el-table-column prop="price" :label="$t('1c4551e3.36a6e0')" min-width="80">
           <template slot-scope="scope">
-            {{ scope.row.price / 100 }}元【数量{{ scope.row.num }}】
+            {{ scope.row.price / 100 }}{{ $t('1c4551e3.c16655') }}【{{ $t('1c4551e3.0bf60b')
+            }}{{ scope.row.num }}】
           </template>
         </el-table-column>
-        <el-table-column prop="plan_date" min-width="80" label="账期" />
-        <el-table-column label="状态" min-width="60">
+        <el-table-column prop="plan_date" min-width="80" :label="$t('1c4551e3.99b7dc')" />
+        <el-table-column :label="$t('1c4551e3.3fea7c')" min-width="60">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.status == 'finish'" type="success"> 已完成 </el-tag>
-            <el-tag v-if="scope.row.status == 'close'" type="info"> 关闭 </el-tag>
-            <el-tag v-if="scope.row.status == 'wait'" type="warning"> 待统计 </el-tag>
+            <el-tag v-if="scope.row.status == 'finish'" type="success">
+{{
+              $t('1c4551e3.fad522')
+            }}
+</el-tag>
+            <el-tag v-if="scope.row.status == 'close'" type="info">
+{{
+              $t('1c4551e3.b15d91')
+            }}
+</el-tag>
+            <el-tag v-if="scope.row.status == 'wait'" type="warning">
+{{
+              $t('1c4551e3.fde8d3')
+            }}
+</el-tag>
           </template>
         </el-table-column>
       </el-table>

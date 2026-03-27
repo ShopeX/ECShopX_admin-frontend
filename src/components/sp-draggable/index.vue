@@ -11,15 +11,17 @@
     append-to-body
     destroy-on-close
     width="800px"
-    :title="title"
+    :title="title != null ? title : $t('a0407150.607e7a')"
     @close="onCancel"
   >
     <div v-if="dialog" class="">
       <div>
-        <el-button type="primary" size="small" plain @click="onSelectImage"> 选择图片 </el-button>
-        <span style="font-size: 12px; color: #888; margin-left: 4px"
-          >建议尺寸:（宽度640px，高度自适应）</span
-        >
+        <el-button type="primary" size="small" plain @click="onSelectImage">
+          {{ $t('a0407150.ba9fc4') }}
+        </el-button>
+        <span style="font-size: 12px; color: #888; margin-left: 4px">{{
+          $t('a0407150.818403')
+        }}</span>
       </div>
 
       <div class="hot-content">
@@ -42,8 +44,8 @@
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="onCancel">取 消</el-button>
-      <el-button type="primary" @click="onConfirm"> 确 定 </el-button>
+      <el-button @click="onCancel">{{ $t('a0407150.c08ab9') }}</el-button>
+      <el-button type="primary" @click="onConfirm"> {{ $t('a0407150.aa7527') }} </el-button>
     </div>
   </el-dialog>
 </template>
@@ -54,7 +56,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '查看'
+      default: null
     }
   },
   data() {

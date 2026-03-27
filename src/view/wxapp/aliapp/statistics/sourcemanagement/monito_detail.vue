@@ -6,44 +6,47 @@
 <template>
   <div class="section-white content-padded">
     <div>
-      页面路径：<a href="#" class="page-name"
+      {{ $t('9fa1ac90.ca6604')
+      }}<a href="#" class="page-name"
         >{{ detail.monitor_path
         }}<span v-show="detail.monitor_path_params != ''"
           >?{{ detail.monitor_path_params }}</span
         ></a
-      ><span>小程序：{{ detail.nick_name }}</span>
+      ><span>{{ $t('9fa1ac90.96e79d') }}{{ detail.nick_name }}</span>
     </div>
     <div class="time-box">
       <div>
-        <span>日期筛选：</span>
+        <span>{{ $t('9fa1ac90.6a1a46') }}</span>
         <el-select v-model="timeType" @change="timeTypeChange">
           <el-option
             v-for="item in timeTypeOptions"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
         <span v-if="isNeardate"
           >{{ typeText
-          }}<span v-if="isRealTime" class="refresh" @click="getRealTime">&nbsp;刷新</span></span
+          }}<span v-if="isRealTime" class="refresh" @click="getRealTime"
+            >&nbsp;{{ $t('9fa1ac90.694fc5') }}</span
+          ></span
         >
         <el-date-picker
           v-if="ischooseDay"
           v-model="chooseDate"
           type="date"
-          placeholder="选择日期"
+          :placeholder="$t('9fa1ac90.2bebdd')"
           :picker-options="pickerOptions"
         />
         <el-date-picker
           v-if="iscustom"
           v-model="customDate"
           type="daterange"
-          placeholder="选择日期范围"
+          :placeholder="$t('9fa1ac90.4b8cb9')"
           :picker-options="pickerOptions2"
         />
         <el-button type="primary" size="small" style="margin: 0 10px" @click="searchStats">
-          查询
+          {{ $t('9fa1ac90.bee912') }}
         </el-button>
       </div>
     </div>
@@ -51,56 +54,52 @@
       <el-row>
         <!-- <el-col :span="6">浏览人数:&nbsp;<span>{{statstotal.total_view_num}}</span></el-col> -->
         <el-col :span="6">
-          新客访问量:&nbsp;<span>{{ statstotal.total_fans_num }}</span>
+          {{ $t('9fa1ac90.559cb4') }}&nbsp;<span>{{ statstotal.total_fans_num }}</span>
         </el-col>
         <el-col :span="6">
-          注册量:&nbsp;<span>{{ statstotal.total_register_num }}</span>
+          {{ $t('9fa1ac90.75cafc') }}&nbsp;<span>{{ statstotal.total_register_num }}</span>
         </el-col>
         <el-col :span="6">
-          购买量:&nbsp;<span>{{ statstotal.total_entries_num }}</span>
+          {{ $t('9fa1ac90.cfbd72') }}&nbsp;<span>{{ statstotal.total_entries_num }}</span>
         </el-col>
         <el-col :span="6">
-          注册购买转化率:&nbsp;<span>{{ statstotal.total_register_entries_rate }}</span>
+          {{ $t('9fa1ac90.144253') }}&nbsp;<span>{{ statstotal.total_register_entries_rate }}</span>
         </el-col>
       </el-row>
     </div>
     <div>
       <div class="content-bottom-padded">
-        <el-button type="primary" @click="codePack"> 二维码打包 </el-button>
+        <el-button type="primary" @click="codePack"> {{ $t('9fa1ac90.5b8a6c') }} </el-button>
       </div>
       <el-table v-loading="loading" :data="dataList" style="width: 100%" :row-key="handleRowKey">
-        <el-table-column prop="source_id" label="来源ID" />
-        <el-table-column prop="monitor_id" label="跟踪ID" />
-        <el-table-column prop="source_name" label="来源名称" />
+        <el-table-column prop="source_id" :label="$t('9fa1ac90.338267')" />
+        <el-table-column prop="monitor_id" :label="$t('9fa1ac90.943b71')" />
+        <el-table-column prop="source_name" :label="$t('9fa1ac90.19f373')" />
         <!-- <el-table-column prop="view_num" label="浏览人数"></el-table-column> -->
-        <el-table-column prop="fans_num" label="新客访问量" />
-        <el-table-column prop="register_num" label="注册量" />
-        <el-table-column prop="entries_num" label="购买量" />
-        <el-table-column prop="register_entries_rate" label="转化率" />
-        <el-table-column label="操作">
+        <el-table-column prop="fans_num" :label="$t('9fa1ac90.d3490a')" />
+        <el-table-column prop="register_num" :label="$t('9fa1ac90.dcf37c')" />
+        <el-table-column prop="entries_num" :label="$t('9fa1ac90.80998b')" />
+        <el-table-column prop="register_entries_rate" :label="$t('9fa1ac90.715054')" />
+        <el-table-column :label="$t('9fa1ac90.2b6bc0')">
           <template slot-scope="scope">
-            <a href="#" @click="showlink(scope.row)">链接</a> &nbsp;
-            <a href="#" @click="remove(scope.row)">删除</a>
+            <a href="#" @click="showlink(scope.row)">{{ $t('9fa1ac90.bfe68d') }}</a> &nbsp;
+            <a href="#" @click="remove(scope.row)">{{ $t('9fa1ac90.2f4aad') }}</a>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
     <el-dialog
-      title="二维码信息"
+      :title="$t('9fa1ac90.f34887')"
       :visible="dialogVisible"
       :close-on-click-modal="false"
       :before-close="cancelDialog"
     >
       <template>
-        <el-alert
-          title="将此链接或二维码进行投放，获取对应跟踪数据"
-          type="warning"
-          :closeable="false"
-        />
+        <el-alert :title="$t('9fa1ac90.f92438')" type="warning" :closeable="false" />
         <el-row class="row-bg">
           <el-col :span="4">
-            <div class="grid-content">来源名称</div>
+            <div class="grid-content">{{ $t('9fa1ac90.19f373') }}</div>
           </el-col>
           <el-col :span="15">
             {{ wxaCodeInfo.source_name }}
@@ -108,10 +107,10 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="4">
-            <div class="grid-content">跟踪二维码</div>
+            <div class="grid-content">{{ $t('9fa1ac90.a73d17') }}</div>
           </el-col>
           <el-col :span="15">
-            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%" />
+            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%">
           </el-col>
         </el-row>
         <el-row class="row-bg">
@@ -119,14 +118,14 @@
             <a
               href="javascript:void(0)"
               @click="downloadCode(wxaCodeInfo.source_name, wxaCodeInfo.code_src)"
-              ><i class="iconfont icon-download" />下载二维码</a
+              ><i class="iconfont icon-download" />{{ $t('9fa1ac90.feea92') }}</a
             >
           </el-col>
         </el-row>
       </template>
     </el-dialog>
     <el-dialog
-      title="二维码打包下载"
+      :title="$t('9fa1ac90.f78c9e')"
       :visible.sync="codeDialogVisible"
       :close-on-click-modal="false"
     >
@@ -226,23 +225,23 @@ export default {
       timeTypeOptions: [
         {
           value: '1',
-          label: '最近7天'
+          label: '9fa1ac90.73bef6'
         },
         {
           value: '2',
-          label: '最近30天'
+          label: '9fa1ac90.63f66f'
         },
         {
           value: '3',
-          label: '自然天'
+          label: '9fa1ac90.457a6d'
         },
         {
           value: '4',
-          label: '今日实时'
+          label: '9fa1ac90.4e2196'
         },
         {
           value: '5',
-          label: '自定义'
+          label: '9fa1ac90.f1d4ff'
         }
       ],
       chooseDate: '',
@@ -272,16 +271,16 @@ export default {
   },
   methods: {
     remove(row) {
-      this.$confirm('确定是否删除该监控来源?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('9fa1ac90.9c5a54'), this.$t('9fa1ac90.02d981'), {
+        confirmButtonText: this.$t('9fa1ac90.38cf16'),
+        cancelButtonText: this.$t('9fa1ac90.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteRelSources(row.monitor_id, row.source_id)
             .then((response) => {
               this.$message({
-                message: '删除监控来源成功',
+                message: this.$t('9fa1ac90.353c1d'),
                 type: 'success',
                 duration: 2 * 1000
               })
@@ -291,14 +290,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除监控来源失败'
+                message: this.$t('9fa1ac90.8daea6')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('9fa1ac90.2111cc')
           })
         })
     },
@@ -338,7 +337,7 @@ export default {
         case '3':
           params.date_type = 'custom'
           if (!this.chooseDate) {
-            this.$message.error('请选择日期')
+            this.$message.error(this.$t('9fa1ac90.aa2fb1'))
             return false
           }
           params.begin_date = this.getTaskTime(this.chooseDate, true)
@@ -350,7 +349,7 @@ export default {
         case '5':
           params.date_type = 'custom'
           if (!this.customDate) {
-            this.$message.error('请选择日期范围')
+            this.$message.error(this.$t('9fa1ac90.a2847d'))
             return false
           }
           params.begin_date = this.getTaskTime(this.customDate[0], true)
@@ -398,12 +397,12 @@ export default {
       switch (val) {
         case '1':
           startDate = this.getTaskTime(new Date(new Date().getTime() - day * 7), true)
-          this.typeText = startDate + ' 至 ' + yesterday
+          this.typeText = startDate + this.$t('9fa1ac90.448ca1') + yesterday
           this.isNeardate = true
           break
         case '2':
           startDate = this.getTaskTime(new Date(new Date().getTime() - day * 30), true)
-          this.typeText = startDate + ' 至 ' + yesterday
+          this.typeText = startDate + this.$t('9fa1ac90.448ca1') + yesterday
           this.isNeardate = true
           break
         case '3':
@@ -446,14 +445,14 @@ export default {
       if (this.checkedSource.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请至少选择一条数据!'
+          message: this.$t('9fa1ac90.12858e')
         })
         return
       }
       if (this.checkedSource.length > 20) {
         this.$message({
           type: 'error',
-          message: '每次最多可选择20条数据!否则可能导致浏览器崩溃！'
+          message: this.$t('9fa1ac90.14bdb9')
         })
         return
       }

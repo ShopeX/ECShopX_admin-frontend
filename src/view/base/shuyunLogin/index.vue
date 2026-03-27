@@ -45,7 +45,7 @@ export default {
     async shunyunLogin() {
       if (!this.code) {
         this.$message({
-          message: '登录失败，缺失code！',
+          message: this.$t('61894ca9.bf6e3f'),
           type: 'error',
           duration: 3 * 1000
         })
@@ -58,7 +58,7 @@ export default {
           this.loginSuccess(token)
         } else {
           this.$message({
-            message: '登录失败，请联系管理员',
+            message: this.$t('61894ca9.178268'),
             type: 'error',
             duration: 3 * 1000
           })
@@ -75,7 +75,7 @@ export default {
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.SET_LOGIN_FROM({ loginFrom: this.loginFrom })
       this.$message({
-        message: '登录成功',
+        message: this.$t('61894ca9.71fa3b'),
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()

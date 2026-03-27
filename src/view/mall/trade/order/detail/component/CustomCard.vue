@@ -13,7 +13,7 @@
         {{ title }}
       </div>
       <el-button type="text" @click="clickShowRemark(dataSource, 'orderDetail')">
-        修改商家备注
+        {{ $t('e67def9a.79d065') }}
       </el-button>
     </div>
     <template v-if="isCommon">
@@ -35,13 +35,13 @@
     <slot />
     <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
     <div v-if="isBase" class="footer">
-      <div class="footer_title">客户留言：</div>
+      <div class="footer_title">{{ $t('e67def9a.90befc') }}</div>
       <div class="footer_content">
         {{ dataSource.remark }}
       </div>
     </div>
     <div v-if="isBase" class="footer">
-      <div class="footer_title">商家备注：</div>
+      <div class="footer_title">{{ $t('e67def9a.9d9b19') }}</div>
       <div class="footer_content">
         {{ dataSource.distributor_remark }}
       </div>

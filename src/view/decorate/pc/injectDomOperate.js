@@ -7,7 +7,7 @@ import { ACTIONS } from './util'
 import cssText from './injectCss'
 
 export default class InjectDomOperations {
-  constructor({ iframe, rootDomClass, targetClass, callback, bodyDomClass, isedit = true }) {
+  constructor({ iframe, rootDomClass, targetClass, callback, bodyDomClass, isedit = true, t }) {
     this.iframe = iframe
     this.root = $(iframe.document).find(`.${rootDomClass}`)
     this.body = this.root.find(`.${bodyDomClass}`)
@@ -17,10 +17,11 @@ export default class InjectDomOperations {
     this.targetDoms = this.body.find(`.${targetClass}`)
     this.callback = callback
     this.isedit = isedit
+    this.t = typeof t === 'function' ? t : (k) => k
     this.doms = {
       // mark:() => $(`<div class='sp-iframe--mark'><div>`),
       down: () =>
-        $(`<div class='button-item'>位置⬇<div>`).on('click', (e) => {
+        $(`<div class='button-item'>${this.t('d964bb81.6bb23f')}<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.DOWN,
@@ -29,7 +30,7 @@ export default class InjectDomOperations {
           callback(options)
         }),
       up: () =>
-        $(`<div class='button-item'>位置⬆<div>`).on('click', (e) => {
+        $(`<div class='button-item'>${this.t('d964bb81.ad211a')}<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.UP,
@@ -38,7 +39,7 @@ export default class InjectDomOperations {
           callback(options)
         }),
       del: () =>
-        $(`<div class='button-item'>删除<div>`).on('click', (e) => {
+        $(`<div class='button-item'>${this.t('d964bb81.2f4aad')}<div>`).on('click', (e) => {
           e.stopPropagation()
           const options = {
             action: ACTIONS.DELETE,
@@ -46,15 +47,18 @@ export default class InjectDomOperations {
           }
           callback(options)
         }),
-      add: (btnCls = 'button-item', text = '添加') =>
-        $(`<div class=${btnCls}>${text}<div>`).on('click', (e) => {
-          e.stopPropagation()
-          const options = {
-            action: ACTIONS.ADD,
-            payload: { ...this.getActionBaseInfo(e.currentTarget) }
+      add: (btnCls = 'button-item', text) =>
+        $(`<div class=${btnCls}>${text != null ? text : this.t('d964bb81.b58c75')}<div>`).on(
+          'click',
+          (e) => {
+            e.stopPropagation()
+            const options = {
+              action: ACTIONS.ADD,
+              payload: { ...this.getActionBaseInfo(e.currentTarget) }
+            }
+            callback(options)
           }
-          callback(options)
-        })
+        )
     }
 
     this.init()
@@ -129,7 +133,7 @@ export default class InjectDomOperations {
     this.injectCss()
     if (this.isedit) {
       setTimeout(() => {
-        this.root.append(this.doms.add('button-primary', '添加模块'))
+        this.root.append(this.doms.add('button-primary', this.t('d964bb81.9397d1')))
         // this.body.append(this.doms.mark())
       }, 500)
       this.injectCheck()

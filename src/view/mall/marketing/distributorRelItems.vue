@@ -7,20 +7,20 @@
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
       <div class="content-bottom-padded">
-        <el-alert type="info" title="上架总部商品说明" show-icon>
-          <div>通过选择店铺和选择商品，则会将选择的总部商品上架到店铺</div>
+        <el-alert type="info" :title="$t('3da3c275.9922ae')" show-icon>
+          <div>{{ $t('3da3c275.c7e90f') }}</div>
         </el-alert>
       </div>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>选择店铺</span>
+          <span>{{ $t('3da3c275.afa2e6') }}</span>
         </div>
         <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
-            <el-input v-model="distributors.params.name" placeholder="店铺姓名" />
+            <el-input v-model="distributors.params.name" :placeholder="$t('3da3c275.8ab05b')" />
           </el-col>
           <el-col :span="6">
-            <el-input v-model="distributors.params.mobile" placeholder="店铺手机号">
+            <el-input v-model="distributors.params.mobile" :placeholder="$t('3da3c275.69e563')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
@@ -33,7 +33,7 @@
           @selection-change="handleDistributorsSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column label="商品操作">
+          <el-table-column :label="$t('3da3c275.1afdd9')">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -45,16 +45,16 @@
                   }
                 }"
               >
-                商品管理
+                {{ $t('3da3c275.5782b6') }}
               </router-link>
               <el-button type="text" @click="handleRelItem('_all', scope.row.distributor_id)">
-                上架全部商品
+                {{ $t('3da3c275.65855c') }}
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="店铺名称" />
-          <el-table-column prop="contact" label="联系人" />
-          <el-table-column prop="mobile" label="联系方式" />
+          <el-table-column prop="name" :label="$t('3da3c275.0d4934')" />
+          <el-table-column prop="contact" :label="$t('3da3c275.52409d')" />
+          <el-table-column prop="mobile" :label="$t('3da3c275.b58943')" />
         </el-table>
         <div v-if="distributors.total_count > distributors.params.pageSize" class="mt-4 text-right">
           <el-pagination
@@ -69,11 +69,11 @@
       </el-card>
       <el-card class="box-card" style="margin-top: 20px">
         <div slot="header" class="clearfix">
-          <span>选择商品</span>
+          <span>{{ $t('3da3c275.43d1e2') }}</span>
         </div>
         <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
-            <el-input v-model="items.params.keywords" placeholder="商品名称">
+            <el-input v-model="items.params.keywords" :placeholder="$t('3da3c275.1fd1d5')">
               <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
             </el-input>
           </el-col>
@@ -88,20 +88,27 @@
           @selection-change="handleItemsSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column prop="itemName" label="商品名称" />
-          <el-table-column prop="price" label="价格" :formatter="priceformatter" width="120" />
-          <el-table-column prop="store" label="库存" width="100" />
+          <el-table-column prop="itemName" :label="$t('3da3c275.1fd1d5')" />
+          <el-table-column
+            prop="price"
+            :label="$t('3da3c275.0e9fd9')"
+            :formatter="priceformatter"
+            width="120"
+          />
+          <el-table-column prop="store" :label="$t('3da3c275.0eac88')" width="100" />
           <el-table-column
             prop="rebate"
-            label="店铺佣金"
+            :label="$t('3da3c275.5c88d7')"
             :formatter="rebateformatter"
             width="100"
           />
-          <el-table-column label="状态" width="120">
+          <el-table-column :label="$t('3da3c275.3fea7c')" width="120">
             <template slot-scope="scope">
-              <span v-if="scope.row.approve_status == 'onsale'">前台可销售</span>
-              <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
-              <span v-else>不可销售</span>
+              <span v-if="scope.row.approve_status == 'onsale'">{{ $t('3da3c275.9b7481') }}</span>
+              <span v-else-if="scope.row.approve_status == 'offline_sale'"
+                >{{ $t('3da3c275.2c50a0') }}
+              </span>
+              <span v-else>{{ $t('3da3c275.ae83a3') }}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -120,7 +127,7 @@
         </div>
       </el-card>
       <div class="content-bottom-padded" style="margin-top: 20px">
-        <el-button type="primary" @click="handleRelItem()"> 上架总部商品 </el-button>
+        <el-button type="primary" @click="handleRelItem()"> {{ $t('3da3c275.604eed') }} </el-button>
       </div>
     </div>
     <router-view />
@@ -246,9 +253,9 @@ export default {
     // 公共部分代码
     handleRelItem: function (isAll = false, distributor_ids) {
       if (isAll) {
-        this.$confirm('当前店铺将上架所有总部商品, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('3da3c275.deeb59'), this.$t('3da3c275.02d981'), {
+          confirmButtonText: this.$t('3da3c275.38cf16'),
+          cancelButtonText: this.$t('3da3c275.625fb2'),
           type: 'warning'
         })
           .then(() => {
@@ -258,7 +265,7 @@ export default {
                 this.item_ids = []
                 this.$message({
                   type: 'success',
-                  message: '已加入队列，请稍后查看'
+                  message: this.$t('3da3c275.120341')
                 })
               }
             )
@@ -266,7 +273,7 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('3da3c275.2111cc')
             })
           })
         return
@@ -275,28 +282,28 @@ export default {
       if (this.items.itemsChecked.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请至少选择一个商品!'
+          message: this.$t('3da3c275.d1fcdb')
         })
         return
       }
       if (this.items.itemsChecked.length > 10) {
         this.$message({
           type: 'error',
-          message: '每次最多可选择10个商品!'
+          message: this.$t('3da3c275.01722a')
         })
         return
       }
       if (this.distributors.distributorsChecked.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请至少选择一个店铺!'
+          message: this.$t('3da3c275.f568bd')
         })
         return
       }
       if (this.distributors.distributorsChecked.length > 10) {
         this.$message({
           type: 'error',
-          message: '每次最多可选择10个店铺!'
+          message: this.$t('3da3c275.3a7fce')
         })
         return
       }
@@ -314,7 +321,7 @@ export default {
           this.item_ids = []
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('3da3c275.3b1083')
           })
         }
       )

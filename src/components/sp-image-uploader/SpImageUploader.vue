@@ -11,8 +11,7 @@
       :before-upload="beforeAvatarUpload"
       :on-success="handleAvatarSuccess"
       :on-error="uploadError"
-    >
-    </el-upload>
+    />
 
     <el-button
       v-if="!isPasteMode"
@@ -20,7 +19,7 @@
       @click.stop="selectImage"
       class="h-[calc(1em+16px)] !border-2 !border-solid !border-purple-700 !mr-2 !flex !items-center !justify-center"
     >
-      选择
+      {{ $t('0248fee0.153fa6') }}
     </el-button>
     <div
       class="w-[300px] h-[calc(1em+16px)] border-2 border-solid border-purple-700 rounded flex items-center justify-center cursor-pointer py-1 px-1 ml-2 hover:bg-purple-50 transition-colors"
@@ -31,11 +30,11 @@
     >
       <div class="flex items-center justify-center">
         <div v-if="isPasteMode" class="hover:cursor-pointer text-gray-400">
-          <div v-if="isMac">使用 <kbd>⌘</kbd> + V</div>
-          <div v-else>使用 Ctrl + V</div>
+          <div v-if="isMac">{{ $t('0248fee0.fcdea3') }}</div>
+          <div v-else>{{ $t('0248fee0.5435ce') }}</div>
         </div>
         <div v-else class="hover:cursor-pointer text-gray-400">
-          拖拽或点击后粘贴图片（仅支持单张图片）
+          {{ $t('0248fee0.d0c7cb') }}
         </div>
       </div>
     </div>
@@ -120,14 +119,14 @@ export default {
                 storage: 'image'
               }
               await this.$api.qiniu.uploadQiniuPic(uploadParams)
-              this.$message.success('图片上传成功')
+              this.$message.success(this.$t('0248fee0.0b1470'))
               this.refresh(true)
             } catch (err) {
-              this.$message.error('上传失败')
+              this.$message.error(this.$t('0248fee0.54e5de'))
             }
           },
           onError: (err) => {
-            this.$message.error('上传失败')
+            this.$message.error(this.$t('0248fee0.54e5de'))
           }
         })
       }
@@ -188,14 +187,14 @@ export default {
                 storage: 'image'
               }
               await this.$api.qiniu.uploadQiniuPic(uploadParams)
-              this.$message.success('粘贴图片上传成功')
+              this.$message.success(this.$t('0248fee0.41ae5e'))
               this.refresh(true)
             } catch (err) {
-              this.$message.error('粘贴图片上传失败')
+              this.$message.error(this.$t('0248fee0.6d4f83'))
             }
           },
           onError: (err) => {
-            this.$message.error('粘贴图片上传失败')
+            this.$message.error(this.$t('0248fee0.6d4f83'))
           }
         })
       }
@@ -207,7 +206,7 @@ export default {
       const isGIF = file.type === 'image/gif'
       const isLt5M = file.size / 1024 / 1024 < 5
       if (!isJPG && !isPNG && !isGIF) {
-        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+        this.$message.error(this.$t('0248fee0.34e969'))
         return false
       }
       /*if (!isLt5M) {
@@ -230,10 +229,10 @@ export default {
       }
       try {
         await this.$api.qiniu.uploadQiniuPic(uploadParams)
-        this.$message.success('上传成功')
+        this.$message.success(this.$t('0248fee0.a7699b'))
         this.refresh(true)
       } catch (error) {
-        this.$message.error('上传失败')
+        this.$message.error(this.$t('0248fee0.54e5de'))
       }
     },
     handleUpload(e) {
@@ -255,7 +254,7 @@ export default {
 
     uploadError(e) {
       console.error(e)
-      this.$message.error('上传失败')
+      this.$message.error(this.$t('0248fee0.54e5de'))
     }
   }
 }

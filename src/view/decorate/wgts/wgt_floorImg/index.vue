@@ -75,10 +75,11 @@
 
 <script>
 import config from './config'
+import { i18n } from '@/i18n'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'FloorImg',
-  wgtName: '楼层图片',
+  wgtName: i18n.t('917cea90.e9eabc'),
   wgtDesc: '',
   wgtIcon: 'wgt-floorImg',
   config: config,

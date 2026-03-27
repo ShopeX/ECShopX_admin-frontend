@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import Attrdata from './attr_data.vue'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
@@ -6,23 +7,23 @@ const config = {
   name: 'classify',
   setting: [
     {
-      label: '展示形式',
+      label: i18n.t('d1229860.1e409f'),
       key: 'animate',
       component: 'radiobutton',
       options: [
-        { name: '横向排列', label: 'horizontal' },
-        { name: '纵向排列', label: 'vertical' }
+        { name: i18n.t('d1229860.4f9974'), label: 'horizontal' },
+        { name: i18n.t('d1229860.6875b7'), label: 'vertical' }
       ],
       value: 'vertical',
       module: ''
     },
     {
-      label: '数据类型',
+      label: i18n.t('d1229860.185f7b'),
       key: 'dataType',
       component: 'select',
       options: [
-        { label: '按管理分类', value: 'manage' },
-        { label: '按销售分类', value: 'sales' }
+        { label: i18n.t('d1229860.64423b'), value: 'manage' },
+        { label: i18n.t('d1229860.2fcd53'), value: 'sales' }
       ],
       value: 'manage',
       onchange: function (v, self) {
@@ -30,7 +31,7 @@ const config = {
       }
     },
     {
-      label: '数据设置',
+      label: i18n.t('d1229860.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return <Attrdata v-model={this.value[key]} dataType={this.value.dataType} />
@@ -49,6 +50,7 @@ const config = {
     // 使用公共函数处理 base 中的样式数据转换
     const transformedBase = transformInBase(base, ['outerMargin', 'innerPadding'])
     return {
+      id: v?.id,
       name: v.name,
       ...transformedBase,
       data: v.data,
@@ -62,6 +64,7 @@ const config = {
   },
   transformOut: (v) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 base 中的样式数据转换

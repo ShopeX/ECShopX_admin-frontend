@@ -6,21 +6,21 @@
 <template>
   <div>
     <el-dialog
-      :title="dialogTitle"
+      :title="dialogTitleText"
       :before-close="handleCancelLabelsDialog"
       :visible.sync="dialogIsShow"
       width="40%"
     >
       <div class="notesinfo">
         <el-row>
-          <el-col class="name" :span="4"> 评论内容 </el-col>
+          <el-col class="name" :span="4">{{ $t('ed6f1bab.034484') }}</el-col>
           <el-col class="value" :span="20">
             <pre class="info-content" v-html="commentInfo.content" />
           </el-col>
         </el-row>
 
         <el-row v-if="commentInfo.userInfo" class="bor-top">
-          <el-col class="name" :span="4"> 用户昵称 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.9a56bb') }}</el-col>
           <el-col class="value" :span="20">
             <div class="user-name" @click="toUserInfo(commentInfo.userInfo)">
               {{ commentInfo.userInfo.nickanme }}
@@ -29,21 +29,21 @@
         </el-row>
 
         <el-row v-if="commentInfo.userInfo">
-          <el-col class="name" :span="4"> 手机号 </el-col>
+          <el-col class="name" :span="4">{{ $t('6b57cb80.ce2bf3') }}</el-col>
           <el-col class="value" :span="20">
             {{ commentInfo.userInfo.mobile }}
           </el-col>
         </el-row>
 
         <el-row>
-          <el-col class="name" :span="4"> 评论时间 </el-col>
+          <el-col class="name" :span="4">{{ $t('ed6f1bab.a666ad') }}</el-col>
           <el-col class="value" :span="20">
             {{ commentInfo.created_text }}
           </el-col>
         </el-row>
 
         <el-row class="bor-top">
-          <el-col class="name" :span="4"> 当前状态 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.6bf1f3') }}</el-col>
           <el-col class="value" :span="20">
             {{ commentInfo.status_text }}
           </el-col>
@@ -51,9 +51,9 @@
       </div>
       <div slot="footer">
         <el-button :type="commentInfo.status == '0' ? 'primary' : 'danger'" @click="handleAudit">
-          {{ commentInfo.status == '0' ? '审核' : '重审' }}
+          {{ commentInfo.status == '0' ? $t('e240ae54.cf13b1') : $t('bf192462.ccfd81') }}
         </el-button>
-        <el-button @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button @click="handleCancelLabelsDialog">{{ $t('09b91dec.625fb2') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -69,11 +69,15 @@ export default {
   },
   data() {
     return {
-      dialogTitle: '评论详情',
+      dialogTitle: null,
       commentInfo: {}
     }
   },
-  computed: {},
+  computed: {
+    dialogTitleText() {
+      return this.$t('23fd6eb4.f4a0f5')
+    }
+  },
   watch: {
     comment_id: {
       handler(newValue, oldValue) {

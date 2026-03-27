@@ -9,7 +9,12 @@
     <div class="flex gap-5">
       <div class="px-5">
         <SpIphone>
-          <SpDecorate ref="decorateRef" v-model="content" scene="1005" title="软文装修" />
+          <SpDecorate
+            ref="decorateRef"
+            v-model="content"
+            scene="1005"
+            :title="$t('5815f596.cb118f')"
+          />
         </SpIphone>
       </div>
       <div class="flex-1">
@@ -44,35 +49,35 @@ export default {
       },
       articleFormList: [
         {
-          label: '标题',
+          label: this.$t('5815f596.32c65d'),
           key: 'title',
           type: 'input'
         },
         {
-          label: '副标题',
+          label: this.$t('5815f596.72cf37'),
           key: 'summary',
           type: 'input'
         },
         {
-          label: '作者名称',
+          label: this.$t('5815f596.ad0c76'),
           key: 'author',
           type: 'input'
         },
         {
-          label: '作者头像',
+          label: this.$t('5815f596.c08f0c'),
           key: 'head_portrait',
           component: ({ key }, form) => {
             return <SpImagePicker v-model={form[key]} />
           }
         },
         {
-          label: '文章类目选择',
+          label: this.$t('5815f596.c7a058'),
           key: 'category_id',
           type: 'select',
           options: []
         },
         {
-          label: '地区选择',
+          label: this.$t('5815f596.9b711a'),
           key: 'region_id',
           component: ({ key }, form) => {
             return (
@@ -83,27 +88,27 @@ export default {
                   style='width: 260px;'
                 />
                 <el-button type='default' onClick={this.asyncToArticleTitle}>
-                  点击同步到标题
+                  {this.$t('5815f596.0abc91')}
                 </el-button>
               </div>
             )
           }
         },
         {
-          label: '封面图片',
+          label: this.$t('5815f596.9cbbc8'),
           key: 'image_url',
           component: ({ key }, form) => {
             return <SpImagePicker v-model={form[key]} />
           },
-          tip: '建议尺寸：200像素 * 200像素'
+          tip: this.$t('5815f596.9f9b2a')
         },
         {
-          label: '分享图片',
+          label: this.$t('5815f596.106d52'),
           key: 'share_image_url',
           component: ({ key }, form) => {
             return <SpImagePicker v-model={form[key]} />
           },
-          tip: '建议尺寸：200像素 * 200像素'
+          tip: this.$t('5815f596.9f9b2a')
         }
       ],
       content: []
@@ -111,7 +116,7 @@ export default {
   },
   computed: {
     pageTitle() {
-      return this.$route.query.id ? '编辑软文' : '创建软文'
+      return this.$route.query.id ? this.$t('5815f596.f48bbd') : this.$t('5815f596.13e8aa')
     }
   },
   mounted() {
@@ -166,12 +171,12 @@ export default {
       }
       if (this.$route.query.id) {
         await this.$api.article.updateArticle(this.$route.query.id, params)
-        this.$message.success('修改文章成功')
+        this.$message.success(this.$t('5815f596.6d2221'))
         this.refresh()
         this.$router.go(-1)
       } else {
         await this.$api.article.createArticle(params)
-        this.$message.success('添加文章成功')
+        this.$message.success(this.$t('5815f596.e04b36'))
         this.refresh()
         this.$router.go(-1)
       }

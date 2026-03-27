@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '交易管理'
+const name = '7220bd7c.266714'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: [
     {
       path: 'adapay_trades',
-      name: '分账',
+      name: '7220bd7c.98818a',
       component: () => import('@/view/mall/sub_account/sub_account'),
       children: [
         {
@@ -22,7 +22,7 @@ export default {
     },
     {
       path: 'adapay_cash',
-      name: `提现`,
+      name: '7220bd7c.db7971',
       component: () => import('@/view/mall/withdraw/withdraw')
     }
   ]

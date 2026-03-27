@@ -17,27 +17,33 @@
           <!-- <el-button type="primary" icon="el-icon-box" :size="size">批量发货222222</el-button> -->
         </el-upload>
       </div>
-      <el-button type="primary" :size="size" @click="exportInvoice"> 导出未开票订单 </el-button>
+      <el-button type="primary" :size="size" @click="exportInvoice">
+        {{ $t('4980b6fc.59bb7f') }}
+      </el-button>
 
       <el-button type="primary" :size="size" @click="exportData('normal_order')">
-        导出子订单
+        {{ $t('4980b6fc.82b914') }}
       </el-button>
 
       <el-button type="primary" :size="size" @click="exportData('normal_master_order')">
-        导出主订单
+        {{ $t('4980b6fc.538414') }}
       </el-button>
 
       <el-popover
         placement="top-start"
         width="200"
         trigger="hover"
-        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+        :content="$t('4980b6fc.676480')"
       >
         <i slot="reference" class="el-icon-question" />
       </el-popover>
     </el-col>
 
-    <el-dialog title="订单下载" :visible.sync="downloadView" :close-on-click-modal="false">
+    <el-dialog
+      :title="$t('4980b6fc.2cf869')"
+      :visible.sync="downloadView"
+      :close-on-click-modal="false"
+    >
       <template v-if="downloadUrl">
         <a :href="downloadUrl" download>{{ downloadName }}</a>
       </template>
@@ -67,7 +73,7 @@ export default {
       handleUploadFile(params).then(() => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('4980b6fc.7bbfaa')
         })
       })
     },
@@ -77,7 +83,7 @@ export default {
       if (this.params.order_type != 'normal') {
         this.$message({
           type: 'error',
-          message: '暂不支持该类型订单导出'
+          message: this.$t('4980b6fc.08bd5c')
         })
         return
       }
@@ -91,7 +97,7 @@ export default {
         if (status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('4980b6fc.3e1ddd')
           })
           this.$export_open(type)
           return
@@ -102,7 +108,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('4980b6fc.89ae53')
           })
           return
         }
@@ -119,7 +125,7 @@ export default {
         if (status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('4980b6fc.3e1ddd')
           })
           this.$export_open('normal')
           return
@@ -130,7 +136,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('4980b6fc.89ae53')
           })
           return
         }

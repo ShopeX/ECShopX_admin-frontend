@@ -7,38 +7,36 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item label="是否开启：" prop="ad_title">
+        <el-form-item :label="$t('ae01af00.9f0f3f')" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
             active-value="true"
             inactive-value="false"
             inactive-color="#ccc"
-            active-text="开启"
-            inactive-text="关闭"
+            :active-text="$t('ae01af00.cc42dd')"
+            :inactive-text="$t('ae01af00.b15d91')"
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item label="注册引导广告标题：" prop="ad_title">
+        <el-form-item :label="$t('ae01af00.6ed28f')" prop="ad_title">
           <el-input
             v-model="form.ad_title"
-            :placeholder="
-              !VERSION_B2C() ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
-            "
+            :placeholder="registerAdTitlePlaceholder"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="注册引导图片：">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
-          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
+        <el-form-item :label="$t('ae01af00.60079e')">
+          <div class="frm-tips">{{ $t('ae01af00.6113fc') }}</div>
+          <div class="frm-tips">{{ $t('ae01af00.3b1660') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200" />
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
         </el-form-item>
-        <el-form-item label="注册引导跳转路径">
+        <el-form-item :label="$t('ae01af00.e5ec03')">
           <div class="uploader-setting">
             <div class="goods-select">
               <div
@@ -49,18 +47,28 @@
                 class="link-content border px-2"
               >
                 <span @click="handleGoodsChange()">
-                  <template v-if="form.register_jump_path.linkPage === 'goods'">商品：</template>
-                  <template v-if="form.register_jump_path.linkPage === 'category'">分类：</template>
-                  <template v-if="form.register_jump_path.linkPage === 'article'">文章：</template>
-                  <template v-if="form.register_jump_path.linkPage === 'planting'">软文：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'goods'">{{
+                    $t('ae01af00.10fe9c')
+                  }}</template>
+                  <template v-if="form.register_jump_path.linkPage === 'category'">{{
+                    $t('ae01af00.e7d2e8')
+                  }}</template>
+                  <template v-if="form.register_jump_path.linkPage === 'article'">{{
+                    $t('ae01af00.8cb9b8')
+                  }}</template>
+                  <template v-if="form.register_jump_path.linkPage === 'planting'">{{
+                    $t('ae01af00.9dcd91')
+                  }}</template>
                   <!--template v-if="form.register_jump_path.linkPage === 'planting'">种草：</template-->
-                  <template v-if="form.register_jump_path.linkPage === 'link'">页面：</template>
-                  <template v-if="form.register_jump_path.linkPage === 'marketing'"
-                    >营销：</template
-                  >
-                  <template v-if="form.register_jump_path.linkPage === 'custom_page'"
-                    >自定义页：</template
-                  >
+                  <template v-if="form.register_jump_path.linkPage === 'link'">{{
+                    $t('ae01af00.ffd741')
+                  }}</template>
+                  <template v-if="form.register_jump_path.linkPage === 'marketing'">{{
+                    $t('ae01af00.c78a2f')
+                  }}</template>
+                  <template v-if="form.register_jump_path.linkPage === 'custom_page'">{{
+                    $t('ae01af00.2a4e32')
+                  }}</template>
                   {{ form.register_jump_path.title }}
                 </span>
                 <span style="margin-left: 10px">
@@ -80,7 +88,7 @@
                 class="content-center border px-2 flex items-center"
                 @click="handleGoodsChange()"
               >
-                <SpIcon name="link" />设置路径
+                <SpIcon name="link" />{{ $t('ae01af00.4f2c29') }}
               </div>
             </div>
           </div>
@@ -111,13 +119,15 @@
             />
           </el-transfer>
         </el-form-item> -->
-        <el-form-item label="注册送优惠券：">
+        <el-form-item :label="$t('ae01af00.513fe3')">
           <el-row>
             <el-col :span="12">
               <div class="promotion-card">
                 <div class="promotion-card-header">
-                  优惠券
-                  <a class="promotion-card-btn" href="#" @click="showModal">新增</a>
+                  {{ $t('ae01af00.2f3635') }}
+                  <a class="promotion-card-btn" href="#" @click="showModal">{{
+                    $t('ae01af00.66ab5e')
+                  }}</a>
                 </div>
                 <div class="promotion-card-body">
                   <ul class="promotion-card-list">
@@ -173,22 +183,24 @@
         </el-form-item> -->
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('ae01af00.56df61') }} </el-button>
       </div>
     </el-form>
     <el-dialog
-      title="选择优惠券"
+      :title="$t('ae01af00.45bcee')"
       :visible.sync="coupons.dialog"
       width="30%"
       @open="onshowModal"
       @close="oncloseModal"
     >
       <el-radio-group v-model="card_type" @change="cardTypeChange(false)">
-        <el-radio-button label="all" value="all"> 全部 </el-radio-button>
-        <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
-        <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
+        <el-radio-button label="all" value="all"> {{ $t('ae01af00.a8b0c2') }} </el-radio-button>
+        <el-radio-button label="cash" value="cash"> {{ $t('ae01af00.f23195') }} </el-radio-button>
+        <el-radio-button label="discount" value="discount">
+          {{ $t('ae01af00.9268f9') }}
+        </el-radio-button>
         <el-radio-button v-if="VERSION_STANDARD()" label="new_gift" value="new_gift">
-          兑换券
+          {{ $t('ae01af00.8bc752') }}
         </el-radio-button>
       </el-radio-group>
       <ul v-loading="coupons.loading" class="dialog-list">
@@ -216,21 +228,25 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelSelected">取 消</el-button>
-        <el-button type="primary" @click="submitSelected(false)">确 定</el-button>
+        <el-button @click="cancelSelected">{{ $t('ae01af00.c08ab9') }}</el-button>
+        <el-button type="primary" @click="submitSelected(false)">{{
+          $t('ae01af00.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
     <el-dialog
-      title="选择优惠券"
+      :title="$t('ae01af00.45bcee')"
       :visible.sync="staffCoupons.dialog"
       width="50%"
       @open="onshowStaffModal"
       @close="oncloseModal"
     >
       <el-radio-group v-model="card_type" @change="cardTypeChange(true)">
-        <el-radio-button label="all" value="all"> 全部 </el-radio-button>
-        <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
-        <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
+        <el-radio-button label="all" value="all"> {{ $t('ae01af00.a8b0c2') }} </el-radio-button>
+        <el-radio-button label="cash" value="cash"> {{ $t('ae01af00.f23195') }} </el-radio-button>
+        <el-radio-button label="discount" value="discount">
+          {{ $t('ae01af00.9268f9') }}
+        </el-radio-button>
         <!-- <el-radio-button
           label="gift"
           value="gift"
@@ -263,8 +279,10 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelSelected">取 消</el-button>
-        <el-button type="primary" @click="submitSelected(true)">确 定</el-button>
+        <el-button @click="cancelSelected">{{ $t('ae01af00.c08ab9') }}</el-button>
+        <el-button type="primary" @click="submitSelected(true)">{{
+          $t('ae01af00.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
     <linkSetter
@@ -335,6 +353,11 @@ export default {
       card_type: 'all',
       linksVisible: false, // 路径设置组件
       linksArr: []
+    }
+  },
+  computed: {
+    registerAdTitlePlaceholder() {
+      return !this.VERSION_B2C() ? this.$t('ae01af00.194ebe') : this.$t('ae01af00.29ec5d')
     }
   },
   watch: {
@@ -584,7 +607,7 @@ export default {
       })
       saveRegisterPromotions(this.form).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('ae01af00.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })

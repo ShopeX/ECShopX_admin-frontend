@@ -6,14 +6,14 @@
 <template>
   <div class="checkBoxDialog">
     <el-dialog :visible.sync="visible" :before-close="handleClose" :modal-append-to-body="false">
-      <div slot="title" class="title"><i class="el-icon-info" /> 提交审批</div>
+      <div slot="title" class="title"><i class="el-icon-info" /> {{ $t('b9eb39af.e8d7d5') }}</div>
       <p class="message" v-html="message" />
 
       <el-form ref="form" :model="form">
         <el-form-item v-if="is_sms" style="justify-content: center">
           <el-checkbox-group v-model="form.is_sms">
             <el-checkbox :key="info[0].value" value="1">
-              {{ info[0].value }}<br />(短信费用将在短信余额中扣除)
+              {{ info[0].value }}<br>{{ $t('b9eb39af.92bdfa') }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -25,7 +25,7 @@
             :rows="5"
             :maxlength="300"
             :show-word-limit="true"
-            placeholder="请填写审批意见"
+            :placeholder="$t('b9eb39af.c4c230')"
           />
         </el-form-item>
       </el-form>
@@ -36,7 +36,7 @@
           ref="loadingBtn"
           size="mini"
           type="primary"
-          text="确定"
+          :text="$t('b9eb39af.38cf16')"
           @clickHandle="confirm"
         />
       </div>

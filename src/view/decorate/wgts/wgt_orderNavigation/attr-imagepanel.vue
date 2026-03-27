@@ -8,11 +8,11 @@
     <CompTodoList v-model="value" :max="4" :is-show-del="false" @onAddItem="handleClickAdd">
       <template slot="body" slot-scope="scope">
         <div class="nav-item--wrap">
-          <el-input v-model="scope.data.content" placeholder="导航名称" />
+          <el-input v-model="scope.data.content" :placeholder="$t('c1030e12.8585af')" />
           <div class="nav-item--picker">
             <SpImagePicker v-model="scope.data.imgUrl" size="small" />
           </div>
-          <div class="cell-value-tip">建议尺寸:（110px * 110px）</div>
+          <div class="cell-value-tip">{{ $t('c1030e12.53f5ef') }}</div>
         </div>
       </template>
     </CompTodoList>
@@ -33,7 +33,7 @@ export default {
   methods: {
     handleClickAdd() {
       this.value.push({
-        content: '导航名称',
+        content: 'c1030e12.8585af',
         imgUrl: ''
       })
     },

@@ -19,20 +19,20 @@
 <template>
   <div class="comp-receive-info receive-info">
     <div class="receive-item">
-      <label class="item-label">订单ID：</label>
+      <label class="item-label">{{ $t('5d259f05.45bcf2') }}</label>
       {{ orderId }}
     </div>
     <div class="receive-item">
-      <label class="item-label">买家：</label>
+      <label class="item-label">{{ $t('5d259f05.60db2a') }}</label>
       {{ `${buy_member} | ${buy_mobile}` }}
     </div>
     <div class="receive-item">
-      <label class="item-label">{{ `${isZiti ? '提货人：' : '收货人：'}` }}</label>
+      <label class="item-label">{{ isZiti ? $t('5d259f05.6b1044') : $t('5d259f05.02ddb4') }}</label>
       {{ `${receive_name} | ${receive_mobile}` }}
     </div>
     <div class="receive-item">
       <label class="item-label">
-        {{ `${isZiti ? '自提地址：' : '收货地址：'}` }}
+        {{ isZiti ? $t('5d259f05.d87411') : $t('5d259f05.e512d6') }}
       </label>
       {{ receive_address }}
     </div>

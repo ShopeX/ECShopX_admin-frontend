@@ -15,22 +15,24 @@
   <SpPage>
     <div>
       <el-tabs type="card">
-        <el-tab-pane label="结算周期配置">
+        <el-tab-pane :label="$t('4bac5508.1c0860')">
           <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
         </el-tab-pane>
-        <el-tab-pane label="供应商结算周期">
+        <el-tab-pane :label="$t('4bac5508.cdd6bd')">
           <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-            <!-- <SpFilterFormItem prop="mobile" label="供应商:">
-            <el-input v-model="formQuery.supplier_name" placeholder="请输入供应商名称" />
-          </SpFilterFormItem> -->
-            <SpFilterFormItem prop="supplier_id" label="供应商:">
-              <SpSelectSupplier v-model="formQuery.supplier_id" clearable placeholder="请选择" />
+            <SpFilterFormItem prop="supplier_id" :label="$t('4bac5508.83bbcd')">
+              <SpSelectSupplier
+                v-model="formQuery.supplier_id"
+                clearable
+                :placeholder="$t('4bac5508.708c9d')"
+              />
             </SpFilterFormItem>
           </SpFilterForm>
           <div class="action-container">
-            <el-button type="primary" @click="addItems"> 添加供应商配置 </el-button>
+            <el-button type="primary" @click="addItems"> {{ $t('4bac5508.664bfb') }} </el-button>
           </div>
           <SpFinder
+            v-if="setting"
             ref="finder"
             no-selection
             :setting="setting"
@@ -45,7 +47,7 @@
       <SpDialog
         ref="addDialogRef"
         v-model="addDialog"
-        :title="`${this.addForm.id ? '供应商编辑' : '添加供应商配置'}`"
+        :title="`${this.addForm.id ? this.$t('4bac5508.de3d8c') : this.$t('4bac5508.664bfb')}`"
         :form="addForm"
         :form-list="addFormList"
         @onSubmit="onAddSubmit"
@@ -79,7 +81,7 @@ export default {
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.form.cycleData
             if (!cycle || !unit) {
-              callback(new Error('结算周期不能为空'))
+              callback(new Error(this.$t('4bac5508.5c5280')))
             } else {
               callback()
             }
@@ -93,58 +95,7 @@ export default {
         merchant_id: '',
         supplier_id: ''
       },
-      setting: createSetting({
-        actions: [
-          // {
-          //   name: '添加供应商配置',
-          //   key: 'add',
-          //   type: 'button',
-          //   slot: 'header',
-          //   buttonType: 'primary',
-          //   action: {
-          //     handler: async (val) => {
-          //       this.addForm.id = ''
-          //       this.addForm.distributor_id = ''
-          //       this.addForm.cycleData = {
-          //         cycle: '',
-          //         unit: ''
-          //       }
-          //       // this.addFormList[0].isShow = true
-          //       // this.addFormList[1].isShow = false
-          //       this.addDialog = true
-          //     }
-          //   }
-          // },
-          {
-            name: '设置',
-            key: 'config',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              handler: async ([row]) => {
-                this.addForm.id = row.id
-                this.addForm.distributor_id = row.distributor_id
-                this.addForm.cycleData = {
-                  cycle: row.period[0],
-                  unit: row.period[1]
-                }
-                this.addForm.distributor_name = row.distributor_name
-                this.addFormList[0].isShow = false
-                // this.addFormList[1].isShow = true
-                this.addDialog = true
-              }
-            }
-          }
-        ],
-        columns: [
-          { name: '供应商名称', key: 'supplier_name' },
-          {
-            name: '结算周期',
-            key: 'period',
-            render: (h, { row }) => h('span', {}, this.getCycle(row.period))
-          }
-        ]
-      }),
+      setting: null,
       addDialog: false,
       addForm: {
         id: '',
@@ -166,7 +117,7 @@ export default {
           validator: (rule, value, callback) => {
             const { id, supplier_id } = this.addForm
             if (!id && !supplier_id) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('4bac5508.281bad')))
             } else {
               callback()
             }
@@ -180,7 +131,7 @@ export default {
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.addForm.cycleData
             if (!cycle || !unit) {
-              callback(new Error('结算周期不能为空'))
+              callback(new Error(this.$t('4bac5508.5c5280')))
             } else {
               callback()
             }
@@ -190,12 +141,43 @@ export default {
     }
   },
   created() {
-    // const currentPath = this.$route.path;
-    // this.is_supplier = (currentPath.indexOf('supplier') >= 0) ? true : false;
-    // console.log('this.is_supplier => ', this.is_supplier);
-    // this.fetch()
+    this.formList[0].label = this.$t('4bac5508.71412a')
+    this.formList[0].tip = this.$t('4bac5508.9c6659')
+    this.addFormList[0].label = this.$t('4bac5508.bab268')
   },
   mounted() {
+    const t = this.$t.bind(this)
+    this.setting = createSetting({
+      actions: [
+        {
+          name: t('4bac5508.e366cc'),
+          key: 'config',
+          type: 'button',
+          buttonType: 'text',
+          action: {
+            handler: async ([row]) => {
+              this.addForm.id = row.id
+              this.addForm.distributor_id = row.distributor_id
+              this.addForm.cycleData = {
+                cycle: row.period[0],
+                unit: row.period[1]
+              }
+              this.addForm.distributor_name = row.distributor_name
+              this.addFormList[0].isShow = false
+              this.addDialog = true
+            }
+          }
+        }
+      ],
+      columns: [
+        { name: t('4bac5508.9190cc'), key: 'supplier_name' },
+        {
+          name: t('4bac5508.71412a'),
+          key: 'period',
+          render: (h, { row }) => h('span', {}, this.getCycle(row.period))
+        }
+      ]
+    })
     this.fetch()
   },
   methods: {
@@ -233,7 +215,7 @@ export default {
         period: [cycle, unit],
         merchant_type: this.merchant_type
       })
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('4bac5508.3b1083'))
     },
     async onAddSubmit() {
       const { id, supplier_id, cycleData } = this.addForm
@@ -244,16 +226,16 @@ export default {
         merchant_type: this.merchant_type,
         period: [cycle, unit]
       })
-      this.$message.success(id ? '保存成功' : '添加成功')
+      this.$message.success(id ? this.$t('4bac5508.3b1083') : this.$t('4bac5508.3fdaea'))
       this.addDialog = false
       this.$refs.finder.refresh(true)
     },
     getCycle(period) {
       const [cycle, unit] = period
       const units = {
-        day: '天',
-        week: '周',
-        month: '月'
+        day: this.$t('4bac5508.249aba'),
+        week: this.$t('4bac5508.a657f4'),
+        month: this.$t('4bac5508.e42b99')
       }
       return `${cycle}${units[unit]}`
     }

@@ -5,49 +5,53 @@
 
 <template>
   <el-form ref="form" label-width="100px">
-    <el-form-item label="商户客户号">
+    <el-form-item :label="$t('ea670112.1e7316')">
       <el-input v-model="form.mer_cust_id" style="width: 300px" />
-      <br />
-      <span class="frm-tips">汇付生成的商户唯一标志：mer_cust_id</span>
+      <br>
+      <span class="frm-tips">{{ $t('ea670112.bbe462') }}</span>
     </el-form-item>
-    <el-form-item label="商户账户号">
+    <el-form-item :label="$t('ea670112.a5f9af')">
       <el-input v-model="form.acct_id" style="width: 300px" />
-      <br />
-      <span class="frm-tips">汇付生成的唯一标志：acct_id</span>
+      <br>
+      <span class="frm-tips">{{ $t('ea670112.06c08f') }}</span>
     </el-form-item>
-    <el-form-item label="证书密钥">
+    <el-form-item :label="$t('ea670112.476853')">
       <el-input v-model="form.pfx_password" style="width: 300px" />
     </el-form-item>
 
-    <el-form-item label="商户证书">
+    <el-form-item :label="$t('ea670112.9fa3f8')">
       <span v-if="form.pfx_file_url"> {{ form.pfx_file_name }}</span>
       <el-upload class="" action="" :on-change="keyHandleChange" :auto-upload="false">
-        <el-button size="small" type="primary"> 点击上传 </el-button>
+        <el-button size="small" type="primary">{{ $t('ea670112.2c808b') }}</el-button>
       </el-upload>
-      <span class="frm-tips">汇付下发的证书，此处换成商户自己的证书 .pfx 格式 加签使用</span>
+      <span class="frm-tips">{{ $t('ea670112.ba042d') }}</span>
     </el-form-item>
 
-    <el-form-item label="CA证书">
+    <el-form-item :label="$t('ea670112.863c3d')">
       <span v-if="form.ca_pfx_file_url"> {{ form.ca_pfx_file_name }}</span>
       <el-upload class="" action="" :on-change="certHandleChange" :auto-upload="false">
-        <el-button size="small" type="primary"> 点击上传 </el-button>
+        <el-button size="small" type="primary">{{ $t('ea670112.2c808b') }}</el-button>
       </el-upload>
-      <span class="frm-tips">汇付下发的.cer证书 ，需要一对证书 解签使用</span>
+      <span class="frm-tips">{{ $t('ea670112.bfb1f0') }}</span>
     </el-form-item>
-    <el-form-item label="OCA31证书">
+    <el-form-item :label="$t('ea670112.42ded6')">
       <span v-if="form.oca31_pfx_file_url"> {{ form.oca31_pfx_file_name }}</span>
       <el-upload class="" action="" :on-change="cert31HandleChange" :auto-upload="false">
-        <el-button size="small" type="primary"> 点击上传 </el-button>
+        <el-button size="small" type="primary">{{ $t('ea670112.2c808b') }}</el-button>
       </el-upload>
-      <span class="frm-tips">汇付下发的.cer证书 ，需要一对证书 解签使用</span>
+      <span class="frm-tips">{{ $t('ea670112.bfb1f0') }}</span>
     </el-form-item>
 
-    <el-form-item label="是否启用">
+    <el-form-item :label="$t('ea670112.53c3dd')">
       <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
     </el-form-item>
 
     <div class="section-footer with-border content-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('ea670112.be5fbb')
+      }}
+</el-button>
     </div>
   </el-form>
 </template>
@@ -129,7 +133,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('ea670112.3b1083')
           })
           this.loading = false
         })

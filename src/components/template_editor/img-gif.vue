@@ -5,28 +5,28 @@
 
 <template>
   <section v-if="name === 'img-gif' || name === 'banner'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('b0943a74.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('b0943a74.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <div v-for="(item, index) in data" :key="index">
-          <el-form-item :label="item.name + '图片'">
+          <el-form-item :label="item.name + $t('b0943a74.20def7')">
             <img
               v-if="item.imgUrl"
               :src="item.imgUrl"
               class="banner-uploader"
               @click="handleImgChange(index)"
-            />
+            >
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <i class="el-icon-camera" />
-              上传图片
+              {{ $t('b0943a74.ce6855') }}
             </div>
           </el-form-item>
         </div>
         <el-form-item label="">
-          <div class="frm-tips">只能上传gif/png文件（建议尺寸：375px * 575px）</div>
+          <div class="frm-tips">{{ $t('b0943a74.c45844') }}</div>
         </el-form-item>
       </el-form>
     </div>

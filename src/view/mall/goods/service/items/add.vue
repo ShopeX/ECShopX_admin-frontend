@@ -5,7 +5,7 @@
 
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">添加商品</div>
+    <div class="section-header with-border">{{ $t('af8bd809.fa3aee') }}</div>
     <div class="section-body">
       <el-form
         ref="form"
@@ -14,14 +14,16 @@
         label-position="left"
         class="demo-ruleForm"
       >
-        <el-form-item label="核销类型">
+        <el-form-item :label="$t('af8bd809.5169ed')">
           <el-radio-group v-model="form.consume_type">
             <div style="margin-bottom: 10px">
               <el-radio
                 label="every"
                 :disabled="form.item_id !== '' && form.consume_type === 'all' ? true : false"
               >
-                次卡类型&nbsp;<span class="frm-tips">(每个物料都需要核销)</span>
+                {{ $t('af8bd809.443835') }}&nbsp;<span class="frm-tips">{{
+                  $t('af8bd809.afa621')
+                }}</span>
               </el-radio>
             </div>
             <div>
@@ -29,37 +31,39 @@
                 label="all"
                 :disabled="form.item_id !== '' && form.consume_type === 'every' ? true : false"
               >
-                团购券类型&nbsp;<span class="frm-tips">(所有物料作为一个整体，只核销一次)</span>
+                {{ $t('af8bd809.86bfd5') }}&nbsp;<span class="frm-tips">{{
+                  $t('af8bd809.548c63')
+                }}</span>
               </el-radio>
             </div>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="商品名称">
+        <el-form-item :label="$t('af8bd809.1fd1d5')">
           <el-col :span="12">
             <el-input v-model="form.item_name" :maxlength="30" placeholder="" />
           </el-col>
         </el-form-item>
-        <el-form-item label="简洁的描述">
+        <el-form-item :label="$t('af8bd809.2617c9')">
           <el-col :span="12">
             <el-input v-model="form.brief" type="textarea" />
           </el-col>
         </el-form-item>
-        <el-form-item label="成本价">
+        <el-form-item :label="$t('af8bd809.2e2ce2')">
           <el-col :span="5">
             <el-input v-model="form.cost_price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1"> &nbsp;元 </el-col>
+          <el-col :span="1"> &nbsp;{{ $t('af8bd809.c16655') }} </el-col>
         </el-form-item>
-        <el-form-item label="销售价">
+        <el-form-item :label="$t('af8bd809.e29575')">
           <el-col :span="5">
             <el-input v-model="form.price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1"> &nbsp;元 </el-col>
+          <el-col :span="1"> &nbsp;{{ $t('af8bd809.c16655') }} </el-col>
         </el-form-item>
-        <el-form-item label="商品状态">
+        <el-form-item :label="$t('af8bd809.ce0008')">
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-select v-model="form.approve_status" placeholder="请选择">
+              <el-select v-model="form.approve_status" :placeholder="$t('af8bd809.708c9d')">
                 <el-option
                   v-for="item in statusOption"
                   :key="item.value"
@@ -70,40 +74,44 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="排序编号">
+        <el-form-item :label="$t('af8bd809.e8373a')">
           <el-row :gutter="20">
             <el-col :span="4">
               <el-input v-model="form.sort" placeholder="" />
             </el-col>
-            <el-col :span="10"> 数字越大越靠前 </el-col>
+            <el-col :span="10"> {{ $t('af8bd809.a46b39') }} </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="商品内容">
+        <el-form-item :label="$t('af8bd809.f0a0a9')">
           <div class="content-bottom-padded">
             <el-button type="primary" size="small" icon="plus" @click="addLabel">
-              选择基础物料
+              {{ $t('af8bd809.173b92') }}
             </el-button>
           </div>
           <el-table :data="form.type_labels" border style="line-height: normal">
-            <el-table-column label="物料名称" prop="labelName" width="150" />
-            <el-table-column label="单价(元)" width="90">
+            <el-table-column :label="$t('af8bd809.901fca')" prop="labelName" width="150" />
+            <el-table-column :label="$t('af8bd809.261fce')" width="90">
               <template slot-scope="scope">
                 <el-col :span="12"> ￥{{ scope.row.labelPrice }} </el-col>
               </template>
             </el-table-column>
-            <el-table-column label="数量">
+            <el-table-column :label="$t('af8bd809.0bf60b')">
               <template slot-scope="scope">
                 <el-row>
                   <el-col :span="12">
-                    <el-radio v-model="scope.row.isNotLimitNum" :label="2"> 限制数量 </el-radio>
-                    <el-radio v-model="scope.row.isNotLimitNum" :label="1"> 不限数量 </el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="2">
+                      {{ $t('af8bd809.476876') }}
+                    </el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="1">
+                      {{ $t('af8bd809.c0e891') }}
+                    </el-radio>
                   </el-col>
                   <el-col v-if="scope.row.isNotLimitNum == 2" :span="12">
                     <el-input
                       v-model="scope.row.num"
                       type="number"
                       min="1"
-                      placeholder="整数"
+                      :placeholder="$t('af8bd809.b5f1a7')"
                       @change="handleMarketPrice"
                     />
                   </el-col>
@@ -111,7 +119,7 @@
                 <el-row />
               </template>
             </el-table-column>
-            <el-table-column label="有效期(天)" width="150">
+            <el-table-column :label="$t('af8bd809.7e683d')" width="150">
               <template slot-scope="scope">
                 <el-col :span="24">
                   <el-input
@@ -119,12 +127,12 @@
                     :disabled="form.consume_type === 'all' ? true : false"
                     type="number"
                     min="1"
-                    placeholder="正整数"
+                    :placeholder="$t('af8bd809.976021')"
                   />
                 </el-col>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="100">
+            <el-table-column :label="$t('af8bd809.2b6bc0')" width="100">
               <template slot-scope="scope">
                 <el-button
                   size="small"
@@ -132,19 +140,23 @@
                   type="danger"
                   @click.native.prevent="deleteServiceLabelsAction(scope.$index, form.type_labels)"
                 >
-                  删除
+                  {{ $t('af8bd809.2f4aad') }}
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-form-item>
-        <el-form-item label="原价">
+        <el-form-item :label="$t('af8bd809.1afdfe')">
           <el-col :span="5">
             <el-input v-model="form.market_price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1"> &nbsp;元 </el-col>
+          <el-col :span="1"> &nbsp;{{ $t('af8bd809.c16655') }} </el-col>
         </el-form-item>
-        <el-form-item v-show="form.consume_type === 'all'" label="有效期" prop="date_type">
+        <el-form-item
+          v-show="form.consume_type === 'all'"
+          :label="$t('af8bd809.bb114a')"
+          prop="date_type"
+        >
           <el-radio-group v-model="form.date_type" @change="changeDatetime">
             <div style="margin-bottom: 20px">
               <el-radio
@@ -153,7 +165,7 @@
                 "
                 label="DATE_TYPE_FIX_TIME_RANGE"
               >
-                固定日期&nbsp;&nbsp;
+                {{ $t('af8bd809.0f7001') }}&nbsp;&nbsp;
               </el-radio>
               <el-date-picker
                 v-model="date_range"
@@ -175,7 +187,7 @@
                 "
                 label="DATE_TYPE_FIX_TERM"
               >
-                领取后&nbsp;&nbsp;&nbsp;&nbsp;
+                {{ $t('af8bd809.ec5892') }}&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-input
                   v-model="form.fixed_term"
                   :disabled="
@@ -188,7 +200,7 @@
                   placeholder=""
                   style="width: 60px"
                 />
-                天内有效
+                {{ $t('af8bd809.c011b5') }}
               </el-radio>
             </div>
           </el-radio-group>
@@ -214,12 +226,11 @@
           </el-dialog>
         </el-form-item> -->
 
-        <el-form-item label="图片">
+        <el-form-item :label="$t('af8bd809.20def7')">
           <el-row :gutter="20">
             <el-col :span="18">
               <div class="frm-tips">
-                最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：375px
-                * 200px）
+                {{ $t('af8bd809.4b6d43') }}
               </div>
               <div class="pics-box">
                 <ul class="goodspic-wrap">
@@ -230,7 +241,7 @@
                     @mouseenter="picsEnter(index)"
                     @mouseleave="picsLeave"
                   >
-                    <img :src="wximageurl + item" />
+                    <img :src="wximageurl + item">
                     <div
                       class="goodspic-mask"
                       :class="picsCurrent == index ? 'on' : ''"
@@ -255,33 +266,35 @@
           </el-row>
         </el-form-item>
 
-        <el-form-item label="详情">
+        <el-form-item :label="$t('af8bd809.f26225')">
           <SpRichText v-model="form.intro" />
         </el-form-item>
-        <el-form-item label="开启购买协议">
+        <el-form-item :label="$t('af8bd809.d6dc4d')">
           <el-switch
             v-model="form.enable_agreement"
             active-color="#13ce66"
             inactive-color="#ff4949"
           />
         </el-form-item>
-        <el-form-item label="购买协议">
+        <el-form-item :label="$t('af8bd809.b04d35')">
           <el-input
             v-model="form.purchase_agreement"
             type="textarea"
             :autosize="{ minRows: 6 }"
-            placeholder="请输入购买协议"
+            :placeholder="$t('af8bd809.15c241')"
           />
         </el-form-item>
         <el-form-item label=" ">
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="submitItemsAction"> 保存 </el-button>
+          <el-button @click.native="handleCancel"> {{ $t('af8bd809.625fb2') }} </el-button>
+          <el-button type="primary" @click="submitItemsAction">
+            {{ $t('af8bd809.be5fbb') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
-      title="选择基础物料"
+      :title="$t('af8bd809.173b92')"
       :visible.sync="serviceLabelsVisible"
       :before-close="handleCancelLabelsDialog"
     >
@@ -302,15 +315,15 @@
           @select="handleSelectionChange"
         >
           <el-table-column type="selection" :reserve-selection="true" width="55" />
-          <el-table-column prop="labelName" label="物料名称" />
-          <el-table-column prop="serviceType" label="系统类型">
+          <el-table-column prop="labelName" :label="$t('af8bd809.901fca')" />
+          <el-table-column prop="serviceType" :label="$t('af8bd809.996dc3')">
             <template slot-scope="scope">
-              <span v-if="scope.row.serviceType === 'point'">积分</span>
-              <span v-if="scope.row.serviceType === 'deposit'">储值</span>
-              <span v-if="scope.row.serviceType === 'timescard'">次卡</span>
+              <span v-if="scope.row.serviceType === 'point'">{{ $t('af8bd809.9f68a8') }}</span>
+              <span v-if="scope.row.serviceType === 'deposit'">{{ $t('af8bd809.0ae749') }}</span>
+              <span v-if="scope.row.serviceType === 'timescard'">{{ $t('af8bd809.cc572d') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="物料价格">
+          <el-table-column :label="$t('af8bd809.47097e')">
             <template slot-scope="scope">
               <span>￥{{ scope.row.labelPrice / 100 }}</span>
             </template>
@@ -343,20 +356,6 @@ export default {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
-      ],
       form: {
         item_id: '',
         date_type: '',
@@ -391,6 +390,15 @@ export default {
       picsDialog: false,
       picsCurrent: -1,
       picsOldLen: 0
+    }
+  },
+  computed: {
+    statusOption() {
+      return [
+        { title: this.$t('af8bd809.9b7481'), value: 'onsale' },
+        { title: this.$t('af8bd809.2c50a0'), value: 'offline_sale' },
+        { title: this.$t('af8bd809.ae83a3'), value: 'instock' }
+      ]
     }
   },
   mounted() {
@@ -539,12 +547,12 @@ export default {
         type_labels: this.form.type_labels
       }
       if (!params.type_labels.length) {
-        this.$message.error('物料信息必填!')
+        this.$message.error(this.$t('af8bd809.ee18fa'))
         return false
       }
       for (let [index, elem] of params.type_labels.entries()) {
         if (elem.num <= 0 && elem.isNotLimitNum == 2) {
-          this.$message.error('物料核销次数，必需大于0!')
+          this.$message.error(this.$t('af8bd809.a52aa2'))
           return false
         }
       }
@@ -562,7 +570,7 @@ export default {
       if (this.form.item_id) {
         updateItems(this.form.item_id, params).then((response) => {
           this.$message({
-            message: '更新成功',
+            message: this.$t('af8bd809.55aa63'),
             type: 'success',
             duration: 2 * 1000,
             onClose() {
@@ -574,7 +582,7 @@ export default {
       } else {
         createItems(params).then((response) => {
           this.$message({
-            message: '添加成功',
+            message: this.$t('af8bd809.3fdaea'),
             type: 'success',
             duration: 2 * 1000,
             onClose() {
@@ -668,7 +676,7 @@ export default {
     },
     pickPics(arr) {
       if (this.picsOldLen + arr.length >= 10) {
-        this.$message.error('最多上传9张图片!')
+        this.$message.error(this.$t('af8bd809.4352be'))
         return false
       } else {
         if (arr.length != 0) {

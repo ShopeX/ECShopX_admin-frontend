@@ -15,7 +15,11 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        <el-button size="medium" type="primary" @click="onShowTimeList"> 时间 </el-button>
+        <el-button size="medium" type="primary" @click="onShowTimeList">
+{{
+          $t('365b5a6a.19fcb9')
+        }}
+</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -32,17 +36,17 @@
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="list" :height="wheight - 280">
-      <el-table-column prop="fieldname" label="指标" />
-      <el-table-column prop="thisweek" label="本周" />
-      <el-table-column prop="lastweek" label="上周" />
+      <el-table-column prop="fieldname" :label="$t('365b5a6a.7e6875')" />
+      <el-table-column prop="thisweek" :label="$t('365b5a6a.725205')" />
+      <el-table-column prop="lastweek" :label="$t('365b5a6a.79abd4')" />
       <!-- <el-table-column prop="username" label="变化百分比" width="120"></el-table-column> -->
-      <el-table-column prop="fieldvalue" label="5周趋势" width="450">
+      <el-table-column prop="fieldvalue" :label="$t('365b5a6a.813dcf')" width="450">
         <template slot-scope="scope">
           <canvas :id="scope.row.fieldkey + 'list'" />
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="时间列表" class="right-dialog" :visible.sync="timeVisible">
+    <el-dialog :title="$t('365b5a6a.dc9079')" class="right-dialog" :visible.sync="timeVisible">
       <template>
         <el-form ref="formwork" :model="timeChoosed">
           <el-form-item>
@@ -62,7 +66,11 @@
             />
           </div>
           <el-form-item class="content-center marginTop">
-            <el-button type="primary" @click="onSubmitTimeChoosed"> 确定筛选 </el-button>
+            <el-button type="primary" @click="onSubmitTimeChoosed">
+{{
+              $t('365b5a6a.e01fab')
+            }}
+</el-button>
           </el-form-item>
         </el-form>
       </template>

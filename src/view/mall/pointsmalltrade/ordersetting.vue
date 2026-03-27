@@ -8,8 +8,8 @@
     <el-form ref="form" :model="form" label-position="left" label-width="150px">
       <div class="section-body">
         <template>
-          <el-form-item label="订单自动取消:">
-            未付款订单，将在
+          <el-form-item :label="$t('90fcc9b4.6756df')">
+            {{ $t('d41d8cd9.ww3xx4') }}
             <el-input
               v-model="form.order_cancel_time"
               type="number"
@@ -17,10 +17,10 @@
               min="1"
               placeholder=""
               style="width: 100px"
-            />(分钟)之后取消
+            />{{ $t('d41d8cd9.yy5zz6') }}
           </el-form-item>
-          <el-form-item label="订单自动确认:">
-            已发货订单，将在
+          <el-form-item :label="$t('90fcc9b4.2cd5c0')">
+            {{ $t('d41d8cd9.aaa7bb') }}
             <el-input
               v-model="form.order_finish_time"
               type="number"
@@ -29,10 +29,10 @@
               placeholder=""
               style="width: 100px"
             />
-            (天)后自动完成
+            {{ $t('d41d8cd9.ccc9dd') }}
           </el-form-item>
-          <el-form-item label="订单售后时效:">
-            已确认收货订单，将在
+          <el-form-item :label="$t('90fcc9b4.f14600')">
+            {{ $t('d41d8cd9.eee1ff') }}
             <el-input
               v-model="form.latest_aftersale_time"
               type="number"
@@ -41,10 +41,10 @@
               placeholder=""
               style="width: 100px"
             />
-            (天)后不可申请售后
+            {{ $t('d41d8cd9.ggg3hh') }}
           </el-form-item>
-          <el-form-item label="售后自动驳回时效:">
-            退货退款同意后未退回商品，将在
+          <el-form-item :label="$t('90fcc9b4.828c80')">
+            {{ $t('d41d8cd9.iii5jj') }}
             <el-input
               v-model="form.auto_refuse_time"
               type="number"
@@ -53,12 +53,12 @@
               placeholder=""
               style="width: 100px"
             />
-            (天)后驳回售后
+            {{ $t('d41d8cd9.kkk7ll') }}
           </el-form-item>
         </template>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('d41d8cd9.mmm9nn') }} </el-button>
       </div>
     </el-form>
   </div>
@@ -97,7 +97,7 @@ export default {
     save() {
       console.log(this.form)
       setOrderSetting(this.form).then((res) => {
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('90fcc9b4.3b1083'), type: 'success' })
       })
     }
   }

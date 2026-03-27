@@ -8,60 +8,62 @@
     <div class="content-bottom-padded" />
     <el-row :gutter="20">
       <el-col :md="8" :lg="6">
-        <el-input v-model="params.name" placeholder="社区名称">
+        <el-input v-model="params.name" :placeholder="$t('0976304f.d541f8')">
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
       </el-col>
       <el-col :md="8" :lg="6">
-        <el-input v-model="params.mobile" placeholder="手机号">
+        <el-input v-model="params.mobile" :placeholder="$t('0976304f.8098e2')">
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
       </el-col>
       <el-col :md="6" :lg="4">
         <el-select
           v-model="params.status"
-          placeholder="审核状态"
+          :placeholder="$t('0976304f.b6d0e9')"
           clearable
           style="width: 100%"
           @change="dataSearch"
         >
-          <el-option label="待审核" value="loading" />
-          <el-option label="已审核" value="open" />
-          <el-option label="已拒绝" value="refuse" />
+          <el-option :label="$t('0976304f.5cb424')" value="loading" />
+          <el-option :label="$t('0976304f.9d5b9b')" value="open" />
+          <el-option :label="$t('0976304f.81233d')" value="refuse" />
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" icon="plus" @click="addServiceLabels"> 添加社区 </el-button>
+        <el-button type="primary" icon="plus" @click="addServiceLabels">
+          {{ $t('0976304f.cc1c5e') }}
+        </el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="communityList" :height="wheight - 270">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="提货地址">
+            <el-form-item :label="$t('0976304f.f0c36d')">
               <span>{{ props.row.address }}</span>
             </el-form-item>
-            <el-form-item label="入住时间">
+            <el-form-item :label="$t('0976304f.c2610e')">
               <span>{{ props.row.created_date }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column prop="community_id" label="社区ID" min-width="70" />
-      <el-table-column prop="community_name" label="社区名称" min-width="120" />
-      <el-table-column prop="leader_name" label="团长姓名" />
-      <el-table-column prop="leader_mobile" label="团长手机" min-width="110" />
-      <el-table-column prop="status" label="状态" min-width="80">
+      <el-table-column prop="community_id" :label="$t('0976304f.a92866')" min-width="70" />
+      <el-table-column prop="community_name" :label="$t('0976304f.d541f8')" min-width="120" />
+      <el-table-column prop="leader_name" :label="$t('0976304f.07e57c')" />
+      <el-table-column prop="leader_mobile" :label="$t('0976304f.6621f6')" min-width="110" />
+      <el-table-column prop="status" :label="$t('0976304f.3fea7c')" min-width="80">
         <template slot-scope="scope">
-          <span v-if="scope.row.status === 'open'">营业</span>
-          <span v-if="scope.row.status === 'close'">暂停</span>
-          <span v-if="scope.row.status === 'loading'">待审核</span>
-          <span v-if="scope.row.status === 'refuse'">拒绝申请</span>
+          <span v-if="scope.row.status === 'open'">{{ $t('0976304f.e52902') }}</span>
+          <span v-if="scope.row.status === 'close'">{{ $t('0976304f.8d63ef') }}</span>
+          <span v-if="scope.row.status === 'loading'">{{ $t('0976304f.5cb424') }}</span>
+          <span v-if="scope.row.status === 'refuse'">{{ $t('0976304f.ff88e0') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="pass_date" label="通过时间" min-width="100" />
+      <el-table-column prop="pass_date" :label="$t('0976304f.db185f')" min-width="100" />
 
-      <el-table-column prop="status" label="是否启用" min-width="80">
+      <el-table-column prop="status" :label="$t('0976304f.53c3dd')" min-width="80">
         <template slot-scope="scope">
           <span v-if="scope.row.status === 'open' || scope.row.status === 'close'">
             <el-switch
@@ -76,7 +78,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column min-width="140" label="操作">
+      <el-table-column min-width="140" :label="$t('0976304f.2b6bc0')">
         <template slot-scope="scope">
           <div class="operating-icons gap-2">
             <el-button
@@ -84,16 +86,16 @@
               type="text"
               @click="checkAction(scope.row)"
             >
-              审核
+              {{ $t('0976304f.cf13b1') }}
             </el-button>
             <el-button type="text" @click="pointlist(scope.$index, scope.row)">
-              积分明细
+              {{ $t('0976304f.2076e8') }}
             </el-button>
             <el-button type="text" @click="editCommunityAction(scope.$index, scope.row)">
-              编辑
+              {{ $t('0976304f.95b351') }}
             </el-button>
             <el-button type="text" @click="deleteCommunityAction(scope.$index, scope.row)">
-              删除
+              {{ $t('0976304f.2f4aad') }}
             </el-button>
           </div>
         </template>
@@ -108,67 +110,77 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <el-dialog title="社区信息审核" :visible.sync="checkVisible" :before-close="handleCancel">
+    <el-dialog
+      :title="$t('0976304f.ae48dd')"
+      :visible.sync="checkVisible"
+      :before-close="handleCancel"
+    >
       <template>
         <el-form ref="form" :model="community" class="demo-ruleForm" label-width="90px">
-          <el-form-item label="地理位置">
+          <el-form-item :label="$t('0976304f.fc82aa')">
             <el-col :span="7">
               {{ community.address }}
             </el-col>
           </el-form-item>
-          <el-form-item inline="true" class="demo-form-inline" label="社区经纬度">
+          <el-form-item inline="true" class="demo-form-inline" :label="$t('0976304f.4cb06f')">
             {{ community.lng }}-{{ community.lat }}
           </el-form-item>
 
-          <el-form-item label="社区名称">
+          <el-form-item :label="$t('0976304f.d541f8')">
             {{ community.community_name }}
           </el-form-item>
-          <el-form-item label="团长姓名">
+          <el-form-item :label="$t('0976304f.07e57c')">
             {{ community.leader_name }}
           </el-form-item>
-          <el-form-item label="团长手机">
+          <el-form-item :label="$t('0976304f.6621f6')">
             {{ community.leader_mobile }}
           </el-form-item>
-          <el-form-item label="团长身份证">
+          <el-form-item :label="$t('0976304f.e46336')">
             {{ community.leader_id_card }}
           </el-form-item>
-          <el-form-item label="团长昵称">
+          <el-form-item :label="$t('0976304f.9315dc')">
             {{ community.leader_nickname }}
           </el-form-item>
-          <el-form-item label="备注说明">
+          <el-form-item :label="$t('0976304f.8a4cf0')">
             {{ community.description }}
           </el-form-item>
-          <el-form-item label="推荐人">
+          <el-form-item :label="$t('0976304f.dd0925')">
             {{ community.referrer }}
           </el-form-item>
-          <el-form-item label="社区人数">
+          <el-form-item :label="$t('0976304f.63388b')">
             {{ community.num }}
           </el-form-item>
-          <el-form-item label="小区商圈">
+          <el-form-item :label="$t('0976304f.44bf0a')">
             {{ community.business_district }}
           </el-form-item>
-          <el-form-item label="营业时间">
+          <el-form-item :label="$t('0976304f.cc3307')">
             {{ community.hour }}
           </el-form-item>
-          <el-form-item label="审核状态">
+          <el-form-item :label="$t('0976304f.b6d0e9')">
             <template>
-              <el-radio v-model="community.check_status" label="open"> 通过 </el-radio>
-              <el-radio v-model="community.check_status" label="refuse"> 拒绝 </el-radio>
+              <el-radio v-model="community.check_status" label="open">
+                {{ $t('0976304f.23c1f3') }}
+              </el-radio>
+              <el-radio v-model="community.check_status" label="refuse">
+                {{ $t('0976304f.7173f8') }}
+              </el-radio>
             </template>
           </el-form-item>
-          <el-form-item v-if="community.check_status == 'refuse'" label="营业时间">
+          <el-form-item v-if="community.check_status == 'refuse'" :label="$t('0976304f.cc3307')">
             <el-input
               v-model="community.deny_reason"
               type="textarea"
               :rows="2"
-              placeholder="请输入原因"
+              :placeholder="$t('0976304f.d63114')"
             />
           </el-form-item>
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="checkActionSubmit"> 保存 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('0976304f.625fb2') }} </el-button>
+        <el-button type="primary" @click="checkActionSubmit">
+          {{ $t('0976304f.be5fbb') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -258,16 +270,16 @@ export default {
       })
     },
     deleteCommunityAction(index, row) {
-      this.$confirm('此操作将删除该社区, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('0976304f.e831d8'), this.$t('0976304f.02d981'), {
+        confirmButtonText: this.$t('0976304f.38cf16'),
+        cancelButtonText: this.$t('0976304f.625fb2'),
         type: 'warning'
       })
         .then(() => {
           communityDelete(row.community_id).then((response) => {
             this.communityList.splice(index, 1)
             this.$message({
-              message: '删除社区成功',
+              message: this.$t('0976304f.5b510e'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -276,13 +288,13 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('0976304f.2111cc')
           })
         })
     },
     updateStatusCommunity(params) {
       CommunityStatusUpdate(params).then((res) => {
-        this.$message({ message: '操作成功', type: 'success' })
+        this.$message({ message: this.$t('0976304f.33130f'), type: 'success' })
         this.checkVisible = false
       })
     },

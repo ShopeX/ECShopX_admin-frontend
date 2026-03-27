@@ -9,7 +9,7 @@
       <shop-select distributors @update="storeChange" @init="initChange" />
       <el-input
         v-model="params.mobile"
-        placeholder="导购员手机号"
+        :placeholder="$t('1c209317.f1ba67')"
         class="input"
         clearable
         @clear="clearparams('mobile')"
@@ -18,7 +18,7 @@
       </el-input>
       <el-input
         v-model="params.name"
-        placeholder="导购员姓名"
+        :placeholder="$t('1c209317.b2614d')"
         class="input"
         clearable
         @clear="clearparams('name')"
@@ -28,7 +28,7 @@
       <el-date-picker
         v-model="date"
         type="datetimerange"
-        placeholder="选择日期范围"
+        :placeholder="$t('1c209317.4b8cb9')"
         format="yyyy-MM-dd HH:mm:ss"
         value-format="timestamp"
         @change="dateChange"
@@ -36,11 +36,15 @@
     </el-row>
     <el-card>
       <el-table v-loading="loading" :data="list">
-        <el-table-column prop="sign_type" label="类型" />
-        <el-table-column prop="name" label="导购姓名" />
-        <el-table-column prop="mobile" label="导购手机号" />
-        <el-table-column prop="shop_name" label="所属门店" />
-        <el-table-column prop="updated" label="操作时间" />
+        <el-table-column
+          prop="sign_type"
+          :label="$t('1c209317.226b09')"
+          :formatter="signTypeFormatter"
+        />
+        <el-table-column prop="name" :label="$t('1c209317.cf6d0a')" />
+        <el-table-column prop="mobile" :label="$t('1c209317.d3ef8d')" />
+        <el-table-column prop="shop_name" :label="$t('1c209317.a6cf26')" />
+        <el-table-column prop="updated" :label="$t('1c209317.7e951d')" />
         <!-- <el-table-column label="备注"></el-table-column> -->
       </el-table>
     </el-card>
@@ -88,16 +92,6 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  filters: {
-    signType: function (key) {
-      const typeObject = {
-        signin: '签到',
-        signout: '主动签退',
-        forceout: '被动签退'
-      }
-      return typeObject[key] || '未知类型'
-    }
-  },
   mounted() {
     this.getList()
   },
@@ -131,6 +125,14 @@ export default {
         this.params.time_start_end = ''
       }
       this.resetSearch()
+    },
+    signTypeFormatter(row, column, cellValue) {
+      const keyMap = {
+        signin: '1c209317.c9da9b',
+        signout: '1c209317.61d1ef',
+        forceout: '1c209317.aaeed4'
+      }
+      return this.$t(keyMap[cellValue] || '1c209317.485d34')
     },
     getList() {
       this.loading = true

@@ -10,13 +10,13 @@
         <el-input
           v-model="params.attribute_name"
           class="input-b"
-          placeholder="参数名称"
+          :placeholder="$t('54b88254.5f49be')"
           @change="brandSearch"
         >
           <el-button slot="append" icon="el-icon-search" @click="brandSearch" />
         </el-input>
         <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-          新增参数
+          {{ $t('54b88254.4c0eea') }}
         </el-button>
       </el-col>
     </el-row>
@@ -25,7 +25,7 @@
         v-loading="loading"
         :data="list"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('54b88254.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
         <el-table-column type="expand">
@@ -38,19 +38,23 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column :label="$t('54b88254.2b6bc0')" width="150">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)">
+              {{ $t('54b88254.95b351') }}
+            </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              {{ $t('54b88254.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="参数类型">
+        <el-table-column :label="$t('54b88254.91bb21')">
           <template slot-scope="props">
-            {{ JSON.parse(props.row.is_show) ? '高级筛选' : '纯显示' }}
+            {{ JSON.parse(props.row.is_show) ? $t('54b88254.df2f0a') : $t('54b88254.26ab96') }}
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="参数名称" width="200" />
-        <el-table-column prop="attribute_memo" label="参数备注" />
+        <el-table-column prop="attribute_name" :label="$t('54b88254.5f49be')" width="200" />
+        <el-table-column prop="attribute_memo" :label="$t('54b88254.dc14a1')" />
       </el-table>
       <div v-if="total_count > params.pageSize" class="mt-4 text-right">
         <el-pagination
@@ -65,21 +69,21 @@
         />
       </div>
     </el-card>
-    <sideBar :visible.sync="show_sideBar" :title="'新增参数'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('54b88254.4c0eea')">
       <el-form>
-        <el-form-item label="参数名称">
+        <el-form-item :label="$t('54b88254.5f49be')">
           <el-input v-model="form.attribute_name" />
         </el-form-item>
-        <el-form-item label="参数备注">
+        <el-form-item :label="$t('54b88254.dc14a1')">
           <el-input v-model="form.attribute_memo" />
         </el-form-item>
-        <el-form-item label="参数类型">
+        <el-form-item :label="$t('54b88254.91bb21')">
           <el-radio-group v-model="form.is_show">
-            <el-radio :label="true"> 支持商品高级筛选 </el-radio>
-            <el-radio :label="false"> 仅用于商品详情展示 </el-radio>
+            <el-radio :label="true"> {{ $t('54b88254.159985') }} </el-radio>
+            <el-radio :label="false"> {{ $t('54b88254.ae6d82') }} </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="参数值">
+        <el-form-item :label="$t('54b88254.bfed49')">
           <div class="clearfix" />
           <div
             v-for="(item, index) in form.attribute_values"
@@ -87,17 +91,19 @@
             class="view-flex view-flex-middle key-item"
           >
             <div class="view-flex-item content-padded-right">
-              <el-input v-model="item.attribute_value" placeholder="参数值名称" />
+              <el-input v-model="item.attribute_value" :placeholder="$t('54b88254.a0386a')" />
             </div>
             <div @click="removeItem(index)">
-              <i class="el-icon-delete-solid"></i>
+              <i class="el-icon-delete-solid" />
             </div>
           </div>
-          <el-button type="default" size="small" @click="addItem"> 添加参数值 </el-button>
+          <el-button type="default" size="small" @click="addItem">
+            {{ $t('54b88254.308c56') }}
+          </el-button>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="primary" @click="save"> 提交 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('54b88254.939d53') }} </el-button>
       </div>
     </sideBar>
   </div>
@@ -147,11 +153,11 @@ export default {
   },
   methods: {
     handleDelete(data) {
-      this.$confirm('确认删除该参数？')
+      this.$confirm(this.$t('54b88254.67d5b6'))
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
             this.list.splice(data.$index, 1)
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('54b88254.33130f') })
           })
         })
         .catch((_) => {})
@@ -184,7 +190,7 @@ export default {
     },
     addItem() {
       if (this.form.attribute_values.length > 50) {
-        this.$message({ type: 'warning', message: '最多添加50项' })
+        this.$message({ type: 'warning', message: this.$t('54b88254.94360c') })
         return
       }
       let item = {
@@ -202,7 +208,7 @@ export default {
       this.getList()
     },
     removeItem(index) {
-      this.$confirm('确认删除当前值？')
+      this.$confirm(this.$t('54b88254.167628'))
         .then((_) => {
           this.form.attribute_values.splice(index, 1)
         })
@@ -211,7 +217,7 @@ export default {
     save() {
       let params = JSON.parse(JSON.stringify(this.form))
       if (params.attribute_values.length === 0 && params.is_show == true) {
-        this.$message({ type: 'error', message: '参数类型为高级筛选类型，参数值不能为空' })
+        this.$message({ type: 'error', message: this.$t('54b88254.ad4589') })
         return
       }
       params.attribute_values = JSON.stringify(params.attribute_values)
@@ -219,14 +225,14 @@ export default {
       // 如果没有id，则表示为新增
       if (!this.form.attribute_id) {
         addGoodsAttr(params).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('54b88254.33130f') })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
         updateGoodsAttr(params.attribute_id, params).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('54b88254.33130f') })
           this.getList()
         })
       }

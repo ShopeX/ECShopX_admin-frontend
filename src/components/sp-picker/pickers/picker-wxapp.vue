@@ -43,7 +43,7 @@
   <div class="picker-wxapp">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="region">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择小程序">
+        <el-select v-model="formData.approve_status" clearable :placeholder="$t('d2553ffe.e4c3df')">
           <el-option
             v-for="item in wxappList"
             :key="item.value"

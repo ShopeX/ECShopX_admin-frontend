@@ -43,49 +43,7 @@
       }"
       url="/promotions/getturntableList"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: 'ID', key: 'id', width: '80' },
-          { name: '活动名称', key: 'activity_name' }
-          // {
-          //   name: '活动区域',
-          //   key: 'regionauth_name'
-          // },
-          // {
-          //   name: '抽奖形式',
-          //   key: 'activity_type',
-          //   render(_, { row }) {
-          //     const lotteryMap = {
-          //       wheel: '大转盘',
-          //       slotMachine: '老虎机',
-          //       nineGrid: '九宫格'
-          //     }
-          //     return lotteryMap[row.activity_type]
-          //   }
-          // },
-          // {
-          //   name: '状态',
-          //   key: 'status',
-          //   render(_, { row }) {
-          //     const status_map = {
-          //       notstart: '未开始',
-          //       expire: '已过期',
-          //       online: '进行中'
-          //     }
-          //     return status_map[row.status]
-          //   }
-          // },
-          // {
-          //   name: '活动时间',
-          //   key: 'begin_time',
-          //   render(_, { row }) {
-          //     return `${moment(row.begin_time * 1000).format('YYYY-MM-DD HH:mm:ss')} - ${moment(
-          //       row.end_time * 1000
-          //     ).format('YYYY-MM-DD HH:mm:ss')}`
-          //   }
-          // }
-        ]
-      }"
+      :setting="lotterySetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -110,6 +68,17 @@ export default {
     title: '选择抽奖活动'
   },
   props: ['value'],
+  computed: {
+    lotterySetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: 'ID', key: 'id', width: '80' },
+          { name: t('cc842c50.39834b'), key: 'activity_name' }
+        ]
+      }
+    }
+  },
   data() {
     const { queryParams } = this.value
     const defaultParams = {
@@ -125,6 +94,7 @@ export default {
     }
   },
   created() {
+    this.$options.config.title = this.$t('cc842c50.20791b')
     this.getAreas()
   },
   methods: {

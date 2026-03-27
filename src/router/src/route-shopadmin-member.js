@@ -2,7 +2,6 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '会员'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +10,7 @@ export default {
   children: [
     {
       path: 'member',
-      name: `会员列表`,
+      name: '268794ad.5386bb',
       component: () => import('@/views/members/member_list'),
       children: [
         {
@@ -26,17 +25,17 @@ export default {
     },
     {
       path: 'Managetag',
-      name: `会员标签`,
+      name: '268794ad.3cc026',
       component: () => import('@/view/member/members/tags')
     },
     {
       path: 'purchase/employee',
-      name: '员工管理',
+      name: '268794ad.b33603',
       component: () => import('@/view/member/purchase/employee'),
       children: [
         {
           path: 'import',
-          name: `白名单导入`,
+          name: '268794ad.eba44e',
           component: () => import('@/view/member/purchase/employeeImport')
         }
       ]
@@ -44,7 +43,7 @@ export default {
 
     {
       path: 'purchase/company',
-      name: '企业管理',
+      name: '268794ad.07c516',
       component: () => import('@/view/member/purchase/company')
     }
   ]

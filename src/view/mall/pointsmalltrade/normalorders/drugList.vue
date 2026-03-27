@@ -20,7 +20,7 @@
             v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('d3a5c6b0.4b8cb9')"
             style="width: 100%"
             size="mini"
             @change="dateChange"
@@ -33,90 +33,94 @@
             v-model="source_name"
             class="inline-input"
             :fetch-suggestions="querySearch"
-            placeholder="请输入来源"
+            :placeholder="$t('d3a5c6b0.4b525f')"
             size="mini"
             @select="sourceSearch"
           />
         </el-col>
         <el-col :md="7" :lg="5">
-          <el-input v-model="salesman_mobile" placeholder="导购员手机号" size="mini">
+          <el-input v-model="salesman_mobile" :placeholder="$t('d3a5c6b0.f1ba67')" size="mini">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
         <el-col :md="7" :lg="5">
-          <el-input v-model="identifier" placeholder="手机号/订单号" size="mini">
+          <el-input v-model="identifier" :placeholder="$t('d3a5c6b0.f4b2e7')" size="mini">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
         <el-col :span="3">
-          <el-button size="mini" type="primary" @click="exportData"> 导出 </el-button>
+          <el-button size="mini" type="primary" @click="exportData">
+            {{ $t('d3a5c6b0.55405e') }}
+          </el-button>
           <el-popover
             placement="top-start"
             width="200"
             trigger="hover"
-            content="当导出数据大于500条时，导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+            :content="$t('d3a5c6b0.32ac80')"
           >
             <i slot="reference" class="el-icon-question" />
           </el-popover>
         </el-col>
       </el-row>
-      <el-dialog title="订单下载" :visible.sync="downloadView" :close-on-click-modal="false">
+      <el-dialog
+        :title="$t('d3a5c6b0.2cf869')"
+        :visible.sync="downloadView"
+        :close-on-click-modal="false"
+      >
         <template v-if="downloadUrl">
           <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
       </el-dialog>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="全部" name="all" />
-        <el-tab-pane label="待审核" name="notpay" />
-        <el-tab-pane label="待自提" name="done" />
-        <el-tab-pane label="已取消" name="cancel" />
+        <el-tab-pane :label="$t('d3a5c6b0.a8b0c2')" name="all" />
+        <el-tab-pane :label="$t('d3a5c6b0.5cb424')" name="notpay" />
+        <el-tab-pane :label="$t('d3a5c6b0.25d532')" name="done" />
+        <el-tab-pane :label="$t('d3a5c6b0.2111cc')" name="cancel" />
         <el-table
           v-loading="loading"
           :data="list"
           style="width: 100%"
           :height="wheight - 190"
-          element-loading-text="数据加载中"
+          :element-loading-text="$t('d3a5c6b0.f09b12')"
         >
-          <el-table-column prop="order_id" width="150" label="订单号" fixed />
-          <el-table-column prop="create_time" width="160" label="创建时间">
+          <el-table-column prop="order_id" width="150" :label="$t('d3a5c6b0.1e8dc2')" fixed />
+          <el-table-column prop="create_time" width="160" :label="$t('d3a5c6b0.eca37c')">
             <template slot-scope="scope">
               <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="distributor_name" label="所属店铺">
+          <el-table-column prop="distributor_name" :label="$t('d3a5c6b0.baad7e')">
             <template slot-scope="scope">
               <span v-if="scope.row.distributor_name">{{ scope.row.distributor_name }}</span>
-              <span v-else>总部</span>
+              <span v-else>{{ $t('d3a5c6b0.d166bb') }}</span>
             </template>
           </el-table-column>
-          <el-table-column width="70" label="运费">
+          <el-table-column width="70" :label="$t('d3a5c6b0.9a935b')">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.freight_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="total_fee" width="70" label="金额">
+          <el-table-column prop="total_fee" width="70" :label="$t('d3a5c6b0.4cf24a')">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="mobile" width="110" label="手机号" />
-          <el-table-column prop="order_status" label="订单状态">
+          <el-table-column prop="mobile" width="110" :label="$t('d3a5c6b0.8098e2')" />
+          <el-table-column prop="order_status" :label="$t('d3a5c6b0.86f6cf')">
             <template slot-scope="scope">
-              <!-- 订单状态 -->
               <el-tag v-if="scope.row.order_status == 'CANCEL'" type="danger" size="mini">
-                已取消
+                {{ $t('d3a5c6b0.2111cc') }}
               </el-tag>
               <template v-if="scope.row.order_status != 'CANCEL'">
-                <!-- 发货状态 -->
                 <el-tag v-if="scope.row.ziti_status == 'APPROVE'" type="success" size="mini">
-                  审核通过
+                  {{ $t('d3a5c6b0.871a30') }}
                 </el-tag>
-                <el-tag v-else type="primary" size="mini"> 待审核 </el-tag>
+                <el-tag v-else type="primary" size="mini"> {{ $t('d3a5c6b0.5cb424') }} </el-tag>
               </template>
             </template>
           </el-table-column>
-          <el-table-column prop="source_name" label="来源" />
-          <el-table-column label="操作" fixed="left">
+          <el-table-column prop="source_name" :label="$t('d3a5c6b0.26ca20')" />
+          <el-table-column :label="$t('d3a5c6b0.2b6bc0')" fixed="left">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -124,7 +128,7 @@
                   query: { orderId: scope.row.order_id, resource: $route.path }
                 }"
               >
-                详情
+                {{ $t('d3a5c6b0.f26225') }}
               </router-link>
             </template>
           </el-table-column>
@@ -302,7 +306,7 @@ export default {
       if (this.params.order_type != 'normal') {
         this.$message({
           type: 'error',
-          message: '暂不支持该类型订单导出'
+          message: this.$t('8906cb64.08bd5c')
         })
         return
       }
@@ -310,7 +314,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('8906cb64.3e1ddd')
           })
           return
         } else if (response.data.data.url) {
@@ -320,7 +324,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('8906cb64.89ae53')
           })
           return
         }

@@ -41,48 +41,7 @@
       }"
       url="/discountcard/list"
       :fixed-row-action="true"
-      :setting="{
-        search: [
-          { key: 'title', name: '', placeholder: '优惠券名称' },
-          { key: 'card_id', name: '', placeholder: '优惠券模板ID' }
-        ],
-        columns: [
-          {
-            name: '优惠券模板ID',
-            key: 'card_id'
-          },
-          { name: '优惠券名称', key: 'title' },
-          {
-            name: '券类型',
-            key: 'card_type',
-            width: '100px',
-            render: (h, { row }) =>
-              h(
-                'el-tag',
-                {
-                  props: {
-                    size: 'mini'
-                  }
-                },
-                cardTypeFormatter(row)
-              )
-          },
-          {
-            name: '卡券规则',
-            key: 'rule_text'
-          },
-          {
-            name: '卡券有效期',
-            formatter: (value, { takeEffect, begin_time, end_time }, col) => {
-              if (takeEffect) {
-                return takeEffect
-              } else {
-                return getCardValidate(begin_time, end_time)
-              }
-            }
-          }
-        ]
-      }"
+      :setting="couponV2Setting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -107,6 +66,49 @@ export default {
     title: '选择优惠券'
   },
   props: ['value'],
+  computed: {
+    couponV2Setting() {
+      const t = this.$t.bind(this)
+      const cardTypeFormatter = this.cardTypeFormatter
+      const getCardValidate = this.getCardValidate
+      return {
+        search: [
+          { key: 'title', name: '', placeholder: t('f6fbe152.fbaebb') },
+          { key: 'card_id', name: '', placeholder: t('f6fbe152.c1cad9') }
+        ],
+        columns: [
+          { name: t('f6fbe152.c1cad9'), key: 'card_id' },
+          { name: t('f6fbe152.fbaebb'), key: 'title' },
+          {
+            name: t('f6fbe152.63629e'),
+            key: 'card_type',
+            width: '100px',
+            render: (h, { row }) =>
+              h(
+                'el-tag',
+                {
+                  props: {
+                    size: 'mini'
+                  }
+                },
+                cardTypeFormatter(row)
+              )
+          },
+          { name: t('f6fbe152.3f0045'), key: 'rule_text' },
+          {
+            name: t('f6fbe152.d48a7a'),
+            formatter: (value, { takeEffect, begin_time, end_time }, col) => {
+              if (takeEffect) {
+                return takeEffect
+              } else {
+                return getCardValidate(begin_time, end_time)
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
   data() {
     return {
       formData: {
@@ -120,7 +122,7 @@ export default {
     }
   },
   created() {
-    // this.fetch()
+    this.$options.config.title = this.$t('f6fbe152.45bcee')
   },
   methods: {
     beforeSearch(params) {

@@ -17,12 +17,12 @@ export default {
       setting: {
         columns: [
           {
-            name: '操作内容',
+            name: this.$t('930caa63.2f2786'),
             key: 'operator_name',
             width: 160
           },
           {
-            name: '操作者',
+            name: this.$t('930caa63.6b0bc6'),
             key: 'username',
             width: 160
           },
@@ -32,7 +32,7 @@ export default {
             width: 160
           },
           {
-            name: '时间',
+            name: this.$t('930caa63.19fcb9'),
             key: 'created',
             formatter: (value) => {
               return this.$options.filters.datetime(value, 'YYYY-MM-DD HH:mm:ss')

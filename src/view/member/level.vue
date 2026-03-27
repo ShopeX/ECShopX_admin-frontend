@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage :title="activeName == 'second' ? '会员等级' : '付费会员等级'">
+  <SpPage :title="activeName == 'second' ? $t('c5e8d16d.6c1583') : $t('c5e8d16d.36a735')">
     <div class="section-white">
       <el-tabs v-model="activeName" type="card">
         <!-- <el-tab-pane
@@ -13,10 +13,10 @@
         >
           <card-setting />
         </el-tab-pane> -->
-        <el-tab-pane label="等级设置" name="second">
+        <el-tab-pane :label="$t('c5e8d16d.795682')" name="second">
           <card-level ref="cardLevel" />
         </el-tab-pane>
-        <el-tab-pane label="付费等级设置" name="thrid">
+        <el-tab-pane :label="$t('c5e8d16d.de2408')" name="thrid">
           <card-viplevel ref="cardViplevel" />
         </el-tab-pane>
       </el-tabs>
@@ -25,15 +25,19 @@
       <div class="text-center">
         <template v-if="activeName == 'second'">
           <el-button v-if="!VERSION_SHUYUN()" @click="addGrade('cardLevel')">
-            添加等级卡
+            {{ $t('c5e8d16d.0b369f') }}
           </el-button>
-          <el-button type="primary" @click="saveGrade('cardLevel')"> 保存 </el-button>
+          <el-button type="primary" @click="saveGrade('cardLevel')">
+            {{ $t('c5e8d16d.be5fbb') }}
+          </el-button>
         </template>
         <template v-if="activeName == 'thrid'">
           <el-button v-if="!VERSION_SHUYUN()" @click="addGrade('cardViplevel')">
-            添加等级卡
+            {{ $t('c5e8d16d.0b369f') }}
           </el-button>
-          <el-button type="primary" @click="saveGrade('cardViplevel')"> 保存 </el-button>
+          <el-button type="primary" @click="saveGrade('cardViplevel')">
+            {{ $t('c5e8d16d.be5fbb') }}
+          </el-button>
         </template>
       </div>
     </template>

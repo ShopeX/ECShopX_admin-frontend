@@ -7,14 +7,14 @@
   <SpPage>
     <div v-if="$route.path.indexOf('policy') === -1">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="微信小程序" name="miniprogram">
+        <el-tab-pane :label="$t('8b4e7ee3.439845')" name="miniprogram">
           <el-table
             v-loading="loading"
             :data="tableList"
             style="width: 100%"
             @expand-change="handleExpandChange"
           >
-            <el-table-column label="绑定详情" width="80" type="expand" fixed="left">
+            <el-table-column :label="$t('8b4e7ee3.1bd231')" width="80" type="expand" fixed="left">
               <template slot-scope="scope">
                 <el-descriptions
                   v-if="scope.row.authorizer && scope.row.authorizer.is_direct == 1"
@@ -24,10 +24,10 @@
                   border
                   class="descriptions"
                 >
-                  <el-descriptions-item label="小程序名称">
+                  <el-descriptions-item :label="$t('8b4e7ee3.d34f1f')">
                     {{ scope.row.authorizer.nick_name }}
                   </el-descriptions-item>
-                  <el-descriptions-item label="小程序Appid">
+                  <el-descriptions-item :label="$t('8b4e7ee3.a7db15')">
                     {{ scope.row.authorizer.authorizer_appid }}
                   </el-descriptions-item>
                 </el-descriptions>
@@ -39,16 +39,16 @@
                   border
                   class="descriptions"
                 >
-                  <el-descriptions-item label="小程序名称">
+                  <el-descriptions-item :label="$t('8b4e7ee3.d34f1f')">
                     {{ scope.row.authorizer.nick_name }}
                   </el-descriptions-item>
-                  <el-descriptions-item label="小程序Appid">
+                  <el-descriptions-item :label="$t('8b4e7ee3.a7db15')">
                     {{ scope.row.authorizer.authorizer_appid }}
                   </el-descriptions-item>
-                  <el-descriptions-item label="线上版本">
+                  <el-descriptions-item :label="$t('8b4e7ee3.7d0a56')">
                     <div>{{ scope.row.authorizer.weapp.release_ver }}</div>
                   </el-descriptions-item>
-                  <el-descriptions-item label="本地版本">
+                  <el-descriptions-item :label="$t('8b4e7ee3.ba147a')">
                     {{ scope.row.authorizer.weappTemplate.version }}
                     <el-alert
                       v-if="
@@ -56,18 +56,27 @@
                         scope.row.authorizer.weapp.template_id
                       "
                       size="10px"
-                      title="请更新到最新版本"
+                      :title="$t('8b4e7ee3.4c753a')"
                       type="warning"
                       :closable="false"
                     />
-                    <el-alert v-else title="当前已是最新版本" type="success" :closable="false" />
+                    <el-alert
+                      v-else
+                      :title="$t('8b4e7ee3.c8b977')"
+                      type="success"
+                      :closable="false"
+                    />
                   </el-descriptions-item>
-                  <el-descriptions-item label="上架状态">
-                    <span v-if="scope.row.authorizer.weapp.release_status == '1'">已上架</span>
-                    <span v-else type="gray">未上架</span>
+                  <el-descriptions-item :label="$t('8b4e7ee3.dc0a7b')">
+                    <span v-if="scope.row.authorizer.weapp.release_status == '1'">{{
+                      $t('8b4e7ee3.2390fa')
+                    }}</span>
+                    <span v-else type="gray">{{ $t('8b4e7ee3.25744b') }}</span>
                   </el-descriptions-item>
-                  <el-descriptions-item label="审核状态">
-                    <span v-if="scope.row.authorizer.weapp.audit_status == '1'">审核失败</span>
+                  <el-descriptions-item :label="$t('8b4e7ee3.b6d0e9')">
+                    <span v-if="scope.row.authorizer.weapp.audit_status == '1'">{{
+                      $t('8b4e7ee3.fe3661')
+                    }}</span>
                     <!--审核成功并且已经上架则不需要显示-->
                     <span
                       v-else-if="
@@ -75,17 +84,21 @@
                         scope.row.authorizer.weapp.release_status != '1'
                       "
                       type="success"
-                      >审核成功</span
+                      >{{ $t('8b4e7ee3.94129a') }}</span
                     >
-                    <span v-else-if="scope.row.authorizer.weapp.audit_status == '3'" type="success"
-                      >待提交</span
+                    <span
+                      v-else-if="scope.row.authorizer.weapp.audit_status == '3'"
+                      type="success"
+                      >{{ $t('8b4e7ee3.a9c09d') }}</span
                     >
-                    <span v-else-if="scope.row.authorizer.weapp.audit_status == '2'" type="primary"
-                      >审核中</span
+                    <span
+                      v-else-if="scope.row.authorizer.weapp.audit_status == '2'"
+                      type="primary"
+                      >{{ $t('8b4e7ee3.b720a6') }}</span
                     >
                   </el-descriptions-item>
                   <el-descriptions-item
-                    label="审核失败原因"
+                    :label="$t('8b4e7ee3.ec85ac')"
                     :content-style="{ 'text-align': 'left' }"
                   >
                     <span
@@ -102,7 +115,7 @@
                   v-if="scope.row.authorizer && scope.row.authorizer.is_direct == 0"
                   class="content-center"
                 >
-                  <el-button type="success" @click="config"> 配置 </el-button>
+                  <el-button type="success" @click="config">{{ $t('8b4e7ee3.224e2c') }}</el-button>
                   <el-button
                     v-if="
                       scope.row.authorizer.weappTemplate.template_id >
@@ -111,14 +124,14 @@
                     type="success"
                     @click="handleAddWxaAction('true')"
                   >
-                    仅上传代码
+                    {{ $t('8b4e7ee3.c9e918') }}
                   </el-button>
                   <el-button
                     v-if="scope.row.authorizer.weapp.audit_status === 3"
                     type="success"
                     @click="handleAddWxaActionSubmitReview"
                   >
-                    提交审核
+                    {{ $t('8b4e7ee3.646db0') }}
                   </el-button>
                   <el-button
                     v-if="
@@ -128,14 +141,14 @@
                     type="success"
                     @click="handleAddWxaAction('false')"
                   >
-                    上传代码并提交审核
+                    {{ $t('8b4e7ee3.cef0e0') }}
                   </el-button>
                   <el-button
                     v-else-if="scope.row.authorizer.weapp.audit_status == '1'"
                     type="success"
                     @click="handleAddWxaAction('false')"
                   >
-                    重新提审
+                    {{ $t('8b4e7ee3.240a55') }}
                   </el-button>
 
                   <!---  v-if="scope.row.authorizer.weapp.audit_status === 3 || scope.row.authorizer.weapp.audit_status === 2" -->
@@ -144,64 +157,68 @@
                     type="info"
                     @click="handleUndocodeaudit"
                   >
-                    审核撤回
+                    {{ $t('8b4e7ee3.71bb0e') }}
                   </el-button>
                   <el-button
                     v-if="scope.row.authorizer.weapp.audit_status === 0"
                     type="warning"
                     @click="handleRevertcoderelease"
                   >
-                    回退版本
+                    {{ $t('8b4e7ee3.8e3b19') }}
                   </el-button>
 
-                  <el-button type="success" @click="tryRelease"> 尝试发布 </el-button>
-                  <el-button type="success" @click="domain"> 域名 </el-button>
+                  <el-button type="success" @click="tryRelease">
+{{
+                    $t('8b4e7ee3.c4a378')
+                  }}
+</el-button>
+                  <el-button type="success" @click="domain">{{ $t('8b4e7ee3.190980') }}</el-button>
                   <el-button
                     v-if="system_is_saas == 'false'"
                     type="success"
                     @click="handleEditTemplate"
                   >
-                    编辑模板
+                    {{ $t('8b4e7ee3.c6aa35') }}
                   </el-button>
                   <el-button v-if="system_is_saas == 'false'" type="primary" @click="getdomain">
-                    小程序合法域名
+                    {{ $t('8b4e7ee3.cec2be') }}
                   </el-button>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="name" label="模版名称" width="180" />
-            <el-table-column label="小程序APPID" width="180">
+            <el-table-column prop="name" :label="$t('8b4e7ee3.abc839')" width="180" />
+            <el-table-column :label="$t('8b4e7ee3.d70fe9')" width="180">
               <template slot-scope="scope">
                 <span v-if="scope.row.authorizer">
                   {{ scope.row.authorizer.authorizer_appid }}</span
                 >
               </template>
             </el-table-column>
-            <el-table-column label="小程序码" width="100">
+            <el-table-column :label="$t('8b4e7ee3.b85b43')" width="100">
               <template slot-scope="scope">
                 <div
                   v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid"
                   @click="downloadWxaCode(scope.row)"
                 >
-                  <img src="@/assets/img/code.png" alt="" />
+                  <img src="@/assets/img/code.png" alt="">
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="绑定状态" width="80">
+            <el-table-column :label="$t('8b4e7ee3.217079')" width="80">
               <template slot-scope="scope">
                 <span v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
-                  <el-tag v-if="scope.row.authorizer.is_direct == 1" type="success" size="mini"
-                    >已绑定直连</el-tag
-                  >
-                  <el-tag v-if="scope.row.authorizer.is_direct == 0" type="success" size="mini"
-                    >已绑第三方</el-tag
-                  >
+                  <el-tag v-if="scope.row.authorizer.is_direct == 1" type="success" size="mini">{{
+                    $t('8b4e7ee3.485291')
+                  }}</el-tag>
+                  <el-tag v-if="scope.row.authorizer.is_direct == 0" type="success" size="mini">{{
+                    $t('8b4e7ee3.1bdae8')
+                  }}</el-tag>
                 </span>
-                <el-tag v-else type="gray" size="mini"> 未绑定 </el-tag>
+                <el-tag v-else type="gray" size="mini">{{ $t('8b4e7ee3.906ad1') }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="key_name" label="模版英文名" width="140" />
-            <el-table-column label="绑定操作" fixed="left">
+            <el-table-column prop="key_name" :label="$t('8b4e7ee3.b8ec7f')" width="140" />
+            <el-table-column :label="$t('8b4e7ee3.5a9d35')" fixed="left">
               <template slot-scope="scope">
                 <div v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <el-button-group>
@@ -212,7 +229,7 @@
                       plain
                       @click="bindUpdateWxapp('miniprogram', scope.row)"
                     >
-                      更换绑定
+                      {{ $t('8b4e7ee3.db22ba') }}
                     </el-button>
                     <el-button
                       v-if="scope.row.authorizer.is_direct == 0"
@@ -221,7 +238,7 @@
                       plain
                       @click="handleBind(scope.row)"
                     >
-                      更换绑定
+                      {{ $t('8b4e7ee3.db22ba') }}
                     </el-button>
                     <el-button
                       size="mini"
@@ -229,14 +246,14 @@
                       plain
                       @click="downloadTextWxaCode(scope.row)"
                     >
-                      体验二维码
+                      {{ $t('8b4e7ee3.b330d1') }}
                     </el-button>
                   </el-button-group>
                 </div>
                 <div v-else>
                   <el-button-group>
                     <el-button size="mini" type="text" plain @click="handleBind(scope.row)">
-                      授权第三方
+                      {{ $t('8b4e7ee3.faa1d4') }}
                     </el-button>
                     <el-button
                       size="mini"
@@ -244,13 +261,13 @@
                       plain
                       @click="bindWxapp('miniprogram', scope.row)"
                     >
-                      添加直连小程序
+                      {{ $t('8b4e7ee3.512e5d') }}
                     </el-button>
                   </el-button-group>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="其他操作" fixed="left">
+            <el-table-column :label="$t('8b4e7ee3.6d872e')" fixed="left">
               <template slot-scope="scope">
                 <span v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <router-link
@@ -260,7 +277,7 @@
                     }"
                     style="margin-left: 5px"
                   >
-                    <el-button size="mini" type="text" plain>数据分析</el-button>
+                    <el-button size="mini" type="text" plain>{{ $t('8b4e7ee3.6450d8') }}</el-button>
                   </router-link>
 
                   <router-link
@@ -270,7 +287,7 @@
                     }"
                     style="margin-left: 5px"
                   >
-                    <el-button size="mini" type="text" plain>千人千码</el-button>
+                    <el-button size="mini" type="text" plain>{{ $t('8b4e7ee3.21058f') }}</el-button>
                   </router-link>
 
                   <router-link
@@ -283,7 +300,7 @@
                     }"
                     style="margin-left: 5px"
                   >
-                    <el-button size="mini" type="text" plain>订阅通知</el-button>
+                    <el-button size="mini" type="text" plain>{{ $t('8b4e7ee3.c910fb') }}</el-button>
                   </router-link>
 
                   <router-link
@@ -297,7 +314,7 @@
                     }"
                     style="margin-left: 5px"
                   >
-                    <el-button size="mini" type="text" plain>隐私指引</el-button>
+                    <el-button size="mini" type="text" plain>{{ $t('8b4e7ee3.c05def') }}</el-button>
                   </router-link>
                 </span>
               </template>
@@ -312,34 +329,34 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="微信服务号" name="offiaccount">
+        <el-tab-pane :label="$t('8b4e7ee3.61b01f')" name="offiaccount">
           <el-table v-loading="loading" :data="authorizerData" style="width: 100%" :height="-200">
-            <el-table-column prop="nick_name" label="公众号昵称" width="180" />
-            <el-table-column prop="authorizer_appid" label="公众号APPID" width="180" />
-            <el-table-column label="二维码" width="100">
+            <el-table-column prop="nick_name" :label="$t('8b4e7ee3.c56782')" width="180" />
+            <el-table-column prop="authorizer_appid" :label="$t('8b4e7ee3.4063a9')" width="180" />
+            <el-table-column :label="$t('8b4e7ee3.22b03c')" width="100">
               <template slot-scope="scope">
                 <div
                   v-if="scope.row.authorizer_appid"
                   @click="downloadOffiaccountCode(scope.row.authorizer_appid)"
                 >
-                  <img src="@/assets/img/code.png" alt="" />
+                  <img src="@/assets/img/code.png" alt="">
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="绑定状态" width="80">
+            <el-table-column :label="$t('8b4e7ee3.217079')" width="80">
               <template slot-scope="scope">
                 <span v-if="scope.row.authorizer_appid">
-                  <el-tag v-if="scope.row.is_direct == 1" type="success" size="mini"
-                    >已绑定直连</el-tag
-                  >
-                  <el-tag v-if="scope.row.is_direct == 0" type="success" size="mini"
-                    >已绑第三方</el-tag
-                  >
+                  <el-tag v-if="scope.row.is_direct == 1" type="success" size="mini">{{
+                    $t('8b4e7ee3.485291')
+                  }}</el-tag>
+                  <el-tag v-if="scope.row.is_direct == 0" type="success" size="mini">{{
+                    $t('8b4e7ee3.1bdae8')
+                  }}</el-tag>
                 </span>
-                <el-tag v-else type="gray" size="mini"> 未绑定 </el-tag>
+                <el-tag v-else type="gray" size="mini">{{ $t('8b4e7ee3.906ad1') }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="绑定操作" fixed="left">
+            <el-table-column :label="$t('8b4e7ee3.5a9d35')" fixed="left">
               <template slot-scope="scope">
                 <div v-if="scope.row.authorizer_appid">
                   <el-button-group>
@@ -350,7 +367,7 @@
                       plain
                       @click="bindUpdateWxapp('offiaccount', scope.row)"
                     >
-                      更换绑定
+                      {{ $t('8b4e7ee3.db22ba') }}
                     </el-button>
                     <el-button
                       v-if="scope.row.is_direct == 0"
@@ -359,14 +376,14 @@
                       plain
                       @click="handleBindOffiaccount"
                     >
-                      更新授权
+                      {{ $t('8b4e7ee3.af3ef9') }}
                     </el-button>
                   </el-button-group>
                 </div>
                 <div v-else>
                   <el-button-group>
                     <el-button size="mini" type="text" plain @click="handleBindOffiaccount">
-                      授权第三方
+                      {{ $t('8b4e7ee3.faa1d4') }}
                     </el-button>
                     <el-button
                       size="mini"
@@ -374,7 +391,7 @@
                       plain
                       @click="bindWxapp('offiaccount', scope.row)"
                     >
-                      添加直连公众号
+                      {{ $t('8b4e7ee3.5c118f') }}
                     </el-button>
                   </el-button-group>
                 </div>
@@ -386,44 +403,44 @@
     </div>
     <router-view />
 
-    <el-drawer :visible.sync="direct_link_applet" :title="directLinkFormLabel.title" size="40%">
+    <el-drawer :visible.sync="direct_link_applet" :title="$t(directLinkFormLabel.title)" size="40%">
       <div class="drawer-content">
         <el-form>
-          <el-form-item :label="directLinkFormLabel.appid[0]">
+          <el-form-item :label="$t(directLinkFormLabel.appid[0])">
             <el-col :span="10">
               <el-input
                 v-model="directLinkForm.authorizer_appid"
-                :placeholder="directLinkFormLabel.appid[1]"
+                :placeholder="$t(directLinkFormLabel.appid[1])"
               />
             </el-col>
           </el-form-item>
-          <el-form-item :label="directLinkFormLabel.appsecret[0]">
+          <el-form-item :label="$t(directLinkFormLabel.appsecret[0])">
             <el-col :span="10">
               <el-input
                 v-model="directLinkForm.authorizer_appsecret"
-                :placeholder="directLinkFormLabel.appsecret[1]"
+                :placeholder="$t(directLinkFormLabel.appsecret[1])"
               />
             </el-col>
           </el-form-item>
-          <el-form-item :label="directLinkFormLabel.nick_name[0]">
+          <el-form-item :label="$t(directLinkFormLabel.nick_name[0])">
             <el-col :span="10">
               <el-input
                 v-model="directLinkForm.nick_name"
-                :placeholder="directLinkFormLabel.nick_name[1]"
+                :placeholder="$t(directLinkFormLabel.nick_name[1])"
               />
             </el-col>
           </el-form-item>
-          <el-form-item :label="directLinkFormLabel.signature[0]">
+          <el-form-item :label="$t(directLinkFormLabel.signature[0])">
             <el-col :span="10">
               <el-input
                 v-model="directLinkForm.signature"
-                :placeholder="directLinkFormLabel.signature[1]"
+                :placeholder="$t(directLinkFormLabel.signature[1])"
               />
             </el-col>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSubmitWxapp(directLinkForm.bind_type)">
-              保 存
+              {{ $t('8b4e7ee3.be5fbb') }}
             </el-button>
           </el-form-item>
         </el-form>
@@ -432,60 +449,60 @@
 
     <el-dialog :title="getwxcodeTitle" :visible.sync="wxaCodeVisible" width="500px">
       <div class="content-center">
-        <img :src="wxaCodeImage" />
+        <img :src="wxaCodeImage">
       </div>
     </el-dialog>
 
-    <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
+    <el-dialog :title="$t('8b4e7ee3.224e2c')" class="right-dialog" :visible.sync="wxaConfigVisible">
       <el-form ref="configForm" :model="configForm" label-position="left" label-width="180px">
         <div class="section-body">
-          <el-form-item label="自动发布：">
+          <el-form-item :label="$t('8b4e7ee3.778a32')">
             <el-switch v-model="configForm.auto_publish" :active-value="1" :inactive-value="0" />
           </el-form-item>
           <el-form-item label="appsecret：">
             <el-col :span="18">
               <el-input
                 v-model="configForm.authorizer_appsecret"
-                placeholder="请输入小程序appsecret"
+                :placeholder="$t('8b4e7ee3.ede01a')"
                 show-password
               />
             </el-col>
           </el-form-item>
         </div>
         <div class="section-footer with-border content-center">
-          <el-button type="primary" @click="configSave"> 保 存 </el-button>
+          <el-button type="primary" @click="configSave">{{ $t('8b4e7ee3.be5fbb') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
 
-    <el-dialog title="域名" class="right-dialog" :visible.sync="wxaDomainVisible">
+    <el-dialog :title="$t('8b4e7ee3.190980')" class="right-dialog" :visible.sync="wxaDomainVisible">
       <p class="frm-tips">
-        对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内
+        {{ $t('8b4e7ee3.08b0a3') }}
       </p>
       <el-form label-width="160px" size="mini">
         <el-collapse accordion>
-          <el-collapse-item title="当前小程序域名" name="1">
-            <el-form-item label="request合法域名:">
+          <el-collapse-item :title="$t('8b4e7ee3.000854')" name="1">
+            <el-form-item :label="$t('8b4e7ee3.d6838c')">
               <div v-for="requestdomain in domainform.wxDomain.requestdomain">
                 {{ requestdomain }}
               </div>
             </el-form-item>
-            <el-form-item label="socket合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.f0fbad')">
               <div v-for="wsrequestdomain in domainform.wxDomain.wsrequestdomain">
                 {{ wsrequestdomain }}
               </div>
             </el-form-item>
-            <el-form-item label="uploadFile合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.32ce31')">
               <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">
                 {{ uploaddomain }}
               </div>
             </el-form-item>
-            <el-form-item label="downloadFile合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.87fd72')">
               <div v-for="downloaddomain in domainform.wxDomain.downloaddomain">
                 {{ downloaddomain }}
               </div>
             </el-form-item>
-            <el-form-item label="业务域名:">
+            <el-form-item :label="$t('8b4e7ee3.935eba')">
               <div v-for="webviewdomain in domainform.wxDomain.webviewdomain">
                 {{ webviewdomain }}
               </div>
@@ -494,28 +511,28 @@
         </el-collapse>
 
         <el-collapse accordion>
-          <el-collapse-item title="本地配置的域名" name="2">
-            <el-form-item label="request合法域名:">
+          <el-collapse-item :title="$t('8b4e7ee3.a6a9a0')" name="2">
+            <el-form-item :label="$t('8b4e7ee3.d6838c')">
               <div v-for="requestdomain in domainform.localDomain.requestdomain">
                 {{ requestdomain }}
               </div>
             </el-form-item>
-            <el-form-item label="socket合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.f0fbad')">
               <div v-for="wsrequestdomain in domainform.localDomain.wsrequestdomain">
                 {{ wsrequestdomain }}
               </div>
             </el-form-item>
-            <el-form-item label="uploadFile合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.32ce31')">
               <div v-for="uploaddomain in domainform.localDomain.uploaddomain">
                 {{ uploaddomain }}
               </div>
             </el-form-item>
-            <el-form-item label="downloadFile合法域名:">
+            <el-form-item :label="$t('8b4e7ee3.87fd72')">
               <div v-for="downloaddomain in domainform.localDomain.downloaddomain">
                 {{ downloaddomain }}
               </div>
             </el-form-item>
-            <el-form-item label="业务域名:">
+            <el-form-item :label="$t('8b4e7ee3.935eba')">
               <div v-for="webviewdomain in domainform.localDomain.webviewdomain">
                 {{ webviewdomain }}
               </div>
@@ -524,13 +541,13 @@
         </el-collapse>
       </el-form>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="domainSave"> 推 送 </el-button>
+        <el-button type="primary" @click="domainSave">{{ $t('8b4e7ee3.6f36dc') }}</el-button>
       </div>
     </el-dialog>
 
     <!--编辑模板-->
     <el-dialog
-      title="编辑模板"
+      :title="$t('8b4e7ee3.c6aa35')"
       width="60%"
       :visible.sync="TemplateEditDialog"
       :before-close="handleCancelLabelsDialog"
@@ -539,90 +556,94 @@
         <el-form ref="form" :model="weappTemplate" class="demo-ruleForm" label-width="200px">
           <el-form-item
             class="content-left"
-            label="小程序唯一标示(英文)"
+            :label="$t('8b4e7ee3.9b3bf3')"
             prop="key_name"
-            :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
+            :rules="[{ required: true, message: $t('8b4e7ee3.dc34dd'), trigger: 'blur' }]"
           >
             <el-input
               v-if="weappTemplate.id"
               v-model="weappTemplate.key_name"
-              placeholder="例如：yykweishop"
+              :placeholder="$t('8b4e7ee3.05b056')"
               disabled
             />
-            <el-input v-else v-model="weappTemplate.key_name" placeholder="例如：yykweishop" />
+            <el-input
+              v-else
+              v-model="weappTemplate.key_name"
+              :placeholder="$t('8b4e7ee3.05b056')"
+            />
           </el-form-item>
-          <el-form-item class="content-left" label="小程序模板名称">
-            <el-input v-model="weappTemplate.name" placeholder="例如：yykweishop" disabled />
+          <el-form-item class="content-left" :label="$t('8b4e7ee3.a83ca1')">
+            <el-input v-model="weappTemplate.name" :placeholder="$t('8b4e7ee3.05b056')" disabled />
           </el-form-item>
-          <el-form-item class="content-left" label="模板id">
-            <el-input v-model="weappTemplate.template_id" placeholder="例如：30" />
+          <el-form-item class="content-left" :label="$t('8b4e7ee3.162795')">
+            <el-input v-model="weappTemplate.template_id" :placeholder="$t('8b4e7ee3.8c804d')" />
           </el-form-item>
-          <el-form-item class="content-left" label="模板版本">
-            <el-input v-model="weappTemplate.version" placeholder="例如：v2.0" />
+          <el-form-item class="content-left" :label="$t('8b4e7ee3.554773')">
+            <el-input v-model="weappTemplate.version" :placeholder="$t('8b4e7ee3.c7f359')" />
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button type="primary" @click="saveTemplate"> 确定保存 </el-button>
+            <el-button type="primary" @click="saveTemplate">{{ $t('8b4e7ee3.b75381') }}</el-button>
           </el-form-item>
         </el-form>
       </template>
     </el-dialog>
 
     <!--    设置小程序合法域名-->
-    <el-dialog title="设置小程序合法域名" width="60%" :visible.sync="domainDialog">
+    <el-dialog :title="$t('8b4e7ee3.2db6d5')" width="60%" :visible.sync="domainDialog">
       <el-alert
-        title="请添加每个域名后回车"
+        :title="$t('8b4e7ee3.35a81a')"
         description="mmbiz.qpic.cn,wx.qlogo.cn"
         type="info"
         show-icon
         :closable="false"
       />
-      <br />
+      <br>
       <el-form v-loading="domainloading" label-width="200px">
-        <el-form-item label="request合法域名">
+        <el-form-item :label="$t('8b4e7ee3.f554f2')">
           <el-input
             v-model="domainData.requestdomain"
             type="textarea"
             :rows="3"
-            placeholder="请输入合法域名"
+            :placeholder="$t('8b4e7ee3.445694')"
             prop="domain.requestdomain"
-            :rules="[{ required: true, message: 'request合法域名', trigger: 'blur' }]"
+            :rules="[{ required: true, message: $t('8b4e7ee3.f554f2'), trigger: 'blur' }]"
           />
         </el-form-item>
-        <el-form-item label="socket合法域名">
+        <el-form-item :label="$t('8b4e7ee3.0885a7')">
           <el-input
             v-model="domainData.wsrequestdomain"
             type="textarea"
             :rows="3"
-            placeholder="请输入合法域名"
+            :placeholder="$t('8b4e7ee3.445694')"
           />
         </el-form-item>
-        <el-form-item label="uploadFile合法域名">
+        <el-form-item :label="$t('8b4e7ee3.fe5685')">
           <el-input
             v-model="domainData.uploaddomain"
             type="textarea"
             :rows="3"
-            placeholder="请输入合法域名"
+            :placeholder="$t('8b4e7ee3.445694')"
           />
         </el-form-item>
-        <el-form-item label="downloadFile合法域名">
+        <el-form-item :label="$t('8b4e7ee3.41a6be')">
           <el-input
             v-model="domainData.downloaddomain"
             type="textarea"
             :rows="6"
-            placeholder="请输入合法域名"
+            :placeholder="$t('8b4e7ee3.445694')"
           />
         </el-form-item>
-        <el-form-item label="业务合法域名">
+        <el-form-item :label="$t('8b4e7ee3.0e758a')">
           <el-input
             v-model="domainData.webviewdomain"
             type="textarea"
             :rows="6"
-            placeholder="请输入合法域名"
+            :placeholder="$t('8b4e7ee3.445694')"
           />
         </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" @click="setdomain">确 定</el-button>
+        <el-button type="primary" @click="setdomain">{{ $t('8b4e7ee3.38cf16') }}</el-button>
       </span>
     </el-dialog>
   </SpPage>
@@ -677,11 +698,11 @@ export default {
         nick_name: ''
       },
       directLinkFormLabel: {
-        title: '配置直连小程序',
-        appid: { 0: '小程序APPID：', 1: '请输入小程序appid' },
-        appsecret: { 0: '小程序APPSECRET：', 1: '请输入小程序appsecret' },
-        signature: { 0: '小程序描述：', 1: '请输入小程序描述' },
-        nick_name: { 0: '小程序名称：', 1: '请输入小程序名称' }
+        title: '8b4e7ee3.a9f432',
+        appid: { 0: '8b4e7ee3.a8bfed', 1: '8b4e7ee3.f14601' },
+        appsecret: { 0: '8b4e7ee3.2b1bc0', 1: '8b4e7ee3.ede01a' },
+        signature: { 0: '8b4e7ee3.d50394', 1: '8b4e7ee3.7efb18' },
+        nick_name: { 0: '8b4e7ee3.79e85e', 1: '8b4e7ee3.7437cc' }
       },
       getwxcodeloading: false,
       getwxcodeTitle: '',
@@ -809,7 +830,7 @@ export default {
       this.directLinkForm.bind_type = bind_type
       addWxapp(this.directLinkForm).then((response) => {
         this.$message({
-          message: '修改成功',
+          message: this.$t('8b4e7ee3.69be67'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -821,11 +842,11 @@ export default {
     setdirectLinkFormLabel(bind_type) {
       if (bind_type == 'offiaccount') {
         this.directLinkFormLabel = {
-          title: '配置直连公众号',
-          appid: { 0: '公众号APPID：', 1: '请输入公众号appid' },
-          appsecret: { 0: '公众号APPSECRET：', 1: '请输入公众号appsecret' },
-          signature: { 0: '公众号描述：', 1: '请输入公众号描述' },
-          nick_name: { 0: '公众号名称：', 1: '请输入公众号名称' }
+          title: '8b4e7ee3.d5049d',
+          appid: { 0: '8b4e7ee3.e4c284', 1: '8b4e7ee3.a40cc9' },
+          appsecret: { 0: '8b4e7ee3.9e6a33', 1: '8b4e7ee3.78247c' },
+          signature: { 0: '8b4e7ee3.4debb8', 1: '8b4e7ee3.310c2f' },
+          nick_name: { 0: '8b4e7ee3.f11771', 1: '8b4e7ee3.2b00df' }
         }
       }
     },
@@ -855,7 +876,7 @@ export default {
         window.open(this.url, '_blank')
       } else {
         this.$message({
-          message: '请确认已经配置好第三方开放平台',
+          message: this.$t('8b4e7ee3.1d2592'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -872,12 +893,12 @@ export default {
           console.log(this.detail)
         })
       } else {
-        this.$message({ message: '当前未绑定' })
+        this.$message({ message: this.$t('8b4e7ee3.22e524') })
       }
     },
     downloadWxaCode(rowdata) {
       this.getwxcodeloading = true
-      this.getwxcodeTitle = '小程序码'
+      this.getwxcodeTitle = this.$t('8b4e7ee3.b85b43')
       let params = { wxaAppId: rowdata.authorizer.authorizer_appid }
       getCodeUnlimit(params)
         .then((response) => {
@@ -890,7 +911,7 @@ export default {
         })
     },
     downloadTextWxaCode(rowdata) {
-      this.getwxcodeTitle = '体验二维码'
+      this.getwxcodeTitle = this.$t('8b4e7ee3.b330d1')
       let params = {
         wxaAppId: rowdata.authorizer.authorizer_appid,
         is_direct: rowdata.authorizer.is_direct
@@ -903,7 +924,7 @@ export default {
     },
     downloadOffiaccountCode(authorizer_appid) {
       this.getwxcodeloading = true
-      this.getwxcodeTitle = '服务号二维码'
+      this.getwxcodeTitle = this.$t('8b4e7ee3.22c7ae')
       let params = { authorizer_appid: authorizer_appid, is_base64: true }
       getOffiaccountCodeForever(params)
         .then((response) => {
@@ -923,7 +944,7 @@ export default {
       configSubmitHandle(this.detail.authorizer_appid, params).then((response) => {
         this.wxaConfigVisible = false
         this.$message({
-          message: '配置成功',
+          message: this.$t('8b4e7ee3.a6d385'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -950,7 +971,7 @@ export default {
       saveDomain(params).then((response) => {
         this.wxaDomainVisible = false
         this.$message({
-          message: '推送成功',
+          message: this.$t('8b4e7ee3.3aefb5'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -990,27 +1011,27 @@ export default {
       setdomain({ domain: this.domainData }).then((res) => {
         if (res.data.data.status === true) {
           this.domainDialog = false
-          this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
+          this.$message({
+            message: this.$t('8b4e7ee3.3b1083'),
+            type: 'success',
+            duration: 2 * 1000
+          })
         } else {
-          this.$message({ message: '保存异常', type: 'error', duration: 2 * 1000 })
+          this.$message({ message: this.$t('8b4e7ee3.ece8fd'), type: 'error', duration: 2 * 1000 })
         }
       })
     },
     // 撤销审核
     handleUndocodeaudit() {
-      this.$confirm(
-        '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次, 是否撤销审核?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      )
+      this.$confirm(this.$t('8b4e7ee3.2980fc'), this.$t('8b4e7ee3.02d981'), {
+        confirmButtonText: this.$t('8b4e7ee3.38cf16'),
+        cancelButtonText: this.$t('8b4e7ee3.625fb2'),
+        type: 'warning'
+      })
         .then(() => {
           undocodeaudit({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
-              message: '撤销成功',
+              message: this.$t('8b4e7ee3.8e05b0'),
               type: 'success',
               duration: 2 * 1000
             })
@@ -1020,21 +1041,21 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('8b4e7ee3.2111cc')
           })
         })
     },
     // 回退版本
     handleRevertcoderelease() {
-      this.$confirm('回退到上一个小程序版本, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('8b4e7ee3.47323e'), this.$t('8b4e7ee3.02d981'), {
+        confirmButtonText: this.$t('8b4e7ee3.38cf16'),
+        cancelButtonText: this.$t('8b4e7ee3.625fb2'),
         type: 'warning'
       })
         .then(() => {
           revertcoderelease({ wxaAppId: this.detail.authorizer_appid }).then((response) => {
             this.$message({
-              message: '回退成功',
+              message: this.$t('8b4e7ee3.742b8f'),
               type: 'success',
               duration: 2 * 1000
             })
@@ -1044,7 +1065,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('8b4e7ee3.2111cc')
           })
         })
     },
@@ -1069,7 +1090,7 @@ export default {
       this.submitWeappForm.templateName = this.detail.weapp.template_name
       submitReview(this.submitWeappForm).then((response) => {
         this.$message({
-          message: '提交成功，等待微信审核',
+          message: this.$t('8b4e7ee3.d3ae9f'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -1087,15 +1108,15 @@ export default {
       this.submitWeappForm.is_only_commit = isOnlySummit
 
       if (isOnlySummit == 'true') {
-        this.$confirm('将重新提交小程序, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('8b4e7ee3.34138b'), this.$t('8b4e7ee3.02d981'), {
+          confirmButtonText: this.$t('8b4e7ee3.38cf16'),
+          cancelButtonText: this.$t('8b4e7ee3.625fb2'),
           type: 'warning'
         })
           .then(() => {
             submitWxa(this.submitWeappForm).then((response) => {
               this.$message({
-                message: '上传并提交成功，等待微信审核',
+                message: this.$t('8b4e7ee3.cd764b'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -1105,13 +1126,13 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('8b4e7ee3.2111cc')
             })
           })
       } else {
         submitWxa(this.submitWeappForm).then((response) => {
           this.$message({
-            message: '上传成功',
+            message: this.$t('8b4e7ee3.a7699b'),
             type: 'success',
             duration: 5 * 1000
           })

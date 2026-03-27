@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'companydata',
       icon: 'internal-data',
       keepAlive: true,
-      title: '数据'
+      title: 'e4519b2c.0d8307'
     },
     name: 'data',
     path: '/data',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'goodsstatistics',
           icon: 'pay-circle',
-          title: '商品统计',
+          title: 'e4519b2c.c38352',
           permissions: ['companydata.statistics.goodsstatistics']
         },
         component: () => import('@/view/mall/datacube/goodsdata')
@@ -33,7 +33,7 @@ const routes = [
         meta: {
           aliasName: 'orderstatistics',
           icon: 'pay-circle',
-          title: '交易统计',
+          title: 'e4519b2c.9dbf41',
           permissions: ['companydata.statistics.orderstatistics']
         },
         component: () => import('@/view/mall/datacube/companydata/order')
@@ -44,7 +44,7 @@ const routes = [
         meta: {
           aliasName: 'member-statistics',
           icon: 'pay-circle',
-          title: '会员统计',
+          title: 'e4519b2c.843ff0',
           permissions: ['companydata.statistics.member-statistics']
         },
         component: () => import('@/view/mall/datacube/companydata/member')
@@ -55,7 +55,7 @@ const routes = [
         meta: {
           aliasName: 'distributordata',
           icon: 'pay-circle',
-          title: '店铺统计',
+          title: 'e4519b2c.63cf82',
           permissions: ['companydata.statistics.distributordata']
         },
         component: () => import('@/view/mall/datacube/distributordata')
@@ -66,7 +66,7 @@ const routes = [
         meta: {
           aliasName: 'baseexport',
           icon: 'pay-circle',
-          title: '导出记录',
+          title: 'e4519b2c.080fda',
           permissions: ['companydata.report.baseexport']
         },
         component: () => import('@/view/base/exportlog/index')

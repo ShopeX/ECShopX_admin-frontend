@@ -9,7 +9,7 @@
       <el-col :span="4">
         <el-select
           v-model="params.status"
-          placeholder="提现状态"
+          :placeholder="$t('fb2561ac.0ed783')"
           style="width: 100%"
           @change="statusSelectHandle"
         >
@@ -22,46 +22,54 @@
         </el-select>
       </el-col>
       <el-col :span="6">
-        <el-input v-model="params.mobile" placeholder="分销商手机号">
+        <el-input v-model="params.mobile" :placeholder="$t('fb2561ac.6fb813')">
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="list" height="550" border>
-      <el-table-column prop="created" label="申请时间" min-width="84">
+      <el-table-column prop="created" :label="$t('fb2561ac.5ba072')" min-width="84">
         <template slot-scope="scope">
           <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="distributor_name" label="分销商姓名" />
-      <el-table-column prop="distributor_mobile" label="分销商手机" />
-      <el-table-column label="申请提现金额">
+      <el-table-column prop="distributor_name" :label="$t('fb2561ac.70cb31')" />
+      <el-table-column prop="distributor_mobile" :label="$t('fb2561ac.bed5e6')" />
+      <el-table-column :label="$t('fb2561ac.8f5d8a')">
         <template slot-scope="scope">
-          <span> {{ scope.row.money / 100 }} </span> 元
+          <span> {{ scope.row.money / 100 }} </span> {{ $t('fb2561ac.c16655') }}
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="提现状态">
+      <el-table-column prop="status" :label="$t('fb2561ac.0ed783')">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status == 'apply'" type="primary"> 待处理 </el-tag>
-          <el-tag v-if="scope.row.status == 'process'" type="danger"> 付款异常 </el-tag>
-          <el-tag v-if="scope.row.status == 'success'" type="warning"> 提现完成 </el-tag>
-          <el-tag v-if="scope.row.status == 'reject'" type="info"> 已拒绝 </el-tag>
+          <el-tag v-if="scope.row.status == 'apply'" type="primary">
+            {{ $t('fb2561ac.047109') }}
+          </el-tag>
+          <el-tag v-if="scope.row.status == 'process'" type="danger">
+            {{ $t('fb2561ac.444e00') }}
+          </el-tag>
+          <el-tag v-if="scope.row.status == 'success'" type="warning">
+            {{ $t('fb2561ac.42b524') }}
+          </el-tag>
+          <el-tag v-if="scope.row.status == 'reject'" type="info">
+            {{ $t('fb2561ac.81233d') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="打款记录" width="120">
+      <el-table-column :label="$t('fb2561ac.e679e8')" width="120">
         <template slot-scope="scope">
           <el-button size="mini" type="warning" @click="dialogPayInfo(scope.row)">
-            打款记录
+            {{ $t('fb2561ac.e679e8') }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="160">
+      <el-table-column :label="$t('fb2561ac.2b6bc0')" width="160">
         <template slot-scope="scope">
           <el-button v-if="scope.row.status == 'reject'" v-popover:popover size="mini" type="info">
             <el-popover ref="popover" placement="top" width="400" trigger="click">
               <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks" />
             </el-popover>
-            拒绝原因
+            {{ $t('fb2561ac.f48f94') }}
           </el-button>
           <el-button
             v-if="scope.row.status == 'apply'"
@@ -69,7 +77,7 @@
             type="primary"
             @click="dialogOpen(scope.row)"
           >
-            打款
+            {{ $t('fb2561ac.1d6733') }}
           </el-button>
           <el-button
             v-if="scope.row.status == 'apply'"
@@ -77,7 +85,7 @@
             type="primary"
             @click="dialogCancel(scope.row)"
           >
-            拒绝
+            {{ $t('fb2561ac.7173f8') }}
           </el-button>
         </template>
       </el-table-column>
@@ -92,26 +100,33 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <el-dialog title="打款记录" :visible.sync="payDialog" :close-on-click-modal="false" width="50%">
+    <el-dialog
+      :title="$t('fb2561ac.e679e8')"
+      :visible.sync="payDialog"
+      :close-on-click-modal="false"
+      width="50%"
+    >
       <el-table :data="payList" border style="width: 100%">
-        <el-table-column prop="update_time" label="日期" width="180">
+        <el-table-column prop="update_time" :label="$t('fb2561ac.4ff1e7')" width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.update_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="提现佣金" width="180">
+        <el-table-column prop="amount" :label="$t('fb2561ac.7f295a')" width="180">
           <template slot-scope="scope">
-            <span> {{ scope.row.amount / 100 }} </span> 元
+            <span> {{ scope.row.amount / 100 }} </span> {{ $t('fb2561ac.c16655') }}
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="付款状态">
+        <el-table-column prop="status" :label="$t('fb2561ac.ac204b')">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == 'NOT_PAY'"> 未付款 </span>
-            <el-tag v-if="scope.row.status == 'SUCCESS'" type="success"> 付款成功 </el-tag>
-            <span v-if="scope.row.status == 'FAIL'"> 付款失败 </span>
+            <span v-if="scope.row.status == 'NOT_PAY'"> {{ $t('fb2561ac.8cbf8e') }} </span>
+            <el-tag v-if="scope.row.status == 'SUCCESS'" type="success">
+              {{ $t('fb2561ac.c7c515') }}
+            </el-tag>
+            <span v-if="scope.row.status == 'FAIL'"> {{ $t('fb2561ac.35d585') }} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="error_desc" label="付款失败原因">
+        <el-table-column prop="error_desc" :label="$t('fb2561ac.727689')">
           <template slot-scope="scope">
             <span v-if="scope.row.error_desc">{{ scope.row.error_desc }}</span>
             <span v-else> - </span>
@@ -119,28 +134,33 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button @click.native="payDialog = false"> 关闭 </el-button>
+        <el-button @click.native="payDialog = false"> {{ $t('fb2561ac.b15d91') }} </el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="拒绝提现"
+      :title="$t('fb2561ac.03c85b')"
       :visible.sync="canceldialog"
       :close-on-click-modal="false"
       width="50%"
     >
-      <el-input v-model="textarea" type="textarea" :rows="6" placeholder="请输入拒绝原因" />
+      <el-input v-model="textarea" type="textarea" :rows="6" :placeholder="$t('fb2561ac.fc955a')" />
       <div slot="footer" class="dialog-footer content-center">
-        <el-button @click.native="canceldialog = false"> 取消操作 </el-button>
+        <el-button @click.native="canceldialog = false"> {{ $t('fb2561ac.170933') }} </el-button>
         <el-button type="primary" @click="actionProcessCashWithdrawal('reject')">
-          确认拒绝
+          {{ $t('fb2561ac.fc9087') }}
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog title="提现确认" :visible.sync="dialog" :close-on-click-modal="false" width="50%">
+    <el-dialog
+      :title="$t('fb2561ac.597e24')"
+      :visible.sync="dialog"
+      :close-on-click-modal="false"
+      width="50%"
+    >
       <el-alert
         v-if="detail.money > cashWithdrawalRebate"
-        title="账户异常，申请提现金额大于可提现金额"
-        description="不可进行打款操作，请联系服务商查看详情。"
+        :title="$t('fb2561ac.0ea1df')"
+        :description="$t('fb2561ac.3d89a7')"
         :closable="false"
         type="error"
         show-icon
@@ -152,21 +172,24 @@
           >
         </div>
         <div class="text item">
-          <span>可提现佣金 </span
-          ><span style="font-size: 26px; color: red">{{ cashWithdrawalRebate / 100 }}</span> 元
+          <span>{{ $t('fb2561ac.7069d4') }} </span
+          ><span style="font-size: 26px; color: red">{{ cashWithdrawalRebate / 100 }}</span>
+          {{ $t('fb2561ac.c16655') }}
         </div>
         <div class="text item">
-          申请提现 <span style="font-size: 26px; color: red">{{ detail.money / 100 }}</span> 元
+          {{ $t('fb2561ac.37fec4') }}
+          <span style="font-size: 26px; color: red">{{ detail.money / 100 }}</span>
+          {{ $t('fb2561ac.c16655') }}
         </div>
       </el-card>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button @click.native="dialog = false"> 取消操作 </el-button>
+        <el-button @click.native="dialog = false"> {{ $t('fb2561ac.170933') }} </el-button>
         <el-button
           v-if="detail.money <= cashWithdrawalRebate"
           type="primary"
           @click="actionProcessCashWithdrawal('argee')"
         >
-          打款到分销商
+          {{ $t('fb2561ac.5f7445') }}
         </el-button>
       </div>
     </el-dialog>
@@ -184,10 +207,10 @@ export default {
   data() {
     return {
       statusList: [
-        { name: '提现待处理', value: 'apply' },
-        { name: '提现拒绝', value: 'reject' },
-        { name: '提现成功', value: 'success' },
-        { name: '提现异常', value: 'process' }
+        { name: this.$t('fb2561ac.99c3eb'), value: 'apply' },
+        { name: this.$t('fb2561ac.940fe3'), value: 'reject' },
+        { name: this.$t('fb2561ac.dca060'), value: 'success' },
+        { name: this.$t('fb2561ac.81246b'), value: 'process' }
       ],
       activeName: 'first',
       total_count: 0,
@@ -232,7 +255,7 @@ export default {
     },
     actionProcessCashWithdrawal(processType) {
       if (processType == 'reject' && !this.textarea) {
-        this.$message({ type: 'error', message: '请输入拒绝提现原因' })
+        this.$message({ type: 'error', message: this.$t('fb2561ac.923aea') })
         return
       }
 
@@ -246,16 +269,16 @@ export default {
         this.dialog = false
         this.getList()
         if (processType == 'reject') {
-          this.$message({ type: 'success', message: '拒绝佣金提现成功' })
+          this.$message({ type: 'success', message: this.$t('fb2561ac.a3dd30') })
         } else {
-          this.$message({ type: 'success', message: '打款成功' })
+          this.$message({ type: 'success', message: this.$t('fb2561ac.3d6f6e') })
         }
       })
     },
     dialogOpen(detail) {
       this.dialog = true
       this.detail = detail
-      this.applyText = '分销商申请提现佣金' + detail.money / 100 + '元'
+      this.applyText = this.$t('fb2561ac.628f1d') + detail.money / 100 + this.$t('fb2561ac.c16655')
       getDistributorCount(detail.distributor_id).then((response) => {
         this.cashWithdrawalRebate = response.data.data.cashWithdrawalRebate
       })

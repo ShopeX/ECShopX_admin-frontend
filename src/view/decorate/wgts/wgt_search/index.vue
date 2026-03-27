@@ -24,23 +24,27 @@
       <!-- 挂件自定义部分 -->
       <div class="search-container">
         <i class="ecx-icon icon-sousuo" />
-        <span class="placeholder"> {{ value.placeholder }} </span>
+        <span class="placeholder"> {{ value.placeholder ? i18n.t(value.placeholder) : '' }} </span>
       </div>
       <!-- 挂件自定义部分 -->
     </div>
   </div>
 </template>
 <script>
+import { i18n } from '@/i18n'
 import config from './config'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Search',
-  wgtName: '搜索',
+  wgtName: i18n.t('545d9787.e5f71f'),
   wgtDesc: '',
   wgtIcon: 'wgt-search',
   config: config,
   props: {
     value: [Object, Array]
+  },
+  data() {
+    return { i18n }
   },
   computed: {
     outerStyle() {

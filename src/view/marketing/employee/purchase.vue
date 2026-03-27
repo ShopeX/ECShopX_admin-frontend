@@ -110,7 +110,7 @@
 }
 </style>
 <template>
-  <SpPage title="员工购买活动">
+  <SpPage :title="$t('39e3acc2.34213d')">
     <template slot="page-footer">
       <ActionsButton
         class="text-center"
@@ -119,7 +119,7 @@
       />
     </template>
     <div class="marketing-employee-purchase">
-      <el-card class="el-card--normal" header="基础信息">
+      <el-card class="el-card--normal" :header="$t('39e3acc2.6ea1fe')">
         <SpForm
           ref="formBase"
           v-model="formBase"
@@ -129,13 +129,13 @@
           :submit="false"
         />
       </el-card>
-      <el-card class="el-card--normal" header="活动规则">
+      <el-card class="el-card--normal" :header="$t('39e3acc2.02a217')">
         <SpForm
           ref="activityRule"
           v-model="activityRule"
           class="base-form"
           show-message
-          :form-list="activityRuleList"
+          :form-list="activityRuleListComputed"
           :submit="false"
         />
       </el-card>
@@ -146,6 +146,7 @@
 <script>
 import { isEmpty } from '@/utils'
 import moment from 'moment'
+import { i18n } from '@/i18n'
 
 const ActionsButton = {
   name: 'ActionsButton',
@@ -163,7 +164,7 @@ const ActionsButton = {
   render() {
     return (
       <div>
-        <el-button onClick={this.onCancel}>取消</el-button>
+        <el-button onClick={this.onCancel}>{this.$t('bea3f44a.625fb2')}</el-button>
         <el-button
           type='primary'
           disabled={this.disabled}
@@ -171,7 +172,7 @@ const ActionsButton = {
             this.$emit('save')
           }}
         >
-          保存
+          {this.$t('d8d84692.be5fbb')}
         </el-button>
       </div>
     )
@@ -183,11 +184,6 @@ export default {
     ActionsButton
   },
   data() {
-    const activePriceList = [
-      { name: '销售价', label: 'sale_price', disabled: true },
-      // { name: '市场价', label: 'market_price' },
-      { name: '活动价', label: 'activity_price' }
-    ]
     return {
       formBase: {
         name: '',
@@ -196,86 +192,7 @@ export default {
         share_pic: '',
         pic: ''
       },
-      formBaseList: [
-        {
-          label: '活动名称',
-          className: 'activity-name',
-          key: 'name',
-          type: 'input',
-          required: true,
-          maxlength: 30,
-          disabled: false,
-          placeholder: '活动名称，管理活动用，不对消费者展示，最多30个字',
-          message: '活动名称不能为空'
-        },
-        {
-          label: '活动标题',
-          className: 'activity-title',
-          key: 'title',
-          type: 'input',
-          required: true,
-          maxlength: 16,
-          disabled: false,
-          placeholder: '活动标题，再活动列表展示，最多16个字',
-          message: '活动标题不能为空',
-          tip: '活动标题在活动列表展示，也会作为分享小程序的卡片标题使用'
-        },
-        {
-          label: '活动首页',
-          key: 'linkHome',
-          component: ({ disabled }) => (
-            <div>
-              <span class='link-home'>
-                {this.formBase?.linkHome && this.formBase.linkHome.template_title}
-              </span>
-              <el-button type='text' disabled={disabled} on-click={this.onPickerTemp}>
-                选择首页
-              </el-button>
-            </div>
-          ),
-          disabled: false,
-          validator: (rule, value, callback) => {
-            if (!this.formBase.linkHome) {
-              callback(new Error('请选择活动首页'))
-            } else {
-              callback()
-            }
-          }
-        },
-        {
-          label: '分享活动',
-          key: 'share_pic',
-          component: () => (
-            <div class='activity-pic-field'>
-              <div class='form-item-tip'>
-                员工通过小程序卡片分享活动时展示，建议尺寸300*240，支持 png、jpg 格式，文件大小为 2M
-                内
-              </div>
-              <SpImagePicker v-model={this.formBase.share_pic} />
-            </div>
-          ),
-          validator: (rule, value, callback) => {
-            if (isEmpty(this.formBase.share_pic)) {
-              callback(new Error('请选择活动图片'))
-            } else {
-              callback()
-            }
-          }
-        },
-        {
-          label: '活动海报',
-          key: 'pic',
-          component: () => <SpImagePicker v-model={this.formBase.pic} />,
-          tip: '建议尺寸:（宽度640px，高度自适应）',
-          validator: (rule, value, callback) => {
-            if (isEmpty(this.formBase.pic)) {
-              callback(new Error('请选择活动海报'))
-            } else {
-              callback()
-            }
-          }
-        }
-      ],
+      formBaseList: [],
       activityRule: {
         companyList: [],
         preheatTime: '',
@@ -300,91 +217,209 @@ export default {
         discount_description: ''
       },
 
-      activityRuleList: [
+      /** 活动规则表单项列表，在 created 中赋值避免 render 阶段访问 $i18n */
+      activityRuleList: [],
+      /** 编辑时活动规则表单项的 disabled 覆盖，key 为索引 */
+      activityRuleDisabledOverrides: {},
+      activityStatus: ''
+    }
+  },
+  computed: {
+    /** 活动规则列表合并 disabled 覆盖后传给表单 */
+    activityRuleListComputed() {
+      const list = this.activityRuleList
+      const overrides = this.activityRuleDisabledOverrides
+      if (!list.length || !Object.keys(overrides).length) return list
+      const result = list.slice()
+      Object.keys(overrides).forEach((i) => {
+        const idx = parseInt(i, 10)
+        if (result[idx]) result[idx] = { ...result[idx], disabled: overrides[i] }
+      })
+      return result
+    }
+  },
+  created() {
+    this.formBaseList = this.buildFormBaseList()
+    this.activityRuleList = this.buildActivityRuleList()
+    const { id } = this.$route.params
+    if (id) {
+      this.getActivityItemDetail(id)
+    }
+  },
+  methods: {
+    buildFormBaseList() {
+      const self = this
+      const t = (key) => i18n.t(key)
+      return [
         {
-          label: '参与企业',
-          key: 'companyList',
+          label: t('39e3acc2.39834b'),
+          className: 'activity-name',
+          key: 'name',
           type: 'input',
+          required: true,
+          maxlength: 30,
+          disabled: false,
+          placeholder: t('39e3acc2.5d602a'),
+          message: t('39e3acc2.19e116')
+        },
+        {
+          label: t('39e3acc2.902a3d'),
+          className: 'activity-title',
+          key: 'title',
+          type: 'input',
+          required: true,
+          maxlength: 16,
+          disabled: false,
+          placeholder: t('39e3acc2.3154a4'),
+          message: t('39e3acc2.f1529d'),
+          tip: t('39e3acc2.198849')
+        },
+        {
+          label: t('39e3acc2.c4750a'),
+          key: 'linkHome',
           component: ({ disabled }) => (
-            <div class='company-list'>
-              {this.activityRule.companyList.map((item, index) => (
-                <el-tag
-                  closable
-                  disable-transitions
-                  key={item.id}
-                  type={item.id}
-                  on-close={this.closeCompany.bind(this, index)}
-                >
-                  {item.name}
-                </el-tag>
-              ))}
-              <el-button type='text' disabled={disabled} on-click={this.onPickerCompany}>
-                选择企业
+            <div>
+              <span class='link-home'>
+                {self.formBase?.linkHome && self.formBase.linkHome.template_title}
+              </span>
+              <el-button type='text' disabled={disabled} on-click={self.onPickerTemp}>
+                {t('39e3acc2.dc38dd')}
               </el-button>
             </div>
           ),
           disabled: false,
           validator: (rule, value, callback) => {
-            if (this.activityRule.companyList.length == 0) {
-              callback(new Error('请选择参与企业'))
+            if (!self.formBase.linkHome) {
+              callback(new Error(t('39e3acc2.747456')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '开始预热',
-          key: 'preheatTime',
+          label: t('39e3acc2.45394d'),
+          key: 'share_pic',
+          component: () => (
+            <div class='activity-pic-field'>
+              <div class='form-item-tip'>{t('39e3acc2.5925d6')}</div>
+              <SpImagePicker v-model={self.formBase.share_pic} />
+            </div>
+          ),
+          validator: (rule, value, callback) => {
+            if (isEmpty(self.formBase.share_pic)) {
+              callback(new Error(t('39e3acc2.9742f1')))
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: t('39e3acc2.98fbb0'),
+          key: 'pic',
+          component: () => <SpImagePicker v-model={self.formBase.pic} />,
+          tip: t('39e3acc2.818403'),
+          validator: (rule, value, callback) => {
+            if (isEmpty(self.formBase.pic)) {
+              callback(new Error(t('39e3acc2.90a4b4')))
+            } else {
+              callback()
+            }
+          }
+        }
+      ]
+    },
+    buildActivityRuleList() {
+      const self = this
+      const t = (key) => i18n.t(key)
+      const activePriceList = [
+        { name: t('39e3acc2.e29575'), label: 'sale_price', disabled: true },
+        { name: t('39e3acc2.08ee55'), label: 'activity_price' }
+      ]
+      return [
+        {
+          label: t('39e3acc2.ef7726'),
+          key: 'companyList',
+          type: 'input',
           component: ({ disabled }) => (
-            <div class='preheat-time'>
-              从
-              <el-date-picker
-                v-model={this.activityRule.preheatTime}
-                disabled={disabled}
-                type='datetime'
-                placeholder='选择日期时间'
-              ></el-date-picker>
-              开始活动将展示在活动列表
+            <div class='company-list'>
+              {self.activityRule.companyList.map((item, index) => (
+                <el-tag
+                  closable
+                  disable-transitions
+                  key={item.id}
+                  type={item.id}
+                  on-close={self.closeCompany.bind(self, index)}
+                >
+                  {item.name}
+                </el-tag>
+              ))}
+              <el-button type='text' disabled={disabled} on-click={self.onPickerCompany}>
+                {t('39e3acc2.0067d7')}
+              </el-button>
             </div>
           ),
           disabled: false,
           validator: (rule, value, callback) => {
-            if (this.activityRule.preheatTime.length == 0) {
-              callback(new Error('请选择活动预热时间'))
+            if (self.activityRule.companyList.length == 0) {
+              callback(new Error(t('39e3acc2.6004b3')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '员工',
+          label: t('39e3acc2.cdacb4'),
+          key: 'preheatTime',
+          component: ({ disabled }) => (
+            <div class='preheat-time'>
+              {t('39e3acc2.0cc05f')}
+              <el-date-picker
+                v-model={self.activityRule.preheatTime}
+                disabled={disabled}
+                type='datetime'
+                placeholder={t('39e3acc2.a42ae4')}
+              ></el-date-picker>
+              {t('39e3acc2.dcc47f')}
+            </div>
+          ),
+          disabled: false,
+          validator: (rule, value, callback) => {
+            if (self.activityRule.preheatTime.length == 0) {
+              callback(new Error(t('39e3acc2.257e33')))
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: t('39e3acc2.2ed392'),
           key: 'employee',
           component: ({ disabled: { datetime, quota } }) => (
             <div class='activity-employee-field'>
               <div class='form-item-content'>
                 <div class='content-item'>
-                  <label>购买时间</label>
+                  <label>{t('39e3acc2.059c1e')}</label>
                   <el-date-picker
-                    v-model={this.activityRule.employee.datetime}
+                    v-model={self.activityRule.employee.datetime}
                     disabled={datetime}
                     type='daterange'
-                    range-separator='至'
-                    start-placeholder='开始时间'
-                    end-placeholder='结束时间'
+                    range-separator={t('bea3f44a.981cbe')}
+                    start-placeholder={t('39e3acc2.592c59')}
+                    end-placeholder={t('39e3acc2.f78277')}
                   />
                 </div>
-                <div class='form-item-tip'>活动人员在该段内可购买商品</div>
+                <div class='form-item-tip'>{t('39e3acc2.f5552d')}</div>
               </div>
               <div class='form-item-content'>
                 <div class='content-item'>
-                  <label>购买额度</label>
+                  <label>{t('39e3acc2.769491')}</label>
                   <SpInput
-                    v-model={this.activityRule.employee.quota}
+                    v-model={self.activityRule.employee.quota}
                     width='120px'
                     disabled={quota}
-                    placeholder='大于0的整数'
-                    prefix='每人最多可购买额度'
-                    suffix='元'
+                    placeholder={t('39e3acc2.ea6c91')}
+                    prefix={t('39e3acc2.4ef1d6')}
+                    suffix={t('39e3acc2.c16655')}
                   />
                 </div>
               </div>
@@ -395,83 +430,83 @@ export default {
             quota: false
           },
           validator: (rule, value, callback) => {
-            if (this.activityRule.employee.datetime.length == 0) {
-              callback(new Error('请选择活动购买时间'))
-            } else if (!this.activityRule.employee.quota) {
-              callback(new Error('请输入活动购买额度'))
+            if (self.activityRule.employee.datetime.length == 0) {
+              callback(new Error(t('39e3acc2.77a141')))
+            } else if (!self.activityRule.employee.quota) {
+              callback(new Error(t('39e3acc2.6a99d7')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '亲友',
+          label: t('39e3acc2.4eca5b'),
           key: 'relatives',
           component: ({ disabled: { join, num, datetime, type, shareLimit } }) => (
             <div class='activity-relatives-field'>
               <div class='form-item-content'>
                 <div class='content-item'>
-                  <el-switch v-model={this.activityRule.relatives.join} disabled={join} />
-                  <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
+                  <el-switch v-model={self.activityRule.relatives.join} disabled={join} />
+                  <span class='form-item-tip'>{t('39e3acc2.735d97')}</span>
                 </div>
               </div>
-              {this.activityRule.relatives.join ? (
+              {self.activityRule.relatives.join ? (
                 <div>
                   <div class='form-item-content'>
                     <div class='content-item'>
-                      <label>邀请亲友</label>
+                      <label>{t('39e3acc2.ff47b7')}</label>
                       <SpInput
-                        v-model={this.activityRule.relatives.num}
+                        v-model={self.activityRule.relatives.num}
                         width='120px'
                         disabled={num}
-                        placeholder='大于0的整数'
-                        prefix='每名员工最多可邀请'
-                        suffix='名亲友'
+                        placeholder={t('39e3acc2.ea6c91')}
+                        prefix={t('39e3acc2.4a00d0')}
+                        suffix={t('39e3acc2.cc2967')}
                       />
                     </div>
                   </div>
                   <div class='form-item-content'>
                     <div class='content-item'>
-                      <label>购买时间</label>
+                      <label>{t('39e3acc2.059c1e')}</label>
                       <el-date-picker
-                        v-model={this.activityRule.relatives.datetime}
+                        v-model={self.activityRule.relatives.datetime}
                         disabled={datetime}
                         type='daterange'
-                        range-separator='至'
-                        start-placeholder='开始时间'
-                        end-placeholder='结束时间'
+                        range-separator={t('bea3f44a.981cbe')}
+                        start-placeholder={t('39e3acc2.592c59')}
+                        end-placeholder={t('39e3acc2.f78277')}
                       />
                     </div>
                   </div>
                   <div class='form-item-content'>
                     <div class='content-item'>
-                      <label>购买额度</label>
+                      <label>{t('39e3acc2.769491')}</label>
                       <div class='content-item-field'>
                         <div class='item-wrap'>
                           <el-radio
-                            v-model={this.activityRule.relatives.type}
+                            v-model={self.activityRule.relatives.type}
                             disabled={type}
                             label='1'
-                            onChange={this.onRadioChange}
+                            onChange={self.onRadioChange}
                           >
                             <SpInput
-                              v-model={this.activityRule.relatives.shareLimit}
+                              v-model={self.activityRule.relatives.shareLimit}
                               width='120px'
                               disabled={shareLimit}
-                              placeholder='大于0的整数'
-                              prefix='每人最多可购买额度'
-                              suffix='元'
+                              placeholder={t('39e3acc2.ea6c91')}
+                              prefix={t('39e3acc2.4ef1d6')}
+                              suffix={t('39e3acc2.c16655')}
                             />
                           </el-radio>
                         </div>
                         <div class='item-wrap'>
                           <el-radio
-                            v-model={this.activityRule.relatives.type}
+                            v-model={self.activityRule.relatives.type}
                             disabled={type}
                             label='2'
-                            onChange={this.onRadioChange}
+                            onChange={self.onRadioChange}
                           >
-                            共享员工额度
+                            {t('39e3acc2.3fe064')}
                           </el-radio>
                         </div>
                       </div>
@@ -490,90 +525,75 @@ export default {
             type: false,
             shareLimit: false
           },
-          message: '活动名称不能为空'
+          message: t('39e3acc2.19e116')
         },
         {
-          label: '订单最低金额',
+          label: t('39e3acc2.ac0065'),
           key: 'orderMiniAmount',
           component: ({ disabled }) => (
             <SpInput
-              v-model={this.activityRule.orderMiniAmount}
+              v-model={self.activityRule.orderMiniAmount}
               disabled={disabled}
               width='120px'
-              placeholder='大于0的整数'
-              prefix='单笔订单不低于'
-              suffix='元'
+              placeholder={t('39e3acc2.ea6c91')}
+              prefix={t('39e3acc2.f780a9')}
+              suffix={t('39e3acc2.c16655')}
             />
           ),
           disabled: false
         },
         {
-          label: '修改收货地址',
+          label: t('39e3acc2.95c4a4'),
           key: 'modifyReceiveAddress',
           component: ({ disabled }) => (
             <SpInput
-              v-model={this.activityRule.modifyReceiveAddress}
+              v-model={self.activityRule.modifyReceiveAddress}
               disabled={disabled}
               width='140px'
-              placeholder='大于等于0的整数'
-              prefix='活动进行中所有买家（员工和亲友）都可以修改收货地址，活动结束后'
-              suffix='小时内买家可修改收货地址，已发货订单不允许修改收货地址'
+              placeholder={t('39e3acc2.977246')}
+              prefix={t('39e3acc2.0ccd13')}
+              suffix={t('39e3acc2.297908')}
             />
           ),
           disabled: false,
-          tip: '请输入大于等于0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地址；活动进行过程中允许买家修改地址'
+          tip: t('39e3acc2.28831c')
         },
         {
-          label: '活动价格展示',
+          label: t('39e3acc2.135b19'),
           type: 'group'
         },
         {
-          label: '商品列表/商详页面',
+          label: t('39e3acc2.040c4d'),
           key: 'items_page',
           type: 'checkbox',
           options: activePriceList
         },
         {
-          label: '购物车',
+          label: t('39e3acc2.c017be'),
           key: 'cart_page',
           type: 'checkbox',
           options: activePriceList
         },
-        // {
-        //   label: '订单列表/订单详情',
-        //   key: 'order_detail_page',
-        //   type: 'checkbox',
-        //   options: activePriceList
-        // },
         {
-          label: '结算页',
+          label: t('39e3acc2.482b55'),
           key: 'checkout_page',
           type: 'checkbox',
           options: activePriceList
         },
         {
-          label: '优惠说明',
+          label: t('39e3acc2.028f5b'),
           key: 'is_discount_description_enabled',
           type: 'switch',
-          tip: '开启优惠说明展示在结算页，关闭不展示'
+          tip: t('39e3acc2.8e568f')
         },
         {
-          label: '结算页价格优惠说明',
+          label: t('39e3acc2.d0bea4'),
           key: 'discount_description',
           type: 'input',
           maxlength: 50
         }
-      ],
-      activityStatus: ''
-    }
-  },
-  created() {
-    const { id } = this.$route.params
-    if (id) {
-      this.getActivityItemDetail(id)
-    }
-  },
-  methods: {
+      ]
+    },
     async getActivityItemDetail(id) {
       const res = await this.$api.marketing.getActivityItemDetail(id)
       const linkHome = await this.$api.template.getPagesTemplateDetail({
@@ -589,38 +609,38 @@ export default {
 
       // 进行中、已暂停
       if (res.status == 'ongoing' || res.status == 'pending') {
-        this.activityRuleList[2].disabled = {
+        this.$set(this.activityRuleDisabledOverrides, 2, {
           datetime: false,
           quota: true
-        }
-        this.activityRuleList[3]['disabled'] = {
+        })
+        this.$set(this.activityRuleDisabledOverrides, 3, {
           join: false,
           num: true,
           datetime: false,
           type: false,
           shareLimit: true
-        }
+        })
       } else if (res.status == 'cancel' || res.status == 'over') {
         // 已取消、已结束
         this.formBaseList[0].disabled = true
         this.formBaseList[1].disabled = true
         this.formBaseList[2].disabled = true
 
-        this.activityRuleList[0].disabled = true
-        this.activityRuleList[1].disabled = true
-        this.activityRuleList[2].disabled = {
+        this.$set(this.activityRuleDisabledOverrides, 0, true)
+        this.$set(this.activityRuleDisabledOverrides, 1, true)
+        this.$set(this.activityRuleDisabledOverrides, 2, {
           datetime: true,
           quota: true
-        }
-        this.activityRuleList[3]['disabled'] = {
+        })
+        this.$set(this.activityRuleDisabledOverrides, 3, {
           join: true,
           num: true,
           datetime: true,
           type: true,
           shareLimit: true
-        }
-        this.activityRuleList[4].disabled = true
-        this.activityRuleList[5].disabled = true
+        })
+        this.$set(this.activityRuleDisabledOverrides, 4, true)
+        this.$set(this.activityRuleDisabledOverrides, 5, true)
       }
       this.activityStatus = res.status
 
@@ -776,15 +796,12 @@ export default {
       }
     },
     onRadioChange(e) {
+      const prev = this.activityRuleDisabledOverrides[3] || {}
       if (e == '1') {
-        this.activityRuleList[3]['disabled'] = {
-          shareLimit: false
-        }
+        this.$set(this.activityRuleDisabledOverrides, 3, { ...prev, shareLimit: false })
       } else {
         this.activityRule.relatives.shareLimit = 0
-        this.activityRuleList[3]['disabled'] = {
-          shareLimit: true
-        }
+        this.$set(this.activityRuleDisabledOverrides, 3, { ...prev, shareLimit: true })
       }
     }
   }

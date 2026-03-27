@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage title="物流信息">
+  <SpPage :title="$t('4bc17f46.24bc07')">
     <div class="section-white">
       <div v-loading="loading" class="detail-info">
         <el-timeline v-if="list.length > 0" :reverse="false">
@@ -17,7 +17,7 @@
             <p>{{ key.AcceptStation }}</p>
           </el-timeline-item>
         </el-timeline>
-        <p v-else>目前暂无物流信息~</p>
+        <p v-else>{{ $t('4bc17f46.6e5fd6') }}</p>
       </div>
     </div>
   </SpPage>

@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrDataVue from '../../comps/goods-attr/attr-data.vue'
 import CompPickerLinkVue from '../../comps/comp-pickerLink.vue'
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
@@ -7,8 +8,8 @@ const config = {
   name: 'ranking',
   setting: [
     {
-      group: '数据设置',
-      label: '数据设置',
+      group: i18n.t('5f12aa3b.e7af71'),
+      label: i18n.t('5f12aa3b.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -25,8 +26,8 @@ const config = {
       }
     },
     {
-      group: '数据设置',
-      label: '数据数量',
+      group: i18n.t('5f12aa3b.e7af71'),
+      label: i18n.t('5f12aa3b.87dfd7'),
       key: 'dataCount',
       component: 'number',
       value: 4,
@@ -34,19 +35,19 @@ const config = {
       max: 99
     },
     {
-      group: '组件标题',
-      label: '标题类型',
+      group: i18n.t('5f12aa3b.6f3360'),
+      label: i18n.t('5f12aa3b.c20c83'),
       key: 'rankingTitleType',
       component: 'radiobutton',
       options: [
-        { name: '文字', label: 'text' },
-        { name: '图片', label: 'image' }
+        { name: i18n.t('5f12aa3b.ca746b'), label: 'text' },
+        { name: i18n.t('5f12aa3b.20def7'), label: 'image' }
       ],
       value: 'text'
     },
     {
-      group: '组件标题',
-      label: '标题图片',
+      group: i18n.t('5f12aa3b.6f3360'),
+      label: i18n.t('5f12aa3b.264fe1'),
       key: 'rankingTitleImage',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
@@ -57,18 +58,18 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题文字',
+      group: i18n.t('5f12aa3b.6f3360'),
+      label: i18n.t('5f12aa3b.eded9e'),
       key: 'rankingTitleText',
       component: 'input',
-      value: '标题',
+      value: '5f12aa3b.32c65d',
       isShow: function () {
         return this.value.rankingTitleType === 'text'
       }
     },
     {
-      group: '组件标题',
-      label: '标题颜色',
+      group: i18n.t('5f12aa3b.6f3360'),
+      label: i18n.t('5f12aa3b.94e391'),
       key: 'rankingTitleColor',
       component: 'color',
       value: '#000000',
@@ -77,19 +78,19 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
-      label: '展示类型',
+      group: i18n.t('5f12aa3b.90507a'),
+      label: i18n.t('5f12aa3b.1711a8'),
       key: 'rankingShowMoreBtn',
       component: 'radiobutton',
       options: [
-        { name: '显示', label: true },
-        { name: '隐藏', label: false }
+        { name: i18n.t('5f12aa3b.4d775d'), label: true },
+        { name: i18n.t('5f12aa3b.dce537'), label: false }
       ],
       value: true
     },
     {
-      group: '更多按钮',
-      label: '按钮颜色',
+      group: i18n.t('5f12aa3b.90507a'),
+      label: i18n.t('5f12aa3b.351201'),
       key: 'rankingMoreBtnColor',
       component: 'color',
       value: '#000000',
@@ -115,7 +116,7 @@ const config = {
     // 处理 titleText：可能是对象格式 {type, text, image} 或单独的字段
     let rankingTitleType = 'text'
     let rankingTitleImage = ''
-    let rankingTitleText = '标题'
+    let rankingTitleText = '5f12aa3b.32c65d'
 
     if (titleText) {
       if (typeof titleText === 'object' && titleText.type) {
@@ -129,6 +130,7 @@ const config = {
     }
 
     return {
+      id: v?.id,
       name: v.name,
       ...rest,
       data: v.data,
@@ -152,6 +154,7 @@ const config = {
   },
   transformOut: (v, wgtList, regionauth_id) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         const baseData = pickBy(v, {

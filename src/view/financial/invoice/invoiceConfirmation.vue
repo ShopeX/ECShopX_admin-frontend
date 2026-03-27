@@ -8,7 +8,7 @@
     <SpForm
       v-model="form"
       :reset-btn="false"
-      submit-btn-text="保存配置"
+      :submit-btn-text="$t('557a6493.ed7526')"
       :form-list="formList"
       @onSubmit="onSaveConfig"
     />
@@ -56,7 +56,7 @@ export default {
           special_invoice_confirm_open: this.form.special_invoice_confirm_open ? 1 : 0
         })
         .then((res) => {
-          this.$message.success('发送成功')
+          this.$message.success(this.$t('557a6493.9db9a7'))
           this.confirmDialogShow = false
         })
     }

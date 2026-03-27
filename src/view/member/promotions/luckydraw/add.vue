@@ -7,12 +7,12 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" class="box-set" label-width="120px">
       <div class="section-header with-border">
-        <div>活动商品信息</div>
+        <div>{{ $t('d37687bd.6fd631') }}</div>
       </div>
       <div class="clearfix" style="min-width: 1222px">
         <div class="form-view clearfix">
           <section class="section section-white">
-            <el-form-item label="抽奖商品">
+            <el-form-item :label="$t('d37687bd.8b1dc6')">
               <el-row :gutter="20">
                 <el-col :span="20">
                   <p class="frm-tips" />
@@ -22,8 +22,12 @@
                         <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                         <div class="gooups-goodsmsg">
                           <div>{{ goods.itemName }}</div>
-                          <div>原价：{{ cursymbol }} {{ goods.price / 100 }}</div>
-                          <div v-if="goods.item_type == 'normal'">库存：{{ goods.store }}</div>
+                          <div>
+                            {{ $t('d37687bd.80193b') }}{{ cursymbol }} {{ goods.price / 100 }}
+                          </div>
+                          <div v-if="goods.item_type == 'normal'">
+                            {{ $t('d37687bd.b008bd') }}{{ goods.store }}
+                          </div>
                         </div>
                       </div>
                       <div v-else tabindex="0" class="el-upload el-upload--picture-card">
@@ -31,7 +35,7 @@
                       </div>
                     </div>
                     <el-button size="small" type="primary" @click="changeItem">
-                      选择商品
+                      {{ $t('d37687bd.43d1e2') }}
                     </el-button>
                   </div>
                 </el-col>
@@ -40,29 +44,41 @@
           </section>
         </div>
         <div class="form-wrapper clearfix">
-          <el-form-item label="活动名称" prop="luckydraw_name" :rules="rules.luckydraw_name">
+          <el-form-item
+            :label="$t('d37687bd.39834b')"
+            prop="luckydraw_name"
+            :rules="rules.luckydraw_name"
+          >
             <el-col :span="9">
-              <el-input v-model="form.luckydraw_name" :maxlength="30" placeholder="抽奖活动名称" />
+              <el-input
+                v-model="form.luckydraw_name"
+                :maxlength="30"
+                :placeholder="$t('d37687bd.5c43b7')"
+              />
             </el-col>
           </el-form-item>
-          <el-form-item label="活动时间" prop="date" :rules="rules.date">
+          <el-form-item :label="$t('d37687bd.c799f5')" prop="date" :rules="rules.date">
             <el-col :span="12">
               <el-date-picker
                 v-model="form.date"
                 type="datetimerange"
-                range-separator="至"
-                start-placeholder="生效时间"
-                end-placeholder="过期时间"
+                :range-separator="$t('d37687bd.981cbe')"
+                :start-placeholder="$t('d37687bd.fc92e9')"
+                :end-placeholder="$t('d37687bd.1fa23f')"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 :default-time="['00:00:00', '23:59:59']"
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="抽奖方式" prop="luckydraw_payment" :rules="rules.luckydraw_payment">
+          <el-form-item
+            :label="$t('d37687bd.6bca26')"
+            prop="luckydraw_payment"
+            :rules="rules.luckydraw_payment"
+          >
             <el-col :span="2">
               <el-select
                 v-model="form.luckydraw_payment"
-                placeholder="支付方式"
+                :placeholder="$t('d37687bd.0c9d2b')"
                 style="width: 100%"
                 @change="changePayment"
               >
@@ -77,7 +93,7 @@
           </el-form-item>
           <el-form-item
             v-if="form.luckydraw_payment == 'cash'"
-            label="抽奖单价(现金)"
+            :label="$t('d37687bd.ad779b')"
             prop="luckydraw_price"
             :rules="rules.luckydraw_price"
           >
@@ -88,11 +104,11 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1"> 元 </el-col>
+            <el-col :span="1"> {{ $t('d37687bd.c16655') }} </el-col>
           </el-form-item>
           <el-form-item
             v-if="form.luckydraw_payment == 'point'"
-            label="单价(积分)"
+            :label="$t('d37687bd.113352')"
             prop="luckydraw_point"
             :rules="rules.luckydraw_point"
           >
@@ -103,9 +119,13 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1"> 积分 </el-col>
+            <el-col :span="1"> {{ $t('d37687bd.9f68a8') }} </el-col>
           </el-form-item>
-          <el-form-item label="总需人次" prop="luckydraw_store" :rules="rules.luckydraw_store">
+          <el-form-item
+            :label="$t('d37687bd.a73b1b')"
+            prop="luckydraw_store"
+            :rules="rules.luckydraw_store"
+          >
             <el-col :span="2">
               <el-input
                 v-model="form.luckydraw_store"
@@ -116,23 +136,27 @@
                 @change="paymentTotalChange"
               />
             </el-col>
-            <el-col :span="1"> 件 </el-col>
+            <el-col :span="1"> {{ $t('d37687bd.f7edf5') }} </el-col>
           </el-form-item>
-          <el-form-item label="总投奖额" prop="payment_total">
+          <el-form-item :label="$t('d37687bd.26a438')" prop="payment_total">
             <el-col :span="2">
               <el-input v-model="form.payment_total" readonly placeholder="" />
             </el-col>
-            <el-col v-if="form.luckydraw_payment == 'point'" :span="1"> 积分, </el-col>
-            <el-col v-else-if="form.luckydraw_payment == 'cash'" :span="1"> 元, </el-col>
-            自动计算
+            <el-col v-if="form.luckydraw_payment == 'point'" :span="1">
+              {{ $t('d37687bd.1a381b') }}
+            </el-col>
+            <el-col v-else-if="form.luckydraw_payment == 'cash'" :span="1">
+              {{ $t('d37687bd.602771') }}
+            </el-col>
+            {{ $t('d37687bd.4ca103') }}
           </el-form-item>
-          <el-form-item label="会员限购数" prop="limit_num" :rules="rules.limit_num">
+          <el-form-item :label="$t('d37687bd.04cbda')" prop="limit_num" :rules="rules.limit_num">
             <el-col :span="4">
               <el-input-number v-model="form.limit_num" :min="0" placeholder="" />
             </el-col>
-            <el-col :span="4"> 填 0 则代表不限购 </el-col>
+            <el-col :span="4"> {{ $t('d37687bd.ddabc2') }} </el-col>
           </el-form-item>
-          <el-form-item label="开奖固定值">
+          <el-form-item :label="$t('d37687bd.b148a1')">
             <el-col :span="4">
               <el-select v-model="form.lucky_fixed_number" placeholder="" style="width: 100%">
                 <el-option
@@ -144,46 +168,54 @@
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="描述" prop="description" :rules="rules.description">
+          <el-form-item
+            :label="$t('d37687bd.3bdd08')"
+            prop="description"
+            :rules="rules.description"
+          >
             <el-col :span="12">
-              <el-input v-model="form.description" :maxlength="25" placeholder="请输入活动描述" />
+              <el-input
+                v-model="form.description"
+                :maxlength="25"
+                :placeholder="$t('d37687bd.acde7b')"
+              />
             </el-col>
           </el-form-item>
           <el-form-item label=" ">
-            <el-button @click.native="handleCancel"> 返回 </el-button>
+            <el-button @click.native="handleCancel"> {{ $t('d37687bd.5f4112') }} </el-button>
             <el-button v-if="true == show" type="primary" @click="submitItemsAction('form')">
-              保存
+              {{ $t('d37687bd.be5fbb') }}
             </el-button>
           </el-form-item>
         </div>
       </div>
     </el-form>
-    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
+    <el-dialog :title="$t('d37687bd.43d1e2')" :visible.sync="goodsDialogVisible" center>
       <!-- <el-button-group class="tab-group">
         <el-button class="tab-btn" @click="changeGoods('normal')" :class="goodsTypeTitle==='实体类商品' ? 'on' : ''" >实体类商品</el-button>
         <el-button class="tab-btn" @click="changeGoods('every')" :class="goodsTypeTitle==='服务类商品' ? 'on' : ''">服务类商品</el-button>
       </el-button-group> -->
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input v-model="itemsParams.keywords" placeholder="商品名称">
+          <el-input v-model="itemsParams.keywords" :placeholder="$t('d37687bd.1fd1d5')">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
       </el-row>
       <el-table v-loading="itemsLoading" :data="itemsList" style="width: 100%" border height="500">
-        <el-table-column prop="itemName" label="商品名称" />
-        <el-table-column label="缩略图">
+        <el-table-column prop="itemName" :label="$t('d37687bd.1fd1d5')" />
+        <el-table-column :label="$t('d37687bd.0f088d')">
           <template slot-scope="scope">
             <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
-        <el-table-column prop="itemName" label="状态">
+        <el-table-column prop="price" :label="$t('d37687bd.e29575')" :formatter="priceformatter" />
+        <el-table-column prop="itemName" :label="$t('d37687bd.3fea7c')">
           <template slot-scope="scope">
-            <a v-if="form.item_Id != scope.row.itemId" href="#" @click="chooseItem(scope.row)"
-              >选择</a
-            >
-            <span v-else>已选择</span>
+            <a v-if="form.item_Id != scope.row.itemId" href="#" @click="chooseItem(scope.row)">{{
+              $t('d37687bd.153fa6')
+            }}</a>
+            <span v-else>{{ $t('d37687bd.f08afd') }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -197,8 +229,10 @@
         />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">关 闭</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        <el-button @click="centerDialogVisible = false">{{ $t('d37687bd.9d2578') }}</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">{{
+          $t('d37687bd.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -215,10 +249,7 @@ import {
 export default {
   data() {
     return {
-      luckydrawPayments: [
-        { name: '积分', value: 'point' }
-        // {name: '现金', value: 'cash'}
-      ],
+      luckydrawPayments: [],
       fixed_numbers: [{ name: '10000001', value: '10000001' }],
       show: true,
       itemsLoading: false,
@@ -247,26 +278,35 @@ export default {
       itemsTotalCount: 0,
       dialogVisible: false,
       goodsDialogVisible: false,
-      rules: {
-        luckydraw_name: [{ required: true, message: '请输入抽奖活动名称' }],
-        date: [{ required: true, message: '请输入活动时间' }],
-        luckydraw_price: [
-          { required: true, message: '请输入价格' },
-          { pattern: /^(?=.*[1-9])\d+(\.\d{1,2})?$/, message: '现金价格最少0.01' }
-        ],
-        luckydraw_point: [
-          { required: true, message: '请输入积分' },
-          { pattern: /^[0-9]*[1-9][0-9]*$/, message: '最少1积分' }
-        ],
-        luckydraw_store: [
-          { required: true, message: '请输入总需人次数' },
-          { pattern: /^[0-9]*[1-9][0-9]*$/, message: '最少1个' }
-        ],
-        description: [{ required: true, message: '请输入描述' }]
+      rules: {}
       },
       currency: {},
       cursymbol: '￥',
-      goodsTypeTitle: '实体类商品'
+      goodsTypeTitle: ''
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        luckydraw_name: [{ required: true, message: this.$t('d37687bd.9a270b') }],
+        date: [{ required: true, message: this.$t('d37687bd.696416') }],
+        luckydraw_price: [
+          { required: true, message: this.$t('d37687bd.6f2838') },
+          { pattern: /^(?=.*[1-9])\d+(\.\d{1,2})?$/, message: this.$t('d37687bd.9f03a0') }
+        ],
+        luckydraw_point: [
+          { required: true, message: this.$t('d37687bd.190729') },
+          { pattern: /^[0-9]*[1-9][0-9]*$/, message: this.$t('d37687bd.aafefb') }
+        ],
+        luckydraw_store: [
+          { required: true, message: this.$t('d37687bd.d7cea5') },
+          { pattern: /^[0-9]*[1-9][0-9]*$/, message: this.$t('d37687bd.06e3c0') }
+        ],
+        description: [{ required: true, message: this.$t('d37687bd.11956a') }]
+      }
+    },
+    luckydrawPayments() {
+      return [{ name: this.$t('d37687bd.9f68a8'), value: 'point' }]
     }
   },
   mounted() {
@@ -284,7 +324,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.form.item_id) {
-            this.$message.error('请选择商品')
+            this.$message.error(this.$t('d37687bd.c5c5f2'))
             return false
           }
           if (this.luckydraw_id) {
@@ -292,7 +332,7 @@ export default {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
-                  message: '保存活动成功'
+                  message: this.$t('d37687bd.918092')
                 })
                 this.$router.push({ path: '/member/marketing/luckydraw/index' })
               }
@@ -302,7 +342,7 @@ export default {
               if (res.data.data) {
                 this.$message({
                   type: 'success',
-                  message: '新增活动成功'
+                  message: this.$t('d37687bd.13655e')
                 })
                 this.$router.push({ path: '/member/marketing/luckydraw/index' })
               }
@@ -346,7 +386,7 @@ export default {
           this.itemsLoading = false
           this.$message({
             type: 'error',
-            message: '获取商品列表列表信息出错'
+            message: this.$t('d37687bd.325305')
           })
         })
     },
@@ -365,7 +405,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取活动详情失败'
+            message: this.$t('d37687bd.09fc42')
           })
         })
     },
@@ -383,12 +423,12 @@ export default {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
           this.$delete(this.itemsParams, 'item_type')
-          this.goodsTypeTitle = '服务类商品'
+          this.goodsTypeTitle = this.$t('d37687bd.fcd4d7')
           break
         case 'normal':
           this.$set(this.itemsParams, 'item_type', 'normal')
           this.$delete(this.itemsParams, 'consume_type')
-          this.goodsTypeTitle = '实体类商品'
+          this.goodsTypeTitle = this.$t('d37687bd.ddf672')
           break
       }
       this.getGoodsList()

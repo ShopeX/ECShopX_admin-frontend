@@ -7,13 +7,13 @@
   <div>
     <div>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="企业" name="show_corp">
+        <el-tab-pane :label="$t('12388bcb.04c9e3')" name="show_corp">
           <corp_template v-if="show_corp" :active-name="activeName" />
         </el-tab-pane>
-        <el-tab-pane label="个体户" name="show_solo">
+        <el-tab-pane :label="$t('12388bcb.a41061')" name="show_solo">
           <solo_template v-if="show_solo" :active-name="activeName" />
         </el-tab-pane>
-        <el-tab-pane label="个人" name="show_user">
+        <el-tab-pane :label="$t('12388bcb.6a0e04')" name="show_user">
           <user_template v-if="show_user" :active-name="activeName" />
         </el-tab-pane>
       </el-tabs>

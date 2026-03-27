@@ -2,10 +2,10 @@
   <div class="comp-background-inner">
     <div class="background-type">
       <el-radio v-model="currentType" :label="TYPE_SOLID" @change="handleTypeChange">
-        <span class="type-label">单色</span>
+        <span class="type-label">{{ $t('2024e8cf.c7af92') }}</span>
       </el-radio>
       <el-radio v-model="currentType" :label="TYPE_GRADIENT" @change="handleTypeChange">
-        <span class="type-label">上下渐变色</span>
+        <span class="type-label">{{ $t('2024e8cf.87c111') }}</span>
       </el-radio>
       <el-radio
         v-if="showImage"
@@ -13,7 +13,7 @@
         :label="TYPE_IMAGE"
         @change="handleTypeChange"
       >
-        <span class="type-label">图片</span>
+        <span class="type-label">{{ $t('2024e8cf.20def7') }}</span>
       </el-radio>
     </div>
     <div class="color-pickers">

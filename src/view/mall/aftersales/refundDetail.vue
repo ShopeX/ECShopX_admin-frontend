@@ -4,94 +4,94 @@
 -->
 
 <template>
-  <SpPage title="退款单详情">
+  <SpPage :title="$t('eb172bd4.3974a9')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click.native="handleCancel"> 返回 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('eb172bd4.5f4112') }} </el-button>
       </div>
     </template>
     <div class="section-white">
       <div class="section-body">
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款单号: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.477317') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refund_bn }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.070dce') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.order_id }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 售后单号: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.cd1b26') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.aftersales_bn }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 对应支付单号: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.36ee2b') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.trade_id }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 应退商品金额: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.030517') }} </el-col>
           <el-col :span="20"> ￥{{ refundDetail.refund_fee / 100 }} </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 实退商品金额: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.bbdb6f') }} </el-col>
           <el-col :span="20"> ￥{{ refundDetail.refunded_fee / 100 }} </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 应退商品积分: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.886abd') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refund_point }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 实退商品积分: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.cd88d4') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refunded_point }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款单状态: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.e1920f') }} </el-col>
           <el-col :span="20">
             <el-tag v-if="refundDetail.refund_status == 'READY'" size="mini" type="info">
-              未审核
+              {{ $t('eb172bd4.97a81d') }}
             </el-tag>
             <el-tag
               v-else-if="refundDetail.refund_status == 'AUDIT_SUCCESS'"
               size="mini"
               type="success"
             >
-              审核成功待退款
+              {{ $t('eb172bd4.202a8b') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.refund_status == 'SUCCESS'" size="mini" type="success">
-              退款成功
+              {{ $t('eb172bd4.d58cbd') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.refund_status == 'REFUSE'" size="mini" type="danger">
-              退款驳回
+              {{ $t('eb172bd4.771b8b') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.refund_status == 'CANCEL'" size="mini" type="info">
-              撤销退款
+              {{ $t('eb172bd4.0a7dff') }}
             </el-tag>
             <el-tag
               v-else-if="refundDetail.refund_status == 'PROCESSING'"
               size="mini"
               type="success"
             >
-              已发起退款等待到账
+              {{ $t('eb172bd4.cd3291') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.refund_status == 'CHANGE'" size="mini" type="danger">
-              退款异常
+              {{ $t('eb172bd4.c59ead') }}
             </el-tag>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款类型: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.9db7af') }} </el-col>
           <el-col :span="20">
             <el-tag
               v-if="refundDetail.refund_type == '0'"
@@ -99,10 +99,10 @@
               type="warning"
               size="mini"
             >
-              售后
+              {{ $t('eb172bd4.59bd68') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.refund_type == '1'" effect="plain" size="mini">
-              售前
+              {{ $t('eb172bd4.63d2ec') }}
             </el-tag>
             <el-tag
               v-else-if="refundDetail.refund_type == '2'"
@@ -110,86 +110,88 @@
               type="danger"
               size="mini"
             >
-              拒单
+              {{ $t('eb172bd4.518ce0') }}
             </el-tag>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.1ec73b') }} </el-col>
           <el-col :span="20">
             <el-tag v-if="refundDetail.freight <= 0" effect="plain" type="warning" size="mini">
-              不退运费
+              {{ $t('eb172bd4.3a58d0') }}
             </el-tag>
             <el-tag v-else-if="refundDetail.freight > 0" effect="plain" size="mini">
-              退运费
+              {{ $t('eb172bd4.662229') }}
             </el-tag>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款运费金额（¥）: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.85df68') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.freight_type == 'cash' ? (refundDetail.freight / 100).toFixed(2) : 0 }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款运费（积分）: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.e672db') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.freight_type == 'point' ? refundDetail.freight : 0 }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款支付方式: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.a0c13c') }} </el-col>
           <el-col :span="20">
-            <span v-if="refundDetail.pay_type == 'wxpay'">微信支付</span>
-            <span v-if="refundDetail.pay_type == 'wxpayapp'">微信APP支付</span>
-            <span v-if="refundDetail.pay_type == 'wxpayh5'">微信H5支付</span>
-            <span v-if="refundDetail.pay_type == 'wxpaypc'">微信POS支付</span>
-            <span v-if="refundDetail.pay_type == 'wxpaypos'">微信PC支付</span>
-            <span v-if="refundDetail.pay_type == 'alipayapp'">支付宝APP支付</span>
-            <span v-if="refundDetail.pay_type == 'alipay'">支付宝支付</span>
-            <span v-if="refundDetail.pay_type == 'alipayh5'">支付宝H5支付</span>
-            <span v-if="refundDetail.pay_type == 'alipaypos'">支付宝POS支付</span>
-            <span v-if="refundDetail.pay_type == 'deposit'">余额支付</span>
-            <span v-if="refundDetail.pay_type == 'ebuy'">EBUY支付</span>
-            <span v-if="refundDetail.pay_type == 'point'">积分支付</span>
-            <span v-if="refundDetail.pay_type == 'pos'">POS银行卡支付</span>
+            <span v-if="refundDetail.pay_type == 'wxpay'">{{ $t('eb172bd4.bffe28') }}</span>
+            <span v-if="refundDetail.pay_type == 'wxpayapp'">{{ $t('eb172bd4.3c2c77') }}</span>
+            <span v-if="refundDetail.pay_type == 'wxpayh5'">{{ $t('eb172bd4.df7033') }}</span>
+            <span v-if="refundDetail.pay_type == 'wxpaypc'">{{ $t('eb172bd4.c8a8cb') }}</span>
+            <span v-if="refundDetail.pay_type == 'wxpaypos'">{{ $t('eb172bd4.67a318') }}</span>
+            <span v-if="refundDetail.pay_type == 'alipayapp'">{{ $t('eb172bd4.2ac4fe') }}</span>
+            <span v-if="refundDetail.pay_type == 'alipay'">{{ $t('eb172bd4.e3b206') }}</span>
+            <span v-if="refundDetail.pay_type == 'alipayh5'">{{ $t('eb172bd4.5a3c52') }}</span>
+            <span v-if="refundDetail.pay_type == 'alipaypos'">{{ $t('eb172bd4.bc475f') }}</span>
+            <span v-if="refundDetail.pay_type == 'deposit'">{{ $t('eb172bd4.89ac23') }}</span>
+            <span v-if="refundDetail.pay_type == 'ebuy'">{{ $t('eb172bd4.a2e703') }}</span>
+            <span v-if="refundDetail.pay_type == 'point'">{{ $t('eb172bd4.accd19') }}</span>
+            <span v-if="refundDetail.pay_type == 'pos'">{{ $t('eb172bd4.d37dec') }}</span>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款渠道: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.2fe741') }} </el-col>
           <el-col :span="20">
             <span v-if="refundDetail.refund_channel == 'offline'"
-              >线下退款
+              >{{ $t('eb172bd4.46a9a9') }}
               <el-button
                 v-if="refundDetail.refund_status == 'SUCCESS'"
                 type="text"
                 @click="handleAccountView"
-                >查看账户</el-button
+                >{{ $t('eb172bd4.ee3e27') }}</el-button
               >
             </span>
-            <span v-else-if="refundDetail.refund_channel == 'original'">原路返回</span>
+            <span v-else-if="refundDetail.refund_channel == 'original'">{{
+              $t('eb172bd4.eef322')
+            }}</span>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 备注: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.55bea7') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refunds_memo }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 第三方退款单号: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.518b6a') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refund_id }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 申请时间: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.796c1b') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="col-3 content-right"> 退款成功时间: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.27c36a') }} </el-col>
           <el-col :span="20">
             <span v-if="refundDetail.refund_success_time">{{
               refundDetail.refund_success_time | datetime('YYYY-MM-DD HH:mm:ss')
@@ -197,7 +199,7 @@
           </el-col>
         </el-row>
         <el-row v-if="refundDetail.refuse_reason">
-          <el-col :span="3" class="col-3 content-right"> 商家处理申请说明: </el-col>
+          <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.0d41e2') }} </el-col>
           <el-col :span="20">
             {{ refundDetail.refuse_reason }}
           </el-col>
@@ -207,7 +209,7 @@
       <SpDialog
         ref="refundDialogRef"
         v-model="refundDialog"
-        :title="`退款【订单：${refundForm.order_id}】`"
+        :title="`${$t('eb172bd4.d59116')}${refundForm.order_id}${$t('eb172bd4.5942e7')}`"
         :form="refundForm"
         :form-list="refundFormList"
         :is-show-footer="false"
@@ -251,6 +253,7 @@ import {
   refundCheck,
   sendConfirm
 } from '../../../api/aftersales'
+import { i18n } from '@/i18n'
 export default {
   data() {
     return {
@@ -271,56 +274,56 @@ export default {
       },
       refundFormList: [
         {
-          label: '退款方式',
+          label: i18n.t('eb172bd4.4178e0'),
           key: 'pay_type',
           type: 'radio',
           required: true,
-          options: [{ label: 'offline_pay', name: '线下转账' }]
+          options: [{ label: 'offline_pay', name: i18n.t('eb172bd4.2d8019') }]
         },
         {
-          label: '收款人户名',
+          label: i18n.t('eb172bd4.84fc41'),
           key: 'bank_account_name',
           type: 'input',
           required: true,
-          message: '请输入收款人户名'
+          message: i18n.t('eb172bd4.2eb695')
         },
         {
-          label: '收款银行账号',
+          label: i18n.t('eb172bd4.27d6ee'),
           key: 'bank_account_no',
           type: 'input',
           required: true,
-          message: '请输入银行账号'
+          message: i18n.t('eb172bd4.f9aa7d')
         },
         {
-          label: '开户银行',
+          label: i18n.t('eb172bd4.cc5ca0'),
           key: 'bank_name',
           type: 'input',
           required: true,
-          message: '请输入开户银行'
+          message: i18n.t('eb172bd4.46222a')
         },
         {
-          label: '退款人户名',
+          label: i18n.t('eb172bd4.4de280'),
           key: 'refund_account_name',
           type: 'input',
           required: true,
-          message: '请输入退款人户名'
+          message: i18n.t('eb172bd4.93e941')
         },
         {
-          label: '退款银行账号',
+          label: i18n.t('eb172bd4.abfe4d'),
           key: 'refund_account_bank',
           type: 'input',
           required: true,
-          message: '请输入退款银行账号'
+          message: i18n.t('eb172bd4.d459b0')
         },
         {
-          label: '退款开户银行',
+          label: i18n.t('eb172bd4.4968ad'),
           key: 'refund_account_no',
           type: 'input',
           required: true,
-          message: '请输入退款开户银行'
+          message: i18n.t('eb172bd4.fad689')
         },
         {
-          label: '退款金额',
+          label: i18n.t('eb172bd4.a0cd4c'),
           key: 'refund_fee',
           type: 'input',
           disabled: true

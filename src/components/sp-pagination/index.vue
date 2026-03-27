@@ -9,7 +9,7 @@
     <div class="sp-pagination__body">
       <slot />
       <div v-if="page.total === 0 && !loading" class="sp-pagination__body-empty">
-        <el-empty description="暂无数据" />
+        <el-empty :description="$t('218f7423.21efd8')" />
       </div>
     </div>
     <div class="sp-pagination__footer">

@@ -7,26 +7,26 @@
   <div class="page-body">
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="activity_name" label="活动名称:">
-          <el-input v-model="params.activity_name" placeholder="请输入活动名称" />
+        <SpFilterFormItem prop="activity_name" :label="$t('3306b52b.1cadc0')">
+          <el-input v-model="params.activity_name" :placeholder="$t('3306b52b.7528b3')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:" size="max">
+        <SpFilterFormItem prop="create_time" :label="$t('3306b52b.374856')" size="max">
           <el-date-picker
             v-model="params.create_time"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('3306b52b.981cbe')"
+            :start-placeholder="$t('3306b52b.b44c0f')"
+            :end-placeholder="$t('3306b52b.1d468b')"
             prefix-icon="null"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="is_success" label="是否成团:">
-          <el-select v-model="params.is_success" clearable placeholder="请选择">
+        <SpFilterFormItem prop="is_success" :label="$t('3306b52b.68c9a6')">
+          <el-select v-model="params.is_success" clearable :placeholder="$t('3306b52b.708c9d')">
             <el-option
               v-for="item in processArr"
               :key="item.value"
@@ -50,13 +50,13 @@
         <el-table v-loading="loading" border :data="tableList">
           <el-table-column width="100" prop="activity_id" label="ID" />
 
-          <el-table-column width="220" prop="activity_name" label="活动名称" />
-          <el-table-column prop="total_fee" width="120" label="实际收入（¥）">
+          <el-table-column width="220" prop="activity_name" :label="$t('3306b52b.39834b')" />
+          <el-table-column prop="total_fee" width="120" :label="$t('3306b52b.622d65')">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column prop="total_fee" min-width="150" label="有效期">
+          <el-table-column prop="total_fee" min-width="150" :label="$t('3306b52b.bb114a')">
             <template slot-scope="scope">
               <div>{{ scope.row.start_time }}</div>
               <div>~</div>
@@ -64,12 +64,16 @@
             </template>
           </el-table-column>
 
-          <el-table-column width="220" prop="activity_process_msg" label="状态" />
+          <el-table-column width="220" prop="activity_process_msg" :label="$t('3306b52b.3fea7c')" />
 
-          <el-table-column width="200" prop="activity_delivery_status_msg" label="发货状态" />
+          <el-table-column
+            width="200"
+            prop="activity_delivery_status_msg"
+            :label="$t('3306b52b.c3c7a1')"
+          />
 
           <!-- <el-table-column
-              label="操作"
+              :label="$t('3306b52b.2b6bc0')"
               min-width="150"
             >
               <template slot-scope="scope">
@@ -79,7 +83,7 @@
                     type="text"
                     @click="send(scope.row)"
                   >
-                    发货
+                    {{ $t('3306b52b.045315') }}
                   </el-button>
 
                 </div>
@@ -124,36 +128,25 @@ export default {
         time_start_begin: '', //
         time_start_end: ''
       },
-      activity_status: [
-        {
-          title: '未开始',
-          value: 'waiting'
-        },
-        {
-          title: '进行中',
-          value: 'ongoing'
-        },
-        {
-          title: '已结束',
-          value: 'end'
-        }
-      ],
-      processArr: [
-        {
-          title: '是',
-          value: 1
-        },
-        {
-          title: '否',
-          value: 0
-        }
-      ],
       pickerOptions: PICKER_DATE_OPTIONS
     }
   },
 
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    activity_status() {
+      return [
+        { title: this.$t('3306b52b.dd4e55'), value: 'waiting' },
+        { title: this.$t('3306b52b.fb852f'), value: 'ongoing' },
+        { title: this.$t('3306b52b.047fab'), value: 'end' }
+      ]
+    },
+    processArr() {
+      return [
+        { title: this.$t('3306b52b.0a60ac'), value: 1 },
+        { title: this.$t('3306b52b.c9744f'), value: 0 }
+      ]
+    }
   },
   mounted() {
     this.fetchList()
@@ -206,17 +199,17 @@ export default {
     },
 
     send(row) {
-      var msg = '此操作发货, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('3306b52b.d56ebc')
+      this.$confirm(msg, this.$t('3306b52b.02d981'), {
+        cancelButtonText: this.$t('3306b52b.625fb2'),
+        confirmButtonText: this.$t('3306b52b.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             communityDeliver({ activity_id: row.activity_id }).then((response) => {
               this.fetchList()
               this.$message({
-                message: '发货成功',
+                message: this.$t('3306b52b.2c8dba'),
                 type: 'success',
                 duration: 5 * 1000
               })

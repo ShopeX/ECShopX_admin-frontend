@@ -9,7 +9,7 @@
             :src="value.titleText.image"
             class="header-image"
             alt=""
-          />
+          >
           <span
             v-if="value.titleText && value.titleText.text && value.titleText.type === 'text'"
             class="header-text"
@@ -25,7 +25,7 @@
         class="header-more"
         :style="{ color: value.moreBtn.color }"
       >
-        查看更多<el-icon class="el-icon-arrow-right" />
+        {{ i18n.t('2e6e1703.90ef7c') }}<el-icon class="el-icon-arrow-right" />
       </div>
     </div>
 
@@ -43,7 +43,7 @@
 
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
         </div>
 
         <!-- 商品信息 -->
@@ -57,7 +57,7 @@
 
           <!-- 拼团价 -->
           <div class="goods-group-price">
-            <span class="price-label">拼团价</span>
+            <span class="price-label">{{ i18n.t('2e6e1703.35a576') }}</span>
             <span class="price-symbol">¥</span>
             <span class="price-value">{{ formatGroupPrice(item) }}</span>
           </div>
@@ -67,9 +67,13 @@
   </div>
 </template>
 
-<script>
+<script>import { i18n } from '@/i18n'
+
 export default {
   name: 'GroupGoods',
+  data() {
+    return { i18n }
+  },
   props: {
     value: {
       type: Object,

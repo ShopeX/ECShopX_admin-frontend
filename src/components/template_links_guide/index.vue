@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="设置路径内容"
+    :title="$t('01495e9e.174dd0')"
     :visible="linksVisible"
     custom-class="dialog"
     append-to-body
@@ -43,8 +43,8 @@
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog">取 消</el-button>
-      <el-button type="primary" @click="setComfirm">确 定</el-button>
+      <el-button @click="closeDialog">{{ $t('01495e9e.c08ab9') }}</el-button>
+      <el-button type="primary" @click="setComfirm">{{ $t('01495e9e.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -132,7 +132,7 @@ export default {
     setComfirm() {
       if (!this.link) {
         this.$message({
-          message: '请选绑定内容',
+          message: this.$t('01495e9e.e244d5'),
           type: 'error'
         })
         return

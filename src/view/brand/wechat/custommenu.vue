@@ -8,7 +8,7 @@
     <div class="menu-wrap content-padded section-white content-box clearfix">
       <div class="menu_preview_area">
         <div class="mobile_menu_preview">
-          <div class="mobile_hd tc">ONex平台</div>
+          <div class="mobile_hd tc">{{ $t('2c018800.92acb3') }}</div>
           <div class="mobile_bd">
             <ul
               class="pre_menu_list grid_line ui-sortable ui-sortable-disabled"
@@ -22,7 +22,7 @@
                 "
                 @click="chooseMenu(item.id, index)"
               >
-                <input type="hidden" name="parentmenu" :value="index" />
+                <input type="hidden" name="parentmenu" :value="index">
                 <a href="javascript:;" class="pre_menu_link"
                   ><i v-if="menuData.length <= 0" class="el-icon-plus" /><span>{{
                     item.name
@@ -35,7 +35,7 @@
                       :class="subItem.id === cid ? 'current' : ''"
                       @click.stop="chooseSubMenu(subItem.id, index, subIndex)"
                     >
-                      <input type="hidden" name="submenu" :value="index + '-' + subIndex" />
+                      <input type="hidden" name="submenu" :value="index + '-' + subIndex">
                       <a href="javascript:;">
                         <span class="sub_pre_menu_inner">{{ subItem.name }}</span>
                       </a>
@@ -55,10 +55,11 @@
                 <a
                   href="javascript:;"
                   class="pre_menu_link"
-                  title="最多添加4个一级菜单"
+                  :title="$t('2c018800.18524f')"
                   @click="addMenu"
                 >
-                  <i class="el-icon-plus" /> <span v-if="menuData.length === 0">添加菜单</span>
+                  <i class="el-icon-plus" />
+                  <span v-if="menuData.length === 0">{{ $t('2c018800.14794a') }}</span>
                 </a>
               </li>
             </ul>
@@ -68,13 +69,13 @@
       <div class="content-box-right">
         <div class="editor-box">
           <div class="section-header with-border">
-            <h3>菜单名称</h3>
+            <h3>{{ $t('2c018800.8ee9f2') }}</h3>
             <a
               v-if="id !== null"
               class="fr link"
               style="margin-top: -30px"
               @click.prevent="removemenu"
-              >删除菜单</a
+              >{{ $t('2c018800.9bfd88') }}</a
             >
           </div>
           <div class="section-body">
@@ -85,18 +86,18 @@
                 :key="item.id"
                 label-width="90px"
               >
-                <el-form-item label="菜单名称">
+                <el-form-item :label="$t('2c018800.8ee9f2')">
                   <el-input v-model="item.name" :maxlength="4" style="width: 240px" />
-                  <p class="form-text-tip">字数不超过4个字</p>
+                  <p class="form-text-tip">{{ $t('2c018800.14867b') }}</p>
                 </el-form-item>
                 <template v-if="item.second_menu === undefined || item.second_menu.length === 0">
                   <!-- <el-form-item label="排序" prop="sort">
                     <el-input v-model="item.sort"></el-input>
                   </el-form-item> -->
-                  <el-form-item label="菜单内容">
+                  <el-form-item :label="$t('2c018800.7aca29')">
                     <el-radio-group v-model="item.menu_type">
-                      <el-radio :label="1"> 发送消息 </el-radio>
-                      <el-radio :label="2"> 跳转网页 </el-radio>
+                      <el-radio :label="1"> {{ $t('2c018800.b5f159') }} </el-radio>
+                      <el-radio :label="2"> {{ $t('2c018800.1d38c9') }} </el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -107,11 +108,11 @@
                       @change="updateMsg"
                     />
                     <div v-if="item.menu_type == 2" class="menu_content">
-                      <p class="frm-tips">订阅者点击该子菜单会跳到以下链接</p>
+                      <p class="frm-tips">{{ $t('2c018800.fddf02') }}</p>
                       <div class="clearfix">
-                        <span class="label f_l" style="display: block; padding-right: 10px"
-                          >页面地址</span
-                        >
+                        <span class="label f_l" style="display: block; padding-right: 10px">{{
+                          $t('2c018800.8f1c07')
+                        }}</span>
                         <div class="f_l content_mar_l">
                           <el-input v-model="item.url" style="width: 300px" />
                         </div>
@@ -128,17 +129,17 @@
                 :key="item.id"
                 label-width="90px"
               >
-                <el-form-item label="菜单名称">
+                <el-form-item :label="$t('2c018800.8ee9f2')">
                   <el-input v-model="item.name" :maxlength="4" style="width: 240px" />
-                  <p class="form-text-tip">字数不超过4个字</p>
+                  <p class="form-text-tip">{{ $t('2c018800.14867b') }}</p>
                 </el-form-item>
                 <!-- <el-form-item label="排序" prop="sort">
                   <el-input v-model="item.sort"></el-input>
                 </el-form-item> -->
-                <el-form-item label="菜单内容">
+                <el-form-item :label="$t('2c018800.7aca29')">
                   <el-radio-group v-model="item.menu_type">
-                    <el-radio :label="1"> 发送消息 </el-radio>
-                    <el-radio :label="2"> 跳转网页 </el-radio>
+                    <el-radio :label="1"> {{ $t('2c018800.b5f159') }} </el-radio>
+                    <el-radio :label="2"> {{ $t('2c018800.1d38c9') }} </el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item>
@@ -149,11 +150,11 @@
                     @change="updateMsg"
                   />
                   <div v-if="item.menu_type == 2" class="menu_content">
-                    <p class="frm-tips">订阅者点击该子菜单会跳到以下链接</p>
+                    <p class="frm-tips">{{ $t('2c018800.fddf02') }}</p>
                     <div class="clearfix">
-                      <span class="label f_l" style="display: block; padding-right: 10px"
-                        >页面地址</span
-                      >
+                      <span class="label f_l" style="display: block; padding-right: 10px">{{
+                        $t('2c018800.8f1c07')
+                      }}</span>
                       <div class="f_l content_mar_l">
                         <el-input v-model="item.url" style="width: 300px" />
                       </div>
@@ -165,7 +166,7 @@
           </div>
           <div class="section-footer with-border tc">
             <el-button v-if="id !== null" type="primary" @click="submitForm">
-              保存并发布至微信
+              {{ $t('2c018800.23fec2') }}
             </el-button>
           </div>
         </div>
@@ -235,7 +236,7 @@ export default {
     addMenu() {
       var defaultMenuData = {
         id: '',
-        name: '菜单',
+        name: this.$t('2c018800.4ccbdc'),
         menu_type: 1,
         news_type: '',
         sort: '',
@@ -255,7 +256,7 @@ export default {
     addSubMenu() {
       var defaultSubmenuData = {
         id: '',
-        name: '菜单',
+        name: this.$t('2c018800.4ccbdc'),
         menu_type: 1,
         news_type: '',
         sort: '',
@@ -271,9 +272,9 @@ export default {
       this.menuData[this.id].second_menu.push(defaultSubmenuData)
     },
     removemenu() {
-      this.$confirm('删除后菜单下设置的内容将被删除', '删除确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('2c018800.41e3cb'), this.$t('2c018800.50eaf9'), {
+        confirmButtonText: this.$t('2c018800.38cf16'),
+        cancelButtonText: this.$t('2c018800.625fb2'),
         type: 'warning'
       }).then(() => {
         this.menuData.forEach((item, index) => {
@@ -354,7 +355,7 @@ export default {
       let params = this.menuData
       addMenu(params).then((res) => {
         this.$message({
-          message: '菜单添加成功',
+          message: this.$t('2c018800.d4ccca'),
           type: 'success',
           duration: 5 * 1000
         })

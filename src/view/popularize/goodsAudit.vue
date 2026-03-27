@@ -8,12 +8,12 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :md="10" :lg="7">
-          <el-input v-model="params.keywords" placeholder="商品名称" size="small">
+          <el-input v-model="params.keywords" :placeholder="$t('f012f411.1fd1d5')" size="small">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
         <el-col :md="10" :lg="7">
-          <el-input v-model="params.item_bn" placeholder="商品编号" size="small">
+          <el-input v-model="params.item_bn" :placeholder="$t('f012f411.b07bdf')" size="small">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
@@ -21,7 +21,7 @@
           <el-cascader
             v-model="select_regions_value"
             size="small"
-            placeholder="商品产地"
+            :placeholder="$t('f012f411.adabc2')"
             :options="regions"
             clearable
             @change="searchAction"
@@ -34,7 +34,7 @@
             v-model="params.approve_status"
             size="small"
             clearable
-            placeholder="请选择状态"
+            :placeholder="$t('f012f411.e1c965')"
             @change="goodsSearch"
           >
             <el-option
@@ -51,13 +51,13 @@
             v-model="params.special_type"
             size="small"
             clearable
-            placeholder="商品类型"
+            :placeholder="$t('f012f411.2af133')"
             @change="searchAction"
           >
             <el-option
               v-for="item in special_type_list"
               :key="item.value"
-              placeholder="商品类型"
+              :placeholder="$t('f012f411.2af133')"
               :label="item.name"
               :value="item.value"
             />
@@ -77,7 +77,7 @@
         <el-col :span="24">
           <el-button-group>
             <el-button type="primary" size="small" icon="el-icon-edit" @click="batchItemsAudit()">
-              批量审核
+              {{ $t('f012f411.9fface') }}
             </el-button>
           </el-button-group>
         </el-col>
@@ -96,56 +96,66 @@
             :height="wheight - 330"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column type="selection" align="center" label="全选" />
-            <el-table-column prop="goods_id" label="商品ID" width="90" />
-            <el-table-column prop="distributor_name.name" label="店铺名称" width="120" />
-            <el-table-column prop="distributor_id" label="店ID" width="70" />
+            <el-table-column type="selection" align="center" :label="$t('f012f411.66eeac')" />
+            <el-table-column prop="goods_id" :label="$t('f012f411.858526')" width="90" />
+            <el-table-column
+              prop="distributor_name.name"
+              :label="$t('f012f411.0d4934')"
+              width="120"
+            />
+            <el-table-column prop="distributor_id" :label="$t('f012f411.d1020f')" width="70" />
 
-            <el-table-column label="审核状态" width="100" fixed>
+            <el-table-column :label="$t('f012f411.b6d0e9')" width="100" fixed>
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.rebate === 2 || scope.row.rebate === '2'" size="mini">
-                  等待审核
+                  {{ $t('f012f411.f6324c') }}
                 </el-tag>
                 <el-tag
                   v-if="scope.row.rebate === 1 || scope.row.rebate === '1'"
                   size="mini"
                   type="success"
                 >
-                  通过审核
+                  {{ $t('f012f411.975fb3') }}
                 </el-tag>
                 <el-tag
                   v-if="scope.row.rebate === 3 || scope.row.rebate === '3'"
                   size="mini"
                   type="warning"
                 >
-                  审核拒绝
+                  {{ $t('f012f411.146bb2') }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="商品图片" width="80">
+            <el-table-column :label="$t('f012f411.9b94b1')" width="80">
               <template slot-scope="scope">
                 <el-avatar shape="square" :size="60" fit="fit" :src="scope.row.pics[0]" />
               </template>
             </el-table-column>
-            <el-table-column label="规格" width="70">
+            <el-table-column :label="$t('f012f411.ea887b')" width="70">
               <template slot-scope="scope">
-                <el-tag v-if="!scope.row.nospec" effect="plain" type="success"> 多规格 </el-tag>
-                <el-tag v-else effect="plain"> 单规格 </el-tag>
+                <el-tag v-if="!scope.row.nospec" effect="plain" type="success">
+                  {{ $t('f012f411.5d60de') }}
+                </el-tag>
+                <el-tag v-else effect="plain"> {{ $t('f012f411.048df4') }} </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="itemName" label="商品名称">
+            <el-table-column prop="itemName" :label="$t('f012f411.1fd1d5')">
               <template slot-scope="scope">
                 {{ scope.row.item_name }}
                 <el-tag v-if="scope.row.special_type == 'drug'" type="danger" size="mini">
-                  处方药
+                  {{ $t('f012f411.e8b7e1') }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="销售价">
-              <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
+            <el-table-column :label="$t('f012f411.e29575')">
+              <template slot-scope="scope">
+                {{ scope.row.price / 100 }}{{ $t('f012f411.c16655') }}
+              </template>
             </el-table-column>
-            <el-table-column label="成本价">
-              <template slot-scope="scope"> {{ scope.row.cost_price / 100 }}元 </template>
+            <el-table-column :label="$t('f012f411.2e2ce2')">
+              <template slot-scope="scope">
+                {{ scope.row.cost_price / 100 }}{{ $t('f012f411.c16655') }}
+              </template>
             </el-table-column>
           </el-table>
           <div class="content-center content-top-padded">
@@ -162,17 +172,17 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <el-dialog title="批量审核" :visible.sync="dialogVisible" width="30%">
+      <el-dialog :title="$t('f012f411.9fface')" :visible.sync="dialogVisible" width="30%">
         <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="审核状态">
+          <el-form-item :label="$t('f012f411.b6d0e9')">
             <el-radio-group v-model="form.audit_status">
-              <el-radio label="approved"> 通过 </el-radio>
-              <el-radio label="rejected"> 拒绝 </el-radio>
+              <el-radio label="approved"> {{ $t('f012f411.23c1f3') }} </el-radio>
+              <el-radio label="rejected"> {{ $t('f012f411.7173f8') }} </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit"> 确定 </el-button>
-            <el-button @click="dialogVisible = false"> 取消 </el-button>
+            <el-button type="primary" @click="onSubmit"> {{ $t('f012f411.38cf16') }} </el-button>
+            <el-button @click="dialogVisible = false"> {{ $t('f012f411.625fb2') }} </el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -201,16 +211,7 @@ export default {
     return {
       dialogVisible: false,
       select_regions_value: [],
-      special_type_list: [
-        { value: 'normal', name: '普通商品' },
-        { value: 'drug', name: '处方药' }
-      ],
       regions: district,
-      tabList: [
-        { name: '待审核分销商品', value: 2, activeName: 'first' },
-        { name: '审核通过', value: 1, activeName: 'approved' },
-        { name: '审核拒绝', value: 3, activeName: 'rejected' }
-      ],
       form: {
         audit_status: 'approved',
         audit_reason: ''
@@ -230,17 +231,32 @@ export default {
         rebate: 2,
         is_warning: false,
         audit_status: 'rebate'
-      },
-      statusOption: [
-        { title: '前台可销售', value: 'onsale' },
-        { title: '前台不展示', value: 'offline_sale' },
-        { title: '前台仅展示', value: 'only_show' },
-        { title: '不可销售', value: 'instock' }
-      ]
+      }
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    special_type_list() {
+      return [
+        { value: 'normal', name: this.$t('f012f411.0f7a66') },
+        { value: 'drug', name: this.$t('f012f411.e8b7e1') }
+      ]
+    },
+    tabList() {
+      return [
+        { name: this.$t('f012f411.098dce'), value: 2, activeName: 'first' },
+        { name: this.$t('f012f411.871a30'), value: 1, activeName: 'approved' },
+        { name: this.$t('f012f411.146bb2'), value: 3, activeName: 'rejected' }
+      ]
+    },
+    statusOption() {
+      return [
+        { title: this.$t('f012f411.9b7481'), value: 'onsale' },
+        { title: this.$t('f012f411.2c50a0'), value: 'offline_sale' },
+        { title: this.$t('f012f411.acf86b'), value: 'only_show' },
+        { title: this.$t('f012f411.ae83a3'), value: 'instock' }
+      ]
+    }
   },
   watch: {
     $route() {
@@ -254,7 +270,7 @@ export default {
     onSubmit() {
       var rebate = this.form.audit_status == 'approved' ? 1 : 3
       updateGoodsInfo({ goods_id: this.goods_id, rebate: rebate }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('f012f411.33130f') })
         this.dialogVisible = false
         this.getGoodsList()
       })
@@ -272,7 +288,7 @@ export default {
     },
     batchItemsAudit() {
       if (this.goods_id.length === 0) {
-        this.$message({ type: 'error', message: '请选择至少一个商品' })
+        this.$message({ type: 'error', message: this.$t('f012f411.ace302') })
         return false
       }
       this.dialogVisible = true

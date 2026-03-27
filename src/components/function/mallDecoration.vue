@@ -6,7 +6,7 @@
 <template>
   <el-dialog
     :visible.sync="showDialog"
-    :title="relStore.id == '0' ? '编辑小程序模板' : '编辑店铺首页'"
+    :title="relStore.id == '0' ? $t('a21358ff.517328') : $t('a21358ff.d3edb3')"
     fullscreen
     lock-scroll
     :before-close="cancelAction"
@@ -31,73 +31,73 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-fujinshangjia" />
             </svg>
-            附近商家
+            {{ $t('a21358ff.0c0d95') }}
           </template>
           <template v-if="item.name === 'coupon' && !VERSION_IN_PURCHASE()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
-            优惠券
+            {{ $t('a21358ff.2f3635') }}
           </template>
           <template v-if="item.name === 'film'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-video1" />
             </svg>
-            视频
+            {{ $t('a21358ff.7fcf42') }}
           </template>
           <template v-if="item.name === 'goodsGrid'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-grid" />
             </svg>
-            商品栅格
+            {{ $t('a21358ff.cc1acf') }}
           </template>
           <template v-if="item.name === 'goodsGridTab'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-shangpintab" />
             </svg>
-            商品Tab
+            {{ $t('a21358ff.be92cb') }}
           </template>
           <template v-if="item.name === 'goodsScroll'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-scroll1" />
             </svg>
-            商品滚动
+            {{ $t('a21358ff.67e128') }}
           </template>
           <template v-if="item.name === 'imgHotzone'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-hotzone" />
             </svg>
-            热区图
+            {{ $t('a21358ff.0ad6ab') }}
           </template>
           <template v-if="item.name === 'marquees'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-marquees" />
             </svg>
-            文字轮播
+            {{ $t('a21358ff.917617') }}
           </template>
           <template v-if="item.name === 'navigation'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
-            图片导航
+            {{ $t('a21358ff.8ae4a2') }}
           </template>
           <template v-if="item.name === 'search'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-search1" />
             </svg>
-            搜索
+            {{ $t('a21358ff.e5f71f') }}
           </template>
           <template v-if="item.name === 'showcase'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-showcase" />
             </svg>
-            橱窗
+            {{ $t('a21358ff.f1beaa') }}
           </template>
           <template v-if="item.name === 'slider'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-slider" />
             </svg>
-            轮播
+            {{ $t('a21358ff.a5987d') }}
           </template>
           <template
             v-if="
@@ -110,14 +110,14 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store1" />
             </svg>
-            推荐店铺
+            {{ $t('a21358ff.089a3d') }}
           </template>
 
           <template v-if="item.name === 'floorImg'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-loucengtupian" />
             </svg>
-            楼层图片
+            {{ $t('a21358ff.e9eabc') }}
           </template>
 
           <!-- <template v-if="item.name === 'floorImg-two'">
@@ -130,20 +130,20 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-wenzibiaoti" />
             </svg>
-            文字标题
+            {{ $t('a21358ff.33a39d') }}
           </template>
           <template v-if="item.name === 'img-gif'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-shipintu" />
             </svg>
-            视频图
+            {{ $t('a21358ff.439ccf') }}
           </template>
 
           <template v-if="item.name === 'hotTopic'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-remenhuati" />
             </svg>
-            热点话题
+            {{ $t('a21358ff.b11dc3') }}
           </template>
         </div>
       </draggable>
@@ -158,7 +158,7 @@
                 ') no-repeat bottom; background-size: 100% auto;'
               "
             >
-              <span v-if="pageData">页面标题</span>
+              <span v-if="pageData">{{ $t('a21358ff.8d6b59') }}</span>
             </div>
           </div>
 
@@ -292,7 +292,7 @@
       <div class="setting-view">
         <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
-          请选择左侧挂件
+          {{ $t('a21358ff.f646bd') }}
         </div>
         <template v-if="editorIndex == -1">
           <TemplatePageEditor v-model="pageData" />
@@ -345,7 +345,9 @@
       </div>
     </section>
     <section class="section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">
+        {{ $t('a21358ff.be5fbb') }}
+      </el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -1027,7 +1029,7 @@ export default {
     },
     // 删除当前组件
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('a21358ff.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
@@ -1139,7 +1141,7 @@ export default {
       // 如果是平台版本推荐店铺组件且店铺为总店（店铺id 0）
       if (this.editorData.name === 'store' && this.VERSION_PLATFORM() && Number(store.id) === 0) {
         this.$message({
-          message: '推荐店铺不能为总店',
+          message: this.$t('a21358ff.146e4f'),
           type: 'error'
         })
         return false
@@ -1151,7 +1153,7 @@ export default {
         if (!store.id) {
           this.relItemsIds.splice(0)
           this.$message({
-            message: '请选择店铺',
+            message: this.$t('a21358ff.06accf'),
             type: 'error'
           })
           return
@@ -1324,7 +1326,7 @@ export default {
       console.log(JSON.parse(filter.template_content))
       await savePagesTemplate(filter)
       this.$message({
-        message: '保存成功',
+        message: this.$t('a21358ff.3b1083'),
         type: 'success',
         onClose: () => {
           this.$emit('saved', false)

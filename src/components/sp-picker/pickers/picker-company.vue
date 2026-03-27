@@ -46,10 +46,10 @@
   <div class="picker-company">
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="name">
-        <el-input v-model="formData.name" placeholder="企业名称" />
+        <el-input v-model="formData.name" :placeholder="$t('f5fd2a50.f47e27')" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="enterprise_sn">
-        <el-input v-model="formData.enterprise_sn" placeholder="企业编码" />
+        <el-input v-model="formData.enterprise_sn" :placeholder="$t('f5fd2a50.705f0a')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -57,12 +57,7 @@
       url="/enterprise"
       :class="['company-finder', { 'no-multiple': !multiple }]"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '企业名称', key: 'name' },
-          { name: '企业编码', key: 'enterprise_sn' }
-        ]
-      }"
+      :setting="companySetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -84,6 +79,17 @@ export default {
     title: '选择企业'
   },
   props: ['value'],
+  computed: {
+    companySetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: t('f5fd2a50.f47e27'), key: 'name' },
+          { name: t('f5fd2a50.705f0a'), key: 'enterprise_sn' }
+        ]
+      }
+    }
+  },
   data() {
     return {
       formData: {
@@ -97,7 +103,7 @@ export default {
     }
   },
   created() {
-    // this.fetch()
+    this.$options.config.title = this.$t('f5fd2a50.0067d7')
   },
   methods: {
     beforeSearch(params) {

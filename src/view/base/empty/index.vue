@@ -5,7 +5,7 @@
 
 <template>
   <div class="empty-box">
-    <p><i class="iconfont icon-meh" />&nbsp;暂无数据</p>
+    <p><i class="iconfont icon-meh" />&nbsp;{{ $t('abb938aa.21efd8') }}</p>
   </div>
 </template>
 <script>

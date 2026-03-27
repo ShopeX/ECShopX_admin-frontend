@@ -9,9 +9,17 @@
     <div class="decorate-hd">
       <div class="hd-lf">{{ localTitle }}</div>
       <div class="hd-rg">
-        <el-button v-if="mode == 'page'" plain @click="onExit"> 后退 </el-button>
-        <el-button v-if="mode == 'dialog'" plain @click="onClose"> 关闭 </el-button>
-        <el-button type="primary" @click="onSaveTemplate"> 保存 </el-button>
+        <el-button v-if="mode == 'page'" plain @click="onExit">
+{{
+          $t('c3827da6.5094c1')
+        }}
+</el-button>
+        <el-button v-if="mode == 'dialog'" plain @click="onClose">
+{{
+          $t('c3827da6.b15d91')
+        }}
+</el-button>
+        <el-button type="primary" @click="onSaveTemplate">{{ $t('c3827da6.be5fbb') }}</el-button>
       </div>
     </div>
     <div class="decorate-bd">
@@ -19,7 +27,7 @@
         <div class="wgts-categories">
           <!-- 通用挂件 -->
           <div v-if="widgetCategories.general.length > 0" class="wgt-category">
-            <div class="category-title">通用挂件</div>
+            <div class="category-title">{{ $t('c3827da6.c67610') }}</div>
             <draggable
               class="wgts-view"
               :chosen-class="'wgts-chosen'"
@@ -44,7 +52,7 @@
                   {{ wgt.wgtName }}
                 </div>
                 <div class="wgt-placeholder">
-                  <div class="placholder-txt">放置区域</div>
+                  <div class="placholder-txt">{{ $t('c3827da6.b3d296') }}</div>
                 </div>
               </div>
             </draggable>
@@ -52,7 +60,7 @@
 
           <!-- 功能挂件 -->
           <div v-if="widgetCategories.functional.length > 0" class="wgt-category">
-            <div class="category-title">功能挂件</div>
+            <div class="category-title">{{ $t('c3827da6.1c4b6c') }}</div>
             <draggable
               class="wgts-view"
               :chosen-class="'wgts-chosen'"
@@ -76,7 +84,7 @@
                   {{ wgt.wgtName }}
                 </div>
                 <div class="wgt-placeholder">
-                  <div class="placholder-txt">放置区域</div>
+                  <div class="placholder-txt">{{ $t('c3827da6.b3d296') }}</div>
                 </div>
               </div>
             </draggable>
@@ -84,7 +92,7 @@
 
           <!-- 专用挂件 -->
           <div v-if="widgetCategories.dedicated.length > 0" class="wgt-category">
-            <div class="category-title">专用挂件</div>
+            <div class="category-title">{{ $t('c3827da6.c69295') }}</div>
             <draggable
               class="wgts-view"
               :chosen-class="'wgts-chosen'"
@@ -109,7 +117,7 @@
                   {{ wgt.wgtName }}
                 </div>
                 <div class="wgt-placeholder">
-                  <div class="placholder-txt">放置区域</div>
+                  <div class="placholder-txt">{{ $t('c3827da6.b3d296') }}</div>
                 </div>
               </div>
             </draggable>
@@ -146,7 +154,12 @@
                   <SpIcon name="copy" @click="onCopyComp(index, wgt)" />
                   <SpIcon name="delete" @click="onDeleteComp(index)" />
                 </div>
-                <component v-if="wgt && wgt.name" :is="wgt.name" :value="wgt" />
+                <component
+                  v-if="wgt && wgt.name"
+                  ref="previewWgts"
+                  :is="getComponentName(wgt)"
+                  :value="wgt"
+                />
               </div>
             </draggable>
           </div>
@@ -163,7 +176,7 @@
             :info="getComponentAttr(contentComps[activeCompIndex])"
           />
         </div>
-        <div v-if="activeCompIndex == null && hackReset && headerAttr && localScene != '1007'">
+        <div v-if="activeCompIndex == null && hackReset && headerAttr && headerVisible">
           <div class="wgt-name">{{ headerAttr.wgtName }}</div>
           <attrPanel v-model="headerData" :info="headerAttr" />
         </div>
@@ -234,10 +247,8 @@ export default {
       }
     },
     headerVisible() {
-      // 商城装修(1001)、自定义页(1004)展示页面设置挂件；1007 分类模版等不展示
-      return (
-        this.mode == 'page' && (this.localScene == '1001' || this.localScene == '1004')
-      )
+      // 商城装修(1001)、店铺装修(1003)、个人中心(1008)展示页面设置挂件，1007 分类模版等不展示
+      return this.mode == 'page' && (this.localScene == '1001' || this.localScene == '1003' || this.localScene == '1008' || this.localScene == '1004')
     },
     widgetCategories() {
       // 通用挂件：轮播、热区图、视频、文字轮播
@@ -311,13 +322,13 @@ export default {
       this.localScene = scene
 
       const _title = {
-        1001: '商城装修',
-        1002: '商品详情',
-        1003: '店铺装修',
-        1004: '自定义页装修',
-        1007: '分类模版装修',
-        1008: '个人中心模版装修',
-        1009: '导购模板装修'
+        1001: this.$t('c3827da6.3d97fc'),
+        1002: this.$t('c3827da6.b4f5db'),
+        1003: this.$t('c3827da6.eab3fc'),
+        1004: this.$t('c3827da6.9d3c40'),
+        1007: this.$t('c3827da6.38e3c7'),
+        1008: this.$t('c3827da6.fbd049'),
+        1009: this.$t('c3827da6.fa06ad')
       }
       this.localTitle = _title[scene]
     } else {
@@ -341,6 +352,12 @@ export default {
       })
     },
     resetDecorateTheme() {},
+    // 用 widgets 中注册的组件名（如 LocationModule）渲染，避免 config.name（如 locationModule）与 Vue 注册名大小写不一致导致预览不显示
+    getComponentName(item) {
+      if (!item?.name || !this.widgets.length) return item?.name || ''
+      const w = this.widgets.find((wgt) => (wgt.name || '').toLowerCase() === (item.name || '').toLowerCase())
+      return w ? w.name : item.name
+    },
     getComponentAttr(item) {
       if (!item) return { wgtName: '', config: {} }
       const wgt = this.widgets.find((wgt) => {
@@ -474,7 +491,10 @@ export default {
         this.$message.error(this.getMutualExclusiveMessage(wgt.name))
         return
       }
-      this.contentComps.splice(index + 1, 0, cloneDeep(wgt))
+      const copy = cloneDeep(wgt)
+      // 与原件共用同一服务端 id 时，保存后后端会按 id 合并/覆盖，再次进入装修页副本会丢失
+      delete copy.id
+      this.contentComps.splice(index + 1, 0, copy)
     },
     onDeleteComp(index) {
       if (this.contentComps.length == index + 1) {
@@ -595,9 +615,21 @@ export default {
     },
     // 互斥时的提示文案（按组件区分）
     getMutualExclusiveMessage(wgtName) {
-      return `该挂件与其他挂件互斥，无法同时添加`
+      return this.$t('c3827da6.e6e7eb')
+    },
+    async syncSliderFirstScreenHeights() {
+      await this.$nextTick()
+      const refs = this.$refs.previewWgts
+      const list = Array.isArray(refs) ? refs : refs ? [refs] : []
+      await Promise.all(
+        list
+          .filter((c) => c && typeof c.measureFirstScreenHeight === 'function')
+          .map((c) => Promise.resolve(c.measureFirstScreenHeight()))
+      )
+      await this.$nextTick()
     },
     async onSaveTemplate() {
+      await this.syncSliderFirstScreenHeights()
       // console.log('onSaveTemplate:', JSON.stringify(data))
       if (this.mode == 'dialog') {
         this.$emit('change', this.contentComps)
@@ -611,6 +643,7 @@ export default {
       })
       data.unshift(this.headerAttr.transformOut(this.headerData, this.widgets))
       const { id } = this.$route.query
+      console.log('onSaveTemplate data:', data)
       if (
         this.localScene == '1004' ||
         this.localScene == '1006' ||
@@ -633,7 +666,7 @@ export default {
         })
       }
 
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('c3827da6.3b1083'))
     },
     onExit() {
       this.$router.go(-1)

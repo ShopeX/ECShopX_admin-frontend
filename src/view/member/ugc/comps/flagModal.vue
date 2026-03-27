@@ -6,16 +6,14 @@
 <template>
   <div>
     <el-dialog
-      :title="dialogTitle"
+      :title="dialogTitleText"
       :before-close="handleCancelLabelsDialog"
       :visible.sync="dialogIsShow"
       :show-close="false"
       width="30%"
     >
       <div>
-        <div class="result">
-          单选，选择后在小程序中将在笔记右上角展示；<br />角标的设置需在「官方角标管理」中调整。
-        </div>
+        <div class="result" v-html="$t('09b91dec.8cda63')" />
 
         <div v-loading="modalLoad" class="flag-list">
           <el-radio
@@ -26,7 +24,7 @@
             border
             size="small"
           >
-            {{ item.badge_name }}
+            {{ item.badge_name_key ? $t(item.badge_name_key) : item.badge_name }}
           </el-radio>
         </div>
       </div>
@@ -40,8 +38,16 @@
           @current-change="handleCurrentChange"
         />
 
-        <el-button type="primary" size="small" @click="modalHandle"> 确认 </el-button>
-        <el-button size="small" @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button type="primary" size="small" @click="modalHandle">
+{{
+          $t('09b91dec.e83a25')
+        }}
+</el-button>
+        <el-button size="small" @click="handleCancelLabelsDialog">
+{{
+          $t('09b91dec.625fb2')
+        }}
+</el-button>
       </div>
     </el-dialog>
   </div>
@@ -57,7 +63,6 @@ export default {
   data() {
     return {
       modalLoad: false,
-      dialogTitle: '选择角标',
       flagList: [],
       checkFlag: null,
       params: {
@@ -70,7 +75,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    dialogTitleText() {
+      return this.$t('09b91dec.e04a23')
+    }
+  },
   watch: {
     dufCheckFlag: {
       handler(newValue, oldValue) {
@@ -89,7 +98,6 @@ export default {
       const { flagList } = this.$data
       if (dufCheckFlag) {
         this.$data.checkFlag = dufCheckFlag.badge_id
-        //console.log('modeal flag checkFlag',dufCheckFlag)
       }
       if (flagList.length < 1) {
         this.getFetch()
@@ -103,7 +111,7 @@ export default {
       getBadge({}).then((res) => {
         var { list, total_count } = res.data.data
         if (list && this.flagList.length < 1) {
-          list.unshift({ badge_id: null, badge_name: '无' })
+          list.unshift({ badge_id: null, badge_name: null, badge_name_key: '09b91dec.d81bb2' })
         }
         that.$data.flagList = list
         that.$data.pagers = { total: total_count }

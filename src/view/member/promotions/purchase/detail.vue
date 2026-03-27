@@ -5,26 +5,26 @@
 
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">员工内购详情</div>
+    <div class="section-header with-border">{{ $t('f60777f5.67d849') }}</div>
     <div class="section-body">
       <el-form ref="detail" :model="detail" label-width="150px" label-position="right">
-        <el-form-item label="活动名称：">
+        <el-form-item :label="$t('f60777f5.eb2f99')">
           {{ detail.purchase_name }}
         </el-form-item>
-        <el-form-item label="活动分享图片：">
-          <img class="detail-img" :src="detail.ad_pic" />
+        <el-form-item :label="$t('f60777f5.d89b24')">
+          <img class="detail-img" :src="detail.ad_pic">
         </el-form-item>
-        <el-form-item label="活动有效时间：" prop="activity_time">
+        <el-form-item :label="$t('f60777f5.339045')" prop="activity_time">
           {{ detail.begin_date }} ~ {{ detail.end_date }}
         </el-form-item>
-        <el-form-item label="适用角色：">
+        <el-form-item :label="$t('f60777f5.936aa4')">
           {{ roleTransform(detail.used_roles) }}
         </el-form-item>
-        <el-form-item label="员工额度：">
+        <el-form-item :label="$t('f60777f5.aaf0b4')">
           {{ detail.employee_limitfee }}
         </el-form-item>
-        <el-form-item label="亲友是否共有额度：">
-          {{ detail.is_share_limitfee ? '是' : '否' }}
+        <el-form-item :label="$t('f60777f5.9726c0')">
+          {{ detail.is_share_limitfee ? $t('f60777f5.0a60ac') : $t('f60777f5.c9744f') }}
         </el-form-item>
         <el-form-item
           v-if="
@@ -32,31 +32,33 @@
             detail.used_roles.indexOf('dependents') > -1 &&
             !detail.is_share_limitfee
           "
-          label="每位亲友额度："
+          :label="$t('f60777f5.be3d6c')"
         >
           {{ detail.dependents_limitfee }}
         </el-form-item>
         <el-form-item
           v-if="detail.used_roles && detail.used_roles.indexOf('dependents') > -1"
-          label="员工邀请亲友上限："
+          :label="$t('f60777f5.060d99')"
         >
           {{ detail.dependents_limit }}
         </el-form-item>
-        <el-form-item :label="itemTypeTransform(detail.item_type) + '限购：'">
-          <p v-if="detail.item_type == 'all'">每人限购{{ detail.item_limit }}件</p>
+        <el-form-item :label="itemTypeTransform(detail.item_type) + $t('f60777f5.5ecbfa')">
+          <p v-if="detail.item_type == 'all'">
+            {{ $t('f60777f5.343488') }}{{ detail.item_limit }}{{ $t('f60777f5.f7edf5') }}
+          </p>
           <el-table v-else :data="detail.item_limit">
             <el-table-column prop="item_id" label="ID" />
-            <el-table-column prop="name" label="名称" />
+            <el-table-column prop="name" :label="$t('f60777f5.d7ec2d')" />
             <el-table-column
               v-if="detail.item_type === 'item'"
               prop="item_spec_desc"
-              label="商品规格描述"
+              :label="$t('f60777f5.8fc069')"
             />
-            <el-table-column prop="limit_num" label="每人限购" />
-            <el-table-column prop="limit_fee" label="每人限额" />
+            <el-table-column prop="limit_num" :label="$t('f60777f5.343488')" />
+            <el-table-column prop="limit_fee" :label="$t('f60777f5.8a34e8')" />
           </el-table>
         </el-form-item>
-        <el-form-item label="单笔订单最低金额：">
+        <el-form-item :label="$t('f60777f5.6703e8')">
           {{ detail.minimum_amount }}
         </el-form-item>
       </el-form>
@@ -96,24 +98,25 @@ export default {
       if (role) {
         let transRole = eval(role)
         let textArr = []
-        transRole.length > 0 && transRole.indexOf('employee') > -1 && textArr.push('员工')
-        transRole.length > 0 && transRole.indexOf('dependents') > -1 && textArr.push('亲友')
+        transRole.length > 0 &&
+          transRole.indexOf('employee') > -1 &&
+          textArr.push(this.$t('f60777f5.2ed392'))
+        transRole.length > 0 &&
+          transRole.indexOf('dependents') > -1 &&
+          textArr.push(this.$t('f60777f5.4eca5b'))
         return textArr.toString()
       }
     },
     itemTypeTransform(type) {
-      switch (type) {
-        case 'all':
-          return '全部商品'
-        case 'item':
-          return '指定商品'
-        case 'tag':
-          return '指定商品标签'
-        case 'category':
-          return '指定分类'
-        case 'brand':
-          return '指定品牌'
+      if (!type) return ''
+      const map = {
+        all: 'f60777f5.794a4e',
+        item: 'f60777f5.106704',
+        tag: 'f60777f5.ca5298',
+        category: 'f60777f5.9f7160',
+        brand: 'f60777f5.32906f'
       }
+      return this.$t(map[type] || '')
     }
   }
 }

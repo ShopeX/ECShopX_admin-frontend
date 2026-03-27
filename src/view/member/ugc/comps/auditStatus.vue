@@ -14,8 +14,8 @@
     >
       <div>
         <el-radio-group v-model="notesModalType" class="result" size="small" @change="modalInit">
-          <el-radio-button label="pass"> 发布已选 </el-radio-button>
-          <el-radio-button label="refuse"> 下架已选 </el-radio-button>
+          <el-radio-button label="pass">{{ $t('2e5b8fba.17523d') }}</el-radio-button>
+          <el-radio-button label="refuse">{{ $t('2e5b8fba.a066c7') }}</el-radio-button>
         </el-radio-group>
 
         <div class="cont">
@@ -26,7 +26,7 @@
         <el-button type="primary" @click="modalHandle">
           {{ handleText }}
         </el-button>
-        <el-button @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button @click="handleCancelLabelsDialog">{{ $t('2e5b8fba.625fb2') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -76,20 +76,17 @@ export default {
     },
     noteInit() {
       const { notesModalType } = this.$data
-      var dialogTitle = '笔记状态变更'
+      var dialogTitle = this.$t('2e5b8fba.082432')
       var handleText = null
       var modalInfo = null
-      // console.log('modalInit notesModalType',notesModalType)
       switch (notesModalType) {
         case 'pass':
-          handleText = '发布'
-          modalInfo =
-            '笔记发布点击「发布」后已选笔记将被加入小程序展示的队列，并将适配对应展示规则；若您希望将所选笔记的展示位置进行调整，请修改对应排序。'
+          handleText = this.$t('2e5b8fba.83611a')
+          modalInfo = this.$t('2e5b8fba.ec4c48')
           break
         case 'refuse':
-          handleText = '下架'
-          modalInfo =
-            '点击「下架」后已选笔记将不会在小程序中的社区中展示；<br/>同时，已转发/分享/收藏的链接&入口将失效。'
+          handleText = this.$t('2e5b8fba.d2379a')
+          modalInfo = this.$t('2e5b8fba.b62289')
           break
       }
       this.$data.dialogTitle = dialogTitle
@@ -98,18 +95,17 @@ export default {
     },
     flagInit() {
       const { notesModalType } = this.$data
-      var dialogTitle = '角标状态变更'
+      var dialogTitle = this.$t('2e5b8fba.fbda8b')
       var handleText = null
       var modalInfo = null
-      //console.log('modalInit notesModalType',notesModalType)
       switch (notesModalType) {
         case 'pass':
-          handleText = '发布'
-          modalInfo = '点击「发布」后，带有已选角标的笔记将会在小程序社区中显示展示对应的角标。'
+          handleText = this.$t('2e5b8fba.83611a')
+          modalInfo = this.$t('2e5b8fba.77f9f0')
           break
         case 'refuse':
-          handleText = '下架'
-          modalInfo = '点击「下架」后，带有已选角标的笔记依旧存在，但不显示对应角标；'
+          handleText = this.$t('2e5b8fba.d2379a')
+          modalInfo = this.$t('2e5b8fba.1719bf')
           break
       }
       this.$data.dialogTitle = dialogTitle

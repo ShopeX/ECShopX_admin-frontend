@@ -3,14 +3,15 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrItem from './attr-item'
 
 const config = {
   name: 'hotTopic',
   setting: [
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    { label: i18n.t('5a51588d.4707ba'), key: 'padded', component: 'switch', value: true },
     {
-      label: '话题',
+      label: i18n.t('5a51588d.b00a65'),
       key: 'data',
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
@@ -18,7 +19,7 @@ const config = {
       value: [
         {
           id: '',
-          topic: '话题'
+          topic: '5a51588d.b00a65'
         }
       ]
     }

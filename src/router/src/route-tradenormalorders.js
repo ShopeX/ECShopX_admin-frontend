@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '交易'
+const name = '4d4908e4.2685c0'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: [
     {
       path: 'entitytrade/tradenormalorders',
-      name: `全部订单`,
+      name: '4d4908e4.dbb4d8',
       component: () => import('@/view/mall/trade/normalorders/list'),
       children: [
         {
@@ -33,7 +33,7 @@ export default {
     },
     {
       path: 'entitytrade/prescriptionorders',
-      name: `处方药订单`,
+      name: '4d4908e4.d42283',
       component: () => import('@/view/mall/trade/normalorders/prepList'),
       children: [
         {
@@ -55,7 +55,7 @@ export default {
     },
     {
       path: 'entitytrade/tradenormalshoporders',
-      name: `自营订单`,
+      name: '4d4908e4.a509ca',
       component: () => import('@/view/mall/trade/normalorders/shopList'),
       children: [
         {
@@ -66,7 +66,7 @@ export default {
     },
     {
       path: 'entitytrade/marketingdistribution_orders',
-      name: `店铺订单`,
+      name: '4d4908e4.aae16d',
       component: () => import('@/view/mall/marketing/distributionOrders'),
       children: [
         {
@@ -77,7 +77,7 @@ export default {
     },
     {
       path: 'aftersales/aftersaleslist',
-      name: `售后列表`,
+      name: '4d4908e4.75bfab',
       component: () => import('@/view/mall/aftersales/list'),
       children: [
         {
@@ -89,17 +89,17 @@ export default {
 
     {
       path: 'entitytrade/normalordersupload',
-      name: `批量发货`,
+      name: '4d4908e4.425991',
       component: () => import('@/view/mall/trade/normalorders/ordersupload')
     },
     {
       path: 'servicepayment',
-      name: `交易单`,
+      name: '4d4908e4.8ab066',
       component: () => import('@/view/mall/trade/list')
     },
     {
       path: 'aftersalesrefundlist',
-      name: `退款单`,
+      name: '4d4908e4.51e9e1',
       component: () => import('@/view/mall/aftersales/refundList'),
       children: [
         {
@@ -110,17 +110,17 @@ export default {
     },
     {
       path: 'Refunderrorlogs',
-      name: `退款失败日志`,
+      name: '4d4908e4.ea0ea2',
       component: () => import('@/view/mall/trade/refunderrorlogs')
     },
     {
       path: 'chinaumsdivisionlist',
-      name: `分账单`,
+      name: '4d4908e4.fb1213',
       component: () => import('@/view/mall/chinaums/divisionList')
     },
     {
       path: 'servicetrade/tradeservice',
-      name: `服务订单`,
+      name: '4d4908e4.cfebe1',
       component: () => import('@/view/mall/trade/order/list'),
       children: [
         {
@@ -131,12 +131,12 @@ export default {
     },
     {
       path: 'servicetrade/tradeverification',
-      name: `服务核销单`,
+      name: '4d4908e4.106f81',
       component: () => import('@/view/mall/trade/salesmanWorkRecords')
     },
     {
       path: 'reservation/mallreservation',
-      name: `预约管理`,
+      name: '4d4908e4.220e22',
       component: () => import('@/view/mall/reservation/resourcesetting/index'),
       children: [
         {
@@ -147,27 +147,27 @@ export default {
     },
     {
       path: 'reservation/reservationsetting',
-      name: `预约设置`,
+      name: '4d4908e4.0ccaa3',
       component: () => import('@/view/mall/reservation/setting/index')
     },
     {
       path: 'reservation/reservationorder',
-      name: `预约单`,
+      name: '4d4908e4.caa2e5',
       component: () => import('@/view/mall/reservation/resourcesetting/reservation')
     },
     {
       path: 'ordersetting/ordersettingdetail',
-      name: `订单时效配置`,
+      name: '4d4908e4.3b529a',
       component: () => import('@/view/order/orderSetting.vue')
     },
     {
       path: 'ordersetting/aftersalesreason',
-      name: `售后原因`,
+      name: '4d4908e4.160adc',
       component: () => import('@/view/mall/aftersales/reason')
     },
     {
       path: 'ordersetting/tradesetting',
-      name: `礼品包装`,
+      name: '4d4908e4.6d923e',
       component: () => import('@/view/order/tradeSetting')
     },
     // {
@@ -183,12 +183,12 @@ export default {
     // },
     {
       path: 'ordersetting/cartremind',
-      name: `购物车提醒`,
+      name: '4d4908e4.f6f5b3',
       component: () => import('@/view/wxapp/cartremind')
     },
     {
       path: 'ordersetting/goodslimit',
-      name: `商品限购`,
+      name: '4d4908e4.44d46e',
       component: () => import('@/view/member/promotions/goodslimit/list'),
       children: [
         {

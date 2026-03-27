@@ -63,41 +63,45 @@
 <template>
   <div class="comp-picker-link-wrapper">
     <!-- {{ localValue }} -->
-    <div class="tracking-params-wrapper">
-      <label class="tracking-params-label">模式</label>
+    <div class="tracking-params-wrapper" v-if="isShowH5Link">
+      <label class="tracking-params-label">{{ $t('4a0a5782.f0789e') }}</label>
       <el-radio-group
         v-model="localValue.linkType"
         class="linktype-radio"
         @change="onChangeLinkType"
         size="small"
       >
-        <el-radio-button :label="0"> 选择路径 </el-radio-button>
-        <el-radio-button v-if="isShowH5Link" :label="1">H5链接</el-radio-button>
+        <el-radio-button :label="0">{{ $t('4a0a5782.e3cf91') }}</el-radio-button>
+        <el-radio-button :label="1">
+{{
+          $t('4a0a5782.4e99fd')
+        }}
+</el-radio-button>
       </el-radio-group>
     </div>
     <div v-if="localValue.linkType == 0" class="tracking-params-wrapper" @click="onPickerPath">
-      <label class="tracking-params-label">路径</label>
+      <label class="tracking-params-label">{{ $t('4a0a5782.4f35e8') }}</label>
       <div class="btn-linkpath">{{ getLabelName() }}</div>
     </div>
     <div class="tracking-params-wrapper" v-else>
-      <label class="tracking-params-label">H5链接</label>
+      <label class="tracking-params-label">{{ $t('4a0a5782.4e99fd') }}</label>
       <el-input
         v-model="localValue.linkUrl"
         class="h5-link"
         size="small"
         type="text"
-        placeholder="请填写自定义链接"
+        :placeholder="$t('4a0a5782.11b162')"
         @change="onChangeLinkUrl"
       />
     </div>
     <div class="tracking-params-wrapper">
-      <label class="tracking-params-label">埋点参数</label>
+      <label class="tracking-params-label">{{ $t('4a0a5782.965470') }}</label>
       <el-input
         v-model="localValue.trackingParams"
         class="tracking-params-input"
         size="small"
         type="text"
-        placeholder="请输入埋点参数"
+        :placeholder="$t('4a0a5782.7bb892')"
         @change="onChangeTrackingParams"
       />
     </div>
@@ -107,6 +111,7 @@
 <script>
 import { cloneDeep } from 'lodash'
 import { LINK_PATH } from '@/consts'
+import { i18n } from '@/i18n'
 export default {
   name: 'CompPickerLink',
   props: {
@@ -182,7 +187,7 @@ export default {
       if (linkPage) {
         return `${LINK_PATH[linkPage]}：${title}`
       } else {
-        return '选择路径'
+        return this.$t('4a0a5782.e3cf91')
       }
     }
   }

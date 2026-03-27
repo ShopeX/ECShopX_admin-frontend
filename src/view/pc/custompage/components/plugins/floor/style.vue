@@ -5,23 +5,23 @@
 
 <template>
   <div class="floorStyle">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('a08d75c1.e366cc') }}</div>
     <el-row :gutter="10">
       <el-form ref="dataForm" :model="dataForm" label-width="120px">
         <!-- 标题 -->
-        <el-form-item label="标题：">
+        <el-form-item :label="$t('a08d75c1.d0b05b')">
           <el-input v-model="dataForm.title" />
         </el-form-item>
         <!-- 左侧导航背景颜色 -->
-        <el-form-item label="左侧导航背景:">
+        <el-form-item :label="$t('a08d75c1.676ec9')">
           <el-color-picker v-model="dataForm.LeftBackgroundColor" />
         </el-form-item>
         <!-- 左侧字体颜色 -->
-        <el-form-item label="左侧字体背景:">
+        <el-form-item :label="$t('a08d75c1.ec69af')">
           <el-color-picker v-model="dataForm.LeftFontColor" />
         </el-form-item>
         <!-- 左侧图片挂件 -->
-        <el-form-item label="左侧图片挂件： 图片大小 250*440">
+        <el-form-item :label="$t('a08d75c1.85ce31')">
           <el-col :span="12">
             <div class="setting-item slider">
               <div v-if="dataForm.leftImg.url">
@@ -29,22 +29,26 @@
                   :src="dataForm.leftImg.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(0)"
-                />
+                >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(0)">
-                <i class="el-icon-camera" />上传图片
+                <i class="el-icon-camera" />{{ $t('a08d75c1.ce6855') }}
               </div>
             </div>
           </el-col>
           <el-col :span="12">
             <el-button size="mini" @click="setTypeNavLink(-1, 0)">
               <i class="el-icon-circle-plus" />
-              {{ dataForm.leftImg.children ? dataForm.leftImg.children.data.title : '设置路径' }}
+              {{
+                dataForm.leftImg.children
+                  ? dataForm.leftImg.children.data.title
+                  : $t('a08d75c1.4f2c29')
+              }}
             </el-button>
           </el-col>
         </el-form-item>
         <!-- 右侧图片挂件1 -->
-        <el-form-item label="右侧图片挂件1： 图片大小 155*280">
+        <el-form-item :label="$t('a08d75c1.20c12d')">
           <el-col :span="12">
             <div class="setting-item slider">
               <div v-if="dataForm.rightImg1.url">
@@ -52,10 +56,10 @@
                   :src="dataForm.rightImg1.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(1)"
-                />
+                >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(1)">
-                <i class="el-icon-camera" />上传图片
+                <i class="el-icon-camera" />{{ $t('a08d75c1.ce6855') }}
               </div>
             </div>
           </el-col>
@@ -63,13 +67,15 @@
             <el-button size="mini" @click="setTypeNavLink(-1, 1)">
               <i class="el-icon-circle-plus" />
               {{
-                dataForm.rightImg1.children ? dataForm.rightImg1.children.data.title : '设置路径'
+                dataForm.rightImg1.children
+                  ? dataForm.rightImg1.children.data.title
+                  : $t('a08d75c1.4f2c29')
               }}
             </el-button>
           </el-col>
         </el-form-item>
         <!-- 右侧图片挂件 -->
-        <el-form-item label="右侧图片挂件2： 图片大小 155*280">
+        <el-form-item :label="$t('a08d75c1.177efe')">
           <el-col :span="12">
             <div class="setting-item slider">
               <div v-if="dataForm.rightImg2.url">
@@ -77,10 +83,10 @@
                   :src="dataForm.rightImg2.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(2)"
-                />
+                >
               </div>
               <div v-else class="banner-uploader" @click="handleImgChange(2)">
-                <i class="el-icon-camera" />上传图片
+                <i class="el-icon-camera" />{{ $t('a08d75c1.ce6855') }}
               </div>
             </div>
           </el-col>
@@ -88,18 +94,20 @@
             <el-button size="mini" @click="setTypeNavLink(-1, 2)">
               <i class="el-icon-circle-plus" />
               {{
-                dataForm.rightImg2.children ? dataForm.rightImg2.children.data.title : '设置路径'
+                dataForm.rightImg2.children
+                  ? dataForm.rightImg2.children.data.title
+                  : $t('a08d75c1.4f2c29')
               }}
             </el-button>
           </el-col>
         </el-form-item>
         <!-- 类型导航项 -->
-        <el-form-item label="类型导航项：">
+        <el-form-item :label="$t('a08d75c1.065562')">
           <template v-for="(item, index) in dataForm.leftNavList">
             <el-col :key="item.uuid" :span="18">
               <el-input v-model="item.titleName" />
               <el-button size="mini" class="btn-width__100" @click="setTypeNavLink(index)">
-                {{ item.id ? item.title : '设置路径' }}
+                {{ item.id ? item.title : $t('a08d75c1.4f2c29') }}
               </el-button>
             </el-col>
             <el-col :key="item.uuid2" :span="6">
@@ -111,12 +119,12 @@
           <el-col :span="24">
             <el-button :disabled="dataForm.leftNavList.length >= 9" size="mini" @click="addTypeNav">
               <i class="el-icon-circle-plus" />
-              设置项目
+              {{ $t('a08d75c1.067bd6') }}
             </el-button>
           </el-col>
         </el-form-item>
         <!-- Tab类型切换 -->
-        <el-form-item label="Tab类型切换：">
+        <el-form-item :label="$t('a08d75c1.b9f670')">
           <template v-for="(item, index) in dataForm.tabList">
             <el-col :key="item.uuid" :span="18">
               <el-input v-model="item.title" />
@@ -130,12 +138,12 @@
           <el-col :span="24">
             <el-button :disabled="dataForm.leftNavList.length >= 9" size="mini" @click="addTabList">
               <i class="el-icon-circle-plus" />
-              设置Tap
+              {{ $t('a08d75c1.f00542') }}
             </el-button>
           </el-col>
         </el-form-item>
         <!-- 选择商品 -->
-        <el-form-item label="选择商品：">
+        <el-form-item :label="$t('a08d75c1.4d7329')">
           <el-tabs v-model="dataForm.activeName" type="card">
             <el-tab-pane
               v-for="(items, index) in dataForm.tabList"
@@ -161,7 +169,7 @@
               <el-col :span="24">
                 <el-button size="mini" @click="addGoods">
                   <i class="el-icon-circle-plus" />
-                  设置商品
+                  {{ $t('a08d75c1.8ab0d7') }}
                 </el-button>
               </el-col>
             </el-tab-pane>

@@ -49,17 +49,21 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
       <div class="form-color">
         <el-form class="view-flex-item" :inline="true" label-width="80px">
-          <el-form-item label="主色调">
+          <el-form-item :label="$t('7b3cf89a.23b6ab')">
             <el-color-picker v-model="form.data[0].primary" />
           </el-form-item>
-          <el-form-item label="辅色调">
+          <el-form-item :label="$t('7b3cf89a.ed87f3')">
             <el-color-picker v-model="form.data[0].accent" />
           </el-form-item>
           <!-- <el-form-item label="会员色">
               <el-color-picker v-model="form.data[0].marketing" />
             </el-form-item> -->
         </el-form>
-        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">
+{{
+          $t('7b3cf89a.be5fbb')
+        }}
+</el-button>
       </div>
       <div class="pages-view-warp">
         <div class="pages-view" :style="'width: ' + Math.floor((wwidth - 250) / 268) * 268 + 'px'">
@@ -73,7 +77,7 @@
                 : 'background:' + form.data[0].marketing
             "
           >
-            <img :src="item.img" />
+            <img :src="item.img">
           </div>
         </div>
       </div>
@@ -145,7 +149,7 @@ export default {
       savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('7b3cf89a.3b1083'),
             type: 'success'
           })
         }

@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'applications',
       icon: 'app-store',
       keepAlive: true,
-      title: '应用'
+      title: '9d1e03c7.5b0520'
     },
     name: 'applications',
     path: '/applications',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'bspay_cash_audit',
           icon: 'pay-circle',
-          title: '提现审核',
+          title: '9d1e03c7.91287f',
           permissions: ['applications.bspay.bspay_cash_audit']
         },
         component: () => import('@/view/mall/bspay_sub_account/withdraw_audit')
@@ -32,7 +32,7 @@ const routes = [
         path: 'dougong/withdraw',
         meta: {
           aliasName: 'dougong_withdraw',
-          title: '提现',
+          title: '9d1e03c7.db7971',
           icon: 'pay-circle',
           permissions: ['applications.bspay.bspay_withdraw']
         },
@@ -43,7 +43,7 @@ const routes = [
         path: 'dougong/user-approval',
         meta: {
           aliasName: 'user_audit',
-          title: '用户进件审批',
+          title: '9d1e03c7.285c7b',
           icon: 'pay-circle',
           permissions: ['applications.bspay.user_audit']
         },
@@ -61,7 +61,7 @@ const routes = [
         meta: {
           aliasName: 'bspay_trades',
           icon: 'pay-circle',
-          title: '分账明细',
+          title: '9d1e03c7.85b2f8',
           permissions: ['applications.bspay.bspay_trades']
         },
         component: () => import('@/view/mall/bspay_sub_account/sub_account'),
@@ -78,7 +78,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_trades',
           icon: 'pay-circle',
-          title: '分账明细',
+          title: '9d1e03c7.85b2f8',
           permissions: ['applications.adapay.adapay_trades']
         },
         component: () => import('@/view/mall/sub_account/sub_account'),
@@ -95,7 +95,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_cash',
           icon: 'pay-circle',
-          title: '提现',
+          title: '9d1e03c7.db7971',
           permissions: ['applications.adapay.adapay_cash']
         },
         component: () => import('@/view/mall/withdraw/withdraw')
@@ -107,7 +107,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_cash_setting',
           icon: 'pay-circle',
-          title: '提现设置',
+          title: '9d1e03c7.b33aa1',
           permissions: ['applications.adapay.adapay_cash_setting']
         },
         component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
@@ -118,7 +118,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_member_audit',
           icon: 'pay-circle',
-          title: '开户审批',
+          title: '9d1e03c7.5bf3b3',
           permissions: ['applications.adapay.adapay_member_audit']
         },
         component: () => import('@/view/mall/marketing/openingapproval'),
@@ -135,7 +135,7 @@ const routes = [
         meta: {
           aliasName: 'company-admin',
           icon: 'pay-circle',
-          title: '企业管理',
+          title: '9d1e03c7.07c516',
           permissions: ['applications.ec.company-admin']
         },
         component: () => import('@/view/member/purchase/company')
@@ -146,7 +146,7 @@ const routes = [
         meta: {
           aliasName: 'employee-admin',
           icon: 'pay-circle',
-          title: '员工管理',
+          title: '9d1e03c7.b33603',
           permissions: ['applications.ec.employee-admin']
         },
         component: () => import('@/view/member/purchase/employee'),
@@ -163,7 +163,7 @@ const routes = [
         meta: {
           aliasName: 'purchase-admin',
           icon: 'pay-circle',
-          title: '活动管理',
+          title: '9d1e03c7.d285a2',
           permissions: ['applications.ec.purchase-admin']
         },
         component: () => import('@/view/marketing/employee/list'),
@@ -192,7 +192,7 @@ const routes = [
         meta: {
           aliasName: 'purchase-list',
           icon: 'pay-circle',
-          title: '订单管理',
+          title: '9d1e03c7.afcd11',
           permissions: ['applications.ec.purchase-list']
         },
         component: () => import('@/view/order/entitytrade/purchase'),
@@ -225,7 +225,7 @@ const routes = [
         meta: {
           aliasName: 'workwechat',
           icon: 'pay-circle',
-          title: '企业微信设置',
+          title: '9d1e03c7.fc99ea',
           permissions: ['applications.guide.workwechat']
         },
         component: () => import('@/view/base/setting/workwechat/workwechat')
@@ -236,7 +236,7 @@ const routes = [
         meta: {
           aliasName: 'salespersonshelfindex',
           icon: 'pay-circle',
-          title: '导购货架首页',
+          title: '9d1e03c7.af488e',
           permissions: ['applications.guide.salespersonshelfindex']
         },
         component: () => import('@/view/wxapp/salespersonshelfindex')
@@ -247,7 +247,7 @@ const routes = [
         meta: {
           aliasName: 'activity',
           icon: 'pay-circle',
-          title: '活动管理',
+          title: '9d1e03c7.d285a2',
           permissions: ['applications.community.activity']
         },
         component: () => import('@/view/mall/community/activityList')
@@ -258,7 +258,7 @@ const routes = [
         meta: {
           aliasName: 'communitygoods',
           icon: 'pay-circle',
-          title: '活动商品',
+          title: '9d1e03c7.42f9f7',
           permissions: ['applications.community.communitygoods']
         },
         component: () => import('@/view/mall/community/communitygoods')
@@ -269,7 +269,7 @@ const routes = [
         meta: {
           aliasName: 'communityorder',
           icon: 'pay-circle',
-          title: '活动订单',
+          title: '9d1e03c7.35420b',
           permissions: ['applications.community.communityorder']
         },
         component: () => import('@/view/mall/trade/normalorders/communityList'),
@@ -290,7 +290,7 @@ const routes = [
         meta: {
           aliasName: 'communitysetting',
           icon: 'pay-circle',
-          title: '活动配置',
+          title: '9d1e03c7.b24f85',
           permissions: ['applications.community.communitysetting']
         },
         component: () => import('@/view/mall/community/setting')
@@ -301,7 +301,7 @@ const routes = [
         meta: {
           aliasName: 'subdistrict',
           icon: 'pay-circle',
-          title: '社区管理',
+          title: '9d1e03c7.62efd2',
           permissions: ['applications.community.subdistrict']
         },
         component: () => import('@/view/mall/subdistrict/list')
@@ -312,7 +312,7 @@ const routes = [
         meta: {
           aliasName: 'communitychief',
           icon: 'pay-circle',
-          title: '团长管理',
+          title: '9d1e03c7.0303d0',
           permissions: ['applications.community.communitychief']
         },
         component: () => import('@/view/mall/community/chief'),
@@ -337,7 +337,7 @@ const routes = [
         meta: {
           aliasName: 'achievement',
           icon: 'pay-circle',
-          title: '团长业绩',
+          title: '9d1e03c7.09cfa9',
           permissions: ['applications.community.achievement']
         },
         component: () => import('@/view/mall/community/achievement')
@@ -348,7 +348,7 @@ const routes = [
         meta: {
           aliasName: 'withdraw',
           icon: 'pay-circle',
-          title: '提现申请',
+          title: '9d1e03c7.33011e',
           permissions: ['applications.community.withdraw']
         },
         component: () => import('@/view/mall/community/withdraw')
@@ -360,7 +360,7 @@ const routes = [
         meta: {
           aliasName: 'chiefupload1',
           icon: 'pay-circle',
-          title: '团长导入',
+          title: '9d1e03c7.5ad881',
           permissions: ['applications.community.chiefupload1']
         },
         component: () => import('@/view/member/members/upload_chief')
@@ -405,7 +405,7 @@ const routes = [
         meta: {
           aliasName: 'extapp',
           icon: 'pay-circle',
-          title: '扩展应用',
+          title: '9d1e03c7.e7a708',
           permissions: ['applications.appsgroup.extapp']
         },
         component: () => import('@/view/applications/plugin'),
@@ -421,7 +421,7 @@ const routes = [
         path: 'kujiale/products',
         meta: {
           aliasName: 'kujiale-products',
-          title: '酷家乐商品',
+          title: '9d1e03c7.5c6426',
           icon: 'pay-circle',
           permissions: ['applications.kujiale.kujiale-products']
         },

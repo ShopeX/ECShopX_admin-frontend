@@ -28,9 +28,9 @@
 <template>
   <div class="picker-sale-category">
     <div class="cascader-header">
-      <div class="hd">一级</div>
-      <div class="hd">二级</div>
-      <div class="hd">三级</div>
+      <div class="hd">{{ $t('fb0f3290.117bf1') }}</div>
+      <div class="hd">{{ $t('fb0f3290.301d4d') }}</div>
+      <div class="hd">{{ $t('fb0f3290.3ba8ac') }}</div>
     </div>
     <el-cascader-panel
       v-model="localValue"
@@ -66,6 +66,7 @@ export default {
     }
   },
   created() {
+    this.$options.config.title = this.$t('fb0f3290.8a28fe')
     this.fetch()
   },
   methods: {

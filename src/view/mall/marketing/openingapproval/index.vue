@@ -13,10 +13,10 @@
               <el-col :span="20">
                 <el-row>
                   <el-col :span="8">
-                    <el-form-item label="审批状态">
+                    <el-form-item :label="$t('fe3fc5f4.d352ae')">
                       <el-select
                         v-model="params.status"
-                        placeholder="请选择审批状态"
+                        :placeholder="$t('fe3fc5f4.a7dd1f')"
                         class="input-m"
                       >
                         <el-option
@@ -29,20 +29,20 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="商户名称">
+                    <el-form-item :label="$t('fe3fc5f4.e6f169')">
                       <el-input
                         v-model="params.user_name"
                         class="input-m"
-                        placeholder="请输入"
+                        :placeholder="$t('fe3fc5f4.02cc4f')"
                         clearable
                       />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="所属地区">
+                    <el-form-item :label="$t('fe3fc5f4.a74dc6')">
                       <el-cascader
                         v-model="regions_value"
-                        placeholder="根据地区筛选"
+                        :placeholder="$t('fe3fc5f4.491f74')"
                         :options="regions"
                         filterable
                         clearable
@@ -53,15 +53,15 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item label="申请日期">
+                    <el-form-item :label="$t('fe3fc5f4.4c9c23')">
                       <el-date-picker
                         v-model="create_time"
                         class="input-m"
                         type="daterange"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
+                        :start-placeholder="$t('fe3fc5f4.b44c0f')"
+                        :end-placeholder="$t('fe3fc5f4.1d468b')"
                         @change="dateChange"
                       />
                     </el-form-item>
@@ -69,8 +69,10 @@
                 </el-row>
               </el-col>
               <el-col :span="3" style="text-align: right">
-                <el-button type="primary" @click="searchData"> 搜索 </el-button>
-                <el-button @click="resetForm('myForm')"> 重置 </el-button>
+                <el-button type="primary" @click="searchData">
+                  {{ $t('fe3fc5f4.e5f71f') }}
+                </el-button>
+                <el-button @click="resetForm('myForm')"> {{ $t('fe3fc5f4.4b9c32') }} </el-button>
               </el-col>
             </el-row>
           </el-form>
@@ -84,13 +86,13 @@
                   class="cus-row-img"
                   src="@/assets/img/adapay/distributor.png"
                   alt=""
-                />
+                >
                 <img
                   v-if="item.apply_type === 'dealer'"
                   class="cus-row-img"
                   src="@/assets/img/adapay/dealer.png"
                   alt=""
-                />
+                >
               </el-col>
               <el-col :span="13">
                 <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
@@ -98,11 +100,10 @@
                 </router-link>
                 <div class="cus-row-time">
                   <span
-                    >申请时间：{{
-                      item.create_time ? createTimeFilter(item.create_time) : '-'
-                    }}</span
+                    >{{ $t('fe3fc5f4.402d96')
+                    }}{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span
                   >
-                  <span>所属地区：{{ item.address || '-' }}</span>
+                  <span>{{ $t('fe3fc5f4.801525') }}{{ item.address || '-' }}</span>
                 </div>
               </el-col>
               <el-col :span="5">
@@ -111,13 +112,13 @@
                   src="@/assets/img/adapay/pass.png"
                   alt=""
                   style="width: 100px; height: 84px"
-                />
+                >
                 <img
                   v-if="item.status === 'REJECT'"
                   src="@/assets/img/adapay/reject.png"
                   alt=""
                   style="width: 90px; height: 89px"
-                />
+                >
               </el-col>
               <el-col
                 class="cus-row-btn"
@@ -128,9 +129,11 @@
                   v-if="item.status === 'WAIT_APPROVE'"
                   :to="{ path: matchRoutePath('approve'), query: { id: item.id } }"
                 >
-                  <el-button type="primary"> 审批 </el-button>
+                  <el-button type="primary"> {{ $t('fe3fc5f4.0273ba') }} </el-button>
                 </router-link>
-                <el-button v-else type="info" plain disabled> 已审批 </el-button>
+                <el-button v-else type="info" plain disabled>
+                  {{ $t('fe3fc5f4.618acb') }}
+                </el-button>
               </el-col>
             </el-row>
           </div>
@@ -177,18 +180,20 @@ export default {
         time_end: ''
       },
       regions_value: [],
-      approveStatusList: [
-        { name: '全部', value: '' },
-        { name: '待审批', value: 'WAIT_APPROVE' },
-        { name: '审批成功', value: 'APPROVED' },
-        { name: '审批失败', value: 'REJECT' }
-      ],
       total_count: 0,
       list: []
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    approveStatusList() {
+      return [
+        { name: this.$t('fe3fc5f4.a8b0c2'), value: '' },
+        { name: this.$t('fe3fc5f4.b0bf01'), value: 'WAIT_APPROVE' },
+        { name: this.$t('fe3fc5f4.6e6732'), value: 'APPROVED' },
+        { name: this.$t('fe3fc5f4.9a27ff'), value: 'REJECT' }
+      ]
+    }
   },
   mounted() {
     this.getAftersalesList(this.params)

@@ -12,7 +12,7 @@ const routes = [
       aliasName: 'sellers',
       icon: 'branch-one',
       keepAlive: true,
-      title: '商户'
+      title: 'fb06c42c.9f1ea3'
     },
     name: 'sellers',
     path: '/sellers',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'storemanager',
           icon: 'pay-circle',
-          title: '商户',
+          title: 'fb06c42c.9f1ea3',
           permissions: ['sellers.salesorganization.storemanager']
         },
         component: () => import('@/view/mall/marketing/merchantList/index'),
@@ -40,7 +40,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsellers',
           icon: 'pay-circle',
-          title: '入驻店铺',
+          title: 'fb06c42c.654af8',
           permissions: ['sellers.sellersmanager.marketingsellers']
         },
         component: () => import('@/view/mall/marketing/distributor'),
@@ -78,7 +78,7 @@ const routes = [
         meta: {
           aliasName: 'storemanager_application',
           icon: 'pay-circle',
-          title: '入驻审核',
+          title: 'fb06c42c.20d385',
           permissions: ['sellers.sellersmanager.storemanager_application']
         },
         component: () => import('@/view/mall/marketing/merchantVerify'),
@@ -95,7 +95,7 @@ const routes = [
         meta: {
           aliasName: 'distributoraftersalesaddress1',
           icon: 'pay-circle',
-          title: '退货地址',
+          title: 'fb06c42c.6356a8',
           permissions: ['sellers.sellersmanager.distributoraftersalesaddress1']
         },
         component: () => import('@/view/mall/marketing/distributorAftersalesAddress')
@@ -106,7 +106,7 @@ const routes = [
         meta: {
           aliasName: 'Sellerstags',
           icon: 'pay-circle',
-          title: '店铺标签',
+          title: 'fb06c42c.e86c4b',
           permissions: ['sellers.sellersmanager.Sellerstags']
         },
         component: () => import('@/view/mall/marketing/distributortags')
@@ -117,7 +117,7 @@ const routes = [
         meta: {
           aliasName: 'storemanager_setting',
           icon: 'pay-circle',
-          title: '商户类目',
+          title: 'fb06c42c.b2662c',
           permissions: ['sellers.salesetting.storemanager_setting']
         },
         component: () => import('@/view/mall/marketing/setting')

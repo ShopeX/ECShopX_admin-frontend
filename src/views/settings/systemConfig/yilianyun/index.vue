@@ -7,10 +7,10 @@
   <SpPage>
     <div>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="易联云配置" name="first">
+        <el-tab-pane :label="$t('5d9b29a0.45cf4e')" name="first">
           <yilianyunTemplates ref="yilianyunTemplates" :get-status="yilianyunTemplates" />
         </el-tab-pane>
-        <el-tab-pane label="门店配置" name="second">
+        <el-tab-pane :label="$t('5d9b29a0.446d7b')" name="second">
           <shopPosTemplates ref="shopPosTemplates" :get-status="shopPosTemplates" />
         </el-tab-pane>
       </el-tabs>

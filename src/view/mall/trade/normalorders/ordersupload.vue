@@ -8,7 +8,7 @@
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <div style="display: flex">
         <el-button type="primary" style="margin-right: 20px" @click="downloadtemplate">
-          下载模板
+          {{ $t('d41d8cd9.o5p6q7') }}
         </el-button>
         <el-upload
           action=""
@@ -17,12 +17,12 @@
           :show-file-list="false"
           class="upload"
         >
-          <el-button type="primary"> 批量发货 </el-button>
+          <el-button type="primary"> {{ $t('d41d8cd9.r8s9t0') }} </el-button>
         </el-upload>
         <el-tooltip
           style="margin-left: 10px; margin-top: 10px"
           effect="light"
-          :content="'请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。'"
+          :content="$t('71df5316.29119c')"
           placement="top-start"
         >
           <i class="el-icon-warning-outline" />
@@ -30,9 +30,13 @@
       </div>
       <div class="tip-info">
         <p>
-          上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
+          {{ $t('d41d8cd9.u1v2w3') }}<strong>15{{ $t('d41d8cd9.x4y5z6') }}</strong
+          >{{ $t('d41d8cd9.a7b8c9') }}
         </p>
-        <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
+        <p>
+          {{ $t('d41d8cd9.d0e1f2a') }}<strong>15{{ $t('d41d8cd9.x4y5z6') }}</strong
+          >{{ $t('d41d8cd9.g3h4i5') }}
+        </p>
       </div>
       <div v-for="item in pane_list">
         <el-tab-pane :label="item.label" :name="item.name">
@@ -47,36 +51,44 @@
               v-loading="loading"
               :data="uploadList"
               :height="wheight - 220"
-              element-loading-text="数据加载中"
+              :element-loading-text="$t('71df5316.f09b12')"
             >
-              <el-table-column prop="file_name" label="上传文件" min-width="100" />
-              <el-table-column prop="created_date" label="上传时间" min-width="80" />
-              <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
-              <el-table-column label="处理状态" min-width="50">
+              <el-table-column prop="file_name" :label="$t('71df5316.a6fc9e')" min-width="100" />
+              <el-table-column prop="created_date" :label="$t('71df5316.cae255')" min-width="80" />
+              <el-table-column
+                prop="file_size_format"
+                :label="$t('71df5316.396b7d')"
+                min-width="60"
+              />
+              <el-table-column :label="$t('71df5316.21b314')" min-width="50">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
-                  <span v-if="scope.row.handle_status == 'processing'">处理中</span>
-                  <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
+                  <span v-if="scope.row.handle_status == 'wait'">{{ $t('d41d8cd9.j6k7l8') }}</span>
+                  <span v-if="scope.row.handle_status == 'processing'">{{
+                    $t('d41d8cd9.m9n0o1')
+                  }}</span>
+                  <span v-if="scope.row.handle_status == 'finish'">{{
+                    $t('d41d8cd9.p2q3r4')
+                  }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="finish_date" label="处理完成时间" />
-              <el-table-column label="处理成功">
+              <el-table-column prop="finish_date" :label="$t('71df5316.475dea')" />
+              <el-table-column :label="$t('71df5316.3ba621')">
                 <template slot-scope="scope">
                   <span v-if="scope.row.handle_message"
-                    >{{ scope.row.handle_message.successLine }}行</span
+                    >{{ scope.row.handle_message.successLine }}{{ $t('d41d8cd9.s5t6u7') }}</span
                   >
                 </template>
               </el-table-column>
-              <el-table-column label="处理失败">
+              <el-table-column :label="$t('71df5316.1012e0')">
                 <template slot-scope="scope">
                   <span v-if="scope.row.handle_message"
-                    >{{ scope.row.handle_message.errorLine }}行</span
+                    >{{ scope.row.handle_message.errorLine }}{{ $t('d41d8cd9.s5t6u7') }}</span
                   >
                   <a
                     v-if="scope.row.handle_message && scope.row.handle_message.errorLine > 0"
                     type="primary"
                     @click="exportErrorFile(scope.row.id, scope.row.file_type)"
-                    >下载错误详情</a
+                    >{{ $t('d41d8cd9.v8w9x0') }}</a
                   >
                 </template>
               </el-table-column>
@@ -108,7 +120,7 @@ import {
 export default {
   data() {
     return {
-      pane_list: [{ name: 'normal_orders', label: '上传实体类商品' }],
+      pane_list: [],
       loading: false,
       total_count: 0,
       pageSize: 20,
@@ -121,6 +133,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
+    this.pane_list = [{ name: 'normal_orders', label: this.$t('71df5316.9e6dce') }]
     this.getUploadList()
   },
   methods: {
@@ -146,7 +159,7 @@ export default {
       handleUploadFile(params).then(() => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('71df5316.7bbfaa')
         })
       })
     },
@@ -158,14 +171,14 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('71df5316.7bbfaa')
         })
         this.getUploadList()
       })
     },
     uploadHandleTemplate() {
       if (this.activeName == 'normal_orders') {
-        var fileName = '新增'
+        var fileName = this.$t('71df5316.66ab5e')
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {
@@ -179,7 +192,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('71df5316.bfd8d5')
           })
         }
       })
@@ -197,7 +210,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('71df5316.bfd8d5')
           })
         }
       })

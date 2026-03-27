@@ -10,7 +10,7 @@ export default {
   methods: {
     onCopySuccess() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('3afa242c.20a495'),
         showClose: true
       })
     }

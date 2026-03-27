@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-form label-width="100px">
-      <el-form-item label="日期范围">
+      <el-form-item :label="$t('a82e152a.786622')">
         <el-col :span="12">
           <el-date-picker
             v-model="vdate"
@@ -14,9 +14,9 @@
             alue-format="yyyy-MM-dd"
             align="right"
             unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('a82e152a.981cbe')"
+            :start-placeholder="$t('a82e152a.b44c0f')"
+            :end-placeholder="$t('a82e152a.1d468b')"
             style="width: 100%"
             :picker-options="pickerOptions"
             value-format="yyyy-MM-dd"
@@ -31,37 +31,37 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="会员数" name="member">
+      <el-tab-pane :label="$t('a82e152a.e3c2e0')" name="member">
         <section>
           <canvas id="canvas_member" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="售后单数" name="aftersales">
+      <el-tab-pane :label="$t('a82e152a.f55538')" name="aftersales">
         <section>
           <canvas id="canvas_aftersales" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="退款额" name="refunded">
+      <el-tab-pane :label="$t('a82e152a.d7cebd')" name="refunded">
         <section>
           <canvas id="canvas_refunded" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="交易额" name="amountPayed">
+      <el-tab-pane :label="$t('a82e152a.78aff0')" name="amountPayed">
         <section>
           <canvas id="canvas_amountPayed" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="订单数" name="order">
+      <el-tab-pane :label="$t('a82e152a.fbb493')" name="order">
         <section>
           <canvas id="canvas_order" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="付款订单数" name="orderPayed">
+      <el-tab-pane :label="$t('a82e152a.7c922f')" name="orderPayed">
         <section>
           <canvas id="canvas_orderPayed" height="120" />
         </section>
       </el-tab-pane>
-      <el-tab-pane label="GMV" name="gmv">
+      <el-tab-pane :label="$t('a82e152a.9ca9e4')" name="gmv">
         <section>
           <canvas id="canvas_gmv" height="120" />
         </section>
@@ -69,18 +69,18 @@
     </el-tabs>
     <template>
       <el-table :data="allListData" stripe border style="width: 100%">
-        <el-table-column prop="count_date" label="日期" fixed />
-        <el-table-column prop="member_count" label="会员数" />
-        <el-table-column prop="aftersales_count" label="售后单数" />
-        <el-table-column label="退款额">
+        <el-table-column prop="count_date" :label="$t('a82e152a.4ff1e7')" fixed />
+        <el-table-column prop="member_count" :label="$t('a82e152a.e3c2e0')" />
+        <el-table-column prop="aftersales_count" :label="$t('a82e152a.f55538')" />
+        <el-table-column :label="$t('a82e152a.d7cebd')">
           <template slot-scope="scope"> ￥{{ scope.row.refunded_count / 100 }} </template>
         </el-table-column>
-        <el-table-column prop="amount_payed_count" label="交易额">
+        <el-table-column prop="amount_payed_count" :label="$t('a82e152a.78aff0')">
           <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
         </el-table-column>
-        <el-table-column prop="order_count" label="订单数" />
-        <el-table-column prop="order_payed_count" label="付款订单数" />
-        <el-table-column prop="gmv_count" label="GMV">
+        <el-table-column prop="order_count" :label="$t('a82e152a.fbb493')" />
+        <el-table-column prop="order_payed_count" :label="$t('a82e152a.7c922f')" />
+        <el-table-column prop="gmv_count" :label="$t('a82e152a.9ca9e4')">
           <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
         </el-table-column>
       </el-table>
@@ -91,6 +91,7 @@
 import { mapGetters } from 'vuex'
 import chart from 'chart.js'
 import { getCompanyData } from '../../../api/datacube'
+import { i18n } from '@/i18n'
 export default {
   data() {
     return {
@@ -124,7 +125,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: i18n.t('a82e152a.56ee10'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -134,7 +135,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: i18n.t('a82e152a.335dfc'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -144,7 +145,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: i18n.t('a82e152a.d96eb4'),
             onClick(picker) {
               const start = new Date()
               const end = new Date()
@@ -209,7 +210,7 @@ export default {
             this.$nextTick(() => {
               let firstparams = {
                 id: 'canvas_member',
-                label: '新增会员数',
+                label: this.$t('a82e152a.cfe830'),
                 dataName: this.list['memberData']
               }
               this.chartInit(firstparams)
@@ -219,7 +220,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取统计信息出错'
+            message: this.$t('a82e152a.5b0398')
           })
         })
     },

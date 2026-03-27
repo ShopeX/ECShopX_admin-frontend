@@ -20,24 +20,24 @@ export default (vm) => {
   }
   const formatterStatus = (v) => {
     if (v == '1') {
-      return '已通过'
+      return vm.$t('35844927.ecfa64')
     } else if (v == '2') {
-      return '未通过'
+      return vm.$t('35844927.4fcdbf')
     } else if (v == '3') {
-      return '关闭'
+      return vm.$t('35844927.b15d91')
     } else {
-      return '待审批'
+      return vm.$t('35844927.b0bf01')
     }
   }
 
   return createSetting({
     columns: [
-      { name: '创建时间', key: 'create_time', width: 200, formatter: formatDate },
-      { name: '申请开通时间', key: 'ex', width: 580 },
-      { name: '申请理由', key: 'reason', width: 130 },
-      { name: '审批状态', key: 'status', width: 100, formatter: formatterStatus },
-      { name: '审批时间', key: 'approve_time', formatter: formatDate },
-      { name: '审批备注', key: 'remarks', width: 150 }
+      { name: vm.$t('35844927.eca37c'), key: 'create_time', width: 200, formatter: formatDate },
+      { name: vm.$t('35844927.a28861'), key: 'ex', width: 580 },
+      { name: vm.$t('35844927.c5ae2e'), key: 'reason', width: 130 },
+      { name: vm.$t('35844927.d352ae'), key: 'status', width: 100, formatter: formatterStatus },
+      { name: vm.$t('35844927.d22bdd'), key: 'approve_time', formatter: formatDate },
+      { name: vm.$t('35844927.4985b0'), key: 'remarks', width: 150 }
     ]
   })
 }

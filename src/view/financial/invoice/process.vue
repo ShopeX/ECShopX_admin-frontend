@@ -15,16 +15,20 @@
         >
           <el-card>
             <h2>{{ key.operator_content?.title }}</h2>
-            <p>操作人员：{{ key.operator_id ?? key.user_id }}</p>
+            <p>{{ $t('b46dbdcf.a73518') }}{{ key.operator_id ?? key.user_id }}</p>
             <p>
-              人员类型：
-              <span v-if="'user' == key.operator_type"> 用户 </span>
-              <span v-else-if="'salesperson' == key.operator_type"> 导购员 </span>
-              <span v-else-if="'admin' == key.operator_type"> 管理员 </span>
-              <span v-else-if="'system' == key.operator_type"> 系统 </span>
-              <span v-else-if="'distributor' == key.operator_type"> 店铺管理员 </span>
+              {{ $t('b46dbdcf.f1f902') }}
+              <span v-if="'user' == key.operator_type">{{ $t('b46dbdcf.1fd02a') }}</span>
+              <span v-else-if="'salesperson' == key.operator_type">{{
+                $t('b46dbdcf.a6d9eb')
+              }}</span>
+              <span v-else-if="'admin' == key.operator_type">{{ $t('b46dbdcf.b1dae9') }}</span>
+              <span v-else-if="'system' == key.operator_type">{{ $t('b46dbdcf.8a8b89') }}</span>
+              <span v-else-if="'distributor' == key.operator_type">{{
+                $t('b46dbdcf.3282f2')
+              }}</span>
             </p>
-            <p>操作详情：{{ key.operator_content?.remark }}</p>
+            <p>{{ $t('b46dbdcf.a7b805') }}{{ key.operator_content?.remark }}</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>

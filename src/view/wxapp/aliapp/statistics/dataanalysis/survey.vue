@@ -7,20 +7,20 @@
   <div>
     <section class="section section-white app_detail_overview">
       <div class="section-header">
-        <div class="section-title">昨日概况</div>
+        <div class="section-title">{{ $t('34c7fda2.0225d7') }}</div>
       </div>
       <div class="section-body">
         <div v-loading="surveyLoading" class="data_overview_list_wrp">
           <div class="data_overview_list js_YO_dataBox">
             <div class="data_overview_item">
-              <p class="data_overview_title">打开次数</p>
+              <p class="data_overview_title">{{ $t('34c7fda2.744b98') }}</p>
               <p class="data_overview_desc">
                 {{ survey.session_cnt ? survey.session_cnt : '0' }}
               </p>
               <ul class="data_overview_percent">
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>日</label>
+                    <label>{{ $t('34c7fda2.3edddd') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.session_cnt_dayRate ? survey.session_cnt_dayRate + '%' : '-'
@@ -30,7 +30,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>周</label>
+                    <label>{{ $t('34c7fda2.a657f4') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.session_cnt_weekRate ? survey.session_cnt_weekRate + '%' : '-'
@@ -40,7 +40,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>月</label>
+                    <label>{{ $t('34c7fda2.e42b99') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.session_cnt_monthRate ? survey.session_cnt_monthRate + '%' : '-'
@@ -51,7 +51,7 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">访问次数 /人数</p>
+              <p class="data_overview_title">{{ $t('34c7fda2.0d8ac2') }}</p>
               <p class="data_overview_desc">
                 {{ survey.visit_pv ? survey.visit_pv : '0' }} /
                 {{ survey.visit_uv ? survey.visit_uv : '0' }}
@@ -59,7 +59,7 @@
               <ul class="data_overview_percent">
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>日</label>
+                    <label>{{ $t('34c7fda2.3edddd') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_pv_dayRate ? survey.visit_pv_dayRate + '%' : '-'
@@ -73,7 +73,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>周</label>
+                    <label>{{ $t('34c7fda2.a657f4') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_pv_weekRate ? survey.visit_pv_weekRate + '%' : '-'
@@ -87,7 +87,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>月</label>
+                    <label>{{ $t('34c7fda2.e42b99') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_pv_monthRate ? survey.visit_pv_monthRate + '%' : '-'
@@ -102,14 +102,14 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">新访问用户数</p>
+              <p class="data_overview_title">{{ $t('34c7fda2.e23fa3') }}</p>
               <p class="data_overview_desc">
                 {{ survey.visit_uv_new ? survey.visit_uv_new : '0' }}
               </p>
               <ul class="data_overview_percent">
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>日</label>
+                    <label>{{ $t('34c7fda2.3edddd') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_uv_new_dayRate ? survey.visit_uv_new_dayRate + '%' : '-'
@@ -119,7 +119,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>周</label>
+                    <label>{{ $t('34c7fda2.a657f4') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_uv_new_weekRate ? survey.visit_uv_new_weekRate + '%' : '-'
@@ -129,7 +129,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>月</label>
+                    <label>{{ $t('34c7fda2.e42b99') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.visit_uv_new_monthRate ? survey.visit_uv_new_monthRate + '%' : '-'
@@ -140,7 +140,7 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">分享次数 /人数</p>
+              <p class="data_overview_title">{{ $t('34c7fda2.9c9ca3') }}</p>
               <p class="data_overview_desc">
                 {{ share.share_pv ? share.share_pv : '0' }} /
                 {{ share.share_uv ? share.share_uv : '0' }}
@@ -148,7 +148,7 @@
               <ul class="data_overview_percent">
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>日</label>
+                    <label>{{ $t('34c7fda2.3edddd') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.share_pv_dayRate ? survey.share_pv_dayRate + '%' : '-'
@@ -162,7 +162,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>周</label>
+                    <label>{{ $t('34c7fda2.a657f4') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.share_pv_weekRate ? survey.share_pv_weekRate + '%' : '-'
@@ -176,7 +176,7 @@
                 </li>
                 <li class="data_overview_percent_item">
                   <div class="data_overview_percent_item_inner">
-                    <label>月</label>
+                    <label>{{ $t('34c7fda2.e42b99') }}</label>
                     <p class="tips_global">
                       <span class="mini_tips">{{
                         survey.share_pv_monthRate ? survey.share_pv_monthRate + '%' : '-'
@@ -197,11 +197,11 @@
     <section class="section section-white">
       <div class="section-header">
         <div class="section-title">
-          {{ chart.currentTabName }}
+          {{ $t(chart.currentTabName) }}
           <el-popover v-model="chart.tabPop" placement="bottom" trigger="click">
             <ul class="tab-list">
               <li v-for="(item, index) in chart.tabCon" :key="index" @click="tabChartHandle(index)">
-                {{ item.label }}
+                {{ $t(item.label) }}
               </li>
             </ul>
             <i slot="reference" class="iconfont el-icon-arrow-down tab-handle" />
@@ -209,11 +209,11 @@
         </div>
       </div>
       <div class="section-header">
-        <el-select v-model="chart.date" placeholder="请选择" @change="chartHandle">
+        <el-select v-model="chart.date" :placeholder="$t('34c7fda2.708c9d')" @change="chartHandle">
           <el-option
             v-for="item in date"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -225,7 +225,7 @@
     <section class="section section-white">
       <div class="section-header">
         <div class="section-title">
-          {{ visitPage.currentTabName }}
+          {{ $t(visitPage.currentTabName) }}
           <el-popover v-model="visitPage.tabPop" placement="bottom" trigger="click">
             <ul class="tab-list">
               <li
@@ -233,7 +233,7 @@
                 :key="index"
                 @click="tabVisitHandle(index)"
               >
-                {{ item.label }}
+                {{ $t(item.label) }}
               </li>
             </ul>
             <i slot="reference" class="iconfont el-icon-arrow-down tab-handle" />
@@ -241,20 +241,24 @@
         </div>
       </div>
       <div class="section-header">
-        <el-select v-model="visitPage.date" placeholder="请选择" @change="visitPageHandle">
+        <el-select
+          v-model="visitPage.date"
+          :placeholder="$t('34c7fda2.708c9d')"
+          @change="visitPageHandle"
+        >
           <el-option
             v-for="item in date"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
       </div>
       <div class="section-body">
         <el-table v-loading="visitPage.visitLoading" :data="visitPage.list">
-          <el-table-column prop="page_path" label="页面路径" />
-          <el-table-column prop="pv_num" label="访问次数" width="180" />
-          <el-table-column prop="percent" label="占比" width="180" />
+          <el-table-column prop="page_path" :label="$t('34c7fda2.e3a8a6')" />
+          <el-table-column prop="pv_num" :label="$t('34c7fda2.f0be64')" width="180" />
+          <el-table-column prop="percent" :label="$t('34c7fda2.c909e6')" width="180" />
         </el-table>
       </div>
     </section>
@@ -286,87 +290,62 @@ export default {
       chartObj: '',
       date: [
         {
-          label: '昨天',
+          label: '34c7fda2.2f8d6f',
           value: 'yesterday'
         },
         {
-          label: '最近7天',
+          label: '34c7fda2.73bef6',
           value: 'weekly'
         },
         {
-          label: '最近30天',
+          label: '34c7fda2.63f66f',
           value: 'monthly'
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date())
-            }
-          },
-          {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24)
-              picker.$emit('pick', date)
-            }
-          },
-          {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', date)
-            }
-          }
-        ]
-      },
+      pickerOptions: null,
       surveyLoading: false,
       survey: {},
       share: {},
       chart: {
         tabCon: [
           {
-            label: '累计访问用户数',
+            label: '34c7fda2.665c66',
             value: 'visit_total'
           },
           {
-            label: '打开次数',
+            label: '34c7fda2.744b98',
             value: 'session_cnt'
           },
           {
-            label: '访问次数',
+            label: '34c7fda2.f0be64',
             value: 'visit_pv'
           },
           {
-            label: '访问人数',
+            label: '34c7fda2.c3c959',
             value: 'visit_uv'
           },
           {
-            label: '新访问用户数',
+            label: '34c7fda2.e23fa3',
             value: 'visit_uv_new'
           },
           {
-            label: '分享次数',
+            label: '34c7fda2.76dc08',
             value: 'share_pv'
           },
           {
-            label: '分享人数',
+            label: '34c7fda2.4058cc',
             value: 'share_uv'
           },
           {
-            label: '人均停留时长',
+            label: '34c7fda2.46a146',
             value: 'stay_time_uv'
           },
           {
-            label: '次均停留时长',
+            label: '34c7fda2.dc6331',
             value: 'stay_time_session'
           }
         ],
-        currentTabName: '累计访问用户数',
+        currentTabName: '34c7fda2.665c66',
         currentTab: 'visit_total',
         tabPop: false,
         chartLoading: false,
@@ -387,15 +366,15 @@ export default {
       visitPage: {
         tabCon: [
           {
-            label: 'TOP入口页',
+            label: '34c7fda2.e9dd7b',
             value: 'entrypage_pv'
           },
           {
-            label: 'TOP受访页',
+            label: '34c7fda2.515127',
             value: 'page_visit_pv'
           }
         ],
-        currentTabName: 'TOP受访页',
+        currentTabName: '34c7fda2.515127',
         currentTab: 'page_visit_pv',
         visitLoading: false,
         tabPop: false,
@@ -405,6 +384,36 @@ export default {
           page_visit_pv: []
         },
         list: []
+      }
+    }
+  },
+  computed: {
+    pickerOptions() {
+      return {
+        shortcuts: [
+          {
+            text: this.$t('34c7fda2.800dfd'),
+            onClick(picker) {
+              picker.$emit('pick', new Date())
+            }
+          },
+          {
+            text: this.$t('34c7fda2.2f8d6f'),
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24)
+              picker.$emit('pick', date)
+            }
+          },
+          {
+            text: this.$t('34c7fda2.2b6eb6'),
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', date)
+            }
+          }
+        ]
       }
     }
   },
@@ -438,7 +447,7 @@ export default {
           labels: this.chart.ref_date,
           datasets: [
             {
-              label: this.chart.currentTabName,
+              label: this.$t(this.chart.currentTabName),
               backgroundColor: this.chartColors.red,
               borderColor: this.chartColors.red,
               data: this.chart.data[this.chart.currentTab],
@@ -483,15 +492,15 @@ export default {
       this.updateChart()
     },
     tabVisitHandle(index) {
-      this.visitPage.currentTabName = this.chart.tabCon[index].label
-      this.visitPage.currentTab = this.chart.tabCon[index].value
+      this.visitPage.currentTabName = this.visitPage.tabCon[index].label
+      this.visitPage.currentTab = this.visitPage.tabCon[index].value
       this.visitPage.tabPop = false
       this.updateChart()
     },
     updateChart() {
       this.chartObj.chart.data.labels = this.chart.ref_date
       this.chartObj.chart.data.datasets[0].data = this.chart.data[this.chart.currentTab]
-      this.chartObj.chart.data.datasets[0].label = this.chart.currentTabName
+      this.chartObj.chart.data.datasets[0].label = this.$t(this.chart.currentTabName)
       this.chartObj.update()
     },
     fetchChartData() {

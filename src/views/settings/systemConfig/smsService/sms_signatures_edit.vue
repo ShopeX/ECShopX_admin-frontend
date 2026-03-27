@@ -5,40 +5,41 @@
 
 <template>
   <div class="sms_signatures_edit">
-    <h4>添加短信签名</h4>
+    <h4>{{ $t('872a1908.6aefb6') }}</h4>
     <el-form ref="form" :model="form" :rules="rules" label-width="150px" class="demo-ruleForm">
-      <el-form-item label="签名名称" prop="sign_name">
+      <el-form-item :label="$t('872a1908.59592b')" prop="sign_name">
         <el-input
           v-model="form.sign_name"
           :disabled="disabled || disabled_edit"
           minlength="2"
           maxlength="12"
           show-word-limit
-          placeholder="长度限2-12个字符，建议为用户真是应用名/网站名/公司名"
+          :placeholder="$t('872a1908.84d7f8')"
         />
         <ul class="tips">
-          <li>· 签名发送自带【】符号，无须添加【】、()、[] 符号，避免重复</li>
-          <li>· 不支持如 “客户服务”、“友情提醒” 等过于宽泛内容、不支持 “测试” 字样的签名</li>
+          <li>{{ $t('872a1908.d65a23') }}</li>
+          <li>{{ $t('872a1908.ba141f') }}</li>
           <li>
-            · 了解更多<a
+            {{ $t('872a1908.01c382')
+            }}<a
               target="_blank"
               href="https://help.aliyun.com/document_detail/55324.html?spm=5176.12212999.0.0.4b2b1cbe7AQAyL"
-              >签名 / 模板申请规范</a
+              >{{ $t('872a1908.9461d0') }}</a
             >
           </li>
         </ul>
       </el-form-item>
-      <el-form-item label="签名来源" prop="sign_source">
+      <el-form-item :label="$t('872a1908.7f3b15')" prop="sign_source">
         <el-radio-group v-model="form.sign_source" :disabled="disabled">
-          <el-radio label="0"> 企事业单位的全称或简称 </el-radio>
-          <el-radio label="1"> 工信部备案网站的全称或简称 </el-radio>
-          <el-radio label="2"> App 应用的全称或简称 </el-radio>
-          <el-radio label="3"> 公众号或小程序的全称或简称 </el-radio>
-          <el-radio label="4"> 电商平台店铺名的全称或简称 </el-radio>
-          <el-radio label="5"> 商标名的全称或简称 </el-radio>
+          <el-radio label="0">{{ $t('872a1908.7d9f89') }}</el-radio>
+          <el-radio label="1">{{ $t('872a1908.72f646') }}</el-radio>
+          <el-radio label="2">{{ $t('872a1908.f2945a') }}</el-radio>
+          <el-radio label="3">{{ $t('872a1908.788dc8') }}</el-radio>
+          <el-radio label="4">{{ $t('872a1908.af36b9') }}</el-radio>
+          <el-radio label="5">{{ $t('872a1908.fc430f') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="申请说明" prop="remark">
+      <el-form-item :label="$t('872a1908.9206ad')" prop="remark">
         <el-input
           v-model="form.remark"
           :disabled="disabled"
@@ -46,22 +47,22 @@
           :rows="8"
           maxlength="200"
           show-word-limit
-          placeholder="详细描述您的业务使用场景或签名用途，可填写企业官网链接，工信部备案网站域名，已上线应用在任一应用商店展示页链接，公众号或小程序全称，任一电商店铺展示页链接，已注册商标名等，可有效提升通过率，长度不超过 200 个字符。"
+          :placeholder="$t('872a1908.7e268f')"
         />
       </el-form-item>
-      <el-form-item label="签名用途" prop="third_party">
+      <el-form-item :label="$t('872a1908.a805a6')" prop="third_party">
         <el-radio-group v-model="form.third_party" :disabled="disabled">
-          <el-radio label="false"> 自用（签名为本账号实名认证的网站、App等） </el-radio>
-          <el-radio label="true"> 他用（签名为非本账号实名认证的企业、网站、产品名等） </el-radio>
+          <el-radio label="false">{{ $t('872a1908.0c0044') }}</el-radio>
+          <el-radio label="true">{{ $t('872a1908.c08162') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="资质ID" prop="qualification_id">
+      <el-form-item :label="$t('872a1908.b3b6e5')" prop="qualification_id">
         <el-input
           v-model="form.qualification_id"
           :disabled="disabled"
-          placeholder="请输入整型数字"
+          :placeholder="$t('872a1908.bc215c')"
         />
-        <div class="form-tips">已审核通过或审核中的资质ID</div>
+        <div class="form-tips">{{ $t('872a1908.59a52c') }}</div>
       </el-form-item>
       <!-- <el-form-item label="证明文件">
         <div
@@ -140,10 +141,10 @@
       </el-form-item> -->
       <el-form-item v-if="$route.query.type !== 'detail'">
         <loadingBtn ref="loadingBtn" size="small" @clickHandle="submitForm('form')" />
-        <el-button size="small" @click="fnBack"> 取消 </el-button>
+        <el-button size="small" @click="fnBack">{{ $t('872a1908.625fb2') }}</el-button>
         <ul class="tips">
-          <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
-          <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
+          <li>{{ $t('872a1908.aafa64') }}</li>
+          <li>{{ $t('872a1908.f8f3cd') }}</li>
         </ul>
       </el-form-item>
     </el-form>
@@ -157,18 +158,22 @@
 
     <!-- result -->
     <el-dialog :visible="resultVisible" class="result" :show-close="false">
-      <el-result icon="success" title="提交成功" sub-title="请根据提示进行操作">
+      <el-result icon="success" :title="$t('872a1908.23b62e')" :sub-title="$t('872a1908.240e49')">
         <template slot="subTitle">
-          <h5>签名已提交审核，审核结果可在签名列表中查看。</h5>
+          <h5>{{ $t('872a1908.b30268') }}</h5>
           <ul class="tips">
-            <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
-            <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
+            <li>{{ $t('872a1908.aafa64') }}</li>
+            <li>{{ $t('872a1908.f8f3cd') }}</li>
           </ul>
         </template>
         <template slot="extra">
-          <el-button type="primary" size="medium" @click="fnBack"> 返回列表 </el-button>
+          <el-button type="primary" size="medium" @click="fnBack">
+{{
+            $t('872a1908.adcd1d')
+          }}
+</el-button>
           <el-button v-if="!$route.query.type" size="medium" @click="fnAgain">
-            再添加一个签名
+            {{ $t('872a1908.8c0a47') }}
           </el-button>
         </template>
       </el-result>
@@ -208,11 +213,11 @@ export default {
         qualification_id: ''
       },
       rules: {
-        sign_name: [requiredRules('签名名称'), MaxRules(12), MinRules(2)],
-        sign_source: [requiredRules('签名来源', 'change')],
-        remark: [requiredRules('申请说明'), MaxRules(200)],
-        third_party: [requiredRules('签名用涂', 'change')],
-        qualification_id: [requiredRules('资质ID', 'blur')]
+        sign_name: [requiredRules(this.$t('872a1908.59592b')), MaxRules(12), MinRules(2)],
+        sign_source: [requiredRules(this.$t('872a1908.7f3b15'), 'change')],
+        remark: [requiredRules(this.$t('872a1908.9206ad')), MaxRules(200)],
+        third_party: [requiredRules(this.$t('872a1908.a805a6'), 'change')],
+        qualification_id: [requiredRules(this.$t('872a1908.b3b6e5'), 'blur')]
       }
     }
   },

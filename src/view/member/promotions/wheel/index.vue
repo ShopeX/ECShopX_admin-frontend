@@ -8,40 +8,40 @@
     <el-form ref="dataForm" :model="dataForm" label-width="125px">
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-form-item label="是否开启大转盘">
+          <el-form-item :label="$t('2619c1c8.bb1f61')">
             <el-switch v-model="dataForm.turntable_open" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="是否长期有效">
+          <el-form-item :label="$t('2619c1c8.f59938')">
             <el-switch v-model="dataForm.long_term" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item v-if="!dataForm.long_term" label="活动周期">
+          <el-form-item v-if="!dataForm.long_term" :label="$t('2619c1c8.b16d1a')">
             <el-date-picker
               v-model="dataForm.long_date"
               type="daterange"
               range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :start-placeholder="$t('2619c1c8.b44c0f')"
+              :end-placeholder="$t('2619c1c8.1d468b')"
               value-format="timestamp"
             />
           </el-form-item>
           <div v-else style="height: 40px; margin-bottom: 22px" />
         </el-col>
         <el-col :span="6">
-          <el-form-item label="大转盘标题">
+          <el-form-item :label="$t('2619c1c8.251ff9')">
             <el-input v-model="dataForm.turntable_title" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="每天最大抽奖次数">
+          <el-form-item :label="$t('2619c1c8.92f32b')">
             <el-input v-model="dataForm.max_times_day" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="登录送抽奖次数">
+          <el-form-item :label="$t('2619c1c8.98921d')">
             <el-input v-model="dataForm.login_get_times" maxlength="20" />
           </el-form-item>
         </el-col>
@@ -51,13 +51,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="购物满">
+          <el-form-item :label="$t('2619c1c8.ffaf55')">
             <el-input v-model="dataForm.shopping_full" maxlength="20" />
           </el-form-item>
         </el-col>
-        <el-col :span="6" class="line-height__40"> 元获取一次抽奖次数 </el-col>
+        <el-col :span="6" class="line-height__40"> {{ $t('2619c1c8.d89aa4') }} </el-col>
         <el-col :span="12">
-          <el-form-item label="活动结束时清空抽奖次数" label-width="170px">
+          <el-form-item :label="$t('2619c1c8.e84dab')" label-width="170px">
             <el-switch v-model="dataForm.clear_times_after_end" />
           </el-form-item>
         </el-col>
@@ -65,45 +65,45 @@
     </el-form>
     <div class="wheel-con">
       <el-tabs v-model="activeName">
-        <el-tab-pane label="奖项配置" name="1">
+        <el-tab-pane :label="$t('2619c1c8.c2907e')" name="1">
           <div class="wheel-con__table">
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column label="操作" width="100">
+              <el-table-column :label="$t('2619c1c8.2b6bc0')" width="100">
                 <template slot-scope="scope">
                   <el-button
                     type="text"
                     size="small"
                     @click="handleClickDel(scope.row, scope.$index)"
                   >
-                    删除
+                    {{ $t('2619c1c8.2f4aad') }}
                   </el-button>
                 </template>
               </el-table-column>
-              <el-table-column label="奖项类型" width="140">
+              <el-table-column :label="$t('2619c1c8.4826e3')" width="140">
                 <template slot-scope="scope">
                   <el-select v-model="scope.row.prize_type" @change="handleChangeType(scope)">
                     <el-option
                       v-for="item in prize_type_options"
                       :key="item.value"
-                      :label="item.label"
+                      :label="$t(item.labelKey)"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="奖项名称" width="130">
+              <el-table-column :label="$t('2619c1c8.a927ed')" width="130">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.prize_name" maxlength="4" />
                 </template>
               </el-table-column>
 
-              <el-table-column label="奖项描述" width="130">
+              <el-table-column :label="$t('2619c1c8.5e0866')" width="130">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.prize_describe" />
                 </template>
               </el-table-column>
 
-              <el-table-column label="中奖概率  0-100的整数">
+              <el-table-column :label="$t('2619c1c8.8ca4b1')">
                 <template slot-scope="scope">
                   <el-input-number
                     v-model="scope.row.prize_probability"
@@ -113,7 +113,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="奖项值">
+              <el-table-column :label="$t('2619c1c8.778e97')">
                 <template v-if="isCheck" slot-scope="scope">
                   <el-input
                     v-if="scope.row.prize_type === 'points'"
@@ -123,7 +123,7 @@
                     v-if="scope.row.prize_type === 'coupon'"
                     v-model="scope.row.prize_value"
                     filterable
-                    placeholder="请选择"
+                    :placeholder="$t('2619c1c8.708c9d')"
                     @change="handleChangePrizaValue(scope.row, scope.$index)"
                   >
                     <el-option
@@ -138,7 +138,7 @@
                     v-model="scope.row.prize_value"
                     multiple
                     filterable
-                    placeholder="请选择"
+                    :placeholder="$t('2619c1c8.708c9d')"
                   >
                     <el-option
                       v-for="item in coupon_options"
@@ -149,7 +149,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column prop="address" label="图片">
+              <el-table-column prop="address" :label="$t('2619c1c8.20def7')">
                 <template slot-scope="scope">
                   <div>
                     <el-image
@@ -159,31 +159,33 @@
                     />
                   </div>
                   <el-button type="primary" size="mini" @click="handleClickUpload(scope.$index)">
-                    图片上传
+                    {{ $t('2619c1c8.6bfb9b') }}
                   </el-button>
                 </template>
               </el-table-column>
-              <el-table-column prop="address" label="设置商品">
+              <el-table-column prop="address" :label="$t('2619c1c8.8ab0d7')">
                 <template slot-scope="scope">
                   <el-select
                     v-if="scope.row.prize_type === 'coupon' && scope.row.goods_options.length > 0"
                     v-model="scope.row.prize_url"
-                    placeholder="请选择"
+                    :placeholder="$t('2619c1c8.708c9d')"
                   >
                     <el-option
                       v-for="item in scope.row.goods_options"
                       :key="item.value"
-                      :label="item.label"
+                      :label="$t(item.labelKey)"
                       :value="item.value"
                     />
                   </el-select>
                 </template>
               </el-table-column>
             </el-table>
-            <el-button class="add-prize" type="primary" @click="handleClickAdd"> 添加 </el-button>
+            <el-button class="add-prize" type="primary" @click="handleClickAdd">
+              {{ $t('2619c1c8.d58dfa') }}
+            </el-button>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="大转盘配置" name="2">
+        <el-tab-pane :label="$t('2619c1c8.8e1b94')" name="2">
           <div class="wheel-con__turntable">
             <div class="turntable-box">
               <div class="turntable-box__background">
@@ -222,7 +224,7 @@
                     >
                       <div class="div-text">
                         <div>{{ item.prize_name }}</div>
-                        <img :src="item.prize_image" />
+                        <img :src="item.prize_image">
                       </div>
                     </li>
                   </ul>
@@ -242,48 +244,50 @@
               <el-form ref="turntableData" :model="turntableData" label-width="120px">
                 <el-row :gutter="20">
                   <el-col :span="24">
-                    <el-form-item label="背景">
+                    <el-form-item :label="$t('2619c1c8.35c2c5')">
                       <el-button size="mini" @click="handleClickAddBackground">
-                        添加背景图
+                        {{ $t('2619c1c8.62e589') }}
                       </el-button>
                       <el-button
                         v-if="turntableData.background_img"
                         size="mini"
                         @click="handleClickDelBackground"
                       >
-                        删除背景图
+                        {{ $t('2619c1c8.0297d2') }}
                       </el-button>
                     </el-form-item>
                   </el-col>
                   <el-col :span="24">
-                    <el-form-item label="背景">
-                      <el-button size="mini" @click="handleClickAddPointer"> 上传指针 </el-button>
+                    <el-form-item :label="$t('2619c1c8.35c2c5')">
+                      <el-button size="mini" @click="handleClickAddPointer">
+                        {{ $t('2619c1c8.d7548a') }}
+                      </el-button>
                       <el-button
                         v-if="turntableData.pointer_img"
                         size="mini"
                         @click="handleClickDelPointer"
                       >
-                        删除指针
+                        {{ $t('2619c1c8.9b4bae') }}
                       </el-button>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="边框颜色">
+                    <el-form-item :label="$t('2619c1c8.1cbac8')">
                       <el-color-picker v-model="turntableData.border_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="阴影颜色">
+                    <el-form-item :label="$t('2619c1c8.53d085')">
                       <el-color-picker v-model="turntableData.shadow_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="分割线颜色">
+                    <el-form-item :label="$t('2619c1c8.7add39')">
                       <el-color-picker v-model="turntableData.line_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="24">
-                    <el-form-item label="活动描述">
+                    <el-form-item :label="$t('2619c1c8.be5fbb')">
                       <SpRichText v-model="turntableData.describe" />
                     </el-form-item>
                   </el-col>
@@ -295,7 +299,7 @@
       </el-tabs>
     </div>
     <div class="wheel-save">
-      <el-button type="danger" @click="handleClickSave"> 保存 </el-button>
+      <el-button type="danger" @click="handleClickSave"> {{ $t('2619c1c8.9f68a8') }} </el-button>
     </div>
     <imgPicker
       :dialog-visible="picsDialog"
@@ -337,23 +341,10 @@ export default {
       picsDialog: false,
       isGetPics: false,
       prize_type_options: [
-        //奖项类型
-        {
-          value: 'points',
-          label: '积分'
-        },
-        {
-          value: 'coupon',
-          label: '优惠券'
-        },
-        {
-          value: 'coupons',
-          label: '优惠券包'
-        },
-        {
-          value: 'thanks',
-          label: '谢谢惠顾'
-        }
+        { value: 'points', labelKey: '2619c1c8.2f3635' },
+        { value: 'coupon', labelKey: '2619c1c8.0f0cb2' },
+        { value: 'coupons', labelKey: '2619c1c8.7c3685' },
+        { value: 'thanks', labelKey: '2619c1c8.8d17cf' }
       ],
       tableData: [],
       isB: true,
@@ -555,7 +546,7 @@ export default {
       })
 
       if (num !== 100) {
-        this.$message.error('中奖概况总和需要等于100')
+        this.$message.error(this.$t('2619c1c8.b4ed67'))
         return
       }
 
@@ -584,7 +575,7 @@ export default {
 
       setSurntableconfig(params).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('2619c1c8.3b1083'),
           type: 'success'
         })
       })

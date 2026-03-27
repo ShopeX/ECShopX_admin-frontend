@@ -8,18 +8,21 @@
     <div class="zyk_adapay_withdraw">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>分账提现</span>
+          <span>{{ $t('d901a946.b96522') }}</span>
         </div>
         <div class="content">
           <div class="part1">
             <div style="margin-right: 50px">
               <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
-                <span>可申请提现余额：￥{{ (available_balance / 100) | formatNumMoney }}</span>
+                <span
+                  >{{ $t('d901a946.54bcf0') }}{{ (available_balance / 100) | formatNumMoney }}</span
+                >
                 <span style="margin-left: 30px"
-                  >审核中提现余额：￥{{ (pending_balance / 100) | formatNumMoney }}</span
+                  >{{ $t('d901a946.568012') }}{{ (pending_balance / 100) | formatNumMoney }}</span
                 >
                 <span style="margin-left: 30px; color: #0079fe; font-weight: bold"
-                  >实际可提现：￥{{
+                  >{{ $t('d901a946.f9a7b6')
+                  }}{{
                     Math.max(0, (available_balance - pending_balance) / 100) | formatNumMoney
                   }}</span
                 >
@@ -39,7 +42,7 @@
                   ref="loadingBtn"
                   size="medium"
                   type="primary"
-                  text="提现申请"
+                  :text="$t('d901a946.33011e')"
                   @clickHandle="btnClick"
                 />
               </div>
@@ -47,16 +50,16 @@
             <div v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'" class="tips">
               <p v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
                 *
-                分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金；
+                {{ $t('d901a946.aae577') }}
               </p>
               <template v-if="$store.getters.login_type != 'admin' && auto_draw_cash == 'Y'">
-                <p>提现规则：</p>
-                <p>提现将在每月10号进行；</p>
-                <p>当余额大于10000元时可提现;</p>
-                <p>提现类型为 T1 。</p>
+                <p>{{ $t('d901a946.c67e72') }}</p>
+                <p>{{ $t('d901a946.2f5c36') }}</p>
+                <p>{{ $t('d901a946.f0bb50') }}</p>
+                <p>{{ $t('d901a946.aa4888') }}</p>
               </template>
               <p v-if="auto_draw_cash == 'N'">
-                * 提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。
+                {{ $t('d901a946.7f9771') }}
               </p>
             </div>
           </div>
@@ -80,8 +83,8 @@
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :default-time="['00:00:00', '23:59:59']"
                   range-separator="-"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :start-placeholder="$t('d901a946.b44c0f')"
+                  :end-placeholder="$t('d901a946.1d468b')"
                   :clearable="false"
                   @change="timeHandle"
                 />
@@ -100,6 +103,7 @@ import setting_ from './finder/setting'
 import loadingBtn from '@/components/loading-btn'
 import SpForm from '@/components/sp-form'
 import SpImagePicker from '@/components/sp-image-picker'
+import { i18n } from '@/i18n'
 export default {
   components: {
     loadingBtn,
@@ -124,13 +128,13 @@ export default {
       pending_balance: 0, // 审核中提现余额
       formList: [
         {
-          label: '提现金额',
+          label: i18n.t('d901a946.292a28'),
           key: 'cash_amt',
           type: 'input',
           required: true,
           width: '300px',
-          placeholder: '请输入',
-          append: '元',
+          placeholder: i18n.t('d901a946.02cc4f'),
+          append: i18n.t('d901a946.c16655'),
           component: ({ key }, value) => {
             // 可提现金额 = 可申请提现余额 - 审核中提现余额
             const maxAmount = Math.max(0, (this.available_balance - this.pending_balance) / 100)
@@ -138,7 +142,7 @@ export default {
               <div style='display: flex; align-items: center; white-space: nowrap;'>
                 <el-input
                   v-model={value[key]}
-                  placeholder='请输入'
+                  placeholder={i18n.t('d901a946.02cc4f')}
                   style='width: 300px; flex-shrink: 0;'
                   type='number'
                   min='0'
@@ -151,25 +155,25 @@ export default {
                     }
                   }}
                 >
-                  <template slot='append'>元</template>
+                  <template slot='append'>{this.$t('d901a946.c16655')}</template>
                 </el-input>
                 <span
                   style='margin-left: 12px; color: #0079fe; cursor: pointer; white-space: nowrap; flex-shrink: 0;'
                   onClick={() => this.allHandle()} // 全部提现
                 >
-                  全部提现
+                  {i18n.t('d901a946.5eb161')}
                 </span>
               </div>
             )
           }
         },
         {
-          label: '提现类型',
+          label: i18n.t('d901a946.79b414'),
           key: 'cash_type',
           type: 'select',
           required: true,
           width: '300px',
-          placeholder: '请选择提现类型',
+          placeholder: i18n.t('d901a946.88c618'),
           options: [
             //   { title: 'D0', value: 'D0' },
             //   { title: 'D1', value: 'D1' },
@@ -177,12 +181,12 @@ export default {
           ]
         },
         {
-          label: ' 发票',
+          label: i18n.t('d901a946.0030df'),
           key: 'invoice_url',
           type: 'input',
           required: true,
           width: '300px',
-          placeholder: '请上传发票',
+          placeholder: i18n.t('d901a946.75e903'),
           component: ({ key }, value) => {
             return (
               <div>
@@ -232,25 +236,21 @@ export default {
         if (status == 0) {
           // 提现成功提示
           this.$message({
-            message: `提现申请提交成功！提现金额：￥${this.form.cash_amt}元`,
+            message: this.$t('d901a946.17cdbe') + this.form.cash_amt + this.$t('d41d8cd9.m8n9o0'),
             type: 'success',
             duration: 5000,
             showClose: true
           })
 
           // 显示成功提示框
-          this.$confirm(
-            '提现申请已提交，请等待审核。您可以在下方列表中查看提现记录。',
-            '提现成功',
-            {
-              confirmButtonText: '确定',
-              type: 'success',
-              showCancelButton: false,
-              center: true
-            }
-          ).then(() => {
+          this.$confirm(this.$t('d901a946.4b050b'), this.$t('d901a946.dca060'), {
+            confirmButtonText: this.$t('d901a946.38cf16'),
+            type: 'success',
+            showCancelButton: false,
+            center: true
+          }).then(() => {
             // 用户点击确定后的操作
-            console.log('用户确认提现成功提示')
+            console.log('User confirmed withdrawal success')
           })
 
           // 重置表单
@@ -260,10 +260,10 @@ export default {
           // 刷新余额
           await this.getWithdrawBalance()
         } else {
-          this.$message.error('提现申请提交失败，请重试')
+          this.$message.error(this.$t('d901a946.68ac19'))
         }
       } catch (error) {
-        console.log('提现失败:', error)
+        console.log('Withdrawal failed:', error)
         // this.$message.error('提现申请提交失败，请检查网络连接或联系客服')
       } finally {
         // 关闭loading状态
@@ -288,7 +288,7 @@ export default {
         this.available_balance = available_balance
         this.pending_balance = pending_balance
       } catch (error) {
-        console.error('获取提现余额失败:', error)
+        console.error('Get withdraw balance failed:', error)
       }
     },
 

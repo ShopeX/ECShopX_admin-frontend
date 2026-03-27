@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '导购'
+const name = 'e8045d5d.c60b43'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,17 +11,17 @@ export default {
   children: [
     {
       path: 'DistributionConfig',
-      name: `分润配置`,
+      name: 'e8045d5d.d2d71c',
       component: () => import('@/view/base/setting/distribution/index')
     },
     {
       path: 'Marketingsalesmanrole',
-      name: `导购角色`,
+      name: 'e8045d5d.2fe8d8',
       component: () => import('@/view/guide/salemanRoleConfig')
     },
     {
       path: 'shoppingGuideTask',
-      name: `导购任务`,
+      name: 'e8045d5d.25048a',
       component: () => import('@/view/guide/shoppingGuideTask'),
       children: [
         {
@@ -36,27 +36,27 @@ export default {
     },
     {
       path: 'shopnoticetempl',
-      name: `导购消息模版`,
+      name: 'e8045d5d.f4f602',
       component: () => import('@/view/guide/shopnoticetempl')
     },
     {
       path: 'SalemanLoginHistory',
-      name: `导购签到记录`,
+      name: 'e8045d5d.51d6c2',
       component: () => import('@/view/guide/SalemanLoginHistory')
     },
     {
       path: 'marketingsalesman',
-      name: `店铺导购员`,
+      name: 'e8045d5d.209e3b',
       component: () => import('@/view/guide/salesman')
     },
     {
       path: 'coupongrantset',
-      name: `优惠券发放设置`,
+      name: 'e8045d5d.0585e2',
       component: () => import('@/view/member/cardticket/couponGrantSet')
     },
     {
       path: 'shopactivities',
-      name: `导购知识库`,
+      name: 'e8045d5d.ea8541',
       component: () => import('@/view/guide/shopactivities'),
       children: [
         {
@@ -67,7 +67,7 @@ export default {
     },
     {
       path: 'shoppingguidenotification',
-      name: `导购员通知`,
+      name: 'e8045d5d.de94d9',
       component: () => import('@/view/guide/shoppingguidenotification'),
       children: [
         {
@@ -78,17 +78,17 @@ export default {
     },
     {
       path: 'profitlist',
-      name: `业绩统计`,
+      name: 'e8045d5d.398e76',
       component: () => import('@/view/mall/profit/list')
     },
     {
       path: 'salemancustomercomplaints',
-      name: `导购员投诉`,
+      name: 'e8045d5d.dc1e9e',
       component: () => import('@/view/guide/salemanCustomerComplaints')
     },
     {
       path: 'guide/qywx/addressBook',
-      name: `通讯录`,
+      name: 'e8045d5d.183abe',
       component: () => import('@/view/base/setting/addressBook/index')
     }
   ]

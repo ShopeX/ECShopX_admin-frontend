@@ -35,7 +35,6 @@ let SCENE_1001 = {
   WgtCoupon,
   WgtMarquees,
   WgtFullSlider,
-  wgtOrderNavigation,
   WgtClassify,
   WgtLocationModule,
   WgtContentPartition,
@@ -68,9 +67,13 @@ const SCENE_1003 = {
   WgtFilm,
   WgtCoupon,
   WgtMarquees,
+  WgtFullSlider,
+  WgtClassify,
+  WgtLocationModule,
+  WgtContentPartition,
+  WgtHotRanking,
+  WgtGoods,
   ...(!VERSION_STANDARD() ? { WgtShop } : {}),
-  WgtNearbyShop,
-  WgtClassify
 }
 
 // 自定义页面装修

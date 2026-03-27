@@ -11,7 +11,7 @@
           <el-select
             v-model="currentCommunity"
             clearable
-            placeholder="请选择社区"
+            :placeholder="$t('9d49798d.56ea59')"
             style="width: 100%"
             @change="communityHandle"
           >
@@ -28,13 +28,13 @@
             v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('9d49798d.4b8cb9')"
             style="width: 100%"
             @change="dateChange"
           />
         </el-col>
         <el-col :md="8" :lg="6">
-          <el-input v-model="identifier" placeholder="手机号/订单号">
+          <el-input v-model="identifier" :placeholder="$t('9d49798d.f4b2e7')">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
@@ -54,35 +54,45 @@
                 <div slot="header" class="clearfix">
                   <el-row v-if="communityObj[props.row.shop_id]" :gutter="24">
                     <el-col :md="8" :lg="6">
-                      社区名称：{{ communityObj[props.row.shop_id].community_name }}
+                      {{ $t('9d49798d.16cb48')
+                      }}{{ communityObj[props.row.shop_id].community_name }}
                     </el-col>
                     <el-col :md="8" :lg="6">
-                      团长名称：{{ communityObj[props.row.shop_id].leader_name }}
+                      {{ $t('9d49798d.21461a') }}{{ communityObj[props.row.shop_id].leader_name }}
                     </el-col>
                     <el-col :md="8" :lg="6">
-                      团长手机号：{{ communityObj[props.row.shop_id].leader_mobile }}
+                      {{ $t('9d49798d.c8d47d') }}{{ communityObj[props.row.shop_id].leader_mobile }}
                     </el-col>
                   </el-row>
                 </div>
                 <el-table :data="props.row.items" style="width: 100%">
-                  <el-table-column class="goods-img" prop="pic" label="图片" min-width="50">
+                  <el-table-column
+                    class="goods-img"
+                    prop="pic"
+                    :label="$t('9d49798d.20def7')"
+                    min-width="50"
+                  >
                     <template slot-scope="scope">
                       <span
                         ><img
                           width="50"
                           :src="wximageurl + scope.row.pic"
                           :alt="scope.row.item_name"
-                      /></span>
+                      ></span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="item_name" min-width="200" label="名称" />
-                  <el-table-column prop="num" min-width="50" label="数量" />
-                  <el-table-column prop="price" min-width="50" label="原价">
+                  <el-table-column
+                    prop="item_name"
+                    min-width="200"
+                    :label="$t('9d49798d.d7ec2d')"
+                  />
+                  <el-table-column prop="num" min-width="50" :label="$t('9d49798d.0bf60b')" />
+                  <el-table-column prop="price" min-width="50" :label="$t('9d49798d.1afdfe')">
                     <template slot-scope="scope">
                       {{ scope.row.fee_symbol }}{{ scope.row.price / 100 }}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="total_fee" min-width="100" label="支付金额">
+                  <el-table-column prop="total_fee" min-width="100" :label="$t('9d49798d.f33297')">
                     <template slot-scope="scope">
                       {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
                     </template>
@@ -91,71 +101,75 @@
               </el-card>
             </template>
           </el-table-column>
-          <el-table-column prop="create_time" width="160" label="创建时间">
+          <el-table-column prop="create_time" width="160" :label="$t('9d49798d.eca37c')">
             <template slot-scope="scope">
               <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="order_id" width="160" label="订单号" />
-          <el-table-column prop="total_fee" label="金额">
+          <el-table-column prop="order_id" width="160" :label="$t('9d49798d.1e8dc2')" />
+          <el-table-column prop="total_fee" :label="$t('9d49798d.4cf24a')">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column prop="mobile" width="110" label="会员手机号" />
-          <el-table-column prop="order_status" label="订单状态">
+          <el-table-column prop="mobile" width="110" :label="$t('9d49798d.6a52ee')" />
+          <el-table-column prop="order_status" :label="$t('9d49798d.86f6cf')">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.order_status == 'DONE'" type="success" size="mini">
-                已完成
+                {{ $t('9d49798d.fad522') }}
               </el-tag>
               <el-tag v-else-if="scope.row.order_status == 'PAYED'" type="primary" size="mini">
-                待提货
+                {{ $t('9d49798d.64729d') }}
               </el-tag>
-              <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini"> 未支付 </el-tag>
+              <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini">
+{{
+                $t('9d49798d.608afd')
+              }}
+</el-tag>
               <el-tag v-else-if="scope.row.order_status == 'CANCEL'" type="danger" size="mini">
-                已取消
+                {{ $t('9d49798d.2111cc') }}
               </el-tag>
               <el-tag
                 v-else-if="scope.row.order_status == 'REFUND_PROCESS'"
                 type="warning"
                 size="mini"
               >
-                退款处理中
+                {{ $t('9d49798d.73ce8f') }}
               </el-tag>
               <el-tag
                 v-else-if="scope.row.order_status == 'REFUND_SUCCESS'"
                 type="info"
                 size="mini"
               >
-                退款成功
+                {{ $t('9d49798d.d58cbd') }}
               </el-tag>
               <el-tag v-else-if="scope.row.order_status == 'REFUND_FAIL'" type="danger" size="mini">
-                退款失败
+                {{ $t('9d49798d.7c2544') }}
               </el-tag>
               <el-tag
                 v-else-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'"
                 type="primary"
                 size="mini"
               >
-                待收货
+                {{ $t('9d49798d.4933ca') }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="order_id" width="160" label="社区名称">
+          <el-table-column prop="order_id" width="160" :label="$t('9d49798d.d541f8')">
             <template slot-scope="scope">
               <span v-if="communityObj[scope.row.shop_id]">{{
                 communityObj[scope.row.shop_id].community_name
               }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="order_id" width="100" label="团长姓名">
+          <el-table-column prop="order_id" width="100" :label="$t('9d49798d.07e57c')">
             <template slot-scope="scope">
               <span v-if="communityObj[scope.row.shop_id]">{{
                 communityObj[scope.row.shop_id].leader_name
               }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column :label="$t('9d49798d.2b6bc0')">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -167,7 +181,7 @@
                   }
                 }"
               >
-                详情
+                {{ $t('9d49798d.f26225') }}
               </router-link>
             </template>
           </el-table-column>
@@ -211,15 +225,6 @@ export default {
         mobile: '',
         order_id: ''
       },
-      orderStatusList: [
-        { name: '全部', value: 'all' },
-        { name: '未支付', value: 'notpay' },
-        { name: '待提货', value: 'payed' },
-        { name: '已完成', value: 'done' },
-        { name: '已取消', value: 'ordercancel' },
-        { name: '退款中', value: 'refundprocess' },
-        { name: '已退款', value: 'refundsuccess' }
-      ],
       order_status: '',
       time_start_begin: '',
       time_start_end: '',
@@ -238,7 +243,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    orderStatusList() {
+      return [
+        { name: this.$t('9d49798d.a8b0c2'), value: 'all' },
+        { name: this.$t('9d49798d.608afd'), value: 'notpay' },
+        { name: this.$t('9d49798d.64729d'), value: 'payed' },
+        { name: this.$t('9d49798d.fad522'), value: 'done' },
+        { name: this.$t('9d49798d.2111cc'), value: 'ordercancel' },
+        { name: this.$t('9d49798d.07e608'), value: 'refundprocess' },
+        { name: this.$t('9d49798d.e85018'), value: 'refundsuccess' }
+      ]
+    }
   },
   mounted() {
     this.getOrders(this.params)

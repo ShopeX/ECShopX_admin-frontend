@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import Vue from 'vue'
+import { i18n } from '@/i18n'
 import {
   VERSION_STANDARD,
   VERSION_PLATFORM,
@@ -58,7 +59,7 @@ Vue.filter('subStr', function (str, n) {
 Vue.filter('formatCityData', function (areaValue, district, defaultValue = true) {
   if (areaValue == 0 || typeof areaValue === 'undefined') {
     if (!defaultValue) return ''
-    return '全国（默认）'
+    return i18n.t('1182143c.9cd661')
   }
   var area_str = ''
   for (var province in district) {
@@ -136,48 +137,22 @@ Vue.filter('formatTimestamp', function formatTimestamp(timestamp) {
 
 //匹配券类别字符串
 Vue.filter('formatCardStr', function (str) {
-  switch (str) {
-    case 'groupon':
-      str = '团购券'
-      break
-    case 'discount':
-      str = '折扣券'
-      break
-    case 'gift':
-      str = '兑换券'
-      break
-    case 'new_gift':
-      str = '兑换券'
-      break
-    case 'cash':
-      str = '满减券'
-      break
-    case 'money':
-      str = '现金券'
-      break
-    case 'general_coupon':
-      str = '优惠券'
-      break
-    case 'member_card':
-      str = '会员卡'
-      break
-    case 'scenic_ticket':
-      str = '景点门票'
-      break
-    case 'movie_ticket':
-      str = '电影票'
-      break
-    case 'boarding_pass':
-      str = '飞机票'
-      break
-    case 'meeting_ticket':
-      str = '会议门票'
-      break
-    case 'bus_ticket':
-      str = '汽车票'
-      break
+  const keyMap = {
+    groupon: '1182143c.f16902',
+    discount: '1182143c.9268f9',
+    gift: '1182143c.8bc752',
+    new_gift: '1182143c.8bc752',
+    cash: '1182143c.f23195',
+    money: '1182143c.f51e54',
+    general_coupon: '1182143c.2f3635',
+    member_card: '1182143c.f2827c',
+    scenic_ticket: '1182143c.25f312',
+    movie_ticket: '1182143c.7736df',
+    boarding_pass: '1182143c.b15293',
+    meeting_ticket: '1182143c.4df7cf',
+    bus_ticket: '1182143c.fab363'
   }
-  return str
+  return keyMap[str] ? i18n.t(keyMap[str]) : str
 })
 
 Vue.prototype.matchInternalRoute = function (name) {
@@ -223,18 +198,8 @@ Vue.prototype.matchRoutePath = function (name) {
 Vue.prototype.getUrlPathByLoginType = getUrlPathByLoginType
 
 Vue.prototype.orderType = [
-  {
-    type: 'service',
-    name: '服务类订单'
-  },
-  {
-    type: 'bargain',
-    name: '助力订单'
-  }
-  // {
-  //   type: 'normal',
-  //   name: '实体订单'
-  // }
+  { type: 'service', name: '1182143c.e6943f' },
+  { type: 'bargain', name: '1182143c.94b1e6' }
 ]
 // console.log("---process.env.IS_SAAS--",process.env)
 Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
@@ -281,6 +246,6 @@ Vue.prototype.theme = {
 }
 Vue.prototype.VUE_APP_LOCAL_DELIVERY_DIRVER = process.env.VUE_APP_LOCAL_DELIVERY_DIRVER
 
-Vue.prototype.companyBrand = '商派ECShopX'
+Vue.prototype.companyBrand = '1182143c.0086b7'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
 Vue.prototype.$EventBus = new Vue()

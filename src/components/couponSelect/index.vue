@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      title="选择优惠券"
+      :title="$t('0b1d1f8f.45bcee')"
       :visible.sync="visible"
       class="couponSelect"
       :before-close="cancelHandle"
@@ -15,7 +15,11 @@
       :close-on-press-escape="false"
     >
       <div class="query">
-        <el-select v-model="query.card_type" placeholder="请选择" @change="selectHandle">
+        <el-select
+          v-model="query.card_type"
+          :placeholder="$t('0b1d1f8f.708c9d')"
+          @change="selectHandle"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -25,11 +29,11 @@
         </el-select>
         <el-input
           v-model="query.title"
-          placeholder="请输入卡券名称"
+          :placeholder="$t('0b1d1f8f.b998dc')"
           style="width: 300px"
           class="input-with-select"
         >
-          <el-button slot="append" @click="queryHandle"> 查询 </el-button>
+          <el-button slot="append" @click="queryHandle"> {{ $t('0b1d1f8f.bee912') }} </el-button>
         </el-input>
       </div>
       <div class="list">
@@ -43,17 +47,29 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column :reserve-selection="true" type="selection" width="55" />
-          <el-table-column label="卡劵类型" width="120">
+          <el-table-column :label="$t('0b1d1f8f.041148')" width="120">
             <template slot-scope="scope">
-              <template v-if="scope.row.card_type == 'new_gift'"> 兑换券 </template>
-              <template v-else-if="scope.row.card_type == 'gift'"> 兑换券 </template>
-              <template v-else-if="scope.row.card_type == 'discount'"> 折扣卷 </template>
-              <template v-else-if="scope.row.card_type == 'cash'"> 满减券 </template>
+              <template v-if="scope.row.card_type == 'new_gift'">
+                {{ $t('0b1d1f8f.8bc752') }}
+              </template>
+              <template v-else-if="scope.row.card_type == 'gift'">
+                {{ $t('0b1d1f8f.8bc752') }}
+              </template>
+              <template v-else-if="scope.row.card_type == 'discount'">
+                {{ $t('0b1d1f8f.c23d22') }}
+              </template>
+              <template v-else-if="scope.row.card_type == 'cash'">
+                {{ $t('0b1d1f8f.f23195') }}
+              </template>
             </template>
           </el-table-column>
-          <el-table-column prop="title" label="卡劵名称" width="120" />
-          <el-table-column prop="description" label="卡劵说明" show-overflow-tooltip />
-          <el-table-column prop="fixed_term" label="卡劵有效期" show-overflow-tooltip>
+          <el-table-column prop="title" :label="$t('0b1d1f8f.439249')" width="120" />
+          <el-table-column
+            prop="description"
+            :label="$t('0b1d1f8f.8c8ca4')"
+            show-overflow-tooltip
+          />
+          <el-table-column prop="fixed_term" :label="$t('0b1d1f8f.ee9534')" show-overflow-tooltip>
             <template slot-scope="scope">
               <template
                 v-if="
@@ -74,14 +90,18 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column prop="quantity" label="可领取库存" show-overflow-tooltip>
+          <el-table-column prop="quantity" :label="$t('0b1d1f8f.4b06cf')" show-overflow-tooltip>
             <template slot-scope="scope">
               {{ scope.row.quantity - scope.row.get_num }}
             </template>
           </el-table-column>
-          <el-table-column prop="quantity" label="发送数量" show-overflow-tooltip>
+          <el-table-column prop="quantity" :label="$t('0b1d1f8f.95eb49')" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-input v-model.number="scope.row.give_num" placeholder="请输入" type="number" />
+              <el-input
+                v-model.number="scope.row.give_num"
+                :placeholder="$t('0b1d1f8f.02cc4f')"
+                type="number"
+              />
             </template>
           </el-table-column>
         </el-table>
@@ -98,11 +118,11 @@
         @current-change="handleCurrentChange"
       />
       <div class="tips">
-        <p>已选择：{{ multipleSelection.length }} 张，最多选择 20 张优惠券</p>
+        <p>{{ $t('0b1d1f8f.986ffb') }}{{ multipleSelection.length }}{{ $t('0b1d1f8f.0d6bd1') }}</p>
       </div>
       <div class="btn">
-        <el-button @click="cancelHandle"> 取消 </el-button>
-        <el-button type="primary" @click="confirm"> 确定 </el-button>
+        <el-button @click="cancelHandle"> {{ $t('0b1d1f8f.625fb2') }} </el-button>
+        <el-button type="primary" @click="confirm"> {{ $t('0b1d1f8f.38cf16') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -121,28 +141,6 @@ export default {
     }
   },
   data() {
-    const options = [
-      {
-        label: '全部类型',
-        value: 'all'
-      },
-
-      {
-        label: '折扣卷',
-        value: 'discount'
-      },
-      {
-        label: '满减券',
-        value: 'cash'
-      }
-    ]
-    if (this.VERSION_STANDARD()) {
-      options.push({
-        label: '兑换券',
-        value: 'new_gift'
-      })
-    }
-
     return {
       tableData: [],
       multipleSelection: [],
@@ -155,8 +153,20 @@ export default {
       paging: {
         page_no: 1,
         page_size: 10
-      },
-      options: options
+      }
+    }
+  },
+  computed: {
+    options() {
+      const opts = [
+        { label: this.$t('0b1d1f8f.c079e7'), value: 'all' },
+        { label: this.$t('0b1d1f8f.c23d22'), value: 'discount' },
+        { label: this.$t('0b1d1f8f.f23195'), value: 'cash' }
+      ]
+      if (this.VERSION_STANDARD()) {
+        opts.push({ label: this.$t('0b1d1f8f.8bc752'), value: 'new_gift' })
+      }
+      return opts
     }
   },
   watch: {
@@ -226,11 +236,11 @@ export default {
     },
     confirm() {
       if (this.multipleSelection.length <= 0) {
-        return this.$message.error('请选择兑换券~')
+        return this.$message.error(this.$t('0b1d1f8f.1128cb'))
       }
 
       if (this.multipleSelection.length > 20) {
-        return this.$message.error('最多可以选择20张优惠券~')
+        return this.$message.error(this.$t('0b1d1f8f.9af997'))
       }
 
       for (let i = 0; i < this.multipleSelection.length; i++) {
@@ -238,15 +248,15 @@ export default {
           this.multipleSelection[i].give_num >
           this.multipleSelection[i].quantity - this.multipleSelection[i].get_num
         ) {
-          return this.$message.error('所选劵包发送数量大于库存，请修改~')
+          return this.$message.error(this.$t('0b1d1f8f.3fbc08'))
         }
 
         if (String(this.multipleSelection[i].give_num).indexOf('.') == '1') {
-          return this.$message.error('所选优惠券发送数量必须为正整数~')
+          return this.$message.error(this.$t('0b1d1f8f.ded522'))
         }
 
         if (this.multipleSelection[i].give_num < 1) {
-          return this.$message.error('所选优惠券发送数量不可小于1~')
+          return this.$message.error(this.$t('0b1d1f8f.a05c63'))
         }
       }
 

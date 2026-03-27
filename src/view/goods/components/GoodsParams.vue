@@ -17,7 +17,7 @@
         filterable
         allow-create
         default-first-option
-        placeholder="请选择"
+        :placeholder="$t('65f7f4a9.708c9d')"
         @change="handleChange(item)"
       >
         <el-option

@@ -39,17 +39,17 @@
     >
       <template slot="tableTop">
         <div v-if="vipGradeIsOpen" class="action-container">
-          <div v-for="(item, index) in userVipGrade" class="vip-item">
+          <div v-for="(item, index) in userVipGrade" :key="item.lv_type" class="vip-item">
             {{ item.grade_name
-            }}{{ item.is_had_vip ? `${item.end_time}到期，延期` : '未购买过该会员卡，当天延期' }}
+            }}{{ item.is_had_vip ? item.end_time + $t('188e1819.15b382') : $t('188e1819.6bbb6c') }}
             <el-input-number
               v-model="formData[item.lv_type].day"
               controls-position="right"
               style="width: 100px"
             />
-            天<span v-if="index < userVipGrade.length - 1">，</span>
+            {{ $t('188e1819.249aba') }}<span v-if="index < userVipGrade.length - 1">，</span>
           </div>
-          <el-button @click="addStoreValue">保存</el-button>
+          <el-button @click="addStoreValue">{{ $t('188e1819.be5fbb') }}</el-button>
         </div>
       </template>
     </SpFinder>
@@ -65,19 +65,25 @@ export default {
     return {
       vipGradeIsOpen: false,
       userVipGrade: [],
-      setting: createSetting({
+      formData: {}
+    }
+  },
+  computed: {
+    setting() {
+      const vm = this
+      return createSetting({
         columns: [
-          { name: '订单号', key: 'order_id' },
-          { name: '会员卡等级', key: 'lv_type' },
-          { name: '会员卡名称', key: 'title' },
+          { name: vm.$t('188e1819.1e8dc2'), key: 'order_id' },
+          { name: vm.$t('188e1819.f512e9'), key: 'lv_type' },
+          { name: vm.$t('188e1819.73b3a0'), key: 'title' },
           {
-            name: '会员卡类型',
+            name: vm.$t('188e1819.f73da2'),
             key: 'card_type',
             formatter: (value, row, col) => {
               return value.desc
             }
           },
-          { name: '会员手机号', key: 'mobile' },
+          { name: vm.$t('188e1819.6a52ee'), key: 'mobile' },
           {
             name: '购买金额',
             key: 'price',
@@ -114,8 +120,7 @@ export default {
             }
           }
         ]
-      }),
-      formData: {}
+      })
     }
   },
   created() {},

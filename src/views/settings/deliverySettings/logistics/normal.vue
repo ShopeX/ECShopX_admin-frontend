@@ -5,7 +5,7 @@
 
 <template>
   <div>
-    <el-card header="搜索" class="search-card">
+    <el-card :header="$t('1874b458.e5f71f')" class="search-card">
       <SpFormPlus
         v-model="form"
         form-type="searchForm"
@@ -15,7 +15,7 @@
         @reset="handleReset"
       />
     </el-card>
-    <el-card header="物流列表">
+    <el-card :header="$t('1874b458.419c0e')">
       <el-row :gutter="40">
         <el-col v-for="(item, index) in list" :key="index" :xs="8" :sm="6" :md="6" :lg="6" :xl="4">
           <LogisticsBlock :info="item" :disabled="index === 0" @refreshList="getList" />
@@ -36,55 +36,36 @@ export default {
         corp_name: '',
         status: 0
       },
-      statusOptions: [
-        {
-          value: 0,
-          label: '全部'
-        },
-        {
-          value: 1,
-          label: '启用'
-        },
-        {
-          value: 2,
-          label: '关闭'
-        }
-      ],
-      formItems: [
+      list: []
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           fieldName: 'corp_name',
-          label: '物流名称',
+          label: this.$t('1874b458.f35ebd'),
           cellWidth: 2,
           component: 'input',
           componentProps: {
-            placeholder: '请输入物流公司名称'
+            placeholder: this.$t('1874b458.7ba15c')
           }
         },
         {
           fieldName: 'status',
-          label: '物流状态',
+          label: this.$t('1874b458.2c574f'),
           component: 'select',
           componentProps: {
-            placeholder: '请选择',
+            placeholder: this.$t('1874b458.708c9d'),
             clearable: true,
             options: [
-              {
-                value: 0,
-                label: '全部'
-              },
-              {
-                value: 1,
-                label: '启用'
-              },
-              {
-                value: 2,
-                label: '关闭'
-              }
+              { value: 0, label: this.$t('1874b458.a8b0c2') },
+              { value: 1, label: this.$t('1874b458.7854b5') },
+              { value: 2, label: this.$t('1874b458.b15d91') }
             ]
           }
         }
-      ],
-      list: []
+      ]
     }
   },
   mounted() {

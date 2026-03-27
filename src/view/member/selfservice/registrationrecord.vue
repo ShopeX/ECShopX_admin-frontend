@@ -13,8 +13,8 @@
   <SpRouterView>
     <SpPage>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="activity_id" label="活动:">
-          <el-select v-model="params.activity_id" placeholder="请选择活动">
+        <SpFilterFormItem prop="activity_id" :label="$t('a0d7a294.f8f6a0')">
+          <el-select v-model="params.activity_id" :placeholder="$t('a0d7a294.252fcb')">
             <el-option
               v-for="item in activity_options"
               :key="item.value"
@@ -23,43 +23,43 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="params.mobile" placeholder="手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('6b57cb80.ce2bf3')">
+          <el-input v-model="params.mobile" :placeholder="$t('6b57cb80.8098e2')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="create_time" :label="$t('6b57cb80.374856')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="根据添加时间筛选"
+            :placeholder="$t('6b57cb80.e08045')"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="is_white_list" label="进白名单:">
-          <el-select v-model="params.is_white_list" placeholder="请选择白名单">
+        <SpFilterFormItem prop="is_white_list" :label="$t('a0d7a294.8cdc4f')">
+          <el-select v-model="params.is_white_list" :placeholder="$t('a0d7a294.72f29d')">
             <el-option
               v-for="item in whiteOptions"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.labelKey)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="distributor" label="店铺:">
+        <SpFilterFormItem prop="distributor" :label="$t('15ecc99b.295713')">
           <el-autocomplete
             v-model="params.distributor.name"
             :fetch-suggestions="queryStoreSearch"
-            placeholder="请输入店铺名称"
+            :placeholder="$t('6b57cb80.867738')"
             @select="handleSelectStore"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="true_name" label="姓名:">
-          <el-input v-model="params.true_name" placeholder="姓名" />
+        <SpFilterFormItem prop="true_name" :label="$t('a0d7a294.75d152')">
+          <el-input v-model="params.true_name" :placeholder="$t('a0d7a294.60d045')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" @click="editorLog()"> 上传日志 </el-button>
-        <el-button type="primary" @click="exportData"> 导出 </el-button>
+        <el-button type="primary" @click="editorLog()">{{ $t('a0d7a294.64dedc') }}</el-button>
+        <el-button type="primary" @click="exportData()">{{ $t('a0d7a294.55405e') }}</el-button>
       </div>
 
       <!-- <div class="action-container"> -->
@@ -91,48 +91,57 @@
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
-          :label="item.label"
+          :label="$t(item.labelKey)"
           :name="item.name"
         >
-          <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
-            <el-table-column prop="status" label="操作" width="150">
+          <el-table
+            v-loading="loading"
+            border
+            :data="tableList"
+            :element-loading-text="$t('731b7d26.f09b12')"
+          >
+            <el-table-column prop="status" :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
                 <el-button
                   type="text"
                   v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()"
                   @click="onLinkChange(scope.row)"
                 >
-                  审核
+                  {{ $t('a0d7a294.cf13b1') }}
                 </el-button>
-                <el-button type="text" @click="onLinkChange(scope.row)">详情</el-button>
+                <el-button type="text" @click="onLinkChange(scope.row)">
+{{
+                  $t('a0d7a294.f26225')
+                }}
+</el-button>
                 <el-button
                   type="text"
                   v-if="scope.row.status == 'passed'"
                   @click="onShowChange(scope.row)"
                 >
-                  核销
+                  {{ $t('a0d7a294.e7d31e') }}
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="record_no" label="报名编号" />
-            <el-table-column prop="group_no" width="140" label="活动群组编号" />
-            <el-table-column prop="activity_name" label="活动名称" />
-            <el-table-column prop="tem_name" label="报名表单" />
-            <el-table-column prop="mobile" label="手机号" />
-            <el-table-column prop="get_points" label="获取积分" />
-            <el-table-column label="进白名单" width="120">
+            <el-table-column prop="record_no" :label="$t('6b57cb80.6c5f80')" />
+            <el-table-column prop="group_no" width="140" :label="$t('a0d7a294.e234d2')" />
+            <el-table-column prop="activity_name" :label="$t('6b57cb80.39834b')" />
+            <el-table-column prop="tem_name" :label="$t('6b57cb80.112a9c')" />
+            <el-table-column prop="mobile" :label="$t('6b57cb80.8098e2')" />
+            <el-table-column prop="get_points" :label="$t('15ecc99b.c07abe')" />
+            <el-table-column :label="$t('15ecc99b.ac7bd3')" width="120">
               <template slot-scope="scope">
-                {{ scope.row.is_white_list == 1 ? '是' : '否' }}
+                {{ scope.row.is_white_list == 1 ? $t('15ecc99b.0a60ac') : $t('15ecc99b.c9744f') }}
               </template>
             </el-table-column>
-            <el-table-column label="备注" width="180">
+            <el-table-column :label="$t('a0d7a294.2432b5')" width="180">
               <template slot-scope="scope">
                 <el-input v-model="scope.row.remark" @blur="() => hanldeRemarkBlur(scope.row)" />
               </template>
             </el-table-column>
 
-            <el-table-column prop="create_date" label="申请时间" />
-            <el-table-column prop="status_name" label="状态">
+            <el-table-column prop="create_date" :label="$t('a0d7a294.5ba072')" />
+            <el-table-column prop="status_name" :label="$t('d3f8464b.3fea7c')">
               <!-- <template slot-scope="scope">
                 <el-tag
                   v-if="scope.row.status == 'pending'"
@@ -188,7 +197,7 @@
       <SpDialog
         ref="dialogRef"
         v-model="dialogVisible"
-        title="报名核销"
+        :title="$t('a0d7a294.af87cc')"
         :modal="false"
         width="500px"
         :form="dialogForm"
@@ -231,12 +240,12 @@ export default {
         ...initialParams
       },
       tabList: [
-        { label: '全部', name: 'all' },
-        { label: '待审核', name: 'pending' },
-        { label: '已报名', name: 'passed' },
-        { label: '已拒绝', name: 'rejected' },
-        { label: '已核销', name: 'verified' },
-        { label: '已取消', name: 'canceled' }
+        { labelKey: 'ac2a6290.a8b0c2', name: 'all' },
+        { labelKey: 'a0d7a294.5cb424', name: 'pending' },
+        { labelKey: 'a0d7a294.4166d8', name: 'passed' },
+        { labelKey: 'a0d7a294.81233d', name: 'rejected' },
+        { labelKey: 'a0d7a294.77af84', name: 'verified' },
+        { labelKey: 'a0d7a294.2111cc', name: 'canceled' }
       ],
       activityParams: {
         page: 1,
@@ -247,25 +256,16 @@ export default {
       activity_options: [],
       shopList: [],
       whiteOptions: [
-        { label: '全部', value: '' },
-        { label: '是', value: 1 },
-        { label: '否', value: 2 }
+        { labelKey: 'ac2a6290.a8b0c2', value: '' },
+        { labelKey: '15ecc99b.0a60ac', value: 1 },
+        { labelKey: '15ecc99b.c9744f', value: 2 }
       ],
       dialogVisible: false,
       dialogForm: {
         record_id: '',
         verify_code: ''
       },
-      dialogFormList: [
-        {
-          label: '提货码',
-          key: 'verify_code',
-          type: 'input',
-          placeholder: '请输入提货码',
-          required: true,
-          message: '不能为空'
-        }
-      ]
+      dialogFormList: []
     }
   },
   mounted() {
@@ -352,7 +352,7 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     uploadHandleTemplate() {
-      var fileName = '报名批量审核'
+      var fileName = this.$t('a0d7a294.8d6cfb')
       let params = { file_type: 'selform_registration_record', file_name: fileName }
       exportUploadTemplate(params).then((response) => {
         if (response.data.data.file) {
@@ -365,7 +365,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('731b7d26.bfd8d5')
           })
         }
       })
@@ -375,7 +375,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('731b7d26.7bbfaa')
         })
         this.$router.push({ path: this.matchRoutePath('editor') })
       })
@@ -389,7 +389,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('a0d7a294.3e1ddd')
           })
           this.$export_open('selform_registration_record')
           return
@@ -400,7 +400,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('a0d7a294.89ae53')
           })
           return
         }
@@ -448,7 +448,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    dialogFormList() {
+      return [
+        {
+          label: this.$t('a0d7a294.d0edc9'),
+          key: 'verify_code',
+          type: 'input',
+          placeholder: this.$t('a0d7a294.ba231e'),
+          required: true,
+          message: this.$t('a0d7a294.281bad')
+        }
+      ]
+    }
   }
 }
 </script>

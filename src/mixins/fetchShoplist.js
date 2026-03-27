@@ -25,7 +25,7 @@ export var shoplistMixin = {
   methods: {
     async getList(refresh) {
       this.exist_shop = true
-      this.desc = this.wxshops ? '请选择门店' : '请选择店铺'
+      this.desc = this.wxshops ? this.$t('1265bd53.ca95a5') : this.$t('1265bd53.06accf')
       const data = this.wxshops ? await this.getWxShopsList() : await this.getDistributorList()
       const list = data.data.list
       this.list = refresh ? list : [...this.list, ...list]

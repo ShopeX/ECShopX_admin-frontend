@@ -15,7 +15,7 @@
       :show-default-actions="false"
     />
     <div class="section-footer with-border content-center">
-      <el-button type="primary" @click="onSubmit"> 一洽客服保存 </el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('c909c3af.7cf724') }}</el-button>
     </div>
   </SpPage>
 </template>
@@ -39,28 +39,28 @@ export default {
         {
           fieldName: '__group_echat',
           component: 'group',
-          label: '客服配置'
+          label: this.$t('c909c3af.63a578')
         },
         {
           fieldName: 'is_open',
-          label: '开启一洽客服',
+          label: this.$t('c909c3af.1e2a73'),
           component: 'switch',
           componentProps: {
             'active-value': 'true',
             'inactive-value': 'false',
             'inactive-color': '#ccc',
-            'active-text': '开启',
-            'inactive-text': '关闭',
+            'active-text': this.$t('c909c3af.cc42dd'),
+            'inactive-text': this.$t('c909c3af.b15d91'),
             'active-color': '#13ce66'
           }
         },
         {
           fieldName: 'echat_url',
-          label: '一洽客服链接地址',
+          label: this.$t('c909c3af.930436'),
           component: 'input',
           componentProps: {
             style: { width: '300px' },
-            placeholder: '请输入内容'
+            placeholder: this.$t('c909c3af.a11cc7')
           }
         }
       ]
@@ -79,7 +79,7 @@ export default {
       try {
         await this.$refs.form.validate()
         await saveEChatSetting(this.form)
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('c909c3af.3b1083'), type: 'success' })
         this.getInfo()
       } catch (error) {}
     }

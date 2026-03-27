@@ -13,8 +13,8 @@
 </style>
 <template>
   <CompButton
-    placeholder="选择店铺"
-    format="{0}个店铺"
+    :placeholder="i18n.t('6074cb51.afa2e6')"
+    :format="i18n.t('6074cb51.ca9969')"
     :value="value.id ? 1 : 0"
     :view-btn="false"
     @click="handleClickAdd"
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { isArray } from '@/utils'
 import CompButton from '../../comps/comp-button'
@@ -32,7 +33,7 @@ export default {
   components: { CompButton },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       localValue: null
     }
   },

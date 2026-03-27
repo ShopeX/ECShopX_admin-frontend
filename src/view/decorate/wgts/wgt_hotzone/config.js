@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrHotSetting from './attr-hotsetting'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
@@ -6,20 +7,20 @@ const config = {
   name: 'imgHotzone',
   setting: [
     {
-      group: '风格设置',
-      label: '展示形式',
+      group: i18n.t('7a0ee76a.eeb8e8'),
+      label: i18n.t('7a0ee76a.1e409f'),
       key: 'animation',
       component: 'radiobutton',
       options: [
-        { name: '纵向排列', label: 'horizontal' },
-        { name: '横向排列', label: 'vertical' }
+        { name: i18n.t('7a0ee76a.6875b7'), label: 'horizontal' },
+        { name: i18n.t('7a0ee76a.4f9974'), label: 'vertical' }
       ],
-      tips: '横向排列:高度固定，宽度自适应, 超出屏幕滑动',
+      tips: i18n.t('7a0ee76a.cc9f07'),
       value: 'horizontal'
     },
     {
-      group: '风格设置',
-      label: '图片高度',
+      group: i18n.t('7a0ee76a.eeb8e8'),
+      label: i18n.t('7a0ee76a.b372fc'),
       key: 'imgHeight',
       component: function (h, { key }) {
         return (
@@ -52,8 +53,8 @@ const config = {
       }
     },
     {
-      group: '风格设置',
-      label: '热区设置',
+      group: i18n.t('7a0ee76a.eeb8e8'),
+      label: i18n.t('7a0ee76a.c90f57'),
       key: 'data',
       component: function (h, { key }) {
         return <AttrHotSetting v-model={this.value[key]} />
@@ -85,6 +86,7 @@ const config = {
         : base?.imgHeight
 
     return {
+      id: v?.id,
       name,
       ...transformedBase,
       imgHeight: convertedBaseImgHeight,
@@ -104,6 +106,7 @@ const config = {
   },
   transformOut: (v) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 outerMargin 转换

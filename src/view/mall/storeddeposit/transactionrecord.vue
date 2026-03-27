@@ -11,17 +11,17 @@
           v-model="create_time"
           value-format="yyyy/MM/dd"
           type="daterange"
-          placeholder="选择日期范围"
+          :placeholder="$t('8276292e.4b8cb9')"
           style="width: 100%"
           @change="dateChange"
         />
       </el-col>
       <el-col :span="6">
-        <el-input v-model="shop_name" placeholder="门店" @change="storeChange" />
+        <el-input v-model="shop_name" :placeholder="$t('8276292e.a7da92')" @change="storeChange" />
       </el-col>
       <el-col :span="6"> &nbsp; </el-col>
       <el-col :span="6">
-        <el-input v-model="mobile" placeholder="手机号／交易流水号">
+        <el-input v-model="mobile" :placeholder="$t('8276292e.6dfa37')">
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
@@ -36,7 +36,7 @@
         <el-table-column
           prop="tradeType"
           column-key="type"
-          label="交易记录类型"
+          :label="$t('8276292e.4e5463')"
           width="180"
           :filters="typeFilters"
           filter-placement="bottom-end"
@@ -45,19 +45,19 @@
             {{ scope.row.tradeType | formatTypeStr }}
           </template>
         </el-table-column>
-        <el-table-column prop="timeStart" label="创建时间">
+        <el-table-column prop="timeStart" :label="$t('8276292e.eca37c')">
           <template slot-scope="scope">
             <span>{{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="depositTradeId" label="交易流水号" />
-        <el-table-column prop="mobile" label="用户手机号" />
-        <el-table-column prop="money" label="金额">
+        <el-table-column prop="depositTradeId" :label="$t('8276292e.fa68e9')" />
+        <el-table-column prop="mobile" :label="$t('8276292e.18b642')" />
+        <el-table-column prop="money" :label="$t('8276292e.4cf24a')">
           <template slot-scope="scope">
-            <span>{{ scope.row.money / 100 }}元</span>
+            <span>{{ scope.row.money / 100 }}{{ $t('7f31cab4.c16655') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="shopName" label="门店" />
+        <el-table-column prop="shopName" :label="$t('8276292e.a7da92')" />
       </el-table>
     </div>
     <div v-if="total_count > pageSize" class="tc" style="margin-top: 20px">
@@ -74,6 +74,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { i18n } from '@/i18n'
 import { getDepositTradeList, getDepositCountIndex } from '../../../api/deposit'
 export default {
   props: ['getStatus'],
@@ -87,13 +88,6 @@ export default {
       total_count: 0,
       pageSize: 20,
       recordList: [],
-      typeFilters: [
-        { text: '充值记录', value: 'recharge' },
-        { text: '赠送记录', value: 'recharge_gift' },
-        { text: '消费记录', value: 'consume' },
-        { text: '返佣记录', value: 'recharge_send' },
-        { text: '退回记录', value: 'refund' }
-      ],
       params: {
         page: 1
       },
@@ -102,7 +96,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    typeFilters() {
+      return [
+        { text: this.$t('8276292e.415b28'), value: 'recharge' },
+        { text: this.$t('8276292e.7be24a'), value: 'recharge_gift' },
+        { text: this.$t('8276292e.58cd6d'), value: 'consume' },
+        { text: this.$t('8276292e.f1398c'), value: 'recharge_send' },
+        { text: this.$t('8276292e.d6b434'), value: 'refund' }
+      ]
+    }
   },
   watch: {
     getStatus(newVal, oldVal) {
@@ -172,24 +175,14 @@ export default {
   },
   filters: {
     formatTypeStr(str) {
-      switch (str) {
-        case 'recharge':
-          str = '充值记录'
-          break
-        case 'consume':
-          str = '消费记录'
-          break
-        case 'recharge_gift':
-          str = '赠送记录'
-          break
-        case 'refund':
-          str = '退回记录'
-          break
-        case 'recharge_send':
-          str = '返佣记录'
-          break
+      const map = {
+        recharge: '8276292e.415b28',
+        consume: '8276292e.58cd6d',
+        recharge_gift: '8276292e.7be24a',
+        refund: '8276292e.d6b434',
+        recharge_send: '8276292e.f1398c'
       }
-      return str
+      return map[str] ? i18n.t(map[str]) : str
     }
   }
 }

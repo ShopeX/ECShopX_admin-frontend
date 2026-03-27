@@ -15,13 +15,18 @@
             @update="storeSearch"
           />
           <!--distributors wxshops 需要哪个api传哪个-->
-          <el-input v-model="goodsName" style="width: 20%" placeholder="商品名称" size="mini">
+          <el-input
+            v-model="goodsName"
+            style="width: 20%"
+            :placeholder="$t('9f60801e.1fd1d5')"
+            size="mini"
+          >
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
           <el-select
             v-model="templates_id"
             size="mini"
-            placeholder="运费模板"
+            :placeholder="$t('9f60801e.416fd4')"
             style="width: 20%"
             @change="handleChangeTemplates"
           >
@@ -43,7 +48,7 @@
               style="display: inline-block"
               @click="addItems"
             >
-              添加商品
+              {{ $t('9f60801e.fa3aee') }}
             </el-button>
             <el-button
               type="primary"
@@ -51,7 +56,7 @@
               style="display: inline-block"
               @click="addCategory"
             >
-              更改销售分类
+              {{ $t('9f60801e.51af77') }}
             </el-button>
             <el-button
               type="primary"
@@ -59,7 +64,7 @@
               style="display: inline-block"
               @click="addTemplates"
             >
-              更改运费模板
+              {{ $t('9f60801e.a7aae3') }}
             </el-button>
           </el-button-group>
         </el-col>
@@ -73,8 +78,10 @@
         >
           <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
             <el-input v-model="warning_store" value="warning_store">
-              <template slot="prepend"> 预警数量 </template>
-              <el-button slot="append" @click="setWarningStore"> 保存 </el-button>
+              <template slot="prepend"> {{ $t('9f60801e.6d4036') }} </template>
+              <el-button slot="append" @click="setWarningStore">
+                {{ $t('9f60801e.be5fbb') }}
+              </el-button>
             </el-input>
           </div>
           <el-table
@@ -84,9 +91,9 @@
             :height="wheight - 280"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column type="selection" align="center" label="全选" />
-            <el-table-column prop="goods_id" label="商品ID" min-width="80" />
-            <el-table-column label="排序编号" min-width="100">
+            <el-table-column type="selection" align="center" :label="$t('9f60801e.66eeac')" />
+            <el-table-column prop="goods_id" :label="$t('9f60801e.858526')" min-width="80" />
+            <el-table-column :label="$t('9f60801e.e8373a')" min-width="100">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.sort"
@@ -95,8 +102,8 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="itemName" label="商品名称" min-width="240" />
-            <el-table-column prop="price" label="价格" min-width="120">
+            <el-table-column prop="itemName" :label="$t('9f60801e.1fd1d5')" min-width="240" />
+            <el-table-column prop="price" :label="$t('9f60801e.0e9fd9')" min-width="120">
               <template slot-scope="scope">
                 <div v-if="scope.row.itemId !== currentId">
                   ¥{{ scope.row.price }}
@@ -114,17 +121,21 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="store" label="库存" min-width="80" />
+            <el-table-column prop="store" :label="$t('9f60801e.0eac88')" min-width="80" />
             <!--el-table-column prop="rebate" label="店铺佣金" :formatter="rebateformatter" width="100"></el-table-column-->
-            <el-table-column label="状态" min-width="100">
+            <el-table-column :label="$t('9f60801e.3fea7c')" min-width="100">
               <template slot-scope="scope">
-                <span v-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
-                <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
-                <span v-else>不可销售</span>
+                <span v-if="scope.row.approve_status == 'onsale'">{{ $t('9f60801e.959221') }}</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'"
+                  >{{ $t('9f60801e.2c50a0') }}
+                </span>
+                <span v-else-if="scope.row.approve_status == 'only_show'">{{
+                  $t('9f60801e.acf86b')
+                }}</span>
+                <span v-else>{{ $t('9f60801e.ae83a3') }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" min-width="200">
+            <el-table-column :label="$t('9f60801e.2b6bc0')" min-width="200">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
@@ -134,7 +145,7 @@
                     class="btn-gap"
                     @click="itemsDetail(scope.$index, scope.row)"
                   >
-                    查看
+                    {{ $t('9f60801e.607e7a') }}
                   </el-button>
                   <el-button
                     size="mini"
@@ -143,7 +154,7 @@
                     class="btn-gap"
                     @click="editItemsAction(scope.$index, scope.row, false)"
                   >
-                    编辑
+                    {{ $t('9f60801e.95b351') }}
                   </el-button>
                   <el-button
                     size="mini"
@@ -152,7 +163,7 @@
                     class="btn-gap"
                     @click="deleteItemsAction(scope.$index, scope.row)"
                   >
-                    删除
+                    {{ $t('9f60801e.2f4aad') }}
                   </el-button>
                   <!--el-button size="mini" icon="edit" type="text" @click="editItemsAction(scope.$index, scope.row, true)" class="btn-gap">添加相似</el-button-->
                 </div>
@@ -176,7 +187,7 @@
 
       <!-- 查看商品详情-开始 -->
       <el-dialog
-        title="商品详情"
+        :title="$t('9f60801e.b4f5db')"
         :visible.sync="ItemsDetailVisible"
         :close-on-click-modal="false"
         class="good-detail-dialog"
@@ -184,7 +195,7 @@
         <template>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">商品名称</div>
+              <div class="grid-content">{{ $t('9f60801e.1fd1d5') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -194,7 +205,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">简述</div>
+              <div class="grid-content">{{ $t('9f60801e.59683f') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -204,7 +215,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">价格</div>
+              <div class="grid-content">{{ $t('9f60801e.0e9fd9') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">￥{{ itemsDetailData.price }}</div>
@@ -212,7 +223,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">原价</div>
+              <div class="grid-content">{{ $t('9f60801e.1afdfe') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">￥{{ itemsDetailData.market_price / 100 }}</div>
@@ -220,7 +231,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">库存</div>
+              <div class="grid-content">{{ $t('9f60801e.0eac88') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -230,24 +241,24 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">状态</div>
+              <div class="grid-content">{{ $t('9f60801e.3fea7c') }}</div>
             </el-col>
             <el-col :span="21">
               <div v-if="itemsDetailData.approve_status === 'onsale'" class="grid-content">
-                前台可销售
+                {{ $t('9f60801e.9b7481') }}
               </div>
               <div
                 v-else-if="itemsDetailData.approve_status === 'offline_sale'"
                 class="grid-content"
               >
-                前台不展示
+                {{ $t('9f60801e.2c50a0') }}
               </div>
-              <div v-else class="grid-content">不可销售</div>
+              <div v-else class="grid-content">{{ $t('9f60801e.ae83a3') }}</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">图片</div>
+              <div class="grid-content">{{ $t('9f60801e.20def7') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -275,7 +286,7 @@
               </div>
             </el-col>
             <el-col :span="3">
-              <div class="grid-content">详情</div>
+              <div class="grid-content">{{ $t('9f60801e.f26225') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content grid-detail" v-html="itemsDetailData.intro" />
@@ -283,7 +294,7 @@
           </el-row>
           <el-row v-if="itemsDetailData.enable_agreement">
             <el-col :span="3">
-              <div class="grid-content">购买协议</div>
+              <div class="grid-content">{{ $t('9f60801e.b04d35') }}</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content grid-detail" v-html="itemsDetailData.purchase_agreement" />
@@ -297,14 +308,22 @@
               itemsDetailData = {}
             "
           >
-            取消
+            {{ $t('9f60801e.625fb2') }}
           </el-button>
         </div>
       </el-dialog>
       <!-- 查看商品详情-结束 -->
       <!-- 选择运费模板-开始 -->
-      <el-dialog title="更改运费模板" :visible.sync="addTemplatesdialogVisible" width="30%">
-        <el-select v-model="templates_new_id" placeholder="运费模板" style="width: 100%">
+      <el-dialog
+        :title="$t('9f60801e.a7aae3')"
+        :visible.sync="addTemplatesdialogVisible"
+        width="30%"
+      >
+        <el-select
+          v-model="templates_new_id"
+          :placeholder="$t('9f60801e.416fd4')"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in templatesList"
             :key="item.template_id"
@@ -313,13 +332,19 @@
           />
         </el-select>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="addTemplatesdialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="changeTemplates">确 定</el-button>
+          <el-button @click="addTemplatesdialogVisible = false">{{
+            $t('9f60801e.c08ab9')
+          }}</el-button>
+          <el-button type="primary" @click="changeTemplates">{{ $t('9f60801e.aa7527') }}</el-button>
         </span>
       </el-dialog>
       <!-- 选择运费模板-结束 -->
       <!-- 选择商品分类-开始 -->
-      <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
+      <el-dialog
+        :title="$t('9f60801e.51af77')"
+        :visible.sync="addCategorydialogVisible"
+        width="30%"
+      >
         <treeselect
           v-model="category_id"
           :options="categoryList"
@@ -328,8 +353,10 @@
           :disable-branch-nodes="true"
         />
         <span slot="footer" class="dialog-footer">
-          <el-button @click="addCategorydialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="changeCategory">确 定</el-button>
+          <el-button @click="addCategorydialogVisible = false">{{
+            $t('9f60801e.c08ab9')
+          }}</el-button>
+          <el-button type="primary" @click="changeCategory">{{ $t('9f60801e.aa7527') }}</el-button>
         </span>
       </el-dialog>
       <!-- 选择商品分类-结束 -->
@@ -383,8 +410,8 @@ export default {
       currentId: '',
       currentPrice: '',
       tabList: [
-        { name: '全部商品', value: null, activeName: 'first' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
+        { name: this.$t('9f60801e.794a4e'), value: null, activeName: 'first' },
+        { name: this.$t('9f60801e.5a867d'), value: 'true', activeName: 'second' }
       ],
       goodsName: '',
       isEdit: false,
@@ -469,7 +496,7 @@ export default {
       updateGoodsInfo({ item_id: this.currentId, price: this.currentPrice }).then((res) => {
         this.$message({
           type: 'success',
-          message: '操作成功'
+          message: this.$t('9f60801e.33130f')
         })
         this.ItemsList[index].price = this.currentPrice
         this.currentId = -1
@@ -517,7 +544,7 @@ export default {
         if (!this.templates_new_id) {
           this.$message({
             type: 'error',
-            message: '请选择运费模板'
+            message: this.$t('9f60801e.d778f5')
           })
           return false
         }
@@ -530,7 +557,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品'
+          message: this.$t('9f60801e.ace302')
         })
       }
     },
@@ -544,7 +571,7 @@ export default {
         if (!this.category_id) {
           this.$message({
             type: 'error',
-            message: '请选择商品分类'
+            message: this.$t('9f60801e.e4e928')
           })
           return false
         }
@@ -558,7 +585,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品'
+          message: this.$t('9f60801e.ace302')
         })
       }
     },
@@ -575,7 +602,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品'
+          message: this.$t('9f60801e.ace302')
         })
       }
     },
@@ -585,7 +612,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品'
+          message: this.$t('9f60801e.ace302')
         })
       }
     },
@@ -629,16 +656,16 @@ export default {
       })
     },
     deleteItemsAction(index, row) {
-      this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('9f60801e.e569b1'), this.$t('9f60801e.02d981'), {
+        confirmButtonText: this.$t('9f60801e.38cf16'),
+        cancelButtonText: this.$t('9f60801e.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteItems(row.itemId).then((response) => {
             this.ItemsList.splice(index, 1)
             this.$message({
-              message: '删除商品成功',
+              message: this.$t('9f60801e.a8504b'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -647,7 +674,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('9f60801e.2111cc')
           })
         })
     },

@@ -15,7 +15,7 @@
     />
 
     <div class="action-container mt-5">
-      <el-button type="primary" @click="addDeliveryman">添加配送员</el-button>
+      <el-button type="primary" @click="addDeliveryman">{{ $t('dcd2f270.193fed') }}</el-button>
     </div>
 
     <SpFinder
@@ -31,7 +31,7 @@
     <SpDialog
       ref="addDialogRef"
       v-model="deliveryman"
-      :title="editTitle"
+      :title="editTitleI18n"
       :form="addForm"
       :form-list="addFormList"
       @onSubmit="onAddSubmit"
@@ -70,7 +70,7 @@ export default {
       oldData: [],
       relDistributors: [],
       operator_id: '',
-      editTitle: '添加配送员',
+      editMode: 'add', // 'add' | 'edit', use editTitleI18n for display
       params: {
         operator_type: 'self_delivery_staff',
         username: '',
@@ -78,94 +78,112 @@ export default {
         payment_method: ''
       },
 
-      formItems: [
+      addForm: {
+        operator_type: 'self_delivery_staff',
+        distributor_name: '',
+        staff_type: 'platform',
+        staff_no: '',
+        staff_attribute: 'part_time',
+        payment_method: 'order',
+        payment_fee: 0.01,
+        payment_fee1: 1,
+        mobile: '',
+        password: '',
+        distributor_ids: []
+      }
+    }
+  },
+  computed: {
+    editTitleI18n() {
+      return this.editMode === 'add' ? this.$t('dcd2f270.193fed') : this.$t('dcd2f270.eee2bb')
+    },
+    formItems() {
+      return [
         {
           fieldName: 'username',
-          label: '配送员姓名',
+          label: this.$t('dcd2f270.9b3489'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入配送员姓名',
+            placeholder: this.$t('dcd2f270.c6c579'),
             size: 'default'
           }
         },
-
         {
           fieldName: 'payment_method',
-          label: '配送结算方式',
+          label: this.$t('dcd2f270.737477'),
           component: 'select',
           componentProps: {
-            placeholder: '请选择',
+            placeholder: this.$t('dcd2f270.708c9d'),
             size: 'small',
             options: [
-              {
-                value: 'order',
-                label: '按单笔订单'
-              },
-              {
-                value: 'amount',
-                label: '按订单金额比例'
-              }
+              { value: 'order', label: this.$t('dcd2f270.ed776f') },
+              { value: 'amount', label: this.$t('dcd2f270.705abf') }
             ]
           }
         },
         {
           fieldName: 'mobile',
-          label: '配送员手机号',
+          label: this.$t('dcd2f270.ec9c94'),
           component: 'input',
           cellWidth: 2,
           componentProps: {
-            placeholder: '请输入配送员手机号',
+            placeholder: this.$t('dcd2f270.f0a58a'),
             size: 'default'
           }
         }
-      ],
-
-      options: [
-        {
-          value: 'order',
-          label: '按单笔订单'
-        },
-        {
-          value: 'amount',
-          label: '按订单金额比例'
-        }
-      ],
-      setting: {
+      ]
+    },
+    setting() {
+      return {
         columns: [
-          { name: '业务员姓名', key: 'username', width: 110 },
-          { name: '配送员编号', key: 'staff_no', width: 110 },
-          { name: '配送员手机号', key: 'mobile', width: 150 },
+          { name: this.$t('dcd2f270.511948'), key: 'username', width: 110 },
+          { name: this.$t('dcd2f270.fb92e9'), key: 'staff_no', width: 110 },
+          { name: this.$t('dcd2f270.ec9c94'), key: 'mobile', width: 150 },
           {
-            name: '配送员属性',
+            name: this.$t('dcd2f270.95a141'),
             width: 110,
             key: 'staff_attribute',
             render: (h, { row }) => {
-              return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>
+              return (
+                <span>
+                  {row.staff_attribute === 'full_time'
+                    ? this.$t('dcd2f270.63f85b')
+                    : this.$t('dcd2f270.7c4f46')}
+                </span>
+              )
             }
           },
           {
-            name: '配送结算方式',
+            name: this.$t('dcd2f270.737477'),
             width: 150,
             key: 'payment_method',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return (
+                <span>
+                  {row.payment_method === 'order'
+                    ? this.$t('dcd2f270.ed776f')
+                    : this.$t('dcd2f270.705abf')}
+                </span>
+              )
             }
           },
           {
-            name: '结算费用',
+            name: this.$t('dcd2f270.60a4ae'),
             key: 'payment_fee',
             width: 150,
             render: (h, { row }) => {
               return (
                 <span>
                   {' '}
-                  {row.payment_fee / 100} （{row.payment_method == 'order' ? '元' : '%'}/单）{' '}
+                  {row.payment_fee / 100} （
+                  {row.payment_method == 'order' ? this.$t('dcd2f270.c16655') : '%'}/
+                  {this.$t('dcd2f270.83958d')}）{' '}
                 </span>
               )
             }
           },
           {
-            name: '所属店铺',
+            name: this.$t('dcd2f270.baad7e'),
             key: 'distributor_ids',
             width: 300,
             render: (h, { row }) => {
@@ -183,7 +201,7 @@ export default {
             }
           },
           {
-            name: '禁用',
+            name: this.$t('dcd2f270.710ad0'),
             key: 'is_disable',
             render: (h, { row }) => {
               return (
@@ -199,7 +217,7 @@ export default {
         ],
         actions: [
           {
-            name: '编辑',
+            name: this.$t('dcd2f270.95b351'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -207,7 +225,7 @@ export default {
               handler: ([row]) => {
                 this.operator_id = row.operator_id
                 this.relDistributors = []
-                this.editTitle = '编辑配送员'
+                this.editMode = 'edit'
                 this.deliveryman = true
                 this.addForm = {
                   username: row.username,
@@ -227,121 +245,71 @@ export default {
               }
             }
           }
-          // {
-          //   name: '删除',
-          //   key: 'apply',
-          //   type: 'button',
-          //   buttonType: 'text',
-          //   action: {
-          //     handler: async ([row]) => {
-          //       await this.$confirm(`确认删除？`, '提示', {
-          //         confirmButtonText: '确定',
-          //         cancelButtonText: '取消'
-          //       })
-          //       await this.$api.pickuplocation.deleteZitiLocation(row.operator_id)
-          //       this.$refs['finder'].refresh()
-          //     }
-          //   }
-          // }
         ]
-      },
-
-      addForm: {
-        operator_type: 'self_delivery_staff',
-        distributor_name: '',
-        staff_type: 'platform',
-        staff_no: '',
-        staff_attribute: 'part_time',
-        payment_method: 'order',
-        payment_fee: 0.01,
-        payment_fee1: 1,
-        mobile: '',
-        password: '',
-        distributor_ids: []
-      },
-      addFormList: [
+      }
+    },
+    addFormList() {
+      const staffTypeOptions =
+        IS_DISTRIBUTOR() || IS_MERCHANT()
+          ? [{ label: 'distributor', name: this.$t('dcd2f270.f2440f') }]
+          : [
+              { label: 'platform', name: this.$t('dcd2f270.8e24f3') },
+              { label: 'distributor', name: this.$t('dcd2f270.f2440f') }
+            ]
+      return [
         {
-          label: '配送员类型',
+          label: this.$t('dcd2f270.04dbf8'),
           key: 'staff_type',
           type: 'radio',
-          options: [
-            {
-              label: 'platform',
-              name: '平台配送员'
-            },
-            {
-              label: 'distributor',
-              name: '店铺配送员'
-            }
-          ]
+          options: staffTypeOptions
         },
         {
-          label: '配送员编码',
+          label: this.$t('dcd2f270.530880'),
           key: 'staff_no',
-          placeholder: '请输入配送员编码',
+          placeholder: this.$t('dcd2f270.0f86ab'),
           type: 'input'
         },
         {
-          label: '配送员属性',
+          label: this.$t('dcd2f270.95a141'),
           key: 'staff_attribute',
           type: 'radio',
           options: [
-            {
-              label: 'part_time',
-              name: '兼职'
-            },
-            {
-              label: 'full_time',
-              name: '全职'
-            }
+            { label: 'part_time', name: this.$t('dcd2f270.7c4f46') },
+            { label: 'full_time', name: this.$t('dcd2f270.63f85b') }
           ]
         },
         {
-          label: '配送结算方式',
+          label: this.$t('dcd2f270.737477'),
           key: 'payment_method',
           type: 'radio',
           options: [
-            {
-              label: 'order',
-              name: '按单笔订单'
-            },
-            {
-              label: 'amount',
-              name: '按订单金额比例'
-            }
+            { label: 'order', name: this.$t('dcd2f270.ed776f') },
+            { label: 'amount', name: this.$t('dcd2f270.705abf') }
           ]
         },
         {
-          label: '结算费用',
+          label: this.$t('dcd2f270.60a4ae'),
           key: 'payment_fee',
-          // type: 'number',
-          // precision: 2,
-          // setp: 0.1,
-          // tip: '元，每单',
-          isShow: () => {
-            return this.addForm.payment_method == 'order'
-          },
-          component: ({ key }, value) => {
-            return (
-              <div class='flex-box'>
-                <el-input-number
-                  v-model={value[key]}
-                  controls-position='right'
-                  precision='3'
-                  step='0.001'
-                />{' '}
-                <span>元，每单（费用包含运费）</span>
-              </div>
-            )
-          },
+          isShow: () => this.addForm.payment_method == 'order',
+          component: ({ key }, value) => (
+            <div class='flex-box'>
+              <el-input-number
+                v-model={value[key]}
+                controls-position='right'
+                precision='3'
+                step='0.001'
+              />{' '}
+              <span>{this.$t('dcd2f270.aa0269')}</span>
+            </div>
+          ),
           validator: (rule, value, callback) => {
             const { payment_fee } = this.addForm
             if (!payment_fee) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('dcd2f270.281bad')))
             } else {
-              let res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee)
+              const res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee)
               if (!res) {
-                callback(new Error('结算费用格式错误'))
+                callback(new Error(this.$t('dcd2f270.c2b50f')))
               } else {
                 callback()
               }
@@ -349,34 +317,28 @@ export default {
           }
         },
         {
-          label: '结算费用',
+          label: this.$t('dcd2f270.60a4ae'),
           key: 'payment_fee1',
-          // type: 'number',
-          // tip: '%,每单',
-          isShow: () => {
-            return this.addForm.payment_method == 'amount'
-          },
-          component: ({ key }, value) => {
-            return (
-              <div class='flex-box'>
-                <el-input-number
-                  v-model={value[key]}
-                  controls-position='right'
-                  precision='3'
-                  step='0.001'
-                />{' '}
-                <span>%，每单（费用包含运费）</span>
-              </div>
-            )
-          },
+          isShow: () => this.addForm.payment_method == 'amount',
+          component: ({ key }, value) => (
+            <div class='flex-box'>
+              <el-input-number
+                v-model={value[key]}
+                controls-position='right'
+                precision='3'
+                step='0.001'
+              />{' '}
+              <span>{this.$t('dcd2f270.fe3878')}</span>
+            </div>
+          ),
           validator: (rule, value, callback) => {
             const { payment_fee1 } = this.addForm
             if (!payment_fee1) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('dcd2f270.281bad')))
             } else {
-              let res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee1)
+              const res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee1)
               if (!res) {
-                callback(new Error('结算费用格式错误'))
+                callback(new Error(this.$t('dcd2f270.c2b50f')))
               } else {
                 callback()
               }
@@ -384,18 +346,18 @@ export default {
           }
         },
         {
-          label: '配送员手机号',
+          label: this.$t('dcd2f270.ec9c94'),
           key: 'mobile',
           type: 'input',
-          placeholder: '请输入配送员手机号',
+          placeholder: this.$t('dcd2f270.f0a58a'),
           validator: (rule, value, callback) => {
             const { mobile } = this.addForm
             if (!mobile) {
-              callback(new Error('不能为空'))
+              callback(new Error(this.$t('dcd2f270.281bad')))
             } else {
-              let res = /^1[3-9]\d{9}$/.test(mobile)
+              const res = /^1[3-9]\d{9}$/.test(mobile)
               if (!res) {
-                callback(new Error('手机号格式错误'))
+                callback(new Error(this.$t('dcd2f270.dc6732')))
               } else {
                 callback()
               }
@@ -403,65 +365,44 @@ export default {
           }
         },
         {
-          label: '配送员姓名',
+          label: this.$t('dcd2f270.9b3489'),
           key: 'username',
-          placeholder: '请输入配送员姓名',
+          placeholder: this.$t('dcd2f270.c6c579'),
           type: 'input',
           required: true,
-          message: '配送员姓名不能为空'
+          message: this.$t('dcd2f270.dd5bc5')
         },
         {
-          label: '登录密码',
+          label: this.$t('dcd2f270.2646b8'),
           key: 'password',
           type: 'input'
-          // validator: (rule, value, callback) => {
-          //   const { password } = this.addForm
-          //   if (!password) {
-          //     callback(new Error('不能为空'))
-          //   } else {
-          //     let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
-          //       password
-          //     )
-          //     if (!res) {
-          //       callback(new Error('密码不能是文字并且至少6位'))
-          //     } else {
-          //       callback()
-          //     }
-          //   }
-          // }
         },
         {
-          label: '所属店铺',
+          label: this.$t('dcd2f270.baad7e'),
           key: 'distributor_name',
-          isShow: () => {
-            return this.addForm.staff_type == 'distributor'
-          },
-          component: ({ key }, value) => {
-            return (
-              <div>
-                {this.relDistributors.map((item, index) => {
-                  return (
-                    <el-tag
-                      key={item.distributor_id}
-                      class='new-tag'
-                      closable
-                      disable-transitions={false}
-                      onClose={this.DistributoreHandleClose.bind(this, index)}
-                    >
-                      {item.name}
-                    </el-tag>
-                  )
-                })}
-                <el-button
-                  size='medium'
-                  class='button-new-tag'
-                  onClick={this.addDistributoreAction.bind(this)}
+          isShow: () => this.addForm.staff_type == 'distributor',
+          component: ({ key }, value) => (
+            <div>
+              {this.relDistributors.map((item, index) => (
+                <el-tag
+                  key={item.distributor_id}
+                  class='new-tag'
+                  closable
+                  disable-transitions={false}
+                  onClose={this.DistributoreHandleClose.bind(this, index)}
                 >
-                  + 点击搜索店铺
-                </el-button>
-              </div>
-            )
-          }
+                  {item.name}
+                </el-tag>
+              ))}
+              <el-button
+                size='medium'
+                class='button-new-tag'
+                onClick={this.addDistributoreAction.bind(this)}
+              >
+                {this.$t('dcd2f270.a5d26b')}
+              </el-button>
+            </div>
+          )
         }
       ]
     }
@@ -469,12 +410,6 @@ export default {
   mounted() {
     if (IS_DISTRIBUTOR() || IS_MERCHANT()) {
       this.addForm.staff_type = 'distributor'
-      this.addFormList[0].options = [
-        {
-          label: 'distributor',
-          name: '店铺配送员'
-        }
-      ]
     }
   },
   methods: {
@@ -490,7 +425,7 @@ export default {
     },
     addDeliveryman() {
       this.deliveryman = true
-      this.editTitle = '添加配送员'
+      this.editMode = 'add'
       this.addForm = {
         operator_type: 'self_delivery_staff',
         distributor_name: '',
@@ -518,24 +453,24 @@ export default {
       if (this.operator_id) {
         if (this.addForm.password) {
           if (!res) {
-            this.$message({ type: 'error', message: '密码不能是文字并且至少6位' })
+            this.$message({ type: 'error', message: this.$t('dcd2f270.5bcd4a') })
             return
           }
         }
       } else {
         if (this.addForm.password) {
           if (!res) {
-            this.$message({ type: 'error', message: '密码不能是文字并且至少6位' })
+            this.$message({ type: 'error', message: this.$t('dcd2f270.5bcd4a') })
             return
           }
         } else {
-          this.$message({ type: 'error', message: '请输入密码' })
+          this.$message({ type: 'error', message: this.$t('dcd2f270.e39ffe') })
           return
         }
       }
 
       if (this.addForm.staff_type == 'distributor' && this.relDistributors.length == 0) {
-        this.$message({ type: 'error', message: '店铺配送员必须关联店铺' })
+        this.$message({ type: 'error', message: this.$t('dcd2f270.991f3d') })
         return false
       }
 
@@ -564,12 +499,12 @@ export default {
 
       if (this.operator_id) {
         await this.$api.company.updateAccountInfo(this.operator_id, params)
-        this.$message.success('编辑成功')
+        this.$message.success(this.$t('dcd2f270.3bb47b'))
         this.deliveryman = false
         this.onSearch()
       } else {
         await this.$api.company.createAccount(this.addForm)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('dcd2f270.3b1083'))
         this.deliveryman = false
         this.onSearch()
       }
@@ -614,9 +549,9 @@ export default {
     },
     async acitonDisabled(row) {
       if (row.is_disable) {
-        await this.$confirm('此操作将开启禁用, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        await this.$confirm(this.$t('dcd2f270.f0ebaa'), this.$t('dcd2f270.02d981'), {
+          confirmButtonText: this.$t('dcd2f270.38cf16'),
+          cancelButtonText: this.$t('dcd2f270.625fb2'),
           type: 'warning'
         })
           .then(async () => {
@@ -629,7 +564,7 @@ export default {
             this.onSearch()
             this.$message({
               type: 'success',
-              message: '开启成功!'
+              message: this.$t('dcd2f270.8e0047')
             })
           })
           .catch(() => {
@@ -645,7 +580,7 @@ export default {
         this.onSearch()
         this.$message({
           type: 'success',
-          message: '关闭成功!'
+          message: this.$t('dcd2f270.4d5ac8')
         })
       }
     }

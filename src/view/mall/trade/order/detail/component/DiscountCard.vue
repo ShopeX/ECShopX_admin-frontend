@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <CustomCard title="优惠明细">
+  <CustomCard :title="$t('19fd6e52.954493')">
     <table
       width="60%"
       cellspacing="0"
@@ -39,7 +39,7 @@
           <td />
           <td>
             <div class="customDataSource tr-font-wight">
-              总计优惠：{{ this.orderInfo.fee_symbol
+              {{ $t('19fd6e52.16a386') }}{{ this.orderInfo.fee_symbol
               }}{{ (this.orderInfo.discount_fee / 100).toFixed(2) }}
             </div>
           </td>
@@ -48,7 +48,7 @@
       <template v-if="!dataSource || !dataSource.length">
         <tr>
           <td :colspan="columns.length">
-            <div class="customEmpty">暂无内容</div>
+            <div class="customEmpty">{{ $t('19fd6e52.4726ff') }}</div>
           </td>
         </tr>
       </template>
@@ -66,9 +66,9 @@ export default {
   data() {
     return {
       columns: [
-        { name: '优惠名称', field: 'info' },
-        { name: '优惠金额', field: 'discount_fee' },
-        { name: '优惠说明', field: 'rule' }
+        { name: this.$t('19fd6e52.72606e'), field: 'info' },
+        { name: this.$t('19fd6e52.5b921a'), field: 'discount_fee' },
+        { name: this.$t('19fd6e52.028f5b'), field: 'rule' }
       ],
       dataSource: this.orderInfo.discount_info
     }

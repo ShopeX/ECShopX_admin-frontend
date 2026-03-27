@@ -58,7 +58,7 @@
 </style>
 <template>
   <div class="pageheader-section section">
-    <div class="section-header with-border">页面设置</div>
+    <div class="section-header with-border">{{ $t('3e16c36f.a018ef') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <!-- <el-form-item label="页面名称">
@@ -67,11 +67,11 @@
         <el-form-item label="页面说明">
           <el-input v-model="base.desc" type="textarea" />
         </el-form-item> -->
-        <el-form-item label="顶部导航">
+        <el-form-item :label="$t('3e16c36f.ed046e')">
           <div>
             <el-radio-group v-model="base.navigateStyle">
-              <el-radio label="1"> 颜色背景 </el-radio>
-              <el-radio label="2"> 图片背景 </el-radio>
+              <el-radio label="1"> {{ $t('3e16c36f.8fb976') }} </el-radio>
+              <el-radio label="2"> {{ $t('3e16c36f.12bda0') }} </el-radio>
             </el-radio-group>
             <div>
               <div v-if="base.navigateStyle == '1'">
@@ -85,25 +85,25 @@
                     }
                   "
                 >
-                  重置
+                  {{ $t('3e16c36f.4b9c32') }}
                 </el-button>
               </div>
               <SpImagePicker v-else v-model="base.navigateBackgroundImage" />
             </div>
           </div>
         </el-form-item>
-        <el-form-item label="页面标题">
+        <el-form-item :label="$t('3e16c36f.8d6b59')">
           <div class="tab">
-            <div>微信小程序商城/H5商城/APP商城</div>
+            <div>{{ $t('3e16c36f.ce2858') }}</div>
             <el-radio-group v-model="base.titleStyle">
-              <el-radio label="1"> 文字 </el-radio>
-              <el-radio label="2"> 图片 </el-radio>
+              <el-radio label="1"> {{ $t('3e16c36f.ca746b') }} </el-radio>
+              <el-radio label="2"> {{ $t('3e16c36f.20def7') }} </el-radio>
             </el-radio-group>
             <div>
               <div v-if="base.titleStyle == '1'">
-                <div class="prompt">页面标题文字请在管理后台装修-商城信息中填写。</div>
+                <div class="prompt">{{ $t('3e16c36f.a7a33e') }}</div>
                 <div class="wxtitle-content">
-                  <span class="mr">颜色</span>
+                  <span class="mr">{{ $t('3e16c36f.6b36c6') }}</span>
                   <el-color-picker v-model="base.titleColor" />
                   <el-button
                     class="btn-reset"
@@ -114,7 +114,7 @@
                       }
                     "
                   >
-                    重置
+                    {{ $t('3e16c36f.4b9c32') }}
                   </el-button>
                 </div>
               </div>
@@ -122,10 +122,10 @@
               <SpImagePicker v-else v-model="base.titleBackgroundImage" />
             </div>
             <div>
-              <span class="mr">位置</span>
+              <span class="mr">{{ $t('3e16c36f.d4d2a6') }}</span>
               <el-radio-group v-model="base.titlePosition">
-                <el-radio label="center"> 居中 </el-radio>
-                <el-radio label="left"> 居左 </el-radio>
+                <el-radio label="center"> {{ $t('3e16c36f.0bbc2e') }} </el-radio>
+                <el-radio label="left"> {{ $t('3e16c36f.316a63') }} </el-radio>
               </el-radio-group>
             </div>
           </div>
@@ -151,11 +151,11 @@
             <el-radio label="center"> 居中 </el-radio>
           </el-radio-group>
         </el-form-item> -->
-        <el-form-item label="页面背景">
+        <el-form-item :label="$t('3e16c36f.1dff74')">
           <div>
             <el-radio-group v-model="base.pageBackgroundStyle">
-              <el-radio label="1"> 颜色背景 </el-radio>
-              <el-radio label="2"> 图片背景 </el-radio>
+              <el-radio label="1"> {{ $t('3e16c36f.8fb976') }} </el-radio>
+              <el-radio label="2"> {{ $t('3e16c36f.12bda0') }} </el-radio>
             </el-radio-group>
             <div>
               <div v-if="base.pageBackgroundStyle == '1'">
@@ -169,7 +169,7 @@
                     }
                   "
                 >
-                  重置
+                  {{ $t('3e16c36f.4b9c32') }}
                 </el-button>
               </div>
               <SpImagePicker v-else v-model="base.pageBackgroundImage" />

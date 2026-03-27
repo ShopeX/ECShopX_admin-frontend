@@ -39,10 +39,10 @@ import ColumnGoods from '../../comps/goods-layout/columngoods.vue'
 import GridGoods from '../../comps/goods-layout/gridgoods.vue'
 import { getOuterStyle, getInnerStyle } from '../../comps/style-utils'
 import rankingdata from './mock/ranking.json'
-
+import { i18n } from '@/i18n'
 export default {
   name: 'Ranking',
-  wgtName: '品类榜单',
+  wgtName: i18n.t('b72c3a9a.4abc55'),
   wgtDesc: '',
   wgtIcon: 'wgt-store',
   wgtType: 2,

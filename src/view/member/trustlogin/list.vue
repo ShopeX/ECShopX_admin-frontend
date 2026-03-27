@@ -6,33 +6,37 @@
 <template>
   <SpPage>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="标准版" name="standard">
+      <el-tab-pane :label="$t('b64b502c.de28d2')" name="standard">
         <el-card>
           <el-table :data="list.standard">
-            <el-table-column label="操作" width="150">
+            <el-table-column :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
-                <el-button type="text" @click="handleEdit(scope.row, 'standard')"> 配置 </el-button>
+                <el-button type="text" @click="handleEdit(scope.row, 'standard')">
+{{
+                  $t('b64b502c.224e2c')
+                }}
+</el-button>
               </template>
             </el-table-column>
-            <el-table-column label="名称" width="150">
+            <el-table-column :label="$t('b64b502c.d7ec2d')" width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.name }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="300">
+            <el-table-column prop="status" :label="$t('b64b502c.3fea7c')" width="300">
               <template slot-scope="scope">
                 <div>
                   <el-tag
                     v-if="scope.row.status == true || scope.row.status == 'true'"
                     type="success"
                   >
-                    开启
+                    {{ $t('b64b502c.cc42dd') }}
                   </el-tag>
                   <el-tag
                     v-else-if="scope.row.status == false || scope.row.status == 'false'"
                     type="danger"
                   >
-                    关闭
+                    {{ $t('b64b502c.b15d91') }}
                   </el-tag>
                 </div>
               </template>
@@ -40,33 +44,37 @@
           </el-table>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="触屏版" name="touch" @tab-click="handleClick">
+      <el-tab-pane :label="$t('b64b502c.c5f087')" name="touch" @tab-click="handleClick">
         <el-card>
           <el-table :data="list.touch">
-            <el-table-column label="操作" width="150">
+            <el-table-column :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
-                <el-button type="text" @click="handleEdit(scope.row, 'touch')"> 配置 </el-button>
+                <el-button type="text" @click="handleEdit(scope.row, 'touch')">
+{{
+                  $t('b64b502c.224e2c')
+                }}
+</el-button>
               </template>
             </el-table-column>
-            <el-table-column label="名称" width="150">
+            <el-table-column :label="$t('b64b502c.d7ec2d')" width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.name }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="300">
+            <el-table-column prop="status" :label="$t('b64b502c.3fea7c')" width="300">
               <template slot-scope="scope">
                 <div>
                   <el-tag
                     v-if="scope.row.status == true || scope.row.status == 'true'"
                     type="success"
                   >
-                    开启
+                    {{ $t('b64b502c.cc42dd') }}
                   </el-tag>
                   <el-tag
                     v-else-if="scope.row.status == false || scope.row.status == 'false'"
                     type="danger"
                   >
-                    关闭
+                    {{ $t('b64b502c.b15d91') }}
                   </el-tag>
                 </div>
               </template>
@@ -75,9 +83,9 @@
         </el-card>
       </el-tab-pane>
       <!--修改-->
-      <sideBar :visible.sync="show_sideBar" :title="'配置'">
+      <sideBar :visible.sync="show_sideBar" :title="$t('b64b502c.224e2c')">
         <el-form>
-          <el-form-item label="名称">
+          <el-form-item :label="$t('b64b502c.d7ec2d')">
             <el-input v-model="form.name" />
           </el-form-item>
           <el-form-item label="app_id">
@@ -86,11 +94,15 @@
           <el-form-item label="secret">
             <el-input v-model="form.secret" />
           </el-form-item>
-          <el-form-item label="状态">
+          <el-form-item :label="$t('b64b502c.3fea7c')">
             <el-switch v-model="form.status" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="statusChange(form)"> 提交 </el-button>
+            <el-button type="primary" @click="statusChange(form)">
+{{
+              $t('b64b502c.939d53')
+            }}
+</el-button>
           </el-form-item>
         </el-form>
       </sideBar>
@@ -162,14 +174,14 @@ export default {
         .then((res) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('b64b502c.3b1083')
           })
           this.show_sideBar = false
         })
         .catch(() => {
           this.$message({
             type: 'error',
-            message: '保存失败'
+            message: this.$t('b64b502c.6de920')
           })
         })
     },
@@ -185,7 +197,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('b64b502c.3b1083')
           })
           this.loading = false
         })

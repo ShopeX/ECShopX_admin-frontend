@@ -67,7 +67,7 @@ export default {
     },
     confirmBtnText: {
       type: String,
-      default: '确定'
+      default: null
     }
   },
   data() {
@@ -101,6 +101,7 @@ export default {
       isShowFooter,
       confirmBtnText
     } = this
+    const confirmText = confirmBtnText != null ? confirmBtnText : this.$t('ac7ddd5c.38cf16')
 
     if (!value) {
       return null
@@ -126,7 +127,7 @@ export default {
         />
         {isShowFooter && (
           <div slot='footer' class='dialog-footer'>
-            <el-button onClick={this.handleCancel}>取 消</el-button>
+            <el-button onClick={this.handleCancel}>{this.$t('ac7ddd5c.c08ab9')}</el-button>
             <el-button
               loading={confirmStatus}
               type='primary'
@@ -134,7 +135,7 @@ export default {
                 this.$refs['form'].handleSubmit()
               }}
             >
-              {confirmBtnText}
+              {confirmText}
             </el-button>
           </div>
         )}

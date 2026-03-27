@@ -8,7 +8,7 @@
     <SpPage>
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-input v-model="params.title" placeholder="活动名称">
+          <el-input v-model="params.title" :placeholder="$t('c89b1fbd.39834b')">
             <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
           </el-input>
         </el-col>
@@ -17,55 +17,59 @@
             v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="添加时间筛选"
+            :placeholder="$t('c89b1fbd.5d92ab')"
             style="width: 100%"
             @change="dateChange"
           />
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="plus" @click="addActivityData"> 添加活动 </el-button>
+          <el-button type="primary" icon="plus" @click="addActivityData">
+            {{ $t('c89b1fbd.23b46b') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
         <el-table-column prop="activity_id" label="ID" width="50" />
-        <el-table-column label="活动名称" width="150">
-          <template slot-scope="scope"> {{ scope.row.title }}<br /> </template>
+        <el-table-column :label="$t('c89b1fbd.39834b')" width="150">
+          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
         </el-table-column>
-        <el-table-column label="活动时间">
+        <el-table-column :label="$t('c89b1fbd.c799f5')">
           <template slot-scope="scope">
             {{ scope.row.begin_time }} <span class="text-muted">~</span> {{ scope.row.end_time }}
             <span class="text-muted" />
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="活动状态" width="150">
+        <el-table-column prop="status" :label="$t('c89b1fbd.1181a5')" width="150">
           <template slot-scope="scope">
-            <span v-if="scope.row.activity_status == 'ready'">待开始</span>
-            <span v-else-if="scope.row.activity_status == 'processing'">进行中</span>
-            <span v-else-if="scope.row.activity_status == 'end'">已结束</span>
+            <span v-if="scope.row.activity_status == 'ready'">{{ $t('c89b1fbd.1568ba') }}</span>
+            <span v-else-if="scope.row.activity_status == 'processing'">{{
+              $t('c89b1fbd.fb852f')
+            }}</span>
+            <span v-else-if="scope.row.activity_status == 'end'">{{ $t('c89b1fbd.047fab') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column :label="$t('c89b1fbd.2b6bc0')" width="200">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.activity_status !== 'end' && scope.row.activity_status != 'invalid'"
               type="text"
               @click="editCommunityAction(scope.$index, scope.row)"
             >
-              编辑活动
+              {{ $t('c89b1fbd.9bd915') }}
             </el-button>
             <el-button
               v-if="scope.row.activity_status == 'processing'"
               type="text"
               @click="updateStatusCommunityAction(scope.row)"
             >
-              终止活动
+              {{ $t('c89b1fbd.6489ff') }}
             </el-button>
             <el-button
               v-if="scope.row.activity_status == 'end'"
               type="text"
               @click="viewDetail(scope.row)"
             >
-              查看活动
+              {{ $t('c89b1fbd.6579c6') }}
             </el-button>
           </template>
         </el-table-column>
@@ -166,17 +170,17 @@ export default {
     },
     updateStatusCommunityAction(row) {
       console.log(row, 1)
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      var msg = this.$t('c89b1fbd.01be42')
+      this.$confirm(msg, this.$t('c89b1fbd.02d981'), {
+        cancelButtonText: this.$t('c89b1fbd.625fb2'),
+        confirmButtonText: this.$t('c89b1fbd.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             extrapointUpdateStatus({ activity_id: row.activity_id }).then((response) => {
               this.getList()
               this.$message({
-                message: '修改活动状态成功',
+                message: this.$t('c89b1fbd.b69694'),
                 type: 'success',
                 duration: 5 * 1000
               })

@@ -4,67 +4,67 @@
 -->
 
 <template>
-  <SpPage title="创建营销活动">
+  <SpPage :title="$t('118bb174.1e5200')">
     <section class="section section-white">
       <div class="content-padded">
         <el-form ref="form" :model="form" label-width="180px">
-          <el-form-item label="活动名称">
+          <el-form-item :label="$t('118bb174.39834b')">
             <el-row>
               <el-col :span="8">
                 <el-input v-model="form.title" />
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="活动时间">
+          <el-form-item :label="$t('118bb174.c799f5')">
             <el-date-picker
               v-model="date"
               type="daterange"
               align="right"
               value-format="timestamp"
               unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :range-separator="$t('118bb174.981cbe')"
+              :start-placeholder="$t('118bb174.b44c0f')"
+              :end-placeholder="$t('118bb174.1d468b')"
               :disabled="form.is_forever"
               :default-time="['00:00:00', '23:59:59']"
               :picker-options="pickerOptions2"
             />
             &nbsp;&nbsp;&nbsp;
-            <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
+            <el-checkbox v-model="form.is_forever"> {{ $t('118bb174.1c5029') }} </el-checkbox>
           </el-form-item>
-          <el-form-item label="赠送方式">
+          <el-form-item :label="$t('118bb174.cfa851')">
             <el-radio-group v-if="form.activity_type === 'member_birthday'" v-model="condition">
-              <el-radio label="birthday_month"> 生日当月1日统一发放 </el-radio>
-              <el-radio label="birthday_week"> 生日当周周日统一发放 </el-radio>
-              <el-radio label="birthday_day"> 生日当日统一发放 </el-radio>
+              <el-radio label="birthday_month"> {{ $t('118bb174.0b8db5') }} </el-radio>
+              <el-radio label="birthday_week"> {{ $t('118bb174.883212') }} </el-radio>
+              <el-radio label="birthday_day"> {{ $t('118bb174.503d48') }} </el-radio>
             </el-radio-group>
             <el-radio
               v-if="form.activity_type === 'member_upgrade'"
               v-model="condition"
               label="member_upgrade"
             >
-              会员升级成功后发放
+              {{ $t('118bb174.e3e252') }}
             </el-radio>
             <el-radio
               v-if="form.activity_type === 'member_vip_upgrade'"
               v-model="condition"
               label="member_vip_upgrade"
             >
-              付费会员升级成功后发放
+              {{ $t('118bb174.a2d14e') }}
             </el-radio>
             <el-radio-group v-if="form.activity_type === 'member_anniversary'" v-model="condition">
-              <el-radio label="anniversary_month"> 周年入会当月1日统一发放 </el-radio>
-              <el-radio label="anniversary_week"> 周年入会当周周日统一发放 </el-radio>
-              <el-radio label="anniversary_day"> 周年入会当日统一发放 </el-radio>
+              <el-radio label="anniversary_month"> {{ $t('118bb174.ce21e7') }} </el-radio>
+              <el-radio label="anniversary_week"> {{ $t('118bb174.e8667c') }} </el-radio>
+              <el-radio label="anniversary_day"> {{ $t('118bb174.5446bf') }} </el-radio>
             </el-radio-group>
             <el-radio-group v-if="form.activity_type === 'member_day'" v-model="condition">
-              <el-radio label="every_year"> 每年 </el-radio>
-              <el-radio label="every_month"> 每月 </el-radio>
-              <el-radio label="every_week"> 每周 </el-radio>
+              <el-radio label="every_year"> {{ $t('118bb174.281cd3') }} </el-radio>
+              <el-radio label="every_month"> {{ $t('118bb174.aa3d57') }} </el-radio>
+              <el-radio label="every_week"> {{ $t('118bb174.09b03b') }} </el-radio>
             </el-radio-group>
             <transition name="el-fade-in-linear">
               <div v-if="condition === 'every_year'">
-                <el-select v-model="memberDay.month" placeholder="请选择月份">
+                <el-select v-model="memberDay.month" :placeholder="$t('118bb174.904393')">
                   <el-option
                     v-for="item in monthOptions"
                     :key="item.value"
@@ -72,7 +72,7 @@
                     :value="item.value"
                   />
                 </el-select>
-                <el-select v-model="memberDay.day" placeholder="请选择日期">
+                <el-select v-model="memberDay.day" :placeholder="$t('118bb174.aa2fb1')">
                   <el-option
                     v-for="item in dayOptions"
                     :key="item.value"
@@ -82,7 +82,7 @@
                 </el-select>
               </div>
               <div v-if="condition === 'every_month'">
-                <el-select v-model="memberDay.day" placeholder="请选择日期">
+                <el-select v-model="memberDay.day" :placeholder="$t('118bb174.aa2fb1')">
                   <el-option
                     v-for="item in dayOptions"
                     :key="item.value"
@@ -92,7 +92,7 @@
                 </el-select>
               </div>
               <div v-if="condition === 'every_week'">
-                <el-select v-model="memberDay.week" placeholder="请选择星期">
+                <el-select v-model="memberDay.week" :placeholder="$t('118bb174.2b40fa')">
                   <el-option
                     v-for="item in weekOptions"
                     :key="item.value"
@@ -106,7 +106,7 @@
           <el-form-item
             v-for="levelItem in levelData"
             :key="levelItem.grade_id"
-            :label="levelItem.grade_name + '优惠设置'"
+            :label="levelItem.grade_name + $t('118bb174.e33e07')"
           >
             <el-row :gutter="20">
               <el-col
@@ -117,10 +117,10 @@
               >
                 <div class="promotion-card">
                   <div class="promotion-card-header">
-                    优惠券
-                    <a class="promotion-card-btn" href="#" @click="showModal('coupons', item.id)"
-                      >新增</a
-                    >
+                    {{ $t('118bb174.2f3635') }}
+                    <a class="promotion-card-btn" href="#" @click="showModal('coupons', item.id)">{{
+                      $t('118bb174.66ab5e')
+                    }}</a>
                   </div>
                   <div class="promotion-card-body">
                     <ul class="promotion-card-list">
@@ -134,7 +134,7 @@
                           controls-position="right"
                           :min="1"
                           :max="10"
-                          label="描述文字"
+                          :label="$t('118bb174.f4e5d6')"
                         />
                         <i
                           class="remove-btn el-icon-delete"
@@ -153,46 +153,44 @@
               />
             </el-row>
           </el-form-item>
-          <el-form-item label="短信通知">
+          <el-form-item :label="$t('118bb174.e7d158')">
             <div class="content-bottom-padded">
               <el-switch v-model="form.sms_isopen" />
-              请确保短信账户余额充足
+              {{ $t('118bb174.3d70d5') }}
               <router-link :to="{ path: matchInternalRoute('datamessage') }" target="_blank">
-                查看短息账户
+                {{ $t('118bb174.f3a137') }}
               </router-link>
             </div>
             <transition name="el-fade-in-linear">
               <el-row v-if="form.sms_isopen" :gutter="30">
                 <el-col v-if="form.activity_type === 'member_birthday'" :span="6">
-                  小程序名称
+                  {{ $t('118bb174.d34f1f') }}
                   <el-input
                     v-model="form.sms_params.app_name"
                     class="content-bottom-padded"
-                    placeholder="请填写小程序名称"
+                    :placeholder="$t('118bb174.7c28ca')"
                   />
                 </el-col>
                 <el-col :span="6">
                   <el-card class="box-card sms-templ">
                     <div slot="header" class="clearfix">
-                      <span>短信模板</span>
+                      <span>{{ $t('118bb174.dbe8ba') }}</span>
                     </div>
-                    <span v-if="form.activity_type === 'member_birthday'"
-                      >尊敬的会员：值此您生日之际，衷心祝您生日快乐！为感谢您对本店的支持，特此赠送您｛赠送内容｝｛数量｝。详情请查看官方小程序</span
-                    >
-                    <span v-if="form.activity_type === 'member_day'"
-                      >｛会员日时间｝是｛品牌｝会员日，特此为您奉上｛奖品｝。到店更有其他惊喜</span
-                    >
-                    <span v-if="form.activity_type === 'member_anniversary'"
-                      >历史上的今天，您成为了｛品牌｝会员。感谢您一路来对｛品牌｝的支持，特此为您奉上｛奖品｝。到店更有其他惊喜。</span
-                    >
-                    <span v-if="form.activity_type === 'member_upgrade'"
-                      >恭喜您成为｛品牌｝｛会员等级名称｝，特此为您奉上｛奖品｝。到店更有其他惊喜。</span
-                    >
-                    <span v-if="form.activity_type === 'member_vip_upgrade'"
-                      >恭喜您成为{{ 品牌 }}的{{ 付费会员等级名称 }}，特此为您奉上{{
-                        赠送内容
-                      }}</span
-                    >
+                    <span v-if="form.activity_type === 'member_birthday'">{{
+                      $t('118bb174.77fed3')
+                    }}</span>
+                    <span v-if="form.activity_type === 'member_day'">{{
+                      $t('118bb174.62eb69')
+                    }}</span>
+                    <span v-if="form.activity_type === 'member_anniversary'">{{
+                      $t('118bb174.6ab1b5')
+                    }}</span>
+                    <span v-if="form.activity_type === 'member_upgrade'">{{
+                      $t('118bb174.67eebf')
+                    }}</span>
+                    <span v-if="form.activity_type === 'member_vip_upgrade'">{{
+                      $t('118bb174.4ec471')
+                    }}</span>
                   </el-card>
                 </el-col>
               </el-row>
@@ -200,9 +198,9 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :loading="submitLoading" @click="onSubmit">
-              立即创建
+              {{ $t('118bb174.9fd000') }}
             </el-button>
-            <el-button @click="back"> 取消 </el-button>
+            <el-button @click="back"> {{ $t('118bb174.625fb2') }} </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -211,7 +209,7 @@
           v-for="(item, index) in goods"
           v-if="levelItem.grade_id === item.id"
           :key="index"
-          title="选择商品"
+          :title="$t('118bb174.43d1e2')"
           :visible.sync="item.dialog"
           width="50%"
           @open="onshowModal('goods')"
@@ -241,8 +239,10 @@
             </template>
           </div>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="cancelSelected('goods')">取 消</el-button>
-            <el-button type="primary" @click="submitSelected('goods')">确 定</el-button>
+            <el-button @click="cancelSelected('goods')">{{ $t('118bb174.c08ab9') }}</el-button>
+            <el-button type="primary" @click="submitSelected('goods')">{{
+              $t('118bb174.aa7527')
+            }}</el-button>
           </span>
         </el-dialog>
       </div>
@@ -251,7 +251,7 @@
           v-for="(item, index) in coupons"
           v-if="levelItem.grade_id === item.id"
           :key="index"
-          title="选择优惠券"
+          :title="$t('118bb174.45bcee')"
           :visible.sync="item.dialog"
           width="50%"
           @open="onshowModal('coupons')"
@@ -281,8 +281,10 @@
             </template>
           </div>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="cancelSelected('coupons')">取 消</el-button>
-            <el-button type="primary" @click="submitSelected('coupons')">确 定</el-button>
+            <el-button @click="cancelSelected('coupons')">{{ $t('118bb174.c08ab9') }}</el-button>
+            <el-button type="primary" @click="submitSelected('coupons')">{{
+              $t('118bb174.aa7527')
+            }}</el-button>
           </span>
         </el-dialog>
       </div>
@@ -302,7 +304,7 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: this.$t('118bb174.56ee10'),
             onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
@@ -313,7 +315,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: this.$t('118bb174.335dfc'),
             onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
@@ -324,7 +326,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: this.$t('118bb174.d96eb4'),
             onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
@@ -383,52 +385,35 @@ export default {
         for (var i = 0; i < 12; i++) {
           let obj = {}
           obj.value = i + 1
-          obj.label = obj.value + '月'
+          obj.label = obj.value + this.$t('118bb174.e42b99')
           month.push(obj)
         }
         for (var i = 0; i < 7; i++) {
           let obj = {}
           obj.value = i + 1
-          obj.label = '星期' + filter(obj.value)
+          obj.label = this.$t(
+            [
+              '118bb174.5ce438',
+              '118bb174.34e521',
+              '118bb174.711d99',
+              '118bb174.3df6af',
+              '118bb174.450ea3',
+              '118bb174.1ae72f',
+              '118bb174.67b195'
+            ][obj.value - 1]
+          )
           week.push(obj)
         }
         for (var i = 0; i < 31; i++) {
           let obj = {}
           obj.value = i + 1
-          obj.label = obj.value + '日'
+          obj.label = obj.value + this.$t('118bb174.3edddd')
           day.push(obj)
         }
         this.monthOptions = month
         this.weekOptions = week
         this.dayOptions = day
       }
-    }
-    function filter(val) {
-      var x = ''
-      switch (val) {
-        case 1:
-          x = '一'
-          break
-        case 2:
-          x = '二'
-          break
-        case 3:
-          x = '三'
-          break
-        case 4:
-          x = '四'
-          break
-        case 5:
-          x = '五'
-          break
-        case 6:
-          x = '六'
-          break
-        case 7:
-          x = '日'
-          break
-      }
-      return x
     }
   },
   methods: {
@@ -482,7 +467,7 @@ export default {
         this.submitLoading = true
         await this.$api.promotions.createActivity(this.form)
         this.submitLoading = false
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('118bb174.3fdaea'))
         setTimeout(() => {
           this.refresh()
           this.$router.go(-3)

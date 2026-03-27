@@ -46,7 +46,7 @@
   <div class="picker-template">
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="页面名称关键词" />
+        <el-input v-model="formData.keywords" :placeholder="$t('1a842358.065962')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -55,7 +55,7 @@
       :class="['template-finder', { 'no-multiple': !multiple }]"
       :fixed-row-action="true"
       :setting="{
-        columns: [{ name: '页面名称', key: 'template_title' }]
+        columns: [{ name: $t('1a842358.b78454'), key: 'template_title' }]
       }"
       :hooks="{
         beforeSearch: beforeSearch,
@@ -78,6 +78,9 @@ export default {
     title: '选择首页'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('1a842358.dc38dd')
+  },
   data() {
     return {
       formData: {

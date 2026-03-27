@@ -7,10 +7,10 @@
   <SpPage v-if="loaded">
     <div v-if="currentApp">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="概况" name="survey">
+        <el-tab-pane :label="$t('a16b36ea.8457e1')" name="survey">
           <survey :wxapp="currentApp" />
         </el-tab-pane>
-        <el-tab-pane label="用户画像" name="user">
+        <el-tab-pane :label="$t('a16b36ea.8857b8')" name="user">
           <user :wxapp="currentApp" />
         </el-tab-pane>
       </el-tabs>
@@ -21,9 +21,9 @@
           <div>
             <i class="iconfont icon-info-circle" style="font-size: 70px" />
           </div>
-          <div class="content-padded">未绑定小程序</div>
+          <div class="content-padded">{{ $t('c1cc4c16.6a7b6f') }}</div>
           <div>
-            <el-button type="primary" @click="toBind"> 去绑定 </el-button>
+            <el-button type="primary" @click="toBind">{{ $t('c1cc4c16.d4594e') }}</el-button>
           </div>
         </div>
       </div>

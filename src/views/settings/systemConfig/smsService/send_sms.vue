@@ -7,9 +7,11 @@
   <div class="alisms_sendSms">
     <tips>
       <ul>
-        根据场景配置好短信，用户进入对应场景时即可触发系统发送对应给用户，支持短信验证码，订单通知，快递提醒等场景。
-        <li>· 一条完整的短信由「签名+模板」组成。</li>
-        <li>· 每一个场景只能启用一条模板。</li>
+        {{
+          $t('e00a2569.bd8455')
+        }}
+        <li>{{ $t('e00a2569.05522f') }}</li>
+        <li>{{ $t('e00a2569.b99f90') }}</li>
       </ul>
     </tips>
     <div class="list">
@@ -18,7 +20,7 @@
           v-model="query.scene_name"
           clearable
           filterable
-          placeholder="请选择"
+          :placeholder="$t('e00a2569.708c9d')"
           @change="onChangeSceneList"
         >
           <el-option
@@ -31,31 +33,31 @@
       </div>
       <section v-for="item in smsScenarioList" :key="item.id" class="card">
         <nav>
-          <h4>短信场景：{{ item.scene_name }}</h4>
-          <div class="type">短信类型：{{ item.template_type }}</div>
+          <h4>{{ $t('e00a2569.93fec5') }}{{ item.scene_name }}</h4>
+          <div class="type">{{ $t('e00a2569.98cf61') }}{{ item.template_type }}</div>
           <div class="btn">
             <el-button
               v-if="item.itemList.length < 3"
               type="primary"
               @click="fnAddSms(item.id, item.scene_name)"
             >
-              添加短信
+              {{ $t('e00a2569.b81ac1') }}
             </el-button>
           </div>
         </nav>
         <el-table :data="item.itemList" style="width: 100%" border>
-          <el-table-column prop="sign_name" label="签名" width="240" />
-          <el-table-column prop="template_content" label="模板" />
-          <el-table-column prop="status" label="状态" width="180">
+          <el-table-column prop="sign_name" :label="$t('e00a2569.be2525')" width="240" />
+          <el-table-column prop="template_content" :label="$t('e00a2569.59cf15')" />
+          <el-table-column prop="status" :label="$t('e00a2569.3fea7c')" width="180">
             <template slot-scope="scope">
-              <div v-if="scope.row.status == '0'" class="fail">未启用</div>
-              <div v-if="scope.row.status == '1'" class="success">已启用</div>
+              <div v-if="scope.row.status == '0'" class="fail">{{ $t('e00a2569.463776') }}</div>
+              <div v-if="scope.row.status == '1'" class="success">{{ $t('e00a2569.53ace4') }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="sign_name" label="操作" width="140">
+          <el-table-column prop="sign_name" :label="$t('e00a2569.2b6bc0')" width="140">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="deteleSms(scope.row.id, item.scene_name)">
-                移除
+                {{ $t('e00a2569.86048b') }}
               </el-button>
               <el-button
                 type="text"
@@ -68,7 +70,7 @@
                   )
                 "
               >
-                {{ scope.row.status == '0' ? '启用' : '停用' }}
+                {{ scope.row.status == '0' ? $t('e00a2569.7854b5') : $t('e00a2569.5c56a8') }}
               </el-button>
             </template>
           </el-table-column>
@@ -76,7 +78,12 @@
       </section>
     </div>
     <!-- 添加短信 -->
-    <el-dialog title="添加短信" :visible="visible" width="30%" :before-close="handleClose">
+    <el-dialog
+      :title="$t('e00a2569.b81ac1')"
+      :visible="visible"
+      width="30%"
+      :before-close="handleClose"
+    >
       <SpFormPlus
         ref="form"
         v-model="form"
@@ -86,8 +93,8 @@
         label-width="60px"
       />
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="fnPass">确 定</el-button>
+        <el-button @click="handleClose">{{ $t('e00a2569.c08ab9') }}</el-button>
+        <el-button type="primary" @click="fnPass">{{ $t('e00a2569.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -139,7 +146,7 @@ export default {
       return [
         {
           fieldName: 'sign_id',
-          label: '签名',
+          label: this.$t('e00a2569.be2525'),
           component: ({ h, value, onInput }) => {
             return h(
               'el-select',
@@ -148,7 +155,7 @@ export default {
                   value: value,
                   filterable: true,
                   'reserve-keyword': true,
-                  placeholder: '输入签名名称搜索'
+                  placeholder: this.$t('e00a2569.46e70c')
                 },
                 style: { width: '95%' },
                 directives: [
@@ -174,11 +181,11 @@ export default {
               ]
             )
           },
-          rules: [requiredRules('签名', 'change')]
+          rules: [requiredRules(this.$t('e00a2569.be2525'), 'change')]
         },
         {
           fieldName: 'template_id',
-          label: '模板',
+          label: this.$t('e00a2569.59cf15'),
           component: ({ h, value, onInput }) => {
             return h(
               'el-select',
@@ -188,7 +195,7 @@ export default {
                   filterable: true,
                   remote: true,
                   'reserve-keyword': true,
-                  placeholder: '输入模板名称搜索'
+                  placeholder: this.$t('e00a2569.6d185e')
                 },
                 style: { width: '95%' },
                 directives: [
@@ -214,7 +221,7 @@ export default {
               ]
             )
           },
-          rules: [requiredRules('模板', 'change')]
+          rules: [requiredRules(this.$t('e00a2569.59cf15'), 'change')]
         }
       ]
     }
@@ -278,7 +285,7 @@ export default {
       try {
         await this.$refs.form.validate()
         await addSceneItem(this.form)
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('e00a2569.3fdaea'))
         this.activeScene_name = ''
         this.handleClose()
         this.getScenarioList()
@@ -294,38 +301,35 @@ export default {
     },
     // 停用/启用/删除
     fnDisablingSms(id, flag, scene_name) {
-      const message = flag
-        ? '每个场景仅可启用一条短信。启用后，该短信将作为当前场景短信使用。'
-        : '停用后当前场景将不会触发短信；您仍可启用其他短信作为当前场景短信使用。'
+      const message = flag ? this.$t('e00a2569.3eb749') : this.$t('e00a2569.198ae1')
       this.$confirm(message, '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('e00a2569.38cf16'),
+        cancelButtonText: this.$t('e00a2569.625fb2'),
         type: 'warning'
       }).then(async () => {
         if (flag) {
           //启用
           await onDisablingSms({ id })
-          this.$message.success('已启用')
+          this.$message.success(this.$t('e00a2569.53ace4'))
           this.getScenarioList()
         } else {
           await offDisablingSms({ id })
-          this.$message.success('已停用')
+          this.$message.success(this.$t('e00a2569.69b0f6'))
           this.getScenarioList()
         }
       })
     },
 
     async deteleSms(id, scene_name) {
-      const message =
-        '移除后，该短信将不在当前场景。如果移除的是已启用的短信，移除后当前场景可不会触发短信。'
+      const message = this.$t('e00a2569.dd4559')
       this.$confirm(message, '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('e00a2569.38cf16'),
+        cancelButtonText: this.$t('e00a2569.625fb2'),
         type: 'warning'
       }).then(async () => {
         await deletedDisablingSms(id)
         this.getScenarioList()
-        this.$message.success('删除成功')
+        this.$message.success(this.$t('e00a2569.0007d1'))
       })
     },
     onChangeSceneList() {

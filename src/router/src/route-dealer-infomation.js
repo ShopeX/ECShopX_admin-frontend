@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '信息管理'
+const name = '59886a7b.442771'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -16,7 +16,7 @@ export default {
     // },
     {
       path: 'info',
-      name: `开户信息`,
+      name: '59886a7b.ac7b4c',
       component: () => import('@/view/mall/marketing/dealer_accountopen')
     }
   ]

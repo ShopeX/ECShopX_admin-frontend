@@ -6,7 +6,7 @@
 <template>
   <el-dialog
     class="new_tagselect"
-    title="选择标签"
+    :title="$t('ffadfba2.f9b05d')"
     :visible.sync="visible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -18,11 +18,11 @@
       <div />
       <el-input
         v-model="query.tag_name"
-        placeholder="请输入查找的标签名"
+        :placeholder="$t('ffadfba2.66cdd8')"
         style="width: 300px"
         class="input-with-select"
       >
-        <el-button slot="append" @click="queryHandle"> 查询 </el-button>
+        <el-button slot="append" @click="queryHandle"> {{ $t('ffadfba2.bee912') }} </el-button>
       </el-input>
     </div>
     <div class="list">
@@ -37,8 +37,8 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column :reserve-selection="true" type="selection" width="55" />
-        <el-table-column prop="tag_name" label="标签名称" width="220" />
-        <el-table-column prop="description" label="标签描述" show-overflow-tooltip />
+        <el-table-column prop="tag_name" :label="$t('ffadfba2.341fe8')" width="220" />
+        <el-table-column prop="description" :label="$t('ffadfba2.da5bf4')" show-overflow-tooltip />
       </el-table>
     </div>
     <el-pagination
@@ -52,9 +52,11 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
-    <p>已选择：{{ multipleSelection.length }}</p>
+    <p>{{ $t('ffadfba2.986ffb') }}{{ multipleSelection.length }}</p>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" type="primary" @click="confirm">确 定</el-button>
+      <el-button size="small" type="primary" @click="confirm">{{
+        $t('ffadfba2.aa7527')
+      }}</el-button>
     </span>
   </el-dialog>
 </template>

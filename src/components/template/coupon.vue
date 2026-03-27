@@ -25,16 +25,18 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img class="coupon-img" :src="item.imgUrl" />
+          <img class="coupon-img" :src="item.imgUrl">
         </template>
         <template v-else>
           <div class="coupon-amount">
             <div>{{ item.amount }}</div>
             <div v-if="item.type === 'cash'" class="amount-cur">RMB</div>
-            <div v-if="item.type === 'discount'" class="amount-cur">折</div>
+            <div v-if="item.type === 'discount'" class="amount-cur">
+              {{ $t('4bc370d2.96c015') }}
+            </div>
           </div>
           <div class="coupon-brand">
-            <img class="brand-img" :src="wximageurl + item.imgUrl" />
+            <img class="brand-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">
@@ -47,7 +49,7 @@
             </div>
           </div>
         </template>
-        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
+        <el-button size="mini" class="coupon-getted-btn">{{ $t('4bc370d2.9c1b27') }}</el-button>
       </div>
     </div>
     <div class="component-body with-padding">
@@ -58,11 +60,11 @@
         :class="{ 'with-img': item.imgUrl }"
       >
         <template v-if="item.imgUrl">
-          <img class="coupon-img" :src="item.imgUrl" />
+          <img class="coupon-img" :src="item.imgUrl">
         </template>
         <template v-else>
           <div class="coupon-brand">
-            <img class="brand-img" :src="wximageurl + item.imgUrl" />
+            <img class="brand-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="coupon-caption">
             <div class="coupon-content">
@@ -75,7 +77,7 @@
             </div>
           </div>
         </template>
-        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
+        <el-button size="mini" class="coupon-getted-btn">{{ $t('4bc370d2.9c1b27') }}</el-button>
       </div>
     </div>
   </div>

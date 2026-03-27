@@ -363,9 +363,7 @@
     <!-- v-if="activateInfo.due_reminder" -->
     <div v-if="activateInfo.due_reminder" class="to-become">
       <div class="text-icon">
-        <i class="el-icon-warning icon-wr" /><span
-          >店铺使用期限即将到期，如需继续使用请点击购买订购产品</span
-        >
+        <i class="el-icon-warning icon-wr" /><span>{{ $t('5bcdc5ca.c74d61') }}</span>
       </div>
       <!-- <div class="btn">
         <el-button @click="handleBuy" size="mini" type="danger"
@@ -379,9 +377,10 @@
           <el-col :span="24">
             <section v-loading="userloading" class="section-card realtime-statics">
               <div class="section-card-header">
-                <div class="section-card-title">实时概况</div>
+                <div class="section-card-title">{{ $t('5bcdc5ca.2ce929') }}</div>
                 <div class="header-small">
-                  更新时间：{{ (Date.now() / 1000) | datetime('YYYY-MM-DD HH:mm:ss') }}
+                  {{ $t('5bcdc5ca.780fb9')
+                  }}{{ (Date.now() / 1000) | datetime('YYYY-MM-DD HH:mm:ss') }}
                 </div>
                 <!-- <ul class="header-filters">
 										<li class="filter-item">全店</li>
@@ -394,23 +393,25 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">实付金额(元)</div>
+                        <div class="label">{{ $t('5bcdc5ca.b80fee') }}</div>
                         <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_payed_fee / 100) | keepTwoDecimalFull }}
                         </div>
                         <div v-if="staticsData" class="history-data">
-                          昨日：{{
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{
                             (staticsData.yesterday_data.real_payed_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">支付订单数</div>
+                        <div class="label">{{ $t('5bcdc5ca.f24e34') }}</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_orders }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_payed_orders }}
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{ staticsData && staticsData.yesterday_data.real_payed_orders }}
                         </div>
                       </div>
                     </div>
@@ -418,23 +419,23 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">实付会员数</div>
+                        <div class="label">{{ $t('5bcdc5ca.87491a') }}</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_members }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_payed_members }}
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{ staticsData && staticsData.yesterday_data.real_payed_members }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">客单价(元)</div>
+                        <div class="label">{{ $t('5bcdc5ca.6dda26') }}</div>
                         <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_atv / 100) | keepTwoDecimalFull }}
                         </div>
                         <div v-if="staticsData" class="history-data">
-                          昨日：{{
-                            (staticsData.yesterday_data.real_atv / 100) | keepTwoDecimalFull
-                          }}
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{ (staticsData.yesterday_data.real_atv / 100) | keepTwoDecimalFull }}
                         </div>
                       </div>
                     </div>
@@ -444,26 +445,28 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">退款金额(元)</div>
+                        <div class="label">{{ $t('5bcdc5ca.7525ce') }}</div>
                         <div v-if="staticsData" class="real-data">
                           {{
                             (staticsData.today_data.real_refunded_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
                         <div v-if="staticsData" class="history-data">
-                          昨日：{{
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{
                             (staticsData.yesterday_data.real_refunded_fee / 100)
                               | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">售后订单数</div>
+                        <div class="label">{{ $t('5bcdc5ca.1ecebf') }}</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_aftersale_count }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_aftersale_count }}
+                          {{ $t('5bcdc5ca.38a533')
+                          }}{{ staticsData && staticsData.yesterday_data.real_aftersale_count }}
                         </div>
                       </div>
                     </div>
@@ -477,27 +480,28 @@
           <el-col :span="10">
             <section v-loading="userloading" class="section-card">
               <div class="section-card-header">
-                <div class="section-card-title">重要提醒</div>
+                <div class="section-card-title">{{ $t('5bcdc5ca.d4c72d') }}</div>
               </div>
               <div class="notices">
                 <div class="notices-group">
-                  <div class="subtitle">订单相关</div>
+                  <div class="subtitle">{{ $t('5bcdc5ca.7ecdf0') }}</div>
                   <el-row>
                     <el-col class="notice-item" :span="12">
                       <router-link to="/merchant/order/tradenormalorders?tab=notship">
-                        待发货订单：{{ staticsData && staticsData.notice_data.wait_delivery_count }}
+                        {{ $t('5bcdc5ca.c8604e')
+                        }}{{ staticsData && staticsData.notice_data.wait_delivery_count }}
                       </router-link>
                     </el-col>
                     <el-col class="notice-item" :span="12">
                       <router-link to="/merchant/order/aftersaleslist">
-                        待处理退款：{{ staticsData && staticsData.notice_data.aftersales_count }}
+                        {{ $t('5bcdc5ca.43e4e0')
+                        }}{{ staticsData && staticsData.notice_data.aftersales_count }}
                       </router-link>
                     </el-col>
                     <el-col class="notice-item" :span="12">
                       <router-link to="/merchant/order/aftersalesrefundlist">
-                        退款失败待处理：{{
-                          staticsData && staticsData.notice_data.refund_errorlogs_count
-                        }}
+                        {{ $t('5bcdc5ca.9ec57b')
+                        }}{{ staticsData && staticsData.notice_data.refund_errorlogs_count }}
                       </router-link>
                     </el-col>
                   </el-row>
@@ -510,17 +514,17 @@
       <el-col :span="4">
         <section v-show="activateInfo.source != 'demo'" class="section-card fn-b-20 card-right">
           <div class="phone-card">
-            <img class="phone-icon" :src="img.phone" alt="客服电话" />
-            <span class="phone-text">客服电话 </span>
+            <img class="phone-icon" :src="img.phone" :alt="$t('5bcdc5ca.e84643')">
+            <span class="phone-text">{{ $t('5bcdc5ca.e84643') }} </span>
           </div>
           <h4 class="phone-num">400-921-3522 转 3</h4>
           <div class="phone-btn">
-            <img class="phone-icon" :src="img.qq" alt="在线客服" />
+            <img class="phone-icon" :src="img.qq" :alt="$t('5bcdc5ca.7f72e8')">
             <span
               ><a
                 href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
                 target="_blank"
-                >在线客服</a
+                >{{ $t('5bcdc5ca.7f72e8') }}</a
               ></span
             >
           </div>
@@ -531,8 +535,8 @@
           class="section-card fn-b-20 sl-img"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
-          <div class="sl-img-hd"><i class="el-icon-user-solid" />售前客户经理</div>
-          <img :src="img.customerService" alt="" class="img-demo" />
+          <div class="sl-img-hd"><i class="el-icon-user-solid" />{{ $t('5bcdc5ca.e21f5a') }}</div>
+          <img :src="img.customerService" alt="" class="img-demo">
         </section>
       </el-col>
     </el-row>
@@ -549,44 +553,44 @@
       <el-button size="medium" @click="bool = true">暂不订购</el-button>
     </div> -->
     <div class="buy-hd">
-      <h3>云店新零售</h3>
-      <span>选择服务提交申请</span>
+      <h3>{{ $t('5bcdc5ca.3d9f81') }}</h3>
+      <span>{{ $t('5bcdc5ca.93356a') }}</span>
     </div>
     <div class="buy">
       <div class="buy-item section-card">
         <div class="buy-item-hd buy-item-hd_s" :style="'background:  url(' + img.try_1 + ')'">
-          <h3>试用版</h3>
-          <span>免费试用15天</span>
+          <h3>{{ $t('5bcdc5ca.f0c1fa') }}</h3>
+          <span>{{ $t('5bcdc5ca.276026') }}</span>
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img :src="img.suo" alt="" class="suo" />
-            <p>当前版本为免费试用版本</p>
-            <p>升级解锁享受更多服务</p>
+            <img :src="img.suo" alt="" class="suo">
+            <p>{{ $t('5bcdc5ca.b449e5') }}</p>
+            <p>{{ $t('5bcdc5ca.0518b4') }}</p>
           </div>
           <div class="buy-item-btn">
             <el-button size="medium" disabled>
-              {{ activateInfo.source == 'demo' ? '使用中' : '已体验' }}
+              {{ activateInfo.source == 'demo' ? $t('5bcdc5ca.4d419c') : $t('5bcdc5ca.a7bca2') }}
             </el-button>
           </div>
         </div>
       </div>
       <div class="buy-item section-card">
         <div class="buy-item-hd buy-item-hd_b" :style="'background:  url(' + img.biaozun + ')'">
-          <h3>商城</h3>
+          <h3>{{ $t('5bcdc5ca.2c7b38') }}</h3>
         </div>
         <div class="buy-item-ft">
           <div>
-            <p>适用于搭建线上社交零售商城的商家,快速开店</p>
-            <p><img :src="img.check" alt="" class="check-icon" />小程序、公众号、PC一体化商城</p>
-            <p><img :src="img.check" alt="" class="check-icon" />种草粉丝内容点赞、分享传播</p>
-            <p><img :src="img.check" alt="" class="check-icon" />粉丝、员工、网红分销卖货</p>
-            <p><img :src="img.check" alt="" class="check-icon" />拼团/砍价/秒杀丰富的营销玩法</p>
-            <p><img :src="img.check" alt="" class="check-icon" />直播预约、点赞、分享、互动</p>
+            <p>{{ $t('5bcdc5ca.c295e2') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.9b09a5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.84e826') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.750080') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.eec9b5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.91a39f') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('商城')">
-              立即订购
+              {{ $t('5bcdc5ca.710d33') }}
             </el-button>
           </div>
         </div>
@@ -594,24 +598,24 @@
       <div class="buy-item section-card">
         <div class="buy-item-hd buy-item-hd_l" :style="'background:  url(' + img.liansuo + ')'">
           <div>
-            <h3>连锁</h3>
+            <h3>{{ $t('5bcdc5ca.66048e') }}</h3>
           </div>
         </div>
         <div class="buy-item-ft">
           <div>
-            <p>适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务</p>
+            <p>{{ $t('5bcdc5ca.15e72c') }}</p>
             <p>
-              <img :src="img.check" alt="" class="check-icon" />
-              千店千面，门店运营线上化
+              <img :src="img.check" alt="" class="check-icon">
+              {{ $t('5bcdc5ca.d21dc6') }}
             </p>
-            <p><img :src="img.check" alt="" class="check-icon" />实现门店差异化促销及服务</p>
-            <p><img :src="img.check" alt="" class="check-icon" />门店导购拉新、服务、激励数字化</p>
-            <p><img :src="img.check" alt="" class="check-icon" />建立门店触达私域用户渠道与方式</p>
-            <p><img :src="img.check" alt="" class="check-icon" />多维度进行全链路经营数据跟踪</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.55ce58') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.a96b28') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.8d61a3') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.3f4d02') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('连锁')">
-              立即订购
+              {{ $t('5bcdc5ca.710d33') }}
             </el-button>
           </div>
         </div>
@@ -619,33 +623,37 @@
     </div>
 
     <el-dialog title="" :visible.sync="dialogVisible" width="580px">
-      <div slot="title" class="title">申请订购版本</div>
+      <div slot="title" class="title">{{ $t('5bcdc5ca.cecb98') }}</div>
       <p class="title-span">
-        您所提交的信息仅用于您的专属顾问与您沟通，不会透露给任何第三方机构或个人
+        {{ $t('5bcdc5ca.59f590') }}
       </p>
       <div>
         <el-form ref="dingInfo" :model="dingInfo" label-width="100px" class="demo-dingInfo">
-          <el-form-item label="订购版本" prop="goods_name">
+          <el-form-item :label="$t('5bcdc5ca.b1613c')" prop="goods_name">
             <span style="font-weight: bold">{{ dingInfo.goods_name }}</span>
           </el-form-item>
-          <el-form-item label="姓名" prop="call_name">
-            <el-input v-model="dingInfo.call_name" placeholder="请输入姓名" />
+          <el-form-item :label="$t('5bcdc5ca.60d045')" prop="call_name">
+            <el-input v-model="dingInfo.call_name" :placeholder="$t('5bcdc5ca.8093e3')" />
           </el-form-item>
 
-          <el-form-item label="性别" prop="sex">
+          <el-form-item :label="$t('5bcdc5ca.787b56')" prop="sex">
             <el-radio-group v-model="dingInfo.sex">
               <el-radio label="男" />
               <el-radio label="女" />
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model="dingInfo.mobile" placeholder="请输入电话号码" />
+          <el-form-item :label="$t('5bcdc5ca.92448a')" prop="mobile">
+            <el-input v-model="dingInfo.mobile" :placeholder="$t('5bcdc5ca.28b882')" />
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button class="btn-ft" @click="dialogVisible = false"> 取 消 </el-button>
-        <el-button class="btn-ft" type="danger" @click="submit"> 确 定 </el-button>
+        <el-button class="btn-ft" @click="dialogVisible = false">
+          {{ $t('5bcdc5ca.c08ab9') }}
+        </el-button>
+        <el-button class="btn-ft" type="danger" @click="submit">
+          {{ $t('5bcdc5ca.aa7527') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -860,7 +868,7 @@ export default {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))
       ydleadsInfo(obj).then((res) => {
         this.$message({
-          message: '订购提交成功',
+          message: this.$t('5bcdc5ca.7ac311'),
           type: 'success'
         })
         this.bool = true
@@ -968,21 +976,21 @@ export default {
           labels: this.userTimeArr,
           datasets: [
             {
-              label: '新增人数',
+              label: this.$t('5bcdc5ca.5d4d77'),
               backgroundColor: window.chartColors.red,
               borderColor: window.chartColors.red,
               data: this.userData,
               fill: false
             },
             {
-              label: '新增vip',
+              label: this.$t('5bcdc5ca.cd06d8'),
               backgroundColor: window.chartColors.orange,
               borderColor: window.chartColors.orange,
               data: this.vipData,
               fill: false
             },
             {
-              label: '新增svip',
+              label: this.$t('5bcdc5ca.c7eefc'),
               backgroundColor: window.chartColors.yellow,
               borderColor: window.chartColors.yellow,
               data: this.svipData,
@@ -994,7 +1002,7 @@ export default {
           responsive: true,
           title: {
             display: true,
-            text: '近7天用户趋势'
+            text: this.$t('5bcdc5ca.685d5d')
           },
           tooltips: {
             mode: 'index',

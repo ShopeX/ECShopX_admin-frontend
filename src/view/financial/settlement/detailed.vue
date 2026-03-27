@@ -11,16 +11,16 @@
 <template>
   <div>
     <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="cycleTime" label="创建时间:" size="max">
+      <SpFilterFormItem prop="cycleTime" :label="$t('ca597823.e2a03f')" size="max">
         <el-date-picker
           v-model="formQuery.cycleTime"
           clearable
           type="datetimerange"
           align="right"
           format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('ca597823.981cbe')"
+          :start-placeholder="$t('ca597823.b44c0f')"
+          :end-placeholder="$t('ca597823.1d468b')"
           prefix-icon="null"
           :default-time="defaultTime"
           :picker-options="pickerOptions"
@@ -55,13 +55,21 @@ export default {
       },
       id: '',
       defaultTime: ['00:00:00', '23:59:59'],
-      pickerOptions: PICKER_DATE_OPTIONS,
       merchantLoading: false,
-      merchantList: [],
-      setting: createSetting({
+      merchantList: []
+    }
+  },
+  computed: {
+    pickerOptions() {
+      return {
+        shortcuts: PICKER_DATE_OPTIONS.shortcuts.map((s) => ({ ...s, text: this.$t(s.text) }))
+      }
+    },
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '导出',
+            name: this.$t('ca597823.55405e'),
             key: 'action',
             type: 'button',
             slot: 'header',
@@ -79,52 +87,43 @@ export default {
                   start_time: formQuery.start_time,
                   end_time: formQuery.end_time
                 })
-                this.$message.success('导出成功')
+                this.$message.success(this.$t('ca597823.105c8a'))
               }
             }
           }
         ],
         columns: [
-          { name: '订单号', key: 'order_id', width: 160 },
+          { name: this.$t('ca597823.1e8dc2'), key: 'order_id', width: 160 },
+          { name: this.$t('ca597823.295713'), key: 'distributor_name', width: 160 },
           {
-            name: '店铺',
-            key: 'distributor_name',
-            width: 160
-          },
-          {
-            name: '订单实付（¥）',
+            name: this.$t('ca597823.9f01f5'),
             key: 'total_fee',
             render: (h, { row }) => h('span', {}, row.total_fee / 100)
           },
           {
-            name: '运费（¥）',
+            name: this.$t('ca597823.4dd437'),
             key: 'freight_fee',
             width: 100,
             render: (h, { row }) => h('span', {}, row.freight_fee / 100)
           },
           {
-            name: '同城配（¥）',
+            name: this.$t('ca597823.e3a3c9'),
             key: 'intra_city_freight_fee',
             width: 100,
             render: (h, { row }) => h('span', {}, row.intra_city_freight_fee / 100)
           },
-          // {
-          //   name: '分销佣金（¥）',
-          //   key: 'rebate_fee',
-          //   render: (h, { row }) => h('span', {}, row.rebate_fee / 100)
-          // },
           {
-            name: '退款金额（¥）',
+            name: this.$t('ca597823.f4a147'),
             key: 'refund_fee',
             render: (h, { row }) => h('span', {}, row.refund_fee / 100)
           },
           {
-            name: '结算金额（¥）',
+            name: this.$t('ca597823.a69a62'),
             key: 'statement_fee',
             render: (h, { row }) => h('span', {}, row.statement_fee / 100)
           },
           {
-            name: '创建时间',
+            name: this.$t('ca597823.eca37c'),
             key: 'alert_required_message',
             width: 160,
             formatter: (row, column) => {
@@ -136,9 +135,10 @@ export default {
             }
           },
           {
-            name: '支付方式',
+            name: this.$t('ca597823.0c9d2b'),
             key: 'statement_status',
-            render: (h, { row }) => h('span', {}, this.getPayment(row.pay_channel, row.pay_type))
+            render: (h, { row }) =>
+              h('span', {}, this.$t(this.getPayment(row.pay_channel, row.pay_type)))
           }
         ]
       })

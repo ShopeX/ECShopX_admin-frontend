@@ -10,11 +10,11 @@
       <SpPlatformTip
         class="damo-crm-tip"
         v-if="dmcrmSetting.is_open"
-        text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示"
+        :text-val="$t('9cc0c982.44de88')"
       />
 
       <div class="action-container" v-if="!dmcrmSetting.is_open">
-        <el-button type="primary" @click="addCoupon"> 创建优惠券 </el-button>
+        <el-button type="primary" @click="addCoupon"> {{ $t('9cc0c982.2ec71c') }} </el-button>
       </div>
 
       <el-tabs v-model="params.date_status" type="card" @tab-click="handleClick">
@@ -25,7 +25,7 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" :data="tableList" border @filter-change="filterTag">
-            <el-table-column width="240" label="操作" fixed="left">
+            <el-table-column width="240" :label="$t('9cc0c982.2b6bc0')" fixed="left">
               <template slot-scope="scope">
                 <div class="flex items-center flex-wrap gap-2">
                   <el-button type="text" class="m-0 px-1">
@@ -40,7 +40,7 @@
                         }
                       }"
                     >
-                      查看
+                      {{ $t('9cc0c982.607e7a') }}
                     </router-link>
                   </el-button>
                   <el-button
@@ -61,13 +61,13 @@
                         query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
                       }"
                     >
-                      编辑
+                      {{ $t('9cc0c982.95b351') }}
                     </router-link>
                   </el-button>
                   <!-- <el-popover v-if="appID" placement="top" width="200" trigger="click"> -->
                   <el-popover placement="top" width="200" trigger="click">
                     <div>
-                      <img class="page-code" :src="appCodeUrl" />
+                      <img class="page-code" :src="appCodeUrl">
                       <div class="page-btns">
                         <el-button
                           type="primary"
@@ -75,10 +75,10 @@
                           size="mini"
                           @click="handleDownload(scope.row.title)"
                         >
-                          下载码
+                          {{ $t('9cc0c982.99e985') }}
                         </el-button>
                         <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                          复制链接
+                          {{ $t('9cc0c982.879058') }}
                         </el-button>
                       </div>
                     </div>
@@ -88,7 +88,7 @@
                       class="m-0 px-1"
                       @click="handleShow(scope.row.card_id)"
                     >
-                      投放
+                      {{ $t('9cc0c982.536ff1') }}
                     </el-button>
                   </el-popover>
                   <el-button
@@ -97,7 +97,7 @@
                     class="m-0 px-1"
                     @click="deleteCard(scope.row.card_id, scope.$index)"
                   >
-                    删除
+                    {{ $t('9cc0c982.2f4aad') }}
                   </el-button>
                 </div>
                 <!-- <a v-if="!scope.row.ifpass" href="#" @click="sendoutShowAction(scope.row.card_id, scope.$index)">投放</a> -->
@@ -107,7 +107,7 @@
             <el-table-column
               prop="card_type"
               column-key="type"
-              label="卡券类型"
+              :label="$t('9cc0c982.f47182')"
               width="120"
               :filter-multiple="false"
               :filters="typeFilters"
@@ -128,8 +128,8 @@
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="title" label="卡券标题" />
-            <el-table-column width="350" label="卡券有效期">
+            <el-table-column prop="title" :label="$t('9cc0c982.d90724')" />
+            <el-table-column width="350" :label="$t('9cc0c982.d48a7a')">
               <template slot-scope="scope">
                 <i class="el-icon-time" />
                 <template v-if="scope.row.takeEffect">
@@ -143,7 +143,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column width="120" label="可领取库存">
+            <el-table-column width="120" :label="$t('9cc0c982.4b06cf')">
               <template slot-scope="scope">
                 <span v-if="scope.row.quantity > scope.row.get_num">{{
                   scope.row.quantity - scope.row.get_num
@@ -170,15 +170,15 @@
                         v-model="scope.row.operationType"
                         class="content-bottom-padded"
                       >
-                        <el-radio label="increase"> 增加 </el-radio>
-                        <el-radio label="reduce"> 减少 </el-radio>
+                        <el-radio label="increase"> {{ $t('9cc0c982.491411') }} </el-radio>
+                        <el-radio label="reduce"> {{ $t('9cc0c982.cdf124') }} </el-radio>
                       </el-radio-group>
                       <el-row>
                         <el-col :span="22">
-                          <el-input v-model="scope.row.storeValue" placeholder="库存不能少于1" />
+                          <el-input v-model="scope.row.storeValue" :placeholder="$t('9cc0c982.b97d6d')" />
                         </el-col>
                         <el-col :span="2" style="line-height: 36px" class="content-center">
-                          份
+                          {{ $t('9cc0c982.2a5da6') }}
                         </el-col>
                       </el-row>
                     </div>
@@ -190,12 +190,12 @@
                           style="width: 100%"
                           @click="saveStore(scope.$index, scope.row.operationType)"
                         >
-                          确定
+                          {{ $t('9cc0c982.38cf16') }}
                         </el-button>
                       </el-col>
                       <el-col :span="12">
                         <el-button style="width: 100%" @click="scope.row.storePop = false">
-                          取消
+                          {{ $t('9cc0c982.625fb2') }}
                         </el-button>
                       </el-col>
                     </el-row>
@@ -206,14 +206,14 @@
                 </el-popover> -->
               </template>
             </el-table-column>
-            <el-table-column width="80" prop="get_num" label="领取量">
+            <el-table-column width="80" prop="get_num" :label="$t('9cc0c982.5d5aac')">
               <template slot-scope="scope">
-                <span>{{ scope.row.get_num || 0 }}</span>
+                <span>{{scope.row.get_num || 0}}</span>
               </template>
             </el-table-column>
-            <el-table-column width="80" prop="use_num" label="使用量">
+            <el-table-column width="80" prop="use_num" :label="$t('9cc0c982.ce2ed8')">
               <template slot-scope="scope">
-                <span>{{ scope.row.use_num || 0 }}</span>
+                <span>{{scope.row.use_num || 0}}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -229,7 +229,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <el-dialog title="您可以通过以下方式投放" :visible.sync="sendoutVisible">
+      <el-dialog :title="$t('9cc0c982.9a494c')" :visible.sync="sendoutVisible">
         <div
           v-for="(item, index) in sedoutList"
           :key="index"
@@ -243,8 +243,12 @@
           </div>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button @click.native="sendoutVisible = false"> 取消 </el-button>
-          <el-button type="primary" @click.native="sendoutAction"> 确定 </el-button>
+          <el-button @click.native="sendoutVisible = false">
+            {{ $t('9cc0c982.625fb2') }}
+          </el-button>
+          <el-button type="primary" @click.native="sendoutAction">
+            {{ $t('9cc0c982.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
     </SpPage>
@@ -252,7 +256,7 @@
       ref="editDialogRef"
       v-model="editDialog"
       width="500px"
-      :title="'修改库存数'"
+      :title="$t('9cc0c982.42477d')"
       :form="editForm"
       :form-list="editFormList"
       @onSubmit="onEditSubmit"
@@ -282,16 +286,16 @@ export default {
     }
     const typeFilters = [
       {
-        text: '折扣券',
+        text: this.$t('9cc0c982.9268f9'),
         value: 'discount'
       },
       {
-        text: '满减券',
+        text: this.$t('9cc0c982.f23195'),
         value: 'cash'
       }
     ]
     if (this.VERSION_STANDARD()) {
-      typeFilters.push({ text: '兑换券', value: 'new_gift' })
+      typeFilters.push({ text: this.$t('9cc0c982.8bc752'), value: 'new_gift' })
     }
     return {
       initialParams,
@@ -304,12 +308,12 @@ export default {
       currSendout: 1,
       checkedType: {},
       typeId: -1,
-      sedoutList: [{ name: '下载二维码', id: 3 }],
+      sedoutList: [{ name: this.$t('9cc0c982.feea92'), id: 3 }],
       typeFilters,
       tabList: [
-        { name: '已生效', activeName: '2' },
-        { name: '待生效', activeName: '1' },
-        { name: '已过期', activeName: '3' }
+        { name: this.$t('9cc0c982.30ce10'), activeName: '2' },
+        { name: this.$t('9cc0c982.438aa8'), activeName: '1' },
+        { name: this.$t('9cc0c982.4d5ccd'), activeName: '3' }
       ],
       isShopadmin: /\/shopadmin/.test(document.location.pathname),
       appID: '',
@@ -327,20 +331,20 @@ export default {
           key: 'type',
           type: 'radio',
           options: [
-            { label: 'increase', name: '增加' },
-            { label: 'reduce', name: '减少' }
+            { label: 'increase', name: this.$t('9cc0c982.491411') },
+            { label: 'reduce', name: this.$t('9cc0c982.cdf124') }
           ]
         },
         {
-          label: '数量',
+          label: this.$t('9cc0c982.0bf60b'),
           key: 'quantity',
           type: 'input',
-          placeholder: '请输入数量',
+          placeholder: this.$t('9cc0c982.fa7872'),
           validator: (rule, value, callback) => {
             const fd = this.tableList.find((item) => item.card_id == this.editForm.card_id)
             if (this.editForm.type == 'reduce') {
               if (this.editForm.quantity > fd.quantity - fd.get_num) {
-                callback(new Error('减少数量不能大于可领取库存'))
+                callback(new Error(this.$t('9cc0c982.6f3a33')))
               } else {
                 callback()
               }
@@ -460,16 +464,16 @@ export default {
       this.sendoutVisible = false
     },
     deleteCard(id, index) {
-      this.$confirm('确定要删除该卡券？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('9cc0c982.a00278'), this.$t('9cc0c982.02d981'), {
+        cancelButtonText: this.$t('9cc0c982.625fb2'),
+        confirmButtonText: this.$t('9cc0c982.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeCard({ card_id: id })
               .then((res) => {
                 this.$message({
-                  message: '删除成功',
+                  message: this.$t('9cc0c982.0007d1'),
                   type: 'success'
                 })
                 this.fetchList()
@@ -486,15 +490,15 @@ export default {
       this.currSendout = index
     },
     pullWechatCard() {
-      this.$confirm('确定同步微信优惠券到本系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('9cc0c982.991084'), this.$t('9cc0c982.02d981'), {
+        confirmButtonText: this.$t('9cc0c982.38cf16'),
+        cancelButtonText: this.$t('9cc0c982.625fb2'),
         type: 'warning'
       })
         .then(() => {
           pullWechatCard().then((response) => {
             this.$message({
-              message: '同步成功',
+              message: this.$t('9cc0c982.52b85c'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -504,7 +508,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('9cc0c982.2111cc')
           })
         })
     },
@@ -523,7 +527,7 @@ export default {
       let reg = /^[1-9]\d*$/
       if (!reg.test(this.tableList[index].storeValue)) {
         this.$message({
-          message: '请输入大于0的正整数',
+          message: this.$t('9cc0c982.099729'),
           type: 'error'
         })
         return
@@ -535,7 +539,7 @@ export default {
             : 0
         if (this.tableList[index].storeValue > quantity) {
           this.$message({
-            message: '减少数量不能大于可领取库存',
+            message: this.$t('9cc0c982.6f3a33'),
             type: 'error'
           })
           return

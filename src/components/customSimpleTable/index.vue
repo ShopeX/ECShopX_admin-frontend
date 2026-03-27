@@ -20,7 +20,7 @@
           </div>
         </th>
         <th v-if="orderInfo.receipt_type === 'logistics'">
-          <div class="customHeader">操作</div>
+          <div class="customHeader">{{ $t('47962e8b.2b6bc0') }}</div>
         </th>
       </tr>
       <template v-if="dataSource && dataSource.length">
@@ -32,7 +32,7 @@
           </td>
           <td v-if="orderInfo.receipt_type === 'logistics'" style="text-align: center">
             <el-button type="text" size="small" @click="openDialog(dataSource[index])">
-              编辑
+              {{ $t('47962e8b.95b351') }}
             </el-button>
           </td>
         </tr>
@@ -40,13 +40,13 @@
       <template v-if="!dataSource || !dataSource.length">
         <tr>
           <td :colspan="columns.length">
-            <div class="customEmpty">暂无内容</div>
+            <div class="customEmpty">{{ $t('47962e8b.4726ff') }}</div>
           </td>
         </tr>
       </template>
     </table>
     <el-dialog
-      title="修改物流信息"
+      :title="$t('47962e8b.92ca2e')"
       :visible.sync="dialogFormVisible"
       :close-on-click-modal="false"
       width="30%"
@@ -55,13 +55,13 @@
       <el-form ref="form" :model="form">
         <el-form-item
           prop="delivery_corp_name"
-          label="物流公司"
+          :label="$t('47962e8b.eb6d92')"
           :label-width="formLabelWidth"
-          :rules="{ required: true, message: '请选择物流公司', trigger: 'blur' }"
+          :rules="{ required: true, message: $t('47962e8b.20e42a'), trigger: 'blur' }"
         >
           <el-select
             v-model="form.delivery_corp_name"
-            placeholder="请选择物流公司"
+            :placeholder="$t('47962e8b.20e42a')"
             style="width: 90%"
           >
             <el-option
@@ -73,17 +73,23 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label="物流单号"
+          :label="$t('47962e8b.0bb075')"
           prop="delivery_code"
           :label-width="formLabelWidth"
-          :rules="{ required: true, message: '请输入物流单号', trigger: 'blur' }"
+          :rules="{ required: true, message: $t('47962e8b.5cc10a'), trigger: 'blur' }"
         >
-          <el-input v-model="form.delivery_code" placeholder="请输入物流单号" style="width: 90%" />
+          <el-input
+            v-model="form.delivery_code"
+            :placeholder="$t('47962e8b.5cc10a')"
+            style="width: 90%"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closeAddDialog()"> 取 消 </el-button>
-        <el-button type="primary" @click="addFormSumbit('form')"> 确 定 </el-button>
+        <el-button @click="closeAddDialog()"> {{ $t('47962e8b.c08ab9') }} </el-button>
+        <el-button type="primary" @click="addFormSumbit('form')">
+          {{ $t('47962e8b.aa7527') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>

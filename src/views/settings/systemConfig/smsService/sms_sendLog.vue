@@ -20,7 +20,7 @@
         url="/aliyunsms/record/list"
       >
         <template #task_name>
-          <el-input v-model="task_name" placeholder="请输入任务名称" clearable />
+          <el-input v-model="task_name" :placeholder="$t('b9fc371b.64615c')" clearable />
         </template>
       </SpFinder>
     </div>
@@ -35,20 +35,24 @@ export default {
   data() {
     return {
       task_name: '',
-      failVisible: false,
-      search_options: [
-        { label: '发送中', value: '1' },
-        { label: '发送成功', value: '3' },
-        { label: '发送失败', value: '2' }
-      ],
-      smeType_options: [
-        { label: '验证码', value: '0' },
-        { label: '短信通知', value: '1' },
-        { label: '推广短信', value: '2' }
-      ]
+      failVisible: false
     }
   },
   computed: {
+    search_options() {
+      return [
+        { label: this.$t('b9fc371b.702513'), value: '1' },
+        { label: this.$t('b9fc371b.9db9a7'), value: '3' },
+        { label: this.$t('b9fc371b.9ca6a3'), value: '2' }
+      ]
+    },
+    smeType_options() {
+      return [
+        { label: this.$t('b9fc371b.983f59'), value: '0' },
+        { label: this.$t('b9fc371b.e7d158'), value: '1' },
+        { label: this.$t('b9fc371b.0a9738'), value: '2' }
+      ]
+    },
     setting() {
       return setting_(this)
     }
@@ -68,7 +72,7 @@ export default {
     afterSearch() {},
     async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
-      this.$message.success('删除成功')
+      this.$message.success(this.$t('b9fc371b.0007d1'))
       this.$refs.finder.refresh(true)
     }
   }

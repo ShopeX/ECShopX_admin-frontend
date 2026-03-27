@@ -14,8 +14,8 @@
     <template v-if="$route.path.indexOf('editor') === -1">
       <SpPlatformTip v-if="!VERSION_SHUYUN()" />
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="wxapp_id" label="针对人群:">
-          <el-select v-model="params.wxapp_id" placeholder="请选择小程序">
+        <SpFilterFormItem prop="wxapp_id" :label="$t('111a6bde.a252cb')">
+          <el-select v-model="params.wxapp_id" :placeholder="$t('111a6bde.e4c3df')">
             <el-option
               v-for="(item, index) in wxaList"
               :key="index"
@@ -31,10 +31,10 @@
           v-loading="loading"
           :data="tableList"
           border
-          element-loading-text="数据加载中"
+          :element-loading-text="$t('111a6bde.f09b12')"
           :default-sort="{ prop: 'bind_date', order: 'descending' }"
         >
-          <el-table-column label="操作" width="150">
+          <el-table-column :label="$t('111a6bde.2b6bc0')" width="150">
             <template slot-scope="scope">
               <router-link
                 :to="{
@@ -42,22 +42,22 @@
                   query: { roomid: scope.row.roomid, wxapp_id: params.wxapp_id }
                 }"
               >
-                视频回放
+                {{ $t('111a6bde.784295') }}
               </router-link>
             </template>
           </el-table-column>
-          <el-table-column label="直播间图片" width="250">
+          <el-table-column :label="$t('111a6bde.49c638')" width="250">
             <template slot-scope="scope">
               <img
                 v-if="scope.row.share_img"
                 :src="scope.row.share_img"
                 width="display:block;width:100px"
-              />
-              <img v-else src="https://fakeimg.pl/50x50/EFEFEF/CCC/?text=brand&font=lobster" />
+              >
+              <img v-else src="https://fakeimg.pl/50x50/EFEFEF/CCC/?text=brand&font=lobster">
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="直播间名称" />
-          <el-table-column label="直播时间" width="300">
+          <el-table-column prop="name" :label="$t('111a6bde.6738c6')" />
+          <el-table-column :label="$t('111a6bde.797e8c')" width="300">
             <template slot-scope="scope">
               {{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
               {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}

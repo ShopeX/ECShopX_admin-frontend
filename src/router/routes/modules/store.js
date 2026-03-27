@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'store',
       icon: 'application',
       keepAlive: true,
-      title: '店铺'
+      title: '6478e260.295713'
     },
     name: 'store',
     path: '/store',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistributor',
           icon: 'icon-shop',
-          title: '自营店铺',
+          title: '6478e260.1b1b01',
           permissions: ['store.storemanager.marketingdistributor']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/merchant/store'),
             meta: {
-              title: '编辑店铺',
+              title: '6478e260.922ec0',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'template',
             component: () => import('@/view/mall/marketing/distributor_template'),
             meta: {
-              title: '店铺模板',
+              title: '6478e260.5da484',
               hidden: true
             }
           },
@@ -47,7 +47,7 @@ const routes = [
             path: 'details/:id?',
             component: () => import('@/view/mall/marketing/distributor_details'),
             meta: {
-              title: '店铺详情',
+              title: '6478e260.9d54ec',
               hidden: true
             }
           },
@@ -55,7 +55,7 @@ const routes = [
             path: 'wxpaysetting',
             component: () => import('@/view/mall/marketing/distributor_wxpaysetting'),
             meta: {
-              title: '微信支付设置',
+              title: '6478e260.bd5e8a',
               hidden: true
             }
           },
@@ -63,7 +63,7 @@ const routes = [
             path: 'alipaysetting',
             component: () => import('@/view/mall/marketing/distributor_alipaysetting'),
             meta: {
-              title: '支付宝设置',
+              title: '6478e260.135e7b',
               hidden: true
             }
           },
@@ -71,7 +71,7 @@ const routes = [
             path: 'storeupload',
             component: () => import('@/view/mall/marketing/shopUpload'),
             meta: {
-              title: '店铺上传',
+              title: '6478e260.081090',
               hidden: true
             }
           }
@@ -84,7 +84,7 @@ const routes = [
         meta: {
           aliasName: 'storewhitelist',
           icon: 'icon-whitelist',
-          title: '店铺白名单',
+          title: '6478e260.899e90',
           permissions: ['store.storemanager.storewhitelist']
         },
         children: [
@@ -92,7 +92,7 @@ const routes = [
             path: 'storewhitelistUpload',
             component: () => import('@/view/mall/marketing/storewhitelistUpload'),
             meta: {
-              title: '白名单上传',
+              title: '6478e260.ba584c',
               hidden: true
             }
           }
@@ -104,10 +104,32 @@ const routes = [
         meta: {
           aliasName: 'storerules',
           icon: 'icon-address',
-          title: '进店规则',
+          title: '6478e260.08894b',
           permissions: ['store.storemanager.storerules']
         },
         component: () => import('@/views/store/storeRules/store-rules')
+      },
+      {
+        name: 'storeManageStoreCategory',
+        path: 'store-manage/store-category',
+        meta: {
+          aliasName: 'storecategory',
+          icon: 'icon-address',
+          title: '6478e260.2419d0',
+          permissions: ['store.storemanager.storecategory']
+        },
+        component: () => import('@/views/store/store-category')
+      },
+      {
+        name: 'storeManageNearbyStoreInfo',
+        path: 'store-manage/nearby-store-info',
+        meta: {
+          aliasName: 'nearbystoreinfo',
+          icon: 'icon-address',
+          title: '6478e260.84b1aa',
+          permissions: ['store.storemanager.nearbystoreinfo']
+        },
+        component: () => import('@/views/store/nearby-store-info')
       },
       {
         name: 'storeManageRefundAddress',
@@ -115,7 +137,7 @@ const routes = [
         meta: {
           aliasName: 'distributoraftersalesaddress',
           icon: 'icon-address',
-          title: '退货地址',
+          title: '6478e260.6356a8',
           permissions: ['store.storemanager.distributoraftersalesaddress']
         },
         component: () => import('@/view/mall/marketing/distributorAftersalesAddress')

@@ -14,7 +14,7 @@
       :show-default-actions="false"
     />
     <div class="section-footer with-border content-center">
-      <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('81ac78f1.be5fbb') }}</el-button>
     </div>
   </SpPage>
 </template>
@@ -43,39 +43,39 @@ export default {
       return [
         {
           fieldName: 'is_open',
-          label: '开启小票机',
+          label: this.$t('81ac78f1.29731e'),
           component: 'switch',
           componentProps: {
             width: 60,
             'active-value': 'true',
             'inactive-value': 'false',
             'inactive-color': '#ccc',
-            'active-text': '开启',
-            'inactive-text': '关闭',
+            'active-text': this.$t('81ac78f1.cc42dd'),
+            'inactive-text': this.$t('81ac78f1.b15d91'),
             'active-color': '#13ce66'
           }
         },
         {
           fieldName: 'is_hide',
-          label: '隐藏收货人',
+          label: this.$t('81ac78f1.a3f95a'),
           component: 'switch',
           componentProps: {
             width: 60,
             'active-value': 'true',
             'inactive-value': 'false',
             'inactive-color': '#ccc',
-            'active-text': '开启',
-            'inactive-text': '关闭',
+            'active-text': this.$t('81ac78f1.cc42dd'),
+            'inactive-text': this.$t('81ac78f1.b15d91'),
             'active-color': '#13ce66'
           }
         },
         {
           fieldName: 'person_id',
-          label: '用户ID',
+          label: this.$t('81ac78f1.30acd2'),
           component: 'input',
           componentProps: {
             style: { width: '300px' },
-            placeholder: '用户ID'
+            placeholder: this.$t('81ac78f1.30acd2')
           },
           tip: () => {
             return this.$createElement('div', { class: 'frm-tips' }, [
@@ -87,18 +87,18 @@ export default {
                     target: '_blank'
                   }
                 },
-                '应用列表地址，点击进入应用，进行查询'
+                this.$t('81ac78f1.0cc74f')
               )
             ])
           }
         },
         {
           fieldName: 'app_id',
-          label: '应用ID',
+          label: this.$t('81ac78f1.3751f6'),
           component: 'input',
           componentProps: {
             style: { width: '300px' },
-            placeholder: '用户ID'
+            placeholder: this.$t('81ac78f1.3751f6')
           },
           tip: () => {
             return this.$createElement('div', { class: 'frm-tips' }, [
@@ -110,18 +110,18 @@ export default {
                     target: '_blank'
                   }
                 },
-                '应用列表地址，点击进入应用，进行查询'
+                this.$t('81ac78f1.0cc74f')
               )
             ])
           }
         },
         {
           fieldName: 'app_key',
-          label: '应用密钥',
+          label: this.$t('81ac78f1.b47711'),
           component: 'input',
           componentProps: {
             style: { width: '300px' },
-            placeholder: '用户ID'
+            placeholder: this.$t('81ac78f1.b47711')
           },
           tip: () => {
             return this.$createElement('div', { class: 'frm-tips' }, [
@@ -133,7 +133,7 @@ export default {
                     target: '_blank'
                   }
                 },
-                '应用列表地址，点击进入应用，进行查询'
+                this.$t('81ac78f1.0cc74f')
               )
             ])
           }
@@ -154,7 +154,7 @@ export default {
       try {
         await this.$refs.form.validate()
         await savePrinter(this.form)
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('81ac78f1.3b1083'), type: 'success' })
         this.getInfo()
       } catch (error) {}
     }

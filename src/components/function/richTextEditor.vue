@@ -16,12 +16,20 @@
         </div>
         <transition name="el-fade-in-linear">
           <div class="edit-btn content-center">
-            <el-button type="primary" plain round @click="plantingShow"> 编辑内容 </el-button>
+            <el-button type="primary" plain round @click="plantingShow">
+              {{ $t('7f6bf178.0f2061') }}
+            </el-button>
           </div>
         </transition>
       </div>
     </div>
-    <el-dialog :visible.sync="dialogVisible" width="80%" title="编辑文章" fullscreen lock-scroll>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="80%"
+      :title="$t('7f6bf178.d0ce13')"
+      fullscreen
+      lock-scroll
+    >
       <section class="section section-white view-warp">
         <draggable
           v-model="initData"
@@ -35,31 +43,31 @@
               <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-video1" />
               </svg>
-              视频
+              {{ $t('7f6bf178.7fcf42') }}
             </template>
             <template v-if="item.name === 'goods'">
               <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-goods" />
               </svg>
-              商品
+              {{ $t('7f6bf178.9897d8') }}
             </template>
             <template v-if="item.name === 'heading'">
               <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-wenzibiaoti" />
               </svg>
-              标题
+              {{ $t('7f6bf178.32c65d') }}
             </template>
             <template v-if="item.name === 'slider'">
               <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-slider" />
               </svg>
-              轮播
+              {{ $t('7f6bf178.a5987d') }}
             </template>
             <template v-if="item.name === 'writing'">
               <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-wenzibiaoti" />
               </svg>
-              文本
+              {{ $t('7f6bf178.97d076') }}
             </template>
           </div>
         </draggable>
@@ -74,7 +82,7 @@
                   ') no-repeat bottom; background-size: 100% auto;'
                 "
               >
-                <span>标题</span>
+                <span>{{ $t('7f6bf178.32c65d') }}</span>
               </div>
             </div>
             <draggable
@@ -113,7 +121,7 @@
         <div class="setting-view">
           <div v-if="editorIndex === null" class="view-placeholder">
             <i class="iconfont icon-shapes" />
-            请拖选左侧挂件
+            {{ $t('7f6bf178.7167ba') }}
           </div>
           <filmEditor :res="editorData" @change="getVideo" />
           <goodsEditor :res="editorData" />
@@ -123,7 +131,9 @@
         </div>
       </section>
       <section slot="footer" class="content-center">
-        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">
+          {{ $t('7f6bf178.be5fbb') }}
+        </el-button>
       </section>
       <imgPicker
         :dialog-visible="imgsVisible"
@@ -402,7 +412,7 @@ export default {
     },
     // 删除当前组件
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('7f6bf178.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)

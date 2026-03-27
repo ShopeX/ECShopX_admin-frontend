@@ -9,7 +9,11 @@
       <el-row>
         <el-col :span="6">
           <el-form-item label="">
-            <el-button type="primary" @click="handleClickUpload"> 上传封面 </el-button>
+            <el-button type="primary" @click="handleClickUpload">
+{{
+              $t('3d687e9b.979179')
+            }}
+</el-button>
           </el-form-item>
         </el-col>
         <el-col :span="18">
@@ -20,22 +24,22 @@
           />
         </el-col>
         <el-col :span="24">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('3d687e9b.32c65d')">
             <el-input v-model="dataForm.article_title" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="描述">
+          <el-form-item :label="$t('3d687e9b.3bdd08')">
             <el-input v-model="dataForm.article_subtitle" maxlength="100" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="内容">
+          <el-form-item :label="$t('3d687e9b.2d711b')">
             <SpRichText v-model="dataForm.article_content" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="连接">
+          <el-form-item :label="$t('3d687e9b.30f7dd')">
             <el-button @click="showVisible = true">
               {{ buttonLinkText }}
             </el-button>
@@ -86,16 +90,16 @@ export default {
       picsDialog: false,
       isGetPics: false,
       coverList: [],
-      buttonText: '保存',
+      buttonText: this.$t('3d687e9b.be5fbb'),
       showVisible: false,
-      buttonLinkText: '设置路径'
+      buttonLinkText: this.$t('3d687e9b.4f2c29')
     }
   },
   mounted() {
     console.log(this.$route.query)
     let { id } = this.$route.query
     if (id) {
-      this.buttonText = '修改'
+      this.buttonText = this.$t('3d687e9b.8347a9')
       this._getActivearticle(id)
     }
   },
@@ -181,7 +185,7 @@ export default {
 
       switch (type) {
         case 'goods':
-          url = '/pages/item/espier-detail?id=' + id
+          url = '/subpages/item/espier-detail?id=' + id
           break
         case 'category':
           url = '/pages/item/list?cat_id=' + id

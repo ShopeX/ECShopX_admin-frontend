@@ -1,15 +1,24 @@
 <template>
   <div class="wgt-couponcard-attr-data">
     <CompButton
-      placeholder="选择优惠券"
-      format="{0}个优惠券"
+      :placeholder="i18n.t('dfd5d828.45bcee')"
+      :format="i18n.t('dfd5d828.9ff61b')"
       :value="value.length"
       :view-btn="false"
       @remove="onRemoveCoupon"
       @click="onOpenDialog"
     />
-    <el-dialog :modal="false" :visible.sync="dialogVisible" title="选择优惠券" width="80vw">
-      <el-button type="primary" size="small" @click="onAddCoupon">选择优惠券</el-button>
+    <el-dialog
+      :modal="false"
+      :visible.sync="dialogVisible"
+      :title="i18n.t('dfd5d828.45bcee')"
+      width="80vw"
+    >
+      <el-button type="primary" size="small" @click="onAddCoupon">
+{{
+        i18n.t('dfd5d828.45bcee')
+      }}
+</el-button>
       <SpFinder
         ref="finder"
         no-selection
@@ -20,14 +29,15 @@
         row-actions-fixed-align="left"
       />
       <span slot="footer" class="dialog-footer">
-        <el-button @click="onCancel">取 消</el-button>
-        <el-button type="primary" @click="onConfirm">确 定</el-button>
+        <el-button @click="onCancel">{{ i18n.t('dfd5d828.c08ab9') }}</el-button>
+        <el-button type="primary" @click="onConfirm">{{ i18n.t('dfd5d828.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash-es'
 import { createSetting } from '@shopex-ui/finder'
 import { CARD_TYPE } from '@/consts'
@@ -45,7 +55,7 @@ export default {
     }
   },
   data() {
-    return {
+    return {i18n,
       couponList: [],
       mobCouponList: [],
       dialogVisible: false,
@@ -57,7 +67,7 @@ export default {
       return createSetting({
         actions: [
           {
-            name: '删除',
+            name: i18n.t('dfd5d828.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'text',
@@ -76,10 +86,10 @@ export default {
         columns:
           this.activeTab == 'pro'
             ? [
-                { name: '券模板ID', key: 'id' },
-                { name: '券名称', key: 'title' },
+                { name: i18n.t('dfd5d828.3d8516'), key: 'id' },
+                { name: i18n.t('dfd5d828.a15f31'), key: 'title' },
                 {
-                  name: '券类型',
+                  name: i18n.t('dfd5d828.63629e'),
                   key: 'card_type',
                   width: '100px',
                   render: (h, { row }) =>
@@ -94,14 +104,14 @@ export default {
                     )
                 },
                 {
-                  name: '使用渠道',
+                  name: i18n.t('dfd5d828.a1f570'),
                   key: 'use_scenes',
                   formatter: (value, row, col) => {
                     return <span>{this.formatterCardType(value)}</span>
                   }
                 },
                 {
-                  name: '有效期',
+                  name: i18n.t('dfd5d828.bb114a'),
                   key: 'valid_date',
                   formatter: (value, { takeEffect, begin_time, end_time }, col) => {
                     if (takeEffect) {
@@ -113,14 +123,14 @@ export default {
                 },
                 // { name: '领取时间', key: 'is_enabled' },
                 {
-                  name: '状态',
+                  name: i18n.t('dfd5d828.3fea7c'),
                   key: 'is_enabled',
                   formatter: (value, row, col) => {
-                    return <span>已上架</span>
+                    return <span>{i18n.t('dfd5d828.2390fa')}</span>
                   }
                 },
                 {
-                  name: '可领取库存',
+                  name: i18n.t('dfd5d828.4b06cf'),
                   formatter: (value, { quantity, get_num }, col) => {
                     if (quantity > get_num) {
                       return quantity - get_num
@@ -130,46 +140,46 @@ export default {
                   }
                 },
                 {
-                  name: '来源',
+                  name: i18n.t('dfd5d828.26ca20'),
                   key: 'source',
                   formatter: (value, row, col) => {
                     return <span>AIO PRO</span>
                   }
                 },
-                { name: '区域', key: 'regionauth_name' }
+                { name: i18n.t('dfd5d828.d3ce40'), key: 'regionauth_name' }
               ]
             : [
-                { name: '券模板ID', key: 'id' },
-                { name: '券名称', key: 'title' },
+                { name: i18n.t('dfd5d828.3d8516'), key: 'id' },
+                { name: i18n.t('dfd5d828.a15f31'), key: 'title' },
                 {
-                  name: '券类型',
+                  name: i18n.t('dfd5d828.63629e'),
                   key: 'card_type',
                   width: '100px'
                 },
                 {
-                  name: '使用渠道',
+                  name: i18n.t('dfd5d828.a1f570'),
                   key: 'use_scenes',
                   formatter: (value, row, col) => {
                     return <span>{this.formatterCardType(value)}</span>
                   }
                 },
-                { name: '有效期', key: 'valid_date' },
+                { name: i18n.t('dfd5d828.bb114a'), key: 'valid_date' },
                 {
-                  name: '状态',
+                  name: i18n.t('dfd5d828.3fea7c'),
                   key: 'is_enabled',
                   formatter: (value, row, col) => {
-                    return <span>已上架</span>
+                    return <span>{i18n.t('dfd5d828.2390fa')}</span>
                   }
                 },
-                { name: '可领取库存', key: 'stockNum' },
+                { name: i18n.t('dfd5d828.4b06cf'), key: 'stockNum' },
                 {
-                  name: '来源',
+                  name: i18n.t('dfd5d828.26ca20'),
                   key: 'source',
                   formatter: (value, row, col) => {
                     return <span>AIO</span>
                   }
                 },
-                { name: '区域', key: 'regionauth_name' }
+                { name: i18n.t('dfd5d828.d3ce40'), key: 'regionauth_name' }
               ]
       })
     },

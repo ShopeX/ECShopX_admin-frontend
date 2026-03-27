@@ -7,15 +7,27 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="addLabels"> 添加关联打印机 </el-button>
+        <el-button type="primary" icon="plus" @click="addLabels">
+{{
+          $t('5f64f748.f77b58')
+        }}
+</el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="printerShopList">
-      <el-table-column prop="name" label="打印机名称" />
-      <el-table-column label="操作">
+      <el-table-column prop="name" :label="$t('5f64f748.9d2ae7')" />
+      <el-table-column :label="$t('5f64f748.2b6bc0')">
         <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
-          <el-button size="mini" @click="deleteAction(scope.$index, scope.row)"> 删除 </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">
+{{
+            $t('5f64f748.95b351')
+          }}
+</el-button>
+          <el-button size="mini" @click="deleteAction(scope.$index, scope.row)">
+{{
+            $t('5f64f748.2f4aad')
+          }}
+</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -32,16 +44,20 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
-          <el-form-item label="打印机名称">
-            <el-input v-model="form.name" style="width: 300px" placeholder="打印机名称" />
+          <el-form-item :label="$t('5f64f748.9d2ae7')">
+            <el-input
+              v-model="form.name"
+              style="width: 300px"
+              :placeholder="$t('5f64f748.9d2ae7')"
+            />
           </el-form-item>
-          <el-form-item label="店铺">
+          <el-form-item :label="$t('5f64f748.295713')">
             <el-radio-group v-model="distributor">
-              <el-radio :label="1"> 总部 </el-radio>
-              <el-radio :label="2"> 店铺 </el-radio>
+              <el-radio :label="1">{{ $t('5f64f748.d166bb') }}</el-radio>
+              <el-radio :label="2">{{ $t('5f64f748.295713') }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="distributor == 2" label="所属店铺">
+          <el-form-item v-if="distributor == 2" :label="$t('5f64f748.baad7e')">
             <el-tag
               v-for="(item, index) in relDistributors"
               :key="index"
@@ -53,22 +69,30 @@
               {{ item.name }}
             </el-tag>
             <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
-              + 点击搜索店铺
+              {{ $t('5f64f748.a5d26b') }}
             </el-button>
           </el-form-item>
-          <el-form-item label="打印机终端号">
-            <el-input v-model="form.app_terminal" style="width: 300px" placeholder="打印机名称" />
-            <div class="frm-tips">见打印机底部</div>
+          <el-form-item :label="$t('5f64f748.c8e5e2')">
+            <el-input
+              v-model="form.app_terminal"
+              style="width: 300px"
+              :placeholder="$t('5f64f748.9d2ae7')"
+            />
+            <div class="frm-tips">{{ $t('5f64f748.4bf399') }}</div>
           </el-form-item>
-          <el-form-item label="打印机秘钥">
-            <el-input v-model="form.app_key" style="width: 300px" placeholder="打印机名称" />
-            <div class="frm-tips">见打印机底部</div>
+          <el-form-item :label="$t('5f64f748.d73500')">
+            <el-input
+              v-model="form.app_key"
+              style="width: 300px"
+              :placeholder="$t('5f64f748.9d2ae7')"
+            />
+            <div class="frm-tips">{{ $t('5f64f748.4bf399') }}</div>
           </el-form-item>
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitAction"> 保存 </el-button>
+        <el-button @click.native="handleCancel">{{ $t('5f64f748.625fb2') }}</el-button>
+        <el-button type="primary" @click="submitAction">{{ $t('5f64f748.be5fbb') }}</el-button>
       </div>
     </el-dialog>
     <DistributorSelect
@@ -169,7 +193,7 @@ export default {
     addLabels() {
       //
       this.handleCancel()
-      this.editTitle = '添加账号信息'
+      this.editTitle = this.$t('5f64f748.f1333f')
       this.editVisible = true
       this.isEdit = false
       this.distributor = 1
@@ -178,7 +202,7 @@ export default {
     editAction(index, row) {
       //
       this.handleCancel()
-      this.editTitle = '编辑账号信息'
+      this.editTitle = this.$t('5f64f748.67b76a')
       this.editVisible = true
       this.isEdit = true
       if (0 == row.distributor_id) {
@@ -200,14 +224,14 @@ export default {
     },
     deleteAction(index, row) {
       //
-      this.$confirm('此操作将删除该小票打印机, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('5f64f748.c8c187'), this.$t('5f64f748.02d981'), {
+        confirmButtonText: this.$t('5f64f748.38cf16'),
+        cancelButtonText: this.$t('5f64f748.625fb2'),
         type: 'warning'
       }).then(() => {
         deletePrinter(row.id)
           .then((response) => {
-            this.$message({ message: '删除成功', type: 'success' })
+            this.$message({ message: this.$t('5f64f748.0007d1'), type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
           })
@@ -224,7 +248,7 @@ export default {
       if (this.id) {
         updatePrinter(this.id, this.form)
           .then((response) => {
-            this.$message({ message: '保存成功', type: 'success' })
+            this.$message({ message: this.$t('5f64f748.3b1083'), type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
           })
@@ -232,7 +256,7 @@ export default {
       } else {
         createPrinter(this.form)
           .then((response) => {
-            this.$message({ message: ' 添加成功', type: 'success' })
+            this.$message({ message: this.$t('5f64f748.3fdaea'), type: 'success' })
             this.editVisible = false
             this.getPrinterShopList()
             this.handleCancel()

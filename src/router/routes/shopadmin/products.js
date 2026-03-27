@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'entity',
       icon: 'commodity',
       keepAlive: true,
-      title: '商品'
+      title: '5051a3c8.9897d8'
     },
     name: 'products',
     path: '/shopadmin/products',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'goodsphysical',
           icon: 'icon-products',
-          title: '自营商品',
+          title: '5051a3c8.81a684',
           permissions: ['entity.goodsphysical']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/goods/index'),
             meta: {
-              title: '新增商品',
+              title: '5051a3c8.27fabd',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'stock-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
             meta: {
-              title: '库存导入',
+              title: '5051a3c8.ac5320',
               hidden: true
             }
           },
@@ -47,7 +47,7 @@ const routes = [
             path: 'product-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload'),
             meta: {
-              title: '商品导入',
+              title: '5051a3c8.9745ac',
               hidden: true
             }
           }
@@ -60,7 +60,7 @@ const routes = [
         meta: {
           aliasName: 'storeshopproductanagement',
           icon: 'icon-products',
-          title: '店铺商品',
+          title: '5051a3c8.54d6cd',
           permissions: ['entity.storeshopproductanagement']
         },
         children: [
@@ -70,7 +70,7 @@ const routes = [
           },
           {
             path: 'physicalupload',
-            name: `商品导入`,
+            name: '5051a3c8.9745ac',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
           }
         ]
@@ -82,7 +82,7 @@ const routes = [
         meta: {
           aliasName: 'physicalupload',
           icon: 'icon-products',
-          title: '商品导入',
+          title: '5051a3c8.9745ac',
           permissions: ['entity.physicalupload']
         }
       },
@@ -93,7 +93,7 @@ const routes = [
         meta: {
           aliasName: 'goodsbrand',
           icon: 'icon-products',
-          title: '商品品牌',
+          title: '5051a3c8.ef6fc3',
           permissions: ['entity.goodsbrand']
         }
       },
@@ -104,7 +104,7 @@ const routes = [
         meta: {
           aliasName: 'goodsbrand',
           icon: 'icon-products',
-          title: '店铺分类',
+          title: '5051a3c8.0f5629',
           permissions: ['entity.goodscategory']
         }
       },
@@ -115,7 +115,7 @@ const routes = [
         meta: {
           aliasName: 'itemtags',
           icon: 'icon-products',
-          title: '商品标签',
+          title: '5051a3c8.0f394b',
           permissions: ['entity.itemtags']
         }
       },
@@ -126,7 +126,7 @@ const routes = [
         meta: {
           aliasName: 'rate',
           icon: 'icon-products',
-          title: '商品评价',
+          title: '5051a3c8.d58254',
           permissions: ['entity.rate']
         }
       },
@@ -137,7 +137,7 @@ const routes = [
         meta: {
           aliasName: 'brandmaterial',
           icon: 'icon-products',
-          title: '素材管理',
+          title: '5051a3c8.b49e2f',
           permissions: ['entity.brandmaterial']
         },
         children: [

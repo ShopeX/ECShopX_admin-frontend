@@ -9,40 +9,45 @@
       <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
         <div class="slogn">
           <div class="logo-box">
-            <img :src="logoIcon" alt="" />
+            <img :src="logoIcon" alt="">
           </div>
           <div v-if="companyBrand == '超新星'">
-            <h3>超新星因你而更好</h3>
+            <h3>{{ $t('72ab3c4c.43aa70') }}</h3>
           </div>
         </div>
         <div v-if="loginType != 'distributor'" class="content-center">
-          <el-input v-model="active_code" placeholder="请输入激活码" style="width: 300px" />
-          <p class="desc">购买或续费产品请联系：400-9213-522 &nbsp;&nbsp; QQ: 800058282</p>
+          <el-input
+            v-model="active_code"
+            :placeholder="$t('72ab3c4c.a4e70f')"
+            style="width: 300px"
+          />
+          <p class="desc">{{ $t('72ab3c4c.bdc807') }}</p>
         </div>
         <div v-if="loginType == 'distributor'" class="content-center">
-          <p class="desc">您的授权已过期，请联系平台管理员处理授权</p>
+          <p class="desc">{{ $t('72ab3c4c.cce46e') }}</p>
         </div>
         <div class="active-opr">
           <el-button v-if="loginType != 'distributor'" type="primary" @click="activetionAction">
-            激活
+            {{ $t('72ab3c4c.83a991') }}
           </el-button>
-          <el-button type="default" @click="closeDialog"> 返回登录 </el-button>
+          <el-button type="default" @click="closeDialog">{{ $t('72ab3c4c.977deb') }}</el-button>
         </div>
       </div>
       <el-dialog
-        title="提示"
+        :title="$t('72ab3c4c.02d981')"
         :visible="dialogVisible"
         :close-on-click-modal="false"
         :before-close="closeDialog"
       >
         <div class="brand">
           <div class="logo-box">
-            <img :src="logoIcon" alt="" />
+            <img :src="logoIcon" alt="">
           </div>
           <span>{{ resultTxt }}</span>
         </div>
         <p class="frm-tips content-center" style="margin-top: 20px">
-          此资源包到期时间为&nbsp; <span>{{ expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+          {{ $t('72ab3c4c.814dc2') }}&nbsp;
+          <span>{{ expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </p>
         <div slot="footer" class="dialog-footer content-center active-opr">
           <el-button type="primary" @click="closeDialog">
@@ -69,8 +74,8 @@ export default {
       active_code: '',
       expired_at: '',
       dialogVisible: false,
-      resultTxt: '恭喜您激活成功！',
-      btnTxt: '确 定',
+      resultTxt: this.$t('72ab3c4c.95dc16'),
+      btnTxt: this.$t('72ab3c4c.aa7527'),
       loginType: 'default'
     }
   },
@@ -97,7 +102,7 @@ export default {
   methods: {
     activetionAction() {
       if (this.active_code == '') {
-        this.$message({ message: '请输入激活码', type: 'error' })
+        this.$message({ message: this.$t('72ab3c4c.a4e70f'), type: 'error' })
         return
       }
       let params = {

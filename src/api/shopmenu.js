@@ -5,6 +5,7 @@
 import { fetch } from './request'
 import { Message } from 'element-ui'
 import store from '@/store'
+import { i18n } from '@/i18n'
 
 export function getShopMenu(query) {
   console.log(query)
@@ -26,7 +27,7 @@ export function saveMenu(isEdit, query) {
         is_show: query.is_show ? 'true' : 'false'
       }
     })
-    msg = '更新菜单成功'
+    msg = i18n.t('995dc510.7d662b')
   } else {
     data = fetch({
       url: '/shopmenu',
@@ -37,7 +38,7 @@ export function saveMenu(isEdit, query) {
         is_show: query.is_show ? 'true' : 'false'
       }
     })
-    msg = '添加菜单成功'
+    msg = i18n.t('995dc510.5e6ef1')
   }
 
   return data.then((res) => {
@@ -49,7 +50,7 @@ export function saveMenu(isEdit, query) {
 export function deleteMenu(id) {
   var data = fetch({ url: '/shopmenu/' + id, method: 'delete' })
   return data.then((res) => {
-    Message({ message: '删除成功', type: 'success', duration: 3 * 1000 })
+    Message({ message: i18n.t('995dc510.0007d1'), type: 'success', duration: 3 * 1000 })
     return res.data.data
   })
 }
@@ -73,7 +74,7 @@ export function downMenu(version) {
 export function uploadMenu(data) {
   var result = fetch({ url: '/shopmenu/upload', method: 'POST', params: data })
   return result.then((res) => {
-    Message({ message: '导入成功', type: 'success', duration: 3 * 1000 })
+    Message({ message: i18n.t('995dc510.b6d16a'), type: 'success', duration: 3 * 1000 })
     return res
   })
 }

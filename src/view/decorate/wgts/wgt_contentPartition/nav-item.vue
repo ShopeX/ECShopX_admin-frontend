@@ -166,10 +166,10 @@
   <div class="content-part-nav-item">
     <CompDragList
       v-model="localValue"
-      btn-text="添加导航项"
+      :btn-text="i18n.t('19537612.e3c649')"
       type="text"
       :show-title="true"
-      title="导航项"
+      :title="i18n.t('19537612.ae5ff3')"
       @onAddItem="handleAddNavItem"
     >
       <template v-if="showSwitch" slot="title" slot-scope="scope">
@@ -182,37 +182,37 @@
       </template>
       <template slot="body" slot-scope="scope">
         <div class="scope-item">
-          <span class="scope-item-label">导航项形式</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.25c1d2') }}</span>
           <div class="scope-item-body">
             <el-radio-group
               v-model="localValue[scope.index].navitemtype"
               size="small"
-              placeholder="请选择导航项形式"
+              :placeholder="i18n.t('19537612.2645ff')"
             >
-              <el-radio label="text">文字</el-radio>
-              <el-radio label="image">图片 </el-radio>
+              <el-radio label="text">{{ i18n.t('19537612.ca746b') }}</el-radio>
+              <el-radio label="image">{{ i18n.t('19537612.20def7') }}</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div v-if="localValue[scope.index].navitemtype == 'text'" class="scope-item">
-          <span class="scope-item-label">导航名称</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.8585af') }}</span>
           <div class="scope-item-body">
             <el-input
               v-model="localValue[scope.index].navItemName"
               size="small"
-              placeholder="导航项名称"
+              :placeholder="i18n.t('19537612.9c018c')"
             />
           </div>
         </div>
         <div v-if="localValue[scope.index].navitemtype == 'image'" class="scope-item">
-          <span class="scope-item-label">导航项图片</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.c9807b') }}</span>
           <div class="scope-item-body">
             <div class="scope-item-item">
-              <span class="scope-item-item-label">默认图片</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.e3906a') }}</span>
               <SpImagePicker v-model="localValue[scope.index].imgUrl" size="small" text="" />
             </div>
             <div class="scope-item-item">
-              <span class="scope-item-item-label">选中图片</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.d8fba2') }}</span>
               <SpImagePicker
                 v-model="localValue[scope.index].navitemactiveimg"
                 size="small"
@@ -222,10 +222,10 @@
           </div>
         </div>
         <div class="scope-item">
-          <span class="scope-item-label">默认样式</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.240210') }}</span>
           <div class="scope-item-body">
             <div class="scope-item-item">
-              <span class="scope-item-item-label">文字颜色</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.7ec907') }}</span>
               <el-color-picker
                 v-model="localValue[scope.index].navitemcolor"
                 size="small"
@@ -233,16 +233,16 @@
               />
             </div>
             <div class="scope-item-item">
-              <span class="scope-item-item-label">背景颜色</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.4573a7') }}</span>
               <el-color-picker v-model="localValue[scope.index].navitembg" size="small" text="" />
             </div>
           </div>
         </div>
         <div class="scope-item">
-          <span class="scope-item-label">选中样式</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.0cc6dd') }}</span>
           <div class="scope-item-body">
             <div class="scope-item-item">
-              <span class="scope-item-item-label">文字颜色</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.7ec907') }}</span>
               <el-color-picker
                 v-model="localValue[scope.index].navitemactivecolor"
                 size="small"
@@ -250,7 +250,7 @@
               />
             </div>
             <div class="scope-item-item">
-              <span class="scope-item-item-label">背景颜色</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.4573a7') }}</span>
               <el-color-picker
                 v-model="localValue[scope.index].navitemactivebg"
                 size="small"
@@ -260,14 +260,14 @@
           </div>
         </div>
         <div class="scope-item">
-          <span class="scope-item-label">选中时导航栏</span>
+          <span class="scope-item-label">{{ i18n.t('19537612.d9961d') }}</span>
           <div class="scope-item-body">
             <div class="scope-item-item">
-              <span class="scope-item-item-label">背景色</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.2f97db') }}</span>
               <el-color-picker v-model="localValue[scope.index].navactivebg" size="small" text="" />
             </div>
             <div class="scope-item-item">
-              <span class="scope-item-item-label">背景图</span>
+              <span class="scope-item-item-label">{{ i18n.t('19537612.543aa6') }}</span>
               <SpImagePicker
                 v-model="localValue[scope.index].navactivebgimg"
                 size="small"
@@ -296,7 +296,7 @@
           </div>
         </draggable>
         <el-button type="primary" class="add-widget-btn" @click="handleAddWidget(scope.index)">
-          添加挂件
+          {{ i18n.t('19537612.407681') }}
         </el-button>
       </template>
     </CompDragList>
@@ -315,6 +315,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompPanel from './comp_panel'
@@ -332,7 +333,7 @@ export default {
     animate: String
   },
   data() {
-    return {
+    return {i18n,
       dragOptions: {
         animation: 300,
         forceFallback: false,

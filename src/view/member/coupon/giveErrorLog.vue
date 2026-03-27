@@ -6,11 +6,11 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="giveErrorLogList" style="width: 100%" height="580" border>
-      <el-table-column prop="username" label="用户姓名" />
-      <el-table-column prop="mobile" label="手机号码" />
-      <el-table-column prop="card_id" label="优惠券id" />
-      <el-table-column prop="title" label="优惠券名称" />
-      <el-table-column prop="note" label="失败原因" />
+      <el-table-column prop="username" :label="$t('78e109b1.d5b5b5')" />
+      <el-table-column prop="mobile" :label="$t('78e109b1.92448a')" />
+      <el-table-column prop="card_id" :label="$t('78e109b1.fc0c54')" />
+      <el-table-column prop="title" :label="$t('78e109b1.fbaebb')" />
+      <el-table-column prop="note" :label="$t('78e109b1.13d5f2')" />
     </el-table>
     <div class="mt-4 text-right">
       <el-pagination
@@ -58,7 +58,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取优惠券发放详情列表信息出错'
+            message: this.$t('78e109b1.8f2958')
           })
         })
     }

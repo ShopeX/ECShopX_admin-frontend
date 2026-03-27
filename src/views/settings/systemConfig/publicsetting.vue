@@ -58,33 +58,21 @@ export default {
         {
           fieldName: '__group_title_1',
           component: 'group',
-          label: '通用设置'
+          label: this.$t('f8743baa.91a229')
         },
         {
           fieldName: 'distributor_param_status',
-          label: '分享带门店参数',
+          label: this.$t('f8743baa.d67433'),
           component: 'switch',
           isShow: () => VERSION_STANDARD(),
           tip: () => {
             return this.$createElement('div', [
-              this.$createElement('p', '已开启：'),
-              this.$createElement(
-                'p',
-                '1. 从小程序分享出去的 太阳码和小程序链接 带店铺参，其他消费者通过此链接或者太阳码进入商城会切换成参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。'
-              ),
-              this.$createElement(
-                'p',
-                '2. 顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。'
-              ),
-              this.$createElement('p', '已关闭：'),
-              this.$createElement(
-                'p',
-                '1. 从小程序分享出去的 太阳码和小程序链接 不带店铺参，其他消费者通过此链接或者太阳码进入商城不会切换成参数对应的店铺，本地缓存也不会切换成参数对应的新店铺，即按照商城原本的进店逻辑进入店铺。'
-              ),
-              this.$createElement(
-                'p',
-                '2. 顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。'
-              )
+              this.$createElement('p', this.$t('f8743baa.5b9fd5')),
+              this.$createElement('p', this.$t('f8743baa.8e3fd4')),
+              this.$createElement('p', this.$t('f8743baa.fe4268')),
+              this.$createElement('p', this.$t('f8743baa.933db8')),
+              this.$createElement('p', this.$t('f8743baa.5e6881')),
+              this.$createElement('p', this.$t('f8743baa.fe4268'))
             ])
           },
           componentProps: {
@@ -98,7 +86,7 @@ export default {
         },
         {
           fieldName: 'rate_status',
-          label: '评论设置',
+          label: this.$t('f8743baa.ff3d97'),
           component: 'switch',
           componentProps: {
             onChange: async (e) => {
@@ -111,7 +99,7 @@ export default {
         },
         {
           fieldName: 'pickupcode_status',
-          label: '提货码设置',
+          label: this.$t('f8743baa.2c2951'),
           component: 'switch',
           isShow: () => !this.VERSION_SHUYUN() && !this.VERSION_B2C() && !this.isMicorMall,
           componentProps: {
@@ -125,7 +113,7 @@ export default {
         },
         {
           fieldName: 'whitelist_status',
-          label: '会员白名单',
+          label: this.$t('f8743baa.05a2d8'),
           component: 'switch',
           componentProps: {
             onChange: async (e) => {
@@ -138,9 +126,9 @@ export default {
         },
         {
           fieldName: 'check_gift_store',
-          label: '赠品设置',
+          label: this.$t('f8743baa.47c0fd'),
           component: 'switch',
-          tip: '赠品缺货是否能继续下单',
+          tip: this.$t('f8743baa.c0d404'),
           isShow: () => !VERSION_IN_PURCHASE(),
           componentProps: {
             onChange: async (e) => {
@@ -153,9 +141,9 @@ export default {
         },
         {
           fieldName: 'ziti_send_oms',
-          label: '推单设置',
+          label: this.$t('f8743baa.f90709'),
           component: 'switch',
-          tip: '自提订单推oms',
+          tip: this.$t('f8743baa.aeb804'),
           isShow: () => !this.VERSION_SHUYUN() && !VERSION_IN_PURCHASE(),
           componentProps: {
             onChange: async (e) => {
@@ -239,9 +227,9 @@ export default {
         // },
         {
           fieldName: 'repeat_cancel',
-          label: '取消订单设置',
+          label: this.$t('f8743baa.f45023'),
           component: 'switch',
-          tip: '拒绝后是否能再次发起申请',
+          tip: this.$t('f8743baa.89e3a5'),
           componentProps: {
             onChange: async (e) => {
               const { repeat_cancel } = this.form
@@ -253,9 +241,9 @@ export default {
         },
         {
           fieldName: 'item_store_status',
-          label: '商品库存',
+          label: this.$t('f8743baa.24bc52'),
           component: 'switch',
-          tip: '商品详情页是否显示库存',
+          tip: this.$t('f8743baa.f590ae'),
           componentProps: {
             onChange: async (e) => {
               const { item_store_status } = this.form
@@ -267,7 +255,7 @@ export default {
         },
         {
           fieldName: 'item_sales_status',
-          label: '商品销量显示',
+          label: this.$t('f8743baa.a2a175'),
           component: 'switch',
           componentProps: {
             onChange: async (e) => {
@@ -280,9 +268,9 @@ export default {
         },
         {
           fieldName: 'invoice_status',
-          label: '发票设置',
+          label: this.$t('f8743baa.764f07'),
           component: 'switch',
-          tip: '结算页是否显示发票',
+          tip: this.$t('f8743baa.79ebf3'),
           isShow: () => !VERSION_IN_PURCHASE(),
           componentProps: {
             onChange: async (e) => {
@@ -295,9 +283,9 @@ export default {
         },
         {
           fieldName: 'dianwu_show_status',
-          label: '店务设置',
+          label: this.$t('f8743baa.7f450a'),
           component: 'switch',
-          tip: '移动端会员中心是否展示店务端入口',
+          tip: this.$t('f8743baa.016f55'),
           componentProps: {
             onChange: async (e) => {
               const { dianwu_show_status } = this.form
@@ -309,16 +297,16 @@ export default {
         },
         {
           fieldName: 'is_pharma_industry',
-          label: '医药行业',
+          label: this.$t('f8743baa.a8ea51'),
           component: 'switch',
-          tip: '用于开启医药行业商品与处方药业务',
+          tip: this.$t('f8743baa.073e31'),
           componentProps: {
             onChange: this.primarySetting
           }
         },
         {
           fieldName: 'use_third_party_system',
-          label: '第三方处方系统',
+          label: this.$t('f8743baa.864ed6'),
           component: 'switch',
           isShow: () => this.form.is_pharma_industry,
           componentProps: {
@@ -333,7 +321,7 @@ export default {
           componentProps: {
             options: [
               {
-                label: '580处方业务集成',
+                label: this.$t('f8743baa.40b3e4'),
                 value: 'kuaizhen580'
               }
             ],
@@ -361,7 +349,7 @@ export default {
         },
         {
           fieldName: 'storeId',
-          label: '门店ID',
+          label: this.$t('f8743baa.0db798'),
           formItemClass: 'w-1/2',
           component: 'input',
           isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
@@ -382,7 +370,7 @@ export default {
                   }
                 }
               },
-              '保存'
+              this.$t('f8743baa.be5fbb')
             )
           },
           isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
@@ -390,23 +378,23 @@ export default {
         {
           fieldName: '__group_title_2',
           component: 'group',
-          label: '商品价格展示'
+          label: this.$t('f8743baa.ce0ab2')
         },
         {
           fieldName: 'item_page',
-          label: '商品列表/商详页',
+          label: this.$t('f8743baa.75f135'),
           component: 'checkbox',
           componentProps: {
             options: VERSION_IN_PURCHASE()
               ? [
-                  { label: '销售价', value: 0, disabled: true },
-                  { label: '原价', value: 1 }
+                  { label: this.$t('f8743baa.e29575'), value: 0, disabled: true },
+                  { label: this.$t('f8743baa.1afdfe'), value: 1 }
                 ]
               : [
-                  { label: '销售价', value: 0, disabled: true },
-                  { label: '原价', value: 1 },
-                  { label: '会员等级价', value: 2 },
-                  { label: '付费会员价', value: 3 }
+                  { label: this.$t('f8743baa.e29575'), value: 0, disabled: true },
+                  { label: this.$t('f8743baa.1afdfe'), value: 1 },
+                  { label: this.$t('f8743baa.c8c6a3'), value: 2 },
+                  { label: this.$t('f8743baa.627908'), value: 3 }
                 ],
             onChange: async (e) => {
               this.saveItemPriceSetting()
@@ -415,14 +403,14 @@ export default {
         },
         {
           fieldName: 'cart_page',
-          label: '购物车',
+          label: this.$t('f8743baa.c017be'),
           component: 'checkbox',
           componentProps: {
             options: VERSION_IN_PURCHASE()
-              ? [{ label: '原价', value: 1 }]
+              ? [{ label: this.$t('f8743baa.1afdfe'), value: 1 }]
               : [
-                  { label: '销售价/会员等级价/付费会员价', value: 0, disabled: true },
-                  { label: '原价', value: 1 }
+                  { label: this.$t('f8743baa.e79235'), value: 0, disabled: true },
+                  { label: this.$t('f8743baa.1afdfe'), value: 1 }
                 ],
             onChange: async (e) => {
               this.saveItemPriceSetting()
@@ -431,14 +419,14 @@ export default {
         },
         {
           fieldName: 'order_page',
-          label: '订单详情',
+          label: this.$t('f8743baa.8054f7'),
           component: 'checkbox',
           componentProps: {
             options: VERSION_IN_PURCHASE()
-              ? [{ label: '原价', value: 1 }]
+              ? [{ label: this.$t('f8743baa.1afdfe'), value: 1 }]
               : [
-                  { label: '销售价/会员等级价/付费会员价', value: 0, disabled: true },
-                  { label: '原价', value: 1 }
+                  { label: this.$t('f8743baa.e79235'), value: 0, disabled: true },
+                  { label: this.$t('f8743baa.1afdfe'), value: 1 }
                 ],
             onChange: async (e) => {
               this.saveItemPriceSetting()
@@ -525,7 +513,7 @@ export default {
           kuaizhen580_config: { clientId, clientSecret, storeId }
         })
         if (isBtn == 'button') {
-          this.$message.success('保存成功')
+          this.$message.success(this.$t('f8743baa.3b1083'))
         }
       } catch (error) {
         this.fetch()

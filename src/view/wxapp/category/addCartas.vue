@@ -286,9 +286,9 @@
   <div class="addCartas-view">
     <!-- 搜索框 -->
     <div class="search-box">
-      <img src="@/assets/imgs/search-for.png" alt="" />
+      <img src="@/assets/imgs/search-for.png" alt="">
       <div class="search-input">|</div>
-      <span class="search-input">搜索</span>
+      <span class="search-input">{{ $t('c1b823e8.e5f71f') }}</span>
     </div>
     <div>
       <!-- 一级分类 -->
@@ -305,7 +305,7 @@
               'one-level-item-imgs-span': index != oneIndex,
               'one-level-item-img-span': index == oneIndex
             }"
-            >{{ item.category_name }}</span
+            >{{ item.category_name === '全部' ? $t('c1b823e8.a8b0c2') : item.category_name }}</span
           >
           <img
             v-if="item.image_url"
@@ -315,17 +315,17 @@
             }"
             :src="item.image_url"
             alt=""
-          />
+          >
           <span
             :class="{
               'one-level-item-titles': index != oneIndex,
               'one-level-item-title': index == oneIndex
             }"
-            >{{ item.category_name }}</span
+            >{{ item.category_name === '全部' ? $t('c1b823e8.a8b0c2') : item.category_name }}</span
           >
         </div>
         <div class="all">
-          <span>全</span><span>部</span> <img src="@/assets/imgs/classification.png" alt="" />
+          {{ $t('c1b823e8.a8b0c2') }} <img src="@/assets/imgs/classification.png" alt="">
         </div>
       </div>
 
@@ -339,7 +339,11 @@
             @click="twoCli(index)"
           >
             <div v-if="twoIndex == index" class="lone" />
-            <div class="two-level-item-title">{{ item?.category_name || '' }}</div>
+            <div class="two-level-item-title">
+              {{
+                item?.category_name === '全部' ? $t('c1b823e8.a8b0c2') : item?.category_name || ''
+              }}
+            </div>
           </div>
         </div>
         <!-- 三级分类 -->
@@ -357,13 +361,15 @@
                 'three-level-list-titles': index == threeIndex
               }"
               @click="threeCli(index)"
-              >{{ item?.category_name || '' }}</span
+              >{{
+                item?.category_name === '全部' ? $t('c1b823e8.a8b0c2') : item?.category_name || ''
+              }}</span
             >
           </div>
           <!-- 三级分类商品 -->
           <div class="three-level-item">
             <div v-for="(item, index) in goodsIndex" :key="index" class="three-list">
-              <img class="three-list-img" :src="item.pics[0]" alt="" />
+              <img class="three-list-img" :src="item.pics[0]" alt="">
               <div class="three-list-title">
                 <span class="name">{{ item.itemName }}</span>
                 <div class="price">
@@ -373,11 +379,13 @@
                     >
                     <span class="price3">{{ item.cost_price / 100 }}</span>
                   </div>
-                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="" />
+                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="">
                 </div>
               </div>
             </div>
-            <div v-if="goodsIndex.length == 0" class="three-level-item-title">暂无数据哟～</div>
+            <div v-if="goodsIndex.length == 0" class="three-level-item-title">
+              {{ $t('c1b823e8.aebe3d') }}
+            </div>
           </div>
         </div>
       </div>

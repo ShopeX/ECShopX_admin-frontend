@@ -2,7 +2,6 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '营销'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout' //
 
@@ -12,7 +11,7 @@ export default {
   children: [
     {
       path: 'employee/purchase',
-      name: `内购`,
+      name: '90713176.d0465c',
       component: SubLayout,
       children: [
         {
@@ -39,7 +38,7 @@ export default {
     },
     {
       path: 'coupon/membermarketing',
-      name: `优惠卷管理`,
+      name: '90713176.d43522',
       component: () => import('@/view/member/cardticket/coupon'),
       children: [
         {
@@ -58,7 +57,7 @@ export default {
     },
     {
       path: 'interactive/lottery',
-      name: '抽奖活动',
+      name: '90713176.283be6',
       component: () => import('@/view/marketing/lottery/list.vue'),
       children: [
         {
@@ -69,7 +68,7 @@ export default {
     },
     {
       path: 'coupon/couponspackage',
-      name: '劵包管理',
+      name: '90713176.e12325',
       component: () => import('@/view/member/cardticket/couponspackage'),
       children: [
         {
@@ -84,7 +83,7 @@ export default {
     },
     {
       path: 'coupon/coupongive',
-      name: `优惠券发放日志`,
+      name: '90713176.5c0da8',
       component: () => import('@/view/member/coupon/giveLog'),
       children: [
         {
@@ -95,7 +94,7 @@ export default {
     },
     {
       path: 'coupon/couponsend',
-      name: `群发优惠券`,
+      name: '90713176.dfa362',
       component: () => import('@/views/members/member_list'),
       children: [
         {
@@ -108,12 +107,12 @@ export default {
     /** 会员营销 */
     {
       path: 'membermarket/marketingindex',
-      name: `新客营销`,
+      name: '90713176.668339',
       component: () => import('@/view/member/promotions/index')
     },
     {
       path: 'membermarket/specificcrowddiscount',
-      name: `定向促销`,
+      name: '90713176.05b6c8',
       component: () => import('@/view/member/promotions/specificcrowd/specificcrowddiscount'),
       children: [
         {
@@ -124,7 +123,7 @@ export default {
     },
     {
       path: 'membermarket/memberpreference',
-      name: `会员优选购`,
+      name: '90713176.e10284',
       component: () => import('@/view/member/promotions/memberpreference/list'),
       children: [
         {
@@ -135,7 +134,7 @@ export default {
     },
     {
       path: 'membermarket/marketingactivity',
-      name: `自动化营销`,
+      name: '90713176.375821',
       component: () => import('@/view/member/activity/index'),
       children: [
         {
@@ -150,7 +149,7 @@ export default {
     },
     {
       path: 'membermarket/recommendlike',
-      name: `热门推荐`,
+      name: '90713176.9223a7',
       component: () => import('@/view/member/promotions/recommendlike')
     },
 
@@ -158,7 +157,7 @@ export default {
 
     {
       path: 'member/pointupvaluation',
-      name: `积分升值`,
+      name: '90713176.c66d5b',
       component: () => import('@/view/member/promotions/pointupvaluation/list'),
       children: [
         {
@@ -169,7 +168,7 @@ export default {
     },
     {
       path: 'member/extrapoint',
-      name: `额外积分`,
+      name: '90713176.2fac5c',
       component: () => import('@/view/member/promotions/extrapoint/list'),
       children: [
         {
@@ -184,7 +183,7 @@ export default {
     },
     {
       path: 'marketing/apply/registrationactivity',
-      name: `全部活动`,
+      name: '90713176.5e06be',
       component: () => import('@/view/member/selfservice/registrationactivity'),
       children: [
         {
@@ -196,7 +195,7 @@ export default {
 
     {
       path: 'marketing/apply/Registrationrecord',
-      name: `报名记录`,
+      name: '90713176.42a5b5',
       component: () => import('@/view/member/selfservice/registrationrecord'),
       children: [
         {
@@ -212,31 +211,31 @@ export default {
 
     {
       path: 'marketing/apply/formattrs',
-      name: `表单元素`,
+      name: '90713176.f26faa',
       component: () => import('@/view/member/selfservice/formsettinglist'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: `表单元素配置-编辑`,
+          name: '90713176.c7d5c2',
           component: () => import('@/view/member/selfservice/formsettingadd')
         }
       ]
     },
     {
       path: 'marketing/apply/formtemplate',
-      name: `表单模板`,
+      name: '90713176.59a9c2',
       component: () => import('@/view/member/selfservice/formtemplatelist'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: `表单模板配置-编辑`,
+          name: '90713176.2b9acd',
           component: () => import('@/view/member/selfservice/formtemplateadd')
         }
       ]
     },
     {
       path: 'marketing/apply/activityverifylist',
-      name: `活动核销记录`,
+      name: '90713176.889d11',
       component: () => import('@/view/member/selfservice/activityverifylist')
     },
 
@@ -247,7 +246,7 @@ export default {
     // },
     {
       path: 'wheel',
-      name: `大转盘配置`,
+      name: '90713176.d58dfa',
       component: () => import('@/view/marketing/lottery/list.vue'),
       children: [
         {
@@ -259,13 +258,13 @@ export default {
 
     {
       path: 'liveroomlist',
-      name: `直播`,
+      name: '90713176.7bbe8e',
       component: () => import('@/view/mall/liveroom/list'),
       children: [
         {
           path: 'editor/:itemId?',
           meta: {
-            title: `${name}-活动报名-活动报名-直播-编辑`
+            title: '90713176.4c240e'
           },
           component: () =>
             import(
@@ -276,7 +275,7 @@ export default {
     },
     {
       path: 'promotion/Marketingspluspricebuy',
-      name: `加价购管理`,
+      name: '90713176.1798d0',
       component: () => import('@/view/member/promotions/pluspricebuy/list'),
       children: [
         {
@@ -287,7 +286,7 @@ export default {
     },
     {
       path: 'promotion/marketingpackage',
-      name: `组合商品管理`,
+      name: '90713176.22b477',
       component: () => import('@/view/member/promotions/package/list'),
       children: [
         {
@@ -298,7 +297,7 @@ export default {
     },
     {
       path: 'promotion/limitedtimesale',
-      name: `限时特惠`,
+      name: '90713176.a0aaca',
       component: () => import('@/view/member/promotions/limitedtimesale/list'),
       children: [
         {
@@ -310,7 +309,7 @@ export default {
 
     {
       path: 'marketingseckill',
-      name: `限时秒杀`,
+      name: '90713176.92325c',
       component: () => import('@/view/member/promotions/seckill/list'),
       children: [
         {
@@ -321,7 +320,7 @@ export default {
     },
     {
       path: 'promotion/marketingsfulldiscount',
-      name: `满折管理`,
+      name: '90713176.c01301',
       component: () => import('@/view/member/promotions/fulldiscount/list'),
       children: [
         {
@@ -332,7 +331,7 @@ export default {
     },
     {
       path: 'promotion/Marketingsfullminus',
-      name: `满减管理`,
+      name: '90713176.561a3c',
       component: () => import('@/view/member/promotions/fullminus/list'),
       children: [
         {
@@ -343,7 +342,7 @@ export default {
     },
     {
       path: 'promotion/Marketingsfullgift',
-      name: `满赠管理`,
+      name: '90713176.1a4f21',
       component: () => import('@/view/member/promotions/fullgift/list'),
       children: [
         {
@@ -355,7 +354,7 @@ export default {
 
     {
       path: 'fissionmarketing/groupsindex',
-      name: `拼团活动`,
+      name: '90713176.550703',
       component: () => import('@/view/member/groups/index'),
       children: [
         {
@@ -365,7 +364,7 @@ export default {
         {
           path: 'detail/:team_id?',
           meta: {
-            title: `${name}-活动报名-活动报名-满赠管理-详情`
+            title: '90713176.446d09'
           },
           component: () => import('@/view/member/groups/teamDetail')
         },
@@ -377,7 +376,7 @@ export default {
     },
     {
       path: 'fissionmarketing/marketingbargain',
-      name: `微信助力`,
+      name: '90713176.d84526',
       component: () => import('@/view/member/bargain/index'),
       children: [
         {
@@ -388,17 +387,17 @@ export default {
     },
     {
       path: 'popularize/popularizesetting',
-      name: `基础设置`,
+      name: '90713176.0aeca0',
       component: () => import('@/view/popularize/setting')
     },
     {
       path: 'popularize/promotersetting',
-      name: `推广员等级`,
+      name: '90713176.917de5',
       component: () => import('@/view/popularize/promoterSetting')
     },
     {
       path: 'popularize/popularizelist',
-      name: `推广员列表`,
+      name: '90713176.f08fa2',
       component: () => import('@/view/popularize/list'),
       children: [
         {
@@ -413,7 +412,7 @@ export default {
     },
     {
       path: 'popularize/popularizedata',
-      name: `推广员业绩`,
+      name: '90713176.251493',
       component: () => import('@/view/popularize/data'),
       children: [
         {
@@ -424,27 +423,27 @@ export default {
     },
     {
       path: 'popularize/popularizewithdraw',
-      name: `提现申请`,
+      name: '90713176.33011e',
       component: () => import('@/view/popularize/withdraw')
     },
     {
       path: 'popularize/popularizegoods',
-      name: `分销商品`,
+      name: '90713176.ad8d69',
       component: () => import('@/view/popularize/goods')
     },
     {
       path: 'popularize/taskbrokerage',
-      name: `任务佣金明细`,
+      name: '90713176.4b43b0',
       component: () => import('@/view/popularize/taskBrokerage')
     },
     {
       path: 'popularize/taskbrokeragecount',
-      name: `任务佣金统计`,
+      name: '90713176.98aee0',
       component: () => import('@/view/popularize/taskBrokerageCount')
     },
     {
       path: 'popularize/popularizegoodsAudit',
-      name: `分销池审核`,
+      name: '90713176.417559',
       component: () => import('@/view/popularize/goodsAudit')
     }
     // {

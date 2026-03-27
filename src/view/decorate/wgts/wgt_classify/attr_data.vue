@@ -2,8 +2,8 @@
   <div class="wgt-classify-comp-data">
     <div class="flex flex-col">
       <el-radio-group v-model="localValue.type" size="small" @change="handleChangeType">
-        <el-radio-button label="select">按选择读取子集</el-radio-button>
-        <el-radio-button label="category">指定分类</el-radio-button>
+        <el-radio-button label="select">{{ i18n.t('f13902e5.b0c4ae') }}</el-radio-button>
+        <el-radio-button label="category">{{ i18n.t('f13902e5.9f7160') }}</el-radio-button>
       </el-radio-group>
       <el-cascader
         v-if="localValue.type === 'select'"
@@ -18,7 +18,7 @@
         <CompDragList
           v-model="localValue.data"
           type="text"
-          btn-text="添加导航项"
+          :btn-text="i18n.t('f13902e5.e3c649')"
           :is-edit="true"
           :is-delete="true"
           :is-move="true"
@@ -35,20 +35,20 @@
           <template slot="body" slot-scope="scope">
             <div class="scope-item-wrapper">
               <div class="scope-item">
-                <span class="scope-item-label">自定义名</span>
+                <span class="scope-item-label">{{ i18n.t('f13902e5.2a8f27') }}</span>
                 <div class="scope-item-body">
                   <el-input
                     v-model="localValue.data[scope.index].current_category_name"
                     size="mini"
-                    placeholder="分类名称"
+                    :placeholder="i18n.t('f13902e5.04d7d8')"
                   />
                 </div>
               </div>
               <div v-if="!VERSION_STANDARD()" class="scope-item">
-                <span class="scope-item-label">圈选店铺</span>
+                <span class="scope-item-label">{{ i18n.t('f13902e5.ae77e5') }}</span>
                 <CompButton
-                  placeholder="设置店铺"
-                  format="{0}个店铺"
+                  :placeholder="i18n.t('f13902e5.c7a1fc')"
+                  :format="i18n.t('f13902e5.ca9969')"
                   :value="localValue.data[scope.index].store_ids.length"
                   :view-btn="false"
                   @click="onSelectShop(scope.index)"
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import api from '@/api'
 import { VERSION_STANDARD } from '@/utils'
 import CompDragList from '../../comps/comp_dragList'
@@ -83,7 +84,7 @@ export default {
     }
   },
   data() {
-    return {
+    return {i18n,
       list: [],
       props: {
         value: 'category_id',

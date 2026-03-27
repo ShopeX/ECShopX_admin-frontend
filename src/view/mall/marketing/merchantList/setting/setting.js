@@ -17,25 +17,25 @@ export default (vm) => {
   }
   return createSetting({
     search: [
-      { key: 'merchant_name', name: '商户名称' },
-      { key: 'legal_name', name: '联系人' },
-      { key: 'legal_mobile', name: '联系电话' },
+      { key: 'merchant_name', name: vm.$t('f06f8d75.e6f169') },
+      { key: 'legal_name', name: vm.$t('f06f8d75.52409d') },
+      { key: 'legal_mobile', name: vm.$t('f06f8d75.09a1f6') },
       {
         key: 'time_start',
-        name: '入驻时间',
+        name: vm.$t('f06f8d75.773775'),
         type: 'date-range',
         defaultTime: ['00:00:00', '23:59:59'],
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
+        startPlaceholder: vm.$t('f06f8d75.b44c0f'),
+        endPlaceholder: vm.$t('f06f8d75.1d468b')
       }
     ],
     columns: [
-      { name: '商户名称', key: 'merchant_name' },
-      { name: '联系人', key: 'legal_name' },
-      { name: '联系电话', key: 'legal_mobile' },
-      { name: '入驻时间', key: 'created', formatter: formatDate, width: '160px' },
+      { name: vm.$t('f06f8d75.e6f169'), key: 'merchant_name' },
+      { name: vm.$t('f06f8d75.52409d'), key: 'legal_name' },
+      { name: vm.$t('f06f8d75.09a1f6'), key: 'legal_mobile' },
+      { name: vm.$t('f06f8d75.773775'), key: 'created', formatter: formatDate, width: '160px' },
       {
-        name: '商品审核（商户商家商品是否需通过平台审核）',
+        name: vm.$t('f06f8d75.fc90f2'),
         key: 'audit_goods',
         width: '100px',
         render: (h, { row }) =>
@@ -51,7 +51,11 @@ export default (vm) => {
               }
             },
             [
-              h('span', { class: 'aaa' }, row.audit_goods ? ' 是 ' : ' 否 '),
+              h(
+                'span',
+                { class: 'aaa' },
+                row.audit_goods ? vm.$t('f06f8d75.0a60ac') : vm.$t('f06f8d75.c9744f')
+              ),
               h('i', { class: 'el-icon-s-tools' }, '')
             ]
           ),
@@ -59,11 +63,11 @@ export default (vm) => {
         renderHeader() {
           return (
             <div>
-              <span>商品审核 </span>
+              <span>{vm.$t('f06f8d75.a453a5')} </span>
               <el-tooltip
                 class='item'
                 effect='light'
-                content='商户上架商品是否需通过平台审核'
+                content={vm.$t('f06f8d75.3792c2')}
                 placement='top-start'
               >
                 {/* <span slot='content'>
@@ -78,7 +82,7 @@ export default (vm) => {
     ],
     actions: [
       {
-        name: '详情',
+        name: vm.$t('f06f8d75.f26225'),
         key: 'detail',
         type: 'button',
         buttonType: 'text',
@@ -93,7 +97,7 @@ export default (vm) => {
         }
       },
       {
-        name: '编辑',
+        name: vm.$t('f06f8d75.95b351'),
         key: 'editor',
         type: 'button',
         buttonType: 'text',
@@ -111,7 +115,7 @@ export default (vm) => {
         }
       },
       {
-        name: '禁用',
+        name: vm.$t('f06f8d75.710ad0'),
         key: 'off',
         type: 'button',
         buttonType: 'text',
@@ -126,7 +130,7 @@ export default (vm) => {
         }
       },
       {
-        name: '开启',
+        name: vm.$t('f06f8d75.cc42dd'),
         key: 'off',
         type: 'button',
         buttonType: 'text',

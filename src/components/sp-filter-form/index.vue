@@ -62,20 +62,20 @@
         <el-button type="primary" @click="onSearch">
           <div class="flex items-center">
             <SpIcon name="search" :size="14" />
-            <span class="ml-1">查询</span>
+            <span class="ml-1">{{ $t('7a07d52e.bee912') }}</span>
           </div>
         </el-button>
         <el-button type="primary" plain @click="onReset">
           <div class="flex items-center">
             <SpIcon name="refresh" :size="14" />
-            <span class="ml-1">重置</span>
+            <span class="ml-1">{{ $t('7a07d52e.4b9c32') }}</span>
           </div>
         </el-button>
       </div>
       <div v-if="showExtend" class="extend-wrap">
         <el-button type="text" @click="toggleExtend">
           <div class="flex items-center">
-            <span>{{ `${extend ? '收起' : '展开'}` }}</span>
+            <span>{{ extend ? $t('7a07d52e.def9e9') : $t('7a07d52e.e2edde') }}</span>
             <SpIcon
               :class="{ 'extend-icon': true, 'extend-active': extend }"
               name="chevrons-down"

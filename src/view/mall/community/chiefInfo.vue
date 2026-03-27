@@ -17,6 +17,7 @@
 import { FORM_COMP } from '@/consts'
 import { isArray } from '@/utils'
 import moment from 'moment'
+import { i18n } from '@/i18n'
 
 export default {
   data() {
@@ -27,7 +28,7 @@ export default {
       source: '',
       applyTime: '',
       approveTime: '',
-      btnActions: [{ name: '审批', key: 'resolve' }],
+      btnActions: [{ name: i18n.t('278c159d.0273ba'), key: 'resolve' }],
       resloveDialog: false,
       resloveForm: {
         approve_status: 1,
@@ -35,12 +36,12 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批:',
+          label: i18n.t('278c159d.717b4d'),
           key: 'approve_status',
           type: 'radio',
           options: [
-            { label: 1, name: '同意' },
-            { label: 2, name: '不同意' }
+            { label: 1, name: i18n.t('278c159d.e61f2c') },
+            { label: 2, name: i18n.t('278c159d.1bf19c') }
           ],
           onChange: (e) => {
             if (e == 2) {
@@ -51,14 +52,14 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: i18n.t('278c159d.de77c5'),
           key: 'refuse_reason',
           type: 'input',
-          placeholder: '请输入拒绝原因',
+          placeholder: i18n.t('278c159d.fc955a'),
           isShow: false,
           validator: (rule, value, callback) => {
             if (this.resloveForm.approve_status == 2 && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(i18n.t('278c159d.281bad')))
             } else {
               callback()
             }
@@ -84,9 +85,9 @@ export default {
     },
     getSource(status) {
       if (status == '0') {
-        return '手动导入'
+        return this.$t('278c159d.b4c3b2')
       } else if (status == '1') {
-        return '主动申请'
+        return this.$t('278c159d.562b1a')
       }
     },
     renderComp({ type, value }) {
@@ -113,33 +114,33 @@ export default {
     return (
       <SpPage>
         <el-card class='el-card--normal'>
-          <div slot='header'>团长基本信息</div>
+          <div slot='header'>{this.$t('278c159d.30817b')}</div>
           <el-row class='card-panel'>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>姓名:</span>
+              <span class='card-panel__label'>{this.$t('278c159d.75d152')}</span>
               <span class='card-panel__value'>{name}</span>
             </el-col>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>手机:</span>
+              <span class='card-panel__label'>{this.$t('278c159d.17afda')}</span>
               <span class='card-panel__value'>{mobile}</span>
             </el-col>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>来源:</span>
+              <span class='card-panel__label'>{this.$t('278c159d.dc06e2')}</span>
               <span class='card-panel__value'>{source}</span>
             </el-col>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>申请时间:</span>
+              <span class='card-panel__label'>{this.$t('278c159d.796c1b')}</span>
               <span class='card-panel__value'>{applyTime}</span>
             </el-col>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>审批时间:</span>
+              <span class='card-panel__label'>{this.$t('278c159d.c9095f')}</span>
               <span class='card-panel__value'>{approveTime}</span>
             </el-col>
           </el-row>
         </el-card>
 
         <el-card class='el-card--normal'>
-          <div slot='header'>团长其他信息</div>
+          <div slot='header'>{this.$t('278c159d.ae094f')}</div>
           {extraData &&
             Object.keys(extraData).map((key) => (
               <el-row class='card-panel' key={key}>

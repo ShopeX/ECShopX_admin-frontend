@@ -5,13 +5,13 @@
 
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">基础设置</div>
+    <div class="section-header with-border">{{ $t('0e057aa1.0aeca0') }}</div>
     <div class="section-body">
       <el-form label-width="80px" label-position="top">
-        <el-form-item label="分类样式">
+        <el-form-item :label="$t('0e057aa1.6a59f6')">
           <el-radio-group v-model="config.category">
-            <el-radio :label="'collapse'"> 收起 </el-radio>
-            <el-radio :label="'expand'"> 展开 </el-radio>
+            <el-radio :label="'collapse'">{{ $t('0e057aa1.def9e9') }}</el-radio>
+            <el-radio :label="'expand'">{{ $t('0e057aa1.e2edde') }}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>

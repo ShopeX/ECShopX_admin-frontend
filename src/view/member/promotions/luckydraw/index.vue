@@ -7,28 +7,32 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-button type="primary" icon="plus" @click="addLuckyDraw"> 新增抽奖活动 </el-button>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="primary" icon="plus" @click="addLuckyDrawShow">
-          设置抽奖活动图片
+        <el-button type="primary" icon="plus" @click="addLuckyDraw">
+          {{ $t('93d63a5d.cc7cc5') }}
         </el-button>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" icon="plus" @click="addLuckyDrawRule"> 设置抽奖规则 </el-button>
+        <el-button type="primary" icon="plus" @click="addLuckyDrawShow">
+          {{ $t('93d63a5d.489b57') }}
+        </el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-button type="primary" icon="plus" @click="addLuckyDrawRule">
+          {{ $t('93d63a5d.da5ae6') }}
+        </el-button>
       </el-col>
     </el-row>
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="全部" name="first">
+      <el-tab-pane :label="$t('93d63a5d.a8b0c2')" name="first">
         <groupsList :view="0" />
       </el-tab-pane>
-      <el-tab-pane label="未开始" name="second">
+      <el-tab-pane :label="$t('93d63a5d.dd4e55')" name="second">
         <groupsList :view="1" />
       </el-tab-pane>
-      <el-tab-pane label="进行中" name="third">
+      <el-tab-pane :label="$t('93d63a5d.fb852f')" name="third">
         <groupsList :view="2" />
       </el-tab-pane>
-      <el-tab-pane label="已结束" name="fourth">
+      <el-tab-pane :label="$t('93d63a5d.047fab')" name="fourth">
         <groupsList :view="3" />
       </el-tab-pane>
     </el-tabs>

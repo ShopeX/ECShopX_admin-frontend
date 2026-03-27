@@ -5,26 +5,26 @@
 
 <template>
   <el-tabs v-model="activeName" class="section-white content-padded">
-    <el-tab-pane label="门店小程序首页配置" name="first">
+    <el-tab-pane :label="$t('823bb520.48caac')" name="first">
       <el-form ref="form" :model="form" label-width="180px">
-        <el-form-item label="首页轮播图：">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+        <el-form-item :label="$t('823bb520.ac147c')">
+          <div class="frm-tips">{{ $t('823bb520.d5a0d5') }}</div>
           <el-button
             type="primary"
             class="el-icon-plus banner-button-uploader"
             @click="handleAddBanner"
           >
-            添加轮播图
+            {{ $t('823bb520.22134f') }}
           </el-button>
           <el-table :data="form.bannerPicList" border style="width: 100%">
-            <el-table-column label="轮播图片">
+            <el-table-column :label="$t('823bb520.178bae')">
               <template slot-scope="scope">
                 <img
                   v-if="scope.row.url"
                   :src="wximageurl + scope.row.url"
                   class="banner-uploader"
                   @click="handleImgChange(scope.$index, 'banner')"
-                />
+                >
                 <i
                   v-else
                   class="el-icon-plus banner-uploader"
@@ -32,13 +32,13 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="点击轮播图片跳转的商品">
+            <el-table-column :label="$t('823bb520.d3eabc')">
               <template slot-scope="scope">
                 <span v-if="scope.row.item_id"
                   >{{ scope.row.item_name }}
-                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'banner')"
-                    >修改</el-button
-                  >
+                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'banner')">{{
+                    $t('823bb520.8347a9')
+                  }}</el-button>
                 </span>
                 <i
                   v-else
@@ -47,23 +47,27 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column :label="$t('823bb520.2b6bc0')">
               <template slot-scope="scope">
-                <el-button icon="delete" @click="handleDelBanner(scope.$index)"> 删除 </el-button>
+                <el-button icon="delete" @click="handleDelBanner(scope.$index)">
+{{
+                  $t('823bb520.2f4aad')
+                }}
+</el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-form-item>
-        <el-form-item label="热门商品：">
+        <el-form-item :label="$t('823bb520.612b0b')">
           <el-table :data="form.hotGoods" border style="width: 100%">
-            <el-table-column label="热门商品广告图">
+            <el-table-column :label="$t('823bb520.b478dd')">
               <template slot-scope="scope">
                 <img
                   v-if="scope.row.url"
                   :src="wximageurl + scope.row.url"
                   class="banner-uploader"
                   @click="handleImgChange(scope.$index, 'hotGoods')"
-                />
+                >
                 <i
                   v-else
                   class="el-icon-plus banner-uploader"
@@ -71,13 +75,13 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="热门商品">
+            <el-table-column :label="$t('823bb520.1f79ba')">
               <template slot-scope="scope">
                 <span v-if="scope.row.item_id"
                   >{{ scope.row.item_name }}
-                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'hotGoods')"
-                    >修改</el-button
-                  >
+                  <el-button type="text" @click="handleGoodsChange(scope.$index, 'hotGoods')">{{
+                    $t('823bb520.8347a9')
+                  }}</el-button>
                 </span>
                 <i
                   v-else
@@ -89,7 +93,7 @@
           </el-table>
         </el-form-item>
         <div class="section-footer with-border content-center" style="width: 100%">
-          <el-button type="primary" @click="save"> 保 存 </el-button>
+          <el-button type="primary" @click="save">{{ $t('823bb520.56df61') }}</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -99,12 +103,16 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <el-dialog title="选择商品" class="select-goods-box" :visible.sync="selectGoodsVisible">
+    <el-dialog
+      :title="$t('823bb520.43d1e2')"
+      class="select-goods-box"
+      :visible.sync="selectGoodsVisible"
+    >
       <template>
         <el-transfer
           v-model="selectGoods"
-          :titles="['商品列表', '已选中']"
-          :button-texts="['移除选择', '添加选择']"
+          :titles="[$t('823bb520.437974'), $t('823bb520.543b04')]"
+          :button-texts="[$t('823bb520.be4911'), $t('823bb520.93d369')]"
           :data="goodsList"
           @change="handleSelectChange"
         >
@@ -119,7 +127,11 @@
           </div>
         </el-transfer>
         <div class="section-footer with-border content-center" style="width: 100%">
-          <el-button type="primary" @click="handleGoodsDialog"> 确定 </el-button>
+          <el-button type="primary" @click="handleGoodsDialog">
+{{
+            $t('823bb520.38cf16')
+          }}
+</el-button>
         </div>
       </template>
     </el-dialog>
@@ -185,7 +197,7 @@ export default {
       let row = { url: '', item_id: 0, item_name: '' }
       if (this.form.bannerPicList.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('823bb520.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -251,7 +263,7 @@ export default {
     handleSelectChange(value, direction, movedKeys) {
       if (value.length > 1) {
         this.$message({
-          message: '最多选择一个商品',
+          message: this.$t('823bb520.0a5544'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -332,7 +344,7 @@ export default {
         }
         updateParamsById(bannerParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('823bb520.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -346,7 +358,7 @@ export default {
         }
         setPageParams(bannerParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('823bb520.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -363,7 +375,7 @@ export default {
         }
         updateParamsById(hotGoodsParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('823bb520.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -377,7 +389,7 @@ export default {
         }
         setPageParams(hotGoodsParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('823bb520.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })

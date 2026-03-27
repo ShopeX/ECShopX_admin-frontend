@@ -7,7 +7,7 @@
   <div>
     <el-alert
       v-if="form_solo.status == 4"
-      title="审核失败"
+      :title="$t('0ec7384b.fe3661')"
       type="error"
       show-icon
       center
@@ -17,25 +17,17 @@
     <el-divider v-if="form_solo.status == 4" />
     <div class="formClass">
       <el-form ref="form_solo" :model="form_solo" label-width="150px" :rules="rules">
-        <el-form-item label="账号认证类型">
-          <el-button type="success" round size="mini"> 个体户 </el-button>
+        <el-form-item :label="$t('0ec7384b.44f2bc')">
+          <el-button type="success" round size="mini"> {{ $t('0ec7384b.a41061') }} </el-button>
         </el-form-item>
-        <el-form-item label="个体户名称" prop="solo_name">
+        <el-form-item :label="$t('0ec7384b.ee3562')" prop="solo_name">
           <el-input v-model="form_solo.solo_name" :disabled="disabled" />
         </el-form-item>
         <el-row>
-          <el-form-item
-            label="营业执照注册号"
-            prop="business_code"
-            :rules="[{ required: true, message: '请填写营业执照注册号', trigger: 'blur' }]"
-          >
+          <el-form-item :label="$t('0ec7384b.10410a')" prop="business_code">
             <el-input v-model="form_solo.business_code" :disabled="disabled" />
           </el-form-item>
-          <el-form-item
-            label="营业执照"
-            prop="business_code_img"
-            :rules="[{ required: true, message: '请上传营业执照', trigger: 'change' }]"
-          >
+          <el-form-item :label="$t('0ec7384b.e0b8cc')" prop="business_code_img">
             <el-upload
               class="avatar-uploader"
               :disabled="disabled"
@@ -52,51 +44,51 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              />
+              >
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-row>
-        <el-form-item label="营业执照起始日期" prop="license_start_date">
+        <el-form-item :label="$t('0ec7384b.b23187')" prop="license_start_date">
           <el-date-picker
             v-model="form_solo.license_start_date"
             type="date"
             value-format="yyyyMMdd"
-            placeholder="选择日期"
+            :placeholder="$t('0ec7384b.2bebdd')"
             style="width: 100%"
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item label="营业执照结束日期" prop="license_end_date">
+        <el-form-item :label="$t('0ec7384b.3e5782')" prop="license_end_date">
           <el-date-picker
             v-model="form_solo.license_end_date"
             type="date"
             value-format="yyyyMMdd"
-            placeholder="选择日期"
+            :placeholder="$t('0ec7384b.2bebdd')"
             style="width: 100%"
             :disabled="disabled"
             @change="$forceUpdate()"
           />
         </el-form-item>
-        <el-form-item label="个体户经营地址" prop="solo_business_address">
+        <el-form-item :label="$t('0ec7384b.57cb22')" prop="solo_business_address">
           <el-input v-model="form_solo.solo_business_address" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="个体户注册地址" prop="solo_reg_address">
+        <el-form-item :label="$t('0ec7384b.c69339')" prop="solo_reg_address">
           <el-input v-model="form_solo.solo_reg_address" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="个体户固定电话" prop="solo_fixed_telephone">
+        <el-form-item :label="$t('0ec7384b.d5ca28')" prop="solo_fixed_telephone">
           <el-input v-model="form_solo.solo_fixed_telephone" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="经营范围" prop="business_scope">
+        <el-form-item :label="$t('0ec7384b.04228b')" prop="business_scope">
           <el-input v-model="form_solo.business_scope" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="法人姓名" prop="legal_name">
+        <el-form-item :label="$t('0ec7384b.2fe17a')" prop="legal_name">
           <el-input v-model="form_solo.legal_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="法人证件类型" prop="legal_id_card_type">
+        <el-form-item :label="$t('0ec7384b.7006b1')" prop="legal_id_card_type">
           <el-select
             v-model="form_solo.legal_id_card_type"
-            placeholder="选择法人代表证件类"
+            :placeholder="$t('0ec7384b.8d63c3')"
             :disabled="disabled"
             @visible-change="(bool) => (isEdit = bool)"
           >
@@ -108,30 +100,30 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="法人证件号码" prop="legal_id_card">
+        <el-form-item :label="$t('0ec7384b.60a665')" prop="legal_id_card">
           <el-input v-model="form_solo.legal_id_card" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="法人证件起始日期" prop="legal_cert_start_date">
+        <el-form-item :label="$t('0ec7384b.41ecb3')" prop="legal_cert_start_date">
           <el-date-picker
             v-model="form_solo.legal_cert_start_date"
             type="date"
             value-format="yyyyMMdd"
-            placeholder="选择日期"
+            :placeholder="$t('0ec7384b.2bebdd')"
             style="width: 100%"
             :disabled="disabled"
           />
         </el-form-item>
-        <el-form-item label="法人证件结束日期" prop="legal_cert_end_date">
+        <el-form-item :label="$t('0ec7384b.0bbe28')" prop="legal_cert_end_date">
           <el-date-picker
             v-model="form_solo.legal_cert_end_date"
             type="date"
             value-format="yyyyMMdd"
             :disabled="disabled"
-            placeholder="选择日期"
+            :placeholder="$t('0ec7384b.2bebdd')"
             style="width: 100%"
           />
         </el-form-item>
-        <el-form-item label="法人证件正面" prop="legal_card_imgz">
+        <el-form-item :label="$t('0ec7384b.aa4cf4')" prop="legal_card_imgz">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -144,11 +136,11 @@
               }
             "
           >
-            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item label="法人证件反面" prop="legal_card_imgf">
+        <el-form-item :label="$t('0ec7384b.4d5a1a')" prop="legal_card_imgf">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -161,23 +153,23 @@
               }
             "
           >
-            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
-        <el-form-item label="法人手机号码" prop="legal_mobile">
+        <el-form-item :label="$t('0ec7384b.187a35')" prop="legal_mobile">
           <el-input v-model="form_solo.legal_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="企业联系人姓名" prop="contact_name">
+        <el-form-item :label="$t('0ec7384b.7b4e6a')" prop="contact_name">
           <el-input v-model="form_solo.contact_name" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="企业联系人手机号" prop="contact_mobile">
+        <el-form-item :label="$t('0ec7384b.47f8a6')" prop="contact_mobile">
           <el-input v-model="form_solo.contact_mobile" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="企业联系人邮箱" prop="contact_email">
+        <el-form-item :label="$t('0ec7384b.915143')" prop="contact_email">
           <el-input v-model="form_solo.contact_email" :disabled="disabled" />
         </el-form-item>
-        <el-form-item label="银行卡号" prop="bank_acct_num">
+        <el-form-item :label="$t('0ec7384b.d98e9d')" prop="bank_acct_num">
           <el-input v-model="form_solo.bank_acct_num" :disabled="disabled" />
         </el-form-item>
         <!-- <el-form-item label="银行卡正面" prop="bank_acct_num_imgz">
@@ -214,10 +206,10 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item> -->
-        <el-form-item label="职业" prop="occupation">
+        <el-form-item :label="$t('0ec7384b.7379c9')" prop="occupation">
           <el-select
             v-model="form_solo.occupation"
-            placeholder="选择职业"
+            :placeholder="$t('0ec7384b.22cf03')"
             :disabled="disabled"
             @visible-change="(bool) => (isEdit = bool)"
           >
@@ -236,13 +228,16 @@
           <el-input v-model="form_solo.open_license_no" :disabled="disabled"></el-input>
         </el-form-item> -->
         <el-form-item>
-          <el-button v-if="!disabled" type="primary" @click="onSoloSubmit"> 保存 </el-button>
+          <el-button v-if="!disabled" type="primary" @click="onSoloSubmit">
+            {{ $t('0ec7384b.be5fbb') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import { i18n } from '@/i18n'
 import { upLoadHffile, saveHffile, getHffile } from '@/api/fenzhang'
 import areaData from '@/common/hfpayAreaData.json'
 import bankData from '@/common/hfpayBankData.json'
@@ -250,23 +245,23 @@ import UploadUtil from '@/utils/uploadUtil'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
   data() {
-    let vaildIdCard = (rule, value, callback) => {
+    const vaildIdCard = (rule, value, callback) => {
       if (!vaildateIdCard(value)) {
-        callback(new Error('请填写正确的身份证号码'))
+        callback(new Error(i18n.t('0ec7384b.498f58')))
       } else {
         callback()
       }
     }
-    let vaildEmail = (rule, value, callback) => {
+    const vaildEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
-        callback(new Error('请填写正确的邮箱地址'))
+        callback(new Error(i18n.t('0ec7384b.7b6234')))
       } else {
         callback()
       }
     }
-    let vaildMobile = (rule, value, callback) => {
+    const vaildMobile = (rule, value, callback) => {
       if (!isMobile(value)) {
-        callback(new Error('请填写正确的手机号码'))
+        callback(new Error(i18n.t('0ec7384b.03951b')))
       } else {
         callback()
       }
@@ -277,78 +272,6 @@ export default {
       cityData: [],
       disabled: false,
       isEdit: false,
-      cardType: [
-        {
-          card_type: '10',
-          label: '身份证'
-        },
-        {
-          card_type: '11',
-          label: '护照'
-        },
-        {
-          card_type: '14',
-          label: '回乡证'
-        },
-        {
-          card_type: '17',
-          label: '台胞证'
-        }
-      ],
-      occupationList: [
-        {
-          occupation_key: '01',
-          label: '国家机关、党群机关、企事业单位负责人'
-        },
-        {
-          occupation_key: '02',
-          label: '金融业从业人员'
-        },
-        {
-          occupation_key: '03',
-          label: '房地产业从业人员'
-        },
-        {
-          occupation_key: '04',
-          label: '商贸从业人员'
-        },
-        {
-          occupation_key: '05',
-          label: '自由职业者'
-        },
-        {
-          occupation_key: '06',
-          label: '科教文从业人员 '
-        },
-        {
-          occupation_key: '07',
-          label: '制造业从业人员'
-        },
-        {
-          occupation_key: '08',
-          label: '卫生行业从业人员'
-        },
-        {
-          occupation_key: '09',
-          label: 'IT业从业人员'
-        },
-        {
-          occupation_key: '10',
-          label: '农林牧渔劳动者'
-        },
-        {
-          occupation_key: '11',
-          label: '生产工作、运输工作和部分体力劳动者'
-        },
-        {
-          occupation_key: '12',
-          label: '退休人员'
-        },
-        {
-          occupation_key: '13',
-          label: '不便分类的其他劳动者'
-        }
-      ],
       form_solo: {
         apply_type: '2',
         solo_name: '',
@@ -383,46 +306,9 @@ export default {
         contact_cert_num: '',
         open_license_no: ''
       },
-      rules: {
-        apply_type: [{ required: true, message: '账号认证类型', trigger: 'blur' }],
-        solo_name: [{ required: true, message: '请填写个体户名称', trigger: 'blur' }],
-        license_start_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
-        license_end_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
-        legal_name: [{ required: true, message: '请填写法人代表姓名', trigger: 'blur' }],
-        legal_id_card_type: [
-          { required: true, message: '请选择法人代表证件类型', trigger: 'change' }
-        ],
-        legal_id_card: [{ required: true, message: '请填写法人代表证件号码', trigger: 'blur' }],
-        legal_card_imgz: [{ required: true, message: '请上传证件正面', trigger: 'change' }],
-        legal_card_imgf: [{ required: true, message: '请上传证件反面', trigger: 'change' }],
-        legal_cert_start_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
-        legal_cert_end_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
-        legal_mobile: [
-          { required: true, message: '请填写法人代表手机号码', trigger: 'blur' },
-          { validator: vaildMobile, trigger: 'blur' }
-        ],
-        contact_name: [{ required: true, message: '请填写企业联系人姓名', trigger: 'blur' }],
-        contact_mobile: [
-          { required: true, message: '请填写企业联系人手机', trigger: 'blur' },
-          { validator: vaildMobile, trigger: 'blur' }
-        ],
-        contact_email: [
-          { required: true, message: '请填写企业联系人邮箱', trigger: 'blur' },
-          { validator: vaildEmail, trigger: 'blur' }
-        ],
-        bank_acct_num: [{ required: true, message: '请填写开户银行账号', trigger: 'blur' }],
-        bank_acct_num_imgz: [{ required: true, message: '请上传银行卡正面', trigger: 'change' }],
-        bank_acct_num_imgf: [{ required: true, message: '请上传银行卡反面', trigger: 'change' }],
-        occupation: [{ required: true, message: '请选择', trigger: 'change' }],
-        solo_business_address: [
-          { required: true, message: '请填写个体户经营地址', trigger: 'blur' }
-        ],
-        solo_reg_address: [{ required: true, message: '请填写个体户注册地址', trigger: 'blur' }],
-        solo_fixed_telephone: [
-          { required: true, message: '请填写个体户固定电话', trigger: 'blur' }
-        ],
-        business_scope: [{ required: true, message: '请填写经营范围', trigger: 'blur' }]
-      },
+      vaildIdCard,
+      vaildEmail,
+      vaildMobile,
       fileList: {
         business_code_img: '',
         legal_card_imgz: '',
@@ -437,6 +323,74 @@ export default {
         bank_acct_num_imgz: '14',
         bank_acct_num_imgf: '15'
       }
+    }
+  },
+  computed: {
+    rules() {
+      const t = this.$t.bind(this)
+      return {
+        apply_type: [{ required: true, message: t('0ec7384b.44f2bc'), trigger: 'blur' }],
+        business_code: [{ required: true, message: t('0ec7384b.324bc5'), trigger: 'blur' }],
+        business_code_img: [{ required: true, message: t('0ec7384b.291d78'), trigger: 'change' }],
+        solo_name: [{ required: true, message: t('0ec7384b.1a1bd2'), trigger: 'blur' }],
+        license_start_date: [{ required: true, message: t('0ec7384b.aa2fb1'), trigger: 'change' }],
+        license_end_date: [{ required: true, message: t('0ec7384b.aa2fb1'), trigger: 'change' }],
+        legal_name: [{ required: true, message: t('0ec7384b.7ab92b'), trigger: 'blur' }],
+        legal_id_card_type: [{ required: true, message: t('0ec7384b.6eaeee'), trigger: 'change' }],
+        legal_id_card: [{ required: true, message: t('0ec7384b.f89ac7'), trigger: 'blur' }],
+        legal_card_imgz: [{ required: true, message: t('0ec7384b.e46ea7'), trigger: 'change' }],
+        legal_card_imgf: [{ required: true, message: t('0ec7384b.43a695'), trigger: 'change' }],
+        legal_cert_start_date: [
+          { required: true, message: t('0ec7384b.aa2fb1'), trigger: 'change' }
+        ],
+        legal_cert_end_date: [{ required: true, message: t('0ec7384b.aa2fb1'), trigger: 'change' }],
+        legal_mobile: [
+          { required: true, message: t('0ec7384b.2f6fb6'), trigger: 'blur' },
+          { validator: this.vaildMobile, trigger: 'blur' }
+        ],
+        contact_name: [{ required: true, message: t('0ec7384b.a69a57'), trigger: 'blur' }],
+        contact_mobile: [
+          { required: true, message: t('0ec7384b.c72b70'), trigger: 'blur' },
+          { validator: this.vaildMobile, trigger: 'blur' }
+        ],
+        contact_email: [
+          { required: true, message: t('0ec7384b.8f3194'), trigger: 'blur' },
+          { validator: this.vaildEmail, trigger: 'blur' }
+        ],
+        bank_acct_num: [{ required: true, message: t('0ec7384b.387c2f'), trigger: 'blur' }],
+        bank_acct_num_imgz: [{ required: true, message: t('0ec7384b.53bb25'), trigger: 'change' }],
+        bank_acct_num_imgf: [{ required: true, message: t('0ec7384b.03380f'), trigger: 'change' }],
+        occupation: [{ required: true, message: t('0ec7384b.708c9d'), trigger: 'change' }],
+        solo_business_address: [{ required: true, message: t('0ec7384b.ce6e3d'), trigger: 'blur' }],
+        solo_reg_address: [{ required: true, message: t('0ec7384b.97dfa8'), trigger: 'blur' }],
+        solo_fixed_telephone: [{ required: true, message: t('0ec7384b.0f197f'), trigger: 'blur' }],
+        business_scope: [{ required: true, message: t('0ec7384b.afbeda'), trigger: 'blur' }]
+      }
+    },
+    cardType() {
+      return [
+        { card_type: '10', label: this.$t('0ec7384b.f33656') },
+        { card_type: '11', label: this.$t('0ec7384b.74f7c6') },
+        { card_type: '14', label: this.$t('0ec7384b.1861b2') },
+        { card_type: '17', label: this.$t('0ec7384b.35e81c') }
+      ]
+    },
+    occupationList() {
+      return [
+        { occupation_key: '01', label: this.$t('0ec7384b.00d0de') },
+        { occupation_key: '02', label: this.$t('0ec7384b.fc0c16') },
+        { occupation_key: '03', label: this.$t('0ec7384b.5e566e') },
+        { occupation_key: '04', label: this.$t('0ec7384b.8776fc') },
+        { occupation_key: '05', label: this.$t('0ec7384b.51ed81') },
+        { occupation_key: '06', label: this.$t('0ec7384b.672eb9') },
+        { occupation_key: '07', label: this.$t('0ec7384b.11d833') },
+        { occupation_key: '08', label: this.$t('0ec7384b.8e8c6b') },
+        { occupation_key: '09', label: this.$t('0ec7384b.5f9a8e') },
+        { occupation_key: '10', label: this.$t('0ec7384b.faeefc') },
+        { occupation_key: '11', label: this.$t('0ec7384b.8b3dce') },
+        { occupation_key: '12', label: this.$t('0ec7384b.ad823f') },
+        { occupation_key: '13', label: this.$t('0ec7384b.36e2fb') }
+      ]
     }
   },
   mounted() {
@@ -476,7 +430,7 @@ export default {
 
           saveHffile(obj).then((res) => {
             this.$message({
-              message: '保存成功',
+              message: this.$t('0ec7384b.3b1083'),
               type: 'success'
             })
             setTimeout(() => {
@@ -492,11 +446,11 @@ export default {
       let { file } = ctx
       if (file) {
         if (file.type != 'image/jpeg' && file.type != 'image/png') {
-          this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+          this.$message.error(this.$t('0ec7384b.34e969'))
           return false
         }
         if (file.size / 1024 / 1024 > 5) {
-          this.$message.error('上传图片大小不能超过 5MB!')
+          this.$message.error(this.$t('0ec7384b.50fa12'))
           return false
         }
       }

@@ -20,12 +20,12 @@
       </div> -->
 
       <SpFilterForm :model="params" @onSearch="queryCoupon" @onReset="queryCoupon">
-        <SpFilterFormItem prop="title" label="劵包标题:">
-          <el-input v-model="params.title" placeholder="请入劵包标题" />
+        <SpFilterFormItem prop="title" :label="$t('309a0eee.59d3e8')">
+          <el-input v-model="params.title" :placeholder="$t('309a0eee.6e1bc4')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-button type="primary" @click="createCoupon"> 创建劵包 </el-button>
+      <el-button type="primary" @click="createCoupon"> {{ $t('309a0eee.b9e6bf') }} </el-button>
 
       <SpFinder
         ref="finder"

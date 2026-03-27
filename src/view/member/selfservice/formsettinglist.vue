@@ -13,25 +13,33 @@
   <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="form_element" label="表单元素:">
-          <el-select v-model="params.form_element" placeholder="请选择表单元素" style="width: 100%">
+        <SpFilterFormItem prop="form_element" :label="$t('1ad8a87f.921962')">
+          <el-select
+            v-model="params.form_element"
+            :placeholder="$t('c831a478.c2dba8')"
+            style="width: 100%"
+          >
             <el-option
               v-for="item in formElement"
               :key="item.value"
-              :label="item.name"
+              :label="$t(item.nameKey)"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="field_title" label="标题:">
-          <el-input v-model="params.field_title" placeholder="标题" style="width: 100%" />
+        <SpFilterFormItem prop="field_title" :label="$t('1ad8a87f.eaaa50')">
+          <el-input
+            v-model="params.field_title"
+            :placeholder="$t('c831a478.32c65d')"
+            style="width: 100%"
+          />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
-          表单元素添加
+          {{ $t('1ad8a87f.a8b6e4') }}
         </el-button>
       </div>
 
@@ -39,11 +47,11 @@
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
-          :label="item.name"
+          :label="$t(item.nameKey)"
           :name="item.activeName"
         >
           <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
-            <el-table-column label="操作" width="130">
+            <el-table-column :label="$t('8da83775.2b6bc0')" width="130">
               <template slot-scope="scope">
                 <router-link
                   class="el-icon-edit"
@@ -62,11 +70,15 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="id" label="ID" width="50" />
-            <el-table-column prop="field_title" label="标题" width="250" />
-            <el-table-column prop="field_name" label="唯一标示(纯字母)" width="200" />
-            <el-table-column prop="form_element" label="元素类型" width="100" />
-            <el-table-column label="元素选择项">
+            <el-table-column prop="id" :label="$t('1ad8a87f.b718ad')" width="50" />
+            <el-table-column prop="field_title" :label="$t('c831a478.32c65d')" width="250" />
+            <el-table-column prop="field_name" :label="$t('1ad8a87f.3a7c96')" width="200" />
+            <el-table-column prop="form_element" :label="$t('1ad8a87f.e1e080')" width="100">
+              <template slot-scope="scope">
+                {{ getElementTypeLabel(scope.row.form_element) }}
+              </template>
+            </el-table-column>
+            <el-table-column :label="$t('1ad8a87f.9e322a')">
               <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.options" :key="index">
                   {{ item.value }}</span
@@ -93,17 +105,17 @@
         <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
           <el-form-item :label="dataInfo.field_title">
             <el-col v-if="dataInfo.form_element == 'text'" :span="12">
-              <el-input placeholder="text预览" />
+              <el-input :placeholder="$t('1ad8a87f.0a71fc')" />
             </el-col>
             <el-col v-if="dataInfo.form_element == 'textarea'" :span="12">
-              <el-input type="textarea" placeholder="textarea预览" />
+              <el-input type="textarea" :placeholder="$t('1ad8a87f.059727')" />
             </el-col>
             <el-col v-if="dataInfo.form_element == 'number'" :span="12">
               <el-input-number type="textarea" placeholder="55.55" />
             </el-col>
             <el-col v-if="dataInfo.form_element == 'image'" :span="12">
               <el-upload class="avatar-uploader" action="" :show-file-list="false">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </el-upload>
             </el-col>
@@ -126,7 +138,7 @@
               </el-checkbox-group>
             </el-col>
             <el-col v-if="dataInfo.form_element == 'select'" :span="12">
-              <el-select placeholder="请选择">
+              <el-select :placeholder="$t('ac2a6290.708c9d')">
                 <el-option
                   v-for="item in dataInfo.options"
                   :key="item.value"
@@ -136,7 +148,7 @@
               </el-select>
             </el-col>
             <el-col v-if="dataInfo.form_element == 'date'" :span="12">
-              <el-date-picker v-model="value1" type="date" placeholder="选择日期" />
+              <el-date-picker v-model="value1" type="date" :placeholder="$t('1ad8a87f.2bebdd')" />
             </el-col>
             <el-col v-if="dataInfo.form_element == 'time'" :span="12">
               <el-time-picker
@@ -145,7 +157,7 @@
                 :picker-options="{
                   selectableRange: '18:30:00 - 20:30:00'
                 }"
-                placeholder="任意时间点"
+                :placeholder="$t('1ad8a87f.c7d809')"
               />
             </el-col>
             <el-col v-if="dataInfo.form_element == 'area'" :span="12">
@@ -188,8 +200,8 @@ export default {
       isEdit: false,
       imageUrl: '',
       tabList: [
-        { name: '有效元素', activeName: '1' },
-        { name: '弃用元素', activeName: '2' }
+        { nameKey: '1ad8a87f.8bbd77', activeName: '1' },
+        { nameKey: '1ad8a87f.0a2515', activeName: '2' }
       ],
       ItemsDetailVisible: false,
       itemsDetailData: {},
@@ -197,16 +209,16 @@ export default {
       dialogVisible: false,
       dataInfo: {},
       formElement: [
-        { name: '文本框', value: 'text' },
-        { name: '文本域', value: 'textarea' },
-        { name: '单选按钮', value: 'radio' },
-        { name: '复选框', value: 'checkbox' },
-        { name: '下拉选择框', value: 'select' },
-        { name: '日期选择', value: 'date' },
-        { name: '地区地址选择', value: 'area' },
-        { name: '数字', value: 'number' },
-        { name: '上传身份证', value: 'idcard' },
-        { name: '上传其他附件', value: 'otherfile' }
+        { nameKey: '1ad8a87f.5ac57c', value: 'text' },
+        { nameKey: '1ad8a87f.d2362d', value: 'textarea' },
+        { nameKey: '1ad8a87f.f96dab', value: 'radio' },
+        { nameKey: '8da83775.db98f8', value: 'checkbox' },
+        { nameKey: '1ad8a87f.ad61d4', value: 'select' },
+        { nameKey: '1ad8a87f.de1a35', value: 'date' },
+        { nameKey: '1ad8a87f.f127e4', value: 'area' },
+        { nameKey: '1ad8a87f.55d479', value: 'number' },
+        { nameKey: 'c831a478.820ef5', value: 'idcard' },
+        { nameKey: 'c831a478.607b17', value: 'otherfile' }
       ],
       options: [
         {
@@ -244,6 +256,10 @@ export default {
     this.fetchList()
   },
   methods: {
+    getElementTypeLabel(value) {
+      const item = this.formElement.find((i) => i.value === value)
+      return item ? this.$t(item.nameKey) : value
+    },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
@@ -288,9 +304,9 @@ export default {
     },
 
     deleteAction(index, row) {
-      this.$confirm('此操废弃该元素, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('1ad8a87f.7d875a'), this.$t('8da83775.02d981'), {
+        confirmButtonText: this.$t('8da83775.38cf16'),
+        cancelButtonText: this.$t('8da83775.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -298,7 +314,7 @@ export default {
             .then((response) => {
               this.tableList.splice(index, 1)
               this.$message({
-                message: '废弃成功',
+                message: this.$t('1ad8a87f.2f3028'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -306,14 +322,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '废弃失败'
+                message: this.$t('1ad8a87f.4f7bce')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('1ad8a87f.2111cc')
           })
         })
     },

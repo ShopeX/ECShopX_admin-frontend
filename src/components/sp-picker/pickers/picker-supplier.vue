@@ -26,7 +26,7 @@
   <div class="picker-table">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="supplier_name">
-        <el-input v-model="formData.supplier_name" placeholder="请输入供应商名称" />
+        <el-input v-model="formData.supplier_name" :placeholder="$t('30451266.f0c2bb')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -60,6 +60,9 @@ export default {
     title: '选择供应商'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('30451266.cfaf98')
+  },
   data() {
     return {
       formData: {

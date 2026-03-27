@@ -21,7 +21,7 @@
       >
         <template #tableTop>
           <div class="mb-5">
-            <el-button type="primary" @click="addSignature"> 新增签名 </el-button>
+            <el-button type="primary" @click="addSignature">{{ $t('523e1e97.156c42') }}</el-button>
           </div>
         </template>
       </SpFinder>
@@ -36,15 +36,17 @@ import { deleteTheSignature } from '@/api/sms'
 export default {
   data() {
     return {
-      failVisible: false,
-      search_options: [
-        { label: '审核中', value: '0' },
-        { label: '审核通过', value: '1' },
-        { label: '审核失败', value: '2' }
-      ]
+      failVisible: false
     }
   },
   computed: {
+    search_options() {
+      return [
+        { label: this.$t('523e1e97.b720a6'), value: '0' },
+        { label: this.$t('523e1e97.871a30'), value: '1' },
+        { label: this.$t('523e1e97.fe3661'), value: '2' }
+      ]
+    },
     setting() {
       return setting_(this)
     }
@@ -59,7 +61,7 @@ export default {
     afterSearch() {},
     async deleteSignatureHandle(id) {
       const result = await deleteTheSignature(id)
-      this.$message.success('删除成功')
+      this.$message.success(this.$t('523e1e97.0007d1'))
       this.$refs.finder.refresh(true)
       console.log(result)
     }

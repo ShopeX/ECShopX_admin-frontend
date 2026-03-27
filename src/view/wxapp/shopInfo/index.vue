@@ -8,11 +8,11 @@
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
-        <el-form-item label="商城名称">
+        <el-form-item :label="$t('5ccb7b76.e2eb05')">
           <el-input v-model="form.brand_name" type="text" style="width: 300px" />
-          {{ VERSION_SHUYUN() ? '（注：商城名称展示到小程序端）' : '' }}
+          {{ VERSION_SHUYUN() ? $t('5ccb7b76.d5e6f5') : '' }}
         </el-form-item>
-        <el-form-item label="商城简介">
+        <el-form-item :label="$t('5ccb7b76.da0c35')">
           <el-row>
             <el-col :span="18">
               <el-input
@@ -20,26 +20,30 @@
                 type="textarea"
                 :maxlength="120"
                 :rows="6"
-                placeholder="请输入商城简介"
+                :placeholder="$t('5ccb7b76.aaa72a')"
                 @input="countInput"
               />
               <div class="content-right muted">{{ remnant }}/120</div>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="商城Logo">
+        <el-form-item :label="$t('5ccb7b76.8c53d5')">
           <imgBox :img-url="form.logo" inline @click="handleImgChange('logo')" />
-          （ 推荐尺寸:147*46px ）
+          （ {{ $t('5ccb7b76.ee7ab2') }} ）
         </el-form-item>
-        <el-form-item label="登录页背景图">
+        <el-form-item :label="$t('5ccb7b76.f2c380')">
           <imgBox :img-url="form.background" inline @click="handleImgChange('background')" />
-          （ 推荐尺寸:1920*690px ）
+          （ {{ $t('5ccb7b76.48bbbc') }} ）
         </el-form-item>
       </div>
     </el-form>
     <template slot="page-footer">
       <div class="text-center">
-        <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+        <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+          $t('5ccb7b76.be5fbb')
+        }}
+</el-button>
       </div>
     </template>
   </SpPage>
@@ -85,7 +89,7 @@ export default {
       this.loading = true
 
       if (!this.form.brand_name || !this.form.brand_name.trim()) {
-        this.$message.error('请输入商城名称')
+        this.$message.error(this.$t('5ccb7b76.f0cac2'))
         this.loading = false
         return
       }
@@ -100,13 +104,13 @@ export default {
       putSettingWxShops(params).then((response) => {
         if (response.data.data) {
           this.$message({
-            message: '保存配置信息成功！',
+            message: this.$t('5ccb7b76.5079cb'),
             type: 'success'
           })
           this.loading = false
           this.$store.dispatch('setSysLogo', this.form.logo)
         } else {
-          this.$message.error('配置信息失败，请确认是否正确填写内容！')
+          this.$message.error(this.$t('5ccb7b76.c6a11d'))
           this.loading = false
           return false
         }

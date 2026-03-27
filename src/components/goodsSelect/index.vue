@@ -7,7 +7,7 @@
   <el-dialog
     class="store-dialog"
     width="900px"
-    title="选择商品"
+    :title="$t('8e248734.43d1e2')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
@@ -28,7 +28,7 @@
         <el-col :span="6">
           <el-input
             v-model="params.keywords"
-            placeholder="输入商品名称"
+            :placeholder="$t('8e248734.c205b4')"
             clearable
             class="input-with-select"
           >
@@ -38,7 +38,7 @@
         <el-col :span="5">
           <el-select
             v-model="params.approve_status"
-            placeholder="选择状态"
+            :placeholder="$t('8e248734.599c08')"
             clearable
             :disabled="setSearch"
             @change="searchByKey"
@@ -46,7 +46,7 @@
             <el-option
               v-for="item in statusOption"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
@@ -55,7 +55,7 @@
           <el-select
             v-model="params.templates_id"
             clearable
-            placeholder="选择运费模板"
+            :placeholder="$t('8e248734.6912d8')"
             @change="searchByKey"
           >
             <el-option
@@ -66,11 +66,11 @@
             />
           </el-select>
         </el-col>
-        <span v-if="setSearch" class="search-tips">选择商品数量不可超过200件</span>
+        <span v-if="setSearch" class="search-tips">{{ $t('8e248734.e9b60d') }}</span>
         <el-col :span="6">
           <el-select
             v-model="select_branch_value"
-            placeholder="选择品牌"
+            :placeholder="$t('8e248734.41b90f')"
             remote
             filterable
             :remote-method="getGoodsBranchList"
@@ -88,7 +88,7 @@
         <el-col :span="6" class="last-col">
           <el-cascader
             v-model="select_category_value"
-            placeholder="商品销售分类"
+            :placeholder="$t('8e248734.8a805a')"
             :options="categoryList"
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
             clearable
@@ -98,7 +98,7 @@
         <el-col :span="6" class="last-col">
           <el-input
             v-model="params.goods_bn"
-            placeholder="SPU编码"
+            :placeholder="$t('8e248734.18ea2a')"
             clearable
             class="input-with-select"
           >
@@ -108,7 +108,7 @@
         <el-col :span="6" class="last-col">
           <el-input
             v-model="params.supplier_name"
-            placeholder="所属供应商"
+            :placeholder="$t('8e248734.40b1be')"
             clearable
             class="input-with-select"
           >
@@ -118,7 +118,7 @@
         <el-col :span="5" class="last-col">
           <el-select
             v-model="params.item_holder"
-            placeholder="商品类型"
+            :placeholder="$t('8e248734.2af133')"
             clearable
             :disabled="setSearch"
             @change="searchByKey"
@@ -126,7 +126,7 @@
             <el-option
               v-for="item in categoryOption"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.title)"
               :value="item.value"
             />
           </el-select>
@@ -134,13 +134,13 @@
         <el-col :span="5" class="last-col">
           <el-select
             v-model="params.is_gift"
-            placeholder="是否为赠品"
+            :placeholder="$t('8e248734.674022')"
             clearable
             :disabled="gift ? setSearch : gift"
             @change="searchByKey"
           >
-            <el-option :value="true" label="是" />
-            <el-option :value="false" label="否" />
+            <el-option :value="true" :label="$t('8e248734.0a60ac')" />
+            <el-option :value="false" :label="$t('8e248734.c9744f')" />
           </el-select>
         </el-col>
       </el-row>
@@ -153,7 +153,7 @@
       tooltip-effect="dark"
       style="width: 100%"
     >
-      <el-table-column label="选择" width="70">
+      <el-table-column :label="$t('8e248734.153fa6')" width="70">
         <template slot-scope="scope">
           <el-radio
             v-model="templateRadio"
@@ -164,35 +164,45 @@
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column prop="itemId" label="商品ID" width="70" />
-      <el-table-column prop="itemName" label="商品名称" />
-      <el-table-column prop="item_spec_desc" label="规格" />
-      <el-table-column prop="goods_bn" label="SPU编码" />
-      <el-table-column label="是否赠品">
+      <el-table-column prop="itemId" :label="$t('8e248734.858526')" width="70" />
+      <el-table-column prop="itemName" :label="$t('8e248734.1fd1d5')" />
+      <el-table-column prop="item_spec_desc" :label="$t('8e248734.ea887b')" />
+      <el-table-column prop="goods_bn" :label="$t('8e248734.18ea2a')" />
+      <el-table-column :label="$t('8e248734.792518')">
         <template slot-scope="scope">
-          {{ scope.row.is_gift == '1' ? '是' : '否' }}
+          {{ scope.row.is_gift == '1' ? $t('8e248734.0a60ac') : $t('8e248734.c9744f') }}
         </template>
       </el-table-column>
-      <el-table-column prop="supplier_name" label="所属供应商" />
-      <el-table-column label="商品类型">
+      <el-table-column prop="supplier_name" :label="$t('8e248734.40b1be')" />
+      <el-table-column :label="$t('8e248734.2af133')">
         <template slot-scope="scope">
           {{ itemSourceMap[scope.row.item_holder] }}
         </template>
       </el-table-column>
-      <el-table-column prop="market_price" show-overflow-tooltip label="市场价">
+      <el-table-column prop="market_price" show-overflow-tooltip :label="$t('8e248734.818fc4')">
         <template slot-scope="scope"> ¥{{ scope.row.market_price / 100 }} </template>
       </el-table-column>
       <el-table-column
         prop="price"
-        label="销售价"
+        :label="$t('8e248734.e29575')"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column prop="cost_price" label="成本价" width="80" show-overflow-tooltip>
+      <el-table-column
+        prop="cost_price"
+        :label="$t('8e248734.2e2ce2')"
+        width="80"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
+      <el-table-column
+        prop="store"
+        :label="$t('8e248734.0eac88')"
+        width="80"
+        show-overflow-tooltip
+      />
     </el-table>
     <el-table
       v-else
@@ -211,35 +221,45 @@
         :reserve-selection="true"
         width="50"
       />
-      <el-table-column prop="itemId" label="商品ID" width="70" />
-      <el-table-column prop="itemName" label="商品名称" />
-      <el-table-column prop="item_spec_desc" label="规格" />
-      <el-table-column prop="goods_bn" label="SPU编码" />
-      <el-table-column label="是否赠品">
+      <el-table-column prop="itemId" :label="$t('8e248734.858526')" width="70" />
+      <el-table-column prop="itemName" :label="$t('8e248734.1fd1d5')" />
+      <el-table-column prop="item_spec_desc" :label="$t('8e248734.ea887b')" />
+      <el-table-column prop="goods_bn" :label="$t('8e248734.18ea2a')" />
+      <el-table-column :label="$t('8e248734.792518')">
         <template slot-scope="scope">
-          {{ scope.row.is_gift == '1' ? '是' : '否' }}
+          {{ scope.row.is_gift == '1' ? $t('8e248734.0a60ac') : $t('8e248734.c9744f') }}
         </template>
       </el-table-column>
-      <el-table-column prop="supplier_name" label="所属供应商" width="120" />
-      <el-table-column label="商品类型">
+      <el-table-column prop="supplier_name" :label="$t('8e248734.40b1be')" width="120" />
+      <el-table-column :label="$t('8e248734.2af133')">
         <template slot-scope="scope">
           {{ itemSourceMap[scope.row.item_holder] }}
         </template>
       </el-table-column>
-      <el-table-column prop="market_price" show-overflow-tooltip label="市场价">
+      <el-table-column prop="market_price" show-overflow-tooltip :label="$t('8e248734.818fc4')">
         <template slot-scope="scope"> ¥{{ scope.row.market_price / 100 }} </template>
       </el-table-column>
       <el-table-column
         prop="price"
-        label="销售价"
+        :label="$t('8e248734.e29575')"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column prop="cost_price" label="成本价" width="80" show-overflow-tooltip>
+      <el-table-column
+        prop="cost_price"
+        :label="$t('8e248734.2e2ce2')"
+        width="80"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
+      <el-table-column
+        prop="store"
+        :label="$t('8e248734.0eac88')"
+        width="80"
+        show-overflow-tooltip
+      />
     </el-table>
     <div v-if="total_count > params.pageSize" class="pager">
       <el-pagination
@@ -254,8 +274,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('8e248734.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('8e248734.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -389,36 +409,15 @@ export default {
       store_value: '',
       templatesList: [],
       categoryOption: [
-        {
-          title: '自营商品',
-          value: 'platform'
-        },
-        {
-          title: '商户商品',
-          value: 'distributor'
-        },
-        {
-          title: '供应商商品',
-          value: 'supplier'
-        }
+        { title: '8e248734.81a684', value: 'platform' },
+        { title: '8e248734.b1c9d7', value: 'distributor' },
+        { title: '8e248734.45a570', value: 'supplier' }
       ],
       statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
+        { title: '8e248734.9b7481', value: 'onsale' },
+        { title: '8e248734.2c50a0', value: 'offline_sale' },
+        { title: '8e248734.acf86b', value: 'only_show' },
+        { title: '8e248734.ae83a3', value: 'instock' }
       ],
       itemSourceMap: GOOD_CATEGORY_MAP,
       currency: {},
@@ -513,7 +512,7 @@ export default {
     },
     handleSelectAll(val) {
       if (this.limitNum) {
-        this.$message({ message: '当前组件不支持全选', type: 'warning' })
+        this.$message({ message: this.$t('8e248734.4f180d'), type: 'warning' })
         this.$refs.multipleTable.clearSelection()
         this.itemsData.forEach((item) => {
           let checked = this.selectRows.find((n) => n.itemId === item.itemId)
@@ -554,7 +553,7 @@ export default {
           return
         } else if (this.limitNum && this.selectRows.length >= this.limitNum) {
           this.$message({
-            message: `最多选择${this.limitNum}件商品`,
+            message: this.$t('8e248734.a0672e') + this.limitNum + this.$t('8e248734.777ba9'),
             type: 'warning'
           })
           this.$refs.multipleTable.clearSelection()
@@ -572,7 +571,9 @@ export default {
     },
     saveStoreAction() {
       if (this.selectRows.length > this.limitCount) {
-        this.$message.error('最多支持选择' + this.limitCount + '件商品！')
+        this.$message.error(
+          this.$t('8e248734.111738') + this.limitCount + this.$t('8e248734.199f06')
+        )
       } else {
         this.multipleSelection = this.selectRows
         this.$emit('chooseStore', this.selectRows, this.store)

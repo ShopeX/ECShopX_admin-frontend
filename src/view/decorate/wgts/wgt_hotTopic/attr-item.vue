@@ -25,7 +25,7 @@
         <div class="topic-item">
           <el-input
             v-model="scope.data.topic"
-            placeholder="话题"
+            :placeholder="i18n.t('ba246fa8.b00a65')"
             size="small"
             class="topic-input"
           />
@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+import { i18n } from '@/i18n'
 import { cloneDeep } from 'lodash'
 import Vue from 'vue'
 import CompPickerLink from '../../comps/comp-pickerLink'

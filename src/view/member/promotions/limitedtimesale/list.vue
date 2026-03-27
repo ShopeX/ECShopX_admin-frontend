@@ -15,22 +15,22 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="name" label="活动名称:">
-          <el-input v-model="params.name" placeholder="活动名称" />
+        <SpFilterFormItem prop="name" :label="$t('ecf8f419.39834b')">
+          <el-input v-model="params.name" :placeholder="$t('ecf8f419.39834b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="create_time" :label="$t('ecf8f419.374856')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="添加时间筛选"
+            :placeholder="$t('ecf8f419.5d92ab')"
           />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
-          添加活动
+          {{ $t('ecf8f419.23b46b') }}
         </el-button>
       </div>
 
@@ -42,27 +42,31 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" border :data="tableList" :height="wheight - 200">
-            <el-table-column prop="seckill_id" label="ID" width="80" />
-            <el-table-column prop="activity_name" label="活动名称" min-width="180" />
-            <el-table-column prop="created_date" label="创建时间" min-width="150" />
-            <el-table-column label="活动时间" min-width="150">
+            <el-table-column prop="seckill_id" :label="$t('ecf8f419.b718ad')" width="80" />
+            <el-table-column prop="activity_name" :label="$t('ecf8f419.39834b')" min-width="180" />
+            <el-table-column prop="created_date" :label="$t('ecf8f419.eca37c')" min-width="150" />
+            <el-table-column :label="$t('ecf8f419.c799f5')" min-width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.activity_start_date }}</div>
                 <div>~</div>
                 <div>{{ scope.row.activity_end_date }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" min-width="100">
+            <el-table-column prop="status" :label="$t('ecf8f419.3fea7c')" min-width="100">
               <template slot-scope="scope">
-                <span v-if="scope.row.status == 'waiting'">待开始</span>
-                <span v-else-if="scope.row.status == 'in_the_notice'">预告中</span>
-                <span v-else-if="scope.row.status == 'in_sale'">进行中</span>
-                <span v-else-if="scope.row.status == 'it_has_ended'">已结束</span>
-                <span v-else-if="scope.row.status == 'close'">已终止</span>
+                <span v-if="scope.row.status == 'waiting'">{{ $t('ecf8f419.1568ba') }}</span>
+                <span v-else-if="scope.row.status == 'in_the_notice'">{{
+                  $t('ecf8f419.2a1f77')
+                }}</span>
+                <span v-else-if="scope.row.status == 'in_sale'">{{ $t('ecf8f419.fb852f') }}</span>
+                <span v-else-if="scope.row.status == 'it_has_ended'">{{
+                  $t('ecf8f419.047fab')
+                }}</span>
+                <span v-else-if="scope.row.status == 'close'">{{ $t('ecf8f419.255412') }}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="70" prop="source_name" label="店铺" />
-            <el-table-column label="操作" width="250">
+            <el-table-column min-width="70" prop="source_name" :label="$t('ecf8f419.295713')" />
+            <el-table-column :label="$t('ecf8f419.2b6bc0')" width="250">
               <template slot-scope="scope">
                 <a v-show="false" ref="download" :href="downloadUrl" :download="downloadfilename" />
                 <template v-if="scope.row.edit_btn == 'Y'">
@@ -71,7 +75,7 @@
                     type="text"
                     @click="editAction(scope.$index, scope.row)"
                   >
-                    编辑活动
+                    {{ $t('ecf8f419.9bd915') }}
                   </el-button>
                 </template>
                 <el-button
@@ -79,14 +83,14 @@
                   type="text"
                   @click="updateStatusCommunityAction(scope.row)"
                 >
-                  终止活动
+                  {{ $t('ecf8f419.6489ff') }}
                 </el-button>
                 <el-button
                   v-if="scope.row.status == 'it_has_ended'"
                   type="text"
                   @click="editAction(scope.$index, scope.row)"
                 >
-                  查看活动
+                  {{ $t('ecf8f419.6579c6') }}
                 </el-button>
               </template>
             </el-table-column>
@@ -107,17 +111,17 @@
       </el-tabs>
     </template>
 
-    <el-dialog title="活动支持店铺列表" :visible.sync="dialogVisible" width="50%">
+    <el-dialog :title="$t('ecf8f419.81dc4f')" :visible.sync="dialogVisible" width="50%">
       <el-table v-loading="loading" :data="distributors.distributor_info" :height="wheight - 500">
-        <el-table-column prop="name" label="店铺名称" min-width="180" />
-        <el-table-column prop="address" label="地址" min-width="180" />
-        <el-table-column label="操作" width="250">
+        <el-table-column prop="name" :label="$t('ecf8f419.0d4934')" min-width="180" />
+        <el-table-column prop="address" :label="$t('ecf8f419.765048')" min-width="180" />
+        <el-table-column :label="$t('ecf8f419.2b6bc0')" width="250">
           <template slot-scope="scope">
             <el-button
               type="text"
               @click="uploadActionWxaCode(scope.$index, distributors, scope.row.distributor_id)"
             >
-              下载小程序码
+              {{ $t('ecf8f419.6d6503') }}
             </el-button>
           </template>
         </el-table-column>
@@ -167,18 +171,20 @@ export default {
       nowActivity: '',
       cursymbol: '',
       dialogVisible: false,
-      currency: {},
-      tabList: [
-        { name: '全部', activeName: 'all' },
-        { name: '未开始', activeName: 'waiting' },
-        { name: '预告中', activeName: 'in_the_notice' },
-        { name: '售卖中', activeName: 'in_sale' },
-        { name: '已结束', activeName: 'it_has_ended' }
-      ]
+      currency: {}
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    tabList() {
+      return [
+        { name: this.$t('ecf8f419.a8b0c2'), activeName: 'all' },
+        { name: this.$t('ecf8f419.dd4e55'), activeName: 'waiting' },
+        { name: this.$t('ecf8f419.2a1f77'), activeName: 'in_the_notice' },
+        { name: this.$t('ecf8f419.b793d3'), activeName: 'in_sale' },
+        { name: this.$t('ecf8f419.047fab'), activeName: 'it_has_ended' }
+      ]
+    }
   },
   watch: {
     getStatus(val) {
@@ -278,17 +284,17 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + row.seckill_id })
     },
     updateStatusCommunityAction(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('ecf8f419.01be42')
+      this.$confirm(msg, this.$t('ecf8f419.02d981'), {
+        cancelButtonText: this.$t('ecf8f419.625fb2'),
+        confirmButtonText: this.$t('ecf8f419.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then((response) => {
               this.fetchList()
               this.$message({
-                message: '修改活动状态成功',
+                message: this.$t('ecf8f419.b69694'),
                 type: 'success',
                 duration: 5 * 1000
               })

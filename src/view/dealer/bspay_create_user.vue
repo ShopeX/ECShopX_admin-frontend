@@ -7,7 +7,7 @@
   <SpPage>
     <div v-if="processed == '未填'" class="zyk_page_register_Info_edit">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane v-if="user_type == 'ent' || allShow" name="ent" label="企业">
+        <el-tab-pane v-if="user_type == 'ent' || allShow" name="ent" :label="$t('3ec151aa.04c9e3')">
           <el-form
             ref="ruleForm"
             :model="form"
@@ -18,34 +18,34 @@
             <!-- 企业信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>企业信息</span>
+                <span>{{ $t('3ec151aa.54796d') }}</span>
               </div>
 
               <div class="content">
                 <el-row :gutter="20">
                   <el-col :span="8">
-                    <el-form-item label="企业名称" prop="reg_name">
+                    <el-form-item :label="$t('3ec151aa.f47e27')" prop="reg_name">
                       <el-input v-model="form.reg_name" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="统一社会信用代码" prop="license_code">
+                    <el-form-item :label="$t('3ec151aa.25c0bd')" prop="license_code">
                       <el-input v-model="form.license_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="成立日期" prop="license_begin_date">
+                    <el-form-item :label="$t('3ec151aa.590847')" prop="license_begin_date">
                       <el-date-picker
                         v-model="form.license_begin_date"
                         type="date"
                         value-format="yyyyMMdd"
-                        placeholder="选择日期"
+                        :placeholder="$t('3ec151aa.2bebdd')"
                         style="width: 100%"
                       />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="营业期限是否为长期" prop="license_validity_type">
+                    <el-form-item :label="$t('3ec151aa.0202dc')" prop="license_validity_type">
                       <el-switch
                         v-model="form.license_validity_type"
                         active-value="1"
@@ -54,18 +54,18 @@
                     </el-form-item>
                   </el-col>
                   <el-col v-if="form.license_validity_type != 1" :span="8">
-                    <el-form-item label="营业期限" prop="license_end_date">
+                    <el-form-item :label="$t('3ec151aa.c857f2')" prop="license_end_date">
                       <el-date-picker
                         v-model="form.license_end_date"
                         type="date"
                         value-format="yyyyMMdd"
-                        placeholder="选择日期"
+                        :placeholder="$t('3ec151aa.2bebdd')"
                         style="width: 100%"
                       />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="住所省市区" prop="regionList">
+                    <el-form-item :label="$t('3ec151aa.e069d9')" prop="regionList">
                       <!-- <el-cascader
                         v-model="form.license_regions_id"
                         placeholder="住所地区"
@@ -89,7 +89,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="住所详细地址" prop="reg_detail">
+                    <el-form-item :label="$t('3ec151aa.a80b29')" prop="reg_detail">
                       <el-input v-model="form.reg_detail" />
                     </el-form-item>
                   </el-col>
@@ -99,37 +99,41 @@
             <!-- 法人信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>法人信息</span>
+                <span>{{ $t('3ec151aa.77d3e2') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="姓名" prop="legal_name">
+                  <el-form-item :label="$t('3ec151aa.60d045')" prop="legal_name">
                     <el-input v-model="form.legal_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="身份证号码" prop="legal_cert_no">
+                  <el-form-item :label="$t('3ec151aa.84e0cb')" prop="legal_cert_no">
                     <div class="flex">
                       <el-input v-model="form.legal_cert_no" />
-                      <el-tooltip content="字母X需大写" placement="top-end" effect="light">
+                      <el-tooltip
+                        :content="$t('3ec151aa.a1480c')"
+                        placement="top-end"
+                        effect="light"
+                      >
                         <i class="el-icon-warning-outline" />
                       </el-tooltip>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="身份证开始有效期" prop="legal_cert_begin_date">
+                  <el-form-item :label="$t('3ec151aa.a71128')" prop="legal_cert_begin_date">
                     <el-date-picker
                       v-model="form.legal_cert_begin_date"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('3ec151aa.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="有效期是否为长期" prop="legal_cert_validity_type">
+                  <el-form-item :label="$t('3ec151aa.15ed38')" prop="legal_cert_validity_type">
                     <el-switch
                       v-model="form.legal_cert_validity_type"
                       active-value="1"
@@ -138,12 +142,12 @@
                   </el-form-item>
                 </el-col>
                 <el-col v-if="form.legal_cert_validity_type != 1" :span="8">
-                  <el-form-item label="身份证结束有效期" prop="legal_cert_end_date">
+                  <el-form-item :label="$t('3ec151aa.4301ec')" prop="legal_cert_end_date">
                     <el-date-picker
                       v-model="form.legal_cert_end_date"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('3ec151aa.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
@@ -154,14 +158,14 @@
                   </el-form-item>
                 </el-col> -->
                 <el-col :span="8">
-                  <el-form-item label="手机号" prop="contact_mobile">
+                  <el-form-item :label="$t('3ec151aa.8098e2')" prop="contact_mobile">
                     <el-input v-model="form.contact_mobile" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="企业类型" prop="ent_type">
+                  <el-form-item :label="$t('3ec151aa.b5a728')" prop="ent_type">
                     <div class="flex">
-                      <el-select v-model="form.ent_type" placeholder="请选择">
+                      <el-select v-model="form.ent_type" :placeholder="$t('3ec151aa.708c9d')">
                         <el-option
                           v-for="(item, index) in ent_type_options"
                           :key="index"
@@ -177,14 +181,14 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('3ec151aa.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="结算银行账户类型" prop="card_type">
+                  <el-form-item :label="$t('3ec151aa.32734c')" prop="card_type">
                     <el-radio-group v-model="form.card_type">
-                      <el-radio label="0">对公</el-radio>
-                      <el-radio label="1">对私法人</el-radio>
+                      <el-radio label="0">{{ $t('3ec151aa.18ba13') }}</el-radio>
+                      <el-radio label="1">{{ $t('3ec151aa.7aa562') }}</el-radio>
                       <!-- <el-radio label="2">对私非法人</el-radio> -->
                     </el-radio-group>
                   </el-form-item>
@@ -199,12 +203,12 @@
                   </el-form-item>
                 </el-col> -->
                 <el-col :span="8">
-                  <el-form-item label="银行卡号" prop="card_no">
+                  <el-form-item :label="$t('3ec151aa.d98e9d')" prop="card_no">
                     <el-input v-model="form.card_no" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="开户行所在省市" prop="card_regions_id">
+                  <el-form-item :label="$t('3ec151aa.3d9865')" prop="card_regions_id">
                     <el-cascader
                       v-model="form.card_regions_id"
                       style="width: 100%"
@@ -219,12 +223,20 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item v-if="form.card_type == 0" label="银行号" prop="bank_code">
+                  <el-form-item
+                    v-if="form.card_type == 0"
+                    :label="$t('3ec151aa.fb4d4e')"
+                    prop="bank_code"
+                  >
                     <el-input v-model="form.bank_code" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item v-if="form.card_type == 0" label="支行名称" prop="branch_name">
+                  <el-form-item
+                    v-if="form.card_type == 0"
+                    :label="$t('3ec151aa.80c6d8')"
+                    prop="branch_name"
+                  >
                     <el-input v-model="form.branch_name" />
                   </el-form-item>
                 </el-col>
@@ -265,7 +277,7 @@
                   </el-form-item>
                 </el-col> -->
                 <el-col :span="8">
-                  <el-form-item label="银行卡绑定手机号" prop="mp">
+                  <el-form-item :label="$t('3ec151aa.534a1d')" prop="mp">
                     <el-input v-model="form.mp" />
                   </el-form-item>
                 </el-col>
@@ -274,7 +286,11 @@
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane v-if="user_type == 'indv' || allShow" name="indv" label="个人">
+        <el-tab-pane
+          v-if="user_type == 'indv' || allShow"
+          name="indv"
+          :label="$t('3ec151aa.6a0e04')"
+        >
           <el-form
             ref="indvForm"
             :model="indvForm"
@@ -285,34 +301,34 @@
             <!-- 基本信息-->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>基本信息</span>
+                <span>{{ $t('3ec151aa.9e5ffa') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="姓名" prop="name">
+                  <el-form-item :label="$t('3ec151aa.60d045')" prop="name">
                     <el-input v-model="indvForm.name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="身份证号码" prop="cert_no">
+                  <el-form-item :label="$t('3ec151aa.84e0cb')" prop="cert_no">
                     <div class="flex">
                       <el-input v-model="indvForm.cert_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="身份证开始有效期" prop="cert_begin_date">
+                  <el-form-item :label="$t('3ec151aa.a71128')" prop="cert_begin_date">
                     <el-date-picker
                       v-model="indvForm.cert_begin_date"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('3ec151aa.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="有效期是否为长期" prop="cert_validity_type">
+                  <el-form-item :label="$t('3ec151aa.15ed38')" prop="cert_validity_type">
                     <el-switch
                       v-model="indvForm.cert_validity_type"
                       active-value="1"
@@ -321,18 +337,18 @@
                   </el-form-item>
                 </el-col>
                 <el-col v-if="indvForm.cert_validity_type != 1" :span="8">
-                  <el-form-item label="身份证结束有效期" prop="cert_end_date">
+                  <el-form-item :label="$t('3ec151aa.4301ec')" prop="cert_end_date">
                     <el-date-picker
                       v-model="indvForm.cert_end_date"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('3ec151aa.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="手机号" prop="mobile_no">
+                  <el-form-item :label="$t('3ec151aa.8098e2')" prop="mobile_no">
                     <div class="flex">
                       <el-input v-model="indvForm.mobile_no" />
                     </div>
@@ -343,7 +359,7 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('3ec151aa.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <!-- <el-col :span="8">
@@ -352,19 +368,19 @@
                   </el-form-item>
                 </el-col> -->
                 <el-col :span="8">
-                  <el-form-item label="银行卡号" prop="card_no">
+                  <el-form-item :label="$t('3ec151aa.d98e9d')" prop="card_no">
                     <el-input v-model="indvForm.card_no" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="银行预留手机号" prop="mp">
+                  <el-form-item :label="$t('3ec151aa.a0b7da')" prop="mp">
                     <div class="flex">
                       <el-input v-model="indvForm.mp" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="开户行所在省市" prop="card_regions_id">
+                  <el-form-item :label="$t('3ec151aa.3d9865')" prop="card_regions_id">
                     <el-cascader
                       v-model="indvForm.card_regions_id"
                       style="width: 100%"
@@ -387,7 +403,7 @@
             ref="loadingBtn"
             size="medium"
             type="primary"
-            text="提交审核"
+            :text="$t('3ec151aa.646db0')"
             @clickHandle="submit"
           />
         </div>
@@ -577,7 +593,7 @@ export default {
             resultStatus: 'failed',
             time: update_time,
             info: audit_desc,
-            title: '开户'
+            title: this.$t('3ec151aa.a7cd73')
           }
           break
         case 'C': // 开户成功
@@ -586,7 +602,7 @@ export default {
             resultStatus: 'netin',
             time: update_time,
             info: audit_desc,
-            title: '开户'
+            title: this.$t('3ec151aa.a7cd73')
           }
           break
       }
@@ -628,16 +644,16 @@ export default {
             // 更新
             const { status } = await this.$api.bspay.modifyUserEnt(this.form)
             if (status) {
-              this.$message.success('提交成功')
+              this.$message.success(this.$t('3ec151aa.23b62e'))
               this.currentStatus = {
                 resultStatus: 'pending',
                 time: '',
                 info: '',
-                title: '开户'
+                title: this.$t('3ec151aa.a7cd73')
               }
               this.processed = '已填'
             } else {
-              this.$message.error('失败')
+              this.$message.error(this.$t('3ec151aa.acd5cb'))
             }
           } else {
             console.log('this.form:', this.form)
@@ -645,12 +661,12 @@ export default {
             try {
               const { status } = await this.$api.bspay.createUserEnt(this.form)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('3ec151aa.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('3ec151aa.a7cd73')
                 }
                 this.processed = '已填'
                 this.$refs[ref].closeLoading()
@@ -660,7 +676,7 @@ export default {
             }
           }
         } else {
-          this.$message.error('请完善您的信息~')
+          this.$message.error(this.$t('3ec151aa.42ef0e'))
           this.$refs.loadingBtn.loading = false
 
           // return false
@@ -677,12 +693,12 @@ export default {
             try {
               const { status } = await this.$api.bspay.modifyUserIndv(this.indvForm)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('3ec151aa.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('3ec151aa.a7cd73')
                 }
                 this.processed = '已填'
               }
@@ -695,12 +711,12 @@ export default {
             try {
               const { status } = await this.$api.bspay.createUserIndv(this.indvForm)
               if (status) {
-                this.$message.success('提交成功')
+                this.$message.success(this.$t('3ec151aa.23b62e'))
                 this.currentStatus = {
                   resultStatus: 'pending',
                   time: '',
                   info: '',
-                  title: '开户'
+                  title: this.$t('3ec151aa.a7cd73')
                 }
                 this.processed = '已填'
                 this.$refs[ref].closeLoading()
@@ -710,7 +726,7 @@ export default {
             }
           }
         } else {
-          this.$message.error('请完善您的信息哦~')
+          this.$message.error(this.$t('3ec151aa.e08d23'))
           this.$refs[ref].closeLoading()
 
           return false
@@ -729,10 +745,10 @@ export default {
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
       if (!isZip) {
-        this.$message.error('文件类型应为Zip')
+        this.$message.error(this.$t('3ec151aa.644239'))
       }
       if (!isLt2M) {
-        this.$message.error('上传文件不能超过 8MB!')
+        this.$message.error(this.$t('3ec151aa.c5f04b'))
       }
       return isZip && isLt2M
     },

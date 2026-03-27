@@ -70,7 +70,7 @@
 <template>
   <div class="refund-goods-address">
     <div class="tip">
-      退货点信息会在买家选择到店退货时展示，初次使用此功能时本店退货点默认为选中状态（可退货店铺列表内未展示），可在保存店铺信息后再次进入此页面移除。
+      {{ $t('add1f60e.7f3581') }}
     </div>
     <SpForm
       ref="form"
@@ -102,15 +102,15 @@ export default {
       },
       formList: [
         {
-          label: '退货点名称',
+          label: this.$t('add1f60e.4a3fed'),
           key: 'name',
           type: 'input',
           className: 'refund-name',
           width: 'auto',
-          placeholder: '请填写退货点名称便于买家理解和管理'
+          placeholder: this.$t('add1f60e.acb9a6')
         },
         {
-          label: '退货点地址',
+          label: this.$t('add1f60e.fba620'),
           width: 'auto',
           component: ({ key }, value) => {
             return (
@@ -119,31 +119,35 @@ export default {
                 <el-input
                   v-model={value['address']}
                   class='address'
-                  placeholder='请填写退货点的具体地址'
+                  placeholder={this.$t('add1f60e.b4b052')}
                 />
               </div>
             )
           }
         },
         {
-          label: '联系电话',
+          label: this.$t('add1f60e.09a1f6'),
           width: 'auto',
           component: ({ key }, value) => {
             return (
               <div class='concat-mobile'>
-                <el-input v-model={value['area_code']} class='input-area-code' placeholder='区号' />
+                <el-input
+                  v-model={value['area_code']}
+                  class='input-area-code'
+                  placeholder={this.$t('add1f60e.9a0e44')}
+                />
                 <span class='separator'>~</span>
                 <el-input
                   v-model={value['mobile']}
                   class='input-mobile'
-                  placeholder='请填写准确的联系电话，便于买家联系（手机号时，区号可为空）'
+                  placeholder={this.$t('add1f60e.8f24ce')}
                 />
               </div>
             )
           }
         },
         {
-          label: '营业时间',
+          label: this.$t('add1f60e.cc3307'),
           width: 'auto',
           component: ({ key }, value) => {
             return (
@@ -151,7 +155,7 @@ export default {
                 <el-time-select
                   v-model={value['startTime']}
                   class='input-start'
-                  placeholder='起始时间'
+                  placeholder={this.$t('add1f60e.26dac3')}
                   picker-options={{
                     start: '00:00',
                     step: '00:30',
@@ -162,7 +166,7 @@ export default {
                 <el-time-select
                   v-model={value['endTime']}
                   class='input-end'
-                  placeholder='结束时间'
+                  placeholder={this.$t('add1f60e.f78277')}
                   picker-options={{
                     start: '00:00',
                     step: '00:30',

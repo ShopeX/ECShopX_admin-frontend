@@ -19,7 +19,7 @@
       v-model="selected_params.regions_value"
       :size="size"
       class="input-m"
-      placeholder="根据地区筛选"
+      :placeholder="$t('ee8f181b.491f74')"
       :options="regions"
       filterable
       :props="{ checkStrictly: true }"
@@ -53,7 +53,7 @@
         :value="item.distributor_id"
       />
     </el-select>
-    <span v-else class="input-m content-center muted no-shop">暂无符合要求的店铺</span>
+    <span v-else class="input-m content-center muted no-shop">{{ $t('ee8f181b.2b4f29') }}</span>
     <!-- <el-button @click="init">重置</el-button> -->
   </div>
 </template>

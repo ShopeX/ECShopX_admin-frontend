@@ -54,12 +54,7 @@
       }"
       url="/article/management"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: 'ID', key: 'article_id', width: 80 },
-          { name: '文章标题', key: 'title' }
-        ]
-      }"
+      :setting="articleSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -81,6 +76,16 @@ export default {
     title: '选择文章'
   },
   props: ['value'],
+  computed: {
+    articleSetting() {
+      return {
+        columns: [
+          { name: 'ID', key: 'article_id', width: 80 },
+          { name: this.$t('9bbe0bc6.7526a0'), key: 'title' }
+        ]
+      }
+    }
+  },
   data() {
     return {
       formData: {
@@ -89,7 +94,9 @@ export default {
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('9bbe0bc6.b72fad')
+  },
   methods: {
     beforeSearch(params) {
       // const { keywords } = this.formData

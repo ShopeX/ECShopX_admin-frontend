@@ -9,28 +9,32 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <el-tabs v-model="activeTab" type="card" @tab-click="fetchPageList">
-        <el-tab-pane label="自定义页面" name="normal" />
-        <el-tab-pane label="我的页面" name="my" />
+        <el-tab-pane :label="$t('0255d436.d7bc07')" name="my" />
+        <el-tab-pane :label="$t('0255d436.cee6eb')" name="normal" />
       </el-tabs>
 
       <div class="action-container">
-        <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
+        <el-button type="primary" icon="plus" @click="openDialog()">
+          {{ $t('0255d436.4c503b') }}
+        </el-button>
       </div>
 
       <el-table border v-loading="loading" :data="list">
-        <el-table-column prop="id" label="页面id" />
-        <el-table-column prop="page_name" label="页面名称" />
-        <el-table-column label="是否启用">
+        <el-table-column prop="id" :label="$t('0255d436.6872c7')" />
+        <el-table-column prop="page_name" :label="$t('0255d436.b78454')" />
+        <el-table-column :label="$t('0255d436.53c3dd')">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.is_open == '0'" type="info"> 禁用 </el-tag>
-            <el-tag v-else type="warning"> 启用 </el-tag>
+            <el-tag v-if="scope.row.is_open == '0'" type="info">
+              {{ $t('0255d436.710ad0') }}
+            </el-tag>
+            <el-tag v-else type="warning"> {{ $t('0255d436.7854b5') }} </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="100">
+        <el-table-column :label="$t('0255d436.2b6bc0')" min-width="100">
           <template slot-scope="scope">
             <div class="flex items-center flex-wrap gap-2">
               <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
-                页面装修
+                {{ $t('0255d436.6343df') }}
               </el-button>
               <el-button type="text" class="m-0 px-1">
                 <a
@@ -38,12 +42,12 @@
                   class="no-underline text-inherit"
                   @click="openDialog(scope.row)"
                 >
-                  编辑
+                  {{ $t('0255d436.95b351') }}
                 </a>
               </el-button>
               <el-popover v-if="appID" placement="top" width="200" trigger="click">
                 <div>
-                  <img class="page-code" :src="appCodeUrl" />
+                  <img class="page-code" :src="appCodeUrl">
                   <div class="page-btns">
                     <el-button
                       type="primary"
@@ -51,10 +55,10 @@
                       size="mini"
                       @click="handleDownload(scope.row.page_name)"
                     >
-                      下载码
+                      {{ $t('0255d436.99e985') }}
                     </el-button>
                     <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                      复制链接
+                      {{ $t('0255d436.879058') }}
                     </el-button>
                   </div>
                 </div>
@@ -64,7 +68,7 @@
                   class="m-0 px-1"
                   @click="handleClick(scope.row.id)"
                 >
-                  投放
+                  {{ $t('0255d436.536ff1') }}
                 </el-button>
               </el-popover>
               <el-button type="text" class="m-0 pl-2">
@@ -73,7 +77,7 @@
                   class="no-underline text-inherit"
                   @click="delPage(scope.row.id)"
                 >
-                  删除
+                  {{ $t('0255d436.2f4aad') }}
                 </a>
               </el-button>
             </div>
@@ -91,14 +95,18 @@
         />
       </div>
       <el-dialog
-        :title="dialogTitle"
+        :title="dialogTitleI18n"
         :visible.sync="page_dialog"
         :close-on-click-modal="false"
         :before-close="handleCancel"
       >
         <el-form v-model="pageForm" label-width="200px">
-          <el-form-item label="页面名称">
-            <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
+          <el-form-item :label="$t('0255d436.b78454')">
+            <el-input
+              v-model="pageForm.page_name"
+              :placeholder="$t('0255d436.b78454')"
+              style="width: 55%"
+            />
           </el-form-item>
           <!-- <el-form-item label="页面类型">
             <el-select v-model="pageForm.page_type" placeholder="请选择页面类型" style="width: 55%">
@@ -110,30 +118,30 @@
               />
             </el-select>
           </el-form-item> -->
-          <el-form-item label="页面描述">
+          <el-form-item :label="$t('0255d436.abf8f4')">
             <el-input
               v-model="pageForm.page_description"
-              placeholder="页面描述"
+              :placeholder="$t('0255d436.abf8f4')"
               style="width: 55%"
             />
           </el-form-item>
-          <el-form-item label="分享标题">
+          <el-form-item :label="$t('0255d436.382e6f')">
             <el-input
               v-model="pageForm.page_share_title"
-              placeholder="分享标题"
+              :placeholder="$t('0255d436.382e6f')"
               style="width: 55%"
             />
           </el-form-item>
           <!-- <el-form-item label="分享描述">
             <el-input v-model="pageForm.page_share_desc" placeholder="分享描述" style="width: 55%;"></el-input>
           </el-form-item> -->
-          <el-form-item label="分享图片">
+          <el-form-item :label="$t('0255d436.106d52')">
             <div class="upload-box" @click="handleImgChange()">
               <img
                 v-if="pageForm.page_share_imageUrl"
                 :src="wximageurl + pageForm.page_share_imageUrl"
                 class="avatar"
-              />
+              >
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
             <!-- <imgPicker
@@ -143,18 +151,18 @@
               @closeImgDialog="closeImgDialog"
             /> -->
           </el-form-item>
-          <el-form-item label="是否启用">
+          <el-form-item :label="$t('0255d436.53c3dd')">
             <el-switch v-model="pageForm.is_open" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button type="primary" @click="savePage"> 确认保存 </el-button>
+          <el-button type="primary" @click="savePage"> {{ $t('0255d436.babc8f') }} </el-button>
         </div>
       </el-dialog>
       <el-dialog
         :visible.sync="template_dialog"
         destroy-on-close
-        title="编辑页面"
+        :title="$t('0255d436.49bcb8')"
         fullscreen
         lock-scroll
       >
@@ -189,7 +197,7 @@ export default {
       template_dialog: false,
       page_dialog: false,
       total_count: 0,
-      dialogTitle: '新增页面',
+      dialogMode: 'new',
       loading: false,
       appID: '',
       appCodeUrl: '',
@@ -214,11 +222,14 @@ export default {
         { label: '自定义', value: 'normal' },
         { label: '个人中心', value: 'my' }
       ],
-      activeTab: 'normal' // 添加activeTab
+      activeTab: 'my' // 默认「我的页面」
     }
   },
   computed: {
-    ...mapGetters(['template_name'])
+    ...mapGetters(['template_name']),
+    dialogTitleI18n() {
+      return this.dialogMode === 'edit' ? this.$t('0255d436.49bcb8') : this.$t('0255d436.0024d3')
+    }
   },
   mounted() {
     this.fetchPageList()
@@ -272,9 +283,9 @@ export default {
       this.fetchPageList()
     },
     delPage(id) {
-      this.$confirm('确认删除当前页面吗？').then((_) => {
+      this.$confirm(this.$t('0255d436.682fb3')).then((_) => {
         delCustomPage(id).then((res) => {
-          this.$message({ type: 'success', message: '操作成功！' })
+          this.$message({ type: 'success', message: this.$t('0255d436.3b6eb9') })
           this.fetchPageList()
         })
       })
@@ -286,9 +297,9 @@ export default {
         if (detail.is_open == 1) {
           this.pageForm.is_open = true
         }
-        this.dialogTitle = '编辑页面'
+        this.dialogMode = 'edit'
       } else {
-        this.dialogTitle = '新增页面'
+        this.dialogMode = 'new'
         this.pageForm = {
           id: '',
           page_name: '',
@@ -323,17 +334,17 @@ export default {
         page_type
       }
       try {
-        if (this.dialogTitle == '编辑页面') {
+        if (this.dialogMode === 'edit') {
           await editCustomPage(id, params)
         }
-        if (this.dialogTitle == '新增页面') {
+        if (this.dialogMode === 'new') {
           await createCustomPage(params)
         }
         this.page_dialog = false
         this.fetchPageList()
         this.$message({
           type: 'success',
-          message: '保存页面成功'
+          message: this.$t('0255d436.800bb4')
         })
       } catch (error) {
         console.log(error)

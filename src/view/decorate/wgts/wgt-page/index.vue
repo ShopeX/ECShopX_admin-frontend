@@ -25,17 +25,34 @@
     background-size: cover;
     background-position: 50%;
     overflow: hidden;
+    padding-right: 94px;
+    box-sizing: border-box;
+  }
+
+  .header-content-left {
+    width: 94px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 15px;
   }
 
   .header-container {
     height: 32px;
     margin-top: 26px;
     line-height: 32px;
-    padding: 0 15px;
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+
+    .title-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      flex: 1;
+      min-width: 0;
+    }
 
     &.has-nearby {
       justify-content: flex-start;
@@ -97,7 +114,6 @@
       margin-left: 0;
       position: relative;
       z-index: 2; // 确保在功能区之上
-      padding-right: 85px;
       box-sizing: border-box;
 
       // 当有功能区（热区图）时，添加左边距避免覆盖
@@ -112,14 +128,16 @@
         border-radius: 4px;
         overflow: hidden;
         position: relative;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-right: 5px;
 
         .search-input {
           flex: 1;
           height: 32px;
           padding: 0 12px 0 20px;
-          border: 1px solid #e0e0e0;
           border-right: none;
-          border-radius: 4px 0 0 4px;
           background-color: #fff;
           font-size: 14px;
           outline: none;
@@ -167,46 +185,37 @@
 <template>
   <div class="wgt-page" :style="headerStyle" @click="handleClickHeader">
     <div class="wgt-page-content" :style="contentStyle">
-      <div
-        v-if="value && value.titleStyle != '0'"
-        class="header-container"
-        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }"
-        :style="containerStyle"
-      >
-        <!-- 功能区：热区图 -->
-        <div
-          class="title-function"
-          v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl"
-        >
-          <sp-image class="title-function-image" :src="functionAreaHotzone.imgUrl" />
-        </div>
-        <!-- 功能区：附近门店 -->
-        <div
-          v-if="showFunctionArea && functionAreaType === 'nearby'"
-          class="title-function nearby-function"
-        >
-          <p class="nearby-function-text">上海</p>
-          <i class="nearby-function-icon el-icon-arrow-down" />
-          <!-- 附近门店组件，可根据需要添加 -->
-        </div>
-        <!-- 标题区：搜索 -->
-        <div v-if="value.titleStyle == '3' && value.showSearchButton" class="title-search">
-          <div class="search-container">
-            <i class="el-icon-search search-icon" />
-            <input type="text" class="search-input" placeholder="" />
-            <div class="search-button" :style="searchButtonStyle">
-              <span>搜索</span>
-            </div>
+      <div v-if="value && value.titleStyle != '0'" class="header-container"
+        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }" :style="containerStyle">
+        <div class="header-content-left">
+          <!-- 功能区：热区图 -->
+          <div class="title-function"
+            v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl">
+            <sp-image class="title-function-image" :src="functionAreaHotzone.imgUrl" />
+          </div>
+          <!-- 功能区：附近门店 -->
+          <div v-if="showFunctionArea && functionAreaType === 'nearby'" class="title-function nearby-function">
+            <p class="nearby-function-text">{{ i18n.t('33e085f7.e94e8b') }}</p>
+            <i class="nearby-function-icon el-icon-arrow-down" />
+            <!-- 附近门店组件，可根据需要添加 -->
           </div>
         </div>
-        <!-- 标题区：页面名称 -->
-        <div v-if="value.titleStyle == '1'" class="title-text">{{ value.wgtName }}</div>
-        <!-- 标题区：图片 -->
-        <sp-image
-          v-if="value.titleStyle == '2'"
-          class="title-image"
-          :src="value.titleBackgroundImage"
-        />
+        <div class="title-container">
+          <!-- 标题区：搜索 -->
+          <div v-if="value.titleStyle == '3' && value.showSearchButton" class="title-search">
+            <div class="search-container">
+              <i class="el-icon-search search-icon" />
+              <input type="text" class="search-input" placeholder="">
+              <div class="search-button" :style="searchButtonStyle">
+                <span>{{ i18n.t('33e085f7.e5f71f') }}</span>
+              </div>
+            </div>
+          </div>
+          <!-- 标题区：页面名称 -->
+          <div v-if="value.titleStyle == '1'" class="title-text">{{ value.wgtName }}</div>
+          <!-- 标题区：图片 -->
+          <sp-image v-if="value.titleStyle == '2'" class="title-image" :src="value.titleBackgroundImage" />
+        </div>
       </div>
     </div>
   </div>
@@ -215,10 +224,11 @@
 <script>
 const weappHeaderDark = require('@/assets/imgs/weapp-header-dark.png')
 const weappHeaderLight = require('@/assets/imgs/weapp-header-light.png')
+import { i18n } from '@/i18n'
 import config from './config'
 export default {
   name: 'Page',
-  wgtName: '页面设置',
+  wgtName: i18n.t('33e085f7.a018ef'),   
   wgtDesc: '',
   config: config,
   props: {
@@ -226,7 +236,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {}
+    return { i18n }
   },
   computed: {
     headerStyle() {
@@ -247,11 +257,10 @@ export default {
     contentStyle() {
       const { navigateBackgroundColor } = this.value || {}
       return {
-        'background-image': `url(${
-          this.isLight(this.get16ToRgb(navigateBackgroundColor))
+        'background-image': `url(${this.isLight(this.get16ToRgb(navigateBackgroundColor))
             ? weappHeaderDark
             : weappHeaderLight
-        })`
+          })`
       }
     },
     containerStyle() {
@@ -282,7 +291,7 @@ export default {
       }
     }
   },
-  created() {},
+  created() { },
   methods: {
     handleClickHeader() {
       this.$emit('change')

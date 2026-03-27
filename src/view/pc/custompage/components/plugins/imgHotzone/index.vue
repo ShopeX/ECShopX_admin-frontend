@@ -8,7 +8,7 @@
     <slot />
     <div class="gray-box">
       <div class="floor">
-        <img :src="t_data.config.imgUrl" alt="" />
+        <img :src="t_data.config.imgUrl" alt="">
       </div>
     </div>
   </div>

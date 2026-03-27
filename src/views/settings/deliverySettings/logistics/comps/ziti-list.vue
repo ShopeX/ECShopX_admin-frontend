@@ -16,7 +16,7 @@
 <template>
   <div class="ziti-list">
     <div class="ziti-tip">
-      一个自提点仅可被一个店铺绑定使用；每个店铺可绑定多个自提点，绑定至同一店铺的自提点共享该店铺库存。
+      {{ $t('2c67fb39.ba3778') }}
     </div>
 
     <SpFormPlus
@@ -29,7 +29,7 @@
     />
 
     <div class="action-container mt-5">
-      <el-button type="primary" @click="createZitiAddress"> 新增自提点 </el-button>
+      <el-button type="primary" @click="createZitiAddress">{{ $t('2c67fb39.57eecc') }}</el-button>
     </div>
 
     <SpFinder
@@ -56,18 +56,22 @@ export default {
         region: [],
         keywords: ''
       },
-      district,
-      formItems: [
+      district
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           fieldName: 'region',
-          label: '自提点地址',
+          label: this.$t('2c67fb39.b73851'),
           component: ({ h, value, onInput, props }) => {
             return h('el-cascader', {
               props: {
                 value: value,
                 filterable: true,
                 clearable: true,
-                placeholder: '选择地区筛选',
+                placeholder: this.$t('2c67fb39.3fc1b5'),
                 options: props.options || [],
                 size: 'small'
               },
@@ -77,24 +81,26 @@ export default {
             })
           },
           componentProps: {
-            options: district
+            options: this.district
           }
         },
         {
           fieldName: 'keywords',
-          label: '自提点名称',
+          label: this.$t('2c67fb39.6b88c4'),
           component: 'input',
           formItemClass: 'keywords-field-close',
           componentProps: {
-            placeholder: '自提点名称关键词',
+            placeholder: this.$t('2c67fb39.e48266'),
             size: 'default'
           }
         }
-      ],
-      setting: createSetting({
+      ]
+    },
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '编辑',
+            name: this.$t('2c67fb39.95b351'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -107,15 +113,15 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: this.$t('2c67fb39.2f4aad'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认删除？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
+                await this.$confirm(this.$t('2c67fb39.b28efa'), this.$t('2c67fb39.02d981'), {
+                  confirmButtonText: this.$t('2c67fb39.38cf16'),
+                  cancelButtonText: this.$t('2c67fb39.625fb2')
                 })
                 await this.$api.pickuplocation.deleteZitiLocation(row.id)
                 this.$refs['finder'].refresh()
@@ -124,18 +130,18 @@ export default {
           }
         ],
         columns: [
-          { name: '自提点名称', key: 'name' },
+          { name: this.$t('2c67fb39.6b88c4'), key: 'name' },
           {
-            name: '地址',
+            name: this.$t('2c67fb39.765048'),
             render: (h, { row }) =>
               h('span', {}, `${row.province}${row.city}${row.area}${row.address}`)
           },
           {
-            name: '联系电话',
+            name: this.$t('2c67fb39.09a1f6'),
             key: 'contract_phone'
           },
           {
-            name: '绑定店铺',
+            name: this.$t('2c67fb39.7318a6'),
             key: 'rel_distributor_name',
             render: (h, { row }) => {
               return (

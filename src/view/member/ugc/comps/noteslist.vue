@@ -10,16 +10,16 @@
 
       <el-table-column prop="post_id" label="id" />
 
-      <el-table-column prop="title" label="笔记标题" />
+      <el-table-column prop="title" :label="$t('c5ae46b6.70dd91')" />
 
-      <el-table-column label="角标" prop="badges[0].badge_name" />
+      <el-table-column :label="$t('c5ae46b6.b8c467')" prop="badges[0].badge_name" />
 
-      <el-table-column prop="status_text" label="笔记状态" />
+      <el-table-column prop="status_text" :label="$t('c5ae46b6.0326f3')" />
 
-      <el-table-column label="排序">
+      <el-table-column :label="$t('c5ae46b6.c360e9')">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.is_top == '1'" type="danger" size="mini" effect="dark">
-            置项
+            {{ $t('c5ae46b6.1b8e54') }}
           </el-tag>
           <div v-else class="text">
             {{ scope.row.p_order }}
@@ -27,16 +27,16 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="创建人">
+      <el-table-column :label="$t('c5ae46b6.95a43e')">
         <template slot-scope="scope">
-          <div v-if="scope.row.source == '2'">管理员</div>
-          <div v-else>{{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}</div>
+          <div v-if="scope.row.source == '2'">{{ $t('c5ae46b6.b1dae9') }}</div>
+          <div v-else>{{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="created_text" label="创建时间" />
+      <el-table-column prop="created_text" :label="$t('c5ae46b6.eca37c')" />
 
-      <el-table-column v-if="handleType" label="操作" width="160" align="center">
+      <el-table-column v-if="handleType" :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
           <div class="operating-icons">
             <el-button
@@ -44,7 +44,7 @@
               type="text"
               @click="viewDetails(scope.row, scope.$index)"
             >
-              详情
+              {{ $t('a0d7a294.f26225') }}
             </el-button>
 
             <el-button v-if="scope.row.source == '2'" type="text">
@@ -54,7 +54,7 @@
                   query: { id: scope.row.post_id }
                 }"
               >
-                编辑
+                {{ $t('e240ae54.95b351') }}
               </router-link>
             </el-button>
 
@@ -81,11 +81,11 @@ export default {
   computed: {
     resetText() {
       return (row) => {
-        var text = '审核'
+        var text = this.$t('e240ae54.cf13b1')
         if (row.status == '1') {
-          text = '下架'
+          text = this.$t('e240ae54.d2379a')
         } else if (row.status == '2') {
-          text = '发布'
+          text = this.$t('2e5b8fba.83611a')
         }
         return text
       }

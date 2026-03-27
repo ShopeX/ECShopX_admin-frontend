@@ -36,14 +36,14 @@
             size="small"
             style="margin-bottom: 10px; margin-top: 10px"
           >
-            <el-radio label="normal">普通商品</el-radio>
-            <el-radio label="point">积分商品</el-radio>
+            <el-radio label="normal">{{ i18n.t('4e93daf5.0f7a66') }}</el-radio>
+            <el-radio label="point">{{ i18n.t('4e93daf5.fe0ea1') }}</el-radio>
           </el-radio-group>
           <CompButton
             v-if="scope.data.type == 'point'"
             :value="scope.data.pointGoods.length"
-            placeholder="选择积分商品"
-            format="{0}件商品"
+            :placeholder="i18n.t('4e93daf5.5d71c6')"
+            :format="i18n.t('1253b8e4.156ada')"
             @click="handleSelectPointGoods(scope.data.pointGoods, scope.index)"
             @remove="onRemovePointItem(scope.index)"
             @view="onViewPointItem(scope.index)"
@@ -51,8 +51,8 @@
           <CompButton
             v-else
             :value="scope.data.goodsList.length"
-            placeholder="选择商品"
-            format="{0}件商品"
+            :placeholder="i18n.t('1253b8e4.43d1e2')"
+            :format="i18n.t('1253b8e4.156ada')"
             @click="handleSelectGoods(scope.data.goodsList, scope.index)"
             @remove="onRemoveItem(scope.index)"
             @view="onViewItem(scope.index)"
@@ -64,7 +64,8 @@
 </template>
 
 <script>
-// import classifyDialog from "./classifyDialog.vue"
+import { i18n } from '@/i18n'
+import classifyDialog from "./classifyDialog.vue"
 import { cloneDeep } from 'lodash'
 import CompButton from '../../comps/comp-button'
 import CompTodoList from '../../comps/comp-todoList'
@@ -73,7 +74,7 @@ export default {
   components: { CompButton, CompTodoList },
   props: ['value'],
   data() {
-    return {
+    return {i18n,
       localValue: []
     }
   },
@@ -175,7 +176,12 @@ export default {
       this.localValue[index].pointGoods = values
     },
     handleAddTabs() {
-      this.localValue.push({ tabTitle: '标签', goodsList: [], type: 'normal', pointGoods: [] })
+      this.localValue.push({
+        tabTitle: i18n.t('4e93daf5.14d342'),
+        goodsList: [],
+        type: 'normal',
+        pointGoods: []
+      })
     },
     onRemoveItem(index) {
       this.localValue[index].goodsList = []

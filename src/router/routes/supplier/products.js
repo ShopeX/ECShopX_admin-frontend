@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'entity',
       icon: 'commodity',
       keepAlive: true,
-      title: '商品'
+      title: 'e8b0aec3.9897d8'
     },
     name: 'supplierEntitygoods',
     path: '/supplier/entity',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'goodsphysical',
           icon: 'icon-products',
-          title: '商品管理',
+          title: 'e8b0aec3.5782b6',
           permissions: ['entity.goodsphysical']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/goods/index'),
             meta: {
-              title: '编辑商品',
+              title: 'e8b0aec3.7d3792',
               hidden: true,
               footerFixed: true
             }
@@ -40,7 +40,7 @@ const routes = [
             path: 'physicalupload/:itemId?',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload.vue'),
             meta: {
-              title: '同步淘宝商品',
+              title: 'e8b0aec3.a4c910',
               hidden: true
             }
           },
@@ -48,7 +48,7 @@ const routes = [
             path: 'stock-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
             meta: {
-              title: '库存导入',
+              title: 'e8b0aec3.ac5320',
               hidden: true
             }
           },
@@ -56,7 +56,7 @@ const routes = [
             path: 'profit-sharing-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload'),
             meta: {
-              title: '分润导入',
+              title: 'e8b0aec3.022564',
               hidden: true
             }
           },
@@ -64,7 +64,7 @@ const routes = [
             path: 'product-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload'),
             meta: {
-              title: '商品导入',
+              title: 'e8b0aec3.9745ac',
               hidden: true
             }
           }
@@ -77,7 +77,7 @@ const routes = [
         meta: {
           aliasName: 'physicalupload',
           icon: 'icon-products',
-          title: '商品导入',
+          title: 'e8b0aec3.9745ac',
           permissions: ['entity.physicalupload']
         }
       },
@@ -88,7 +88,7 @@ const routes = [
         meta: {
           aliasName: 'brandmaterial',
           icon: 'icon-products',
-          title: '素材管理',
+          title: 'e8b0aec3.b49e2f',
           permissions: ['entity.brandmaterial']
         },
         children: [

@@ -5,57 +5,55 @@
 
 <template>
   <section v-if="name === 'coupon'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('64cb1465.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('64cb1465.32c65d')">
           <el-input v-model="base.title" type="text" />
         </el-form-item>
-        <el-form-item label="副标题">
+        <el-form-item :label="$t('64cb1465.72cf37')">
           <el-input v-model="base.subtitle" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('64cb1465.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="选择优惠券">
+        <el-form-item :label="$t('64cb1465.45bcee')">
           <div v-for="(item, index) in data" :key="index" class="setting-item item-selected">
             <div class="old-styles">
-              <!--<img v-if="item.imgUrl" :src="wximageurl + item.imgUrl" class="banner-uploader square thumbnail" @click="handleImgChange(index)"/>
-              <div class="banner-uploader square thumbnail" v-else @click="handleImgChange(index)">
-                <div class="content-center">
-                  <i class="el-icon-camera"></i>
-                </div>
-              </div>-->
               {{ item.title }}
-              <span v-if="item.type === 'cash'" class="amount-cur">{{ item.amount }}元满减券</span>
-              <span v-if="item.type === 'discount'" class="amount-cur">{{ item.amount }}折券</span>
+              <span v-if="item.type === 'cash'" class="amount-cur"
+                >{{ item.amount }}{{ $t('64cb1465.eeeebc') }}</span
+              >
+              <span v-if="item.type === 'discount'" class="amount-cur"
+                >{{ item.amount }}{{ $t('64cb1465.656b64') }}</span
+              >
 
               <div class="setting-remove" @click="removeItem(index)">
                 <i class="el-icon-delete" />
               </div>
             </div>
             <div class="background-color">
-              背景色：
+              {{ $t('64cb1465.751081') }}
               <el-color-picker v-model="item.backgroundOne" />
               <el-color-picker v-model="item.backgroundTwo" />
               <el-color-picker v-model="item.backgroundThree" />
 
-              按钮文字颜色：<el-color-picker v-model="item.btnColor" />
+              {{ $t('64cb1465.76c59e') }}<el-color-picker v-model="item.btnColor" />
             </div>
             <div class="background-color">
-              开始时间：<el-input v-model="item.startTime" type="text" />
+              {{ $t('64cb1465.61e84e') }}<el-input v-model="item.startTime" type="text" />
             </div>
             <div class="background-color">
-              结束时间：<el-input v-model="item.endTime" type="text" />
+              {{ $t('64cb1465.590dbb') }}<el-input v-model="item.endTime" type="text" />
             </div>
           </div>
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+          <div class="frm-tips">{{ $t('64cb1465.d5a0d5') }}</div>
           <el-button
             type="default"
             class="iconfont icon-cog banner-button-uploader"
             @click="setCoupons"
           >
-            设置优惠券
+            {{ $t('64cb1465.8436e0') }}
           </el-button>
         </el-form-item>
       </el-form>

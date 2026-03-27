@@ -12,7 +12,7 @@ const routes = [
       icon: 'ad-product',
       // icon: 'application',
       keepAlive: true,
-      title: '供应'
+      title: '55038796.104fec'
     },
     name: 'supply',
     path: '/supply',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'supplier_goods_list',
           icon: 'pay-circle',
-          title: '商品管理',
+          title: '55038796.5782b6',
           permissions: ['supply.supplygoods.supplier_goods_list']
         },
         component: () => import('@/view/mall/goods/physical/supplier_goods_list'),
@@ -38,17 +38,17 @@ const routes = [
           },
           {
             path: 'physicalstoreupload',
-            name: `库存导入`,
+            name: `55038796.ac5320`,
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload')
           },
           {
             path: 'physicalprofitupload',
-            name: `分润导入`,
+            name: `55038796.022564`,
             component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload')
           },
           {
             path: 'physicalupload',
-            name: `商品导入`,
+            name: `55038796.9745ac`,
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
           }
         ]
@@ -59,7 +59,7 @@ const routes = [
         meta: {
           aliasName: 'goods_suppliergoods',
           icon: 'pay-circle',
-          title: '商品审核',
+          title: '55038796.a453a5',
           permissions: ['supply.supplygoods.goods_suppliergoods']
         },
         component: () => import('@/view/mall/goods/physical/supplier_goods_check'),
@@ -79,7 +79,7 @@ const routes = [
         meta: {
           aliasName: 'supplier_list',
           icon: 'pay-circle',
-          title: '供应商列表',
+          title: '55038796.1e4a8e',
           permissions: ['supply.supplymanage.supplier_list']
         },
         component: () => import('@/view/mall/supplier/supplier_list')
@@ -90,7 +90,7 @@ const routes = [
         meta: {
           aliasName: 'supplier',
           icon: 'pay-circle',
-          title: '供应商账号',
+          title: '55038796.55c7cb',
           permissions: ['supply.supplymanage.supplier']
         },
         component: () => import('@/view/base/account/suppliers')

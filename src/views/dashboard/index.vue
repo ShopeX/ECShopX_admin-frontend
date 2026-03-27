@@ -14,7 +14,9 @@
           </div>
           <div class="py-6">
             <div class="text-[28px] text-[#333] leading-10 font-[roboto]">{{ item.today }}</div>
-            <div class="text-[14px] mt-2 leading-5 text-[#999]">昨日：{{ item.yesterday }}</div>
+            <div class="text-[14px] mt-2 leading-5 text-[#999]">
+              {{ $t('ac445cdb.23c9bc') }}：{{ item.yesterday }}
+            </div>
           </div>
         </div>
       </div>
@@ -22,43 +24,43 @@
 
     <div class="mt-4 grid grid-cols-2 gap-4">
       <div class="bg-white rounded-lg p-6 notice-box">
-        <div class="text-[18px] text-[#333]">重要信息</div>
+        <div class="text-[18px] text-[#333]">{{ $t('ac445cdb.6b9290') }}</div>
         <div class="flex flex-col gap-6 py-6">
           <div class="rounded-[8px] bg-[#f5f5f5] p-6">
-            <div class="text-[16px] text-[#333]">订单相关</div>
+            <div class="text-[16px] text-[#333]">{{ $t('ac445cdb.7ecdf0') }}</div>
             <div class="flex gap-6 h-10 items-center">
               <div>
-                <span class="text-[#718096]">待发货订单：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.c8604e') }}</span>
                 <span class="text-[#333] text-[20px]">{{ wait_delivery_count }}</span>
               </div>
               <div>
-                <span class="text-[#718096]">待处理退款：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.43e4e0') }}</span>
                 <span class="text-[#333] text-[20px]">{{ aftersales_count }}</span>
               </div>
               <div>
-                <span class="text-[#718096]">退款失败待处理：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.9ec57b') }}</span>
                 <span class="text-[#333] text-[20px]">{{ refund_errorlogs_count }}</span>
               </div>
             </div>
           </div>
           <div class="rounded-[8px] bg-[#f5f5f5] p-6">
-            <div class="text-[16px] text-[#333]">商品相关</div>
+            <div class="text-[16px] text-[#333]">{{ $t('ac445cdb.7e4c38') }}</div>
             <div class="flex gap-6 h-10 items-center">
               <div>
-                <span class="text-[#718096]">库存预警商品：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.74f192') }}</span>
                 <span class="text-[#333] text-[20px]">{{ warning_goods_count }}</span>
               </div>
             </div>
           </div>
           <div class="rounded-[8px] bg-[#f5f5f5] p-6">
-            <div class="text-[16px] text-[#333]">营销相关</div>
+            <div class="text-[16px] text-[#333]">{{ $t('ac445cdb.cf9587') }}</div>
             <div class="flex gap-6 h-10 items-center">
               <div>
-                <span class="text-[#718096]">进行中的秒杀：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.200456') }}</span>
                 <span class="text-[#333] text-[20px]">{{ started_seckill_count }}</span>
               </div>
               <div>
-                <span class="text-[#718096]">进行中的拼团：</span>
+                <span class="text-[#718096]">{{ $t('ac445cdb.3e49ca') }}</span>
                 <span class="text-[#333] text-[20px]">{{ started_gtoups_count }}</span>
               </div>
             </div>
@@ -67,7 +69,7 @@
       </div>
       <div class="bg-white rounded-lg p-6">
         <div class="flex justify-between items-center">
-          <div class="text-[18px] text-[#333]">7天用户趋势</div>
+          <div class="text-[18px] text-[#333]">{{ $t('ac445cdb.c9b185') }}</div>
           <SpTabs :tab-list="tabList" v-model="activeTab" @change="handleTabChange" />
         </div>
         <div id="member-chart" class="h-[350px] mt-4" />
@@ -89,48 +91,18 @@ export default {
         new_svip: []
       },
       realTimeData: {
-        atv: {
-          icon: 'finance',
-          label: '客单价',
-          today: 0,
-          yesterday: 0
-        },
-        refunded_fee: {
-          icon: 'tag-one',
-          label: '退款金额',
-          today: 0,
-          yesterday: 0
-        },
-        payed_fee: {
-          icon: 'expenses',
-          label: '实付金额',
-          today: 0,
-          yesterday: 0
-        },
-        payed_orders: {
-          icon: 'shopping-cart-del',
-          label: '实付订单数',
-          today: 0,
-          yesterday: 0
-        },
-        payed_members: {
-          icon: 'light-member',
-          label: '实付会员数',
-          today: 0,
-          yesterday: 0
-        },
-        aftersale_count: {
-          icon: 'date-comes-back',
-          label: '售后订单数',
-          today: 0,
-          yesterday: 0
-        }
+        atv: { icon: 'finance', label: '', today: 0, yesterday: 0 },
+        refunded_fee: { icon: 'tag-one', label: '', today: 0, yesterday: 0 },
+        payed_fee: { icon: 'expenses', label: '', today: 0, yesterday: 0 },
+        payed_orders: { icon: 'shopping-cart-del', label: '', today: 0, yesterday: 0 },
+        payed_members: { icon: 'light-member', label: '', today: 0, yesterday: 0 },
+        aftersale_count: { icon: 'date-comes-back', label: '', today: 0, yesterday: 0 }
       },
       activeTab: 'new_user',
       tabList: [
-        { name: 'new_user', label: '新增人数' },
-        { name: 'new_vip', label: '新增VIP' },
-        { name: 'new_svip', label: '新增SVIP' }
+        { name: 'new_user', label: '' },
+        { name: 'new_vip', label: '' },
+        { name: 'new_svip', label: '' }
       ],
       themeColor: Config.themeConfig.primaryColor,
       wait_delivery_count: 0,
@@ -142,7 +114,16 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.user.accessMenus, '权限列表')
+    const t = this.$t.bind(this)
+    this.realTimeData.atv.label = t('ac445cdb.53c7e7')
+    this.realTimeData.refunded_fee.label = t('ac445cdb.a0cd4c')
+    this.realTimeData.payed_fee.label = t('ac445cdb.94a7de')
+    this.realTimeData.payed_orders.label = t('ac445cdb.a4517a')
+    this.realTimeData.payed_members.label = t('ac445cdb.87491a')
+    this.realTimeData.aftersale_count.label = t('ac445cdb.1ecebf')
+    this.tabList[0].label = t('ac445cdb.5d4d77')
+    this.tabList[1].label = t('ac445cdb.2f182e')
+    this.tabList[2].label = t('ac445cdb.01f9b3')
     this.getCompanyStatistics()
   },
   methods: {

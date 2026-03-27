@@ -5,10 +5,10 @@
 
 <template>
   <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-    <el-tab-pane label="普通员工管理" name="staff">
+    <el-tab-pane :label="$t('510bb360.48529f')" name="staff">
       <normalstaffManager :is-load="normalStaff" />
     </el-tab-pane>
-    <el-tab-pane label="店铺员工管理" name="store">
+    <el-tab-pane :label="$t('510bb360.41c6e5')" name="store">
       <storestaffManager :is-load="storeStaff" />
     </el-tab-pane>
   </el-tabs>
@@ -17,19 +17,21 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="addLabels">添加账号</el-button>
+        <el-button type="primary" icon="plus" @click="addLabels">{{
+          $t('510bb360.f0677c')
+        }}</el-button>
       </el-col>
       <el-col :span="12">
-        <el-input placeholder="手机号" v-model="mobile"
+        <el-input :placeholder="$t('510bb360.8098e2')" v-model="mobile"
           ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
         ></el-input>
       </el-col>
     </el-row>
     <el-table :data="accountsList" :height="wheight - 160" v-loading="loading">
-      <el-table-column prop="login_name" label="账号名称"></el-table-column>
-      <el-table-column prop="mobile" label="手机号"></el-table-column>
-      <el-table-column prop="username" label="姓名"></el-table-column>
-      <el-table-column prop="roles" label="角色">
+      <el-table-column prop="login_name" :label="$t('510bb360.17327f')"></el-table-column>
+      <el-table-column prop="mobile" :label="$t('510bb360.8098e2')"></el-table-column>
+      <el-table-column prop="username" :label="$t('510bb360.60d045')"></el-table-column>
+      <el-table-column prop="roles" :label="$t('510bb360.464f3d')">
         <template slot-scope="scope">
           <el-tag
             v-for="item in scope.row.role_data"
@@ -41,12 +43,14 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('510bb360.2b6bc0')">
         <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)"
-            >删除</el-button
-          >
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">{{
+            $t('510bb360.95b351')
+          }}</el-button>
+          <el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)">{{
+            $t('510bb360.2f4aad')
+          }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,39 +68,43 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
-          <el-form-item label="登录账号">
+          <el-form-item :label="$t('510bb360.bb2cdf')">
             <el-col :span="10">
               <el-input
                 v-if="!editLoginName"
                 v-model="form.login_name"
                 :minlength="4"
                 :maxlength="16"
-                placeholder="请输入员工登录账号"
+                :placeholder="$t('510bb360.2b668a')"
               ></el-input>
               <el-input v-else v-model="form.login_name" :disabled="true"></el-input>
             </el-col>
-            <p class="frm-tips">账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线</p>
+            <p class="frm-tips">{{ $t('510bb360.d59d95') }}</p>
           </el-form-item>
-          <el-form-item label="手机号">
+          <el-form-item :label="$t('510bb360.8098e2')">
             <el-col :span="10">
               <el-input
                 v-if="!isEdit"
                 v-model="form.mobile"
                 :maxlength="11"
-                placeholder="请输入11位手机号"
+                :placeholder="$t('510bb360.fed6c9')"
               ></el-input>
               <el-input v-else v-model="editMobile" :disabled="true"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="姓名">
+          <el-form-item :label="$t('510bb360.60d045')">
             <el-col :span="10"
-              ><el-input required v-model="form.username" placeholder="请填写昵称"></el-input
+              ><el-input
+                required
+                v-model="form.username"
+                :placeholder="$t('510bb360.76e7b3')"
+              ></el-input
             ></el-col>
           </el-form-item>
-          <el-form-item label="登录密码">
+          <el-form-item :label="$t('510bb360.2646b8')">
             <el-col :span="10"><el-input :maxlength="255" v-model="form.secret"></el-input></el-col>
           </el-form-item>
-          <el-form-item label="所属店铺">
+          <el-form-item :label="$t('510bb360.baad7e')">
             <el-tag
               :key="shop_name"
               class="new-tag"
@@ -112,7 +120,7 @@
               v-if="inputVisible"
               popper-class="my-autocomplete"
               :fetch-suggestions="queryShopNameSearch"
-              placeholder="请输入内容"
+              :placeholder="$t('510bb360.a11cc7')"
               prefix-icon="el-icon-search"
               @select="shopNameSearch"
             >
@@ -121,10 +129,10 @@
               </template>
             </el-autocomplete>
             <el-button v-else size="medium" class="button-new-tag" @click="showInput"
-              >+ 点击搜索店铺
+              >{{ $t('510bb360.a5d26b') }}
             </el-button>
           </el-form-item>
-          <el-form-item label="角色">
+          <el-form-item :label="$t('510bb360.464f3d')">
             <el-checkbox-group v-model="form.role_id">
               <el-checkbox
                 v-for="role in rolesListData"
@@ -138,8 +146,8 @@
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel">取消</el-button>
-        <el-button type="primary" @click="submitAction">保存</el-button>
+        <el-button @click.native="handleCancel">{{ $t('510bb360.625fb2') }}</el-button>
+        <el-button type="primary" @click="submitAction">{{ $t('510bb360.be5fbb') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -216,7 +224,7 @@ export default {
       if (this.dynamicShopName.indexOf(item.name) != -1) {
         this.$message({
           type: 'error',
-          message: '当前店铺已选中，不可重复选择'
+          message: this.$t('510bb360.fad882')
         })
       } else {
         this.dynamicShopName.push(item.name)
@@ -259,14 +267,14 @@ export default {
     addLabels() {
       // 添加物料弹框
       this.handleCancel()
-      this.editTitle = '添加账号信息'
+      this.editTitle = this.$t('510bb360.f1333f')
       this.editVisible = true
       this.isEdit = false
     },
     editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
-      this.editTitle = '编辑账号信息'
+      this.editTitle = this.$t('510bb360.67b76a')
       this.editVisible = true
       this.isEdit = true
       this.form.username = row.username
@@ -318,16 +326,16 @@ export default {
       })
     },
     deleteAccountAction(index, row) {
-      this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('510bb360.80ae2a'), this.$t('510bb360.02d981'), {
+        confirmButtonText: this.$t('510bb360.38cf16'),
+        cancelButtonText: this.$t('510bb360.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteAccountInfo(row.operator_id).then((response) => {
             this.accountsList.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('510bb360.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -336,7 +344,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('510bb360.2111cc')
           })
         })
     },

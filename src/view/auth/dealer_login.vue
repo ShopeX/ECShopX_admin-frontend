@@ -8,9 +8,9 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="" />
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">欢迎登录</div>
+        <div class="log-welcome">{{ $t('825c6793.04b015') }}</div>
       </div>
     </div>
     <div
@@ -24,7 +24,7 @@
     >
       <div class="log-container">
         <el-tabs type="border-card" value="admin" style="width: 400px" class="login-type-tab">
-          <el-tab-pane name="admin" label="经销商账号登录">
+          <el-tab-pane name="admin" :label="$t('825c6793.a21849')">
             <div class="log-img" />
             <el-form
               ref="ruleForm1"
@@ -41,7 +41,7 @@
                   type="text"
                   name="account"
                   auto-complete="off"
-                  placeholder="请输入手机号"
+                  :placeholder="$t('825c6793.6e4f4b')"
                 />
               </el-form-item>
               <el-form-item prop="checkPass">
@@ -50,11 +50,11 @@
                   type="password"
                   name="password"
                   auto-complete="off"
-                  placeholder="密码"
+                  :placeholder="$t('825c6793.a81052')"
                 />
               </el-form-item>
               <el-form-item class="log-opr clearfix title">
-                忘记密码，请联系管理员后台重置
+                {{ $t('825c6793.d7e9e0') }}
               </el-form-item>
               <el-form-item style="width: 100%">
                 <el-button
@@ -64,7 +64,7 @@
                   :disabled="submitDisabled"
                   @click.native.prevent="handleSubmit1"
                 >
-                  登录
+                  {{ $t('825c6793.402d19') }}
                 </el-button>
               </el-form-item>
             </el-form>
@@ -73,12 +73,12 @@
       </div>
     </div>
     <div class="log-footer">
-      <span>友情链接：</span>
-      <a href="https://www.shopex.cn" target="_blank">商派</a>
+      <span>{{ $t('825c6793.f6f50c') }}</span>
+      <a href="https://www.shopex.cn" target="_blank">{{ $t('825c6793.a7cac2') }}</a>
       <span>|</span>
-      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">{{ $t('825c6793.285113') }}</a>
       <span>|</span>
-      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">{{ $t('825c6793.d4bf6e') }}</a>
     </div>
   </div>
 </template>
@@ -93,14 +93,14 @@ export default {
   data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
-        callback(new Error('请输入正确的合法手机号'))
+        callback(new Error(this.$t('825c6793.e56e22')))
       } else {
         callback()
       }
     }
     const validatePass = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能小于6位'))
+        callback(new Error(this.$t('825c6793.395316')))
       } else {
         callback()
       }
@@ -144,7 +144,7 @@ export default {
             this.SET_TOKEN({ token })
             this.SET_TOKEN_EXP({ exp: new Date().getTime() })
             this.$message({
-              message: '登录成功',
+              message: this.$t('825c6793.71fa3b'),
               type: 'success'
             })
             const userInfo = await this.$api.login.getAdminInfo()

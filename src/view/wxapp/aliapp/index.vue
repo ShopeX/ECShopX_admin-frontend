@@ -12,14 +12,14 @@
     <template v-if="$route.path.indexOf('aliapp_templ') === -1">
       <div v-for="(dataList, idx) in list" :key="idx" class="page">
         <div class="title">
-          {{ idx ? '支付宝' : '微信' }}
+          {{ idx ? $t('910679b4.ccd097') : $t('910679b4.cfbf6f') }}
         </div>
         <el-row :gutter="20">
           <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
             <div class="template-item add-btn" @click="chooseTemp(idx)">
               <div class="template-wrap items-center flex-col flex add-btn">
                 <i :class="`iconfont ${idx ? 'icon-zhifubaologo' : 'icon-weixin'}`" />
-                <div>添加小程序模板</div>
+                <div>{{ $t('910679b4.e117c3') }}</div>
               </div>
             </div>
           </el-col>
@@ -36,7 +36,7 @@
               <div v-if="item.is_weapp_grade" class="has-upgrade" />
               <div v-if="item.wxaCodeVisible" class="wxcode">
                 <div class="el-icon-close" @click="closeWxcode(idx, index)" />
-                <img :src="item.wxaCodeImage" alt="" />
+                <img :src="item.wxaCodeImage" alt="">
               </div>
               <div class="template-wrap items-center flex-col flex">
                 <div class="template-img">
@@ -44,49 +44,49 @@
                     v-if="item.template_name === 'yykmembership'"
                     src="@/assets/img/template_img.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'yykmendian'"
                     src="@/assets/img/template_img_01.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'yykcutdown'"
                     src="@/assets/img/template_img_02.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'yykweishop'"
                     src="@/assets/img/template_img_04.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'appleweishop'"
                     src="@/assets/img/template_img_09.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'yykcommunity'"
                     src="@/assets/img/template_img_07.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'yykcommunitypms'"
                     src="@/assets/img/template_img_06.jpg"
                     alt=""
-                  />
+                  >
                   <img
                     v-if="item.template_name === 'onexshop'"
                     src="@/assets/img/onexshop.png"
                     alt=""
-                  />
+                  >
                   <div
                     v-if="idx === 0 && item.is_bind"
                     v-loading="item.loading"
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'wechat')"
                   >
-                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="">
                   </div>
                   <div
                     v-if="item.bindInfo && idx === 1 && item.bindInfo.status === 5"
@@ -94,17 +94,19 @@
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'alipay')"
                   >
-                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="">
                   </div>
                 </div>
                 <div class="template-caption">
                   {{ item.templateInfo.name }}
                 </div>
                 <div v-if="!idx" class="template-opend-btn" @click="linkTo(item, idx)">
-                  <span v-if="item.is_bind">编辑模板</span><span v-else>未绑定</span>
+                  <span v-if="item.is_bind">{{ $t('910679b4.c6aa35') }}</span
+                  ><span v-else>{{ $t('910679b4.906ad1') }}</span>
                 </div>
                 <div v-else class="template-opend-btn" @click="linkTo(item, idx)">
-                  <span v-if="item.is_bind">编辑模板</span><span v-else>授权支付宝小程序</span>
+                  <span v-if="item.is_bind">{{ $t('910679b4.c6aa35') }}</span
+                  ><span v-else>{{ $t('910679b4.2f5ba4') }}</span>
                 </div>
               </div>
             </div>
@@ -116,25 +118,21 @@
       center
       top="30vh"
       width="20%"
-      title="授权支付宝小程序"
+      :title="$t('910679b4.2f5ba4')"
       :show-close="!isClick"
       :visible.sync="isShow"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
     >
       <div class="content-center">
-        {{
-          !isClick
-            ? '点击【继续】后将为你打开新网页进行授权务必在完成授权后手动回到本页面进行后续操作。'
-            : '点击【我已完成授权】继续编辑小程序模板。'
-        }}
+        {{ !isClick ? $t('910679b4.f85c92') : $t('910679b4.8bcc64') }}
       </div>
       <span v-if="!isClick" slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="accredit">继续</el-button>
+        <el-button type="primary" @click="accredit">{{ $t('910679b4.27ca56') }}</el-button>
       </span>
       <span v-else slot="footer" class="dialog-footer">
-        <el-button @click="accredit">重新授权</el-button>
-        <el-button type="primary" @click="doneAccredit">我已完成授权</el-button>
+        <el-button @click="accredit">{{ $t('910679b4.ca03b7') }}</el-button>
+        <el-button type="primary" @click="doneAccredit">{{ $t('910679b4.e42172') }}</el-button>
       </span>
     </el-dialog>
     <router-view />

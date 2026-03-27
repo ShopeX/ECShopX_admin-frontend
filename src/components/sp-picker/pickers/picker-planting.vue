@@ -40,7 +40,7 @@
       :setting="{
         columns: [
           { name: 'ID', key: 'article_id', width: 80 },
-          { name: '软文标题', key: 'title' }
+          { name: $t('ef3ae776.64cebd'), key: 'title' }
         ]
       }"
       :hooks="{
@@ -64,6 +64,9 @@ export default {
     title: '选择软文'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('ef3ae776.8f5d8d')
+  },
   data() {
     return {
       formData: {
@@ -72,7 +75,6 @@ export default {
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
   methods: {
     beforeSearch(params) {
       params = {

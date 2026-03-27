@@ -6,41 +6,46 @@
 <template>
   <div class="gift-coupon">
     <el-form v-if="!showGiftEdit" ref="form" :rules="rules" :model="form" label-width="140px">
-      <el-card shadow="never" header="基础信息">
-        <el-form-item label="优惠券名称" prop="title">
+      <el-card shadow="never" :header="$t('81b3322f.6ea1fe')">
+        <el-form-item :label="$t('81b3322f.fbaebb')" prop="title">
           <el-input
             v-model="form.title"
             :disabled="form.card_id ? true : false"
             :maxlength="15"
-            placeholder="请输入优惠券名称"
+            :placeholder="$t('81b3322f.1f9884')"
             show-word-limit
             style="width: 400px"
           />
         </el-form-item>
 
-        <el-form-item label="发放总量" prop="quantity">
+        <el-form-item :label="$t('81b3322f.4f8fef')" prop="quantity">
           <el-input
             v-model.number="form.quantity"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
-            placeholder="发放数量需大于0，且为整数"
+            :placeholder="$t('81b3322f.d86fa9')"
             style="width: 400px"
           >
-            <template slot="append"> 张 </template>
+            <template slot="append"> {{ $t('81b3322f.6499fc') }} </template>
           </el-input>
         </el-form-item>
 
-        <el-form-item label="活动类型" prop="date_type">
+        <el-form-item :label="$t('81b3322f.13955e')" prop="date_type">
           <el-radio-group v-model="form.date_type" :disabled="form.card_id ? true : false">
-            <el-radio label="DATE_TYPE_LONG"> 长期活动 </el-radio>
+            <el-radio label="DATE_TYPE_LONG"> {{ $t('81b3322f.2f28ba') }} </el-radio>
             <!-- <el-radio label="DATE_TYPE_SHORT"> 短期活动 </el-radio> -->
           </el-radio-group>
           <template v-if="form.date_type === 'DATE_TYPE_LONG'">
-            <el-form-item class="m-b-10" label-width="80px" label="开始时间" prop="begintime">
+            <el-form-item
+              class="m-b-10"
+              label-width="80px"
+              :label="$t('81b3322f.592c59')"
+              prop="begintime"
+            >
               <el-date-picker
                 v-model="form.begintime"
                 :disabled="form.card_id ? true : false"
                 type="datetime"
-                placeholder="选择日期时间"
+                :placeholder="$t('81b3322f.a42ae4')"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 size="small"
               />
@@ -48,13 +53,13 @@
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="该时间为活动开始时间点"
+                :content="$t('81b3322f.e083ef')"
                 placement="top"
               >
                 <i class="el-icon-question tooltip" />
               </el-tooltip>
             </el-form-item>
-            <el-form-item label-width="80px" label="领取" prop="days">
+            <el-form-item label-width="80px" :label="$t('81b3322f.9c1b27')" prop="days">
               <template>
                 <el-select
                   v-model="form.limit"
@@ -69,14 +74,14 @@
                     :value="item.value"
                   />
                 </el-select>
-                <span style="padding: 0 8px">后生效，</span>
+                <span style="padding: 0 8px">{{ $t('81b3322f.57f370') }}</span>
                 <el-input
                   v-model.number="form.days"
                   style="width: 120px; margin-top: 6px"
                   :disabled="form.card_id ? true : false"
                   size="small"
                 >
-                  <template slot="append"> 天 </template>
+                  <template slot="append"> {{ $t('81b3322f.249aba') }} </template>
                 </el-input>
                 <!-- <el-select
                   :disabled="form.card_id ? true : false"
@@ -91,7 +96,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select> -->
-                <span style="padding-left: 8px">内可用</span>
+                <span style="padding-left: 8px">{{ $t('81b3322f.6f0572') }}</span>
                 <!-- <el-input
                   :disabled="form.card_id ? true : false"
                   v-model.number="form.days"
@@ -130,7 +135,7 @@
           </template> -->
         </el-form-item>
 
-        <el-form-item label="卡券使用说明" prop="description">
+        <el-form-item :label="$t('81b3322f.f0772c')" prop="description">
           <el-input
             v-model="form.description"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
@@ -140,7 +145,7 @@
             type="textarea"
             :rows="6"
             style="width: 400px"
-            placeholder="请输入内容"
+            :placeholder="$t('81b3322f.a11cc7')"
           />
         </el-form-item>
 
@@ -149,29 +154,27 @@
         </el-form-item> -->
       </el-card>
 
-      <el-card shadow="never" header="领取和适用规则">
-        <el-form-item label="领取限制" prop="get_limit">
+      <el-card shadow="never" :header="$t('81b3322f.228948')">
+        <el-form-item :label="$t('81b3322f.a31bfd')" prop="get_limit">
           <el-input
             v-model.number="form.get_limit"
             :disabled="form.card_id ? true : false"
             style="width: 150px"
           >
-            <template slot="append"> 张 </template>
+            <template slot="append"> {{ $t('81b3322f.6499fc') }} </template>
           </el-input>
-          <span class="tips after-tips">每个用户领券上限，如不填，则默认为1。</span>
+          <span class="tips after-tips">{{ $t('81b3322f.727b1d') }}</span>
         </el-form-item>
 
-        <el-form-item label="前台直接领取">
+        <el-form-item :label="$t('81b3322f.466af0')">
           <el-switch
             v-model="form.receive"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
           />
-          <span class="tips after-tips"
-            >默认为开启。开启后用户可在卡券列表中领取，未开启需手动发放。</span
-          >
+          <span class="tips after-tips">{{ $t('81b3322f.57101c') }}</span>
         </el-form-item>
 
-        <el-form-item label="指定会员可领">
+        <el-form-item :label="$t('81b3322f.b218bc')">
           <el-checkbox-group
             v-model="form.grade_ids"
             class="checkbox"
@@ -191,10 +194,10 @@
               :key="vipdata.vip_grade_id"
               :label="vipdata.vip_grade_id"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('81b3322f.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
-          <div class="tips after-tips">未选默认所有会员适用</div>
+          <div class="tips after-tips">{{ $t('81b3322f.632916') }}</div>
         </el-form-item>
 
         <!-- <el-form-item label="指定会员标签可领">
@@ -218,31 +221,33 @@
         </el-form-item> -->
       </el-card>
 
-      <el-card shadow="never" header="兑换规则">
-        <el-form-item label="选定商品锁定时间" prop="lock_time">
+      <el-card shadow="never" :header="$t('81b3322f.4dccda')">
+        <el-form-item :label="$t('81b3322f.764d22')" prop="lock_time">
           <el-input
             v-model.number="form.lock_time"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
             style="width: 100px"
-          />&nbsp;小时
+          />&nbsp;{{ $t('81b3322f.2de0d4') }}
           <div class="tips">
-            消费者使用兑换券选定商品后，为避免到店后无兑换商品，则该商品对应库存锁定时间，时间需大于0，且为整数
+            {{ $t('81b3322f.fda2a8') }}
           </div>
         </el-form-item>
       </el-card>
 
       <div class="content-center">
-        <el-button v-if="form.kq_status !== 2" @click="cancelSubmit"> 取消 </el-button>
+        <el-button v-if="form.kq_status !== 2" @click="cancelSubmit">
+          {{ $t('81b3322f.625fb2') }}
+        </el-button>
         <template v-if="form.card_id && form.kq_status === 0">
-          <el-button type="danger" @click="editGift(2)"> 关闭 </el-button>
-          <el-button type="danger" @click="editGift(1)"> 暂停 </el-button>
+          <el-button type="danger" @click="editGift(2)"> {{ $t('81b3322f.b15d91') }} </el-button>
+          <el-button type="danger" @click="editGift(1)"> {{ $t('81b3322f.8d63ef') }} </el-button>
         </template>
         <template v-if="form.kq_status !== 2">
           <el-button v-if="form.kq_status === 1" type="danger" plain @click="editGift(0)">
-            启用
+            {{ $t('81b3322f.7854b5') }}
           </el-button>
           <el-button v-else v-loading="loading" type="primary" @click="submitForm('form')">
-            提交
+            {{ $t('81b3322f.939d53') }}
           </el-button>
         </template>
       </div>
@@ -269,46 +274,6 @@ export default {
     TagSelect
   },
   data() {
-    function getTempDays(start = 0) {
-      let tempDays = []
-      for (let i = start; i <= 90; i++) {
-        tempDays.push({ text: i + '天', value: i })
-      }
-      return tempDays
-    }
-    const checkNumber = (rule, value, callback) => {
-      if (value === '' || value === null) {
-        callback()
-      } else {
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'))
-          } else {
-            if (value <= 0) {
-              callback(new Error('必须大于0'))
-            } else {
-              callback()
-            }
-          }
-        }, 500)
-      }
-    }
-    const checkQuantity = (rule, value, callback) => {
-      if (!value && value !== 0) {
-        return callback(new Error('不能为空'))
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (value <= 0) {
-            callback(new Error('必须大于0'))
-          } else {
-            callback()
-          }
-        }
-      }, 500)
-    }
     const params = {
       card_id: null,
       card_type: 'new_gift',
@@ -335,21 +300,8 @@ export default {
     return {
       form: Object.assign({}, params),
       params,
-      rules: {
-        title: [{ required: true, message: '请填写优惠券名称', trigger: 'blur' }],
-        quantity: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
-        date_type: [{ required: true, message: '请选择活动类型', trigger: 'blur' }],
-        begintime: [{ required: true, message: '请选择开始时间', trigger: 'blur' }],
-        // issuetime: [{ required: true, message: '请选择发放时间', trigger: 'blur' }],
-        // usetime: [{ required: true, message: '请选择使用时间', trigger: 'blur' }],
-        days: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
-        description: [{ required: true, message: '请填写卡券使用说明', trigger: 'blur' }],
-        // color: [{ required: true, message: '请选择优惠券主色', trigger: 'blur' }],
-        lock_time: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
-        get_limit: [{ validator: checkNumber, trigger: 'blur' }]
-      },
-      totalDays: getTempDays(),
-      issueTotalDays: getTempDays(1),
+      totalDays: [],
+      issueTotalDays: [],
       loading: false,
       showGiftEdit: false,
       gradeList: [],
@@ -361,6 +313,33 @@ export default {
       vipGrade: []
     }
   },
+  computed: {
+    rules() {
+      const vm = this
+      return {
+        title: [{ required: true, message: () => vm.$t('81b3322f.2642b9'), trigger: 'blur' }],
+        quantity: [{ required: true, validator: vm.checkQuantity, trigger: 'blur' }],
+        date_type: [{ required: true, message: () => vm.$t('81b3322f.641268'), trigger: 'blur' }],
+        begintime: [{ required: true, message: () => vm.$t('81b3322f.90fae3'), trigger: 'blur' }],
+        days: [{ required: true, validator: vm.checkQuantity, trigger: 'blur' }],
+        description: [{ required: true, message: () => vm.$t('81b3322f.3408a8'), trigger: 'blur' }],
+        lock_time: [{ required: true, validator: vm.checkQuantity, trigger: 'blur' }],
+        get_limit: [{ validator: vm.checkNumber, trigger: 'blur' }]
+      }
+    },
+    totalDays() {
+      return Array.from({ length: 91 }, (_, i) => ({
+        text: i + this.$t('81b3322f.249aba'),
+        value: i
+      }))
+    },
+    issueTotalDays() {
+      return Array.from({ length: 90 }, (_, i) => ({
+        text: i + 1 + this.$t('81b3322f.249aba'),
+        value: i + 1
+      }))
+    }
+  },
   mounted() {
     if (this.$route.query.cardId) {
       this.form.card_id = this.$route.query.cardId
@@ -370,6 +349,35 @@ export default {
     this.init()
   },
   methods: {
+    checkNumber(rule, value, callback) {
+      if (value === '' || value === null) {
+        callback()
+      } else {
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error(this.$t('81b3322f.6fb0b9')))
+          } else if (value <= 0) {
+            callback(new Error(this.$t('81b3322f.cf5fe4')))
+          } else {
+            callback()
+          }
+        }, 500)
+      }
+    },
+    checkQuantity(rule, value, callback) {
+      if (!value && value !== 0) {
+        return callback(new Error(this.$t('81b3322f.281bad')))
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error(this.$t('81b3322f.6fb0b9')))
+        } else if (value <= 0) {
+          callback(new Error(this.$t('81b3322f.cf5fe4')))
+        } else {
+          callback()
+        }
+      }, 500)
+    },
     toTimeStamp(time) {
       return new Date(time).getTime() / 1000
     },
@@ -381,11 +389,11 @@ export default {
     },
     submitForm(formName) {
       if (this.form.days <= 0) {
-        this.$message.error('有效天数必须大于0')
+        this.$message.error(this.$t('81b3322f.ea1a0b'))
         return
       }
       if (typeof this.form.days !== 'number') {
-        this.$message.error('请输入有效的数字')
+        this.$message.error(this.$t('81b3322f.fde53c'))
         return
       }
       this.$refs[formName].validate((valid) => {
@@ -422,7 +430,7 @@ export default {
       if (params.card_id) {
         const data = await updateCard(params)
         if (data) {
-          this.$message.success('更新成功')
+          this.$message.success(this.$t('81b3322f.55aa63'))
           if (source === 'first') {
             this.showGiftEdit = true
           } else {
@@ -435,7 +443,7 @@ export default {
         if (data) {
           this.params.card_id = data.data.status.card_id
           this.form = data.data.status
-          this.$message.success('提交成功')
+          this.$message.success(this.$t('81b3322f.23b62e'))
           if (source === 'first') {
             this.showGiftEdit = true
             this.$emit('haddleShowTab', false)
@@ -498,7 +506,7 @@ export default {
         params.vip_grade_ids?.length > 0 ? JSON.stringify(params.vip_grade_ids) : []
       updateCard(params).then((res) => {
         if (res) {
-          this.$message.success('更新成功')
+          this.$message.success(this.$t('81b3322f.55aa63'))
           this.refresh()
           this.$router.go(-1)
         }

@@ -180,7 +180,7 @@
           :on-success="handleAvatarSuccess"
           :on-error="uploadError"
         >
-          <el-button>上传视频</el-button>
+          <el-button>{{ $t('cd674c72.afddcb') }}</el-button>
         </el-upload>
       </div>
       <!-- <div>
@@ -231,7 +231,7 @@
               </div>
             </div>
           </div>
-          <el-empty v-if="list.length == 0" description="暂无数据" />
+          <el-empty v-if="list.length == 0" :description="$t('cd674c72.21efd8')" />
         </div>
         <el-pagination
           layout="total, prev, pager, next"
@@ -247,7 +247,7 @@
     <SpDialog
       ref="groupDialogRef"
       v-model="groupDialog"
-      title="添加分组"
+      :title="$t('cd674c72.ddceab')"
       :modal="false"
       :form="groupForm"
       :form-list="groupFormList"
@@ -258,7 +258,7 @@
     <SpDialog
       ref="editDialogRef"
       v-model="editDialog"
-      title="编辑"
+      :title="$t('cd674c72.95b351')"
       :modal="false"
       :form="editForm"
       :form-list="editFormList"
@@ -279,6 +279,9 @@ export default {
     title: '我的视频'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('cd674c72.718023')
+  },
   data() {
     const { multiple = false, data } = this.value
     return {
@@ -291,41 +294,13 @@ export default {
       groupForm: {
         groupName: ''
       },
-      groupFormList: [
-        {
-          label: '分组名称:',
-          key: 'groupName',
-          type: 'input',
-          maxlength: 150,
-          placeholder: '请输入分组名称',
-          required: true,
-          message: '不能为空'
-        }
-      ],
+      editFormListOptions: [],
+      editFormSecondDisabled: false,
       editDialog: false,
       editForm: {
         groupName: '',
         name: ''
       },
-      editFormList: [
-        {
-          label: '图片分组:',
-          key: 'groupName',
-          placeholder: '请选择图片分组',
-          type: 'select',
-          options: [],
-          required: true,
-          message: '不能为空'
-        },
-        {
-          label: '图片名称:',
-          key: 'name',
-          type: 'input',
-          placeholder: '请输入图片名称',
-          required: true,
-          message: '不能为空'
-        }
-      ],
       cropperDialogShow: false,
       localpostData: {
         token: '',
@@ -340,6 +315,41 @@ export default {
     }
   },
   computed: {
+    groupFormList() {
+      return [
+        {
+          label: this.$t('cd674c72.f230d2'),
+          key: 'groupName',
+          type: 'input',
+          maxlength: 150,
+          placeholder: this.$t('cd674c72.0c6416'),
+          required: true,
+          message: this.$t('cd674c72.281bad')
+        }
+      ]
+    },
+    editFormList() {
+      return [
+        {
+          label: this.$t('cd674c72.a27bfb'),
+          key: 'groupName',
+          placeholder: this.$t('cd674c72.597997'),
+          type: 'select',
+          options: this.editFormListOptions,
+          required: true,
+          message: this.$t('cd674c72.281bad')
+        },
+        {
+          label: this.$t('cd674c72.55ddeb'),
+          key: 'name',
+          type: 'input',
+          placeholder: this.$t('cd674c72.858461'),
+          required: true,
+          message: this.$t('cd674c72.281bad'),
+          disabled: this.editFormSecondDisabled
+        }
+      ]
+    },
     disabledDeleteGroup() {
       return this.selectCatgory == -1
     },
@@ -363,7 +373,6 @@ export default {
       return this.multiple ? this.selected.length == 0 : !this.selected
     }
   },
-  created() {},
   mounted() {
     this.nextPage()
     this.getImageAllCatgory()
@@ -379,13 +388,13 @@ export default {
     },
     handleEdit() {
       const { multiple, selected } = this
-      this.editFormList[1].disabled = false
+      this.editFormSecondDisabled = false
       if (multiple && selected.length == 1) {
         this.editForm.name = selected[0].image_name
       } else if (!multiple && selected) {
         this.editForm.name = selected.image_name
       } else {
-        this.editFormList[1].disabled = true
+        this.editFormSecondDisabled = true
       }
       this.editDialog = true
     },
@@ -409,8 +418,11 @@ export default {
     },
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
-      this.catgoryList = [{ image_cat_id: -1, image_cat_name: '默认分组' }, ...list.reverse()]
-      this.editFormList[0].options = this.catgoryList.map((item) => {
+      this.catgoryList = [
+        { image_cat_id: -1, image_cat_name: this.$t('cd674c72.9b4019') },
+        ...list.reverse()
+      ]
+      this.editFormListOptions = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
@@ -455,11 +467,11 @@ export default {
       const isGIF = file.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 5
       if (!isJPG && !isPNG && !isGIF) {
-        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+        this.$message.error(this.$t('cd674c72.34e969'))
         return
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 5MB!')
+        this.$message.error(this.$t('cd674c72.50fa12'))
         return
       }
       this.localpostData.fname = file.name
@@ -473,7 +485,7 @@ export default {
         storage: 'image' //图片id必填
       }
       await this.$api.qiniu.uploadQiniuPic(uploadParams)
-      this.$message.success('上传成功')
+      this.$message.success(this.$t('cd674c72.a7699b'))
       this.refresh(true)
     },
     // 自定义上传
@@ -495,7 +507,7 @@ export default {
     async handleCopy(url) {
       await this.$copyText(url)
       this.$notify.success({
-        message: '链接复制成功',
+        message: this.$t('cd674c72.c13172'),
         showClose: true
       })
     },

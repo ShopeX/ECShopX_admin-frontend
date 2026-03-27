@@ -7,20 +7,20 @@
   <div>
     <el-row :gutter="10">
       <el-col :md="8" :lg="6">
-        <el-input v-model="params.order_id" placeholder="订单号">
+        <el-input v-model="params.order_id" :placeholder="$t('d14d01a0.1e8dc2')">
           <el-button slot="append" icon="el-icon-search" @click="getLuckyDrawTeamList" />
         </el-input>
       </el-col>
       <el-col :md="8" :lg="6">
-        <el-input v-model="params.mobile" placeholder="手机号">
+        <el-input v-model="params.mobile" :placeholder="$t('d14d01a0.8098e2')">
           <el-button slot="append" icon="el-icon-search" @click="getLuckyDrawTeamList" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="luckyDrawTeamList" style="width: 110%" border height="580">
-      <el-table-column prop="luckydraw_trade_id" label="订单号" width="180" />
-      <el-table-column prop="lucky_code" label="抽奖号码" width="120" />
-      <el-table-column prop="member_info.backend_mobile" label="手机号" width="120">
+      <el-table-column prop="luckydraw_trade_id" :label="$t('d14d01a0.1e8dc2')" width="180" />
+      <el-table-column prop="lucky_code" :label="$t('d14d01a0.e492b7')" width="120" />
+      <el-table-column prop="member_info.backend_mobile" :label="$t('d14d01a0.8098e2')" width="120">
         <template slot-scope="scope">
           <router-link
             :to="{ path: '/member/manage/members/detail', query: { user_id: scope.row.user_id } }"
@@ -29,44 +29,54 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="member_info.username" label="姓名" width="100" />
-      <el-table-column label="下单时间" width="160">
+      <el-table-column prop="member_info.username" :label="$t('d14d01a0.60d045')" width="100" />
+      <el-table-column :label="$t('d14d01a0.2240cc')" width="160">
         <template slot-scope="scope">
           {{ scope.row.created | datetime }}
         </template>
       </el-table-column>
-      <el-table-column label="中奖状态" width="120">
+      <el-table-column :label="$t('d14d01a0.830d03')" width="120">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.lucky_status == 'wait'"> 未开奖 </el-tag>
-          <el-tag v-else-if="scope.row.lucky_status == 'lucky'" type="danger"> 已中奖 </el-tag>
-          <el-tag v-else-if="scope.row.lucky_status == 'unlucky'" type="info"> 未中奖 </el-tag>
+          <el-tag v-if="scope.row.lucky_status == 'wait'"> {{ $t('d14d01a0.67d31e') }} </el-tag>
+          <el-tag v-else-if="scope.row.lucky_status == 'lucky'" type="danger">
+            {{ $t('d14d01a0.c809f4') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.lucky_status == 'unlucky'" type="info">
+            {{ $t('d14d01a0.1229c3') }}
+          </el-tag>
           <el-tag v-else> - </el-tag>
           <el-button
             v-if="scope.row.lucky_status == 'lucky' && !scope.row.ship_code"
             type="text"
             @click="deliveryAction(scope.row)"
           >
-            发货
+            {{ $t('d14d01a0.045315') }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="支付状态" width="100">
+      <el-table-column :label="$t('d14d01a0.510fa2')" width="100">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.payment_status == 'payed'" type="success"> 已支付 </el-tag>
-          <el-tag v-else-if="scope.row.payment_status == 'unpay'" type="info"> 未支付 </el-tag>
-          <el-tag v-else-if="scope.row.payment_status == 'refunded'" type="warning">
-            已退款
+          <el-tag v-if="scope.row.payment_status == 'payed'" type="success">
+            {{ $t('d14d01a0.8d02a5') }}
           </el-tag>
-          <el-tag v-else-if="scope.row.payment_status == 'readyrefund'"> 等待退款 </el-tag>
+          <el-tag v-else-if="scope.row.payment_status == 'unpay'" type="info">
+            {{ $t('d14d01a0.608afd') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.payment_status == 'refunded'" type="warning">
+            {{ $t('d14d01a0.e85018') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.payment_status == 'readyrefund'">
+            {{ $t('d14d01a0.12e196') }}
+          </el-tag>
           <el-tag v-else> - </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="支付(积分/现金)">
+      <el-table-column :label="$t('d14d01a0.7a39b1')">
         <template v-if="scope.row.luckydraw_payment == 'cash'" slot-scope="scope">
-          <span>{{ scope.row.luckydraw_price / 100 }}元</span>
+          <span>{{ scope.row.luckydraw_price / 100 }}{{ $t('d14d01a0.c16655') }}</span>
         </template>
         <template v-if="scope.row.luckydraw_payment == 'point'" slot-scope="scope">
-          <span>{{ scope.row.luckydraw_point }} 积分</span>
+          <span>{{ scope.row.luckydraw_point }} {{ $t('d14d01a0.9f68a8') }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -81,7 +91,7 @@
     </div>
     <!-- 发货-开始 -->
     <el-dialog
-      :title="deliveryTitle"
+      :title="$t('d14d01a0.045315')"
       :visible.sync="deliveryVisible"
       :before-close="handleCancel"
       width="57%"
@@ -89,26 +99,26 @@
       <template>
         <el-alert
           v-if="deliveryData.ship_status == 'waitaddress' || !deliveryData.ship_status"
-          title="获奖用户还没有填写收货地址，暂时不能发货！"
+          :title="$t('d14d01a0.8c2531')"
           type="error"
         />
         <el-form ref="deliveryForm" :model="deliveryForm" class="demo-ruleForm" label-width="100px">
-          <el-form-item label="抽奖订单号">
+          <el-form-item :label="$t('d14d01a0.886f6d')">
             <el-col :span="20">
               {{ deliveryData.luckydraw_trade_id }}
             </el-col>
           </el-form-item>
-          <el-form-item label="商品名称">
+          <el-form-item :label="$t('d14d01a0.1fd1d5')">
             <el-col :span="20">
               {{ deliveryData.item_name }}
             </el-col>
           </el-form-item>
-          <el-form-item label="积分">
+          <el-form-item :label="$t('d14d01a0.9f68a8')">
             <el-col :span="20">
               {{ deliveryData.luckydraw_point }}
             </el-col>
           </el-form-item>
-          <el-form-item v-if="deliveryData.address_id" label="收货地址">
+          <el-form-item v-if="deliveryData.address_id" :label="$t('d14d01a0.748ea9')">
             <el-col :span="20">
               {{ deliveryData.address.province }}
               {{ deliveryData.address.city }}
@@ -116,23 +126,23 @@
               {{ deliveryData.address.adrdetail }}
             </el-col>
           </el-form-item>
-          <el-form-item v-if="deliveryData.address_id" label="收货人">
+          <el-form-item v-if="deliveryData.address_id" :label="$t('d14d01a0.6aea70')">
             <el-col :span="20">
               {{ deliveryData.address.username }}
             </el-col>
           </el-form-item>
-          <el-form-item v-if="deliveryData.address_id" label="手机号">
+          <el-form-item v-if="deliveryData.address_id" :label="$t('d14d01a0.8098e2')">
             <el-col :span="20">
               {{ deliveryData.address.telephone }}
             </el-col>
           </el-form-item>
           <template v-if="deliveryData.address_id">
-            <el-form-item label="快递公司">
+            <el-form-item :label="$t('d14d01a0.f3af96')">
               <el-col>
                 <el-select
                   v-model="deliveryForm.ship_corp"
                   filterable
-                  placeholder="请选择快递公司，可搜索"
+                  :placeholder="$t('d14d01a0.32e586')"
                 >
                   <el-option
                     v-for="item in dlycorps"
@@ -143,12 +153,12 @@
                 </el-select>
               </el-col>
             </el-form-item>
-            <el-form-item label="物流单号">
+            <el-form-item :label="$t('d14d01a0.0bb075')">
               <el-col :span="14">
                 <el-input
                   v-model="deliveryForm.ship_code"
                   :maxlength="20"
-                  placeholder="物流公司单号"
+                  :placeholder="$t('d14d01a0.0e9f1e')"
                 />
               </el-col>
             </el-form-item>
@@ -156,8 +166,10 @@
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
-        <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
+        <el-button @click.native="handleCancel"> {{ $t('d14d01a0.625fb2') }} </el-button>
+        <el-button type="primary" @click="submitDeliveryAction">
+          {{ $t('d14d01a0.38cf16') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -186,7 +198,6 @@ export default {
       },
       IsDisabled: false,
       deliveryVisible: false,
-      deliveryTitle: '发货',
       deliveryData: {},
       deliveryForm: {
         luckydraw_trade_id: '',
@@ -220,7 +231,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取参与抽奖活动列表失败'
+            message: this.$t('d14d01a0.718f46')
           })
         })
     },
@@ -245,16 +256,16 @@ export default {
       // 提交物料
       console.log(this.deliveryData)
       if (!this.deliveryData.address_id) {
-        this.$message.error('获奖用户还没有填写收货地址，暂时不能发货!')
+        this.$message.error(this.$t('d14d01a0.58f0da'))
         return false
       }
       luckydrawDelivery(this.deliveryForm).then((response) => {
         if (response.data.data) {
           this.handleCancel()
-          this.$message.success('发货成功!')
+          this.$message.success(this.$t('d14d01a0.de3b52'))
           this.getLuckyDrawTeamList()
         } else {
-          this.$message.error('发货失败!')
+          this.$message.error(this.$t('d14d01a0.2249c1'))
           return false
         }
       })

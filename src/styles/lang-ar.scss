@@ -13,37 +13,79 @@ html[dir='rtl'] {
       margin-right: 0;
     }
   }
+  .el-radio-group{
+    direction: ltr;
+  }
+  .hd-rg{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
   .sp-form {
     .el-form-item {
       padding-right: 5px;
       padding-left: 5px;
     }
+
     .el-form-item__label {
       text-align: right;
     }
   }
-  *:not(
-      .el-tabs__item,
-      .el-pager > .number,
-      .el-menu-item,
-      .el-submenu__title,
-      .el-tag,
-      .el-select-dropdown__item,
-      .el-dropdown-menu__item,
-      .el-range-separator,
-      .btn-linkpath,
-      .el-input__inner,
-      .el-input,
-      .el-input-number *,
-      .el-input-number
-    ) {
+  .wgts-slider-dialog {
+    .el-form-item__content {
+      margin-left: 0 !important;
+      flex-shrink: 0;
+      flex-grow: 0;
+      flex-basis: auto;
+      width: fit-content;
+      max-width: 100%;
+      .el-radio-group{
+        min-width: 240px;
+        display: flex;
+      }
+      .el-slider{
+        width: 280px!important;
+      }
+      .el-slider__bar{
+        width: 120px!important;
+      }
+    }
+    .el-form--label-left{
+      .el-form-item{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+    }
+  }
+  .hot-content-inner-right{
+    left: 0!important;
+    right: auto!important;
+  }
+
+  *:not(.el-tabs__item,
+    .el-pager > .number,
+    .el-menu-item,
+    .el-submenu__title,
+    .el-tag,
+    .el-select-dropdown__item,
+    .el-dropdown-menu__item,
+    .el-range-separator,
+    .btn-linkpath,
+    .el-input__inner,
+    .el-input,
+    .el-input-number *,
+    .el-input-number) {
     line-height: 1.2;
   }
+
   .el-table__cell .cell,
   .el-dialog__body {
     word-break: normal !important;
     text-align: right;
   }
+
   .el-table__cell .cell {
     line-height: 1.2;
   }
@@ -53,9 +95,11 @@ html[dir='rtl'] {
       padding-right: 20px !important;
       padding-left: 0 !important;
     }
+
     .el-submenu {
       margin-bottom: 15px;
     }
+
     .el-menu-item,
     .el-submenu__title {
       word-break: normal;
@@ -66,16 +110,20 @@ html[dir='rtl'] {
       width: 100%;
       text-align: right;
     }
+
     .el-menu-item {
       font-size: 12px;
       margin-bottom: 5px;
     }
+
     .el-submenu__title {
       box-sizing: border-box;
+
       span {
         display: inline-block;
         width: 80%;
       }
+
       padding-right: 9px !important;
       padding-left: 0 !important;
     }
@@ -85,14 +133,17 @@ html[dir='rtl'] {
     display: block !important;
     padding-bottom: 10px;
   }
+
   .cell-label {
     line-height: 1.2 !important;
     padding-bottom: 5px;
     width: auto !important;
     text-align: right;
   }
+
   .el-dropdown-menu__item {
     div {
+
       &,
       * {
         line-height: 36px !important;
@@ -107,6 +158,7 @@ html[dir='rtl'] {
   [style*='float: left'] {
     float: right !important;
   }
+
   .el-float-right,
   [class*='float-right'],
   [style*='float: right'] {
@@ -116,6 +168,7 @@ html[dir='rtl'] {
   .f_l {
     float: right !important;
   }
+
   .f_r {
     float: left !important;
   }
@@ -126,6 +179,7 @@ html[dir='rtl'] {
   [class*='text-left'] {
     text-align: right !important;
   }
+
   .el-text-right,
   [class*='text-right'] {
     text-align: left !important;
@@ -151,38 +205,54 @@ html[dir='rtl'] {
     left: auto !important;
     right: 0 !important;
   }
+
   .el-input__prefix {
     right: 5px !important;
     left: auto !important;
   }
+
   .el-input__suffix {
     left: 5px !important;
     right: auto !important;
   }
+
   .el-textarea__inner {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   // 处理图标和按钮的定位
   .el-icon-close,
   .el-icon-circle-close {
-    right: 15px !important;
+    right: -7px !important;
     left: auto !important;
   }
+
   // 处理弹出层和下拉菜单的定位
   .el-popover,
   .el-tooltip__popper {
     direction: rtl;
   }
+  .icon-qingchuFilled{
+    right: -7px !important;
+    left: auto !important;
+    top: -7px!important;
+  }
+
+
+  
+
   // 处理步骤条中的定位
   .el-step__line {
     left: auto !important;
     right: 14px !important;
   }
+
   // 处理时间选择器中的定位
   .el-time-spinner__item {
     text-align: right;
   }
+
   // 处理日期选择器中的定位
   .el-date-table td {
     text-align: right;
@@ -199,120 +269,196 @@ html[dir='rtl'] {
   .el-form-item__label {
     text-align: right;
   }
+
   .el-input-group__prepend {
     border-left: 1px solid #dcdfe6;
     border-right: none;
   }
+
   .el-input-group__append {
     border-right: 1px solid #dcdfe6;
     border-left: none;
   }
-  .el-button-group > .el-button:first-child {
+
+  .el-button-group>.el-button:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 4px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 4px;
   }
-  .el-button-group > .el-button:last-child {
+
+  .el-button-group>.el-button:last-child {
     border-top-right-radius: 0;
     border-top-left-radius: 4px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 4px;
   }
+
   .el-tabs__nav {
     float: right;
   }
+
   .el-tabs__active-bar {
     right: 0;
     left: auto;
   }
+
   .el-pagination {
     .el-pagination__sizes {
       margin-right: 0;
       margin-left: 10px;
     }
+
     .el-pagination__jump {
       margin-right: 10px;
       margin-left: 0;
     }
   }
+
   .el-dialog {
     .el-dialog__header {
       padding: 20px 20px 10px;
       text-align: right;
     }
+
     .el-dialog__headerbtn {
-      right: auto;
-      left: 20px;
+      right: 20px;
+      left: auto;
     }
+
     .el-dialog__footer {
-      text-align: left;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .el-dialog__footer .el-button+.el-button {
+      margin-right: 10px;
+      margin-left: 0;
     }
   }
+
+  /* 弹窗内表单 RTL（添加/编辑分类等） */
+  .sp-dialog .el-dialog__body .el-form {
+    margin-right: 0;
+    margin-left: 100px;
+  }
+
+  .el-input__inner,
+  .el-textarea__inner {
+    text-align: right;
+  }
+
+  .el-input-number {
+    direction: rtl;
+  }
+
+  .el-input-number .el-input__inner {
+    text-align: right;
+  }
+
+  .el-input-number__decrease,
+  .el-input-number__increase {
+    right: auto !important;
+    left: 1px !important;
+    border-right: 1px solid #dcdfe6;
+    border-left: none;
+  }
+
+  .el-input-number__increase {
+    border-bottom: 1px solid #dcdfe6;
+  }
+
+  .el-form--label-right {
+    .el-form-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  }
+
   .el-message-box {
     .el-message-box__header {
       padding: 20px 20px 10px;
       text-align: right;
     }
+
     .el-message-box__headerbtn {
-      right: auto;
-      left: 20px;
+      right: 20px;
+      left: auto;
     }
+
     .el-message-box__content {
       text-align: right;
     }
+
     .el-message-box__btns {
       text-align: left;
     }
   }
+
   .el-dropdown-menu {
     text-align: right;
   }
+
   .el-select-dropdown {
     .el-select-dropdown__item {
       text-align: right;
     }
   }
+
   .el-cascader-menus {
     direction: rtl;
   }
+
   .el-date-editor {
     .el-range-input {
       text-align: right;
     }
+
     .el-range-separator {
       margin: 0 10px;
     }
   }
+
   .el-table {
     .el-table__header-wrapper {
       th {
         text-align: right;
       }
     }
+
     .el-table__body-wrapper {
       td {
         text-align: right;
       }
     }
+
+    .el-table__body-wrapper td .cell {
+      direction: rtl;
+    }
+
     // 处理表格中的定位
     .el-table__fixed,
     .el-table__fixed-right {
       left: auto !important;
       right: 0 !important;
     }
+
     .el-table__fixed-header-wrapper {
       left: auto !important;
       right: 0;
     }
+
     .el-table__fixed-body-wrapper {
       left: auto !important;
       right: 0;
     }
   }
+
   .el-menu {
     text-align: right;
   }
+
   // 菜单图标镜像
   // Element UI 默认的子菜单箭头图标
   .el-submenu__icon-arrow {
@@ -333,6 +479,7 @@ html[dir='rtl'] {
       margin-right: 0 !important;
       margin-left: 4px !important;
     }
+
     // 处理绝对定位的图标
     .icon-xiala {
       position: absolute;
@@ -340,8 +487,10 @@ html[dir='rtl'] {
       left: auto !important;
     }
   }
+
   // 菜单项中的图标位置调整
   .el-menu-item {
+
     i,
     .iconfont,
     [class^='icon-'],
@@ -350,8 +499,10 @@ html[dir='rtl'] {
       margin-left: 16px !important;
     }
   }
+
   // 子菜单标题中的图标（包括 iconfont）
   .el-submenu__title {
+
     i,
     .iconfont,
     [class^='icon-'],
@@ -369,6 +520,7 @@ html[dir='rtl'] {
 
   // 处理菜单组中的图标
   .menu-group {
+
     .icon-shouqijiantouxiao,
     [class^='icon-'],
     [class*=' icon-'] {
@@ -376,6 +528,7 @@ html[dir='rtl'] {
       margin-left: 4px !important;
     }
   }
+
   // 处理页面布局中的菜单图标
   .page-layout {
     .el-submenu__title {
@@ -385,11 +538,13 @@ html[dir='rtl'] {
       }
     }
   }
+
   .el-breadcrumb {
     .el-breadcrumb__separator {
       margin: 0 8px;
     }
   }
+
   .el-steps {
     .el-step__head {
       .el-step__icon {
@@ -397,58 +552,71 @@ html[dir='rtl'] {
         margin-left: 8px;
       }
     }
+
     .el-step__main {
       text-align: right;
     }
   }
+
   .el-timeline {
     .el-timeline-item__node {
       left: auto;
       right: 0;
     }
+
     .el-timeline-item__wrapper {
       padding-right: 28px;
       padding-left: 0;
       text-align: right;
     }
   }
+
   // 处理更多常见的定位场景
   // 处理侧边栏和菜单的定位
   .el-menu--horizontal {
+
     .el-menu-item,
     .el-submenu__title {
       text-align: right;
     }
   }
+
   // 处理抽屉组件的定位
   .el-drawer {
     direction: rtl;
+
     &.rtl {
       left: auto;
       right: 0;
     }
   }
+
   // 处理通知组件的定位
   .el-notification {
     right: auto !important;
     left: 16px !important;
   }
+
   // 处理消息组件的定位
   .el-message {
     right: auto !important;
     left: 50% !important;
     transform: translateX(-50%);
   }
+
   // 处理加载组件的定位
   .el-loading-mask {
     direction: rtl;
   }
+
   // 处理标签页的定位
   .el-tabs__item {
     text-align: right;
   }
+
   // 处理导航菜单的定位
   .el-menu-vertical {
+
     .el-menu-item,
     .el-submenu__title {
       text-align: right;
@@ -456,29 +624,35 @@ html[dir='rtl'] {
       padding-left: 0;
     }
   }
+
   // 处理卡片组件的定位
   .el-card {
     .el-card__header {
       text-align: right;
     }
   }
+
   // 处理表单验证错误的定位
   .el-form-item.is-error {
+
     .el-input__inner,
     .el-textarea__inner {
       border-color: #f56c6c;
     }
   }
+
   // 处理工具提示的定位
   .el-tooltip__popper {
     direction: rtl;
     text-align: right;
   }
+
   // 处理弹出确认框的定位
   .el-popconfirm {
     direction: rtl;
     text-align: right;
   }
+
   .el-form {
     &.el-form--label-left {
       .el-form-item__label {
@@ -486,34 +660,42 @@ html[dir='rtl'] {
       }
     }
   }
+
   .cpn_drawer {
     .box {
       left: 0 !important;
       right: auto !important;
     }
+
     .title {
       left: 100% !important;
       right: auto !important;
     }
+
     .el-icon-d-arrow-right {
       transform: rotate(180deg);
     }
+
     // RTL 模式下的动画：从左侧滑出（translateX(-100%)）
     .show {
       animation: slide-rtl 0.5s forwards;
     }
+
     .hide {
       animation: slide-rtl 0.5s reverse;
     }
   }
+
   @keyframes slide-rtl {
     0% {
       transform: translateX(0%);
     }
+
     100% {
       transform: translateX(-100%);
     }
   }
+
   .page-decorate-index {
     .right-container {
       right: auto;

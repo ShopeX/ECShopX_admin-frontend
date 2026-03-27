@@ -99,6 +99,9 @@ export default {
     title: '选择挂件'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('11a7d126.e0bc2a')
+  },
   data() {
     return {
       formData: {

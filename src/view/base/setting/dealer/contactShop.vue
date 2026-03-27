@@ -11,17 +11,21 @@
           <div class="left">
             <el-form-item>
               <el-select v-model="selectStatus">
-                <el-option label="按状态筛选" value="1" />
-                <el-option label="按地区筛选" value="2" />
+                <el-option :label="$t('3e9b9d2e.7d64bb')" value="1" />
+                <el-option :label="$t('3e9b9d2e.7c487d')" value="2" />
               </el-select>
             </el-form-item>
             <template v-if="selectStatus == '1'">
               <el-form-item>
-                <el-select v-model="form.is_valid" placeholder="全部状态" @change="getList()">
+                <el-select
+                  v-model="form.is_valid"
+                  :placeholder="$t('3e9b9d2e.443483')"
+                  @change="getList()"
+                >
                   <el-option
                     v-for="item in statusList"
                     :key="item.value"
-                    :label="item.name"
+                    :label="$t(item.nameKey)"
                     :value="item.value"
                   />
                 </el-select>
@@ -30,7 +34,7 @@
             <template v-else>
               <el-cascader
                 v-model="form.address"
-                placeholder="根据地区筛选"
+                :placeholder="$t('3e9b9d2e.491f74')"
                 :options="regions"
                 filterable
                 :props="{ checkStrictly: true }"
@@ -41,29 +45,37 @@
           <div class="right">
             <el-form-item>
               <el-select v-model="nameSelect">
-                <el-option label="店铺名称" value="1" />
-                <el-option label="联系人手机号" value="2" />
+                <el-option :label="$t('3e9b9d2e.0d4934')" value="1" />
+                <el-option :label="$t('3e9b9d2e.d9898e')" value="2" />
               </el-select>
             </el-form-item>
             <el-form-item v-if="nameSelect == '1'">
-              <el-input v-model="form.name" placeholder="请输入店铺名称" @change="getList()">
-                <el-button slot="append" @click="getList"> 搜索 </el-button>
+              <el-input
+                v-model="form.name"
+                :placeholder="$t('3e9b9d2e.867738')"
+                @change="getList()"
+              >
+                <el-button slot="append" @click="getList"> {{ $t('3e9b9d2e.e5f71f') }} </el-button>
               </el-input>
             </el-form-item>
             <el-form-item v-else>
-              <el-input v-model="form.mobile" placeholder="请输入联系人手机号" @change="getList()">
-                <el-button slot="append" @click="getList"> 搜索 </el-button>
+              <el-input
+                v-model="form.mobile"
+                :placeholder="$t('3e9b9d2e.2b28a8')"
+                @change="getList()"
+              >
+                <el-button slot="append" @click="getList"> {{ $t('3e9b9d2e.e5f71f') }} </el-button>
               </el-input>
             </el-form-item>
           </div>
         </div>
         <el-form-item style="text-align: right">
-          <el-button @click="resetForm('form')"> 重置 </el-button>
+          <el-button @click="resetForm('form')"> {{ $t('3e9b9d2e.4b9c32') }} </el-button>
         </el-form-item>
       </el-form>
       <div class="bottom">
-        <span>快捷操作</span>
-        <el-button size="mini" @click="dialogOpen()"> 关联店铺 </el-button>
+        <span>{{ $t('3e9b9d2e.9530e8') }}</span>
+        <el-button size="mini" @click="dialogOpen()"> {{ $t('3e9b9d2e.5c16c5') }} </el-button>
       </div>
     </div>
     <el-card class="box-card" shadow="never">
@@ -74,12 +86,12 @@
         tooltip-effect="dark"
         style="width: 100%"
       >
-        <el-table-column label="店铺编号" width="120">
+        <el-table-column :label="$t('3e9b9d2e.a3068b')" width="120">
           <template slot-scope="scope">
             {{ scope.row.distributor_id }}
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="店铺名/联系人/手机号">
+        <el-table-column prop="name" :label="$t('3e9b9d2e.9a6d8e')">
           <template slot-scope="scope">
             <div class="store-name">
               {{ scope.row.name }}
@@ -100,17 +112,17 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="地址" />
-        <el-table-column label="店铺状态">
+        <el-table-column prop="address" :label="$t('3e9b9d2e.765048')" />
+        <el-table-column :label="$t('3e9b9d2e.e28997')">
           <template slot-scope="scope">
             <span>{{
-              (scope.row.is_valid === 'true' && '启用') ||
-              (scope.row.is_valid === 'false' && '禁用') ||
-              (scope.row.is_valid === 'delete' && '废弃')
+              (scope.row.is_valid === 'true' && $t('3e9b9d2e.7854b5')) ||
+              (scope.row.is_valid === 'false' && $t('3e9b9d2e.710ad0')) ||
+              (scope.row.is_valid === 'delete' && $t('3e9b9d2e.0044f6'))
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column :label="$t('3e9b9d2e.2b6bc0')" width="150">
           <template slot-scope="scope">
             <el-button
               :style="{ color: 'red' }"
@@ -118,10 +130,10 @@
               size="mini"
               @click="cancelHandle(scope.row.distributor_id)"
             >
-              取消关联
+              {{ $t('3e9b9d2e.eabb6f') }}
             </el-button>
             <el-button type="text" size="mini" @click="checkHandle(scope.row.distributor_id)">
-              查看
+              {{ $t('3e9b9d2e.607e7a') }}
             </el-button>
           </template>
         </el-table-column>
@@ -172,10 +184,10 @@ export default {
       ShopStatus: false,
       adapayMemberId: this.$route.query.id,
       statusList: [
-        { name: '全部', value: '' },
-        { name: '启用', value: 'true' },
-        { name: '禁用', value: 'false' },
-        { name: '废弃', value: 'delete' }
+        { nameKey: '3e9b9d2e.a8b0c2', value: '' },
+        { nameKey: '3e9b9d2e.7854b5', value: 'true' },
+        { nameKey: '3e9b9d2e.710ad0', value: 'false' },
+        { nameKey: '3e9b9d2e.0044f6', value: 'delete' }
       ],
 
       total_count: 0,
@@ -229,7 +241,7 @@ export default {
         this.loading = false
         this.$message({
           type: 'error',
-          message: '获取统计信息出错'
+          message: this.$t('3e9b9d2e.5b0398')
         })
       }
     },
@@ -280,7 +292,7 @@ export default {
     cancelHandle(id) {
       const h = this.$createElement
       this.$msgbox({
-        title: '提示',
+        title: this.$t('3e9b9d2e.02d981'),
         id: id,
         message: h('div', { style: 'padding-top:0px' }, [
           h('i', {
@@ -290,17 +302,17 @@ export default {
           h(
             'span',
             { style: 'font-size: 14px;color:#000', class: 'tips' },
-            '您确定要取消所选中的店铺关联关系吗？'
+            this.$t('3e9b9d2e.770742')
           ),
           h(
             'p',
             { style: 'font-size: 12px;margin-bottom:20px ;margin-left:32px ;' },
-            '取消后会影响店铺正常交易，请确保无影响的情况下再做此操作!'
+            this.$t('3e9b9d2e.37b966')
           )
         ]),
         showCancelButton: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('3e9b9d2e.38cf16'),
+        cancelButtonText: this.$t('3e9b9d2e.625fb2'),
         beforeClose: async (action, instance, done) => {
           console.log(action)
           console.log(instance)
@@ -313,7 +325,7 @@ export default {
             done()
             if (result.data.data.status) {
               instance.confirmButtonLoading = false
-              this.$message.success('取消成功')
+              this.$message.success(this.$t('3e9b9d2e.285f58'))
               this.getList()
               // done("取消成功");
             }

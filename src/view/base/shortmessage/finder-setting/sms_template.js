@@ -19,27 +19,27 @@ export default (vm) => {
   const formatTemplate_type = (status) => {
     switch (status) {
       case '0':
-        return `验证码`
+        return vm.$t('7adabfaf.983f59')
       case '1':
-        return `短信通知`
+        return vm.$t('7adabfaf.e7d158')
       case '2':
-        return `推广短信`
+        return vm.$t('7adabfaf.0a9738')
     }
   }
   return createSetting({
     search: [
-      { key: 'status', name: '审核状态', type: 'select', options: vm.search_options },
-      { key: 'template_name', name: '模板名称' }
+      { key: 'status', name: vm.$t('7adabfaf.b6d0e9'), type: 'select', options: vm.search_options },
+      { key: 'template_name', name: vm.$t('7adabfaf.a5d1c5') }
     ],
     columns: [
-      { name: '模板名称', key: 'template_name' },
-      { name: '模板CODE', key: 'template_code' },
-      { name: '模板内容', key: 'template_content' },
-      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type },
-      { name: '短信场景', key: 'scene_name' },
-      { name: '创建时间', key: 'created', formatter: formatDate },
+      { name: vm.$t('7adabfaf.a5d1c5'), key: 'template_name' },
+      { name: vm.$t('7adabfaf.50760a'), key: 'template_code' },
+      { name: vm.$t('7adabfaf.03ae79'), key: 'template_content' },
+      { name: vm.$t('7adabfaf.b2b399'), key: 'template_type', formatter: formatTemplate_type },
+      { name: vm.$t('7adabfaf.bc50bf'), key: 'scene_name' },
+      { name: vm.$t('7adabfaf.eca37c'), key: 'created', formatter: formatDate },
       {
-        name: '审核状态',
+        name: vm.$t('7adabfaf.b6d0e9'),
         key: 'status',
         width: '100px',
         render: (h, { row }) =>
@@ -57,9 +57,9 @@ export default (vm) => {
               h(
                 'span',
                 {},
-                (row.status == '0' && '审核中') ||
-                  (row.status == '1' && '审核通过') ||
-                  (row.status == '2' && '审核失败 ')
+                (row.status == '0' && vm.$t('7adabfaf.b720a6')) ||
+                  (row.status == '1' && vm.$t('7adabfaf.871a30')) ||
+                  (row.status == '2' && vm.$t('7adabfaf.3c6210'))
               ),
               row.status == 2 &&
                 row.reason &&
@@ -81,7 +81,7 @@ export default (vm) => {
     ],
     actions: [
       {
-        name: '详情',
+        name: vm.$t('7adabfaf.f26225'),
         key: 'detail',
         type: 'button',
         buttonType: 'text',
@@ -96,7 +96,7 @@ export default (vm) => {
         }
       },
       {
-        name: '编辑',
+        name: vm.$t('7adabfaf.95b351'),
         key: 'editor',
         type: 'button',
         buttonType: 'text',
@@ -114,7 +114,7 @@ export default (vm) => {
         }
       },
       {
-        name: '删除',
+        name: vm.$t('7adabfaf.2f4aad'),
         key: 'delete',
         type: 'button',
         buttonType: 'text',

@@ -23,7 +23,7 @@
 }
 </style>
 <template>
-  <el-card class="el-card--normal" header="基础信息">
+  <el-card class="el-card--normal" :header="$t('bc312924.6ea1fe')">
     <el-form
       ref="form"
       class="shop-baseinfo-form"
@@ -32,39 +32,43 @@
       :model="content.baseForm"
       :rules="rules"
     >
-      <el-form-item label="店铺号" prop="shop_code">
-        <el-input v-model="content.baseForm.shop_code" placeholder="请输入店铺号" :maxlength="10" />
+      <el-form-item :label="$t('bc312924.f6d738')" prop="shop_code">
+        <el-input
+          v-model="content.baseForm.shop_code"
+          :placeholder="$t('bc312924.68f04a')"
+          :maxlength="10"
+        />
       </el-form-item>
 
-      <el-form-item label="店铺名称" prop="name">
-        <el-input v-model="content.baseForm.name" placeholder="请输入店铺名称" />
+      <el-form-item :label="$t('bc312924.0d4934')" prop="name">
+        <el-input v-model="content.baseForm.name" :placeholder="$t('bc312924.867738')" />
       </el-form-item>
 
-      <el-form-item label="联系人姓名" prop="contact">
+      <el-form-item :label="$t('bc312924.986d36')" prop="contact">
         <el-input
           v-model="content.baseForm.contact"
-          placeholder="请输入联系人姓名"
+          :placeholder="$t('bc312924.e30625')"
           :disabled="content.baseForm.datapass_block == 1 && distributor_id > 0"
         />
       </el-form-item>
 
-      <el-form-item label="联系方式" prop="mobile">
+      <el-form-item :label="$t('bc312924.b58943')" prop="mobile">
         <el-input
           v-model="content.baseForm.mobile"
-          placeholder="请输入联系人手机号"
+          :placeholder="$t('bc312924.2b28a8')"
           :disabled="content.baseForm.datapass_block == 1 && distributor_id > 0"
         />
       </el-form-item>
 
-      <el-form-item label="固定座机">
-        <el-input v-model="content.baseForm.contract_phone" placeholder="请输入联系人座机号" />
+      <el-form-item :label="$t('bc312924.699886')">
+        <el-input v-model="content.baseForm.contract_phone" :placeholder="$t('bc312924.cb842c')" />
       </el-form-item>
 
-      <el-form-item label="经营时间">
+      <el-form-item :label="$t('bc312924.a2bed2')">
         <el-time-select
           v-model="content.baseForm.startTime"
           class="start-time"
-          placeholder="起始时间"
+          :placeholder="$t('bc312924.26dac3')"
           :picker-options="{
             start: '00:00',
             step: '00:30',
@@ -75,7 +79,7 @@
         <el-time-select
           v-model="content.baseForm.endTime"
           class="end-time"
-          placeholder="结束时间"
+          :placeholder="$t('bc312924.f78277')"
           :picker-options="{
             start: '00:00',
             step: '00:30',
@@ -85,16 +89,16 @@
         />
       </el-form-item>
 
-      <el-form-item label="是否快递">
+      <el-form-item :label="$t('bc312924.2e552e')">
         <el-switch v-model="content.baseForm.is_delivery" />
       </el-form-item>
 
       <el-form-item
         v-if="content.baseForm.distribution_type != '1' && !VERSION_STANDARD()"
-        label="审核商品"
+        :label="$t('bc312924.48f0ee')"
       >
         <el-switch v-model="content.baseForm.is_audit_goods" />
-        <div class="form-item-tip">开启后，店铺添加的自有商品，需要平台审核通过后才可以上架</div>
+        <div class="form-item-tip">{{ $t('bc312924.c46414') }}</div>
       </el-form-item>
 
       <el-form-item
@@ -103,18 +107,18 @@
           $store.getters.login_type != 'distributor' &&
           !content.baseForm.distributor_self
         "
-        label="同步商品"
+        :label="$t('bc312924.5aa3a7')"
       >
         <el-switch v-model="content.baseForm.auto_sync_goods" />
-        <div class="form-item-tip">自动同步商品至店铺</div>
+        <div class="form-item-tip">{{ $t('bc312924.8d61d8') }}</div>
       </el-form-item>
-      <el-form-item v-if="!content.baseForm.distributor_self" label="街道居委">
+      <el-form-item v-if="!content.baseForm.distributor_self" :label="$t('bc312924.6e548b')">
         <el-switch v-model="content.baseForm.is_require_subdistrict" />
-        <div class="form-item-tip">下单是否需要选择街道居委</div>
+        <div class="form-item-tip">{{ $t('bc312924.1ef2d0') }}</div>
       </el-form-item>
-      <el-form-item v-if="!content.baseForm.distributor_self" label="楼号房号">
+      <el-form-item v-if="!content.baseForm.distributor_self" :label="$t('bc312924.a4e97c')">
         <el-switch v-model="content.baseForm.is_require_building" />
-        <div class="form-item-tip">下单是否需要填写楼号房号</div>
+        <div class="form-item-tip">{{ $t('bc312924.e2f9a1') }}</div>
       </el-form-item>
     </el-form>
   </el-card>
@@ -125,21 +129,25 @@ export default {
   inject: ['content'],
   data() {
     return {
-      rules: {
-        shop_code: [
-          {
-            pattern: /^[A-Za-z0-9\-]+$/,
-            message: '请输入正确格式的店铺号',
-            required: true
-          }
-        ],
-        name: [{ message: '店铺名称必填', required: true }],
-        contact: [{ message: '联系人必填', required: true }],
-        mobile: [{ message: '手机必填', required: true }]
-      },
       startTime: '08:00',
       endTime: '21:00',
       distributor_id: null
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        shop_code: [
+          {
+            pattern: /^[A-Za-z0-9\-]+$/,
+            message: this.$t('bc312924.3bb116'),
+            required: true
+          }
+        ],
+        name: [{ message: this.$t('bc312924.45c9f8'), required: true }],
+        contact: [{ message: this.$t('bc312924.e65a59'), required: true }],
+        mobile: [{ message: this.$t('bc312924.3510d5'), required: true }]
+      }
     }
   },
   mounted() {

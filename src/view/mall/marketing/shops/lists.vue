@@ -6,18 +6,24 @@
 <template>
   <div>
     <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="border-card">
-      <el-tab-pane label="门店管理" name="first">
+      <el-tab-pane :label="$t('aa338e9b.b94273')" name="first">
         <el-row>
           <el-col :span="12">
-            店铺类型：
+            {{ $t('aa338e9b.e3d663') }}
             <el-select v-model="store_type" @change="storeChange">
-              <el-option label="直营店" :value="1"> 直营店 </el-option>
-              <el-option label="非直营店" :value="2"> 非直营店 </el-option>
+              <el-option :label="$t('aa338e9b.4b940c')" :value="1">
+                {{ $t('aa338e9b.4b940c') }}
+              </el-option>
+              <el-option :label="$t('aa338e9b.c26325')" :value="2">
+                {{ $t('aa338e9b.c26325') }}
+              </el-option>
             </el-select>
           </el-col>
           <el-col :span="12" class="content-right">
             <router-link :to="matchRoutePath('editor')">
-              <el-button type="primary" icon="el-icon-plus"> 添加门店 </el-button>
+              <el-button type="primary" icon="el-icon-plus">
+                {{ $t('aa338e9b.894d98') }}
+              </el-button>
             </router-link>
           </el-col>
         </el-row>
@@ -27,18 +33,18 @@
           style="width: 100%"
           :height="wheight - 305"
         >
-          <el-table-column prop="storeName" label="门店名称" width="240" />
-          <el-table-column prop="isDirectStore" label="直营店">
+          <el-table-column prop="storeName" :label="$t('aa338e9b.740032')" width="240" />
+          <el-table-column prop="isDirectStore" :label="$t('aa338e9b.4b940c')">
             <template slot-scope="scope">
               <div v-if="scope.row.isDirectStore === 1">
-                <el-tag type="success" size="mini"> 直营 </el-tag>
+                <el-tag type="success" size="mini"> {{ $t('aa338e9b.0f2d3f') }} </el-tag>
               </div>
               <div v-if="scope.row.isDirectStore === 2">
-                <el-tag type="gray" size="mini"> 非直营 </el-tag>
+                <el-tag type="gray" size="mini"> {{ $t('aa338e9b.7439a8') }} </el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column width="240" label="地理位置">
+          <el-table-column width="240" :label="$t('aa338e9b.fc82aa')">
             <template slot-scope="scope">
               <div v-if="scope.row.isDomestic == 2">
                 {{ scope.row.country }} {{ scope.row.city }} {{ scope.row.address }}
@@ -48,7 +54,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="状态" width="80">
+          <el-table-column :label="$t('aa338e9b.3fea7c')" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_valid"
@@ -67,7 +73,7 @@
             <span v-else> -- </span>
           </template>
           </el-table-column> -->
-          <el-table-column label="设为默认" width="80">
+          <el-table-column :label="$t('aa338e9b.1af3ec')" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_default"
@@ -78,18 +84,18 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="170">
+          <el-table-column :label="$t('aa338e9b.2b6bc0')" width="170">
             <template slot-scope="scope">
               <!-- <el-button size="mini" type="text" v-if="!scope.row.is_valid" @click="getRes(scope.row)">激活</el-button> -->
               <el-button size="mini" type="text" @click="shopsEdit(scope.$index, scope.row)">
-                编辑
+                {{ $t('aa338e9b.95b351') }}
               </el-button>
               <el-button
                 size="mini"
                 type="text"
                 @click="distributorShopsDetail(scope.$index, scope.row)"
               >
-                详情
+                {{ $t('aa338e9b.f26225') }}
               </el-button>
               <!-- <el-button size="mini" type="text" @click="deleteDistributorShopAction(scope.$index, scope.row)">删除</el-button> -->
             </template>
@@ -229,7 +235,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取门店详情出错'
+            message: this.$t('aa338e9b.816eba')
           })
         })
     },
@@ -245,7 +251,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取门店信息出错'
+            message: this.$t('aa338e9b.91e257')
           })
         })
     },
@@ -269,7 +275,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '默认门店设置失败'
+            message: this.$t('aa338e9b.07c5cc')
           })
         })
     },
@@ -282,9 +288,9 @@ export default {
       this.currentRow = val
     },
     deleteDistributorShopAction(index, row) {
-      this.$confirm('此操作将删除该门店, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('aa338e9b.a7a939'), this.$t('aa338e9b.02d981'), {
+        confirmButtonText: this.$t('aa338e9b.38cf16'),
+        cancelButtonText: this.$t('aa338e9b.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -292,7 +298,7 @@ export default {
             .then((response) => {
               this.wxShopsList.splice(index, 1)
               this.$message({
-                message: '删除门店成功',
+                message: this.$t('aa338e9b.765351'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -300,27 +306,27 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除门店失败'
+                message: this.$t('aa338e9b.1b9d4c')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('aa338e9b.2111cc')
           })
         })
     },
     syncWxShops() {
-      this.$confirm('确定同步微信门店到本系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('aa338e9b.275b0e'), this.$t('aa338e9b.02d981'), {
+        confirmButtonText: this.$t('aa338e9b.38cf16'),
+        cancelButtonText: this.$t('aa338e9b.625fb2'),
         type: 'warning'
       })
         .then(() => {
           syncWxShops().then((response) => {
             this.$message({
-              message: '同步成功',
+              message: this.$t('aa338e9b.52b85c'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -330,7 +336,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('aa338e9b.2111cc')
           })
         })
     },
@@ -346,7 +352,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '门店状态修改失败'
+            message: this.$t('aa338e9b.8a004c')
           })
         })
     }

@@ -11,7 +11,7 @@
         <div>{{ base.title }}</div>
       </div>
       <div class="component-more" style="flex: 1; text-align: right; justify-content: end">
-        <div class="more">查看更多</div>
+        <div class="more">{{ $t('6d548076.90ef7c') }}</div>
       </div>
     </div>
     <div class="nearbyBox">
@@ -25,8 +25,8 @@
       </div>
       <div class="shopList">
         <div v-if="shoplist.length <= 0" class="noShop">
-          <img :src="img.noShopImg" alt="" />
-          <p>更多商家接入中，敬请期待</p>
+          <img :src="img.noShopImg" alt="">
+          <p>{{ $t('6d548076.d17ff7') }}</p>
         </div>
         <div v-else class="content">
           <div v-for="item in shoplist" :key="item.distributor_id" class="shop">
@@ -39,7 +39,7 @@
                 backgroundRepeat: 'no-repeat'
               }"
             >
-              <img class="logo" :src="item.logo || img.logoImg" alt="" />
+              <img class="logo" :src="item.logo || img.logoImg" alt="">
             </div>
             <!-- <img class="bg" :src="img.bgImg" alt="" /> -->
 

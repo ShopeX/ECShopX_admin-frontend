@@ -7,7 +7,7 @@
   <div>
     <div class="clearfix" style="margin: 0.6%">
       <div class="f_l">
-        <el-button type="primary" @click="editNewsItem()"> 新增图文消息 </el-button>
+        <el-button type="primary" @click="editNewsItem()"> {{ $t('e2e2fc55.6e021c') }} </el-button>
       </div>
     </div>
     <div
@@ -27,7 +27,7 @@
         >
           <div class="msg-content">
             <div class="msg-info">
-              <span>更新于 {{ item.update_time | datetime }}</span>
+              <span>{{ $t('e2e2fc55.3a6d9c') }} {{ item.update_time | datetime }}</span>
             </div>
             <div class="sub-msg-item" :class="{ coverMsgItem: item.content.news_item[1] }">
               <h4 class="msg-title">
@@ -40,7 +40,7 @@
                 }"
               />
               <a :href="item.content.news_item[0].url" class="edit-mask preview-mask">
-                <div class="edit-mask-content">预览文章</div>
+                <div class="edit-mask-content">{{ $t('e2e2fc55.f9d706') }}</div>
               </a>
               <p v-if="!item.content.news_item[1]" class="msg-desc">
                 {{ item.content.news_item[0].digest }}
@@ -58,7 +58,7 @@
                   <a>{{ item.content.news_item[n].title }}</a>
                 </h4>
                 <a :href="item.content.news_item[n].url" class="edit-mask preview-mask">
-                  <div class="edit-mask-content">预览文章</div>
+                  <div class="edit-mask-content">{{ $t('e2e2fc55.f9d706') }}</div>
                 </a>
               </div>
             </div>
@@ -67,14 +67,24 @@
             <el-row>
               <el-col :span="12">
                 <div @click="editNewsItem(item.media_id)">
-                  <el-tooltip :key="item.id" effect="dark" content="编辑" placement="top">
+                  <el-tooltip
+                    :key="item.id"
+                    effect="dark"
+                    :content="$t('e2e2fc55.95b351')"
+                    placement="top"
+                  >
                     <a><i class="el-icon-edit" /></a>
                   </el-tooltip>
                 </div>
               </el-col>
               <el-col :span="12">
                 <div class="opr_item" @click="removeNewsItem(item, index)">
-                  <el-tooltip :key="item.id" effect="dark" content="删除" placement="top">
+                  <el-tooltip
+                    :key="item.id"
+                    effect="dark"
+                    :content="$t('e2e2fc55.2f4aad')"
+                    placement="top"
+                  >
                     <i class="el-icon-delete" />
                   </el-tooltip>
                 </div>
@@ -170,16 +180,16 @@ export default {
       }
     },
     removeNewsItem(item, index) {
-      this.$confirm('确定删除此图文吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('e2e2fc55.702c71'), this.$t('e2e2fc55.02d981'), {
+        confirmButtonText: this.$t('e2e2fc55.38cf16'),
+        cancelButtonText: this.$t('e2e2fc55.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteWechatMaterial({ media_id: item.media_id }).then((response) => {
             this.list_news.item.splice(index, 1)
             this.$message({
-              message: '删除成功',
+              message: this.$t('e2e2fc55.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -189,7 +199,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('e2e2fc55.2111cc')
           })
         })
     }

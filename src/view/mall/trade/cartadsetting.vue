@@ -8,13 +8,13 @@
     <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
         <template>
-          <el-form-item label="购物车顶部营销语:">
+          <el-form-item :label="$t('fc0ea1af.9adc99')">
             <el-input v-model="form.ad_title" required placeholder="" style="width: 100px" />
           </el-form-item>
         </template>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save">{{ $t('fc0ea1af.56df61') }}</el-button>
       </div>
     </el-form>
   </div>
@@ -40,11 +40,11 @@ export default {
   methods: {
     save() {
       if (!this.form.ad_title) {
-        this.$message({ message: '信息必填', type: 'error' })
+        this.$message({ message: this.$t('fc0ea1af.32c5ed'), type: 'error' })
         return
       }
       setCartMarketingAd(this.form).then((res) => {
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('fc0ea1af.3b1083'), type: 'success' })
       })
     }
   }

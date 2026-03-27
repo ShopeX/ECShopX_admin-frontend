@@ -4,6 +4,7 @@
  */
 import Vue from 'vue'
 import store from '@/store'
+import { i18n } from '@/i18n'
 import { RequestClient } from './request'
 
 function createRequestClient() {
@@ -43,9 +44,9 @@ function createRequestClient() {
       const err = error?.toString?.() ?? ''
       let errMsg = ''
       if (err?.includes('Network Error')) {
-        errMsg = '网络异常，请检查您的网络连接后重试'
+        errMsg = i18n.t('11ec4029.db63d0')
       } else if (error?.message?.includes?.('timeout')) {
-        errMsg = '请求超时，请稍后再试'
+        errMsg = i18n.t('11ec4029.de9296')
       }
 
       if (errMsg) {
@@ -58,7 +59,7 @@ function createRequestClient() {
 
       switch (status) {
         case 401:
-          errorMessage = '登录认证过期，请重新登录后继续'
+          errorMessage = i18n.t('11ec4029.9a2414')
           break
       }
 

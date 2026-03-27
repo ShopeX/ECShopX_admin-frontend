@@ -8,25 +8,25 @@
     <SpPlatformTip v-if="!VERSION_SHUYUN()" />
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('7e3babaa.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('7e3babaa.b44c0f')"
+          :end-placeholder="$t('7e3babaa.1d468b')"
           @change="dateChange"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="rel_id" label="商品ID:">
-        <el-input v-model="params.rel_id" placeholder="请输入商品ID" />
+      <SpFilterFormItem prop="rel_id" :label="$t('7e3babaa.bcd964')">
+        <el-input v-model="params.rel_id" :placeholder="$t('7e3babaa.bc49b3')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="sub_status" label="是否评价:">
-        <el-select v-model="params.sub_status" clearable placeholder="请选择是否评价">
+      <SpFilterFormItem prop="sub_status" :label="$t('7e3babaa.6c95c6')">
+        <el-select v-model="params.sub_status" clearable :placeholder="$t('7e3babaa.6784cc')">
           <el-option
             v-for="(item, index) in noticeStatusList"
             :key="index"
-            :label="item.name"
+            :label="$t(item.name)"
             :value="item.value"
           />
         </el-select>
@@ -39,9 +39,9 @@
       :data="list"
       style="width: 100%"
       :height="wheight - 140"
-      element-loading-text="数据加载中"
+      :element-loading-text="$t('7e3babaa.f09b12')"
     >
-      <el-table-column prop="star" min-width="150" label="用户">
+      <el-table-column prop="star" min-width="150" :label="$t('7e3babaa.1fd02a')">
         <template slot-scope="scope">
           <div class="order-time" style="padding: 8px 0 2px 0">
             <span class="content-right-margin">
@@ -57,30 +57,31 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="order_id" width="200" label="订阅时间">
+      <el-table-column prop="order_id" width="200" :label="$t('7e3babaa.e91545')">
         <template slot-scope="scope">
           <div class="order-time">
             {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="order_id" width="400" label="商品">
+      <el-table-column prop="order_id" width="400" :label="$t('7e3babaa.9897d8')">
         <template slot-scope="scope">
           <div class="order-time">
             {{ scope.row.item_name }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="is_reply" width="160" label="通知状态">
+      <el-table-column prop="is_reply" width="160" :label="$t('7e3babaa.8023ba')">
         <template slot-scope="scope">
-          <!-- 订单状态 -->
           <span>
-            <el-tag v-if="scope.row.sub_status == 'SUCCESS'" type="success" size="mini"
-              >已通知</el-tag
-            >
-            <el-tag v-else type="danger" size="mini">未通知</el-tag>
+            <el-tag v-if="scope.row.sub_status == 'SUCCESS'" type="success" size="mini">{{
+              $t('7e3babaa.917400')
+            }}</el-tag>
+            <el-tag v-else type="danger" size="mini">{{ $t('7e3babaa.d70c8c') }}</el-tag>
           </span>
-          <el-tag v-if="scope.row.disabled" type="danger" size="mini"> 已删除 </el-tag>
+          <el-tag v-if="scope.row.disabled" type="danger" size="mini">
+            {{ $t('7e3babaa.5cc232') }}
+          </el-tag>
         </template>
       </el-table-column>
       <!--<el-table-column width="140" label="操作">-->
@@ -104,28 +105,28 @@
     </div>
 
     <el-dialog
-      title="评价详情"
+      :title="$t('7e3babaa.ae1bad')"
       width="45%"
       :visible.sync="detailsDialogVisible"
       :before-close="handleClose"
     >
       <el-dialog width="45%" :visible.sync="imgVisible" append-to-body>
-        <img width="100%" :src="Dialogpic" />
+        <img width="100%" :src="Dialogpic">
       </el-dialog>
       <div class="section-white">
         <div class="section-header with-border">
-          <h3>评价商品信息</h3>
+          <h3>{{ $t('7e3babaa.2233e4') }}</h3>
         </div>
         <div class="section-body">
           <el-row>
             <el-table :data="details.itemInfo" style="width: 100%">
-              <el-table-column class="goods-img" prop="pic" label="商品图片">
+              <el-table-column class="goods-img" prop="pic" :label="$t('7e3babaa.9b94b1')">
                 <template slot-scope="scope">
-                  <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100" />
+                  <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100">
                 </template>
               </el-table-column>
-              <el-table-column prop="item_name" label="商品名称" width="180" />
-              <el-table-column label="成交价格(元)">
+              <el-table-column prop="item_name" :label="$t('7e3babaa.1fd1d5')" width="180" />
+              <el-table-column :label="$t('7e3babaa.b5972b')">
                 <template slot-scope="scope">
                   <span>￥{{ scope.row.total_fee / 100 }}</span>
                 </template>
@@ -134,34 +135,34 @@
           </el-row>
         </div>
         <div class="section-header with-border">
-          <h3>评价信息</h3>
+          <h3>{{ $t('7e3babaa.9c20b6') }}</h3>
         </div>
         <div class="section-body">
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 评价星级： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.d06931') }} </el-col>
             <el-col :span="20">
               <el-rate v-model="details.rateInfo.star" disabled />
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 评价内容： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.2d0f2f') }} </el-col>
             <el-col :span="20">
               {{ details.rateInfo.content }}
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 评价图： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.c6321f') }} </el-col>
             <el-col v-if="details.rateInfo.rate_pic" :span="20">
               <img
                 v-for="pic in details.rateInfo.rate_pic"
                 :src="pic"
                 width="100"
                 @click="showImg(pic)"
-              />
+              >
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 评价人： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.24bc89') }} </el-col>
             <el-col :span="20">
               <router-link
                 target="_blank"
@@ -175,25 +176,27 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 评价时间： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.4738bc') }} </el-col>
             <el-col :span="20">
               {{ details.rateInfo.created | datetime('YYYY-MM-DD HH:mm:ss') }}
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 是否回复： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.c3fd30') }} </el-col>
             <el-col :span="20">
-              <el-tag v-if="details.rateInfo.is_reply" type="success" size="mini"> 已回复 </el-tag>
-              <el-tag v-else type="danger" size="mini"> 未回复 </el-tag>
+              <el-tag v-if="details.rateInfo.is_reply" type="success" size="mini">
+                {{ $t('7e3babaa.4bea88') }}
+              </el-tag>
+              <el-tag v-else type="danger" size="mini"> {{ $t('7e3babaa.6231a2') }} </el-tag>
             </el-col>
           </el-row>
         </div>
         <div class="section-header with-border">
-          <h3>管理员回复信息</h3>
+          <h3>{{ $t('7e3babaa.e60ff5') }}</h3>
         </div>
         <div v-if="details.replyInfo" class="section-body">
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 回复内容： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.c2747a') }} </el-col>
             <el-col :span="20">
               <el-tag type="success">
                 {{ details.replyInfo.content }}
@@ -201,25 +204,25 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 回复人： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.fcf518') }} </el-col>
             <el-col :span="20">
               {{ details.replyInfo.operator_name }}
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4" class="col-3 content-right"> 回复时间： </el-col>
+            <el-col :span="4" class="col-3 content-right"> {{ $t('7e3babaa.afdc52') }} </el-col>
             <el-col :span="20">
               {{ details.replyInfo.created | datetime('YYYY-MM-DD HH:mm:ss') }}
             </el-col>
           </el-row>
         </div>
         <div class="section-header with-border">
-          <h3>买家评论</h3>
+          <h3>{{ $t('7e3babaa.561c22') }}</h3>
         </div>
         <div class="section-body">
           <el-row>
             <el-table :data="details.userReply" style="width: 100%">
-              <el-table-column prop="username" label="评论人" width="120">
+              <el-table-column prop="username" :label="$t('7e3babaa.84fed1')" width="120">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -232,8 +235,8 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="content" label="评论内容" />
-              <el-table-column prop="created" label="评论时间" width="160">
+              <el-table-column prop="content" :label="$t('7e3babaa.034484')" />
+              <el-table-column prop="created" :label="$t('7e3babaa.a666ad')" width="160">
                 <template slot-scope="scope">
                   <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
                 </template>
@@ -267,14 +270,8 @@ export default {
         time_start_end: ''
       },
       noticeStatusList: [
-        {
-          name: '未通知',
-          value: 'NO'
-        },
-        {
-          name: '已通知',
-          value: 'SUCCESS'
-        }
+        { name: '7e3babaa.d70c8c', value: 'NO' },
+        { name: '7e3babaa.917400', value: 'SUCCESS' }
       ],
 
       total_count: 0,
@@ -299,17 +296,17 @@ export default {
   methods: {
     onCopy() {
       this.$notify({
-        message: '复制成功',
+        message: this.$t('7e3babaa.20a495'),
         type: 'success'
       })
     },
     noticeDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前通知吗？').then((_) => {
+      this.$confirm(this.$t('7e3babaa.36b97b')).then((_) => {
         deleteRate(id).then((res) => {
           if (res.data.data.status) {
             this.$message({
-              message: '删除成功',
+              message: this.$t('7e3babaa.0007d1'),
               type: 'success'
             })
             _self.fetchList()

@@ -2,7 +2,6 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '会员'
 import Layout from '@/view/layout' // 主框架
 import { VERSION_IN_PURCHASE } from '@/utils'
 
@@ -12,7 +11,7 @@ export default {
   children: [
     {
       path: 'member/memberlist',
-      name: `会员列表`,
+      name: 'd251b20e.5386bb',
       component: () => import('@/views/members/member_list'),
       children: [
         {
@@ -27,22 +26,22 @@ export default {
     },
     {
       path: 'card/managecard',
-      name: `等级管理`,
+      name: 'd251b20e.481b69',
       component: () => import('@/view/member/level')
     },
     {
       path: 'card/managecardorder',
-      name: `等级购买记录`,
+      name: 'd251b20e.d2a32f',
       component: () => import('@/view/member/membercard/list')
     },
     {
       path: 'Membertagcategory',
-      name: `会员标签分组`,
+      name: 'd251b20e.4ad5cb',
       component: () => import('@/view/member/members/tagcategory.vue')
     },
     {
       path: 'whitelistlist',
-      name: `白名单列表`,
+      name: 'd251b20e.389be0',
       component: () => {
         if (VERSION_IN_PURCHASE()) {
           return import('@/view/member/whitelist/list.purchase')
@@ -53,67 +52,67 @@ export default {
     },
     {
       path: 'whitelistuploade',
-      name: `白名单导入`,
+      name: 'd251b20e.eba44e',
       component: () => import('@/view/member/whitelist/uploadeindex')
     },
     {
       path: 'card/pointrule',
-      name: `积分规则`,
+      name: 'd251b20e.09d011',
       component: () => import('@/view/member/point/index.vue')
     },
     {
       path: 'card/pointoverview',
-      name: `积分总览`,
+      name: 'd251b20e.908dab',
       component: () => import('@/view/member/point/overview.vue')
     },
     {
       path: 'analysisrights',
-      name: `会员权益`,
+      name: 'd251b20e.de4753',
       component: () => import('@/view/member/members/rightsList')
     },
     {
       path: 'member/Managetag',
-      name: `会员标签`,
+      name: 'd251b20e.3cc026',
       component: () => import('@/view/member/members/tags')
     },
     {
       path: 'membertouch/smssend',
-      name: `群发短信`,
+      name: 'd251b20e.43e10b',
       component: () => import('@/views/members/member_list')
     },
     {
       path: 'membertouch/arrivalnotice',
-      name: `到货通知`,
+      name: 'd251b20e.46a6b2',
       component: () => import('@/view/goods/arrivalNotice')
     },
     {
       path: 'membersetting/Manageinfomation',
-      name: `会员注册信息`,
+      name: 'd251b20e.91fb53',
       component: () => import('@/view/member/register')
     },
     {
       path: 'salemanprotocol',
-      name: `业务员协议`,
+      name: 'd251b20e.6f717b',
       component: () => import('@/view/member/salemanprotocol')
     },
     {
       path: 'mallrecharge',
-      name: `会员储值`,
+      name: 'd251b20e.ba4d7a',
       component: () => import('@/view/mall/storeddeposit/index')
     },
     {
       path: 'member/managecustomer',
-      name: `会员信息导入`,
+      name: 'd251b20e.bb0a54',
       component: () => import('@/view/member/members/uploade')
     },
     {
       path: 'membersetting/trustlogin',
-      name: `信任登录`,
+      name: 'd251b20e.7c7579',
       component: () => import('@/view/member/trustlogin/list')
     },
     {
       path: 'membersetting/closeAccount',
-      name: '会员注销',
+      name: 'd251b20e.76c5fa',
       component: () => import('@/view/member/logout')
     }
     // {

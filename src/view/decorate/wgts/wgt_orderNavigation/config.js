@@ -3,15 +3,34 @@
  * See LICENSE file for license details.
  */
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrNavItem from './attr-imagepanel'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
 const config = {
   name: 'orderNavigation',
   setting: [
-    { label: '组件间距', group: '组件样式', key: 'padded', component: 'switch', value: true },
-    { label: '标题', group: '基础设置', key: 'title', component: 'input', value: '' },
-    { label: '标题颜色', group: '组件样式', key: 'titleColor', component: 'color', value: '#000' },
+    {
+      label: i18n.t('cff31093.4707ba'),
+      group: i18n.t('cff31093.32789d'),
+      key: 'padded',
+      component: 'switch',
+      value: true
+    },
+    {
+      label: i18n.t('cff31093.32c65d'),
+      group: i18n.t('cff31093.0aeca0'),
+      key: 'title',
+      component: 'input',
+      value: ''
+    },
+    {
+      label: i18n.t('cff31093.94e391'),
+      group: i18n.t('cff31093.32789d'),
+      key: 'titleColor',
+      component: 'color',
+      value: '#000'
+    },
     {
       label: '',
       key: 'data',
@@ -20,19 +39,19 @@ const config = {
       },
       value: [
         {
-          content: '待付款',
+          content: 'cff31093.818d78',
           imgUrl: ''
         },
         {
-          content: '待收货',
+          content: 'cff31093.4933ca',
           imgUrl: ''
         },
         {
-          content: '待评价',
+          content: 'cff31093.a48b28',
           imgUrl: ''
         },
         {
-          content: '售后',
+          content: 'cff31093.59bd68',
           imgUrl: ''
         }
       ]
@@ -46,7 +65,7 @@ const config = {
       name,
       ...transformedBase,
       ...(cfg || {}),
-      data,
+      data: Array.isArray(data) ? data : [],
       track,
       tags: {
         type: tagsType || '2',

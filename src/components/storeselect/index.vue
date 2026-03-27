@@ -6,13 +6,13 @@
 <template>
   <el-dialog
     class="store-dialog"
-    title="选择门店"
+    :title="$t('1a20dc63.86c570')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input v-model="name" placeholder="输入门店名称" clearable>
+      <el-input v-model="name" :placeholder="$t('1a20dc63.4d521c')" clearable>
         <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
@@ -26,8 +26,8 @@
       @select="handleSelectionChange"
     >
       <el-table-column type="selection" :reserve-selection="true" width="50" />
-      <el-table-column prop="storeName" label="门店名称" />
-      <el-table-column prop="address" label="地址" show-overflow-tooltip />
+      <el-table-column prop="storeName" :label="$t('1a20dc63.740032')" />
+      <el-table-column prop="address" :label="$t('1a20dc63.765048')" show-overflow-tooltip />
     </el-table>
     <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
@@ -38,8 +38,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('1a20dc63.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('1a20dc63.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>

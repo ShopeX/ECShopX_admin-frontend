@@ -6,10 +6,10 @@
 <template>
   <div>
     <el-form :model="dataForm" label-width="120px">
-      <el-form-item label="任务名称">
+      <el-form-item :label="$t('d8306401.78caf7')">
         <el-input v-model="dataForm.task_name" class="input-m" />
       </el-form-item>
-      <el-form-item label="任务时间">
+      <el-form-item :label="$t('d8306401.b341f9')">
         <el-date-picker
           v-model="date_range"
           type="datetimerange"
@@ -17,20 +17,20 @@
           style="width: 380px"
         />
       </el-form-item>
-      <el-form-item label="任务类型">
-        <el-select v-model="dataForm.task_type" placeholder="请选择">
+      <el-form-item :label="$t('d8306401.bb763c')">
+        <el-select v-model="dataForm.task_type" :placeholder="$t('d8306401.708c9d')">
           <el-option
             v-for="item in type"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.labelKey)"
             :value="item.value"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="任务完成指标">
+      <el-form-item :label="$t('d8306401.54dbe3')">
         <el-input v-model="dataForm.task_quota" class="input-m" type="number" />
       </el-form-item>
-      <el-form-item label="素材">
+      <el-form-item :label="$t('d8306401.54d363')">
         <div>
           <div class="pics-box">
             <ul class="goodspic-wrap">
@@ -46,7 +46,7 @@
                   @mouseenter="picsEnter(index)"
                   @mouseleave="picsLeave"
                 >
-                  <img :src="wximageurl + item" />
+                  <img :src="wximageurl + item">
                   <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
                     <div class="el-icon-delete" @click="removePicsImg(index)" />
                     <div class="el-icon-rank" />
@@ -59,8 +59,8 @@
             </div>
           </div>
           <div class="frm-tips">
-            <p>1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M</p>
-            <p>2. 拖动图片进行可排序</p>
+            <p>{{ $t('d8306401.96b8d8') }}</p>
+            <p>{{ $t('d8306401.2eceaf') }}</p>
           </div>
         </div>
         <imgPicker
@@ -71,27 +71,31 @@
           @closeImgDialog="closePicsDialog"
         />
       </el-form-item>
-      <el-form-item label="内容">
+      <el-form-item :label="$t('d8306401.2d711b')">
         <SpRichText v-model="dataForm.task_content" />
       </el-form-item>
-      <el-card header="店铺" shadow="naver">
-        <el-form-item label="适用店铺">
+      <el-card :header="$t('d8306401.295713')" shadow="naver">
+        <el-form-item :label="$t('d8306401.eb4307')">
           <el-radio-group v-model="dataForm.use_all_distributor" @change="shopTypeChange">
-            <el-radio :label="true"> 全部店铺适用 </el-radio>
-            <el-radio :label="false"> 指定店铺适用 </el-radio>
+            <el-radio :label="true">{{ $t('d8306401.87e0ad') }}</el-radio>
+            <el-radio :label="false">{{ $t('d8306401.3640e1') }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <div v-if="!zdShopHidden">
-          <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
+          <el-button type="primary" @click="addDistributorAction">
+{{
+            $t('d8306401.afa2e6')
+          }}
+</el-button>
           <el-table
             v-if="distributor_info.length > 0"
             :data="distributor_info"
             style="line-height: normal"
           >
             <el-table-column label="ID" prop="distributor_id" width="60" />
-            <el-table-column label="名称" prop="name" />
-            <el-table-column prop="address" label="地址" show-overflow-tooltip />
-            <el-table-column label="操作" width="50">
+            <el-table-column :label="$t('d8306401.d7ec2d')" prop="name" />
+            <el-table-column prop="address" :label="$t('d8306401.765048')" show-overflow-tooltip />
+            <el-table-column :label="$t('d8306401.2b6bc0')" width="50">
               <template slot-scope="scope">
                 <i class="el-icon-delete" @click="deleteDistritutorRow(scope.$index)" />
               </template>
@@ -101,7 +105,7 @@
       </el-card>
     </el-form>
     <div class="content-center content-padded-b">
-      <el-button type="primary" @click="handelClickSubmit"> 保存 </el-button>
+      <el-button type="primary" @click="handelClickSubmit">{{ $t('d8306401.be5fbb') }}</el-button>
     </div>
     <DistributorSelect
       :store-visible="distributorVisible"
@@ -132,22 +136,10 @@ export default {
     return {
       task_id: '',
       type: [
-        {
-          value: 1,
-          label: '转发分享'
-        },
-        {
-          value: 2,
-          label: '获取新客'
-        },
-        {
-          value: 3,
-          label: '客户下单'
-        },
-        {
-          value: 4,
-          label: '会员福利'
-        }
+        { value: 1, labelKey: 'd8306401.22ddc3' },
+        { value: 2, labelKey: 'd8306401.93ee1b' },
+        { value: 3, labelKey: 'd8306401.7a13b6' },
+        { value: 4, labelKey: 'd8306401.61aa3e' }
       ],
       dragIssuesOptions: {
         animation: 300,
@@ -204,11 +196,11 @@ export default {
       if (!this.task_id) {
         // 新增
         await createSalesperosnTask(this.dataForm)
-        message = '添加成功'
+        message = this.$t('d8306401.3fdaea')
       } else {
         // 修改
         await updateSalesperosnTask(this.task_id, this.dataForm)
-        message = '修成成功'
+        message = this.$t('d8306401.69be67')
       }
       this.$message({
         message,
@@ -283,7 +275,7 @@ export default {
     pickPics(data) {
       if (this.currentSku === -1) {
         if (this.picsOldLen + data.length >= 10) {
-          this.$message.error('最多上传9张图片!')
+          this.$message.error(this.$t('d8306401.4352be'))
           return false
         } else {
           if (data.length != 0) {
@@ -297,7 +289,7 @@ export default {
         }
       } else {
         if (this.specImages[this.currentSku].item_image_url.length + data.length > 5) {
-          this.$message.error('最多添加5张图片!')
+          this.$message.error(this.$t('d8306401.5bd788'))
           return false
         }
         if (data.length > 0) {

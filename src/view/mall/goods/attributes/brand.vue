@@ -14,7 +14,7 @@
     />
 
     <div class="action-container mt-4">
-      <el-button type="primary" @click="handleNew"> 新增品牌 </el-button>
+      <el-button type="primary" @click="handleNew"> {{ $t('6ec569f9.1c1a1f') }} </el-button>
     </div>
 
     <!-- <div class="action-container">
@@ -39,10 +39,12 @@
         beforeSearch: beforeSearch
       }"
     />
-    <sideBar :visible.sync="show_sideBar" :title="'新增品牌'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('6ec569f9.1c1a1f')">
       <BrandForm :value="form" @submit="onFormSubmit" />
       <div slot="footer">
-        <el-button type="primary" @click="handleFormSubmit"> 提交 </el-button>
+        <el-button type="primary" @click="handleFormSubmit">
+          {{ $t('6ec569f9.939d53') }}
+        </el-button>
       </div>
     </sideBar>
   </SpPage>
@@ -59,6 +61,7 @@ import {
 import sideBar from '@/components/element/sideBar'
 import { createSetting } from '@shopex-ui/finder'
 import { useForm } from '@/composables'
+import { i18n } from '@/i18n'
 
 const [BrandForm, BrandFormApi] = useForm({
   formType: 'normalForm',
@@ -68,24 +71,24 @@ const [BrandForm, BrandFormApi] = useForm({
   formItems: [
     {
       fieldName: 'attribute_name',
-      label: '品牌名',
+      label: i18n.t('6ec569f9.fc4a05'),
       component: 'input',
       value: '',
       componentProps: {
-        placeholder: '请输入品牌名称'
+        placeholder: i18n.t('6ec569f9.492918')
       },
-      rules: [{ required: true, message: '请输入品牌名称', trigger: 'blur' }]
+      rules: [{ required: true, message: i18n.t('6ec569f9.492918'), trigger: 'blur' }]
     },
     {
       fieldName: 'image_url',
-      label: '品牌logo',
+      label: i18n.t('6ec569f9.8bfb27'),
       component: 'imagepicker',
       value: '',
       componentProps: {
         multiple: false,
         limit: 1
       },
-      tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）'
+      tip: i18n.t('6ec569f9.876be1')
     }
   ]
 })
@@ -132,10 +135,10 @@ export default {
     //   this.fetchList()
     // },
     handleDelete(data) {
-      this.$confirm('确认删除该品牌？')
+      this.$confirm(this.$t('6ec569f9.3051cf'))
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
             this.$refs.finder.refresh()
           })
         })
@@ -192,14 +195,14 @@ export default {
       // 如果没有id，则表示为新增
       if (!submitData.attribute_id) {
         addGoodsAttr(submitData).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.resetData()
           this.show_sideBar = false
           this.$refs.finder.refresh(true)
         })
       } else {
         updateGoodsAttr(submitData.attribute_id, submitData).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.show_sideBar = false
           this.$refs.finder.refresh()
         })
@@ -210,12 +213,12 @@ export default {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列'
+            message: this.$t('6ec569f9.bbdee9')
           })
         } else {
           this.$message({
             type: 'error',
-            message: '同步失败'
+            message: this.$t('6ec569f9.d61036')
           })
         }
       })
@@ -228,12 +231,12 @@ export default {
       return [
         {
           fieldName: 'attribute_name',
-          label: '品牌名称',
+          label: this.$t('6ec569f9.4e8713'),
           component: 'input',
           cellWidth: 1.3,
           componentProps: {
             clearable: true,
-            placeholder: '请输入品牌名称'
+            placeholder: this.$t('6ec569f9.492918')
           }
         }
       ]
@@ -243,7 +246,7 @@ export default {
       return createSetting({
         actions: [
           {
-            name: '编辑',
+            name: this.$t('6ec569f9.95b351'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
@@ -255,7 +258,7 @@ export default {
             }
           },
           {
-            name: '删除',
+            name: this.$t('6ec569f9.2f4aad'),
             key: 'delete',
             type: 'button',
             buttonType: 'text',
@@ -269,7 +272,7 @@ export default {
         ],
         columns: [
           {
-            name: '品牌图片',
+            name: this.$t('6ec569f9.60fe0b'),
             key: 'image_url',
             width: 150,
             render: (h, scope) => {
@@ -286,7 +289,7 @@ export default {
             }
           },
           {
-            name: '品牌名称',
+            name: this.$t('6ec569f9.4e8713'),
             key: 'attribute_name'
           }
         ]

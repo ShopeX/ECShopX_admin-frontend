@@ -21,22 +21,22 @@
             @mouseenter="picsEnter(index)"
             @mouseleave="picsLeave"
           >
-            <img :src="wximageurl + item" />
+            <img :src="wximageurl + item">
             <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
               <!-- <div
                 class="el-icon-delete"
                 @click="removePicsImg(index)"
               ></div> -->
-              <div class="text">拖动进行排序</div>
-              <div class="button1" @click="replacePicsImg(index)">替换</div>
-              <div class="button2" @click="removePicsImg(index)">删除</div>
+              <div class="text">{{ $t('0989142d.da1033') }}</div>
+              <div class="button1" @click="replacePicsImg(index)">{{ $t('0989142d.e22c9a') }}</div>
+              <div class="button2" @click="removePicsImg(index)">{{ $t('0989142d.2f4aad') }}</div>
             </div>
           </li>
           <div v-if="pics.length < max" class="upload-box custom_picker" @click="handlePicsChange">
             <div class="support">
               <div>
                 <i class="iconfont iconadd" />
-                <span>添加图片</span>
+                <span>{{ $t('0989142d.b89fb3') }}</span>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default {
     pickPics(data) {
       if (Array.isArray(data)) {
         if (this.picsOldLen + data.length > this.max) {
-          this.$message.error(`最多上传${this.max}张图片!`)
+          this.$message.error(this.$t('0989142d.b48d2c') + this.max + this.$t('0989142d.3adbcb'))
           return false
         } else {
           if (data.length != 0) {

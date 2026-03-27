@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'companydata',
       icon: 'internal-data',
       keepAlive: true,
-      title: '统计'
+      title: '6a7a6499.d7656a'
     },
     name: 'merchantCompanydata',
     path: '/merchant/companydata',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'orderstatistics',
           icon: 'icon-order',
-          title: '交易统计',
+          title: '6a7a6499.9dbf41',
           permissions: ['companydata.orderstatistics']
         }
       },
@@ -34,7 +34,7 @@ const routes = [
         meta: {
           aliasName: 'distributordata',
           icon: 'icon-shop',
-          title: '店铺统计',
+          title: '6a7a6499.63cf82',
           permissions: ['companydata.distributordata']
         }
       },
@@ -45,7 +45,7 @@ const routes = [
         meta: {
           aliasName: 'goodsstatistics',
           icon: 'icon-goods',
-          title: '商品统计',
+          title: '6a7a6499.c38352',
           permissions: ['companydata.goodsstatistics']
         }
       },
@@ -55,7 +55,7 @@ const routes = [
         meta: {
           aliasName: 'summary',
           icon: 'pay-circle',
-          title: '结算汇总',
+          title: '6a7a6499.070f26',
           permissions: ['companydata.settlement.summary']
         },
         component: () => import('@/view/financial/settlement/summary')
@@ -67,7 +67,7 @@ const routes = [
         meta: {
           aliasName: 'merchant_companydata_deliverystaffstatistics',
           icon: 'icon-delivery',
-          title: '配送员业绩',
+          title: '6a7a6499.d6f79b',
           permissions: ['companydata.merchant_companydata_deliverystaffstatistics']
         }
       },
@@ -80,7 +80,7 @@ const routes = [
         meta: {
           aliasName: 'accountingstatistics',
           icon: 'icon-accounting',
-          title: '分账统计',
+          title: '6a7a6499.a0e20d',
           permissions: ['companydata.accountingstatistics']
         },
         children: [
@@ -88,7 +88,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/datacube/accountingstatistics_detail'),
             meta: {
-              title: '分账统计详情',
+              title: '6a7a6499.151685',
               hidden: true
             }
           }
@@ -101,7 +101,7 @@ const routes = [
         meta: {
           aliasName: 'cashrecord',
           icon: 'icon-cash',
-          title: '提现记录',
+          title: '6a7a6499.103053',
           permissions: ['companydata.cashrecord']
         }
       },
@@ -112,7 +112,7 @@ const routes = [
         meta: {
           aliasName: 'transactionstatistics',
           icon: 'icon-transaction',
-          title: '店铺交易统计',
+          title: '6a7a6499.29b09e',
           permissions: ['companydata.transactionstatistics']
         }
       },
@@ -123,7 +123,7 @@ const routes = [
         meta: {
           aliasName: 'salemanloginhistory',
           icon: 'icon-login',
-          title: '导购签到记录',
+          title: '6a7a6499.51d6c2',
           permissions: ['companydata.salemanloginhistory']
         }
       },
@@ -134,7 +134,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsalesman',
           icon: 'icon-salesman',
-          title: '店铺导购员',
+          title: '6a7a6499.209e3b',
           permissions: ['companydata.marketingsalesman']
         }
       },
@@ -145,7 +145,7 @@ const routes = [
         meta: {
           aliasName: 'coupongrantset',
           icon: 'icon-coupon',
-          title: '优惠券发放设置',
+          title: '6a7a6499.0585e2',
           permissions: ['companydata.coupongrantset']
         }
       },
@@ -156,7 +156,7 @@ const routes = [
         meta: {
           aliasName: 'shopactivities',
           icon: 'icon-activity',
-          title: '导购知识库',
+          title: '6a7a6499.ea8541',
           permissions: ['companydata.shopactivities']
         },
         children: [
@@ -164,7 +164,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/guide/shopActivities_editor'),
             meta: {
-              title: '编辑知识库',
+              title: '6a7a6499.0fabdb',
               hidden: true
             }
           }
@@ -177,7 +177,7 @@ const routes = [
         meta: {
           aliasName: 'shoppingguidenotification',
           icon: 'icon-notification',
-          title: '导购员通知',
+          title: '6a7a6499.de94d9',
           permissions: ['companydata.shoppingguidenotification']
         },
         children: [
@@ -185,7 +185,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/guide/shoppingguidenotification_editor'),
             meta: {
-              title: '编辑通知',
+              title: '6a7a6499.afe31d',
               hidden: true
             }
           }
@@ -198,7 +198,7 @@ const routes = [
         meta: {
           aliasName: 'profitlist',
           icon: 'icon-profit',
-          title: '业绩统计',
+          title: '6a7a6499.398e76',
           permissions: ['companydata.profitlist']
         }
       },
@@ -209,7 +209,7 @@ const routes = [
         meta: {
           aliasName: 'salemancustomercomplaints',
           icon: 'icon-complaint',
-          title: '导购员投诉',
+          title: '6a7a6499.dc1e9e',
           permissions: ['companydata.salemancustomercomplaints']
         }
       },
@@ -220,7 +220,7 @@ const routes = [
         meta: {
           aliasName: 'guideqywxaddressbook',
           icon: 'icon-addressbook',
-          title: '企业微信-通讯录',
+          title: '6a7a6499.309dd8',
           permissions: ['companydata.guide.qywx.addressbook']
         }
       },
@@ -231,7 +231,7 @@ const routes = [
         meta: {
           aliasName: 'financialsettlementsummary',
           icon: 'icon-settlement',
-          title: '结算汇总',
+          title: '6a7a6499.070f26',
           permissions: ['companydata.financial.settlement.summary']
         },
         children: [
@@ -239,7 +239,7 @@ const routes = [
             path: 'detail/:id?',
             component: () => import('@/view/financial/settlement/detailed'),
             meta: {
-              title: '结算详情',
+              title: '6a7a6499.8cce7c',
               hidden: true
             }
           }

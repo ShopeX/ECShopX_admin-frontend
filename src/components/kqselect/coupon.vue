@@ -7,7 +7,7 @@
   <div>
     <el-dialog
       class="img_dialog"
-      title="选择卡券"
+      :title="$t('8c9bd79b.46c275')"
       :visible="showDialog"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -19,13 +19,13 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column label="卡券类型">
+        <el-table-column :label="$t('8c9bd79b.f47182')">
           <template slot-scope="card_type">
             {{ card_type.row.card_type | formatCardStr }}
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="全部卡券" />
-        <el-table-column label="卡券有效期">
+        <el-table-column prop="title" :label="$t('8c9bd79b.4e6906')" />
+        <el-table-column :label="$t('8c9bd79b.d48a7a')">
           <template slot-scope="card_type">
             <i class="el-icon-time" />
             <template v-if="card_type.row.takeEffect">
@@ -35,7 +35,9 @@
               {{ card_type.row.begin_time | datetime }}
               <template v-if="card_type.row.end_time"> ~ </template>
               {{ card_type.row.end_time | datetime }}
-              {{ Date.parse(new Date()) > card_type.row.end_time * 1000 ? '已过期' : '' }}
+              {{
+                Date.parse(new Date()) > card_type.row.end_time * 1000 ? $t('8c9bd79b.4d5ccd') : ''
+              }}
             </template>
           </template>
         </el-table-column>
@@ -51,8 +53,8 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelAction">取 消</el-button>
-        <el-button type="primary" @click="saveAction">确 定</el-button>
+        <el-button @click="cancelAction">{{ $t('8c9bd79b.c08ab9') }}</el-button>
+        <el-button type="primary" @click="saveAction">{{ $t('8c9bd79b.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>

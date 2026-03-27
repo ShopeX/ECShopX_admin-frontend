@@ -14,7 +14,11 @@
       :show-tool-bar="false"
     />
 
-    <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+    <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+      $t('9662e704.be5fbb')
+    }}
+</el-button>
   </SpPage>
 </template>
 <script>
@@ -41,11 +45,12 @@ export default {
       return createSetting({
         columns: [
           {
-            name: '域名设置',
+            name: this.$t('9662e704.93c728'),
             key: 'type',
             width: 150,
             render: (h, scope) => {
-              return h('span', scope.row.type)
+              const typeKey = scope.row.type === 'H5域名' ? '9662e704.bd9e16' : '9662e704.73b5d2'
+              return h('span', this.$t(typeKey))
             }
           },
           {
@@ -83,7 +88,7 @@ export default {
                       }
                     }
                   },
-                  '点我复制'
+                  this.$t('9662e704.9d1e84')
                 )
               ])
             }
@@ -95,7 +100,7 @@ export default {
               return h('el-input', {
                 props: {
                   value: scope.row.domain,
-                  placeholder: '请输入绑定的独立域名',
+                  placeholder: this.$t('9662e704.00c0ed'),
                   size: 'small'
                 },
                 style: {
@@ -124,7 +129,7 @@ export default {
   methods: {
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('9662e704.20a495'),
         showClose: true
       })
     },
@@ -162,7 +167,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('9662e704.3b1083')
           })
           this.loading = false
         })

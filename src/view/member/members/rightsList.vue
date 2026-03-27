@@ -39,17 +39,26 @@
       <el-col>
         <!--distributors wxshops 需要哪个api传哪个-->
         <shop-select wxshops @update="shopHandle" />
-        <el-input v-model="searchMobile" class="input-m" placeholder="手机号" clearable>
+        <el-input
+          v-model="searchMobile"
+          class="input-m"
+          :placeholder="$t('5e1e35aa.8098e2')"
+          clearable
+        >
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
         <el-date-picker
           v-model="create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="选择日期范围"
+          :placeholder="$t('5e1e35aa.4b8cb9')"
           @change="dateChange"
         />
-        <el-select v-model="rights_from" placeholder="请选择来源" @change="rightsFromHandle">
+        <el-select
+          v-model="rights_from"
+          :placeholder="$t('5e1e35aa.d5c816')"
+          @change="rightsFromHandle"
+        >
           <el-option
             v-for="(item, index) in rightsFrom"
             :key="index"
@@ -60,22 +69,26 @@
         <el-switch
           v-model="valid"
           active-color="#13ce66"
-          inactive-text="是否有效"
+          :inactive-text="$t('5e1e35aa.572682')"
           inactive-color="#efefef"
           @change="changeOpen()"
         />
-        <el-button type="primary" @click="exportData"> 导出 </el-button>
+        <el-button type="primary" @click="exportData">{{ $t('5e1e35aa.55405e') }}</el-button>
         <el-popover
           placement="top-start"
           width="200"
           trigger="hover"
-          content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+          :content="$t('5e1e35aa.676480')"
         >
           <i slot="reference" class="el-icon-question" />
         </el-popover>
       </el-col>
     </el-row>
-    <el-dialog title="权益下载" :visible.sync="downloadView" :close-on-click-modal="false">
+    <el-dialog
+      :title="$t('5e1e35aa.cc93e2')"
+      :visible.sync="downloadView"
+      :close-on-click-modal="false"
+    >
       <template v-if="downloadUrl">
         <a :href="downloadUrl" download>{{ downloadName }}</a>
       </template>
@@ -92,47 +105,59 @@
       <el-table v-loading="loading" :data="rightsList" :height="wheight - 150">
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <div v-for="info in scope.row.label_infos">
-              <span>包含物料：</span
+            <div v-for="(info, idx) in scope.row.label_infos" :key="idx">
+              <span>{{ $t('5e1e35aa.b87551') }}</span
               ><el-tag type="success">
                 {{ info.label_name }}
               </el-tag>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="rights_name" label="名称" min-width="140" />
-        <el-table-column prop="rights_from" label="来源" min-width="100" />
-        <el-table-column prop="mobile" label="手机号" min-width="90" />
-        <el-table-column prop="total_num" label="总数量">
+        <el-table-column prop="rights_name" :label="$t('5e1e35aa.d7ec2d')" min-width="140" />
+        <el-table-column prop="rights_from" :label="$t('5e1e35aa.26ca20')" min-width="100" />
+        <el-table-column prop="mobile" :label="$t('5e1e35aa.8098e2')" min-width="90" />
+        <el-table-column prop="total_num" :label="$t('5e1e35aa.8887e3')">
           <template slot-scope="scope">
             <span v-if="scope.row.is_not_limit_num == 2">{{ scope.row.total_num }}</span>
-            <span v-if="scope.row.is_not_limit_num == 1">无限次</span>
+            <span v-if="scope.row.is_not_limit_num == 1">{{ $t('5e1e35aa.53e5df') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="total_consum_num" label="已核销数量" />
-        <el-table-column label="过期时间">
+        <el-table-column prop="total_consum_num" :label="$t('5e1e35aa.d6004a')" />
+        <el-table-column :label="$t('5e1e35aa.1fa23f')">
           <template slot-scope="scope">
             <span>{{ scope.row.end_time | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="100">
+        <el-table-column :label="$t('5e1e35aa.3fea7c')" min-width="100">
           <template slot-scope="scope">
             <template v-if="scope.row.is_not_limit_num == 2">
               <el-tag v-if="scope.row.total_num == scope.row.total_consum_num" size="mini">
-                已用完
+                {{ $t('5e1e35aa.535023') }}
               </el-tag>
             </template>
             <template v-if="scope.row.is_not_limit_num == 1">
-              <el-tag size="mini"> 无限次 </el-tag>
+              <el-tag size="mini">{{ $t('5e1e35aa.53e5df') }}</el-tag>
             </template>
-            <el-tag v-else-if="scope.row.is_valid == '1'" size="mini" type="success"> 有效 </el-tag>
-            <el-tag v-else size="mini"> 已过期 </el-tag>
+            <el-tag v-else-if="scope.row.is_valid == '1'" size="mini" type="success">
+{{
+              $t('5e1e35aa.c6cc39')
+            }}
+</el-tag>
+            <el-tag v-else size="mini">{{ $t('5e1e35aa.4d5ccd') }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="200">
+        <el-table-column :label="$t('5e1e35aa.2b6bc0')" min-width="200">
           <template slot-scope="scope">
-            <el-button size="mini" @click="delayAction(scope.row)"> 延期 </el-button>
-            <el-button size="mini" @click="transferAction(scope.row)"> 转让 </el-button>
+            <el-button size="mini" @click="delayAction(scope.row)">
+{{
+              $t('5e1e35aa.e6095e')
+            }}
+</el-button>
+            <el-button size="mini" @click="transferAction(scope.row)">
+{{
+              $t('5e1e35aa.9aa883')
+            }}
+</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -147,22 +172,22 @@
     </el-card>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
-      title="添加权益"
+      :title="$t('5e1e35aa.ba6956')"
       class="right-dialog"
       :visible.sync="addRightsDialog"
       :before-close="handleCancelLabelsDialog"
     >
       <template>
         <el-form>
-          <el-form-item label-width="100px" label="手机号">
+          <el-form-item label-width="100px" :label="$t('5e1e35aa.8098e2')">
             <el-col :span="9">
-              <el-input v-model="mobile" placeholder="请输入添加权益用户的手机号" />
+              <el-input v-model="mobile" :placeholder="$t('5e1e35aa.d89f8a')" />
             </el-col>
           </el-form-item>
-          <el-form-item label-width="100px" label="选择权益商品">
+          <el-form-item label-width="100px" :label="$t('5e1e35aa.015d03')">
             <el-transfer
               v-model="addRightsItems"
-              :titles="['商品列表', '已选中']"
+              :titles="[$t('5e1e35aa.437974'), $t('5e1e35aa.543b04')]"
               :data="goodsList"
             >
               <div slot="left-footer" class="transfer-footer">
@@ -178,79 +203,82 @@
             </el-transfer>
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button type="primary" @click="onSubmit"> 确定添加 </el-button>
+            <el-button type="primary" @click="onSubmit">{{ $t('5e1e35aa.b04fcb') }}</el-button>
           </el-form-item>
         </el-form>
       </template>
     </el-dialog>
     <!-- 延期 -->
-    <el-dialog title="延期设置" class="delay-dialog" :visible.sync="delayDialog">
+    <el-dialog :title="$t('5e1e35aa.86fe28')" class="delay-dialog" :visible.sync="delayDialog">
       <div class="alert-txt">
-        <el-alert title="" type="warning" description="消息提示的文案" :closable="false">
-          权益：{{ rightsInfo.rights_name }} ,有效期至：{{ rightsInfo.end_time | datetime }}
+        <el-alert title="" type="warning" :closable="false">
+          <span
+            >{{ $t('5e1e35aa.733e02') }}{{ rightsInfo.rights_name }} ,{{ $t('5e1e35aa.e65e93')
+            }}{{ rightsInfo.end_time | datetime }}</span
+          >
         </el-alert>
       </div>
       <el-row class="option-box">
         <el-col :span="8">
-          延期至：<el-date-picker
-            v-model="form.delay_date"
-            type="date"
-            :picker-options="pickerOptions"
-          />
+          {{ $t('5e1e35aa.452983')
+          }}<el-date-picker v-model="form.delay_date" type="date" :picker-options="pickerOptions" />
         </el-col>
         <el-col :span="12">
-          备注：<el-input
+          {{ $t('5e1e35aa.751ce6')
+          }}<el-input
             v-model="form.remark"
             type="textarea"
-            placeholder="请输入备注"
+            :placeholder="$t('5e1e35aa.3cac63')"
             :rows="2"
           />
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="delaySave"> 提交 </el-button>
+          <el-button type="primary" @click="delaySave">{{ $t('5e1e35aa.939d53') }}</el-button>
         </el-col>
       </el-row>
       <el-table :data="delayData" height="380" style="width: 100%">
-        <el-table-column label="原有效期">
+        <el-table-column :label="$t('5e1e35aa.31add5')">
           <template slot-scope="scope">
             <span>{{ scope.row.original_date | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="延期后有效期">
+        <el-table-column :label="$t('5e1e35aa.8cef94')">
           <template slot-scope="scope">
             <span>{{ scope.row.delay_date | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="remark" :label="$t('5e1e35aa.2432b5')" />
       </el-table>
     </el-dialog>
     <!-- 延期 -->
-    <el-dialog title="转让权益设置" class="delay-dialog" :visible.sync="transferDialog">
+    <el-dialog :title="$t('5e1e35aa.ac692c')" class="delay-dialog" :visible.sync="transferDialog">
       <el-row class="option-box">
         <el-col :span="8">
-          转让手机号：<el-input v-model="transferForm.transfer_mobile" style="width: 200px" />
+          {{ $t('5e1e35aa.d55a1a')
+          }}<el-input v-model="transferForm.transfer_mobile" style="width: 200px" />
         </el-col>
         <el-col :span="12">
-          备注：<el-input
+          {{ $t('5e1e35aa.751ce6')
+          }}<el-input
             v-model="transferForm.remark"
             type="textarea"
-            placeholder="请输入备注"
+            :placeholder="$t('5e1e35aa.3cac63')"
             :rows="2"
           />
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="transferSave"> 提交 </el-button>
+          <el-button type="primary" @click="transferSave">{{ $t('5e1e35aa.939d53') }}</el-button>
         </el-col>
       </el-row>
       <el-table :data="transferData" height="380" style="width: 100%">
-        <el-table-column label="转让时间">
+        <el-table-column :label="$t('5e1e35aa.1f3f11')">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="原持有者" />
-        <el-table-column prop="transfer_mobile" label="现持有者" />
-        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="mobile" :label="$t('5e1e35aa.4ba29d')" />
+        <el-table-column prop="transfer_mobile" :label="$t('5e1e35aa.94d7f9')" />
+        <el-table-column prop="remark" :label="$t('5e1e35aa.2432b5')" />
       </el-table>
     </el-dialog>
   </div>
@@ -319,36 +347,6 @@ export default {
       },
       create_time: '',
       rights_from: '',
-      rightsFrom: [
-        {
-          type: '会员升级送',
-          name: '会员升级送'
-        },
-        {
-          type: '会员周年送',
-          name: '会员周年送'
-        },
-        {
-          type: '会员日送',
-          name: '会员日送'
-        },
-        {
-          type: '会员生日送',
-          name: '会员生日送'
-        },
-        {
-          type: '注册赠送',
-          name: '注册赠送'
-        },
-        {
-          type: '管理员手动添加',
-          name: '管理员手动添加'
-        },
-        {
-          type: '购买获取',
-          name: '购买获取'
-        }
-      ],
       valid: 0,
       downloadView: false,
       downloadUrl: '',
@@ -357,7 +355,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    rightsFrom() {
+      return [
+        { type: '会员升级送', name: this.$t('5e1e35aa.96cbbd') },
+        { type: '会员周年送', name: this.$t('5e1e35aa.262501') },
+        { type: '会员日送', name: this.$t('5e1e35aa.f9fc39') },
+        { type: '会员生日送', name: this.$t('5e1e35aa.920ac0') },
+        { type: '注册赠送', name: this.$t('5e1e35aa.78f6e4') },
+        { type: '管理员手动添加', name: this.$t('5e1e35aa.d7e022') },
+        { type: '购买获取', name: this.$t('5e1e35aa.aecb3a') }
+      ]
+    }
   },
   mounted() {
     this.getRightsList()
@@ -370,7 +379,7 @@ export default {
         this.addRightsItems = []
         this.$message({
           type: 'success',
-          message: '添加权益成功'
+          message: this.$t('5e1e35aa.d71d42')
         })
         this.getRightsList()
         this.addRightsDialog = false
@@ -492,14 +501,14 @@ export default {
       if (!this.transferForm.transfer_mobile) {
         this.$message({
           type: 'error',
-          message: '请输入转让手机号'
+          message: this.$t('5e1e35aa.67cc22')
         })
         return false
       }
       if (!this.transferForm.remark) {
         this.$message({
           type: 'error',
-          message: '请输入备注'
+          message: this.$t('5e1e35aa.3cac63')
         })
         return false
       }
@@ -529,7 +538,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('5e1e35aa.3e1ddd')
           })
           return
         } else if (response.data.data.url) {
@@ -539,7 +548,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
+            message: this.$t('5e1e35aa.89ae53')
           })
           return
         }

@@ -11,7 +11,7 @@ export const tableSchema = (vm) =>
   createSetting({
     actions: [
       {
-        name: '编辑',
+        name: vm.$t('7350de2d.95b351'),
         key: 'edit',
         type: 'button',
         buttonType: 'text',
@@ -28,7 +28,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '删除',
+        name: vm.$t('7350de2d.2f4aad'),
         key: 'delete',
         type: 'button',
         buttonType: 'text',
@@ -47,7 +47,7 @@ export const tableSchema = (vm) =>
     ],
     columns: [
       {
-        name: '开票方名称',
+        name: vm.$t('7350de2d.29b041'),
         key: 'seller_company_name',
         width: '160',
         render(h, { row }) {
@@ -55,7 +55,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票方税号',
+        name: vm.$t('7350de2d.ca2be5'),
         key: 'seller_tax_no',
         width: '160',
         render(h, { row }) {
@@ -63,7 +63,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票方电话',
+        name: vm.$t('7350de2d.eff7dc'),
         key: 'seller_phone',
         width: '160',
         render(h, { row }) {
@@ -76,12 +76,12 @@ export const tableSchema = (vm) =>
       //   width: '120'
       // },
       {
-        name: '管理分类',
+        name: vm.$t('7350de2d.b3ed9f'),
         key: 'invoice_apply_bn',
         width: '300',
         render(h, { row }) {
           if (row.tax_rate_type == 'ALL') {
-            return '全部分类'
+            return vm.$t('7350de2d.1a7503')
           }
           const categoryNames =
             (row.category_ids &&
@@ -97,7 +97,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '税率',
+        name: vm.$t('7350de2d.2a79a7'),
         key: 'invoice_tax_rate',
         width: '80',
         render(h, { row }) {
@@ -105,7 +105,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票人',
+        name: vm.$t('7350de2d.68346c'),
         key: 'seller_name',
         width: '120',
         render(h, { row }) {
@@ -113,7 +113,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '收款人',
+        name: vm.$t('7350de2d.ba2c38'),
         key: 'payee',
         width: '120',
         render(h, { row }) {
@@ -121,7 +121,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '复核人',
+        name: vm.$t('7350de2d.24045b'),
         key: 'reviewer',
         width: '120',
         render(h, { row }) {
@@ -129,7 +129,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票方地址',
+        name: vm.$t('7350de2d.210c86'),
         key: 'seller_address',
         width: '160',
         render(h, { row }) {
@@ -137,7 +137,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '添加时间',
+        name: vm.$t('7350de2d.ffc7ed'),
         key: 'created',
         width: '160',
         render(h, { row }) {
@@ -151,20 +151,19 @@ export const formSchema = (vm) =>
   bindThisForFormSchema(
     [
       {
-        label: '开票方名称',
+        label: vm.$t('7350de2d.29b041'),
         key: 'sales_party_id',
         type: 'select',
-        tip: '下拉选择配置销方开票信息',
+        tip: vm.$t('7350de2d.ce7c10'),
         options: vm.invoiceSellerList,
         required: true
       },
       {
-        label: '配置税率分类',
+        label: vm.$t('7350de2d.2fc8ee'),
         key: 'tax_rate_type',
         validator: (rule, value, callback) => {
-          console.log(123, value, vm.dialogForm)
           if (value == 'SPECIFIED' && !vm.dialogForm.category_ids?.length) {
-            callback(new Error('指定分类不能为空'))
+            callback(new Error(vm.$t('7350de2d.4dbf37')))
           } else {
             callback()
           }
@@ -179,14 +178,14 @@ export const formSchema = (vm) =>
                   value['category_ids'] = ''
                 }}
               >
-                <el-radio label='ALL'>全部分类</el-radio>
-                <el-radio label='SPECIFIED'>指定分类</el-radio>
+                <el-radio label='ALL'>{vm.$t('7350de2d.1a7503')}</el-radio>
+                <el-radio label='SPECIFIED'>{vm.$t('7350de2d.9f7160')}</el-radio>
               </el-radio-group>
               <div>
                 {value['tax_rate_type'] == 'SPECIFIED' && (
                   <el-cascader
                     v-model={value['category_ids']}
-                    placeholder='请选择'
+                    placeholder={vm.$t('7350de2d.708c9d')}
                     clearable
                     class='invoice-cascader'
                     options={vm.itemCategoryList}
@@ -225,7 +224,7 @@ export const formSchema = (vm) =>
         }
       },
       {
-        label: '发票税率',
+        label: vm.$t('7350de2d.a731f8'),
         key: 'invoice_tax_rate',
         type: 'input',
         required: true,

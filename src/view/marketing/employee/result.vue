@@ -6,10 +6,18 @@
 <style lang="scss"></style>
 <template>
   <SpPage>
-    <el-result icon="success" title="创建成功" sub-title="活动创建成功，请继续为活动添加商品">
+    <el-result icon="success" :title="$t('fb0e4a6f.04a691')" :sub-title="$t('fb0e4a6f.4f50ac')">
       <template slot="extra">
-        <el-button type="primary" size="medium" @click="addGoods">添加商品</el-button>
-        <el-button plain size="medium" @click="goActivityList">返回活动列表</el-button>
+        <el-button type="primary" size="medium" @click="addGoods">
+{{
+          $t('fb0e4a6f.fa3aee')
+        }}
+</el-button>
+        <el-button plain size="medium" @click="goActivityList">
+{{
+          $t('fb0e4a6f.0fdf19')
+        }}
+</el-button>
       </template>
     </el-result>
   </SpPage>

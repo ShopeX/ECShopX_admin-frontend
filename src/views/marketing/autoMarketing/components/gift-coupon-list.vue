@@ -5,8 +5,8 @@
 
 <template>
   <el-table border :data="list">
-    <el-table-column label="会员等级" prop="grade_name" width="300" />
-    <el-table-column label="优惠券">
+    <el-table-column :label="$t('26a24c3a.6c1583')" prop="grade_name" width="300" />
+    <el-table-column :label="$t('26a24c3a.2f3635')">
       <template #default="scope">
         <div>
           <div
@@ -16,7 +16,7 @@
           >
             <div class="coupon-name w-[300px]">{{ coupon.name }}</div>
             <div class="flex items-center">
-              <span class="mr-1">数量</span>
+              <span class="mr-1">{{ $t('26a24c3a.0bf60b') }}</span>
               <el-input-number
                 v-model="coupon.count"
                 size="mini"
@@ -27,10 +27,18 @@
                 style="width: 100px"
               />
             </div>
-            <el-button type="text" @click="deleteCoupon(scope.row, index)">删除</el-button>
+            <el-button type="text" @click="deleteCoupon(scope.row, index)">
+{{
+              $t('26a24c3a.2f4aad')
+            }}
+</el-button>
           </div>
           <div class="add-coupon">
-            <el-button type="text" @click="addCoupon(scope.row)">添加优惠券</el-button>
+            <el-button type="text" @click="addCoupon(scope.row)">
+{{
+              $t('26a24c3a.ae8c83')
+            }}
+</el-button>
           </div>
         </div>
       </template>

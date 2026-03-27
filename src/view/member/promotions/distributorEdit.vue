@@ -7,31 +7,31 @@
   <div class="section section-white">
     <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item label="是否开启：" prop="ad_title">
+        <el-form-item :label="$t('ff601efd.9f0f3f')" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
             active-value="true"
             inactive-value="false"
             inactive-color="#ccc"
-            active-text="开启"
-            inactive-text="关闭"
+            :active-text="$t('ff601efd.cc42dd')"
+            :inactive-text="$t('ff601efd.b15d91')"
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item label="注册引导广告标题：" prop="ad_title">
+        <el-form-item :label="$t('ff601efd.6ed28f')" prop="ad_title">
           <el-input
             v-model="form.ad_title"
-            placeholder="用于门店小程序注册引导入口标题"
+            :placeholder="$t('ff601efd.194ebe')"
             style="width: 340px"
           />
         </el-form-item>
-        <el-form-item label="注册引导图片：">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
-          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
+        <el-form-item :label="$t('ff601efd.60079e')">
+          <div class="frm-tips">{{ $t('ff601efd.6113fc') }}</div>
+          <div class="frm-tips">{{ $t('ff601efd.3b1660') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -42,11 +42,11 @@
             @closeImgDialog="closeImgDialog"
           />
         </el-form-item>
-        <el-form-item label="请选择分销商：">
+        <el-form-item :label="$t('ff601efd.46c6a8')">
           <el-transfer
             v-model="form.distributor_id"
-            :titles="['分销商列表', '已选中']"
-            :button-texts="['移除', '添加']"
+            :titles="transferTitles"
+            :button-texts="transferButtonTexts"
             :data="distributorList"
           >
             <div slot="left-footer" class="transfer-footer">
@@ -80,13 +80,15 @@
             <div class="transfer-footer" slot="right-footer"></div>
           </el-transfer>
         </el-form-item> -->
-        <el-form-item label="注册送优惠券：">
+        <el-form-item :label="$t('ff601efd.513fe3')">
           <el-row>
             <el-col :span="12">
               <div class="promotion-card">
                 <div class="promotion-card-header">
-                  优惠券
-                  <a class="promotion-card-btn" href="#" @click="showModal">新增</a>
+                  {{ $t('ff601efd.2f3635') }}
+                  <a class="promotion-card-btn" href="#" @click="showModal">{{
+                    $t('ff601efd.66ab5e')
+                  }}</a>
                 </div>
                 <div class="promotion-card-body">
                   <ul class="promotion-card-list">
@@ -112,11 +114,11 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save"> 保 存 </el-button>
+        <el-button type="primary" @click="save"> {{ $t('ff601efd.56df61') }} </el-button>
       </div>
     </el-form>
     <el-dialog
-      title="选择优惠券"
+      :title="$t('ff601efd.45bcee')"
       :visible.sync="coupons.dialog"
       width="30%"
       @open="onshowModal"
@@ -145,8 +147,8 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelSelected">取 消</el-button>
-        <el-button type="primary" @click="submitSelected">确 定</el-button>
+        <el-button @click="cancelSelected">{{ $t('ff601efd.c08ab9') }}</el-button>
+        <el-button type="primary" @click="submitSelected">{{ $t('ff601efd.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -205,6 +207,14 @@ export default {
         }
       },
       options: []
+    }
+  },
+  computed: {
+    transferTitles() {
+      return [this.$t('ff601efd.8d5c86'), this.$t('ff601efd.543b04')]
+    },
+    transferButtonTexts() {
+      return [this.$t('ff601efd.86048b'), this.$t('ff601efd.b58c75')]
     }
   },
   mounted() {
@@ -379,7 +389,7 @@ export default {
       // })
       createRegister(this.form).then((res) => {
         this.$message({
-          message: '更新成功',
+          message: this.$t('ff601efd.55aa63'),
           type: 'success',
           duration: 2 * 1000,
           onClose() {

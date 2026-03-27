@@ -9,9 +9,9 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
       <div v-if="!isDistributorTemplate" class="shop-header">
         <div v-if="!VERSION_B2C() && !VERSION_IN_PURCHASE()" class="shop-left">
-          <span class="text">小程序模版呈现：</span>
+          <span class="text">{{ $t('a066f499.7f7f14') }}</span>
           <div class="option-item">
-            <span class="option-item_text">总部首页</span>
+            <span class="option-item_text">{{ $t('a066f499.1ab35c') }}</span>
             <el-switch
               v-model="index_type"
               :active-value="1"
@@ -20,7 +20,7 @@
             />
           </div>
           <div v-if="VERSION_STANDARD()" class="option-item">
-            <span class="option-item_text">店铺首页</span>
+            <span class="option-item_text">{{ $t('a066f499.e8f64a') }}</span>
             <el-switch
               v-model="index_type"
               :active-value="2"
@@ -28,9 +28,9 @@
               @change="changeHomeTemplate"
             />
           </div>
-          <span v-if="!VERSION_PLATFORM()" class="text">模版同步设置：</span>
+          <span v-if="!VERSION_PLATFORM()" class="text">{{ $t('a066f499.c889d2') }}</span>
           <div v-if="!VERSION_PLATFORM()" class="option-item">
-            <span class="option-item_text">同步并启用</span>
+            <span class="option-item_text">{{ $t('a066f499.f9c780') }}</span>
             <el-switch
               v-model="is_enforce_sync"
               :active-value="1"
@@ -48,10 +48,10 @@
               }
             "
           >
-            <i class="iconfont icon-cog" /> 小程序配置
+            <i class="iconfont icon-cog" /> {{ $t('a066f499.701fa5') }}
           </el-button>
           <el-button @click="handleShowTabConfig">
-            <i class="iconfont icon-cog" /> 小程序导航配置
+            <i class="iconfont icon-cog" /> {{ $t('a066f499.f9a598') }}
           </el-button>
         </div>
       </div>
@@ -66,8 +66,8 @@
             @click="addTemplate"
           >
             <div class="template-wrap flex-col items-center justify-center flex">
-              <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
-              <div class="add-text">添加模板</div>
+              <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+              <div class="add-text">{{ $t('a066f499.6fef15') }}</div>
             </div>
           </div>
         </div>
@@ -75,18 +75,18 @@
           <div class="template-item">
             <div class="img-wrap">
               <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览" />
-                <span class="preview-cover_text">预览</span>
+                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
+                <span class="preview-cover_text">{{ $t('a066f499.645dbc') }}</span>
               </div>
               <el-image class="template-pic" :src="item.template_pic" fit="cover" />
-              <div v-if="item.template_type == 1" class="tag">同步模板</div>
+              <div v-if="item.template_type == 1" class="tag">{{ $t('a066f499.55f872') }}</div>
             </div>
             <div class="template-name">
               <span>{{ item.template_title }}</span>
               <span class="el-icon-edit edit-css" @click="modifyTemplate(item)" />
             </div>
             <div v-if="!VERSION_B2C()" class="template-common">
-              <span class="temp-label">店铺可编辑挂件</span>
+              <span class="temp-label">{{ $t('a066f499.f6cda6') }}</span>
               <el-switch
                 v-model="item.element_edit_status"
                 :active-value="1"
@@ -95,11 +95,11 @@
               />
             </div>
             <div class="template-common">
-              <span class="temp-label">立即启用</span>
+              <span class="temp-label">{{ $t('a066f499.1388f2') }}</span>
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="至少开启一套模版"
+                :content="$t('a066f499.b4805d')"
                 placement="top-start"
               >
                 <el-switch
@@ -112,10 +112,10 @@
             </div>
             <div class="time-wrap">
               <div v-if="item.timer_status == 2" class="no-time">
-                <div>定时启用</div>
+                <div>{{ $t('a066f499.b4f549') }}</div>
                 <div class="picker-wrap">
-                  <img class="time-img" src="@/assets/img/time-img.png" />
-                  <span>设置模板切换时间</span>
+                  <img class="time-img" src="@/assets/img/time-img.png">
+                  <span>{{ $t('a066f499.33d8ff') }}</span>
                   <el-date-picker
                     v-model="item.timer_time"
                     value-format="yyyy-MM-dd HH:mm:ss"
@@ -125,27 +125,35 @@
                 </div>
               </div>
               <div v-if="item.timer_status == 1" class="has-time">
-                <span class="time">{{ item.timer_time }}启用</span>
-                <span class="cancel-btn" @click="cancelTime(item)">取消</span>
+                <span class="time">{{ item.timer_time }}{{ $t('a066f499.7854b5') }}</span>
+                <span class="cancel-btn" @click="cancelTime(item)">{{
+                  $t('a066f499.625fb2')
+                }}</span>
               </div>
             </div>
             <div class="option-btns">
-              <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
-              <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
+              <span class="btn" @click="editTemplate(item.pages_template_id)">{{
+                $t('a066f499.95b351')
+              }}</span>
+              <span class="btn" @click="copyTemplate(item.pages_template_id)">{{
+                $t('a066f499.79d3ab')
+              }}</span>
               <span
                 v-if="!isDistributorTemplate"
                 class="btn"
                 @click="handleClickNav(item.pages_template_id)"
-                >导航</span
+                >{{ $t('a066f499.056f2d') }}</span
               >
-              <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
+              <span class="btn" @click="abandonTemplate(item.pages_template_id)">{{
+                $t('a066f499.0044f6')
+              }}</span>
             </div>
             <div
               v-if="!isDistributorTemplate"
               class="synchronize-btn"
               @click="synchronizeTemplateToShop(index)"
             >
-              同步模板至店铺
+              {{ $t('a066f499.94ec92') }}
             </div>
           </div>
         </div>
@@ -186,7 +194,7 @@
       <SpDialog
         ref="templateDialogRef"
         v-model="templateDialog"
-        :title="templateForm.pages_template_id ? '编辑模板' : '添加模板'"
+        :title="templateForm.pages_template_id ? $t('a066f499.c6aa35') : $t('a066f499.6fef15')"
         :form="templateForm"
         :form-list="templateFormList"
         @onSubmit="onTemplateFormSubmit"
@@ -195,7 +203,7 @@
       <SpDrawer
         v-model="configDrawerShow"
         class="config-drawer"
-        :title="'小程序配置'"
+        :title="$t('a066f499.701fa5')"
         :footer="false"
       >
         <SpForm
@@ -211,7 +219,7 @@
       <SpDrawer
         v-model="navDrawerShow"
         class="nav-drawer"
-        :title="'导航设置'"
+        :title="$t('a066f499.ec6f17')"
         :width="650"
         @confirm="
           () => {
@@ -236,6 +244,7 @@
 <script>
 import moment from 'moment'
 import { VERSION_PLATFORM, VERSION_STANDARD, VERSION_B2C } from '@/utils'
+import { i18n } from '@/i18n'
 
 import DistributorSelect from '@/components/function/distributorSelect'
 import MallDecoration from '@/components/function/mallDecoration'
@@ -331,7 +340,7 @@ export default {
       },
       configFormList: [
         {
-          label: '热门推荐',
+          label: i18n.t('a066f499.9223a7'),
           key: 'is_open_recommend',
           type: 'switch',
           onChange: async () => {
@@ -341,7 +350,7 @@ export default {
           }
         },
         {
-          label: '小程序定位',
+          label: i18n.t('a066f499.0cf696'),
           key: 'is_open_wechatapp_location',
           type: 'switch',
           isShow: () => {
@@ -351,9 +360,9 @@ export default {
             const tempStatus = this.configForm.is_open_wechatapp_location
             if (!VERSION_PLATFORM() && !this.configForm.is_open_wechatapp_location) {
               this.configForm.is_open_wechatapp_location = true
-              await this.$confirm('关闭后附件商家组件将无法使用', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+              await this.$confirm(i18n.t('a066f499.0a9b59'), i18n.t('a066f499.02d981'), {
+                confirmButtonText: i18n.t('a066f499.38cf16'),
+                cancelButtonText: i18n.t('a066f499.625fb2'),
                 type: 'warning'
               })
             }
@@ -363,26 +372,6 @@ export default {
             this.configForm.is_open_wechatapp_location = tempStatus
           }
         }
-        // {
-        //   label: '扫码功能',
-        //   key: 'is_open_scan_qrcode',
-        //   type: 'switch',
-        //   onChange: async () => {
-        //     await this.$api.template.setPagesTemplate({
-        //       is_open_scan_qrcode: this.configForm.is_open_scan_qrcode ? 1 : 2
-        //     })
-        //   }
-        // },
-        // {
-        //   label: '公众号组件',
-        //   key: 'is_open_official_account',
-        //   type: 'switch',
-        //   onChange: async () => {
-        //     await this.$api.template.setPagesTemplate({
-        //       is_open_official_account: this.configForm.is_open_official_account ? 1 : 2
-        //     })
-        //   }
-        // }
       ],
       template_name: 'yykweishop',
       isTemplateNavList: true,
@@ -394,20 +383,20 @@ export default {
       },
       templateFormList: [
         {
-          label: '模板名称',
+          label: i18n.t('a066f499.a5d1c5'),
           key: 'template_title',
           type: 'input',
-          placeholder: '请输入模板名称',
+          placeholder: i18n.t('a066f499.8f21b9'),
           required: true,
-          message: '不能为空'
+          message: i18n.t('a066f499.281bad')
         },
         {
-          label: '模板封面',
+          label: i18n.t('a066f499.259536'),
           key: 'template_pic',
           component: () => <SpImagePicker v-model={this.templateForm.template_pic} />,
           validator: (rule, value, callback) => {
             if (!value) {
-              callback(new Error('请上传封面图片'))
+              callback(new Error(i18n.t('a066f499.5b9c9d')))
             } else {
               callback()
             }
@@ -519,14 +508,18 @@ export default {
                     <div class='nav-item-hd'>
                       <SpImagePicker v-model={item.iconPath} />
                       <SpImagePicker v-model={item.selectedIconPath} />
-                      <SpInput v-model={item.text} width={'120px'} placeholder='导航名称' />
+                      <SpInput
+                        v-model={item.text}
+                        width={'120px'}
+                        placeholder={i18n.t('a066f499.8585af')}
+                      />
                       <el-select
                         v-model={item.pagePath}
-                        placeholder='请选择页面'
+                        placeholder={i18n.t('a066f499.4ef9f6')}
                         on-change={this.onChangePagePath.bind(this, index)}
                       >
                         {this.templateNavList.map((item, index) => (
-                          <el-option label={item.label} value={item.value} />
+                          <el-option label={i18n.t(item.label)} value={item.value} />
                         ))}
                       </el-select>
                       {item.pagePath == 'customPage' && (
@@ -535,7 +528,7 @@ export default {
                             class='btn-linkpath'
                             onClick={this.handleCustomPageSelect.bind(this, item)}
                           >
-                            {item?.customPage?.page_name ?? '请选择自定义页面'}
+                            {item?.customPage?.page_name ?? i18n.t('a066f499.7727a5')}
                           </div>
                         </div>
                       )}
@@ -543,7 +536,7 @@ export default {
                     <div class='nav-item-bd'>
                       {index > 1 && (
                         <el-button type='text' on-click={this.removeTabItem.bind(this, index)}>
-                          删除
+                          {i18n.t('a066f499.2f4aad')}
                         </el-button>
                       )}
                     </div>
@@ -553,11 +546,11 @@ export default {
               <div></div>
             </div>
           ),
-          tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）',
+          tip: i18n.t('a066f499.ebf932'),
           validator: (rule, value, callback) => {
             const fd = value.find((item) => !item.pagePath || !item.name)
             if (fd) {
-              callback('请设置导航名称以及导航页面')
+              callback(i18n.t('a066f499.012229'))
             } else {
               callback()
             }
@@ -573,7 +566,7 @@ export default {
               class='iconfont icon-plus-circle'
               on-click={this.addTabItem}
             >
-              添加菜单项
+              {i18n.t('a066f499.648c5e')}
             </el-button>
           )
         }
@@ -692,7 +685,7 @@ export default {
         this.distributorVisible = false
         this.distributorStatus = false
         this.$message({
-          message: '操作成功',
+          message: i18n.t('a066f499.33130f'),
           type: 'success'
         })
       })
@@ -711,10 +704,14 @@ export default {
       await this.$api.template.setPagesTemplate({
         is_enforce_sync: this.is_enforce_sync
       })
-      this.$message.success('操作成功')
+      this.$message.success(i18n.t('a066f499.33130f'))
     },
     addTemplate() {
-      this.templateForm = this.$options.data().templateForm
+      this.templateForm = {
+        pages_template_id: '',
+        template_title: '',
+        template_pic: ''
+      }
       this.templateDialog = true
     },
     modifyTemplate({ pages_template_id, template_title, template_pic }) {
@@ -768,9 +765,9 @@ export default {
       const status = JSON.parse(JSON.stringify(item.status))
       if (item.status == 1) {
         this.templateList[index].status = 2
-        await this.$confirm('确认立即启用当前模板？', '启用模板', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
+        await this.$confirm(i18n.t('a066f499.b25494'), i18n.t('a066f499.dabf42'), {
+          confirmButtonText: i18n.t('a066f499.38cf16'),
+          cancelButtonText: i18n.t('a066f499.625fb2')
         })
       }
       await this.$api.template.modifyPagesTemplateStatus({
@@ -792,9 +789,9 @@ export default {
     },
     // 取消定时模板
     async cancelTime(item) {
-      await this.$confirm('确认取消启用定时模板？', '取消定时模板', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(i18n.t('a066f499.c655f2'), i18n.t('a066f499.268d04'), {
+        confirmButtonText: i18n.t('a066f499.38cf16'),
+        cancelButtonText: i18n.t('a066f499.625fb2')
       })
       await this.$api.template.modifyPagesTemplateStatus({
         pages_template_id: item.pages_template_id,
@@ -821,24 +818,24 @@ export default {
       }
     },
     async copyTemplate(pages_template_id) {
-      await this.$confirm('确认拷贝当前模板？', '拷贝模板', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(i18n.t('a066f499.4ce207'), i18n.t('a066f499.580dd7'), {
+        confirmButtonText: i18n.t('a066f499.38cf16'),
+        cancelButtonText: i18n.t('a066f499.625fb2')
       })
       await this.$api.template.copyPagesTemplate({
         pages_template_id
       })
-      this.$message.success('操作成功')
+      this.$message.success(i18n.t('a066f499.33130f'))
       this.params.page_no = 1
       this.getList()
     },
     async abandonTemplate(pages_template_id) {
-      await this.$confirm('确认废弃当前模板？', '废弃模板', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(i18n.t('a066f499.018e6d'), i18n.t('a066f499.faac73'), {
+        confirmButtonText: i18n.t('a066f499.38cf16'),
+        cancelButtonText: i18n.t('a066f499.625fb2')
       })
       await this.$api.template.deletePagesTemplate(pages_template_id)
-      this.$message.success('操作成功')
+      this.$message.success(i18n.t('a066f499.33130f'))
       this.params.page_no = 1
       this.getList()
     },
@@ -890,7 +887,7 @@ export default {
     },
     onChangePagePath(index, value) {
       const { label, name } = this.templateNavList.find((item) => item.value == value)
-      this.navForm.tabList[index].text = label
+      this.navForm.tabList[index].text = i18n.t(label)
       this.navForm.tabList[index].name = name
       if (value != 'customPage' && this.navForm.tabList[index]?.customPage) {
         this.$delete(this.navForm.tabList[index], 'customPage')
@@ -902,7 +899,7 @@ export default {
       const emptyIndex = tabList.findIndex((item) => item.name == 'customPage' && !item.customPage)
       if (emptyIndex > -1) {
         return this.$message({
-          message: '请选择自定义页面',
+          message: i18n.t('a066f499.7727a5'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -923,7 +920,7 @@ export default {
       }
       await this.$api.template.setPagesTemplate(params)
       this.navDrawerShow = false
-      this.$message.success('操作成功')
+      this.$message.success(i18n.t('a066f499.33130f'))
     }
   }
 }

@@ -19,9 +19,9 @@
   <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="status" label="提现状态:">
+        <SpFilterFormItem prop="status" :label="$t('2eada62f.2c30c4')">
           <!-- <el-input v-model="formQuery.name" placeholder="请选择" /> -->
-          <el-select v-model="formQuery.status" clearable placeholder="请选择">
+          <el-select v-model="formQuery.status" clearable :placeholder="$t('2eada62f.708c9d')">
             <el-option
               v-for="item in withDrawStatusList"
               :key="item.value"
@@ -31,32 +31,32 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('2eada62f.ce2bf3')">
+          <el-input v-model="formQuery.mobile" :placeholder="$t('2eada62f.999e78')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <el-row class="total-info">
         <el-col :span="6">
-          <div class="total-label">佣金总额（¥）</div>
+          <div class="total-label">{{ $t('2eada62f.186472') }}</div>
           <div class="total-value">
             {{ rebate_total / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">已提现总额（¥）</div>
+          <div class="total-label">{{ $t('2eada62f.63df67') }}</div>
           <div class="total-value">
             {{ payed_rebate / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">待处理金额（¥）</div>
+          <div class="total-label">{{ $t('2eada62f.42cacb') }}</div>
           <div class="total-value">
             {{ freeze_cash_withdrawal_rebate / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">申请提现人数</div>
+          <div class="total-label">{{ $t('2eada62f.28fe21') }}</div>
           <div class="total-value">
             {{ apply_chief_num }}
           </div>
@@ -77,7 +77,7 @@
       <SpDialog
         ref="resloveDialogRef"
         v-model="resloveDialog"
-        :title="`提现确认`"
+        :title="$t('2eada62f.597e24')"
         :form="resloveForm"
         :form-list="resloveFormList"
         @onSubmit="onResloveSubmit"
@@ -90,18 +90,17 @@
 <script>
 import { createSetting } from '@shopex-ui/finder'
 import moment from 'moment'
+import { i18n } from '@/i18n'
 
-const withDrawStatusList = [
-  { title: '待处理', value: 'apply' },
-  { title: '拒绝', value: 'reject' },
-  { title: '提现成功', value: 'success' }
-  // { title: '处理中', value: 'process' },
-  // { title: '提现失败', value: 'failed' }
-]
 export default {
   name: '',
   data() {
     return {
+      withDrawStatusList: [
+        { title: i18n.t('2eada62f.047109'), value: 'apply' },
+        { title: i18n.t('2eada62f.7173f8'), value: 'reject' },
+        { title: i18n.t('2eada62f.dca060'), value: 'success' }
+      ],
       formQuery: {
         status: '',
         mobile: ''
@@ -109,7 +108,7 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '打款',
+            name: i18n.t('2eada62f.1d6733'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -134,7 +133,7 @@ export default {
             }
           },
           {
-            name: '拒绝',
+            name: i18n.t('2eada62f.7173f8'),
             key: 'apply',
             type: 'button',
             buttonType: 'text',
@@ -144,10 +143,14 @@ export default {
             action: {
               handler: async ([row]) => {
                 try {
-                  const res = await this.$confirm('拒绝提现？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消'
-                  })
+                  const res = await this.$confirm(
+                    this.$t('2eada62f.c508ab'),
+                    this.$t('2eada62f.02d981'),
+                    {
+                      confirmButtonText: this.$t('2eada62f.38cf16'),
+                      cancelButtonText: this.$t('2eada62f.625fb2')
+                    }
+                  )
                   await this.$api.community.withdrawApply(row.id, {
                     process_type: 'reject'
                   })
@@ -160,24 +163,23 @@ export default {
           }
         ],
         columns: [
-          { name: '申请时间', key: 'created_date' },
+          { name: i18n.t('2eada62f.5ba072'), key: 'created_date' },
           {
-            name: '打款方式',
+            name: i18n.t('2eada62f.c11ddb'),
             key: 'pay_type',
             render: (h, { row }) => h('span', {}, this.getPayType(row.pay_type))
           },
-          { name: '团长手机号', key: 'mobile' },
+          { name: i18n.t('2eada62f.5fdcbd'), key: 'mobile' },
           {
-            name: '申请提现金额（¥）',
+            name: i18n.t('2eada62f.10faa6'),
             key: 'money',
             render: (h, { row }) => h('span', {}, row.money / 100)
           },
           {
-            name: '提现状态',
+            name: i18n.t('2eada62f.0ed783'),
             key: 'status',
             render: (h, { row }) => h('span', {}, this.renderWithdrawStatu(row.status))
           }
-          // { name: '打款记录', key: 'chief_mobile' }
         ]
       }),
       // 申请人数
@@ -188,7 +190,6 @@ export default {
       payed_rebate: 0,
       // 佣金总额
       rebate_total: 0,
-      withDrawStatusList,
       resloveDialog: false,
       resloveForm: {
         id: '',
@@ -201,32 +202,32 @@ export default {
       },
       resloveFormList: [
         {
-          label: '团长姓名',
+          label: i18n.t('2eada62f.07e57c'),
           key: 'account_name',
           type: 'text'
         },
         {
-          label: '提现方式',
+          label: i18n.t('2eada62f.e5bd6e'),
           key: 'pay_type',
           type: 'text'
         },
         {
-          label: '银行名称',
+          label: i18n.t('2eada62f.181d9a'),
           key: 'bank_name',
           type: 'text'
         },
         {
-          label: '银行卡号',
+          label: i18n.t('2eada62f.d98e9d'),
           key: 'pay_account',
           type: 'text'
         },
         {
-          label: '可提现金额',
+          label: i18n.t('2eada62f.e2201a'),
           key: 'cash_withdrawal_rebate',
           type: 'text'
         },
         {
-          label: '申请提现',
+          label: i18n.t('2eada62f.37fec4'),
           key: 'money',
           type: 'text'
         }
@@ -255,9 +256,9 @@ export default {
     },
     getPayType(type) {
       const payType = {
-        bankcard: '银行卡',
-        alipay: '支付宝',
-        wechat: '微信'
+        bankcard: this.$t('2eada62f.774267'),
+        alipay: this.$t('2eada62f.ccd097'),
+        wechat: this.$t('2eada62f.cfbf6f')
       }
       return payType[type]
     },

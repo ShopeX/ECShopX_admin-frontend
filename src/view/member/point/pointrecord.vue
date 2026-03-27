@@ -28,25 +28,25 @@
       </el-col>
     </el-row> -->
     <SpFilterForm :model="params" @onSearch="getList(params)" @onReset="getList(params)">
-      <SpFilterFormItem prop="created" label="日期范围:">
+      <SpFilterFormItem prop="created" :label="$t('d787385e.8d3bf9')">
         <el-date-picker
           v-model="params.created"
           value-format="yyyy/MM/dd"
           type="daterange"
-          placeholder="选择日期范围"
+          :placeholder="$t('d787385e.4b8cb9')"
           style="width: 100%"
           @change="dateChange"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="手机号:">
-        <el-input v-model="params.mobile" placeholder="手机号" />
+      <SpFilterFormItem prop="mobile" :label="$t('d787385e.ce2bf3')">
+        <el-input v-model="params.mobile" :placeholder="$t('d787385e.8098e2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="username" label="昵称:">
-        <el-input v-model="params.username" placeholder="昵称" />
+      <SpFilterFormItem prop="username" :label="$t('d787385e.0a3c0b')">
+        <el-input v-model="params.username" :placeholder="$t('d787385e.23eb0e')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-button type="primary" @click="exportData"> 导出 </el-button>
+    <el-button type="primary" @click="exportData"> {{ $t('d787385e.55405e') }} </el-button>
     <div class="record-list">
       <el-table
         v-loading="loading"
@@ -54,16 +54,16 @@
         :height="wheight - 250"
         @filter-change="filterTag"
       >
-        <el-table-column prop="timeStart" label="创建时间">
+        <el-table-column prop="timeStart" :label="$t('d787385e.eca37c')">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="username" label="昵称" />
-        <el-table-column prop="name" label="用户名" />
-        <el-table-column prop="mobile" label="手机号" />
-        <el-table-column prop="point" label="积分变动">
+        <el-table-column prop="username" :label="$t('d787385e.23eb0e')" />
+        <el-table-column prop="name" :label="$t('d787385e.819767')" />
+        <el-table-column prop="mobile" :label="$t('d787385e.8098e2')" />
+        <el-table-column prop="point" :label="$t('d787385e.85b589')">
           <template slot-scope="scope">
             <span v-if="scope.row.point == 0">{{ scope.row.point }}</span>
             <span v-else-if="scope.row.income > 0">+{{ scope.row.income }}</span>
@@ -71,10 +71,10 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="point_desc" label="变动类型" />
-        <el-table-column prop="s_point" label="当前剩余积分" />
-        <el-table-column prop="point_desc" label="记录" />
-        <el-table-column prop="order_id" label="订单号" />
+        <el-table-column prop="point_desc" :label="$t('d787385e.f9a67c')" />
+        <el-table-column prop="s_point" :label="$t('d787385e.4b8bc3')" />
+        <el-table-column prop="point_desc" :label="$t('d787385e.620bf8')" />
+        <el-table-column prop="order_id" :label="$t('d787385e.1e8dc2')" />
       </el-table>
     </div>
     <div v-if="total_count > pageSize" class="tc" style="margin-top: 20px">

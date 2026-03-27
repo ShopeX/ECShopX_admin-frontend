@@ -10,28 +10,28 @@
         <el-table-column
           prop="tradeType"
           column-key="type"
-          label="交易记录类型"
+          :label="$t('11682082.4e5463')"
           width="180"
           :filters="typeFilters"
           filter-placement="bottom-end"
         >
           <template slot-scope="scope">
-            {{ scope.row.tradeType | formatTypeStr }}
+            {{ getTradeTypeLabel(scope.row.tradeType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="timeStart" label="创建时间">
+        <el-table-column prop="timeStart" :label="$t('11682082.eca37c')">
           <template slot-scope="scope">
             <span>{{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="depositTradeId" label="交易流水号" />
-        <el-table-column prop="money" label="金额">
+        <el-table-column prop="depositTradeId" :label="$t('11682082.fa68e9')" />
+        <el-table-column prop="money" :label="$t('11682082.4cf24a')">
           <template slot-scope="scope">
             <span>{{ scope.row.money / 100 }}元</span>
           </template>
         </el-table-column>
-        <el-table-column prop="detail" label="备注" />
-        <el-table-column prop="shopName" label="门店" />
+        <el-table-column prop="detail" :label="$t('11682082.2432b5')" />
+        <el-table-column prop="shopName" :label="$t('11682082.a7da92')" />
       </el-table>
     </div>
     <div v-if="total_count > pageSize" class="content-padded tc">
@@ -49,28 +49,6 @@
 <script>
 import { getDepositTradeList, getDepositCountIndex } from '../../../api/deposit'
 export default {
-  filters: {
-    formatTypeStr(str) {
-      switch (str) {
-        case 'recharge':
-          str = '充值记录'
-          break
-        case 'consume':
-          str = '消费记录'
-          break
-        case 'recharge_gift':
-          str = '赠送记录'
-          break
-        case 'refund':
-          str = '退回记录'
-          break
-        case 'recharge_send':
-          str = '返佣记录'
-          break
-      }
-      return str
-    }
-  },
   props: ['userId', 'isLoad'],
   data() {
     return {
@@ -79,18 +57,22 @@ export default {
       total_count: 0,
       pageSize: 20,
       recordList: [],
-      typeFilters: [
-        { text: '充值记录', value: 'recharge' },
-        { text: '赠送记录', value: 'recharge_gift' },
-        { text: '消费记录', value: 'consume' },
-        { text: '返佣记录', value: 'recharge_send' },
-        { text: '退回记录', value: 'refund' }
-      ],
       params: {
         page: 1
       },
       date_begin: '',
       date_end: ''
+    }
+  },
+  computed: {
+    typeFilters() {
+      return [
+        { text: this.$t('11682082.415b28'), value: 'recharge' },
+        { text: this.$t('11682082.7be24a'), value: 'recharge_gift' },
+        { text: this.$t('11682082.58cd6d'), value: 'consume' },
+        { text: this.$t('11682082.f1398c'), value: 'recharge_send' },
+        { text: this.$t('11682082.d6b434'), value: 'refund' }
+      ]
     }
   },
   watch: {
@@ -112,6 +94,16 @@ export default {
     // this.getList(query)
   },
   methods: {
+    getTradeTypeLabel(type) {
+      const map = {
+        recharge: '11682082.415b28',
+        consume: '11682082.58cd6d',
+        recharge_gift: '11682082.7be24a',
+        refund: '11682082.d6b434',
+        recharge_send: '11682082.f1398c'
+      }
+      return this.$t(map[type] || '')
+    },
     filterTag(val) {
       if (val.type.length > 0 && val.type.length != this.typeFilters.length) {
         this.trade_type = val.type.join(',')

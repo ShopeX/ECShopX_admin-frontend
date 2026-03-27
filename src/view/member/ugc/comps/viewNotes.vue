@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-dialog
-      :title="dialogTitle"
+      :title="dialogTitleText"
       :before-close="handleCancelLabelsDialog"
       :visible.sync="dialogIsShow"
       width="40%"
@@ -15,11 +15,15 @@
       <div v-if="post_info.post_id" v-loading="formLoad" class="notesinfo">
         <el-form ref="dataForm" :model="ruleForm" :rules="rules" class="notes-form">
           <el-row>
-            <el-col class="name" :span="4"> 笔记排序 </el-col>
+            <el-col class="name" :span="4">{{ $t('bf192462.6df5ba') }}</el-col>
             <el-col class="value" :span="20">
               <div class="serialBar">
-                <el-checkbox v-model="is_top" @change="serialChanges"> 置项 </el-checkbox>
-                <span class="text-ml"> 最多置顶两篇笔记，置顶后将自动排序最优。 </span>
+                <el-checkbox v-model="is_top" @change="serialChanges">
+{{
+                  $t('bf192462.1b8e54')
+                }}
+</el-checkbox>
+                <span class="text-ml">{{ $t('bf192462.bd797f') }}</span>
               </div>
               <div class="serialBar">
                 <el-form-item prop="serial" class="serial-ipt">
@@ -33,20 +37,20 @@
                     max="50"
                     @change="updataNotes"
                   />
-                  <span class="text-ml"> 默认为0，排序数字越小优先级越高；相同优先级下 </span>
+                  <span class="text-ml">{{ $t('bf192462.8a10e3') }}</span>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
 
           <el-row class="flag-bar">
-            <el-col class="name" :span="4"> 笔记角标 </el-col>
+            <el-col class="name" :span="4">{{ $t('bf192462.2b4a6a') }}</el-col>
             <el-col class="value" :span="20">
               <div v-if="ruleForm.badges" class="badgebar">
-                <span class="text"> 已选：{{ relFlag.badge_name }} </span>
+                <span class="text">{{ $t('bf192462.374700') }}{{ relFlag.badge_name }}</span>
                 <span class="el-icon el-icon-close" @click="removeFlag" />
               </div>
-              <span v-else class="text">请选择</span>
+              <span v-else class="text">{{ $t('bf192462.708c9d') }}</span>
 
               <el-button
                 size="small"
@@ -55,28 +59,28 @@
                 plain
                 @click="flagModalHide(true)"
               >
-                选择角标
+                {{ $t('bf192462.e04a23') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form>
 
         <el-row>
-          <el-col class="name" :span="4"> 笔记标题 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.70dd91') }}</el-col>
           <el-col class="value" :span="20">
             {{ post_info.title }}
           </el-col>
         </el-row>
 
         <el-row>
-          <el-col class="name" :span="4"> 笔记描述 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.eea3bc') }}</el-col>
           <el-col class="value" :span="20">
             <pre class="info-content" v-html="post_info.content" />
           </el-col>
         </el-row>
 
         <el-row v-if="post_info.topics">
-          <el-col class="name" :span="4"> 关联话题 </el-col>
+          <el-col class="name" :span="4">{{ $t('aaf935c3.051a44') }}</el-col>
           <el-col class="value" :span="20">
             <span v-for="(item, index) in post_info.topics" :key="index" class="tag">{{
               item.topic_name
@@ -84,11 +88,11 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col class="name" :span="4"> 笔记图片 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.c9c99a') }}</el-col>
           <el-col class="value imgflxe" :span="20">
             <div v-if="post_info.video" class="img">
               <video id="video" class="video">
-                <source :src="post_info.video" type="video/mp4" />
+                <source :src="post_info.video" type="video/mp4">
               </video>
               <div class="upload-box" @click="magnifyImg(post_info.video, true)">
                 <div class="iconfont icon-play" />
@@ -100,24 +104,24 @@
               class="img"
               @click="magnifyImg(item.url)"
             >
-              <img :src="item.url" alt="" />
+              <img :src="item.url" alt="">
             </div>
           </el-col>
         </el-row>
 
         <el-row v-if="taglist.length">
-          <el-col class="name" :span="4"> 图片内Tag </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.3eb0a7') }}</el-col>
           <el-col class="value" :span="20">
             <span v-for="(tag, index) in taglist" :key="index" class="tag">{{ tag.tag_name }}</span>
           </el-col>
         </el-row>
 
         <el-row v-if="post_info.goods">
-          <el-col class="name" :span="4"> 推荐商品 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.479ddf') }}</el-col>
           <el-col class="value imgflxe" :span="20">
             <div v-for="(item, index) in post_info.goods" :key="index" class="goods">
               <div class="pics">
-                <img :src="item.pics" alt="" />
+                <img :src="item.pics" alt="">
               </div>
               <div class="text">
                 {{ item.item_name }}
@@ -127,7 +131,7 @@
         </el-row>
 
         <el-row v-if="post_info.userInfo" class="bor-top">
-          <el-col class="name" :span="4"> 用户昵称 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.9a56bb') }}</el-col>
           <el-col class="value" :span="20">
             <div class="user-name" @click="toUserInfo(post_info.userInfo)">
               {{ post_info.userInfo.nickname }}
@@ -136,32 +140,34 @@
         </el-row>
 
         <el-row v-if="post_info.userInfo">
-          <el-col class="name" :span="4"> 手机号 </el-col>
+          <el-col class="name" :span="4">{{ $t('6b57cb80.ce2bf3') }}</el-col>
           <el-col class="value" :span="20">
             {{ post_info.userInfo.mobile }}
           </el-col>
         </el-row>
 
         <el-row>
-          <el-col class="name" :span="4"> 笔记时间 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.9e008e') }}</el-col>
           <el-col class="value" :span="20">
             {{ post_info.created_text }}
           </el-col>
         </el-row>
 
         <el-row class="bor-top">
-          <el-col class="name" :span="4"> 当前状态 </el-col>
+          <el-col class="name" :span="4">{{ $t('bf192462.6bf1f3') }}</el-col>
           <el-col class="value" :span="20">
             {{ post_info.status_text }}
           </el-col>
         </el-row>
       </div>
-      <div v-if="!post_info.post_id" class="tips">id {{ post_id }} 笔记:{{ errInfo }}</div>
+      <div v-if="!post_info.post_id" class="tips">
+        id {{ post_id }} {{ $t('bf192462.ebab3c') }}{{ errInfo }}
+      </div>
       <div v-if="post_info.post_id" slot="footer">
         <el-button :type="post_info.status == '0' ? 'primary' : 'danger'" @click="handleAudit">
-          {{ post_info.status == '0' ? '审核' : '重审' }}
+          {{ post_info.status == '0' ? $t('e240ae54.cf13b1') : $t('bf192462.ccfd81') }}
         </el-button>
-        <el-button @click="handleCancelLabelsDialog"> 取消 </el-button>
+        <el-button @click="handleCancelLabelsDialog">{{ $t('09b91dec.625fb2') }}</el-button>
       </div>
     </el-dialog>
 
@@ -174,10 +180,10 @@
     >
       <div class="magnify" @click="magnifyHide">
         <video v-if="magnifyVideo" id="preview-video" class="video" controls autoplay>
-          <source :src="magnifyVideo" type="video/mp4" />
+          <source :src="magnifyVideo" type="video/mp4">
         </video>
 
-        <img v-if="magnifySrc" :src="magnifySrc" alt="" />
+        <img v-if="magnifySrc" :src="magnifySrc" alt="">
       </div>
     </el-dialog>
 
@@ -201,23 +207,13 @@ export default {
     dialogIsShow: Boolean
   },
   data() {
-    const valNumer = (rule, value, callback) => {
-      //console.log('valNumer',value,rule)
-      if (value < 0) {
-        return callback(new Error('数值不能小于0'))
-      } else if (value > rule.max) {
-        return callback(new Error('数值不能超过' + rule.max))
-      } else {
-        callback()
-      }
-    }
     return {
       magnifyShow: false,
       magnifySrc: null,
       magnifyVideo: null,
       errInfo: null,
       formLoad: false,
-      dialogTitle: '笔记详情',
+      dialogTitle: null,
       post_info: {},
       taglist: [],
       is_top: false,
@@ -228,15 +224,32 @@ export default {
         p_order: 0,
         flag: null
       },
-      rules: {
+      rules: {}
+    }
+  },
+  computed: {
+    dialogTitleText() {
+      return this.$t('bf192462.72eb43')
+    },
+    rules() {
+      const that = this
+      const valNumer = (rule, value, callback) => {
+        if (value < 0) {
+          return callback(new Error(that.$t('bf192462.5985f3')))
+        } else if (value > rule.max) {
+          return callback(new Error(that.$t('bf192462.997a79') + rule.max))
+        } else {
+          callback()
+        }
+      }
+      return {
         p_order: [
-          { required: true, message: '请填写序号', trigger: 'change' },
+          { required: true, message: this.$t('bf192462.fe1924'), trigger: 'change' },
           { validator: valNumer, max: 5, trigger: 'blur' }
         ]
       }
     }
   },
-  computed: {},
   watch: {
     post_id: {
       handler(newValue, oldValue) {

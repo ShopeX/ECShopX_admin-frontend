@@ -26,6 +26,7 @@
 import transfer from './components/transfer'
 import transferdetail from './components/transferdetail'
 import transferlog from './components/transferlog'
+import { i18n } from '@/i18n'
 export default {
   components: {
     transfer,
@@ -36,9 +37,9 @@ export default {
     return {
       activeName: 'transfer',
       tabList: [
-        { name: '划付单', activeName: 'transfer' },
-        { name: '划付单明细', activeName: 'transferdetail' },
-        { name: '划付失败日志', activeName: 'transferlog' }
+        { name: i18n.t('a4a3c890.6c9cac'), activeName: 'transfer' },
+        { name: i18n.t('a4a3c890.362f6d'), activeName: 'transferdetail' },
+        { name: i18n.t('a4a3c890.e2e8fe'), activeName: 'transferlog' }
       ]
     }
   },

@@ -10,7 +10,7 @@
       @click="openSearchDialog"
     >
       <Search theme="outline" :size="14" fill="#333" />
-      <span class="text-gray-600">搜索</span>
+      <span class="text-gray-600">{{ $t('37d406b5.e5f71f') }}</span>
       <span class="px-2 py-1 bg-white rounded-l-md rounded-r-xl text-gray-700 font-medium">
         <span v-if="isMac">⌘K</span>
         <span v-else>Ctrl+K</span>
@@ -42,7 +42,7 @@
                   component: 'input',
                   cellWidth: 2,
                   componentProps: {
-                    placeholder: '搜索导航菜单'
+                    placeholder: $t('37d406b5.f346ed')
                   }
                 }
               ]"
@@ -96,16 +96,18 @@
                     />
                     <span
                       v-html="highlightText(menu.name, keyword, selectedIndex === index)"
-                    ></span>
+                    />
                   </div>
                   <div v-if="menu.path" class="text-xs text-gray-400 mt-1">{{ menu.path }}</div>
                 </div>
               </div>
-              <div v-else class="text-sm text-gray-400 text-center py-4">未找到匹配的菜单</div>
+              <div v-else class="text-sm text-gray-400 text-center py-4">
+                {{ $t('37d406b5.12e43b') }}
+              </div>
             </div>
             <div v-else>
               <div v-if="searchHistory.length > 0">
-                <div class="text-xs text-gray-500 mb-2">搜索历史</div>
+                <div class="text-xs text-gray-500 mb-2">{{ $t('37d406b5.e9c38f') }}</div>
                 <div class="menu-list">
                   <div
                     v-for="(historyItem, index) in searchHistory"
@@ -144,7 +146,9 @@
                   </div>
                 </div>
               </div>
-              <div v-else class="text-sm text-gray-400 text-center py-4">没有搜索历史</div>
+              <div v-else class="text-sm text-gray-400 text-center py-4">
+                {{ $t('37d406b5.941fcf') }}
+              </div>
             </div>
           </div>
         </div>
@@ -154,15 +158,15 @@
         <div class="flex items-center gap-3 text-xs text-gray-700">
           <div class="flex items-center gap-1">
             <EnterKey theme="outline" :size="12" fill="#333" />
-            <span>选择</span>
+            <span>{{ $t('37d406b5.153fa6') }}</span>
           </div>
           <div class="flex items-center gap-1">
             <SortThree theme="outline" :size="12" fill="#333" />
-            <span>导航</span>
+            <span>{{ $t('37d406b5.056f2d') }}</span>
           </div>
           <div class="flex items-center gap-1">
             <span class="text-xs">ESC</span>
-            <span>关闭</span>
+            <span>{{ $t('37d406b5.b15d91') }}</span>
           </div>
         </div>
       </template>

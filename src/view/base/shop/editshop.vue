@@ -6,43 +6,43 @@
 <template>
   <section class="section section-white content-padded" onload="init()">
     <el-form ref="form" :model="form" label-width="110px">
-      <el-form-item label="是否是国内门店">
+      <el-form-item :label="$t('345b9595.a1bb9c')">
         <el-col :span="10">
           <el-radio-group
             v-if="form.wx_shop_id"
             v-model="form.is_domestic"
             @change="isDomesticChange"
           >
-            <el-radio :label="1" value="1" disabled> 国内 </el-radio>
-            <el-radio :label="2" value="2" disabled> 非国内 </el-radio>
+            <el-radio :label="1" value="1" disabled>{{ $t('345b9595.227dd1') }}</el-radio>
+            <el-radio :label="2" value="2" disabled>{{ $t('345b9595.cf4787') }}</el-radio>
           </el-radio-group>
           <el-radio-group v-else v-model="form.is_domestic" @change="isDomesticChange">
-            <el-radio :label="1" value="1"> 国内 </el-radio>
-            <el-radio :label="2" value="2"> 非国内 </el-radio>
+            <el-radio :label="1" value="1">{{ $t('345b9595.227dd1') }}</el-radio>
+            <el-radio :label="2" value="2">{{ $t('345b9595.cf4787') }}</el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
-      <el-form-item label="是否是直营店">
+      <el-form-item :label="$t('345b9595.0306b5')">
         <el-col :span="10">
           <el-radio-group v-model="form.is_direct_store">
-            <el-radio :label="1" value="1"> 直营店 </el-radio>
-            <el-radio :label="2" value="2"> 非直营店 </el-radio>
+            <el-radio :label="1" value="1">{{ $t('345b9595.4b940c') }}</el-radio>
+            <el-radio :label="2" value="2">{{ $t('345b9595.c26325') }}</el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == 1" label="地理位置">
+      <el-form-item v-if="form.is_domestic == 1" :label="$t('345b9595.fc82aa')">
         <el-col :span="4">
           <el-cascader :options="regions" change-on-select @change="handleRegionChange" />
         </el-col>
         <el-col :span="7">
-          <el-input id="keyword" v-model="form.address" placeholder="请输入门店名称" />
+          <el-input id="keyword" v-model="form.address" :placeholder="$t('345b9595.d17095')" />
         </el-col>
         <el-col :span="1" class="content-center"> &nbsp; </el-col>
         <el-col :span="3">
-          <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
+          <el-button type="primary" @click="searchKeyword()">{{ $t('345b9595.83546a') }}</el-button>
         </el-col>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == 1" label="地图定位">
+      <el-form-item v-if="form.is_domestic == 1" :label="$t('345b9595.86188c')">
         <el-col :span="4">
           <div id="qqmap_rslist" />
         </el-col>
@@ -50,43 +50,43 @@
           <div id="qqmap_container" />
         </el-col>
       </el-form-item>
-      <el-form-item label="门店名称">
+      <el-form-item :label="$t('345b9595.740032')">
         <div>
           <el-col :span="8">
-            <el-input v-model="form.shopname" placeholder="请先完成上方地理位置的选择" />
+            <el-input v-model="form.shopname" :placeholder="$t('345b9595.7c3c07')" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == '2'" label="具体地址">
+      <el-form-item v-if="form.is_domestic == '2'" :label="$t('345b9595.a345de')">
         <div>
           <el-col :span="1">
-            <el-input v-model="form.country" placeholder="国家" />
+            <el-input v-model="form.country" :placeholder="$t('345b9595.ee3f55')" />
           </el-col>
           <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="2">
-            <el-input v-model="form.city" placeholder="城市" />
+            <el-input v-model="form.city" :placeholder="$t('345b9595.f7d29d')" />
           </el-col>
           <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="5">
-            <el-input v-model="form.address" placeholder="详细地址" />
+            <el-input v-model="form.address" :placeholder="$t('345b9595.61a0ec')" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == 2" label="经营资质名称">
+      <el-form-item v-if="form.is_domestic == 2" :label="$t('345b9595.ca5ba1')">
         <el-col :span="8">
           <el-input v-model="form.company_name" />
         </el-col>
         <el-col>
-          <p class="frm-tips">请填写营业执照名称，或组织机构代码证名称。</p>
+          <p class="frm-tips">{{ $t('345b9595.ac8ce8') }}</p>
         </el-col>
       </el-form-item>
-      <el-form-item inline="true" class="demo-form-inline" label="门店经纬度">
+      <el-form-item inline="true" class="demo-form-inline" :label="$t('345b9595.8545dd')">
         <el-col :span="3">
-          <el-input v-model="form.lng" readonly placeholder="经度" />
+          <el-input v-model="form.lng" readonly :placeholder="$t('345b9595.3d18ca')" />
         </el-col>
         <el-col :span="1" class="content-center"> - </el-col>
         <el-col :span="3">
-          <el-input v-model="form.lat" readonly placeholder="纬度" />
+          <el-input v-model="form.lat" readonly :placeholder="$t('345b9595.6acaee')" />
         </el-col>
       </el-form-item>
       <!-- <el-form-item label="门店图片">
@@ -107,11 +107,11 @@
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
       </el-form-item> -->
-      <el-form-item label="门店图片">
+      <el-form-item :label="$t('345b9595.d63742')">
         <el-row :gutter="20">
           <el-col :span="18">
             <div class="frm-tips">
-              请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br />最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M
+              {{ $t('345b9595.056495') }}
             </div>
             <div class="pics-box">
               <ul class="goodspic-wrap">
@@ -122,7 +122,7 @@
                   @mouseenter="picsEnter(index)"
                   @mouseleave="picsLeave"
                 >
-                  <img :src="wximageurl + item" />
+                  <img :src="wximageurl + item">
                   <div
                     class="goodspic-mask"
                     :class="picsCurrent == index ? 'on' : ''"
@@ -147,42 +147,46 @@
         </el-row>
       </el-form-item>
 
-      <el-form-item label="客服电话">
+      <el-form-item :label="$t('345b9595.e84643')">
         <el-col :span="8">
           <el-input v-model="form.contract_phone" />
         </el-col>
         <el-col>
-          <p class="frm-tips">固定电话需加区号；区号、分机号均用“-”连接</p>
+          <p class="frm-tips">{{ $t('345b9595.7b78e9') }}</p>
         </el-col>
       </el-form-item>
-      <el-form-item label="营业时间">
+      <el-form-item :label="$t('345b9595.cc3307')">
         <el-col :span="5">
           <el-time-picker
             v-model="opentime"
             is-range
             format="HH:mm"
             type="fixed-time"
-            placeholder="营业时间"
+            :placeholder="$t('345b9595.cc3307')"
             style="width: 100%"
             @change="selectDateChange"
           />
         </el-col>
         <el-col>
-          <p class="frm-tips">24小时制，如10：00-20：30</p>
+          <p class="frm-tips">{{ $t('345b9595.a7bd0e') }}</p>
         </el-col>
       </el-form-item>
-      <el-form-item v-show="add_flag === 1" v-if="form.is_domestic == '1'" label="经营资质主体">
+      <el-form-item
+        v-show="add_flag === 1"
+        v-if="form.is_domestic == '1'"
+        :label="$t('345b9595.be228b')"
+      >
         <el-radio-group v-model="form.add_type">
           <div style="margin-bottom: 10px">
             <el-radio :label="1">
-              公众账号主体&nbsp;<span class="frm-tips">({{ principal_name }})</span>
+              {{ $t('345b9595.0418fa') }}&nbsp;<span class="frm-tips">({{ principal_name }})</span>
             </el-radio>
           </div>
           <div>
             <el-radio :label="2">
-              相关主体&nbsp;<span class="frm-tips"
-                >(若地点的经营资质名称与帐号主体名称不一致，请选择相关主体。)</span
-              >
+              {{ $t('345b9595.8d85c1') }}&nbsp;<span class="frm-tips">{{
+                $t('345b9595.608963')
+              }}</span>
             </el-radio>
           </div>
         </el-radio-group>
@@ -190,34 +194,36 @@
       <el-form-item
         v-show="form.add_type == '2' && add_flag === 1"
         v-if="form.is_domestic == 1"
-        label="经营资质名称"
+        :label="$t('345b9595.ca5ba1')"
       >
         <el-col :span="8">
           <el-input v-model="form.company_name" />
         </el-col>
         <el-col>
-          <p class="frm-tips">请填写营业执照名称，或组织机构代码证名称。</p>
+          <p class="frm-tips">{{ $t('345b9595.ac8ce8') }}</p>
         </el-col>
       </el-form-item>
-      <el-form-item v-show="add_flag === 1" v-if="form.is_domestic == 1" label="经营资质证件号">
+      <el-form-item
+        v-show="add_flag === 1"
+        v-if="form.is_domestic == 1"
+        :label="$t('345b9595.8e8efa')"
+      >
         <el-col :span="8">
           <el-input v-model="form.credential" />
         </el-col>
         <el-col>
           <p class="frm-tips">
-            请填写15位营业执照注册号或9位组织机构代码（如12345678-9）或18位或20位统一社会信用代码
+            {{ $t('345b9595.3745b0') }}
           </p>
         </el-col>
       </el-form-item>
       <el-form-item
         v-show="form.add_type == '2' && add_flag === 1"
         v-if="form.is_domestic == 1"
-        label="相关证明材料"
+        :label="$t('345b9595.9bd9d3')"
       >
         <el-col>
-          <p class="frm-tips">
-            提交能证明此经营资质主体与帐号主体相关的证明材料。文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M。
-          </p>
+          <p class="frm-tips">{{ $t('345b9595.3a3821') }}</p>
         </el-col>
         <el-col>
           <el-upload
@@ -227,19 +233,23 @@
             :show-file-list="false"
             :on-change="handleQualificationPicChange"
           >
-            <img v-if="qpic_url" :src="qpic_url" class="avatar" />
+            <img v-if="qpic_url" :src="qpic_url" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="large" @click="onSubmit"> 提交 </el-button>
-        <el-button size="large" @click="cancelSubmit"> 取消 </el-button>
+        <el-button type="primary" size="large" @click="onSubmit">
+{{
+          $t('345b9595.939d53')
+        }}
+</el-button>
+        <el-button size="large" @click="cancelSubmit">{{ $t('345b9595.625fb2') }}</el-button>
       </el-form-item>
     </el-form>
     <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button type="primary" @click="imp_poi(poi_info)"> 导入该门店信息 </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)">{{ $t('345b9595.0310ee') }}</el-button>
       </el-col>
       <el-col>{{ poi_info.id }}</el-col>
       <el-col>{{ poi_info.name }},{{ poi_info.address }}</el-col>
@@ -393,7 +403,7 @@ export default {
 
       if (this.form.is_domestic == 1) {
         if (!this.form.address || !this.form.lng || !this.form.lat) {
-          this.$message.error('国内门店，地理位置必填! 并且请导入具体地址，用以确定经纬度')
+          this.$message.error(this.$t('345b9595.b98f4b'))
           return false
         }
       }
@@ -430,7 +440,7 @@ export default {
             this.refresh()
             this.$router.go(-1)
           } else {
-            this.$message.error('搜索门店失败!')
+            this.$message.error(this.$t('345b9595.08141b'))
             return false
           }
         })
@@ -442,7 +452,7 @@ export default {
             this.refresh()
             this.$router.go(-1)
           } else {
-            this.$message.error('搜索门店失败!')
+            this.$message.error(this.$t('345b9595.08141b'))
             return false
           }
         })
@@ -502,7 +512,7 @@ export default {
         },
         //若服务请求失败，则运行以下函数
         error: function () {
-          this.$message.error('搜索门店失败!')
+          that.$message.error(that.$t('345b9595.08141b'))
         }
       })
     },
@@ -517,14 +527,14 @@ export default {
       //设置搜索的范围和关键字等属性
       if (!this.form.region) {
         this.$message({
-          message: '请选择地区',
+          message: this.$t('345b9595.ad1a24'),
           type: 'warning'
         })
         return ''
       }
       if (!this.form.address) {
         this.$message({
-          message: '请输入门店名称',
+          message: this.$t('345b9595.d17095'),
           type: 'warning'
         })
         return ''
@@ -595,10 +605,10 @@ export default {
       this.qpic_url = file.url
       if (file && file.raw) {
         if (file.raw.type != 'image/jpeg' && file.raw.type != 'image/png') {
-          this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+          this.$message.error(this.$t('345b9595.34e969'))
         }
         if (file.raw.size / 1024 / 1024 > 5) {
-          this.$message.error('上传图片大小不能超过 5MB!')
+          this.$message.error(this.$t('345b9595.50fa12'))
         }
       }
 
@@ -619,7 +629,7 @@ export default {
     },
     pickPics(arr) {
       if (this.picsOldLen + arr.length >= 10) {
-        this.$message.error('最多上传9张图片!')
+        this.$message.error(this.$t('345b9595.4352be'))
         return false
       } else {
         if (arr.length != 0) {

@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '店铺'
+const name = 'ae421b4f.295713'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: [
     {
       path: 'shop/Shopwxshop',
-      name: `服务网店`,
+      name: 'ae421b4f.f82d86',
       component: () => import('@/view/base/shop/wxshop'),
       children: [
         {
@@ -22,7 +22,7 @@ export default {
     },
     {
       path: 'storemanager/marketingdistributor',
-      name: `店铺列表`,
+      name: 'ae421b4f.a4d703',
       component: () => import('@/view/mall/marketing/distributor'),
       children: [
         {
@@ -54,22 +54,22 @@ export default {
     },
     {
       path: 'storemanager/distributoraftersalesaddress',
-      name: `售后地址`,
+      name: 'ae421b4f.c096c4',
       component: () => import('@/view/mall/marketing/distributorAftersalesAddress')
     },
     {
       path: 'storemanager/exportstoreitems',
-      name: `店铺商品更新`,
+      name: 'ae421b4f.068bb6',
       component: () => import('@/view/mall/marketing/productUpdate')
     },
     {
       path: 'storemanager/marketinglog',
-      name: `店铺记录`,
+      name: 'ae421b4f.fe37d0',
       component: () => import('@/view/mall/marketing/distributionLog')
     },
     {
       path: 'storemanager/storewhitelist',
-      name: `店铺白名单`,
+      name: 'ae421b4f.899e90',
       component: () => import('@/view/mall/marketing/storewhitelist'),
       children: [
         {

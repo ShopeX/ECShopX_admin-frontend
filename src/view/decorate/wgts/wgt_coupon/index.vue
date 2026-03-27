@@ -27,14 +27,14 @@
               class="coupon-unit"
               :style="{ color: value.amountColor }"
             >
-              折
+              {{ i18n.t('4e8312aa.96c015') }}
             </div>
           </div>
           <div v-if="value.data.length == 1" class="wgt-couponcard-item-info">
             <p class="use-title">{{ item?.title }}</p>
 
             <p class="use-desc" v-html="item.description" />
-            <p class="use-time">有效期至 {{ item.end_date }}</p>
+            <p class="use-time">{{ i18n.t('4e8312aa.6460f4') }} {{ item.end_date }}</p>
             <p class="use-time">{{ item?.valid_date }}</p>
           </div>
           <div v-else class="wgt-couponcard-item-info">
@@ -50,7 +50,7 @@
           :class="['wgt-couponcard-item-btn', { 'disabled': item.quantity - item.get_num <= 0 }]"
           :style="receiveBtnStyle"
         >
-          {{ item.quantity - item.get_num <= 0 ? '已领完' : '立即领取' }}
+          {{ item.quantity - item.get_num <= 0 ? i18n.t('4e8312aa.c6055e') : i18n.t('4e8312aa.d67527') }}
         </div>
       </div>
     </div>
@@ -58,11 +58,12 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import config from './config'
 import { getOuterStyle, getInnerStyle } from '../../comps/style-utils'
 export default {
   name: 'CouponCard',
-  wgtName: '优惠券',
+  wgtName: i18n.t('4e8312aa.2f3635'),
   wgtDesc: '',
   wgtIcon: 'ticket',
   wgtType: 2,
@@ -71,7 +72,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {
+    return {i18n,
       currentIndex: 1,
       couponDeep: {}
     }
@@ -95,9 +96,9 @@ export default {
   methods: {
     AIOFormatter(item) {
       if (item.stockNum > 0 && item.realStockNum > 0) {
-        return '立即领取'
+        return i18n.t('4e8312aa.d67527')
       } else {
-        return item.realStockNum <= 0 ? '已领完' : '今日已领完'
+        return item.realStockNum <= 0 ? i18n.t('4e8312aa.c6055e') : i18n.t('4e8312aa.6ed748')
       }
       // return {
       //   dayStockNum: 'stockNum',//日剩余库存

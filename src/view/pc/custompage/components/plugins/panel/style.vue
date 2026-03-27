@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <product-map :data="data" :num="4" text="新增" />
+  <product-map :data="data" :num="4" :text="$t('19b63607.66ab5e')" />
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'

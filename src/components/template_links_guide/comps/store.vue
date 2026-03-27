@@ -14,7 +14,7 @@
           {{ checked.address }}
         </div>
       </div>
-      <div v-else class="view-flex-item">全部店铺</div>
+      <div v-else class="view-flex-item">{{ $t('3602e695.77678b') }}</div>
       <div v-if="checked" class="el-icon-close" @click="handleResetClick" />
       <div class="iconfont icon-sync-alt" @click="handleClick" />
     </div>
@@ -22,6 +22,7 @@
       <ul v-loading="loading" class="store-list">
         <li
           v-for="item in list"
+          :key="item.id"
           class="store-list-item"
           :class="current.id === item.id ? 'active' : ''"
           @click="handleItemClick(item)"
@@ -35,8 +36,8 @@
         </li>
       </ul>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="visible = false">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        <el-button @click="visible = false">{{ $t('3602e695.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleConfirm">{{ $t('3602e695.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>

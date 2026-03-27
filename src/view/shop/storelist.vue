@@ -8,31 +8,39 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row>
         <el-col :span="12">
-          门店类型：
+          {{ $t('3919fa23.69fc26') }}
           <el-select v-model="store_type" @change="storeChange">
-            <el-option label="直营店" :value="1"> 直营店 </el-option>
-            <el-option label="非直营店" :value="2"> 非直营店 </el-option>
+            <el-option :label="$t('3919fa23.4b940c')" :value="1">
+{{
+              $t('3919fa23.4b940c')
+            }}
+</el-option>
+            <el-option :label="$t('3919fa23.c26325')" :value="2">
+{{
+              $t('3919fa23.c26325')
+            }}
+</el-option>
           </el-select>
         </el-col>
         <el-col :span="12" class="content-right">
           <router-link :to="matchRoutePath('editor')">
-            <el-button type="primary" icon="el-icon-plus"> 添加门店 </el-button>
+            <el-button type="primary" icon="el-icon-plus">{{ $t('3919fa23.894d98') }}</el-button>
           </router-link>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="wxShopsList" style="width: 100%" :height="wheight - 305">
-        <el-table-column prop="storeName" label="门店名称" width="240" />
-        <el-table-column prop="isDirectStore" label="门店类型">
+        <el-table-column prop="storeName" :label="$t('3919fa23.740032')" width="240" />
+        <el-table-column prop="isDirectStore" :label="$t('3919fa23.8aac45')">
           <template slot-scope="scope">
             <div v-if="scope.row.isDirectStore === 1">
-              <el-tag type="success" size="mini"> 直营 </el-tag>
+              <el-tag type="success" size="mini">{{ $t('3919fa23.0f2d3f') }}</el-tag>
             </div>
             <div v-if="scope.row.isDirectStore === 2">
-              <el-tag type="gray" size="mini"> 非直营 </el-tag>
+              <el-tag type="gray" size="mini">{{ $t('3919fa23.7439a8') }}</el-tag>
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="240" label="地理位置">
+        <el-table-column width="240" :label="$t('3919fa23.fc82aa')">
           <template slot-scope="scope">
             <div v-if="scope.row.isDomestic == 2">
               {{ scope.row.country }} {{ scope.row.city }} {{ scope.row.address }}
@@ -42,7 +50,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="80">
+        <el-table-column :label="$t('3919fa23.3fea7c')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.isOpen"
@@ -52,7 +60,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="设为默认" width="80">
+        <el-table-column :label="$t('3919fa23.1af3ec')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.isDefault"
@@ -63,7 +71,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="170">
+        <el-table-column :label="$t('3919fa23.2b6bc0')" width="170">
           <template slot-scope="scope">
             <el-button
               v-if="1"
@@ -71,9 +79,13 @@
               type="text"
               @click="wxShopsEdit(scope.$index, scope.row)"
             >
-              编辑
+              {{ $t('3919fa23.95b351') }}
             </el-button>
-            <el-button v-else size="mini" type="text" :disabled="true"> 编辑 </el-button>
+            <el-button v-else size="mini" type="text" :disabled="true">
+{{
+              $t('3919fa23.95b351')
+            }}
+</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -194,9 +206,9 @@ export default {
       this.$refs.resource_list.setCurrentRow()
     },
     deleteWxShopsAction(index, row) {
-      this.$confirm('此操作将删除该门店, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('3919fa23.a7a939'), this.$t('3919fa23.02d981'), {
+        confirmButtonText: this.$t('3919fa23.38cf16'),
+        cancelButtonText: this.$t('3919fa23.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -204,7 +216,7 @@ export default {
             .then((response) => {
               this.wxShopsList.splice(index, 1)
               this.$message({
-                message: '删除门店成功',
+                message: this.$t('3919fa23.765351'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -212,27 +224,27 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除门店失败'
+                message: this.$t('3919fa23.1b9d4c')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('3919fa23.2111cc')
           })
         })
     },
     syncWxShops() {
-      this.$confirm('确定同步微信门店到本系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('3919fa23.275b0e'), this.$t('3919fa23.02d981'), {
+        confirmButtonText: this.$t('3919fa23.38cf16'),
+        cancelButtonText: this.$t('3919fa23.625fb2'),
         type: 'warning'
       })
         .then(() => {
           syncWxShops().then((response) => {
             this.$message({
-              message: '同步成功',
+              message: this.$t('3919fa23.52b85c'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -242,7 +254,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('3919fa23.2111cc')
           })
         })
     },

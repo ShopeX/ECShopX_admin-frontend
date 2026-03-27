@@ -107,7 +107,8 @@
       <el-dropdown v-if="isShow && btnType == 'drop'" class="comp-button" @command="handleCommand">
         <el-button type="primary" size="small">
           <p class="bc">
-            <span class="line">添加</span><i class="el-icon-arrow-down el-icon--right" />
+            <span class="line">{{ $t('67867fc8.b58c75') }}</span
+            ><i class="el-icon-arrow-down el-icon--right" />
           </p>
         </el-button>
         <!-- <el-dropdown-menu slot="dropdown">
@@ -141,7 +142,9 @@ export default {
     },
     btnText: {
       type: String,
-      default: '添加'
+      default() {
+        return this && this.$t ? this.$t('67867fc8.b58c75') : '添加'
+      }
     },
     showTitle: {
       type: Boolean,
@@ -198,7 +201,7 @@ export default {
   methods: {
     handleAddItem() {
       if (this.localValue.length >= this.max) {
-        this.$message.error(`最多添加${this.max}条`)
+        this.$message.error(this.$t('67867fc8.848801', { max: this.max }))
         return
       }
       this.$emit('onAddItem')

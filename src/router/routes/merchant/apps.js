@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'applications',
       icon: 'app-store',
       keepAlive: true,
-      title: '应用'
+      title: '4f279119.5b0520'
     },
     name: 'merchantApplications',
     path: '/merchant/applications',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'bspay_cash_audit',
           icon: 'pay-circle',
-          title: '提现审核',
+          title: '4f279119.91287f',
           permissions: ['applications.bspay.bspay_cash_audit']
         },
         component: () => import('@/view/mall/bspay_sub_account/withdraw_audit')
@@ -32,7 +32,7 @@ const routes = [
         path: 'dougong/withdraw',
         meta: {
           aliasName: 'dougong_withdraw',
-          title: '提现',
+          title: '4f279119.db7971',
           icon: 'pay-circle',
           permissions: ['applications.bspay.bspay_withdraw']
         },
@@ -45,7 +45,7 @@ const routes = [
         meta: {
           aliasName: 'user',
           icon: 'icon-user',
-          title: '进件管理',
+          title: '4f279119.d38018',
           permissions: ['applications.bspay.user']
         }
       },
@@ -56,7 +56,7 @@ const routes = [
         meta: {
           aliasName: 'bspay_trades',
           icon: 'icon-trades',
-          title: '分账明细',
+          title: '4f279119.85b2f8',
           permissions: ['applications.bspay.bspay_trades']
         },
         children: [
@@ -64,7 +64,7 @@ const routes = [
             path: 'detail/:order_id',
             component: () => import('@/view/mall/bspay_sub_account/detail'),
             meta: {
-              title: '分账明细详情',
+              title: '4f279119.ee8348',
               hidden: true
             }
           }

@@ -10,13 +10,13 @@
         <el-input
           v-model="params.attribute_name"
           class="input-b"
-          placeholder="规格名称"
+          :placeholder="$t('0712913a.023809')"
           @change="brandSearch"
         >
           <el-button slot="append" icon="el-icon-search" @click="brandSearch" />
         </el-input>
         <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-          新增规格
+          {{ $t('0712913a.ac469a') }}
         </el-button>
       </el-col>
     </el-row>
@@ -25,7 +25,7 @@
         v-loading="loading"
         :data="list"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('0712913a.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
         <el-table-column type="expand">
@@ -34,25 +34,32 @@
               v-for="(item, index) in props.row.attribute_values.list"
               :key="index"
               class="sku-value"
-              ><img v-if="item.image_url" class="sku-img" :src="item.image_url" />{{
+              ><img v-if="item.image_url" class="sku-img" :src="item.image_url">{{
                 item.attribute_value
               }}</span
             >
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column :label="$t('0712913a.2b6bc0')" width="150">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)">
+              {{ $t('0712913a.95b351') }}
+            </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              {{ $t('0712913a.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="类型" width="150">
+        <el-table-column :label="$t('0712913a.226b09')" width="150">
           <template slot-scope="props">
-            {{ props.row.is_image && (JSON.parse(props.row.is_image) ? '图片' : '文字') }}
+            {{
+              props.row.is_image &&
+              (JSON.parse(props.row.is_image) ? $t('0712913a.20def7') : $t('0712913a.ca746b'))
+            }}
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="规格名称" width="200" />
-        <el-table-column prop="attribute_memo" label="规格备注" />
+        <el-table-column prop="attribute_name" :label="$t('0712913a.023809')" width="200" />
+        <el-table-column prop="attribute_memo" :label="$t('0712913a.bfe414')" />
       </el-table>
       <div v-if="total_count > params.pageSize" class="mt-4 text-right">
         <el-pagination
@@ -73,21 +80,21 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <sideBar :visible.sync="show_sideBar" :title="'新增规格'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('0712913a.ac469a')">
       <el-form>
-        <el-form-item label="规格名称">
+        <el-form-item :label="$t('0712913a.023809')">
           <el-input v-model="form.attribute_name" />
         </el-form-item>
-        <el-form-item label="规格备注">
+        <el-form-item :label="$t('0712913a.bfe414')">
           <el-input v-model="form.attribute_memo" />
         </el-form-item>
-        <el-form-item label="规格类型">
+        <el-form-item :label="$t('0712913a.1ca8f1')">
           <el-radio-group v-model="form.is_image">
-            <el-radio :label="false"> 文字 </el-radio>
-            <el-radio :label="true"> 图片 </el-radio>
+            <el-radio :label="false"> {{ $t('0712913a.ca746b') }} </el-radio>
+            <el-radio :label="true"> {{ $t('0712913a.20def7') }} </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="规格值">
+        <el-form-item :label="$t('0712913a.94d502')">
           <div class="clearfix" />
           <div
             v-for="(item, index) in form.attribute_values"
@@ -95,23 +102,25 @@
             class="view-flex view-flex-middle key-item"
           >
             <div v-if="form.is_image" class="upload-box" @click="handleImgPicker(index)">
-              <img v-if="item.image_url" :src="item.image_url" class="avatar" />
+              <img v-if="item.image_url" :src="item.image_url" class="avatar">
               <i v-else class="el-icon-camera avatar-uploader-icon" />
             </div>
             <div
               class="view-flex-item"
               :class="form.is_image ? 'content-h-padded' : 'content-padded-right'"
             >
-              <el-input v-model="item.attribute_value" placeholder="规格值名称" />
+              <el-input v-model="item.attribute_value" :placeholder="$t('0712913a.2690c2')" />
             </div>
             <div @click="removeItem(index)">
-              <i class="el-icon-delete-solid"></i>
+              <i class="el-icon-delete-solid" />
             </div>
           </div>
-          <el-button type="default" size="small" @click="addItem"> 添加规格值 </el-button>
+          <el-button type="default" size="small" @click="addItem">
+            {{ $t('0712913a.cfa46a') }}
+          </el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="save"> 提交 </el-button>
+          <el-button type="primary" @click="save"> {{ $t('0712913a.939d53') }} </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -164,11 +173,11 @@ export default {
   },
   methods: {
     handleDelete(data) {
-      this.$confirm('确认删除该参数？')
+      this.$confirm(this.$t('0712913a.67d5b6'))
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
             this.list.splice(data.$index, 1)
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('0712913a.33130f') })
           })
         })
         .catch((_) => {})
@@ -200,7 +209,7 @@ export default {
     },
     addItem() {
       if (this.form.attribute_values.length > 50) {
-        this.$message({ type: 'warning', message: '最多添加50项' })
+        this.$message({ type: 'warning', message: this.$t('0712913a.94360c') })
         return
       }
       let item = {
@@ -219,7 +228,7 @@ export default {
       this.getList()
     },
     removeItem(index) {
-      this.$confirm('确认删除当前值？')
+      this.$confirm(this.$t('0712913a.167628'))
         .then((_) => {
           this.form.attribute_values.splice(index, 1)
         })
@@ -231,14 +240,14 @@ export default {
       // 如果没有id，则表示为新增
       if (!this.form.attribute_id) {
         addGoodsAttr(params).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('0712913a.33130f') })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
         updateGoodsAttr(params.attribute_id, params).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('0712913a.33130f') })
           this.getList()
         })
       }

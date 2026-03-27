@@ -7,31 +7,31 @@
   <div>
     <el-form ref="form" :model="form" label-position="left" label-width="170px">
       <div class="section-body">
-        <el-form-item label="自提订单：">
+        <el-form-item :label="$t('ae282f25.0b2c6b')">
           <el-switch v-model="form.data.ziti_order" />
         </el-form-item>
         <!--                 <el-form-item label="推广信息：">
                     <el-switch v-model="form.data.ext_info"></el-switch>
                 </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="我的拼团：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" :label="$t('ae282f25.7b80b8')">
           <el-switch v-model="form.data.group" />
         </el-form-item>
-        <el-form-item v-if="VERSION_STANDARD()" label="助力活动：">
+        <el-form-item v-if="VERSION_STANDARD()" :label="$t('ae282f25.46843c')">
           <el-switch v-model="form.data.boost_activity" />
         </el-form-item>
-        <el-form-item v-if="VERSION_STANDARD()" label="助力订单：">
+        <el-form-item v-if="VERSION_STANDARD()" :label="$t('ae282f25.6dfa64')">
           <el-switch v-model="form.data.boost_order" />
         </el-form-item>
         <!-- <el-form-item label="投诉记录：">
           <el-switch v-model="form.data.complaint"></el-switch>
         </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="活动预约：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" :label="$t('ae282f25.d72e6e')">
           <el-switch v-model="form.data.activity" />
         </el-form-item>
         <!-- <el-form-item label="储值：">
                     <el-switch v-model="form.data.recharge"></el-switch>
                 </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="会员二维码：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" :label="$t('ae282f25.d3836b')">
           <el-switch v-model="form.data.member_code" />
         </el-form-item>
         <!--  <el-form-item label="社区团购：">
@@ -49,15 +49,19 @@
         >
           <el-switch v-model="form.data.share_enable" />
         </el-form-item> -->
-        <el-form-item label="个人信息：">
+        <el-form-item :label="$t('ae282f25.b6b73b')">
           <el-switch v-model="form.data.memberinfo_enable" />
         </el-form-item>
-        <el-form-item label="社区团购：">
+        <el-form-item :label="$t('ae282f25.699828')">
           <el-switch v-model="form.data.community_group_enable" />
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig">
+{{
+          $t('ae282f25.be5fbb')
+        }}
+</el-button>
       </div>
     </el-form>
   </div>
@@ -161,7 +165,7 @@ export default {
       savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('ae282f25.3b1083'),
             type: 'success'
           })
         }

@@ -7,8 +7,8 @@
   <SpPage>
     <div v-if="$route.path.indexOf('_child') === -1 && $route.path.indexOf('detail') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="mobile" label="会员手机号:">
-          <el-input v-model="params.mobile" class="input-m" placeholder="请输入会员手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('b03b1d5f.468c2b')">
+          <el-input v-model="params.mobile" class="input-m" :placeholder="$t('b03b1d5f.c0e45d')" />
         </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="username" label="会员名称:">
           <el-input
@@ -27,7 +27,7 @@
             v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
             @click="exportPopularizeData"
           >
-            导出业绩统计
+            {{ $t('b03b1d5f.d65153') }}
           </el-button>
         </div>
 
@@ -38,15 +38,16 @@
             v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
             @click="exportPopularizeStatic"
           >
-            导出业绩订单统计
+            {{ $t('b03b1d5f.8278b7') }}
           </el-button>
 
           <el-button type="primary" plain @click="exportPopularizeOrder">
-            导出业绩订单详细 </el-button
-          >* 下载订单详细日期
+            {{ $t('b03b1d5f.bf0b43') }}
+</el-button
+          >* {{ $t('b03b1d5f.1a1ed0') }}
         </div>
 
-        <SpFilterFormItem prop="tag_id" label="下载日期:">
+        <SpFilterFormItem prop="tag_id" :label="$t('b03b1d5f.d2334d')">
           <el-date-picker
             v-model="created"
             unlink-panels
@@ -54,9 +55,9 @@
             align="right"
             format="yyyy-MM-dd"
             value-format="yyyy-MM-dd"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('b03b1d5f.981cbe')"
+            :start-placeholder="$t('b03b1d5f.b44c0f')"
+            :end-placeholder="$t('b03b1d5f.1d468b')"
             prefix-icon="null"
             :picker-options="pickerOptions"
             @change="dateChange"
@@ -69,25 +70,25 @@
         border
         :data="list"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('b03b1d5f.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
-        <el-table-column label="操作" width="90">
+        <el-table-column :label="$t('b03b1d5f.2b6bc0')" width="90">
           <template slot-scope="scope">
             <el-button icon="edit" type="text" class="btn-gap" @click="detail(scope.row)">
-              分佣详情
+              {{ $t('b03b1d5f.3329bc') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="姓名" />
-        <el-table-column prop="mobile" label="手机号" width="150">
+        <el-table-column prop="username" :label="$t('b03b1d5f.60d045')" />
+        <el-table-column prop="mobile" :label="$t('b03b1d5f.8098e2')" width="150">
           <template slot-scope="scope">
             <i v-if="scope.row.mobile" class="el-icon-mobile" />
             {{ scope.row.mobile }}
             <el-tooltip
               v-if="scope.row.mobile && datapass_block == 0"
               effect="dark"
-              content="复制"
+              :content="$t('b03b1d5f.79d3ab')"
               placement="top-start"
             >
               <i
@@ -101,58 +102,72 @@
         <!-- v-if="$route.path.indexOf('_child') === -1  -->
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="可提现"
-        >
-          <template slot-scope="scope"> {{ scope.row.cashWithdrawalRebate / 100 }}元 </template>
-        </el-table-column>
-        <el-table-column
-          v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="已提现"
-        >
-          <template slot-scope="scope"> {{ scope.row.payedRebate / 100 }}元 </template>
-        </el-table-column>
-        <el-table-column
-          v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="申请提现"
+          :label="$t('b03b1d5f.f7e761')"
         >
           <template slot-scope="scope">
-            {{ scope.row.freezeCashWithdrawalRebate / 100 }}元
+            {{ scope.row.cashWithdrawalRebate / 100 }}{{ $t('b03b1d5f.c16655') }}
           </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="未结算"
+          :label="$t('b03b1d5f.70dbe1')"
         >
-          <template slot-scope="scope"> {{ scope.row.noCloseRebate / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.payedRebate / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="未结算积分"
+          :label="$t('b03b1d5f.37fec4')"
         >
-          <template slot-scope="scope"> {{ scope.row.noClosePoint || 0 }}积分 </template>
+          <template slot-scope="scope">
+            {{ scope.row.freezeCashWithdrawalRebate / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="佣金总额"
+          :label="$t('b03b1d5f.facb53')"
         >
-          <template slot-scope="scope"> {{ scope.row.rebateTotal / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.noCloseRebate / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="积分总额"
+          :label="$t('b03b1d5f.f131d0')"
         >
-          <template slot-scope="scope"> {{ scope.row.pointTotal || 0 }}积分 </template>
+          <template slot-scope="scope">
+            {{ scope.row.noClosePoint || 0 }}{{ $t('b03b1d5f.9f68a8') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-          label="商品总额"
+          :label="$t('b03b1d5f.587e76')"
         >
-          <template slot-scope="scope"> {{ scope.row.itemTotalPrice / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.rebateTotal / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
+          :label="$t('b03b1d5f.521856')"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.pointTotal || 0 }}{{ $t('b03b1d5f.9f68a8') }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
+          :label="$t('b03b1d5f.64b8dd')"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.itemTotalPrice / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
 
         <el-table-column
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          label="店铺"
+          :label="$t('b03b1d5f.295713')"
         >
           <template slot-scope="scope">
             {{ scope.row.store_name }}
@@ -160,21 +175,27 @@
         </el-table-column>
         <el-table-column
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          label="未结算"
+          :label="$t('b03b1d5f.facb53')"
         >
-          <template slot-scope="scope"> {{ scope.row.rebate_sum_noclose / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.rebate_sum_noclose / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          label="佣金总额"
+          :label="$t('b03b1d5f.587e76')"
         >
-          <template slot-scope="scope"> {{ scope.row.rebate_sum / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.rebate_sum / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
         <el-table-column
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          label="商品总额"
+          :label="$t('b03b1d5f.64b8dd')"
         >
-          <template slot-scope="scope"> {{ scope.row.price_sum / 100 }}元 </template>
+          <template slot-scope="scope">
+            {{ scope.row.price_sum / 100 }}{{ $t('b03b1d5f.c16655') }}
+          </template>
         </el-table-column>
       </el-table>
       <div class="mt-4 text-right">
@@ -223,10 +244,17 @@ export default {
       total_count: 0,
 
       created: '',
-      pickerOptions: {
+
+      datapass_block: 1
+    }
+  },
+  computed: {
+    ...mapGetters(['wheight']),
+    pickerOptions() {
+      return {
         shortcuts: [
           {
-            text: '最近一周',
+            text: this.$t('b03b1d5f.56ee10'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -235,7 +263,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: this.$t('b03b1d5f.335dfc'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -244,7 +272,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: this.$t('b03b1d5f.d96eb4'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -253,9 +281,7 @@ export default {
             }
           }
         ]
-      },
-
-      datapass_block: 1
+      }
     }
   },
   mounted() {
@@ -294,12 +320,12 @@ export default {
           this.$export_open('popularize')
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('b03b1d5f.3e1ddd')
           })
         } else {
           this.$message({
             type: 'error',
-            message: '导出失败'
+            message: this.$t('b03b1d5f.dd51ab')
           })
         }
       })
@@ -333,13 +359,13 @@ export default {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('b03b1d5f.3e1ddd')
           })
           this.$export_open('popularizeStatic')
         } else {
           this.$message({
             type: 'error',
-            message: '导出失败'
+            message: this.$t('b03b1d5f.dd51ab')
           })
         }
       })
@@ -363,20 +389,20 @@ export default {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('b03b1d5f.3e1ddd')
           })
           this.$export_open('popularizeOrder')
         } else {
           this.$message({
             type: 'error',
-            message: '导出失败'
+            message: this.$t('b03b1d5f.dd51ab')
           })
         }
       })
     },
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('b03b1d5f.20a495'),
         showClose: true
       })
     },
@@ -403,9 +429,6 @@ export default {
         this.loading = false
       })
     }
-  },
-  computed: {
-    ...mapGetters(['wheight'])
   }
 }
 </script>

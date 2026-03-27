@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <product-map :data="data" :show_goods="false" text="添加图片" />
+  <product-map :data="data" :show_goods="false" :text="$t('9ec15717.b89fb3')" />
 </template>
 <script>
 import ProductMap from '../../../../homePage/pluginscomponents/ProductMap'

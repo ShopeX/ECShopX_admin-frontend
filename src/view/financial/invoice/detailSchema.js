@@ -15,11 +15,11 @@ export const formSchema = (vm) =>
     [
       {
         type: 'group',
-        label: '基础信息'
+        label: vm.$t('75e1c1f2.6ea1fe')
       },
       {
         key: 'create_time',
-        label: '开票申请时间',
+        label: vm.$t('75e1c1f2.2e3999'),
         display: 'inline',
         component(_, value) {
           return <span> {moment(value.create_time * 1000).format('yyyy-MM-DD HH:mm:ss')} </span>
@@ -27,31 +27,34 @@ export const formSchema = (vm) =>
       },
       {
         key: 'invoice_status',
-        label: '开票状态',
+        label: vm.$t('75e1c1f2.2af9f7'),
         display: 'inline',
         component(_, value) {
-          return <span> {open_status_map[value.invoice_status]} </span>
+          const key = open_status_map[value.invoice_status]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
         key: 'invoice_method',
-        label: '开票渠道',
+        label: vm.$t('75e1c1f2.352b0b'),
         display: 'inline',
         component(_, value) {
-          return <span> {open_status_step_map[value.invoice_method]} </span>
+          const key = open_status_step_map[value.invoice_method]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
         key: 'invoice_source',
-        label: '来源',
+        label: vm.$t('75e1c1f2.26ca20'),
         display: 'inline',
         component(_, value) {
-          return <span> {invoice_source_map[value.invoice_source]} </span>
+          const key = invoice_source_map[value.invoice_source]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
         key: 'update_time',
-        label: '更新时间',
+        label: vm.$t('75e1c1f2.a001a2'),
         display: 'inline',
         component(_, value) {
           return <span> {moment(value.update_time * 1000).format('yyyy-MM-DD HH:mm:ss')} </span>
@@ -59,25 +62,25 @@ export const formSchema = (vm) =>
       },
       {
         key: 'user_card_code',
-        label: '会员编号',
+        label: vm.$t('75e1c1f2.6061ba'),
         type: 'text',
         display: 'inline'
       },
       {
         key: 'user_mobile',
-        label: '会员手机',
+        label: vm.$t('75e1c1f2.d8b944'),
         type: 'text',
         display: 'inline'
       },
       {
         key: 'order_id',
-        label: '订单编号',
+        label: vm.$t('75e1c1f2.3e8657'),
         type: 'text',
         display: 'inline'
       },
       {
         key: 'invoice_amount',
-        label: '发票金额',
+        label: vm.$t('75e1c1f2.b432e1'),
         type: 'text',
         display: 'inline',
         component(_, value) {
@@ -86,43 +89,47 @@ export const formSchema = (vm) =>
       },
       {
         key: 'remark',
-        label: '备注',
+        label: vm.$t('2eced1b3.2432b5'),
         type: 'text',
         display: 'inline'
       },
       {
         type: 'group',
-        label: '开票信息'
+        label: vm.$t('75e1c1f2.131871')
       },
       {
         key: 'invoice_type',
-        label: '抬头类型',
+        label: vm.$t('75e1c1f2.01b477'),
         type: 'text',
         component(_, value) {
-          const typeMap = { enterprise: '企业', individual: '个人' }
+          const typeMap = {
+            enterprise: vm.$t('75e1c1f2.04c9e3'),
+            individual: vm.$t('75e1c1f2.6a0e04')
+          }
           return <span> {typeMap[value.invoice_type]} </span>
         }
       },
       {
         key: 'company_title',
-        label: '发票抬头',
+        label: vm.$t('75e1c1f2.6cbd05'),
         type: 'text',
         display: 'inline'
       },
       {
         key: 'invoice_type_code',
-        label: '开票类型',
+        label: vm.$t('75e1c1f2.c532fc'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
         },
         component(_, value) {
-          return invoice_type_code_map[value.invoice_type_code]
+          const key = invoice_type_code_map[value.invoice_type_code]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
         key: 'mobile',
-        label: '开票手机号',
+        label: vm.$t('75e1c1f2.0352b7'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'individual'
@@ -130,7 +137,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'email',
-        label: '开票邮箱',
+        label: vm.$t('75e1c1f2.2c972c'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'individual'
@@ -138,7 +145,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_tax_number',
-        label: '纳税人识别号',
+        label: vm.$t('75e1c1f2.a22d0a'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -146,7 +153,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_address',
-        label: '公司地址',
+        label: vm.$t('75e1c1f2.e06494'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -154,7 +161,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_telephone',
-        label: '公司电话',
+        label: vm.$t('75e1c1f2.9e1660'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -162,7 +169,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'bank_name',
-        label: '开户银行',
+        label: vm.$t('75e1c1f2.cc5ca0'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -170,7 +177,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'bank_account',
-        label: '银行账户',
+        label: vm.$t('75e1c1f2.c85e1d'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -178,7 +185,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'mobile',
-        label: '开票手机号',
+        label: vm.$t('75e1c1f2.0352b7'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -186,7 +193,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'email',
-        label: '开票邮箱',
+        label: vm.$t('75e1c1f2.2c972c'),
         type: 'text',
         isShow() {
           return vm.form.invoice_type === 'enterprise'
@@ -194,7 +201,7 @@ export const formSchema = (vm) =>
       },
       {
         type: 'group',
-        label: '开票商品明细'
+        label: vm.$t('75e1c1f2.009228')
       },
       {
         key: 'invoice_items',
@@ -202,7 +209,7 @@ export const formSchema = (vm) =>
           return (
             <SpFinder
               ref='finder'
-              setting={infoTable}
+              setting={infoTable(vm)}
               data={value.invoice_items}
               no-selection
               show-pager={false}
@@ -212,7 +219,7 @@ export const formSchema = (vm) =>
       },
       {
         type: 'group',
-        label: '发票详情'
+        label: vm.$t('75e1c1f2.7e7830')
       },
       {
         key: 'invoices',
@@ -221,7 +228,7 @@ export const formSchema = (vm) =>
             <SpFinder
               ref='finder'
               fixed-row-action
-              setting={afterTable}
+              setting={afterTable(vm)}
               data={vm.form.invoices}
               no-selection
               show-pager={false}
@@ -229,14 +236,13 @@ export const formSchema = (vm) =>
               <div slot='tableTop'>
                 <div class='action-container'>
                   <div style='height: 20px' />
-                  <el-button type='primary' plain onClick={() => this.showPdHandle()}>
-                    查看发票PDF
+                  <el-button type='primary' plain onClick={() => vm.showPdHandle()}>
+                    {vm.$t('75e1c1f2.e58576')}
                   </el-button>
-                  {/* 开票成功的线上  开票失败的线下 展示 */}
                   {((vm.form.invoice_status == 'success' && vm.form.invoice_method == 'online') ||
                     (vm.form.invoice_status == 'failed' && vm.form.invoice_method != 'online')) && (
-                    <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
-                      重发至邮箱
+                    <el-button type='primary' plain onClick={() => vm.sendEmailHandle()}>
+                      {vm.$t('75e1c1f2.40928e')}
                     </el-button>
                   )}
                 </div>
@@ -249,32 +255,21 @@ export const formSchema = (vm) =>
     vm
   )
 
-const afterTable = {
+const afterTable = (vm) => ({
   columns: [
+    { name: vm.$t('75e1c1f2.4ae540'), key: 'invoice_no', width: 180 },
+    { name: vm.$t('75e1c1f2.e0be40'), key: 'invoice_code', width: 100 },
     {
-      name: '发票号码',
-      key: 'invoice_no',
-      width: 180
-    },
-    {
-      name: '发票代码',
-      key: 'invoice_code',
-      width: 100
-    },
-    {
-      name: '开票类型',
+      name: vm.$t('75e1c1f2.c532fc'),
       key: 'invoice_type',
       width: 100,
       render(_, { row }) {
-        const color_map = {
-          'blue': '蓝票',
-          'red': '红票'
-        }
-        return <span> {color_map[row['invoice_type']]} </span>
+        const colorMap = { blue: vm.$t('75e1c1f2.20166c'), red: vm.$t('75e1c1f2.858904') }
+        return <span> {colorMap[row['invoice_type']]} </span>
       }
     },
     {
-      name: '开票日期',
+      name: vm.$t('75e1c1f2.420d8d'),
       key: 'create_time',
       width: 190,
       render(_, { row }) {
@@ -282,34 +277,17 @@ const afterTable = {
       }
     }
   ]
-}
+})
 
-// 嵌套在日志里面的商品表格信息
-const infoTable = {
+const infoTable = (vm) => ({
   columns: [
-    {
-      key: 'item_bn',
-      name: 'SKU编号',
-      width: 180
-    },
-    {
-      key: 'item_name',
-      name: '商品名称',
-      width: 180
-    },
-    {
-      key: 'spec_info',
-      name: '规格',
-      width: 80
-    },
-    {
-      key: 'num',
-      name: '数量',
-      width: 80
-    },
+    { key: 'item_bn', name: vm.$t('75e1c1f2.58cac1'), width: 180 },
+    { key: 'item_name', name: vm.$t('75e1c1f2.1fd1d5'), width: 180 },
+    { key: 'spec_info', name: vm.$t('75e1c1f2.ea887b'), width: 80 },
+    { key: 'num', name: vm.$t('75e1c1f2.0bf60b'), width: 80 },
     {
       key: 'amount',
-      name: '开票金额',
+      name: vm.$t('75e1c1f2.b432e1'),
       width: 120,
       render(_, { row }) {
         return <span> {row.amount / 100} </span>
@@ -317,21 +295,13 @@ const infoTable = {
     },
     {
       key: 'invoice_tax_rate',
-      name: '税率',
+      name: vm.$t('75e1c1f2.2a79a7'),
       width: 100,
       render(_, { row }) {
         return <span> {row.invoice_tax_rate}% </span>
       }
     },
-    {
-      key: 'item_spec_desc',
-      name: '规格',
-      width: 180
-    },
-    {
-      key: 'order_id',
-      name: '订单编号',
-      width: 220
-    }
+    { key: 'item_spec_desc', name: vm.$t('75e1c1f2.ea887b'), width: 180 },
+    { key: 'order_id', name: vm.$t('75e1c1f2.3e8657'), width: 220 }
   ]
-}
+})

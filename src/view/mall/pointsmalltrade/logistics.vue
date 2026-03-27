@@ -6,8 +6,8 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="logisticsList" :height="wheight - 160">
-      <el-table-column prop="corp_name" label="物流公司简称" />
-      <el-table-column prop="is_default" label="是否启用">
+      <el-table-column prop="corp_name" :label="$t('a72f999b.e38114')" />
+      <el-table-column prop="is_default" :label="$t('a72f999b.53c3dd')">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.is_enable" @change="setEnable(scope.row)" />
         </template>

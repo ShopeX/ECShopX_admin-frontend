@@ -15,11 +15,11 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="specific" label="针对人群:">
+        <SpFilterFormItem prop="specific" :label="$t('c69f23db.a252cb')">
           <el-autocomplete
             v-model="params.specific.name"
             :fetch-suggestions="querySearch"
-            placeholder="请输入会员标签名称"
+            :placeholder="$t('c69f23db.78a87c')"
             @select="handleSelectStore"
           />
         </SpFilterFormItem>
@@ -27,7 +27,7 @@
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
-          添加标签折扣
+          {{ $t('c69f23db.3e35d0') }}
         </el-button>
       </div>
 
@@ -35,7 +35,7 @@
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
-          :label="item.name"
+          :label="$t(item.nameKey)"
           :name="item.activeName"
         >
           <el-table
@@ -43,9 +43,9 @@
             :data="tableList"
             border
             style="width: 100%"
-            element-loading-text="数据加载中"
+            :element-loading-text="$t('c69f23db.f09b12')"
           >
-            <el-table-column label="操作" min-width="180">
+            <el-table-column :label="$t('c69f23db.2b6bc0')" min-width="180">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
@@ -53,37 +53,43 @@
                     type="text"
                     @click="editActivityAction(scope.$index, scope.row)"
                   >
-                    编辑
+                    {{ $t('c69f23db.95b351') }}
                   </el-button>
                   <el-button style="margin-right: 20px" type="text" @click="viewDetail(scope.row)">
-                    查看优惠日志
+                    {{ $t('c69f23db.2e8f98') }}
                   </el-button>
                   <!--<i class="el-icon-delete" @click="deleteActivityAction(scope.row)"></i> -->
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="id" width="60" label="编号" />
-            <el-table-column prop="specific_name" min-width="150" label="适用人群" />
-            <el-table-column label="周期" min-width="200">
+            <el-table-column prop="id" width="60" :label="$t('c69f23db.c515f3')" />
+            <el-table-column prop="specific_name" min-width="150" :label="$t('c69f23db.188e1b')" />
+            <el-table-column :label="$t('c69f23db.2d8423')" min-width="200">
               <template slot-scope="scope">
-                <span v-if="scope.row.cycle_type == '1'"> 自然月 </span>
+                <span v-if="scope.row.cycle_type == '1'"> {{ $t('c69f23db.cdfcf4') }} </span>
                 <span v-if="scope.row.cycle_type == '2'">
                   {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="discount" min-width="100" label="优惠折扣">
+            <el-table-column prop="discount" min-width="100" :label="$t('c69f23db.3045fe')">
               <template slot-scope="scope"> {{ scope.row.discount }}% </template>
             </el-table-column>
-            <el-table-column prop="limit_total_money" min-width="150" label="周期内最高优惠限额">
-              <template slot-scope="scope"> {{ scope.row.limit_total_money }}元 </template>
-            </el-table-column>
-            <el-table-column label="状态" min-width="200">
+            <el-table-column
+              prop="limit_total_money"
+              min-width="150"
+              :label="$t('c69f23db.55db7f')"
+            >
               <template slot-scope="scope">
-                <span v-if="scope.row.status == '1'">暂存</span>
-                <span v-if="scope.row.status == '2'">已发布</span>
-                <span v-if="scope.row.status == '3'">停用</span>
-                <span v-if="scope.row.status == '4'">过期</span>
+                {{ scope.row.limit_total_money }}{{ $t('c69f23db.c16655') }}
+              </template>
+            </el-table-column>
+            <el-table-column :label="$t('c69f23db.3fea7c')" min-width="200">
+              <template slot-scope="scope">
+                <span v-if="scope.row.status == '1'">{{ $t('c69f23db.d8acae') }}</span>
+                <span v-if="scope.row.status == '2'">{{ $t('c69f23db.dca0c1') }}</span>
+                <span v-if="scope.row.status == '3'">{{ $t('c69f23db.5c56a8') }}</span>
+                <span v-if="scope.row.status == '4'">{{ $t('c69f23db.584cd1') }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -103,7 +109,7 @@
       </el-tabs>
 
       <el-dialog
-        title="添加定向促销"
+        :title="$t('c69f23db.ebec7b')"
         :visible.sync="activityItemDialog"
         :before-close="handleCancel"
         width="70%"
@@ -116,24 +122,26 @@
             label-position="right"
             class="demo-ruleForm"
           >
-            <el-form-item label="针对人群">
+            <el-form-item :label="$t('c69f23db.188e1b')">
               <el-autocomplete
                 v-model="form.specific_name"
                 class="inline-input"
                 clearable
                 :fetch-suggestions="querySearch"
-                placeholder="请输入会员标签名称"
+                :placeholder="$t('c69f23db.78a87c')"
                 size="mini"
                 @select="selectTag"
               />
             </el-form-item>
-            <el-form-item label="周期选择">
-              <el-radio v-model="form.cycle_type" label="1" @change="cycleType"> 自然月 </el-radio>
+            <el-form-item :label="$t('c69f23db.0832b7')">
+              <el-radio v-model="form.cycle_type" label="1" @change="cycleType">
+                {{ $t('c69f23db.cdfcf4') }}
+              </el-radio>
               <el-radio v-model="form.cycle_type" label="2" @change="cycleType">
-                特定时段
+                {{ $t('c69f23db.f7ad46') }}
               </el-radio>
             </el-form-item>
-            <el-form-item label="活动有效时间">
+            <el-form-item :label="$t('c69f23db.08256c')">
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-date-picker
@@ -143,7 +151,7 @@
                     :disabled="form.cycle_type == '1' ? true : false"
                     format="yyyy/MM/dd HH:mm:ss"
                     value-format="timestamp"
-                    placeholder="选择日期时间"
+                    :placeholder="$t('c69f23db.a42ae4')"
                   />
                 </el-col>
                 <el-col :span="1"> ~ </el-col>
@@ -155,29 +163,35 @@
                     :disabled="form.cycle_type == '1' ? true : false"
                     format="yyyy/MM/dd HH:mm:ss"
                     value-format="timestamp"
-                    placeholder="选择日期时间"
+                    :placeholder="$t('c69f23db.a42ae4')"
                   />
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item label="周期内优惠折扣">
-              <el-input v-model="form.discount" placeholder="请输入内容" style="width: 20%" />%
+            <el-form-item :label="$t('c69f23db.763249')">
+              <el-input
+                v-model="form.discount"
+                :placeholder="$t('c69f23db.a11cc7')"
+                style="width: 20%"
+              />%
             </el-form-item>
-            <el-form-item label="周期内优惠限额">
+            <el-form-item :label="$t('c69f23db.e7309b')">
               <el-input
                 v-model="form.limit_total_money"
-                placeholder="请输入内容"
+                :placeholder="$t('c69f23db.a11cc7')"
                 style="width: 20%"
-              />元
+              />{{ $t('c69f23db.c16655') }}
             </el-form-item>
-            <el-form-item label="状态">
-              <el-radio v-model="form.status" label="1"> 暂存 </el-radio>
-              <el-radio v-model="form.status" label="2"> 直接发布 </el-radio>
-              <el-radio v-model="form.status" label="3"> 停用 </el-radio>
+            <el-form-item :label="$t('c69f23db.3fea7c')">
+              <el-radio v-model="form.status" label="1"> {{ $t('c69f23db.d8acae') }} </el-radio>
+              <el-radio v-model="form.status" label="2"> {{ $t('c69f23db.9465f8') }} </el-radio>
+              <el-radio v-model="form.status" label="3"> {{ $t('c69f23db.5c56a8') }} </el-radio>
             </el-form-item>
             <el-form-item>
-              <el-button @click.native="handleCancel"> 取消 </el-button>
-              <el-button type="primary" @click="submitAction"> 保存 </el-button>
+              <el-button @click.native="handleCancel"> {{ $t('c69f23db.625fb2') }} </el-button>
+              <el-button type="primary" @click="submitAction">
+                {{ $t('c69f23db.be5fbb') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -244,10 +258,10 @@ export default {
       ItemLoading: false,
       specific_name: '',
       tabList: [
-        { name: '全部', activeName: 'all' },
-        { name: '暂存', activeName: '1' },
-        { name: '已发布', activeName: '2' },
-        { name: '停用', activeName: '3' }
+        { nameKey: 'c69f23db.a8b0c2', activeName: 'all' },
+        { nameKey: 'c69f23db.d8acae', activeName: '1' },
+        { nameKey: 'c69f23db.dca0c1', activeName: '2' },
+        { nameKey: 'c69f23db.5c56a8', activeName: '3' }
       ]
     }
   },
@@ -349,7 +363,7 @@ export default {
         })
       } else {
         createSpecificcrowddiscount({ ...this.form, ...obj }).then((res) => {
-          this.$message.success('创建成功')
+          this.$message.success(this.$t('c69f23db.04a691'))
           this.fetchList()
           this.activityItemDialog = false
         })
@@ -407,10 +421,10 @@ export default {
     },
 
     updateStatusCommunityAction(row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      const msg = this.$t('c69f23db.01be42')
+      this.$confirm(msg, this.$t('c69f23db.02d981'), {
+        cancelButtonText: this.$t('c69f23db.625fb2'),
+        confirmButtonText: this.$t('c69f23db.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -418,7 +432,7 @@ export default {
               (response) => {
                 this.fetchList()
                 this.$message({
-                  message: '修改活动状态成功',
+                  message: this.$t('c69f23db.1c48c9'),
                   type: 'success',
                   duration: 5 * 1000
                 })

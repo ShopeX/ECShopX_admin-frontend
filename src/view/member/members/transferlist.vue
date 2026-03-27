@@ -7,15 +7,15 @@
   <div class="section-white">
     <div class="transfer-list">
       <el-table v-loading="loading" :data="transferList" border>
-        <el-table-column prop="rights_name" label="权益名称" />
-        <el-table-column prop="timeStart" label="转让时间">
+        <el-table-column prop="rights_name" :label="$t('2ab52385.32d169')" />
+        <el-table-column prop="timeStart" :label="$t('2ab52385.1f3f11')">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="原持有者" />
-        <el-table-column prop="transfer_mobile" label="现持有者" />
-        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="mobile" :label="$t('2ab52385.4ba29d')" />
+        <el-table-column prop="transfer_mobile" :label="$t('2ab52385.94d7f9')" />
+        <el-table-column prop="remark" :label="$t('2ab52385.2432b5')" />
       </el-table>
     </div>
     <div v-if="total_count > params.pageSize" class="content-padded tc">

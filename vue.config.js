@@ -7,40 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const bodyParser = require('body-parser')
-const webpackPluginsAutoI18n = require('webpack-auto-i18n-plugin')
-const { YoudaoTranslator, EmptyTranslator, Translator } = require('webpack-auto-i18n-plugin')
-const axios = require('axios')
-const { generateId } = require('./build/utils')
-
-// 保证 targetLangList / originLang 始终为有效数组或字符串，避免 auto-i18n-plugin-core 内部访问 .length 报错
-const AutoI18nOptions = {
-  excludedPath: ['/src/i18n/index.js'],
-  globalPath: path.resolve(__dirname, './src/i18n/lang'),
-  originLang: 'zh-cn',
-  targetLangList: ['en', 'ar'],
-  rewriteConfig: false,
-  includePath: [/src\//, /node_modules\/element-ui\//]
-  // languageJsonMode: 'split'
-}
-
-if (process.argv.includes('i18n')) {
-  AutoI18nOptions['translator'] = new YoudaoTranslator({
-    appId: process.env.VUE_YOUDAO_APPID,
-    appKey: process.env.VUE_YOUDAO_APPKEY
-  })
-} else {
-  AutoI18nOptions['translator'] = new EmptyTranslator()
-}
-
-// 规范化选项，避免 auto-i18n-plugin-core 中 v(..., targetLangList, true) 时 targetLangList 为 undefined 导致 "reading 'length'" 报错
-const safeI18nOptions = {
-  ...AutoI18nOptions,
-  originLang: AutoI18nOptions.originLang || 'zh-cn',
-  targetLangList: Array.isArray(AutoI18nOptions.targetLangList)
-    ? [...AutoI18nOptions.targetLangList]
-    : ['en']
-}
-const i18nPlugin = new webpackPluginsAutoI18n.default(safeI18nOptions)
 
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env
@@ -267,8 +233,6 @@ module.exports = {
     // 删除预加载和预获取
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
-
-    config.plugin('i18n').use(i18nPlugin)
 
     config.plugin('define').tap((args) => {
       args[0]['process.env'] = {

@@ -20,7 +20,7 @@
                 src: item.url
               }
             ],
-            notSupportedMessage: '此视频暂无法播放，请稍后再试',
+            notSupportedMessage: this.$t('c9176f55.01c0da'),
             controlBar: false
           }"
         />
@@ -29,9 +29,14 @@
         <SpIcon name="video-two" size="24" />
       </div>
     </div>
-    <el-dialog class="video_dialog" title="选择视频" :visible.sync="visible" append-to-body>
+    <el-dialog
+      class="video_dialog"
+      :title="$t('c9176f55.543018')"
+      :visible.sync="visible"
+      append-to-body
+    >
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="本地上传" name="localvideos">
+        <el-tab-pane :label="$t('c9176f55.b4af78')" name="localvideos">
           <div>
             <div class="upload_box">
               <el-upload
@@ -45,8 +50,8 @@
                 :before-upload="beforeVideoUpload"
                 :on-success="handleVideoSuccess"
               >
-                <el-button type="primary"> 本地上传 </el-button>
-                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过50M</div>
+                <el-button type="primary">{{ $t('c9176f55.b4af78') }}</el-button>
+                <div slot="tip" class="el-upload__tip">{{ $t('c9176f55.34f871') }}</div>
               </el-upload>
             </div>
             <el-row v-loading="localloading" :gutter="10">
@@ -70,7 +75,7 @@
                         src: item.url
                       }
                     ],
-                    notSupportedMessage: '此视频暂无法播放，请稍后再试',
+                    notSupportedMessage: this.$t('c9176f55.01c0da'),
                     controlBar: false
                   }"
                 />
@@ -99,8 +104,8 @@
         </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel">取 消</el-button>
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+        <el-button @click="handleCancel">{{ $t('c9176f55.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleSubmit">{{ $t('c9176f55.aa7527') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -197,7 +202,7 @@ export default {
       // if (res.key) {
       uploadQiniuVideo(uploadParams).then((res) => {
         this.$message({
-          message: '上传成功',
+          message: this.$t('c9176f55.a7699b'),
           type: 'success',
           duration: 5 * 1000
         })
@@ -210,11 +215,11 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 50
 
       if (!isMP4) {
-        this.$message.error('上传视频只能是 mp4 格式!')
+        this.$message.error(this.$t('c9176f55.6c6cbc'))
         return
       }
       if (!isLt2M) {
-        this.$message.error('上传视频大小不能超过 50MB!')
+        this.$message.error(this.$t('c9176f55.091c18'))
         return
       }
 
@@ -248,7 +253,7 @@ export default {
       //             src: v.url
       //           }
       //         ],
-      //         notSupportedMessage: '此视频暂无法播放，请稍后再试',
+      //         notSupportedMessage: this.$t('c9176f55.01c0da'),
       //         controlBar: false
       //       }
       //     }))
@@ -327,7 +332,7 @@ export default {
         this.checked = arr
         this.$emit('change', this.isArray ? this.checked : this.checked[0]) //判断传入进来的是数组还是对象再传递出去对应的数据
       } else {
-        this.$message('请选择视频')
+        this.$message(this.$t('c9176f55.6f9fe0'))
       }
     },
     handleClick(tab, event) {}

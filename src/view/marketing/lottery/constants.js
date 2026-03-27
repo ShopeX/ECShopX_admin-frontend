@@ -2,30 +2,18 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-export const audit_status = [
-  {
-    value: 'all',
-    label: '全部'
-  },
-  {
-    value: 'notstart',
-    label: '待开始'
-  },
-  {
-    value: 'online',
-    label: '进行中'
-  },
-  {
-    value: 'expire',
-    label: '已结束'
-  }
+export const audit_status = (t) => [
+  { value: 'all', label: t('9f64e002.a8b0c2') },
+  { value: 'notstart', label: t('9f64e002.1568ba') },
+  { value: 'online', label: t('9f64e002.fb852f') },
+  { value: 'expire', label: t('9f64e002.047fab') }
 ]
 
-export const status_map = {
-  notstart: '未开始',
-  expire: '已过期',
-  online: '进行中'
-}
+export const status_map = (t) => ({
+  notstart: t('9f64e002.dd4e55'),
+  expire: t('9f64e002.4d5ccd'),
+  online: t('9f64e002.fb852f')
+})
 
 export const status_info_map = {
   notstart: 'notstart',
@@ -43,12 +31,12 @@ export const defaultItem = {
   img: ''
 }
 
-export const prize_types = {
-  thanks: '无奖品', // 无奖品
-  points: '积分', // 积分
-  coupon: '优惠券', // 优惠券
-  coupons: '券包' // 券包
-}
+export const prize_types = (t) => ({
+  thanks: t('9f64e002.d7bc19'),
+  points: t('9f64e002.9f68a8'),
+  coupon: t('9f64e002.2f3635'),
+  coupons: t('9f64e002.7fac13')
+})
 
 export const defaultGameConfig = {
   gameType: '',

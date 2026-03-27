@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div>转发送礼</div>
+  <div>{{ $t('3ecfe771.1c94b1') }}</div>
 </template>
 
 <script>

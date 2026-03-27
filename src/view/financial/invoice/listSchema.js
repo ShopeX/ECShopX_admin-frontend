@@ -20,7 +20,7 @@ export const tableSchema = (vm) =>
   createSetting({
     actions: [
       {
-        name: '详情',
+        name: vm.$t('2eced1b3.f26225'),
         key: 'detail',
         type: 'button',
         buttonType: 'text',
@@ -42,7 +42,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '编辑',
+        name: vm.$t('2eced1b3.95b351'),
         key: 'edit',
         type: 'button',
         buttonType: 'text',
@@ -63,7 +63,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '重发至邮箱',
+        name: vm.$t('2eced1b3.40928e'),
         key: 'pushPack',
         type: 'button',
         buttonType: 'text',
@@ -87,7 +87,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '备注',
+        name: vm.$t('2eced1b3.2432b5'),
         key: 'remark',
         type: 'button',
         buttonType: 'text',
@@ -104,7 +104,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '日志',
+        name: vm.$t('2eced1b3.456d29'),
         key: 'linkPath',
         type: 'button',
         buttonType: 'text',
@@ -121,7 +121,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '重推开票',
+        name: vm.$t('2eced1b3.556256'),
         key: 'reInvoice',
         type: 'button',
         buttonType: 'text',
@@ -143,12 +143,12 @@ export const tableSchema = (vm) =>
     ],
     columns: [
       {
-        name: '开票申请流水',
+        name: vm.$t('2eced1b3.90e5bc'),
         key: 'invoice_apply_bn',
         width: '200'
       },
       {
-        name: '订单号',
+        name: vm.$t('2eced1b3.1e8dc2'),
         key: 'order_id',
         width: '180',
         render(_, { row }) {
@@ -156,7 +156,7 @@ export const tableSchema = (vm) =>
             <div>
               <div class='order-num'>
                 {row.order_id}
-                <el-tooltip effect='dark' content='复制' placement='top-start'>
+                <el-tooltip effect='dark' content={vm.$t('2eced1b3.79d3ab')} placement='top-start'>
                   <i
                     class='el-icon-document-copy'
                     style={{ marginLeft: '6px' }}
@@ -169,13 +169,13 @@ export const tableSchema = (vm) =>
                 </el-tooltip>
               </div>
               <div class='order-store'>
-                <el-tooltip effect='dark' content='店铺名' placement='top-start'>
+                <el-tooltip effect='dark' content={vm.$t('2eced1b3.8a0cc2')} placement='top-start'>
                   <i class='el-icon-office-building' />
                 </el-tooltip>
                 {row.distributor_name}
               </div>
               <div class='order-time'>
-                <el-tooltip effect='dark' content='下单时间' placement='top-start'>
+                <el-tooltip effect='dark' content={vm.$t('2eced1b3.2240cc')} placement='top-start'>
                   <i class='el-icon-time' style={{ marginRight: '6px' }} />
                 </el-tooltip>
                 {moment(row.create_time * 1000).format('YYYY-MM-DD HH:mm:ss')}
@@ -185,7 +185,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '订单分类',
+        name: vm.$t('2eced1b3.350fd3'),
         key: 'order_holder',
         width: '120',
         render(_, { row }) {
@@ -193,7 +193,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票金额（¥）',
+        name: vm.$t('2eced1b3.ec29b1'),
         key: 'invoice_amount',
         width: '120',
         render(_, { row }) {
@@ -201,68 +201,75 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '开票状态',
+        name: vm.$t('2eced1b3.2af9f7'),
         key: 'invoice_status',
         width: '120',
         render(h, { row }) {
+          const key = open_status_map[row.invoice_status]
           if (row.invoice_status === 'success') {
-            return <span style={{ color: 'green' }}> {open_status_map[row.invoice_status]} </span>
+            return <span style={{ color: 'green' }}> {key ? vm.$t(key) : ''} </span>
           } else if (row.invoice_status === 'failed') {
-            return <span style={{ color: 'red' }}> {open_status_map[row.invoice_status]} </span>
+            return <span style={{ color: 'red' }}> {key ? vm.$t(key) : ''} </span>
           } else {
-            return <span> {open_status_map[row.invoice_status]} </span>
+            return <span> {key ? vm.$t(key) : ''} </span>
           }
         }
       },
       {
-        name: '抬头类型',
+        name: vm.$t('2eced1b3.01b477'),
         key: 'invoice_type',
         width: '120',
         render(_, { row }) {
-          const typeMap = { enterprise: '企业', individual: '个人' }
+          const typeMap = {
+            enterprise: vm.$t('2eced1b3.04c9e3'),
+            individual: vm.$t('2eced1b3.6a0e04')
+          }
           return <span> {typeMap[row.invoice_type]} </span>
         }
       },
       {
-        name: '发票抬头',
+        name: vm.$t('2eced1b3.6cbd05'),
         key: 'company_title',
         width: '120'
       },
       {
-        name: '发票类型',
+        name: vm.$t('2eced1b3.9c1f61'),
         key: 'invoice_type_code',
         width: '120',
         render(h, { row }) {
-          return <span> {invoice_type_code_map[row.invoice_type_code]} </span>
+          const key = invoice_type_code_map[row.invoice_type_code]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
-        name: '开票渠道',
+        name: vm.$t('2eced1b3.352b0b'),
         key: 'invoice_method',
         width: '120',
         render(h, { row }) {
-          return <span> {open_status_step_map[row.invoice_method]} </span>
+          const key = open_status_step_map[row.invoice_method]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
-        name: '来源',
+        name: vm.$t('2eced1b3.26ca20'),
         key: 'invoice_source',
         render(h, { row }) {
-          return <span> {invoice_source_map[row.invoice_source]} </span>
+          const key = invoice_source_map[row.invoice_source]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
-        name: '会员编号',
+        name: vm.$t('2eced1b3.6061ba'),
         key: 'user_card_code',
         width: '100'
       },
       {
-        name: '备注',
+        name: vm.$t('2eced1b3.2432b5'),
         key: 'remark',
         width: '120'
       },
       {
-        name: '创建时间',
+        name: vm.$t('2eced1b3.eca37c'),
         key: 'created',
         width: '120',
         render(h, { row }) {
@@ -270,7 +277,7 @@ export const tableSchema = (vm) =>
         }
       },
       {
-        name: '更新时间',
+        name: vm.$t('2eced1b3.a001a2'),
         key: 'updated',
         width: '120',
         render(h, { row }) {
@@ -285,21 +292,25 @@ export const formSchema = (vm) =>
     [
       {
         key: 'invoice_status',
-        label: '发票状态',
+        label: vm.$t('2eced1b3.a03d7f'),
         type: 'select',
         defaultValue: '',
-        options: open_status_arr
+        options: open_status_arr.map((item) => ({
+          ...item,
+          label: vm.$t(item.label),
+          title: vm.$t(item.title)
+        }))
       },
       {
         key: 'invoice_type',
-        label: '抬头类型',
+        label: vm.$t('2eced1b3.01b477'),
         defaultValue: 'individual',
         component({ key }, value) {
           return (
             <div>
               <el-radio-group v-model={value['invoice_type']}>
-                <el-radio label='individual'>个人</el-radio>
-                <el-radio label='enterprise'>公司</el-radio>
+                <el-radio label='individual'>{vm.$t('2eced1b3.6a0e04')}</el-radio>
+                <el-radio label='enterprise'>{vm.$t('2eced1b3.41716f')}</el-radio>
               </el-radio-group>
             </div>
           )
@@ -307,14 +318,14 @@ export const formSchema = (vm) =>
       },
       {
         key: 'invoice_type_code',
-        label: '发票类型',
+        label: vm.$t('2eced1b3.9c1f61'),
         defaultValue: '02',
         component({ key }, value) {
           return (
             <div>
               <el-radio-group v-model={value['invoice_type_code']}>
-                <el-radio label='02'>电子普通发票</el-radio>
-                <el-radio label='01'>专用发票</el-radio>
+                <el-radio label='02'>{vm.$t('364a6013.8a487a')}</el-radio>
+                <el-radio label='01'>{vm.$t('364a6013.515a32')}</el-radio>
               </el-radio-group>
             </div>
           )
@@ -325,7 +336,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_title',
-        label: '个人抬头',
+        label: vm.$t('2eced1b3.240af5'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -334,7 +345,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_title',
-        label: '公司抬头',
+        label: vm.$t('2eced1b3.e29d27'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -343,7 +354,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_tax_number',
-        label: '纳税人识别号',
+        label: vm.$t('2eced1b3.a22d0a'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -352,26 +363,26 @@ export const formSchema = (vm) =>
       },
       {
         key: 'email',
-        label: '收票人邮箱',
+        label: vm.$t('2eced1b3.4b5787'),
         type: 'input',
         defaultValue: ''
       },
       {
         key: 'mobile',
-        label: '收票人手机',
+        label: vm.$t('2eced1b3.69af7e'),
         type: 'input',
         defaultValue: '',
         component({ key }, value) {
           return (
             <div>
-              <el-input v-model={value['mobile']} placeholder='请输入内容' />
+              <el-input v-model={value['mobile']} placeholder={vm.$t('2eced1b3.a11cc7')} />
             </div>
           )
         }
       },
       {
         key: 'company_address',
-        label: '公司地址',
+        label: vm.$t('2eced1b3.e06494'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -380,7 +391,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'company_telephone',
-        label: '公司电话',
+        label: vm.$t('2eced1b3.9e1660'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -389,7 +400,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'bank_name',
-        label: '开户银行',
+        label: vm.$t('2eced1b3.cc5ca0'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -398,7 +409,7 @@ export const formSchema = (vm) =>
       },
       {
         key: 'bank_account',
-        label: '开户行账户',
+        label: vm.$t('2eced1b3.0905fd'),
         type: 'input',
         defaultValue: '',
         isShow() {
@@ -427,12 +438,12 @@ export const confirmSchema = (vm) =>
     [
       {
         key: 'email',
-        label: '邮箱',
+        label: vm.$t('2eced1b3.3bc5e6'),
         type: 'input',
         defaultValue: '',
         required: true,
-        message: '请输入邮箱',
-        tip: '电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
+        message: vm.$t('2eced1b3.dbf6d0'),
+        tip: vm.$t('2eced1b3.a1f8da')
       }
     ],
     vm
@@ -442,14 +453,15 @@ export const logTableSchema = (vm) =>
   createSetting({
     columns: [
       {
-        name: '操作类型',
+        name: vm.$t('2eced1b3.de9cc3'),
         key: 'operator_type',
         render(h, { row }) {
-          return <span> {invoice_log_type_map[row.operator_type]} </span>
+          const key = invoice_log_type_map[row.operator_type]
+          return <span> {key ? vm.$t(key) : ''} </span>
         }
       },
       {
-        name: '操作内容',
+        name: vm.$t('2eced1b3.2f2786'),
         key: 'operator_content',
         width: 400,
         render(_, { row }) {
@@ -471,11 +483,11 @@ export const logTableSchema = (vm) =>
         }
       },
       {
-        name: '操作人',
+        name: vm.$t('2eced1b3.f9ac4b'),
         key: 'operator'
       },
       {
-        name: '时间',
+        name: vm.$t('2eced1b3.19fcb9'),
         key: 'update_time',
         render(h, { row }) {
           return <span> {moment(row.update_time * 1000).format('yyyy-MM-DD HH:mm:ss')} </span>
@@ -489,11 +501,11 @@ export const innerTableSchema = (vm) =>
   createSetting({
     columns: [
       {
-        name: '修改前',
+        name: vm.$t('2eced1b3.86ae34'),
         key: 'oldValue'
       },
       {
-        name: '修改后',
+        name: vm.$t('2eced1b3.79bf6b'),
         key: 'newValue'
       }
     ]

@@ -13,8 +13,12 @@
   <SpPage class="merchantVerify">
     <div v-if="$route.path.indexOf('verify') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="audit_status" label="审批状态:">
-          <el-select v-model="params.audit_status" placeholder="请选择审批状态" class="input-m">
+        <SpFilterFormItem prop="audit_status" :label="$t('52713abc.c4565a')">
+          <el-select
+            v-model="params.audit_status"
+            :placeholder="$t('52713abc.a7dd1f')"
+            class="input-m"
+          >
             <el-option
               v-for="(item, index) in approveStatusList"
               :key="index"
@@ -23,34 +27,34 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="merchant_name" label="商户名称:">
-          <el-input v-model="params.merchant_name" placeholder="请输入" clearable />
+        <SpFilterFormItem prop="merchant_name" :label="$t('52713abc.a1b85f')">
+          <el-input v-model="params.merchant_name" :placeholder="$t('52713abc.02cc4f')" clearable />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_value" label="所属地区:">
+        <SpFilterFormItem prop="regions_value" :label="$t('52713abc.60b13d')">
           <el-cascader
             v-model="params.regions_value"
-            placeholder="根据地区筛选"
+            :placeholder="$t('52713abc.491f74')"
             :options="regions"
             filterable
             clearable
             :props="{ checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="settled_type" label="入驻类型:">
-          <el-select v-model="params.settled_type" placeholder="请选择">
-            <el-option label="企业" value="enterprise" />
-            <el-option label="个体户" value="soletrader" />
+        <SpFilterFormItem prop="settled_type" :label="$t('52713abc.b7785f')">
+          <el-select v-model="params.settled_type" :placeholder="$t('52713abc.708c9d')">
+            <el-option :label="$t('52713abc.04c9e3')" value="enterprise" />
+            <el-option :label="$t('52713abc.a41061')" value="soletrader" />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="time_start" label="申请日期:">
+        <SpFilterFormItem prop="time_start" :label="$t('52713abc.cb535c')">
           <el-date-picker
             v-model="params.time_start"
             :default-time="['00:00:00', '23:59:59']"
             type="daterange"
             format="yyyy-MM-dd"
             value-format="yyyy-MM-dd HH:mm:ss"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :start-placeholder="$t('52713abc.b44c0f')"
+            :end-placeholder="$t('52713abc.1d468b')"
           />
         </SpFilterFormItem>
       </SpFilterForm>
@@ -83,9 +87,13 @@
                 <span class="cus-row-name">{{ item.merchant_name }}</span>
               </router-link>
               <div class="cus-row-time">
-                <span>申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span>
                 <span
-                  >所属地区：{{ item.province + '-' + item.city + '-' + item.area || '-' }}</span
+                  >{{ $t('52713abc.402d96')
+                  }}{{ item.created ? createTimeFilter(item.created) : '-' }}</span
+                >
+                <span
+                  >{{ $t('52713abc.801525')
+                  }}{{ item.province + '-' + item.city + '-' + item.area || '-' }}</span
                 >
               </div>
             </el-col>
@@ -95,13 +103,13 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 85px; height: 85px"
-              />
+              >
               <img
                 v-if="item.audit_status === '3'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 92px; height: 92px"
-              />
+              >
             </el-col>
             <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1' ? 0 : 5">
               <router-link
@@ -111,9 +119,9 @@
                   query: { type: 'verify', merchantId: item.id }
                 }"
               >
-                <el-button type="primary"> 审批 </el-button>
+                <el-button type="primary"> {{ $t('52713abc.0273ba') }} </el-button>
               </router-link>
-              <el-button v-else type="info" plain disabled> 已审批 </el-button>
+              <el-button v-else type="info" plain disabled> {{ $t('52713abc.618acb') }} </el-button>
             </el-col>
           </el-row>
         </div>
@@ -139,6 +147,7 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 import district from '@/common/district.json'
 import mixin, { pageMixin } from '@/mixins'
+import { i18n } from '@/i18n'
 export default {
   mixins: [mixin, pageMixin],
   data() {
@@ -155,9 +164,9 @@ export default {
       regions: district,
       loading: true,
       approveStatusList: [
-        { name: '待审批', value: '1' },
-        { name: '通过', value: '2' },
-        { name: '驳回', value: '3' }
+        { name: i18n.t('52713abc.b0bf01'), value: '1' },
+        { name: i18n.t('52713abc.23c1f3'), value: '2' },
+        { name: i18n.t('52713abc.325254'), value: '3' }
       ]
     }
   },

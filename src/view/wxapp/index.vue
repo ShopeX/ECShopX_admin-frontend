@@ -14,7 +14,7 @@
         <div class="template-item add-btn" @click="chooseTemp">
           <div class="template-wrap items-center flex-col flex add-btn">
             <i class="iconfont icon-weixin" />
-            <div>添加小程序模板</div>
+            <div>{{ $t('9aec82de.e117c3') }}</div>
           </div>
         </div>
       </el-col>
@@ -31,7 +31,7 @@
           <div v-if="item.is_weapp_grade" class="has-upgrade" />
           <div v-if="item.wxaCodeVisible" class="wxcode">
             <div class="el-icon-close" @click="closeWxcode(index)" />
-            <img :src="item.wxaCodeImage" alt="" />
+            <img :src="item.wxaCodeImage" alt="">
           </div>
           <div class="template-wrap items-center flex-col flex">
             <div class="template-img">
@@ -39,51 +39,52 @@
                 v-if="item.template_name === 'yykmembership'"
                 src="@/assets/img/template_img.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'yykmendian'"
                 src="@/assets/img/template_img_01.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'yykcutdown'"
                 src="@/assets/img/template_img_02.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'yykweishop'"
                 src="@/assets/img/template_img_04.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'appleweishop'"
                 src="@/assets/img/template_img_09.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'yykcommunity'"
                 src="@/assets/img/template_img_07.jpg"
                 alt=""
-              />
+              >
               <img
                 v-if="item.template_name === 'yykcommunitypms'"
                 src="@/assets/img/template_img_06.jpg"
                 alt=""
-              />
+              >
               <div
                 v-if="item.is_bind"
                 v-loading="item.loading"
                 class="demo-qrcode"
                 @click="downloadWxaCode(index, item.bindInfo.authorizer_appid)"
               >
-                <img src="@/assets/img/code.png" height="34" width="35" alt="" />
+                <img src="@/assets/img/code.png" height="34" width="35" alt="">
               </div>
             </div>
             <div class="template-caption">
               {{ item.templateInfo.name }}
             </div>
             <div class="template-opend-btn" @click="linkTo(item)">
-              <span v-if="item.is_bind">编辑模板</span><span v-else>未绑定</span>
+              <span v-if="item.is_bind">{{ $t('9aec82de.c6aa35') }}</span
+              ><span v-else>{{ $t('9aec82de.906ad1') }}</span>
             </div>
           </div>
         </div>

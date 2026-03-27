@@ -8,37 +8,45 @@
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
     <div class="action-container">
       <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="AddRecommendLikeItem">
-        添加商品
+        {{ $t('59409905.fa3aee') }}
       </el-button>
-      <el-button type="primary" plain @click="DelItemData('true')"> 清除所有商品 </el-button>
+      <el-button type="primary" plain @click="DelItemData('true')">
+        {{ $t('59409905.c76eef') }}
+      </el-button>
     </div>
 
     <el-table ref="multipleItemsTable" v-loading="loading" border :data="tableList">
-      <el-table-column label="操作" width="100">
+      <el-table-column :label="$t('59409905.2b6bc0')" width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="DelItemData('false', scope.row)"> 删除关联 </el-button>
+          <el-button type="text" @click="DelItemData('false', scope.row)">
+            {{ $t('59409905.2a792e') }}
+          </el-button>
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55" />
       <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
-      <el-table-column prop="itemName" label="商品名称" />
-      <el-table-column prop="price" label="商品价格" width="120">
-        <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
+      <el-table-column prop="itemName" :label="$t('59409905.1fd1d5')" />
+      <el-table-column prop="price" :label="$t('59409905.9cf4c6')" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.price / 100 }}{{ $t('59409905.c16655') }}
+        </template>
       </el-table-column>
-      <el-table-column prop="sort" label="商品排序" width="120">
+      <el-table-column prop="sort" :label="$t('59409905.35577a')" width="120">
         <template slot-scope="scope">
           <el-input v-model="scope.row.sort" @change="editItemSort(scope.$index, scope.row)">
             <i slot="suffix" class="el-input__icon el-icon-edit" />
           </el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="approve_status" label="状态" width="100">
+      <el-table-column prop="approve_status" :label="$t('59409905.3fea7c')" width="100">
         <template slot-scope="scope">
-          <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">前台可销售</div>
-          <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
-            前台不展示
+          <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
+            {{ $t('59409905.9b7481') }}
           </div>
-          <div v-else class="grid-content">不可销售</div>
+          <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
+            {{ $t('59409905.2c50a0') }}
+          </div>
+          <div v-else class="grid-content">{{ $t('59409905.ae83a3') }}</div>
         </template>
       </el-table-column>
     </el-table>
@@ -55,19 +63,19 @@
       />
     </div>
 
-    <sideBar :visible.sync="show_sideBar" title="选择商品" width="60">
+    <sideBar :visible.sync="show_sideBar" :title="$t('59409905.43d1e2')" width="60">
       <div v-if="editItemSortVisible">
         <el-row>
           <el-col :span="4">
             <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
-              保存
+              {{ $t('59409905.be5fbb') }}
             </el-button>
           </el-col>
         </el-row>
         <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
           <el-table-column label="ID" prop="item_id" width="60" />
-          <el-table-column label="名称" prop="item_name" />
-          <el-table-column label="排序" width="80">
+          <el-table-column :label="$t('59409905.d7ec2d')" prop="item_name" />
+          <el-table-column :label="$t('59409905.c360e9')" width="80">
             <template slot-scope="scope">
               <el-input v-model="scope.row.sort" size="mini" />
             </template>
@@ -78,25 +86,27 @@
         <el-row>
           <el-col :span="8">
             <el-button type="primary" class="el-icon-plus" size="mini" @click="relItems">
-              选择商品
+              {{ $t('59409905.43d1e2') }}
             </el-button>
           </el-col>
           <el-col :span="4">
-            <el-button size="mini" @click.native="handleCancel"> 返回 </el-button>
+            <el-button size="mini" @click.native="handleCancel">
+              {{ $t('59409905.5f4112') }}
+            </el-button>
             <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
-              保存
+              {{ $t('59409905.be5fbb') }}
             </el-button>
           </el-col>
         </el-row>
         <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
           <el-table-column label="ID" prop="item_id" width="60" />
-          <el-table-column label="名称" prop="item_name" />
-          <el-table-column label="排序" width="80">
+          <el-table-column :label="$t('59409905.d7ec2d')" prop="item_name" />
+          <el-table-column :label="$t('59409905.c360e9')" width="80">
             <template slot-scope="scope">
               <el-input v-model="scope.row.sort" size="mini" />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="50">
+          <el-table-column :label="$t('59409905.2b6bc0')" width="50">
             <template slot-scope="scope">
               <i class="el-icon-delete" @click="deleteItemRow(scope.$index, form.items)" />
             </template>
@@ -204,19 +214,19 @@ export default {
     },
     DelItemData(isAll, row) {
       this.show_sideBar = false
-      let title = '将删除该商品推荐，是否继续?'
+      let title = this.$t('59409905.d56ddf')
       let param = ''
       if (row) {
         param = row.id
       }
       if (isAll === 'true') {
-        title = '将清除所有商品，是否继续?'
+        title = this.$t('59409905.0bfcd6')
         param = 'all'
       }
       if (param) {
-        this.$confirm(title, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(title, this.$t('59409905.02d981'), {
+          confirmButtonText: this.$t('59409905.38cf16'),
+          cancelButtonText: this.$t('59409905.625fb2'),
           type: 'warning'
         })
           .then(() => {
@@ -224,20 +234,20 @@ export default {
               this.fetchList()
               this.$message({
                 type: 'success',
-                message: '删除成功'
+                message: this.$t('59409905.0007d1')
               })
             })
           })
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('59409905.2111cc')
             })
           })
       } else {
         this.$message({
           type: 'info',
-          message: '操作数据有误'
+          message: this.$t('59409905.168b64')
         })
       }
     },
@@ -253,7 +263,7 @@ export default {
         this.fetchList()
         this.$message({
           type: 'success',
-          message: '保存成功'
+          message: this.$t('59409905.3b1083')
         })
         this.show_sideBar = false
         this.itemVisible = false
@@ -304,7 +314,7 @@ export default {
         if (res.data.data) {
           this.$message({
             type: 'success',
-            message: '修改成功'
+            message: this.$t('59409905.69be67')
           })
         }
       })
@@ -313,7 +323,7 @@ export default {
       if (row.is_total_store === false && (row.store == '' || row.store <= 0)) {
         this.$message({
           type: 'error',
-          message: '非总部发货时，库存不能小于等于0!'
+          message: this.$t('59409905.e1d1a9')
         })
         return
       }

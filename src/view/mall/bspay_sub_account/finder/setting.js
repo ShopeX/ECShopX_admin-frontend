@@ -17,20 +17,13 @@ export default (vm) => {
     return YY + MM + DD + ' ' + hh + mm + ss
   }
   const formatStatus = (val) => {
-    // status: 0=审核中 1=审核通过 2=已拒绝 3=处理中 4=处理成功 5=处理失败
-    if (val === '0') {
-      return '审核中'
-    } else if (val === '1') {
-      return '审核通过'
-    } else if (val === '2') {
-      return '已拒绝'
-    } else if (val === '3') {
-      return '处理中'
-    } else if (val === '4') {
-      return '处理成功'
-    } else if (val === '5') {
-      return '处理失败'
-    }
+    if (val === '0') return vm.$t('7526bc04.b720a6')
+    if (val === '1') return vm.$t('7526bc04.871a30')
+    if (val === '2') return vm.$t('7526bc04.81233d')
+    if (val === '3') return vm.$t('7526bc04.5d459d')
+    if (val === '4') return vm.$t('7526bc04.3ba621')
+    if (val === '5') return vm.$t('7526bc04.1012e0')
+    return val
   }
   const formatMoney = (money) => {
     return (money / 100).toFixed(2).toLocaleString()
@@ -40,19 +33,17 @@ export default (vm) => {
   const basePath = window.location.href.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
   const isMerchant = basePath === 'merchant'
 
-  // 根据是否为商户来配置不同的表格字段
   const getColumns = () => {
     if (isMerchant) {
-      // 商户提现菜单字段
       return [
-        { name: '申请时间', key: 'created', width: 200, formatter: formatDate },
-        { name: '申请商户', key: 'merchant_name', width: 120 },
-        { name: '商户id', key: 'merchant_id', width: 100 },
-        { name: '申请人账号', key: 'operator', width: 120 },
-        { name: '提现类型', key: 'withdraw_type', width: 100 },
-        { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
+        { name: vm.$t('7526bc04.5ba072'), key: 'created', width: 200, formatter: formatDate },
+        { name: vm.$t('7526bc04.9c19fb'), key: 'merchant_name', width: 120 },
+        { name: vm.$t('7526bc04.d69f24'), key: 'merchant_id', width: 100 },
+        { name: vm.$t('7526bc04.d47045'), key: 'operator', width: 120 },
+        { name: vm.$t('7526bc04.79b414'), key: 'withdraw_type', width: 100 },
+        { name: vm.$t('7526bc04.292a28'), key: 'amount', width: 120, formatter: formatMoney },
         {
-          name: '查看发票',
+          name: vm.$t('7526bc04.121a39'),
           key: 'invoice_file',
           width: 100,
           render: (h, { row }) => {
@@ -70,22 +61,20 @@ export default (vm) => {
             })
           }
         },
-        { name: '审批时间', key: 'audit_time', width: 200, formatter: formatDate },
-        { name: '审核原因', key: 'audit_remark', width: 150 },
-
-        { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
-        { name: '失败原因', key: 'failure_reason', width: 150 }
+        { name: vm.$t('7526bc04.d22bdd'), key: 'audit_time', width: 200, formatter: formatDate },
+        { name: vm.$t('7526bc04.0f92aa'), key: 'audit_remark', width: 150 },
+        { name: vm.$t('7526bc04.0ed783'), key: 'status', width: 100, formatter: formatStatus },
+        { name: vm.$t('7526bc04.13d5f2'), key: 'failure_reason', width: 150 }
       ]
     } else {
-      // 平台提现菜单字段
       return [
-        { name: '申请时间', key: 'created', width: 200, formatter: formatDate },
-        { name: '申请人账号', key: 'operator', width: 120 },
-        { name: '申请店铺', key: 'distributor_name', width: 120 },
-        { name: '提现类型', key: 'withdraw_type', width: 100 },
-        { name: '提现金额', key: 'amount', width: 120, formatter: formatMoney },
+        { name: vm.$t('7526bc04.5ba072'), key: 'created', width: 200, formatter: formatDate },
+        { name: vm.$t('7526bc04.d47045'), key: 'operator', width: 120 },
+        { name: vm.$t('7526bc04.bef889'), key: 'distributor_name', width: 120 },
+        { name: vm.$t('7526bc04.79b414'), key: 'withdraw_type', width: 100 },
+        { name: vm.$t('7526bc04.292a28'), key: 'amount', width: 120, formatter: formatMoney },
         {
-          name: '查看发票',
+          name: vm.$t('7526bc04.121a39'),
           key: 'invoice_file',
           width: 100,
           render: (h, { row }) => {
@@ -103,11 +92,11 @@ export default (vm) => {
             })
           }
         },
-        { name: '审批时间', key: 'audit_time', width: 200, formatter: formatDate },
-        { name: '审核备注', key: 'audit_remark', width: 150 },
-        { name: '审核人账号', key: 'auditor', width: 120 },
-        { name: '提现状态', key: 'status', width: 100, formatter: formatStatus },
-        { name: '提现进度', key: 'failure_reason', width: 150 }
+        { name: vm.$t('7526bc04.d22bdd'), key: 'audit_time', width: 200, formatter: formatDate },
+        { name: vm.$t('7526bc04.200d69'), key: 'audit_remark', width: 150 },
+        { name: vm.$t('7526bc04.39982f'), key: 'auditor', width: 120 },
+        { name: vm.$t('7526bc04.0ed783'), key: 'status', width: 100, formatter: formatStatus },
+        { name: vm.$t('7526bc04.470717'), key: 'failure_reason', width: 150 }
       ]
     }
   }

@@ -7,9 +7,9 @@
   <div :class="['nav-sub', store && 'nav-sub-store']">
     <div :class="['nav-sub-wrapper', 'w']">
       <div class="nav-list1">
-        <div v-if="store" class="title">店铺首页</div>
+        <div v-if="store" class="title">{{ $t('0abba2b8.e8f64a') }}</div>
         <div v-else class="title">
-          所有商品分类
+          {{ $t('0abba2b8.156940') }}
           <ul class="cate-pop">
             <template v-for="(item, index) in cateList" v-if="index < 9">
               <li>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <ul class="nav-list2">
-        <li v-if="!store" @click="change(-1)">全部商品</li>
+        <li v-if="!store" @click="change(-1)">{{ $t('0abba2b8.794a4e') }}</li>
         <li v-for="v in data.data">
           {{ v.tab }}
         </li>

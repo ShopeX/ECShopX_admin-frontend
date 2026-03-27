@@ -5,10 +5,10 @@
 
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('5f26b723.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="80px" label-position="top">
-        <el-form-item label="导航设置">
+        <el-form-item :label="$t('5f26b723.ec6f17')">
           <draggable
             v-model="t_data.data"
             class="content-bottom-padded"
@@ -23,31 +23,34 @@
               <div class="setting-remove" @click="removeItem(index)">
                 <i class="el-icon-delete" />
               </div>
-              <el-input v-model="item.tab" placeholder="请输入导航名" class="input-m" />
+              <el-input v-model="item.tab" :placeholder="$t('5f26b723.810cf7')" class="input-m" />
               <div class="uploader-setting">
                 <div class="goods-select" @click="editLink(index)">
                   <div v-if="item.id" class="link-content">
-                    <template v-if="item.linkPage === 'goods'"> 【商品】{{ item.title }} </template>
-                    <template v-if="item.linkPage === 'store'"> 【店铺】{{ item.title }} </template>
+                    <template v-if="item.linkPage === 'goods'">
+                      {{ $t('5f26b723.516f1d') }}{{ item.title }}
+                    </template>
+                    <template v-if="item.linkPage === 'store'">
+                      {{ $t('5f26b723.d0e883') }}{{ item.title }}
+                    </template>
                     <template v-if="item.linkPage === 'custom_page'">
-                      【自定义页面】{{ item.title }}
+                      {{ $t('5f26b723.2272bc') }}{{ item.title }}
                     </template>
                     <template v-if="item.linkPage === 'category'">
-                      【分类】{{ item.title }}
+                      {{ $t('5f26b723.196c46') }}{{ item.title }}
                     </template>
                   </div>
-                  <div v-else class="content-center"><i class="el-icon-link" />设置路径</div>
+                  <div v-else class="content-center">
+                    <i class="el-icon-link" />{{ $t('5f26b723.4f2c29') }}
+                  </div>
                 </div>
               </div>
             </div>
           </draggable>
           <el-button type="primary" icon="el-icon el-icon-circle-plus" plain @click="addNav">
-            添加导航
+            {{ $t('5f26b723.4b742d') }}
           </el-button>
-          <p class="desc">
-            (
-            导航说明：导航菜单数量限制为8，不过建议根据实际菜单名称的长度，选择性显示导航菜单数量。)
-          </p>
+          <p class="desc">({{ $t('5f26b723.0630c9') }})</p>
         </el-form-item>
       </el-form>
       <linkSetter

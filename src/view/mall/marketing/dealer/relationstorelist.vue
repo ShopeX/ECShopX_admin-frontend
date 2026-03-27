@@ -26,8 +26,8 @@
               type="daterange"
               format="yyyy-MM-dd"
               value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              :start-placeholder="$t('3f433608.b44c0f')"
+              :end-placeholder="$t('3f433608.1d468b')"
               @change="(val) => dateChange(val)"
             />
           </template>
@@ -57,9 +57,9 @@ export default {
       visibleModal: false,
       modalContent: '',
       statusList: [
-        { label: '未入网', value: 1 },
-        { label: '待审核', value: 2 },
-        { label: '入网成功', value: 3 }
+        { label: this.$t('3f433608.14f778'), value: 1 },
+        { label: this.$t('3f433608.5cb424'), value: 2 },
+        { label: this.$t('3f433608.4ad6e4'), value: 3 }
       ],
       create_time: '',
       form: {}
@@ -70,46 +70,61 @@ export default {
     setting() {
       return createSetting({
         columns: [
-          { name: '店铺ID', key: 'distributor_id' },
-          { name: '店铺名称', key: 'name' },
-          { name: '联系人', key: 'contact' },
-          { name: '联系方式', key: 'mobile' },
+          { name: this.$t('3f433608.8fdefd'), key: 'distributor_id' },
+          { name: this.$t('3f433608.0d4934'), key: 'name' },
+          { name: this.$t('3f433608.52409d'), key: 'contact' },
+          { name: this.$t('3f433608.b58943'), key: 'mobile' },
           {
-            name: '状态',
+            name: this.$t('3f433608.3fea7c'),
             key: '',
             formatter: (h, { audit_state }) =>
-              (audit_state == '1' && '未入网') ||
-              (audit_state == '2' && '待审核') ||
-              (audit_state == '3' && '入网成功')
+              (audit_state == '1' && this.$t('3f433608.14f778')) ||
+              (audit_state == '2' && this.$t('3f433608.5cb424')) ||
+              (audit_state == '3' && this.$t('3f433608.4ad6e4'))
           },
           {
-            name: '创建日期',
+            name: this.$t('3f433608.696f5a'),
             key: 'created',
             formatter: (h, { created }) =>
               created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
           }
         ],
         search: [
-          { type: 'input', key: 'name', name: '店铺名称', placeholder: '请输入店铺名称' },
-          { type: 'input', key: 'contact', name: '联系人', placeholder: '请输入联系人' },
-          { type: 'input', key: 'mobile', name: '联系方式', placeholder: '请输入联系方式' },
+          {
+            type: 'input',
+            key: 'name',
+            name: this.$t('3f433608.0d4934'),
+            placeholder: this.$t('3f433608.867738')
+          },
+          {
+            type: 'input',
+            key: 'contact',
+            name: this.$t('3f433608.52409d'),
+            placeholder: this.$t('3f433608.9e3f21')
+          },
+          {
+            type: 'input',
+            key: 'mobile',
+            name: this.$t('3f433608.b58943'),
+            placeholder: this.$t('3f433608.8f7e96')
+          },
           {
             type: 'select',
             key: 'audit_state',
             options: this.statusList,
-            name: '状态',
-            placeholder: '请选择'
+            name: this.$t('3f433608.3fea7c'),
+            placeholder: this.$t('3f433608.708c9d')
           },
-          { key: 'create_time', name: '创建时间', slot: 'create_time' }
+          { key: 'create_time', name: this.$t('3f433608.eca37c'), slot: 'create_time' }
         ],
         actions: [
           {
-            name: '关联',
+            name: this.$t('3f433608.1c3cf7'),
             key: 'relation',
             type: 'button',
             buttonType: 'text',
             action: {
-              handler: (row) => this.handleModalClick(true, '未入网', row[0])
+              handler: (row) => this.handleModalClick(true, this.$t('3f433608.14f778'), row[0])
             }
           }
         ]
@@ -145,8 +160,8 @@ export default {
         }
         this.modalContent =
           row.audit_state == '3'
-            ? '如新增关联，已入网成功的店铺需重新设置店铺所占分帐比例。'
-            : `请确认是否将【${row.name}】与【${this.username}】关联`
+            ? this.$t('3f433608.cb3f8c')
+            : this.$t('3f433608.454a59', [row.name, this.username])
       }
       this.visibleModal = visible
       if (!visible) this.$refs.finder.refresh(true)

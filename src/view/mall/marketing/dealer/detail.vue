@@ -9,7 +9,7 @@
       <el-card>
         <el-row>
           <el-col :span="3">
-            <img class="cus-details-img" src="@/assets/img/adapay/dealer.png" alt="" />
+            <img class="cus-details-img" src="@/assets/img/adapay/dealer.png" alt="">
           </el-col>
           <el-col :span="20">
             <div class="cus-details-flex">
@@ -29,13 +29,13 @@
               <div class="cus-details-pfonts">
                 <i class="el-icon-phone cus-icon" />
                 <span>{{
-                  infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
+                  infoList.basicInfo ? infoList.basicInfo.tel_no + $t('9d04916c.88ab08') : '-'
                 }}</span>
               </div>
               <div class="cus-details-pfonts cus-margin-50">
                 <i class="el-icon-message cus-icon" />
                 <span>{{
-                  infoList.basicInfo ? infoList.basicInfo.email + '（企业邮箱）' : '-'
+                  infoList.basicInfo ? infoList.basicInfo.email + $t('9d04916c.c15332') : '-'
                 }}</span>
               </div>
             </div>
@@ -44,18 +44,20 @@
       </el-card>
       <el-card>
         <el-tabs v-model="activeName" class="cus-details-tabs" @tab-click="tabChange">
-          <el-tab-pane v-if="infoList.member_id" label="开户信息" name="first">
+          <el-tab-pane v-if="infoList.member_id" :label="$t('9d04916c.ac7b4c')" name="first">
             <BaseModal
               :span="7"
               :label-list="infoList.member_type === 'corp' ? enterPriseList : personInfo"
               :info="infoList"
-              :title="infoList.member_type === 'corp' ? '企业信息' : '个人信息'"
+              :title="
+                infoList.member_type === 'corp' ? $t('9d04916c.54796d') : $t('9d04916c.eab129')
+              "
             />
             <BaseModal
               :span="7"
               :label-list="infoList.member_type === 'corp' ? enterAccountInfo : accountList"
               :info="infoList"
-              title="结算账户信息"
+              :title="$t('9d04916c.99f89b')"
             />
             <BaseModal
               :span="7"
@@ -63,18 +65,18 @@
                 infoList.member_type === 'corp' ? enterSplitAccountList : splitAccountList
               "
               :info="split_ledger_info"
-              title="分账信息"
+              :title="$t('9d04916c.adb36c')"
             />
             <el-card>
-              <div slot="header">其他信息</div>
+              <div slot="header">{{ $t('9d04916c.febe40') }}</div>
               <div class="body">
                 <el-row class="load-btn">
                   <el-col :span="4" style="text-align: right; padding-right: 10px">
-                    附件信息：
+                    {{ $t('9d04916c.8a9502') }}
                   </el-col>
                   <el-col v-if="infoList.member_type === 'corp'" :span="20" class="cus-btn">
                     <el-button type="text" @click="dowloadFile(infoList.attach_file)">
-                      附件
+                      {{ $t('9d04916c.c9a6ee') }}
                     </el-button>
                   </el-col>
                   <span v-else>-</span>
@@ -82,12 +84,12 @@
               </div>
             </el-card>
           </el-tab-pane>
-          <el-tab-pane v-else label="开户信息" name="first">
+          <el-tab-pane v-else :label="$t('9d04916c.ac7b4c')" name="first">
             <el-row style="height: 350px" type="flex" justify="center" align="middle">
-              <span style="color: #ccc">--暂无开户信息--</span>
+              <span style="color: #ccc">{{ $t('9d04916c.192fdd') }}</span>
             </el-row>
           </el-tab-pane>
-          <el-tab-pane label="操作记录" name="second">
+          <el-tab-pane :label="$t('9d04916c.cf8e1f')" name="second">
             <el-timeline :reverse="false" class="cus-timeline">
               <el-timeline-item
                 v-for="(item, index) in logList"
@@ -118,7 +120,7 @@
         <el-button type='primary' size='small' plain>导出</el-button>
       </el-row> -->
       <el-dialog
-        title="通知消息"
+        :title="$t('9d04916c.59a702')"
         :visible.sync="visibleModal"
         width="25%"
         :close-on-click-modal="false"
@@ -129,9 +131,13 @@
         </el-row>
         <el-row style="text-align: right">
           <el-button type="primary" size="small" plain @click="handleModalConfirm(false)">
-            取消
+            {{ $t('9d04916c.625fb2') }}
           </el-button>
-          <el-button type="primary" size="small" @click="handleModalConfirm(true)">确认</el-button>
+          <el-button type="primary" size="small" @click="handleModalConfirm(true)">
+{{
+            $t('9d04916c.e83a25')
+          }}
+</el-button>
         </el-row>
       </el-dialog>
     </div>
@@ -164,44 +170,48 @@ export default {
       },
       enterPriseList: [
         // 企业信息
-        { name: '法人姓名', field: 'legal_person' },
-        { name: '法人身份证号码', field: 'legal_cert_id' },
-        { name: '法人证件有效期', field: 'legal_cert_id_expires' },
-        { name: '营业执照号', field: 'social_credit_code' },
-        { name: '商户有效日期', field: 'social_credit_code_expires	' },
-        { name: '经营范围', field: 'business_scope' },
-        { name: '法人电话号码', field: 'tel_no' },
-        { name: '企业地址', field: 'address' },
-        { name: '邮编', field: 'zip_code' }
+        { name: this.$t('d41d8cd9.q1r2s3'), field: 'legal_person' },
+        { name: this.$t('d41d8cd9.t4u5v6'), field: 'legal_cert_id' },
+        { name: this.$t('d41d8cd9.w7x8y9'), field: 'legal_cert_id_expires' },
+        { name: this.$t('d41d8cd9.z0a1b2'), field: 'social_credit_code' },
+        { name: this.$t('d41d8cd9.c3d4e5'), field: 'social_credit_code_expires	' },
+        { name: this.$t('d41d8cd9.f6g7h8'), field: 'business_scope' },
+        { name: this.$t('d41d8cd9.i9j0k1'), field: 'tel_no' },
+        { name: this.$t('d41d8cd9.l2m3n4'), field: 'address' },
+        { name: this.$t('d41d8cd9.o5p6q7'), field: 'zip_code' }
       ],
       enterAccountInfo: [
         // 企业结算账户信息
-        { name: '结算银行卡号', field: 'card_no' },
-        { name: '结算银行卡开户姓名', field: 'card_name' },
-        { name: '结算银行卡所属银行', field: 'bank_name' },
-        { name: '结算银行账户类型', field: 'bank_acct_type', filter: this.bankFilter }
+        { name: this.$t('d41d8cd9.r8s9t0'), field: 'card_no' },
+        { name: this.$t('d41d8cd9.u1v2w3'), field: 'card_name' },
+        { name: this.$t('d41d8cd9.x4y5z6'), field: 'bank_name' },
+        { name: this.$t('d41d8cd9.a7b8c9'), field: 'bank_acct_type', filter: this.bankFilter }
       ],
       enterSplitAccountList: [
         // 企业分帐
-        { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
-        { name: '经销商分账占比', field: 'dealer_proportion', filter: this.dealerFilter },
-        { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter }
+        {
+          name: this.$t('d41d8cd9.d0e1f2'),
+          field: 'headquarters_proportion',
+          filter: this.headquartersFilter
+        },
+        { name: this.$t('d41d8cd9.g3h4i5'), field: 'dealer_proportion', filter: this.dealerFilter },
+        { name: this.$t('d41d8cd9.j6k7l8'), field: 'adapay_fee_mode', filter: this.adapayFilter }
       ],
       personInfo: [
         // 个人信息
-        { name: '用户姓名', field: 'user_name' },
-        { name: '用户手机号码', field: 'tel_no' },
-        { name: '法人身份证号码', field: 'cert_id' }
+        { name: this.$t('d41d8cd9.m9n0o1'), field: 'user_name' },
+        { name: this.$t('d41d8cd9.p2q3r4'), field: 'tel_no' },
+        { name: this.$t('d41d8cd9.t4u5v6'), field: 'cert_id' }
       ],
       accountList: [
         // 个人结算信息
-        { name: '开户人姓名', field: 'bank_card_name' },
-        { name: '银行预留手机号', field: 'bank_tel_no' },
-        { name: '银行账号', field: 'bank_card_id' },
-        { name: '开户人证件号码', field: 'bank_cert_id' }
+        { name: this.$t('d41d8cd9.s5t6u7'), field: 'bank_card_name' },
+        { name: this.$t('d41d8cd9.v8w9x0'), field: 'bank_tel_no' },
+        { name: this.$t('d41d8cd9.y1z2a3'), field: 'bank_card_id' },
+        { name: this.$t('d41d8cd9.b4c5d6'), field: 'bank_cert_id' }
       ],
       splitAccountList: [
-        { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter }
+        { name: this.$t('d41d8cd9.j6k7l8'), field: 'adapay_fee_mode', filter: this.adapayFilter }
       ]
     }
   },
@@ -226,7 +236,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取详情出错'
+            message: this.$t('9d04916c.25bc43')
           })
         })
     },
@@ -240,15 +250,15 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取日志出错'
+            message: this.$t('9d04916c.ae6e5b')
           })
         })
     },
     handleOpenOpeartion(visivle, type) {
       this.modalContent =
-        type === '开启'
-          ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。'
-          : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
+        type === this.$t('d41d8cd9.e7f8g9')
+          ? this.$t('9d04916c.c8fbcd')
+          : this.$t('9d04916c.e6d19f')
       this.visibleModal = visivle
       this.modalType = type
     },
@@ -277,7 +287,7 @@ export default {
       link.click()
       this.$message({
         type: 'success',
-        message: '下载成功'
+        message: this.$t('9d04916c.50940e')
       })
     },
     bankFilter() {
@@ -285,10 +295,10 @@ export default {
       let returnValue = ''
       switch (bank_acct_type) {
         case '1':
-          returnValue = '对公'
+          returnValue = this.$t('9d04916c.18ba13')
           break
         case '2':
-          returnValue = '对公'
+          returnValue = this.$t('9d04916c.18ba13')
           break
       }
       return returnValue
@@ -298,10 +308,10 @@ export default {
       let returnValue = ''
       switch (adapay_fee_mode) {
         case 'I':
-          returnValue = '内扣'
+          returnValue = this.$t('9d04916c.75d29a')
           break
         case 'O':
-          returnValue = '外扣'
+          returnValue = this.$t('9d04916c.6c1506')
           break
       }
       return returnValue

@@ -6,21 +6,26 @@
 <template>
   <div>
     <div class="cus-form-label">
-      <el-input v-model="name" placeholder="输入店铺名称" clearable class="cus-width-35">
+      <el-input v-model="name" :placeholder="$t('0ec03f26.240fdb')" clearable class="cus-width-35">
         <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
-      <el-input v-model="address" placeholder="输入经营地址" clearable class="cus-width-35">
+      <el-input
+        v-model="address"
+        :placeholder="$t('0ec03f26.19ee5b')"
+        clearable
+        class="cus-width-35"
+      >
         <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
     <el-table v-loading="info.loading" :data="data" tooltip-effect="dark" style="width: 100%">
-      <el-table-column prop="name" label="店铺名称">
+      <el-table-column prop="name" :label="$t('0ec03f26.0d4934')">
         <template slot-scope="scope">
           <i class="el-icon-house icons-size" />
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="经营地址" show-overflow-tooltip>
+      <el-table-column prop="address" :label="$t('0ec03f26.0ed872')" show-overflow-tooltip>
         <template slot-scope="scope">
           <i class="el-icon-location-outline icons-size" />
           <span style="margin-left: 10px">{{ scope.row.address }}</span>

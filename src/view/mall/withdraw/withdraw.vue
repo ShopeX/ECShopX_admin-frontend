@@ -8,15 +8,17 @@
     <div class="zyk_adapay_withdraw">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>分账提现</span>
+          <span>{{ $t('7f31cab4.b96522') }}</span>
         </div>
         <div class="content">
           <div class="part1">
             <div style="margin-right: 50px">
               <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
-                <span>可提现金额：￥{{ (cash_balance / 100) | formatNumMoney }}</span>
+                <span
+                  >{{ $t('7f31cab4.e2201a') }}：￥{{ (cash_balance / 100) | formatNumMoney }}</span
+                >
                 <span v-if="$store.getters.login_type != 'admin'" style="margin-left: 30px"
-                  >暂冻金额：￥{{ (cash_limit / 100) | formatNumMoney }}</span
+                  >{{ $t('7f31cab4.3b757d') }}：￥{{ (cash_limit / 100) | formatNumMoney }}</span
                 >
               </div>
               <el-form
@@ -27,26 +29,26 @@
                 label-width="100px"
                 :rules="rules"
               >
-                <el-form-item label="提现金额" prop="cash_amt">
+                <el-form-item :label="$t('7f31cab4.292a28')" prop="cash_amt">
                   <el-input
                     v-model="form.cash_amt"
-                    placeholder="请输入"
+                    :placeholder="$t('7f31cab4.02cc4f')"
                     style="width: 300px"
                     type="number"
                     min="0"
                   >
-                    <template slot="append">元</template>
+                    <template slot="append">{{ $t('7f31cab4.c16655') }}</template>
                   </el-input>
                   <span
                     style="margin-left: 12px; color: #0079fe; cursor: pointer"
                     @click="allHandle"
-                    >全部提现</span
+                    >{{ $t('7f31cab4.5eb161') }}</span
                   >
                 </el-form-item>
-                <el-form-item label="提现类型" prop="cash_type">
+                <el-form-item :label="$t('7f31cab4.79b414')" prop="cash_type">
                   <el-select
                     v-model="form.cash_type"
-                    placeholder="请选择提现类型"
+                    :placeholder="$t('7f31cab4.88c618')"
                     style="width: 300px"
                   >
                     <el-option value="D0" />
@@ -59,7 +61,7 @@
                     ref="loadingBtn"
                     size="medium"
                     type="primary"
-                    text="确认提现"
+                    :text="$t('7f31cab4.6b9c3d')"
                     @clickHandle="btnClick('ruleForm', 'loadingBtn')"
                   />
                   <!-- <el-button  type="primary" size="medium" @click="btnClick('ruleForm')">确认提现</el-button> -->
@@ -68,18 +70,15 @@
             </div>
             <div v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'" class="tips">
               <p v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
-                *
-                分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金；
+                * {{ $t('7f31cab4.aae577') }}
               </p>
               <template v-if="$store.getters.login_type != 'admin' && auto_draw_cash == 'Y'">
-                <p>提现规则：</p>
-                <p>提现将在每月10号进行；</p>
-                <p>当余额大于10000元时可提现;</p>
-                <p>提现类型为 T1 。</p>
+                <p>{{ $t('7f31cab4.c67e72') }}</p>
+                <p>{{ $t('7f31cab4.2f5c36') }}</p>
+                <p>{{ $t('7f31cab4.f0bb50') }}</p>
+                <p>{{ $t('7f31cab4.aa4888') }}</p>
               </template>
-              <p v-if="auto_draw_cash == 'N'">
-                * 提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。
-              </p>
+              <p v-if="auto_draw_cash == 'N'">* {{ $t('7f31cab4.56ee17') }}</p>
             </div>
           </div>
           <div class="list">
@@ -102,8 +101,8 @@
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :default-time="['00:00:00', '23:59:59']"
                   range-separator="-"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  :start-placeholder="$t('7f31cab4.b44c0f')"
+                  :end-placeholder="$t('7f31cab4.1d468b')"
                   :clearable="false"
                   @change="timeHandle"
                 />
@@ -120,6 +119,8 @@
 // applyForWithdrawal
 import setting_ from './finder/setting'
 import loadingBtn from '@/components/loading-btn'
+import { i18n } from '@/i18n'
+
 export default {
   components: {
     loadingBtn
@@ -138,8 +139,8 @@ export default {
       cash_balance: 0,
       cash_limit: 0,
       rules: {
-        cash_amt: [{ required: true, message: '请输入', trigger: 'blur' }],
-        cash_type: [{ required: true, message: '请选择', trigger: 'change' }]
+        cash_amt: [{ required: true, message: i18n.t('7f31cab4.02cc4f'), trigger: 'blur' }],
+        cash_type: [{ required: true, message: i18n.t('7f31cab4.708c9d'), trigger: 'change' }]
       }
     }
   },
@@ -168,11 +169,11 @@ export default {
             const { status } = await this.$api.adapay.applyForWithdrawal(this.form)
             this.$refs[ref].closeLoading()
             if (status) {
-              this.$message.success('提现成功')
+              this.$message.success(this.$t('7f31cab4.dca060'))
               this.$refs[formName].resetFields()
               this.$refs.finder.refresh(true)
             } else {
-              this.$message.error('提现失败')
+              this.$message.error(this.$t('7f31cab4.f285c5'))
             }
             console.log(result)
           } catch (error) {

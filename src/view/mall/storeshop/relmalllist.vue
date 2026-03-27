@@ -14,13 +14,13 @@
             @update="storeSearch"
           />
           <!--distributors wxshops 需要哪个api传哪个-->
-          <el-input v-model="params.keywords" class="input-m" placeholder="请输入商品名称">
+          <el-input v-model="params.keywords" class="input-m" :placeholder="$t('e8af8a4b.d83187')">
             <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
-          <el-input v-model="params.item_bn" class="input-m" placeholder="请输入商品货号">
+          <el-input v-model="params.item_bn" class="input-m" :placeholder="$t('e8af8a4b.35a59c')">
             <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
-          <el-input v-model="params.barcode" class="input-m" placeholder="请输入商品条码">
+          <el-input v-model="params.barcode" class="input-m" :placeholder="$t('e8af8a4b.f17e38')">
             <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
         </el-col>
@@ -29,19 +29,21 @@
         <el-col>
           <el-button-group>
             <el-button type="primary" icon="el-icon-upload" @click="handleBatchOnline(true)">
-              批量上架
+              {{ $t('e8af8a4b.644c0d') }}
             </el-button>
             <el-button type="primary" icon="el-icon-download" @click="handleBatchOnline(false)">
-              批量下架
+              {{ $t('e8af8a4b.d5e015') }}
             </el-button>
             <el-button type="primary" @click="handleBatchIsTotalStore(true)">
-              开启总部发货
+              {{ $t('e8af8a4b.c99d6a') }}
             </el-button>
             <el-button type="primary" @click="handleBatchIsTotalStore(false)">
-              关闭总部发货
+              {{ $t('e8af8a4b.47d8a7') }}
             </el-button>
-            <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
-            <el-button type="primary" @click="exportList"> 导出 </el-button>
+            <el-button type="primary" @click="handleBatchDownload">
+              {{ $t('e8af8a4b.1a40b3') }}
+            </el-button>
+            <el-button type="primary" @click="exportList"> {{ $t('e8af8a4b.55405e') }} </el-button>
           </el-button-group>
         </el-col>
       </el-row>
@@ -62,12 +64,14 @@
           @selection-change="handleItemsSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column label="操作">
+          <el-table-column :label="$t('e8af8a4b.2b6bc0')">
             <template slot-scope="scope">
-              <el-button type="text" @click="handleSkuEdit(scope.row)"> 设置SKU </el-button>
+              <el-button type="text" @click="handleSkuEdit(scope.row)">
+                {{ $t('e8af8a4b.2b158b') }}
+              </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="上下架操作">
+          <el-table-column :label="$t('e8af8a4b.c1e70a')">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.goods_can_sale"
@@ -75,12 +79,14 @@
               />
             </template>
           </el-table-column>
-          <el-table-column prop="item_name" label="商品名称" min-width="300" />
-          <el-table-column prop="store" label="商品库存" min-width="120" />
-          <el-table-column prop="price" label="商品价格" min-width="120">
-            <template slot-scope="scope"> {{ scope.row.price }}元 </template>
+          <el-table-column prop="item_name" :label="$t('e8af8a4b.1fd1d5')" min-width="300" />
+          <el-table-column prop="store" :label="$t('e8af8a4b.24bc52')" min-width="120" />
+          <el-table-column prop="price" :label="$t('e8af8a4b.9cf4c6')" min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.price }}{{ $t('e8af8a4b.c16655') }}
+            </template>
           </el-table-column>
-          <el-table-column prop="is_total_store" label="总部发货" width="80">
+          <el-table-column prop="is_total_store" :label="$t('e8af8a4b.cecc2e')" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_total_store"
@@ -91,15 +97,15 @@
               />
             </template>
           </el-table-column>
-          <el-table-column prop="approve_status" label="状态" min-width="100">
+          <el-table-column prop="approve_status" :label="$t('e8af8a4b.3fea7c')" min-width="100">
             <template slot-scope="scope">
               <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
-                前台可销售
+                {{ $t('e8af8a4b.9b7481') }}
               </div>
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
-                前台不展示
+                {{ $t('e8af8a4b.2c50a0') }}
               </div>
-              <div v-else class="grid-content">不可销售</div>
+              <div v-else class="grid-content">{{ $t('e8af8a4b.ae83a3') }}</div>
             </template>
           </el-table-column>
         </el-table>
@@ -117,15 +123,15 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <sideBar :visible.sync="show_sideBar" title="编辑店铺sku配置" width="60">
+    <sideBar :visible.sync="show_sideBar" :title="$t('e8af8a4b.6d4fce')" width="60">
       <slot>
         <h3 class="content-padded">
           {{ itemSkuParam.name }}
         </h3>
         <el-table v-loading="loading" :data="itemSku.list" :height="wheight - 240">
           <el-table-column prop="item_bn" label="SKU" width="140" />
-          <el-table-column prop="item_spec_desc" label="规格" />
-          <el-table-column prop="store" label="库存" width="120">
+          <el-table-column prop="item_spec_desc" :label="$t('e8af8a4b.ea887b')" />
+          <el-table-column prop="store" :label="$t('e8af8a4b.0eac88')" width="120">
             <template slot-scope="scope">
               <el-input
                 v-if="editStore"
@@ -137,7 +143,7 @@
               <span v-else>{{ scope.row.store }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="商品价格" width="120">
+          <el-table-column prop="price" :label="$t('e8af8a4b.9cf4c6')" width="120">
             <template slot-scope="scope">
               <el-input
                 v-if="editStore"
@@ -147,29 +153,29 @@
                 <i slot="prefix" class="el-input__icon el-icon-edit" /><i
                   slot="suffix"
                   class="el-input__icon"
-                  >元</i
+                  >{{ $t('e8af8a4b.c16655') }}</i
                 >
               </el-input>
               <span v-else>{{ scope.row.price }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="approve_status" label="状态" width="100">
+          <el-table-column prop="approve_status" :label="$t('e8af8a4b.3fea7c')" width="100">
             <template slot-scope="scope">
               <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
-                前台可销售
+                {{ $t('e8af8a4b.9b7481') }}
               </div>
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
-                前台不展示
+                {{ $t('e8af8a4b.2c50a0') }}
               </div>
-              <div v-else class="grid-content">不可销售</div>
+              <div v-else class="grid-content">{{ $t('e8af8a4b.ae83a3') }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="上下架操作" width="180">
+          <el-table-column :label="$t('e8af8a4b.c1e70a')" width="180">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_can_sale"
-                active-text="已上架"
-                inactive-text="已下架"
+                :active-text="$t('e8af8a4b.2390fa')"
+                :inactive-text="$t('e8af8a4b.ca9084')"
                 @change="switchStatusChange(scope.$index, scope.row, false)"
               />
             </template>
@@ -255,9 +261,9 @@ export default {
       list: [],
       itemsChecked: [],
       tabList: [
-        { name: '全部商品', value: null, activeName: 'first' },
-        { name: '已上架', value: 'true', activeName: 'second' },
-        { name: '未上架', value: 'true', activeName: 'third' }
+        { name: this.$t('e8af8a4b.794a4e'), value: null, activeName: 'first' },
+        { name: this.$t('e8af8a4b.2390fa'), value: 'true', activeName: 'second' },
+        { name: this.$t('e8af8a4b.25744b'), value: 'true', activeName: 'third' }
       ],
       editStore: false,
       itemSkuList: [],
@@ -346,7 +352,7 @@ export default {
     },
     handleBatchOnline(goods_can_sale) {
       if (this.itemsChecked.length <= 0) {
-        this.$message({ type: 'error', message: '请至少选择一个商品' })
+        this.$message({ type: 'error', message: this.$t('e8af8a4b.20e46f') })
         return
       }
 
@@ -423,11 +429,11 @@ export default {
       })
       post_date.goods_ids = goods_ids
       exportDistributorItems(post_date).then((response) => {
-        console.log('导出', response)
+        console.log('Export', response)
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('e8af8a4b.3e1ddd')
           })
           return
         }
@@ -453,7 +459,7 @@ export default {
       if (this.itemsChecked.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请至少选择一个商品!'
+          message: this.$t('e8af8a4b.d1fcdb')
         })
         return
       }
@@ -479,7 +485,7 @@ export default {
       Promise.all(promises).then(() => {
         zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
-          FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
+          FileSaver.saveAs(content, this.$t('e8af8a4b.b9bca0')) // 利用file-saver保存文件
         })
       })
     },
@@ -489,7 +495,7 @@ export default {
         this.getList()
         this.$message({
           type: 'success',
-          message: '修改成功',
+          message: this.$t('e8af8a4b.69be67'),
           duration: 1000
         })
       })
@@ -533,7 +539,7 @@ export default {
     },
     handleBatchIsTotalStore(is_total_store) {
       if (this.itemsChecked.length <= 0) {
-        this.$message({ type: 'error', message: '请至少选择一个商品' })
+        this.$message({ type: 'error', message: this.$t('e8af8a4b.20e46f') })
         return
       }
 

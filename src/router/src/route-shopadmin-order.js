@@ -2,7 +2,6 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '交易'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +10,7 @@ export default {
   children: [
     {
       path: 'tradenormalorders',
-      name: `实物订单`,
+      name: '9a3d308f.72ab0d',
       component: () => import('@/view/mall/trade/normalorders/list'),
       children: [
         {
@@ -34,7 +33,7 @@ export default {
     },
     {
       path: 'entitytrade/purchase',
-      name: `内购订单`,
+      name: '9a3d308f.d753bc',
       component: () => import('@/view/order/entitytrade/purchase'),
       children: [
         {
@@ -60,12 +59,12 @@ export default {
     },
     {
       path: 'tradepayment',
-      name: `交易单`,
+      name: '9a3d308f.8ab066',
       component: () => import('@/view/mall/trade/list')
     },
     {
       path: 'aftersaleslist',
-      name: `售后列表`,
+      name: '9a3d308f.75bfab',
       component: () => import('@/view/mall/aftersales/list'),
       children: [
         {
@@ -76,7 +75,7 @@ export default {
     },
     {
       path: 'aftersalesrefundlist',
-      name: `退款单`,
+      name: '9a3d308f.51e9e1',
       component: () => import('@/view/mall/aftersales/refundList'),
       children: [
         {
@@ -87,12 +86,12 @@ export default {
     },
     {
       path: 'chinaumsdivisionlist',
-      name: `分账单`,
+      name: '9a3d308f.fb1213',
       component: () => import('@/view/mall/chinaums/divisionList')
     },
     {
       path: 'shippingtemplates',
-      name: `运费模板`,
+      name: '9a3d308f.416fd4',
       component: () => import('@/view/mall/trade/shipping/templates'),
       children: [
         {
@@ -103,7 +102,7 @@ export default {
     },
     {
       path: 'logistics',
-      name: `物流公司`,
+      name: '9a3d308f.eb6d92',
       // component: () => import('@/view/mall/trade/logistics/normal')
       component: () => import('@/views/settings/deliverySettings/logistics/index'),
       children: [
@@ -111,7 +110,7 @@ export default {
           path: 'addziti/:id?',
           component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
           beforeEnter: ({ params, meta }, from, next) => {
-            meta.title = params.id ? '编辑自提点' : '新增自提点'
+            meta.title = params.id ? 'b51bc270.f36bc9' : 'b51bc270.57eecc'
             next()
           }
         }
@@ -119,7 +118,7 @@ export default {
     },
     {
       path: 'subdistrict',
-      name: '街道社区配置',
+      name: '9a3d308f.814849',
       component: () => import('@/view/mall/subdistrict/list')
     }
   ]

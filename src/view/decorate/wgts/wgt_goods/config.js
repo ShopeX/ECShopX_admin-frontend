@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrDataVue from '../../comps/goods-attr/attr-data.vue'
 import CompPickerLinkVue from '../../comps/comp-pickerLink.vue'
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
@@ -9,17 +10,18 @@ const config = {
   name: 'goods',
   setting: [
     {
-      group: '数据设置',
-      label: '数据类型',
+      group: i18n.t('62d2fa27.e7af71'),
+      label: i18n.t('62d2fa27.185f7b'),
       key: 'dataType',
       component: 'select',
-      placeholder: '请选择数据类型',
+      placeholder: i18n.t('62d2fa27.86ec5f'),
       options: [
-        { label: '按价格区间', value: 'price' },
-        { label: '按指定商品', value: 'items' },
-        { label: '按管理分类', value: 'main_category' },
-        { label: '按销售分类', value: 'category' },
-        { label: '按浏览记录', value: 'history' }
+        { label: i18n.t('62d2fa27.5488d8'), value: 'price' },
+        { label: i18n.t('62d2fa27.728225'), value: 'items' },
+        { label: i18n.t('46e04a5c.fe0ea1'), value: 'pointsmall_items' },
+        { label: i18n.t('62d2fa27.64423b'), value: 'main_category' },
+        { label: i18n.t('62d2fa27.2fcd53'), value: 'category' },
+        { label: i18n.t('62d2fa27.edf51a'), value: 'history' }
       ],
       value: 'main_category',
       onchange: function (v, self) {
@@ -34,8 +36,8 @@ const config = {
       }
     },
     {
-      group: '数据设置',
-      label: '数据设置',
+      group: i18n.t('62d2fa27.e7af71'),
+      label: i18n.t('62d2fa27.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -51,12 +53,13 @@ const config = {
         info: null
       },
       isShow: function () {
-        return !['price', 'history'].includes(this.value.dataType)
+        const dataType = this.value && this.value.dataType
+        return !['price', 'history'].includes(dataType)
       }
     },
     {
-      group: '数据设置',
-      label: '价格区间',
+      group: i18n.t('62d2fa27.e7af71'),
+      label: i18n.t('62d2fa27.8d8376'),
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -72,12 +75,13 @@ const config = {
         info: null
       },
       isShow: function () {
-        return ['price'].includes(this.value.dataType)
+        const dataType = this.value && this.value.dataType
+        return dataType === 'price'
       }
     },
     {
-      group: '数据设置',
-      label: '数据数量',
+      group: i18n.t('62d2fa27.e7af71'),
+      label: i18n.t('62d2fa27.87dfd7'),
       key: 'dataCount',
       component: function (h, { key }) {
         const maxCount = this.value.dataType === 'history' ? 10 : 99
@@ -86,19 +90,19 @@ const config = {
       value: 4
     },
     {
-      group: '组件标题',
-      label: '标题类型',
+      group: i18n.t('62d2fa27.6f3360'),
+      label: i18n.t('62d2fa27.c20c83'),
       key: 'goodsTitleType',
       component: 'radiobutton',
       options: [
-        { name: '文字', label: 'text' },
-        { name: '图片', label: 'image' }
+        { name: i18n.t('62d2fa27.ca746b'), label: 'text' },
+        { name: i18n.t('62d2fa27.20def7'), label: 'image' }
       ],
       value: 'text'
     },
     {
-      group: '组件标题',
-      label: '标题图片',
+      group: i18n.t('62d2fa27.6f3360'),
+      label: i18n.t('62d2fa27.264fe1'),
       key: 'goodsTitleImage',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
@@ -109,8 +113,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题文字',
+      group: i18n.t('62d2fa27.6f3360'),
+      label: i18n.t('62d2fa27.eded9e'),
       key: 'goodsTitleText',
       component: 'input',
       value: '',
@@ -119,8 +123,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题颜色',
+      group: i18n.t('62d2fa27.6f3360'),
+      label: i18n.t('62d2fa27.94e391'),
       key: 'goodsTitleColor',
       component: 'color',
       value: '#000000',
@@ -129,19 +133,19 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
-      label: '展示类型',
+      group: i18n.t('62d2fa27.90507a'),
+      label: i18n.t('62d2fa27.1711a8'),
       key: 'goodsShowMoreBtn',
       component: 'radiobutton',
       options: [
-        { name: '显示', label: true },
-        { name: '隐藏', label: false }
+        { name: i18n.t('62d2fa27.4d775d'), label: true },
+        { name: i18n.t('62d2fa27.dce537'), label: false }
       ],
       value: true
     },
     {
-      group: '更多按钮',
-      label: '按钮颜色',
+      group: i18n.t('62d2fa27.90507a'),
+      label: i18n.t('62d2fa27.351201'),
       key: 'goodsMoreBtnColor',
       component: 'color',
       value: '#000000',
@@ -150,7 +154,7 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
+      group: i18n.t('62d2fa27.90507a'),
       label: '',
       key: 'goodsMoreLink',
       component: function (h, { key }) {
@@ -183,6 +187,7 @@ const config = {
     }
 
     return {
+      id: v?.id,
       name: v.name,
       ...rest,
       // 数据设置：保存后回显必须带回 data、dataType、dataCount（data 在顶层，dataType/dataCount 可能在 base 内）
@@ -209,6 +214,7 @@ const config = {
   },
   transformOut: (v, wgtList, regionauth_id) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         // 使用公共函数处理 base 中的样式数据转换

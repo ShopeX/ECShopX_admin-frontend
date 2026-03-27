@@ -7,15 +7,17 @@
   <SpPage>
     <div class="custom-tree-container">
       <div class="action-container">
-        <el-button type="primary" icon="plus" @click="updateCategory"> 保存栏目 </el-button>
+        <el-button type="primary" icon="plus" @click="updateCategory">
+          {{ $t('692f821b.fedd44') }}
+        </el-button>
       </div>
 
       <div class="block">
         <ul class="custom-tree-node-title">
-          <li>栏目名称</li>
-          <li>栏目排序</li>
-          <li>复制链接</li>
-          <li>操作</li>
+          <li>{{ $t('692f821b.0d4458') }}</li>
+          <li>{{ $t('692f821b.0e2532') }}</li>
+          <li>{{ $t('692f821b.879058') }}</li>
+          <li>{{ $t('692f821b.2b6bc0') }}</li>
         </ul>
       </div>
       <div class="tree-background block">
@@ -28,18 +30,18 @@
           <ul slot-scope="{ node, data }" class="custom-tree-node">
             <li>
               <i v-if="data.level == 0" /><i v-else>　├─</i>
-              <input v-model="data.category_name" placeholder="栏目名称" />
+              <input v-model="data.category_name" :placeholder="$t('692f821b.0d4458')">
               <!-- <span class="add-child-category" v-if="data.level == 0"
                   @click="append(data.children, 1)">
             <i class="el-icon-plus"></i>增加子栏目 
           </span> -->
             </li>
             <li>
-              <input v-model="data.sort" placeholder="栏目排序" />
+              <input v-model="data.sort" :placeholder="$t('692f821b.0e2532')">
             </li>
             <li v-clipboard:copy="data.link" v-clipboard:success="onCopy">
-              <input v-model="data.link" class="copy-link" type="text" />
-              <i class="el-icon-copy-document" /> 复制栏目链接
+              <input v-model="data.link" class="copy-link" type="text">
+              <i class="el-icon-copy-document" /> {{ $t('692f821b.25345a') }}
             </li>
             <li>
               <span class="remove-category" @click="deleteCategory(node, data)">
@@ -50,7 +52,9 @@
         </el-tree>
 
         <div class="add-category">
-          <span @click="append(categoryList)"><i class="el-icon-plus" />增加栏目</span>
+          <span @click="append(categoryList)"
+            ><i class="el-icon-plus" />{{ $t('692f821b.a8f195') }}</span
+          >
         </div>
       </div>
       <imgPicker
@@ -95,7 +99,7 @@ export default {
   methods: {
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('692f821b.20a495'),
         showClose: true
       })
     },
@@ -118,7 +122,7 @@ export default {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
             this.$message({
               type: 'error',
-              message: '同级栏目名称不能相同'
+              message: this.$t('692f821b.51c077')
             })
             return false
           }
@@ -136,7 +140,7 @@ export default {
             ) {
               this.$message({
                 type: 'error',
-                message: '同级栏目名称不能相同'
+                message: this.$t('692f821b.51c077')
               })
               return false
             }
@@ -150,15 +154,15 @@ export default {
       saveArticleCategory({ form: form }).then((response) => {
         this.$message({
           type: 'success',
-          message: '保存栏目成功'
+          message: this.$t('692f821b.14efdc')
         })
         this.getArticleCategory()
       })
     },
     deleteCategory(node, data) {
-      this.$confirm('此操作将删除该栏目, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('692f821b.ddaf50'), this.$t('692f821b.02d981'), {
+        confirmButtonText: this.$t('692f821b.38cf16'),
+        cancelButtonText: this.$t('692f821b.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -166,7 +170,7 @@ export default {
             deleteArticleCategoryInfo(data.category_id).then((response) => {
               this.$message({
                 type: 'success',
-                message: '删除栏目成功'
+                message: this.$t('692f821b.e677ea')
               })
               this.getArticleCategory()
             })
@@ -180,7 +184,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('692f821b.2111cc')
           })
         })
     },
@@ -209,7 +213,7 @@ export default {
         if (catNameLength > 12) {
           this.$message({
             type: 'error',
-            message: '栏目名称长度最多6个汉字或12个字符'
+            message: this.$t('692f821b.2a2979')
           })
           return false
         }
@@ -217,7 +221,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '栏目不能为空'
+          message: this.$t('692f821b.c62f2f')
         })
         return false
       }

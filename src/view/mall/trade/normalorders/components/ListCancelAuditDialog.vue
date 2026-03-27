@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="取消订单退款审核"
+    :title="$t('f7881862.763eea')"
     :visible.sync="visible"
     :before-close="handleCancelOrderCancel"
     width="57%"
@@ -13,65 +13,79 @@
     <template>
       <el-row :gutter="100">
         <el-col :span="24">
-          <span class="grid-content">订单号:{{ cancelData.order_id }}</span>
+          <span class="grid-content">{{ $t('f7881862.070dce') }}{{ cancelData.order_id }}</span>
         </el-col>
         <el-col :span="24">
-          <span v-if="cancelData.cancel_from == 'buyer'">取消来源:消费者申请</span>
-          <span v-else>取消来源:系统自动取消</span>
+          <span v-if="cancelData.cancel_from == 'buyer'">{{ $t('f7881862.497ac9') }}</span>
+          <span v-else>{{ $t('f7881862.f01ac7') }}</span>
         </el-col>
         <el-col :span="24">
-          <span>申请时间:{{ cancelData.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+          <span
+            >{{ $t('f7881862.796c1b')
+            }}{{ cancelData.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span
+          >
         </el-col>
         <el-col :span="24">
-          <span>退款状态:</span>
-          <span v-if="cancelData.refund_status == 'READY'">待审核</span>
-          <span v-if="cancelData.refund_status == 'AUDIT_SUCCESS'">审核成功待退款</span>
-          <span v-if="cancelData.refund_status == 'SUCCESS'">退款成功</span>
-          <span v-if="cancelData.refund_status == 'SHOP_CHECK_FAILS'">商家审核不通过</span>
-          <span v-if="cancelData.refund_status == 'CANCEL'">撤销退款</span>
-          <span v-if="cancelData.refund_status == 'PROCESSING'">已发起退款等待到账</span>
-          <span v-if="cancelData.refund_status == 'FAILS'">退款失败</span>
-          <span v-if="cancelData.refund_status == 'WAIT_CHECK'">待审核</span>
-          <span v-if="cancelData.refund_status == 'WAIT_REFUND'">等待退款</span>
+          <span>{{ $t('f7881862.a2f94f') }}</span>
+          <span v-if="cancelData.refund_status == 'READY'">{{ $t('f7881862.5cb424') }}</span>
+          <span v-if="cancelData.refund_status == 'AUDIT_SUCCESS'">{{
+            $t('f7881862.202a8b')
+          }}</span>
+          <span v-if="cancelData.refund_status == 'SUCCESS'">{{ $t('f7881862.d58cbd') }}</span>
+          <span v-if="cancelData.refund_status == 'SHOP_CHECK_FAILS'">{{
+            $t('f7881862.0e14e3')
+          }}</span>
+          <span v-if="cancelData.refund_status == 'CANCEL'">{{ $t('f7881862.0a7dff') }}</span>
+          <span v-if="cancelData.refund_status == 'PROCESSING'">{{ $t('f7881862.cd3291') }}</span>
+          <span v-if="cancelData.refund_status == 'FAILS'">{{ $t('f7881862.7c2544') }}</span>
+          <span v-if="cancelData.refund_status == 'WAIT_CHECK'">{{ $t('f7881862.5cb424') }}</span>
+          <span v-if="cancelData.refund_status == 'WAIT_REFUND'">{{ $t('f7881862.12e196') }}</span>
         </el-col>
         <el-col :span="24">
-          <span>处理进度:</span>
-          <span v-if="cancelData.progress == '0'">待处理</span>
-          <span v-if="cancelData.progress == '1'">已取消</span>
-          <span v-if="cancelData.progress == '2'">退款中</span>
-          <span v-if="cancelData.progress == '3'">已完成</span>
-          <span v-if="cancelData.progress == '4'">已驳回</span>
+          <span>{{ $t('f7881862.7f1328') }}</span>
+          <span v-if="cancelData.progress == '0'">{{ $t('f7881862.047109') }}</span>
+          <span v-if="cancelData.progress == '1'">{{ $t('f7881862.2111cc') }}</span>
+          <span v-if="cancelData.progress == '2'">{{ $t('f7881862.07e608') }}</span>
+          <span v-if="cancelData.progress == '3'">{{ $t('f7881862.fad522') }}</span>
+          <span v-if="cancelData.progress == '4'">{{ $t('f7881862.dbf36d') }}</span>
         </el-col>
         <el-col :span="24">
-          <span>退款金额:{{ cancelData.fee_symbol }}{{ cancelData.total_fee / 100 }}</span>
+          <span
+            >{{ $t('f7881862.b772c7') }}{{ cancelData.fee_symbol
+            }}{{ cancelData.total_fee / 100 }}</span
+          >
         </el-col>
         <el-col :span="24">
-          <span v-if="cancelData.pay_type == 'wxpay'">支付方式:微信支付</span>
+          <span v-if="cancelData.pay_type == 'wxpay'">{{ $t('f7881862.f5041a') }}</span>
         </el-col>
         <el-col :span="24">
-          <span>取消原因:{{ cancelData.cancel_reason }}</span>
+          <span>{{ $t('f7881862.27910a') }}{{ cancelData.cancel_reason }}</span>
         </el-col>
       </el-row>
       <el-divider />
       <el-form ref="cancelForm" :model="cancelForm" class="" label-width="100px">
-        <el-form-item label="处理结果:">
+        <el-form-item :label="$t('f7881862.de455e')">
           <el-row>
             <el-col :span="20">
               <template>
-                <el-radio v-model="cancelForm.check_cancel" label="0"> 不同意 </el-radio>
-                <el-radio v-model="cancelForm.check_cancel" label="1"> 同意 </el-radio>
+                <el-radio v-model="cancelForm.check_cancel" label="0">
+                  {{ $t('f7881862.1bf19c') }}
+                </el-radio>
+                <el-radio v-model="cancelForm.check_cancel" label="1">
+                  {{ $t('f7881862.e61f2c') }}
+                </el-radio>
               </template>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item v-if="cancelForm.check_cancel == '0'" label="拒绝原因:">
+        <el-form-item v-if="cancelForm.check_cancel == '0'" :label="$t('f7881862.de77c5')">
           <el-row>
             <el-col :span="24">
               <el-input
                 v-model="cancelForm.shop_reject_reason"
                 type="textarea"
                 :rows="3"
-                placeholder="请输入拒绝原因"
+                :placeholder="$t('f7881862.fc955a')"
               />
             </el-col>
           </el-row>
@@ -79,8 +93,10 @@
       </el-form>
     </template>
     <div slot="footer" class="dialog-footer">
-      <el-button @click.native="handleCancelOrderCancel"> 取消 </el-button>
-      <el-button type="primary" @click="submitCancelConfirmAction"> 确定 </el-button>
+      <el-button @click.native="handleCancelOrderCancel"> {{ $t('f7881862.625fb2') }} </el-button>
+      <el-button type="primary" @click="submitCancelConfirmAction">
+        {{ $t('f7881862.38cf16') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -123,12 +139,12 @@ export default {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()
-          this.$message.success('审核成功!')
+          this.$message.success(this.$t('f7881862.388738'))
         } else if (cancelOrderStatus == 'SHOP_CHECK_FAILS') {
           this.handleCancelOrderCancel()
-          this.$message.success('审核拒绝成功!')
+          this.$message.success(this.$t('f7881862.1cd415'))
         } else {
-          this.$message.error('审核失败!')
+          this.$message.error(this.$t('f7881862.f74090'))
           return false
         }
       })

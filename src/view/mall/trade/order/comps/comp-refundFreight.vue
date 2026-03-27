@@ -15,8 +15,8 @@
   <div class="comp-refund-amount">
     <el-input v-model="fee" type="text" @change="onChangeFee" />
     <div class="refund-amount-tip">
-      <div>实际可退运费：{{ getTotalFee() }}</div>
-      <el-button type="text" @click="refundAll">全部退款</el-button>
+      <div>{{ $t('e92098f0.477493') }}{{ getTotalFee() }}</div>
+      <el-button type="text" @click="refundAll">{{ $t('e92098f0.3593b9') }}</el-button>
     </div>
   </div>
 </template>

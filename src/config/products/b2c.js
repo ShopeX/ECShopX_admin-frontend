@@ -4,10 +4,10 @@
  */
 export default {
   productName: 'B2C',
-  systemTitle: '云店管理中心',
-  systemTitleShopadmin: '店铺管理中心',
-  systemTitleMerchant: '商户管理中心',
-  systemTitleSupplier: '供应商管理中心',
+  systemTitle: '53a462c4.65bb11',
+  systemTitleShopadmin: '53a462c4.5a6369',
+  systemTitleMerchant: '53a462c4.dd5a0e',
+  systemTitleSupplier: '53a462c4.67602b',
   logo: 'logo-yd.png',
   loginBackground: 'ecxbg.jpg',
   footerBackground: 'footer-yd.png',

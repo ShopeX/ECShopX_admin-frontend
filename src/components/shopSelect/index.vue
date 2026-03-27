@@ -18,7 +18,7 @@
     <el-cascader
       v-model="selected_params.regions_value"
       class="input-m"
-      placeholder="根据地区筛选"
+      :placeholder="$t('00f01843.491f74')"
       :options="regions"
       filterable
       :props="{ checkStrictly: true }"
@@ -50,8 +50,8 @@
         :value="item.distributor_id"
       />
     </el-select>
-    <span v-else class="input-m content-center muted no-shop">暂无符合要求的店铺</span>
-    <el-button @click="init"> 重置 </el-button>
+    <span v-else class="input-m content-center muted no-shop">{{ $t('00f01843.2b4f29') }}</span>
+    <el-button @click="init"> {{ $t('00f01843.4b9c32') }} </el-button>
   </div>
 </template>
 <script>

@@ -46,7 +46,7 @@
               muted="muted"
               objectFit="cover"
             >
-              <source :src="item.videoUrl" />
+              <source :src="item.videoUrl">
             </video>
             <!-- <video-player
               v-if="item.media_type == 'video' && item.videoUrl"
@@ -117,10 +117,10 @@
 <script>
 import config from './config'
 import { getOuterStyle } from '../../comps/style-utils'
-
+import { i18n } from '@/i18n'
 export default {
   name: 'FullSlider',
-  wgtName: '整屏滑动',
+  wgtName: i18n.t('9221ba28.e39be2'),
   wgtDesc: '',
   wgtIcon: 'auto-height-one',
   wgtType: 1,

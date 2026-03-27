@@ -6,62 +6,66 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="luckydrawList" :height="wheight - 240">
-      <el-table-column prop="luckydraw_name" label="活动名称" />
+      <el-table-column prop="luckydraw_name" :label="$t('f31a353f.39834b')" />
       <!--  <el-table-column label="商品类型" width="120">
           <template slot-scope="scope">
               <el-tag  v-if="scope.row.goods_type=='services'" type="success">服务类商品</el-tag>
               <el-tag v-else>实体类商品</el-tag>
           </template>
       </el-table-column> -->
-      <el-table-column prop="goods_info.itemName" label="商品名称" />
-      <el-table-column label="活动有效期" width="160">
+      <el-table-column prop="goods_info.itemName" :label="$t('f31a353f.1fd1d5')" />
+      <el-table-column :label="$t('f31a353f.e7adc9')" width="160">
         <template slot-scope="scope">
-          {{ scope.row.start_time | datetime }}<br />{{ scope.row.end_time | datetime }}
+          {{ scope.row.start_time | datetime }}<br>{{ scope.row.end_time | datetime }}
         </template>
       </el-table-column>
-      <el-table-column label="单价(积分/现金)" width="120">
+      <el-table-column :label="$t('f31a353f.c5f711')" width="120">
         <template v-if="scope.row.luckydraw_payment == 'cash'" slot-scope="scope">
-          <span>{{ cursymbol + scope.row.luckydraw_price / 100 }}元</span>
+          <span>{{ cursymbol + scope.row.luckydraw_price / 100 }}{{ $t('f31a353f.c16655') }}</span>
         </template>
         <template v-if="scope.row.luckydraw_payment == 'point'" slot-scope="scope">
-          <span>{{ scope.row.luckydraw_point }} 积分</span>
+          <span>{{ scope.row.luckydraw_point }} {{ $t('f31a353f.9f68a8') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column :label="$t('f31a353f.3fea7c')" width="100">
         <template slot-scope="scope">
-          <span v-if="scope.row.activity_status == 1">未开始</span>
-          <span v-else-if="scope.row.activity_status == 2">进行中</span>
-          <span v-else>已结束</span>
+          <span v-if="scope.row.activity_status == 1">{{ $t('f31a353f.dd4e55') }}</span>
+          <span v-else-if="scope.row.activity_status == 2">{{ $t('f31a353f.fb852f') }}</span>
+          <span v-else>{{ $t('f31a353f.047fab') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="中奖号码" width="120">
+      <el-table-column :label="$t('f31a353f.2981da')" width="120">
         <template slot-scope="scope">
           <el-popover
             v-if="scope.row.lucky_code"
             placement="top-start"
-            title="开奖信息"
+            :title="$t('f31a353f.65cba2')"
             width="200"
             trigger="hover"
           >
-            <span v-if="scope.row.third_info.name">彩种:{{ scope.row.third_info.name }}</span
-            ><br />
-            <span v-if="scope.row.third_info.period">期数:{{ scope.row.third_info.period }}</span
-            ><br />
-            <span v-if="scope.row.third_info.number">号码:{{ scope.row.third_info.number }}</span>
+            <span v-if="scope.row.third_info.name"
+              >{{ $t('f31a353f.842867') }}{{ scope.row.third_info.name }}</span
+            ><br>
+            <span v-if="scope.row.third_info.period"
+              >{{ $t('f31a353f.d24a26') }}{{ scope.row.third_info.period }}</span
+            ><br>
+            <span v-if="scope.row.third_info.number"
+              >{{ $t('f31a353f.e5aaf0') }}{{ scope.row.third_info.number }}</span
+            >
             <el-tag slot="reference" type="danger">
               {{ scope.row.lucky_code }}
             </el-tag>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="250">
+      <el-table-column :label="$t('f31a353f.2b6bc0')" width="250">
         <template slot-scope="scope">
           <el-button
             size="mini"
             icon="edit"
             @click="showLuckyDrawDataAction(scope.$index, scope.row)"
           >
-            活动数据
+            {{ $t('f31a353f.ee30fd') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 1"
@@ -69,21 +73,21 @@
             icon="edit"
             @click="editLuckyDrawAction(scope.$index, scope.row)"
           >
-            编辑
+            {{ $t('f31a353f.95b351') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 2"
             size="mini"
             @click="showLuckyDrawAction(scope.$index, scope.row)"
           >
-            查看
+            {{ $t('f31a353f.607e7a') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 2"
             size="mini"
             @click="finishLuckyDrawAction(scope.$index, scope.row)"
           >
-            终止
+            {{ $t('f31a353f.ff6c6a') }}
           </el-button>
           <el-button
             v-if="scope.row.activity_status == 1"
@@ -91,7 +95,7 @@
             type="danger"
             @click="deleteLuckyDrawAction(scope.$index, scope.row)"
           >
-            删 除
+            {{ $t('f31a353f.3f6975') }}
           </el-button>
         </template>
       </el-table-column>
@@ -159,7 +163,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取活动列表失败'
+            message: this.$t('f31a353f.6ddd9b')
           })
         })
     },
@@ -176,9 +180,9 @@ export default {
       this.$router.push({ path: '/member/marketing/luckydraw/add/' + row.luckydraw_id })
     },
     finishLuckyDrawAction(index, row) {
-      this.$confirm('此操作将终止该活动, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('f31a353f.cc0663'), this.$t('f31a353f.02d981'), {
+        confirmButtonText: this.$t('f31a353f.38cf16'),
+        cancelButtonText: this.$t('f31a353f.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -189,14 +193,14 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('f31a353f.2111cc')
           })
         })
     },
     deleteLuckyDrawAction(index, row) {
-      this.$confirm('此操作将删除该活动, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('f31a353f.f6e90f'), this.$t('f31a353f.02d981'), {
+        confirmButtonText: this.$t('f31a353f.38cf16'),
+        cancelButtonText: this.$t('f31a353f.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -207,7 +211,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('f31a353f.2111cc')
           })
         })
     },

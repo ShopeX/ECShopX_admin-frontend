@@ -11,7 +11,7 @@
           ref="decorateRef"
           v-model="content"
           scene="1009"
-          title="导购装修"
+          :title="$t('5a6854d6.45648d')"
           @change="onSaveTemplate"
         />
       </SpIphone>

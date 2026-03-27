@@ -4,10 +4,10 @@
  */
 export default {
   productName: 'B2B2C',
-  systemTitle: '平台管理中心',
-  systemTitleShopadmin: '店铺管理中心',
-  systemTitleMerchant: '商户管理中心',
-  systemTitleSupplier: '供应商管理中心',
+  systemTitle: '50b80b9c.43e95d',
+  systemTitleShopadmin: '50b80b9c.5a6369',
+  systemTitleMerchant: '50b80b9c.dd5a0e',
+  systemTitleSupplier: '50b80b9c.67602b',
   logo: 'logo-b2b2c.png',
   loginBackground: 'ecxbg.jpg',
   footerBackground: 'footer-b2b2c.png',

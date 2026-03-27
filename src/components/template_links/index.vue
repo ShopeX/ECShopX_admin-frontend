@@ -6,7 +6,7 @@
 <template>
   <div class="templateLinks">
     <el-dialog
-      title="设置路径内容"
+      :title="$t('01495e9e.174dd0')"
       :visible="linksVisible"
       custom-class="dialog"
       width="60%"
@@ -138,7 +138,7 @@ export default {
     setComfirm() {
       if (!this.link) {
         this.$message({
-          message: '请选绑定内容',
+          message: this.$t('01495e9e.e244d5'),
           type: 'error'
         })
         return

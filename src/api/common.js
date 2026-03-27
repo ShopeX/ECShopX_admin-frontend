@@ -4,6 +4,7 @@
  */
 import fetch, { axios } from '@/utils/fetch'
 import store from '@/store'
+import { i18n } from '@/i18n'
 
 export function handleUploadFile(query) {
   return fetch({
@@ -50,7 +51,7 @@ export function download() {
     method: 'get',
     params: {
       file_type: 'normal_orders',
-      file_name: '批量发货'
+      file_name: i18n.t('e82ee599.425991')
     }
   })
 }

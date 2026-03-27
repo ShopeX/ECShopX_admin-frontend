@@ -7,7 +7,7 @@
 <template>
   <section class="section section-white content-padded" onload="init()">
     <el-form ref="form" :model="form" label-width="110px">
-      <el-form-item label="地理位置">
+      <el-form-item :label="$t('7d527d35.fc82aa')">
         <div>
           <el-col :span="4">
             <el-cascader
@@ -17,15 +17,19 @@
             />
           </el-col>
           <el-col :span="7">
-            <el-input id="keyword" v-model="form.address" placeholder="请输入具体地址" />
+            <el-input id="keyword" v-model="form.address" :placeholder="$t('7d527d35.739604')" />
           </el-col>
           <el-col :span="1" class="content-center"> &nbsp; </el-col>
           <el-col :span="3">
-            <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
+            <el-button type="primary" @click="searchKeyword()">
+{{
+              $t('7d527d35.83546a')
+            }}
+</el-button>
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="地图定位">
+      <el-form-item :label="$t('7d527d35.86188c')">
         <!-- <div v-if="form.community_id">
           <img :src="form.qqmapimg">
         </div> -->
@@ -38,100 +42,100 @@
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item inline="true" class="demo-form-inline" label="社区经纬度">
+      <el-form-item inline="true" class="demo-form-inline" :label="$t('7d527d35.4cb06f')">
         <el-col :span="3">
-          <el-input v-model="form.lng" readonly placeholder="经度" />
+          <el-input v-model="form.lng" readonly :placeholder="$t('7d527d35.3d18ca')" />
         </el-col>
         <el-col :span="1" class="content-center"> - </el-col>
         <el-col :span="3">
-          <el-input v-model="form.lat" readonly placeholder="纬度" />
+          <el-input v-model="form.lat" readonly :placeholder="$t('7d527d35.6acaee')" />
         </el-col>
       </el-form-item>
-      <el-form-item inline="true" class="demo-form-inline" label="社区详细地址">
+      <el-form-item inline="true" class="demo-form-inline" :label="$t('7d527d35.c16dc6')">
         <div>
           <el-col :span="8">
-            <el-input id="keyword" v-model="form.address" placeholder="请输入具体提货地址" />
+            <el-input id="keyword" v-model="form.address" :placeholder="$t('7d527d35.f8c5c0')" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="社区名称">
+      <el-form-item :label="$t('7d527d35.d541f8')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.community_name" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="团长姓名">
+      <el-form-item :label="$t('7d527d35.07e57c')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.leader_name" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="团长手机">
+      <el-form-item :label="$t('7d527d35.6621f6')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.leader_mobile" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="团长身份证">
+      <el-form-item :label="$t('7d527d35.e46336')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.leader_id_card" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="团长昵称">
+      <el-form-item :label="$t('7d527d35.9315dc')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.leader_nickname" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="备注说明">
+      <el-form-item :label="$t('7d527d35.8a4cf0')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.description" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="推荐人">
+      <el-form-item :label="$t('7d527d35.dd0925')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.referrer" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="BD">
+      <el-form-item :label="$t('7d527d35.87a475')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.bd" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="社区人数">
+      <el-form-item :label="$t('7d527d35.63388b')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.num" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="小区商圈">
+      <el-form-item :label="$t('7d527d35.44bf0a')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.business_district" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="店号">
+      <el-form-item :label="$t('7d527d35.3833a5')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.shop_number" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item label="站点号">
+      <el-form-item :label="$t('7d527d35.dfa7e2')">
         <div>
           <el-col :span="8">
             <el-input v-model="form.site_number" />
@@ -139,13 +143,17 @@
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="large" @click="onSubmit"> 提交 </el-button>
-        <el-button size="large" @click.native.prevent> 取消 </el-button>
+        <el-button type="primary" size="large" @click="onSubmit">
+{{
+          $t('7d527d35.939d53')
+        }}
+</el-button>
+        <el-button size="large" @click.native.prevent>{{ $t('7d527d35.625fb2') }}</el-button>
       </el-form-item>
     </el-form>
     <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button type="primary" @click="imp_poi(poi_info)"> 导入社区地址信息 </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)">{{ $t('7d527d35.d56a1c') }}</el-button>
       </el-col>
       <el-col>{{ poi_info.address }}</el-col>
     </div>
@@ -235,7 +243,7 @@ export default {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('7d527d35.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -244,7 +252,7 @@ export default {
               }
             })
           } else {
-            his.$message.error('保存失败!')
+            this.$message.error(this.$t('7d527d35.73b0d9'))
             return false
           }
         })
@@ -254,7 +262,7 @@ export default {
           if (response.data.data.community_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('7d527d35.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -263,7 +271,7 @@ export default {
               }
             })
           } else {
-            his.$message.error('保存失败!')
+            this.$message.error(this.$t('7d527d35.73b0d9'))
             return false
           }
         })
@@ -329,7 +337,7 @@ export default {
         },
         //若服务请求失败，则运行以下函数
         error: function () {
-          this.$message.error('搜索地址失败!')
+          this.$message.error(this.$t('7d527d35.2b4374'))
         }
       })
     },
@@ -344,14 +352,14 @@ export default {
       //设置搜索的范围和关键字等属性
       if (!this.region) {
         this.$message({
-          message: '请选择地区',
+          message: this.$t('7d527d35.ad1a24'),
           type: 'warning'
         })
         return ''
       }
       if (!this.form.address) {
         this.$message({
-          message: '请输入具体地址',
+          message: this.$t('7d527d35.739604'),
           type: 'warning'
         })
         return ''

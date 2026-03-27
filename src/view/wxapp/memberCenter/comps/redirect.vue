@@ -7,29 +7,31 @@
   <div>
     <el-form ref="form" :model="form" label-position="left" label-width="200px">
       <div class="section-body">
-        <el-form-item label="“积分”点击跳转设置" class="title" />
-        <el-form-item label="外部链接是否开启：">
+        <el-form-item :label="$t('518c5993.4397ff')" class="title" />
+        <el-form-item :label="$t('518c5993.de0720')">
           <el-switch v-model="form.data.point_url_is_open" />
         </el-form-item>
-        <el-form-item label="外部链接小程序appid：">
+        <el-form-item :label="$t('518c5993.c23968')">
           <el-input v-model="form.data.point_app_id" type="text" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="外部链接路径：">
+        <el-form-item :label="$t('518c5993.86a389')">
           <el-input v-model="form.data.point_page" type="text" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="“个人信息”点击跳转设置" class="title" />
-        <el-form-item label="外部链接是否开启：">
+        <el-form-item :label="$t('518c5993.02bef9')" class="title" />
+        <el-form-item :label="$t('518c5993.de0720')">
           <el-switch v-model="form.data.info_url_is_open" />
         </el-form-item>
-        <el-form-item label="外部链接小程序appid：">
+        <el-form-item :label="$t('518c5993.c23968')">
           <el-input v-model="form.data.info_app_id" type="text" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="外部链接路径：">
+        <el-form-item :label="$t('518c5993.86a389')">
           <el-input v-model="form.data.info_page" type="text" style="width: 300px" />
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig">
+          {{ $t('518c5993.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -90,7 +92,7 @@ export default {
       savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('518c5993.3b1083'),
             type: 'success'
           })
         }

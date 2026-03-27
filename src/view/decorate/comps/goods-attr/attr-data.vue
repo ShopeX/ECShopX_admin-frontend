@@ -3,7 +3,7 @@
     <!-- 销售分类 -->
     <CompButton
       v-if="type === 'category'"
-      :placeholder="value?.info?.title || '选择销售分类'"
+      :placeholder="value?.info?.title || $t('40718fc5.8a28fe')"
       :view-btn="false"
       @click="handleSelectCategory"
     />
@@ -11,7 +11,7 @@
     <!-- 管理分类 -->
     <CompButton
       v-if="type === 'main_category'"
-      :placeholder="value?.info?.title || '选择管理分类'"
+      :placeholder="value?.info?.title || $t('40718fc5.c50637')"
       :view-btn="false"
       @click="handleSelectMainCategory"
     />
@@ -19,7 +19,7 @@
     <!-- 限时特惠活动 -->
     <CompButton
       v-if="type === 'seckill'"
-      :placeholder="value?.info?.title || '请选择限时特惠活动'"
+      :placeholder="value?.info?.title || $t('40718fc5.21d2a0')"
       :view-btn="false"
       @click="handleSelectSeckill"
     />
@@ -30,10 +30,16 @@
       <i class="el-icon-arrow-right" />
     </div>
 
+    <!-- 积分商品 -->
+    <div v-if="type === 'pointsmall_items'" class="attr-data-specified" @click="handleSelectPointGoods">
+      <span class="specified-text">{{ pointGoodsDisplayText }}</span>
+      <i class="el-icon-arrow-right" />
+    </div>
+
     <!-- 品类热销榜单 -->
     <CompButton
       v-if="type === 'category_ranking'"
-      :placeholder="value?.info?.title || '选择榜单'"
+      :placeholder="value?.info?.title || $t('40718fc5.74143d')"
       :view-btn="false"
       :clear-btn="false"
       @click="handleSelectRanking"
@@ -42,7 +48,7 @@
     <!-- 平台品类榜单 -->
     <CompButton
       v-if="type === 'platform_ranking'"
-      :placeholder="value?.info?.title || '选择平台榜单'"
+      :placeholder="value?.info?.title || $t('40718fc5.257944')"
       :view-btn="false"
       :clear-btn="false"
       @click="handleSelectPlatformRanking"
@@ -56,17 +62,17 @@
         :precision="0"
         size="small"
         :max="maxPrice || 999999"
-        placeholder="最低价"
+        :placeholder="$t('40718fc5.3d3297')"
         controls-position="right"
         @change="handleChangePrice"
       />
-      <span class="separator">至</span>
+      <span class="separator">{{ $t('40718fc5.981cbe') }}</span>
       <el-input-number
         v-model="maxPrice"
         :min="minPrice || 0"
         :precision="0"
         size="small"
-        placeholder="最高价"
+        :placeholder="$t('40718fc5.dab19a')"
         controls-position="right"
         @change="handleChangePrice"
       />
@@ -75,7 +81,7 @@
     <!-- 活动集合页-秒杀 -->
     <CompButton
       v-if="type === 'promotion'"
-      :placeholder="value?.info?.name || '选择秒杀活动'"
+      :placeholder="value?.info?.name || $t('40718fc5.312bbb')"
       :view-btn="false"
       @click="handleChangePromotion"
     />
@@ -83,7 +89,7 @@
     <!-- 活动集合页-拼团 -->
     <CompButton
       v-if="type === 'group'"
-      :placeholder="value?.info?.name || '选择拼团活动'"
+      :placeholder="value?.info?.name || $t('40718fc5.fde84d')"
       :view-btn="false"
       @click="handleSelectGroup"
     />
@@ -119,7 +125,11 @@ export default {
     },
     itemsDisplayText() {
       const count = this.localValue?.info?.length
-      return count > 0 ? `已选择 ${count} 件商品` : '请选择商品'
+      return count > 0 ? this.$t('40718fc5.e1a5c2', { count }) : this.$t('40718fc5.c5c5f2')
+    },
+    pointGoodsDisplayText() {
+      const count = this.localValue?.info?.length
+      return count > 0 ? this.$t('40718fc5.e1a5c2', { count }) : this.$t('46e04a5c.5d71c6')
     }
   },
   watch: {
@@ -139,6 +149,14 @@ export default {
                 length: this.value?.id ? this.value?.id?.split(',')?.length : 0,
                 type: ''
               }
+            }
+          }
+        } else if (newVal === 'pointsmall_items') {
+          this.localValue = {
+            id: this.value?.id || '',
+            info: {
+              length: this.value?.id ? this.value.id.split(',').length : 0,
+              type: 'pointsmall_items'
             }
           }
         } else {
@@ -211,6 +229,30 @@ export default {
         }
       }
       this.$emit('input', { id: data, info: { length, type: 'group_id' } })
+    },
+    // 选择积分商品
+    async handleSelectPointGoods() {
+      const idStr = this.localValue?.info?.type === 'point' ? this.localValue?.id || '' : ''
+      const list = idStr ? idStr.split(',').map((id) => ({ item_id: id, itemId: id })) : []
+      const result = await this.$picker.goodsitem({
+        isPointGoods: true,
+        multiple: true,
+        rowKey: 'item_id',
+        data: list,
+        regionauth_id: this.$route.query.regionauth_id,
+        distributor_id: this.$route.query.distributor_id,
+        distributor_name: this.$route.query.distributor_name
+      })
+      if (!result || !result.data) return
+      const selected = result.data || []
+      const ids = selected.map((item) => item.item_id || item.itemId).filter(Boolean)
+      const data = ids.join(',')
+      const length = ids.length
+      this.localValue = {
+        id: data,
+        info: { length, type: 'point' }
+      }
+      this.$emit('input', { id: data, info: { length, type: 'point' } })
     },
     // 选择拼团活动
     async handleSelectGroup() {

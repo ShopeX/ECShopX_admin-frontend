@@ -13,7 +13,7 @@ export default [
       auth: false,
       type: 'admin'
     },
-    name: '授权-登录'
+    name: 'dfac0e4e.b85cc4'
   },
   {
     path: '/shopadmin/login',
@@ -22,7 +22,7 @@ export default [
       auth: false,
       type: 'distributor'
     },
-    name: '授权-店铺登录'
+    name: 'dfac0e4e.d846b2'
   },
   {
     path: '/merchant/login',
@@ -31,7 +31,7 @@ export default [
       auth: false,
       type: 'merchant'
     },
-    name: '授权-商户登录'
+    name: 'dfac0e4e.b8d9aa'
   },
   {
     path: '/dealer/login',
@@ -40,7 +40,7 @@ export default [
       auth: false,
       type: 'dealer'
     },
-    name: '授权-经销商登录'
+    name: 'dfac0e4e.eea474'
   },
   {
     path: '/shuyunLogin',
@@ -49,7 +49,7 @@ export default [
       auth: false,
       from: 'shuyun'
     },
-    name: 'shuyun登录'
+    name: 'dfac0e4e.4479f7'
   },
 
   // {
@@ -86,12 +86,12 @@ export default [
       layout: 'empty'
     },
     path: '/wxapp/manage/decorate',
-    name: `模板编辑`,
+    name: 'dfac0e4e.72c663',
     component: () => import('@/view/decorate/index')
   },
   {
     path: '/wxapp/manage/decorate_pc',
-    name: `Pc模板编辑`,
+    name: 'dfac0e4e.357db2',
     component: () => import('@/view/decorate/pc/index')
   },
   {
@@ -101,7 +101,7 @@ export default [
       auth: false,
       type: 'supplier'
     },
-    name: '供应商登录'
+    name: 'dfac0e4e.44c6ea'
   },
   {
     path: '/supplier/setting',
@@ -109,7 +109,7 @@ export default [
     children: [
       {
         path: 'supplier_register',
-        name: `供应商入驻`,
+        name: 'dfac0e4e.1daa33',
         component: () => import('@/view/auth/certify')
       }
     ]

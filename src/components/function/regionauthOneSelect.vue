@@ -6,13 +6,13 @@
 <template>
   <el-dialog
     class="store-dialog"
-    title="选择区域"
+    :title="$t('3967bd2c.97d03d')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <el-input v-model="regionauth_name" placeholder="输入区域名称" clearable>
+      <el-input v-model="regionauth_name" :placeholder="$t('3967bd2c.1d1147')" clearable>
         <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
       </el-input>
     </div>
@@ -23,7 +23,7 @@
       tooltip-effect="dark"
       style="width: 100%"
     >
-      <el-table-column label="选择">
+      <el-table-column :label="$t('3967bd2c.153fa6')">
         <template slot-scope="scope">
           <el-radio
             v-model="templateRadio"
@@ -34,7 +34,7 @@
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column prop="regionauth_name" label="区域名称" />
+      <el-table-column prop="regionauth_name" :label="$t('3967bd2c.faffe5')" />
     </el-table>
     <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
@@ -45,8 +45,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('3967bd2c.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('3967bd2c.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>

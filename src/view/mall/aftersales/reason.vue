@@ -8,7 +8,7 @@
     <!--搜索添加-->
     <el-row :gutter="40">
       <el-col class="action-container">
-        <el-button type="primary" @click="handleNew"> 新增原因 </el-button>
+        <el-button type="primary" @click="handleNew"> {{ $t('2090c821.454c5b') }} </el-button>
       </el-col>
     </el-row>
 
@@ -17,14 +17,16 @@
         v-loading="loading"
         :data="reason_list"
         :height="wheight - 300"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('2090c821.f09b12')"
       >
-        <el-table-column label="操作" width="150">
+        <el-table-column :label="$t('2090c821.2b6bc0')" width="150">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              {{ $t('2090c821.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="原因">
+        <el-table-column prop="attribute_name" :label="$t('2090c821.41dfb0')">
           <template slot-scope="scope">
             <div>{{ scope.row }}</div>
           </template>
@@ -33,13 +35,13 @@
     </el-card>
 
     <!--新增修改-->
-    <sideBar :visible.sync="show_sideBar" :title="'添加售后原因'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('2090c821.049ca9')">
       <el-form>
-        <el-form-item label="售后原因">
+        <el-form-item :label="$t('2090c821.160adc')">
           <el-input v-model="form.reason" maxlength="120" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="add"> 提交 </el-button>
+          <el-button type="primary" @click="add"> {{ $t('2090c821.939d53') }} </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -81,7 +83,7 @@ export default {
     },
     // 删除
     handleDelete(data) {
-      this.$confirm('确认删除该原因么？')
+      this.$confirm(this.$t('2090c821.e9eff5'))
         .then((_) => {
           this.reason_list.splice(data.$index, 1)
           this.save()
@@ -100,13 +102,13 @@ export default {
         this.reason_list.push(this.form.reason)
         this.save()
       } else {
-        this.$message({ type: 'warning', message: '请输入原因' })
+        this.$message({ type: 'warning', message: this.$t('2090c821.d63114') })
       }
     },
     // 保存数据
     save() {
       addAftersalesReason({ reason: this.reason_list }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('2090c821.33130f') })
         this.resetData()
         this.getList()
       })
@@ -116,7 +118,7 @@ export default {
       // console.log('获取数据')
       // this.loading = true
       getAftersalesReason([]).then((res) => {
-        console.log('返回数据', res)
+        console.log('Response data', res)
         this.reason_list = res.data.data
       })
     }

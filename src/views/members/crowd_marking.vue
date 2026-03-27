@@ -18,7 +18,7 @@
       />
 
       <div class="action-container mt-4">
-        <el-button type="primary" @click="handleCreate"> 创建人群 </el-button>
+        <el-button type="primary" @click="handleCreate">{{ $t('c9953411.bef304') }}</el-button>
       </div>
 
       <SpFinder
@@ -59,33 +59,7 @@ export default {
         tag_name: '',
         created: []
       },
-      searchFormItems: [
-        {
-          formItemClass: 'w-1/3',
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入标签名称',
-            clearable: true
-          },
-          fieldName: 'tag_name',
-          label: '标签名称'
-        },
-        {
-          formItemClass: 'w-2/4',
-          component: 'datetimepicker',
-          componentProps: {
-            type: 'datetimerange',
-            rangeSeparator: '至',
-            startPlaceholder: '开始日期',
-            endPlaceholder: '结束日期',
-            format: 'timestamp',
-            valueFormat: 'yyyy-MM-dd'
-          },
-          fieldName: 'created',
-          label: '创建时间',
-          size: 'small'
-        }
-      ],
+      searchFormItems: [],
       finderSetting: null,
       selectedRows: []
     }
@@ -93,26 +67,27 @@ export default {
   computed: {
     ...mapGetters(['wheight']),
     formList() {
+      const t = this.$t.bind(this)
       return [
         {
-          label: '标签名称',
+          label: t('c9953411.341fe8'),
           key: 'name',
           type: 'input',
           required: true,
-          placeholder: '请输入标签名称'
+          placeholder: t('c9953411.6f81f3')
         },
         {
-          label: '人群说明',
+          label: t('c9953411.5893e9'),
           key: 'description',
           type: 'textarea',
           required: true,
-          placeholder: '请输入人群说明',
+          placeholder: t('c9953411.ff913c'),
           component: ({ key }, value) => {
             return (
               <el-input
                 type='textarea'
                 v-model={value[key]}
-                placeholder='请输入人群说明'
+                placeholder={t('c9953411.ff913c')}
                 rows={4}
               />
             )
@@ -122,32 +97,61 @@ export default {
     }
   },
   mounted() {
+    const t = this.$t.bind(this)
+    this.searchFormItems = [
+      {
+        formItemClass: 'w-1/3',
+        component: 'input',
+        componentProps: {
+          placeholder: t('c9953411.6f81f3'),
+          clearable: true
+        },
+        fieldName: 'tag_name',
+        label: t('c9953411.341fe8')
+      },
+      {
+        formItemClass: 'w-2/4',
+        component: 'datetimepicker',
+        componentProps: {
+          type: 'datetimerange',
+          rangeSeparator: t('c9953411.981cbe'),
+          startPlaceholder: t('c9953411.b44c0f'),
+          endPlaceholder: t('c9953411.1d468b'),
+          format: 'timestamp',
+          valueFormat: 'yyyy-MM-dd'
+        },
+        fieldName: 'created',
+        label: t('c9953411.eca37c'),
+        size: 'small'
+      }
+    ]
     this.initFinderSetting()
   },
   methods: {
     initFinderSetting() {
       const vm = this
+      const t = vm.$t.bind(vm)
       this.finderSetting = createSetting({
         columns: [
           {
-            name: '标签名称',
+            name: t('c9953411.341fe8'),
             key: 'rule_name',
             width: 200
           },
           {
-            name: '人群说明',
+            name: t('c9953411.5893e9'),
             key: 'description',
             minWidth: 300
           },
           {
-            name: '创建时间',
+            name: t('c9953411.eca37c'),
             key: 'created',
             width: 180
           }
         ],
         actions: [
           {
-            name: '详情',
+            name: t('c9953411.f26225'),
             type: 'button',
             buttonType: 'text',
             action: {
@@ -213,9 +217,9 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor'), query: { id: row.rule_id } })
     },
     handleDelete(row) {
-      this.$confirm('此操作将永久删除该标签,是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('c9953411.b1b628'), this.$t('c9953411.02d981'), {
+        confirmButtonText: this.$t('c9953411.38cf16'),
+        cancelButtonText: this.$t('c9953411.625fb2'),
         type: 'warning'
       })
         .then(async () => {
@@ -223,20 +227,20 @@ export default {
             // await this.$api.member.deleteAudience(row.id)
             this.$message({
               type: 'success',
-              message: '删除成功'
+              message: this.$t('c9953411.0007d1')
             })
             this.$refs.finder.refresh()
           } catch (error) {
             this.$message({
               type: 'error',
-              message: '删除失败'
+              message: this.$t('c9953411.acf066')
             })
           }
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('c9953411.c34281')
           })
         })
     },

@@ -54,12 +54,7 @@
       }"
       url="/promotions/liverooms"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '房间ID', key: 'roomid', width: 80 },
-          { name: '直播活动', key: 'name' }
-        ]
-      }"
+      :setting="liveSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -71,6 +66,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -78,9 +74,20 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择直播间'
+    title: i18n.t('7f395b54.6e102c')
   },
   props: ['value'],
+  computed: {
+    liveSetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: t('7f395b54.e3778c'), key: 'roomid', width: 80 },
+          { name: t('7f395b54.abf66f'), key: 'name' }
+        ]
+      }
+    }
+  },
   data() {
     return {
       formData: {
@@ -89,7 +96,9 @@ export default {
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('7f395b54.6e102c')
+  },
   methods: {
     beforeSearch(params) {
       params = {
@@ -101,7 +110,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data && Array.isArray(this.value.data) && this.value.data.length > 0) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.roomid))
+        const selectRows = list.filter(item => this.value.data.includes(item.roomid))
         const { finderTable } = this.$refs.finder.$refs
         // 只有当找到匹配的项时才设置选中状态，避免清空其他选中项
         if (selectRows.length > 0) {

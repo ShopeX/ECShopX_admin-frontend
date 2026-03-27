@@ -5,23 +5,23 @@
 
 <template>
   <section v-if="name === 'nearbyShop'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('1d343cce.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('1d343cce.32c65d')">
           <el-input v-model="base.title" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('1d343cce.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="商家分类">
+        <el-form-item :label="$t('1d343cce.4542a1')">
           <el-button
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
             size="mini"
             @click="addTab"
           >
-            添加标签
+            {{ $t('1d343cce.736eaa') }}
           </el-button>
           <p>
             <draggable
@@ -36,11 +36,11 @@
             </draggable>
           </p>
         </el-form-item>
-        <el-form-item label="显示优惠券">
+        <el-form-item :label="$t('1d343cce.5ea469')">
           <el-switch v-model="base.show_coupon" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
-        <el-form-item label="商家排序">
-          <span>LBS定位</span>
+        <el-form-item :label="$t('1d343cce.1e9b1d')">
+          <span>{{ $t('1d343cce.2ce41d') }}</span>
         </el-form-item>
       </el-form>
     </div>

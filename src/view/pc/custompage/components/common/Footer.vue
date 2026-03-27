@@ -11,10 +11,10 @@
           <h4 class="content-c2">Copyright ©2017, ＊＊＊＊＊＊, Ltd. All Rights Reserved.</h4>
           <ul class="privacy">
             <li class="content-c1">
-              <a class="content-c0" @click="open1">法律声明</a>
+              <a class="content-c0" @click="open1">{{ $t('3275db64.e6368f') }}</a>
             </li>
             <li class="content-c1">
-              <a class="content-c0" @click="open2">隐私条款</a>
+              <a class="content-c0" @click="open2">{{ $t('3275db64.584716') }}</a>
             </li>
           </ul>
         </div>
@@ -28,7 +28,7 @@
           <li class="tel">
             <a class="c5" target="_blank">123456789</a>
           </li>
-          <li class="time">周一至周日 10:00-23:00</li>
+          <li class="time">{{ $t('3275db64.141e23') }}</li>
         </div>
 
         <li class="online">
@@ -50,20 +50,20 @@ export default {
   methods: {
     open1() {
       this.$notify.info({
-        title: '法律声明',
-        message: '＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊'
+        title: this.$t('3275db64.e6368f'),
+        message: this.$t('3275db64.21305c')
       })
     },
     open2() {
       this.$notify.info({
-        title: '隐私条款',
-        message: '本网站将不会严格遵守有关法律法规和本隐私政策所载明的内容收集、使用您的信息'
+        title: this.$t('3275db64.584716'),
+        message: this.$t('3275db64.1b95ae')
       })
     },
     open3() {
       this.$notify({
-        title: '离线帮助',
-        message: '没人会帮助你，请自己靠自己',
+        title: this.$t('3275db64.e69ae5'),
+        message: this.$t('3275db64.910b65'),
         type: 'warning'
       })
     }

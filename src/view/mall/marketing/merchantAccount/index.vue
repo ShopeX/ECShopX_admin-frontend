@@ -17,25 +17,32 @@
       }"
       url="/merchant/operator"
     />
-    <el-dialog title="编辑账号信息" :visible.sync="visible" width="30%" :before-close="handleClose">
+    <el-dialog
+      :title="$t('6bfa2979.67b76a')"
+      :visible.sync="visible"
+      width="30%"
+      :before-close="handleClose"
+    >
       <el-form :model="form" label-width="60px">
-        <el-form-item label="登录账号">
+        <el-form-item :label="$t('6bfa2979.bb2cdf')">
           <span>{{ form.mobile }}</span>
           <!-- <el-input v-model="form.mobile" autocomplete="off"></el-input> -->
         </el-form-item>
-        <el-form-item label="登录密码">
+        <el-form-item :label="$t('6bfa2979.2646b8')">
           <el-input
             v-model="form.password"
             type="password"
             autocomplete="off"
             style="max-width: 160px"
           />
-          <span style="color: #999"> 密码6-16位，支持字母、数字、下划线</span>
+          <span style="color: #999">{{ $t('6bfa2979.c62756') }}</span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="handleClose">取 消</el-button>
-        <el-button type="primary" size="small" @click="fnConfirm">确 定</el-button>
+        <el-button size="small" @click="handleClose">{{ $t('6bfa2979.c08ab9') }}</el-button>
+        <el-button type="primary" size="small" @click="fnConfirm">{{
+          $t('6bfa2979.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </SpPage>
@@ -64,10 +71,12 @@ export default {
   },
   methods: {
     fnChangePassword(row) {
-      const message = `<p>请确认是否重置【商户名称】的密码<br/><span class='tips'>（新密码将以短信形式发送至其手机号上，<br/>短信费用将从短信余额中扣除）</span></p>`
-      this.$confirm(message, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const message = `<p>${this.$t('6bfa2979.183307')}<br/><span class='tips'>（${this.$t(
+        '6bfa2979.1e9e7b'
+      )}）</span></p>`
+      this.$confirm(message, this.$t('6bfa2979.02d981'), {
+        confirmButtonText: this.$t('6bfa2979.38cf16'),
+        cancelButtonText: this.$t('6bfa2979.625fb2'),
         type: 'warning',
         dangerouslyUseHTMLString: true,
         center: true
@@ -76,7 +85,7 @@ export default {
         if (result.data.data.status) {
           this.$message({
             type: 'success',
-            message: '修改成功!'
+            message: this.$t('6bfa2979.9844f9')
           })
         }
       })
@@ -92,7 +101,7 @@ export default {
         password: this.form.password
       })
       if (result.data.data.status) {
-        this.$message.success('修改成功')
+        this.$message.success(this.$t('6bfa2979.69be67'))
         this.handleClose()
       }
     },

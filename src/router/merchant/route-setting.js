@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '设置'
+const name = '0c22b63a.e366cc'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,40 +11,40 @@ export default {
   children: [
     {
       path: 'Merchantstaff',
-      name: `账号管理-店铺管理员`,
+      name: '0c22b63a.0f2f5b',
       component: () => import('@/view/base/account/storestaff')
       // component: () => import('@/view/base/exportlog/index')
     },
     {
       path: 'account',
-      name: `账号管理-商户账号管理`,
+      name: '0c22b63a.ebea9e',
       component: () => import('@/view/mall/marketing/merchantAccount')
     },
     {
       path: 'staff/selfdeliverystaff',
-      name: `账号管理-商户配送员`,
+      name: '0c22b63a.24a85d',
       component: () => import('@/views/settings/deliverySettings/delivery-management')
     },
     {
       path: 'baseexport',
-      name: `导出列表`,
+      name: '0c22b63a.d12fb1',
       component: () => import('@/view/base/exportlog/index')
     },
 
     {
       path: 'operatorlogs',
-      name: `操作日志`,
+      name: '0c22b63a.cda84b',
       component: () => import('@/views/settings/systemInfo/operation-log')
     },
 
     {
       path: 'datapassapprove',
-      name: '权限申请',
+      name: '0c22b63a.74236b',
       component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
     },
     {
       path: 'datapassapply',
-      name: `权限审批`,
+      name: '0c22b63a.54d3e9',
       component: () => import('@/view/base/setting/authorityapproval'),
       children: [
         {

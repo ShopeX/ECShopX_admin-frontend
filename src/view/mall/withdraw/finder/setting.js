@@ -18,11 +18,11 @@ export default (vm) => {
   }
   const formatStatus = (val) => {
     if (val == 'pending') {
-      return '提现处理中'
+      return vm.$t('6d0e9bce.2e89ce')
     } else if (val == 'succeeded') {
-      return '提现成功'
+      return vm.$t('6d0e9bce.dca060')
     } else if (val == 'failed') {
-      return '提现失败'
+      return vm.$t('6d0e9bce.f285c5')
     }
   }
   const formatMoney = (money) => {
@@ -30,13 +30,13 @@ export default (vm) => {
   }
   return createSetting({
     columns: [
-      { name: '提现日期', key: 'create_time', width: 200, formatter: formatDate },
-      { name: '提现账户', key: 'user_name', width: 150 },
-      { name: '提现卡号', key: 'bank_card', width: 150 },
-      { name: '提现类型', key: 'cash_type', width: 150 },
-      { name: '提现状态', key: 'status', width: 150, formatter: formatStatus },
-      { name: '提现金额', key: 'cash_amt', width: 150, formatter: formatMoney },
-      { name: '备注', key: 'remark' }
+      { name: vm.$t('6d0e9bce.9c40d4'), key: 'create_time', width: 200, formatter: formatDate },
+      { name: vm.$t('6d0e9bce.24f1fc'), key: 'user_name', width: 150 },
+      { name: vm.$t('6d0e9bce.2c47bd'), key: 'bank_card', width: 150 },
+      { name: vm.$t('6d0e9bce.79b414'), key: 'cash_type', width: 150 },
+      { name: vm.$t('6d0e9bce.0ed783'), key: 'status', width: 150, formatter: formatStatus },
+      { name: vm.$t('6d0e9bce.292a28'), key: 'cash_amt', width: 150, formatter: formatMoney },
+      { name: vm.$t('6d0e9bce.2432b5'), key: 'remark' }
     ]
   })
 }

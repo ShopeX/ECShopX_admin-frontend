@@ -7,56 +7,59 @@
   <div>
     <el-row class="section-white content-padded coupon-header">
       <el-col :span="6" class="coupon-img">
-        <img src="@/assets/img/webchat.png" alt="图片" />
+        <img src="@/assets/img/webchat.png" :alt="$t('88683ec4.20def7')">
       </el-col>
       <el-col :span="18" class="coupon-desc">
-        <h3>派券大师<span>(2018年9月30日到期)</span></h3>
+        <h3>
+          {{ $t('88683ec4.9c880c') }}<span>{{ $t('88683ec4.823e89') }}</span>
+        </h3>
         <p>
-          <span class="coupon-desc-content" :class="isHidden ? 'content-hidden' : ''"
-            >如果你无法简洁的描述你的想法，那只能说明你不够了解它</span
+          <span class="coupon-desc-content" :class="isHidden ? 'content-hidden' : ''">{{
+            $t('88683ec4.638ca1')
+          }}</span
           ><span v-if="isHidden" class="more" @click="showAll"
-            >更多<i class="el-icon-arrow-down" /></span
+            >{{ $t('88683ec4.0ec9ea') }}<i class="el-icon-arrow-down" /></span
           ><span v-if="!isHidden" class="more" @click="contentHidden"
-            >收起<i class="el-icon-arrow-up"
+            >{{ $t('88683ec4.def9e9') }}<i class="el-icon-arrow-up"
           /></span>
         </p>
         <div class="coupon-opr">
-          <el-button type="primary" size="small"> 立即选购 </el-button>
-          <el-button size="small"> 查看教程 </el-button>
+          <el-button type="primary" size="small"> {{ $t('88683ec4.7b2567') }} </el-button>
+          <el-button size="small"> {{ $t('88683ec4.f7e26a') }} </el-button>
         </div>
       </el-col>
     </el-row>
     <div class="section-white coupon-body content-padded">
       <div class="scene-box">
         <div class="section-header with-border">
-          <h3>场景满足</h3>
+          <h3>{{ $t('88683ec4.3de9d8') }}</h3>
         </div>
         <div class="section-body">
-          <div class="scene-item">[吸引注册]：满足门店通过优惠券快速获客。</div>
+          <div class="scene-item">{{ $t('88683ec4.1408f7') }}</div>
           <div class="scene-item">
-            [尾随交易]：通过消费者的一次交易，让消费者获得其他促销信息，进一步提升消费者粘性。
+            {{ $t('88683ec4.4fee81') }}
           </div>
         </div>
       </div>
       <div class="scene-box new-function-box">
         <div class="section-header with-border">
           <h3 class="clearfix">
-            版本1.1.1中的新功能
+            {{ $t('88683ec4.203fb8') }}
             <span v-if="functionOpen" class="f_r open" @click="open"
-              >展开<i class="el-icon-arrow-down" /></span
+              >{{ $t('88683ec4.e2edde') }}<i class="el-icon-arrow-down" /></span
             ><span v-if="!functionOpen" class="f_r open" @click="close"
-              >收起<i class="el-icon-arrow-up"
+              >{{ $t('88683ec4.def9e9') }}<i class="el-icon-arrow-up"
             /></span>
           </h3>
         </div>
         <div class="section-body">
-          <div class="scene-item">[新增]：新增注册送礼功能</div>
-          <div class="scene-item">[新增]：新增注册送礼功能</div>
+          <div class="scene-item">{{ $t('88683ec4.f4663a') }}</div>
+          <div class="scene-item">{{ $t('88683ec4.f4663a') }}</div>
         </div>
       </div>
       <div class="app-exhibition-box">
         <div class="section-header with-border">
-          <h3>注册送礼小程序展示</h3>
+          <h3>{{ $t('88683ec4.9ac427') }}</h3>
         </div>
         <div class="section-body">
           <el-carousel :interval="4000" type="card" height="400px" width="800px">

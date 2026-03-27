@@ -6,13 +6,13 @@
 <template>
   <div>
     <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="border-card">
-      <el-tab-pane label="微信门店管理" name="first">
+      <el-tab-pane :label="$t('c27e774b.793200')" name="first">
         <div class="content-bottom-padded">
-          <el-alert type="info" title="请先确认您是否已经开通门店小程序！" show-icon>
+          <el-alert type="info" :title="$t('c27e774b.8666d6')" show-icon>
             <div>
-              如果没有请点击
-              <a href="https://mp.weixin.qq.com">开通门店小程序</a
-              >，去微信后台添加或者升级门店小程序
+              {{ $t('c27e774b.ede760') }}
+              <a href="https://mp.weixin.qq.com">{{ $t('c27e774b.ddfd20') }}</a
+              >{{ $t('c27e774b.54ea86') }}
             </div>
           </el-alert>
         </div>
@@ -29,19 +29,27 @@
 
         <el-row>
           <el-col :span="12">
-            店铺类型：
+            {{ $t('c27e774b.e3d663') }}
             <el-select v-model="store_type" @change="storeChange">
-              <el-option label="直营店" :value="1"> 直营店 </el-option>
-              <el-option label="非直营店" :value="2"> 非直营店 </el-option>
+              <el-option :label="$t('c27e774b.4b940c')" :value="1">
+{{
+                $t('c27e774b.4b940c')
+              }}
+</el-option>
+              <el-option :label="$t('c27e774b.c26325')" :value="2">
+{{
+                $t('c27e774b.c26325')
+              }}
+</el-option>
             </el-select>
           </el-col>
           <el-col :span="12" class="content-right">
             <router-link :to="matchRoutePath('editor')">
-              <el-button type="primary" icon="el-icon-plus"> 添加门店 </el-button>
+              <el-button type="primary" icon="el-icon-plus">{{ $t('c27e774b.894d98') }}</el-button>
             </router-link>
-            <el-tooltip effect="light" content="同步微信门店到本地" placement="right-start">
+            <el-tooltip effect="light" :content="$t('c27e774b.630291')" placement="right-start">
               <el-button type="primary" icon="el-icon-refresh" @click="syncWxShops()">
-                同步门店
+                {{ $t('c27e774b.3dc167') }}
               </el-button>
             </el-tooltip>
           </el-col>
@@ -52,18 +60,18 @@
           style="width: 100%"
           :height="wheight - 305"
         >
-          <el-table-column prop="storeName" label="门店名称" width="240" />
-          <el-table-column prop="isDirectStore" label="直营店">
+          <el-table-column prop="storeName" :label="$t('c27e774b.740032')" width="240" />
+          <el-table-column prop="isDirectStore" :label="$t('c27e774b.4b940c')">
             <template slot-scope="scope">
               <div v-if="scope.row.isDirectStore === 1">
-                <el-tag type="success" size="mini"> 直营 </el-tag>
+                <el-tag type="success" size="mini">{{ $t('c27e774b.0f2d3f') }}</el-tag>
               </div>
               <div v-if="scope.row.isDirectStore === 2">
-                <el-tag type="gray" size="mini"> 非直营 </el-tag>
+                <el-tag type="gray" size="mini">{{ $t('c27e774b.7439a8') }}</el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column width="240" label="地理位置">
+          <el-table-column width="240" :label="$t('c27e774b.fc82aa')">
             <template slot-scope="scope">
               <div v-if="scope.row.isDomestic == 2">
                 {{ scope.row.country }} {{ scope.row.city }} {{ scope.row.address }}
@@ -73,7 +81,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="状态" width="80">
+          <el-table-column :label="$t('c27e774b.3fea7c')" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.isOpen"
@@ -83,18 +91,18 @@
               />
             </template>
           </el-table-column>
-          <el-table-column prop="expiredAt" label="到期时间" width="160">
+          <el-table-column prop="expiredAt" :label="$t('c27e774b.22e888')" width="160">
             <template slot-scope="scope">
               <span v-if="scope.row.expiredAt && scope.row.is_valid">{{
                 scope.row.expiredAt | datetime('YYYY-MM-DD HH:mm:ss')
               }}</span>
               <span v-else-if="scope.row.expiredAt && !scope.row.is_valid">
-                <el-tag type="danger">已过期</el-tag>
+                <el-tag type="danger">{{ $t('c27e774b.4d5ccd') }}</el-tag>
               </span>
               <span v-else> -- </span>
             </template>
           </el-table-column>
-          <el-table-column label="设为默认" width="80">
+          <el-table-column :label="$t('c27e774b.1af3ec')" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.isDefault"
@@ -105,7 +113,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="170">
+          <el-table-column :label="$t('c27e774b.2b6bc0')" width="170">
             <template slot-scope="scope">
               <el-button
                 v-if="!scope.row.is_valid"
@@ -113,7 +121,7 @@
                 type="text"
                 @click="getRes(scope.row)"
               >
-                激活
+                {{ $t('c27e774b.83a991') }}
               </el-button>
               <el-button
                 v-if="1"
@@ -121,11 +129,15 @@
                 type="text"
                 @click="wxShopsEdit(scope.$index, scope.row)"
               >
-                编辑
+                {{ $t('c27e774b.95b351') }}
               </el-button>
-              <el-button v-else size="mini" type="text" :disabled="true"> 编辑 </el-button>
+              <el-button v-else size="mini" type="text" :disabled="true">
+{{
+                $t('c27e774b.95b351')
+              }}
+</el-button>
               <el-button size="mini" type="text" @click="wxShopsDetail(scope.$index, scope.row)">
-                详情
+                {{ $t('c27e774b.f26225') }}
               </el-button>
               <!-- <el-button size="mini" type="text" @click="deleteWxShopsAction(scope.$index, scope.row)">删除</el-button> -->
             </template>
@@ -141,7 +153,7 @@
         </div>
         <!-- 资源列表 -->
         <el-dialog
-          title="资源列表"
+          :title="$t('c27e774b.6a50dc')"
           :close-on-click-modal="false"
           :visible.sync="dialogTableVisible"
           class="resource-dialog"
@@ -155,14 +167,14 @@
             @current-change="resCurrentChange"
             @row-click="getResId"
           >
-            <el-table-column label="激活时间">
+            <el-table-column :label="$t('c27e774b.94d02e')">
               <template slot-scope="scope">
                 <span>{{ scope.row.activeAt | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="resourceName" label="资源名称" />
-            <el-table-column prop="leftShopNum" label="剩余门店数" />
-            <el-table-column label="到期期时间">
+            <el-table-column prop="resourceName" :label="$t('c27e774b.45d6ec')" />
+            <el-table-column prop="leftShopNum" :label="$t('c27e774b.f35334')" />
+            <el-table-column :label="$t('c27e774b.2be4ff')">
               <template slot-scope="scope">
                 <span>{{ scope.row.expiredAt | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
               </template>
@@ -177,27 +189,27 @@
             />
           </div>
           <div slot="footer" class="dialog-footer content-center">
-            <el-button @click="cancelRes()"> 取 消 </el-button>
-            <el-button type="primary" @click="setResource"> 确 定 </el-button>
+            <el-button @click="cancelRes()">{{ $t('c27e774b.c08ab9') }}</el-button>
+            <el-button type="primary" @click="setResource">{{ $t('c27e774b.aa7527') }}</el-button>
           </div>
         </el-dialog>
         <!-- 微信门店详情-开始 -->
-        <el-dialog title="门店详情" :visible.sync="wxShopsDetailVisible">
+        <el-dialog :title="$t('c27e774b.862c34')" :visible.sync="wxShopsDetailVisible">
           <template>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">当前状态</div>
+                <div class="grid-content">{{ $t('c27e774b.6bf1f3') }}</div>
               </el-col>
               <el-col :span="12">
-                <div v-if="wxShopsDetailData.status === 1">已通过</div>
-                <div v-if="wxShopsDetailData.status === 2">审核中</div>
-                <div v-if="wxShopsDetailData.status === 3">审核失败</div>
-                <div v-if="wxShopsDetailData.status === 4">审核驳回</div>
+                <div v-if="wxShopsDetailData.status === 1">{{ $t('c27e774b.ecfa64') }}</div>
+                <div v-if="wxShopsDetailData.status === 2">{{ $t('c27e774b.b720a6') }}</div>
+                <div v-if="wxShopsDetailData.status === 3">{{ $t('c27e774b.fe3661') }}</div>
+                <div v-if="wxShopsDetailData.status === 4">{{ $t('c27e774b.a77aa8') }}</div>
               </el-col>
             </el-row>
             <el-row v-if="wxShopsDetailData.status == '3'">
               <el-col :span="6">
-                <div class="grid-content">未通过原因</div>
+                <div class="grid-content">{{ $t('c27e774b.df22a4') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -207,7 +219,7 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">门店名称</div>
+                <div class="grid-content">{{ $t('c27e774b.740032') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -217,7 +229,7 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">地理位置</div>
+                <div class="grid-content">{{ $t('c27e774b.fc82aa') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -227,17 +239,17 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">地理位置</div>
+                <div class="grid-content">{{ $t('c27e774b.fc82aa') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
-                  <img :src="wxShopsDetailData.qqmapimg" />
+                  <img :src="wxShopsDetailData.qqmapimg">
                 </div>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">联系电话</div>
+                <div class="grid-content">{{ $t('c27e774b.09a1f6') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -247,7 +259,7 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">经营资质证件号</div>
+                <div class="grid-content">{{ $t('c27e774b.8e8efa') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -257,7 +269,7 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">营业时间</div>
+                <div class="grid-content">{{ $t('c27e774b.cc3307') }}</div>
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
@@ -267,7 +279,7 @@
             </el-row>
             <el-row>
               <el-col :span="6">
-                <div class="grid-content">门店图片</div>
+                <div class="grid-content">{{ $t('c27e774b.d63742') }}</div>
               </el-col>
               <el-col
                 v-for="(pic, index) in wxShopsDetailData.pic_list"
@@ -275,27 +287,31 @@
                 :span="1"
                 :offset="index > 0 ? 1 : 0"
               >
-                <img :src="wximageurl + pic" width="40" height="40" />
+                <img :src="wximageurl + pic" width="40" height="40">
               </el-col>
             </el-row>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="wxShopsDetailVisible = false"> 取消 </el-button>
+            <el-button @click.native="wxShopsDetailVisible = false">
+{{
+              $t('c27e774b.625fb2')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <!-- 微信门店详情-结束 -->
       </el-tab-pane>
-      <el-tab-pane v-loading="loading" label="可用资源包列表" name="resourceList">
+      <el-tab-pane v-loading="loading" :label="$t('c27e774b.1edb97')" name="resourceList">
         <el-table :data="resourceList" :height="wheight - 110" style="width: 100%">
-          <el-table-column prop="resourceName" label="资源名称" />
-          <el-table-column prop="shopNum" label="包含门店数" />
-          <el-table-column prop="leftShopNum" label="剩余门店数" />
-          <el-table-column label="激活时间">
+          <el-table-column prop="resourceName" :label="$t('c27e774b.45d6ec')" />
+          <el-table-column prop="shopNum" :label="$t('c27e774b.d09ed0')" />
+          <el-table-column prop="leftShopNum" :label="$t('c27e774b.f35334')" />
+          <el-table-column :label="$t('c27e774b.94d02e')">
             <template slot-scope="scope">
               <span>{{ scope.row.activeAt | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="到期期时间">
+          <el-table-column :label="$t('c27e774b.2be4ff')">
             <template slot-scope="scope">
               <span>{{ scope.row.expiredAt | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
@@ -386,7 +402,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取门店详情出错'
+            message: this.$t('c27e774b.816eba')
           })
         })
     },
@@ -402,7 +418,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取门店信息出错'
+            message: this.$t('c27e774b.91e257')
           })
         })
     },
@@ -426,7 +442,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '默认门店设置失败'
+            message: this.$t('c27e774b.07c5cc')
           })
         })
     },
@@ -442,7 +458,7 @@ export default {
       if (row.leftShopNum == 0) {
         this.$message({
           type: 'error',
-          message: '该资源包门店数已达上限，不能选中'
+          message: this.$t('c27e774b.0e9de5')
         })
         return
       } else {
@@ -453,7 +469,7 @@ export default {
       if (!this.bindResId) {
         this.$message({
           type: 'error',
-          message: '没有可用的资源包激活门店'
+          message: this.$t('c27e774b.5207e0')
         })
         return
       }
@@ -473,9 +489,9 @@ export default {
       this.$refs.resource_list.setCurrentRow()
     },
     deleteWxShopsAction(index, row) {
-      this.$confirm('此操作将删除该门店, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('c27e774b.a7a939'), this.$t('c27e774b.02d981'), {
+        confirmButtonText: this.$t('c27e774b.38cf16'),
+        cancelButtonText: this.$t('c27e774b.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -483,7 +499,7 @@ export default {
             .then((response) => {
               this.wxShopsList.splice(index, 1)
               this.$message({
-                message: '删除门店成功',
+                message: this.$t('c27e774b.765351'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -491,27 +507,27 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '删除门店失败'
+                message: this.$t('c27e774b.1b9d4c')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('c27e774b.2111cc')
           })
         })
     },
     syncWxShops() {
-      this.$confirm('确定同步微信门店到本系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('c27e774b.275b0e'), this.$t('c27e774b.02d981'), {
+        confirmButtonText: this.$t('c27e774b.38cf16'),
+        cancelButtonText: this.$t('c27e774b.625fb2'),
         type: 'warning'
       })
         .then(() => {
           syncWxShops().then((response) => {
             this.$message({
-              message: '同步成功',
+              message: this.$t('c27e774b.52b85c'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -521,7 +537,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('c27e774b.2111cc')
           })
         })
     },
@@ -537,7 +553,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '门店状态修改失败'
+            message: this.$t('c27e774b.8a004c')
           })
         })
     }

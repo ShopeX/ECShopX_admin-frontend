@@ -7,7 +7,7 @@
   <div class="finder view-flex view-flex-middle">
     <slot />
     <div class="view-flex-item">
-      <el-input v-model="keywords" placeholder="请输入内容">
+      <el-input v-model="keywords" :placeholder="$t('5b221410.a11cc7')">
         <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
       </el-input>
     </div>

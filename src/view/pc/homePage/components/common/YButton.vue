@@ -9,16 +9,16 @@
     readonly
     :class="classStyle"
     :disabled="classStyle === 'disabled-btn'"
-    :value="text"
+    :value="displayText"
     @click="btnClick($event)"
-  />
+  >
 </template>
 <script>
 export default {
   props: {
     text: {
       type: [String, Number],
-      default: '一颗小按钮'
+      default: ''
     },
     inputType: {
       type: [String],
@@ -27,6 +27,14 @@ export default {
     classStyle: {
       type: String,
       default: 'default-btn'
+    }
+  },
+  computed: {
+    displayText() {
+      if (!this.text) return this.$t('626831ff.919149')
+      if (typeof this.text === 'string' && /^[a-f0-9]{8}\.[a-f0-9]{6}$/.test(this.text))
+        return this.$t(this.text)
+      return this.text
     }
   },
   methods: {

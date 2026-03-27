@@ -10,19 +10,23 @@
 
       <el-table-column prop="tag_id" label="id" />
 
-      <el-table-column prop="tag_name" label="Tag内容" />
+      <el-table-column prop="tag_name" :label="$t('8f90518f.0eab37')" />
 
-      <el-table-column prop="status_text" label="Tag状态" />
+      <el-table-column prop="status_text" :label="$t('8f90518f.e6f080')" />
 
-      <el-table-column v-if="handleType == 'view'" label="昵称/手机号">
+      <el-table-column v-if="handleType == 'view'" :label="$t('8f90518f.df9a42')">
         <template slot-scope="scope">
-          {{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}
+          {{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}
         </template>
       </el-table-column>
 
-      <el-table-column v-if="handleType == 'view'" prop="created_text" label="创建时间" />
+      <el-table-column
+        v-if="handleType == 'view'"
+        prop="created_text"
+        :label="$t('c5ae46b6.eca37c')"
+      />
 
-      <el-table-column label="操作" width="160" align="center">
+      <el-table-column :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="auditNote(scope.row)">
             {{ resetText(scope.row) }}
@@ -46,11 +50,11 @@ export default {
   computed: {
     resetText() {
       return (row) => {
-        var text = '审核'
+        var text = this.$t('e240ae54.cf13b1')
         if (row.status == '1') {
-          text = '拒绝'
+          text = this.$t('ed6f1bab.7173f8')
         } else if (row.status == '2') {
-          text = '通过'
+          text = this.$t('e240ae54.23c1f3')
         }
         return text
       }

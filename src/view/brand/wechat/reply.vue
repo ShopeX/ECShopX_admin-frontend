@@ -5,11 +5,11 @@
 
 <template>
   <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-    <el-tab-pane v-loading="loading" label="被关注自动回复" name="subscribe">
+    <el-tab-pane v-loading="loading" :label="$t('ff123105.f6119b')" name="subscribe">
       <el-alert
-        title="被关注自动回复"
+        :title="$t('ff123105.f6119b')"
         type="warning"
-        description="当微信用户关注公众号时，自动发送当前配置消息给用户"
+        :description="$t('ff123105.51e1d3')"
         show-icon
         :closable="false"
       />
@@ -18,22 +18,22 @@
           <MsgSender ref="subscribeMsg" v-model="subscribeData" :type="subscribeType" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
-          <el-button>取消</el-button>
+          <el-button type="primary" @click="onSubmit"> {{ $t('ff123105.be5fbb') }} </el-button>
+          <el-button>{{ $t('ff123105.625fb2') }}</el-button>
         </el-form-item>
       </el-form>
     </el-tab-pane>
-    <el-tab-pane v-loading="loading" label="关键词自动回复" name="keyword">
+    <el-tab-pane v-loading="loading" :label="$t('ff123105.98941e')" name="keyword">
       <el-alert
-        title="接收用户消息最先触发：关键词自动回复"
+        :title="$t('ff123105.423f06')"
         type="warning"
-        description="根据接收消息的关键词自动发送当前配置消息"
+        :description="$t('ff123105.547f6b')"
         show-icon
         :closable="false"
       />
       <div class="reply_add">
         <el-button type="primary" @click="addReplyAction">
-          <i class="el-icon-plus" />添加关键字规则
+          <i class="el-icon-plus" />{{ $t('ff123105.023c7d') }}
         </el-button>
       </div>
 
@@ -41,7 +41,7 @@
         <div v-for="(item, index) in keywordReplyData" class="reply_item">
           <div class="keywords_rule_hd clearfix">
             <div class="info f_l">
-              <span>关键字规则: {{ item.rule_name }}</span>
+              <span>{{ $t('ff123105.f5444d') }} {{ item.rule_name }}</span>
             </div>
             <div class="opr f_r">
               <a href="javascript:;" @click="itemchange(item, index)"
@@ -56,21 +56,24 @@
           <div v-if="item.isopen" class="keyword_rule_detail">
             <div class="keywords">
               <div v-if="item.is_new">
-                规则名：<el-input
+                {{ $t('ff123105.b7a1e5') }}：<el-input
                   v-model="item.rule_name"
                   :maxlength="60"
                   style="width: 300px"
                 />&nbsp;<span class="frm-tips">{{ item.rule_name.length }}/60</span>
               </div>
-              <div v-else>规则名：{{ item.rule_name }}</div>
+              <div v-else>{{ $t('ff123105.b7a1e5') }}：{{ item.rule_name }}</div>
             </div>
             <div class="keywords">
               <div>
-                <el-button @click="addNewKeyword(item, index)"> 新增关键字 </el-button>&nbsp;
-                <span class="frm-tips">开启则启用完全匹配，关闭则启用包含匹配模式</span>
+                <el-button @click="addNewKeyword(item, index)">
+                  {{ $t('ff123105.1c85b8') }}
+</el-button
+                >&nbsp;
+                <span class="frm-tips">{{ $t('ff123105.5677de') }}</span>
               </div>
               <div v-for="(rule, i) in item.keywords_rule" class="keywords_rule_item">
-                关键字{{ i }}：<el-input
+                {{ $t('ff123105.cfb5f1') }}{{ i }}：<el-input
                   v-model="rule.keyword"
                   :maxlength="30"
                   style="width: 300px"
@@ -81,18 +84,23 @@
                   active-value="equal"
                   inactive-value="contain"
                   inactive-color="#ccc"
-                  active-text="开启完全匹配"
-                  inactive-text="开启包含匹配"
+                  :active-text="$t('ff123105.2120b4')"
+                  :inactive-text="$t('ff123105.807eba')"
                   active-color="#ff5000"
                 />
-                <el-tooltip class="item" effect="dark" content="删除关键字" placement="top">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  :content="$t('ff123105.77c811')"
+                  placement="top"
+                >
                   <i class="el-icon-delete2" @click="delNewKeyword(item, index, i)" />
                 </el-tooltip>
               </div>
             </div>
             <div class="keywords_tap reply">
               <div class="keywords_tap_hd">
-                <span>回复</span>
+                <span>{{ $t('ff123105.1edff0') }}</span>
               </div>
               <div class="keywords_tap_bd">
                 <MsgSender
@@ -104,15 +112,19 @@
               </div>
               <div class="keywords_rule_ft">
                 <div class="opr tr">
-                  <el-button type="primary" @click="onSubmitKeyword(item, index)"> 保存 </el-button>
-                  <el-button @click="delAction(item, index)"> 删除 </el-button>
+                  <el-button type="primary" @click="onSubmitKeyword(item, index)">
+                    {{ $t('ff123105.be5fbb') }}
+                  </el-button>
+                  <el-button @click="delAction(item, index)">
+                    {{ $t('ff123105.2f4aad') }}
+                  </el-button>
                 </div>
               </div>
             </div>
           </div>
           <div v-if="!item.isopen" class="keywords_rule_bd keywords_rule_overview">
             <div class="keywords_info keywords clearfix">
-              <span class="keywords_info_title f_l">关键词：</span>
+              <span class="keywords_info_title f_l">{{ $t('ff123105.f5444d') }}</span>
               <div class="keywords_info_detail">
                 <div v-for="keywordRule in item.keywords_rule">
                   <span v-if="keywordRule.keyword">{{ keywordRule.keyword }}</span>
@@ -123,23 +135,23 @@
         </div>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="开启多客服回复" name="kfreply">
+    <el-tab-pane :label="$t('ff123105.0757ea')" name="kfreply">
       <el-alert
-        title="接收用户消息未触发关键词自动回复：开启多客服回复"
+        :title="$t('ff123105.f08626')"
         type="warning"
-        description="如果未触发关键字,如果开启多客服回复并且有客服在线，则客服回复消息"
+        :description="$t('ff123105.d18025')"
         show-icon
         :closable="false"
       />
       <div v-loading="kfreplyload">
         <el-form ref="form">
-          <el-form-item label="是否开启多客服回复">
+          <el-form-item :label="$t('ff123105.29fc54')">
             <el-switch
               v-if="isRequest"
               v-model="isOpenKfReply"
-              active-text="开启"
+              :active-text="$t('ff123105.cc42dd')"
               disabled
-              inactive-text="关闭"
+              :inactive-text="$t('ff123105.b15d91')"
               active-color="#ff5000"
               inactive-color="#ccc"
               @change="openKfReplyChange"
@@ -147,8 +159,8 @@
             <el-switch
               v-else
               v-model="isOpenKfReply"
-              active-text="开启"
-              inactive-text="关闭"
+              :active-text="$t('ff123105.cc42dd')"
+              :inactive-text="$t('ff123105.b15d91')"
               active-color="#ff5000"
               inactive-color="#ccc"
               @change="openKfReplyChange"
@@ -157,11 +169,11 @@
         </el-form>
       </div>
     </el-tab-pane>
-    <el-tab-pane v-loading="loading" label="消息自动回复" name="autoreply">
+    <el-tab-pane v-loading="loading" :label="$t('ff123105.63483f')" name="autoreply">
       <el-alert
-        title="接收用户消息并且关键词和多客服都未触发：消息自动回复"
+        :title="$t('ff123105.768533')"
         type="warning"
-        description="如果多客服回复未触发则自动回复当前配置消息"
+        :description="$t('ff123105.c27b88')"
         show-icon
         :closable="false"
       />
@@ -170,8 +182,8 @@
           <MsgSender ref="autoreplyMsg" v-model="autoreplyData" :type="autoreplyType" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
-          <el-button>取消</el-button>
+          <el-button type="primary" @click="onSubmit"> {{ $t('ff123105.be5fbb') }} </el-button>
+          <el-button>{{ $t('ff123105.625fb2') }}</el-button>
         </el-form-item>
       </el-form>
     </el-tab-pane>
@@ -344,7 +356,7 @@ export default {
       if (params.reply_content.length == 0) {
         this.$message({
           type: 'error',
-          message: '请填写回复内容'
+          message: this.$t('ff123105.16d130')
         })
         return
       }
@@ -362,7 +374,7 @@ export default {
     messageSuccess() {
       this.$message({
         type: 'success',
-        message: '保存配置成功'
+        message: this.$t('ff123105.ae9a55')
       })
     },
     // 开启客服自动回复
@@ -375,7 +387,7 @@ export default {
             this.isOpenKfReply = isOpen
             this.$message({
               type: 'success',
-              message: '保存配置成功'
+              message: this.$t('ff123105.ae9a55')
             })
             this.isRequest = false
           })
@@ -386,7 +398,7 @@ export default {
     },
     addNewKeyword(item, index) {
       if (item.keywords_rule.length > 9) {
-        this.$message({ type: 'error', message: '最多添加10个关键字' })
+        this.$message({ type: 'error', message: this.$t('ff123105.81541c') })
         return
       }
       this.keywordReplyData[index].keywords_rule.push({ keyword: '', reply_mode: '' })
@@ -412,9 +424,9 @@ export default {
       }
     },
     delAction(item, index) {
-      this.$confirm('确定要删除该关键字规则？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('ff123105.fed87e'), this.$t('ff123105.02d981'), {
+        confirmButtonText: this.$t('ff123105.38cf16'),
+        cancelButtonText: this.$t('ff123105.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -432,7 +444,7 @@ export default {
               }
               this.$message({
                 type: 'success',
-                message: '删除成功'
+                message: this.$t('ff123105.0007d1')
               })
             })
           }
@@ -440,7 +452,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('ff123105.2111cc')
           })
         })
     }

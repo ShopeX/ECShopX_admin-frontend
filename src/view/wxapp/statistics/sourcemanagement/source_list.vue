@@ -10,7 +10,7 @@
         <el-col :span="18">
           <div style="float: left">
             <el-button-group>
-              <el-button type="primary" @click="addSource"> 新增来源 </el-button>
+              <el-button type="primary" @click="addSource">{{ $t('1d0069ea.aa8221') }}</el-button>
               <!-- <el-button type="primary" @click="checkMemberTags"> 选择会员标签 </el-button> -->
             </el-button-group>
           </div>
@@ -23,7 +23,7 @@
           </div> -->
         </el-col>
         <el-col :span="6" class="content-right">
-          <el-input v-model="searchTxt" placeholder="搜索" style="width: 260px">
+          <el-input v-model="searchTxt" :placeholder="$t('1d0069ea.e5f71f')" style="width: 260px">
             <el-button slot="append" icon="el-icon-search" @click="getSourcesLists()" />
           </el-input>
         </el-col>
@@ -37,9 +37,9 @@
       :height="wheight - 210"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" label="全选" />
-      <el-table-column prop="sourceName" label="来源名称" />
-      <el-table-column prop="sourceId" label="来源ID" />
+      <el-table-column type="selection" align="center" :label="$t('1d0069ea.66eeac')" />
+      <el-table-column prop="sourceName" :label="$t('1d0069ea.19f373')" />
+      <el-table-column prop="sourceId" :label="$t('1d0069ea.338267')" />
       <!-- <el-table-column prop="sourceName" label="标签">
         <template slot-scope="scope">
           <template>
@@ -49,16 +49,16 @@
           </template>
         </template>
       </el-table-column> -->
-      <el-table-column label="创建时间">
+      <el-table-column :label="$t('1d0069ea.eca37c')">
         <template slot-scope="scope">
           <template>
             {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('1d0069ea.2b6bc0')">
         <template slot-scope="scope">
-          <a href="#" @click="edit(scope.row)">修改名称</a>
+          <a href="#" @click="edit(scope.row)">{{ $t('1d0069ea.54a3dd') }}</a>
         </template>
       </el-table-column>
     </el-table>
@@ -74,17 +74,21 @@
       </div>
     </div>
     <el-dialog
-      title="添加来源"
+      :title="$t('1d0069ea.246f1d')"
       :visible="dialogVisible"
       :show-close="false"
       :close-on-click-modal="false"
     >
       <div>
         <el-form ref="form" :rules="rules" :model="form" label-width="120px">
-          <el-form-item v-if="!tagdialogVisible" label="来源名称" prop="source_name">
-            <el-input v-model="form.source_name" placeholder="填写来源名称" style="width: 80%" />
+          <el-form-item v-if="!tagdialogVisible" :label="$t('1d0069ea.19f373')" prop="source_name">
+            <el-input
+              v-model="form.source_name"
+              :placeholder="$t('1d0069ea.335e4b')"
+              style="width: 80%"
+            />
             <p class="frm-tips">
-              建议将来源名称命名为要使用的推广渠道的名称，方便理解与跟踪，例如：微信朋友圈广告
+              {{ $t('1d0069ea.20010c') }}
             </p>
           </el-form-item>
           <!-- <el-form-item
@@ -148,11 +152,11 @@
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="onCancel"> 取消 </el-button>
+        <el-button @click="onCancel">{{ $t('1d0069ea.625fb2') }}</el-button>
         <el-button v-if="tagdialogVisible" type="primary" @click="submitMemberTag">
-          确定
+          {{ $t('1d0069ea.38cf16') }}
         </el-button>
-        <el-button v-else type="primary" @click="onSubmit"> 确定 </el-button>
+        <el-button v-else type="primary" @click="onSubmit">{{ $t('1d0069ea.38cf16') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -193,13 +197,16 @@ export default {
       pageLimit: 10,
       tagPage: 1,
       total_count: 0,
-      rules: {
-        source_name: [{ required: true, message: '请输入来源名称', trigger: 'blur' }]
-      }
+      rules: null
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    rules() {
+      return {
+        source_name: [{ required: true, message: this.$t('1d0069ea.eefe1f'), trigger: 'blur' }]
+      }
+    }
   },
   mounted() {
     this.getSourcesLists()
@@ -260,7 +267,7 @@ export default {
                 this.form.source_id = ''
                 this.getSourcesLists()
               } else {
-                this.$message.error('更新来源失败!')
+                this.$message.error(this.$t('1d0069ea.17d763'))
                 return false
               }
             })
@@ -272,7 +279,7 @@ export default {
                 this.form.source_id = ''
                 this.getSourcesLists()
               } else {
-                this.$message.error('创建来源失败!')
+                this.$message.error(this.$t('1d0069ea.893e45'))
                 return false
               }
             })
@@ -311,13 +318,13 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取来源信息出错'
+            message: this.$t('1d0069ea.a2ce6e')
           })
         })
     },
     checkMemberTags() {
       if (this.checkSource.length == 0) {
-        return this.$message.error('还未选择来源')
+        return this.$message.error(this.$t('1d0069ea.f01fec'))
       }
       this.tagdialogVisible = true
       this.dialogVisible = true
@@ -347,11 +354,11 @@ export default {
     },
     submitMemberTag() {
       if (this.checkSource.length == 0) {
-        this.$message.error('请选择来源!')
+        this.$message.error(this.$t('1d0069ea.7b1910'))
         return false
       }
       if (this.checktags.length == 0) {
-        this.$message.error('请选择标签!')
+        this.$message.error(this.$t('1d0069ea.b7d555'))
         return false
       }
       let checkSource = []
@@ -366,7 +373,7 @@ export default {
       saveTags(params).then((res) => {
         this.$message({
           type: 'success',
-          message: '保存完成'
+          message: this.$t('1d0069ea.626a15')
         })
         this.tagdialogVisible = false
         this.dialogVisible = false

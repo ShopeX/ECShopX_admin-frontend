@@ -9,14 +9,16 @@
       <el-form :model="form" label-width="90px" class="demo-ruleForm">
         <el-row>
           <el-col :span="14">
-            <el-form-item class="first" label="企业ID">
+            <el-form-item class="first" :label="$t('e748f88a.5a83cb')">
               <el-input v-model="form.corpid" type="age" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <p class="tips">
-              <a href="https://work.weixin.qq.com/api/doc#90000/90135/90665/corpid" target="_blank"
-                >您企业主体的认证ID、用于确认企业的唯一性</a
+              <a
+                href="https://work.weixin.qq.com/api/doc#90000/90135/90665/corpid"
+                target="_blank"
+                >{{ $t('e748f88a.7f796e') }}</a
               >
             </p>
           </el-col>
@@ -25,9 +27,9 @@
     </el-card>
 
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="导购小程序" name="first">
+      <el-tab-pane :label="$t('e748f88a.02eb82')" name="first">
         <div class="list">
-          <div class="title">小程序配置</div>
+          <div class="title">{{ $t('e748f88a.701fa5') }}</div>
           <div class="formBox">
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
@@ -35,7 +37,7 @@
                   <el-input v-model="form.agents.app.appid" style="width: 400px" />
                   <span class="tips">
                     <a href="http://" target="_blank" rel="noopener noreferrer">
-                      企业微信的小程序AppID，点击跳转说明
+                      {{ $t('e748f88a.91ce6c') }}
                     </a></span
                   >
                 </el-form-item>
@@ -46,7 +48,7 @@
                     <a
                       href="https://work.weixin.qq.com/api/doc#90000/90135/90665/agentid"
                       target="_blank"
-                      >企业微信的小程序agent_id</a
+                      >{{ $t('e748f88a.ea3558') }}</a
                     ></span
                   >
                 </el-form-item>
@@ -57,7 +59,7 @@
                     <a
                       href="https://work.weixin.qq.com/api/doc#90000/90135/90665/secret"
                       target="_blank"
-                      >企业微信的小程序凭证密钥</a
+                      >{{ $t('e748f88a.2464ad') }}</a
                     ></span
                   >
                 </el-form-item>
@@ -68,8 +70,10 @@
                 <el-form-item label="EncodingAESKey">
                   <el-input v-model="form.agents.app.aes_key" style="width: 400px" />
                   <span class="tips"
-                    ><a href="https://work.weixin.qq.com/api/doc#90000/90135/90930" target="_blank"
-                      >企业微信小程序的加密秘钥</a
+                    ><a
+                      href="https://work.weixin.qq.com/api/doc#90000/90135/90930"
+                      target="_blank"
+                      >{{ $t('e748f88a.b904a0') }}</a
                     ></span
                   >
                 </el-form-item>
@@ -78,15 +82,12 @@
           </div>
         </div>
         <div class="list">
-          <div class="title">客户联系配置</div>
+          <div class="title">{{ $t('e748f88a.770cf3') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>获取路径：</p>
-              <p>1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到云店小程序</p>
-              <p>
-                2.
-                点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至此处。
-              </p>
+              <p>{{ $t('e748f88a.18fdcb') }}</p>
+              <p>{{ $t('e748f88a.25b4c7') }}</p>
+              <p>{{ $t('e748f88a.0541c6') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
@@ -96,17 +97,11 @@
                   </el-form-item>
                 </div>
                 <div class="introduce-Flex">
-                  <div class="subtitle">接受事件服务器配置：</div>
+                  <div class="subtitle">{{ $t('e748f88a.fd50cb') }}</div>
                   <div class="content">
-                    <p>设置路径：</p>
-                    <p>
-                      1. 在企业微信管理后台 - 「应用管理」- 应用 -
-                      下方的「自建应用」中找到云店小程序
-                    </p>
-                    <p>
-                      2. 点击进入应用详情页，找到「功能」中的「接收消息」，点击「设置 API
-                      接收」，依次复制下方内容填写至对应输入框中。
-                    </p>
+                    <p>{{ $t('e748f88a.614e37') }}</p>
+                    <p>{{ $t('e748f88a.25b4c7') }}</p>
+                    <p>{{ $t('e748f88a.2d18bf') }}</p>
                   </div>
                 </div>
 
@@ -116,7 +111,7 @@
                     v-clipboard:copy="form.agents.customer.URL"
                     v-clipboard:success="onCopy"
                     class="btn"
-                    >复制</span
+                    >{{ $t('e748f88a.79d3ab') }}</span
                   >
                 </el-form-item>
 
@@ -126,7 +121,7 @@
                     v-clipboard:copy="form.agents.customer.token"
                     v-clipboard:success="onCopy"
                     class="btn"
-                    >复制</span
+                    >{{ $t('e748f88a.79d3ab') }}</span
                   >
                 </el-form-item>
 
@@ -136,7 +131,7 @@
                     v-clipboard:copy="form.agents.customer.aes_key"
                     v-clipboard:success="onCopy"
                     class="btn"
-                    >复制</span
+                    >{{ $t('e748f88a.79d3ab') }}</span
                   >
                 </el-form-item>
               </el-card>
@@ -144,22 +139,19 @@
           </div>
         </div>
         <div class="list">
-          <div class="title">通讯录配置</div>
+          <div class="title">{{ $t('e748f88a.3794da') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>获取路径：</p>
-              <p>1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到店务工作台</p>
-              <p>
-                2.
-                点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至此处。
-              </p>
-              <p>3. 点击同步。</p>
+              <p>{{ $t('e748f88a.18fdcb') }}</p>
+              <p>{{ $t('e748f88a.e04191') }}</p>
+              <p>{{ $t('e748f88a.0541c6') }}</p>
+              <p>{{ $t('e748f88a.03ee44') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <el-form-item label="Secret">
                   <el-input v-model="form.agents.report.secret" style="width: 400px" />
-                  <span class="tips">企业微信的小程序凭证秘钥</span>
+                  <span class="tips">{{ $t('e748f88a.61554d') }}</span>
                 </el-form-item>
                 <el-form-item label="Token">
                   <el-input v-model="form.agents.report.token" style="width: 400px" />
@@ -167,57 +159,49 @@
                 <el-form-item label="EncodingAESKey">
                   <el-input v-model="form.agents.report.aes_key" style="width: 400px" />
 
-                  <span class="tips"> 企业微信小程序的加密密钥 </span>
+                  <span class="tips">{{ $t('e748f88a.e27d12') }}</span>
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="page-btn">
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button type="primary" @click="onSubmit">{{ $t('e748f88a.be5fbb') }}</el-button>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="店务自建应用" name="second">
+      <el-tab-pane :label="$t('e748f88a.56db7b')" name="second">
         <div class="list">
-          <div class="title">通讯录配置</div>
+          <div class="title">{{ $t('e748f88a.3794da') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>获取路径：</p>
-              <p>1. 在 企业微信管理后台 -「应用管理」-应用-下方的「自建应用」中找到店务工作台。</p>
-              <p>2. 点击进入应用详情页，复制顶部「AgentID」至下方输入框。</p>
-              <p>
-                3.
-                点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至下方输入框。
-              </p>
+              <p>{{ $t('e748f88a.18fdcb') }}</p>
+              <p>{{ $t('e748f88a.e662e0') }}</p>
+              <p>{{ $t('e748f88a.f7a07a') }}</p>
+              <p>{{ $t('e748f88a.dd308f') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <el-form-item label="AgentID">
                   <el-input v-model="form.agents.dianwu.agent_id" style="width: 400px" />
-                  <span class="tips"> 企业微信的自建应用凭证 </span>
+                  <span class="tips">{{ $t('e748f88a.45511c') }}</span>
                 </el-form-item>
 
                 <el-form-item label="Secret" class="first">
                   <el-input v-model="form.agents.dianwu.secret" style="width: 400px" />
-                  <span class="tips"> 企业微信的自建应用密钥 </span>
+                  <span class="tips">{{ $t('e748f88a.60e2ba') }}</span>
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="list">
-          <div class="title">企业微信自建H5地址</div>
+          <div class="title">{{ $t('e748f88a.8a9827') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>操作指南：</p>
-              <p>
-                1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到店务工作台。
-              </p>
-              <p>
-                2.
-                点击进入应用详情页，点击「应用主页」后的「设置」按钮，并复制下方的url为「网页地址」。
-              </p>
-              <p>3. 点击确定</p>
+              <p>{{ $t('e748f88a.3ffbfe') }}</p>
+              <p>{{ $t('e748f88a.e03b7b') }}</p>
+              <p>{{ $t('e748f88a.1313fe') }}</p>
+              <p>{{ $t('e748f88a.5e2009') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
@@ -227,7 +211,7 @@
                     v-clipboard:copy="form.agents.dianwu.h5_url"
                     v-clipboard:success="onCopy"
                     class="btn"
-                    >复制</span
+                    >{{ $t('e748f88a.79d3ab') }}</span
                   >
                 </el-form-item>
               </el-card>
@@ -235,26 +219,24 @@
           </div>
         </div>
         <div class="list">
-          <div class="title">设置可信域名地址</div>
+          <div class="title">{{ $t('e748f88a.b74740') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>操作指南：</p>
-              <p>
-                1. 在企业微信管理后台 - 「应用管理」- 应用 - 下方的「自建应用」中找到店务工作台。
-              </p>
-              <p>2. 点击进入应用详情页，点击最下方的「网页授权及JS-SDK」。</p>
-              <p>3. 将下方「可信域名」复制至企业微信后台的「可信域名」，并点击申请校验域名。</p>
-              <p>4. 点击确定。</p>
+              <p>{{ $t('e748f88a.3ffbfe') }}</p>
+              <p>{{ $t('e748f88a.e03b7b') }}</p>
+              <p>{{ $t('e748f88a.8dca50') }}</p>
+              <p>{{ $t('e748f88a.88530e') }}</p>
+              <p>{{ $t('e748f88a.28882c') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
-                <el-form-item label="可信域名" class="first">
+                <el-form-item :label="$t('e748f88a.2db568')" class="first">
                   <el-input v-model="form.agents.dianwu.h5_host" disabled class="bg-gray" />
                   <span
                     v-clipboard:copy="form.agents.dianwu.h5_host"
                     v-clipboard:success="onCopy"
                     class="btn"
-                    >复制</span
+                    >{{ $t('e748f88a.79d3ab') }}</span
                   >
                 </el-form-item>
               </el-card>
@@ -262,20 +244,22 @@
           </div>
         </div>
         <div class="list">
-          <div class="title">申请校验域名</div>
+          <div class="title">{{ $t('e748f88a.350b47') }}</div>
           <div class="formBox">
             <div class="introduce">
-              <p>操作指南：</p>
-              <p>1. 接上方操作，点击企业微信说明中第一步的「下载文件」。</p>
-              <p>2. 回到云店后台，点击下方上传文件，选择刚刚下载的文件。</p>
-              <p>3. 回到企业微信后台，点击确定。</p>
+              <p>{{ $t('e748f88a.3ffbfe') }}</p>
+              <p>{{ $t('e748f88a.a7bdf1') }}</p>
+              <p>{{ $t('e748f88a.d4a8a8') }}</p>
+              <p>{{ $t('e748f88a.e59a7d') }}</p>
             </div>
             <el-form ref="form" label-width="150px">
               <el-card shadow="never">
-                <el-form-item label="域名文件" class="first yuming">
+                <el-form-item :label="$t('e748f88a.2f860e')" class="first yuming">
                   <div class="line">
                     <div class="filename">
-                      <span v-if="form.agents.dianwu.verify_file_name">已上传：</span
+                      <span v-if="form.agents.dianwu.verify_file_name">{{
+                        $t('e748f88a.669c86')
+                      }}</span
                       >{{ form.agents.dianwu.verify_file_name }}
                     </div>
                     <el-upload
@@ -286,7 +270,11 @@
                       :show-file-list="false"
                       :on-success="handleUploadSuccess"
                     >
-                      <el-button size="small" type="primary" plain> 点击上传 </el-button>
+                      <el-button size="small" type="primary" plain>
+{{
+                        $t('e748f88a.2c808b')
+                      }}
+</el-button>
                     </el-upload>
                   </div>
                 </el-form-item>
@@ -295,7 +283,29 @@
           </div>
         </div>
         <div class="page-btn">
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button type="primary" @click="onSubmit">{{ $t('e748f88a.be5fbb') }}</el-button>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane :label="$t('e748f88a.a56156')" name="third">
+        <div class="list">
+          <div class="title">{{ $t('e748f88a.80d2ca') }}</div>
+          <div class="formBox">
+            <el-form ref="form" label-width="150px">
+              <el-card shadow="never">
+                <el-form-item :label="$t('e748f88a.6a37ea')">
+                  <SpImagePicker v-model="form.avatar_url" />
+                  <div class="tips">{{ $t('e748f88a.0f1410') }}</div>
+                </el-form-item>
+                <el-form-item :label="$t('e748f88a.8fe9a8')">
+                  <SpImagePicker v-model="form.bg_avatar_url" />
+                  <div class="tips">{{ $t('e748f88a.4b1f0b') }}</div>
+                </el-form-item>
+              </el-card>
+            </el-form>
+          </div>
+        </div>
+        <div class="page-btn">
+          <el-button type="primary" @click="onSubmit"> {{ $t('e748f88a.be5fbb') }} </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -316,6 +326,8 @@ export default {
       activeName: 'first',
       form: {
         corpid: '', //企业ID
+        avatar_url: '', // 导购服务头像图
+        bg_avatar_url: '', // 添加导购背景图
         agents: {
           // 小程序配置
           app: {
@@ -365,7 +377,7 @@ export default {
     },
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('e748f88a.20a495'),
         showClose: true
       })
     },
@@ -383,7 +395,7 @@ export default {
       console.log(this.form)
       const result = await setWorkWechatConfig(this.form)
       if (result.status === 200) {
-        Message.success('保存成功')
+        Message.success(this.$t('e748f88a.3b1083'))
       }
     },
     copyHandle(value) {

@@ -5,31 +5,31 @@
 
 <template>
   <el-card v-if="data.length > 0" class="refund_info_card">
-    <h3>退款信息</h3>
+    <h3>{{ $t('1cfdb98c.f179f2') }}</h3>
     <el-table
       :data="data"
       border
       :span-method="objectSpanMethod"
       style="width: 100%; margin-top: 20px"
     >
-      <el-table-column prop="refund_bn" label="退款单号" />
-      <el-table-column prop="refund_id" label="汇付退款单号" />
-      <el-table-column prop="distributor_name" label="退款客户名称" />
+      <el-table-column prop="refund_bn" :label="$t('1cfdb98c.b0612b')" />
+      <el-table-column prop="refund_id" :label="$t('1cfdb98c.a10084')" />
+      <el-table-column prop="distributor_name" :label="$t('1cfdb98c.226a62')" />
 
-      <el-table-column prop="refund_fee" label="退款金额">
+      <el-table-column prop="refund_fee" :label="$t('1cfdb98c.a0cd4c')">
         <template slot-scope="scope"> ￥{{ (scope.row.refund_fee / 100).toFixed(2) }} </template>
       </el-table-column>
-      <el-table-column prop="refund_status" label="退款状态">
+      <el-table-column prop="refund_status" :label="$t('1cfdb98c.db7c80')">
         <template slot-scope="scope">
           {{
-            (scope.row.refund_status === 'READY' && '未审核') ||
-            (scope.row.refund_status === 'SUCCESS' && '退款成功  ') ||
-            (scope.row.refund_status === 'CANCEL' && '撤销退款') ||
-            (scope.row.refund_status === 'CHANGE' && '退款异常') ||
-            (scope.row.refund_status === 'REFUNDCLOSE' && '退款关闭') ||
-            (scope.row.refund_status === 'PROCESSING' && '退款处理中') ||
-            (scope.row.refund_status === 'AUDIT_SUCCESS' && '退款中') ||
-            (scope.row.refund_status === 'REFUSE' && '退款失败')
+            (scope.row.refund_status === 'READY' && $t('1cfdb98c.97a81d')) ||
+            (scope.row.refund_status === 'SUCCESS' && $t('1cfdb98c.0943d2')) ||
+            (scope.row.refund_status === 'CANCEL' && $t('1cfdb98c.0a7dff')) ||
+            (scope.row.refund_status === 'CHANGE' && $t('1cfdb98c.c59ead')) ||
+            (scope.row.refund_status === 'REFUNDCLOSE' && $t('1cfdb98c.1d83a4')) ||
+            (scope.row.refund_status === 'PROCESSING' && $t('1cfdb98c.73ce8f')) ||
+            (scope.row.refund_status === 'AUDIT_SUCCESS' && $t('1cfdb98c.07e608')) ||
+            (scope.row.refund_status === 'REFUSE' && $t('1cfdb98c.7c2544'))
           }}
         </template>
       </el-table-column>

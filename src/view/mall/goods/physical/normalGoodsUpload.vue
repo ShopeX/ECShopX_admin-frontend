@@ -8,9 +8,9 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <div class="tip-info">
         <p>
-          上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
+          {{ $t('5f45d286.08f306') }}
         </p>
-        <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
+        <p>{{ $t('5f45d286.4f6279') }}</p>
       </div>
       <template v-for="item in pane_list">
         <el-tab-pane :key="item.name" :label="item.label" :name="item.name">
@@ -22,10 +22,10 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button size="small" type="primary"> 点击上传 </el-button>
+                <el-button size="small" type="primary"> {{ $t('5f45d286.2c808b') }} </el-button>
               </el-upload>
               <el-button size="small" type="primary" @click="uploadHandleTemplate()">
-                下载模版
+                {{ $t('5f45d286.402a67') }}
               </el-button>
             </div>
             <el-table
@@ -33,36 +33,44 @@
               v-loading="loading"
               :data="uploadList"
               :height="wheight - 220"
-              element-loading-text="数据加载中"
+              :element-loading-text="$t('5f45d286.f09b12')"
             >
-              <el-table-column prop="file_name" label="上传文件" min-width="100" />
-              <el-table-column prop="created_date" label="上传时间" min-width="80" />
-              <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
-              <el-table-column label="处理状态" min-width="50">
+              <el-table-column prop="file_name" :label="$t('5f45d286.a6fc9e')" min-width="100" />
+              <el-table-column prop="created_date" :label="$t('5f45d286.cae255')" min-width="80" />
+              <el-table-column
+                prop="file_size_format"
+                :label="$t('5f45d286.396b7d')"
+                min-width="60"
+              />
+              <el-table-column :label="$t('5f45d286.21b314')" min-width="50">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
-                  <span v-if="scope.row.handle_status == 'processing'">处理中</span>
-                  <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
+                  <span v-if="scope.row.handle_status == 'wait'">{{ $t('5f45d286.1e57c1') }}</span>
+                  <span v-if="scope.row.handle_status == 'processing'">{{
+                    $t('5f45d286.5d459d')
+                  }}</span>
+                  <span v-if="scope.row.handle_status == 'finish'">{{
+                    $t('5f45d286.7be39b')
+                  }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="finish_date" label="处理完成时间" />
-              <el-table-column label="处理成功">
+              <el-table-column prop="finish_date" :label="$t('5f45d286.475dea')" />
+              <el-table-column :label="$t('5f45d286.3ba621')">
                 <template slot-scope="scope">
                   <span v-if="scope.row.handle_message"
-                    >{{ scope.row.handle_message.successLine }}行</span
+                    >{{ scope.row.handle_message.successLine }}{{ $t('d41d8cd9.j5k6l7') }}</span
                   >
                 </template>
               </el-table-column>
-              <el-table-column label="处理失败">
+              <el-table-column :label="$t('5f45d286.1012e0')">
                 <template slot-scope="scope">
                   <span v-if="scope.row.handle_message"
-                    >{{ scope.row.handle_message.errorLine }}行</span
+                    >{{ scope.row.handle_message.errorLine }}{{ $t('d41d8cd9.j5k6l7') }}</span
                   >
                   <a
                     v-if="scope.row.handle_message && scope.row.handle_message.errorLine > 0"
                     type="primary"
                     @click="exportErrorFile(scope.row.id, scope.row.file_type)"
-                    >下载错误详情</a
+                    >{{ $t('5f45d286.3798d3') }}</a
                   >
                 </template>
               </el-table-column>
@@ -90,16 +98,17 @@ import {
   exportUploadTemplate
 } from '../../../../api/common'
 import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
+import { i18n } from '@/i18n'
 
 export default {
   data() {
     const paneList = [
-      { name: 'upload_tb_items', label: '上传淘宝链接' },
-      { name: 'normal_goods', label: '上传实体类商品' }
+      { name: 'upload_tb_items', label: i18n.t('5f45d286.f1968b') },
+      { name: 'normal_goods', label: i18n.t('5f45d286.9e6dce') }
     ]
 
     if (!IS_SUPPLIER()) {
-      paneList.push({ name: 'employee_purchase_activity_items', label: '上传内购活动商品' })
+      paneList.push({ name: 'employee_purchase_activity_items', label: i18n.t('5f45d286.4482b6') })
     }
 
     return {
@@ -142,15 +151,15 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功，等待处理'
+          message: this.$t('5f45d286.7bbfaa')
         })
         this.getUploadList()
       })
     },
     uploadHandleTemplate() {
-      let fileName = '新增商品'
+      let fileName = this.$t('5f45d286.27fabd')
       if (this.activeName == 'employee_purchase_activity_items') {
-        fileName = '新增内购活动商品'
+        fileName = this.$t('5f45d286.3dd83a')
       }
       let params = {
         file_type: IS_SUPPLIER() ? 'supplier_goods' : 'normal_goods',
@@ -170,7 +179,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('5f45d286.bfd8d5')
           })
         }
       })
@@ -188,7 +197,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('5f45d286.bfd8d5')
           })
         }
       })

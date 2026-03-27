@@ -58,7 +58,7 @@
       :setting="{
         columns: [
           { name: 'ID', key: 'id', width: 120 },
-          { name: '页面名称', key: 'title' }
+          { name: $t('223cc8af.b78454'), key: 'title' }
         ]
       }"
       @select="onSelect"
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -75,57 +76,59 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择页面'
+    title: i18n.t('223cc8af.a4895e')
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('223cc8af.a4895e')
+  },
   data() {
     return {
       formData: {
         keywords: ''
       },
       list: [
-        { id: 'vipgrades', title: '会员开通' },
-        { id: 'applyChief', title: '社区团长申请' },
-        { id: 'recharge', title: '储值卡' },
-        { id: 'purchase', title: '内购' },
-        { id: 'pointShop', title: '积分商城' },
-        { id: 'registActivity', title: '报名活动' },
-        { id: 'group', title: '我的拼团' },
-        { id: 'coupon_list', title: '优惠券' },
-        { id: 'my_collect', title: '我的收藏' },
-        { id: 'address', title: '地址管理' },
-        { id: 'groups_list', title: '限时团购' },
-        { id: 'hottopic', title: '种草列表' },
-        { id: 'zitiOrder', title: '自提订单' },
-        { id: 'customerService', title: '客服' },
-        { id: 'homeSearch', title: '搜索' },
-        { id: 'settings', title: '设置' },
-        { id: 'kujiale', title: '酷家乐案例库' }
+        { id: 'vipgrades', title: this.$t('223cc8af.f035ca') },
+        { id: 'applyChief', title: this.$t('223cc8af.38d966') },
+        { id: 'recharge', title: this.$t('223cc8af.1200d5') },
+        { id: 'purchase', title: this.$t('223cc8af.d0465c') },
+        { id: 'pointShop', title: this.$t('223cc8af.a13364') },
+        { id: 'registActivity', title: this.$t('223cc8af.7fb92b') },
+        { id: 'group', title: this.$t('223cc8af.75a1d2') },
+        { id: 'coupon_list', title: this.$t('223cc8af.2f3635') },
+        { id: 'my_collect', title: this.$t('223cc8af.975ff6') },
+        { id: 'address', title: this.$t('223cc8af.bca1ea') },
+        { id: 'groups_list', title: this.$t('223cc8af.f38e72') },
+        { id: 'hottopic', title: this.$t('223cc8af.26b2d6') },
+        { id: 'zitiOrder', title: this.$t('223cc8af.d50361') },
+        { id: 'homeSearch', title: this.$t('223cc8af.e5f71f') },
+        { id: 'settings', title: this.$t('223cc8af.e366cc') },
+        { id: 'kujiale', title: this.$t('223cc8af.f2d3e5') },
+        { id: 'nearby_store', title: this.$t('223cc8af.3b02dd') }
       ],
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
   mounted() {
     if (!this.VERSION_PLATFORM() && !this.VERSION_B2C()) {
       // 平台版&b2c隐藏助力活动和助力订单
       this.list.push(
-        { id: 'boost_activity', title: '助力活动' },
-        { id: 'boost_order', title: '助力订单' }
+        { id: 'boost_activity', title: this.$t('223cc8af.5c34aa') },
+        { id: 'boost_order', title: this.$t('223cc8af.94b1e6') }
       )
     }
     if (!this.VERSION_STANDARD()) {
-      this.list.push({ id: 'tenants', title: '商家入驻' })
+      this.list.push({ id: 'tenants', title: this.$t('223cc8af.1107a8') })
     }
     if (!this.VERSION_IN_PURCHASE()) {
-      this.list.push({ id: 'community_group_enable', title: '社区团购（H5不支持）' })
+      this.list.push({ id: 'community_group_enable', title: this.$t('223cc8af.d0f121') })
     }
     if (this.value.guide == 'share_page') {
       this.list = [
-        { id: 'coupon_list', title: '领券中心' },
-        { id: 'page_index', title: '首页' },
-        { id: 'category', title: '分类' },
-        { id: 'hottopic', title: '种草列表' }
+        { id: 'coupon_list', title: this.$t('223cc8af.9c356b') },
+        { id: 'page_index', title: this.$t('223cc8af.db1c89') },
+        { id: 'category', title: this.$t('223cc8af.d0771a') },
+        { id: 'hottopic', title: this.$t('223cc8af.26b2d6') }
       ]
     }
     if (this.value.data) {

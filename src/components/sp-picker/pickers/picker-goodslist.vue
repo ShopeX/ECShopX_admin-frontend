@@ -20,11 +20,11 @@
 <template>
   <div class="picker-goodslist">
     <div class="type-select">
-      选择商品:
+      {{ $t('d40ceba9.b30230') }}
       <el-radio-group v-model="typeSelect">
-        <el-radio :label="1">从全部商品选择</el-radio>
-        <el-radio :label="2">按管理分类选择</el-radio>
-        <el-radio :label="3">按销售分类选择</el-radio>
+        <el-radio :label="1">{{ $t('d40ceba9.16828f') }}</el-radio>
+        <el-radio :label="2">{{ $t('d40ceba9.14a853') }}</el-radio>
+        <el-radio :label="3">{{ $t('d40ceba9.bf910a') }}</el-radio>
       </el-radio-group>
     </div>
 
@@ -33,7 +33,7 @@
         <SpFilterFormItem prop="main_cat_id">
           <el-cascader
             v-model="queryForm.main_cat_id"
-            placeholder="管理分类"
+            :placeholder="$t('d40ceba9.b3ed9f')"
             :options="categoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
@@ -42,22 +42,26 @@
         <SpFilterFormItem prop="category">
           <el-cascader
             v-model="queryForm.category"
-            placeholder="销售分类"
+            :placeholder="$t('d40ceba9.392d49')"
             :options="salesCategoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
           />
         </SpFilterFormItem>
         <SpFilterFormItem prop="item_name">
-          <el-input v-model="queryForm.item_name" placeholder="请输入商品名称" />
+          <el-input v-model="queryForm.item_name" :placeholder="$t('d40ceba9.d83187')" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="item_bn">
-          <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
+          <el-input v-model="queryForm.item_bn" :placeholder="$t('d40ceba9.40a487')" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="approve_status">
-          <el-select v-model="queryForm.approve_status" placeholder="选择状态" clearable>
+          <el-select
+            v-model="queryForm.approve_status"
+            :placeholder="$t('d40ceba9.599c08')"
+            clearable
+          >
             <el-option
-              v-for="item in statusOption"
+              v-for="item in statusOptionTranslated"
               :key="item.value"
               :label="item.title"
               :value="item.value"
@@ -65,12 +69,12 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="supplier_name">
-          <el-input v-model="queryForm.supplier_name" placeholder="所属供应商" />
+          <el-input v-model="queryForm.supplier_name" :placeholder="$t('d40ceba9.40b1be')" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="item_holder">
-          <el-select v-model="queryForm.item_holder" placeholder="商品类型" clearable>
+          <el-select v-model="queryForm.item_holder" :placeholder="$t('d40ceba9.2af133')" clearable>
             <el-option
-              v-for="item in categoryOption"
+              v-for="item in categoryOptionTranslated"
               :key="item.value"
               :label="item.title"
               :value="item.value"
@@ -78,15 +82,15 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="is_gift">
-          <el-select v-model="queryForm.is_gift" placeholder="是否为赠品" clearable>
-            <el-option :value="true" label="是" />
-            <el-option :value="false" label="否" />
+          <el-select v-model="queryForm.is_gift" :placeholder="$t('d40ceba9.674022')" clearable>
+            <el-option :value="true" :label="$t('d40ceba9.0a60ac')" />
+            <el-option :value="false" :label="$t('d40ceba9.c9744f')" />
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="brand_id">
           <el-select
             v-model="queryForm.brand_id"
-            placeholder="选择品牌"
+            :placeholder="$t('d40ceba9.41b90f')"
             remote
             filterable
             :remote-method="getGoodsBranchList"
@@ -104,7 +108,7 @@
 
       <SpFinder
         ref="finder"
-        :setting="setting"
+        :setting="goodslistSetting"
         :row-actions-align="'left'"
         :hooks="{
           beforeSearch: beforeSearch
@@ -121,9 +125,9 @@
         </SpFilterFormItem>
       </SpFilterForm> -->
       <div class="cascader-header">
-        <div class="hd">一级</div>
-        <div class="hd">二级</div>
-        <div class="hd">三级</div>
+        <div class="hd">{{ $t('d40ceba9.117bf1') }}</div>
+        <div class="hd">{{ $t('d40ceba9.301d4d') }}</div>
+        <div class="hd">{{ $t('d40ceba9.3ba8ac') }}</div>
       </div>
       <el-cascader-panel
         :options="categoryList"
@@ -144,9 +148,9 @@
         </SpFilterFormItem>
       </SpFilterForm> -->
       <div class="cascader-header">
-        <div class="hd">一级</div>
-        <div class="hd">二级</div>
-        <div class="hd">三级</div>
+        <div class="hd">{{ $t('d40ceba9.117bf1') }}</div>
+        <div class="hd">{{ $t('d40ceba9.301d4d') }}</div>
+        <div class="hd">{{ $t('d40ceba9.3ba8ac') }}</div>
       </div>
       <el-cascader-panel
         v-model="salevalue"
@@ -198,46 +202,37 @@ export default {
       },
       goodsBranchList: [],
       itemSourceMap: GOOD_CATEGORY_MAP,
-      categoryOption: [
-        {
-          title: '自营商品',
-          value: 'platform'
-        },
-        {
-          title: '商户商品',
-          value: 'distributor'
-        },
-        {
-          title: '供应商商品',
-          value: 'supplier'
-        }
-      ],
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
-      ],
       salevalue: '唇膏',
       categoryList: [],
-      salesCategoryList: [],
-      setting: createSetting({
+      salesCategoryList: []
+    }
+  },
+  computed: {
+    categoryOptionTranslated() {
+      const t = this.$t.bind(this)
+      return [
+        { title: t('d40ceba9.81a684'), value: 'platform' },
+        { title: t('d40ceba9.b1c9d7'), value: 'distributor' },
+        { title: t('d40ceba9.45a570'), value: 'supplier' }
+      ]
+    },
+    statusOptionTranslated() {
+      const t = this.$t.bind(this)
+      return [
+        { title: t('d40ceba9.9b7481'), value: 'onsale' },
+        { title: t('d40ceba9.2c50a0'), value: 'offline_sale' },
+        { title: t('d40ceba9.acf86b'), value: 'only_show' },
+        { title: t('d40ceba9.ae83a3'), value: 'instock' }
+      ]
+    },
+    goodslistSetting() {
+      const t = this.$t.bind(this)
+      const itemSourceMap = this.itemSourceMap
+      return createSetting({
         columns: [
-          { name: '商品ID', key: 'itemId', width: '80' },
+          { name: t('d40ceba9.858526'), key: 'itemId', width: '80' },
           {
-            name: '商品名称',
+            name: t('d40ceba9.1fd1d5'),
             key: 'name',
             width: '220',
             render: (h, { row }) =>
@@ -265,41 +260,32 @@ export default {
                     h(
                       'div',
                       { class: 'text-xs bg-gray-100 inline-block px-1 leading-[18px]' },
-                      row.nospec ? '' : '多规格'
+                      row.nospec ? '' : t('d40ceba9.5d60de')
                     )
                   ])
                 ]
               )
           },
+          { name: t('d40ceba9.ea887b'), key: 'item_spec_desc', width: '120' },
           {
-            name: '规格',
-            key: 'item_spec_desc',
-            width: '120'
-          },
-          {
-            name: '是否赠品',
+            name: t('d40ceba9.792518'),
             key: 'is_gift',
             formatter: (value, row, col) => {
-              return value == '1' ? '是' : '否'
+              return value == '1' ? t('d40ceba9.0a60ac') : t('d40ceba9.c9744f')
             },
             width: '120'
           },
+          { name: t('d40ceba9.40b1be'), key: 'supplier_name', width: '120' },
           {
-            name: '所属供应商',
-            key: 'supplier_name',
-            width: '120'
-          },
-          {
-            name: '商品类型',
+            name: t('d40ceba9.2af133'),
             key: 'item_holder',
             formatter: (value, row, col) => {
-              return this.itemSourceMap[value]
+              return itemSourceMap[value]
             },
             width: '120'
           },
-
           {
-            name: '市场价',
+            name: t('d40ceba9.818fc4'),
             key: 'market_price',
             formatter: (value, row, col) => {
               return value / 100
@@ -307,7 +293,7 @@ export default {
             width: '120'
           },
           {
-            name: '销售价',
+            name: t('d40ceba9.e29575'),
             key: 'price',
             formatter: (value, row, col) => {
               return value / 100
@@ -315,23 +301,17 @@ export default {
             width: '120'
           },
           {
-            name: '成本价',
+            name: t('d40ceba9.2e2ce2'),
             key: 'cost_price',
             formatter: (value, row, col) => {
               return value / 100
             },
             width: '120'
           },
-          {
-            name: '库存',
-            key: 'store',
-            width: '120'
-          }
+          { name: t('d40ceba9.0eac88'), key: 'store', width: '120' }
         ]
       })
-    }
-  },
-  computed: {
+    },
     goodsUrl() {
       if (
         (this.VERSION_STANDARD() && this.IS_DISTRIBUTOR()) ||
@@ -348,6 +328,7 @@ export default {
     }
   },
   async created() {
+    this.$options.config.title = this.$t('d40ceba9.43d1e2')
     await this.getCategoryInfo()
     this.getGoodsBranchList()
   },

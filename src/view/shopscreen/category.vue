@@ -646,7 +646,9 @@ $txt-placeholder: #f5f5f7;
                     :class="{ active: index === currentFidx }"
                     @click="switchTab(index)"
                   >
-                    <span v-if="item.hot" class="hot-tag" />{{ item.name ? item.name : '分类' }}
+                    <span v-if="item.hot" class="hot-tag" />{{
+                      item.name ? item.name : $t('bcce6703.d0771a')
+                    }}
                   </div>
                 </div>
                 <div class="child-layout-view">
@@ -659,7 +661,7 @@ $txt-placeholder: #f5f5f7;
                           : 'https://fakeimg.pl/250x100/EFEFEF/CCC/'
                       "
                       alt=""
-                    />
+                    >
                     <div
                       v-for="(sitem, sidx) in editableData[currentFidx].children"
                       :key="sidx"
@@ -674,8 +676,8 @@ $txt-placeholder: #f5f5f7;
                             class="child-img"
                             :src="litem.img ? litem.img : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                             alt=""
-                          />
-                          <div>{{ litem.name ? litem.name : '子分类' }}</div>
+                          >
+                          <div>{{ litem.name ? litem.name : $t('bcce6703.3b150c') }}</div>
                         </div>
                       </div>
                     </div>
@@ -693,7 +695,7 @@ $txt-placeholder: #f5f5f7;
                     :class="{ active: index === currentFidx }"
                     @click="switchTab(index)"
                   >
-                    {{ item.name ? item.name : '分类' }}
+                    {{ item.name ? item.name : $t('bcce6703.d0771a') }}
                   </div>
                 </div>
                 <div class="child-layout-view">
@@ -706,14 +708,14 @@ $txt-placeholder: #f5f5f7;
                           : 'https://fakeimg.pl/250x100/EFEFEF/CCC/'
                       "
                       alt=""
-                    />
+                    >
                     <div v-for="item in 3" class="child-goods-view">
                       <div class="child-item">
-                        <img class="item-img" src="https://fakeimg.pl/70x70/EFEFEF/CCC/" alt="" />
+                        <img class="item-img" src="https://fakeimg.pl/70x70/EFEFEF/CCC/" alt="">
                         <div class="item-caption">
                           <div>
-                            <div class="item-title">当前类目商品标题</div>
-                            <div class="item-desc">当前类目商品描述</div>
+                            <div class="item-title">{{ $t('bcce6703.670f73') }}</div>
+                            <div class="item-desc">{{ $t('bcce6703.f359a5') }}</div>
                           </div>
                           <div class="item-icon">
                             <div class="iconfont icon-cart-plus" />
@@ -739,7 +741,7 @@ $txt-placeholder: #f5f5f7;
                       :src="item.img ? item.img : 'https://fakeimg.pl/320x120/EFEFEF/CCC/'"
                       alt=""
                       @click="switchTab(index)"
-                    />
+                    >
                     <div v-for="(sitem, sidx) in item.children" :key="sidx" class="child">
                       <div v-if="sitem.name" class="second-title">
                         {{ sitem.name }}
@@ -750,8 +752,8 @@ $txt-placeholder: #f5f5f7;
                             class="child-img"
                             :src="litem.img ? litem.img : 'https://fakeimg.pl/70x70/EFEFEF/CCC/'"
                             alt=""
-                          />
-                          <div>{{ litem.name ? litem.name : '子分类' }}</div>
+                          >
+                          <div>{{ litem.name ? litem.name : $t('bcce6703.3b150c') }}</div>
                         </div>
                       </div>
                     </div>
@@ -761,7 +763,7 @@ $txt-placeholder: #f5f5f7;
             </div>
             <div v-if="!editableData.length" class="no-category-placeholder">
               <div class="iconfont icon-th-list" />
-              <div>请添加分类</div>
+              <div>{{ $t('bcce6703.c81aac') }}</div>
             </div>
           </div>
         </div>
@@ -794,15 +796,19 @@ $txt-placeholder: #f5f5f7;
                       v-model="seriesTitle"
                       type="text"
                       size="small"
-                      placeholder="请输入系列名称"
+                      :placeholder="$t('bcce6703.2df86a')"
                     />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button size="mini" type="text" @click="handleCancel"> 取消 </el-button>
-                    <el-button type="primary" size="mini" @click="addSeries"> 确定 </el-button>
+                    <el-button size="mini" type="text" @click="handleCancel">
+                      {{ $t('bcce6703.625fb2') }}
+                    </el-button>
+                    <el-button type="primary" size="mini" @click="addSeries">
+                      {{ $t('bcce6703.38cf16') }}
+                    </el-button>
                   </div>
                   <el-button slot="reference" type="text" class="add-btn iconfont icon-plus-circle">
-                    添加系列
+                    {{ $t('bcce6703.17d491') }}
                   </el-button>
                 </el-popover>
               </div>
@@ -815,18 +821,17 @@ $txt-placeholder: #f5f5f7;
                       v-if="item.img"
                       :src="item.img ? item.img : 'https://fakeimg.pl/50x50'"
                       alt=""
-                    />
+                    >
                     <div v-else>
-                      <i class="el-icon-pictures"></i>
+                      <i class="el-icon-pictures" />
                     </div>
                   </div>
-                  <el-input v-model="item.name" placeholder="名称" />
+                  <el-input v-model="item.name" :placeholder="$t('bcce6703.d7ec2d')" />
                   <div class="bind-btn" @click="showCategory(fidx)">
-                    <i class="el-icon-link"></i>
-                    {{ item.category_name ? item.category_name : '绑定分类' }}
+                    <i class="el-icon-link" />
+                    {{ item.category_name ? item.category_name : $t('bcce6703.f66037') }}
                   </div>
-                  <!-- <div @click="openPageDialog(fidx)" class="bind-btn el-icon-link"> {{item.page_name ? item.page_name : '绑定自定义页面'}}</div> -->
-                  <el-checkbox v-model="item.hot"> 热推 </el-checkbox>
+                  <el-checkbox v-model="item.hot"> {{ $t('bcce6703.ae6540') }} </el-checkbox>
                   <div class="control-bar move iconfont icon-stream" />
                   <div class="control-bar remove iconfont icon-trash" @click="remove(fidx)" />
                 </div>
@@ -839,18 +844,18 @@ $txt-placeholder: #f5f5f7;
                             v-if="sitem.img"
                             :src="sitem.img ? sitem.img : 'https://fakeimg.pl/50x50'"
                             alt=""
-                          />
+                          >
                           <div v-else class="el-icon-pictures" />
                         </div>
-                        <el-input v-model="sitem.name" placeholder="名称" />
+                        <el-input v-model="sitem.name" :placeholder="$t('bcce6703.d7ec2d')" />
                         <div class="bind-btn" @click="showCategory(fidx, sidx)">
                           <i
                             class="el-icon-link"
                             v-if="!sitem.main_category_id && !sitem.category_id"
-                          ></i>
-                          {{ sitem.main_category_id ? '管理分类：' : ''
-                          }}{{ sitem.category_id ? '商品分类：' : ''
-                          }}{{ sitem.category_name ? sitem.category_name : '绑定分类' }}
+                          />
+                          {{ sitem.main_category_id ? $t('bcce6703.ca079c') : ''
+                          }}{{ sitem.category_id ? $t('bcce6703.919e4d') : ''
+                          }}{{ sitem.category_name ? sitem.category_name : $t('bcce6703.f66037') }}
                         </div>
                         <div class="control-bar move iconfont icon-stream" />
                         <div
@@ -871,20 +876,22 @@ $txt-placeholder: #f5f5f7;
                                   v-if="litem.img"
                                   :src="litem.img ? litem.img : 'https://fakeimg.pl/50x50'"
                                   alt=""
-                                />
+                                >
                                 <div v-else>
-                                  <i class="el-icon-pictures"></i>
+                                  <i class="el-icon-pictures" />
                                 </div>
                               </div>
-                              <el-input v-model="litem.name" placeholder="名称" />
+                              <el-input v-model="litem.name" :placeholder="$t('bcce6703.d7ec2d')" />
                               <div class="bind-btn" @click="showCategory(fidx, sidx, lidx)">
                                 <i
                                   class="el-icon-link"
                                   v-if="!litem.main_category_id && !litem.category_id"
-                                ></i>
-                                {{ litem.main_category_id ? '管理分类：' : ''
-                                }}{{ litem.category_id ? '商品分类：' : ''
-                                }}{{ litem.category_name ? litem.category_name : '绑定分类' }}
+                                />
+                                {{ litem.main_category_id ? $t('bcce6703.ca079c') : ''
+                                }}{{ litem.category_id ? $t('bcce6703.919e4d') : ''
+                                }}{{
+                                  litem.category_name ? litem.category_name : $t('bcce6703.f66037')
+                                }}
                               </div>
                               <div class="control-bar move iconfont icon-stream" />
                               <div
@@ -899,7 +906,7 @@ $txt-placeholder: #f5f5f7;
                           class="child-add-btn iconfont icon-plus-circle"
                           @click="add(fidx, sidx)"
                         >
-                          添加三级分类
+                          {{ $t('bcce6703.284004') }}
                         </el-button>
                       </div>
                     </div>
@@ -909,33 +916,39 @@ $txt-placeholder: #f5f5f7;
                     class="child-add-btn iconfont icon-plus-circle"
                     @click="add(fidx)"
                   >
-                    添加二级分类
+                    {{ $t('bcce6703.f8875b') }}
                   </el-button>
                 </div>
               </div>
             </draggable>
             <el-button class="parent-add-btn iconfont icon-plus" @click="add()">
-              添加分类
+              {{ $t('bcce6703.9811be') }}
             </el-button>
           </div>
         </div>
       </section>
       <section class="content-padded-s section-white content-center">
-        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">
+          {{ $t('bcce6703.be5fbb') }}
+        </el-button>
       </section>
       <!-- 分类选择器弹窗 -->
-      <el-dialog title="绑定分类" :visible.sync="categoryDialog" :before-close="hideCategory">
+      <el-dialog
+        :title="$t('bcce6703.f66037')"
+        :visible.sync="categoryDialog"
+        :before-close="hideCategory"
+      >
         <el-form>
           <el-form-item>
             <el-radio-group v-model="curCateType">
-              <el-radio-button label="goodsCate"> 商品分类 </el-radio-button>
-              <el-radio-button label="mainCate"> 管理分类 </el-radio-button>
+              <el-radio-button label="goodsCate"> {{ $t('bcce6703.c3ece5') }} </el-radio-button>
+              <el-radio-button label="mainCate"> {{ $t('bcce6703.b3ed9f') }} </el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="选择分类">
+          <el-form-item :label="$t('bcce6703.5fcb1e')">
             <el-cascader
               v-if="curCateType === 'goodsCate'"
-              placeholder="选择商品分类"
+              :placeholder="$t('bcce6703.302aab')"
               :options="category"
               :props="{ checkStrictly: true }"
               clearable
@@ -943,7 +956,7 @@ $txt-placeholder: #f5f5f7;
             />
             <el-cascader
               v-if="curCateType === 'mainCate'"
-              placeholder="选择管理分类"
+              :placeholder="$t('bcce6703.c50637')"
               :options="mainCategory"
               :props="{ checkStrictly: true }"
               clearable
@@ -952,13 +965,13 @@ $txt-placeholder: #f5f5f7;
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="categoryDialog = false">取 消</el-button>
-          <el-button type="primary" @click="setCategory">确 定</el-button>
+          <el-button @click="categoryDialog = false">{{ $t('bcce6703.c08ab9') }}</el-button>
+          <el-button type="primary" @click="setCategory">{{ $t('bcce6703.aa7527') }}</el-button>
         </span>
       </el-dialog>
       <!-- 选择自定义页面 -->
-      <el-dialog title="选择页面" :visible.sync="pageDialogVisible">
-        <el-select v-model="selectedCustomPage" placeholder="请选择">
+      <el-dialog :title="$t('bcce6703.a4895e')" :visible.sync="pageDialogVisible">
+        <el-select v-model="selectedCustomPage" :placeholder="$t('bcce6703.708c9d')">
           <el-option
             v-for="(item, index) in customPageList"
             :key="index"
@@ -967,8 +980,10 @@ $txt-placeholder: #f5f5f7;
           />
         </el-select>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="pageDialogVisible = false"> 取 消 </el-button>
-          <el-button type="primary" @click="confirmPageDialog"> 确 定 </el-button>
+          <el-button @click="pageDialogVisible = false"> {{ $t('bcce6703.c08ab9') }} </el-button>
+          <el-button type="primary" @click="confirmPageDialog">
+            {{ $t('bcce6703.aa7527') }}
+          </el-button>
         </div>
       </el-dialog>
       <imgPicker
@@ -1150,11 +1165,11 @@ export default {
     // 添加系列
     addSeries() {
       if (!this.seriesTitle) {
-        this.$message({ message: '系列名称必填', type: 'error' })
+        this.$message({ message: this.$t('bcce6703.26c90f'), type: 'error' })
         return
       }
       if (this.series.length >= 3) {
-        this.$message({ message: '最多添加3个系列', type: 'error' })
+        this.$message({ message: this.$t('bcce6703.ca0da1'), type: 'error' })
         return
       }
       let newTabName = Date.parse(new Date()) + ''
@@ -1177,9 +1192,9 @@ export default {
     // 移除系列
     removeTab(targetName) {
       console.log(targetName)
-      this.$confirm('删除系列将删除该系列下配置的分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('bcce6703.6a7f3b'), this.$t('bcce6703.02d981'), {
+        confirmButtonText: this.$t('bcce6703.38cf16'),
+        cancelButtonText: this.$t('bcce6703.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -1240,13 +1255,13 @@ export default {
     // 移除菜单
     remove(fidx, sidx, lidx) {
       if (lidx !== undefined) {
-        this.$confirm('确认删除？')
+        this.$confirm(this.$t('bcce6703.b28efa'))
           .then((_) => {
             this.editableData[fidx].children[sidx].children.splice(lidx, 1)
           })
           .catch((_) => {})
       } else {
-        this.$confirm('删该分类将会删除其所有子级，确认删除吗？')
+        this.$confirm(this.$t('bcce6703.e26c17'))
           .then((_) => {
             if (sidx !== undefined) {
               this.editableData[fidx].children.splice(sidx, 1)
@@ -1391,7 +1406,7 @@ export default {
         if (this.form.data[lv1].children.length > 0) {
           for (let lv2 in this.form.data[lv1].children) {
             if (this.form.data[lv1].children[lv2].children.length == 0) {
-              this.$message({ message: '自定义分类只能设置一级或者三级', type: 'error' })
+              this.$message({ message: this.$t('bcce6703.1d2742'), type: 'error' })
               return
             }
           }
@@ -1406,7 +1421,7 @@ export default {
       savePageParams(param).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('bcce6703.3b1083'),
             type: 'success'
           })
         }

@@ -15,7 +15,7 @@
 <template>
   <div class="page-404">
     <div class="context-404">404</div>
-    <el-button @click="goBack"> 返回 </el-button>
+    <el-button @click="goBack"> {{ $t('7fe3d873.5f4112') }} </el-button>
   </div>
 </template>
 

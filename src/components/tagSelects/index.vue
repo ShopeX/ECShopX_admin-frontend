@@ -7,7 +7,7 @@
   <el-dialog
     class="store-dialog"
     width="60%"
-    title="选择会员标签"
+    :title="$t('07693588.177391')"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
@@ -15,7 +15,7 @@
     <div style="margin-bottom: 15px">
       <el-input
         v-model="params.keywords"
-        placeholder="输入标签名称"
+        :placeholder="$t('07693588.4be191')"
         class="input-with-select"
         style="width: 50%"
       >
@@ -32,8 +32,8 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" :reserve-selection="true" width="50" />
-      <el-table-column prop="itemId" label="标签ID" width="70" />
-      <el-table-column prop="itemName" label="标签名称">
+      <el-table-column prop="itemId" :label="$t('07693588.e2c5cd')" width="70" />
+      <el-table-column prop="itemName" :label="$t('07693588.341fe8')">
         <template slot-scope="scope">
           <el-tag :color="scope.row.tag_color" size="mini" style="color: #ffffff">
             {{ scope.row.tag_name }}
@@ -50,8 +50,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('07693588.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('07693588.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -78,23 +78,11 @@ export default {
         templates_id: ''
       },
       templatesList: [],
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
+      statusOptionValues: [
+        { value: 'onsale' },
+        { value: 'offline_sale' },
+        { value: 'only_show' },
+        { value: 'instock' }
       ],
       currency: {},
       cursymbol: '￥'
@@ -103,6 +91,10 @@ export default {
   computed: {
     showDialog() {
       return this.itemsVisible
+    },
+    statusOption() {
+      const keys = ['07693588.9b7481', '07693588.2c50a0', '07693588.acf86b', '07693588.ae83a3']
+      return this.statusOptionValues.map((item, i) => ({ ...item, title: this.$t(keys[i]) }))
     }
   },
   watch: {

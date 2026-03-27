@@ -35,7 +35,7 @@
       v-model="data.areaNo"
       clearable
       type="text"
-      placeholder="区号"
+      :placeholder="$t('0a30d23d.9a0e44')"
       :class="keyClass('areaNo')"
       @change="onChange"
     />
@@ -43,7 +43,7 @@
       v-model="data.phone"
       clearable
       type="text"
-      placeholder="请填写准确的联系电话，便于买家联系（手机号时区号可留空）"
+      :placeholder="$t('0a30d23d.92193c')"
       :class="keyClass('phone')"
       @change="onChange"
     />
@@ -92,10 +92,10 @@ export default {
       this.isErrorKey = ''
       if (areaNo && !phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入固定电话')
+        throw new Error(this.$t('0a30d23d.b75945'))
       } else if (!phone) {
         this.isErrorKey = 'phone'
-        throw new Error('请输入联系电话')
+        throw new Error(this.$t('0a30d23d.7b540b'))
       }
     }
   }

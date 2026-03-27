@@ -14,13 +14,13 @@
       :form-list="formList"
     />
     <div class="lottery-editor-footer">
-      <el-button @click="cancel">取消</el-button>
-      <el-button type="primary" @click="onGroupFormSubmit">保存</el-button>
+      <el-button @click="cancel">{{ $t('bea3f44a.625fb2') }}</el-button>
+      <el-button type="primary" @click="onGroupFormSubmit">{{ $t('d8d84692.be5fbb') }}</el-button>
     </div>
     <SpDialog
       ref="hotAreasDialogRef"
       v-model="hotAreasDialogShow"
-      title="抽奖区域"
+      :title="$t('d8d84692.ffa588')"
       :modal="false"
       class="base-form"
       :form="hotArea"
@@ -31,7 +31,7 @@
     <SpDialog
       ref="ruleDialogRef"
       v-model="ruleDialogShow"
-      title="抽奖规则按钮"
+      :title="$t('d8d84692.f4f9e5')"
       :modal="false"
       class="base-form"
       :form="ruleForm"
@@ -42,7 +42,7 @@
     <SpDialog
       ref="recordDialogRef"
       v-model="recordDialogShow"
-      title="抽奖记录"
+      :title="$t('d8d84692.8a69c2')"
       :modal="false"
       class="base-form"
       :form="recordForm"
@@ -59,29 +59,11 @@ import { generatorParams } from "@/utils/schemaHelper.js";
 import moment from 'moment'
 import api from '@/api'
 
-import { defaultItem, prize_types, defaultGameConfig } from './constants'
+import { defaultItem, defaultGameConfig } from './constants'
 
 let index = 0
 
 const defaultValues = {
-  options: [
-    {
-      label: prize_types.thanks,
-      value: "thanks",
-    },
-    {
-      label: prize_types.points,
-      value: "points",
-    },
-    {
-      label: prize_types.coupon,
-      value: "coupon",
-    },
-    {
-      label: prize_types.coupons,
-      value: "coupons",
-    },
-  ],
   prize_data: [
     { ...defaultItem, index: index++ },
     { ...defaultItem, index: index++ },
@@ -108,7 +90,6 @@ export default {
         area_id: 0
       },
       areas: [],
-      options: defaultValues.options,
       //
       hotArea: generatorParams(lotteryAreaSchema(this)),
       hotAreasDialogShow: false,
@@ -122,6 +103,14 @@ export default {
     }
   },
   computed: {
+    options() {
+      return [
+        { label: this.$t('9f64e002.d7bc19'), value: 'thanks' },
+        { label: this.$t('9f64e002.9f68a8'), value: 'points' },
+        { label: this.$t('9f64e002.2f3635'), value: 'coupon' },
+        { label: this.$t('9f64e002.7fac13'), value: 'coupons' }
+      ]
+    },
     formList() {
       return formList(this)
     },

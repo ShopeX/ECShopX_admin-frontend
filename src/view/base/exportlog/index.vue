@@ -6,59 +6,75 @@
 <template>
   <SpPage class="sp-export-log-page">
     <div class="content-bottom-padded">
-      <el-alert type="info" title="下载提示" show-icon>
-        <div>已经生成的文件只保留一天，请及时下载</div>
+      <el-alert type="info" :title="$t('cb7af8ae.d42828')" show-icon>
+        <div>{{ $t('cb7af8ae.7de565') }}</div>
       </el-alert>
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <template v-if="$store.getters.login_type == 'dealer'">
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="分账导出" name="adapay_tradedata" />
+        <el-tab-pane
+          v-if="!VERSION_SHUYUN()"
+          :label="$t('cb7af8ae.355262')"
+          name="adapay_tradedata"
+        />
       </template>
       <template v-else-if="$store.getters.login_type == 'merchant'">
-        <el-tab-pane label="主订单导出" name="normal_master_order" />
-        <el-tab-pane label="子订单导出" name="normal_order" />
-        <el-tab-pane label="待开票订单导出" name="invoice" />
-        <el-tab-pane label="售后列表导出" name="aftersale_record_count" />
-        <el-tab-pane label="交易单导出" name="tradedata" />
-        <el-tab-pane label="退款单导出" name="refund_record_count" />
-        <el-tab-pane label="商品统计导出" name="goods_data" />
-        <el-tab-pane label="商品导出" name="items" />
-        <el-tab-pane label="商品标签导出" name="normal_items_tag" />
-        <el-tab-pane label="商品码导出" name="itemcode" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单" name="statements" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单明细" name="statement_details" />
-        <el-tab-pane label="推广员业绩导出" name="popularize" />
-        <el-tab-pane label="业绩统计" name="popularizeStatic" />
-        <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
-        <el-tab-pane label="业绩订单" name="popularizeOrder" />
-        <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
+        <el-tab-pane :label="$t('cb7af8ae.c7af0d')" name="normal_master_order" />
+        <el-tab-pane :label="$t('cb7af8ae.97e27a')" name="normal_order" />
+        <el-tab-pane :label="$t('cb7af8ae.12f70e')" name="invoice" />
+        <el-tab-pane :label="$t('cb7af8ae.f12320')" name="aftersale_record_count" />
+        <el-tab-pane :label="$t('cb7af8ae.c67ce6')" name="tradedata" />
+        <el-tab-pane :label="$t('cb7af8ae.523cb3')" name="refund_record_count" />
+        <el-tab-pane :label="$t('cb7af8ae.d012d9')" name="goods_data" />
+        <el-tab-pane :label="$t('cb7af8ae.f83133')" name="items" />
+        <el-tab-pane :label="$t('cb7af8ae.9bb27d')" name="normal_items_tag" />
+        <el-tab-pane :label="$t('cb7af8ae.480b38')" name="itemcode" />
+        <el-tab-pane v-if="!VERSION_SHUYUN()" :label="$t('cb7af8ae.75a79c')" name="statements" />
+        <el-tab-pane
+          v-if="!VERSION_SHUYUN()"
+          :label="$t('cb7af8ae.f7f2df')"
+          name="statement_details"
+        />
+        <el-tab-pane :label="$t('cb7af8ae.d8defc')" name="popularize" />
+        <el-tab-pane :label="$t('cb7af8ae.398e76')" name="popularizeStatic" />
+        <el-tab-pane :label="$t('cb7af8ae.41356e')" name="export_luckdraw_log" />
+        <el-tab-pane :label="$t('cb7af8ae.7d75ec')" name="popularizeOrder" />
+        <el-tab-pane :label="$t('cb7af8ae.03c9b1')" name="delivery_staffdata" />
       </template>
 
       <template v-else>
-        <el-tab-pane label="提现记录导出" name="bspay_withdraw" />
-        <el-tab-pane label="会员导出" name="member" />
+        <el-tab-pane :label="$t('cb7af8ae.b8338a')" name="bspay_withdraw" />
+        <el-tab-pane :label="$t('cb7af8ae.e9cc0a')" name="member" />
         <!-- <el-tab-pane
           label="服务订单导出"
           name="service_order"
           v-if="!VERSION_IN_PURCHASE()"
         /> -->
-        <el-tab-pane label="实体主订单导出" name="normal_master_order" />
-        <el-tab-pane label="实体子订单导出" name="normal_order" />
-        <el-tab-pane label="社区团购销售数据导出" name="normal_community_order" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="发票信息导出" name="invoice" />
+        <el-tab-pane :label="$t('cb7af8ae.8045f7')" name="normal_master_order" />
+        <el-tab-pane :label="$t('cb7af8ae.b8ffd8')" name="normal_order" />
+        <el-tab-pane :label="$t('cb7af8ae.daa8e0')" name="normal_community_order" />
+        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" :label="$t('cb7af8ae.3c04c9')" name="invoice" />
         <!-- <el-tab-pane
           v-if="!VERSION_IN_PURCHASE()"
           label="药品需求单"
           name="drug_order"
         /> -->
-        <el-tab-pane label="商品统计导出" name="goods_data" />
-        <el-tab-pane label="商品导出" name="items" />
-        <el-tab-pane label="供应商商品导出" name="supplier_goods" />
-        <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
+        <el-tab-pane :label="$t('cb7af8ae.d012d9')" name="goods_data" />
+        <el-tab-pane :label="$t('cb7af8ae.f83133')" name="items" />
+        <el-tab-pane :label="$t('cb7af8ae.e2ace4')" name="supplier_goods" />
+        <el-tab-pane :label="$t('cb7af8ae.41356e')" name="export_luckdraw_log" />
         <!-- <el-tab-pane label="商品标签导出" name="normal_items_tag" /> -->
-        <el-tab-pane label="积分记录导出" name="member_point_logs" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="店铺商品导出" name="distributor_items" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="积分商品导出" name="pointsmallitems" />
+        <el-tab-pane :label="$t('cb7af8ae.1be670')" name="member_point_logs" />
+        <el-tab-pane
+          v-if="!VERSION_IN_PURCHASE()"
+          :label="$t('cb7af8ae.5f46b0')"
+          name="distributor_items"
+        />
+        <el-tab-pane
+          v-if="!VERSION_IN_PURCHASE()"
+          :label="$t('cb7af8ae.42ff32')"
+          name="pointsmallitems"
+        />
         <!-- <el-tab-pane
           label="权益导出"
           name="right"
@@ -76,58 +92,74 @@
         /> -->
         <el-tab-pane
           v-if="!VERSION_IN_PURCHASE()"
-          label="报名导出"
+          :label="$t('cb7af8ae.972304')"
           name="selform_registration_record"
         />
-        <el-tab-pane label="售后列表" name="aftersale_record_count" />
-        <el-tab-pane label="退款单列表" name="refund_record_count" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="银联分账单" name="chinaums_division" />
+        <el-tab-pane :label="$t('cb7af8ae.75bfab')" name="aftersale_record_count" />
+        <el-tab-pane :label="$t('cb7af8ae.ae300f')" name="refund_record_count" />
+        <el-tab-pane
+          v-if="!VERSION_SHUYUN()"
+          :label="$t('cb7af8ae.3f1191')"
+          name="chinaums_division"
+        />
         <!-- <el-tab-pane label="推广员业绩" name="popularize" />
         <el-tab-pane label="业绩统计" name="popularizeStatic" />
         <el-tab-pane label="业绩订单" name="popularizeOrder" /> -->
         <!-- <el-tab-pane label="财务售后单导出" name="aftersale_financial" /> -->
         <el-tab-pane
           v-if="!VERSION_SHUYUN()"
-          label="财务销售报表导出"
+          :label="$t('cb7af8ae.d5fc54')"
           name="salesreport_financial"
         />
-        <el-tab-pane label="交易统计导出" name="hfpay_trade_record" />
+        <el-tab-pane :label="$t('cb7af8ae.c97d08')" name="hfpay_trade_record" />
         <!-- <el-tab-pane
           label="分账统计导出"
           name="hfpay_order_record"
         /> -->
-        <el-tab-pane label="提现记录导出" name="hfpay_withdraw_record" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="分账导出" name="adapay_tradedata" />
-        <el-tab-pane label="商品码导出" name="itemcode" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单" name="statements" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单明细" name="statement_details" />
-        <el-tab-pane label="斗拱分账" name="bspay_tradedata" />
-        <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
-        <el-tab-pane v-if="IS_SUPPLIER()" label="主订单导出" name="supplier_order" />
-        <el-tab-pane label="转账审核导出" name="offline_payment" />
-        <el-tab-pane label="员工列表" name="employee_purchase_employees" />
-        <el-tab-pane label="店铺白名单导出" name="distributor_white_list" />
+        <el-tab-pane :label="$t('cb7af8ae.b8338a')" name="hfpay_withdraw_record" />
+        <el-tab-pane
+          v-if="!VERSION_SHUYUN()"
+          :label="$t('cb7af8ae.355262')"
+          name="adapay_tradedata"
+        />
+        <el-tab-pane :label="$t('cb7af8ae.480b38')" name="itemcode" />
+        <el-tab-pane v-if="!VERSION_SHUYUN()" :label="$t('cb7af8ae.75a79c')" name="statements" />
+        <el-tab-pane
+          v-if="!VERSION_SHUYUN()"
+          :label="$t('cb7af8ae.f7f2df')"
+          name="statement_details"
+        />
+        <el-tab-pane :label="$t('cb7af8ae.443bfc')" name="bspay_tradedata" />
+        <el-tab-pane :label="$t('cb7af8ae.03c9b1')" name="delivery_staffdata" />
+        <el-tab-pane v-if="IS_SUPPLIER()" :label="$t('cb7af8ae.c7af0d')" name="supplier_order" />
+        <el-tab-pane :label="$t('cb7af8ae.e222a6')" name="offline_payment" />
+        <el-tab-pane :label="$t('cb7af8ae.d04e78')" name="employee_purchase_employees" />
+        <el-tab-pane :label="$t('cb7af8ae.fa1b9f')" name="distributor_white_list" />
       </template>
 
-      <el-tab-pane label="推广员业绩导出" name="popularize" />
-      <el-tab-pane label="业绩统计" name="popularizeStatic" />
-      <el-tab-pane label="业绩订单" name="popularizeOrder" />
+      <el-tab-pane :label="$t('cb7af8ae.d8defc')" name="popularize" />
+      <el-tab-pane :label="$t('cb7af8ae.398e76')" name="popularizeStatic" />
+      <el-tab-pane :label="$t('cb7af8ae.7d75ec')" name="popularizeOrder" />
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">
-        <el-table-column label="操作">
+        <el-table-column :label="$t('cb7af8ae.2b6bc0')">
           <template slot-scope="scope">
-            <el-button type="text" @click.prevent="handleDown(scope.row)">下载</el-button>
+            <el-button type="text" @click.prevent="handleDown(scope.row)">
+{{
+              $t('cb7af8ae.f26ef9')
+            }}
+</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="log_id" label="ID" />
-        <el-table-column prop="file_name" label="文件名称" />
-        <el-table-column prop="finish_date" label="处理完成时间" />
-        <el-table-column prop="handle_status" label="处理状态">
+        <el-table-column prop="file_name" :label="$t('cb7af8ae.d2e256')" />
+        <el-table-column prop="finish_date" :label="$t('cb7af8ae.475dea')" />
+        <el-table-column prop="handle_status" :label="$t('cb7af8ae.21b314')">
           <template slot-scope="scope">
-            <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
-            <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
-            <span v-if="scope.row.handle_status == 'processing'">处理中</span>
-            <span v-if="scope.row.handle_status == 'fail'">处理失败</span>
+            <span v-if="scope.row.handle_status == 'wait'">{{ $t('cb7af8ae.1e57c1') }}</span>
+            <span v-if="scope.row.handle_status == 'finish'">{{ $t('cb7af8ae.7be39b') }}</span>
+            <span v-if="scope.row.handle_status == 'processing'">{{ $t('cb7af8ae.5d459d') }}</span>
+            <span v-if="scope.row.handle_status == 'fail'">{{ $t('cb7af8ae.1012e0') }}</span>
           </template>
         </el-table-column>
       </el-table>

@@ -6,14 +6,14 @@
 <template>
   <SpPage>
     <el-dialog
-      title="小程序消息模版详情"
+      :title="$t('0918501c.2c36fe')"
       size="tiny"
       :visible.sync="detailDialog"
       :close-on-click-modal="false"
     >
       <div class="section-body">
         <el-form label-width="100px">
-          <el-form-item label="是否开启">
+          <el-form-item :label="$t('0918501c.780afe')">
             <el-switch
               v-model="currentTemplate.is_open"
               active-text=" "
@@ -22,16 +22,16 @@
               @change="openChange"
             />
           </el-form-item>
-          <el-form-item label="模版id">
+          <el-form-item :label="$t('0918501c.08b2da')">
             {{ currentTemplate.template_id }}
           </el-form-item>
-          <el-form-item label="发送时间点">
+          <el-form-item :label="$t('0918501c.c325ef')">
             {{ currentTemplate.send_time_desc.title }}
             <span v-if="currentTemplate.send_time_desc.time_list">
               <el-select
                 v-model="currentTemplate.send_time_desc.value"
                 style="width: 80px"
-                placeholder="请选择"
+                :placeholder="$t('0918501c.708c9d')"
                 @change="openChange"
               >
                 <el-option
@@ -41,11 +41,11 @@
                   :value="item"
                 />
               </el-select>
-              {{ currentTemplate?.send_time_desc?.time_unit || '分钟' }}
+              {{ currentTemplate?.send_time_desc?.time_unit || $t('0918501c.3a17b7') }}
               {{ currentTemplate.send_time_desc.end_title }}
             </span>
           </el-form-item>
-          <el-form-item label="内容">
+          <el-form-item :label="$t('0918501c.2d711b')">
             <el-card class="box-card" shadow="never">
               <div v-for="data in currentTemplate.content" :key="data.column">
                 {{ data.title }}
@@ -66,14 +66,19 @@
           <div class="item-title clearfix">{{ row.title }} <i class="el-icon-arrow-right" /></div>
           <div v-if="row.send_time_desc.value" class="item-content">
             {{ row.send_time_desc.title }}{{ row.send_time_desc.value
-            }}{{ row?.send_time_desc?.time_unit || '分钟' }}{{ row.send_time_desc.end_title }}
+            }}{{ row?.send_time_desc?.time_unit || $t('0918501c.3a17b7')
+            }}{{ row.send_time_desc.end_title }}
           </div>
           <div v-else class="item-content">
             {{ row.send_time_desc.title }}
           </div>
           <div class="item-footer">
-            <el-button v-if="row.is_open" type="default" size="small"> 启用中 </el-button>
-            <el-button v-else type="default" size="small"> 未启用 </el-button>
+            <el-button v-if="row.is_open" type="default" size="small">
+{{
+              $t('0918501c.c16e2e')
+            }}
+</el-button>
+            <el-button v-else type="default" size="small">{{ $t('0918501c.463776') }}</el-button>
           </div>
         </div>
       </div>
@@ -127,7 +132,7 @@ export default {
         params.send_time = this.currentTemplate.send_time_desc.value
       }
       openWxaMessageTemplate(params).then((res) => {
-        this.$message({ message: '保存成功', type: 'success' })
+        this.$message({ message: this.$t('975b4821.3b1083'), type: 'success' })
       })
     },
     toDetail(params) {

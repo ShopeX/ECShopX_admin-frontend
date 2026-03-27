@@ -8,38 +8,42 @@
     <el-row :gutter="20">
       <el-col>
         <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)">
-          添加销售分类
+          {{ $t('1ca86b46.c171b3') }}
         </el-button>
       </el-col>
     </el-row>
     <el-card>
       <el-dialog
-        :title="dialog.type === 'add' ? '新增分类' : '编辑分类'"
+        :title="dialog.type === 'add' ? $t('1ca86b46.b6cb2b') : $t('1ca86b46.55d793')"
         :visible.sync="dialog.visible"
         destroy-on-close
       >
         <el-form label-width="80px">
-          <el-form-item label="分类名称">
+          <el-form-item :label="$t('1ca86b46.04d7d8')">
             <el-input v-model="dialog.cat_name" />
           </el-form-item>
 
-          <el-form-item label="分类排序">
-            <el-input-number v-model="dialog.sort" label="分类排序" :min="0" />
+          <el-form-item :label="$t('1ca86b46.53eb44')">
+            <el-input-number v-model="dialog.sort" :label="$t('1ca86b46.53eb44')" :min="0" />
           </el-form-item>
 
-          <el-form-item v-if="dialog.is_hassuperior" label="父级分类">
-            <el-input v-model="dialog.superior_cat_name" label="分类排序" :disabled="true" />
+          <el-form-item v-if="dialog.is_hassuperior" :label="$t('1ca86b46.dc1eed')">
+            <el-input
+              v-model="dialog.superior_cat_name"
+              :label="$t('1ca86b46.53eb44')"
+              :disabled="true"
+            />
           </el-form-item>
 
-          <el-form-item label="分类图片">
+          <el-form-item :label="$t('1ca86b46.b34dc8')">
             <imgBox :img-url="dialog.cat_img" @click="handleImgChangeCat" />
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleCancel">取 消</el-button>
-          <el-button :loading="dialog.loading" type="primary" @click="handleSubmit"
-            >确 定</el-button
-          >
+          <el-button @click="handleCancel">{{ $t('1ca86b46.c08ab9') }}</el-button>
+          <el-button :loading="dialog.loading" type="primary" @click="handleSubmit">{{
+            $t('1ca86b46.aa7527')
+          }}</el-button>
         </span>
       </el-dialog>
 
@@ -54,17 +58,17 @@
         style="width: 100%"
         size="small"
       >
-        <el-table-column label="分类名称" width="380">
+        <el-table-column :label="$t('1ca86b46.04d7d8')" width="380">
           <template slot-scope="scope">
             <span>{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" sortable width="100">
+        <el-table-column prop="sort" :label="$t('1ca86b46.53eb44')" sortable width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="分类图片" width="200">
+        <el-table-column :label="$t('1ca86b46.b34dc8')" width="200">
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.image_url"
@@ -81,12 +85,12 @@
             > -->
           </template>
         </el-table-column>
-        <el-table-column prop="created" label="创建时间" width="120">
+        <el-table-column prop="created" :label="$t('1ca86b46.eca37c')" width="120">
           <template slot-scope="scope">
             {{ scope.row.created | datetime('YYYY-MM-DD') }}
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('1ca86b46.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -98,16 +102,20 @@
                   query: { category: scope.row.path }
                 }"
               >
-                查看商品
+                {{ $t('1ca86b46.f13684') }}
               </router-link>
             </el-button>
             <el-button v-if="scope.row.level < 2" type="text" @click="append(scope.row)">
-              新增子类
+              {{ $t('1ca86b46.82537d') }}
             </el-button>
-            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="editCategory(scope.row)">
+{{
+              $t('1ca86b46.95b351')
+            }}
+</el-button>
             <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl" />
+                <img class="page-code" :src="appCodeUrl">
                 <div class="page-btns">
                   <el-button
                     type="primary"
@@ -115,10 +123,10 @@
                     size="mini"
                     @click="handleDownload(scope.row.category_name)"
                   >
-                    下载码
+                    {{ $t('1ca86b46.99e985') }}
                   </el-button>
                   <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                    复制链接
+                    {{ $t('1ca86b46.879058') }}
                   </el-button>
                 </div>
               </div>
@@ -128,11 +136,11 @@
                 type="text"
                 @click="handleClick(scope.row.id)"
               >
-                投放
+                {{ $t('1ca86b46.536ff1') }}
               </el-button>
             </el-popover>
             <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-              删除
+              {{ $t('1ca86b46.2f4aad') }}
             </el-button>
           </template>
         </el-table-column>
@@ -266,7 +274,7 @@ export default {
       const { sort, cat_name, cat_img, is_hassuperior, superior_cat_id, type, current_id } =
         this.dialog
       if ((!sort && sort !== 0) || !cat_name) {
-        this.$message.error('排序或分类名称必填！')
+        this.$message.error(this.$t('1ca86b46.510bbc'))
         return
       } else {
         this.dialog.loading = true
@@ -345,7 +353,7 @@ export default {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
             this.$message({
               type: 'error',
-              message: '同级分类名称不能相同'
+              message: this.$t('1ca86b46.cd40f5')
             })
             return false
           }
@@ -366,7 +374,7 @@ export default {
             ) {
               this.$message({
                 type: 'error',
-                message: '同级分类名称不能相同'
+                message: this.$t('1ca86b46.cd40f5')
               })
               return false
             }
@@ -386,15 +394,15 @@ export default {
       saveCategory({ form: form }).then((response) => {
         this.$message({
           type: 'success',
-          message: '保存分类成功'
+          message: this.$t('1ca86b46.e07262')
         })
         this.getCategory()
       })
     },
     deleteCategory(data) {
-      this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('1ca86b46.442ecc'), this.$t('1ca86b46.02d981'), {
+        confirmButtonText: this.$t('1ca86b46.38cf16'),
+        cancelButtonText: this.$t('1ca86b46.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -402,7 +410,7 @@ export default {
             deleteCategory(data.category_id).then((response) => {
               this.$message({
                 type: 'success',
-                message: '删除分类成功'
+                message: this.$t('1ca86b46.1fe03c')
               })
               this.getCategory()
             })
@@ -438,7 +446,7 @@ export default {
           console.log(e)
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('1ca86b46.2111cc')
           })
         })
     },
@@ -472,7 +480,7 @@ export default {
         if (catNameLength > 50) {
           this.$message({
             type: 'error',
-            message: '分类名称长度最多25个汉字或50个字符'
+            message: this.$t('1ca86b46.12d07c')
           })
           return false
         }
@@ -480,7 +488,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '分类不能为空'
+          message: this.$t('1ca86b46.1bb421')
         })
         return false
       }

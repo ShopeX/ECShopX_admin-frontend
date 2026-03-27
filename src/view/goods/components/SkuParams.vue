@@ -76,12 +76,12 @@
       border
       style="line-height: initial; width: 100%; margin-bottom: 26px"
     >
-      <el-table-column label="规格名称" width="150px">
+      <el-table-column :label="$t('20da51cd.023809')" width="150px">
         <template slot-scope="scope">
           {{ scope.row.custom_attribute_value || scope.row.attribute_value }}
         </template>
       </el-table-column>
-      <el-table-column prop="spec_name" label="规格图片">
+      <el-table-column prop="spec_name" :label="$t('20da51cd.92e71c')">
         <template slot-scope="scope">
           <SpImagePicker v-model="scope.row.sku_images" :max="5" class="sku-image" size="small" />
         </template>
@@ -94,9 +94,13 @@
           {{ scope.row.custom_attribute_value || scope.row.item_spec }}
         </template>
       </el-table-column>
-      <el-table-column v-if="!IS_SUPPLIER() && !isSupplierGoods" label="状态">
+      <el-table-column v-if="!IS_SUPPLIER() && !isSupplierGoods" :label="$t('20da51cd.3fea7c')">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
+          <el-select
+            v-model="scope.row.approve_status"
+            size="mini"
+            :placeholder="$t('20da51cd.708c9d')"
+          >
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -108,7 +112,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="库存">
+      <el-table-column :label="$t('20da51cd.0eac88')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.store"
@@ -116,11 +120,11 @@
             required
             min="0"
             size="mini"
-            placeholder="库存"
+            :placeholder="$t('20da51cd.0eac88')"
           />
         </template>
       </el-table-column>
-      <el-table-column v-if="medicinePrescription" label="最大开方数">
+      <el-table-column v-if="medicinePrescription" :label="$t('20da51cd.06bdef')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.max_num"
@@ -128,26 +132,41 @@
             required
             min="0"
             size="mini"
-            placeholder="最大开方数量"
+            :placeholder="$t('20da51cd.1a2657')"
           />
         </template>
       </el-table-column>
-      <el-table-column label="货号">
+      <el-table-column :label="$t('20da51cd.9b979b')">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.item_bn" :maxlength="60" size="mini" placeholder="货号" />
+          <el-input
+            v-model="scope.row.item_bn"
+            :maxlength="60"
+            size="mini"
+            :placeholder="$t('20da51cd.9b979b')"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="重量">
+      <el-table-column :label="$t('20da51cd.fcd943')">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="重量" />
+          <el-input
+            v-model="scope.row.weight"
+            :maxlength="60"
+            size="mini"
+            :placeholder="$t('20da51cd.fcd943')"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="体积">
+      <el-table-column :label="$t('20da51cd.972d5f')">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="体积" />
+          <el-input
+            v-model="scope.row.volume"
+            :maxlength="60"
+            size="mini"
+            :placeholder="$t('20da51cd.972d5f')"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="销售价">
+      <el-table-column :label="$t('20da51cd.e29575')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.price"
@@ -155,11 +174,11 @@
             required
             min="0"
             size="mini"
-            placeholder="销售价"
+            :placeholder="$t('20da51cd.e29575')"
           />
         </template>
       </el-table-column>
-      <el-table-column label="成本价">
+      <el-table-column :label="$t('20da51cd.2e2ce2')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.cost_price"
@@ -167,12 +186,12 @@
             required
             min="0"
             size="mini"
-            placeholder="成本价"
+            :placeholder="$t('20da51cd.2e2ce2')"
             :disabled="disabled"
           />
         </template>
       </el-table-column>
-      <el-table-column label="市场价">
+      <el-table-column :label="$t('20da51cd.818fc4')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.market_price"
@@ -180,11 +199,11 @@
             required
             min="0"
             size="mini"
-            placeholder="市场价"
+            :placeholder="$t('20da51cd.818fc4')"
           />
         </template>
       </el-table-column>
-      <el-table-column label="起订量">
+      <el-table-column :label="$t('20da51cd.ed52fd')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.start_num"
@@ -192,21 +211,21 @@
             required
             min="0"
             size="mini"
-            placeholder="起订量"
+            :placeholder="$t('20da51cd.ed52fd')"
           />
         </template>
       </el-table-column>
-      <el-table-column label="发货时间">
+      <el-table-column :label="$t('20da51cd.bfd255')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.delivery_time"
             :maxlength="60"
             size="mini"
-            placeholder="发货时间"
+            :placeholder="$t('20da51cd.bfd255')"
           />
         </template>
       </el-table-column>
-      <el-table-column label="条形码">
+      <el-table-column :label="$t('20da51cd.1e8836')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.barcode"
@@ -214,37 +233,45 @@
             required
             min="0"
             size="mini"
-            placeholder="条形码"
+            :placeholder="$t('20da51cd.1e8836')"
           />
         </template>
       </el-table-column>
-      <el-table-column v-if="isShowPoint" label="获取积分">
+      <el-table-column v-if="isShowPoint" :label="$t('20da51cd.c07abe')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.point_num"
             type="number"
             min="0"
             size="mini"
-            placeholder="获取积分"
+            :placeholder="$t('20da51cd.c07abe')"
           />
         </template>
       </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="onFillSpecItems"> 填充 </el-button>
+          <el-button type="primary" size="mini" @click="onFillSpecItems">
+{{
+            $t('20da51cd.756e44')
+          }}
+</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <el-table :data="value.specItems" border style="line-height: initial; width: 100%">
-      <el-table-column prop="spec_name" label="规格" />
+      <el-table-column prop="spec_name" :label="$t('20da51cd.ea887b')" />
       <el-table-column
-        label="状态"
+        :label="$t('20da51cd.3fea7c')"
         :render-header="renderRequire"
         v-if="!IS_SUPPLIER() && !isSupplierGoods"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
+          <el-select
+            v-model="scope.row.approve_status"
+            size="mini"
+            :placeholder="$t('20da51cd.708c9d')"
+          >
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -256,7 +283,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="store" label="库存" :render-header="renderRequire">
+      <el-table-column prop="store" :label="$t('20da51cd.0eac88')" :render-header="renderRequire">
         <template slot-scope="scope">
           <el-input v-model="scope.row.store" type="number" min="0" size="mini" />
         </template>
@@ -265,36 +292,36 @@
       <el-table-column
         v-if="medicinePrescription"
         prop="max_num"
-        label="最大开方数"
+        :label="$t('20da51cd.06bdef')"
         :render-header="renderRequire"
       >
         <template slot-scope="scope">
           <el-input v-model="scope.row.max_num" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="item_bn" label="货号">
+      <el-table-column prop="item_bn" :label="$t('20da51cd.9b979b')">
         <template slot-scope="scope">
           <el-input v-model="scope.row.item_bn" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="weight" label="重量（kg）">
+      <el-table-column prop="weight" :label="$t('20da51cd.fcd943') + '（kg）'">
         <template slot-scope="scope">
           <el-input v-model="scope.row.weight" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="volume" label="体积（m³）">
+      <el-table-column prop="volume" :label="$t('20da51cd.972d5f') + '（m³）'">
         <template slot-scope="scope">
           <el-input v-model="scope.row.volume" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="price" label="销售价" :render-header="renderRequire">
+      <el-table-column prop="price" :label="$t('20da51cd.e29575')" :render-header="renderRequire">
         <template slot-scope="scope">
           <el-input v-model="scope.row.price" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
       <el-table-column
         prop="cost_price"
-        label="成本价"
+        :label="$t('20da51cd.2e2ce2')"
         :render-header="$store.getters.login_type != 'admin' ? renderRequire : undefined"
       >
         <template slot-scope="scope">
@@ -307,39 +334,43 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="market_price" label="市场价">
+      <el-table-column prop="market_price" :label="$t('20da51cd.818fc4')">
         <template slot-scope="scope">
           <el-input v-model="scope.row.market_price" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="start_num" label="起订量">
+      <el-table-column prop="start_num" :label="$t('20da51cd.ed52fd')">
         <template slot-scope="scope">
           <el-input v-model="scope.row.start_num" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="delivery_time" label="发货时间">
+      <el-table-column prop="delivery_time" :label="$t('20da51cd.bfd255')">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.delivery_time"
             :maxlength="60"
             size="mini"
-            placeholder="发货时间"
+            :placeholder="$t('20da51cd.bfd255')"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="barcode" label="条形码">
+      <el-table-column prop="barcode" :label="$t('20da51cd.1e8836')">
         <template slot-scope="scope">
           <el-input v-model="scope.row.barcode" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column v-if="isShowPoint" prop="point_num" label="获取积分">
+      <el-table-column v-if="isShowPoint" prop="point_num" :label="$t('20da51cd.c07abe')">
         <template slot-scope="scope">
           <el-input v-model="scope.row.point_num" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
-          <el-button type="text" @click="onClearSpecItem(scope.$index)"> 清除 </el-button>
+          <el-button type="text" @click="onClearSpecItem(scope.$index)">
+{{
+            $t('20da51cd.4403fc')
+          }}
+</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -382,25 +413,13 @@ export default {
     }
   },
   data() {
-    let statusOption = [
-      {
-        title: '前台可销售',
-        value: 'onsale'
-      },
-      {
-        title: '前台仅展示',
-        value: 'only_show'
-      },
-      {
-        title: '不可销售',
-        value: 'instock'
-      }
+    const statusOption = [
+      { title: this.$t('20da51cd.9b7481'), value: 'onsale' },
+      { title: this.$t('20da51cd.acf86b'), value: 'only_show' },
+      { title: this.$t('20da51cd.ae83a3'), value: 'instock' }
     ]
     if (!this.VERSION_IN_PURCHASE()) {
-      statusOption.push({
-        title: '前台不展示',
-        value: 'offline_sale'
-      })
+      statusOption.push({ title: this.$t('20da51cd.2c50a0'), value: 'offline_sale' })
     }
     return {
       tax_rate_list: GOODS_TAX_RATE,
@@ -717,9 +736,9 @@ export default {
     },
     // 清除
     async onClearSpecItem(index) {
-      await this.$confirm('确定清除当前规格的数据吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      await this.$confirm(this.$t('20da51cd.3dd6cf'), this.$t('20da51cd.02d981'), {
+        confirmButtonText: this.$t('20da51cd.38cf16'),
+        cancelButtonText: this.$t('20da51cd.625fb2'),
         type: 'warning'
       })
       Object.assign(this.value.specItems[index], {

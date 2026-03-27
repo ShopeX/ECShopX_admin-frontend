@@ -7,22 +7,22 @@
   <SpPage>
     <div v-if="$route.path.indexOf('child') === -1 && $route.path.indexOf('detail') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="mobile" label="手机号:">
-          <el-input v-model="params.mobile" placeholder="请输入手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('a8b7ec6e.ce2bf3')">
+          <el-input v-model="params.mobile" :placeholder="$t('a8b7ec6e.6e4f4b')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="store_status" label="开店状态:">
-          <el-select v-model="params.store_status" placeholder="请输入开店状态" clearable>
-            <el-option label="未开店" value="0" />
-            <el-option label="已开店" value="1" />
-            <el-option label="已关闭" value="3" />
-            <el-option label="等待审核" value="2" />
-            <el-option label="审核拒绝" value="4" />
+        <SpFilterFormItem prop="store_status" :label="$t('a8b7ec6e.7c4b82')">
+          <el-select v-model="params.store_status" :placeholder="$t('a8b7ec6e.b276ed')" clearable>
+            <el-option :label="$t('a8b7ec6e.f1e0af')" value="0" />
+            <el-option :label="$t('a8b7ec6e.30e9f3')" value="1" />
+            <el-option :label="$t('a8b7ec6e.9c5850')" value="3" />
+            <el-option :label="$t('a8b7ec6e.f6324c')" value="2" />
+            <el-option :label="$t('a8b7ec6e.146bb2')" value="4" />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
       <div v-if="loginType !== 'distributor'" class="action-container">
         <el-button type="primary" icon="el-icon-circle-plus" @click.native="addVisible = true">
-          添加推广员
+          {{ $t('a8b7ec6e.917e6c') }}
         </el-button>
       </div>
       <el-table
@@ -30,22 +30,24 @@
         border
         :data="list"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('a8b7ec6e.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
-        <el-table-column label="操作" width="120">
+        <el-table-column :label="$t('a8b7ec6e.2b6bc0')" width="120">
           <template slot-scope="scope">
-            <el-button type="text" class="btn-gap" @click="detail(scope.row)"> 分佣详情 </el-button>
+            <el-button type="text" class="btn-gap" @click="detail(scope.row)">
+              {{ $t('a8b7ec6e.3329bc') }}
+            </el-button>
             <el-popover placement="right" width="440" trigger="hover">
               <div class="operating-icons">
                 <el-button icon="edit" type="text" class="btn-gap" @click="detail(scope.row)">
-                  分佣详情
+                  {{ $t('a8b7ec6e.3329bc') }}
                 </el-button>
                 <el-button icon="edit" type="text" @click="editTop(scope.row)">
-                  调整至顶级
+                  {{ $t('a8b7ec6e.d9865f') }}
                 </el-button>
                 <el-button icon="edit" type="text" @click="editSuperior(scope.row)">
-                  调整上级
+                  {{ $t('a8b7ec6e.23ced7') }}
                 </el-button>
                 <el-button
                   v-if="
@@ -56,21 +58,21 @@
                   type="text"
                   @click="handleShopStatus(scope.$index, scope.row)"
                 >
-                  开通虚拟店
+                  {{ $t('a8b7ec6e.7f009c') }}
                 </el-button>
                 <el-button
                   v-if="scope.row.shop_status === 2"
                   type="text"
                   @click="handleShopStatus(scope.$index, scope.row)"
                 >
-                  审核申请
+                  {{ $t('a8b7ec6e.a1d511') }}
                 </el-button>
                 <el-button
                   v-if="scope.row.shop_status === 1"
                   type="text"
                   @click="handleShopStatus(scope.$index, scope.row)"
                 >
-                  关闭虚拟店
+                  {{ $t('a8b7ec6e.4be651') }}
                 </el-button>
                 <el-button
                   v-show="gradeList.isOpenPromoterGrade == 'true'"
@@ -78,7 +80,7 @@
                   type="text"
                   @click="editGrade(scope.$index, scope.row)"
                 >
-                  修改推广员等级
+                  {{ $t('a8b7ec6e.31520d') }}
                 </el-button>
               </div>
               <el-button slot="reference" type="text">
@@ -87,15 +89,15 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="姓名" />
-        <el-table-column prop="mobile" label="手机号" width="150">
+        <el-table-column prop="username" :label="$t('a8b7ec6e.60d045')" />
+        <el-table-column prop="mobile" :label="$t('a8b7ec6e.8098e2')" width="150">
           <template slot-scope="scope">
             <i v-if="scope.row.mobile" class="el-icon-mobile" />
             {{ scope.row.mobile }}
             <el-tooltip
               v-if="scope.row.mobile && datapass_block == 0"
               effect="dark"
-              content="复制"
+              :content="$t('a8b7ec6e.79d3ab')"
               placement="top-start"
             >
               <i
@@ -106,15 +108,15 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="promoter_grade_name" label="推广员等级" />
-        <el-table-column prop="pmobile" label="上级联系方式" width="150">
+        <el-table-column prop="promoter_grade_name" :label="$t('a8b7ec6e.917de5')" />
+        <el-table-column prop="pmobile" :label="$t('a8b7ec6e.5cf93d')" width="150">
           <template slot-scope="scope">
             <i v-if="scope.row.pmobile && scope.row.pmobile != ''" class="el-icon-mobile" />
             {{ scope.row.pmobile && scope.row.pmobile != '' ? scope.row.pmobile : '-' }}
             <el-tooltip
               v-if="scope.row.pmobile && scope.row.pmobile != ''"
               effect="dark"
-              content="复制"
+              :content="$t('a8b7ec6e.79d3ab')"
               placement="top-start"
             >
               <i
@@ -125,14 +127,14 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="children_count" width="100" label="直属下级" sortable>
+        <el-table-column prop="children_count" width="100" :label="$t('a8b7ec6e.721e8b')" sortable>
           <template slot-scope="scope">
             <el-button size="mini" icon="edit" type="text" @click="count(scope.$index, scope.row)">
               {{ scope.row.children_count }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="60">
+        <el-table-column :label="$t('a8b7ec6e.3fea7c')" width="60">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.disabled == 0"
@@ -142,17 +144,19 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="开店状态" width="80">
+        <el-table-column :label="$t('a8b7ec6e.eb96f1')" width="80">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.shop_status === 0" size="mini" effect="plain"> 未开店 </el-tag>
+            <el-tag v-if="scope.row.shop_status === 0" size="mini" effect="plain">
+              {{ $t('a8b7ec6e.f1e0af') }}
+            </el-tag>
             <el-tag v-if="scope.row.shop_status === 1" size="mini" effect="plain" type="success">
-              已开店
+              {{ $t('a8b7ec6e.30e9f3') }}
             </el-tag>
             <el-tag v-if="scope.row.shop_status === 2" size="mini" effect="plain">
-              等待审核
+              {{ $t('a8b7ec6e.f6324c') }}
             </el-tag>
             <el-tag v-if="scope.row.shop_status === 3" size="mini" effect="plain" type="warning">
-              店铺关闭
+              {{ $t('a8b7ec6e.87ebc2') }}
             </el-tag>
             <el-popover
               v-if="scope.row.shop_status === 4"
@@ -161,17 +165,19 @@
               trigger="hover"
               :content="scope.row.reason"
             >
-              <el-tag slot="reference" size="mini" effect="plain"> 审核拒绝 </el-tag>
+              <el-tag slot="reference" size="mini" effect="plain">
+                {{ $t('a8b7ec6e.146bb2') }}
+              </el-tag>
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="bind_date" label="加入时间" width="100" />
-        <el-table-column label="已结算" width="80">
+        <el-table-column prop="bind_date" :label="$t('a8b7ec6e.8653cd')" width="100" />
+        <el-table-column :label="$t('a8b7ec6e.139304')" width="80">
           <template slot-scope="scope">
             ￥{{ (scope.row.rebateTotal - scope.row.noCloseRebate) / 100 }}
           </template>
         </el-table-column>
-        <el-table-column label="未结算" width="80">
+        <el-table-column :label="$t('a8b7ec6e.facb53')" width="80">
           <template slot-scope="scope"> ￥{{ scope.row.noCloseRebate / 100 }} </template>
         </el-table-column>
       </el-table>
@@ -189,13 +195,13 @@
 
       <!-- 调整上下级弹框 -->
       <el-dialog
-        title="调整上级"
+        :title="$t('a8b7ec6e.23ced7')"
         :visible.sync="editSuperiorVisible"
         :before-close="handleCancelSuperior"
       >
         <el-row :gutter="10">
           <el-col :md="8" :lg="10">
-            <el-input v-model="identifierModal" placeholder="请输入手机号">
+            <el-input v-model="identifierModal" :placeholder="$t('a8b7ec6e.6e4f4b')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearchModal" />
             </el-input>
           </el-col>
@@ -206,18 +212,20 @@
           :data="modalList"
           style="width: 100%"
           :height="400"
-          element-loading-text="数据加载中"
+          :element-loading-text="$t('a8b7ec6e.f09b12')"
           highlight-current-row
           @current-change="handleCurrentChange"
         >
           <el-table-column type="index" width="50" />
-          <el-table-column prop="username" label="姓名" />
-          <el-table-column prop="mobile" label="手机号" />
-          <el-table-column prop="promoter_grade_name" label="推广员等级" />
-          <el-table-column prop="disabled" label="状态">
+          <el-table-column prop="username" :label="$t('a8b7ec6e.60d045')" />
+          <el-table-column prop="mobile" :label="$t('a8b7ec6e.8098e2')" />
+          <el-table-column prop="promoter_grade_name" :label="$t('a8b7ec6e.917de5')" />
+          <el-table-column prop="disabled" :label="$t('a8b7ec6e.3fea7c')">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini"> 有效 </el-tag>
-              <el-tag v-else type="info" size="mini"> 无效 </el-tag>
+              <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
+                {{ $t('a8b7ec6e.c6cc39') }}
+              </el-tag>
+              <el-tag v-else type="info" size="mini"> {{ $t('a8b7ec6e.1abbb1') }} </el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -231,62 +239,72 @@
           />
         </div>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button @click.native="handleCancelSuperior"> 取消 </el-button>
-          <el-button type="primary" @click="submitSuperiorAction"> 确定 </el-button>
+          <el-button @click.native="handleCancelSuperior"> {{ $t('a8b7ec6e.625fb2') }} </el-button>
+          <el-button type="primary" @click="submitSuperiorAction">
+            {{ $t('a8b7ec6e.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
 
       <!-- 添加推广员 -->
       <el-dialog
-        title="添加推广员"
+        :title="$t('a8b7ec6e.917e6c')"
         :visible.sync="addVisible"
         :distinguish-cancel-and-close="false"
       >
         <el-row :gutter="10">
           <el-col>
-            <el-alert title="添加的推广员必须为已经授权手机号的会员" type="info" show-icon />
+            <el-alert :title="$t('a8b7ec6e.0b61ae')" type="info" show-icon />
           </el-col>
         </el-row>
         <el-row :gutter="10">
           <el-col :md="8" :lg="10">
-            <el-input v-model="promoter_mobile" placeholder="会员手机号" />
+            <el-input v-model="promoter_mobile" :placeholder="$t('a8b7ec6e.6a52ee')" />
           </el-col>
         </el-row>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button @click.native="addVisible = false"> 取消 </el-button>
-          <el-button type="primary" @click="addPromoter"> 保存 </el-button>
+          <el-button @click.native="addVisible = false"> {{ $t('a8b7ec6e.625fb2') }} </el-button>
+          <el-button type="primary" @click="addPromoter"> {{ $t('a8b7ec6e.be5fbb') }} </el-button>
         </div>
       </el-dialog>
 
       <!-- 审核开通虚拟店 -->
       <el-dialog
-        title="审核开通虚拟店"
+        :title="$t('a8b7ec6e.b54ce7')"
         :visible.sync="updateShopVisible"
         :close-on-click-modal="false"
       >
         <template>
           <el-form>
-            <el-form-item label="审核状态" label-width="100px">
+            <el-form-item :label="$t('a8b7ec6e.b6d0e9')" label-width="100px">
               <el-radio-group v-model="shop_status">
-                <el-radio :label="1"> 审核通过 </el-radio>
-                <el-radio :label="4"> 审核拒绝 </el-radio>
+                <el-radio :label="1"> {{ $t('a8b7ec6e.871a30') }} </el-radio>
+                <el-radio :label="4"> {{ $t('a8b7ec6e.146bb2') }} </el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="shop_status == 4" label="拒绝原因" label-width="100px">
+            <el-form-item
+              v-if="shop_status == 4"
+              :label="$t('a8b7ec6e.f48f94')"
+              label-width="100px"
+            >
               <el-input v-model="currentRow.reason" type="textarea" :rows="4" />
             </el-form-item>
           </el-form>
         </template>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button @click.native="updateShopVisible = false"> 取消 </el-button>
-          <el-button type="primary" @click="actionShopStatus"> 确定 </el-button>
+          <el-button @click.native="updateShopVisible = false">
+            {{ $t('a8b7ec6e.625fb2') }}
+          </el-button>
+          <el-button type="primary" @click="actionShopStatus">
+            {{ $t('a8b7ec6e.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
       <!-- 审核开通虚拟店 -->
 
       <!-- 修改推广员等级-开始 -->
       <el-dialog
-        title="修改推广员等级"
+        :title="$t('a8b7ec6e.31520d')"
         :visible.sync="editGradeVisible"
         :before-close="handleCancel"
       >
@@ -295,9 +313,9 @@
             <el-col :span="8" class="grade-setting-col">
               {{ row.promoter_grade_name }}
             </el-col>
-            <el-col :span="8" class="grade-setting-col"> 调整为 </el-col>
+            <el-col :span="8" class="grade-setting-col"> {{ $t('a8b7ec6e.d4b609') }} </el-col>
             <el-col :span="8" class="grade-setting-col">
-              <el-select v-model="newGradeName" placeholder="请选择">
+              <el-select v-model="newGradeName" :placeholder="$t('a8b7ec6e.708c9d')">
                 <el-option
                   v-for="item in gradeList.grade"
                   :key="item.grade_level"
@@ -309,8 +327,10 @@
           </el-row>
         </template>
         <div slot="footer" class="dialog-footer content-center">
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="submitGradeAction"> 确定调整 </el-button>
+          <el-button @click.native="handleCancel"> {{ $t('a8b7ec6e.625fb2') }} </el-button>
+          <el-button type="primary" @click="submitGradeAction">
+            {{ $t('a8b7ec6e.1e333a') }}
+          </el-button>
         </div>
       </el-dialog>
       <!-- 修改推广员等级-结束 -->
@@ -386,7 +406,7 @@ export default {
     },
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('a8b7ec6e.20a495'),
         showClose: true
       })
     },
@@ -402,7 +422,7 @@ export default {
         this.promoter_mobile = ''
         this.addVisible = false
         this.$message({
-          message: '添加推广员成功',
+          message: this.$t('a8b7ec6e.9d915b'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -436,19 +456,19 @@ export default {
       this.currentRow = row
       var msg = ''
       if (row.shop_status == 0 || row.shop_status == 4 || row.shop_status == 3) {
-        msg = '确定当前推广员开通虚拟店？'
+        msg = this.$t('a8b7ec6e.b132f7')
         this.shop_status = 1
       } else if (row.shop_status == 1) {
-        msg = '确定将当前推广员的虚拟店关闭？'
+        msg = this.$t('a8b7ec6e.5d8928')
         this.shop_status = 3
       } else if (row.shop_status == 2) {
         this.updateShopVisible = true
         return
       }
 
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(msg, this.$t('a8b7ec6e.02d981'), {
+        confirmButtonText: this.$t('a8b7ec6e.38cf16'),
+        cancelButtonText: this.$t('a8b7ec6e.625fb2'),
         type: 'warning',
         center: true
       })
@@ -458,7 +478,7 @@ export default {
           this.list[index].status = this.shop_status
         })
         .catch(() => {
-          this.$message({ type: 'info', message: '已取消' })
+          this.$message({ type: 'info', message: this.$t('a8b7ec6e.2111cc') })
         })
     },
     actionShopStatus() {
@@ -467,16 +487,16 @@ export default {
         data.reason = this.currentRow.reason
       }
       updatePromoterShop(data).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('a8b7ec6e.33130f') })
         this.fetchList()
         this.updateShopVisible = false
       })
       return true
     },
     editTop(row) {
-      this.$confirm('调整至顶级, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('a8b7ec6e.53ad9e'), this.$t('a8b7ec6e.02d981'), {
+        confirmButtonText: this.$t('a8b7ec6e.38cf16'),
+        cancelButtonText: this.$t('a8b7ec6e.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -509,12 +529,12 @@ export default {
       editPopularizeGrade({ user_id: this.row.user_id, grade_level: this.newGradeName }).then(
         (res) => {
           if (this.newGradeName == '') {
-            this.$message({ message: '请选择调整后的等级', type: 'error' })
+            this.$message({ message: this.$t('a8b7ec6e.8e27d0'), type: 'error' })
             return
           }
           this.editGradeVisible = false
           this.$message({
-            message: '调整等级成功',
+            message: this.$t('a8b7ec6e.777aca'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -529,7 +549,7 @@ export default {
         console.log(7, row.disabled, active)
         this.$message({
           type: 'success',
-          message: '状态修改成功'
+          message: this.$t('a8b7ec6e.225b5e')
         })
       })
     },

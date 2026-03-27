@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import AttrDataVue from '../../comps/goods-attr/attr-data.vue'
 import CompPickerLinkVue from '../../comps/comp-pickerLink.vue'
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
@@ -7,19 +8,19 @@ const config = {
   name: 'speedkill',
   setting: [
     {
-      group: '数据设置',
-      label: '数据类型',
+      group: i18n.t('e05e61da.e7af71'),
+      label: i18n.t('e05e61da.185f7b'),
       key: 'dataType',
       component: 'radiobutton',
       options: [
-        { name: '普通', label: 'seckill' },
-        { name: '集合页', label: 'promotion' }
+        { name: i18n.t('e05e61da.35242c'), label: 'seckill' },
+        { name: i18n.t('e05e61da.84bf84'), label: 'promotion' }
       ],
       value: 'seckill'
     },
     {
-      group: '数据设置',
-      label: '数据设置',
+      group: i18n.t('e05e61da.e7af71'),
+      label: i18n.t('e05e61da.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return (
@@ -36,8 +37,8 @@ const config = {
       }
     },
     {
-      group: '数据设置',
-      label: '数据数量',
+      group: i18n.t('e05e61da.e7af71'),
+      label: i18n.t('e05e61da.87dfd7'),
       key: 'dataCount',
       component: 'number',
       value: 4,
@@ -45,19 +46,19 @@ const config = {
       max: 99
     },
     {
-      group: '组件标题',
-      label: '标题类型',
+      group: i18n.t('e05e61da.6f3360'),
+      label: i18n.t('e05e61da.c20c83'),
       key: 'speedkillTitleType',
       component: 'radiobutton',
       options: [
-        { name: '文字', label: 'text' },
-        { name: '图片', label: 'image' }
+        { name: i18n.t('e05e61da.ca746b'), label: 'text' },
+        { name: i18n.t('e05e61da.20def7'), label: 'image' }
       ],
       value: 'text'
     },
     {
-      group: '组件标题',
-      label: '标题图片',
+      group: i18n.t('e05e61da.6f3360'),
+      label: i18n.t('e05e61da.264fe1'),
       key: 'speedkillTitleImage',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
@@ -68,8 +69,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题文字',
+      group: i18n.t('e05e61da.6f3360'),
+      label: i18n.t('e05e61da.eded9e'),
       key: 'speedkillTitleText',
       component: 'input',
       value: '标题',
@@ -78,8 +79,8 @@ const config = {
       }
     },
     {
-      group: '组件标题',
-      label: '标题颜色',
+      group: i18n.t('e05e61da.6f3360'),
+      label: i18n.t('e05e61da.94e391'),
       key: 'speedkillTitleColor',
       component: 'color',
       value: '#000000',
@@ -88,19 +89,19 @@ const config = {
       }
     },
     {
-      group: '更多按钮',
-      label: '展示类型',
+      group: i18n.t('e05e61da.90507a'),
+      label: i18n.t('e05e61da.1711a8'),
       key: 'speedkillShowMoreBtn',
       component: 'radiobutton',
       options: [
-        { name: '显示', label: true },
-        { name: '隐藏', label: false }
+        { name: i18n.t('e05e61da.4d775d'), label: true },
+        { name: i18n.t('e05e61da.dce537'), label: false }
       ],
       value: true
     },
     {
-      group: '更多按钮',
-      label: '按钮颜色',
+      group: i18n.t('e05e61da.90507a'),
+      label: i18n.t('e05e61da.351201'),
       key: 'speedkillMoreBtnColor',
       component: 'color',
       value: '#000000',
@@ -134,6 +135,7 @@ const config = {
       ...rest
     } = v.base || {}
     return {
+      id: v?.id,
       name: v.name,
       ...rest,
       data: v.data,
@@ -156,6 +158,7 @@ const config = {
   },
   transformOut: (v, wgtList, regionauth_id) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       base: (v) => {
         const baseData = pickBy(v, {

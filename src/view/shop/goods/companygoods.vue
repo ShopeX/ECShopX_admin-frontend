@@ -12,7 +12,7 @@
             v-model="params.keywords"
             style="width: 100%"
             size="mini"
-            placeholder="请输入商品名称"
+            :placeholder="$t('85c4b37c.d83187')"
           >
             <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
@@ -27,7 +27,7 @@
               icon="el-icon-upload"
               @click="handleBatchOnline(true)"
             >
-              批量上架
+              {{ $t('85c4b37c.644c0d') }}
             </el-button>
             <el-button
               type="primary"
@@ -35,10 +35,10 @@
               icon="el-icon-download"
               @click="handleBatchOnline(false)"
             >
-              批量下架
+              {{ $t('85c4b37c.d5e015') }}
             </el-button>
             <el-button type="primary" size="mini" @click="handleBatchDownload">
-              商品码下载
+              {{ $t('85c4b37c.1a40b3') }}
             </el-button>
           </el-button-group>
         </el-col>
@@ -48,7 +48,7 @@
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
-        :label="item.name"
+        :label="$t(item.nameKey)"
         :name="item.activeName"
       >
         <el-table
@@ -60,12 +60,16 @@
           @selection-change="handleItemsSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column label="操作">
+          <el-table-column :label="$t('85c4b37c.2b6bc0')">
             <template slot-scope="scope">
-              <el-button type="text" @click="handleSkuEdit(scope.row)"> 设置SKU </el-button>
+              <el-button type="text" @click="handleSkuEdit(scope.row)">
+{{
+                $t('85c4b37c.2b158b')
+              }}
+</el-button>
             </template>
           </el-table-column>
-          <el-table-column label="上下架操作">
+          <el-table-column :label="$t('85c4b37c.c1e70a')">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.goods_can_sale"
@@ -73,19 +77,21 @@
               />
             </template>
           </el-table-column>
-          <el-table-column prop="item_name" label="商品名称" min-width="300" />
-          <el-table-column prop="price" label="商品价格" min-width="120">
-            <template slot-scope="scope"> {{ scope.row.price }}元 </template>
+          <el-table-column prop="item_name" :label="$t('85c4b37c.1fd1d5')" min-width="300" />
+          <el-table-column prop="price" :label="$t('85c4b37c.9cf4c6')" min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.price }}{{ $t('85c4b37c.c16655') }}
+            </template>
           </el-table-column>
-          <el-table-column prop="approve_status" label="状态" min-width="100">
+          <el-table-column prop="approve_status" :label="$t('85c4b37c.3fea7c')" min-width="100">
             <template slot-scope="scope">
               <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
-                前台可销售
+                {{ $t('85c4b37c.9b7481') }}
               </div>
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
-                前台不展示
+                {{ $t('85c4b37c.2c50a0') }}
               </div>
-              <div v-else class="grid-content">不可销售</div>
+              <div v-else class="grid-content">{{ $t('85c4b37c.ae83a3') }}</div>
             </template>
           </el-table-column>
         </el-table>
@@ -103,13 +109,13 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <sideBar :visible.sync="show_sideBar" title="编辑店铺sku配置" width="60">
+    <sideBar :visible.sync="show_sideBar" :title="$t('85c4b37c.6d4fce')" width="60">
       <slot>
         <el-table v-loading="loading" :data="itemSkuList" style="width: 100%">
           <el-table-column prop="item_id" width="55" />
-          <el-table-column prop="item_name" label="商品名称" width="200" />
-          <el-table-column prop="item_spec_desc" label="规格" width="200" />
-          <el-table-column prop="store" label="库存" width="120">
+          <el-table-column prop="item_name" :label="$t('85c4b37c.1fd1d5')" width="200" />
+          <el-table-column prop="item_spec_desc" :label="$t('85c4b37c.ea887b')" width="200" />
+          <el-table-column prop="store" :label="$t('85c4b37c.0eac88')" width="120">
             <template slot-scope="scope">
               <el-input v-if="editStore" v-model="scope.row.store">
                 <i slot="suffix" class="el-input__icon el-icon-edit" />
@@ -117,23 +123,23 @@
               <el-input v-else v-model="scope.row.store" disabled />
             </template>
           </el-table-column>
-          <el-table-column prop="approve_status" label="状态" width="100">
+          <el-table-column prop="approve_status" :label="$t('85c4b37c.3fea7c')" width="100">
             <template slot-scope="scope">
               <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
-                前台可销售
+                {{ $t('85c4b37c.9b7481') }}
               </div>
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
-                前台不展示
+                {{ $t('85c4b37c.2c50a0') }}
               </div>
-              <div v-else class="grid-content">不可销售</div>
+              <div v-else class="grid-content">{{ $t('85c4b37c.ae83a3') }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="上下架操作" width="180">
+          <el-table-column :label="$t('85c4b37c.c1e70a')" width="180">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_can_sale"
-                active-text="已上架"
-                inactive-text="已下架"
+                :active-text="$t('85c4b37c.2390fa')"
+                :inactive-text="$t('85c4b37c.ca9084')"
                 @change="switchStatusChange(scope.$index, scope.row, false)"
               />
             </template>
@@ -203,9 +209,9 @@ export default {
       list: [],
       itemsChecked: [],
       tabList: [
-        { name: '全部商品', value: null, activeName: 'first' },
-        { name: '已上架', value: 'true', activeName: 'second' },
-        { name: '未上架', value: 'true', activeName: 'third' }
+        { nameKey: '85c4b37c.794a4e', value: null, activeName: 'first' },
+        { nameKey: '85c4b37c.2390fa', value: 'true', activeName: 'second' },
+        { nameKey: '85c4b37c.25744b', value: 'true', activeName: 'third' }
       ],
       editStore: false,
       itemSkuList: [],
@@ -223,7 +229,7 @@ export default {
   methods: {
     handleBatchOnline(goods_can_sale) {
       if (this.itemsChecked.length <= 0) {
-        this.$message({ type: 'error', message: '请至少选择一个商品' })
+        this.$message({ type: 'error', message: this.$t('85c4b37c.20e46f') })
         return
       }
 
@@ -292,7 +298,7 @@ export default {
       if (this.itemsChecked.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请至少选择一个商品!'
+          message: this.$t('85c4b37c.d1fcdb')
         })
         return
       }
@@ -318,7 +324,7 @@ export default {
       Promise.all(promises).then(() => {
         zip.generateAsync({ type: 'blob' }).then((content) => {
           // 生成二进制流
-          FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
+          FileSaver.saveAs(content, this.$t('85c4b37c.b9bca0')) // 利用file-saver保存文件
         })
       })
     },
@@ -327,7 +333,7 @@ export default {
         this.getList()
         this.$message({
           type: 'success',
-          message: '修改成功',
+          message: this.$t('85c4b37c.69be67'),
           duration: 1000
         })
       })

@@ -7,61 +7,69 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
+        <SpFilterFormItem prop="distributor_id" :label="$t('364a6013.16f2bc')">
           <SpSelectShop
             ref="selectShop"
             v-model="formData.distributor_id"
             clearable
-            placeholder="请选择"
+            :placeholder="$t('364a6013.708c9d')"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="order_id" label="订单号:">
-          <el-input v-model="formData.order_id" placeholder="请输入订单号" />
+        <SpFilterFormItem prop="order_id" :label="$t('364a6013.070dce')">
+          <el-input v-model="formData.order_id" :placeholder="$t('364a6013.e9e836')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="invoice_apply_bn" label="开票申请流水:">
-          <el-input v-model="formData.invoice_apply_bn" placeholder="请输入开票申请流水" />
+        <SpFilterFormItem prop="invoice_apply_bn" :label="$t('364a6013.c6c698')">
+          <el-input v-model="formData.invoice_apply_bn" :placeholder="$t('364a6013.242a19')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="company_title" label="发票抬头:">
-          <el-input v-model="formData.company_title" placeholder="请输入发票抬头" />
+        <SpFilterFormItem prop="company_title" :label="$t('364a6013.5f4907')">
+          <el-input v-model="formData.company_title" :placeholder="$t('364a6013.05274f')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="invoice_source" label="开票来源:">
-          <el-select v-model="formData.invoice_source" clearable placeholder="请选择">
+        <SpFilterFormItem prop="invoice_source" :label="$t('364a6013.85c0f0')">
+          <el-select
+            v-model="formData.invoice_source"
+            clearable
+            :placeholder="$t('364a6013.708c9d')"
+          >
             <el-option
               v-for="item in invoiceSourceList"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.title)"
               size="mini"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="mobile" label="开票申请手机号:">
-          <el-input v-model="formData.mobile" placeholder="请输入开票申请手机号" />
+        <SpFilterFormItem prop="mobile" :label="$t('364a6013.44f683')">
+          <el-input v-model="formData.mobile" :placeholder="$t('364a6013.89ca80')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="email" label="开票申请邮箱:">
-          <el-input v-model="formData.email" placeholder="请输入开票申请邮箱" />
+        <SpFilterFormItem prop="email" :label="$t('364a6013.93335a')">
+          <el-input v-model="formData.email" :placeholder="$t('364a6013.189880')" />
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="invoice_type_code" label="发票类型:">
-          <el-select v-model="formData.invoice_type_code" clearable placeholder="请选择">
+        <SpFilterFormItem prop="invoice_type_code" :label="$t('364a6013.33e2c8')">
+          <el-select
+            v-model="formData.invoice_type_code"
+            clearable
+            :placeholder="$t('364a6013.708c9d')"
+          >
             <el-option
               v-for="item in typeList"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.title)"
               size="mini"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="cycleTime" label="创建时间:" size="max">
+        <SpFilterFormItem prop="cycleTime" :label="$t('364a6013.e2a03f')" size="max">
           <el-date-picker
             v-model="formData.cycleTime"
             clearable
             type="datetimerange"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
+            :range-separator="$t('364a6013.981cbe')"
+            :start-placeholder="$t('364a6013.592c59')"
+            :end-placeholder="$t('364a6013.f78277')"
             prefix-icon="null"
             :default-time="defaultTime"
           />
@@ -80,13 +88,13 @@
         @select-all="handleSelectionChange"
         @selection-change="handleSelectionChange"
       >
-        <template v-slot:tableTop>
+        <template #tableTop>
           <!-- 选择tab -->
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane
               v-for="item in status"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.label)"
               :name="item.value"
             />
           </el-tabs>
@@ -97,7 +105,7 @@
       <SpDialog
         ref="dialogRef"
         v-model="dialogShow"
-        title="编辑发票"
+        :title="$t('364a6013.bca2db')"
         :modal="false"
         class="base-form"
         :form="dialogForm"
@@ -108,7 +116,7 @@
       <SpDialog
         ref="dialogRef1"
         v-model="remarkDialogShow"
-        title="备注"
+        :title="$t('364a6013.2432b5')"
         :modal="false"
         class="base-form"
         :confirm-status="confirmStatus"
@@ -121,8 +129,8 @@
       <SpDialog
         ref="dialogRef2"
         v-model="confirmDialogShow"
-        title="请确认重发邮箱"
-        confirm-btn-text="邮箱正确并发送"
+        :title="$t('364a6013.6a91d7')"
+        :confirm-btn-text="$t('364a6013.bd134b')"
         :modal="false"
         class="base-form"
         :confirm-status="confirmStatus"
@@ -134,7 +142,7 @@
       <SpDrawer
         v-model="showLogInfoDrawer"
         class="config-drawer"
-        :title="'发票日志'"
+        :title="$t('364a6013.35cdc7')"
         :footer="false"
         :width="1000"
       >
@@ -198,7 +206,6 @@ export default {
         cycleTime:[]
       },
       invoiceSourceList:invoice_source_arr,
-      typeList:[{value:'01',title:'专用发票'},{value:'02',title:'电子普通发票'}],
       orderCategory: this.VERSION_STANDARD()
         ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
         : ORDER_CATEGORY,
@@ -210,6 +217,12 @@ export default {
     },
     dialogRuleForm() {
       return formSchema(this)
+    },
+    typeList() {
+      return [
+        { value: '01', title: this.$t('364a6013.515a32') },
+        { value: '02', title: this.$t('364a6013.8a487a') }
+      ]
     }
   },
   mounted() {
@@ -233,7 +246,7 @@ export default {
     },
     onCopySuccess() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('364a6013.20a495'),
         showClose: true
       })
     },
@@ -308,7 +321,7 @@ export default {
         id: this.editRow.id,
         confirm_email: this.confirmForm.email,
       }).then((res) => {
-        this.$message.success('发送成功')
+        this.$message.success(this.$t('364a6013.9db9a7'))
         this.confirmDialogShow = false
         this.refresh()
       }).finally(()=>{
@@ -318,7 +331,7 @@ export default {
     onRemarkFormSubmit() {
       this.confirmStatus = true
       api.financial.updateInvoiceRemark(this.editRow.id, this.remarkForm).then((res) => {
-        this.$message.success('更新成功')
+        this.$message.success(this.$t('364a6013.55aa63'))
         this.remarkDialogShow = false
         this.refresh()
       }).finally(()=>{
@@ -327,19 +340,19 @@ export default {
     },
     onDialogFormSubmit() {
       api.financial.updateInvoice(this.editRow.id, this.dialogForm).then((res) => {
-        this.$message.success('更新成功')
+        this.$message.success(this.$t('364a6013.55aa63'))
         this.dialogShow = false
         this.refresh()
       })
     },
     reInvoiceHandle(row) {
-      this.$confirm('确定重推开票', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+      this.$confirm(this.$t('364a6013.97adcd'), this.$t('364a6013.02d981'), {
+          confirmButtonText: this.$t('364a6013.38cf16'),
+          cancelButtonText: this.$t('364a6013.625fb2'),
           type: 'warning'
         }).then(async () => {
           await this.$api.trade.retryFailedInvoice({  invoice_id: row.id })
-          this.$message.success('重推开票成功')
+          this.$message.success(this.$t('364a6013.e76fce'))
           this.refresh()
         })
     }

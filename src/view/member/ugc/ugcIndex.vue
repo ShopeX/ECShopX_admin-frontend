@@ -8,13 +8,10 @@
     <SpPage>
       <el-row>
         <el-col :span="2">
-          <div class="p-title">社区笔记管理</div>
+          <div class="p-title">{{ $t('a88979f1.34696a') }}</div>
         </el-col>
         <el-col :span="16">
-          <div class="tips">
-            用户发表的笔记会通过「机器审核」，若包含违禁内容将自动变为下架状态；官方笔记不会被审核，默认下架状态，需人工上架笔记；
-            <br />若通过「机器审核」，则会为待审核，等待人工审核，此时社区内会展示笔记。
-          </div>
+          <div class="tips" v-html="$t('a88979f1.428920') + '<br />' + $t('a88979f1.1cbedd')" />
         </el-col>
         <el-col :span="6">
           <el-input
@@ -27,12 +24,12 @@
               slot="prepend"
               v-model="searchtype"
               class="barSelect"
-              placeholder="请选择"
+              :placeholder="$t('a88979f1.708c9d')"
               @change="changeName"
             >
-              <el-option label="用户昵称" value="nickname" />
-              <el-option label="用户手机号" value="mobile" />
-              <el-option label="标题关键字" value="content" />
+              <el-option :label="$t('a88979f1.9a56bb')" value="nickname" />
+              <el-option :label="$t('a88979f1.18b642')" value="mobile" />
+              <el-option :label="$t('a88979f1.e16f84')" value="content" />
             </el-select>
             <el-button slot="append" icon="el-icon-search" @click="searchData('searchkey')" />
           </el-input>
@@ -40,9 +37,13 @@
       </el-row>
       <el-row class="margin-col">
         <el-col>
-          <el-button type="primary" @click="auditHandle(false)"> 状态变更 </el-button>
+          <el-button type="primary" @click="auditHandle(false)">
+{{
+            $t('a88979f1.67cc91')
+          }}
+</el-button>
 
-          <el-button type="primary" plain @click="addNote"> 新建官方笔记 </el-button>
+          <el-button type="primary" plain @click="addNote">{{ $t('a88979f1.4727b5') }}</el-button>
 
           <!-- <el-button
             type="primary"
@@ -52,16 +53,20 @@
             删除笔记(测试用)
           </el-button> -->
 
-          <el-button type="primary" plain @click="handleNotesFlag"> 打角标 </el-button>
+          <el-button type="primary" plain @click="handleNotesFlag">
+{{
+            $t('a88979f1.9ead93')
+          }}
+</el-button>
           <span class="marbor" />
           <el-select
             v-model="filt_badge"
             class="searSelect"
             filterable
-            placeholder="角标不限"
+            :placeholder="$t('a88979f1.9c999f')"
             @change="searchData"
           >
-            <el-option label="角标不限" :value="null" />
+            <el-option :label="$t('a88979f1.9c999f')" :value="null" />
             <el-option
               v-for="(item, index) in flagList"
               :key="index"
@@ -74,28 +79,28 @@
             v-model="params.source"
             class="searSelect"
             filterable
-            placeholder="全部笔记"
+            :placeholder="$t('a88979f1.1ccf4b')"
             @change="searchData"
           >
-            <el-option label="全部笔记" :value="null" />
-            <el-option label="官方笔记" value="2" />
-            <el-option label="用户笔记" value="1" />
+            <el-option :label="$t('a88979f1.1ccf4b')" :value="null" />
+            <el-option :label="$t('a88979f1.8ba19b')" value="2" />
+            <el-option :label="$t('a88979f1.900341')" value="1" />
           </el-select>
           <span class="marbor" />
 
-          <el-button plain @click="officialModalHide(true)"> 官方账号设置 </el-button>
+          <el-button plain @click="officialModalHide(true)">{{ $t('a88979f1.1e27f5') }}</el-button>
           <span class="marbor" />
           <el-switch
             v-model="video_enable"
             active-color="#13ce66"
-            active-text="允许会员上传视频"
+            :active-text="$t('a88979f1.95d8f5')"
             @change="setUGCSetting"
           />
         </el-col>
       </el-row>
 
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="全部状态" name="first">
+        <el-tab-pane :label="$t('a88979f1.443483')" name="first">
           <noteslist
             ref="notestable"
             :tmp-data="noteList"
@@ -105,7 +110,7 @@
             @viewDetails="viewDetails"
           />
         </el-tab-pane>
-        <el-tab-pane label="待审核" name="second">
+        <el-tab-pane :label="$t('a88979f1.5cb424')" name="second">
           <noteslist
             :tmp-data="noteList"
             :loading="loading"
@@ -114,7 +119,7 @@
             @viewDetails="viewDetails"
           />
         </el-tab-pane>
-        <el-tab-pane label="已发布" name="third">
+        <el-tab-pane :label="$t('a88979f1.dca0c1')" name="third">
           <noteslist
             :tmp-data="noteList"
             :loading="loading"
@@ -123,7 +128,7 @@
             @viewDetails="viewDetails"
           />
         </el-tab-pane>
-        <el-tab-pane label="已下架" name="fourth">
+        <el-tab-pane :label="$t('a88979f1.ca9084')" name="fourth">
           <noteslist
             :tmp-data="noteList"
             :loading="loading"
@@ -227,7 +232,7 @@ export default {
       filt_badge: null,
       searchkey: '',
       searchtype: 'nickname',
-      searPlace: '请输入昵称',
+      searPlace: '',
       auditdiff: false,
       dufStatus: null,
       auditDialogShow: false,
@@ -248,7 +253,7 @@ export default {
   },
   mounted() {
     const { path } = this.$route
-    //console.log('path',path)
+    this.$data.searPlace = this.researchMsg(this.$data.searchtype)
     if (path.indexOf('editor') === -1) {
       this.searchData()
       this.getFlagsList()
@@ -276,11 +281,11 @@ export default {
       this.$data.auditdiff = false
     },
     researchMsg(type) {
-      var msg = '请输入昵称'
+      var msg = this.$t('a88979f1.916ff9')
       if (type == 'title') {
-        msg = '请输入关键字'
+        msg = this.$t('a88979f1.db91cb')
       } else if (type == 'mobile') {
-        msg = '请输入手机号'
+        msg = this.$t('a88979f1.6e4f4b')
       }
       this.params.nickname = null
       this.params.content = null
@@ -405,14 +410,14 @@ export default {
       if (id_set.length < 1) {
         this.$message({
           type: 'error',
-          message: '请选择笔记',
+          message: this.$t('a88979f1.4a6206'),
           duration: 1500
         })
         return false
       }
-      this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('a88979f1.24c49a'), this.$t('4add4f82.02d981'), {
+        confirmButtonText: this.$t('4add4f82.38cf16'),
+        cancelButtonText: this.$t('09b91dec.625fb2'),
         type: 'warning'
       }).then(() => {
         notesDelete(params).then((res) => {
@@ -450,7 +455,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择笔记',
+          message: this.$t('a88979f1.4a6206'),
           duration: 1500
         })
       }
@@ -489,7 +494,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择笔记',
+          message: this.$t('a88979f1.4a6206'),
           duration: 1500
         })
       }

@@ -18,7 +18,7 @@
       />
 
       <div class="action-container mt-4">
-        <el-button type="primary" @click="onAddChange"> 新建标签组 </el-button>
+        <el-button type="primary" @click="onAddChange">{{ $t('a190be57.19214e') }}</el-button>
       </div>
 
       <SpFinder
@@ -64,18 +64,7 @@ export default {
       params: {
         keyword: ''
       },
-      searchFormItems: [
-        {
-          formItemClass: 'w-2/4',
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入标签组/标签',
-            clearable: true
-          },
-          fieldName: 'keyword',
-          label: '标签组/标签'
-        }
-      ],
+      searchFormItems: [],
       form: {
         group_id: '',
         group_name: '',
@@ -92,15 +81,29 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
+    const t = this.$t.bind(this)
+    this.searchFormItems = [
+      {
+        formItemClass: 'w-2/4',
+        component: 'input',
+        componentProps: {
+          placeholder: t('a190be57.3605b8'),
+          clearable: true
+        },
+        fieldName: 'keyword',
+        label: t('a190be57.60224e')
+      }
+    ]
     this.initFinderSetting()
   },
   methods: {
     initFinderSetting() {
       const vm = this
+      const t = vm.$t.bind(vm)
       this.finderSetting = createSetting({
         columns: [
           {
-            name: '标签组',
+            name: t('a190be57.6c805e'),
             key: 'group_name',
             width: 200,
             render: (h, { row }) => {
@@ -132,7 +135,7 @@ export default {
             }
           },
           {
-            name: '标签',
+            name: t('a190be57.14d342'),
             key: 'tags',
             minWidth: 400,
             render: (h, { row }) => {
@@ -148,7 +151,7 @@ export default {
             }
           },
           {
-            name: '操作',
+            name: t('a190be57.2b6bc0'),
             key: 'action',
             width: 150,
             fixed: 'right',
@@ -164,7 +167,7 @@ export default {
                       click: () => vm.handleEdit(row)
                     }
                   },
-                  '编辑'
+                  t('a190be57.95b351')
                 ),
                 h(
                   'el-button',
@@ -177,7 +180,7 @@ export default {
                       click: () => vm.handleDelete(row)
                     }
                   },
-                  '删除'
+                  t('a190be57.2f4aad')
                 )
               ]
               return h('div', actions)
@@ -259,9 +262,9 @@ export default {
       this.addGroupVisible = true
     },
     handleDelete(row) {
-      this.$confirm('此操作将永久删除该标签组,是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('a190be57.dda238'), this.$t('a190be57.02d981'), {
+        confirmButtonText: this.$t('a190be57.38cf16'),
+        cancelButtonText: this.$t('a190be57.625fb2'),
         type: 'warning'
       })
         .then(async () => {
@@ -269,7 +272,7 @@ export default {
             await this.$api.member.deleteTagGroup(row.group_id)
             this.$message({
               type: 'success',
-              message: '删除成功'
+              message: this.$t('a190be57.0007d1')
             })
             this.$refs.finder.refresh()
           } catch (error) {
@@ -279,7 +282,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('a190be57.c34281')
           })
         })
     },
@@ -292,7 +295,7 @@ export default {
         }
         this.$message({
           type: 'success',
-          message: this.isEdit ? '编辑成功' : '创建成功'
+          message: this.isEdit ? this.$t('a190be57.3bb47b') : this.$t('a190be57.04a691')
         })
         this.addGroupVisible = false
         this.$refs.finder.refresh(true)
@@ -311,7 +314,7 @@ export default {
         await this.$api.member.saveTag(params)
         this.$message({
           type: 'success',
-          message: '添加标签成功'
+          message: this.$t('a190be57.78ec37')
         })
         this.$refs.finder.refresh(true)
       } catch (error) {

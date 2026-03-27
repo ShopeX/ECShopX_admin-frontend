@@ -6,24 +6,28 @@
 <template>
   <SpPage>
     <SpFilterForm class="sp-filter-form" :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="time" label="时间筛选:" size="max">
+      <SpFilterFormItem prop="time" :label="$t('b2f40ed3.3b5dd4')" size="max">
         <el-date-picker
           v-model="params.time"
           type="datetimerange"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('b2f40ed3.b44c0f')"
+          :end-placeholder="$t('b2f40ed3.1d468b')"
           :default-time="['00:00:00', '23:59:59']"
           value-format="timestamp"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="delivery_staff_name" label="配送员姓名:">
-        <el-input v-model="params.delivery_staff_name" placeholder="请输入配送员姓名" />
+      <SpFilterFormItem prop="delivery_staff_name" :label="$t('b2f40ed3.e39850')">
+        <el-input v-model="params.delivery_staff_name" :placeholder="$t('b2f40ed3.c6c579')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="delivery_staff_mobile" label="手机号:">
-        <el-input v-model="params.delivery_staff_mobile" placeholder="手机号" />
+      <SpFilterFormItem prop="delivery_staff_mobile" :label="$t('b2f40ed3.ce2bf3')">
+        <el-input v-model="params.delivery_staff_mobile" :placeholder="$t('b2f40ed3.8098e2')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor_id" label="所属店铺:">
-        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+      <SpFilterFormItem prop="distributor_id" :label="$t('b2f40ed3.1861bc')">
+        <SpSelectShop
+          v-model="params.distributor_id"
+          clearable
+          :placeholder="$t('b2f40ed3.708c9d')"
+        />
       </SpFilterFormItem>
       <!-- <SpFilterFormItem prop="merchant_id" label="所属商家:">
         <el-select v-model="params.merchant_id" filterable placeholder="请选择">
@@ -49,6 +53,7 @@
   </SpPage>
 </template>
 <script>
+import { i18n } from '@/i18n'
 export default {
   components: {},
   mixins: [],
@@ -64,11 +69,11 @@ export default {
       },
       setting: {
         columns: [
-          { name: '配送员编号', key: 'staff_no', width: 110 },
-          { name: '配送员姓名', key: 'username', width: 110 },
-          { name: '手机号', key: 'mobile', width: 130 },
+          { name: i18n.t('b2f40ed3.fb92e9'), key: 'staff_no', width: 110 },
+          { name: i18n.t('b2f40ed3.9b3489'), key: 'username', width: 110 },
+          { name: i18n.t('b2f40ed3.ce2bf3'), key: 'mobile', width: 130 },
           {
-            name: '所属店铺',
+            name: i18n.t('b2f40ed3.baad7e'),
             key: 'distributor_ids',
             width: 300,
             render: (h, { row }) => {
@@ -86,17 +91,23 @@ export default {
             }
           },
           {
-            name: '配送结算方式',
+            name: i18n.t('b2f40ed3.737477'),
             width: 150,
             key: 'payment_method',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return (
+                <span>
+                  {row.payment_method === 'order'
+                    ? i18n.t('b2f40ed3.ed776f')
+                    : i18n.t('b2f40ed3.705abf')}
+                </span>
+              )
             }
           },
-          { name: '配送客户数', key: 'user_count', width: 110 },
-          { name: '配送订单量', key: 'order_count', width: 110 },
+          { name: i18n.t('b2f40ed3.cb60c1'), key: 'user_count', width: 110 },
+          { name: i18n.t('b2f40ed3.24b4bb'), key: 'order_count', width: 110 },
           {
-            name: '配送单价',
+            name: i18n.t('b2f40ed3.86ac6f'),
             key: 'payment_method',
             render: (h, { row }) => {
               return (
@@ -109,47 +120,53 @@ export default {
             }
           },
           {
-            name: '订单金额',
+            name: i18n.t('b2f40ed3.b1862e'),
             key: 'total_fee_count',
             render: (h, { row }) => {
               return <span>{row.total_fee_count / 100}</span>
             }
           },
           {
-            name: '配送费用',
+            name: i18n.t('b2f40ed3.d355df'),
             key: 'self_delivery_fee_count',
             render: (h, { row }) => {
               return <span>{row.self_delivery_fee_count / 100}</span>
             }
           },
           {
-            name: '配送员类型',
+            name: i18n.t('b2f40ed3.04dbf8'),
             width: 110,
             key: 'staff_type',
             render: (h, { row }) => {
               return (
                 <span>
                   {row.staff_type === 'platform'
-                    ? '平台'
+                    ? i18n.t('b2f40ed3.498128')
                     : row.staff_type === 'distributor'
-                    ? '店铺'
-                    : '商家'}
+                    ? i18n.t('b2f40ed3.295713')
+                    : i18n.t('b2f40ed3.0f09a8')}
                 </span>
               )
             }
           },
           {
-            name: '配送员属性',
+            name: i18n.t('b2f40ed3.95a141'),
             width: 110,
             key: 'staff_attribute',
             render: (h, { row }) => {
-              return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>
+              return (
+                <span>
+                  {row.staff_attribute === 'full_time'
+                    ? i18n.t('b2f40ed3.63f85b')
+                    : i18n.t('b2f40ed3.7c4f46')}
+                </span>
+              )
             }
           }
         ],
         actions: [
           {
-            name: '导 出',
+            name: i18n.t('b2f40ed3.066ffd'),
             key: 'add',
             type: 'button',
             slot: 'header',
@@ -168,7 +185,7 @@ export default {
                 if (response.status) {
                   this.$message({
                     type: 'success',
-                    message: '已加入执行队列，请在设置-导出列表中下载'
+                    message: i18n.t('b2f40ed3.3e1ddd')
                   })
                   this.$export_open(params.type)
                   return
@@ -179,7 +196,7 @@ export default {
                 } else {
                   this.$message({
                     type: 'error',
-                    message: '无内容可导出 或 执行失败，请检查重试'
+                    message: i18n.t('b2f40ed3.89ae53')
                   })
                   return
                 }

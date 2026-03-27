@@ -10,24 +10,29 @@
         <el-row :gutter="20">
           <el-col>
             <shop-select distributors @update="storeChange" @init="initChange" />
-            <el-input v-model="params.mobile" placeholder="手机号" class="input-m" clearable>
+            <el-input
+              v-model="params.mobile"
+              :placeholder="$t('f73abcb8.8098e2')"
+              class="input-m"
+              clearable
+            >
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
             <el-button type="primary" icon="plus" @click="handleAddSalesmanAction">
-              添加
+              {{ $t('f73abcb8.b58c75') }}
             </el-button>
           </el-col>
         </el-row>
         <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-          <el-tab-pane label="列表" name="admin" />
+          <el-tab-pane :label="$t('f73abcb8.371297')" name="admin" />
           <!-- <el-tab-pane
         label="禁用"
         name="invalid"
       /> -->
           <el-table v-loading="loading" :data="list">
-            <el-table-column prop="salesman_name" label="姓名" />
-            <el-table-column prop="mobile" label="手机号" />
-            <el-table-column prop="storeInfo.name" label="店铺" />
+            <el-table-column prop="salesman_name" :label="$t('f73abcb8.60d045')" />
+            <el-table-column prop="mobile" :label="$t('f73abcb8.8098e2')" />
+            <el-table-column prop="storeInfo.name" :label="$t('f73abcb8.295713')" />
 
             <!-- <el-table-column prop="children_count" width="100" label="会员数量">
             <template slot-scope="scope">
@@ -61,7 +66,7 @@
             </template>
           </el-table-column> -->
 
-            <el-table-column prop="children_count" width="130" label="累计会员数量">
+            <el-table-column prop="children_count" width="130" :label="$t('f73abcb8.284bb6')">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -74,7 +79,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="是否启用">
+            <el-table-column :label="$t('f73abcb8.53c3dd')">
               <template slot-scope="scope">
                 <el-switch
                   v-model="scope.row.is_valid"
@@ -112,7 +117,7 @@
       -->
             <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
 
-            <el-table-column label="操作" width="160px">
+            <el-table-column :label="$t('f73abcb8.2b6bc0')" width="160px">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <i class="el-icon-edit-outline" @click="handleUpdateSalesman(scope.row)" />
@@ -141,12 +146,12 @@
 
         <el-dialog
           v-show="false"
-          title="编辑导购员角色"
+          :title="$t('f73abcb8.a0c788')"
           :visible.sync="dialog_role"
           :close-on-click-modal="false"
         >
           <el-form v-model="form" label-width="160px">
-            <el-form-item label="角色">
+            <el-form-item :label="$t('f73abcb8.464f3d')">
               <el-radio-group v-model="roleForm.role">
                 <el-radio
                   v-for="(item, index) in roleList"
@@ -159,12 +164,20 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer content-center">
-            <el-button type="primary" @click="handleAddSalesmanRole"> 确定 </el-button>
+            <el-button type="primary" @click="handleAddSalesmanRole">
+{{
+              $t('f73abcb8.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="添加/编辑" :visible.sync="dialog" :close-on-click-modal="false">
+        <el-dialog
+          :title="$t('f73abcb8.66ae11')"
+          :visible.sync="dialog"
+          :close-on-click-modal="false"
+        >
           <el-form v-model="form" label-width="160px">
-            <el-form-item label="管理店铺">
+            <el-form-item :label="$t('f73abcb8.fbf1b2')">
               <shop-select
                 distributors
                 :shop-id-default="form.distributor_id"
@@ -179,16 +192,16 @@
             <el-button type="text" @click="addStoreAction">添加适用店铺</el-button>
           </div> -->
             </el-form-item>
-            <el-form-item label="手机号">
+            <el-form-item :label="$t('f73abcb8.8098e2')">
               <el-input
                 v-model="form.mobile"
-                placeholder="请输入手机号"
+                :placeholder="$t('f73abcb8.6e4f4b')"
                 style="width: 193px"
                 :readonly="salesman_id > 0"
               />
-              <div v-if="salesman_id">* 手机号不可修改</div>
+              <div v-if="salesman_id">{{ $t('f73abcb8.a77a12') }}</div>
             </el-form-item>
-            <el-form-item v-show="false" label="角色">
+            <el-form-item v-show="false" :label="$t('f73abcb8.464f3d')">
               <el-radio-group v-model="form.role">
                 <el-radio
                   v-for="(item, index) in roleList"
@@ -199,24 +212,32 @@
                 </el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="姓名">
+            <el-form-item :label="$t('f73abcb8.60d045')">
               <el-input
                 v-model="form.salesman_name"
-                placeholder="请输入姓名"
+                :placeholder="$t('f73abcb8.8093e3')"
                 style="width: 193px"
               />
             </el-form-item>
-            <el-form-item v-if="activeName == 'invalid'" label="是否启用">
-              <el-radio v-model="form.is_valid" label="true"> 启用 </el-radio>
-              <el-radio v-model="form.is_valid" label="delete"> 禁用 </el-radio>
+            <el-form-item v-if="activeName == 'invalid'" :label="$t('f73abcb8.53c3dd')">
+              <el-radio v-model="form.is_valid" label="true">{{ $t('f73abcb8.7854b5') }}</el-radio>
+              <el-radio v-model="form.is_valid" label="delete">
+{{
+                $t('f73abcb8.710ad0')
+              }}
+</el-radio>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer content-center">
-            <el-button type="primary" @click="handleAddSalesman"> 确定 </el-button>
+            <el-button type="primary" @click="handleAddSalesman">
+{{
+              $t('f73abcb8.38cf16')
+            }}
+</el-button>
           </div>
         </el-dialog>
         <el-dialog
-          title="店铺列表"
+          :title="$t('f73abcb8.a4d703')"
           :visible.sync="relShop.relShopVisible"
           :before-close="handleCancel"
           width="70%"
@@ -224,8 +245,8 @@
           <template>
             <el-table v-loading="loading" :data="relShop.list">
               <el-table-column prop="shop_id" label="id" width="60" />
-              <el-table-column prop="store_name" label="店铺名称" width="300" />
-              <el-table-column prop="address" label="店铺地址" />
+              <el-table-column prop="store_name" :label="$t('f73abcb8.0d4934')" width="300" />
+              <el-table-column prop="address" :label="$t('f73abcb8.9198af')" />
             </el-table>
             <div
               v-if="relShop.total_count > relShop.params.pageSize"
@@ -251,22 +272,22 @@
         />
 
         <!-- 绑定关系 -->
-        <SideBar :visible.sync="showSideBar" title="绑定关系" width="50">
+        <SideBar :visible.sync="showSideBar" :title="$t('f73abcb8.0dacc2')" width="50">
           <div class="relationship">
             <el-card v-loading="relationship.loading">
               <el-table :data="relationship.list">
-                <el-table-column label="导购员">
+                <el-table-column :label="$t('f73abcb8.a6d9eb')">
                   <template slot-scope="scope">
                     {{ scope.row.salesperson_info.salesman_name }}
                   </template>
                 </el-table-column>
-                <el-table-column prop="work_userid" label="导购员企业微信userid" />
-                <el-table-column label="手机号">
+                <el-table-column prop="work_userid" :label="$t('f73abcb8.f1215f')" />
+                <el-table-column :label="$t('f73abcb8.8098e2')">
                   <template slot-scope="scope">
                     {{ scope.row.user_info.mobile }}
                   </template>
                 </el-table-column>
-                <el-table-column label="会员">
+                <el-table-column :label="$t('f73abcb8.4d9dd5')">
                   <template slot-scope="scope">
                     <router-link
                       :to="{
@@ -278,16 +299,16 @@
                     </router-link>
                   </template>
                 </el-table-column>
-                <el-table-column label="是否是朋友">
+                <el-table-column :label="$t('f73abcb8.884694')">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.is_friend == 0">否</span>
-                    <span v-else>是</span>
+                    <span v-if="scope.row.is_friend == 0">{{ $t('f73abcb8.c9744f') }}</span>
+                    <span v-else>{{ $t('f73abcb8.0a60ac') }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="是否绑定">
+                <el-table-column :label="$t('f73abcb8.d388c5')">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.is_bind == 0">否</span>
-                    <span v-else>是</span>
+                    <span v-if="scope.row.is_bind == 0">{{ $t('f73abcb8.c9744f') }}</span>
+                    <span v-else>{{ $t('f73abcb8.0a60ac') }}</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -468,9 +489,9 @@ export default {
       })
     },
     handleDeleteSalesman(index, row) {
-      this.$confirm('此操作将禁用, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('f73abcb8.81c5b5'), this.$t('f73abcb8.02d981'), {
+        confirmButtonText: this.$t('f73abcb8.38cf16'),
+        cancelButtonText: this.$t('f73abcb8.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -478,20 +499,20 @@ export default {
             this.list.splice(index, 1)
             this.$message({
               type: 'success',
-              message: '操作成功'
+              message: this.$t('f73abcb8.33130f')
             })
           })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('f73abcb8.2111cc')
           })
         })
     },
     defaultSwitchChange(row) {
       updateSalesman(row.salesperson_id, { is_valid: row.is_valid }).then((response) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('f73abcb8.33130f') })
       })
     },
     handleAddSalesman() {
@@ -511,14 +532,14 @@ export default {
         }
         this.dialog = false
         this.getList()
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('f73abcb8.33130f') })
       })
     },
     handleAddSalesmanRole() {
       updateSalesmanRole(this.salesman_id, this.roleForm).then((res) => {
         this.dialog_role = false
         this.getList()
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('f73abcb8.33130f') })
       })
     },
     addSalesmanAction() {
@@ -531,7 +552,7 @@ export default {
         }
         this.dialog = false
         this.getList()
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('f73abcb8.33130f') })
       })
     },
     getList() {

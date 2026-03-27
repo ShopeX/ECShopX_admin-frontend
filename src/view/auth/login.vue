@@ -22,60 +22,60 @@
           class="form"
         >
           <div class="box">
-            <h3>{{ title }}</h3>
+            <h3>{{ $t(title) }}</h3>
             <el-tabs v-if="$route.meta.type == 'admin'" v-model="activeName" class="tab">
-              <el-tab-pane label="管理员账号登录" name="first">
-                <el-form-item label="账户" prop="account">
+              <el-tab-pane :label="$t('73f7fe3a.f45406')" name="first">
+                <el-form-item :label="$t('73f7fe3a.7116e7')" prop="account">
                   <el-input v-model="form.account" />
                 </el-form-item>
-                <el-form-item label="密码" prop="checkPass">
+                <el-form-item :label="$t('73f7fe3a.a81052')" prop="checkPass">
                   <el-input v-model="form.checkPass" type="password" />
                 </el-form-item>
                 <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
-                  <el-input v-model="form.yzm" type="text" placeholder="验证码">
+                  <el-input v-model="form.yzm" type="text" :placeholder="$t('73f7fe3a.983f59')">
                     <img
                       slot="append"
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    />
+                    >
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
-              <el-tab-pane label="员工账号登录" name="second">
-                <el-form-item label="账户" prop="account">
+              <el-tab-pane :label="$t('73f7fe3a.3cf7a7')" name="second">
+                <el-form-item :label="$t('73f7fe3a.7116e7')" prop="account">
                   <el-input v-model="form.account" />
                 </el-form-item>
-                <el-form-item label="密码" prop="checkPass">
+                <el-form-item :label="$t('73f7fe3a.a81052')" prop="checkPass">
                   <el-input v-model="form.checkPass" type="password" />
                 </el-form-item>
                 <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
-                  <el-input v-model="form.yzm" type="text" placeholder="验证码">
+                  <el-input v-model="form.yzm" type="text" :placeholder="$t('73f7fe3a.983f59')">
                     <img
                       slot="append"
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    />
+                    >
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
             </el-tabs>
             <div v-else class="tab">
-              <el-form-item label="账户" prop="account">
+              <el-form-item :label="$t('73f7fe3a.7116e7')" prop="account">
                 <el-input v-model="form.account" />
               </el-form-item>
-              <el-form-item label="密码" prop="checkPass">
+              <el-form-item :label="$t('73f7fe3a.a81052')" prop="checkPass">
                 <el-input v-model="form.checkPass" type="password" />
               </el-form-item>
               <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
-                <el-input v-model="form.yzm" type="text" placeholder="验证码">
+                <el-input v-model="form.yzm" type="text" :placeholder="$t('73f7fe3a.983f59')">
                   <img
                     slot="append"
                     :src="imageData"
                     style="width: auto; height: 38px; cursor: pointer"
                     @click="_getImagesCode"
-                  />
+                  >
                 </el-input>
               </el-form-item>
             </div>
@@ -83,11 +83,11 @@
               <loadingBtn
                 ref="loadingBtn"
                 class="btn"
-                text="登 录"
+                :text="$t('73f7fe3a.e43613')"
                 @clickHandle="fnLogin('form')"
               />
             </el-form-item>
-            <p v-if="loginType != 'admin'" class="tip">忘记密码，请联系管理员重置</p>
+            <p v-if="loginType != 'admin'" class="tip">{{ $t('73f7fe3a.e65366') }}</p>
           </div>
         </el-form>
       </div>
@@ -100,8 +100,8 @@
     <el-dialog title="" width="800px" :visible.sync="dialogVisible">
       <div class="agreement-content" v-html="agreementContent" />
       <div slot="footer" class="dialog-footer">
-        <el-button plain @click="dialogVisible = false"> 取 消 </el-button>
-        <el-button type="primary" @click="handleAgreement"> 同 意 </el-button>
+        <el-button plain @click="dialogVisible = false"> {{ $t('73f7fe3a.c08ab9') }} </el-button>
+        <el-button type="primary" @click="handleAgreement"> {{ $t('73f7fe3a.7f3a36') }} </el-button>
       </div>
     </el-dialog>
   </div>
@@ -124,7 +124,7 @@ export default {
   },
   data() {
     return {
-      title: '平台管理中心',
+      title: '73f7fe3a.43e95d',
       login_bg: login_bg_ecshopx,
       size: 0,
       activeName: 'first',
@@ -136,8 +136,8 @@ export default {
       },
       loginType: 'admin',
       rules: {
-        account: [requiredRules('账户')],
-        checkPass: [requiredRules('密码'), MinRules(6)]
+        account: [requiredRules(this.$t('73f7fe3a.7116e7'))],
+        checkPass: [requiredRules(this.$t('73f7fe3a.a81052')), MinRules(6)]
       },
       dialogVisible: false,
       agreementId: null,
@@ -163,7 +163,7 @@ export default {
       this.level = res.level
       if (this.level === 'img_code') {
         this._getImagesCode()
-        this.rules.yzm = [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        this.rules.yzm = [{ required: true, message: this.$t('73f7fe3a.d0c06a'), trigger: 'blur' }]
       }
     })
   },
@@ -190,50 +190,33 @@ export default {
     getBgImg() {
       switch (this.VUE_APP_PRODUCT_MODEL) {
         case 'standard':
-          this.title = this.getLoginTitle('云店管理中心')
+          this.title = this.getLoginTitle('73f7fe3a.65bb11')
           this.login_bg = login_bg_yundian
           break
         case 'in_purchase':
-          this.title = this.getLoginTitle('内购管理中心')
+          this.title = this.getLoginTitle('73f7fe3a.8a3a96')
           this.login_bg = login_bg_inpurchase
           break
         case 'b2c':
-          this.title = this.getLoginTitle('官方商城管理中心')
-          this.login_bg = login_bg_b2c
-          break
         case 'shuyun':
-          this.title = this.getLoginTitle('官方商城管理中心')
+          this.title = this.getLoginTitle('73f7fe3a.12d5e5')
           this.login_bg = login_bg_b2c
           break
         default:
-          this.title = this.getLoginTitle('平台管理中心')
+          this.title = this.getLoginTitle('73f7fe3a.43e95d')
           this.login_bg = login_bg_ecshopx
           break
       }
     },
-    getLoginTitle(t) {
-      let title
-      switch (this.loginType) {
-        case 'supplier':
-          title = '供应商管理中心'
-          break
-        case 'agent':
-          title = '代理商管理中心'
-          break
-        case 'distributor':
-          title = '店铺管理中心'
-          break
-        case 'dealer':
-          title = '经销商管理中心'
-          break
-        case 'merchant':
-          title = '商户管理中心'
-          break
-        default:
-          title = t
-          break
+    getLoginTitle(key) {
+      const keyMap = {
+        supplier: '73f7fe3a.67602b',
+        agent: '73f7fe3a.9ec352',
+        distributor: '73f7fe3a.5a6369',
+        dealer: '73f7fe3a.7dc0b2',
+        merchant: '73f7fe3a.dd5a0e'
       }
-      return title
+      return keyMap[this.loginType] || key
     },
     fnSize() {
       this.size = document.body.clientHeight
@@ -258,7 +241,7 @@ export default {
               this.loginSuccess(token)
             } else {
               this.$message({
-                message: '登录失败，请联系管理员',
+                message: this.$t('73f7fe3a.178268'),
                 type: 'error',
                 duration: 3 * 1000
               })
@@ -290,7 +273,7 @@ export default {
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.SET_LOGIN_TYPE({ loginType: this.loginType })
       this.$message({
-        message: '登录成功',
+        message: this.$t('73f7fe3a.71fa3b'),
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()

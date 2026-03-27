@@ -18,40 +18,50 @@ export default (vm) => {
   const formatTemplate_type = (status) => {
     switch (status) {
       case '0':
-        return `验证码`
+        return vm.$t('5e4a9ce3.983f59')
       case '1':
-        return `短信通知`
+        return vm.$t('5e4a9ce3.e7d158')
       case '2':
-        return `推广短信`
+        return vm.$t('5e4a9ce3.0a9738')
     }
   }
   return createSetting({
     search: [
       {
         key: 'time_start',
-        name: '发送时间',
+        name: vm.$t('5e4a9ce3.63b34d'),
         type: 'date-range',
         defaultTime: ['00:00:00', '23:59:59'],
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
+        startPlaceholder: vm.$t('5e4a9ce3.b44c0f'),
+        endPlaceholder: vm.$t('5e4a9ce3.1d468b')
       },
 
-      { key: 'template_type', name: '短信类型', type: 'select', options: vm.smeType_options },
-      { key: 'status', name: '发送状态', type: 'select', options: vm.search_options },
-      { key: 'template_code', name: '模板CODE' },
-      { key: 'mobile', name: '手机号' },
-      { key: 'sms_content', name: '短信内容' },
-      { key: 'task_name', name: '任务名称', slot: 'task_name' }
+      {
+        key: 'template_type',
+        name: vm.$t('5e4a9ce3.b2b399'),
+        type: 'select',
+        options: vm.smeType_options
+      },
+      { key: 'status', name: vm.$t('5e4a9ce3.d48fc2'), type: 'select', options: vm.search_options },
+      { key: 'template_code', name: vm.$t('5e4a9ce3.50760a') },
+      { key: 'mobile', name: vm.$t('5e4a9ce3.8098e2') },
+      { key: 'sms_content', name: vm.$t('5e4a9ce3.4e963c') },
+      { key: 'task_name', name: vm.$t('5e4a9ce3.78caf7'), slot: 'task_name' }
     ],
     columns: [
-      { name: '接受短信的手机号', key: 'mobile', width: '140px' },
-      { name: '模板CODE', key: 'template_code', width: '120px' },
-      { name: '短信内容', key: 'sms_content' },
-      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type, width: '100px' },
-      { name: '短信场景', key: 'scene_name' },
-      { name: '发送时间', key: 'created', formatter: formatDate, width: '170px' },
+      { name: vm.$t('5e4a9ce3.0bc1d2'), key: 'mobile', width: '140px' },
+      { name: vm.$t('5e4a9ce3.50760a'), key: 'template_code', width: '120px' },
+      { name: vm.$t('5e4a9ce3.4e963c'), key: 'sms_content' },
       {
-        name: '发送状态',
+        name: vm.$t('5e4a9ce3.b2b399'),
+        key: 'template_type',
+        formatter: formatTemplate_type,
+        width: '100px'
+      },
+      { name: vm.$t('5e4a9ce3.bc50bf'), key: 'scene_name' },
+      { name: vm.$t('5e4a9ce3.63b34d'), key: 'created', formatter: formatDate, width: '170px' },
+      {
+        name: vm.$t('5e4a9ce3.d48fc2'),
         key: 'status',
         width: '100px',
         render: (h, { row }) =>
@@ -69,9 +79,9 @@ export default (vm) => {
               h(
                 'span',
                 {},
-                (row.status == '1' && '发送中') ||
-                  (row.status == '3' && '发送成功') ||
-                  (row.status == '2' && '发送失败 ')
+                (row.status == '1' && vm.$t('5e4a9ce3.702513')) ||
+                  (row.status == '3' && vm.$t('5e4a9ce3.9db9a7')) ||
+                  (row.status == '2' && vm.$t('5e4a9ce3.22066a'))
               ),
               row.status == 2 &&
                 row.reason &&

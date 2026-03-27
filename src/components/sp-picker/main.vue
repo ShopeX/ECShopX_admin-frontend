@@ -23,13 +23,14 @@
     />
 
     <span slot="footer" class="dialog-footer">
-      <el-button @click="isLocalShow = false">取 消</el-button>
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      <el-button @click="isLocalShow = false">{{ cancelText }}</el-button>
+      <el-button type="primary" @click="handleConfirm">{{ confirmText }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import PickerType from './picker-type'
 
 export default {
@@ -54,6 +55,15 @@ export default {
     return {
       title: dialogTitle || title,
       isLocalShow: false
+    }
+  },
+
+  computed: {
+    cancelText() {
+      return i18n.t('8e248734.c08ab9')
+    },
+    confirmText() {
+      return i18n.t('8e248734.aa7527')
     }
   },
 

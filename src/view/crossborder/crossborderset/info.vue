@@ -8,15 +8,15 @@
     <el-card>
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">
-          <el-form-item label="跨境显示">
+          <el-form-item :label="$t('2d1c35f7.136cc9')">
             <el-radio-group v-model="form.crossborder_show">
-              <el-radio :label="1"> 是 </el-radio>
-              <el-radio :label="0"> 否 </el-radio>
+              <el-radio :label="1"> {{ $t('2d1c35f7.0a60ac') }} </el-radio>
+              <el-radio :label="0"> {{ $t('2d1c35f7.c9744f') }} </el-radio>
             </el-radio-group>
-            <br />
-            <span class="tip">说明：用户端是否展示跨境购物车</span>
+            <br>
+            <span class="tip">{{ $t('2d1c35f7.d0c1da') }}</span>
           </el-form-item>
-          <el-form-item label="全局税率">
+          <el-form-item :label="$t('2d1c35f7.0ee50e')">
             <!--          <el-input type="number" min="0" max="10" :precision="2" @keydown="handleInput2" v-model="form.tax_rate" placeholder="请输入整数">
                         <template slot="append">%</template>
                       </el-input>-->
@@ -30,25 +30,24 @@
               :max="100"
             />
             <span style="margin-left: 5px">%</span>
-            <br />
+            <br>
             <span class="tip"
-              >说明：跨境商品税率设置权重按 商品 -> 类目 ->
-              全局，当商品及类目未设置时，按全局计算，以此类推
-              <a href="/entity/goodsbase/goodsmaincategory">类目税率设置</a></span
+              >{{ $t('2d1c35f7.a75b32') }}
+              <a href="/entity/goodsbase/goodsmaincategory">{{ $t('2d1c35f7.a1a244') }}</a></span
             >
           </el-form-item>
-          <el-form-item label="个人额度提醒">
+          <el-form-item :label="$t('2d1c35f7.e4ac84')">
             <SpRichText v-model="form.quota_tip" />
             <!-- <span class="tip">依据《关于跨境电子商务零售进口税收政策的通知》个人单次跨境购物消费限额未5000元。跨境消费年度交易限额未2万6千元。超过限额将会无法清关。</span> -->
           </el-form-item>
 
-          <el-form-item label="跨境物流编码">
+          <el-form-item :label="$t('2d1c35f7.68fc4d')">
             <el-input v-model="form.logistics" type="text" />
           </el-form-item>
 
           <el-form-item size="large">
-            <el-button>取消</el-button>
-            <el-button type="primary" @click="save"> 保存 </el-button>
+            <el-button>{{ $t('2d1c35f7.625fb2') }}</el-button>
+            <el-button type="primary" @click="save"> {{ $t('2d1c35f7.be5fbb') }} </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -100,7 +99,7 @@ export default {
     // 保存数据
     save() {
       saveCrossborderSet(this.form).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('2d1c35f7.33130f') })
         this.getInfo()
       })
     }

@@ -7,7 +7,7 @@
 
 <template>
   <div v-if="visible">
-    <el-dialog title="选择挂件" :visible.sync="visible" :before-close="handleClose">
+    <el-dialog :title="$t('88d1548d.e0bc2a')" :visible.sync="visible" :before-close="handleClose">
       <el-radio-group style="width: 100%" v-model="selected" size="small">
         <div class="wgts">
           <div
@@ -26,8 +26,8 @@
         </div>
       </el-radio-group>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm"> 确 定 </el-button>
+        <el-button @click="handleClose">{{ $t('88d1548d.c08ab9') }}</el-button>
+        <el-button type="primary" @click="handleComfirm">{{ $t('88d1548d.aa7527') }}</el-button>
       </div>
     </el-dialog>
   </div>

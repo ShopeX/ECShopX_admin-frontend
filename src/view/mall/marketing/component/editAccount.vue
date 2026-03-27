@@ -7,7 +7,7 @@
   <div>
     <div class="zyk_page_register_Info_edit">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane name="corp" v-if="info.member_type == 'corp'" label="企业">
+        <el-tab-pane name="corp" v-if="info.member_type == 'corp'" :label="$t('d5ea25da.04c9e3')">
           <el-form
             :model="form"
             ref="ruleForm"
@@ -18,49 +18,49 @@
             <!-- 企业信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>企业信息</span>
+                <span>{{ $t('d5ea25da.54796d') }}</span>
               </div>
 
               <div class="content">
                 <el-row :gutter="20">
                   <el-col :span="8">
-                    <el-form-item label="企业名称" prop="name">
+                    <el-form-item :label="$t('d5ea25da.f47e27')" prop="name">
                       <el-input v-model="form.name" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="营业执照号" prop="social_credit_code">
+                    <el-form-item :label="$t('d5ea25da.b9bf38')" prop="social_credit_code">
                       <el-input disabled v-model="form.social_credit_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="商户有效日期" prop="social_credit_code_expires">
+                    <el-form-item :label="$t('d5ea25da.1fcd91')" prop="social_credit_code_expires">
                       <el-date-picker
                         v-model="form.social_credit_code_expires"
                         type="date"
                         value-format="yyyyMMdd"
-                        placeholder="选择日期"
+                        :placeholder="$t('d5ea25da.2bebdd')"
                         style="width: 100%"
                       />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业电话" prop="telphone">
+                    <el-form-item :label="$t('d5ea25da.3d9d21')" prop="telphone">
                       <el-input v-model="form.telphone" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业邮箱" prop="email">
+                    <el-form-item :label="$t('d5ea25da.d7c0a1')" prop="email">
                       <el-input v-model="form.email" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="邮编" prop="zip_code">
+                    <el-form-item :label="$t('d5ea25da.4d8e09')" prop="zip_code">
                       <el-input v-model="form.zip_code" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="所在省市" prop="area">
+                    <el-form-item :label="$t('d5ea25da.c63fa8')" prop="area">
                       <el-cascader
                         style="width: 100%"
                         v-model="form.area"
@@ -75,18 +75,18 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="企业地址" prop="address">
+                    <el-form-item :label="$t('d5ea25da.400147')" prop="address">
                       <el-input v-model="form.address" />
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
-                    <el-form-item label="经营范围" prop="business_scope">
+                    <el-form-item :label="$t('d5ea25da.04228b')" prop="business_scope">
                       <el-input
                         maxlength="500"
                         show-word-limit
                         v-model="form.business_scope"
                         type="textarea"
-                        placeholder="请输入内容"
+                        :placeholder="$t('d5ea25da.a11cc7')"
                         rows="7"
                       />
                     </el-form-item>
@@ -97,20 +97,20 @@
             <!-- 法人信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>法人信息</span>
+                <span>{{ $t('d5ea25da.77d3e2') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="法人姓名" prop="legal_person">
+                  <el-form-item :label="$t('d5ea25da.2fe17a')" prop="legal_person">
                     <el-input v-model="form.legal_person" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人身份证号码" prop="legal_cert_id">
+                  <el-form-item :label="$t('d5ea25da.1415b3')" prop="legal_cert_id">
                     <div class="flex">
                       <el-input v-model="form.legal_cert_id" />
                       <el-tooltip
-                        content="身份证信息字母X需大写"
+                        :content="$t('d5ea25da.43e031')"
                         placement="top-end"
                         effect="light"
                       >
@@ -120,17 +120,17 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人手机号码" prop="legal_mp">
+                  <el-form-item :label="$t('d5ea25da.187a35')" prop="legal_mp">
                     <el-input v-model="form.legal_mp" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="法人证件有效期" prop="legal_cert_id_expires">
+                  <el-form-item :label="$t('d5ea25da.a79a87')" prop="legal_cert_id_expires">
                     <el-date-picker
                       v-model="form.legal_cert_id_expires"
                       type="date"
                       value-format="yyyyMMdd"
-                      placeholder="选择日期"
+                      :placeholder="$t('d5ea25da.2bebdd')"
                       style="width: 100%"
                     />
                   </el-form-item>
@@ -140,18 +140,18 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('d5ea25da.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="结算银行账户类型" prop="bank_acct_type">
+                  <el-form-item :label="$t('d5ea25da.32734c')" prop="bank_acct_type">
                     <el-radio-group v-model="form.bank_acct_type">
-                      <el-radio label="1">对公</el-radio>
-                      <el-radio label="2">对私</el-radio>
+                      <el-radio label="1">{{ $t('d5ea25da.18ba13') }}</el-radio>
+                      <el-radio label="2">{{ $t('d5ea25da.f0bf8a') }}</el-radio>
                     </el-radio-group>
                     <el-tooltip
                       :style="{ 'margin-left': 30 + 'px' }"
-                      content="提现到账银行卡账户类型"
+                      :content="$t('d5ea25da.8597fb')"
                       placement="top-end"
                       effect="light"
                     >
@@ -160,7 +160,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡所属银行" prop="bank_name">
+                  <el-form-item :label="$t('d5ea25da.0a3e82')" prop="bank_name">
                     <div class="flex">
                       <el-autocomplete
                         style="width: 100%"
@@ -168,19 +168,19 @@
                         class="inline-input"
                         v-model="form.bank_name"
                         :fetch-suggestions="querySearch"
-                        placeholder="请输入选择内容"
+                        :placeholder="$t('d5ea25da.473e86')"
                         @select="handleSelectBank"
                       />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡开户名" prop="card_name">
+                  <el-form-item :label="$t('d5ea25da.748b0c')" prop="card_name">
                     <el-input disabled v-model="form.card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="结算银行卡号" prop="card_no">
+                  <el-form-item :label="$t('d5ea25da.88174a')" prop="card_no">
                     <el-input v-model="form.card_no" />
                   </el-form-item>
                 </el-col>
@@ -188,10 +188,10 @@
             </el-card>
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>其他信息</span>
+                <span>{{ $t('d5ea25da.febe40') }}</span>
               </div>
               <div class="other_content">
-                <el-form-item label="上传附件" prop="attach_file">
+                <el-form-item :label="$t('d5ea25da.0063c5')" prop="attach_file">
                   <el-upload
                     class="upload-demo"
                     drag
@@ -204,17 +204,19 @@
                   >
                     <i class="el-icon-upload" />
                     <div v-if="form.attach_file_name">{{ form.attach_file_name }}</div>
-                    <div v-else class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                    <div v-else class="el-upload__text">
+                      {{ $t('d5ea25da.1ef03f') }}<em>{{ $t('d5ea25da.2c808b') }}</em>
+                    </div>
                   </el-upload>
                 </el-form-item>
                 <el-form-item>
                   <div class="opload_rules">
-                    <p>内容须包括：</p>
-                    <p>营业执照：三证合一证件照；</p>
-                    <p>法人信息：法人身份证正面照、法人身份证反面照；</p>
-                    <p>结算账户信息：开户银行许可证照</p>
-                    <p>请确保上传的图片信息清晰、准确、一致性；</p>
-                    <p>请压缩为Zip文件进行上传，整包最大限制为8M。</p>
+                    <p>{{ $t('d5ea25da.8d7392') }}</p>
+                    <p>{{ $t('d5ea25da.3d250f') }}</p>
+                    <p>{{ $t('d5ea25da.ba1a9a') }}</p>
+                    <p>{{ $t('d5ea25da.07314d') }}</p>
+                    <p>{{ $t('d5ea25da.c18816') }}</p>
+                    <p>{{ $t('d5ea25da.bb87b2') }}</p>
                   </div>
                 </el-form-item>
               </div>
@@ -229,13 +231,17 @@
                 @clickHandle="submitForm('ruleForm', 'Y', 'loadingBtn')"
               /> -->
               <el-button type="primary" size="medium" @click="submitHandle('ruleForm', 'Y')">
-                提交
+                {{ $t('d5ea25da.939d53') }}
               </el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane name="person" v-if="info.member_type == 'person'" label="个人">
+        <el-tab-pane
+          name="person"
+          v-if="info.member_type == 'person'"
+          :label="$t('d5ea25da.6a0e04')"
+        >
           <el-form
             ref="personForm"
             :model="personForm"
@@ -246,23 +252,23 @@
             <!-- 基本信息-->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>基本信息</span>
+                <span>{{ $t('d5ea25da.9e5ffa') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="用户姓名" prop="user_name">
+                  <el-form-item :label="$t('d5ea25da.d5b5b5')" prop="user_name">
                     <el-input disabled v-model="personForm.user_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="用户手机号码" prop="tel_no">
+                  <el-form-item :label="$t('d5ea25da.dde968')" prop="tel_no">
                     <div class="flex">
                       <el-input disabled v-model="personForm.tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="用户身份证号码" prop="cert_id">
+                  <el-form-item :label="$t('d5ea25da.a692a6')" prop="cert_id">
                     <el-input disabled v-model="personForm.cert_id" />
                   </el-form-item>
                 </el-col>
@@ -276,28 +282,28 @@
             <!-- 结算账户信息 -->
             <el-card class="box-card" shadow="never">
               <div slot="header" class="clearfix">
-                <span>结算账户信息</span>
+                <span>{{ $t('d5ea25da.99f89b') }}</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item label="开户人姓名" prop="bank_card_name">
+                  <el-form-item :label="$t('d5ea25da.e3f6a6')" prop="bank_card_name">
                     <el-input disabled v-model="personForm.bank_card_name" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="银行预留手机号" prop="bank_tel_no">
+                  <el-form-item :label="$t('d5ea25da.a0b7da')" prop="bank_tel_no">
                     <div class="flex">
                       <el-input v-model="personForm.bank_tel_no" />
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="银行账号" prop="bank_card_id">
+                  <el-form-item :label="$t('d5ea25da.954218')" prop="bank_card_id">
                     <el-input v-model="personForm.bank_card_id" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="开户人证件号码" prop="bank_cert_id">
+                  <el-form-item :label="$t('d5ea25da.c503f0')" prop="bank_cert_id">
                     <el-input disabled v-model="personForm.bank_cert_id" />
                   </el-form-item>
                 </el-col>
@@ -313,7 +319,7 @@
                 @clickHandle="submitFormPerson('personForm', 'Y', 'loadingBtn')"
               /> -->
               <el-button type="primary" size="medium" @click="submitHandle('personForm', 'Y')">
-                提交
+                {{ $t('d5ea25da.939d53') }}
               </el-button>
             </el-form-item>
           </el-form>
@@ -379,28 +385,6 @@ export default {
         confirm_letter_file: '',
         confirm_letter_file_name: ''
       },
-      rules: {
-        name: requiredRules('企业名称'),
-        social_credit_code: [requiredRules('营业执照号'), MaxRules(18)],
-        social_credit_code_expires: {
-          required: true,
-          message: '请选择商户有效期',
-          trigger: 'blur'
-        },
-        area: { type: 'array', required: true, message: '请选择省市', trigger: 'change' },
-        address: [requiredRules('企业地址'), MaxRules(60)],
-        business_scope: requiredRules('经营范围'),
-        legal_person: [requiredRules('法人姓名'), MaxRules(20)],
-        legal_cert_id: [requiredRules('法人身份证号'), MaxRules(18)],
-        legal_cert_id_expires: { required: true, message: '请选择法人证件有效期', trigger: 'blur' },
-        legal_mp: [requiredRules('法人手机号'), MaxRules(11)],
-        bank_acct_type: [requiredRules('结算银行账户类型', 'change')],
-        bank_name: { required: true, message: '请输入并选择', trigger: 'blur' },
-        card_name: [requiredRules('结算银行卡开户名'), MaxRules(20)],
-        card_no: [requiredRules('结算银行卡卡号'), MaxRules(40)],
-        attach_file: { required: true, message: '请上传', trigger: 'change' },
-        confirm_letter_file: { required: true, message: '请上传', trigger: 'change' }
-      },
       personForm: {
         user_name: '', //用户姓名
         tel_no: '', // 用户手机号码
@@ -410,19 +394,60 @@ export default {
         bank_card_id: '', //银行账号
         bank_cert_id: '' // 开户人证件号码
       },
-      personRules: {
-        user_name: [requiredRules('用户姓名'), MaxRules(20)],
-        tel_no: [requiredRules('用户手机号码'), MaxRules(11)],
-        cert_id: [requiredRules('用户身份证号码'), MaxRules(18)],
-        bank_card_name: [requiredRules('开户人姓名'), MaxRules(20)],
-        bank_tel_no: [requiredRules('银行预留手机号'), MaxRules(11)],
-        bank_card_id: [requiredRules('银行账号'), MaxRules(40)],
-        bank_cert_id: [requiredRules('开户人证件号码'), MaxRules(18)]
-      },
       isShow_corp: false,
       isShow_person: false,
       type: '',
       id: ''
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        name: requiredRules(this.$t('d5ea25da.f47e27')),
+        social_credit_code: [requiredRules(this.$t('d5ea25da.b9bf38')), MaxRules(18)],
+        social_credit_code_expires: {
+          required: true,
+          message: this.$t('d5ea25da.947edc'),
+          trigger: 'blur'
+        },
+        area: {
+          type: 'array',
+          required: true,
+          message: this.$t('d5ea25da.b7ef53'),
+          trigger: 'change'
+        },
+        address: [requiredRules(this.$t('d5ea25da.400147')), MaxRules(60)],
+        business_scope: requiredRules(this.$t('d5ea25da.04228b')),
+        legal_person: [requiredRules(this.$t('d5ea25da.2fe17a')), MaxRules(20)],
+        legal_cert_id: [requiredRules(this.$t('d5ea25da.1415b3')), MaxRules(18)],
+        legal_cert_id_expires: {
+          required: true,
+          message: this.$t('d5ea25da.c52f2a'),
+          trigger: 'blur'
+        },
+        legal_mp: [requiredRules(this.$t('d5ea25da.187a35')), MaxRules(11)],
+        bank_acct_type: [requiredRules(this.$t('d5ea25da.32734c'), 'change')],
+        bank_name: { required: true, message: this.$t('d5ea25da.e184f6'), trigger: 'blur' },
+        card_name: [requiredRules(this.$t('d5ea25da.748b0c')), MaxRules(20)],
+        card_no: [requiredRules(this.$t('d5ea25da.b5140a')), MaxRules(40)],
+        attach_file: { required: true, message: this.$t('d5ea25da.197c4f'), trigger: 'change' },
+        confirm_letter_file: {
+          required: true,
+          message: this.$t('d5ea25da.197c4f'),
+          trigger: 'change'
+        }
+      }
+    },
+    personRules() {
+      return {
+        user_name: [requiredRules(this.$t('d5ea25da.d5b5b5')), MaxRules(20)],
+        tel_no: [requiredRules(this.$t('d5ea25da.dde968')), MaxRules(11)],
+        cert_id: [requiredRules(this.$t('d5ea25da.a692a6')), MaxRules(18)],
+        bank_card_name: [requiredRules(this.$t('d5ea25da.e3f6a6')), MaxRules(20)],
+        bank_tel_no: [requiredRules(this.$t('d5ea25da.a0b7da')), MaxRules(11)],
+        bank_card_id: [requiredRules(this.$t('d5ea25da.954218')), MaxRules(40)],
+        bank_cert_id: [requiredRules(this.$t('d5ea25da.c503f0')), MaxRules(18)]
+      }
     }
   },
   mounted() {
@@ -438,20 +463,16 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           if (formName == 'ruleForm') {
-            this.$confirm(
-              '未避免影响提现，请确认结算卡持卡人姓名与法人一致，信息更改需审核，请确认是否提交。',
-              '提示消息',
-              {
-                confirmButtonText: '确定',
-                type: 'warning',
-                showCancelButton: false
-              }
-            ).then(() => {
+            this.$confirm(this.$t('d5ea25da.1b1123'), this.$t('d5ea25da.b38163'), {
+              confirmButtonText: this.$t('d5ea25da.38cf16'),
+              type: 'warning',
+              showCancelButton: false
+            }).then(() => {
               this.submitForm(formName, isSubmit)
             })
           } else {
-            this.$confirm('结算账户信息更改需提交审核，请确认是否提交', '提示消息', {
-              confirmButtonText: '确定',
+            this.$confirm(this.$t('d5ea25da.1829a9'), this.$t('d5ea25da.b38163'), {
+              confirmButtonText: this.$t('d5ea25da.38cf16'),
               type: 'warning',
               showCancelButton: false
             }).then(() => {
@@ -459,7 +480,7 @@ export default {
             })
           }
         } else {
-          this.$message.error('请完善您的信息')
+          this.$message.error(this.$t('d5ea25da.cc0a23'))
         }
       })
     },
@@ -470,20 +491,20 @@ export default {
 
       const result = await this.$api.adapay.accountUpdate(this.form)
       if (result.data.data.status) {
-        this.$message.success('提交成功')
+        this.$message.success(this.$t('d5ea25da.23b62e'))
         this.$emit('back')
       } else {
-        this.$message.error('失败')
+        this.$message.error(this.$t('d5ea25da.acd5cb'))
       }
     },
     async submitFormPerson(formName, isSubmit) {
       this.personForm.submit_review = isSubmit
       const result = await this.$api.adapay.accountUpdatePerson(this.personForm)
       if (result.data.data.status) {
-        this.$message.success('提交成功')
+        this.$message.success(this.$t('d5ea25da.23b62e'))
         this.$emit('back')
       } else {
-        this.$message.error('失败')
+        this.$message.error(this.$t('d5ea25da.acd5cb'))
       }
     },
     handleAvatarSuccess(file) {
@@ -498,10 +519,10 @@ export default {
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
       if (!isZip) {
-        this.$message.error('文件类型应为Zip')
+        this.$message.error(this.$t('d5ea25da.644239'))
       }
       if (!isLt2M) {
-        this.$message.error('上传文件不能超过 8MB!')
+        this.$message.error(this.$t('d5ea25da.c5f04b'))
       }
       return isZip && isLt2M
     },
@@ -511,13 +532,13 @@ export default {
     async processedHandle() {
       if (this.member_type == 'corp') {
         const result = await this.$api.adapay.accountQueryCorp()
-        this.processed = '未填'
+        this.processed = this.$t('d5ea25da.0e223e')
         this.form = result.data.data
         this.form.area = [this.form.prov_code, this.form.area_code]
         console.log(result)
       } else {
         const result = await this.$api.adapay.accountQueryCorp()
-        this.processed = '未填'
+        this.processed = this.$t('d5ea25da.0e223e')
         this.personForm = result.data.data
         this.activeName = 'person'
         console.log(result)
@@ -557,7 +578,7 @@ export default {
         this.personForm = result.data.data
         console.log('person---------', result)
       } else {
-        console.log('增加')
+        console.log('Add')
         this.isShow_person = true
         this.isShow_corp = true
         this.activeName = 'corp'

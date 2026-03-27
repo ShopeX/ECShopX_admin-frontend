@@ -7,11 +7,11 @@
   <SpPage>
     <el-card>
       <el-table v-loading="loading" :data="vipGradeList" :height="wheight - 80">
-        <el-table-column prop="order_id" label="订单号" min-width="200">
+        <el-table-column prop="order_id" :label="$t('1cd1c781.1e8dc2')" min-width="200">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.order_id }}
-              <el-tooltip effect="dark" content="复制" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('1cd1c781.79d3ab')" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopy"
@@ -20,33 +20,33 @@
               </el-tooltip>
             </div>
             <div class="order-time">
-              <el-tooltip effect="dark" content="下单时间" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('1cd1c781.2240cc')" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="lv_type" label="等级" width="60">
+        <el-table-column prop="lv_type" :label="$t('1cd1c781.95e0d7')" width="60">
           <template slot-scope="scope">
             <el-tag :type="scope.row.lv_type === 'vip' ? 'warning' : 'danger'" size="mini">
               {{ scope.row.lv_type }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="卡名称" />
-        <el-table-column prop="card_type" label="卡类型">
+        <el-table-column prop="title" :label="$t('1cd1c781.eae15f')" />
+        <el-table-column prop="card_type" :label="$t('1cd1c781.bba849')">
           <template slot-scope="scope">
             {{ scope.row.card_type.desc }}
           </template>
         </el-table-column>
-        <el-table-column width="160" label="会员手机号">
+        <el-table-column width="160" :label="$t('1cd1c781.6a52ee')">
           <template slot-scope="scope">
             <i class="el-icon-mobile" />{{ scope.row.mobile }}
             <el-tooltip
               v-if="datapass_block == 0"
               effect="dark"
-              content="复制"
+              :content="$t('1cd1c781.79d3ab')"
               placement="top-start"
             >
               <i
@@ -57,7 +57,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="购买金额" width="100">
+        <el-table-column prop="price" :label="$t('1cd1c781.0efb0f')" width="100">
           <template slot-scope="scope">
             <div class="mark">
               <span class="cur">{{ scope.row.fee_symbol }}</span
@@ -65,7 +65,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="discount" label="折扣值" width="100">
+        <el-table-column prop="discount" :label="$t('1cd1c781.8da606')" width="100">
           <template slot-scope="scope"> {{ (100 - scope.row.discount) / 100 }}折 </template>
         </el-table-column>
 

@@ -18,12 +18,12 @@ export default (vm) => {
   if (vm.$store.getters.login_type != 'merchant') {
     return createSetting({
       search: [
-        { key: 'mobile', name: '手机号' },
-        { key: 'merchant_name', name: '商户名称' }
+        { key: 'mobile', name: vm.$t('bc46a6b6.8098e2') },
+        { key: 'merchant_name', name: vm.$t('bc46a6b6.e6f169') }
       ],
       columns: [
         {
-          name: '手机号（账号名称）',
+          name: vm.$t('bc46a6b6.99359a'),
           key: 'mobile',
           render: (h, { row }) => {
             if (row.settled_type === 'soletrader') {
@@ -40,7 +40,7 @@ export default (vm) => {
                   {
                     props: { type: 'text', type: 'warning', size: 'medium' }
                   },
-                  '个体户'
+                  vm.$t('bc46a6b6.a41061')
                 )
               ]
             } else {
@@ -57,17 +57,17 @@ export default (vm) => {
                   {
                     props: { type: 'text', type: 'success', size: 'medium' }
                   },
-                  '企业'
+                  vm.$t('bc46a6b6.04c9e3')
                 )
               ]
             }
           }
         },
-        { name: '商户名称', key: 'merchant_name' }
+        { name: vm.$t('bc46a6b6.e6f169'), key: 'merchant_name' }
       ],
       actions: [
         {
-          name: '重置密码',
+          name: vm.$t('bc46a6b6.0719aa'),
           key: 'detail',
           type: 'button',
           buttonType: 'text',
@@ -84,7 +84,7 @@ export default (vm) => {
     return createSetting({
       columns: [
         {
-          name: '手机号（账号名称）',
+          name: vm.$t('bc46a6b6.99359a'),
           key: 'mobile',
           render: (h, { row }) => {
             if (row.is_merchant_main == '1') {
@@ -101,7 +101,7 @@ export default (vm) => {
                   {
                     props: { type: 'text', type: 'warning', size: 'medium' }
                   },
-                  '超级管理员'
+                  vm.$t('bc46a6b6.302ff0')
                 )
               ]
             } else {
@@ -118,7 +118,7 @@ export default (vm) => {
       ],
       actions: [
         {
-          name: '编辑',
+          name: vm.$t('bc46a6b6.95b351'),
           key: 'detail',
           type: 'button',
           buttonType: 'text',

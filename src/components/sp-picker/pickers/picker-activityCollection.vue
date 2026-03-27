@@ -21,7 +21,7 @@
   <div class="picker-activity-collection">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入集合名称" />
+        <el-input v-model="formData.keywords" :placeholder="$t('021a5ddf.55f14c')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -32,27 +32,7 @@
       }"
       url="/promotions/collection/list"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '集合ID', key: 'collection_id', width: '80' },
-          { name: '集合名称', key: 'collection_name' },
-          {
-            name: '描述',
-            key: 'description',
-            formatter: (value, row, col) => {
-              return value || '-'
-            }
-          },
-          {
-            name: '状态',
-            key: 'is_open',
-            width: '100',
-            formatter: (value, row, col) => {
-              return value == 1 ? '启用' : '禁用'
-            }
-          }
-        ]
-      }"
+      :setting="activityCollectionSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -74,6 +54,32 @@ export default {
     title: '选择活动集合'
   },
   props: ['value'],
+  computed: {
+    activityCollectionSetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: t('021a5ddf.26cf62'), key: 'collection_id', width: '80' },
+          { name: t('021a5ddf.fd4fcb'), key: 'collection_name' },
+          {
+            name: t('021a5ddf.3bdd08'),
+            key: 'description',
+            formatter: (value, row, col) => {
+              return value || '-'
+            }
+          },
+          {
+            name: t('021a5ddf.3fea7c'),
+            key: 'is_open',
+            width: '100',
+            formatter: (value, row, col) => {
+              return value == 1 ? t('021a5ddf.7854b5') : t('021a5ddf.710ad0')
+            }
+          }
+        ]
+      }
+    }
+  },
   data() {
     const { queryParams } = this.value
     const defaultParams = {
@@ -85,7 +91,9 @@ export default {
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('021a5ddf.85d516')
+  },
   methods: {
     beforeSearch(params) {
       params = {

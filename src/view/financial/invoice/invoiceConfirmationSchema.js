@@ -9,21 +9,21 @@ export const formSchema = (vm) =>
     [
       {
         type: 'group',
-        label: '专票确认书'
+        label: vm.$t('82053bba.30117a')
       },
       {
-        label: '企业专用发票确认书',
+        label: vm.$t('82053bba.26d40f'),
         key: 'special_invoice_confirm_open',
         type: 'switch'
       },
       {
-        label: '注册协议标题',
+        label: vm.$t('82053bba.206057'),
         key: 'title',
         type: 'input',
         maxlength: 15
       },
       {
-        label: '注册协议',
+        label: vm.$t('82053bba.3c0397'),
         key: 'content',
         type: 'richText'
       }

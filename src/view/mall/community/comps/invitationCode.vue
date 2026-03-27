@@ -17,9 +17,9 @@
 <template>
   <div class="invitation-code">
     <SpImage :src="info" :width="120" />
-    <a class="download-link text-blue-400" download="invitation_code.jpg" :href="info"
-      >下载邀请码</a
-    >
+    <a class="download-link text-blue-400" download="invitation_code.jpg" :href="info">{{
+      $t('d613199d.75ea93')
+    }}</a>
   </div>
 </template>
 

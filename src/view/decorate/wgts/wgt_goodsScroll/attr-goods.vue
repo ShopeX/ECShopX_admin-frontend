@@ -17,14 +17,14 @@
 <template>
   <div class="attr-goods">
     <el-radio-group v-model="value.type" size="small" style="margin-bottom: 10px">
-      <el-radio label="goods">单商品</el-radio>
-      <el-radio label="seckill">秒杀活动</el-radio>
-      <el-radio label="limitTimeSale">限时特惠</el-radio>
+      <el-radio label="goods">{{ i18n.t('832cf50b.bcf481') }}</el-radio>
+      <el-radio label="seckill">{{ i18n.t('832cf50b.dbe208') }}</el-radio>
+      <el-radio label="limitTimeSale">{{ i18n.t('832cf50b.a0aaca') }}</el-radio>
     </el-radio-group>
     <CompButton
       v-if="value.type == 'goods'"
-      placeholder="选择商品"
-      format="{0}件商品"
+      :placeholder="i18n.t('1253b8e4.43d1e2')"
+      :format="i18n.t('1253b8e4.156ada')"
       :value="value.data.length"
       @click="handleClickAdd"
       @remove="onRemove"
@@ -32,8 +32,8 @@
     />
     <CompButton
       v-if="value.type == 'seckill'"
-      placeholder="选择秒杀活动"
-      format="{0}个秒杀活动"
+      :placeholder="i18n.t('832cf50b.312bbb')"
+      :format="i18n.t('832cf50b.15d23a')"
       :value="value.secKillId ? 1 : 0"
       :view-btn="false"
       @click="onAddSeckill"
@@ -41,8 +41,8 @@
     />
     <CompButton
       v-if="value.type == 'limitTimeSale'"
-      placeholder="选择限时特惠"
-      format="{0}个限时特惠"
+      :placeholder="i18n.t('832cf50b.f8f202')"
+      :format="i18n.t('832cf50b.a81cca')"
       :value="value.limitTimeSaleId ? 1 : 0"
       :view-btn="false"
       @click="onAddLimitSeckill"
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompButton from '../../comps/comp-button'
@@ -63,7 +64,7 @@ export default {
     value: Object
   },
   data() {
-    return {
+    return {i18n,
       localValue: {
         data: [],
         secKillGoods: [],
@@ -182,7 +183,7 @@ export default {
     async onAddLimitSeckill() {
       const { data } = await this.$picker.seckill({
         data: [this.value.limitTimeSaleId],
-        dialogTitle: '选择限时特惠活动',
+        dialogTitle: i18n.t('832cf50b.558625'),
         queryParams: {
           status: 'valid',
           seckill_type: 'limited_time_sale'

@@ -13,33 +13,33 @@
             class="input-m"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
+            :placeholder="$t('2f57554b.4b8cb9')"
             @change="dateChange"
           />
-          <el-input v-model="identifier" class="input-m" placeholder="订单号">
+          <el-input v-model="identifier" class="input-m" :placeholder="$t('2f57554b.1e8dc2')">
             <el-button slot="append" icon="el-icon-search" @click="search" />
           </el-input>
-          <el-input v-model="aftersales_bn" class="input-m" placeholder="售后单号">
+          <el-input v-model="aftersales_bn" class="input-m" :placeholder="$t('2f57554b.d34f24')">
             <el-button slot="append" icon="el-icon-search" @click="search2" />
           </el-input>
-          <el-button type="primary" @click="exportData"> 导出 </el-button>
+          <el-button type="primary" @click="exportData"> {{ $t('2f57554b.55405e') }} </el-button>
           <el-popover
             placement="top-start"
             width="200"
             trigger="hover"
-            content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+            :content="$t('2f57554b.676480')"
           >
             <i slot="reference" class="el-icon-question" />
           </el-popover>
         </el-col>
       </el-row>
       <el-card>
-        <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
-          <el-table-column prop="create_time" width="220" label="售后单">
+        <el-table v-loading="loading" :data="list" :element-loading-text="$t('2f57554b.f09b12')">
+          <el-table-column prop="create_time" width="220" :label="$t('2f57554b.d1b93f')">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.aftersales_bn }}
-                <el-tooltip effect="dark" content="复制" placement="top-start">
+                <el-tooltip effect="dark" :content="$t('2f57554b.79d3ab')" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.aftersales_bn"
                     v-clipboard:success="onCopy"
@@ -49,11 +49,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="300" label="订单">
+          <el-table-column min-width="300" :label="$t('2f57554b.4c117f')">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
-                <el-tooltip effect="dark" content="复制" placement="top-start">
+                <el-tooltip effect="dark" :content="$t('2f57554b.79d3ab')" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.order_id"
                     v-clipboard:success="onCopy"
@@ -63,17 +63,17 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="80" label="退款金额">
+          <el-table-column min-width="80" :label="$t('2f57554b.a0cd4c')">
             <template slot-scope="scope">
               <span>￥{{ scope.row.refund_fee / 100 }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="100" label="退款原因">
+          <el-table-column min-width="100" :label="$t('2f57554b.220bc2')">
             <template slot-scope="scope">
               <span>{{ scope.row.reason }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="300" label="售后描述">
+          <el-table-column min-width="300" :label="$t('2f57554b.6c13e2')">
             <template slot-scope="scope">
               <span>{{ scope.row.description }}</span>
             </template>
@@ -127,7 +127,7 @@ export default {
   methods: {
     onCopy() {
       this.$notify.success({
-        message: '复制成功',
+        message: this.$t('2f57554b.20a495'),
         showClose: true
       })
     },
@@ -204,7 +204,7 @@ export default {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
+            message: this.$t('2f57554b.3e1ddd')
           })
           this.$export_open('aftersale_record_count')
           return
@@ -215,7 +215,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('2f57554b.bfd8d5')
           })
         }
       })

@@ -9,45 +9,59 @@
       <div class="website-template">
         <div v-if="$route.path.indexOf('editor') === -1">
           <el-row class="mb-4">
-            <el-button type="primary" @click="dialogVisible = true"> 添加页面 </el-button>
+            <el-button type="primary" @click="dialogVisible = true">
+{{
+              $t('8b0d1458.4c503b')
+            }}
+</el-button>
           </el-row>
           <el-row>
             <el-tabs type="card" v-model="page_type" @tab-click="handleTabClick">
               <el-tab-pane
                 v-for="(item, index) of tabList"
                 :key="index"
-                :label="item.label"
+                :label="$t(item.labelKey)"
                 :disabled="loading"
                 :name="item.name"
               />
               <el-table border v-loading="loading" stripe style="width: 100%" :data="templateList">
-                <el-table-column prop="theme_pc_template_id" label="页面id" />
-                <el-table-column prop="template_title" label="页面名称" />
-                <el-table-column prop="template_description" label="页面描述" />
-                <el-table-column prop="page_type" label="页面类型">
+                <el-table-column prop="theme_pc_template_id" :label="$t('8b0d1458.6872c7')" />
+                <el-table-column prop="template_title" :label="$t('8b0d1458.b78454')" />
+                <el-table-column prop="template_description" :label="$t('8b0d1458.abf8f4')" />
+                <el-table-column prop="page_type" :label="$t('8b0d1458.46f391')">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.page_type === 'index' ? '首页' : '自定义页' }}</span>
+                    <span>{{
+                      scope.row.page_type === 'index'
+                        ? $t('8b0d1458.db1c89')
+                        : $t('8b0d1458.ec20e4')
+                    }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="status" label="是否启用">
+                <el-table-column prop="status" :label="$t('8b0d1458.53c3dd')">
                   <template slot-scope="scope">
                     <div>
-                      <el-tag v-if="scope.row.status === '1'" type="success"> 启用 </el-tag>
-                      <el-tag v-else type="info"> 未启用 </el-tag>
+                      <el-tag v-if="scope.row.status === '1'" type="success">
+{{
+                        $t('8b0d1458.7854b5')
+                      }}
+</el-tag>
+                      <el-tag v-else type="info">{{ $t('8b0d1458.463776') }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="250px">
+                <el-table-column :label="$t('8b0d1458.2b6bc0')" width="250px">
                   <template slot-scope="scope">
                     <div>
                       <el-button type="text" size="mini" @click="handleDisable(scope.row)">
-                        {{ scope.row.status === '1' ? '禁用' : '启用' }}
+                        {{
+                          scope.row.status === '1' ? $t('8b0d1458.710ad0') : $t('8b0d1458.7854b5')
+                        }}
                       </el-button>
                       <el-button type="text" size="mini" @click="handleDelete(scope.row)">
-                        删除
+                        {{ $t('8b0d1458.2f4aad') }}
                       </el-button>
                       <el-button type="text" size="mini" @click="handleEdit(scope.row)">
-                        编辑
+                        {{ $t('8b0d1458.95b351') }}
                       </el-button>
                       <el-button
                         type="primary"
@@ -55,7 +69,7 @@
                         size="mini"
                         @click="handleRenovation(scope.row)"
                       >
-                        页面装修
+                        {{ $t('8b0d1458.6343df') }}
                       </el-button>
                     </div>
                   </template>
@@ -76,44 +90,44 @@
             />
           </div>
           <el-dialog
-            title="添加/编辑页面"
+            :title="$t('8b0d1458.b73a0b')"
             :visible.sync="dialogVisible"
             width="500px"
             :before-close="handleDialogClose"
           >
             <el-form ref="myForm" :model="formData" :rules="formRule" label-width="80px">
-              <el-form-item label="页面名称" prop="template_title">
+              <el-form-item :label="$t('8b0d1458.b78454')" prop="template_title">
                 <el-input
                   v-model="formData.template_title"
                   clearable
-                  placeholder="请输入页面名称"
+                  :placeholder="$t('8b0d1458.7d5cc3')"
                 />
               </el-form-item>
-              <el-form-item label="页面描述" prop="template_description">
+              <el-form-item :label="$t('8b0d1458.abf8f4')" prop="template_description">
                 <el-input
                   v-model="formData.template_description"
                   clearable
-                  placeholder="请输入页面描述"
+                  :placeholder="$t('8b0d1458.9c5cf8')"
                 />
               </el-form-item>
-              <el-form-item label="页面类型" prop="page_type">
+              <el-form-item :label="$t('8b0d1458.46f391')" prop="page_type">
                 <el-select v-model="formData.page_type" style="width: 100%" clearable>
                   <el-option
                     v-for="(item, index) of tabList"
                     :key="index"
                     :value="item.name"
-                    :label="item.label"
+                    :label="$t(item.labelKey)"
                   />
                 </el-select>
               </el-form-item>
-              <el-form-item label="是否启用" prop="status">
+              <el-form-item :label="$t('8b0d1458.53c3dd')" prop="status">
                 <el-switch v-model="formData.status" />
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button type="primary" :loading="loading" @click="submitForm('myForm')"
-                >确认保存</el-button
-              >
+              <el-button type="primary" :loading="loading" @click="submitForm('myForm')">{{
+                $t('8b0d1458.babc8f')
+              }}</el-button>
             </span>
           </el-dialog>
         </div>
@@ -135,11 +149,11 @@ import {
 
 const tabList = [
   {
-    label: '首页',
+    labelKey: '8b0d1458.db1c89',
     name: 'index'
   },
   {
-    label: '自定义页',
+    labelKey: '8b0d1458.ec20e4',
     name: 'custom'
   }
 ]
@@ -159,33 +173,21 @@ export default {
       dialogVisible: false,
       formData: {
         theme_pc_template_id: '',
-        template_title: '', // 页面名称
-        template_description: '', // 页面描述
-        page_type: '', // 页面类型
-        status: false // 是否开启状态
-      },
-      formRule: {
-        template_title: [
-          {
-            required: true,
-            message: '请输入页面名称',
-            trigger: 'blur'
-          }
-        ],
+        template_title: '',
+        template_description: '',
+        page_type: '',
+        status: false
+      }
+    }
+  },
+  computed: {
+    formRule() {
+      return {
+        template_title: [{ required: true, message: this.$t('8b0d1458.7d5cc3'), trigger: 'blur' }],
         template_description: [
-          {
-            required: true,
-            message: '请输入页面描述',
-            trigger: 'blur'
-          }
+          { required: true, message: this.$t('8b0d1458.9c5cf8'), trigger: 'blur' }
         ],
-        page_type: [
-          {
-            required: true,
-            message: '请输入页面类型',
-            trigger: 'change'
-          }
-        ]
+        page_type: [{ required: true, message: this.$t('8b0d1458.8dfcc4'), trigger: 'change' }]
       }
     }
   },
@@ -231,9 +233,9 @@ export default {
     },
     async handleDelete({ theme_pc_template_id: id }) {
       try {
-        const result = await this.$confirm('确定删除吗?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        const result = await this.$confirm(this.$t('8b0d1458.f9abac'), this.$t('8b0d1458.02d981'), {
+          confirmButtonText: this.$t('8b0d1458.38cf16'),
+          cancelButtonText: this.$t('8b0d1458.625fb2'),
           type: 'warning'
         })
         this.loading = true

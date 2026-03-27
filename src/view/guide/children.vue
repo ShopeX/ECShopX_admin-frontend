@@ -10,29 +10,37 @@
       :data="list"
       style="width: 100%"
       :height="wheight - 140"
-      element-loading-text="数据加载中......"
+      :element-loading-text="$t('13c2f918.fdba71')"
     >
-      <el-table-column label="操作" width="120">
+      <el-table-column :label="$t('13c2f918.2b6bc0')" width="120">
         <template slot-scope="scope">
-          <el-button icon="edit" type="text" @click="editSuperior(scope.row)"> 调整上级 </el-button>
+          <el-button icon="edit" type="text" @click="editSuperior(scope.row)">
+{{
+            $t('13c2f918.23ced7')
+          }}
+</el-button>
         </template>
       </el-table-column>
 
-      <el-table-column prop="username" label="姓名" />
-      <el-table-column prop="mobile" label="手机号" />
-      <el-table-column prop="bind_date" label="加入时间" />
-      <el-table-column label="已结算">
+      <el-table-column prop="username" :label="$t('13c2f918.60d045')" />
+      <el-table-column prop="mobile" :label="$t('13c2f918.8098e2')" />
+      <el-table-column prop="bind_date" :label="$t('13c2f918.8653cd')" />
+      <el-table-column :label="$t('13c2f918.139304')">
         <template slot-scope="scope">
           ￥{{ (scope.row.rebateTotal - scope.row.noCloseRebate) / 100 }}
         </template>
       </el-table-column>
-      <el-table-column label="未结算">
+      <el-table-column :label="$t('13c2f918.facb53')">
         <template slot-scope="scope"> ￥{{ scope.row.noCloseRebate / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="disabled" label="状态">
+      <el-table-column prop="disabled" :label="$t('13c2f918.3fea7c')">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini"> 有效 </el-tag>
-          <el-tag v-else type="info" size="mini"> 无效 </el-tag>
+          <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
+{{
+            $t('13c2f918.c6cc39')
+          }}
+</el-tag>
+          <el-tag v-else type="info" size="mini">{{ $t('13c2f918.1abbb1') }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -49,13 +57,13 @@
 
     <!-- 调整上下级弹框 -->
     <el-dialog
-      title="调整上级"
+      :title="$t('13c2f918.23ced7')"
       :visible.sync="editSuperiorVisible"
       :before-close="handleCancelSuperior"
     >
       <el-row :gutter="10">
         <el-col :md="8" :lg="10">
-          <el-input v-model="identifierModal" placeholder="请输入手机号">
+          <el-input v-model="identifierModal" :placeholder="$t('13c2f918.6e4f4b')">
             <el-button slot="append" icon="el-icon-search" @click="numberSearchModal" />
           </el-input>
         </el-col>
@@ -66,7 +74,7 @@
         :data="modalList"
         style="width: 100%"
         :height="400"
-        element-loading-text="数据加载中..."
+        :element-loading-text="$t('13c2f918.6d7faa')"
         highlight-current-row
         @current-change="handleCurrentChangeUpLV"
       > -->
@@ -93,18 +101,21 @@
         :data="modalList"
         style="width: 100%"
         :height="400"
-        element-loading-text="数据加载中..."
+        :element-loading-text="$t('13c2f918.6d7faa')"
         highlight-current-row
         @current-change="handleCurrentChangeUpLV"
       >
         <el-table-column type="index" width="50" />
-        <el-table-column prop="username" label="姓名" />
-        <el-table-column prop="mobile" label="手机号" />
-        <!-- <el-table-column prop="promoter_grade_name" label="推广员等级-" /> -->
-        <el-table-column prop="disabled" label="状态">
+        <el-table-column prop="username" :label="$t('13c2f918.60d045')" />
+        <el-table-column prop="mobile" :label="$t('13c2f918.8098e2')" />
+        <el-table-column prop="disabled" :label="$t('13c2f918.3fea7c')">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini"> 有效 </el-tag>
-            <el-tag v-else type="info" size="mini"> 无效 </el-tag>
+            <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
+{{
+              $t('13c2f918.c6cc39')
+            }}
+</el-tag>
+            <el-tag v-else type="info" size="mini">{{ $t('13c2f918.1abbb1') }}</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -118,8 +129,12 @@
         />
       </div>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button @click.native="handleCancelSuperior"> 取消 </el-button>
-        <el-button type="primary" @click="submitSuperiorAction"> 确定 </el-button>
+        <el-button @click.native="handleCancelSuperior">{{ $t('13c2f918.625fb2') }}</el-button>
+        <el-button type="primary" @click="submitSuperiorAction">
+{{
+          $t('13c2f918.38cf16')
+        }}
+</el-button>
       </div>
     </el-dialog>
   </div>
@@ -212,10 +227,9 @@ export default {
     editPopularizeRemoveFun() {
       editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
         (res) => {
-          this.message = '上下级'
           this.loading = false
           this.$message({
-            message: '调整' + this.message + '成功',
+            message: this.$t('13c2f918.2b8558'),
             type: 'success',
             duration: 5 * 1000
           })

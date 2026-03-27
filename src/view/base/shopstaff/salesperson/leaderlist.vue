@@ -11,41 +11,41 @@
         <!--distributors wxshops 需要哪个api传哪个-->
       </el-col>
       <el-col :md="8" :lg="5">
-        <el-input v-model="mobile" placeholder="手机号" clearable size="mini">
+        <el-input v-model="mobile" :placeholder="$t('5d24fd22.8098e2')" clearable size="mini">
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
       <el-col :span="3" class="content-right">
         <el-button size="mini" type="primary" icon="plus" @click="addSalesperson">
-          添加管理员
+          {{ $t('5d24fd22.19070d') }}
         </el-button>
       </el-col>
     </el-row>
     <el-row />
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="管理员" name="admin" />
-      <el-tab-pane label="核销员" name="verification_clerk" />
+      <el-tab-pane :label="$t('5d24fd22.b1dae9')" name="admin" />
+      <el-tab-pane :label="$t('5d24fd22.ec69fc')" name="verification_clerk" />
       <el-table v-loading="loading" :data="salespersonList" :height="wheight - 160">
-        <el-table-column prop="name" label="姓名" />
-        <el-table-column prop="mobile" label="手机号" />
-        <el-table-column label="所属门店">
+        <el-table-column prop="name" :label="$t('5d24fd22.60d045')" />
+        <el-table-column prop="mobile" :label="$t('5d24fd22.8098e2')" />
+        <el-table-column :label="$t('5d24fd22.a6cf26')">
           <template slot-scope="scope">
             <el-button type="text" @click="getSalepersonShopList(scope.row.salespersonId, 'shop')">
-              查看门店
+              {{ $t('5d24fd22.726b20') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="所属店铺">
+        <el-table-column :label="$t('5d24fd22.baad7e')">
           <template slot-scope="scope">
             <el-button
               type="text"
               @click="getSalepersonShopList(scope.row.salespersonId, 'distributor')"
             >
-              查看店铺
+              {{ $t('5d24fd22.7e651b') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('5d24fd22.2b6bc0')">
           <template slot-scope="scope">
             <div class="operating-icons">
               <i class="el-icon-edit-outline" @click="updateSalesperson(scope.row)" />
@@ -71,13 +71,17 @@
 
     <el-dialog :title="DialogTitle" :visible.sync="detailDialog" :close-on-click-modal="false">
       <el-form v-model="form" label-width="160px">
-        <el-form-item label="管理门店">
+        <el-form-item :label="$t('5d24fd22.1dcfcf')">
           <div style="margin-left: 1.5%">
             <template v-if="rel_shops_ids">
               <el-table :data="rel_shops_ids" tooltip-effect="dark" style="width: 90%">
-                <el-table-column prop="storeName" label="门店名称" />
-                <el-table-column prop="address" label="地址" show-overflow-tooltip />
-                <el-table-column label="操作" width="120">
+                <el-table-column prop="storeName" :label="$t('5d24fd22.740032')" />
+                <el-table-column
+                  prop="address"
+                  :label="$t('5d24fd22.765048')"
+                  show-overflow-tooltip
+                />
+                <el-table-column :label="$t('5d24fd22.2b6bc0')" width="120">
                   <template slot-scope="scope">
                     <el-button
                       type="text"
@@ -89,17 +93,21 @@
                 </el-table-column>
               </el-table>
             </template>
-            <el-button type="text" @click="addShopAction"> 添加适用门店 </el-button>
+            <el-button type="text" @click="addShopAction">{{ $t('5d24fd22.8af2f4') }}</el-button>
           </div>
         </el-form-item>
-        <el-form-item label="管理店铺">
+        <el-form-item :label="$t('5d24fd22.fbf1b2')">
           <div style="margin-left: 1.5%">
             <template v-if="rel_distributor_ids">
               <el-table :data="rel_distributor_ids" style="line-height: normal">
                 <el-table-column label="ID" prop="distributor_id" width="60" />
-                <el-table-column label="店铺名称" prop="name" />
-                <el-table-column prop="address" label="地址" show-overflow-tooltip />
-                <el-table-column label="操作" width="50">
+                <el-table-column :label="$t('5d24fd22.0d4934')" prop="name" />
+                <el-table-column
+                  prop="address"
+                  :label="$t('5d24fd22.765048')"
+                  show-overflow-tooltip
+                />
+                <el-table-column :label="$t('5d24fd22.2b6bc0')" width="50">
                   <template slot-scope="scope">
                     <i
                       class="el-icon-delete"
@@ -109,32 +117,36 @@
                 </el-table-column>
               </el-table>
             </template>
-            <el-button type="text" @click="addStoreAction"> 添加适用店铺 </el-button>
+            <el-button type="text" @click="addStoreAction">{{ $t('5d24fd22.7b91b1') }}</el-button>
           </div>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('5d24fd22.8098e2')">
           <el-input
             v-model="form.mobile"
-            placeholder="请输入手机号"
+            :placeholder="$t('5d24fd22.6e4f4b')"
             style="width: 193px"
             :disabled="datapass_block == 1"
           />
         </el-form-item>
-        <el-form-item label="管理员姓名">
+        <el-form-item :label="$t('5d24fd22.1b260c')">
           <el-input
             v-model="form.name"
-            placeholder="请输入管理员姓名"
+            :placeholder="$t('5d24fd22.9bafb0')"
             :disabled="datapass_block == 1"
             style="width: 193px"
           />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer content-center">
-        <el-button type="primary" @click="addSalespersonAction"> 确定 </el-button>
+        <el-button type="primary" @click="addSalespersonAction">
+{{
+          $t('5d24fd22.38cf16')
+        }}
+</el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="门店列表"
+      :title="$t('5d24fd22.9f3102')"
       :visible.sync="relShop.relShopVisible"
       :before-close="handleCancel"
       width="70%"
@@ -142,8 +154,8 @@
       <template>
         <el-table v-loading="loading" :data="relShop.list">
           <el-table-column prop="shop_id" label="id" width="60" />
-          <el-table-column prop="store_name" label="门店名称" width="300" />
-          <el-table-column prop="address" label="门店地址" />
+          <el-table-column prop="store_name" :label="$t('5d24fd22.740032')" width="300" />
+          <el-table-column prop="address" :label="$t('5d24fd22.85c7c1')" />
         </el-table>
         <div
           v-if="relShop.total_count > relShop.params.pageSize"
@@ -248,9 +260,9 @@ export default {
     // 切换tab
     handleClick(tab, event) {
       if (tab.name == 'admin') {
-        this.DialogTitle = '编辑管理员信息'
+        this.DialogTitle = this.$t('5d24fd22.627f73')
       } else if (tab.name == 'verification_clerk') {
-        this.DialogTitle = '编辑核销员信息'
+        this.DialogTitle = this.$t('5d24fd22.23e994')
       }
       this.activeName = tab.name
       this.params.page = 1
@@ -280,7 +292,7 @@ export default {
           this.getList()
           this.$message({
             type: 'success',
-            message: '更新管理员成功'
+            message: this.$t('5d24fd22.bba1f8')
           })
         })
       } else {
@@ -289,7 +301,7 @@ export default {
           this.getList()
           this.$message({
             type: 'success',
-            message: '添加管理员成功'
+            message: this.$t('5d24fd22.6b84d5')
           })
         })
       }
@@ -311,9 +323,9 @@ export default {
       })
     },
     deleteSalesperson(index, row) {
-      this.$confirm('此操作将删除该管理员, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('5d24fd22.07b471'), this.$t('5d24fd22.02d981'), {
+        confirmButtonText: this.$t('5d24fd22.38cf16'),
+        cancelButtonText: this.$t('5d24fd22.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -321,14 +333,14 @@ export default {
             this.salespersonList.splice(index, 1)
             this.$message({
               type: 'success',
-              message: '删除管理员成功'
+              message: this.$t('5d24fd22.da52a9')
             })
           })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('5d24fd22.2111cc')
           })
         })
     },
@@ -361,7 +373,7 @@ export default {
           this.loading = false
           this.$message({
             type: 'error',
-            message: '获取管理员出错'
+            message: this.$t('5d24fd22.431bcb')
           })
         })
     },

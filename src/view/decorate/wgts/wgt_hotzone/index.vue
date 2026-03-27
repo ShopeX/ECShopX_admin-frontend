@@ -59,9 +59,10 @@
 import dImage from '@/assets/imgs/default.jpg'
 import { getOuterStyle } from '../../comps/style-utils'
 import config from './config'
+import { i18n } from '@/i18n'
 export default {
   name: 'ImgHotzone',
-  wgtName: '热区图',
+  wgtName: i18n.t('7f789849.0ad6ab'),
   wgtDesc: '',
   wgtIcon: 'layers',
   wgtType: 1,

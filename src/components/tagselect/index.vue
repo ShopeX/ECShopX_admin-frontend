@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="请选择标签"
+    :title="$t('debc18ae.ce7cf5')"
     :visible.sync="dialogVisible"
     width="400px"
     :before-close="dialogBeforeClose"
@@ -24,8 +24,16 @@
       </div>
     </div>
     <div slot="footer" class="tag-footer">
-      <el-button type="primary" plain size="medium" @click="selectAll"> 选择全部 </el-button>
-      <el-button type="primary" size="medium" @click="submitTags"> 确 定 </el-button>
+      <el-button type="primary" plain size="medium" @click="selectAll">
+{{
+        $t('debc18ae.296a44')
+      }}
+</el-button>
+      <el-button type="primary" size="medium" @click="submitTags">
+{{
+        $t('debc18ae.aa7527')
+      }}
+</el-button>
     </div>
   </el-dialog>
 </template>

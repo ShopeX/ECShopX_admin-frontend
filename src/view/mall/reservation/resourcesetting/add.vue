@@ -7,18 +7,18 @@
   <div class="section-white content-padded">
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
       <div class="section-header with-border">
-        <h3>{{ resourceName }}添加</h3>
+        <h3>{{ resourceName }}{{ $t('d0bb1a49.b58c75') }}</h3>
       </div>
       <div class="section-body">
-        <el-form-item label="名称" prop="name">
+        <el-form-item :label="$t('d0bb1a49.d7ec2d')" prop="name">
           <el-input
             v-model="form.name"
             :maxlength="10"
-            placeholder="请输入名称"
+            :placeholder="$t('d0bb1a49.06e2f8')"
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="所属门店" prop="shopId">
+        <el-form-item :label="$t('d0bb1a49.a6cf26')" prop="shopId">
           <el-select v-if="form.resourceLevelId" v-model="form.shopId" disabled>
             <el-option
               v-for="item in storeData"
@@ -36,18 +36,18 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="服务项目" prop="materialIds">
+        <el-form-item :label="$t('d0bb1a49.01295d')" prop="materialIds">
           <!-- <el-button type="info" @click="addServer">添加服务项</el-button> -->
           <div class="server-box">
             <div class="server-head clearfix">
-              <span class="f_l">服务目录({{ serverList.length }}项)</span>
+              <span class="f_l">{{ $t('d0bb1a49.a5483b', { count: serverList.length }) }}</span>
               <div class="f_r">
                 <el-checkbox
                   v-model="checkAll"
                   :indeterminate="isIndeterminate"
                   @change="checkAllChange"
                 >
-                  全选
+                  {{ $t('d0bb1a49.66eeac') }}
                 </el-checkbox>
               </div>
             </div>
@@ -71,7 +71,7 @@
             </el-checkbox-group>
           </div>
         </el-form-item>
-        <el-form-item label="简介" prop="description">
+        <el-form-item :label="$t('d0bb1a49.e05dce')" prop="description">
           <el-input
             v-model="form.description"
             type="textarea"
@@ -91,10 +91,10 @@
           </div>
         </el-form-item> -->
 
-        <el-form-item label="展示图">
+        <el-form-item :label="$t('d0bb1a49.364e87')">
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar" />
+              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -107,8 +107,8 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button @click="cancel"> 取消 </el-button>
-        <el-button type="primary" @click="saveResource"> 保存 </el-button>
+        <el-button @click="cancel"> {{ $t('d0bb1a49.625fb2') }} </el-button>
+        <el-button type="primary" @click="saveResource"> {{ $t('d0bb1a49.be5fbb') }} </el-button>
       </div>
     </el-form>
 
@@ -138,6 +138,7 @@ import {
 import { getWxShopsList } from '../../../../api/shop'
 import { getServiceLabelsList } from '../../../../api/goods'
 import imgPicker from '../../../../components/imageselect'
+import { i18n } from '@/i18n'
 export default {
   inject: ['refresh'],
   components: {
@@ -146,31 +147,31 @@ export default {
   data() {
     var storeChecked = (rule, value, callback) => {
       if (value == '' || value <= 0) {
-        return callback(new Error('所属门店不能为空'))
+        return callback(new Error(i18n.t('d0bb1a49.148169')))
       }
       return callback()
     }
     var materialChecked = (rule, value, callback) => {
       if (value.length <= 0) {
-        return callback(new Error('请选择服务项目'))
+        return callback(new Error(i18n.t('d0bb1a49.abd245')))
       }
       return callback()
     }
     var nameChecked = (rule, value, callback) => {
       if (value == '') {
-        return callback(new Error('名称不能为空'))
+        return callback(new Error(i18n.t('d0bb1a49.df09ff')))
       }
       if (value.length > 10) {
-        return callback(new Error('名称不能超过10个汉字'))
+        return callback(new Error(i18n.t('d0bb1a49.298b17')))
       }
       return callback()
     }
     var descriptionChecked = (rule, value, callback) => {
       if (value == '') {
-        return callback(new Error('简介不能为空'))
+        return callback(new Error(i18n.t('d0bb1a49.d0bc43')))
       }
       if (value.length > 100) {
-        return callback(new Error('简介不能超过100个汉字'))
+        return callback(new Error(i18n.t('d0bb1a49.20df4e')))
       }
       return callback()
     }
@@ -240,7 +241,7 @@ export default {
     //},
     saveServer() {
       if (this.addForm.server_name == '') {
-        this.$message.error('服务名称不能为空')
+        this.$message.error(this.$t('d0bb1a49.a7b256'))
         return
       }
       this.dialogVisible = false
@@ -282,7 +283,7 @@ export default {
             updateResourceLevel(this.form).then((res) => {
               if (res.data.data.status) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('d0bb1a49.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -296,7 +297,7 @@ export default {
             createResourceLevel(this.form).then((res) => {
               if (res.data.data.status) {
                 this.$message({
-                  message: '添加成功',
+                  message: this.$t('d0bb1a49.3fdaea'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {

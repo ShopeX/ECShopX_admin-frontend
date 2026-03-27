@@ -8,21 +8,25 @@
     <el-row :gutter="20">
       <el-col :span="4">
         <el-radio-group v-model="params.api_type" size="small" @change="searchDate">
-          <el-radio label="request" border> 请求 </el-radio>
-          <el-radio label="response" border> 响应 </el-radio>
+          <el-radio label="request" border>{{ $t('5f2af693.75b160') }}</el-radio>
+          <el-radio label="response" border>{{ $t('5f2af693.8aa9de') }}</el-radio>
         </el-radio-group>
       </el-col>
       <el-col :span="10">
         <el-radio-group v-model="params.status" size="small" @change="searchDate">
-          <el-radio label="running" border> 执行中 </el-radio>
-          <el-radio label="success" border> 成功 </el-radio>
-          <el-radio label="fail" border> 失败 </el-radio>
+          <el-radio label="running" border>{{ $t('5f2af693.46e386') }}</el-radio>
+          <el-radio label="success" border>{{ $t('5f2af693.330363') }}</el-radio>
+          <el-radio label="fail" border>{{ $t('5f2af693.acd5cb') }}</el-radio>
         </el-radio-group>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="10">
-        <el-input v-model="params.content" placeholder="请输入内容" class="input-with-select">
+        <el-input
+          v-model="params.content"
+          :placeholder="$t('5f2af693.a11cc7')"
+          class="input-with-select"
+        >
           <el-button slot="append" icon="el-icon-search" @click="searchDate" />
         </el-input>
       </el-col>
@@ -31,9 +35,9 @@
           v-model="params.updated"
           type="datetimerange"
           :picker-options="pickerOptions"
-          range-separator="至"
-          start-placeholder="最后更新开始日期"
-          end-placeholder="最后更新结束日期"
+          :range-separator="$t('5f2af693.981cbe')"
+          :start-placeholder="$t('5f2af693.57974c')"
+          :end-placeholder="$t('5f2af693.744e59')"
           align="right"
           value-format="yyyy-MM-dd"
           @change="searchDate"
@@ -51,13 +55,13 @@
               <pre>{{props.row.result}}</pre>
             </el-collapse-item>
           </el-collapse> -->
-          返回值详情:
+          {{ $t('5f2af693.1aaa88') }}:
           <el-row :gutter="20">
             <el-col :span="12">
               <pre>{{ props.row.result }}</pre>
             </el-col>
           </el-row>
-          参数详情:
+          {{ $t('5f2af693.043456') }}:
           <el-row :gutter="20">
             <el-col :span="12">
               <pre>{{ props.row.params }}</pre>
@@ -65,11 +69,11 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="api_type" label="类型" />
-      <el-table-column prop="status" label="状态" />
-      <el-table-column prop="worker" label="接口名称" />
-      <el-table-column prop="created_date" label="创建时间" />
-      <el-table-column prop="updated_date" label="更新时间" />
+      <el-table-column prop="api_type" :label="$t('5f2af693.226b09')" />
+      <el-table-column prop="status" :label="$t('5f2af693.3fea7c')" />
+      <el-table-column prop="worker" :label="$t('5f2af693.34cab8')" />
+      <el-table-column prop="created_date" :label="$t('5f2af693.eca37c')" />
+      <el-table-column prop="updated_date" :label="$t('5f2af693.a001a2')" />
     </el-table>
     <div class="mt-4 text-right">
       <el-pagination
@@ -106,7 +110,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: this.$t('5f2af693.56ee10'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -115,7 +119,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: this.$t('5f2af693.335dfc'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -124,7 +128,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: this.$t('5f2af693.d96eb4'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()

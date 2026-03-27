@@ -8,7 +8,7 @@
     <el-col :span="18">
       <div class="section-white content-padded app-box">
         <div class="section-header with-border">
-          <h3>我的应用</h3>
+          <h3>{{ $t('ee9b8b66.0ecb7b') }}</h3>
         </div>
         <div class="section-body">
           <ul class="app-list clearfix">
@@ -18,7 +18,7 @@
                   <div class="app-icon">
                     <i class="iconfont icon-calendar-alt" />
                   </div>
-                  <div class="app-txt">预约</div>
+                  <div class="app-txt">{{ $t('ee9b8b66.26ad89') }}</div>
                 </router-link>
               </div>
             </li>
@@ -28,7 +28,7 @@
                   <div class="app-icon">
                     <i class="icon icon-ticket-alt" />
                   </div>
-                  <div class="app-txt">派券大师</div>
+                  <div class="app-txt">{{ $t('ee9b8b66.9c880c') }}</div>
                 </router-link>
               </div>
             </li>
@@ -37,7 +37,7 @@
       </div>
     </el-col>
     <el-col :span="6">
-      <div class="section-white content-padded">广告栏</div>
+      <div class="section-white content-padded">{{ $t('ee9b8b66.2bd998') }}</div>
     </el-col>
   </el-row>
 </template>

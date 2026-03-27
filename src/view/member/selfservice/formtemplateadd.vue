@@ -15,28 +15,32 @@
       >
         <div v-if="!form.id" class="content-center content-bottom-padded">
           <el-radio-group v-model="form.tem_type" @change="handleTypeChange">
-            <el-radio-button label="ask_answer_paper"> 问卷调查 </el-radio-button>
-            <el-radio-button label="basic_entry"> 基础录入(统计报表) </el-radio-button>
+            <el-radio-button label="ask_answer_paper">{{ $t('0493712c.859b34') }}</el-radio-button>
+            <el-radio-button label="basic_entry">{{ $t('0493712c.4e8c55') }}</el-radio-button>
           </el-radio-group>
         </div>
-        <el-form-item
-          label="标题"
-          prop="tem_name"
-          :rules="[{ required: true, message: '请输入标题', trigger: 'blur' }]"
-        >
+        <el-form-item :label="$t('c831a478.32c65d')" prop="tem_name" :rules="titleRules">
           <el-col :span="20">
-            <el-input v-model.trim="form.tem_name" :maxlength="30" placeholder="体测表单" />
+            <el-input
+              v-model.trim="form.tem_name"
+              :maxlength="30"
+              :placeholder="$t('0493712c.450f34')"
+            />
           </el-col>
         </el-form-item>
         <el-form-item
           v-if="form.tem_type == 'ask_answer_paper'"
-          label="表单风格"
+          :label="$t('0493712c.78ce0e')"
           prop="form_style"
-          :rules="[{ required: true, message: '请输入标题', trigger: 'blur' }]"
+          :rules="titleRules"
         >
           <el-row :gutter="20">
             <el-col :span="5">
-              <el-radio v-model="form.form_style" label="single"> 单页问卷(多项集合) </el-radio>
+              <el-radio v-model="form.form_style" label="single">
+{{
+                $t('0493712c.0ba634')
+              }}
+</el-radio>
               <!-- <el-radio v-model="form.form_style" label="multiple">多页问卷(每页一项)</el-radio> -->
             </el-col>
             <el-col :span="10">
@@ -51,7 +55,7 @@
                 v-if="form.form_style == 'multiple'"
                 show-icon
                 :closable="false"
-                title="多页问卷方式提供图片显示"
+                :title="$t('0493712c.d9cc4f')"
                 type="warning"
               />
             </el-col>
@@ -96,24 +100,20 @@
             />
           </el-col>
         </el-form-item> -->
-        <el-form-item
-          label="表单内容"
-          prop="content"
-          :rules="[{ required: true, message: '请选择表单内容', trigger: 'change' }]"
-        >
+        <el-form-item :label="$t('0493712c.4dca81')" prop="content" :rules="formContentRules">
           <el-row v-for="(item, index) in form.content" :key="index" :gutter="2">
             <el-col :span="18">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
                   <template v-if="form.tem_type == 'ask_answer_paper'">
-                    <span>区块一标题:</span
+                    <span>{{ $t('0493712c.0de15f') }}</span
                     ><el-input
                       v-model="item.title"
-                      placeholder="区块标题"
+                      :placeholder="$t('0493712c.5a02fa')"
                       size="mini"
                       style="width: 200px"
                     />
-                    <span>排序:</span
+                    <span>{{ $t('0493712c.488f80') }}</span
                     ><el-input v-model="item.sort" size="mini" style="width: 50px" />
                   </template>
                   <el-button
@@ -121,19 +121,23 @@
                     type="text"
                     @click="checkContent(index)"
                   >
-                    选择表单内容
+                    {{ $t('0493712c.99eb0c') }}
                   </el-button>
                 </div>
                 <el-col v-if="item.formdata.length > 0">
                   <el-table :data="item.formdata" style="width: 100%">
-                    <el-table-column prop="id" label="ID" width="40" />
-                    <el-table-column prop="field_title" label="标题" width="100" />
-                    <el-table-column prop="sort" label="排序" width="100">
+                    <el-table-column prop="id" :label="$t('1ad8a87f.b718ad')" width="40" />
+                    <el-table-column
+                      prop="field_title"
+                      :label="$t('c831a478.32c65d')"
+                      width="100"
+                    />
+                    <el-table-column prop="sort" :label="$t('0493712c.c360e9')" width="100">
                       <template slot-scope="scope">
                         <el-input v-model="scope.row.sort" width="80" size="small" />
                       </template>
                     </el-table-column>
-                    <el-table-column prop="sort" label="是否必填" width="100">
+                    <el-table-column prop="sort" :label="$t('0493712c.04d815')" width="100">
                       <template slot-scope="scope">
                         <el-checkbox
                           v-model="scope.row.is_required"
@@ -141,7 +145,7 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column v-if="keyIndexIsShow" label="设置关键指数(最多设置5个)">
+                    <el-table-column v-if="keyIndexIsShow" :label="$t('0493712c.633608')">
                       <template slot-scope="scope">
                         <el-checkbox
                           v-model="scope.row.key_index"
@@ -154,16 +158,20 @@
               </el-card>
             </el-col>
             <el-col v-if="form.tem_type == 'ask_answer_paper'" :span="2">
-              <el-button v-if="index == 0" circle type="primary" @click="addCard"> 增 </el-button>
+              <el-button v-if="index == 0" circle type="primary" @click="addCard">
+{{
+                $t('c831a478.c0a0f2')
+              }}
+</el-button>
               <el-button v-if="index != 0" circle type="primary" @click="delCard(index)">
-                删
+                {{ $t('0493712c.fe5c38') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item
           v-if="keyIndexIsShow && form.key_index.length > 0"
-          label="关键指数"
+          :label="$t('0493712c.b25fc1')"
           prop="tem_name"
         >
           <el-row>
@@ -173,7 +181,7 @@
           </el-row>
         </el-form-item>
         <el-form-item
-          label="填写表单图片背景"
+          :label="$t('0493712c.634fb6')"
           prop="header_bg_pic"
           v-if="form.tem_type == 'ask_answer_paper'"
         >
@@ -182,49 +190,53 @@
               <imgBox :img-url="wximageurl + form.header_bg_pic" inline @click="handleImgBChange" />
             </div>
             <div class="frm-tips">
-              只能上传jpg/png文件，且不超过2M （建议尺寸：640px，高度自适应）
+              {{ $t('0493712c.a206d0') }}
             </div>
           </el-col>
         </el-form-item>
         <el-form-item
-          label="表单距离顶部高度"
+          :label="$t('0493712c.21dbb2')"
           prop="header_height"
           v-if="form.tem_type == 'ask_answer_paper'"
         >
           <el-col :span="20">
             <el-input
               v-model.trim="form.header_height"
-              placeholder="请输入数字"
+              :placeholder="$t('0493712c.de66a2')"
               style="width: 50%"
             />
           </el-col>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="submitAction"> 保存 </el-button>
+          <el-button @click.native="handleCancel">{{ $t('8da83775.625fb2') }}</el-button>
+          <el-button type="primary" @click="submitAction">{{ $t('8da83775.be5fbb') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <SideBar :visible.sync="showElementList" title="选择表单元素" width="40">
+    <SideBar :visible.sync="showElementList" :title="$t('0493712c.864188')" width="40">
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="6">
           <el-select
             v-model="params.form_element"
-            placeholder="请选择表单元素"
+            :placeholder="$t('c831a478.c2dba8')"
             style="width: 100%"
             clearable
             @change="searchData"
           >
             <el-option
-              v-for="(item, key) in formElement"
+              v-for="item in formElement"
               :key="item.value"
-              :label="item.name"
+              :label="$t(item.nameKey)"
               :value="item.value"
             />
           </el-select>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="params.field_title" placeholder="标题" style="width: 100%">
+          <el-input
+            v-model="params.field_title"
+            :placeholder="$t('c831a478.32c65d')"
+            style="width: 100%"
+          >
             <el-button slot="append" icon="el-icon-search" @click="searchData" />
           </el-input>
         </el-col>
@@ -241,10 +253,10 @@
         @select-all="handleSelectAll"
       >
         <el-table-column type="selection" :reserve-selection="true" width="50" />
-        <el-table-column prop="id" label="ID" width="40" />
-        <el-table-column prop="field_title" label="标题" width="150" />
-        <el-table-column prop="form_element" label="元素" width="80" />
-        <el-table-column label="选择项">
+        <el-table-column prop="id" :label="$t('1ad8a87f.b718ad')" width="40" />
+        <el-table-column prop="field_title" :label="$t('c831a478.32c65d')" width="150" />
+        <el-table-column prop="form_element" :label="$t('1ad8a87f.e1e080')" width="80" />
+        <el-table-column :label="$t('1ad8a87f.9e322a')">
           <template slot-scope="scope">
             <span v-for="(item, index) in scope.row.options" :key="index"> {{ item.value }}</span>
           </template>
@@ -259,7 +271,7 @@
         />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+        <el-button type="primary" @click="saveStoreAction">{{ $t('ac2a6290.aa7527') }}</el-button>
       </span>
     </SideBar>
   </div>
@@ -310,20 +322,28 @@ export default {
       loading: false,
       selectRows: [],
       formElement: [
-        { name: '文本框', value: 'text' },
-        { name: '文本域', value: 'textarea' },
-        { name: '单选按钮', value: 'radio' },
-        { name: '复选框', value: 'checkbox' },
-        { name: '下拉选择框', value: 'select' },
-        { name: '日期选择', value: 'date' },
-        { name: '地区地址选择', value: 'area' },
-        { name: '数字', value: 'number' },
-        { name: '上传身份证', value: 'idcard' },
-        { name: '上传其他附件', value: 'otherfile' }
+        { nameKey: '1ad8a87f.5ac57c', value: 'text' },
+        { nameKey: '1ad8a87f.d2362d', value: 'textarea' },
+        { nameKey: '1ad8a87f.f96dab', value: 'radio' },
+        { nameKey: '8da83775.db98f8', value: 'checkbox' },
+        { nameKey: '1ad8a87f.ad61d4', value: 'select' },
+        { nameKey: '1ad8a87f.de1a35', value: 'date' },
+        { nameKey: '1ad8a87f.f127e4', value: 'area' },
+        { nameKey: '1ad8a87f.55d479', value: 'number' },
+        { nameKey: 'c831a478.820ef5', value: 'idcard' },
+        { nameKey: 'c831a478.607b17', value: 'otherfile' }
       ],
       templateRadio: '',
       formcontentindex: 0,
       selectdata: []
+    }
+  },
+  computed: {
+    titleRules() {
+      return [{ required: true, message: this.$t('8da83775.b91aba'), trigger: 'blur' }]
+    },
+    formContentRules() {
+      return [{ required: true, message: this.$t('0493712c.00d91e'), trigger: 'change' }]
     }
   },
   mounted() {
@@ -361,7 +381,7 @@ export default {
           if (this.form.tem_type == 'basic_entry' && this.form.key_index.length <= 0) {
             this.$message({
               type: 'error',
-              message: '请配置关键数值'
+              message: this.$t('0493712c.3c46c9')
             })
             return false
           }
@@ -373,7 +393,7 @@ export default {
             updateTemplate(postparams).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('c831a478.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -388,7 +408,7 @@ export default {
               .then((res) => {
                 if (res.data.data) {
                   this.$message({
-                    message: '添加成功',
+                    message: this.$t('c831a478.3fdaea'),
                     type: 'success',
                     duration: 2 * 1000,
                     onClose() {
@@ -401,14 +421,14 @@ export default {
               .catch((error) => {
                 this.$message({
                   type: 'error',
-                  message: '保存出错'
+                  message: this.$t('0493712c.3d73d2')
                 })
               })
           }
         } else {
           this.$message({
             type: 'error',
-            message: '请录入正确的数据'
+            message: this.$t('c831a478.3737df')
           })
           return false
         }
@@ -434,7 +454,7 @@ export default {
         this.form.content[index].key_index = false
         this.$message({
           type: 'error',
-          message: '关键指数最高只能选5个'
+          message: this.$t('0493712c.bd8d8e')
         })
         return false
       }
@@ -452,20 +472,20 @@ export default {
     checkContent(index) {
       if (this.form.tem_type == 'basic_entry') {
         this.params.form_element = 'number'
-        this.formElement = [{ name: '数字', value: 'number' }]
+        this.formElement = [{ nameKey: '1ad8a87f.55d479', value: 'number' }]
       } else {
         this.params.form_element = ''
         this.formElement = [
-          { name: '文本框', value: 'text' },
-          { name: '文本域', value: 'textarea' },
-          { name: '单选按钮', value: 'radio' },
-          { name: '复选框', value: 'checkbox' },
-          { name: '下拉选择框', value: 'select' },
-          { name: '日期选择', value: 'date' },
-          { name: '地区地址选择', value: 'area' },
-          { name: '数字', value: 'number' },
-          { name: '上传身份证', value: 'idcard' },
-          { name: '上传其他附件', value: 'otherfile' }
+          { nameKey: '1ad8a87f.5ac57c', value: 'text' },
+          { nameKey: '1ad8a87f.d2362d', value: 'textarea' },
+          { nameKey: '1ad8a87f.f96dab', value: 'radio' },
+          { nameKey: '8da83775.db98f8', value: 'checkbox' },
+          { nameKey: '1ad8a87f.ad61d4', value: 'select' },
+          { nameKey: '1ad8a87f.de1a35', value: 'date' },
+          { nameKey: '1ad8a87f.f127e4', value: 'area' },
+          { nameKey: '1ad8a87f.55d479', value: 'number' },
+          { nameKey: 'c831a478.820ef5', value: 'idcard' },
+          { nameKey: 'c831a478.607b17', value: 'otherfile' }
         ]
       }
       this.showElementList = true

@@ -13,8 +13,8 @@
 <template>
   <div class="picker-goods-sku">
     <div class="item-name">
-      <div>商品名称：{{ value.itemName }}</div>
-      <div>商品编码：{{ value.itemBn }}</div>
+      <div>{{ $t('c10dd593.90f08f') }}{{ value.itemName }}</div>
+      <div>{{ $t('c10dd593.0d803a') }}{{ value.itemBn }}</div>
     </div>
     <SpFinder
       ref="finder"
@@ -44,30 +44,37 @@ export default {
   },
   props: ['value'],
   data() {
-    return {
-      setting: createSetting({
+    return {}
+  },
+  computed: {
+    setting() {
+      const t = this.$t.bind(this)
+      return createSetting({
         columns: [
-          { name: '规格', key: 'item_spec_desc' },
-          { name: '库存', key: 'store' },
+          { name: t('c10dd593.ea887b'), key: 'item_spec_desc' },
+          { name: t('c10dd593.0eac88'), key: 'store' },
           {
-            name: '价格（¥）',
+            name: t('c10dd593.30be8c'),
             key: 'price',
             formatter: (value, row, col) => {
               return value / 100
             }
           },
           {
-            name: '商品状态',
+            name: t('c10dd593.ce0008'),
             key: 'approve_status',
             formatter: (value, row, col) => {
-              return SALES_STATUS.find((item) => item.value == value).title
+              const item = SALES_STATUS.find((i) => i.value == value)
+              return item ? t(item.title) : value
             }
           }
         ]
       })
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('c10dd593.a0f99d')
+  },
   mounted() {},
   methods: {
     beforeSearch(params) {

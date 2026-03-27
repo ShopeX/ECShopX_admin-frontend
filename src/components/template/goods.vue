@@ -28,25 +28,25 @@
                 ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
                 : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
             "
-          />
+          >
           <div class="caption">
             <div class="goods-title">
-              {{ data[0].item_name || '商品标题' }}
+              {{ data[0].item_name || $t('37035f2d.07ec01') }}
             </div>
             <template v-if="config.style === 'card'">
-              <div class="tips">点击查看产品详情</div>
+              <div class="tips">{{ $t('37035f2d.50cc16') }}</div>
               <div class="sales-num">
                 <i class="iconfont icon-user-friends" />{{ data[0].sales || 0 }}
               </div>
             </template>
             <template v-else>
-              <div class="price">价格： ¥{{ data[0].price / 100 }}</div>
+              <div class="price">{{ $t('37035f2d.f4c750') }} ¥{{ data[0].price / 100 }}</div>
             </template>
           </div>
         </div>
         <div class="card-footer">
-          <div class="footer-btn">加入心愿</div>
-          <div class="footer-btn">加入购买</div>
+          <div class="footer-btn">{{ $t('37035f2d.56d0b8') }}</div>
+          <div class="footer-btn">{{ $t('37035f2d.2971f7') }}</div>
         </div>
       </div>
     </div>

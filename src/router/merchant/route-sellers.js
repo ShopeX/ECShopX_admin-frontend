@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '商家'
+const name = 'ab10f588.0f09a8'
 import Layout from '@/view/layout' // 主框架
 
 export default {

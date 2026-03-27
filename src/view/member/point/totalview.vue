@@ -10,37 +10,38 @@
         <!-- <i class="iconfont icon-coins" /> -->
         <SpIcon name="layers" :size="50" fill="#ff5000" />
         <div>
-          <span>可用积分总额</span> <span class="money mark">{{ count.can_use }}</span>
+          <span>{{ $t('5f9e58ef.48b0e9') }}</span>
+          <span class="money mark">{{ count.can_use }}</span>
         </div>
       </div>
       <div class="view-flex-item">
         <SpIcon name="funds" :size="50" fill="#ff5000" />
         <div>
-          累计积分总额 <span class="money mark">{{ count.total }}</span>
+          {{ $t('5f9e58ef.eae77b') }} <span class="money mark">{{ count.total }}</span>
         </div>
       </div>
       <div class="view-flex-item">
         <SpIcon name="timer" :size="50" fill="#ff5000" />
         <div>
-          <span>已使用积分总额</span> <span class="money mark">{{ count.used }}</span>
+          <span>{{ $t('5f9e58ef.82f4a7') }}</span> <span class="money mark">{{ count.used }}</span>
         </div>
       </div>
     </div>
     <el-table v-loading="loading" :data="dataList" :height="wheight - 240">
-      <el-table-column prop="timeStart" label="创建时间">
+      <el-table-column prop="timeStart" :label="$t('5f9e58ef.eca37c')">
         <template slot-scope="scope">
           <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="point" label="积分变动">
+      <el-table-column prop="point" :label="$t('5f9e58ef.85b589')">
         <template slot-scope="scope">
           <span v-if="scope.row.point == 0">{{ scope.row.point }}</span>
           <span v-else-if="scope.row.income > 0">+{{ scope.row.income }}</span>
           <span v-else-if="scope.row.outcome > 0">-{{ scope.row.outcome }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="point_desc" label="记录" />
-      <el-table-column prop="order_id" label="订单号" />
+      <el-table-column prop="point_desc" :label="$t('5f9e58ef.620bf8')" />
+      <el-table-column prop="order_id" :label="$t('5f9e58ef.1e8dc2')" />
     </el-table>
   </div>
 </template>

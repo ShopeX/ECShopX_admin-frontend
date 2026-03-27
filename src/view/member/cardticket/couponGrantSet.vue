@@ -6,28 +6,30 @@
 <template>
   <div>
     <el-form ref="form" v-model="form_setting" label-width="250px">
-      <el-form-item label="限制周期">
+      <el-form-item :label="$t('963ca074.34f533')">
         <el-radio-group v-model="form_setting.limit_cycle">
-          <el-radio-button key="month" label="month"> 月 </el-radio-button>
-          <el-radio-button key="week" label="week"> 周 </el-radio-button>
+          <el-radio-button key="month" label="month"> {{ $t('963ca074.e42b99') }} </el-radio-button>
+          <el-radio-button key="week" label="week"> {{ $t('963ca074.a657f4') }} </el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="导购可发放优惠券总数">
+      <el-form-item :label="$t('963ca074.88459e')">
         <el-input v-model="form_setting.grant_total" class="formInput" />
       </el-form-item>
-      <el-form-item label="导购可发放给单个客户的优惠券数">
+      <el-form-item :label="$t('963ca074.a72cbe')">
         <el-input v-model="form_setting.grant_per_user_total" class="formInput" />
       </el-form-item>
     </el-form>
     <div>
       <el-row :gutter="20">
         <el-col :md="4" :lg="8">
-          <el-button type="primary" icon="plus" @click="addCoupon"> 添加优惠券 </el-button>
+          <el-button type="primary" icon="plus" @click="addCoupon">
+            {{ $t('963ca074.ae8c83') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-table :data="coupon_list">
-        <el-table-column prop="title" label="卡券名称" />
-        <el-table-column label="卡券类型">
+        <el-table-column prop="title" :label="$t('963ca074.b7fef7')" />
+        <el-table-column :label="$t('963ca074.f47182')">
           <template slot-scope="card_type">
             {{ card_type.row.card_type | formatCardStr }}
           </template>
@@ -37,9 +39,11 @@
             <el-input @change="changeCouponSendNum" v-model="scope.row.send_num" style="width: 75px"></el-input>
           </template>
         </el-table-column> -->
-        <el-table-column label="操作">
+        <el-table-column :label="$t('963ca074.2b6bc0')">
           <template slot-scope="scope">
-            <el-button type="text" @click="deleteCoupon(scope.row)"> 移除 </el-button>
+            <el-button type="text" @click="deleteCoupon(scope.row)">
+              {{ $t('963ca074.86048b') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -51,7 +55,9 @@
       />
     </div>
     <div style="text-align: center">
-      <el-button type="primary" @click="saveCouponGrantSet"> 保存修改 </el-button>
+      <el-button type="primary" @click="saveCouponGrantSet">
+        {{ $t('963ca074.c5575b') }}
+      </el-button>
     </div>
   </div>
 </template>
@@ -116,13 +122,13 @@ export default {
       createSalepersonCoupon(this.form_setting).then((response) => {
         if (response.data.data.status) {
           this.$message({
-            message: '保存成功',
+            message: this.$t('963ca074.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
         } else {
           this.$message({
-            message: '保存失败',
+            message: this.$t('963ca074.6de920'),
             type: 'error',
             duration: 5 * 1000
           })
@@ -136,23 +142,23 @@ export default {
     },
     deleteCoupon(row) {
       let that = this
-      this.$confirm('是否移除可发放优惠券, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(that.$t('963ca074.76321a'), that.$t('963ca074.02d981'), {
+        confirmButtonText: that.$t('963ca074.38cf16'),
+        cancelButtonText: that.$t('963ca074.625fb2'),
         type: 'warning'
       }).then(() => {
         deleteSalepersonCoupon(row.id)
           .then((response) => {
             that.$message({
               type: 'success',
-              message: '移除可发放优惠券成功'
+              message: that.$t('963ca074.dea62d')
             })
             that.getList()
           })
           .catch(() => {
             that.$message({
               type: 'info',
-              message: '移除可发放优惠券失败'
+              message: that.$t('963ca074.15fb6c')
             })
           })
       })

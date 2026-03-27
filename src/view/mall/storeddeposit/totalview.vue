@@ -9,45 +9,51 @@
       <div class="view-flex-item">
         <i class="iconfont icon-wallet" />
         <div>
-          <span>储值总额</span>
-          <span class="money mark">{{ count.shopDepositTotal / 100 }}</span> 元
+          <span>{{ $t('12db072a.b1219a') }}</span>
+          <span class="money mark">{{ count.shopDepositTotal / 100 }}</span>
+          {{ $t('7f31cab4.c16655') }}
         </div>
       </div>
       <div class="view-flex-item">
         <i class="iconfont icon-credit-card1" />
         <div>
-          今日充值 <small class="muted">(不含赠送金额)</small>
-          <span class="money mark">{{ count.rechargeDayTotal / 100 }}</span> 元
+          {{ $t('12db072a.6430bc') }} <small class="muted">{{ $t('12db072a.f497a5') }}</small>
+          <span class="money mark">{{ count.rechargeDayTotal / 100 }}</span>
+          {{ $t('7f31cab4.c16655') }}
         </div>
       </div>
       <div class="view-flex-item">
         <i class="iconfont icon-store-alt" />
         <div>
-          <span>今日使用</span> <span class="money mark">{{ count.consumeDayTotal / 100 }}</span> 元
+          <span>{{ $t('12db072a.5c665b') }}</span>
+          <span class="money mark">{{ count.consumeDayTotal / 100 }}</span>
+          {{ $t('7f31cab4.c16655') }}
         </div>
       </div>
     </div>
     <el-table v-loading="loading" :data="dataList" :height="wheight - 240">
-      <el-table-column prop="timeStart" label="创建时间">
+      <el-table-column prop="timeStart" :label="$t('8276292e.eca37c')">
         <template slot-scope="scope">
           <span>{{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="depositTradeId" label="交易流水号" />
-      <el-table-column prop="mobile" label="用户手机号" />
-      <el-table-column label="类型">
+      <el-table-column prop="depositTradeId" :label="$t('8276292e.fa68e9')" />
+      <el-table-column prop="mobile" :label="$t('8276292e.18b642')" />
+      <el-table-column :label="$t('12db072a.226b09')">
         <template slot-scope="scope">
-          <span v-if="scope.row.tradeType == 'consume'">消费记录</span>
-          <span v-else-if="scope.row.tradeType == 'recharge_gift'">赠送记录</span>
-          <span v-else>充值记录</span>
+          <span v-if="scope.row.tradeType == 'consume'">{{ $t('8276292e.58cd6d') }}</span>
+          <span v-else-if="scope.row.tradeType == 'recharge_gift'">{{
+            $t('8276292e.7be24a')
+          }}</span>
+          <span v-else>{{ $t('8276292e.415b28') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="money" label="金额">
+      <el-table-column prop="money" :label="$t('8276292e.4cf24a')">
         <template slot-scope="scope">
-          <span>{{ scope.row.money / 100 }}元</span>
+          <span>{{ scope.row.money / 100 }}{{ $t('7f31cab4.c16655') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="shopName" label="门店" />
+      <el-table-column prop="shopName" :label="$t('8276292e.a7da92')" />
     </el-table>
     <!--
     <el-col :span="7">

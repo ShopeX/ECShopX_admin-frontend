@@ -13,20 +13,28 @@
   <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="tem_name" label="模板名称:">
-          <el-input v-model="params.tem_name" placeholder="模板名称" />
+        <SpFilterFormItem prop="tem_name" :label="$t('d3f8464b.fad9b7')">
+          <el-input v-model="params.tem_name" :placeholder="$t('d3f8464b.a5d1c5')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="tem_type" label="模板类型:">
-          <el-select v-model="params.tem_type" placeholder="模板类型" style="width: 100%">
-            <el-option key="basic_entry" label="基础录入" value="basic_entry" />
-            <el-option key="ask_answer_paper" label="问卷调查" value="ask_answer_paper" />
+        <SpFilterFormItem prop="tem_type" :label="$t('d3f8464b.719bc8')">
+          <el-select
+            v-model="params.tem_type"
+            :placeholder="$t('d3f8464b.bfd708')"
+            style="width: 100%"
+          >
+            <el-option key="basic_entry" :label="$t('d3f8464b.c94d96')" value="basic_entry" />
+            <el-option
+              key="ask_answer_paper"
+              :label="$t('0493712c.859b34')"
+              value="ask_answer_paper"
+            />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addTemplate">
-          添加模板
+          {{ $t('d3f8464b.6fef15') }}
         </el-button>
       </div>
 
@@ -34,11 +42,11 @@
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
-          :label="item.name"
+          :label="$t(item.nameKey)"
           :name="item.activeName"
         >
           <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
-            <el-table-column label="操作" width="150">
+            <el-table-column :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
                 <router-link
                   class="el-icon-edit"
@@ -57,10 +65,10 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="id" label="ID" width="100" />
-            <el-table-column prop="tem_name" label="模板名称" width="300" />
-            <el-table-column prop="tem_type" label="模板类型" width="300" />
-            <el-table-column prop="status" label="状态" width="100" />
+            <el-table-column prop="id" :label="$t('1ad8a87f.b718ad')" width="100" />
+            <el-table-column prop="tem_name" :label="$t('d3f8464b.a5d1c5')" width="300" />
+            <el-table-column prop="tem_type" :label="$t('d3f8464b.bfd708')" width="300" />
+            <el-table-column prop="status" :label="$t('d3f8464b.3fea7c')" width="100" />
           </el-table>
           <div class="content-center content-top-padded">
             <el-pagination
@@ -77,7 +85,7 @@
         </el-tab-pane>
       </el-tabs>
       <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" width="50">
-        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false" /><br />
+        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false" /><br>
         <el-card v-for="(carditem, index) in dialogContent" :key="index">
           <div slot="header">
             {{ carditem.title }}
@@ -94,14 +102,14 @@
               :label="item.field_title"
             >
               <el-col v-if="item.form_element == 'text'" :span="12">
-                <el-input placeholder="text预览" disabled />
+                <el-input :placeholder="$t('1ad8a87f.0a71fc')" disabled />
               </el-col>
               <el-col v-if="item.form_element == 'number'" :span="12">
                 <el-input placeholder="1" size="mini" disabled style="width: 120px" />
-                <span class="frm-tips"> (只能是数字)</span>
+                <span class="frm-tips"> {{ $t('d3f8464b.6d389f') }}</span>
               </el-col>
               <el-col v-if="item.form_element == 'textarea'" :span="12">
-                <el-input type="textarea" placeholder="textarea预览" disabled :rows="5" />
+                <el-input type="textarea" :placeholder="$t('1ad8a87f.059727')" disabled :rows="5" />
               </el-col>
               <el-col v-if="item.form_element == 'radio'" :span="12">
                 <el-radio-group disabled>
@@ -122,7 +130,7 @@
                 </el-checkbox-group>
               </el-col>
               <el-col v-if="item.form_element == 'select'" :span="12">
-                <el-select placeholder="请选择">
+                <el-select :placeholder="$t('ac2a6290.708c9d')">
                   <el-option
                     v-for="item in item.options"
                     :key="item.value"
@@ -136,7 +144,7 @@
           </el-form>
         </el-card>
         <el-alert v-if="bottomTitle" :title="bottomTitle" type="info" :closable="false" />
-        <el-button type="primary" disabled> 确认提交 </el-button>
+        <el-button type="primary" disabled>{{ $t('d3f8464b.28dda2') }}</el-button>
       </el-dialog>
     </template>
     <router-view />
@@ -166,8 +174,8 @@ export default {
       },
       isEdit: false,
       tabList: [
-        { name: '有效模板', activeName: '1' },
-        { name: '弃用模板', activeName: '2' }
+        { nameKey: 'd3f8464b.9ea5a5', activeName: '1' },
+        { nameKey: 'd3f8464b.d3c88c', activeName: '2' }
       ],
       ItemsDetailVisible: false,
       itemsDetailData: {},
@@ -218,9 +226,8 @@ export default {
       this.$router.push({ path: '/member/selfservice/formtemplateadd/' + row.id })
     },
     preview(index, row) {
-      // 编辑商品弹框
       this.dialogVisible = true
-      this.dialogTitle = row.tem_name + '( 预览模式 )'
+      this.dialogTitle = row.tem_name + ' ( ' + this.$t('d3f8464b.5fad96') + ' )'
       this.dialogContent = row.content
       this.headerTitle = row.header_title
       this.bottomTitle = row.bottom_title
@@ -239,9 +246,9 @@ export default {
       this.loading = false
     },
     deleteAction(index, row) {
-      this.$confirm('此操作将废弃该模板, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('d3f8464b.01602a'), this.$t('8da83775.02d981'), {
+        confirmButtonText: this.$t('8da83775.38cf16'),
+        cancelButtonText: this.$t('8da83775.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -249,7 +256,7 @@ export default {
             .then((response) => {
               this.tableList.splice(index, 1)
               this.$message({
-                message: '废弃成功',
+                message: this.$t('1ad8a87f.2f3028'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -257,14 +264,14 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '废弃失败'
+                message: this.$t('1ad8a87f.4f7bce')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('1ad8a87f.2111cc')
           })
         })
     },

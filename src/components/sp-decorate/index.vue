@@ -64,7 +64,9 @@
       </div>
     </div>
     <div class="btn-edit">
-      <el-button type="primary" plain round @click="onEdit"> 编辑内容 </el-button>
+      <el-button type="primary" plain round @click="onEdit">
+        {{ $t('7f6bf178.0f2061') }}
+      </el-button>
     </div>
 
     <el-dialog
@@ -78,7 +80,7 @@
       <DecorateView
         v-if="dialogVisible"
         ref="decorateViewRef"
-        :title="title"
+        :title="title === '商品描述' ? $t('56d6d658.608a2f') : title"
         mode="dialog"
         :value="localValue"
         :scene="scene"

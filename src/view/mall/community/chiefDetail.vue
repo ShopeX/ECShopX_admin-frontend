@@ -16,6 +16,7 @@
 <script>
 import { FORM_COMP } from '@/consts'
 import { isArray } from '@/utils'
+import { i18n } from '@/i18n'
 
 export default {
   data() {
@@ -25,8 +26,8 @@ export default {
       extraData: {},
       approve_status: 0,
       btnActions: [
-        { name: '通过', key: 'resolve' },
-        { name: '驳回', key: 'reject' }
+        { name: i18n.t('ab0b4593.23c1f3'), key: 'resolve' },
+        { name: i18n.t('ab0b4593.325254'), key: 'reject' }
       ],
       resloveDialog: false,
       resloveForm: {
@@ -51,14 +52,14 @@ export default {
         //   }
         // },
         {
-          label: '拒绝原因',
+          label: i18n.t('ab0b4593.f48f94'),
           key: 'refuse_reason',
           type: 'input',
-          placeholder: '请输入拒绝原因',
+          placeholder: i18n.t('ab0b4593.fc955a'),
           // isShow: false,
           validator: (rule, value, callback) => {
             if (this.resloveForm.approve_status == 2 && !value) {
-              callback(new Error('不能为空'))
+              callback(new Error(i18n.t('ab0b4593.281bad')))
             } else {
               callback()
             }
@@ -123,21 +124,21 @@ export default {
     return (
       <SpPage>
         <el-card class='el-card--normal'>
-          <div slot='header'>团长基本信息</div>
+          <div slot='header'>{this.$t('ab0b4593.30817b')}</div>
           <el-row class='card-panel'>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>姓名:</span>
+              <span class='card-panel__label'>{this.$t('ab0b4593.75d152')}</span>
               <span class='card-panel__value'>{name}</span>
             </el-col>
             <el-col class='card-panel-item' span={24}>
-              <span class='card-panel__label'>手机:</span>
+              <span class='card-panel__label'>{this.$t('ab0b4593.17afda')}</span>
               <span class='card-panel__value'>{mobile}</span>
             </el-col>
           </el-row>
         </el-card>
 
         <el-card class='el-card--normal'>
-          <div slot='header'>团长其他信息</div>
+          <div slot='header'>{this.$t('ab0b4593.ae094f')}</div>
           {Object.keys(extraData).map((key) => (
             <el-row class='card-panel' key={key}>
               <el-col class='card-panel-item' span={24}>
@@ -166,7 +167,7 @@ export default {
         <SpDialog
           ref='resloveDialogRef'
           v-model={this.resloveDialog}
-          title='审批'
+          title={this.$t('ab0b4593.0273ba')}
           form={this.resloveForm}
           form-list={this.resloveFormList}
           on-onSubmit={this.onResloveSubmit}

@@ -35,12 +35,14 @@
                   size="mini"
                   style="background-color: #fff"
                 >
-                  处方药
+                  {{ i18n.t('e46faabb.e8b7e1') }}
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
+                <span v-if="item.point" class="item-price"
+                  >{{ item.point }}{{ i18n.t('e46faabb.9f68a8') }}</span
+                >
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"
@@ -70,12 +72,14 @@
                   size="mini"
                   style="background-color: #fff"
                 >
-                  处方药
+                  {{ i18n.t('e46faabb.e8b7e1') }}
                 </el-tag>
                 {{ item.title }}
               </div>
               <div v-if="value.showPrice" class="price">
-                <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
+                <span v-if="item.point" class="item-price"
+                  >{{ item.point }}{{ i18n.t('e46faabb.9f68a8') }}</span
+                >
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
                   class="line-price"
@@ -107,7 +111,9 @@
               {{ item.title }}
             </div>
             <div v-if="value.showPrice" class="price">
-              <span v-if="item.point" class="item-price">{{ item.point }}积分</span>
+              <span v-if="item.point" class="item-price"
+                >{{ item.point }}{{ i18n.t('e46faabb.9f68a8') }}</span
+              >
               <SpPrice class="item-price" :value="item.price / 100" :size="15" />
               <SpPrice
                 class="line-price"
@@ -172,11 +178,12 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import config from './config'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'GoodsGrid',
-  wgtName: '商品栅格',
+  wgtName: i18n.t('e46faabb.cc1acf'),
   wgtDesc: '',
   wgtIcon: 'wgt-goodsgrid',
   config: config,
@@ -184,7 +191,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {
+    return {i18n,
       leftGoodsList: [],
       rightGoodsList: [],
       goodsList: []

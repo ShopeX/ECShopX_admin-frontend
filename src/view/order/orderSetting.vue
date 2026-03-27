@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <SpPage title="订单设置" class="page-order-order-setting">
+  <SpPage :title="$t('edc1646b.327b34')" class="page-order-order-setting">
     <SpForm
       ref="form"
       v-model="form"
@@ -28,7 +28,7 @@
           }
         "
       >
-        保存
+        {{ $t('edc1646b.be5fbb') }}
       </el-button>
     </div>
   </SpPage>
@@ -50,12 +50,12 @@ export default {
       },
       formList: [
         {
-          label: '订单自动取消',
+          label: this.$t('edc1646b.756fb3'),
           key: 'order_cancel_time',
           component: () => (
             <SpInput
-              prefix='未付款订单，将在'
-              suffix='（分钟）之后取消'
+              prefix={this.$t('edc1646b.1f092f')}
+              suffix={this.$t('edc1646b.2db278')}
               width='100px'
               v-model={this.form.order_cancel_time}
             />
@@ -63,31 +63,31 @@ export default {
           validator: (rule, value, callback) => {
             const { order_cancel_time } = this.form
             if (order_cancel_time < 5) {
-              callback(new Error('订单自动取消时间需大于等于5分钟'))
+              callback(new Error(this.$t('edc1646b.18b713')))
             } else {
               callback()
             }
           }
         },
         {
-          label: '订单自动确认',
+          label: this.$t('edc1646b.5c37bd'),
           key: 'order_finish_time',
           component: () => (
             <SpInput
-              prefix='已发货订单，将在'
-              suffix='（天）后自动完成'
+              prefix={this.$t('edc1646b.d80d26')}
+              suffix={this.$t('edc1646b.f18640')}
               width='100px'
               v-model={this.form.order_finish_time}
             />
           )
         },
         {
-          label: '订单售后时效',
+          label: this.$t('edc1646b.1d7baa'),
           key: 'latest_aftersale_time',
           component: () => (
             <SpInput
-              prefix='已确认收货订单，将在'
-              suffix='（天）后不可申请售后'
+              prefix={this.$t('edc1646b.df38fa')}
+              suffix={this.$t('edc1646b.b05e2a')}
               width='100px'
               v-model={this.form.latest_aftersale_time}
             />
@@ -95,12 +95,12 @@ export default {
           isShow: () => !this.VERSION_IN_PURCHASE()
         },
         {
-          label: '售后自动驳回时效',
+          label: this.$t('edc1646b.68096d'),
           key: 'auto_refuse_time',
           component: () => (
             <SpInput
-              prefix='退货退款同意后未退回商品，将在'
-              suffix='（天）后驳回售后'
+              prefix={this.$t('edc1646b.0e40c5')}
+              suffix={this.$t('edc1646b.deb459')}
               width='100px'
               v-model={this.form.auto_refuse_time}
             />
@@ -108,33 +108,33 @@ export default {
           isShow: () => !this.VERSION_IN_PURCHASE()
         },
         {
-          label: '自动审批同意',
+          label: this.$t('edc1646b.a76730'),
           key: 'auto_aftersales',
           type: 'switch',
           isShow: () => !this.VERSION_IN_PURCHASE(),
-          tip: '未发货订单申请退款是否自动审批同意'
+          tip: this.$t('edc1646b.6919fa')
         },
         {
-          label: '到店退货',
+          label: this.$t('edc1646b.11b600'),
           key: 'offline_aftersales',
           type: 'radio',
           options: [
-            { label: true, name: '启用' },
-            { label: false, name: '不启用' }
+            { label: true, name: this.$t('edc1646b.7854b5') },
+            { label: false, name: this.$t('edc1646b.622424') }
           ],
           isShow: () => this.VERSION_STANDARD(),
-          tip: '启用后，请前往店铺管理中设置到店退货信息，消费者申请退货退款时可选择到店退货。'
+          tip: this.$t('edc1646b.bc991d')
         },
         {
-          label: '退货退款时可退运费',
+          label: this.$t('edc1646b.e1414f'),
           key: 'is_refund_freight',
           type: 'radio',
           options: [
-            { label: true, name: '启用' },
-            { label: false, name: '不启用' }
+            { label: true, name: this.$t('edc1646b.7854b5') },
+            { label: false, name: this.$t('edc1646b.622424') }
           ],
           // isShow: () => this.VERSION_STANDARD(),
-          tip: '启用后，请前往店铺管理中设置退货退款时消费者可退运费。'
+          tip: this.$t('edc1646b.5c24e1')
         }
       ]
     }
@@ -162,7 +162,7 @@ export default {
         is_refund_freight: params.is_refund_freight ? 1 : 0,
         auto_aftersales: params.auto_aftersales ? 1 : 0
       })
-      this.$message.success('保存成功')
+      this.$message.success(this.$t('edc1646b.3b1083'))
     }
   }
 }

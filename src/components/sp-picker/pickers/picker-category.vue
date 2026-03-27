@@ -28,9 +28,9 @@
 <template>
   <div class="picker-category">
     <div class="cascader-header">
-      <div class="hd">一级</div>
-      <div class="hd">二级</div>
-      <div class="hd">三级</div>
+      <div class="hd">{{ headerCol1 }}</div>
+      <div class="hd">{{ headerCol2 }}</div>
+      <div class="hd">{{ headerCol3 }}</div>
     </div>
     <el-cascader-panel
       v-model="localValue"
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -49,9 +50,20 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择管理分类'
+    title: ''
   },
   props: ['value'],
+  computed: {
+    headerCol1() {
+      return i18n.t('90951772.117bf1')
+    },
+    headerCol2() {
+      return i18n.t('90951772.301d4d')
+    },
+    headerCol3() {
+      return i18n.t('90951772.3ba8ac')
+    }
+  },
   data() {
     return {
       props: {
@@ -66,6 +78,7 @@ export default {
     }
   },
   created() {
+    this.$options.config.title = i18n.t('90951772.c50637')
     this.fetch()
   },
   methods: {

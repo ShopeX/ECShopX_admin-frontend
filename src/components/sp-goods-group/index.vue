@@ -6,7 +6,7 @@
 <template>
   <div class="sp-goods-group">
     <div v-if="localValue.length == 0" class="sp-goods-group__empty">
-      <el-empty description="暂无商品" :image-size="60" />
+      <el-empty :description="$t('5261c48c.e3a720')" :image-size="60" />
     </div>
     <div v-else class="sp-goods-group__list" :style="computedStyle">
       <SpGoodsCard v-for="(item, index) in localValue" :key="item.item_id" :info="item">

@@ -7,13 +7,13 @@
   <div>
     <div class="action-container">
       <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-        新增内购企业
+        {{ $t('7e801404.111e3a') }}
       </el-button>
     </div>
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="enterprise_name" label="企业名称:">
-        <el-input v-model="params.enterprise_name" placeholder="请输入企业名称" />
+      <SpFilterFormItem prop="enterprise_name" :label="$t('7e801404.1a1bc7')">
+        <el-input v-model="params.enterprise_name" :placeholder="$t('7e801404.8ded4d')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -22,32 +22,36 @@
       border
       :data="list"
       :height="wheight - 170"
-      element-loading-text="数据加载中"
+      :element-loading-text="$t('7e801404.f09b12')"
       :default-sort="{ prop: 'bind_date', order: 'descending' }"
     >
       <el-table-column label="ID" prop="enterprise_id" />
-      <el-table-column prop="enterprise_name" label="企业名称" />
-      <el-table-column prop="enterprise_sn" label="企业编码" />
+      <el-table-column prop="enterprise_name" :label="$t('7e801404.f47e27')" />
+      <el-table-column prop="enterprise_sn" :label="$t('7e801404.705f0a')" />
 
-      <el-table-column prop="login_type" label="登录类型">
+      <el-table-column prop="login_type" :label="$t('7e801404.78cbe8')">
         <template slot-scope="scope">
-          <span v-if="scope.row.login_type == 'mobile'">手机号登录</span>
-          <span v-else-if="scope.row.login_type == 'email'">邮箱登录</span>
-          <span v-else-if="scope.row.login_type == 'account'">账号登录</span>
+          <span v-if="scope.row.login_type == 'mobile'">{{ $t('7e801404.cbbfff') }}</span>
+          <span v-else-if="scope.row.login_type == 'email'">{{ $t('7e801404.fc2898') }}</span>
+          <span v-else-if="scope.row.login_type == 'account'">{{ $t('7e801404.efae77') }}</span>
           <span v-else>{{ scope.row.login_type }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="disabled" label="状态">
+      <el-table-column prop="disabled" :label="$t('7e801404.3fea7c')">
         <template slot-scope="scope">
           <el-button type="text" icon="el-icon-s-tools" @click="handleClick(scope.row)">
-            {{ scope.row.disabled == 0 ? '启用' : '禁用' }}
+            {{ scope.row.disabled == 0 ? $t('7e801404.7854b5') : $t('7e801404.710ad0') }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('7e801404.2b6bc0')">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)">
+{{
+            $t('7e801404.95b351')
+          }}
+</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,23 +67,23 @@
         @size-change="onSizeChange"
       />
     </div>
-    <sideBar :visible.sync="show_sideBar" :title="'新增企业'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('7e801404.13118a')">
       <el-form>
-        <el-form-item label="企业名称">
+        <el-form-item :label="$t('7e801404.f47e27')">
           <el-input v-model="form.enterprise_name" />
         </el-form-item>
-        <el-form-item label="企业编码">
+        <el-form-item :label="$t('7e801404.705f0a')">
           <el-input v-model="form.enterprise_sn" />
         </el-form-item>
-        <el-form-item label="登录类型">
+        <el-form-item :label="$t('7e801404.78cbe8')">
           <el-select v-model="form.login_type" style="width: 100%">
-            <el-option label="手机号" value="mobile" />
-            <el-option label="账号" value="account" />
-            <el-option label="邮箱" value="email" />
+            <el-option :label="$t('7e801404.8098e2')" value="mobile" />
+            <el-option :label="$t('7e801404.7035c6')" value="account" />
+            <el-option :label="$t('7e801404.3bc5e6')" value="email" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="save"> 提交 </el-button>
+          <el-button type="primary" @click="save">{{ $t('7e801404.939d53') }}</el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -150,10 +154,10 @@ export default {
       }
     },
     handleClick(row) {
-      const message = row.disabled == 0 ? '是否禁用？' : '是否启用？'
-      this.$confirm(message, '通知消息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const message = row.disabled == 0 ? this.$t('7e801404.c93817') : this.$t('7e801404.40df5a')
+      this.$confirm(message, this.$t('7e801404.59a702'), {
+        confirmButtonText: this.$t('7e801404.38cf16'),
+        cancelButtonText: this.$t('7e801404.625fb2'),
         type: 'warning',
         center: true
       }).then(async () => {
@@ -164,7 +168,7 @@ export default {
         if (result.data.data.status) {
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('7e801404.a3869d')
           })
           this.fetchList()
           this.resetData()
@@ -177,14 +181,14 @@ export default {
       if (!this.form.enterprise_id) {
         delete this.form.enterprise_id
         addEnterpriseInfo(this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('7e801404.33130f') })
           this.page.pageIndex = 1
           this.resetData()
           this.fetchList()
         })
       } else {
         updateEnterpriseInfo(this.form.enterprise_id, this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('7e801404.33130f') })
           this.fetchList()
           this.setChinaumspayVisible = false
         })

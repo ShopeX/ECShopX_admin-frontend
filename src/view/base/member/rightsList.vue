@@ -39,55 +39,71 @@
       <div class="content-padded">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-input v-model="searchMobile" placeholder="手机号">
+            <el-input v-model="searchMobile" :placeholder="$t('3bd3e3f4.8098e2')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
         </el-row>
       </div>
-      <el-tab-pane label="会员权益列表" name="first">
+      <el-tab-pane :label="$t('3bd3e3f4.13141a')" name="first">
         <div class="content-padded">
-          <el-table v-loading="loading" :data="rightsList" element-loading-text="数据加载中">
+          <el-table
+            v-loading="loading"
+            :data="rightsList"
+            :element-loading-text="$t('3bd3e3f4.f09b12')"
+          >
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <div v-for="info in scope.row.label_infos">
-                  <span>包含物料：</span
+                  <span>{{ $t('3bd3e3f4.b87551') }}</span
                   ><el-tag type="success">
                     {{ info.label_name }}
                   </el-tag>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="rights_name" label="名称" min-width="140" />
-            <el-table-column prop="rights_from" label="来源" min-width="100" />
-            <el-table-column prop="mobile" label="手机号" min-width="90" />
-            <el-table-column prop="total_num" label="总数量">
+            <el-table-column prop="rights_name" :label="$t('3bd3e3f4.d7ec2d')" min-width="140" />
+            <el-table-column prop="rights_from" :label="$t('3bd3e3f4.26ca20')" min-width="100" />
+            <el-table-column prop="mobile" :label="$t('3bd3e3f4.8098e2')" min-width="90" />
+            <el-table-column prop="total_num" :label="$t('3bd3e3f4.8887e3')">
               <template slot-scope="scope">
                 <span v-if="scope.row.is_not_limit_num == 2">{{ scope.row.total_num }}</span>
-                <span v-if="scope.row.is_not_limit_num == 1">无限次</span>
+                <span v-if="scope.row.is_not_limit_num == 1">{{ $t('3bd3e3f4.53e5df') }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="total_consum_num" label="已核销数量" />
-            <el-table-column label="过期时间">
+            <el-table-column prop="total_consum_num" :label="$t('3bd3e3f4.d6004a')" />
+            <el-table-column :label="$t('3bd3e3f4.1fa23f')">
               <template slot-scope="scope">
                 <span>{{ scope.row.end_time | datetime }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="状态">
+            <el-table-column :label="$t('3bd3e3f4.3fea7c')">
               <template slot-scope="scope">
                 <template v-if="scope.row.is_not_limit_num == 2">
-                  <el-tag v-if="scope.row.total_num == scope.row.total_consum_num"> 已用完 </el-tag>
+                  <el-tag v-if="scope.row.total_num == scope.row.total_consum_num">
+{{
+                    $t('3bd3e3f4.535023')
+                  }}
+</el-tag>
                 </template>
                 <template v-if="scope.row.is_not_limit_num == 1">
-                  <el-tag>无限次</el-tag>
+                  <el-tag>{{ $t('3bd3e3f4.53e5df') }}</el-tag>
                 </template>
-                <el-tag v-else-if="scope.row.is_valid == '1'" type="success"> 有效 </el-tag>
-                <el-tag v-else> 已过期 </el-tag>
+                <el-tag v-else-if="scope.row.is_valid == '1'" type="success">
+{{
+                  $t('3bd3e3f4.c6cc39')
+                }}
+</el-tag>
+                <el-tag v-else>{{ $t('3bd3e3f4.4d5ccd') }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column :label="$t('3bd3e3f4.2b6bc0')">
               <template slot-scope="scope">
-                <el-button size="mini" @click="delayAction(scope.row)"> 延期 </el-button>
+                <el-button size="mini" @click="delayAction(scope.row)">
+{{
+                  $t('3bd3e3f4.e6095e')
+                }}
+</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -103,22 +119,22 @@
     </el-tabs>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
-      title="添加权益"
+      :title="$t('3bd3e3f4.ba6956')"
       class="right-dialog"
       :visible.sync="addRightsDialog"
       :before-close="handleCancelLabelsDialog"
     >
       <template>
         <el-form>
-          <el-form-item label-width="100px" label="手机号">
+          <el-form-item label-width="100px" :label="$t('3bd3e3f4.8098e2')">
             <el-col :span="9">
-              <el-input v-model="mobile" placeholder="请输入添加权益用户的手机号" />
+              <el-input v-model="mobile" :placeholder="$t('3bd3e3f4.d89f8a')" />
             </el-col>
           </el-form-item>
-          <el-form-item label-width="100px" label="选择权益商品">
+          <el-form-item label-width="100px" :label="$t('3bd3e3f4.015d03')">
             <el-transfer
               v-model="addRightsItems"
-              :titles="['商品列表', '已选中']"
+              :titles="[$t('3bd3e3f4.437974'), $t('3bd3e3f4.543b04')]"
               :data="goodsList"
             >
               <div slot="left-footer" class="transfer-footer">
@@ -134,50 +150,49 @@
             </el-transfer>
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button type="primary" @click="onSubmit"> 确定添加 </el-button>
+            <el-button type="primary" @click="onSubmit">{{ $t('3bd3e3f4.b04fcb') }}</el-button>
           </el-form-item>
         </el-form>
       </template>
     </el-dialog>
     <!-- 延期 -->
-    <el-dialog title="延期设置" class="delay-dialog" :visible.sync="delayDialog">
+    <el-dialog :title="$t('3bd3e3f4.86fe28')" class="delay-dialog" :visible.sync="delayDialog">
       <div class="alert-txt">
-        <el-alert title="" type="warning" description="消息提示的文案" :closable="false">
-          权益：{{ rightsInfo.rights_name }} ,有效期至：{{ rightsInfo.end_time | datetime }}
+        <el-alert title="" type="warning" :description="$t('3bd3e3f4.a8bf32')" :closable="false">
+          {{ $t('3bd3e3f4.733e02') }}{{ rightsInfo.rights_name }} ,{{ $t('3bd3e3f4.e65e93')
+          }}{{ rightsInfo.end_time | datetime }}
         </el-alert>
       </div>
       <el-row class="option-box">
         <el-col :span="8">
-          延期至：<el-date-picker
-            v-model="form.delay_date"
-            type="date"
-            :picker-options="pickerOptions"
-          />
+          {{ $t('3bd3e3f4.452983')
+          }}<el-date-picker v-model="form.delay_date" type="date" :picker-options="pickerOptions" />
         </el-col>
         <el-col :span="12">
-          备注：<el-input
+          {{ $t('3bd3e3f4.751ce6')
+          }}<el-input
             v-model="form.remark"
             type="textarea"
-            placeholder="请输入备注"
+            :placeholder="$t('3bd3e3f4.3cac63')"
             :rows="2"
           />
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="delaySave"> 提交 </el-button>
+          <el-button type="primary" @click="delaySave">{{ $t('3bd3e3f4.939d53') }}</el-button>
         </el-col>
       </el-row>
       <el-table :data="delayData" height="380" style="width: 100%">
-        <el-table-column label="原有效期">
+        <el-table-column :label="$t('3bd3e3f4.31add5')">
           <template slot-scope="scope">
             <span>{{ scope.row.original_date | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="延期后有效期">
+        <el-table-column :label="$t('3bd3e3f4.8cef94')">
           <template slot-scope="scope">
             <span>{{ scope.row.delay_date | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="remark" :label="$t('3bd3e3f4.2432b5')" />
       </el-table>
     </el-dialog>
   </div>
@@ -236,7 +251,7 @@ export default {
         this.addRightsItems = []
         this.$message({
           type: 'success',
-          message: '添加权益成功'
+          message: this.$t('3bd3e3f4.d71d42')
         })
         this.getRightsList()
         this.addRightsDialog = false

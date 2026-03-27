@@ -8,7 +8,9 @@
     <div class="store-picker view-flex view-flex-middle">
       <div class="store-info view-flex-item">
         <div class="store-name">
-          {{ isChangeStore ? (checked.name ? checked.name : '总店') : currentStoreName }}
+          {{
+            isChangeStore ? (checked.name ? checked.name : $t('d7d75405.0d7757')) : currentStoreName
+          }}
         </div>
         <div class="store-address">
           {{ checked.address }}
@@ -111,7 +113,7 @@ export default {
     },
     handleChangeStore(list) {
       //如果返回只有一个则为店铺端
-      this.currentStoreName = list.length === 1 ? list[0].name : '总店'
+      this.currentStoreName = list.length === 1 ? list[0].name : this.$t('d7d75405.0d7757')
       console.log('==currentStoreName', list, this.currentStoreName)
       this.storeList = list
       if (!this.isChangeStore && list.length === 1) {

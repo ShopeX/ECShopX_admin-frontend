@@ -4,17 +4,21 @@
 -->
 
 <template>
-  <SpPage title="购物车提醒配置">
+  <SpPage :title="$t('12a24e54.084d81')">
     <el-form ref="form" label-width="180px">
-      <el-form-item label="购物车是否展示">
+      <el-form-item :label="$t('12a24e54.d16a96')">
         <el-switch v-model="form.is_open" active-color="#13ce66" inactive-color="#ff4949" />
       </el-form-item>
-      <el-form-item label="提醒内容">
+      <el-form-item :label="$t('12a24e54.59c952')">
         <el-input v-model="form.remind_content" style="width: 550px" />
       </el-form-item>
     </el-form>
     <div slot="page-footer" class="text-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('12a24e54.be5fbb')
+      }}
+</el-button>
     </div>
     <!-- <el-tabs
       v-model="activeName"
@@ -88,7 +92,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('12a24e54.3b1083')
           })
           this.loading = false
         })

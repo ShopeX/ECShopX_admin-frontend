@@ -35,10 +35,11 @@
 </template>
 <script>
 import config from './config'
+import { i18n } from '@/i18n'
 import { getOuterStyle } from '../../comps/style-utils'
 export default {
   name: 'Heading',
-  wgtName: '标题',
+  wgtName: i18n.t('c1540c5b.32c65d'),
   wgtDesc: '',
   wgtIcon: 'wgt-headline',
   config: config,

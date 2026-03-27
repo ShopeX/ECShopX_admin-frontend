@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '营销'
+const name = '004596d8.916801'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout'
 

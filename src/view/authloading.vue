@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-loading="fullscreenLoading" element-loading-text="正在绑定授权信息" />
+  <div v-loading="fullscreenLoading" :element-loading-text="$t('801bb6e5.125197')" />
 </template>
 <script>
 import { getWechatBind } from '../api/wechat'
@@ -30,7 +30,7 @@ export default {
           this.$store.dispatch('setAuthorizer', true)
           this.fullscreenLoading = false
           this.$message({
-            message: '绑定或更新授权信息成功',
+            message: this.$t('801bb6e5.cc9f21'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -47,7 +47,7 @@ export default {
           this.fullscreenLoading = false
           this.$message({
             type: 'error',
-            message: '绑定失败'
+            message: this.$t('801bb6e5.76be59')
           })
           if (query.auth_type == 'woa') {
             this.$router.push({ path: homePath, query: { isBindFail: true } })
@@ -67,7 +67,7 @@ export default {
         templateName: template_name
       }
       await this.$api.wxa.submitWxa(params)
-      this.$message.success('上传代码成功')
+      this.$message.success(this.$t('801bb6e5.cfb4ab'))
       this.$router.push({ path: '/site/wechat/wxaindex' })
     }
   }

@@ -41,10 +41,10 @@
 }
 </style>
 <template>
-  <SpPage title="商品详情" class="goods-index">
+  <SpPage :title="$t('de022579.b4f5db')" class="goods-index">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button @click.native="handleCancel">{{ $t('de022579.625fb2') }}</el-button>
         <el-button
           v-if="
             (IS_SUPPLIER() || !form.supplier_id) && !routerParams.detail && !routerParams.supplier
@@ -53,7 +53,7 @@
           :loading="submitLoading"
           @click="onFormSubmit('submiting')"
         >
-          保存
+          {{ $t('de022579.be5fbb') }}
         </el-button>
         <el-button
           v-if="IS_SUPPLIER() && !routerParams.detail"
@@ -61,7 +61,7 @@
           :loading="submitLoading"
           @click.native="onFormSubmit('processing')"
         >
-          提交审核
+          {{ $t('de022579.646db0') }}
         </el-button>
         <el-button
           v-if="IS_ADMIN() && form.audit_status == 'processing'"
@@ -69,14 +69,14 @@
           :loading="submitLoading"
           @click.native="onApplyConfirm"
         >
-          保存并审核
+          {{ $t('de022579.388305') }}
         </el-button>
       </div>
     </template>
 
     <el-alert
       v-if="form.audit_status == 'rejected' && IS_SUPPLIER()"
-      :title="`审核失败：${form.audit_reason || ''}`"
+      :title="$t('de022579.1158bc') + (form.audit_reason || '')"
       type="warning"
     />
     <!-- {{ form.specParams }} -->
@@ -93,7 +93,7 @@
     <SpDialog
       ref="sendNumDialogRef"
       v-model="applyDialog"
-      title="审核"
+      :title="$t('de022579.cf13b1')"
       :form="applyForm"
       :form-list="applyFormList"
       @onSubmit="onApplySubmit"
@@ -114,9 +114,9 @@ export default {
       this.$refs['decorateRef'].resetDecorateTheme()
       this.$refs['decorateRef'].onClose()
     } else if (!this.isLeave && !this.routerParams.detail) {
-      await this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      await this.$confirm(this.$t('de022579.3ba67c'), this.$t('de022579.02d981'), {
+        confirmButtonText: this.$t('de022579.38cf16'),
+        cancelButtonText: this.$t('de022579.625fb2'),
         type: 'warning'
       })
       next()
@@ -217,15 +217,15 @@ export default {
       },
       formList: [
         {
-          label: '管理分类',
+          label: this.$t('de022579.b3ed9f'),
           type: 'group'
         },
         {
-          label: '管理分类',
+          label: this.$t('de022579.b3ed9f'),
           key: 'mainCategory',
           required: true,
           disabled,
-          message: '请选择管理分类',
+          message: this.$t('de022579.db6c82'),
           component: ({ key }, value) => {
             return (
               <el-cascader
@@ -239,38 +239,36 @@ export default {
           }
         },
         {
-          label: '基础信息',
+          label: this.$t('de022579.6ea1fe'),
           type: 'group'
         },
         {
-          label: '商品标题',
+          label: this.$t('de022579.07ec01'),
           key: 'itemName',
           type: 'input',
           display: 'inline',
-          // disabled,
           required: true,
-          message: '请输入商品标题'
+          message: this.$t('de022579.90795d')
         },
         {
-          label: '副标题',
+          label: this.$t('de022579.72cf37'),
           key: 'brief',
           type: 'input',
-          // disabled,
           display: 'inline'
         },
         {
-          label: '运费模板',
+          label: this.$t('de022579.416fd4'),
           key: 'templatesId',
           type: 'select',
           options: [],
           required: true,
           disabled,
-          message: '请选择运费模板',
+          message: this.$t('de022579.d778f5'),
           display: 'inline',
           isShow: () => !this.routerParams?.isSupplierGoods
         },
         {
-          label: '运费模板',
+          label: this.$t('de022579.416fd4'),
           key: 'templatesName',
           type: 'input',
           disabled: true,
@@ -278,24 +276,24 @@ export default {
           isShow: () => this.routerParams?.isSupplierGoods
         },
         {
-          label: '品牌',
+          label: this.$t('de022579.09307c'),
           key: 'brandId',
           type: 'select',
           options: [],
           disabled,
           required: true,
-          message: '请选择品牌',
+          message: this.$t('de022579.f70267'),
           display: 'inline'
         },
         {
-          label: '计量单位',
+          label: this.$t('de022579.251549'),
           key: 'itemUnit',
           type: 'input',
           disabled,
           display: 'inline'
         },
         {
-          label: '排序编号',
+          label: this.$t('de022579.e8373a'),
           key: 'sort',
           disabled,
           type: 'number',
@@ -303,7 +301,7 @@ export default {
           display: 'inline'
         },
         {
-          label: '产地',
+          label: this.$t('de022579.2b6d31'),
           key: 'regionsId',
           component: ({ key }, value) => (
             <el-cascader
@@ -316,49 +314,38 @@ export default {
           display: 'inline'
         },
         {
-          label: 'SPU编码',
+          label: this.$t('de022579.18ea2a'),
           key: 'goods_bn',
           disabled,
-          // disabled: () => {
-          //   return !!this.form.item_id
-          // },
           type: 'input',
           display: 'inline'
         },
-        // 处方药
         {
-          label: '商品类型',
+          label: this.$t('de022579.2af133'),
           key: 'is_medicine',
           type: 'radio',
           isShow: () => this.is_pharma_industry,
           disabled: () => !this.is_pharma_industry || !!this.$route.params.itemId,
           options: [
-            {
-              label: '0',
-              name: '实物商品'
-            },
-            {
-              label: '1',
-              name: '医药商品'
-            }
+            { label: '0', name: this.$t('de022579.b5a63d') },
+            { label: '1', name: this.$t('de022579.32a3cd') }
           ],
           required: true,
-          message: '请选择是否是处方药'
+          message: this.$t('de022579.e9bb44')
         },
         {
-          label: '药品分类',
+          label: this.$t('de022579.13ce61'),
           key: 'medicine_type',
           isShow: () => this.form.is_medicine == '1',
           type: 'select',
           options: [
-            { title: '西药', value: '0' },
-            { title: '中成药', value: '1' },
-            { title: '其他', value: '3' }
+            { title: this.$t('de022579.ccb52e'), value: '0' },
+            { title: this.$t('de022579.15042c'), value: '1' },
+            { title: this.$t('de022579.0d98c7'), value: '3' }
           ],
-          // required: true,
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1') {
-              callback('请选择药品分类')
+              callback(this.$t('de022579.66f2cc'))
             } else {
               callback()
             }
@@ -366,13 +353,13 @@ export default {
           display: 'inline'
         },
         {
-          label: '生产厂家',
+          label: this.$t('de022579.1fe7ae'),
           key: 'manufacturer',
           type: 'input',
           isShow: () => this.form.is_medicine == '1',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1') {
-              callback('请输入生产厂家')
+              callback(this.$t('de022579.db028d'))
             } else {
               callback()
             }
@@ -380,13 +367,13 @@ export default {
           display: 'inline'
         },
         {
-          label: '通用别名',
+          label: this.$t('de022579.ebb8fd'),
           key: 'common_name',
           isShow: () => this.form.is_medicine == '1',
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1') {
-              callback('请输入通用别名')
+              callback(this.$t('de022579.1a1a7e'))
             } else {
               callback()
             }
@@ -394,27 +381,20 @@ export default {
           display: 'inline'
         },
         {
-          label: '特殊通用名',
+          label: this.$t('de022579.33ded3'),
           key: 'special_common_name',
           type: 'input',
           isShow: () => this.form.is_medicine == '1',
-          // validator: async (rule, value, callback) => {
-          //   if (!value && this.form.is_medicine == '1') {
-          //     callback('请输入特殊通用名1')
-          //   } else {
-          //     callback()
-          //   }
-          // },
           display: 'inline'
         },
         {
-          label: '批准文号',
+          label: this.$t('de022579.fff94f'),
           key: 'approval_number',
           isShow: () => this.form.is_medicine == '1',
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1') {
-              callback('请输入批准文号')
+              callback(this.$t('de022579.645604'))
             } else {
               callback()
             }
@@ -422,13 +402,13 @@ export default {
           display: 'inline'
         },
         {
-          label: '最小售卖单位',
+          label: this.$t('de022579.4253ed'),
           key: 'unit',
           isShow: () => this.form.is_medicine == '1',
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1') {
-              callback('请输入第三方药品编码')
+              callback(this.$t('de022579.039e09'))
             } else {
               callback()
             }
@@ -436,52 +416,48 @@ export default {
           display: 'inline'
         },
         {
-          label: '包装规格',
+          label: this.$t('de022579.991539'),
           key: 'packing_spec',
           isShow: () => this.form.is_medicine == '1',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '剂型',
+          label: this.$t('de022579.9a5043'),
           key: 'dosage',
           isShow: () => this.form.is_medicine == '1',
           type: 'input',
           display: 'inline'
         },
         {
-          label: '是否处方药',
+          label: this.$t('de022579.9c251b'),
           key: 'is_prescription',
           isShow: () => this.form.is_medicine == '1',
           disabled: () => !!this.$route.params.itemId,
           type: 'switch',
-          // options: [
-          //   { label: '1', name: '是' },
-          //   { label: '0', name: '否' }
-          // ],
-          tip: '开启后前端走处方药下单流程'
+          tip: this.$t('de022579.8338a8')
         },
         {
-          label: '用药提示',
+          label: this.$t('de022579.88396c'),
           key: 'use_tip',
           type: 'input',
           isShow: () => this.medicinePrescription,
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
-              callback('请输入用药提示')
+              callback(this.$t('de022579.b10bac'))
             } else {
               callback()
             }
           }
         },
         {
-          label: '药品症状',
+          label: this.$t('de022579.5e15d4'),
           key: 'symptom',
           isShow: () => this.medicinePrescription,
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
-              callback('请输入药品症状')
+              callback(this.$t('de022579.6ca63d'))
             } else {
               callback()
             }
@@ -570,29 +546,28 @@ export default {
         //   display: 'inline'
         // },
         {
-          label: '供应状态',
+          label: this.$t('de022579.63d68b'),
           key: 'is_market',
           type: 'select',
           isShow: this.IS_SUPPLIER(),
           options: [
-            { title: '可售', value: 1 },
-            { title: '不可售', value: 0 }
+            { title: this.$t('de022579.434e17'), value: 1 },
+            { title: this.$t('de022579.b37fb8'), value: 0 }
           ],
           display: 'inline'
         },
         {
-          label: '赠品',
+          label: this.$t('de022579.d017cc'),
           key: 'isGift',
           type: 'switch',
-          tip: '开启后前台不可购买'
+          tip: this.$t('de022579.66619b')
         },
         {
-          label: '销售分类',
+          label: this.$t('de022579.392d49'),
           key: 'salesCategory',
           width: '720px',
-          // required: !this.IS_SUPPLIER() && !this.form.supplier_id,
           required: true,
-          message: '请选择销售分类',
+          message: this.$t('de022579.24b9c6'),
           component: ({ key }, value) => (
             <el-cascader
               v-model={value[key]}
@@ -609,10 +584,10 @@ export default {
           )
         },
         {
-          label: '商品图',
+          label: this.$t('de022579.5352d4'),
           key: 'pics',
           required: true,
-          message: '请上传商品图片',
+          message: this.$t('de022579.4d1ed9'),
           component: ({ key }, value) => (
             <div>
               {/* diabled */}
@@ -641,10 +616,10 @@ export default {
               )}
             </div>
           ),
-          tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码1`
+          tip: this.$t('de022579.fd4ce6')
         },
         {
-          label: '商品视频',
+          label: this.$t('de022579.face4f'),
           key: 'videos',
           component: ({ key }, value) => (
             <div>
@@ -661,7 +636,7 @@ export default {
           )
         },
         {
-          label: '商品参数',
+          label: this.$t('de022579.8686bb'),
           disabled,
           type: 'group',
           isShow: (item, { paramsData }) => {
@@ -684,11 +659,11 @@ export default {
           }
         },
         {
-          label: '商品规格',
+          label: this.$t('de022579.5fceb3'),
           type: 'group'
         },
         {
-          label: '多规格',
+          label: this.$t('de022579.5d60de'),
           key: 'isSpecs',
           disabled,
           type: 'switch',
@@ -778,17 +753,17 @@ export default {
 
               const isSkusUnChecked = skus?.some((item) => !item.checkedSku.length)
               if (isSkusUnChecked) {
-                callback('请勾选规格项')
+                callback(this.$t('de022579.d78fc6'))
               }
 
               if (!IS_SUPPLIER() && !this.routerParams.isSupplierGoods && !approveStatus) {
-                callback('请选择商品状态')
+                callback(this.$t('de022579.c3b891'))
               } else if (!store) {
-                callback('请输入商品库存')
+                callback(this.$t('de022579.643cc7'))
               } else if (!price) {
-                callback('请输入商品销售价格')
+                callback(this.$t('de022579.50d707'))
               } else if (!max_num && this.medicinePrescription) {
-                callback('请输入最大开方数量')
+                callback(this.$t('de022579.8d1f7c'))
               } else {
                 callback()
               }
@@ -796,32 +771,32 @@ export default {
           }
         },
         {
-          label: 'PC关键词搜索引擎',
+          label: this.$t('de022579.b02a70'),
           type: 'group'
         },
         {
-          label: '页面标题',
+          label: this.$t('de022579.8d6b59'),
           key: 'title',
           disabled,
           type: 'input'
         },
         {
-          label: '页面描述',
+          label: this.$t('de022579.abf8f4'),
           key: 'mate_description',
           type: 'textarea',
           disabled,
           width: '720px'
         },
         {
-          label: '关键词',
+          label: this.$t('de022579.9699a5'),
           key: 'mate_keywords',
           type: 'textarea',
-          placeholder: '关键词之间请用半角”,”分隔',
+          placeholder: this.$t('de022579.c0a63b'),
           disabled,
           width: '720px'
         },
         {
-          label: '图文详情',
+          label: this.$t('de022579.7db2d6'),
           type: 'group'
         },
         {
@@ -830,8 +805,8 @@ export default {
           disabled,
           type: 'radio',
           options: [
-            { label: 'richText', name: '富文本' },
-            { label: 'component', name: '组件式' }
+            { label: 'richText', name: this.$t('de022579.e2591e') },
+            { label: 'component', name: this.$t('de022579.b09ce9') }
           ]
         },
         {
@@ -887,25 +862,25 @@ export default {
       },
       applyFormList: [
         {
-          label: '处理结果',
+          label: this.$t('de022579.9eb71d'),
           key: 'applyResult',
           type: 'radio',
           options: [
-            { label: 'rejected', name: '不同意' },
-            { label: 'approved', name: '同意' }
+            { label: 'rejected', name: this.$t('de022579.1bf19c') },
+            { label: 'approved', name: this.$t('de022579.e61f2c') }
           ]
         },
         {
-          label: '拒绝原因',
+          label: this.$t('de022579.f48f94'),
           key: 'audit_reason',
           type: 'textarea',
-          placeholder: '请输入拒绝原因',
+          placeholder: this.$t('de022579.fc955a'),
           isShow: (item, value) => {
             return value.applyResult == 'rejected'
           },
           validator: (rule, value, callback) => {
             if (this.applyForm.applyResult == 'rejected' && !value) {
-              callback(new Error('请输入拒绝原因'))
+              callback(new Error(this.$t('de022579.fc955a')))
             } else {
               callback()
             }
@@ -1175,7 +1150,8 @@ export default {
         max_num
       }
       const { goods_params, goods_spec = [] } = await this.$api.goods.getCategoryInfo(
-        item_main_cat_id
+        item_main_cat_id,
+        { item_id: itemId ? itemId : '' }
       )
       this.mainCategorySpec = goods_spec
       this.resolveParamsData(goods_params, item_params)
@@ -1262,7 +1238,7 @@ export default {
           }
         })
       } else {
-        this.$message.error('请先添加运费模板')
+        this.$message.error(this.$t('de022579.e9d74f'))
       }
     },
     // 获取品牌列表
@@ -1288,7 +1264,7 @@ export default {
       this.regionsList = res
       const _all_obj = {
         value: 'all',
-        label: '全部'
+        label: this.$t('de022579.a8b0c2')
       }
       const data_n = res.map((v) => {
         const children = []
@@ -1628,10 +1604,10 @@ export default {
             ...params,
             item_id: itemId
           })
-          this.$message.success('更新成功')
+          this.$message.success(this.$t('de022579.55aa63'))
         } else {
           await this.$api.goods.createItems(params)
-          this.$message.success('添加成功')
+          this.$message.success(this.$t('de022579.3fdaea'))
         }
         this.submitLoading = false
         this.isLeave = true
@@ -1663,7 +1639,7 @@ export default {
             src
           }
         ],
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
+        notSupportedMessage: this.$t('de022579.01c0da'),
         controlBar: false
       }
     }

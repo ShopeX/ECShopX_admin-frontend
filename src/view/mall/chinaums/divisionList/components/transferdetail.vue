@@ -12,40 +12,40 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="order_id" label="指令ID:">
-        <el-input v-model="params.division_id" placeholder="请输入指令ID" />
+      <SpFilterFormItem prop="order_id" :label="$t('a23a610a.429106')">
+        <el-input v-model="params.division_id" :placeholder="$t('a23a610a.40bf18')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="params.order_id" placeholder="请输入订单号" />
+      <SpFilterFormItem prop="order_id" :label="$t('a23a610a.070dce')">
+        <el-input v-model="params.order_id" :placeholder="$t('a23a610a.e9e836')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <SpFilterFormItem prop="create_time" :label="$t('a23a610a.8d3bf9')">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
-          placeholder="添加时间筛选"
+          :placeholder="$t('a23a610a.5d92ab')"
         />
       </SpFilterFormItem>
     </SpFilterForm>
     <div class="action-container">
-      <el-button type="primary" @click="exportData"> 导出 </el-button>
+      <el-button type="primary" @click="exportData"> {{ $t('a23a610a.55405e') }} </el-button>
     </div>
     <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
-      <el-table-column prop="division_id" label="指令ID" width="100" />
-      <el-table-column prop="order_id" label="订单号" width="180" />
-      <el-table-column prop="total_fee" label="订单金额">
+      <el-table-column prop="division_id" :label="$t('a23a610a.662bb7')" width="100" />
+      <el-table-column prop="order_id" :label="$t('a23a610a.1e8dc2')" width="180" />
+      <el-table-column prop="total_fee" :label="$t('a23a610a.b1862e')">
         <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="actual_fee" label="实际金额">
+      <el-table-column prop="actual_fee" :label="$t('a23a610a.dff07e')">
         <template slot-scope="scope"> ￥{{ scope.row.actual_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="commission_rate_fee" label="收单手续费">
+      <el-table-column prop="commission_rate_fee" :label="$t('a23a610a.2e9852')">
         <template slot-scope="scope"> ￥{{ scope.row.commission_rate_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="division_fee" label="分账金额">
+      <el-table-column prop="division_fee" :label="$t('a23a610a.1e61f1')">
         <template slot-scope="scope"> ￥{{ scope.row.division_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="create_time" label="创建时间" width="200">
+      <el-table-column prop="create_time" :label="$t('a23a610a.eca37c')" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
@@ -150,7 +150,7 @@ export default {
       if (status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('a23a610a.3e1ddd')
         })
         return
       } else if (url) {

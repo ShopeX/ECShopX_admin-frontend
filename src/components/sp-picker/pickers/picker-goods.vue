@@ -48,10 +48,10 @@
   <div class="picker-goods">
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" clearable placeholder="请输入商品名称" />
+        <el-input v-model="formData.keywords" clearable :placeholder="$t('a7e61545.d83187')" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="approve_status">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
+        <el-select v-model="formData.approve_status" clearable :placeholder="$t('a7e61545.708c9d')">
           <el-option
             v-for="item in salesStatus"
             :key="item.value"
@@ -64,7 +64,7 @@
       <SpFilterFormItem prop="brand_id">
         <el-select
           v-model="formData.brand_id"
-          placeholder="请选择品牌"
+          :placeholder="$t('a7e61545.f70267')"
           remote
           filterable
           clearable
@@ -81,7 +81,7 @@
       <SpFilterFormItem prop="category">
         <el-cascader
           v-model="formData.category"
-          placeholder="请选择分类"
+          :placeholder="$t('a7e61545.8bb820')"
           clearable
           :options="categoryList"
           :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
@@ -91,15 +91,15 @@
         <SpSelectShop
           v-model="formData.distributor_id"
           clearable
-          placeholder="请选择店铺"
+          :placeholder="$t('a7e61545.06accf')"
           @change="onSearch"
         />
       </SpFilterFormItem>
       <SpFilterFormItem prop="supplier_name">
-        <el-input v-model="formData.supplier_name" placeholder="所属供应商" />
+        <el-input v-model="formData.supplier_name" :placeholder="$t('a7e61545.40b1be')" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="item_holder">
-        <el-select v-model="formData.item_holder" placeholder="请选择商品类型" clearable>
+        <el-select v-model="formData.item_holder" :placeholder="$t('a7e61545.77ccd0')" clearable>
           <el-option
             v-for="item in goodCategory"
             :key="item.value"
@@ -109,17 +109,17 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="is_gift">
-        <el-select v-model="formData.is_gift" placeholder="是否为赠品" clearable>
-          <el-option :value="true" label="是" />
-          <el-option :value="false" label="否" />
+        <el-select v-model="formData.is_gift" :placeholder="$t('a7e61545.674022')" clearable>
+          <el-option :value="true" :label="$t('a7e61545.0a60ac')" />
+          <el-option :value="false" :label="$t('a7e61545.c9744f')" />
         </el-select>
       </SpFilterFormItem>
 
       <SpFilterFormItem prop="item_bn">
-        <el-input v-model="formData.item_bn" placeholder="商品sku编码" />
+        <el-input v-model="formData.item_bn" :placeholder="$t('a7e61545.db1e8f')" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="goods_bn">
-        <el-input v-model="formData.goods_bn" placeholder="商品spu编码" />
+        <el-input v-model="formData.goods_bn" :placeholder="$t('a7e61545.bad9fb')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -131,65 +131,9 @@
         'header-cell-class-name': cellClass
       }"
       :url="urls"
-      show-pager-text="已选中：${n}"
+      :show-pager-text="$t('a7e61545.b7ef23')"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '商品ID', key: 'item_id', width: 80 },
-          {
-            name: '商品主图',
-            key: 'pics',
-            width: 80,
-            render: (h, { row }) =>
-              h('SpImage', {
-                props: {
-                  src: row.pics[0],
-                  width: 60,
-                  height: 60
-                }
-              })
-          },
-          {
-            name: '商品名称',
-            key: 'item_name'
-          },
-          { name: 'SKU编码', key: 'item_bn', width: 120 },
-          { name: 'SPU编码', key: 'goods_bn', width: 120 },
-          {
-            name: '商品类型',
-            key: 'item_holder',
-            width: 80,
-            render: (h, { row }) => h('span', {}, goodCategoryMap[row.item_holder])
-          },
-          {
-            name: '是否赠品',
-            key: 'is_gift',
-            width: 80,
-            render: (h, { row }) => h('span', {}, row.is_gift == '1' ? '是' : '否')
-          },
-          { name: '所属供应商', key: 'supplier_name', width: 100 },
-
-          {
-            name: '市场价（¥）',
-            key: 'market_price',
-            width: 100,
-            render: (h, { row }) => h('span', {}, row.market_price / 100)
-          },
-          {
-            name: '销售价（¥）',
-            key: 'price',
-            width: 100,
-            render: (h, { row }) => h('span', {}, row.price / 100)
-          },
-          {
-            name: '成本价（¥）',
-            key: 'cost_price',
-            width: 100,
-            render: (h, { row }) => h('span', {}, row.cost_price / 100)
-          },
-          { name: '库存', key: 'store', width: 100 }
-        ]
-      }"
+      :setting="pickerSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -212,6 +156,9 @@ export default {
     title: '选择商品'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('8e248734.43d1e2')
+  },
   data() {
     const { queryParams } = this.value
     const defaultParams = {
@@ -247,8 +194,68 @@ export default {
       urls: '/goods/items'
     }
   },
+  computed: {
+    pickerSetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: t('a7e61545.858526'), key: 'item_id', width: 80 },
+          {
+            name: t('a7e61545.3da767'),
+            key: 'pics',
+            width: 80,
+            render: (h, { row }) =>
+              h('SpImage', {
+                props: {
+                  src: row.pics[0],
+                  width: 60,
+                  height: 60
+                }
+              })
+          },
+          { name: t('a7e61545.1fd1d5'), key: 'item_name' },
+          { name: t('a7e61545.b54bd0'), key: 'item_bn', width: 120 },
+          { name: t('a7e61545.18ea2a'), key: 'goods_bn', width: 120 },
+          {
+            name: t('a7e61545.2af133'),
+            key: 'item_holder',
+            width: 80,
+            render: (h, { row }) => h('span', {}, this.goodCategoryMap[row.item_holder])
+          },
+          {
+            name: t('a7e61545.792518'),
+            key: 'is_gift',
+            width: 80,
+            render: (h, { row }) =>
+              h('span', {}, row.is_gift == '1' ? t('a7e61545.0a60ac') : t('a7e61545.c9744f'))
+          },
+          { name: t('a7e61545.40b1be'), key: 'supplier_name', width: 100 },
+          {
+            name: t('a7e61545.5cd87e'),
+            key: 'market_price',
+            width: 100,
+            render: (h, { row }) => h('span', {}, row.market_price / 100)
+          },
+          {
+            name: t('a7e61545.cf0170'),
+            key: 'price',
+            width: 100,
+            render: (h, { row }) => h('span', {}, row.price / 100)
+          },
+          {
+            name: t('a7e61545.066804'),
+            key: 'cost_price',
+            width: 100,
+            render: (h, { row }) => h('span', {}, row.cost_price / 100)
+          },
+          { name: t('a7e61545.0eac88'), key: 'store', width: 100 }
+        ]
+      }
+    }
+  },
   created() {
     this.localSelection = this.value.data || []
+    this.$options.config.title = this.$t('a7e61545.43d1e2')
   },
   mounted() {
     this.getGoodsBranchList()

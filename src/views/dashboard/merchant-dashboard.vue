@@ -14,7 +14,9 @@
           </div>
           <div class="py-6">
             <div class="text-[28px] text-[#333] leading-10 font-[roboto]">{{ item.today }}</div>
-            <div class="text-[14px] mt-2 leading-5 text-[#999]">昨日：{{ item.yesterday }}</div>
+            <div class="text-[14px] mt-2 leading-5 text-[#999]">
+              {{ $t('ac445cdb.23c9bc') }}：{{ item.yesterday }}
+            </div>
           </div>
         </div>
       </div>
@@ -89,6 +91,16 @@ export default {
     }
   },
   mounted() {
+    const t = this.$t.bind(this)
+    this.realTimeData.atv.label = t('ac445cdb.53c7e7')
+    this.realTimeData.refunded_fee.label = t('ac445cdb.a0cd4c')
+    this.realTimeData.payed_fee.label = t('ac445cdb.94a7de')
+    this.realTimeData.payed_orders.label = t('ac445cdb.a4517a')
+    this.realTimeData.payed_members.label = t('ac445cdb.87491a')
+    this.realTimeData.aftersale_count.label = t('ac445cdb.1ecebf')
+    this.tabList[0].label = t('ac445cdb.5d4d77')
+    this.tabList[1].label = t('ac445cdb.2f182e')
+    this.tabList[2].label = t('ac445cdb.01f9b3')
     this.getCompanyStatistics()
   },
   methods: {

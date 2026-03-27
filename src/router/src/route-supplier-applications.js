@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '应用'
+const name = '9bedcee8.5b0520'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: [
     {
       path: 'adapay/adapay_trades',
-      name: '分账明细',
+      name: '9bedcee8.85b2f8',
       component: () => import('@/view/mall/sub_account/sub_account'),
       children: [
         {
@@ -22,22 +22,22 @@ export default {
     },
     {
       path: 'adapay/adapay_cash',
-      name: '提现',
+      name: '9bedcee8.db7971',
       component: () => import('@/view/mall/withdraw/withdraw')
     },
     {
       path: 'adapay/adapay_cash_setting',
-      name: '提现设置',
+      name: '9bedcee8.b33aa1',
       component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
     },
     {
       path: 'adapay/adapay_merchant_info',
-      name: `开户信息`,
+      name: '9bedcee8.ac7b4c',
       component: () => import('@/view/mall/accountopeninfo')
     },
     {
       path: 'adapay/adapay_member_audit',
-      name: `开户审批`,
+      name: '9bedcee8.5bf3b3',
       component: () => import('@/view/mall/marketing/openingapproval'),
       children: [
         {
@@ -48,7 +48,7 @@ export default {
     },
     {
       path: 'adapay/adapay_merchant',
-      name: '商户设置',
+      name: '9bedcee8.eee869',
       component: () => import('@/view/base/setting/dealer'),
       children: [
         {
@@ -71,7 +71,7 @@ export default {
     },
     {
       path: 'jfmall/jfgoods',
-      name: `商品管理`,
+      name: '9bedcee8.5782b6',
       component: () => import('@/view/applications/pointmall/list'),
       children: [
         {
@@ -80,19 +80,19 @@ export default {
         },
         {
           path: 'physicalupload',
-          name: `实体商品导入`,
+          name: '9bedcee8.0d9697',
           component: () => import('@/view/applications/pointmall/goodsImport')
         },
         {
           path: 'physicalstoreupload',
-          name: `商品库存导入`,
+          name: '9bedcee8.e9f31e',
           component: () => import('@/view/applications/pointmall/storeImport')
         }
       ]
     },
     {
       path: 'jfmall/jforders',
-      name: `实物订单`,
+      name: '9bedcee8.72ab0d',
       component: () => import('@/view/applications/pointmall/orderList'),
       children: [
         {
@@ -103,12 +103,12 @@ export default {
     },
     {
       path: 'jfmall/jfsetting',
-      name: `基础设置`,
+      name: '9bedcee8.0aeca0',
       component: () => import('@/view/applications/pointmall/setting')
     },
     {
       path: 'appsgroup/extapp',
-      name: `扩展应用`,
+      name: '9bedcee8.e7a708',
       component: () => import('@/view/applications/plugin'),
       children: [
         {

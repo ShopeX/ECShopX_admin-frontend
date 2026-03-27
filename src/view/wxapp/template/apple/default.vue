@@ -18,72 +18,72 @@
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
-            优惠券
+            {{ $t('902732c4.2f3635') }}
           </template>
           <template v-if="item.name === 'film'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-video1" />
             </svg>
-            视频
+            {{ $t('902732c4.7fcf42') }}
           </template>
           <template v-if="item.name === 'goodsGrid'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-grid" />
             </svg>
-            商品栅格
+            {{ $t('902732c4.cc1acf') }}
           </template>
           <template v-if="item.name === 'goodsScroll'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-scroll1" />
             </svg>
-            商品滚动
+            {{ $t('902732c4.67e128') }}
           </template>
           <template v-if="item.name === 'imgHotzone'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-hotzone" />
             </svg>
-            热区图
+            {{ $t('902732c4.0ad6ab') }}
           </template>
           <template v-if="item.name === 'marquees'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-marquees" />
             </svg>
-            文字轮播
+            {{ $t('902732c4.917617') }}
           </template>
           <template v-if="item.name === 'navigation'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
-            图片导航
+            {{ $t('902732c4.8ae4a2') }}
           </template>
           <template v-if="item.name === 'search'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-search1" />
             </svg>
-            搜索
+            {{ $t('902732c4.e5f71f') }}
           </template>
           <template v-if="item.name === 'showcase'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-showcase" />
             </svg>
-            橱窗
+            {{ $t('902732c4.f1beaa') }}
           </template>
           <template v-if="item.name === 'slider'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
-            轮播
+            {{ $t('902732c4.a5987d') }}
           </template>
           <template v-if="item.name === 'store' && VERSION_PLATFORM()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store1" />
             </svg>
-            推荐店铺
+            {{ $t('902732c4.089a3d') }}
           </template>
         </div>
       </draggable>
       <el-button type="text" @click="handleShowConfig">
-        <i class="iconfont icon-cog" /> 小程序设置
+        <i class="iconfont icon-cog" /> {{ $t('902732c4.cc2d92') }}
       </el-button>
     </section>
     <section class="section section-white view-warp">
@@ -98,7 +98,7 @@
                 ') no-repeat bottom; background-size: 100% auto;'
               "
             >
-              <span>标题</span>
+              <span>{{ $t('902732c4.32c65d') }}</span>
             </div>
           </div>
           <draggable
@@ -117,7 +117,7 @@
             >
               <transition name="el-fade-in-linear">
                 <div v-if="editorIndex === index" @click="removeCurrent">
-                  <i class="el-icon-delete"></i>
+                  <i class="el-icon-delete" />
                 </div>
               </transition>
               <coupon v-if="item.name === 'coupon'" :res="item" :active="index == editorIndex" />
@@ -192,14 +192,14 @@
                       item.selectedIconPath ||
                       'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  />
+                  >
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  />
+                  >
                 </template>
                 <div class="tab-text">
                   {{ item.text }}
@@ -212,7 +212,7 @@
       <div class="setting-view">
         <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
-          请选择左侧挂件
+          {{ $t('902732c4.f646bd') }}
         </div>
         <couponEditor :res="editorData" @bindCoupons="showCoupons" @bindImgs="showImgs" />
         <filmEditor :res="editorData" @change="getVideo" />
@@ -229,7 +229,11 @@
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存2 </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">
+{{
+        $t('902732c4.be5fbb')
+      }}
+</el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -252,9 +256,9 @@
       @closeStoreDialog="closeDialog"
     />
     <couponPicker :visible="couponsVisible" @pickCoupon="pickCoupon" @closeDialog="closeDialog" />
-    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="40">
+    <sideBar :visible.sync="show_sideBar" :title="$t('902732c4.cc2d92')" width="40">
       <el-form label-width="130px">
-        <el-form-item label="开启热门推荐">
+        <el-form-item :label="$t('902732c4.05ee0e')">
           <el-switch
             v-model="isOpenFaverite"
             :active-value="true"
@@ -263,7 +267,7 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item label="开启小程序定位">
+        <el-form-item :label="$t('902732c4.b41a1e')">
           <el-switch
             v-model="isOpenLocation"
             :active-value="true"
@@ -272,10 +276,10 @@
             inactive-color="#efefef"
           />
         </el-form-item>
-        <el-form-item v-if="isOpenLocation" label="腾讯位置服务秘钥">
+        <el-form-item v-if="isOpenLocation" :label="$t('902732c4.38a3f6')">
           <el-input v-model="tencentLocationKey" />
         </el-form-item>
-        <el-form-item label="开启扫码功能">
+        <el-form-item :label="$t('902732c4.a085b1')">
           <el-switch
             v-model="isOpenScancode"
             :active-value="true"
@@ -815,7 +819,7 @@ export default {
     },
     // 删除当前组件
     removeCurrent() {
-      this.$confirm('确认删除当前组件？')
+      this.$confirm(this.$t('902732c4.815e89'))
         .then((_) => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
@@ -904,7 +908,7 @@ export default {
         if (!store.id) {
           this.relItemsIds.splice(0)
           this.$message({
-            message: '请选择店铺',
+            message: this.$t('902732c4.06accf'),
             type: 'error'
           })
           return
@@ -1056,7 +1060,7 @@ export default {
       const tabBar = await savePageParams(param)
       if (template && tabBar) {
         this.$message({
-          message: '保存成功',
+          message: this.$t('975b4821.3b1083'),
           type: 'success'
         })
       }

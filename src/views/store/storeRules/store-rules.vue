@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <SpPage title="进店规则">
+  <SpPage :title="$t('e6c5776a.08894b')">
     <SpFormPlus
       ref="storeRulesForm"
       form-type="normalForm"
@@ -39,7 +39,7 @@ export default {
       },
       formItems: [
         {
-          label: '规则配置',
+          label: this.$t('e6c5776a.28a769'),
           component: 'group'
         },
         {
@@ -49,7 +49,7 @@ export default {
           fieldName: 'ruleList'
         },
         {
-          label: '兜底策略（店铺失效、导购离职、关闭LBS时落地场景）',
+          label: this.$t('e6c5776a.4f3d59'),
           component: 'group'
         },
         {
@@ -67,14 +67,16 @@ export default {
                     })
                   }}
                 >
-                  <el-radio-button label='1'>虚拟店</el-radio-button>
-                  <el-radio-button label='2'>介绍页</el-radio-button>
+                  <el-radio-button label='1'>{this.$t('e6c5776a.457ea5')}</el-radio-button>
+                  <el-radio-button label='2'>{this.$t('e6c5776a.9ee9fb')}</el-radio-button>
                 </el-radio-group>
 
                 {value.type == 2 && (
                   <div class='mt-2 flex items-center'>
                     <el-button onClick={() => this.onSelectPage(formData)}>
-                      {value.template_id ? `引导页名称：${value.template_name}` : '选择页面'}
+                      {value.template_id
+                        ? this.$t('e6c5776a.d32dd4') + value.template_name
+                        : this.$t('e6c5776a.a4895e')}
                     </el-button>
                     <el-button
                       type='text'
@@ -86,7 +88,7 @@ export default {
                         })
                       }}
                     >
-                      删除
+                      {this.$t('e6c5776a.2f4aad')}
                     </el-button>
                   </div>
                 )}
@@ -97,7 +99,7 @@ export default {
             {
               validator: (rule, value, callback) => {
                 if (value.type == 2 && !value.template_id) {
-                  callback(new Error('请选择引导页'))
+                  callback(new Error(this.$t('e6c5776a.11380d')))
                 } else {
                   callback()
                 }
@@ -190,9 +192,9 @@ export default {
 
       try {
         await this.$api.store.saveEntryStoreRules(params)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('e6c5776a.3b1083'))
       } catch (error) {
-        this.$message.error('保存失败')
+        this.$message.error(this.$t('e6c5776a.6de920'))
       }
     }
   }

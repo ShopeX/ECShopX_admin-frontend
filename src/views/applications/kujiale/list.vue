@@ -19,7 +19,11 @@
 
       <!-- 操作按钮 -->
       <div class="action-container mt-4">
-        <el-button type="primary" @click="handleSelectProduct">选品关联方案</el-button>
+        <el-button type="primary" @click="handleSelectProduct">
+{{
+          $t('b6d1901c.ea9246')
+        }}
+</el-button>
       </div>
 
       <!-- 商品列表 -->
@@ -40,19 +44,18 @@
       <!-- 选品关联弹框 -->
       <el-dialog
         :visible.sync="selectProductVisible"
-        title="选品关联"
+        :title="$t('b6d1901c.f10bf0')"
         width="900px"
         :close-on-click-modal="false"
         @close="handleDialogClose"
       >
-        <!-- 第一部分：选择酷家乐案例 -->
         <div class="dialog-section">
           <div class="section-header">
-            <h3 class="section-title">1、选择酷家乐案例</h3>
+            <h3 class="section-title">{{ $t('b6d1901c.fe6829') }}</h3>
             <div class="section-actions">
               <el-select
                 v-model="design_id"
-                placeholder="可输入方案名称或下拉选择方案"
+                :placeholder="$t('b6d1901c.6fd283')"
                 filterable
                 clearable
                 style="width: 300px; margin-right: 10px; margin-left: 30px"
@@ -74,7 +77,7 @@
         <!-- 第二部分：选择酷家乐案例关联商品 -->
         <div class="dialog-section" style="margin-top: 24px">
           <div class="section-header">
-            <h3 class="section-title">2、选择酷家乐案例关联商品</h3>
+            <h3 class="section-title">{{ $t('b6d1901c.fe100c') }}</h3>
           </div>
           <div style="margin-top: 16px; margin-left: 40px">
             <SkuSelector
@@ -87,10 +90,10 @@
         </div>
 
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleDialogClose">取消</el-button>
-          <el-button type="primary" :loading="confirmLoading" @click="handleConfirm"
-            >确认</el-button
-          >
+          <el-button @click="handleDialogClose">{{ $t('b6d1901c.625fb2') }}</el-button>
+          <el-button type="primary" :loading="confirmLoading" @click="handleConfirm">{{
+            $t('b6d1901c.e83a25')
+          }}</el-button>
         </span>
       </el-dialog>
     </SpRouterView>
@@ -124,99 +127,103 @@ export default {
       selectedSkus: [], // 最终选中的SKU列表（从SkuSelector的change事件获取）
       confirmLoading: false,
       skuSelectorKey: 0, // SkuSelector 组件的 key，用于强制重新渲染
-      searchFormItems: [
-        {
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入商品标题',
-            clearable: true,
-            size: 'medium'
-          },
-          fieldName: 'keywords',
-          label: '商品标题'
-        },
-        {
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入SPU编码',
-            clearable: true
-          },
-          fieldName: 'goods_bn',
-          label: 'SPU编码'
-        },
-        {
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入方案ID',
-            clearable: true
-          },
-          fieldName: 'design_id',
-          label: '方案ID'
-        },
-        {
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入方案名称',
-            clearable: true
-          },
-          fieldName: 'design_name',
-          label: '方案名称'
-        },
-        {
-          cellWidth: 1.3,
-          component: 'select',
-          componentProps: {
-            placeholder: '请选择',
-            clearable: true,
-            options: [
-              { label: '全部', value: '' },
-              { label: '前台可销售', value: 'onsale' },
-              { label: '不可销售', value: 'instock' },
-              { label: '前台仅展示', value: 'only_show' },
-              { label: '前台不展示', value: 'offline_sale' }
-            ]
-          },
-          fieldName: 'approve_status',
-          label: '商品状态'
-        },
-        {
-          cellWidth: 1.3,
-          component: ({ h, value, onInput, props: componentProps }) => {
-            return h('el-cascader', {
-              attrs: {
-                size: 'small',
-                style: 'width:100%'
-              },
-              props: {
-                value: value,
-                placeholder: '请选择',
-                clearable: true,
-                options: componentProps.options || [],
-                props: {
-                  value: 'category_id',
-                  label: 'category_name',
-                  checkStrictly: true
-                }
-              },
-              on: {
-                input: onInput
-              }
-            })
-          },
-          componentProps: {
-            options: []
-          },
-          fieldName: 'main_cat_id',
-          label: '管理分类'
-        }
-      ],
+      searchFormItems: [],
       finderSetting: null,
       selectedRows: []
     }
+  },
+  created() {
+    const t = this.$t.bind(this)
+    this.searchFormItems = [
+      {
+        cellWidth: 1.3,
+        component: 'input',
+        componentProps: {
+          placeholder: t('b6d1901c.90795d'),
+          clearable: true,
+          size: 'medium'
+        },
+        fieldName: 'keywords',
+        label: t('b6d1901c.07ec01')
+      },
+      {
+        cellWidth: 1.3,
+        component: 'input',
+        componentProps: {
+          placeholder: t('b6d1901c.36438f'),
+          clearable: true
+        },
+        fieldName: 'goods_bn',
+        label: t('b6d1901c.18ea2a')
+      },
+      {
+        cellWidth: 1.3,
+        component: 'input',
+        componentProps: {
+          placeholder: t('b6d1901c.54f81d'),
+          clearable: true
+        },
+        fieldName: 'design_id',
+        label: t('b6d1901c.95e7dd')
+      },
+      {
+        cellWidth: 1.3,
+        component: 'input',
+        componentProps: {
+          placeholder: t('b6d1901c.9e93f1'),
+          clearable: true
+        },
+        fieldName: 'design_name',
+        label: t('b6d1901c.1b0b23')
+      },
+      {
+        cellWidth: 1.3,
+        component: 'select',
+        componentProps: {
+          placeholder: t('b6d1901c.708c9d'),
+          clearable: true,
+          options: [
+            { label: t('b6d1901c.a8b0c2'), value: '' },
+            { label: t('b6d1901c.9b7481'), value: 'onsale' },
+            { label: t('b6d1901c.ae83a3'), value: 'instock' },
+            { label: t('b6d1901c.acf86b'), value: 'only_show' },
+            { label: t('b6d1901c.2c50a0'), value: 'offline_sale' }
+          ]
+        },
+        fieldName: 'approve_status',
+        label: t('b6d1901c.ce0008')
+      },
+      {
+        cellWidth: 1.3,
+        component: ({ h, value, onInput, props: componentProps }) => {
+          return h('el-cascader', {
+            attrs: {
+              size: 'small',
+              style: 'width:100%'
+            },
+            props: {
+              value: value,
+              placeholder: t('b6d1901c.708c9d'),
+              clearable: true,
+              options: componentProps.options || [],
+              props: {
+                value: 'category_id',
+                label: 'category_name',
+                checkStrictly: true
+              }
+            },
+            on: {
+              input: onInput
+            }
+          })
+        },
+        componentProps: {
+          options: []
+        },
+        fieldName: 'main_cat_id',
+        label: t('b6d1901c.b3ed9f')
+      }
+    ]
   },
   mounted() {
     this.initFinderSetting()
@@ -225,26 +232,27 @@ export default {
   methods: {
     initFinderSetting() {
       const vm = this
+      const t = vm.$t.bind(vm)
       this.finderSetting = createSetting({
         columns: [
           {
-            name: '商品ID',
+            name: t('b6d1901c.858526'),
             key: 'item_id',
             width: 100
           },
           {
-            name: '商品标题',
+            name: t('b6d1901c.07ec01'),
             key: 'item_name',
             minWidth: 200,
             showOverflowTooltip: true
           },
           {
-            name: 'SPU编码',
+            name: t('b6d1901c.18ea2a'),
             key: 'goods_bn',
             width: 150
           },
           {
-            name: '方案ID',
+            name: t('b6d1901c.95e7dd'),
             key: 'design_id',
             width: 120,
             render: (h, { row }) => {
@@ -252,7 +260,7 @@ export default {
             }
           },
           {
-            name: '方案名称',
+            name: t('b6d1901c.1b0b23'),
             key: 'design_name',
             minWidth: 150,
             showOverflowTooltip: true,
@@ -261,7 +269,7 @@ export default {
             }
           },
           {
-            name: '标签',
+            name: t('b6d1901c.14d342'),
             width: 150,
             key: 'tagList',
             render: (h, { row }) => (
@@ -284,13 +292,13 @@ export default {
             )
           },
           {
-            name: '库存',
+            name: t('b6d1901c.0eac88'),
             key: 'stock',
             width: 100,
             formatterType: 'number'
           },
           {
-            name: '销售价',
+            name: t('b6d1901c.e29575'),
             key: 'price',
             width: 100,
             formatter: (value, row, col) => {
@@ -298,7 +306,7 @@ export default {
             }
           },
           {
-            name: '市场价',
+            name: t('b6d1901c.818fc4'),
             key: 'market_price',
             width: 100,
             formatter: (value, row, col) => {
@@ -306,7 +314,7 @@ export default {
             }
           },
           {
-            name: '成本价',
+            name: t('b6d1901c.2e2ce2'),
             key: 'cost_price',
             width: 100,
             formatter: (value, row, col) => {
@@ -314,15 +322,15 @@ export default {
             }
           },
           {
-            name: '商品状态',
+            name: t('b6d1901c.ce0008'),
             key: 'approve_status',
             width: 100,
             render: (h, { row }) => {
               const statusMap = {
-                onsale: { text: '前台可销售', type: 'success' },
-                instock: { text: '不可销售', type: 'info' },
-                only_show: { text: '前台仅展示', type: 'info' },
-                offline_sale: { text: '前台不展示', type: 'warning' }
+                onsale: { text: t('b6d1901c.9b7481'), type: 'success' },
+                instock: { text: t('b6d1901c.ae83a3'), type: 'info' },
+                only_show: { text: t('b6d1901c.acf86b'), type: 'info' },
+                offline_sale: { text: t('b6d1901c.2c50a0'), type: 'warning' }
               }
               const status = statusMap[row.approve_status] || { text: '-', type: 'info' }
               return h(
@@ -338,7 +346,7 @@ export default {
             }
           },
           {
-            name: '销售分类',
+            name: t('b6d1901c.392d49'),
             key: 'itemCatName',
             minWidth: 150,
             showOverflowTooltip: true
@@ -346,7 +354,7 @@ export default {
         ],
         actions: [
           {
-            name: '解绑',
+            name: t('b6d1901c.663393'),
             type: 'button',
             buttonType: 'text',
             action: {
@@ -426,7 +434,7 @@ export default {
         const list = res.list || (res.data && res.data.list) || []
         this.allCaseList = list
       } catch (error) {
-        this.$message.error('加载案例列表失败')
+        this.$message.error(this.$t('b6d1901c.282b62'))
       }
     },
     handleSelecteChange(value) {
@@ -446,11 +454,11 @@ export default {
     // 确认关联
     async handleConfirm() {
       if (!this.design_id) {
-        this.$message.warning('请先选择酷家乐案例')
+        this.$message.warning(this.$t('b6d1901c.625973'))
         return
       }
       if (this.selectedSkus.length === 0) {
-        this.$message.warning('请至少选择一个关联商品')
+        this.$message.warning(this.$t('b6d1901c.9bfb08'))
         return
       }
       this.confirmLoading = true
@@ -460,11 +468,11 @@ export default {
           design_id: this.design_id,
           item_id: goodsIds
         })
-        this.$message.success('关联成功')
+        this.$message.success(this.$t('b6d1901c.55828c'))
         this.handleDialogClose()
         this.$refs.finder.refresh(true)
       } catch (error) {
-        this.$message.error(error.message || '关联失败')
+        this.$message.error(error.message || this.$t('b6d1901c.6d973d'))
       } finally {
         this.confirmLoading = false
       }
@@ -487,9 +495,9 @@ export default {
     },
     // 解绑商品和方案
     async handleUnbind(row) {
-      this.$confirm('确定要解绑该商品与方案的关联吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$confirm(this.$t('b6d1901c.a2cb15'), this.$t('b6d1901c.02d981'), {
+        confirmButtonText: this.$t('b6d1901c.38cf16'),
+        cancelButtonText: this.$t('b6d1901c.625fb2')
       })
         .then(async () => {
           try {
@@ -497,16 +505,16 @@ export default {
               design_id: row.design.design_id,
               item_id: row.item_id
             })
-            this.$message.success('解绑成功')
+            this.$message.success(this.$t('b6d1901c.1c4385'))
             this.$refs.finder.refresh(true)
           } catch (error) {
-            this.$message.error(error.message || '解绑失败')
+            this.$message.error(error.message || this.$t('b6d1901c.913643'))
           }
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('b6d1901c.2111cc')
           })
         })
     }

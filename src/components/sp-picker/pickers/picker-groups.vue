@@ -21,7 +21,7 @@
   <div class="picker-groups">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入活动名称" />
+        <el-input v-model="formData.keywords" :placeholder="$t('39c20259.7528b3')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -32,27 +32,7 @@
       }"
       url="/promotions/groups"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '活动ID', key: 'groups_activity_id', width: '80' },
-          { name: '活动名称', key: 'act_name' },
-          {
-            name: '活动时间',
-            key: 'begin_time',
-            formatter: (value, row, col) => {
-              return `${row.begin_time} ~ ${row.end_time}`
-            }
-          },
-          {
-            name: '活动状态',
-            key: 'status',
-            width: '160',
-            formatter: (value, row, col) => {
-              return this.statusList[value] || '未知'
-            }
-          }
-        ]
-      }"
+      :setting="groupsSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -82,15 +62,43 @@ export default {
     const formData = Object.assign(defaultParams, queryParams)
     return {
       formData,
-      multiple: this.value?.multiple ?? true,
-      statusList: {
-        0: '未开始',
-        1: '进行中',
-        2: '已结束'
+      multiple: this.value?.multiple ?? true
+    }
+  },
+  computed: {
+    groupsSetting() {
+      const t = this.$t.bind(this)
+      const statusMap = {
+        0: t('39c20259.dd4e55'),
+        1: t('39c20259.fb852f'),
+        2: t('39c20259.047fab')
+      }
+      return {
+        columns: [
+          { name: t('39c20259.be3322'), key: 'groups_activity_id', width: '80' },
+          { name: t('39c20259.39834b'), key: 'act_name' },
+          {
+            name: t('39c20259.c799f5'),
+            key: 'begin_time',
+            formatter: (value, row, col) => {
+              return `${row.begin_time} ~ ${row.end_time}`
+            }
+          },
+          {
+            name: t('39c20259.1181a5'),
+            key: 'status',
+            width: '160',
+            formatter: (value, row, col) => {
+              return statusMap[value] || t('39c20259.1622dc')
+            }
+          }
+        ]
       }
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('39c20259.fde84d')
+  },
   methods: {
     beforeSearch(params) {
       params = {

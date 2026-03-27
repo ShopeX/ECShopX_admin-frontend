@@ -21,7 +21,7 @@
       >
         <template #tableTop>
           <div class="mb-5">
-            <el-button type="primary" @click="addTemplate"> 添加模板 </el-button>
+            <el-button type="primary" @click="addTemplate">{{ $t('ae4ac261.6fef15') }}</el-button>
           </div>
         </template>
       </SpFinder>
@@ -36,15 +36,17 @@ import { deleteSmsTemplate } from '@/api/sms'
 export default {
   data() {
     return {
-      failVisible: false,
-      search_options: [
-        { label: '审核中', value: '0' },
-        { label: '审核通过', value: '1' },
-        { label: '审核失败', value: '2' }
-      ]
+      failVisible: false
     }
   },
   computed: {
+    search_options() {
+      return [
+        { label: this.$t('ae4ac261.b720a6'), value: '0' },
+        { label: this.$t('ae4ac261.871a30'), value: '1' },
+        { label: this.$t('ae4ac261.fe3661'), value: '2' }
+      ]
+    },
     setting() {
       return setting_(this)
     }
@@ -59,7 +61,7 @@ export default {
     afterSearch() {},
     async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
-      this.$message.success('删除成功')
+      this.$message.success(this.$t('ae4ac261.0007d1'))
       this.$refs.finder.refresh(true)
       console.log(result)
     }

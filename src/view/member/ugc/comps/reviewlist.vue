@@ -10,25 +10,29 @@
 
       <el-table-column prop="comment_id" label="id" width="100" />
 
-      <el-table-column prop="content" label="评论内容" />
+      <el-table-column prop="content" :label="$t('ed6f1bab.034484')" />
 
-      <el-table-column prop="status_text" label="评论状态" />
+      <el-table-column prop="status_text" :label="$t('ed6f1bab.8d81d3')" />
 
-      <el-table-column label="创建人">
+      <el-table-column :label="$t('c5ae46b6.95a43e')">
         <template slot-scope="scope">
           <div v-if="scope.row.userInfo">
-            {{ scope.row.userInfo.nickanme }}<br />{{ scope.row.userInfo.mobile }}
+            {{ scope.row.userInfo.nickanme }}<br>{{ scope.row.userInfo.mobile }}
           </div>
-          <div v-else>管理员</div>
+          <div v-else>{{ $t('c5ae46b6.b1dae9') }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="created_text" label="评论时间" />
+      <el-table-column prop="created_text" :label="$t('ed6f1bab.a666ad')" />
 
-      <el-table-column v-if="handleType" label="操作" width="160" align="center">
+      <el-table-column v-if="handleType" :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <el-button type="text" @click="viewDetails(scope.row, scope.$index)"> 详情 </el-button>
+            <el-button type="text" @click="viewDetails(scope.row, scope.$index)">
+{{
+              $t('a0d7a294.f26225')
+            }}
+</el-button>
 
             <el-button type="text" @click="auditNote(scope.row)">
               {{ resetText(scope.row) }}
@@ -53,11 +57,11 @@ export default {
   computed: {
     resetText() {
       return (row) => {
-        var text = '审核'
+        var text = this.$t('e240ae54.cf13b1')
         if (row.status == '1') {
-          text = '拒绝'
+          text = this.$t('ed6f1bab.7173f8')
         } else if (row.status == '2') {
-          text = '通过'
+          text = this.$t('e240ae54.23c1f3')
         }
         return text
       }

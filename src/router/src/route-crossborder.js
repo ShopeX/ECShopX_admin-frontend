@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '跨境'
+const name = 'af5ab393.a4883a'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,17 +11,17 @@ export default {
   children: [
     {
       path: 'origincountry',
-      name: `产地国`,
+      name: 'af5ab393.ce304a',
       component: () => import('@/view/crossborder/origincountry/list')
     },
     {
       path: 'crossbordersetinfo',
-      name: `跨境设置`,
+      name: 'af5ab393.6f0f2c',
       component: () => import('@/view/crossborder/crossborderset/info')
     },
     {
       path: 'godsphysicalkj',
-      name: `商品管理`,
+      name: 'af5ab393.5782b6',
       component: () => import('@/view/mall/goods/physical/list'),
       children: [
         {
@@ -32,7 +32,7 @@ export default {
     },
     {
       path: 'taxstrategy',
-      name: `税费策略`,
+      name: 'af5ab393.eff9c6',
       component: () => import('@/view/crossborder/taxstrategy/list'),
       children: [
         {

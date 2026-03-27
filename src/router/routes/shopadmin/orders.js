@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'order',
       icon: 'order',
       keepAlive: true,
-      title: '交易'
+      title: '8bb379e9.2685c0'
     },
     name: 'shopadminOrder',
     path: '/shopadmin/order',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'shoptradenormalorders',
           icon: 'icon-order',
-          title: '全部订单',
+          title: '8bb379e9.dbb4d8',
           permissions: ['order.shoptradenormalorders']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/trade/order/detail'),
             meta: {
-              title: '订单详情',
+              title: '8bb379e9.8054f7',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'process/:itemId?',
             component: () => import('@/view/mall/trade/order/process'),
             meta: {
-              title: '订单处理',
+              title: '8bb379e9.afbe0f',
               hidden: true
             }
           },
@@ -47,7 +47,7 @@ const routes = [
             path: 'after-sale/:id?',
             component: () => import('@/view/mall/trade/order/afterSale'),
             meta: {
-              title: '售后服务',
+              title: '8bb379e9.d9a9d8',
               hidden: true
             }
           },
@@ -55,7 +55,7 @@ const routes = [
             path: 'logistics/:itemId?',
             component: () => import('@/view/mall/trade/order/logistics'),
             meta: {
-              title: '物流信息',
+              title: '8bb379e9.24bc07',
               hidden: true
             }
           }
@@ -68,7 +68,7 @@ const routes = [
         meta: {
           aliasName: 'tradepayment',
           icon: 'icon-payment',
-          title: '交易单',
+          title: '8bb379e9.8ab066',
           permissions: ['order.tradepayment']
         }
       },
@@ -79,7 +79,7 @@ const routes = [
         meta: {
           aliasName: 'aftersaleslist',
           icon: 'icon-aftersales',
-          title: '售后列表',
+          title: '8bb379e9.75bfab',
           permissions: ['order.aftersaleslist']
         },
         children: [
@@ -87,7 +87,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/aftersales/detail'),
             meta: {
-              title: '售后详情',
+              title: '8bb379e9.70536c',
               hidden: true
             }
           }
@@ -100,7 +100,7 @@ const routes = [
         meta: {
           aliasName: 'aftersalesrefundlist',
           icon: 'icon-refund',
-          title: '退款单',
+          title: '8bb379e9.51e9e1',
           permissions: ['order.aftersalesrefundlist']
         },
         children: [
@@ -108,7 +108,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/aftersales/refundDetail'),
             meta: {
-              title: '退款详情',
+              title: '8bb379e9.94b1b9',
               hidden: true
             }
           }
@@ -121,7 +121,7 @@ const routes = [
         meta: {
           aliasName: 'shippingtemplates',
           icon: 'icon-shipping',
-          title: '运费模板',
+          title: '8bb379e9.416fd4',
           permissions: ['order.shippingtemplates']
         },
         children: [
@@ -129,7 +129,7 @@ const routes = [
             path: 'editor/:templatesId?',
             component: () => import('@/view/mall/trade/shipping/add'),
             meta: {
-              title: '编辑运费模板',
+              title: '8bb379e9.ccbd27',
               hidden: true
             }
           }
@@ -142,7 +142,7 @@ const routes = [
         meta: {
           aliasName: 'wl-logistics',
           icon: 'icon-logistics',
-          title: '物流公司',
+          title: '8bb379e9.eb6d92',
           permissions: ['order.wl-logistics']
         },
         children: [
@@ -150,11 +150,11 @@ const routes = [
             path: 'editor/:id?',
             component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
             meta: {
-              title: '自提点管理',
+              title: '8bb379e9.cc5959',
               hidden: true
             },
             beforeEnter: ({ params, meta }, from, next) => {
-              meta.title = params.id ? '编辑自提点' : '新增自提点'
+              meta.title = params.id ? 'b51bc270.f36bc9' : 'b51bc270.57eecc'
               next()
             }
           }
@@ -170,7 +170,7 @@ const routes = [
         meta: {
           aliasName: 'chinaumsdivisionlist',
           icon: 'icon-division',
-          title: '分账单',
+          title: '8bb379e9.fb1213',
           permissions: ['shopadmin.order.chinaumsdivisionlist']
         }
       },
@@ -182,7 +182,7 @@ const routes = [
         meta: {
           aliasName: 'subdistrict',
           icon: 'icon-district',
-          title: '街道社区配置',
+          title: '8bb379e9.814849',
           permissions: ['shopadmin.order.subdistrict']
         }
       }

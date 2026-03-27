@@ -6,16 +6,16 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="全部" name="first">
+      <el-tab-pane :label="$t('2ce1b5ba.a8b0c2')" name="first">
         <teamList :view="0" />
       </el-tab-pane>
-      <el-tab-pane label="拼团中" name="second">
+      <el-tab-pane :label="$t('2ce1b5ba.8d3e8a')" name="second">
         <teamList :view="1" />
       </el-tab-pane>
-      <el-tab-pane label="拼团成功" name="third">
+      <el-tab-pane :label="$t('2ce1b5ba.1e792a')" name="third">
         <teamList :view="2" />
       </el-tab-pane>
-      <el-tab-pane label="拼团失败" name="fourth">
+      <el-tab-pane :label="$t('2ce1b5ba.11afd7')" name="fourth">
         <teamList :view="3" />
       </el-tab-pane>
     </el-tabs>

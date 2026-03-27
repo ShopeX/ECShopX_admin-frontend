@@ -19,34 +19,34 @@ export default (vm) => {
   const formatTemplate_type = (status) => {
     switch (status) {
       case '0':
-        return `验证码`
+        return vm.$t('66b2c71e.983f59')
       case '1':
-        return `短信通知`
+        return vm.$t('66b2c71e.e7d158')
       case '2':
-        return `推广短信`
+        return vm.$t('66b2c71e.0a9738')
     }
   }
   return createSetting({
     search: [
       {
         key: 'time_start',
-        name: '发送时间',
+        name: vm.$t('66b2c71e.63b34d'),
         type: 'date-range',
         defaultTime: ['00:00:00', '23:59:59'],
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
+        startPlaceholder: vm.$t('66b2c71e.b44c0f'),
+        endPlaceholder: vm.$t('66b2c71e.1d468b')
       },
-      { key: 'status', name: '任务状态', type: 'select', options: vm.search_options },
-      { key: 'task_name', name: '任务名称' },
-      { key: 'template_name', name: '短信模板' }
+      { key: 'status', name: vm.$t('66b2c71e.bc7e74'), type: 'select', options: vm.search_options },
+      { key: 'task_name', name: vm.$t('66b2c71e.78caf7') },
+      { key: 'template_name', name: vm.$t('66b2c71e.dbe8ba') }
     ],
     columns: [
-      { name: '任务名称', key: 'task_name', width: '140px' },
-      { name: '创建时间', key: 'created', formatter: formatDate, width: '170px' },
-      { name: '定时发送', key: 'send_at', formatter: formatDate, width: '170px' },
-      { name: '短信模板', key: 'template_name' },
+      { name: vm.$t('66b2c71e.78caf7'), key: 'task_name', width: '140px' },
+      { name: vm.$t('66b2c71e.eca37c'), key: 'created', formatter: formatDate, width: '170px' },
+      { name: vm.$t('66b2c71e.74e5c0'), key: 'send_at', formatter: formatDate, width: '170px' },
+      { name: vm.$t('66b2c71e.dbe8ba'), key: 'template_name' },
       {
-        name: '任务状态',
+        name: vm.$t('66b2c71e.bc7e74'),
         key: 'status',
         width: '100px',
         render: (h, { row }) =>
@@ -64,10 +64,10 @@ export default (vm) => {
               h(
                 'span',
                 {},
-                (row.status == '1' && '等待中') ||
-                  (row.status == '2' && '群发成功') ||
-                  (row.status == '3' && '群发失败 ') ||
-                  (row.status == '4' && '已撤销 ')
+                (row.status == '1' && vm.$t('66b2c71e.65dd9e')) ||
+                  (row.status == '2' && vm.$t('66b2c71e.4e9e4e')) ||
+                  (row.status == '3' && vm.$t('66b2c71e.d602a5')) ||
+                  (row.status == '4' && vm.$t('66b2c71e.40acf0'))
               ),
               row.status == 2 &&
                 row.reason &&
@@ -87,7 +87,7 @@ export default (vm) => {
           )
       },
       {
-        name: '号码数量',
+        name: vm.$t('66b2c71e.cc12fb'),
         key: 'total_num',
         render: (h, { row }) =>
           h(
@@ -111,11 +111,11 @@ export default (vm) => {
           ),
         align: 'center'
       },
-      { name: '失败号码数量', key: 'failed_num', align: 'center' }
+      { name: vm.$t('66b2c71e.b1e6d2'), key: 'failed_num', align: 'center' }
     ],
     actions: [
       {
-        name: '查看',
+        name: vm.$t('66b2c71e.607e7a'),
         key: 'detail',
         type: 'button',
         buttonType: 'text',
@@ -134,7 +134,7 @@ export default (vm) => {
         }
       },
       {
-        name: '撤销',
+        name: vm.$t('66b2c71e.bd9fcf'),
         key: 'delete',
         type: 'button',
         buttonType: 'text',
@@ -149,7 +149,7 @@ export default (vm) => {
         }
       },
       {
-        name: '编辑',
+        name: vm.$t('66b2c71e.95b351'),
         key: 'edit',
         type: 'button',
         buttonType: 'text',

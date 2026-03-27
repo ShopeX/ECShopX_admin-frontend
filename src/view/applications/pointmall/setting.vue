@@ -5,17 +5,17 @@
 
 <template>
   <SpPage>
-    <div class="title">积分商城基础设置</div>
+    <div class="title">{{ $t('13b44266.73e24d') }}</div>
     <el-card>
       <div style="width: 90%">
         <el-form v-loading="loading" label-width="180px" label-position="left">
-          <el-form-item label="入口配置">
-            <span class="desc">开启后，您的用户能在对应界面进入积分商城页面使用积分换购商品。</span>
+          <el-form-item :label="$t('13b44266.7e59a6')">
+            <span class="desc">{{ $t('13b44266.dcfb2b') }}</span>
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              移动端 <br />
-              (包含小程序/H5/APP）
+              {{ $t('13b44266.c95e74') }} <br>
+              {{ $t('13b44266.518129') }}
             </span>
             <el-switch
               v-model="entrance.mobile_openstatus"
@@ -30,15 +30,15 @@
     <el-card>
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">
-          <el-form-item label="物流费用">
+          <el-form-item :label="$t('13b44266.3f69e9')">
             <el-radio-group v-model="form.freight_type">
-              <el-radio :label="'cash'"> 按现金 </el-radio>
-              <el-radio :label="'point'"> 按积分 </el-radio>
+              <el-radio :label="'cash'">{{ $t('13b44266.b7312f') }}</el-radio>
+              <el-radio :label="'point'">{{ $t('13b44266.fcead5') }}</el-radio>
             </el-radio-group>
-            <br />
-            <span class="tip">说明：运费使用现金或积分支付</span>
+            <br>
+            <span class="tip">{{ $t('13b44266.4e116d') }}</span>
           </el-form-item>
-          <el-form-item v-if="form.freight_type == 'point'" label="积分商城运费抵扣比率">
+          <el-form-item v-if="form.freight_type == 'point'" :label="$t('13b44266.a6cd51')">
             <el-input
               v-model="form.proportion"
               type="number"
@@ -46,14 +46,14 @@
               style="width: 120px"
               :min="1"
               :max="9999999"
-            />积分 抵扣1元人民币
+            />{{ $t('13b44266.8ef12b') }}
           </el-form-item>
-          <el-form-item v-if="form.freight_type == 'point'" label="积分取整设置">
+          <el-form-item v-if="form.freight_type == 'point'" :label="$t('13b44266.51ad56')">
             <el-radio-group v-model="form.rounding_mode">
-              <el-radio :label="'down'"> 向下取整 </el-radio>
-              <el-radio :label="'up'"> 向上取整 </el-radio>
+              <el-radio :label="'down'">{{ $t('13b44266.5a309d') }}</el-radio>
+              <el-radio :label="'up'">{{ $t('13b44266.a0730b') }}</el-radio>
             </el-radio-group>
-            <br />
+            <br>
             <!-- <span class="tip">说明：运费使用现金或积分支付</span> -->
           </el-form-item>
           <!-- <el-form-item size="large">
@@ -66,7 +66,7 @@
 
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save">{{ $t('13b44266.be5fbb') }}</el-button>
       </div>
     </template>
   </SpPage>
@@ -127,7 +127,7 @@ export default {
           mobile_openstatus: this.entrance.mobile_openstatus
         }
       }).then((res) => {
-        this.$message({ type: 'success', message: '操作成功' })
+        this.$message({ type: 'success', message: this.$t('13b44266.33130f') })
         this.getInfo()
       })
     }

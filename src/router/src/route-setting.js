@@ -2,7 +2,6 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '设置'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,34 +10,34 @@ export default {
   children: [
     {
       path: 'staff/staffleader',
-      name: `账号管理-门店管理员`,
+      name: 'b51bc270.878047',
       component: () => import('@/view/base/shopstaff/salesperson/leaderlist')
     },
     {
       path: 'staff/Merchantstaff',
-      name: `账号管理-店铺管理员`,
+      name: 'b51bc270.0f2f5b',
       component: () => import('@/view/base/account/storestaff')
     },
     {
       path: 'staff/storemanager',
-      name: `账号管理-商户账号管理`,
+      name: 'b51bc270.ebea9e',
       component: () => import('@/view/mall/marketing/merchantAccount')
     },
     {
       path: 'staff/Merchantstaffroles',
-      name: `账号管理-店铺员工角色`,
+      name: 'b51bc270.910b4e',
       component: () => import('@/view/base/account/storeroles')
     },
     {
       path: 'delivery/logistics',
-      name: `物流公司`,
+      name: 'b51bc270.eb6d92',
       component: () => import('@/views/settings/deliverySettings/logistics/index'),
       children: [
         {
           path: 'addziti/:id?',
           component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
           beforeEnter: ({ params, meta }, from, next) => {
-            meta.title = params.id ? '编辑自提点' : '新增自提点'
+            meta.title = params.id ? 'b51bc270.f36bc9' : 'b51bc270.57eecc'
             next()
           }
         }
@@ -46,7 +45,7 @@ export default {
     },
     {
       path: 'delivery/shippingtemplates',
-      name: `运费模板`,
+      name: 'b51bc270.416fd4',
       component: () => import('@/view/mall/trade/shipping/templates'),
       children: [
         {
@@ -57,24 +56,24 @@ export default {
     },
     {
       path: 'delivery/kdniao',
-      name: `快递跟踪配置`,
+      name: 'b51bc270.d7bebc',
       component: () => import('@/view/base/setting/kdniao')
     },
     {
       path: 'delivery/sfbsp',
-      name: `顺丰物流跟踪设置`,
+      name: 'b51bc270.8b8dc6',
       component: () => import('@/view/base/setting/sfbsp')
     },
     {
       path: 'delivery/selfdeliverystaff',
-      name: `账号管理-店铺配送员`,
+      name: 'b51bc270.3f12ff',
       component: () => import('@/views/settings/deliverySettings/delivery-management')
     },
     {
       path: 'delivery/deliverystaffstatistics',
       name: `deliverystaffstatistics`,
       meta: {
-        title: `${name}-配送员业绩`
+        title: 'b51bc270.7388cf'
       },
       component: () =>
         import(
@@ -83,22 +82,22 @@ export default {
     },
     {
       path: 'delivery/dada',
-      name: `达达账户`,
+      name: 'b51bc270.52ec0e',
       component: () => import('@/view/mall/distribution/account')
     },
     {
       path: 'staff/Platformstaff',
-      name: `账号管理-平台管理员`,
+      name: 'b51bc270.341f65',
       component: () => import('@/view/base/account/normalstaff')
     },
     {
       path: 'staff/Platformstaffroles',
-      name: `账号管理-平台角色`,
+      name: 'b51bc270.30a44c',
       component: () => import('@/view/base/account/normalroles')
     },
     {
       path: 'staff/dealer_list',
-      name: `账号管理-经销商管理`,
+      name: 'b51bc270.4571aa',
       component: () => import('@/view/mall/marketing/dealer'),
       children: [
         {
@@ -117,7 +116,7 @@ export default {
     },
     {
       path: 'offlineAccount',
-      name: `线下收款账户`,
+      name: 'b51bc270.606c99',
       component: () => import('@/view/base/setting/offlineAccount')
     },
     {
@@ -127,49 +126,49 @@ export default {
     },
     {
       path: 'dataAnalysis',
-      name: `数据分析配置`,
+      name: 'b51bc270.783fc5',
       component: () => import('@/view/base/setting/dataAnalysis')
     },
 
     /** 系统配置 */
     {
       path: 'systemsetting/publicsetting',
-      name: `通用设置`,
+      name: 'b51bc270.91a229',
       component: () => import('@/view/base/setting/publicsetting')
     },
     {
       path: 'systemsetting/invoinceConfiguration',
-      name: `开票配置`,
+      name: 'b51bc270.1275c1',
       component: () => import('@/view/financial/invoice/baiSetting')
     },
     {
       path: 'GoodsShareSetting',
-      name: `商品分享设置`,
+      name: 'b51bc270.029c35',
       component: () => import('@/view/base/setting/goodsShareSetting')
     },
     {
       path: 'systemsetting/certificate',
-      name: `商派ERP`,
+      name: 'b51bc270.e5549d',
       component: () => import('@/view/base/setting/certificate/index')
     },
     {
       path: 'systemsetting/wdtSetting',
-      name: `旺店通ERP`,
+      name: 'b51bc270.a891b2',
       component: () => import('@/views/settings/systemConfig/wdtSetting')
     },
     {
       path: 'systemsetting/jstSetting',
-      name: '聚水潭ERP',
+      name: 'b51bc270.318bb2',
       component: () => import('@/views/settings/systemConfig/jstSetting')
     },
     {
       path: 'systemsetting/assetpayment',
-      name: `支付配置`,
+      name: 'b51bc270.1c3835',
       component: () => import('@/view/base/setting/payment')
     },
     {
       path: 'systemsetting/datamessage',
-      name: `短信服务`,
+      name: 'b51bc270.ffa488',
       component: () => import('@/view/base/shortmessage/index'),
       children: [
         {
@@ -179,19 +178,19 @@ export default {
           children: [
             {
               path: '/',
-              name: '基础配置',
+              name: 'b51bc270.b6453a',
               meta: 'base_config',
               component: () => import('@/views/settings/systemConfig/smsService/base_config')
             },
             {
               path: 'send_sms',
-              name: '发送短信',
+              name: 'b51bc270.2d7288',
               meta: 'send_sms',
               component: () => import('@/views/settings/systemConfig/smsService/send_sms')
             },
             {
               path: 'sms_signatures',
-              name: '短信签名',
+              name: 'b51bc270.f32c04',
               component: () => import('@/views/settings/systemConfig/smsService/sms_signatures'),
               meta: 'sms_signatures',
               children: [
@@ -205,7 +204,7 @@ export default {
             },
             {
               path: 'sms_template',
-              name: '短信模板',
+              name: 'b51bc270.dbe8ba',
               component: () => import('@/views/settings/systemConfig/smsService/sms_template'),
               meta: 'sms_template',
               children: [
@@ -219,13 +218,13 @@ export default {
             },
             {
               path: 'sms_sendLog',
-              name: '短信发送记录',
+              name: 'b51bc270.dabdd1',
               component: () => import('@/views/settings/systemConfig/smsService/sms_sendLog'),
               meta: 'sms_sendLog'
             },
             {
               path: 'sms_MassLog',
-              name: '短信群发送记录',
+              name: 'b51bc270.28cf8d',
               component: () => import('@/views/settings/systemConfig/smsService/sms_MassLog'),
               meta: 'sms_MassLog',
               children: [
@@ -241,44 +240,44 @@ export default {
         },
         {
           path: 'shopex_sms',
-          name: '商派短信',
+          name: 'b51bc270.67fc96',
           component: () => import('@/views/settings/systemConfig/smsService/shopex_sms')
         }
       ]
     },
     {
       path: 'systemsetting/mapsetting',
-      name: `地图服务`,
+      name: 'b51bc270.5e6abb',
       component: () => import('@/view/base/setting/mapsetting')
     },
     {
       path: 'systemsetting/Yilianyun',
-      name: `小票打印`,
+      name: 'b51bc270.bf34e4',
       component: () => import('@/views/settings/systemConfig/yilianyun/index')
     },
     {
       path: 'systemsetting/ugctpos',
-      name: `UGC审核配置`,
+      name: 'b51bc270.b28ada',
       component: () => import('@/views/settings/systemConfig/ugcTPOS')
     },
     {
       path: 'systemsetting/wxaindex',
-      name: `小程序管理`,
+      name: 'b51bc270.10aa76',
       component: () => import('@/view/wxapp/wxappmanage/list')
     },
     {
       path: 'systemsetting/brand',
-      name: `公众号授权`,
+      name: 'b51bc270.cbf7c8',
       component: () => import('@/view/brand/wechat/open')
     },
     {
       path: 'systemsetting/editdashboard',
-      name: `数据分析`,
+      name: 'b51bc270.6450d8',
       component: () => import('@/view/wxapp/statistics/dataanalysis/index')
     },
     {
       path: 'systemsetting/editsourcemanagement',
-      name: `千人千码`,
+      name: 'b51bc270.21058f',
       component: () => import('@/view/wxapp/statistics/sourcemanagement/index'),
       children: [
         {
@@ -289,63 +288,63 @@ export default {
     },
     {
       path: 'systemsetting/noticemessage',
-      name: `消息通知`,
+      name: 'b51bc270.d1d4c3',
       component: () => import('@/view/wxapp/messages')
     },
     {
       path: 'systemsetting/wxappchat',
-      name: `小程序客服`,
+      name: 'b51bc270.107a88',
       component: () => import('@/view/base/setting/im/wxappchat')
       // component: () => import('@/view/brand/wechat/wxapp')
     },
     {
       path: 'systemsetting/echat',
-      name: `一洽客服`,
+      name: 'b51bc270.e66efe',
       component: () => import('@/view/base/setting/im/echat')
     },
     {
       path: 'systemsetting/meiqia',
-      name: `美洽客服`,
+      name: 'b51bc270.7ef177',
       component: () => import('@/view/site/meiqia')
     },
     {
       path: 'systemsetting/brandcustomer',
-      name: `客服-微信客服`,
+      name: 'b51bc270.488ac4',
       component: () => import('@/view/brand/wechat/customservice')
     },
     {
       path: 'systemsetting/wdtSetting',
-      name: `旺店通`,
+      name: 'b51bc270.152925',
       component: () => import('@/views/settings/systemConfig/wdtSetting')
     },
     {
       path: 'systemsetting/jstSetting',
-      name: '聚水潭',
+      name: 'b51bc270.deb133',
       component: () => import('@/views/settings/systemConfig/jstSetting')
     },
     {
       path: 'systemsetting/certificate',
-      name: `商派ERP`,
+      name: 'b51bc270.e5549d',
       component: () => import('@/view/base/setting/certificate/index')
     },
     {
       path: 'systemsetting/damoCrm',
-      name: `达摩CRM`,
+      name: 'b51bc270.a21aa1',
       component: () => import('@/view/base/setting/damoCrm/index')
     },
     {
       path: 'systemsetting/domain_setting',
-      name: `域名设置`,
+      name: 'b51bc270.93c728',
       component: () => import('@/view/base/setting/companys/domain')
     },
     {
       path: 'systemsetting/approve',
-      name: '脱敏数据申请',
+      name: 'b51bc270.1fb869',
       component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
     },
     {
       path: 'systemsetting/apply',
-      name: `脱敏申请审批`,
+      name: 'b51bc270.18dbfa',
       component: () => import('@/view/base/setting/authorityapproval'),
       children: [
         {
@@ -356,83 +355,83 @@ export default {
     },
     {
       path: 'systemsetting/extminilink',
-      name: `外部小程序配置`,
+      name: 'b51bc270.83c5fa',
       component: () => import('@/view/base/wxa/extMiniLink'),
       children: [
         {
           path: 'editor',
-          name: '外部小程序配置-页面路径',
+          name: 'b51bc270.3ddd64',
           component: () => import('@/view/base/wxa/extMiniLinkDetail')
         }
       ]
     },
     {
       path: 'systeminfo/agreement',
-      name: '软件使用协议',
+      name: 'b51bc270.c94c15',
       component: () => import('@/view/base/setting/agreement')
     },
     /** 系统配置 */
 
     {
       path: 'openapi',
-      name: `开发接口配置`,
+      name: 'b51bc270.4f8798',
       component: () => import('@/view/base/setting/opendev/index')
     },
     {
       path: 'Regionauth',
-      name: `区域管理`,
+      name: 'b51bc270.c2a469',
       component: () => import('@/view/regionauth/list')
     },
 
     {
       path: 'GoodsShareSetting',
-      name: `商品分享设置`,
+      name: 'b51bc270.029c35',
       component: () => import('@/view/base/setting/goodsShareSetting')
     },
 
     {
       path: 'basecurrency',
-      name: `货币管理`,
+      name: 'b51bc270.f68fc6',
       component: () => import('@/view/base/currency/index')
     },
     {
       path: 'systeminfo/assetaccountactivation',
-      name: `续费激活`,
+      name: 'b51bc270.647339',
       component: () => import('@/view/base/asset/accountactivation/index')
     },
     {
       path: 'systeminfo/operatorlogs',
-      name: `操作日志`,
+      name: 'b51bc270.cda84b',
       component: () => import('@/views/settings/systemInfo/operation-log')
     },
     {
       path: 'omsqueuelog',
-      name: `oms接口日志`,
+      name: 'b51bc270.930384',
       component: () => import('@/view/mall/trade/omsqueuelog')
     },
     {
       path: 'menumanage/shopmenus',
-      name: `商城菜单管理`,
+      name: 'b51bc270.93b9ef',
       component: () => import('@/view/menus/shopmenu')
     },
     {
       path: 'menumanage/merchantmenu',
-      name: `商户菜单管理`,
+      name: 'b51bc270.9d25eb',
       component: () => import('@/view/menus/merchantmenu')
     },
     {
       path: 'menumanage/suppliermenus',
-      name: `供应商菜单管理`,
+      name: 'b51bc270.b59806',
       component: () => import('@/view/menus/supplier')
     },
     {
       path: 'menumanage/distributormenu',
-      name: `店铺菜单管理`,
+      name: 'b51bc270.470a9d',
       component: () => import('@/view/menus/distributormenu')
     },
     {
       path: 'adapay_merchant',
-      name: '商户设置',
+      name: 'b51bc270.eee869',
       component: () => import('@/view/base/setting/dealer'),
       children: [
         {
@@ -455,7 +454,7 @@ export default {
     },
     {
       path: 'adapay_cash_setting',
-      name: '提现设置',
+      name: 'b51bc270.b33aa1',
       component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
     }
   ]

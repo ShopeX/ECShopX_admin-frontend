@@ -13,36 +13,40 @@
     <div class="page-body">
       <template v-if="$route.path.indexOf('detail') === -1">
         <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-          <SpFilterFormItem v-if="!VERSION_B2C()" prop="distributor" label="店铺名称:">
+          <SpFilterFormItem v-if="!VERSION_B2C()" prop="distributor" :label="$t('4d1aec94.4de1b7')">
             <el-autocomplete
               v-model="params.distributor.name"
               :fetch-suggestions="queryStoreSearch"
-              placeholder="请输入店铺名称"
+              :placeholder="$t('4d1aec94.867738')"
               @select="handleSelectStore"
             />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="create_time" label="日期范围:">
+          <SpFilterFormItem prop="create_time" :label="$t('4d1aec94.8d3bf9')">
             <el-date-picker
               v-model="params.create_time"
               type="daterange"
               value-format="yyyy/MM/dd"
-              placeholder="选择日期范围"
+              :placeholder="$t('4d1aec94.4b8cb9')"
             />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="order_id" label="订单号:">
-            <el-input v-model="params.order_id" placeholder="订单号" />
+          <SpFilterFormItem prop="order_id" :label="$t('4d1aec94.070dce')">
+            <el-input v-model="params.order_id" :placeholder="$t('4d1aec94.1e8dc2')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="aftersales_bn" label="售后单号:">
-            <el-input v-model="params.aftersales_bn" placeholder="请填写售后单号" />
+          <SpFilterFormItem prop="aftersales_bn" :label="$t('4d1aec94.cd1b26')">
+            <el-input v-model="params.aftersales_bn" :placeholder="$t('4d1aec94.431df4')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="item_name" label="商品名称:">
-            <el-input v-model="params.item_name" placeholder="请填写商品名称" />
+          <SpFilterFormItem prop="item_name" :label="$t('4d1aec94.752597')">
+            <el-input v-model="params.item_name" :placeholder="$t('4d1aec94.83919e')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="mobile" label="手机号:">
-            <el-input v-model="params.mobile" placeholder="手机号" />
+          <SpFilterFormItem prop="mobile" :label="$t('4d1aec94.ce2bf3')">
+            <el-input v-model="params.mobile" :placeholder="$t('4d1aec94.8098e2')" />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="aftersales_status" label="售后状态:">
-            <el-select v-model="params.aftersales_status" clearable placeholder="售后状态">
+          <SpFilterFormItem prop="aftersales_status" :label="$t('4d1aec94.aaddd7')">
+            <el-select
+              v-model="params.aftersales_status"
+              clearable
+              :placeholder="$t('4d1aec94.5101e8')"
+            >
               <el-option
                 v-for="(item, index) in aftersalesStatusList"
                 :key="index"
@@ -51,8 +55,8 @@
               />
             </el-select>
           </SpFilterFormItem>
-          <SpFilterFormItem prop="aftersales_type" label="售后类型:">
-            <el-select v-model="params.aftersales_type" placeholder="请选择售后类型">
+          <SpFilterFormItem prop="aftersales_type" :label="$t('4d1aec94.0e993f')">
+            <el-select v-model="params.aftersales_type" :placeholder="$t('4d1aec94.9d60ad')">
               <el-option
                 v-for="(item, index) in $store.getters.login_type == 'merchant'
                   ? aftersalesTypeListOther
@@ -63,23 +67,23 @@
               />
             </el-select>
           </SpFilterFormItem>
-          <SpFilterFormItem prop="item_bn" label="SKU编号:">
-            <el-input v-model="params.item_bn" placeholder="SKU编号" />
+          <SpFilterFormItem prop="item_bn" :label="$t('4d1aec94.233aa5')">
+            <el-input v-model="params.item_bn" :placeholder="$t('4d1aec94.58cac1')" />
           </SpFilterFormItem>
 
           <SpFilterFormItem
             v-if="VERSION_STANDARD() || IS_ADMIN()"
             prop="supplier_name"
-            label="来源供应商:"
+            :label="$t('4d1aec94.a54fd2')"
           >
-            <el-input v-model="params.supplier_name" placeholder="请输入来源供应商" />
+            <el-input v-model="params.supplier_name" :placeholder="$t('4d1aec94.1542c0')" />
           </SpFilterFormItem>
           <SpFilterFormItem
             v-if="VERSION_STANDARD() || IS_ADMIN()"
             prop="order_holder"
-            label="订单分类:"
+            :label="$t('4d1aec94.e56a5e')"
           >
-            <el-select v-model="params.order_holder" clearable placeholder="请选择">
+            <el-select v-model="params.order_holder" clearable :placeholder="$t('4d1aec94.708c9d')">
               <el-option
                 v-for="item in orderCategory"
                 :key="item.value"
@@ -89,11 +93,19 @@
               />
             </el-select>
           </SpFilterFormItem>
-          <SpFilterFormItem v-if="IS_SUPPLIER()" prop="distributor_id" label="来源店铺:">
-            <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+          <SpFilterFormItem
+            v-if="IS_SUPPLIER()"
+            prop="distributor_id"
+            :label="$t('4d1aec94.16f2bc')"
+          >
+            <SpSelectShop
+              v-model="params.distributor_id"
+              clearable
+              :placeholder="$t('4d1aec94.708c9d')"
+            />
           </SpFilterFormItem>
-          <SpFilterFormItem prop="order_class" label="订单类型:">
-            <el-select v-model="params.order_class" clearable placeholder="请选择">
+          <SpFilterFormItem prop="order_class" :label="$t('4d1aec94.0e83be')">
+            <el-select v-model="params.order_class" clearable :placeholder="$t('4d1aec94.708c9d')">
               <el-option
                 v-for="item in orderType"
                 :key="item.value"
@@ -106,12 +118,16 @@
           <SpFilterFormItem
             v-if="is_pharma_industry"
             prop="is_prescription_order"
-            label="是否处方药:"
+            :label="$t('4d1aec94.b7a604')"
           >
-            <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
-              <el-option label="全部" value="" />
-              <el-option label="是" value="1" />
-              <el-option label="否" value="0" />
+            <el-select
+              v-model="params.is_prescription_order"
+              clearable
+              :placeholder="$t('4d1aec94.708c9d')"
+            >
+              <el-option :label="$t('4d1aec94.a8b0c2')" value="" />
+              <el-option :label="$t('4d1aec94.0a60ac')" value="1" />
+              <el-option :label="$t('4d1aec94.c9744f')" value="0" />
             </el-select>
           </SpFilterFormItem>
           <!-- <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="用药人姓名:">
@@ -132,15 +148,17 @@
         >
           <template slot="tableTop">
             <div class="action-container">
-              <el-button @click="exportData" type="primary" plain> 导出 </el-button>
+              <el-button @click="exportData" type="primary" plain>
+                {{ $t('4d1aec94.55405e') }}
+              </el-button>
               <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
-                售后提醒内容
+                {{ $t('4d1aec94.117b5a') }}
               </el-button>
               <el-button type="primary" plain @click="aftersalesAction('approved')">
-                批量审核
+                {{ $t('4d1aec94.9fface') }}
               </el-button>
               <el-button type="primary" plain @click="aftersalesAction('refund')">
-                批量退款
+                {{ $t('4d1aec94.b7d6de') }}
               </el-button>
             </div>
           </template>
@@ -160,30 +178,28 @@
               class="demo-ruleForm"
               label-width="100px"
             >
-              <el-form-item label="提醒内容">
+              <el-form-item :label="$t('4d1aec94.59c952')">
                 <template>
                   <SpRichText v-model="aftersalesRemindForm.intro" />
                 </template>
-                <span class="frm-tips"
-                  >例如：由于商品的特殊性，如涉及机油类产品需寄回，建议使用京东快递，快递公司联系电话955XX。</span
-                >
+                <span class="frm-tips">{{ $t('4d1aec94.cdebf6') }}</span>
               </el-form-item>
-              <el-form-item label="是否启用">
+              <el-form-item :label="$t('4d1aec94.53c3dd')">
                 <el-switch
                   v-model="aftersalesRemindForm.is_open"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                 />
-                <br />
-                <span class="frm-tips"
-                  >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span
-                >
+                <br>
+                <span class="frm-tips">{{ $t('4d1aec94.8f2914') }}</span>
               </el-form-item>
             </el-form>
           </template>
           <div slot="footer" class="dialog-footer">
-            <el-button @click.native="handleCancel"> 取消 </el-button>
-            <el-button type="primary" @click="submitAftersalesRemind"> 确定 </el-button>
+            <el-button @click.native="handleCancel"> {{ $t('4d1aec94.625fb2') }} </el-button>
+            <el-button type="primary" @click="submitAftersalesRemind">
+              {{ $t('4d1aec94.38cf16') }}
+            </el-button>
           </div>
         </el-dialog>
         <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
@@ -192,7 +208,7 @@
         <SpDialog
           ref="batchReviewDialogRef"
           v-model="batchReviewDialog"
-          title="批量审核（售后申请）"
+          :title="$t('4d1aec94.5f936e')"
           :form="batchReviewForm"
           :form-list="batchReviewFormList"
           @onSubmit="onBatchReviewSubmit"
@@ -209,6 +225,7 @@ import SpDialog from '@/components/sp-dialog'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
 import { ORDER_CATEGORY, ORDER_TYPE } from '@/consts'
+import { i18n } from '@/i18n'
 export default {
   components: {
     RemarkModal,
@@ -249,26 +266,26 @@ export default {
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
-        { name: '待处理', value: '0' },
-        { name: '处理中', value: '1' },
-        { name: '已处理', value: '2' },
-        { name: '已驳回', value: '3' }
+        { name: i18n.t('4d1aec94.047109'), value: '0' },
+        { name: i18n.t('4d1aec94.5d459d'), value: '1' },
+        { name: i18n.t('4d1aec94.5ad605'), value: '2' },
+        { name: i18n.t('4d1aec94.dbf36d'), value: '3' }
       ],
       aftersalesTypeList: [
-        { name: '仅退款', value: 'ONLY_REFUND' },
-        { name: '退货退款', value: 'REFUND_GOODS' }
+        { name: i18n.t('4d1aec94.6b8821'), value: 'ONLY_REFUND' },
+        { name: i18n.t('4d1aec94.cc0193'), value: 'REFUND_GOODS' }
         // { name: '换货', value: 'EXCHANGING_GOODS' }
       ],
       aftersalesTypeListOther: [
-        { name: '仅退款', value: 'ONLY_REFUND' },
-        { name: '退货退款', value: 'REFUND_GOODS' }
+        { name: i18n.t('4d1aec94.6b8821'), value: 'ONLY_REFUND' },
+        { name: i18n.t('4d1aec94.cc0193'), value: 'REFUND_GOODS' }
       ],
       aftersalesRemindForm: {
         intro: '',
         is_open: false
       },
       aftersalesRemindVisible: false,
-      aftersalesRemindTitle: '售后提醒内容',
+      aftersalesRemindTitle: i18n.t('4d1aec94.117b5a'),
       orderType: ORDER_TYPE,
       multipleSelection: [],
       // 批量审核相关
@@ -280,20 +297,20 @@ export default {
       },
       batchReviewFormList: [
         {
-          label: '审核状态',
+          label: i18n.t('4d1aec94.b6d0e9'),
           key: 'is_approved',
           type: 'radio',
           required: true,
           options: [
-            { label: '1', name: '通过' },
-            { label: '0', name: '拒绝' }
+            { label: '1', name: i18n.t('4d1aec94.23c1f3') },
+            { label: '0', name: i18n.t('4d1aec94.7173f8') }
           ]
         },
         {
-          label: '拒绝原因',
+          label: i18n.t('4d1aec94.f48f94'),
           key: 'refuse_reason',
           type: 'textarea',
-          placeholder: '拒绝原因',
+          placeholder: i18n.t('4d1aec94.f48f94'),
           width: '100%',
           isShow: ({ key }, value) => {
             console.log(key, value, '--')
@@ -301,7 +318,7 @@ export default {
           },
           validator: (rule, value, callback) => {
             if (value.is_approved == 0 && !value.refuse_reason) {
-              callback(new Error('请填写拒绝原因'))
+              callback(new Error(i18n.t('4d1aec94.0f9381')))
             } else {
               callback()
             }
@@ -311,7 +328,7 @@ export default {
       finderSetting: {
         columns: [
           {
-            name: '售后单',
+            name: i18n.t('4d1aec94.d1b93f'),
             key: 'aftersales_bn',
             width: 200,
             render: (h, { row }) => {
@@ -321,7 +338,11 @@ export default {
                   h(
                     'el-tooltip',
                     {
-                      props: { effect: 'dark', content: '复制', placement: 'top-start' }
+                      props: {
+                        effect: 'dark',
+                        content: i18n.t('4d1aec94.79d3ab'),
+                        placement: 'top-start'
+                      }
                     },
                     [
                       h('i', {
@@ -339,7 +360,11 @@ export default {
                     h(
                       'el-tooltip',
                       {
-                        props: { effect: 'dark', content: '店铺名', placement: 'top-start' }
+                        props: {
+                          effect: 'dark',
+                          content: i18n.t('4d1aec94.8a0cc2'),
+                          placement: 'top-start'
+                        }
                       },
                       [h('i', { class: 'el-icon-office-building' })]
                     ),
@@ -349,7 +374,11 @@ export default {
                   h(
                     'el-tooltip',
                     {
-                      props: { effect: 'dark', content: '申请时间', placement: 'top-start' }
+                      props: {
+                        effect: 'dark',
+                        content: i18n.t('4d1aec94.5ba072'),
+                        placement: 'top-start'
+                      }
                     },
                     [h('i', { class: 'el-icon-time' })]
                   ),
@@ -359,7 +388,7 @@ export default {
             }
           },
           {
-            name: '订单号',
+            name: i18n.t('4d1aec94.1e8dc2'),
             key: 'order_id',
             minWidth: 180,
             render: (h, { row }) => {
@@ -368,7 +397,11 @@ export default {
                 h(
                   'el-tooltip',
                   {
-                    props: { effect: 'dark', content: '复制', placement: 'top-start' }
+                    props: {
+                      effect: 'dark',
+                      content: i18n.t('4d1aec94.79d3ab'),
+                      placement: 'top-start'
+                    }
                   },
                   [
                     h('i', {
@@ -384,7 +417,7 @@ export default {
             }
           },
           {
-            name: '子单商品',
+            name: i18n.t('4d1aec94.db24c2'),
             key: 'sub_order_items',
             minWidth: 220,
             render: (h, { row }) => {
@@ -394,7 +427,7 @@ export default {
                   row.detail.map((item) =>
                     h('div', { style: { marginBottom: '4px' } }, [
                       h('div', { style: {} }, item.item_name),
-                      h('div', { style: {} }, `货号: ${item.item_bn}`)
+                      h('div', { style: {} }, `${i18n.t('4d1aec94.d1d3e6')} ${item.item_bn}`)
                     ])
                   )
                 )
@@ -403,19 +436,19 @@ export default {
             }
           },
           {
-            name: '退款商品金额（¥）',
+            name: i18n.t('4d1aec94.6f42a9'),
             key: 'refund_fee',
             width: 160,
             align: 'center'
           },
           {
-            name: '退款抵扣积分',
+            name: i18n.t('4d1aec94.8686e0'),
             key: 'refund_point',
             width: 160,
             align: 'center'
           },
           {
-            name: '退款运费金额（¥）',
+            name: i18n.t('4d1aec94.3034f2'),
             key: 'freight',
             width: 150,
             align: 'center',
@@ -425,7 +458,7 @@ export default {
             }
           },
           {
-            name: '退款运费（积分）',
+            name: i18n.t('4d1aec94.ff5669'),
             key: 'freight',
             width: 160,
             align: 'center',
@@ -435,7 +468,7 @@ export default {
             }
           },
           {
-            name: '实退金额（¥）',
+            name: i18n.t('4d1aec94.b1d954'),
             key: 'refunded_fee',
             width: 150,
             align: 'center',
@@ -446,7 +479,7 @@ export default {
             }
           },
           {
-            name: '实退积分',
+            name: i18n.t('4d1aec94.761d19'),
             key: 'refunded_point',
             width: 120,
             align: 'center',
@@ -478,7 +511,7 @@ export default {
           //   }
           // },
           {
-            name: '手机号',
+            name: i18n.t('4d1aec94.8098e2'),
             key: 'mobile',
             minWidth: 150,
             visible: !this.IS_SUPPLIER(),
@@ -495,84 +528,84 @@ export default {
             }
           },
           {
-            name: '导购',
+            name: i18n.t('4d1aec94.c60b43'),
             key: 'salesman_name',
             visible: this.VERSION_STANDARD(),
             width: 100
           },
           {
-            name: '订单分类',
+            name: i18n.t('4d1aec94.350fd3'),
             key: 'order_holder',
             width: 120,
             render: (h, { row }) => h('span', {}, this.getOrderCategoryName(row.order_holder)),
             visible: this.VERSION_STANDARD() || this.IS_ADMIN()
           },
           {
-            name: '来源供应商',
+            name: i18n.t('4d1aec94.55c61d'),
             key: 'supplier_name',
             minWidth: 100,
             visible: this.VERSION_STANDARD() || this.IS_ADMIN()
           },
           {
-            name: '配送员',
+            name: i18n.t('4d1aec94.b7765e'),
             key: 'self_delivery_operator_name',
             visible: !this.IS_SUPPLIER()
           },
           {
-            name: '姓名',
+            name: i18n.t('4d1aec94.60d045'),
             key: 'contact',
             minWidth: 100,
             visible: this.IS_SUPPLIER()
           },
           {
-            name: 'SKU编号',
+            name: i18n.t('4d1aec94.58cac1'),
             key: '',
             minWidth: 150,
             visible: this.IS_SUPPLIER(),
             render: (h, { row }) => h('span', {}, row.detail[0].item_bn)
           },
           {
-            name: '商品名称',
+            name: i18n.t('4d1aec94.1fd1d5'),
             key: '',
             minWidth: 100,
             visible: this.IS_SUPPLIER(),
             render: (h, { row }) => h('span', {}, row.detail[0].item_name)
           },
           {
-            name: '售后商品数量',
+            name: i18n.t('4d1aec94.88b8dc'),
             key: '',
             minWidth: 120,
             visible: this.IS_SUPPLIER(),
             render: (h, { row }) => h('span', {}, row.detail[0].num)
           },
           {
-            name: '金额',
+            name: i18n.t('4d1aec94.4cf24a'),
             key: 'detail.0.refund_fee',
             minWidth: 100,
             visible: this.IS_SUPPLIER(),
             render: (h, { row }) => h('span', {}, `${(row.detail[0].refund_fee / 100).toFixed(2)}`)
           },
           {
-            name: '售后原因',
+            name: i18n.t('4d1aec94.160adc'),
             key: 'reason',
             minWidth: 100,
             visible: this.IS_SUPPLIER()
           },
           {
-            name: '修改时间',
+            name: i18n.t('4d1aec94.1303e6'),
             key: 'update_time',
             minWidth: 100,
             visible: this.IS_SUPPLIER()
           },
           {
-            name: '售后类型',
+            name: i18n.t('4d1aec94.d4e4ff'),
             key: 'aftersales_type',
             width: 100,
             render: (h, { row }) => {
               const typeMap = {
-                'ONLY_REFUND': { text: '仅退款', type: 'info' },
-                'REFUND_GOODS': { text: '退货退款', type: 'warning' },
-                'EXCHANGING_GOODS': { text: '换货', type: 'danger' }
+                'ONLY_REFUND': { text: i18n.t('4d1aec94.6b8821'), type: 'info' },
+                'REFUND_GOODS': { text: i18n.t('4d1aec94.cc0193'), type: 'warning' },
+                'EXCHANGING_GOODS': { text: i18n.t('4d1aec94.bb9cd5'), type: 'danger' }
               }
               const type = typeMap[row.aftersales_type]
               return type
@@ -587,16 +620,16 @@ export default {
             }
           },
           {
-            name: '售后状态',
+            name: i18n.t('4d1aec94.5101e8'),
             key: 'aftersales_status',
             width: 100,
             render: (h, { row }) => {
               const statusMap = {
-                '0': { text: '待处理', type: '' },
-                '1': { text: '处理中', type: '' },
-                '2': { text: '已处理', type: 'success' },
-                '3': { text: '已驳回', type: 'success' },
-                '4': { text: '已关闭', type: 'success' }
+                '0': { text: i18n.t('4d1aec94.047109'), type: '' },
+                '1': { text: i18n.t('4d1aec94.5d459d'), type: '' },
+                '2': { text: i18n.t('4d1aec94.5ad605'), type: 'success' },
+                '3': { text: i18n.t('4d1aec94.dbf36d'), type: 'success' },
+                '4': { text: i18n.t('4d1aec94.9c5850'), type: 'success' }
               }
               const status = statusMap[row.aftersales_status]
               return status
@@ -611,7 +644,7 @@ export default {
             }
           },
           {
-            name: '操作',
+            name: i18n.t('4d1aec94.2b6bc0'),
             key: 'actions',
             width: 100,
             fixed: 'left',
@@ -630,7 +663,7 @@ export default {
                       }
                     }
                   },
-                  '详情'
+                  i18n.t('4d1aec94.f26225')
                 ),
                 h(
                   'el-button',
@@ -640,7 +673,7 @@ export default {
                       click: () => this.clickShowRemark(row, 'afterList')
                     }
                   },
-                  '备注'
+                  i18n.t('4d1aec94.2432b5')
                 )
               ])
             }
@@ -768,7 +801,7 @@ export default {
       if (status) {
         this.$message({
           type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
+          message: this.$t('4d1aec94.3e1ddd')
         })
         this.$export_open('aftersale_record_count')
         return
@@ -779,7 +812,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '没有相关数据可导出'
+          message: this.$t('4d1aec94.bfd8d5')
         })
       }
     },
@@ -807,7 +840,7 @@ export default {
       await this.$api.aftersales.setAftersalesRemind(params)
       this.$message({
         type: 'success',
-        message: '保存成功'
+        message: this.$t('4d1aec94.3b1083')
       })
       this.aftersalesRemindVisible = false
     },
@@ -834,7 +867,7 @@ export default {
         navigator.clipboard
           .writeText(text)
           .then(() => {
-            this.$message.success('复制成功')
+            this.$message.success(this.$t('4d1aec94.20a495'))
           })
           .catch(() => {
             this.fallbackCopyTextToClipboard(text)
@@ -856,12 +889,12 @@ export default {
       try {
         const successful = document.execCommand('copy')
         if (successful) {
-          this.$message.success('复制成功')
+          this.$message.success(this.$t('4d1aec94.20a495'))
         } else {
-          this.$message.error('复制失败')
+          this.$message.error(this.$t('4d1aec94.5154ae'))
         }
       } catch (err) {
-        this.$message.error('复制失败')
+        this.$message.error(this.$t('4d1aec94.5154ae'))
       }
       document.body.removeChild(textArea)
     },
@@ -869,7 +902,7 @@ export default {
       this.batchReviewType = type
       const selection = this.$refs.finder.$refs.finderTable.getSelection()
       if (selection.length === 0) {
-        return this.$message.error('请选择需要审核的数据')
+        return this.$message.error(this.$t('4d1aec94.8751cf'))
       }
 
       // 重置表单
@@ -884,7 +917,7 @@ export default {
       try {
         const selection = this.$refs.finder.$refs.finderTable.getSelection()
         if (this.batchReviewForm.is_approved == 0 && !this.batchReviewForm.refuse_reason) {
-          this.$message.error('请填写拒绝原因')
+          this.$message.error(this.$t('4d1aec94.0f9381'))
           return
         }
 
@@ -899,18 +932,18 @@ export default {
           params.is_approved = this.batchReviewForm.is_approved
           params.refuse_reason = this.batchReviewForm.refuse_reason
         }
-        console.log('批量审核参数:', params)
+        console.log('Batch review params:', params)
         if (this.batchReviewType == 'refund') {
           await this.$api.aftersales.refundCheck(params)
         } else {
           await this.$api.aftersales.reviewAftersales(params)
         }
-        this.$message.success(`操作成功`)
+        this.$message.success(this.$t('4d1aec94.33130f'))
         this.batchReviewDialog = false
         this.$refs.finder.refresh()
       } catch (error) {
-        console.error('批量审核失败:', error)
-        this.$message.error('批量审核失败，请重试')
+        console.error('Batch review failed:', error)
+        this.$message.error(this.$t('4d1aec94.239a77'))
       }
     }
   }

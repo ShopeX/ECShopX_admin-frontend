@@ -19,7 +19,7 @@
     >
       <template slot="tableTop" v-if="!dmcrmIsOpen">
         <div class="action-container">
-          <el-button @click="updatePoint">积分调整</el-button>
+          <el-button @click="updatePoint">{{ $t('39c803f6.5546a2') }}</el-button>
         </div>
       </template>
     </SpFinder>
@@ -28,7 +28,7 @@
     <SpDialog
       ref="pointDialogRef"
       v-model="pointDialog"
-      title="积分调整"
+      :title="$t('39c803f6.5546a2')"
       :form="pointForm"
       :form-list="pointFormList"
       @onSubmit="onChuZhiFormSubmit"
@@ -42,37 +42,6 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      setting: createSetting({
-        columns: [
-          {
-            name: '时间',
-            key: 'created',
-            formatter: (value, row, col) => {
-              return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
-            }
-          },
-          {
-            name: '积分变动',
-            key: 'curPayFee',
-            render: (h, { row }) => {
-              return h(
-                'el-tag',
-                {
-                  props: {
-                    type: row.income > 0 ? 'danger' : row.outcome > 0 ? 'success' : ''
-                  }
-                },
-                row.income > 0 ? `+${row.income}` : row.outcome > 0 ? `-${row.outcome}` : 0
-              )
-            }
-          },
-          {
-            name: '变动原因',
-            key: 'point_desc'
-          },
-          { name: '订单号', key: 'order_id' }
-        ]
-      }),
       pointDialog: false,
       pointForm: {
         adjustment_type: 'plus',
@@ -97,6 +66,42 @@ export default {
           type: 'number'
         }
       ]
+    }
+  },
+  computed: {
+    setting() {
+      const vm = this
+      return createSetting({
+        columns: [
+          {
+            name: vm.$t('39c803f6.8a0f5e'),
+            key: 'created',
+            formatter: (value, row, col) => {
+              return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
+            }
+          },
+          {
+            name: vm.$t('39c803f6.2e7c4d'),
+            key: 'curPayFee',
+            render: (h, { row }) => {
+              return h(
+                'el-tag',
+                {
+                  props: {
+                    type: row.income > 0 ? 'danger' : row.outcome > 0 ? 'success' : ''
+                  }
+                },
+                row.income > 0 ? `+${row.income}` : row.outcome > 0 ? `-${row.outcome}` : 0
+              )
+            }
+          },
+          {
+            name: vm.$t('39c803f6.9f3b1a'),
+            key: 'point_desc'
+          },
+          { name: vm.$t('39c803f6.4c8e6b'), key: 'order_id' }
+        ]
+      })
     }
   },
   created() {

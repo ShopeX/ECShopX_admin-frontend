@@ -26,7 +26,7 @@
   <div class="picker-seckill">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入活动名称" />
+        <el-input v-model="formData.keywords" :placeholder="$t('e8cd9812.7528b3')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -37,27 +37,7 @@
       }"
       url="/promotions/seckillactivity/getlist"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '活动ID', key: 'seckill_id', width: '80' },
-          { name: '活动名称', key: 'activity_name' },
-          {
-            name: '活动时间',
-            key: 'activity_start_date',
-            formatter: (value, row, col) => {
-              return `${row.activity_start_date} ~ ${row.activity_end_date}`
-            }
-          },
-          {
-            name: '活动状态',
-            key: 'status',
-            width: '160',
-            formatter: (value, row, col) => {
-              return this.statusList[value]
-            }
-          }
-        ]
-      }"
+      :setting="seckillSetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -80,6 +60,32 @@ export default {
     title: '选择秒杀'
   },
   props: ['value'],
+  computed: {
+    seckillSetting() {
+      const t = this.$t.bind(this)
+      return {
+        columns: [
+          { name: t('e8cd9812.be3322'), key: 'seckill_id', width: '80' },
+          { name: t('e8cd9812.39834b'), key: 'activity_name' },
+          {
+            name: t('e8cd9812.c799f5'),
+            key: 'activity_start_date',
+            formatter: (value, row, col) => {
+              return `${row.activity_start_date} ~ ${row.activity_end_date}`
+            }
+          },
+          {
+            name: t('e8cd9812.1181a5'),
+            key: 'status',
+            width: '160',
+            formatter: (value, row, col) => {
+              return this.statusList[value]
+            }
+          }
+        ]
+      }
+    }
+  },
   data() {
     const { queryParams } = this.value
     const defaultParams = {
@@ -92,7 +98,9 @@ export default {
       statusList: SECKILL_ACTIVITY_STATUS
     }
   },
-  created() {},
+  created() {
+    this.$options.config.title = this.$t('e8cd9812.235258')
+  },
   methods: {
     beforeSearch(params) {
       params = {

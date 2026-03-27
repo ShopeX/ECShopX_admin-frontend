@@ -6,36 +6,44 @@
 <template>
   <SpPage>
     <SpFilterForm :model="params" @onSearch="handleClick" @onReset="onReset">
-      <SpFilterFormItem prop="promoter_mobile" label="推广员">
-        <el-input v-model="params.promoter_mobile" size="mini" placeholder="推广员" />
+      <SpFilterFormItem prop="promoter_mobile" :label="$t('434cdeb7.018377')">
+        <el-input
+          v-model="params.promoter_mobile"
+          size="mini"
+          :placeholder="$t('434cdeb7.018377')"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="item_name" label="商品">
-        <el-input v-model="params.item_name" size="mini" placeholder="商品" />
+      <SpFilterFormItem prop="item_name" :label="$t('434cdeb7.9897d8')">
+        <el-input v-model="params.item_name" size="mini" :placeholder="$t('434cdeb7.9897d8')" />
       </SpFilterFormItem>
-      <SpFilterFormItem label="日期" prop="search_time">
+      <SpFilterFormItem :label="$t('434cdeb7.4ff1e7')" prop="search_time">
         <el-date-picker
           v-model="search_time"
           type="daterange"
           value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('434cdeb7.981cbe')"
+          :start-placeholder="$t('434cdeb7.b44c0f')"
+          :end-placeholder="$t('434cdeb7.1d468b')"
         />
       </SpFilterFormItem>
     </SpFilterForm>
     <div class="action-container">
-      <el-button type="primary" size="mini" @click="exportData"> 导 出 </el-button>
+      <el-button type="primary" size="mini" @click="exportData">
+{{
+        $t('434cdeb7.066ffd')
+      }}
+</el-button>
     </div>
     <el-table
       v-loading="loading"
       :data="list"
       style="width: 100%"
       :height="wheight - 170"
-      element-loading-text="数据加载中"
+      :element-loading-text="$t('434cdeb7.f09b12')"
       :default-sort="{ prop: 'bind_date', order: 'descending' }"
     >
-      <el-table-column prop="promoter_mobile" label="推广员" />
-      <el-table-column prop="item_name" label="商品">
+      <el-table-column prop="promoter_mobile" :label="$t('434cdeb7.018377')" />
+      <el-table-column prop="item_name" :label="$t('434cdeb7.9897d8')">
         <template slot-scope="scope">
           {{ scope.row.item_name
           }}<el-tag v-if="scope.row.item_spec_desc" size="mini" effect="plain">
@@ -43,25 +51,29 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="rebate_type" label="任务制类型">
+      <el-table-column prop="rebate_type" :label="$t('434cdeb7.d07d88')">
         <template slot-scope="scope">
-          <span v-if="scope.row.rebate_type == 'total_money'">按总金额</span>
-          <span v-if="scope.row.rebate_type == 'total_num'">按总数量</span>
+          <span v-if="scope.row.rebate_type == 'total_money'">{{ $t('434cdeb7.fed67e') }}</span>
+          <span v-if="scope.row.rebate_type == 'total_num'">{{ $t('434cdeb7.5f414e') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="total_fee" label="已完成金额" min-width="80">
-        <template slot-scope="scope"> {{ scope.row.total_fee / 100 }}元 </template>
-      </el-table-column>
-      <el-table-column prop="finish_num" label="已完成数量" min-width="80" />
-      <el-table-column prop="wait_num" label="待完成数量" min-width="80" />
-      <el-table-column prop="close_num" label="退回数量" min-width="80" />
-      <el-table-column prop="plan_date" min-width="80" label="账期" />
-      <el-table-column prop="rebate_money" min-width="80" label="奖金">
-        <template slot-scope="scope"> {{ scope.row.rebate_money / 100 }}元 </template>
-      </el-table-column>
-      <el-table-column label="状态" min-width="60">
+      <el-table-column prop="total_fee" :label="$t('434cdeb7.18f625')" min-width="80">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status" type="success"> 已达标 </el-tag>
+          {{ scope.row.total_fee / 100 }}{{ $t('1c4551e3.c16655') }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="finish_num" :label="$t('434cdeb7.be4db6')" min-width="80" />
+      <el-table-column prop="wait_num" :label="$t('434cdeb7.bebb1e')" min-width="80" />
+      <el-table-column prop="close_num" :label="$t('434cdeb7.f6fb04')" min-width="80" />
+      <el-table-column prop="plan_date" min-width="80" :label="$t('434cdeb7.99b7dc')" />
+      <el-table-column prop="rebate_money" min-width="80" :label="$t('434cdeb7.f41af7')">
+        <template slot-scope="scope">
+          {{ scope.row.rebate_money / 100 }}{{ $t('1c4551e3.c16655') }}
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('434cdeb7.3fea7c')" min-width="60">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status" type="success">{{ $t('434cdeb7.f4b045') }}</el-tag>
           <span v-else>{{ scope.row.limit_desc }}</span>
         </template>
       </el-table-column>

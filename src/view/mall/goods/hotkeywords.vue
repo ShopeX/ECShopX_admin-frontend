@@ -5,7 +5,7 @@
 
 <template>
   <el-col class="section section-white" :span="24">
-    <div class="section-header with-border">热门关键词配置</div>
+    <div class="section-header with-border">{{ $t('dd43ad36.9473fa') }}</div>
     <div class="section-white content-padded">
       <el-tag
         v-for="tag in form_content"
@@ -30,9 +30,9 @@
       </el-button>
     </div>
     <div class="section-footer content-center">
-      <el-button type="primary" @click="saveContent"> 保存 </el-button>
+      <el-button type="primary" @click="saveContent"> {{ $t('dd43ad36.be5fbb') }} </el-button>
     </div>
-    <br />
+    <br>
   </el-col>
 </template>
 
@@ -75,7 +75,7 @@ export default {
     saveContent() {
       setHotKeywords({ content: this.form_content }).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('dd43ad36.3b1083'),
           type: 'success',
           duration: 5 * 1000
         })

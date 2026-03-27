@@ -8,22 +8,22 @@
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="4">
-          开启体测：
+          {{ $t('db2d7b44.c0a6f6') }}
           <el-switch v-model="setting.status" active-color="#13ce66" inactive-color="#ff4949" />
         </el-col>
       </el-row>
       <el-row v-if="setting.status == 1" class="content-bottom-padded" :gutter="20">
         <el-col v-if="setting.status == 1 && setting.temp_id != 0" :span="4">
-          <div>当前体测模板：{{ setting.temp_name }}</div>
+          <div>{{ $t('db2d7b44.440f84') }}{{ setting.temp_name }}</div>
         </el-col>
         <el-col :span="4">
-          <el-button round @click="batchChooseFormwork"> 选择体测模板 </el-button>
+          <el-button round @click="batchChooseFormwork">{{ $t('db2d7b44.d4543d') }}</el-button>
         </el-col>
       </el-row>
       <el-card v-if="setting.status == 1 && setting.temp_id != 0" shadow="never">
         <el-table v-loading="loading" :data="ItemsList" :height="wheight - 280">
-          <el-table-column prop="mobile" label="会员手机号" width="140" />
-          <el-table-column prop="username" label="姓名" width="120" />
+          <el-table-column prop="mobile" :label="$t('db2d7b44.6a52ee')" width="140" />
+          <el-table-column prop="username" :label="$t('a0d7a294.60d045')" width="120" />
           <el-table-column
             v-for="(col, index) in colsTitle"
             :key="index"
@@ -31,11 +31,11 @@
             :label="col.label"
             width="100"
           />
-          <el-table-column label="操作" width="100">
+          <el-table-column :label="$t('8da83775.2b6bc0')" width="100">
             <template slot-scope="scope">
-              <i class="iconfont icon-search-plus" @click="goToDetail(scope.$index, scope.row)"
-                >详情</i
-              >
+              <i class="iconfont icon-search-plus" @click="goToDetail(scope.$index, scope.row)">{{
+                $t('a0d7a294.f26225')
+              }}</i>
             </template>
           </el-table-column>
         </el-table>
@@ -52,7 +52,11 @@
           />
         </div>
       </el-card>
-      <el-dialog title="选择体侧模板" class="right-dialog" :visible.sync="FormworkVisible">
+      <el-dialog
+        :title="$t('db2d7b44.28fd7c')"
+        class="right-dialog"
+        :visible.sync="FormworkVisible"
+      >
         <template>
           <el-form ref="formwork" :model="formwork">
             <el-form-item>
@@ -63,7 +67,11 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="onSubmitFormwork"> 确定添加 </el-button>
+              <el-button type="primary" @click="onSubmitFormwork">
+{{
+                $t('db2d7b44.b04fcb')
+              }}
+</el-button>
             </el-form-item>
           </el-form>
         </template>

@@ -54,21 +54,7 @@
       }"
       url="/employeepurchase/activities"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: 'ID', key: 'id', width: 80 },
-          { name: '内购活动名称', key: 'name' },
-          { name: '来源店铺', key: 'distributor_name' },
-          {
-            name: '购买时间',
-            key: 'employee_end_time',
-            formatter: (value, { employee_end_time, employee_begin_time }, col) => {
-              return `${momentFunc(employee_begin_time)} ~ ${momentFunc(employee_end_time)}`
-            }
-          },
-          { name: '状态', key: 'status_desc' }
-        ]
-      }"
+      :setting="purchaseActivitySetting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -99,7 +85,30 @@ export default {
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {},
+  computed: {
+    purchaseActivitySetting() {
+      const t = this.$t.bind(this)
+      const momentFunc = this.momentFunc
+      return {
+        columns: [
+          { name: 'ID', key: 'id', width: 80 },
+          { name: t('ad117ebf.5da03b'), key: 'name' },
+          { name: t('ad117ebf.53cc55'), key: 'distributor_name' },
+          {
+            name: t('ad117ebf.059c1e'),
+            key: 'employee_end_time',
+            formatter: (value, { employee_end_time, employee_begin_time }, col) => {
+              return `${momentFunc(employee_begin_time)} ~ ${momentFunc(employee_end_time)}`
+            }
+          },
+          { name: t('ad117ebf.3fea7c'), key: 'status_desc' }
+        ]
+      }
+    }
+  },
+  created() {
+    this.$options.config.title = this.$t('ad117ebf.b2e230')
+  },
   methods: {
     beforeSearch(params) {
       params = {

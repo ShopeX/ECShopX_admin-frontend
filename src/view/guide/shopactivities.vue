@@ -6,7 +6,11 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
-      <el-button type="primary" @click="handleClickAddActivity"> 新增活动 </el-button>
+      <el-button type="primary" @click="handleClickAddActivity">
+{{
+        $t('60e84c78.6f0c8f')
+      }}
+</el-button>
       <div class="articles">
         <el-row :gutter="10">
           <el-col v-for="(item, index) in list" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
@@ -39,26 +43,38 @@
               <div class="footer">
                 <div class="footer-item" @click="handleClikPublish(item)">
                   <template v-if="item.is_show === '1'">
-                    <i class="iconfont icon-undo-alt" />撤回
+                    <i class="iconfont icon-undo-alt" />{{ $t('60e84c78.230505') }}
                   </template>
-                  <template v-else> <i class="iconfont icon-broadcast-tower" />发布 </template>
+                  <template v-else
+                    >
+<i class="iconfont icon-broadcast-tower" />{{
+                      $t('60e84c78.83611a')
+                    }}
+</template
+                  >
                 </div>
                 <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
                   <div class="content-bottom-padded">
-                    <el-input v-model="item.sort" size="mini" placeholder="请输入排序" />
+                    <el-input
+                      v-model="item.sort"
+                      size="mini"
+                      :placeholder="$t('60e84c78.215aaa')"
+                    />
                   </div>
                   <div style="text-align: right; margin: 0">
                     <el-button size="mini" type="text" @click="item.visible = false">
-                      取消
+                      {{ $t('60e84c78.625fb2') }}
                     </el-button>
                     <el-button type="primary" size="mini" @click="handleClickSort(item)">
-                      确定
+                      {{ $t('60e84c78.38cf16') }}
                     </el-button>
                   </div>
-                  <div slot="reference"><i class="iconfont icon-sort-amount-up" />排序</div>
+                  <div slot="reference">
+                    <i class="iconfont icon-sort-amount-up" />{{ $t('60e84c78.c360e9') }}
+                  </div>
                 </el-popover>
                 <div class="footer-item" @click="handleClickDel(item)">
-                  <i class="el-icon-delete" />删除
+                  <i class="el-icon-delete" />{{ $t('60e84c78.2f4aad') }}
                 </div>
               </div>
             </div>
@@ -148,16 +164,16 @@ export default {
      * 删除
      * */
     handleClickDel(row) {
-      this.$confirm('确认是否删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('60e84c78.23f9f0'), this.$t('60e84c78.02d981'), {
+        confirmButtonText: this.$t('60e84c78.38cf16'),
+        cancelButtonText: this.$t('60e84c78.625fb2'),
         type: 'warning'
       })
         .then(() => {
           delActivearticle(row.id).then((res) => {
             this._getActivearticleList()
             this.$message({
-              message: '删除活动成功',
+              message: this.$t('60e84c78.e236fe'),
               type: 'success',
               duration: 5 * 1000
             })

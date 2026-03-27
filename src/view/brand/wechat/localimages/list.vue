@@ -201,11 +201,15 @@
           :on-success="handleAvatarSuccess"
           :on-error="uploadError"
         >
-          <el-button>上传图片</el-button>
+          <el-button>{{ $t('f69ac5cd.ce6855') }}</el-button>
         </el-upload>
-        <el-button @click="onAddGroup"> 添加分组 </el-button>
-        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移动 </el-button>
-        <el-button :disabled="disabledBtn" @click="handleCancelAll"> 全部取消 </el-button>
+        <el-button @click="onAddGroup"> {{ $t('f69ac5cd.ddceab') }} </el-button>
+        <el-button :disabled="disabledBtn" @click="onMoveGroup">
+          {{ $t('f69ac5cd.68d982') }}
+        </el-button>
+        <el-button :disabled="disabledBtn" @click="handleCancelAll">
+          {{ $t('f69ac5cd.4c347e') }}
+        </el-button>
       </div>
     </div>
     <div class="picker-image-bd">
@@ -260,7 +264,7 @@
               </div>
             </div>
           </div>
-          <el-empty v-if="list.length == 0" description="暂无数据" />
+          <el-empty v-if="list.length == 0" :description="$t('f69ac5cd.21efd8')" />
         </div>
         <el-pagination
           layout="total, prev, pager, next"
@@ -276,7 +280,7 @@
     <SpDialog
       ref="groupDialogRef"
       v-model="groupDialog"
-      title="添加分组"
+      :title="$t('f69ac5cd.ddceab')"
       :modal="false"
       :form="groupForm"
       :form-list="groupFormList"
@@ -287,7 +291,7 @@
     <SpDialog
       ref="editDialogRef"
       v-model="editDialog"
-      title="移动分组"
+      :title="$t('f69ac5cd.2ccbfe')"
       :modal="false"
       :form="editForm"
       :form-list="editFormList"
@@ -297,7 +301,7 @@
     <!-- 图片裁剪 -->
     <el-dialog
       class="cropper-dialog"
-      title="图片裁剪"
+      :title="$t('f69ac5cd.1cb6db')"
       :modal="false"
       :visible.sync="cropperDialogShow"
       width="500px"
@@ -318,8 +322,10 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cropperDialogShow = false">取 消</el-button>
-        <el-button type="primary" @click="cropperDialogShow = false">确 定</el-button>
+        <el-button @click="cropperDialogShow = false">{{ $t('f69ac5cd.c08ab9') }}</el-button>
+        <el-button type="primary" @click="cropperDialogShow = false">{{
+          $t('f69ac5cd.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -338,9 +344,6 @@ export default {
   },
   extends: BasePicker,
   mixins: [PageMixin],
-  config: {
-    title: '我的图片'
-  },
   props: ['value'],
   data() {
     let { multiple = true, data } = this.value || {}
@@ -360,13 +363,13 @@ export default {
       },
       groupFormList: [
         {
-          label: '分组名称',
+          label: this.$t('f69ac5cd.1014b3'),
           key: 'groupName',
           type: 'input',
           maxlength: 150,
-          placeholder: '请输入分组名称',
+          placeholder: this.$t('f69ac5cd.0c6416'),
           required: true,
-          message: '不能为空'
+          message: this.$t('f69ac5cd.281bad')
         }
       ],
       editDialog: false,
@@ -375,13 +378,13 @@ export default {
       },
       editFormList: [
         {
-          label: '图片分组',
+          label: this.$t('f69ac5cd.e26c8c'),
           key: 'groupId',
-          placeholder: '请选择图片分组',
+          placeholder: this.$t('f69ac5cd.597997'),
           type: 'select',
           options: [],
           required: true,
-          message: '不能为空'
+          message: this.$t('f69ac5cd.281bad')
         }
       ],
       cropperDialogShow: false,
@@ -398,6 +401,9 @@ export default {
     }
   },
   computed: {
+    config() {
+      return { title: this.$t('f69ac5cd.e757d0') }
+    },
     disabledDeleteGroup() {
       return this.selectCatgory == -1
     },
@@ -465,10 +471,14 @@ export default {
     },
     async onDeleteGroup({ image_cat_id, image_cat_name }) {
       try {
-        await this.$confirm(`确认删除分组【${image_cat_name}】？`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        })
+        await this.$confirm(
+          this.$t('f69ac5cd.9b22f9') + '【' + image_cat_name + '】？',
+          this.$t('f69ac5cd.02d981'),
+          {
+            confirmButtonText: this.$t('f69ac5cd.38cf16'),
+            cancelButtonText: this.$t('f69ac5cd.625fb2')
+          }
+        )
         await this.$api.picker.deleteImageGroup(image_cat_id)
         this.getImageAllCatgory()
         this.refresh(true)
@@ -549,7 +559,10 @@ export default {
     },
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
-      this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
+      this.catgoryList = [
+        { image_cat_id: -1, image_cat_name: this.$t('f69ac5cd.a8982a') },
+        ...list.reverse()
+      ]
       this.editFormList[0].options = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,
@@ -586,11 +599,11 @@ export default {
       const isGIF = file.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 5
       if (!isJPG && !isPNG && !isGIF) {
-        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+        this.$message.error(this.$t('f69ac5cd.34e969'))
         return
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 5MB!')
+        this.$message.error(this.$t('f69ac5cd.50fa12'))
         return
       }
       this.localpostData.fname = file.name
@@ -604,7 +617,7 @@ export default {
         storage: 'image' //图片id必填
       }
       await this.$api.qiniu.uploadQiniuPic(uploadParams)
-      this.$message.success('上传成功')
+      this.$message.success(this.$t('f69ac5cd.a7699b'))
       this.refresh(true)
     },
     // 自定义上传
@@ -626,21 +639,21 @@ export default {
     async handleCopy(url) {
       await this.$copyText(url)
       this.$notify.success({
-        message: '链接复制成功',
+        message: this.$t('f69ac5cd.c13172'),
         showClose: true
       })
     },
     removeItem(item, index) {
-      this.$confirm('确定删除此图片吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('f69ac5cd.5dab41'), this.$t('f69ac5cd.02d981'), {
+        confirmButtonText: this.$t('f69ac5cd.38cf16'),
+        cancelButtonText: this.$t('f69ac5cd.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteImage({ image_id: item.image_id }).then((response) => {
             this.refresh(true)
             this.$message({
-              message: '删除成功',
+              message: this.$t('f69ac5cd.0007d1'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -649,7 +662,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('f69ac5cd.2111cc')
           })
         })
     },

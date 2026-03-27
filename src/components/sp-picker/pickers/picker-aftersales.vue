@@ -27,7 +27,7 @@
   <div class="picker-aftersales">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="输入店铺名称或关键词搜索" />
+        <el-input v-model="formData.keywords" :placeholder="$t('51253cd4.af37a1')" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -35,7 +35,7 @@
       url="/distributors/aftersales"
       :fixed-row-action="true"
       :setting="{
-        columns: [{ name: '店铺名称', key: 'name' }]
+        columns: [{ name: $t('51253cd4.0d4934'), key: 'name' }]
       }"
       :hooks="{
         beforeSearch: beforeSearch,
@@ -57,6 +57,9 @@ export default {
     title: '选择店铺'
   },
   props: ['value'],
+  created() {
+    this.$options.config.title = this.$t('51253cd4.afa2e6')
+  },
   data() {
     return {
       formData: {
@@ -66,9 +69,6 @@ export default {
       loading: false,
       localData: []
     }
-  },
-  created() {
-    // this.fetch()
   },
   methods: {
     beforeSearch(params) {

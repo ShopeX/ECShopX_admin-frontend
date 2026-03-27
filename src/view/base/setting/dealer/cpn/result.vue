@@ -7,63 +7,73 @@
   <div class="cpn-result">
     <div v-if="currentStatus.resultStatus == 'failed'" class="content">
       <div class="img">
-        <img :src="fail_IMG" alt="" />
+        <img :src="fail_IMG" alt="">
       </div>
       <div class="tips">
         <p>
-          您的{{ currentStatus.title }}审核于
-          {{ currentStatus.time && timestampToTime(currentStatus.time) }} 未通过
+          {{
+            $t('e15f614a.6247c2', {
+              title: currentStatus.title,
+              time: currentStatus.time && timestampToTime(currentStatus.time)
+            })
+          }}
         </p>
-        <p>建议查看审批详情修改入驻信息再提交审核</p>
+        <p>{{ $t('e15f614a.4d8d6f') }}</p>
       </div>
-      <div class="errinfo">审批意见：{{ currentStatus.info || '-' }}</div>
+      <div class="errinfo">{{ $t('e15f614a.f5c361') }}{{ currentStatus.info || '-' }}</div>
     </div>
     <div v-else-if="currentStatus.resultStatus == 'succeeded'" class="content">
       <div class="img">
-        <img :src="success_IMG" alt="" />
+        <img :src="success_IMG" alt="">
       </div>
       <div class="tips">
         <p>
-          您的{{ currentStatus.title }}审核于
-          {{ currentStatus.time && timestampToTime(currentStatus.time) }} 顺利通过
+          {{
+            $t('e15f614a.06b035', {
+              title: currentStatus.title,
+              time: currentStatus.time && timestampToTime(currentStatus.time)
+            })
+          }}
         </p>
         <p v-if="currentStatus.type == 'photo'">
-          请在
-          {{ (currentStatus.time && timestampToTime(currentStatus.time + day * 5)) || '-' }}
-          前提交证照信息进行审核，否则入驻审核结果将失效
+          {{
+            $t('e15f614a.5182d0', {
+              time: (currentStatus.time && timestampToTime(currentStatus.time + day * 5)) || '-'
+            })
+          }}
         </p>
       </div>
     </div>
     <div v-else-if="currentStatus.resultStatus == 'netin'" class="content">
       <div class="img">
-        <img :src="success_IMG" alt="" />
+        <img :src="success_IMG" alt="">
       </div>
       <div class="tips">
-        <p>您的入网环节顺利完成</p>
+        <p>{{ $t('e15f614a.ff8e5d') }}</p>
       </div>
     </div>
     <div v-else class="content">
       <div class="img">
-        <img :src="wait_IMG" alt="" />
+        <img :src="wait_IMG" alt="">
       </div>
       <div class="tips">
-        <p>已提交审核，请耐心等待～</p>
-        <p>预计会在1～5个工作日完成审核</p>
+        <p>{{ $t('e15f614a.0236d1') }}</p>
+        <p>{{ $t('e15f614a.4d6405') }}</p>
       </div>
     </div>
     <div class="btn">
       <el-button v-if="currentStatus.resultStatus == 'failed'" type="primary" @click="reset">
-        重新填写
+        {{ $t('e15f614a.a5c7b5') }}
       </el-button>
       <el-button v-if="currentStatus.resultStatus == 'succeeded'" type="primary" @click="next">
-        下一步
+        {{ $t('e15f614a.38ce27') }}
       </el-button>
       <el-button
         v-if="currentStatus.resultStatus == 'netin' && $store.getters.login_type != 'distributor'"
         type="primary"
         @click="nextCenter"
       >
-        进入结算信息
+        {{ $t('e15f614a.5a2ee9') }}
       </el-button>
     </div>
   </div>

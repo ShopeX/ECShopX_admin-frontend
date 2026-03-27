@@ -7,39 +7,43 @@
   <div class="section section-white pluspricebuyAdd">
     <el-form ref="form" :model="form" class="box-set" label-width="120px">
       <div class="section-header with-border">
-        <div>添加/编辑加价购促销</div>
+        <div>{{ $t('4262458d.b17fea') }}</div>
       </div>
       <div class="form-wrapper clearfix">
         <el-form-item
-          label="名称"
+          :label="$t('4262458d.d7ec2d')"
           style="margin-top: 20px"
           prop="marketing_name"
-          :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
+          :rules="nameRules"
         >
           <el-col :span="20">
-            <el-input v-model="form.marketing_name" :maxlength="30" placeholder="最多30个字" />
+            <el-input
+              v-model="form.marketing_name"
+              :maxlength="30"
+              :placeholder="$t('4262458d.017ce7')"
+            />
           </el-col>
         </el-form-item>
-        <el-form-item label="有效期">
+        <el-form-item :label="$t('4262458d.bb114a')">
           <el-col :span="20">
             <el-date-picker
               v-model="activity_date"
               type="datetimerange"
-              range-separator="至"
-              start-placeholder="生效时间"
-              end-placeholder="过期时间"
+              :range-separator="$t('4262458d.981cbe')"
+              :start-placeholder="$t('4262458d.fc92e9')"
+              :end-placeholder="$t('4262458d.1fa23f')"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="绑定商品">
+        <el-form-item :label="$t('4262458d.3b9737')">
           <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
             <!-- el-radio label="0">全场可用</el-radio> -->
-            <el-radio label="1"> 指定商品可用 </el-radio>
-            <el-radio label="2"> 指定分类适用 </el-radio>
-            <el-radio label="3"> 指定商品标签适用 </el-radio>
-            <el-radio label="4"> 指定品牌适用 </el-radio>
+            <el-radio label="1"> {{ $t('4262458d.53be82') }} </el-radio>
+            <el-radio label="2"> {{ $t('4262458d.4e4c10') }} </el-radio>
+            <el-radio label="3"> {{ $t('4262458d.d61cbb') }} </el-radio>
+            <el-radio label="4"> {{ $t('4262458d.8f5e18') }} </el-radio>
           </el-radio-group>
           <div v-if="!zdItemHidden" style="position: relative">
             <SkuSelector :data="relItems" @change="getItems">
@@ -51,9 +55,11 @@
                   :auto-upload="false"
                   :show-file-list="false"
                 >
-                  <el-button type="primary"> 批量上传 </el-button>
+                  <el-button type="primary"> {{ $t('4262458d.c3202e') }} </el-button>
                 </el-upload>
-                <el-button type="primary" @click="uploadHandleTemplate()"> 下载模板 </el-button>
+                <el-button type="primary" @click="uploadHandleTemplate()">
+                  {{ $t('4262458d.c3f9a1') }}
+                </el-button>
               </template>
             </SkuSelector>
           </div>
@@ -75,7 +81,7 @@
           </el-col>
           <template v-if="!tagHidden">
             <div class="selected-tags view-flex">
-              <div class="label">已选中标签：</div>
+              <div class="label">{{ $t('4262458d.e98819') }}</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(tag, index) in tag.currentTags"
@@ -105,7 +111,7 @@
           </template>
           <template v-if="!brandHidden">
             <div class="selected-tags view-flex">
-              <div class="label">已选中品牌：</div>
+              <div class="label">{{ $t('4262458d.f5bf1f') }}</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(brand, index) in brand.currentBrands"
@@ -151,10 +157,10 @@
           <!--</el-table>-->
           <!--</el-col>-->
         </el-form-item>
-        <el-form-item v-if="useShopVisible()" label="指定店铺">
-          <el-radio v-model="form.use_shop" :label="0"> 全场可用 </el-radio>
+        <el-form-item v-if="useShopVisible()" :label="$t('4262458d.fcf7d8')">
+          <el-radio v-model="form.use_shop" :label="0"> {{ $t('4262458d.6e78ce') }} </el-radio>
           <el-radio v-if="!VERSION_PLATFORM()" v-model="form.use_shop" :label="1">
-            指定店铺可用
+            {{ $t('4262458d.663407') }}
           </el-radio>
           <el-col v-if="form.use_shop == 1" :span="23">
             <el-button
@@ -164,13 +170,17 @@
               round
               @click="relStoresClick"
             >
-              选店铺
+              {{ $t('4262458d.95a6ca') }}
             </el-button>
             <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
-              <el-table-column label="ID" prop="distributor_id" width="60" />
-              <el-table-column label="名称" prop="name" />
-              <el-table-column prop="address" label="地址" show-overflow-tooltip />
-              <el-table-column label="操作" width="50">
+              <el-table-column :label="$t('4262458d.b718ad')" prop="distributor_id" width="60" />
+              <el-table-column :label="$t('4262458d.d7ec2d')" prop="name" />
+              <el-table-column
+                prop="address"
+                :label="$t('4262458d.765048')"
+                show-overflow-tooltip
+              />
+              <el-table-column :label="$t('4262458d.2b6bc0')" width="50">
                 <template slot-scope="scope">
                   <i class="el-icon-delete" @click="deleteStoreRow(scope.$index, form.items)" />
                 </template>
@@ -178,18 +188,22 @@
             </el-table>
           </el-col>
         </el-form-item>
-        <el-form-item label="促销规则">
+        <el-form-item :label="$t('4262458d.0768ec')">
           <el-row :gutter="1">
             <el-col :span="7">
-              <el-radio v-model="form.condition_type" label="quantity"> 按订单总件数 </el-radio>
-              <el-radio v-model="form.condition_type" label="totalfee"> 按订单总金额 </el-radio>
+              <el-radio v-model="form.condition_type" label="quantity">
+                {{ $t('4262458d.e4a84d') }}
+              </el-radio>
+              <el-radio v-model="form.condition_type" label="totalfee">
+                {{ $t('4262458d.7b98f9') }}
+              </el-radio>
             </el-col>
             <el-col :span="6">
               <span
                 v-for="(item, key) in conditionValue"
                 v-if="form.condition_type == 'totalfee'"
                 :key="key"
-                >消费满
+                >{{ $t('4262458d.13dc43') }}
                 <el-input
                   v-model="item.full"
                   type="input"
@@ -197,13 +211,13 @@
                   style="width: 100px"
                   size="mini"
                 />
-                元，加价购</span
+                {{ $t('4262458d.9e02d2') }}</span
               >
               <span
                 v-for="(item, key) in conditionValue"
                 v-if="form.condition_type == 'quantity'"
                 :key="key"
-                >消费满
+                >{{ $t('4262458d.13dc43') }}
                 <el-input
                   v-model="item.full"
                   type="input"
@@ -211,7 +225,7 @@
                   style="width: 100px"
                   size="mini"
                 />
-                件，加价购</span
+                {{ $t('4262458d.329d9a') }}</span
               >
             </el-col>
           </el-row>
@@ -220,7 +234,8 @@
             <div v-for="(item, key) in purchaseRules" :key="key">
               <el-row>
                 <el-col :span="5">
-                  加价购金额：<el-input v-model="item.price" style="width: 100px" size="mini" />
+                  {{ $t('4262458d.7bbcdd')
+                  }}<el-input v-model="item.price" style="width: 100px" size="mini" />
                 </el-col>
                 <el-col :span="15">
                   <el-button
@@ -230,18 +245,18 @@
                     round
                     @click="relGiftsClick(key, item.gift_item)"
                   >
-                    选商品
+                    {{ $t('4262458d.0ec0c6') }}
                   </el-button>
                   <el-table :data="item.gift_item" style="line-height: normal" width="20%">
-                    <el-table-column label="ID" prop="item_id" width="60" />
-                    <el-table-column label="名称" prop="item_name" />
-                    <el-table-column label="规格" prop="item_spec_desc" />
+                    <el-table-column :label="$t('4262458d.b718ad')" prop="item_id" width="60" />
+                    <el-table-column :label="$t('4262458d.d7ec2d')" prop="item_name" />
+                    <el-table-column :label="$t('4262458d.ea887b')" prop="item_spec_desc" />
                     <!-- <el-table-column label="赠品数量" width="100">
                         <template slot-scope="scope">
                           <el-input v-model="scope.row.gift_num" width="90" size="mini"></el-input>
                         </template>
                       </el-table-column> -->
-                    <el-table-column label="操作" width="100">
+                    <el-table-column :label="$t('4262458d.2b6bc0')" width="100">
                       <template slot-scope="scope">
                         <i class="el-icon-delete" @click="deleteGiftRow(key, scope.$index)" />
                       </template>
@@ -263,23 +278,23 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="导航栏颜色" style="flex: 2">
+        <el-form-item :label="$t('4262458d.8bc4d9')" style="flex: 2">
           <el-color-picker v-model="form.navbar_color" />
         </el-form-item>
 
-        <el-form-item label="倒计时背景色" style="flex: 2">
+        <el-form-item :label="$t('4262458d.94a0dc')" style="flex: 2">
           <el-color-picker v-model="form.timeBackgroundColor" />
         </el-form-item>
 
-        <el-form-item label="活动背景图" prop="activity_background">
-          <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
+        <el-form-item :label="$t('4262458d.7b55fa')" prop="activity_background">
+          <p class="frm-tips">{{ $t('4262458d.c2c43a') }}</p>
           <div>
             <div class="upload-box" @click="handleImgChange">
               <img
                 v-if="form.activity_background"
                 :src="wximageurl + form.activity_background"
                 class="avatar"
-              />
+              >
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -291,22 +306,22 @@
           />
         </el-form-item>
 
-        <el-form-item label="规则描述">
+        <el-form-item :label="$t('4262458d.c9cd39')">
           <el-col :span="20">
             <el-input
               v-model="form.marketing_desc"
               type="textarea"
               :rows="3"
-              placeholder="规则描述"
+              :placeholder="$t('4262458d.c9cd39')"
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="可参与次数">
+        <el-form-item :label="$t('4262458d.129e40')">
           <el-col :span="20">
-            <el-input v-model="form.join_limit" type="input" placeholder="整数数字" />
+            <el-input v-model="form.join_limit" type="input" :placeholder="$t('4262458d.8e19ad')" />
           </el-col>
         </el-form-item>
-        <el-form-item label="适用会员">
+        <el-form-item :label="$t('4262458d.6dbb6f')">
           <el-checkbox-group v-model="validGrade">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -316,7 +331,7 @@
               :key="vipdata.vip_grade_id"
               :label="vipdata.lv_type"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('4262458d.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -330,9 +345,9 @@
           </el-form-item> -->
         <div>
           <el-button v-if="btnSaveVisible()" type="primary" @click="submitActivityAction()">
-            保存
+            {{ $t('4262458d.be5fbb') }}
           </el-button>
-          <el-button @click.native="handleCancel"> 返回 </el-button>
+          <el-button @click.native="handleCancel"> {{ $t('4262458d.5f4112') }} </el-button>
         </div>
       </div>
     </el-form>
@@ -481,7 +496,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['login_type'])
+    ...mapGetters(['login_type']),
+    nameRules() {
+      return [{ required: true, message: this.$t('4262458d.813065'), trigger: 'blur' }]
+    }
   },
   watch: {
     relItems(val) {
@@ -610,7 +628,7 @@ export default {
       if (this.conditionValue.length > 0) {
         this.conditionValue.forEach((rule) => {
           if (rule.full == 0 || !rule.full) {
-            this.$message.error('加价购条件必填!')
+            this.$message.error(this.$t('4262458d.570c5f'))
             return
           }
         })
@@ -628,7 +646,7 @@ export default {
       }
 
       if (this.form.item_ids && this.form.item_ids.length <= 0) {
-        this.$message.error('参加活动的商品必填!')
+        this.$message.error(this.$t('4262458d.439bdc'))
         return false
       }
 
@@ -638,7 +656,7 @@ export default {
         let conditionValue = []
         this.purchaseRules.forEach((rule) => {
           if (rule.price > 0 && rule.gift_item.length == 0) {
-            this.$message.error('加价购商品至少选一件!')
+            this.$message.error(this.$t('4262458d.9b2cd8'))
             return
           }
           rule.gift_item.forEach((item) => {
@@ -663,7 +681,7 @@ export default {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
-              message: '更新成功',
+              message: this.$t('4262458d.55aa63'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -672,7 +690,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('4262458d.73b0d9'))
             return false
           }
         })
@@ -681,7 +699,7 @@ export default {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
-              message: '添加成功',
+              message: this.$t('4262458d.3fdaea'),
               type: 'success',
               duration: 2 * 1000,
               onClose() {
@@ -690,7 +708,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('保存失败!')
+            this.$message.error(this.$t('4262458d.73b0d9'))
             return false
           }
         })
@@ -768,7 +786,7 @@ export default {
     },
     relGiftsClick(index, itemArr) {
       if (!this.purchaseRules[index].price) {
-        this.$message.error('加价金额必填!')
+        this.$message.error(this.$t('4262458d.58fbd7'))
         return false
       }
       this.getParams.price = this.purchaseRules[index].price
@@ -851,7 +869,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品!'
+          message: this.$t('4262458d.c5f66d')
         })
       }
     },
@@ -891,7 +909,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('4262458d.3e5ac0')
         })
         return false
       }
@@ -943,7 +961,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('4262458d.3e5ac0')
         })
         return false
       }
@@ -1030,7 +1048,7 @@ export default {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
-          message: '请选择活动时间!'
+          message: this.$t('4262458d.3e5ac0')
         })
         return
       }
@@ -1103,7 +1121,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      let params = { file_type: 'marketing_goods', file_name: this.$t('4262458d.e07423') }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -1116,7 +1134,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('4262458d.bfd8d5')
           })
         }
       })
@@ -1129,7 +1147,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('4262458d.a7699b')
         })
 
         let { data } = response.data
@@ -1142,7 +1160,7 @@ export default {
           setTimeout(() => {
             this.$message({
               showClose: true,
-              message: `以下商品编号不存在：${str}`,
+              message: `${this.$t('4262458d.ef474d')}${str}`,
               type: 'error',
               duration: 5000
             })

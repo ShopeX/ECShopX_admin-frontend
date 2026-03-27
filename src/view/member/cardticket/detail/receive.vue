@@ -6,17 +6,17 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="cardList" style="width: 100%" border height="600">
-      <el-table-column prop="username" label="用户名字" />
-      <el-table-column prop="mobile" label="手机号" />
-      <el-table-column label="领取时间">
+      <el-table-column prop="username" :label="$t('7c2974e3.5b95ee')" />
+      <el-table-column prop="mobile" :label="$t('7c2974e3.8098e2')" />
+      <el-table-column :label="$t('7c2974e3.22d47e')">
         <template slot-scope="scope">
           <span v-if="'0' != scope.row.get_date">{{
             scope.row.get_date | datetime('YYYY-MM-DD HH:mm:ss')
           }}</span>
-          <span v-else>老数据</span>
+          <span v-else>{{ $t('7c2974e3.4dd976') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="source_type" label="来源类型" />
+      <el-table-column prop="source_type" :label="$t('7c2974e3.a9c8c6')" />
     </el-table>
     <el-pagination
       background

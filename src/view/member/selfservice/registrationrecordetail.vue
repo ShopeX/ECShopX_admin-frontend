@@ -12,33 +12,33 @@
       label-position="right"
       class="demo-ruleForm"
     >
-      <el-card header="活动报名信息" shadow="naver">
-        <el-form-item label="活动名称：">
+      <el-card :header="$t('b20b6711.e38333')" shadow="naver">
+        <el-form-item :label="$t('b20b6711.eb2f99')">
           {{ recorddata.activity_name }}
         </el-form-item>
-        <el-form-item label="活动有效时间" prop="activity_time">
+        <el-form-item :label="$t('b20b6711.08256c')" prop="activity_time">
           {{ recorddata.activity_start_time | datetime('YYYY-MM-DD HH:mm:ss') }} ~
           {{ recorddata.activity_end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-form-item>
-        <el-form-item label="活动状态：">
+        <el-form-item :label="$t('b20b6711.da2549')">
           {{ recorddata.status_name }}
         </el-form-item>
         <!-- <el-form-item label="活动城市：">
           {{ recorddata.area_name }}
         </el-form-item> -->
-        <el-form-item label="申请时间" prop="created">
+        <el-form-item :label="$t('b20b6711.5ba072')" prop="created">
           {{ recorddata.created | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-form-item>
-        <el-form-item label="活动地址：">
+        <el-form-item :label="$t('b20b6711.982708')">
           {{ recorddata.place }}
         </el-form-item>
-        <el-form-item label="详情地址：">
+        <el-form-item :label="$t('b20b6711.b9131a')">
           {{ recorddata.address }}
         </el-form-item>
-        <el-form-item label="手机号：">
+        <el-form-item :label="$t('b20b6711.41fe81')">
           {{ recorddata.mobile }}
         </el-form-item>
-        <el-form-item label="获取积分：">
+        <el-form-item :label="$t('b20b6711.12635a')">
           {{ recorddata.get_points }}
         </el-form-item>
         <!-- <el-form-item label="可重复报名：">
@@ -53,13 +53,13 @@
         <el-form-item label="允许取消报名：">
           {{ recorddata.is_allow_cancel == 1 ? '是' : '否'}}
         </el-form-item> -->
-        <el-form-item label="活动群组编号：">
+        <el-form-item :label="$t('b20b6711.d151a7')">
           {{ recorddata.group_no }}
         </el-form-item>
-        <el-form-item label="进内购企业白名单：">
-          {{ recorddata.is_white_list == 1 ? '是' : '否' }}
+        <el-form-item :label="$t('b20b6711.e5b125')">
+          {{ recorddata.is_white_list == 1 ? $t('15ecc99b.0a60ac') : $t('15ecc99b.c9744f') }}
         </el-form-item>
-        <el-form-item label="适用会员" v-if="recorddata.is_white_list == 0">
+        <el-form-item :label="$t('b20b6711.6dbb6f')" v-if="recorddata.is_white_list == 0">
           <el-checkbox-group v-model="memberLevelList">
             <el-checkbox
               v-for="grade in memberGrade"
@@ -73,11 +73,11 @@
               :key="vipdata.lv_type"
               :label="vipdata.lv_type + ''"
             >
-              付费{{ vipdata.grade_name }}
+              {{ $t('b20b6711.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="适用店铺：" v-if="recorddata.is_white_list == 0">
+        <el-form-item :label="$t('b20b6711.a0162c')" v-if="recorddata.is_white_list == 0">
           <SpFinder
             :no-selection="true"
             :setting="shopSetting"
@@ -86,7 +86,7 @@
             :show-pager="false"
           />
         </el-form-item>
-        <el-form-item label="企业：" v-if="recorddata.is_white_list == 1">
+        <el-form-item :label="$t('b20b6711.aa1329')" v-if="recorddata.is_white_list == 1">
           <SpFinder
             :no-selection="true"
             :setting="setting"
@@ -96,13 +96,25 @@
           />
         </el-form-item>
       </el-card>
-      <el-card header="报名登记信息" shadow="naver">
-        <el-form-item label="审核结果：" prop="status">
-          <el-tag v-if="recorddata.status == 'pending'" type="warning" size="mini"> 待审核 </el-tag>
-          <el-tag v-if="recorddata.status == 'passed'" type="success" size="mini"> 已通过 </el-tag>
-          <el-tag v-if="recorddata.status == 'rejected'" type="danger" size="mini"> 已拒绝 </el-tag>
+      <el-card :header="$t('b20b6711.c7557f')" shadow="naver">
+        <el-form-item :label="$t('b20b6711.0dee1e')" prop="status">
+          <el-tag v-if="recorddata.status == 'pending'" type="warning" size="mini">
+{{
+            $t('a0d7a294.5cb424')
+          }}
+</el-tag>
+          <el-tag v-if="recorddata.status == 'passed'" type="success" size="mini">
+{{
+            $t('b20b6711.ecfa64')
+          }}
+</el-tag>
+          <el-tag v-if="recorddata.status == 'rejected'" type="danger" size="mini">
+{{
+            $t('a0d7a294.81233d')
+          }}
+</el-tag>
         </el-form-item>
-        <el-form-item label="报名问卷：">
+        <el-form-item :label="$t('b20b6711.2271f0')">
           <el-card
             v-for="(item, index) in recorddata.content"
             :key="index"
@@ -142,16 +154,16 @@
         </el-form-item>
       </el-card>
       <el-card
-        header="活动报名审核"
+        :header="$t('b20b6711.9cb5bf')"
         shadow="naver"
         v-if="recorddata.status == 'pending' && !IS_DISTRIBUTOR()"
       >
-        <el-form-item v-if="recorddata.status == 'pending'" label="是否同意：">
+        <el-form-item v-if="recorddata.status == 'pending'" :label="$t('b20b6711.db1690')">
           <el-switch v-model="form.status" />
         </el-form-item>
         <el-form-item
           v-if="form.status === false && recorddata.status == 'pending'"
-          label="拒绝原因："
+          :label="$t('b20b6711.2624eb')"
         >
           <el-input v-model="form.reason" type="textarea" />
         </el-form-item>
@@ -165,9 +177,9 @@
           type="primary"
           @click="submitAction"
         >
-          提交审核
+          {{ $t('b20b6711.646db0') }}
         </el-button>
-        <el-button @click="handleCancel"> 取消 </el-button>
+        <el-button @click="handleCancel">{{ $t('b20b6711.625fb2') }}</el-button>
       </div>
     </template>
   </SpPage>
@@ -192,37 +204,44 @@ export default {
         reason: ''
       },
       recorddata: {},
-      shopSetting: {
-        columns: [
-          { name: 'ID', key: 'distributor_id' },
-          { name: '名称', key: 'name' },
-          { name: '地址', key: 'address' }
-        ]
-      },
-      setting: {
-        columns: [
-          { name: '企业ID', key: 'id' },
-          { name: '企业名称', key: 'name' },
-          {
-            name: '登录类型',
-            key: 'auth_type',
-            formatter: (value, { auth_type }, col) => {
-              const VALIDATE_TYPES = [
-                { name: '全部', value: '' },
-                { name: '手机号', value: 'mobile' },
-                { name: '账号密码', value: 'account' },
-                { name: '邮箱', value: 'email' },
-                { name: '二维码', value: 'qr_code' }
-              ]
-              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
-              return authType
-            }
-          },
-          { name: '来源店铺', key: 'distributor_name' }
-        ]
-      },
       vipGrade: [],
       memberGrade: []
+    }
+  },
+  computed: {
+    shopSetting() {
+      return {
+        columns: [
+          { name: 'ID', key: 'distributor_id' },
+          { name: this.$t('b20b6711.d7ec2d'), key: 'name' },
+          { name: this.$t('b20b6711.765048'), key: 'address' }
+        ]
+      }
+    },
+    setting() {
+      const vm = this
+      return {
+        columns: [
+          { name: vm.$t('b20b6711.5a83cb'), key: 'id' },
+          { name: vm.$t('b20b6711.f47e27'), key: 'name' },
+          {
+            name: vm.$t('b20b6711.78cbe8'),
+            key: 'auth_type',
+            formatter(value, { auth_type }, col) {
+              const VALIDATE_TYPES = [
+                { nameKey: 'ac2a6290.a8b0c2', value: '' },
+                { nameKey: '6b57cb80.8098e2', value: 'mobile' },
+                { nameKey: 'b20b6711.bc1f2d', value: 'account' },
+                { nameKey: 'b20b6711.3bc5e6', value: 'email' },
+                { nameKey: 'b20b6711.22b03c', value: 'qr_code' }
+              ]
+              const item = VALIDATE_TYPES.find((i) => i.value == auth_type)
+              return item ? vm.$t(item.nameKey) : value
+            }
+          },
+          { name: vm.$t('3aa73191.53cc55'), key: 'distributor_name' }
+        ]
+      }
     }
   },
   mounted() {

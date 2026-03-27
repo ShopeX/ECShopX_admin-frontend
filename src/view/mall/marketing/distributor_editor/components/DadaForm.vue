@@ -23,9 +23,7 @@
   <el-card v-if="show" class="el-card--normal">
     <div slot="header">
       <div>
-        同城配<span class="frm-tips"
-          >（需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持同城配）</span
-        >
+        {{ $t('68758f54.583dcd') }}<span class="frm-tips">{{ $t('68758f54.d7de2d') }}</span>
       </div>
     </div>
     <el-form
@@ -35,15 +33,19 @@
       :model="content.baseForm"
       :rules="rules"
     >
-      <el-form-item label="达达同城配">
+      <el-form-item :label="$t('68758f54.bcb155')">
         <el-switch v-model="content.baseForm.is_dada" />
         <div class="form-item-tip">
-          开启后有店铺订单时需要该店铺人员手动接单，接单后系统会自动在达达平台下单
+          {{ $t('68758f54.62ec6f') }}
         </div>
       </el-form-item>
 
-      <el-form-item v-if="content.baseForm.is_dada" prop="business" label="业务类型">
-        <el-select v-model="content.baseForm.business" class="business-select" placeholder="请选择">
+      <el-form-item v-if="content.baseForm.is_dada" prop="business" :label="$t('68758f54.09ab42')">
+        <el-select
+          v-model="content.baseForm.business"
+          class="business-select"
+          :placeholder="$t('68758f54.708c9d')"
+        >
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -62,9 +64,13 @@ export default {
   data() {
     return {
       typeList: [],
-      show: false,
-      rules: {
-        business: [{ message: '达达业务类型必填', required: true }]
+      show: false
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        business: [{ message: this.$t('68758f54.16c84d'), required: true }]
       }
     }
   },

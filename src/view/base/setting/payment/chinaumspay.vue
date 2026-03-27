@@ -19,44 +19,46 @@
       />
       <br>
     </el-form-item> -->
-    <el-form-item label="平台商户号">
+    <el-form-item :label="$t('53e6f865.435ed4')">
       <el-input v-model="form.mid" style="width: 500px" />
-      <br />
-      <!-- <span class="frm-tips">APPID</span> -->
+      <br>
     </el-form-item>
-    <el-form-item label="平台终端号">
-      <el-input v-model="form.tid" style="width: 500px" placeholder="请输入内容" />
-      <br />
+    <el-form-item :label="$t('53e6f865.bdbef9')">
+      <el-input v-model="form.tid" style="width: 500px" :placeholder="$t('53e6f865.a11cc7')" />
+      <br>
     </el-form-item>
-    <el-form-item label="费率">
-      <el-input v-model="form.rate" style="width: 200px" placeholder="请输入内容" />%
-      <br />
-      <span class="frm-tips">收单手续费</span>
+    <el-form-item :label="$t('53e6f865.1abce7')">
+      <el-input v-model="form.rate" style="width: 200px" :placeholder="$t('53e6f865.a11cc7')" />%
+      <br>
+      <span class="frm-tips">{{ $t('53e6f865.2e9852') }}</span>
     </el-form-item>
-    <el-form-item label="商户加签私钥">
+    <el-form-item :label="$t('53e6f865.b1bbef')">
       <span v-if="form.rsa_private_path"> {{ form.rsa_private_name }}</span>
       <el-upload class="" action="" :on-change="privateHandleChange" :auto-upload="false">
-        <el-button size="small" type="primary"> 点击上传 </el-button>
+        <el-button size="small" type="primary">{{ $t('53e6f865.2c808b') }}</el-button>
       </el-upload>
       <span class="frm-tips" />
     </el-form-item>
-    <el-form-item label="密码">
-      <el-input v-model="form.password" style="width: 200px" placeholder="请输入内容" />
-      <br />
-      <!-- <span class="frm-tips">收单手续费</span> -->
+    <el-form-item :label="$t('53e6f865.a81052')">
+      <el-input v-model="form.password" style="width: 200px" :placeholder="$t('53e6f865.a11cc7')" />
+      <br>
     </el-form-item>
-    <el-form-item label="商户回盘验签公钥">
+    <el-form-item :label="$t('53e6f865.486605')">
       <span v-if="form.rsa_public_path"> {{ form.rsa_public_name }}</span>
       <el-upload class="" action="" :on-change="publicHandleChange" :auto-upload="false">
-        <el-button size="small" type="primary"> 点击上传 </el-button>
+        <el-button size="small" type="primary">{{ $t('53e6f865.2c808b') }}</el-button>
       </el-upload>
       <span class="frm-tips" />
     </el-form-item>
-    <el-form-item label="是否启用">
+    <el-form-item :label="$t('53e6f865.53c3dd')">
       <el-switch v-model="form.is_open" />
     </el-form-item>
     <div class="section-footer with-border content-center">
-      <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+      <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+        $t('53e6f865.be5fbb')
+      }}
+</el-button>
     </div>
   </el-form>
 </template>
@@ -119,7 +121,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('53e6f865.3b1083')
           })
           this.loading = false
         })

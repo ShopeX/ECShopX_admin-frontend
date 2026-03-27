@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <el-card header="闪送配置">
+  <el-card :header="$t('33477150.9a685d')">
     <el-form
       ref="form"
       :model="form"
@@ -14,7 +14,7 @@
     >
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item label="商户ID" prop="shop_id">
+          <el-form-item :label="$t('33477150.0bcf5a')" prop="shop_id">
             <el-input v-model="form.shop_id" style="width: 300px" />
           </el-form-item>
         </el-col>
@@ -24,26 +24,27 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="App-密钥" prop="app_secret">
+          <el-form-item :label="$t('33477150.af65db')" prop="app_secret">
             <el-input v-model="form.app_secret" style="width: 300px" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item prop="freight_type">
             <div class="padding-bottom">
-              运费承担方<span class="frm-tips" style="display: inne-block; margin-left: 20px"
-                >买家承担请保证商品规格数据准确性</span
-              >
+              {{ $t('33477150.8b3191')
+              }}<span class="frm-tips" style="display: inne-block; margin-left: 20px">{{
+                $t('33477150.d70b38')
+              }}</span>
             </div>
             <el-radio-group v-model="form.freight_type">
-              <el-radio label="0"> 商家承担 </el-radio>
-              <el-radio label="1"> 买家承担 </el-radio>
+              <el-radio label="0">{{ $t('33477150.ec1ffa') }}</el-radio>
+              <el-radio label="1">{{ $t('33477150.3f3e01') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item prop="online">
-            <div class="padding-bottom">是否上线</div>
+            <div class="padding-bottom">{{ $t('33477150.d53d61') }}</div>
             <el-switch
               v-model="form.online"
               active-color="#13ce66"
@@ -55,7 +56,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item prop="is_open">
-            <div class="padding-bottom">是否开启</div>
+            <div class="padding-bottom">{{ $t('33477150.780afe') }}</div>
             <el-switch
               v-model="form.is_open"
               active-color="#13ce66"
@@ -68,7 +69,7 @@
       </el-row>
     </el-form>
     <div class="footer-container">
-      <el-button type="primary" @click="save"> 保存配置 </el-button>
+      <el-button type="primary" @click="save">{{ $t('33477150.ed7526') }}</el-button>
     </div>
   </el-card>
 </template>
@@ -91,11 +92,15 @@ export default {
         app_secret: '',
         online: 0,
         freight_type: '1'
-      },
-      rules: {
-        shop_id: [{ required: true, message: '请输入商户ID' }],
-        client_id: [{ required: true, message: '请输入App-key' }],
-        app_secret: [{ required: true, message: '请输入App-密钥' }]
+      }
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        shop_id: [{ required: true, message: this.$t('33477150.59f65b') }],
+        client_id: [{ required: true, message: this.$t('33477150.4c3c41') }],
+        app_secret: [{ required: true, message: this.$t('33477150.4e40f3') }]
       }
     }
   },
@@ -109,7 +114,7 @@ export default {
       }).then((res) => {
         console.log('saveShansongInfo', res)
         if (res.status === 200) {
-          this.$message.success('同城配设置成功！')
+          this.$message.success(this.$t('33477150.84a218'))
           return
         }
       })

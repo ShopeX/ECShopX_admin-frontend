@@ -10,13 +10,13 @@
         <el-input
           v-model="params.attribute_name"
           class="input-b"
-          placeholder="品牌名称"
+          :placeholder="$t('aef46509.4e8713')"
           @change="brandSearch"
         >
           <el-button slot="append" icon="el-icon-search" @click="brandSearch" />
         </el-input>
         <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
-          新增品牌
+          {{ $t('aef46509.1c1a1f') }}
         </el-button>
       </el-col>
     </el-row>
@@ -25,24 +25,28 @@
         v-loading="loading"
         :data="list"
         :height="wheight - 170"
-        element-loading-text="数据加载中"
+        :element-loading-text="$t('aef46509.f09b12')"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
-        <el-table-column label="操作" width="150">
+        <el-table-column :label="$t('aef46509.2b6bc0')" width="150">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)">
+              {{ $t('aef46509.95b351') }}
+            </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              {{ $t('aef46509.2f4aad') }}
+            </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="品牌图片" width="150">
+        <el-table-column :label="$t('aef46509.60fe0b')" width="150">
           <template slot-scope="scope">
             <el-image style="width: 70px; height: 70px" :src="scope.row.image_url" fit="cover" />
           </template>
         </el-table-column>
-        <el-table-column prop="attribute_name" label="品牌名称">
+        <el-table-column prop="attribute_name" :label="$t('aef46509.4e8713')">
           <template slot-scope="scope">
             <div v-if="!scope.row.attribute_id">
-              <el-input v-model="scope.row.attribute_name" placeholder="请输入品牌名称" />
+              <el-input v-model="scope.row.attribute_name" :placeholder="$t('aef46509.492918')" />
             </div>
             <div v-else>
               {{ scope.row.attribute_name }}
@@ -69,20 +73,20 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <sideBar :visible.sync="show_sideBar" :title="'新增品牌'">
+    <sideBar :visible.sync="show_sideBar" :title="$t('aef46509.1c1a1f')">
       <el-form>
-        <el-form-item label="品牌名">
+        <el-form-item :label="$t('aef46509.fc4a05')">
           <el-input v-model="form.attribute_name" />
         </el-form-item>
-        <el-form-item label="品牌logo">
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
+        <el-form-item :label="$t('aef46509.8bfb27')">
+          <div class="frm-tips">{{ $t('aef46509.876be1') }}</div>
           <div class="upload-box" @click="handleImgPicker">
-            <img v-if="form.image_url" :src="form.image_url" class="avatar" />
+            <img v-if="form.image_url" :src="form.image_url" class="avatar">
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="save"> 提交 </el-button>
+          <el-button type="primary" @click="save"> {{ $t('aef46509.939d53') }} </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -141,11 +145,11 @@ export default {
       this.getList()
     },
     handleDelete(data) {
-      this.$confirm('确认删除该品牌？')
+      this.$confirm(this.$t('aef46509.3051cf'))
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
             this.list.splice(data.$index, 1)
-            this.$message({ type: 'success', message: '操作成功' })
+            this.$message({ type: 'success', message: this.$t('aef46509.33130f') })
           })
         })
         .catch((_) => {})
@@ -175,14 +179,14 @@ export default {
       // 如果没有id，则表示为新增
       if (!this.form.attribute_id) {
         addGoodsAttr(this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('aef46509.33130f') })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
         updateGoodsAttr(this.form.attribute_id, this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('aef46509.33130f') })
           this.getList()
         })
       }

@@ -14,8 +14,8 @@
   <div class="comp-refund-amount">
     <el-input v-model="fee" type="text" @change="onChangeFee" />
     <div class="refund-amount-tip">
-      实际可退金额：{{ refundFee }}
-      <el-button type="text" @click="refundAll">全部退款</el-button>
+      {{ $t('8a5fac4d.eea9ab') }}{{ refundFee }}
+      <el-button type="text" @click="refundAll">{{ $t('8a5fac4d.3593b9') }}</el-button>
     </div>
   </div>
 </template>

@@ -5,27 +5,29 @@
 
 <template>
   <el-form ref="form" :model="form" class="box-set" label-width="100px">
-    <el-card header="活动商品信息" shadow="never">
-      <el-form-item label="活动封面">
+    <el-card :header="$t('cfc108c7.6fd631')" shadow="never">
+      <el-form-item :label="$t('cfc108c7.350355')">
         <div class="frm-tips">
-          文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）
+          {{ $t('cfc108c7.270fe3') }}
         </div>
         <div>
           <imgBox :img-url="wximageurl + form.pics" @click="handleImgChange" />
         </div>
       </el-form-item>
-      <el-form-item label="拼团商品">
+      <el-form-item :label="$t('cfc108c7.f95101')">
         <el-row :gutter="20">
           <el-col :span="20">
             <p class="frm-tips" />
             <div class="logo-box" @click="changeItem">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
-                    <div>原价：{{ goods.price }}</div>
-                    <div v-if="goods.item_type == 'normal'">库存：{{ goods.store }}</div>
+                    <div>{{ $t('cfc108c7.80193b') }}{{ goods.price }}</div>
+                    <div v-if="goods.item_type == 'normal'">
+                      {{ $t('cfc108c7.b008bd') }}{{ goods.store }}
+                    </div>
                   </div>
                 </div>
                 <div v-else tabindex="0" class="el-upload el-upload--picture-card">
@@ -37,155 +39,167 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="活动名称" prop="act_name" :rules="rules.act_name">
+      <el-form-item :label="$t('cfc108c7.39834b')" prop="act_name" :rules="rules.act_name">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input v-model="form.act_name" :maxlength="30" placeholder="拼团活动名称" />
+            <el-input
+              v-model="form.act_name"
+              :maxlength="30"
+              :placeholder="$t('cfc108c7.68b3e2')"
+            />
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="活动时间" prop="date" :rules="rules.date">
+      <el-form-item :label="$t('cfc108c7.c799f5')" prop="date" :rules="rules.date">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-date-picker
               v-model="form.date"
               type="datetimerange"
-              range-separator="至"
-              start-placeholder="生效时间"
-              end-placeholder="过期时间"
+              :range-separator="$t('cfc108c7.981cbe')"
+              :start-placeholder="$t('cfc108c7.fc92e9')"
+              :end-placeholder="$t('cfc108c7.1fa23f')"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
             />
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="拼团库存" prop="store" :rules="rules.store">
+      <el-form-item :label="$t('cfc108c7.b96ff6')" prop="store" :rules="rules.store">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-input v-model="form.store" placeholder="" />
           </el-col>
-          <el-col :span="2"> 件 </el-col>
+          <el-col :span="2"> {{ $t('cfc108c7.f7edf5') }} </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="拼团价格" prop="act_price" :rules="rules.act_price">
+      <el-form-item :label="$t('cfc108c7.8c918e')" prop="act_price" :rules="rules.act_price">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input v-model="form.act_price" placeholder=""> 元 </el-input>
+            <el-input v-model="form.act_price" placeholder="">
+              {{ $t('cfc108c7.c16655') }}
+            </el-input>
           </el-col>
-          <el-col :span="2"> 元 </el-col>
+          <el-col :span="2"> {{ $t('cfc108c7.c16655') }} </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="成团人数" prop="person_num" :rules="rules.person_num">
+      <el-form-item :label="$t('cfc108c7.25c463')" prop="person_num" :rules="rules.person_num">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input v-model="form.person_num" placeholder=""> 人 </el-input>
+            <el-input v-model="form.person_num" placeholder="">
+              {{ $t('cfc108c7.465afe') }}
+            </el-input>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="成团时效" prop="limit_time" :rules="rules.limit_time">
+      <el-form-item :label="$t('cfc108c7.2c7235')" prop="limit_time" :rules="rules.limit_time">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input v-model="form.limit_time" placeholder="小时" />
+            <el-input v-model="form.limit_time" :placeholder="$t('cfc108c7.2de0d4')" />
           </el-col>
-          <el-col :span="2"> 小时 </el-col>
+          <el-col :span="2"> {{ $t('cfc108c7.2de0d4') }} </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="拼团限制" prop="limit_buy_num" :rules="rules.limit_buy_num">
+      <el-form-item
+        :label="$t('cfc108c7.9bd6cd')"
+        prop="limit_buy_num"
+        :rules="rules.limit_buy_num"
+      >
         <el-row :gutter="20">
           <el-col :span="12">
             <el-input v-model="form.limit_buy_num" placeholder="" />
-            <p class="frm-tips">(限制一人只能参加X次活动，为0表示无限制)</p>
+            <p class="frm-tips">{{ $t('cfc108c7.ba09a0') }}</p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="成团机器人">
+      <el-form-item :label="$t('cfc108c7.93a064')">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-switch v-model="form.robot" active-value="1" inactive-value="0" />
             <p class="frm-tips">
-              (开启成团机器人后，成团时效内人数未满的团，系统将会使用机器人凑满人数，使该团成团。商家只需对真实订单进行发货处理。)
+              {{ $t('cfc108c7.c29269') }}
             </p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="凑团">
+      <el-form-item :label="$t('cfc108c7.e1e717')">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-switch v-model="form.rig_up" active-value="1" inactive-value="0" />
             <p class="frm-tips">
-              (开启凑团后，消费者可以在拼团商品详情页看到未成团的团列表，可选择其中一个参团。有效提高成团成功率)
+              {{ $t('cfc108c7.bf4a11') }}
             </p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item v-if="goods.item_type == 'normal'" label="包邮">
+      <el-form-item v-if="goods.item_type == 'normal'" :label="$t('cfc108c7.56f046')">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-switch v-model="form.free_post" active-value="1" inactive-value="0" />
-            <p class="frm-tips">(如果不开启包邮，那么运费按照商品的运费模版计算运费)</p>
+            <p class="frm-tips">{{ $t('cfc108c7.cdaed5') }}</p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="分享描述" prop="share_desc" :rules="rules.share_desc">
+      <el-form-item :label="$t('cfc108c7.8fcba7')" prop="share_desc" :rules="rules.share_desc">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-input
               v-model="form.share_desc"
               :maxlength="25"
-              placeholder="请输入拼团活动分享文字"
+              :placeholder="$t('cfc108c7.1aa60b')"
             >
-              （最多25个字）
+              {{ $t('cfc108c7.4570f6') }}
             </el-input>
           </el-col>
         </el-row>
       </el-form-item>
     </el-card>
     <div style="margin-top: 10px">
-      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button @click.native="handleCancel"> {{ $t('cfc108c7.5f4112') }} </el-button>
       <el-button v-if="true == show" type="primary" @click.prevent="submitItemsAction('form')">
-        保存
+        {{ $t('cfc108c7.be5fbb') }}
       </el-button>
     </div>
-    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
+    <el-dialog :title="$t('cfc108c7.43d1e2')" :visible.sync="goodsDialogVisible" center>
       <!-- <el-button-group class="tab-group">
         <el-button
           class="tab-btn"
           @click="changeGoods('every')"
-          :class="goodsTypeTitle === '服务类商品' ? 'on' : ''"
-          >服务类商品</el-button
+          :class="goodsTypeTitle === $t('cfc108c7.fcd4d7') ? 'on' : ''"
+          >{{ $t('cfc108c7.fcd4d7') }}</el-button
         >
         <el-button
           class="tab-btn"
           @click="changeGoods('normal')"
-          :class="goodsTypeTitle === '实体类商品' ? 'on' : ''"
-          >实体类商品</el-button
+          :class="goodsTypeTitle === $t('cfc108c7.ddf672') ? 'on' : ''"
+          >{{ $t('cfc108c7.ddf672') }}</el-button
         >
       </el-button-group> -->
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input v-model="itemsParams.keywords" placeholder="商品名称">
+          <el-input v-model="itemsParams.keywords" :placeholder="$t('cfc108c7.1fd1d5')">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
       </el-row>
       <el-table v-loading="itemsLoading" :data="itemsList" style="width: 100%" border height="500">
-        <el-table-column prop="itemName" label="商品名称" />
-        <el-table-column label="缩略图">
+        <el-table-column prop="itemName" :label="$t('cfc108c7.1fd1d5')" />
+        <el-table-column :label="$t('cfc108c7.0f088d')">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]" />
+            <img width="20" :src="wximageurl + scope.row.pics[0]">
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
-        <el-table-column prop="itemName" label="状态">
+        <el-table-column prop="price" :label="$t('cfc108c7.e29575')" :formatter="priceformatter" />
+        <el-table-column prop="itemName" :label="$t('cfc108c7.3fea7c')">
           <template slot-scope="scope">
             <el-button
               v-if="form.goods_id != scope.row.itemId"
               type="text"
               @click="chooseItem(scope.row)"
             >
-              选择
+              {{ $t('cfc108c7.153fa6') }}
             </el-button>
-            <span v-else>已选择</span>
+            <span v-else>{{ $t('cfc108c7.f08afd') }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -199,8 +213,10 @@
         />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="goodsDialogVisible = false">关 闭</el-button>
-        <el-button type="primary" @click="goodsDialogVisible = false">确 定</el-button>
+        <el-button @click="goodsDialogVisible = false">{{ $t('cfc108c7.9d2578') }}</el-button>
+        <el-button type="primary" @click="goodsDialogVisible = false">{{
+          $t('cfc108c7.aa7527')
+        }}</el-button>
       </span>
     </el-dialog>
   </el-form>
@@ -252,37 +268,42 @@ export default {
       dialogVisible: false,
       dialogImageUrl: '',
       goodsDialogVisible: false,
-      rules: {
-        act_name: [{ required: true, message: '请输入拼团活动名称' }],
-        date: [{ required: true, message: '请输入活动时间' }],
-        store: [
-          { required: true, message: '请输入拼团库存' },
-          { pattern: /^[1-9]\d{0,4}$/, message: '库存最少为1，最多99999' }
-        ],
-        act_price: [
-          { required: true, message: '请输入拼团价格' },
-          { pattern: /^(?=.*[1-9])\d+(\.\d{1,2})?$/, message: '拼团价格最少0.01' }
-        ],
-        person_num: [
-          { required: true, message: '请输入成团人数' },
-          { pattern: /^([2-9]|[1-9]\d{1})$/, message: '最少2人成团,最多99人成团' }
-        ],
-        limit_time: [
-          { required: true, message: '请输入成团时效' },
-          { pattern: /^[1-9]\d{0,1}$/, message: '成团时效至少1小时，最多99小时' }
-        ],
-        limit_buy_num: [
-          { required: true, message: '请输入限购数量' },
-          { pattern: /^\d{0,2}$/, message: '最多99' }
-        ],
-        share_desc: [{ required: true, message: '请输入分享描述' }]
-      },
       currency: {},
       cursymbol: '￥',
-      goodsTypeTitle: '服务类商品'
+      goodsTypeTitle: ''
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        act_name: [{ required: true, message: this.$t('cfc108c7.6b7caf') }],
+        date: [{ required: true, message: this.$t('cfc108c7.696416') }],
+        store: [
+          { required: true, message: this.$t('cfc108c7.05c81c') },
+          { pattern: /^[1-9]\d{0,4}$/, message: this.$t('cfc108c7.e8ba08') }
+        ],
+        act_price: [
+          { required: true, message: this.$t('cfc108c7.91c590') },
+          { pattern: /^(?=.*[1-9])\d+(\.\d{1,2})?$/, message: this.$t('cfc108c7.6cd091') }
+        ],
+        person_num: [
+          { required: true, message: this.$t('cfc108c7.19b2d8') },
+          { pattern: /^([2-9]|[1-9]\d{1})$/, message: this.$t('cfc108c7.a7e01e') }
+        ],
+        limit_time: [
+          { required: true, message: this.$t('cfc108c7.7df867') },
+          { pattern: /^[1-9]\d{0,1}$/, message: this.$t('cfc108c7.fdbb26') }
+        ],
+        limit_buy_num: [
+          { required: true, message: this.$t('cfc108c7.d5297f') },
+          { pattern: /^\d{0,2}$/, message: this.$t('cfc108c7.b7d94a') }
+        ],
+        share_desc: [{ required: true, message: this.$t('cfc108c7.f80b7a') }]
+      }
     }
   },
   mounted() {
+    this.goodsTypeTitle = this.$t('cfc108c7.ddf672')
     if (this.$route.query.show) {
       this.show = false
     }
@@ -298,18 +319,18 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.form.pics) {
-            this.$message.error('请上传活动封面')
+            this.$message.error(this.$t('cfc108c7.104b35'))
             return false
           }
           if (!this.form.goods_id) {
-            this.$message.error('请选择商品')
+            this.$message.error(this.$t('cfc108c7.c5c5f2'))
             return false
           }
           if (this.groups_activity_id) {
             updateGroupActivity(this.groups_activity_id, this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '更新成功',
+                  message: this.$t('cfc108c7.55aa63'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -323,7 +344,7 @@ export default {
             createGroupActivity(this.form).then((res) => {
               if (res.data.data) {
                 this.$message({
-                  message: '添加成功',
+                  message: this.$t('cfc108c7.3fdaea'),
                   type: 'success',
                   duration: 2 * 1000,
                   onClose() {
@@ -395,7 +416,7 @@ export default {
           this.itemsLoading = false
           this.$message({
             type: 'error',
-            message: '获取商品列表列表信息出错'
+            message: this.$t('cfc108c7.325305')
           })
         })
     },
@@ -419,7 +440,7 @@ export default {
         .catch((error) => {
           this.$message({
             type: 'error',
-            message: '获取拼团活动详情失败'
+            message: this.$t('cfc108c7.c5c26e')
           })
         })
     },
@@ -461,12 +482,12 @@ export default {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
           this.$delete(this.itemsParams, 'item_type')
-          this.goodsTypeTitle = '服务类商品'
+          this.goodsTypeTitle = this.$t('cfc108c7.fcd4d7')
           break
         case 'normal':
           this.$set(this.itemsParams, 'item_type', 'normal')
           this.$delete(this.itemsParams, 'consume_type')
-          this.goodsTypeTitle = '实体类商品'
+          this.goodsTypeTitle = this.$t('cfc108c7.ddf672')
           break
       }
       this.getGoodsList()

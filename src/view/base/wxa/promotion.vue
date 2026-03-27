@@ -9,7 +9,7 @@
       <div class="appmsg_preview_container">
         <div id="submitContent" />
         <div class="appmsg_container_hd">
-          <h4 class="appmsg_container_title">小程序营销文章配置</h4>
+          <h4 class="appmsg_container_title">{{ $t('680103fe.8eba89') }}</h4>
         </div>
         <div class="appmsg_container_bd">
           <div class="appmsg multi has_first_cover editing">
@@ -21,7 +21,7 @@
                   :class="id === index ? 'current' : ''"
                   @click="handleClick(index)"
                 >
-                  <div class="first_appmsg_item" title="第一篇图文">
+                  <div class="first_appmsg_item" :title="$t('680103fe.ff5ad1')">
                     <div class="cover_appmsg_item">
                       <h4 class="appmsg_title">
                         <a
@@ -32,7 +32,7 @@
                           <template v-if="articals[0].title != ''">
                             {{ articals[0].title }}
                           </template>
-                          <template v-else> 标题 </template>
+                          <template v-else>{{ $t('680103fe.32c65d') }}</template>
                         </a>
                       </h4>
                       <div
@@ -51,7 +51,7 @@
                       <a
                         onclick="return false;"
                         class="icon20_common iconfont icon-arrow-down sort_down_white"
-                        title="下移"
+                        :title="$t('680103fe.17acd2')"
                         @click.prevent="sortdown(index)"
                       />
                     </div>
@@ -79,18 +79,18 @@
                       <template v-if="item.title != ''">
                         {{ item.title }}
                       </template>
-                      <template v-else> 标题 </template>
+                      <template v-else>{{ $t('680103fe.32c65d') }}</template>
                     </h4>
                     <div class="appmsg_edit_mask">
                       <a
                         class="icon20_common sort_up_white iconfont icon-arrow-up"
-                        title="上移"
+                        :title="$t('680103fe.315eac')"
                         @click.prevent="sortup(index)"
                       />
                       <a
                         v-if="index !== articals.length - 1"
                         class="icon20_common sort_down_white iconfont icon-arrow-down"
-                        title="下移"
+                        :title="$t('680103fe.17acd2')"
                         @click.prevent="sortdown(index)"
                       />
                       <el-popover
@@ -100,17 +100,25 @@
                         trigger="click"
                       >
                         <p class="content-padded content-center" style="font-size: 14px">
-                          确定删除这篇文章？
+                          {{ $t('680103fe.2a0fc2') }}
                         </p>
                         <div class="content-center">
-                          <el-button @click="item.popVisible = false"> 取消 </el-button>
-                          <el-button type="primary" @click="remove(index)"> 确定 </el-button>
+                          <el-button @click="item.popVisible = false">
+{{
+                            $t('680103fe.625fb2')
+                          }}
+</el-button>
+                          <el-button type="primary" @click="remove(index)">
+{{
+                            $t('680103fe.38cf16')
+                          }}
+</el-button>
                         </div>
                         <a
                           v-if="!isEditting"
                           slot="reference"
                           class="icon20_common del_media_white el-icon-delete2"
-                          title="删除"
+                          :title="$t('680103fe.2f4aad')"
                         />
                       </el-popover>
                     </div>
@@ -121,7 +129,7 @@
           </div>
           <div
             v-if="!isEditting"
-            title="添加一篇图文"
+            :title="$t('680103fe.327d4a')"
             class="create_access_primary appmsg_add"
             @click="addmsg"
           >
@@ -134,21 +142,22 @@
       <template v-for="(item, index) in articals" v-if="id === index">
         <el-form ref="item" :model="item" label-position="top" label-width="80px">
           <div class="content-padded">
-            <el-form-item label="标题">
-              <el-input v-model="item.title" placeholder="请输入标题" />
+            <el-form-item :label="$t('680103fe.32c65d')">
+              <el-input v-model="item.title" :placeholder="$t('680103fe.96641a')" />
             </el-form-item>
             <el-form-item>
               <SpRichText v-model="item.viewcontent" />
             </el-form-item>
           </div>
           <div class="content-padded appmsg_edit_highlight_area">
-            <h3 class="header-title">发布样式编辑</h3>
+            <h3 class="header-title">{{ $t('680103fe.874d4d') }}</h3>
             <div class="header_tips">
-              封面小图片 <span class="form-text-tip">建议尺寸：200像素 * 200像素</span>
+              {{ $t('680103fe.05eb24') }}
+              <span class="form-text-tip">{{ $t('680103fe.9f9b2a') }}</span>
             </div>
             <el-form-item>
               <div>
-                <el-button @click="addThumbPreview"> 从图片库选择 </el-button>
+                <el-button @click="addThumbPreview">{{ $t('680103fe.60dd12') }}</el-button>
               </div>
               <div
                 v-if="item.thumb_url"
@@ -166,12 +175,12 @@
     <div class="appmsg_tpl_area">
       <div class="appmsg_tpl_container">
         <div class="appmsg_container_hd">
-          <h4 class="appmsg_container_title">多媒体</h4>
+          <h4 class="appmsg_container_title">{{ $t('680103fe.ea2da2') }}</h4>
         </div>
         <div class="appmsg_container_bd">
           <ul id="js_media_list" class="tpl_list">
             <li class="tpl_item img" style="" @click="addImgPreview">
-              <i class="el-icon-picture" />图片
+              <i class="el-icon-picture" />{{ $t('680103fe.20def7') }}
             </li>
           </ul>
           <imgPicker
@@ -192,7 +201,7 @@
     <div class="tool_area_wrp">
       <div class="tool_area">
         <div class="tool_bar content-center">
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button type="primary" @click="onSubmit">{{ $t('680103fe.be5fbb') }}</el-button>
         </div>
       </div>
     </div>
@@ -292,7 +301,7 @@ export default {
     },
     addmsg() {
       if (this.articals.length > 3) {
-        this.$message({ message: '最多添加4条文章', type: 'error' })
+        this.$message({ message: this.$t('680103fe.df31d7'), type: 'error' })
         return
       }
       let baseMsgData = {
@@ -333,7 +342,7 @@ export default {
         param = { params: that.articals, name: 'marketing_articles', id: that.pageSettingId }
         updateParamsById(param).then((response) => {
           this.$message({
-            message: '修改文章成功',
+            message: this.$t('680103fe.6d2221'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -347,7 +356,7 @@ export default {
         }
         setPageParams(param).then((response) => {
           this.$message({
-            message: '添加文章成功',
+            message: this.$t('680103fe.e04b36'),
             type: 'success',
             duration: 5 * 1000
           })

@@ -7,46 +7,50 @@
   <div>
     <el-form ref="form" :model="form.data" label-position="left" label-width="100px" :rules="rules">
       <div class="section-body">
-        <el-form-item label="分享信息" class="title" />
-        <el-form-item label="分享标题" prop="title">
+        <el-form-item :label="$t('3b929223.b77239')" class="title" />
+        <el-form-item :label="$t('3b929223.382e6f')" prop="title">
           <el-input
             v-model="form.data.title"
             :maxlength="15"
-            placeholder="字数上限为15个汉字"
+            :placeholder="$t('3b929223.988672')"
             style="width: 300px"
           />&nbsp;<span class="frm-tips">{{ form.data.title.length }}/{{ gift_max }}</span>
         </el-form-item>
-        <el-form-item label="分享描述" prop="description">
+        <el-form-item :label="$t('3b929223.8fcba7')" prop="description">
           <el-input
             v-model="form.data.description"
             :maxlength="30"
             type="textarea"
             :rows="2"
             style="width: 300px"
-            placeholder="字数上限为30个汉字"
+            :placeholder="$t('3b929223.89b50b')"
           />&nbsp;
           <div class="frm-tips2" style="">
             {{ form.data.description.length }}/{{ description_max }}
           </div>
         </el-form-item>
-        <el-form-item label="分享图片" class="inline-label paddingleft9">
+        <el-form-item :label="$t('3b929223.106d52')" class="inline-label paddingleft9">
           <div class="inline">
             <imgBox
               :img-url="form.data.pic"
               inline
-              bottom-info="小程序"
+              :bottom-info="$t('3b929223.0ed510')"
               @click="handleImgChange('pic')"
             />
-            <p>建议尺寸5:4</p>
+            <p>{{ $t('3b929223.db1b92') }}</p>
           </div>
         </el-form-item>
-        <el-form-item label="预览效果" class="inline-label paddingleft9">
-          <el-button size="small" type="primary" style="margin-bottom: 20px"> 小程序 </el-button>
+        <el-form-item :label="$t('3b929223.e986b4')" class="inline-label paddingleft9">
+          <el-button size="small" type="primary" style="margin-bottom: 20px">
+            {{ $t('3b929223.0ed510') }}
+          </el-button>
           <wechatShare :title="form.data.title" :content-img-src="form.data.pic" />
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button v-loading="loading" type="primary" @click="saveConfig"> 保存 </el-button>
+        <el-button v-loading="loading" type="primary" @click="saveConfig">
+          {{ $t('3b929223.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
     <imgPicker
@@ -73,14 +77,14 @@ export default {
   data() {
     var titleChecked = (rule, value, callback) => {
       if (value == '' || !value) {
-        callback(new Error('分享标题不能为空'))
+        callback(new Error(this.$t('3b929223.1215b2')))
       } else {
         callback()
       }
     }
     var descriptionChecked = (rule, value, callback) => {
       if (value == '' || !value) {
-        callback(new Error('分享描述不能为空'))
+        callback(new Error(this.$t('3b929223.333ec7')))
       } else {
         callback()
       }
@@ -166,7 +170,7 @@ export default {
       }
       setShareInfo(info).then((res) => {
         this.$message({
-          message: '保存成功',
+          message: this.$t('3b929223.3b1083'),
           type: 'success',
           duration: 2 * 1000
         })

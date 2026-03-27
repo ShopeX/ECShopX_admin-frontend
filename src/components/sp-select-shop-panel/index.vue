@@ -52,13 +52,13 @@
         v-model="region"
         filterable
         clearable
-        placeholder="选择地区筛选店铺"
+        :placeholder="$t('93e22d77.d525df')"
         :options="district"
         @change="onChangeCascader"
         @visible-change="visibleChange"
       />
-      <el-input v-model="keywords" placeholder="请输入店铺名称搜索" @change="fetch" />
-      <el-button type="text" @click="reset"> 重置 </el-button>
+      <el-input v-model="keywords" :placeholder="$t('93e22d77.616382')" @change="fetch" />
+      <el-button type="text" @click="reset"> {{ $t('93e22d77.4b9c32') }} </el-button>
     </div>
     <div>
       <el-table
@@ -74,7 +74,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column prop="name" label="店铺名称" />
+        <el-table-column prop="name" :label="$t('93e22d77.0d4934')" />
       </el-table>
     </div>
     <div>

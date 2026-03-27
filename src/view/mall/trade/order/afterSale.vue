@@ -26,7 +26,7 @@
 }
 </style>
 <template>
-  <SpPage title="售后申请">
+  <SpPage :title="$t('9ebd763b.a518ff')">
     <template slot="page-footer">
       <div class="text-center">
         <el-button
@@ -36,9 +36,9 @@
             }
           "
         >
-          取消
+          {{ $t('9ebd763b.625fb2') }}
         </el-button>
-        <el-button type="primary" @click="submitRefund"> 保存 </el-button>
+        <el-button type="primary" @click="submitRefund">{{ $t('9ebd763b.be5fbb') }}</el-button>
       </div>
     </template>
     <!-- form: {{ form }} -->
@@ -60,17 +60,18 @@ import CompRefundAmount from './comps/comp-refundAmount'
 import CompRefundPoint from './comps/comp-refundPoint'
 import CompRefundFreight from './comps/comp-refundFreight.vue'
 
-const REASONS = [
-  { title: '收到残次品', value: '1' },
-  { title: '商品有污渍', value: '2' },
-  { title: '包装破损导致商品损坏', value: '3' },
-  { title: '七天无理由退货', value: '4' }
-]
 export default {
   name: '',
   data() {
+    const REASONS = [
+      { title: this.$t('9ebd763b.c84563'), value: '1' },
+      { title: this.$t('9ebd763b.2dc870'), value: '2' },
+      { title: this.$t('9ebd763b.04996d'), value: '3' },
+      { title: this.$t('9ebd763b.42065f'), value: '4' }
+    ]
     return {
       orderInfo: null,
+      reasonOptions: REASONS,
       form: {
         order_id: '',
         aftersales_type: 'ONLY_REFUND',
@@ -92,12 +93,12 @@ export default {
           }
         },
         {
-          label: '售后形式',
+          label: this.$t('9ebd763b.632e0a'),
           key: 'aftersales_type',
           type: 'radio',
           options: [
-            { label: 'ONLY_REFUND', name: '仅退款（无需退货）' },
-            { label: 'REFUND_GOODS', name: '退货退款' }
+            { label: 'ONLY_REFUND', name: this.$t('9ebd763b.e04db3') },
+            { label: 'REFUND_GOODS', name: this.$t('9ebd763b.cc0193') }
           ],
           onChange: (e) => {
             if (e == 'REFUND_GOODS') {
@@ -108,14 +109,14 @@ export default {
           }
         },
         {
-          label: '退款原因',
+          label: this.$t('9ebd763b.220bc2'),
           key: 'reason',
-          placeholder: '请选择退款原因',
+          placeholder: this.$t('9ebd763b.9318de'),
           type: 'select',
           options: REASONS
         },
         {
-          label: '退款商品',
+          label: this.$t('9ebd763b.67148e'),
           key: 'items',
           component: () => (
             <CompGoodsList
@@ -131,12 +132,12 @@ export default {
             if (this.form.items.length > 0) {
               callback()
             } else {
-              callback('请选择售后商品')
+              callback(this.$t('9ebd763b.175653'))
             }
           }
         },
         {
-          label: '退积分',
+          label: this.$t('9ebd763b.401595'),
           key: 'refund_point',
           component: () => (
             <CompRefundPoint
@@ -148,20 +149,20 @@ export default {
           ),
           validator: (rule, value, callback) => {
             if (this.form.refund_point > this.orderInfo?.refund_point_amount / 100) {
-              callback('退积分超过可退积分')
+              callback(this.$t('9ebd763b.5706af'))
             } else if (
               this.form.refund_point === '' ||
               this.form.refund_point === null ||
               this.form.refund_point === undefined
             ) {
-              callback('退积分不能为空')
+              callback(this.$t('9ebd763b.3ae867'))
             } else {
               callback()
             }
           }
         },
         {
-          label: '退款金额',
+          label: this.$t('9ebd763b.a0cd4c'),
           key: 'refund_fee',
           component: () => (
             <CompRefundAmount
@@ -184,18 +185,18 @@ export default {
               this.form.refund_fee === null ||
               this.form.refund_fee === undefined
             ) {
-              callback('退款金额不能为空')
+              callback(this.$t('9ebd763b.18f5bc'))
             } else if (
               parseFloat(this.form.refund_fee) > parseFloat(this.$refs['compRefundRef'].refundFee)
             ) {
-              callback('退款金额超过可退金额')
+              callback(this.$t('9ebd763b.7d7771'))
             } else {
               callback()
             }
           }
         },
         {
-          label: '退运费',
+          label: this.$t('9ebd763b.662229'),
           key: 'freight',
           component: () => {
             return (
@@ -214,34 +215,34 @@ export default {
               this.form.freight === null ||
               this.form.freight === undefined
             ) {
-              callback('退运费不能为空')
+              callback(this.$t('9ebd763b.ad6507'))
             } else if (
               parseFloat(this.form.freight) >
               parseFloat(this.orderInfo?.refund_freight_amount / 100)
             ) {
-              callback('退运费超过可退运费')
+              callback(this.$t('9ebd763b.4a32c4'))
             } else {
               callback()
             }
           }
         },
         {
-          label: '回寄方式',
+          label: this.$t('9ebd763b.89c604'),
           key: 'goods_returned',
           type: 'radio',
           options: [
-            { label: false, name: '快递发货' },
-            { label: true, name: '到店退货（店员已验货）' }
+            { label: false, name: this.$t('9ebd763b.118582') },
+            { label: true, name: this.$t('9ebd763b.66b764') }
           ],
           isShow: false
         },
         {
-          label: '补充描述',
+          label: this.$t('9ebd763b.f55683'),
           key: 'description',
           type: 'textarea'
         },
         {
-          label: '上传凭证',
+          label: this.$t('9ebd763b.9f447d'),
           key: 'pic',
           component: ({ key }, value) => {
             return <SpImagePicker v-model={value[key]} />
@@ -281,12 +282,13 @@ export default {
       }
     },
     async onSubmit() {
-      await this.$confirm('请确认申请售后', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('9ebd763b.ee8174'), this.$t('9ebd763b.02d981'), {
+        confirmButtonText: this.$t('9ebd763b.38cf16'),
+        cancelButtonText: this.$t('9ebd763b.625fb2')
       })
       const { id: order_id } = this.$route.params
-      const reason = REASONS.find((item) => item.value == this.form.reason).title
+      const reason =
+        this.reasonOptions.find((item) => item.value == this.form.reason)?.title || ''
       const params = {
         order_id,
         aftersales_type: this.form.aftersales_type,
@@ -305,7 +307,7 @@ export default {
         this.$message.error(error.message)
         return
       }
-      this.$message.success('售后申请提交成功')
+      this.$message.success(this.$t('9ebd763b.913abc'))
       this.$EventBus.$emit('event.tradelist.refresh')
       setTimeout(() => {
         this.$router.go(-1)

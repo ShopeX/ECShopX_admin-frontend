@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="component-more">
-        <div class="goods-more">全部商品</div>
+        <div class="goods-more">{{ $t('9477ff58.794a4e') }}</div>
       </div>
     </div>
     <div class="component-body with-padding">
@@ -40,7 +40,9 @@
             <div class="coupon-amount">
               {{ item.amount }}
               <div v-if="item.type === 'cash'" class="amount-cur">¥</div>
-              <div v-if="item.type === 'discount'" class="amount-cur">折</div>
+              <div v-if="item.type === 'discount'" class="amount-cur">
+                {{ $t('9477ff58.96c015') }}
+              </div>
             </div>
             <!--<div class="coupon-brand">
               <img class="brand-img" :src="wximageurl + item.imgUrl"/>
@@ -61,7 +63,7 @@
             </div>
           </div>
         </template>
-        <el-button size="mini" class="coupon-getted-btn"> 领取 </el-button>
+        <el-button size="mini" class="coupon-getted-btn">{{ $t('9477ff58.9c1b27') }}</el-button>
       </div>
     </div>
   </div>

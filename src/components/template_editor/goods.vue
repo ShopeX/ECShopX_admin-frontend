@@ -5,16 +5,16 @@
 
 <template>
   <section v-if="name === 'goods'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('2698edba.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
-        <el-form-item label="标题">
+        <el-form-item :label="$t('2698edba.32c65d')">
           <el-input v-model="base.title" />
         </el-form-item>
-        <el-form-item label="副标题">
+        <el-form-item :label="$t('2698edba.72cf37')">
           <el-input v-model="base.subtitle" />
         </el-form-item>
-        <el-form-item label="组件间距">
+        <el-form-item :label="$t('2698edba.4707ba')">
           <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <!-- <el-form-item label="展示样式">
@@ -23,7 +23,7 @@
             <el-radio :label="'poster'">海报</el-radio>
           </el-radio-group>
         </el-form-item> -->
-        <el-form-item label="选择商品">
+        <el-form-item :label="$t('2698edba.43d1e2')">
           <div v-if="data[0].item_id" class="goods-card">
             <div class="goods" :class="config.style">
               <img
@@ -34,19 +34,21 @@
                     ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
                     : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
                 "
-              />
+              >
               <div class="caption">
                 <div class="goods-title">
-                  {{ data[0].item_name || '商品标题' }}
+                  {{ data[0].item_name || $t('2698edba.07ec01') }}
                 </div>
                 <div class="sales-num">
                   <i class="iconfont icon-user-friends" />{{ data[0].sales || 0 }}
                 </div>
-                <div class="price">价格： ¥{{ data[0].price / 100 }}</div>
+                <div class="price">{{ $t('2698edba.f4c750') }} ¥{{ data[0].price / 100 }}</div>
               </div>
             </div>
           </div>
-          <el-button type="primary" plain round @click="showGoods"> 选择商品 </el-button>
+          <el-button type="primary" plain round @click="showGoods">
+            {{ $t('2698edba.43d1e2') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </div>

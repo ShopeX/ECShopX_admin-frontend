@@ -6,16 +6,16 @@
 <template>
   <section class="section section-white">
     <el-form ref="form" :model="form" label-width="100px" label-position="left" size="mini">
-      <div class="section-header with-border">批次管理</div>
+      <div class="section-header with-border">{{ $t('af752888.2569f4') }}</div>
       <div class="section-body">
-        <el-form-item label="物品名称">
+        <el-form-item :label="$t('af752888.6c27ed')">
           <el-row :gutter="20">
             <el-col :span="6">
               {{ things.thing_name }}
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="批次编号">
+        <el-form-item :label="$t('af752888.811036')">
           <el-row :gutter="20">
             <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_number }}
@@ -24,12 +24,12 @@
               <el-input
                 v-model="form.batch_number"
                 type="text"
-                placeholder="请输入批次编号，限20位"
+                :placeholder="$t('af752888.099a35')"
               />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="批次名称">
+        <el-form-item :label="$t('af752888.8ea3a2')">
           <el-row :gutter="20">
             <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_name }}
@@ -38,12 +38,12 @@
               <el-input
                 v-model="form.batch_name"
                 type="text"
-                placeholder="仅用于后台展示，便于维护"
+                :placeholder="$t('af752888.e67d5a')"
               />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="批次件数">
+        <el-form-item :label="$t('af752888.6a4e2a')">
           <el-row :gutter="20">
             <el-col v-if="form.batch_id" :span="6">
               {{ form.batch_quantity }}
@@ -52,19 +52,19 @@
               <el-input
                 v-model="form.batch_quantity"
                 type="number"
-                placeholder="请输入该批次件数"
+                :placeholder="$t('af752888.91ac59')"
               />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="流通信息">
+        <el-form-item :label="$t('af752888.d9ce4c')">
           <el-row :gutter="20">
             <el-switch v-model="form.show_trace" />
           </el-row>
           <el-row :gutter="20">
             <template>
               <el-table :data="traceData" border style="width: 100%">
-                <el-table-column prop="date" label="日期" width="250">
+                <el-table-column prop="date" :label="$t('af752888.4ff1e7')" width="250">
                   <template slot-scope="scope">
                     <span>
                       <el-date-picker
@@ -72,42 +72,48 @@
                         value-format="timestamp"
                         format="yyyy-MM-dd"
                         type="date"
-                        placeholder="选择日期"
+                        :placeholder="$t('af752888.2bebdd')"
                       />
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="info" label="信息" width="300">
+                <el-table-column prop="info" :label="$t('af752888.d8c7e0')" width="300">
                   <template slot-scope="scope">
                     <span>
-                      <el-input v-model="scope.row.info" placeholder="请输入信息" />
+                      <el-input v-model="scope.row.info" :placeholder="$t('af752888.5e02a9')" />
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column fixed="left" label="操作" width="300">
+                <el-table-column fixed="left" :label="$t('af752888.2b6bc0')" width="300">
                   <template slot-scope="scope">
                     <el-button
                       type="danger"
                       size="mini"
                       @click.native.prevent="deleteRow(scope.$index, traceData)"
                     >
-                      移除
+                      {{ $t('af752888.86048b') }}
                     </el-button>
                   </template>
                 </el-table-column>
               </el-table>
-              <el-button size="mini" type="success" circle @click="addTraceInfo"> 添加 </el-button>
+              <el-button size="mini" type="success" circle @click="addTraceInfo">
+                {{ $t('af752888.b58c75') }}
+              </el-button>
             </template>
           </el-row>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="default" @click.native="handleCancel"> 返回 </el-button>
-        <el-button type="primary" @click="submitThingsAction"> 生成并下载二维码 </el-button>
+        <el-button type="default" @click.native="handleCancel">
+          {{ $t('af752888.5f4112') }}
+        </el-button>
+        <el-button type="primary" @click="submitThingsAction">
+          {{ $t('af752888.0261c2') }}
+        </el-button>
       </div>
     </el-form>
     <el-dialog
-      title="二维码打包下载"
+      :title="$t('af752888.f78c9e')"
       :visible.sync="codeDialogVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -231,7 +237,7 @@ export default {
           .then((response) => {
             this.$message({
               type: 'success',
-              message: '更新批次信息成功'
+              message: this.$t('af752888.e04619')
             })
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
@@ -239,7 +245,7 @@ export default {
           .catch((error) => {
             this.$message({
               type: 'error',
-              message: '更新批次信息出错'
+              message: this.$t('af752888.97b98e')
             })
           })
       } else {
@@ -247,7 +253,7 @@ export default {
           .then((response) => {
             this.$message({
               type: 'success',
-              message: '添加批次信息成功'
+              message: this.$t('af752888.a995f1')
             })
             this.handleCodeDownload(response.data.data)
             // this.$router.push({path: '/brand/onecode'})
@@ -255,7 +261,7 @@ export default {
           .catch((error) => {
             this.$message({
               type: 'error',
-              message: '添加批次信息出错'
+              message: this.$t('af752888.d109d4')
             })
           })
       }

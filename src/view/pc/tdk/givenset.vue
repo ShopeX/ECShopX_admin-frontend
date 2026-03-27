@@ -12,29 +12,34 @@
       v-loading="loading"
       :data="list"
       :height="wheight - 300"
-      element-loading-text="数据加载中"
+      :element-loading-text="$t('33ffbda2.f09b12')"
     >
-      <el-table-column label="操作" width="150">
+      <el-table-column :label="$t('33ffbda2.2b6bc0')" width="150">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)">
+{{
+            $t('33ffbda2.95b351')
+          }}
+</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="page" label="页面" />
+      <el-table-column
+        prop="page"
+        :label="$t('33ffbda2.59ceff')"
+        :formatter="(row) => (row.page ? $t(row.page) : '')"
+      />
     </el-table>
 
     <!--新增修改-->
 
-    <sideBar :visible.sync="show_sideBar" :title="title">
+    <sideBar :visible.sync="show_sideBar" :title="title ? $t(title) : $t('33ffbda2.224e2c')">
       <el-form>
-        <el-form-item
-          label="
-TITLE(页面标题）"
-        >
+        <el-form-item :label="$t('33ffbda2.522f16')">
           <el-input
             v-model="form['title']"
             type="textarea"
             :rows="2"
-            placeholder="请选择"
+            :placeholder="$t('33ffbda2.708c9d')"
             disabled
           />
           <div>
@@ -49,15 +54,12 @@ TITLE(页面标题）"
           </div>
         </el-form-item>
 
-        <el-form-item
-          label="
-MATE_DESCRIPTION(页面描述）"
-        >
+        <el-form-item :label="$t('33ffbda2.c2814d')">
           <el-input
             v-model="form['mate_description']"
             type="textarea"
             :rows="2"
-            placeholder="请选择"
+            :placeholder="$t('33ffbda2.708c9d')"
             disabled
           />
           <div>
@@ -71,15 +73,12 @@ MATE_DESCRIPTION(页面描述）"
             </el-tag>
           </div>
         </el-form-item>
-        <el-form-item
-          label="
-MATE_KEYWORDS (关键词）"
-        >
+        <el-form-item :label="$t('33ffbda2.75605b')">
           <el-input
             v-model="form['mate_keywords']"
             type="textarea"
             :rows="2"
-            placeholder="请选择"
+            :placeholder="$t('33ffbda2.708c9d')"
             disabled
           />
           <div>
@@ -94,7 +93,7 @@ MATE_KEYWORDS (关键词）"
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="save"> 提交 </el-button>
+          <el-button type="primary" @click="save">{{ $t('33ffbda2.939d53') }}</el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -118,7 +117,7 @@ export default {
   data() {
     return {
       loading: false,
-      title: '配置',
+      title: '',
       show_sideBar: false,
       detailTags: [
         {
@@ -165,8 +164,8 @@ export default {
 
       // 列表数据
       list: [
-        { page: '商品详情页', id: 'detailTags' },
-        { page: '商品列表页', id: 'listTags' }
+        { page: '33ffbda2.b2da87', id: 'detailTags' },
+        { page: '33ffbda2.544780', id: 'listTags' }
       ],
       type: '',
       form: {
@@ -232,12 +231,12 @@ export default {
     save() {
       if (this.type == 'detailTags') {
         saveTdkgivensetDetail(this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('33ffbda2.33130f') })
           this.show_sideBar = false
         })
       } else {
         saveTdkgivensetList(this.form).then((res) => {
-          this.$message({ type: 'success', message: '操作成功' })
+          this.$message({ type: 'success', message: this.$t('33ffbda2.33130f') })
           this.show_sideBar = false
         })
       }

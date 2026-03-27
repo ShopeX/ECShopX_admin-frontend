@@ -2,18 +2,18 @@
   <div class="comp-inner">
     <div v-if="showtype" class="background-type">
       <el-radio-button v-model="localShowType" :label="'default'" @change="handleShowTypeChange">
-        <span class="type-label">默认</span>
+        <span class="type-label">{{ $t('b1ff8a60.18c634') }}</span>
       </el-radio-button>
       <el-radio-button v-model="localShowType" :label="'custom'" @change="handleShowTypeChange">
-        <span class="type-label">自定义</span>
+        <span class="type-label">{{ $t('b1ff8a60.f1d4ff') }}</span>
       </el-radio-button>
     </div>
     <div v-if="localShowType !== 'default'" class="background-type">
       <el-radio-button v-model="localType" :label="'text'" @change="handleTypeChange">
-        <span class="type-label">文字</span>
+        <span class="type-label">{{ $t('b1ff8a60.ca746b') }}</span>
       </el-radio-button>
       <el-radio-button v-model="localType" :label="'image'" @change="handleTypeChange">
-        <span class="type-label">图片</span>
+        <span class="type-label">{{ $t('b1ff8a60.20def7') }}</span>
       </el-radio-button>
     </div>
     <div v-if="localShowType !== 'default'" class="color-pickers">

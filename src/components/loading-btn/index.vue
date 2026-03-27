@@ -5,7 +5,7 @@
 
 <template>
   <el-button :type="type" :size="size" :loading="loading" @click="btnHandle">
-    {{ text }}
+    {{ text || $t('c4bbc9c6.38cf16') }}
   </el-button>
 </template>
 
@@ -19,7 +19,7 @@ export default {
       default: 'primary'
     },
     text: {
-      default: '确定'
+      default: ''
     }
   },
 

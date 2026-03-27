@@ -9,13 +9,13 @@
             :src="value.titleText.image"
             class="header-image"
             alt=""
-          />
+          >
           <span
             v-if="value.titleText && value.titleText.type === 'text' && value.titleText.text"
             class="header-text"
             :style="{ color: value.titleColor }"
           >
-            {{ value.titleText?.text }}
+            {{ value.titleText?.text ? i18n.t(value.titleText.text) : '' }}
           </span>
         </div>
       </div>
@@ -25,7 +25,7 @@
         class="header-more"
         :style="{ color: value.moreBtn.color }"
       >
-        查看更多>
+        {{ i18n.t('47f355d9.44a1f0') }}
       </div>
     </div>
 
@@ -44,7 +44,7 @@
 
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
           <!-- 销量 -->
           <div class="goods-sales" v-if="item.score">
             <el-image :src="fireIcon" class="fire-icon" alt="" />
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import fireIcon from '@/assets/imgs/wgt/fire.png'
 import activitySeckill from '@/assets/imgs/wgt/activity_seckill.png'
 import memberPreferenceIcon from '@/assets/imgs/wgt/member_preference.png'
@@ -107,7 +108,7 @@ export default {
     }
   },
   data() {
-    return {
+    return {i18n,
       fireIcon: fireIcon,
       activitySeckill,
       memberPreferenceIcon

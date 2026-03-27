@@ -4,11 +4,11 @@
 -->
 
 <template>
-  <SpPage title="新增图文消息">
+  <SpPage :title="$t('5fcd403b.6e021c')">
     <template slot="page-footer">
       <div class="text-right">
-        <el-button type="primary" @click="onSubmit"> 保存 </el-button>
-        <el-button @click="onSubmit"> 预览 </el-button>
+        <el-button type="primary" @click="onSubmit"> {{ $t('5fcd403b.be5fbb') }} </el-button>
+        <el-button @click="onSubmit"> {{ $t('5fcd403b.645dbc') }} </el-button>
       </div>
     </template>
     <section class="section-white">
@@ -16,7 +16,7 @@
         <div class="appmsg_preview_container">
           <div id="submitContent" />
           <div class="appmsg_container_hd">
-            <h4 class="appmsg_container_title">图文列表</h4>
+            <h4 class="appmsg_container_title">{{ $t('5fcd403b.3474d4') }}</h4>
           </div>
           <div class="appmsg_container_bd">
             <div class="appmsg multi has_first_cover editing">
@@ -29,7 +29,7 @@
                     :class="id === index ? 'current' : ''"
                     @click="handleClick(index)"
                   >
-                    <div class="first_appmsg_item" title="第一篇图文">
+                    <div class="first_appmsg_item" :title="$t('5fcd403b.ff5ad1')">
                       <div class="cover_appmsg_item">
                         <h4 class="appmsg_title">
                           <a
@@ -40,7 +40,7 @@
                             <template v-if="articals[0].title != ''">
                               {{ articals[0].title }}
                             </template>
-                            <template v-else> 标题 </template>
+                            <template v-else> {{ $t('5fcd403b.32c65d') }} </template>
                           </a>
                         </h4>
                         <div
@@ -59,7 +59,7 @@
                         <a
                           onclick="return false;"
                           class="icon20_common iconfont icon-arrow-down sort_down_white"
-                          title="下移"
+                          :title="$t('5fcd403b.17acd2')"
                           @click.prevent="sortdown(index)"
                         />
                       </div>
@@ -88,18 +88,18 @@
                         <template v-if="item.title != ''">
                           {{ item.title }}
                         </template>
-                        <template v-else> 标题 </template>
+                        <template v-else> {{ $t('5fcd403b.32c65d') }} </template>
                       </h4>
                       <div class="appmsg_edit_mask">
                         <a
                           class="icon20_common sort_up_white iconfont icon-arrow-up"
-                          title="上移"
+                          :title="$t('5fcd403b.315eac')"
                           @click.prevent="sortup(index)"
                         />
                         <a
                           v-if="index !== articals.length - 1"
                           class="icon20_common sort_down_white icon icon-arrow-down"
-                          title="下移"
+                          :title="$t('5fcd403b.17acd2')"
                           @click.prevent="sortdown(index)"
                         />
                         <el-popover
@@ -109,17 +109,21 @@
                           trigger="click"
                         >
                           <p class="content-padded content-center" style="font-size: 14px">
-                            确定删除这篇图文？
+                            {{ $t('5fcd403b.0352e6') }}
                           </p>
                           <div class="content-center">
-                            <el-button @click="item.popVisible = false"> 取消 </el-button>
-                            <el-button type="primary" @click="remove(index)"> 确定 </el-button>
+                            <el-button @click="item.popVisible = false">
+                              {{ $t('5fcd403b.625fb2') }}
+                            </el-button>
+                            <el-button type="primary" @click="remove(index)">
+                              {{ $t('5fcd403b.38cf16') }}
+                            </el-button>
                           </div>
                           <a
                             v-if="!isEditting"
                             slot="reference"
                             class="icon20_common del_media_white el-icon-delete2"
-                            title="删除"
+                            :title="$t('5fcd403b.2f4aad')"
                           />
                         </el-popover>
                       </div>
@@ -130,7 +134,7 @@
             </div>
             <div
               v-if="!isEditting"
-              title="添加一篇图文"
+              :title="$t('5fcd403b.327d4a')"
               class="create_access_primary appmsg_add"
               @click="addmsg"
             >
@@ -143,30 +147,31 @@
         <template v-for="(item, index) in articals" v-if="id === index">
           <el-form ref="item" :key="index" :model="item" label-position="top" label-width="80px">
             <div class="content-padded">
-              <el-form-item label="标题">
-                <el-input v-model="item.title" placeholder="请输入标题" />
+              <el-form-item :label="$t('5fcd403b.32c65d')">
+                <el-input v-model="item.title" :placeholder="$t('5fcd403b.96641a')" />
               </el-form-item>
-              <el-form-item label="作者">
+              <el-form-item :label="$t('5fcd403b.62cea7')">
                 <el-input v-model="item.author" />
               </el-form-item>
               <el-form-item>
                 <SpRichText v-model="item.viewcontent" />
               </el-form-item>
               <el-form-item>
-                <el-checkbox v-model="item.hasLink"> 原文链接 </el-checkbox>
+                <el-checkbox v-model="item.hasLink"> {{ $t('5fcd403b.b63a00') }} </el-checkbox>
                 <el-input v-if="item.hasLink" v-model="item.content_source_url" placeholder="">
                   <template slot="prepend"> Http:// </template>
                 </el-input>
               </el-form-item>
             </div>
             <div class="content-padded appmsg_edit_highlight_area">
-              <h3 class="header-title">发布样式编辑</h3>
+              <h3 class="header-title">{{ $t('5fcd403b.874d4d') }}</h3>
               <div class="header_tips">
-                封面小图片 <span class="form-text-tip">建议尺寸：200像素 * 200像素</span>
+                {{ $t('5fcd403b.05eb24') }}
+                <span class="form-text-tip">{{ $t('5fcd403b.9f9b2a') }}</span>
               </div>
               <el-form-item>
                 <div>
-                  <el-button @click="addThumbPreview"> 从图片库选择 </el-button>
+                  <el-button @click="addThumbPreview"> {{ $t('5fcd403b.60dd12') }} </el-button>
                 </div>
                 <div
                   v-if="item.thumb_url"
@@ -178,7 +183,8 @@
                 />
               </el-form-item>
               <div class="header_tips">
-                摘要 <span class="form-text-tip">选填，如果不填写会默认抓取正文前54个字</span>
+                {{ $t('5fcd403b.3ae146') }}
+                <span class="form-text-tip">{{ $t('5fcd403b.8cb6d9') }}</span>
               </div>
               <el-form-item>
                 <el-input
@@ -197,12 +203,12 @@
       <div class="appmsg_tpl_area">
         <div class="appmsg_tpl_container">
           <div class="appmsg_container_hd">
-            <h4 class="appmsg_container_title">多媒体</h4>
+            <h4 class="appmsg_container_title">{{ $t('5fcd403b.ea2da2') }}</h4>
           </div>
           <div class="appmsg_container_bd">
             <ul id="js_media_list" class="tpl_list">
               <li class="tpl_item img" style="" @click="addImgPreview">
-                <i class="el-icon-picture" />图片
+                <i class="el-icon-picture" />{{ $t('5fcd403b.20def7') }}
               </li>
               <!-- <li class="tpl_item video">
               <i class="fa fa-video-camera"></i>视频
@@ -457,7 +463,7 @@ export default {
         param = { body: that.articals, media_id: this.$route.params.id }
         updateArtical(param).then((response) => {
           this.$message({
-            message: '修改图文成功',
+            message: this.$t('5fcd403b.60d5dc'),
             type: 'success',
             duration: 2 * 1000,
             onClose() {
@@ -470,7 +476,7 @@ export default {
         param = { body: that.articals }
         createArtical(param).then((response) => {
           this.$message({
-            message: '添加图文成功',
+            message: this.$t('5fcd403b.bddd46'),
             type: 'success',
             duration: 2 * 1000,
             onClose() {

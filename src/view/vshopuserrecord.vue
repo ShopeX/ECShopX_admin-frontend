@@ -80,7 +80,7 @@
     <div class="top-header">
       <!-- <button class='listkeybtn' @click="goBack">返回</button> -->
       <div class="top-select">
-        时间筛选：
+        {{ $t('c2e25025.94a73a') }}
         <select v-model="timeChoosed.time" class="select-style" @change="timeSelected">
           <option v-for="(item, index) in timeList" :key="index" :value="item.record_date">
             {{ item.record_date_str }}
@@ -88,7 +88,7 @@
         </select>
       </div>
     </div>
-    <div class="all-title">关键指标</div>
+    <div class="all-title">{{ $t('c2e25025.94635d') }}</div>
     <div v-for="(item, index) in labels_num" :key="index" class="canvas-div">
       <div class="this_labels">
         {{ item.thisweek }}
@@ -96,7 +96,7 @@
       <canvas :id="item.fieldkey" />
     </div>
     <div>
-      <div class="all-title">全部指标</div>
+      <div class="all-title">{{ $t('c2e25025.9dea79') }}</div>
       <div class="allbtn">
         <button
           v-for="(item, index) in listKeyData"
@@ -110,15 +110,15 @@
       </div>
       <div class="single_content">
         <div class="clearfloat">
-          <span class="span_left">本周</span>
+          <span class="span_left">{{ $t('c2e25025.725205') }}</span>
           <span class="span_right">{{ thisweek }}</span>
         </div>
         <div class="clearfloat">
-          <span class="span_left">上周</span>
+          <span class="span_left">{{ $t('c2e25025.79abd4') }}</span>
           <span class="span_right">{{ lastweek }}</span>
         </div>
         <div class="clearfloat">
-          <span class="span_left">5周趋势</span>
+          <span class="span_left">{{ $t('c2e25025.813dcf') }}</span>
           <canvas :id="canvas_fieldkey" />
         </div>
       </div>

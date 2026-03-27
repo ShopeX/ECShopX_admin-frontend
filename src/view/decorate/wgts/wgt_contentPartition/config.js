@@ -1,4 +1,5 @@
 import { pickBy } from '@/utils'
+import { i18n } from '@/i18n'
 import NavItem from './nav-item.vue'
 import { transformInBase, createTransformOutBase } from '../../comps/transform-utils'
 
@@ -6,41 +7,51 @@ const config = {
   name: 'contentPartition',
   setting: [
     {
-      label: '导航可吸顶',
-      group: '内容设置',
+      label: i18n.t('85b49e49.7bcb8e'),
+      group: i18n.t('85b49e49.c6b063'),
       key: 'navSticky',
       component: 'radiobutton',
       options: [
-        { name: '是', label: true },
-        { name: '否', label: false }
+        { name: i18n.t('85b49e49.0a60ac'), label: true },
+        { name: i18n.t('85b49e49.c9744f'), label: false }
       ],
       value: true
     },
     {
-      label: '圆角',
-      group: '导航项区域设置',
+      label: i18n.t('85b49e49.158f11'),
+      group: i18n.t('85b49e49.c6b063'),
+      key: 'statusBarBgColor',
+      component: 'color',
+      value: '#ffffff',
+      isShow: function () {
+        return this.value.navSticky
+      }
+    },
+    {
+      label: i18n.t('85b49e49.0103eb'),
+      group: i18n.t('85b49e49.480e08'),
       key: 'navitemradius',
       component: 'number',
       value: 0,
       module: 'navitemarea'
     },
     {
-      label: '高度',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.c1df04'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'navitemheight',
       component: 'number',
       value: 40
     },
     {
-      label: '左右内间距',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.35824c'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'navitemmargin',
       component: 'number',
       value: 0
     },
     {
-      label: '导航左滑图片',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.ebf1ca'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'leftimgUrl',
       component: function (h, { key }) {
         return (
@@ -52,8 +63,8 @@ const config = {
       value: ''
     },
     {
-      label: '导航右滑图片',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.01569f'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'rightimgUrl',
       component: function (h, { key }) {
         return (
@@ -65,19 +76,19 @@ const config = {
       value: ''
     },
     {
-      label: '选中底线',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.efcd04'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'navitemborder',
       component: 'radiobutton',
       options: [
-        { name: '是', label: 'true' },
-        { name: '否', label: 'false' }
+        { name: i18n.t('85b49e49.0a60ac'), label: 'true' },
+        { name: i18n.t('85b49e49.c9744f'), label: 'false' }
       ],
       value: false
     },
     {
-      label: '底线颜色',
-      group: '导航项设置',
+      label: i18n.t('85b49e49.c33be8'),
+      group: i18n.t('85b49e49.5f3c21'),
       key: 'navitembordercolor',
       component: 'color',
       value: '#ffffff',
@@ -88,7 +99,7 @@ const config = {
     },
     {
       label: '',
-      group: '数据设置',
+      group: i18n.t('85b49e49.e7af71'),
       key: 'data',
       component: function (h, { key }) {
         return <NavItem v-model={this.value[key]} animate='horizontal' />
@@ -158,6 +169,7 @@ const config = {
     }
 
     return {
+      id: v?.id,
       name,
       uuid,
       animate: 'horizontal', // 固定为横向
@@ -206,6 +218,7 @@ const config = {
   },
   transformOut: (v, wgtList) => {
     return pickBy(v, {
+      id: 'id',
       name: 'name',
       meber_tags: 'tags.meber_tags',
       no_meber_tags: 'tags.no_meber_tags',
@@ -227,6 +240,7 @@ const config = {
           track: 'track',
           animate: () => 'horizontal', // 固定为横向
           navSticky: 'navSticky',
+          statusBarBgColor: 'statusBarBgColor',
           navitemheight: (v) => (v.navitemheight || 0) * 2,
           navitemmargin: (v) => (v.navitemmargin || 0) * 2,
           leftimgUrl: 'leftimgUrl',

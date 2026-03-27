@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '经销商'
+const name = 'dc26d9cb.9019dc'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: [
     {
       path: 'dealer_list',
-      name: `经销商管理`,
+      name: 'dc26d9cb.429487',
       component: () => import('@/view/mall/marketing/dealer'),
       children: [
         {

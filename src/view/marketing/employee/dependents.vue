@@ -11,11 +11,11 @@
 <template>
   <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="employee_mobile" label="员工手机号:">
-        <el-input v-model="queryForm.employee_mobile" placeholder="员工手机号" />
+      <SpFilterFormItem prop="employee_mobile" :label="$t('a2055098.5f4688')">
+        <el-input v-model="queryForm.employee_mobile" :placeholder="$t('a2055098.1a1f66')" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="relative_mobile" label="亲友手机号:">
-        <el-input v-model="queryForm.relative_mobile" placeholder="亲友手机号" />
+      <SpFilterFormItem prop="relative_mobile" :label="$t('a2055098.125e4a')">
+        <el-input v-model="queryForm.relative_mobile" :placeholder="$t('a2055098.ec6ed9')" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -42,36 +42,22 @@ export default {
       queryForm: {
         employee_mobile: '',
         relative_mobile: ''
-      },
-      setting: createSetting({
+      }
+    }
+  },
+  computed: {
+    setting() {
+      return createSetting({
         columns: [
-          { name: '员工手机号', key: 'employee_mobile' },
+          { name: this.$t('a2055098.1a1f66'), key: 'employee_mobile' },
+          { name: this.$t('a2055098.a64a69'), key: 'employee_account' },
+          { name: this.$t('a2055098.1bfa5e'), key: 'enterprise_name' },
+          { name: this.$t('a2055098.4a1a2c'), key: 'employee_username' },
+          { name: this.$t('a2055098.ec6ed9'), key: 'relative_mobile' },
+          { name: this.$t('a2055098.5912a9'), key: 'relative_username' },
+          { name: this.$t('a2055098.cf3c69'), key: 'aggregate_fee' },
           {
-            name: '员工账号',
-            key: 'employee_account'
-          },
-          {
-            name: '员工所属公司',
-            key: 'enterprise_name'
-          },
-          {
-            name: '员工昵称',
-            key: 'employee_username'
-          },
-          {
-            name: '亲友手机号',
-            key: 'relative_mobile'
-          },
-          {
-            name: '亲友昵称',
-            key: 'relative_username'
-          },
-          {
-            name: '亲友已使用额度（¥）',
-            key: 'aggregate_fee'
-          },
-          {
-            name: '绑定时间',
+            name: this.$t('a2055098.d12952'),
             key: 'created',
             formatter: (value, { created }, col) => {
               return `${moment(created * 1000).format('YYYY-MM-DD HH:mm:ss')}`

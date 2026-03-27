@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'shopsetting',
       icon: 'setting-config',
       keepAlive: true,
-      title: '设置'
+      title: '55c94d66.e366cc'
     },
     name: 'setting',
     path: '/shopadmin/setting',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'Merchant-staff',
           icon: 'icon-products',
-          title: '店铺管理员',
+          title: '55c94d66.3282f2',
           permissions: ['shopsetting.distributor-staff.Merchant-staff']
         },
         component: () => import('@/view/base/account/storestaff')
@@ -33,7 +33,7 @@ const routes = [
         meta: {
           aliasName: 'platformstaffroles',
           icon: 'icon-products',
-          title: '店铺角色',
+          title: '55c94d66.c115e5',
           permissions: ['shopsetting.distributor-staff.platformstaffroles']
         },
         component: () => import('@/view/base/account/storeroles')
@@ -44,7 +44,7 @@ const routes = [
         meta: {
           aliasName: 'shopadmin_shopsetting_staff_selfdeliverystaff',
           icon: 'icon-products',
-          title: '配送员',
+          title: '55c94d66.b7765e',
           permissions: [
             'shopsetting.distributor-staff.shopadmin_shopsetting_staff_selfdeliverystaff'
           ]
@@ -57,7 +57,7 @@ const routes = [
         meta: {
           aliasName: 'shop-baseexport',
           icon: 'icon-products',
-          title: '导出列表',
+          title: '55c94d66.d12fb1',
           permissions: ['shopsetting.shop-baseexport']
         },
         component: () => import('@/view/base/exportlog/index')
@@ -68,7 +68,7 @@ const routes = [
         meta: {
           aliasName: 'applyDataPass',
           icon: 'icon-products',
-          title: '脱敏数据申请',
+          title: '55c94d66.1fb869',
           permissions: ['shopsetting.datapass.applyDataPass']
         },
         component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')

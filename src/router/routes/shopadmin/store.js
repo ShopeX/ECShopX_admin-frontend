@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'store',
       icon: 'application',
       keepAlive: true,
-      title: '店铺'
+      title: '766e6b00.295713'
     },
     name: 'shopadminStore',
     path: '/shopadmin/store',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistributor',
           icon: 'icon-shop',
-          title: '店铺信息',
+          title: '766e6b00.e7e6e2',
           permissions: ['store.marketingdistributor']
         },
         children: [
@@ -31,7 +31,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/merchant/store'),
             meta: {
-              title: '编辑店铺',
+              title: '766e6b00.922ec0',
               hidden: true
             }
           },
@@ -39,7 +39,7 @@ const routes = [
             path: 'template/:distributor_id?',
             component: () => import('@/view/mall/marketing/distributor_template'),
             meta: {
-              title: '店铺模板',
+              title: '766e6b00.5da484',
               hidden: true
             }
           },
@@ -47,7 +47,7 @@ const routes = [
             path: 'details/:id?',
             component: () => import('@/view/mall/marketing/distributor_details'),
             meta: {
-              title: '店铺详情',
+              title: '766e6b00.9d54ec',
               hidden: true
             }
           },
@@ -55,7 +55,7 @@ const routes = [
             path: 'wxpaysetting',
             component: () => import('@/view/mall/marketing/distributor_wxpaysetting'),
             meta: {
-              title: '微信支付设置',
+              title: '766e6b00.bd5e8a',
               hidden: true
             }
           },
@@ -63,7 +63,7 @@ const routes = [
             path: 'alipaysetting',
             component: () => import('@/view/mall/marketing/distributor_alipaysetting'),
             meta: {
-              title: '支付宝设置',
+              title: '766e6b00.135e7b',
               hidden: true
             }
           }
@@ -76,7 +76,7 @@ const routes = [
         meta: {
           aliasName: 'storewhitelist',
           icon: 'icon-whitelist',
-          title: '店铺白名单',
+          title: '766e6b00.899e90',
           permissions: ['store.storewhitelist']
         },
         children: [
@@ -84,7 +84,7 @@ const routes = [
             path: 'storewhitelistUpload',
             component: () => import('@/view/mall/marketing/storewhitelistUpload'),
             meta: {
-              title: '白名单上传',
+              title: '766e6b00.ba584c',
               hidden: true
             }
           }
@@ -97,7 +97,7 @@ const routes = [
         meta: {
           aliasName: 'distributorCode',
           icon: 'icon-qrcode',
-          title: '店铺码',
+          title: '766e6b00.147bf3',
           permissions: ['store.distributorCode']
         }
       },
@@ -108,7 +108,7 @@ const routes = [
         meta: {
           aliasName: 'marketingsalesman',
           icon: 'icon-salesman',
-          title: '业务员',
+          title: '766e6b00.808d6c',
           permissions: ['shopadmin.store.marketingsalesman']
         },
         children: [
@@ -116,7 +116,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/popularize/brokerageLog'),
             meta: {
-              title: '业务员详情',
+              title: '766e6b00.306c79',
               hidden: true
             }
           },
@@ -124,7 +124,7 @@ const routes = [
             path: 'child',
             component: () => import('@/view/popularize/children'),
             meta: {
-              title: '下级业务员',
+              title: '766e6b00.884bdf',
               hidden: true
             }
           },
@@ -132,7 +132,7 @@ const routes = [
             path: 'children',
             component: () => import('@/view/guide/children'),
             meta: {
-              title: '业务员下级',
+              title: '766e6b00.a6ebab',
               hidden: true
             }
           }
@@ -145,7 +145,7 @@ const routes = [
         meta: {
           aliasName: 'popularizegoods',
           icon: 'icon-goods',
-          title: '分销商品',
+          title: '766e6b00.ad8d69',
           permissions: ['shopadmin.store.popularize.popularizegoods']
         }
       },
@@ -156,7 +156,7 @@ const routes = [
         meta: {
           aliasName: 'popularizelist',
           icon: 'icon-popularize',
-          title: '推广员列表',
+          title: '766e6b00.f08fa2',
           permissions: ['shopadmin.store.marketing.popularize.popularizelist']
         },
         children: [
@@ -164,7 +164,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/popularize/brokerageLog'),
             meta: {
-              title: '推广员详情',
+              title: '766e6b00.de1e62',
               hidden: true
             }
           },
@@ -172,7 +172,7 @@ const routes = [
             path: 'child',
             component: () => import('@/view/popularize/children'),
             meta: {
-              title: '下级推广员',
+              title: '766e6b00.3adfae',
               hidden: true
             }
           }
@@ -185,7 +185,7 @@ const routes = [
         meta: {
           aliasName: 'popularizedata',
           icon: 'icon-data',
-          title: '业务员业绩',
+          title: '766e6b00.b0bf8e',
           permissions: ['shopadmin.store.marketing.popularize.popularizedata']
         },
         children: [
@@ -193,7 +193,7 @@ const routes = [
             path: 'detail',
             component: () => import('@/view/popularize/brokerageLog'),
             meta: {
-              title: '业绩详情',
+              title: '766e6b00.20cd45',
               hidden: true
             }
           }
@@ -206,7 +206,7 @@ const routes = [
         meta: {
           aliasName: 'popularizewithdraw',
           icon: 'icon-withdraw',
-          title: '业务员提现',
+          title: '766e6b00.f8e42e',
           permissions: ['shopadmin.store.popularizewithdraw']
         }
       },
@@ -217,7 +217,7 @@ const routes = [
         meta: {
           aliasName: 'shopdecoration',
           icon: 'icon-mobile',
-          title: '移动商城',
+          title: '766e6b00.40f82e',
           permissions: ['shopadmin.store.tmpl.shopdecoration']
         },
         children: [
@@ -225,7 +225,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/aftersales/detail'),
             meta: {
-              title: '商城详情',
+              title: '766e6b00.f6b1df',
               hidden: true
             }
           }
@@ -238,7 +238,7 @@ const routes = [
         meta: {
           aliasName: 'planting',
           icon: 'icon-article',
-          title: '软文',
+          title: '766e6b00.e8f87a',
           permissions: ['shopadmin.store.planting']
         },
         children: [
@@ -246,7 +246,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/content/soft-article-id'),
             meta: {
-              title: '软文编辑',
+              title: '766e6b00.d0acc7',
               hidden: true
             }
           }

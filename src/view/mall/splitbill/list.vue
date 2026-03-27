@@ -40,7 +40,7 @@
           ></el-cascader>
           <el-input class="input-m" placeholder="店铺名称" v-model="params.name"></el-input> -->
         <shop-select distributors :shop-id-default="params.distributor_id" @update="storeSearch" />
-        <el-input v-model="params.mobile" class="input-m" placeholder="联系人手机号">
+        <el-input v-model="params.mobile" class="input-m" :placeholder="$t('d643eeec.d9898e')">
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
         <!-- </el-col> -->
@@ -49,7 +49,7 @@
       <el-card>
         <el-table v-loading="loading" :data="list">
           <el-table-column width="50" prop="distributor_id" label="ID" />
-          <el-table-column label="店铺">
+          <el-table-column :label="$t('d643eeec.295713')">
             <template slot-scope="scope">
               <div class="store-name">
                 {{ scope.row.name }}
@@ -71,20 +71,22 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="status" label="状态">
+          <el-table-column prop="status" :label="$t('d643eeec.3fea7c')">
             <template slot-scope="scope">
               {{ scope.row.status_msg }}
             </template>
           </el-table-column>
-          <el-table-column width="180" label="操作">
+          <el-table-column width="180" :label="$t('d643eeec.2b6bc0')">
             <template slot-scope="scope">
-              <el-button type="text" @click="handelClick(scope.row, '查看')"> 查看 </el-button>
+              <el-button type="text" @click="handelClick(scope.row, $t('d643eeec.607e7a'))">
+                {{ $t('d643eeec.607e7a') }}
+              </el-button>
               <el-button
                 v-if="scope.row.status == 1 || scope.row.status == 4"
                 type="text"
-                @click="handelClick(scope.row, '编辑')"
+                @click="handelClick(scope.row, $t('d643eeec.95b351'))"
               >
-                编辑
+                {{ $t('d643eeec.95b351') }}
               </el-button>
               <el-button
                 v-if="
@@ -92,9 +94,9 @@
                   (scope.row.status == 1 || scope.row.status == 4)
                 "
                 type="text"
-                @click="handelClick(scope.row, '开户')"
+                @click="handelClick(scope.row, $t('d643eeec.a7cd73'))"
               >
-                开户
+                {{ $t('d643eeec.a7cd73') }}
               </el-button>
             </template>
           </el-table-column>
@@ -169,10 +171,10 @@ export default {
       regions: district,
       total_count: 0,
       statusText: {
-        1: '未提交进件信息',
-        2: '审核中',
-        3: '审核成功',
-        4: '审核失败'
+        1: this.$t('d41d8cd9.p0q1r2'),
+        2: this.$t('d41d8cd9.s3t4u5'),
+        3: this.$t('d41d8cd9.v6w7x8'),
+        4: this.$t('d41d8cd9.y9z0a1')
       },
       params: {
         page: 1,
@@ -219,31 +221,31 @@ export default {
 
     handelClick(row, type) {
       switch (type) {
-        case '查看':
+        case this.$t('d643eeec.607e7a'):
           this.$router.push({
             path: this.matchRoutePath('editor'),
             query: { id: row.distributor_id, type: '0' }
           })
           break
-        case '编辑':
+        case this.$t('d643eeec.95b351'):
           this.$router.push({
             path: this.matchRoutePath('editor'),
             query: { id: row.distributor_id, type: '1' }
           })
 
           break
-        case '开户':
+        case this.$t('d643eeec.a7cd73'):
           {
-            this.$confirm('确认开户？', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+            this.$confirm(this.$t('d643eeec.55e973'), this.$t('d643eeec.02d981'), {
+              confirmButtonText: this.$t('d643eeec.38cf16'),
+              cancelButtonText: this.$t('d643eeec.625fb2'),
               type: 'warning'
             })
               .then(() => {
                 upHfkaihu({ distributor_id: row.distributor_id }).then((res) => {
                   this.$message({
                     type: 'success',
-                    message: '提交成功!'
+                    message: this.$t('d643eeec.814952')
                   })
                   this.getList()
                 })

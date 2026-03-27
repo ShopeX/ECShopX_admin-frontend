@@ -7,7 +7,7 @@
   <div>
     <section class="section section-white content-padded view-flex view-flex-middle">
       <div class="view-flex view-flex-middle view-flex-item">
-        <div>主题：</div>
+        <div>{{ $t('655b4b0f.df23a5') }}</div>
         <div>
           <div class="theme-item">
             <div style="background: #f3b600" />
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="content-right">
-        <el-button type="primary" @click="save"> 保存 </el-button>
+        <el-button type="primary" @click="save">{{ $t('655b4b0f.be5fbb') }}</el-button>
       </div>
     </section>
     <section class="section-white view-warp">
@@ -27,7 +27,7 @@
           :class="currentPage === index ? 'page active' : 'page'"
           @click="tabPage(index)"
         >
-          <img alt="" :src="item.imgurl" height="569" width="320" />
+          <img alt="" :src="item.imgurl" height="569" width="320">
         </div>
       </div>
       <div v-if="currentPage === 0" class="template-view">
@@ -42,7 +42,9 @@
               ') no-repeat 0 4px; background-size: 100% auto;'
             "
           >
-            <div class="template-title" :style="'color:' + theme.fontColor">标题</div>
+            <div class="template-title" :style="'color:' + theme.fontColor">
+              {{ $t('655b4b0f.32c65d') }}
+            </div>
           </div>
           <el-carousel height="160px" :autoplay="false">
             <el-carousel-item
@@ -58,27 +60,29 @@
             />
           </el-carousel>
           <div class="view-flex view-flex-middle activity">
-            <img src="@/assets/img/gift.png" class="activity-icon" />
+            <img src="@/assets/img/gift.png" class="activity-icon">
             <div class="view-flex-item">
-              <div class="activity-title">新手福利</div>
-              <div>新入会员立即领取88元红包</div>
+              <div class="activity-title">{{ $t('655b4b0f.807688') }}</div>
+              <div>{{ $t('655b4b0f.df0da4') }}</div>
             </div>
-            <div class="activity-btn">领取</div>
+            <div class="activity-btn">{{ $t('655b4b0f.9c1b27') }}</div>
           </div>
           <div class="view-flex view-flex-middle nav">
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/activity.png" />热门活动
+              <img class="nav-icon" src="@/assets/img/activity.png">{{ $t('655b4b0f.891313') }}
             </div>
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/reseveration.png" />预约
+              <img class="nav-icon" src="@/assets/img/reseveration.png">{{
+                $t('655b4b0f.26ad89')
+              }}
             </div>
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/buy.png" />买单
+              <img class="nav-icon" src="@/assets/img/buy.png">{{ $t('655b4b0f.554003') }}
             </div>
           </div>
           <div class="goods-list">
             <div class="list-title">
-              <text class="title-txt"> 精选推荐 </text>
+              <text class="title-txt">{{ $t('655b4b0f.1dc55a') }}</text>
             </div>
             <div v-for="item in form.hotGoods" class="goods view-flex view-flex-stretch">
               <div
@@ -108,19 +112,19 @@
             </div>
           </div>
           <div class="store">
-            <div class="store-more store-label">全部门店</div>
+            <div class="store-more store-label">{{ $t('655b4b0f.a48948') }}</div>
             <div class="content-center">
               <div class="store-name">桂林路店</div>
               <div class="store-desc">上海市徐汇区桂林路396号2号楼</div>
             </div>
             <div class="view-flex view-flex-center store-contact">
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_location.png" />
+                <img class="store-icon" src="@/assets/img/store_location.png">
                 <div>1220 km</div>
               </div>
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_phone.png" />
-                <div>咨询</div>
+                <img class="store-icon" src="@/assets/img/store_phone.png">
+                <div>{{ $t('655b4b0f.a74ccc') }}</div>
               </div>
             </div>
           </div>
@@ -128,7 +132,7 @@
       </div>
       <div v-if="currentPage === 0" class="setting-view">
         <div class="section">
-          <div class="section-header with-border with-bg">轮播图配置</div>
+          <div class="section-header with-border with-bg">{{ $t('655b4b0f.12d44c') }}</div>
           <div class="section-body">
             <div v-for="(item, index) in form.bannerPicList" class="setting-item slider">
               <div class="setting-remove" @click="handleDelBanner(index)">
@@ -140,11 +144,11 @@
                   :src="wximageurl + item.url"
                   class="banner-uploader"
                   @click="handleImgChange(index, 'banner')"
-                />
+                >
                 <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
-                    <i class="el-icon-camera" /><br />
-                    上传图片
+                    <i class="el-icon-camera" /><br>
+                    {{ $t('655b4b0f.ce6855') }}
                   </div>
                 </div>
               </div>
@@ -162,26 +166,28 @@
                   {{ item.item_name }}
                 </div>
                 <div v-else class="content-center">
-                  <i class="el-icon-link" @click="handleGoodsChange(index, 'banner')" />绑定商品
+                  <i class="el-icon-link" @click="handleGoodsChange(index, 'banner')" />{{
+                    $t('655b4b0f.3b9737')
+                  }}
                 </div>
               </div>
             </div>
             <div class="content-center">
               <div class="frm-tips">
-                只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
+                {{ $t('655b4b0f.d5a0d5') }}
               </div>
               <el-button
                 type="primary"
                 class="el-icon-plus banner-button-uploader"
                 @click="handleAddBanner"
               >
-                添加轮播图
+                {{ $t('655b4b0f.22134f') }}
               </el-button>
             </div>
           </div>
         </div>
         <div class="section">
-          <div class="section-header with-border with-bg">热门商品配置</div>
+          <div class="section-header with-border with-bg">{{ $t('655b4b0f.7d174d') }}</div>
           <div class="section-body">
             <div v-for="(item, index) in form.hotGoods" class="setting-item hot">
               <div class="goods-select" @click="handleGoodsChange(index, 'hotGoods')">
@@ -197,7 +203,9 @@
                   />
                   {{ item.item_name }}
                 </div>
-                <div v-else class="content-center"><i class="el-icon-link" />绑定商品</div>
+                <div v-else class="content-center">
+                  <i class="el-icon-link" />{{ $t('655b4b0f.3b9737') }}
+                </div>
               </div>
             </div>
           </div>
@@ -217,7 +225,9 @@
           >
             <div class="msg-content">
               <div class="msg-info">
-                <span>更新于 {{ data.news.content.update_time | datetime }}</span>
+                <span
+                  >{{ $t('655b4b0f.3a6d9c') }} {{ data.news.content.update_time | datetime }}</span
+                >
               </div>
               <div
                 class="sub-msg-item"
@@ -234,7 +244,7 @@
                   }"
                 />
                 <a :href="data.news.content.news_item[0].url" class="edit-mask preview-mask">
-                  <div class="edit-mask-content">预览文章</div>
+                  <div class="edit-mask-content">{{ $t('655b4b0f.f9d706') }}</div>
                 </a>
                 <p v-if="data.news.content.news_item.length === 1" class="msg-desc">
                   {{ data.news.content.news_item[0].digest }}
@@ -253,7 +263,7 @@
                     <a>{{ item.title }}</a>
                   </h4>
                   <a :href="item.url" class="edit-mask preview-mask">
-                    <div class="edit-mask-content">预览文章</div>
+                    <div class="edit-mask-content">{{ $t('655b4b0f.f9d706') }}</div>
                   </a>
                 </div>
               </div>
@@ -264,7 +274,7 @@
           <div class="appmsg_preview_area">
             <div class="appmsg_preview_container">
               <div class="appmsg_container_hd">
-                <h4 class="appmsg_container_title">小程序营销文章配置</h4>
+                <h4 class="appmsg_container_title">{{ $t('655b4b0f.8eba89') }}</h4>
               </div>
               <div class="appmsg_container_bd">
                 <div class="appmsg multi has_first_cover editing">
@@ -276,7 +286,7 @@
                         :class="id === index ? 'current' : ''"
                         @click="handleClick(index)"
                       >
-                        <div class="first_appmsg_item" title="第一篇图文">
+                        <div class="first_appmsg_item" :title="$t('655b4b0f.ff5ad1')">
                           <div class="cover_appmsg_item">
                             <h4 class="appmsg_title">
                               <a
@@ -287,7 +297,7 @@
                                 <template v-if="articals[0].title != ''">
                                   {{ articals[0].title }}
                                 </template>
-                                <template v-else> 标题 </template>
+                                <template v-else>{{ $t('655b4b0f.32c65d') }}</template>
                               </a>
                             </h4>
                             <div
@@ -306,7 +316,7 @@
                             <a
                               onclick="return false;"
                               class="icon20_common iconfont icon-arrow-down sort_down_white"
-                              title="下移"
+                              :title="$t('655b4b0f.17acd2')"
                               @click.prevent="sortdown(index)"
                             />
                           </div>
@@ -334,18 +344,18 @@
                             <template v-if="item.title != ''">
                               {{ item.title }}
                             </template>
-                            <template v-else> 标题 </template>
+                            <template v-else>{{ $t('655b4b0f.32c65d') }}</template>
                           </h4>
                           <div class="appmsg_edit_mask">
                             <a
                               class="icon20_common sort_up_white iconfont icon-arrow-up"
-                              title="上移"
+                              :title="$t('655b4b0f.315eac')"
                               @click.prevent="sortup(index)"
                             />
                             <a
                               v-if="index !== articals.length - 1"
                               class="icon20_common sort_down_white iconfont icon-arrow-down"
-                              title="下移"
+                              :title="$t('655b4b0f.17acd2')"
                               @click.prevent="sortdown(index)"
                             />
                             <el-popover
@@ -355,17 +365,25 @@
                               trigger="click"
                             >
                               <p class="content-padded content-center" style="font-size: 14px">
-                                确定删除这篇文章？
+                                {{ $t('655b4b0f.2a0fc2') }}
                               </p>
                               <div class="content-center">
-                                <el-button @click="item.popVisible = false"> 取消 </el-button>
-                                <el-button type="primary" @click="remove(index)"> 确定 </el-button>
+                                <el-button @click="item.popVisible = false">
+{{
+                                  $t('655b4b0f.625fb2')
+                                }}
+</el-button>
+                                <el-button type="primary" @click="remove(index)">
+{{
+                                  $t('655b4b0f.38cf16')
+                                }}
+</el-button>
                               </div>
                               <a
                                 v-if="!isEditting"
                                 slot="reference"
                                 class="icon20_common del_media_white el-icon-delete"
-                                title="删除"
+                                :title="$t('655b4b0f.2f4aad')"
                               />
                             </el-popover>
                           </div>
@@ -376,7 +394,7 @@
                 </div>
                 <div
                   v-if="!isEditting"
-                  title="添加一篇图文"
+                  :title="$t('655b4b0f.327d4a')"
                   class="create_access_primary appmsg_add"
                   @click="addmsg"
                 >
@@ -389,21 +407,22 @@
             <template v-for="(item, index) in articals" v-if="id === index">
               <el-form ref="item" :model="item" label-position="top" label-width="80px">
                 <div class="content-padded">
-                  <el-form-item label="标题" style="height: 80px">
-                    <el-input v-model="item.title" placeholder="请输入标题" />
+                  <el-form-item :label="$t('655b4b0f.32c65d')" style="height: 80px">
+                    <el-input v-model="item.title" :placeholder="$t('655b4b0f.96641a')" />
                   </el-form-item>
                   <el-form-item>
                     <SpRichText v-model="item.viewcontent" />
                   </el-form-item>
                 </div>
                 <div class="content-padded appmsg_edit_highlight_area" style="height: 420px">
-                  <h3 class="header-title">发布样式编辑</h3>
+                  <h3 class="header-title">{{ $t('655b4b0f.874d4d') }}</h3>
                   <div class="header_tips">
-                    封面小图片 <span class="form-text-tip">建议尺寸：200像素 * 200像素</span>
+                    {{ $t('655b4b0f.05eb24') }}
+                    <span class="form-text-tip">{{ $t('655b4b0f.9f9b2a') }}</span>
                   </div>
                   <el-form-item>
                     <div>
-                      <el-button @click="addThumbPreview"> 从图片库选择 </el-button>
+                      <el-button @click="addThumbPreview">{{ $t('655b4b0f.60dd12') }}</el-button>
                     </div>
                     <div
                       v-if="item.thumb_url"
@@ -421,12 +440,12 @@
           <div class="appmsg_tpl_area">
             <div class="appmsg_tpl_container">
               <div class="appmsg_container_hd">
-                <h4 class="appmsg_container_title">多媒体</h4>
+                <h4 class="appmsg_container_title">{{ $t('655b4b0f.ea2da2') }}</h4>
               </div>
               <div class="appmsg_container_bd">
                 <ul id="js_media_list" class="tpl_list">
                   <li class="tpl_item img" style="" @click="addImgPreview">
-                    <i class="el-icon-picture" />图片
+                    <i class="el-icon-picture" />{{ $t('655b4b0f.20def7') }}
                   </li>
                 </ul>
                 <imgPicker
@@ -447,12 +466,16 @@
         </div>
       </div>
     </section>
-    <el-dialog title="选择商品" class="select-goods-box" :visible.sync="selectGoodsVisible">
+    <el-dialog
+      :title="$t('655b4b0f.43d1e2')"
+      class="select-goods-box"
+      :visible.sync="selectGoodsVisible"
+    >
       <template>
         <el-transfer
           v-model="selectGoods"
-          :titles="['商品列表', '已选中']"
-          :button-texts="['移除选择', '添加选择']"
+          :titles="[$t('655b4b0f.437974'), $t('655b4b0f.543b04')]"
+          :button-texts="[$t('655b4b0f.be4911'), $t('655b4b0f.93d369')]"
           :data="goodsList"
           @change="handleSelectChange"
         >
@@ -468,7 +491,11 @@
           </div>
         </el-transfer>
         <div class="section-footer with-border content-center" style="width: 100%">
-          <el-button type="primary" @click="handleGoodsDialog"> 确定 </el-button>
+          <el-button type="primary" @click="handleGoodsDialog">
+{{
+            $t('655b4b0f.38cf16')
+          }}
+</el-button>
         </div>
       </template>
     </el-dialog>
@@ -616,7 +643,7 @@ export default {
       let item = { url: '', item_id: 0, item_name: '' }
       if (this.form.bannerPicList.length > 4) {
         this.$message({
-          message: '轮播图最多添加5个图片',
+          message: this.$t('655b4b0f.1d1897'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -686,7 +713,7 @@ export default {
     handleSelectChange(value, direction, movedKeys) {
       if (value.length > 1) {
         this.$message({
-          message: '最多选择一个商品',
+          message: this.$t('655b4b0f.0a5544'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -773,7 +800,7 @@ export default {
     },
     addmsg() {
       if (this.articals.length > 3) {
-        this.$message({ message: '最多添加4条文章', type: 'error' })
+        this.$message({ message: this.$t('655b4b0f.df31d7'), type: 'error' })
         return
       }
       let baseMsgData = {
@@ -853,7 +880,7 @@ export default {
         }
         updateParamsById(bannerParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -867,7 +894,7 @@ export default {
         }
         setPageParams(bannerParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -884,7 +911,7 @@ export default {
         }
         updateParamsById(hotGoodsParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -898,7 +925,7 @@ export default {
         }
         setPageParams(hotGoodsParams).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -918,7 +945,7 @@ export default {
         param = { params: that.articals, name: 'marketing_articles', id: that.articleSetId }
         updateParamsById(param).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })
@@ -932,7 +959,7 @@ export default {
         }
         setPageParams(param).then((response) => {
           this.$message({
-            message: '保存成功',
+            message: this.$t('655b4b0f.3b1083'),
             type: 'success',
             duration: 5 * 1000
           })

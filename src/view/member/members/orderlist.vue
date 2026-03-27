@@ -6,17 +6,17 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="list" border>
-      <el-table-column prop="create_time" label="创建时间">
+      <el-table-column prop="create_time" :label="$t('63018193.eca37c')">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="order_id" label="订单号" />
-      <el-table-column prop="title" label="标题" />
-      <el-table-column prop="total_fee" label="金额">
+      <el-table-column prop="order_id" :label="$t('63018193.1e8dc2')" />
+      <el-table-column prop="title" :label="$t('63018193.32c65d')" />
+      <el-table-column prop="total_fee" :label="$t('63018193.4cf24a')">
         <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column prop="order_type" label="类型">
+      <el-table-column prop="order_type" :label="$t('63018193.226b09')">
         <template slot-scope="scope">
           <span
             v-for="(item, index) in orderType"
@@ -27,14 +27,26 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="order_status" label="订单状态">
+      <el-table-column prop="order_status" :label="$t('63018193.86f6cf')">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.order_status == 'DONE'" type="success"> 已完成 </el-tag>
-          <el-tag v-else-if="scope.row.order_status == 'NOTPAY'"> 未支付 </el-tag>
-          <el-tag v-else-if="scope.row.order_status == 'CLOSED'" type="danger"> 已取消 </el-tag>
+          <el-tag v-if="scope.row.order_status == 'DONE'" type="success">
+{{
+            $t('63018193.fad522')
+          }}
+</el-tag>
+          <el-tag v-else-if="scope.row.order_status == 'NOTPAY'">
+{{
+            $t('63018193.608afd')
+          }}
+</el-tag>
+          <el-tag v-else-if="scope.row.order_status == 'CLOSED'" type="danger">
+{{
+            $t('63018193.2111cc')
+          }}
+</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('63018193.2b6bc0')">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.order_type != 'membercard'"
@@ -42,7 +54,7 @@
             icon="view"
             @click="getDetail(scope.row.order_id)"
           >
-            详情
+            {{ $t('63018193.f26225') }}
           </el-button>
         </template>
       </el-table-column>
@@ -65,10 +77,6 @@ export default {
     return {
       loading: false,
       params: {},
-      orderStatusList: [
-        { name: '未支付', value: 'notpay' },
-        { name: '已完成', value: 'done' }
-      ],
       // time_start_begin: '',
       // time_start_end: '',
       total_count: 0,
@@ -77,6 +85,14 @@ export default {
       list: [],
       currentShop: '',
       wxShopsList: []
+    }
+  },
+  computed: {
+    orderStatusList() {
+      return [
+        { name: this.$t('63018193.608afd'), value: 'notpay' },
+        { name: this.$t('63018193.fad522'), value: 'done' }
+      ]
     }
   },
   watch: {

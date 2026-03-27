@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '商品'
+const name = '848f4323.9897d8'
 import Layout from '@/view/layout' // 主框架
 import SubLayout from '@/view/sublayout' // 主框架
 
@@ -13,7 +13,7 @@ export default {
     // 自营商品
     {
       path: 'goods/goodsphysical',
-      name: `商品管理`,
+      name: '848f4323.5782b6',
       component: () => import('@/view/mall/goods/physical/list'),
       children: [
         {
@@ -26,30 +26,30 @@ export default {
         },
         {
           path: 'physicalstoreupload',
-          name: `库存导入`,
+          name: '848f4323.ac5320',
           component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload')
         },
         {
           path: 'physicalprofitupload',
-          name: `分润导入`,
+          name: '848f4323.022564',
           component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload')
         },
         {
           path: 'physicalupload',
-          name: `商品导入`,
+          name: '848f4323.9745ac',
           component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
         }
       ]
     },
     {
       path: 'goods/storeshopitemanagement',
-      name: `店铺商品`,
+      name: '848f4323.54d6cd',
       // component: () => import('@/view/mall/storeshop/itemlist')
       component: () => import('@/view/mall/storeshop/store-shop.standard')
     },
     {
       path: 'goods/goodsaudit',
-      name: `商家商品`,
+      name: '848f4323.eab74c',
       component: () => import('@/view/mall/goods/audit/list'),
       children: [
         {
@@ -64,56 +64,56 @@ export default {
     // 商品分类
     {
       path: 'goodsgroup/goodscategory',
-      name: `销售分类`,
+      name: '848f4323.392d49',
       // component: () => import('@/view/mall/goods/category')
       component: () => import('@/view/goods/saleCategory')
     },
     {
       path: 'goodsgroup/goodsmaincategory',
-      name: `管理分类`,
+      name: '848f4323.b3ed9f',
       // component: () => import('@/view/mall/goods/maincategory')
       component: () => import('@/view/goods/mainCategory')
     },
     {
       path: 'goodsgroup/itemtags',
-      name: `商品标签`,
+      name: '848f4323.0f394b',
       component: () => import('@/view/mall/goods/tags')
     },
     // 基础设置
     {
       path: 'goodsbase/goodsattributes',
-      name: `商品规格`,
+      name: '848f4323.5fceb3',
       component: () => import('@/view/mall/goods/attributes/attributes')
     },
     {
       path: 'goodsbase/goodsstartnum',
-      name: `起订量`,
+      name: '848f4323.ed52fd',
       component: () => import('@/view/mall/goods/attributes/goodsattributes')
     },
     {
       path: 'goodsbase/goodsbrand',
-      name: `商品品牌`,
+      name: '848f4323.ef6fc3',
       component: () => import('@/view/mall/goods/attributes/brand')
     },
     {
       path: 'goodsbase/goodsparams',
-      name: `商品参数`,
+      name: '848f4323.8686bb',
       component: () => import('@/view/mall/goods/attributes/params')
     },
     {
       path: 'goods/itemstagupload',
-      name: `批量打标签`,
+      name: '848f4323.4f1e39',
       component: () => import('@/view/mall/goods/physical/normalGoodsTagUpload')
     },
     {
       path: 'goods/physicalupload',
-      name: `实体商品导入`,
+      name: '848f4323.0d9697',
       component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
     },
 
     {
       path: 'service_goods/servicegoods',
-      name: `商品管理`,
+      name: '848f4323.5782b6',
       component: () => import('@/view/mall/goods/service/index'),
       children: [
         {

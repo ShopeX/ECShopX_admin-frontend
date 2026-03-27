@@ -7,13 +7,13 @@
   <div class="notExistAuth_page">
     <el-card class="box-card card">
       <div class="box">
-        <img :src="require('@/assets/img/warning.png')" alt="" />
-        <p>登录失败，该账号无权限</p>
+        <img :src="require('@/assets/img/warning.png')" alt="">
+        <p>{{ $t('84bc684d.848bbe') }}</p>
       </div>
       <p class="message">
-        您正在登录的账号没有商派销售中心的使用权限，请联系管理员添加权限，如有疑问请联系客户
+        {{ $t('84bc684d.e5eaa4') }}
       </p>
-      <button type="submit" @click="golink()">返回营销中心</button>
+      <button type="submit" @click="golink()">{{ $t('84bc684d.0d57fb') }}</button>
     </el-card>
   </div>
 </template>

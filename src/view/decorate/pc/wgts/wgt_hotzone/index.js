@@ -10,8 +10,8 @@ export default {
   wgtIcon: 'wgt-hotzone',
   example: {
     name: 'imgHotzone',
-    title: '热区图',
-    subtitle: '图上随意画块块',
+    title: 'b8c8c43e.0ad6ab',
+    subtitle: 'b8c8c43e.f858aa',
     padded: true,
     data: {
       imgUrl: '',
@@ -21,11 +21,11 @@ export default {
   config: {
     name: 'imgHotzone',
     setting: [
-      { label: '标题', key: 'title', component: 'input', value: '热区图' },
-      { label: '副标题', key: 'subtitle', component: 'input', value: '图上随意画块块' },
-      { label: '组件间距', key: 'padded', component: 'switch', value: true },
+      { label: 'b8c8c43e.32c65d', key: 'title', component: 'input', value: '热区图' },
+      { label: 'b8c8c43e.72cf37', key: 'subtitle', component: 'input', value: '图上随意画块块' },
+      { label: 'b8c8c43e.4707ba', key: 'padded', component: 'switch', value: true },
       {
-        label: '热区设置',
+        label: 'b8c8c43e.c90f57',
         key: 'data',
         component: function (h, { key }) {
           return <AttrHotSetting v-model={this.value[key]} />

@@ -19,8 +19,17 @@
 <template>
   <SpPage>
     <div class="page-goods-salecategory">
-      <div class="action-container">
-        <el-button type="primary" @click="addCategory"> 添加销售分类 </el-button>
+      <div class="action-container flex items-center gap-4">
+        <el-button type="primary" @click="addCategory"> {{ $t('0e7dabe2.c171b3') }} </el-button>
+        <div class="flex items-center gap-2">
+          <span>{{ $t('0e7dabe2.63cd0e') }}</span>
+          <el-switch
+            v-model="saleableEnabled"
+            :active-value="true"
+            :inactive-value="false"
+            @change="handleSaleableChange"
+          />
+        </div>
       </div>
 
       <el-table
@@ -33,8 +42,8 @@
         :load="load"
         width="100%"
       >
-        <el-table-column label="" width="60"></el-table-column>
-        <el-table-column label="操作" width="450">
+        <el-table-column label="" width="60" />
+        <el-table-column :label="$t('0e7dabe2.2b6bc0')" width="450">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -45,7 +54,7 @@
                   query: { category: scope.row.path }
                 }"
               >
-                查看商品
+                {{ $t('0e7dabe2.f13684') }}
               </router-link>
             </el-button>
             <el-button
@@ -53,12 +62,14 @@
               type="text"
               @click="appendChildren(scope.row)"
             >
-              新增子类
+              {{ $t('0e7dabe2.82537d') }}
             </el-button>
-            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="editCategory(scope.row)">
+              {{ $t('0e7dabe2.95b351') }}
+            </el-button>
             <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl" />
+                <img class="page-code" :src="appCodeUrl">
                 <div class="page-btns">
                   <el-button
                     type="primary"
@@ -66,10 +77,10 @@
                     size="mini"
                     @click="handleDownload(scope.row.category_name)"
                   >
-                    下载码
+                    {{ $t('0e7dabe2.99e985') }}
                   </el-button>
                   <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                    复制链接
+                    {{ $t('0e7dabe2.879058') }}
                   </el-button>
                 </div>
               </div>
@@ -79,27 +90,37 @@
                 type="text"
                 @click="handleClick(scope.row.category_id)"
               >
-                投放
+                {{ $t('0e7dabe2.536ff1') }}
               </el-button>
             </el-popover>
             <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-              删除
+              {{ $t('0e7dabe2.2f4aad') }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="分类名称" prop="category_name" width="280">
+        <el-table-column :label="$t('0e7dabe2.04d7d8')" prop="category_name" width="280">
           <template slot-scope="scope">
             <div class="whitespace-nowrap">
               {{ scope.row.category_name }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="分类排序" width="140">
+        <el-table-column prop="sort" :label="$t('0e7dabe2.53eb44')" width="140">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="分类图片" width="200">
+        <el-table-column :label="$t('0e7dabe2.e8f9a1')" width="120" align="center">
+          <template slot-scope="scope">
+            <el-switch
+              :value="scope.row.is_show_front"
+              active-value="1"
+              inactive-value="0"
+              @change="(val) => onIsShowFrontChange(scope.row, val)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('0e7dabe2.b34dc8')" width="200">
           <template slot-scope="scope">
             <div class="img-container">
               <SpImage
@@ -117,7 +138,7 @@
       <SpDialog
         ref="categoryDialogRef"
         v-model="categoryDialog"
-        :title="categoryForm.category_id > 0 ? '编辑分类' : '添加分类'"
+        :title="categoryForm.category_id > 0 ? $t('0e7dabe2.55d793') : $t('0e7dabe2.9811be')"
         :modal="false"
         :form="categoryForm"
         :form-list="categoryFormList"
@@ -139,6 +160,7 @@ export default {
       mapData: null,
       cacheRowData: null,
       categoryDialog: false,
+      saleableEnabled: true,
       categoryForm: {
         category_id: '',
         category_name: '',
@@ -146,42 +168,44 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: 0
-      },
-      categoryFormList: [
+        customize_page_id: '',
+        is_show_front: '1'
+      }
+    }
+  },
+  computed: {
+    categoryFormList() {
+      return [
         {
-          label: '分类名称',
+          label: this.$t('0e7dabe2.04d7d8'),
           key: 'category_name',
           type: 'input',
-          placeholder: '请输入分类名称',
+          placeholder: this.$t('0e7dabe2.68363f'),
           required: true,
-          message: '不能为空'
+          message: this.$t('0e7dabe2.281bad')
         },
         {
-          label: '分类排序',
+          label: this.$t('0e7dabe2.53eb44'),
           key: 'sort',
           type: 'number'
         },
         {
-          label: '父级分类',
+          label: this.$t('0e7dabe2.e8f9a1'),
+          key: 'is_show_front',
+          component: ({ key }, value) => <el-switch v-model={value[key]} active-value="1" inactive-value="0"/>,
+        },
+        {
+          label: this.$t('0e7dabe2.dc1eed'),
           key: 'parent_name',
           type: 'text',
           isShow: ({ key }, value) =>
             this.categoryForm.parent_id > 0 && !this.categoryForm.category_id
         },
         {
-          label: '分类图片',
+          label: this.$t('0e7dabe2.b34dc8'),
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
         }
-        // {
-        //   label: '一级分类模版',
-        //   key: 'customize_page_id',
-        //   type: 'select',
-        //   options: [],
-        //   placeholder: '请选择一级分类模版',
-        //   display: 'inline'
-        // }
       ]
     }
   },
@@ -191,6 +215,7 @@ export default {
   mounted() {
     this.init()
     this.fetchWechatList()
+    this.fetchSaleableFilter()
     // this.classification()
   },
   methods: {
@@ -218,6 +243,24 @@ export default {
       const { authorizer_appid } = authorizer
       this.appID = authorizer_appid
     },
+    async fetchSaleableFilter() {
+      try {
+        const res = await this.$api.goods.getSaleableFilter()
+        this.saleableEnabled = res.enabled ?? true
+      } catch (e) {
+        console.error(this.$t('0e7dabe2.976500'), e)
+      }
+    },
+    async handleSaleableChange(value) {
+      try {
+        await this.$api.goods.setSaleableFilter({ enabled: value })
+        this.$message.success(value ? this.$t('0e7dabe2.164ac5') : this.$t('0e7dabe2.819f29'))
+      } catch (e) {
+        // 如果失败，恢复原值
+        this.saleableEnabled = !value
+        this.$message.error(this.$t('0e7dabe2.9f9603'))
+      }
+    },
     addCategory() {
       this.categoryForm = {
         category_id: '',
@@ -226,19 +269,33 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id: 0
+        customize_page_id: '',
+        is_show_front: '1'
       }
       this.categoryDialog = true
     },
-    // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url, customize_page_id }) {
+    // 编辑分类（与列表「前台是否显示」开关保持一致：统一为 '1'/'0'）
+    editCategory({
+      parent_id,
+      category_id,
+      category_name,
+      sort,
+      image_url,
+      customize_page_id,
+      is_show_front
+    }) {
+      const showFront =
+        is_show_front === 1 ||
+        is_show_front === '1' ||
+        is_show_front === true
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
         image_url,
-        customize_page_id
+        customize_page_id: customize_page_id == 0 ? '' : customize_page_id,
+        is_show_front: showFront ? '1' : '0'
       }
       this.categoryDialog = true
     },
@@ -253,9 +310,22 @@ export default {
         parent_id: category_id,
         parent_name: category_name,
         image_url: '',
-        customize_page_id: 0
+        customize_page_id: '',
+        is_show_front: '1'
       }
       this.categoryDialog = true
+    },
+    async onIsShowFrontChange(row, val) {
+      try {
+        await this.$api.goods.editCategory({
+          category_id: row.category_id,
+          is_show_front: val
+        })
+        this.$set(row, 'is_show_front', val)
+        this.$message.success(this.$t('0e7dabe2.3bb47b'))
+      } catch (e) {
+        this.$message.error(e?.message || this.$t('0e7dabe2.02d981'))
+      }
     },
 
     async handleClick(cat_id) {
@@ -283,9 +353,14 @@ export default {
         parent_id: pid
       })
       const list = res.map((item) => {
+        const showFront =
+          item.is_show_front === 1 ||
+          item.is_show_front === '1' ||
+          item.is_show_front === true
         return {
           ...item,
-          hasChildren: item.has_children == '1'
+          hasChildren: item.has_children == '1',
+          is_show_front: showFront ? '1' : '0'
         }
       })
       return list
@@ -297,39 +372,48 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, customize_page_id=0, parent_id, category_id } =
-        this.categoryForm
+      const {
+        category_name,
+        sort,
+        image_url,
+        customize_page_id,
+        parent_id,
+        category_id,
+        is_show_front
+      } = this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,
           sort,
           image_url,
           category_id,
-          customize_page_id
+          customize_page_id,
+          is_show_front
         })
-        this.$message.success('编辑成功')
+        this.$message.success(this.$t('0e7dabe2.3bb47b'))
       } else {
         await this.$api.goods.addCategory({
           category_name,
           sort,
           image_url,
           customize_page_id,
+          is_show_front,
           parent_id: parent_id != '0' ? parent_id : undefined
         })
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('0e7dabe2.3fdaea'))
       }
       this.refreshNode(parent_id)
       this.categoryDialog = false
     },
     async deleteCategory(row) {
-      await this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      await this.$confirm(this.$t('0e7dabe2.442ecc'), this.$t('0e7dabe2.02d981'), {
+        confirmButtonText: this.$t('0e7dabe2.38cf16'),
+        cancelButtonText: this.$t('0e7dabe2.625fb2')
       })
       const { parent_id, category_id } = row
       this.cacheRowData = row
       await this.$api.goods.deleteCategory(category_id)
-      this.$message.success('删除分类成功')
+      this.$message.success(this.$t('0e7dabe2.1fe03c'))
       this.refreshNode(parent_id)
       // const store = this.$refs.tableTree.store
       // let parentRow, index

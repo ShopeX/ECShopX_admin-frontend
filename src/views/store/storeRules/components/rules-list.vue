@@ -7,7 +7,7 @@
   <div>
     <el-alert
       class="leading-normal !mb-[10px]"
-      title="从上到下权重由大到小，拖拽可进行优先级排序"
+      :title="$t('c94cb914.caa479')"
       type="warning"
       show-icon
       :closable="false"
@@ -22,10 +22,10 @@
           <div class="flex leading-normal p-3">
             <el-switch v-model="item.status" />
             <div class="ml-4">
-              <div>店铺码进店</div>
+              <div>{{ $t('c94cb914.bb6d98') }}</div>
               <div class="text-sm text-[#999] mt-2">
-                <p>通过带门店参小程序码扫码进入对应店铺</p>
-                <p>通过分享小程序卡片进入对应店铺</p>
+                <p>{{ $t('c94cb914.e45ade') }}</p>
+                <p>{{ $t('c94cb914.777f40') }}</p>
               </div>
             </div>
           </div>
@@ -34,13 +34,13 @@
           <div class="flex leading-normal p-3">
             <el-switch v-model="item.status" />
             <div class="ml-4">
-              <div>导购物料进店（需开通导购应用）</div>
+              <div>{{ $t('c94cb914.c2cb2d') }}</div>
               <div class="text-sm text-[#999] mt-2">
-                <p>通过扫企微码添加导购加好友的欢迎语推送的小程序卡片进店</p>
-                <p>通过导购商城分享的小程序海报、小程序卡片进店</p>
+                <p>{{ $t('c94cb914.e2f3b5') }}</p>
+                <p>{{ $t('c94cb914.2bb3ec') }}</p>
               </div>
               <div class="flex items-center text-md flex-nowrap mt-2.5">
-                导购参数保留时长
+                {{ $t('c94cb914.d9e091') }}
                 <el-input-number
                   size="small"
                   v-model="item.express_time"
@@ -48,7 +48,7 @@
                   :min="0"
                   style="width: 100px; margin: 0 8px"
                 />
-                ×24小时
+                {{ $t('c94cb914.dabef3') }}
               </div>
             </div>
           </div>
@@ -57,9 +57,9 @@
           <div class="flex leading-normal p-3">
             <el-switch v-model="item.status" />
             <div class="ml-4">
-              <div>进入白名单店铺（需开启店铺白名单）</div>
+              <div>{{ $t('c94cb914.aecdc5') }}</div>
               <div class="text-sm text-[#999] mt-2">
-                <p>进入用户绑定白名单的店铺</p>
+                <p>{{ $t('c94cb914.f2c894') }}</p>
               </div>
             </div>
           </div>
@@ -68,9 +68,9 @@
           <div class="flex leading-normal p-3">
             <el-switch v-model="item.status" />
             <div class="ml-4">
-              <div>进入专属导购所属店（需开通导购应用）</div>
+              <div>{{ $t('c94cb914.d98812') }}</div>
               <div class="text-sm text-[#999] mt-2">
-                <p>进入用户专属导购的归属店铺</p>
+                <p>{{ $t('c94cb914.74ee6d') }}</p>
               </div>
             </div>
           </div>
@@ -78,13 +78,13 @@
       </div>
     </draggable>
     <div class="rule-item">
-      <div class="holder"></div>
+      <div class="holder" />
       <div class="flex leading-normal p-3">
         <el-switch v-model="shop_lbs" />
         <div class="ml-4">
-          <div>LBS就近进店</div>
+          <div>{{ $t('c94cb914.f4fbfc') }}</div>
           <div class="text-sm text-[#999] mt-2">
-            <p>根据用户LBS定位，进入附近店铺</p>
+            <p>{{ $t('c94cb914.5f7c1e') }}</p>
           </div>
         </div>
       </div>

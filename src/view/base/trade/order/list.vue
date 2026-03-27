@@ -6,7 +6,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" class="section-white content-padded">
-      <el-tab-pane label="订单列表" name="first">
+      <el-tab-pane :label="$t('86312778.07166e')" name="first">
         <el-row class="content-bottom-padded" :gutter="20">
           <el-col v-if="order_type == 'service'" :span="4">
             <shop-select wxshops @update="storeChange" @init="initChange" />
@@ -17,27 +17,27 @@
               v-model="create_time"
               type="daterange"
               value-format="yyyy/MM/dd"
-              placeholder="选择日期范围"
+              :placeholder="$t('86312778.4b8cb9')"
               style="width: 100%"
               @change="dateChange"
             />
           </el-col>
           <el-col :span="4">
-            <el-input v-model="identifier" placeholder="手机号/订单号">
+            <el-input v-model="identifier" :placeholder="$t('86312778.f4b2e7')">
               <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
             </el-input>
           </el-col>
           <el-col :span="3">
             <el-select
               v-model="order_status"
-              placeholder="订单状态"
+              :placeholder="$t('86312778.86f6cf')"
               style="width: 100%"
               @change="orderStatusSelectHandle"
             >
               <el-option
                 v-for="(item, index) in orderStatusList"
                 :key="index"
-                :label="item.name"
+                :label="$t(item.nameKey)"
                 :value="item.value"
               />
             </el-select>
@@ -45,7 +45,7 @@
           <el-col :span="4">
             <el-select
               v-model="order_type"
-              placeholder="请选择订单类型"
+              :placeholder="$t('86312778.249ee7')"
               style="width: 100%"
               @change="TypeHandle"
             >
@@ -62,7 +62,7 @@
               v-model="source_name"
               class="inline-input"
               :fetch-suggestions="querySearch"
-              placeholder="请输入来源"
+              :placeholder="$t('86312778.4b525f')"
               @select="sourceSearch"
             />
           </el-col>
@@ -72,20 +72,20 @@
             v-loading="loading"
             :data="list"
             style="width: 100%"
-            element-loading-text="数据加载中"
+            :element-loading-text="$t('86312778.f09b12')"
           >
-            <el-table-column prop="create_time" label="创建时间">
+            <el-table-column prop="create_time" :label="$t('86312778.eca37c')">
               <template slot-scope="scope">
                 <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="order_id" label="订单号" />
-            <el-table-column prop="title" label="标题" />
-            <el-table-column prop="total_fee" label="金额">
+            <el-table-column prop="order_id" :label="$t('86312778.1e8dc2')" />
+            <el-table-column prop="title" :label="$t('86312778.32c65d')" />
+            <el-table-column prop="total_fee" :label="$t('86312778.4cf24a')">
               <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
             </el-table-column>
-            <el-table-column prop="mobile" label="手机号" />
-            <el-table-column prop="order_type" label="类型">
+            <el-table-column prop="mobile" :label="$t('86312778.8098e2')" />
+            <el-table-column prop="order_type" :label="$t('86312778.226b09')">
               <template slot-scope="scope">
                 <span
                   v-for="(item, index) in orderType"
@@ -96,20 +96,28 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="order_status" label="订单状态">
+            <el-table-column prop="order_status" :label="$t('86312778.86f6cf')">
               <template slot-scope="scope">
-                <el-tag v-if="scope.row.order_status == 'DONE'" type="success"> 已完成 </el-tag>
-                <el-tag v-else-if="scope.row.order_status == 'NOTPAY'"> 未支付 </el-tag>
+                <el-tag v-if="scope.row.order_status == 'DONE'" type="success">
+{{
+                  $t('86312778.fad522')
+                }}
+</el-tag>
+                <el-tag v-else-if="scope.row.order_status == 'NOTPAY'">
+{{
+                  $t('86312778.608afd')
+                }}
+</el-tag>
                 <el-tag v-else-if="scope.row.order_status == 'CLOSED'" type="danger">
-                  已取消
+                  {{ $t('86312778.2111cc') }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="source_name" label="来源" />
-            <el-table-column label="操作">
+            <el-table-column prop="source_name" :label="$t('86312778.26ca20')" />
+            <el-table-column :label="$t('86312778.2b6bc0')">
               <template slot-scope="scope">
                 <el-button size="small" icon="view" @click="getDetail(scope.row.order_id)">
-                  详情
+                  {{ $t('86312778.f26225') }}
                 </el-button>
               </template>
             </el-table-column>
@@ -143,8 +151,8 @@ export default {
       create_time: '',
       params: {},
       orderStatusList: [
-        { name: '未支付', value: 'notpay' },
-        { name: '已完成', value: 'done' }
+        { nameKey: '86312778.608afd', value: 'notpay' },
+        { nameKey: '86312778.fad522', value: 'done' }
       ],
       order_status: '',
       time_start_begin: '',

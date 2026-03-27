@@ -8,32 +8,20 @@
     <div v-if="VERSION_STANDARD()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>分享带门店参数设置：</span>
+          <span>{{ $t('982b8845.2f859b') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="是否带门店参数">
+        <el-form-item :label="$t('982b8845.c90132')">
           <el-switch v-model="form.distributor_param_status" @change="paramShareChange()" />
           <div class="wrapper-tips">
-            <div class="margin-top-10">已开启：</div>
-            <div>
-              1. 从小程序分享出去的 太阳码和小程序链接
-              带店铺参，其他消费者通过此链接或者太阳码进入商城会切换成参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
-            </div>
-            <div>
-              2.
-              顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
-            </div>
-            <div class="margin-top-20">已关闭：</div>
-            <div>
-              1. 从小程序分享出去的 太阳码和小程序链接
-              不带店铺参，其他消费者通过此链接或者太阳码进入商城不会切换成参数对应的店铺，本地缓存也不会切换成参数对应的新店铺，即按照商城原本的进店逻辑进入店铺。
-            </div>
-            <div>
-              2.
-              顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
-            </div>
+            <div class="margin-top-10">{{ $t('982b8845.5b9fd5') }}</div>
+            <div>{{ $t('982b8845.65807c') }}</div>
+            <div>{{ $t('982b8845.e79a64') }}</div>
+            <div class="margin-top-20">{{ $t('982b8845.933db8') }}</div>
+            <div>{{ $t('982b8845.1a3783') }}</div>
+            <div>{{ $t('982b8845.e79a64') }}</div>
           </div>
         </el-form-item>
       </el-form>
@@ -41,12 +29,12 @@
     <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>评论设置：</span>
+          <span>{{ $t('982b8845.53ceb6') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="是否开启评论">
+        <el-form-item :label="$t('982b8845.f4ecf1')">
           <el-switch v-model="form.rate_status" @change="rateStatusChange()" />
         </el-form-item>
       </el-form>
@@ -55,12 +43,12 @@
     <div v-if="!isMicorMall && !VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>提货码设置：</span>
+          <span>{{ $t('982b8845.1c7dda') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="是否开启提货码">
+        <el-form-item :label="$t('982b8845.15efe2')">
           <el-switch v-model="form.pickupcode_status" @change="presaleStatusChange()" />
         </el-form-item>
       </el-form>
@@ -68,12 +56,12 @@
 
     <div class="clearfix">
       <h2 class="f_l">
-        <span>会员白名单设置：</span>
+        <span>{{ $t('982b8845.e1d267') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef" />
+    <hr style="border: 1px solid #efefef">
     <el-form v-model="form" label-width="200px">
-      <el-form-item label="是否开启白名单">
+      <el-form-item :label="$t('982b8845.12cfe2')">
         <el-switch v-model="form.whitelist_status" @change="whitelistStatusChange()" />
       </el-form-item>
     </el-form>
@@ -81,10 +69,10 @@
     <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>赠品设置：</span>
+          <span>{{ $t('982b8845.a59036') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <!-- <el-form v-model="form" label-width="200px">
         <el-form-item label="赠品是否扣门店库存">
           <el-switch
@@ -94,7 +82,7 @@
         </el-form-item>
       </el-form> -->
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="赠品缺货是否能继续下单">
+        <el-form-item :label="$t('982b8845.c0d404')">
           <el-switch
             v-model="form.check_gift_store"
             @change="giftSettingChange('check_gift_store')"
@@ -106,12 +94,12 @@
     <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>推单设置：</span>
+          <span>{{ $t('982b8845.154f22') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="自提订单推oms">
+        <el-form-item :label="$t('982b8845.aeb804')">
           <el-switch v-model="form.ziti_send_oms" @change="sendOmsChange('ziti_send_oms')" />
         </el-form-item>
       </el-form>
@@ -120,14 +108,14 @@
     <div v-if="VERSION_STANDARD()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>前端店铺展示关闭：</span>
+          <span>{{ $t('982b8845.8aa5e1') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="是否关闭">
+        <el-form-item :label="$t('982b8845.5e6422')">
           <el-switch v-model="form.nostores_status" @change="sendNoStoresChange" />
-          <span class="frm-tips">用于关闭前端店铺切换功能</span>
+          <span class="frm-tips">{{ $t('982b8845.aef76c') }}</span>
         </el-form-item>
       </el-form>
     </div>
@@ -146,36 +134,36 @@
 
     <div class="clearfix">
       <h2 class="f_l">
-        <span>取消订单设置：</span>
+        <span>{{ $t('982b8845.cc9def') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef" />
+    <hr style="border: 1px solid #efefef">
     <el-form v-model="form" label-width="200px">
-      <el-form-item label="拒绝后是否能再次发起申请">
+      <el-form-item :label="$t('982b8845.89e3a5')">
         <el-switch v-model="form.repeat_cancel" @change="repeatCancelChange()" />
       </el-form-item>
     </el-form>
 
     <div class="clearfix">
       <h2 class="f_l">
-        <span>商品库存设置：</span>
+        <span>{{ $t('982b8845.256171') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef" />
+    <hr style="border: 1px solid #efefef">
     <el-form v-model="form" label-width="200px">
-      <el-form-item label="商品详情页是否显示库存">
+      <el-form-item :label="$t('982b8845.f590ae')">
         <el-switch v-model="form.item_store_status" @change="itemStoreChange()" />
       </el-form-item>
     </el-form>
 
     <div class="clearfix">
       <h2 class="f_l">
-        <span>商品销量设置：</span>
+        <span>{{ $t('982b8845.63f039') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef" />
+    <hr style="border: 1px solid #efefef">
     <el-form v-model="form" label-width="200px">
-      <el-form-item label="商品销量是否显示">
+      <el-form-item :label="$t('982b8845.1a6e14')">
         <el-switch v-model="form.item_sales_status" @change="itemSalesChange()" />
       </el-form-item>
     </el-form>
@@ -183,12 +171,12 @@
     <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
-          <span>发票设置：</span>
+          <span>{{ $t('982b8845.48fc91') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef" />
+      <hr style="border: 1px solid #efefef">
       <el-form v-model="form" label-width="200px">
-        <el-form-item label="结算页是否显示发票">
+        <el-form-item :label="$t('982b8845.79ebf3')">
           <el-switch v-model="form.invoice_status" @change="invoiceStatusChange()" />
         </el-form-item>
       </el-form>
@@ -196,12 +184,12 @@
 
     <div class="clearfix">
       <h2 class="f_l">
-        <span>店务设置：</span>
+        <span>{{ $t('982b8845.61b24b') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef" />
+    <hr style="border: 1px solid #efefef">
     <el-form v-model="form" label-width="200px">
-      <el-form-item label="移动端是否展示店务端入口">
+      <el-form-item :label="$t('982b8845.fb9f26')">
         <el-switch v-model="form.dianwu_show_status" @change="dianwuShowStatusChange()" />
       </el-form-item>
     </el-form>
@@ -338,15 +326,11 @@ export default {
   },
   methods: {
     rateStatusChange() {
-      let msg = ''
-      if (this.form.rate_status === true) {
-        msg = '确定开启评价功能？'
-      } else {
-        msg = '确定关闭评价功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.rate_status === true ? this.$t('982b8845.c50e1a') : this.$t('982b8845.d34a15')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -354,13 +338,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -372,20 +356,18 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     paramShareChange() {
-      let msg = ''
-      if (this.form.distributor_param_status === true) {
-        msg = '确定开启分享带门店参数功能？'
-      } else {
-        msg = '确定关闭分享带门店参数功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.distributor_param_status === true
+          ? this.$t('982b8845.ac254f')
+          : this.$t('982b8845.b251d6')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -393,13 +375,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -412,20 +394,18 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     whitelistStatusChange() {
-      let msg = ''
-      if (this.form.whitelist_status === true) {
-        msg = '确定开启白名单功能？'
-      } else {
-        msg = '确定关闭白名单功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.whitelist_status === true
+          ? this.$t('982b8845.a49e50')
+          : this.$t('982b8845.80c5af')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -433,13 +413,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -451,20 +431,18 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     presaleStatusChange() {
-      let msg = ''
-      if (this.form.pickupcode_status === true) {
-        msg = '确定开启预售提货码功能？'
-      } else {
-        msg = '确定关闭预售提货码功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.pickupcode_status === true
+          ? this.$t('982b8845.73b5c0')
+          : this.$t('982b8845.203404')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -472,13 +450,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -490,30 +468,20 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     giftSettingChange(type) {
-      let msg = ''
-      if (this.form[type] == true) {
-        msg = '确定开启'
-      } else {
-        msg = '确定关闭'
-      }
+      const prefix =
+        this.form[type] == true ? this.$t('982b8845.8805f6') : this.$t('982b8845.7183f6')
+      const suffix =
+        type === 'minus_shop_gift_store' ? this.$t('982b8845.fd501b') : this.$t('982b8845.5af793')
+      const msg = prefix + suffix
 
-      switch (type) {
-        case 'minus_shop_gift_store':
-          msg += '赠品扣门店库存'
-          break
-        case 'check_gift_store':
-          msg += '赠品缺货能继续下单'
-          break
-      }
-
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -521,13 +489,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -539,27 +507,18 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     sendOmsChange(type) {
-      let msg = ''
-      if (this.form[type] == true) {
-        msg = '确定开启'
-      } else {
-        msg = '确定关闭'
-      }
+      const prefix =
+        this.form[type] == true ? this.$t('982b8845.8805f6') : this.$t('982b8845.7183f6')
+      const msg = prefix + this.$t('982b8845.aeb804')
 
-      switch (type) {
-        case 'ziti_send_oms':
-          msg += '自提订单推oms'
-          break
-      }
-
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -567,13 +526,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -585,35 +544,30 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     sendNoStoresChange() {
-      let msg = ''
-      if (this.form.nostores_status === true) {
-        msg = '更改前端店铺切换功能，会影响前端消费者购物流程，请谨慎操作'
-      } else {
-        msg = '更改前端店铺切换功能，会影响前端消费者购物流程，请谨慎操作'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg = this.$t('982b8845.1d3ef6')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
-          let params = { nostores_status: this.form.nostores_status }
+          const params = { nostores_status: this.form.nostores_status }
           setNoStores(params)
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -625,20 +579,16 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     rechargeStatusChange() {
-      let msg = ''
-      if (this.form.recharge_status === true) {
-        msg = '确定开启储值功能？'
-      } else {
-        msg = '确定关闭储值功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.recharge_status === true ? this.$t('982b8845.d68a60') : this.$t('982b8845.c2fdab')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -646,13 +596,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -664,20 +614,16 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
     repeatCancelChange() {
-      let msg = ''
-      if (this.form.repeat_cancel === true) {
-        msg = '确定开启重复发起取消订单功能？'
-      } else {
-        msg = '确定关闭重复发起取消订单功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.repeat_cancel === true ? this.$t('982b8845.d592fb') : this.$t('982b8845.07e7f3')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -685,13 +631,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -703,21 +649,19 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
 
     itemStoreChange() {
-      let msg = ''
-      if (this.form.item_store_status === true) {
-        msg = '确定开启显示功能？'
-      } else {
-        msg = '确定关闭显示功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.item_store_status === true
+          ? this.$t('982b8845.ae34d3')
+          : this.$t('982b8845.c5a6de')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -725,13 +669,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -743,21 +687,19 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
 
     itemSalesChange() {
-      let msg = ''
-      if (this.form.item_sales_status === true) {
-        msg = '确定开启显示功能？'
-      } else {
-        msg = '确定关闭显示功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.item_sales_status === true
+          ? this.$t('982b8845.ae34d3')
+          : this.$t('982b8845.c5a6de')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -765,13 +707,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -783,21 +725,17 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
 
     invoiceStatusChange() {
-      let msg = ''
-      if (this.form.invoice_status === true) {
-        msg = '确定开启显示功能？'
-      } else {
-        msg = '确定关闭显示功能？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.invoice_status === true ? this.$t('982b8845.ae34d3') : this.$t('982b8845.c5a6de')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -805,13 +743,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -823,21 +761,19 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     },
 
     dianwuShowStatusChange() {
-      let msg = ''
-      if (this.form.dianwu_show_status === true) {
-        msg = '确定开启显示店务端？'
-      } else {
-        msg = '确定关闭显示店务端？'
-      }
-      this.$confirm(msg, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const msg =
+        this.form.dianwu_show_status === true
+          ? this.$t('982b8845.fb70b0')
+          : this.$t('982b8845.bb8953')
+      this.$confirm(msg, this.$t('982b8845.02d981'), {
+        confirmButtonText: this.$t('982b8845.38cf16'),
+        cancelButtonText: this.$t('982b8845.625fb2'),
         type: 'warning'
       })
         .then(() => {
@@ -845,13 +781,13 @@ export default {
             .then((res) => {
               this.$message({
                 type: 'success',
-                message: '保存成功'
+                message: this.$t('982b8845.3b1083')
               })
             })
             .catch(() => {
               this.$message({
                 type: 'error',
-                message: '保存失败'
+                message: this.$t('982b8845.6de920')
               })
             })
         })
@@ -863,7 +799,7 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('982b8845.2111cc')
           })
         })
     }

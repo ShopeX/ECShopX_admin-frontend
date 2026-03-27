@@ -13,14 +13,18 @@
   <SpPage class="distributorAftersalesAddress">
     <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
     <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem label="供应商名称" prop="supplier_name">
-        <el-input v-model="searchParams.supplier_name" placeholder="请输入供应商名称" clearable />
+      <SpFilterFormItem :label="$t('bb662cf9.9190cc')" prop="supplier_name">
+        <el-input
+          v-model="searchParams.supplier_name"
+          :placeholder="$t('bb662cf9.f0c2bb')"
+          clearable
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem label="手机号" prop="mobile">
-        <el-input v-model="searchParams.mobile" placeholder="请输入手机号" clearable />
+      <SpFilterFormItem :label="$t('bb662cf9.8098e2')" prop="mobile">
+        <el-input v-model="searchParams.mobile" :placeholder="$t('bb662cf9.6e4f4b')" clearable />
       </SpFilterFormItem>
-      <SpFilterFormItem label="审核状态" prop="is_check">
-        <el-select v-model="searchParams.is_check" placeholder="请选择" clearable>
+      <SpFilterFormItem :label="$t('bb662cf9.b6d0e9')" prop="is_check">
+        <el-select v-model="searchParams.is_check" :placeholder="$t('bb662cf9.708c9d')" clearable>
           <el-option
             v-for="item in check_options"
             :key="item.value"
@@ -47,7 +51,7 @@
 
     <!-- 审核供应商 -->
     <el-dialog
-      title="审核供应商"
+      :title="$t('bb662cf9.d3f7d8')"
       :visible.sync="editDialog"
       :close-on-click-modal="false"
       width="800px"
@@ -55,45 +59,45 @@
       <!--supplier_name', 'contact', 'mobile', 'business_license', 'wechat_qrcode', 'service_tel', 'bank_name', 'bank_account-->
       <el-descriptions :column="2" border :label-style="{ width: '150px', textAlign: 'right' }">
         <el-descriptions-item>
-          <template slot="label"> 供应商名称 </template>
+          <template slot="label"> {{ $t('bb662cf9.9190cc') }} </template>
           {{ editForm.supplier_name }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-user" />
-            联系人
+            {{ $t('bb662cf9.52409d') }}
           </template>
           {{ editForm.contact }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile" />
-            手机号
+            {{ $t('bb662cf9.8098e2') }}
           </template>
           {{ editForm.mobile }}
         </el-descriptions-item>
         <el-descriptions-item>
-          <template slot="label"> 客服电话 </template>
+          <template slot="label"> {{ $t('bb662cf9.e84643') }} </template>
           {{ editForm.service_tel }}
         </el-descriptions-item>
         <el-descriptions-item>
-          <template slot="label"> 营业执照 </template>
+          <template slot="label"> {{ $t('bb662cf9.e0b8cc') }} </template>
           <a :href="editForm.business_license" target="_blank"
             ><img :src="editForm.business_license" height="100"
-          /></a>
+          ></a>
         </el-descriptions-item>
         <el-descriptions-item>
-          <template slot="label"> 客服二维码 </template>
+          <template slot="label"> {{ $t('bb662cf9.939fdb') }} </template>
           <a :href="editForm.wechat_qrcode" target="_blank"
             ><img :src="editForm.wechat_qrcode" height="100"
-          /></a>
+          ></a>
         </el-descriptions-item>
         <el-descriptions-item>
-          <template slot="label"> 收款银行 </template>
+          <template slot="label"> {{ $t('bb662cf9.bd4097') }} </template>
           {{ editForm.bank_name }}
         </el-descriptions-item>
         <el-descriptions-item>
-          <template slot="label"> 收款账号 </template>
+          <template slot="label"> {{ $t('bb662cf9.31eab8') }} </template>
           {{ editForm.bank_account }}
         </el-descriptions-item>
         <!--        <el-descriptions-item>-->
@@ -110,20 +114,23 @@
       </el-descriptions>
 
       <el-form ref="editForm" label-width="160px" style="padding-top: 10px">
-        <el-form-item label="审核结果">
-          <el-radio v-model="editForm.is_check" label="1">审核通过</el-radio>
-          <el-radio v-model="editForm.is_check" label="2">审核拒绝</el-radio>
+        <el-form-item :label="$t('bb662cf9.8beefb')">
+          <el-radio v-model="editForm.is_check" label="1">{{ $t('bb662cf9.871a30') }}</el-radio>
+          <el-radio v-model="editForm.is_check" label="2">{{ $t('bb662cf9.146bb2') }}</el-radio>
         </el-form-item>
-        <el-form-item label="审核备注" v-if="editForm.is_check == '2'">
+        <el-form-item :label="$t('bb662cf9.200d69')" v-if="editForm.is_check == '2'">
           <el-input
             type="textarea"
             :rows="2"
-            placeholder="请输入内容"
+            :placeholder="$t('bb662cf9.a11cc7')"
             v-model="editForm.audit_remark"
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button v-loading="loading" type="primary" @click="editFormSubmit"> 确认</el-button>
+          <el-button v-loading="loading" type="primary" @click="editFormSubmit">
+            {{ $t('bb662cf9.e83a25') }}
+</el-button
+          >
         </div>
       </el-form>
     </el-dialog>
@@ -142,9 +149,9 @@ export default {
         province: []
       },
       check_options: [
-        { label: '待审核', value: 0 },
-        { label: '审核通过', value: 1 },
-        { label: '审核拒绝', value: 2 }
+        { label: this.$t('bb662cf9.5cb424'), value: 0 },
+        { label: this.$t('bb662cf9.871a30'), value: 1 },
+        { label: this.$t('bb662cf9.146bb2'), value: 2 }
       ],
       dataList: [],
       provinces: [],
@@ -160,20 +167,20 @@ export default {
       },
       tableSetting: {
         columns: [
-          { name: '审核状态', key: 'check_state' },
-          { name: '供应商名称', key: 'supplier_name' },
-          { name: '负责人', key: 'contact' },
-          { name: '手机号', key: 'mobile' },
-          { name: '登录账号', key: 'login_name' }
+          { name: this.$t('bb662cf9.b6d0e9'), key: 'check_state' },
+          { name: this.$t('bb662cf9.9190cc'), key: 'supplier_name' },
+          { name: this.$t('bb662cf9.b29725'), key: 'contact' },
+          { name: this.$t('bb662cf9.8098e2'), key: 'mobile' },
+          { name: this.$t('bb662cf9.bb2cdf'), key: 'login_name' }
         ],
         actions: [
           {
-            name: '修改',
+            name: this.$t('bb662cf9.8347a9'),
             key: 'edit',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.check_state == '审核通过'
+              return row.check_state == this.$t('bb662cf9.871a30')
             },
             action: {
               type: 'link',
@@ -183,12 +190,12 @@ export default {
             }
           },
           {
-            name: '审核',
+            name: this.$t('bb662cf9.cf13b1'),
             key: 'review',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.check_state != '审核通过'
+              return row.check_state != this.$t('bb662cf9.871a30')
             },
             action: {
               type: 'link',
@@ -219,13 +226,13 @@ export default {
     },
     async editFormSubmit() {
       if (!parseInt(this.editForm.is_check)) {
-        this.$message.error('请选择审核结果')
+        this.$message.error(this.$t('bb662cf9.5ff8e8'))
         return false
       }
       this.loading = true
       try {
         const { status } = await this.$api.supplier.checkSupplier(this.editForm)
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('bb662cf9.3b1083'))
         this.editDialog = false
         this.$refs['finder'].refresh()
       } catch (e) {}

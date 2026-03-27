@@ -6,34 +6,34 @@
 <template>
   <el-dialog :visible.sync="dialogVisible" width="460px" :before-close="dialogBeforeClose">
     <div slot="title" class="clearfix">
-      <span>数据导入</span>
-      <span class="tips title-tips">请导入EXCEL数据表格</span>
+      <span>{{ $t('fc463ac7.73f28a') }}</span>
+      <span class="tips title-tips">{{ $t('fc463ac7.470b8b') }}</span>
     </div>
     <div>
-      <div class="tips">商品数量不能超过两万，超过部分会被删除</div>
+      <div class="tips">{{ $t('fc463ac7.fed838') }}</div>
       <div class="upload" @dragover="fileDragover" @drop="fileDrop">
-        <img class="upload-img" src="@/assets/img/upload.svg" alt="" />
+        <img class="upload-img" src="@/assets/img/upload.svg" alt="">
         <div class="upload-text">
-          <span>将文件拖到此处，或</span>
+          <span>{{ $t('fc463ac7.1ef03f') }}</span>
           <el-upload
             action=""
             :on-change="uploadHandleChange"
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="text"> 点击上传 </el-button>
+            <el-button type="text">{{ $t('fc463ac7.2c808b') }}</el-button>
           </el-upload>
         </div>
       </div>
       <div>
-        EXCEL格式模板请<span class="download-temp" @click="uploadHandleTemplate()"
-          >下载系统提供模板</span
-        >
+        EXCEL格式模板请<span class="download-temp" @click="uploadHandleTemplate()">{{
+          $t('fc463ac7.1dc6d4')
+        }}</span>
       </div>
     </div>
     <div slot="footer">
-      <el-button @click="dialogBeforeClose"> 取 消 </el-button>
-      <el-button type="primary" @click="submitUpload"> 确认上传 </el-button>
+      <el-button @click="dialogBeforeClose">{{ $t('fc463ac7.c08ab9') }}</el-button>
+      <el-button type="primary" @click="submitUpload">{{ $t('fc463ac7.e87cc2') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -77,7 +77,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '没有相关数据可导出'
+            message: this.$t('fc463ac7.bfd8d5')
           })
         }
       })
@@ -108,7 +108,7 @@ export default {
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
-          message: '上传成功'
+          message: this.$t('fc463ac7.a7699b')
         })
 
         let { data } = response.data
@@ -117,7 +117,7 @@ export default {
             return item.item_bn
           })
           setTimeout(() => {
-            this.$alert(`【${str}】在系统中未查询到相关数据，请核对后再上传`, '消息通知')
+            this.$alert(`【${str}】` + this.$t('fc463ac7.e6e637'), this.$t('fc463ac7.d1d4c3'))
           }, 1000)
         }
         if (data.succ.length <= 0) return

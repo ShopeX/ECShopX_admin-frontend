@@ -28,12 +28,12 @@
 </style>
 <template>
   <div class="fi-item-timeslots">
-    <div class="tip">买家下单时从下方时间段内选择自提时间</div>
+    <div class="tip">{{ $t('c89bb72c.7ab9fa') }}</div>
     <div class="time-slots">
       <div v-for="(item, index) in data" :key="`solt-item__${index}`">
         <el-time-select
           v-model="item[0]"
-          placeholder="起始时间"
+          :placeholder="$t('c89bb72c.26dac3')"
           :class="keyClass(`time-${index}_start`)"
           :picker-options="{
             start: '00:00',
@@ -44,7 +44,7 @@
         <span class="separator">~</span>
         <el-time-select
           v-model="item[1]"
-          placeholder="结束时间"
+          :placeholder="$t('c89bb72c.f78277')"
           :class="keyClass(`time-${index}_end`)"
           :picker-options="{
             start: '00:00',
@@ -54,11 +54,17 @@
         />
 
         <el-button v-if="index > 0" class="btn-delete" type="text" @click="deleteTimeSlot(index)">
-          删除
+          {{ $t('c89bb72c.2f4aad') }}
         </el-button>
       </div>
     </div>
-    <div><el-button class="btn-add" type="text" @click="addTimeSlot()">添加时间段</el-button></div>
+    <div>
+      <el-button class="btn-add" type="text" @click="addTimeSlot()">
+{{
+        $t('c89bb72c.96fd7a')
+      }}
+</el-button>
+    </div>
   </div>
 </template>
 
@@ -121,7 +127,7 @@ export default {
           // if()
         })
       } catch (e) {
-        throw new Error('自提时间段不能为空')
+        throw new Error(this.$t('c89bb72c.c2ddf7'))
       }
     }
   }

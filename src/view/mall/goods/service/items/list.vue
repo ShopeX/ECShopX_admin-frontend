@@ -7,17 +7,19 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" size="mini" @click="addItems"> 添加商品 </el-button>
+        <el-button type="primary" icon="plus" size="mini" @click="addItems">
+          {{ $t('29e15308.fa3aee') }}
+        </el-button>
       </el-col>
       <el-col :span="12">
-        <el-input v-model="goodsName" placeholder="商品名称" size="mini">
+        <el-input v-model="goodsName" :placeholder="$t('29e15308.1fd1d5')" size="mini">
           <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="ItemsList" :height="wheight - 220">
-      <el-table-column prop="itemId" label="商品ID" width="70" />
-      <el-table-column label="排序编号" width="100">
+      <el-table-column prop="itemId" :label="$t('29e15308.858526')" width="70" />
+      <el-table-column :label="$t('29e15308.e8373a')" width="100">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.sort"
@@ -26,16 +28,21 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="itemName" label="商品名称" />
-      <el-table-column width="120" prop="price" label="价格" :formatter="priceformatter" />
-      <el-table-column width="120" label="核销类型">
+      <el-table-column prop="itemName" :label="$t('29e15308.1fd1d5')" />
+      <el-table-column
+        width="120"
+        prop="price"
+        :label="$t('29e15308.0e9fd9')"
+        :formatter="priceformatter"
+      />
+      <el-table-column width="120" :label="$t('29e15308.5169ed')">
         <template slot-scope="scope">
-          <span v-if="scope.row.consumeType == 'all'">团购券类型</span>
-          <span v-else-if="scope.row.consumeType == 'every'">次卡类型</span>
-          <span v-else>充值记录</span>
+          <span v-if="scope.row.consumeType == 'all'">{{ $t('29e15308.86bfd5') }}</span>
+          <span v-else-if="scope.row.consumeType == 'every'">{{ $t('29e15308.443835') }}</span>
+          <span v-else>{{ $t('29e15308.415b28') }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" label="操作">
+      <el-table-column width="120" :label="$t('29e15308.2b6bc0')">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="iconfont icon-search-plus" @click="itemsDetail(scope.$index, scope.row)" />
@@ -62,7 +69,7 @@
     </div>
     <!-- 查看商品详情-开始 -->
     <el-dialog
-      title="商品详情"
+      :title="$t('29e15308.b4f5db')"
       :visible.sync="ItemsDetailVisible"
       :close-on-click-modal="false"
       class="good-detail-dialog"
@@ -70,17 +77,21 @@
       <template>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">核销类型</div>
+            <div class="grid-content">{{ $t('29e15308.5169ed') }}</div>
           </el-col>
           <el-col :span="21">
-            <div v-if="itemsDetailData.consume_type == 'every'" class="grid-content">次卡类型</div>
-            <div v-if="itemsDetailData.consume_type == 'all'" class="grid-content">团购券类型</div>
+            <div v-if="itemsDetailData.consume_type == 'every'" class="grid-content">
+              {{ $t('29e15308.443835') }}
+            </div>
+            <div v-if="itemsDetailData.consume_type == 'all'" class="grid-content">
+              {{ $t('29e15308.86bfd5') }}
+            </div>
           </el-col>
         </el-row>
 
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">商品名称</div>
+            <div class="grid-content">{{ $t('29e15308.1fd1d5') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">
@@ -90,7 +101,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">简述</div>
+            <div class="grid-content">{{ $t('29e15308.59683f') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">
@@ -100,7 +111,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">价格</div>
+            <div class="grid-content">{{ $t('29e15308.0e9fd9') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">￥{{ itemsDetailData.price / 100 }}&nbsp;</div>
@@ -108,7 +119,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">原价</div>
+            <div class="grid-content">{{ $t('29e15308.1afdfe') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">￥{{ itemsDetailData.market_price / 100 }}&nbsp;</div>
@@ -116,7 +127,7 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">图片</div>
+            <div class="grid-content">{{ $t('29e15308.20def7') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">
@@ -146,18 +157,18 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">基础物料</div>
+            <div class="grid-content">{{ $t('29e15308.138860') }}</div>
           </el-col>
           <el-col :span="21">
             <div v-show="itemsDetailData.consume_type == 'all'" class="grid-content grid-attribute">
               <el-table :data="itemsDetailData.type_labels" style="width: 100%">
-                <el-table-column prop="labelName" label="物料名称" />
-                <el-table-column label="单价(元)">
+                <el-table-column prop="labelName" :label="$t('29e15308.901fca')" />
+                <el-table-column :label="$t('29e15308.261fce')">
                   <template slot-scope="scope">
                     <span>￥{{ scope.row.labelPrice / 100 }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="num" label="数量" />
+                <el-table-column prop="num" :label="$t('29e15308.0bf60b')" />
               </el-table>
             </div>
             <div
@@ -165,40 +176,42 @@
               class="grid-content grid-attribute"
             >
               <el-table :data="itemsDetailData.type_labels" style="width: 100%">
-                <el-table-column prop="labelName" label="物料名称" />
-                <el-table-column label="单价(元)">
+                <el-table-column prop="labelName" :label="$t('29e15308.901fca')" />
+                <el-table-column :label="$t('29e15308.261fce')">
                   <template slot-scope="scope">
                     <span>￥{{ scope.row.labelPrice / 100 }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="limitTime" label="有效期" />
-                <el-table-column prop="num" label="数量" />
+                <el-table-column prop="limitTime" :label="$t('29e15308.bb114a')" />
+                <el-table-column prop="num" :label="$t('29e15308.0bf60b')" />
               </el-table>
             </div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">有效期</div>
+            <div class="grid-content">{{ $t('29e15308.bb114a') }}</div>
           </el-col>
           <el-col :span="21">
             <div
               v-show="itemsDetailData.date_type == 'DATE_TYPE_FIX_TIME_RANGE'"
               class="grid-content grid-detail"
             >
-              固定日期范围 {{ start_date }}&nbsp;~&nbsp;{{ end_date }}
+              {{ $t('29e15308.8407b8') }} {{ start_date }}&nbsp;~&nbsp;{{ end_date }}
             </div>
             <div
               v-show="itemsDetailData.date_type == 'DATE_TYPE_FIX_TERM'"
               class="grid-content grid-detail"
             >
-              领取后&nbsp;{{ itemsDetailData.fixed_term }}&nbsp;天内有效
+              {{ $t('29e15308.ec5892') }}&nbsp;{{ itemsDetailData.fixed_term }}&nbsp;{{
+                $t('29e15308.c011b5')
+              }}
             </div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">详情</div>
+            <div class="grid-content">{{ $t('29e15308.f26225') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content grid-detail" v-html="itemsDetailData.intro" />
@@ -206,7 +219,7 @@
         </el-row>
         <el-row v-if="itemsDetailData.enable_agreement" class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">购买协议</div>
+            <div class="grid-content">{{ $t('29e15308.b04d35') }}</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content grid-detail" v-html="itemsDetailData.purchase_agreement" />
@@ -220,7 +233,7 @@
             itemsDetailData = {}
           "
         >
-          取消
+          {{ $t('29e15308.625fb2') }}
         </el-button>
       </div>
     </el-dialog>
@@ -313,16 +326,16 @@ export default {
       })
     },
     deleteItemsAction(index, row) {
-      this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('29e15308.e569b1'), this.$t('29e15308.02d981'), {
+        confirmButtonText: this.$t('29e15308.38cf16'),
+        cancelButtonText: this.$t('29e15308.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteItems(row.itemId).then((response) => {
             this.ItemsList.splice(index, 1)
             this.$message({
-              message: '删除商品成功',
+              message: this.$t('29e15308.a8504b'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -331,7 +344,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('29e15308.2111cc')
           })
         })
     },

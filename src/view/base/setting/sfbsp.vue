@@ -5,18 +5,18 @@
 
 <template>
   <el-tabs v-model="activeName" type="border-card">
-    <el-tab-pane label="顺丰BSP" name="sfbsp">
+    <el-tab-pane :label="$t('2fc6f286.eda877')" name="sfbsp">
       <el-form ref="form" label-width="100px">
-        <el-form-item label="接入地址">
+        <el-form-item :label="$t('2fc6f286.f682f8')">
           <el-input v-model="sfbsp_form.config.url" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="接入编码">
+        <el-form-item :label="$t('2fc6f286.1312b0')">
           <el-input v-model="sfbsp_form.config.accesscode" style="width: 300px" />
         </el-form-item>
         <el-form-item label="Checkword">
           <el-input v-model="sfbsp_form.config.checkword" style="width: 300px" />
         </el-form-item>
-        <el-form-item label="是否启用">
+        <el-form-item :label="$t('2fc6f286.53c3dd')">
           <el-switch
             v-model="sfbsp_form.config.is_open"
             active-color="#13ce66"
@@ -24,7 +24,11 @@
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button v-loading="loading" type="primary" @click="onSubmit">
+{{
+            $t('2fc6f286.be5fbb')
+          }}
+</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -83,7 +87,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: this.$t('2fc6f286.3b1083')
           })
           this.loading = false
         })

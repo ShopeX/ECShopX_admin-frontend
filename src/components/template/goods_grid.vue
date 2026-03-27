@@ -26,7 +26,7 @@
         <div v-for="(item, index) in data.slice(0, 50)" :key="index" class="grid-item">
           <div class="goods-wrap">
             <div class="thumbnail">
-              <img class="goods-img" :src="wximageurl + item.imgUrl" />
+              <img class="goods-img" :src="wximageurl + item.imgUrl">
             </div>
             <div class="caption">
               <img
@@ -37,7 +37,7 @@
                     ? wximageurl + item.brand
                     : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
                 "
-              />
+              >
               <div class="goods-title">
                 {{ item.title }}
               </div>
@@ -53,13 +53,13 @@
                   :key="i"
                   :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
                 >
-                  {{ s.tag_type == 'single_group' ? '团购' : '' }}
-                  {{ s.tag_type == 'full_minus' ? '满减' : '' }}
-                  {{ s.tag_type == 'full_discount' ? '满折' : '' }}
-                  {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
-                  {{ s.tag_type == 'normal' ? '秒杀' : '' }}
-                  {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
-                  {{ s.tag_type == 'plus_price_buy' ? '换购' : '' }}
+                  {{ s.tag_type == 'single_group' ? $t('a40fcc58.f47464') : '' }}
+                  {{ s.tag_type == 'full_minus' ? $t('a40fcc58.94b1fd') : '' }}
+                  {{ s.tag_type == 'full_discount' ? $t('a40fcc58.1c120b') : '' }}
+                  {{ s.tag_type == 'full_gift' ? $t('a40fcc58.8e2405') : '' }}
+                  {{ s.tag_type == 'normal' ? $t('a40fcc58.55c758') : '' }}
+                  {{ s.tag_type == 'limited_time_sale' ? $t('a40fcc58.a0aaca') : '' }}
+                  {{ s.tag_type == 'plus_price_buy' ? $t('a40fcc58.1687b1') : '' }}
                 </p>
               </div>
             </div>

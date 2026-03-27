@@ -5,7 +5,7 @@
 
 <template>
   <CustomCard
-    title="订单基本信息"
+    :title="$t('14e217b9.168447')"
     :info="baseInfo"
     :data-source="orderInfo"
     :is-common="true"
@@ -28,43 +28,47 @@ export default {
     return {
       baseInfo: [
         [
-          { name: '下单时间', field: 'create_time', filter: dateFilter },
-          { name: '订单编号', field: 'order_id' },
+          { name: self.$t('14e217b9.2240cc'), field: 'create_time', filter: dateFilter },
+          { name: self.$t('14e217b9.3e8657'), field: 'order_id' },
           {
-            name: '订单类型',
+            name: self.$t('14e217b9.5cd56b'),
             field: 'order_class',
             filter: self.orderClassFilter
           },
-          { name: '订单状态', field: '', filter: self.orderStatusFilter }
+          { name: self.$t('14e217b9.86f6cf'), field: '', filter: self.orderStatusFilter }
         ],
         [
           {
-            name: '开票状态',
+            name: self.$t('14e217b9.2af9f7'),
             field: 'invoice_status',
             filter: self.invoiceFilter
           },
           {
-            name: '配送类型',
+            name: self.$t('14e217b9.c377e5'),
             field: 'receipt_type',
             filter: self.receiptTypeFilter
           },
-          { name: '会员昵称', field: '', filter: self.memeberNameFilter },
-          { name: '会员手机号', field: '', filter: self.memeberPhoneFilter }
+          { name: self.$t('14e217b9.9a7f00'), field: '', filter: self.memeberNameFilter },
+          { name: self.$t('14e217b9.6a52ee'), field: '', filter: self.memeberPhoneFilter }
         ],
         [
-          { name: '会员等级', field: '', filter: self.memeberLevelFilter },
-          { name: '会员折扣', field: '', filter: self.memeberDisCountFilter },
-          { name: '货币类型', field: 'fee_type' },
+          { name: self.$t('14e217b9.6c1583'), field: '', filter: self.memeberLevelFilter },
+          { name: self.$t('14e217b9.eababe'), field: '', filter: self.memeberDisCountFilter },
+          { name: self.$t('14e217b9.bf52d4'), field: 'fee_type' },
           {
-            name: '购物赠送积分',
+            name: self.$t('14e217b9.824376'),
             field: 'bonus_points',
             isHidden: self.hiddenPoint('bonus_points')
           }
         ],
         [
-          { name: '订单获取积分', field: 'get_points', isHidden: self.hiddenPoint('get_points') },
           {
-            name: '额外获取积分',
+            name: self.$t('14e217b9.630c77'),
+            field: 'get_points',
+            isHidden: self.hiddenPoint('get_points')
+          },
+          {
+            name: self.$t('14e217b9.864d7a'),
             field: 'extra_points',
             isHidden: self.hiddenPoint('extra_points')
           }
@@ -83,32 +87,32 @@ export default {
       let returnValue = ''
       switch (item) {
         case 'groups':
-          returnValue = '拼团'
+          returnValue = this.$t('14e217b9.0dc5dc')
           break
         case 'bargain':
-          returnValue = '助力'
+          returnValue = this.$t('14e217b9.151c35')
           break
         case 'service':
-          returnValue = '服务类订单'
+          returnValue = this.$t('14e217b9.e6943f')
           break
         case 'bargain':
-          returnValue = '助力订单'
+          returnValue = this.$t('14e217b9.94b1e6')
           break
         case 'normal':
-          returnValue = '实体订单'
+          returnValue = this.$t('14e217b9.7a83f9')
           break
         case 'excard':
-          returnValue = '兑换订单'
+          returnValue = this.$t('14e217b9.8e09cc')
           break
         case 'community':
-          returnValue = '社区团购订单'
+          returnValue = this.$t('14e217b9.991e15')
           break
         default:
-          returnValue = '实体订单'
+          returnValue = this.$t('14e217b9.7a83f9')
           break
       }
-      if (returnValue === '实体订单' && this.orderInfo.type == '1') {
-        returnValue += '-跨境订单'
+      if (returnValue === this.$t('14e217b9.7a83f9') && this.orderInfo.type == '1') {
+        returnValue += this.$t('14e217b9.4ce265')
       }
       return returnValue
     },
@@ -124,30 +128,30 @@ export default {
       } = this.orderInfo
       if (order_class === 'drug') {
         if (order_status_des == 'CANCEL') {
-          returnValue = '取消'
+          returnValue = this.$t('14e217b9.625fb2')
         } else if (order_status_des == 'CLOSED') {
-          returnValue = '已关闭'
+          returnValue = this.$t('14e217b9.9c5850')
         }
         if (order_status_des !== 'CANCEL') {
           if (ziti_status === 'APPROVE') {
-            returnValue += ' 审核通过'
+            returnValue += this.$t('14e217b9.68db3f')
           } else {
-            returnValue += ' 待审核'
+            returnValue += this.$t('14e217b9.1a2612')
           }
         }
       } else if (order_type == 'bargain') {
         if (order_status === 'NOTPAY') {
-          returnValue = '未支付'
+          returnValue = this.$t('14e217b9.608afd')
         } else if (order_status === 'CLOSED' || order_status === 'CANCEL') {
-          returnValue = '已取消'
+          returnValue = this.$t('14e217b9.2111cc')
         } else if (order_status === 'WAIT_GROUPS_SUCCESS') {
-          returnValue = '等待拼团成功'
+          returnValue = this.$t('14e217b9.c2335d')
         } else if (order_status === 'REFUND_PROCESS') {
-          returnValue = '退款处理中'
+          returnValue = this.$t('14e217b9.73ce8f')
         } else if (order_status === 'REFUND_SUCCESS') {
-          returnValue = '退款成功'
+          returnValue = this.$t('14e217b9.d58cbd')
         } else if (order_status === 'REFUND_FAIL') {
-          returnValue = '退款失败'
+          returnValue = this.$t('14e217b9.7c2544')
         }
       } else {
         returnValue = order_status_msg
@@ -161,16 +165,16 @@ export default {
       let returnValue = ''
       switch (item) {
         case 'logistics':
-          returnValue = '普通快递'
+          returnValue = this.$t('14e217b9.249bfe')
           break
         case 'ziti':
-          returnValue = '自提'
+          returnValue = this.$t('14e217b9.b30d27')
           break
         case 'dada':
-          returnValue = '同城配'
+          returnValue = this.$t('14e217b9.583dcd')
           break
         default:
-          returnValue = '普通快递'
+          returnValue = this.$t('14e217b9.249bfe')
           break
       }
       return returnValue
@@ -186,7 +190,9 @@ export default {
       if (this.memberInfo.vipgrade && this.memberInfo.vipgrade.is_vip) {
         returnValue = this.memberInfo.vipgrade.grade_name
       } else {
-        returnValue = this.memberInfo.gradeInfo ? this.memberInfo.gradeInfo.grade_name : '无'
+        returnValue = this.memberInfo.gradeInfo
+          ? this.memberInfo.gradeInfo.grade_name
+          : this.$t('14e217b9.d81bb2')
       }
       return returnValue
     },

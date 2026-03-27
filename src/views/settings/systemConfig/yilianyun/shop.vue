@@ -18,16 +18,20 @@
       <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
         <template>
           <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
-            <el-form-item label="打印机名称">
-              <el-input v-model="form.name" style="width: 300px" placeholder="打印机名称" />
+            <el-form-item :label="$t('23a1c6ea.9d2ae7')">
+              <el-input
+                v-model="form.name"
+                style="width: 300px"
+                :placeholder="$t('23a1c6ea.9d2ae7')"
+              />
             </el-form-item>
-            <el-form-item label="店铺">
+            <el-form-item :label="$t('23a1c6ea.295713')">
               <el-radio-group v-model="distributor">
-                <el-radio :label="1"> 总部 </el-radio>
-                <el-radio :label="2"> 店铺 </el-radio>
+                <el-radio :label="1">{{ $t('23a1c6ea.d166bb') }}</el-radio>
+                <el-radio :label="2">{{ $t('23a1c6ea.295713') }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="distributor == 2" label="所属店铺">
+            <el-form-item v-if="distributor == 2" :label="$t('23a1c6ea.baad7e')">
               <el-tag
                 v-for="(item, index) in relDistributors"
                 :key="index"
@@ -39,26 +43,30 @@
                 {{ item.name }}
               </el-tag>
               <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
-                + 点击搜索店铺
+                {{ $t('23a1c6ea.a5d26b') }}
               </el-button>
             </el-form-item>
-            <el-form-item label="打印机终端号">
+            <el-form-item :label="$t('23a1c6ea.c8e5e2')">
               <el-input
                 v-model="form.app_terminal"
                 style="width: 300px"
-                placeholder="打印机终端号"
+                :placeholder="$t('23a1c6ea.c8e5e2')"
               />
-              <div class="frm-tips">见打印机底部</div>
+              <div class="frm-tips">{{ $t('23a1c6ea.4bf399') }}</div>
             </el-form-item>
-            <el-form-item label="打印机秘钥">
-              <el-input v-model="form.app_key" style="width: 300px" placeholder="打印机秘钥" />
-              <div class="frm-tips">见打印机底部</div>
+            <el-form-item :label="$t('23a1c6ea.d73500')">
+              <el-input
+                v-model="form.app_key"
+                style="width: 300px"
+                :placeholder="$t('23a1c6ea.d73500')"
+              />
+              <div class="frm-tips">{{ $t('23a1c6ea.4bf399') }}</div>
             </el-form-item>
           </el-form>
         </template>
         <div slot="footer" class="dialog-footer">
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" @click="submitAction"> 保存 </el-button>
+          <el-button @click.native="handleCancel">{{ $t('23a1c6ea.625fb2') }}</el-button>
+          <el-button type="primary" @click="submitAction">{{ $t('23a1c6ea.be5fbb') }}</el-button>
         </div>
       </el-dialog>
       <DistributorSelect
@@ -108,11 +116,11 @@ export default {
       setting: {
         columns: [
           {
-            name: '打印机名称',
+            name: this.$t('23a1c6ea.9d2ae7'),
             key: 'name'
           },
           {
-            name: '操作',
+            name: this.$t('23a1c6ea.2b6bc0'),
             key: 'actions',
             width: 180,
             render: (h, { row }) => {
@@ -128,7 +136,7 @@ export default {
                       click: () => this.editAction(row)
                     }
                   },
-                  '编辑'
+                  this.$t('23a1c6ea.95b351')
                 ),
                 h(
                   'el-button',
@@ -140,7 +148,7 @@ export default {
                       click: () => this.deleteAction(row)
                     }
                   },
-                  '删除'
+                  this.$t('23a1c6ea.2f4aad')
                 )
               ])
             }
@@ -148,7 +156,7 @@ export default {
         ],
         actions: [
           {
-            name: '添加关联打印机',
+            name: this.$t('23a1c6ea.f77b58'),
             key: 'add',
             type: 'button',
             buttonType: 'primary',
@@ -205,7 +213,7 @@ export default {
     },
     addLabels() {
       this.handleCancel()
-      this.editTitle = '添加账号信息'
+      this.editTitle = this.$t('23a1c6ea.f1333f')
       this.editVisible = true
       this.isEdit = false
       this.distributor = 1
@@ -214,7 +222,7 @@ export default {
     editAction(row) {
       //
       this.handleCancel()
-      this.editTitle = '编辑账号信息'
+      this.editTitle = this.$t('23a1c6ea.67b76a')
       this.editVisible = true
       this.isEdit = true
       if (0 == row.distributor_id) {
@@ -235,22 +243,22 @@ export default {
       }
     },
     deleteAction(row) {
-      this.$confirm('此操作将删除该小票打印机, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('23a1c6ea.c8c187'), this.$t('23a1c6ea.02d981'), {
+        confirmButtonText: this.$t('23a1c6ea.38cf16'),
+        cancelButtonText: this.$t('23a1c6ea.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deletePrinter(row.id)
             .then((response) => {
-              this.$message({ message: '删除成功', type: 'success' })
+              this.$message({ message: this.$t('23a1c6ea.0007d1'), type: 'success' })
               this.editVisible = false
               if (this.$refs.finder) {
                 this.$refs.finder.refresh()
               }
             })
             .catch((error) => {
-              this.$message({ message: '删除失败', type: 'error' })
+              this.$message({ message: this.$t('23a1c6ea.acf066'), type: 'error' })
             })
         })
         .catch(() => {
@@ -266,7 +274,7 @@ export default {
       if (this.id) {
         updatePrinter(this.id, this.form)
           .then((response) => {
-            this.$message({ message: '保存成功', type: 'success' })
+            this.$message({ message: this.$t('23a1c6ea.3b1083'), type: 'success' })
             this.editVisible = false
             if (this.$refs.finder) {
               this.$refs.finder.refresh()
@@ -276,7 +284,7 @@ export default {
       } else {
         createPrinter(this.form)
           .then((response) => {
-            this.$message({ message: ' 添加成功', type: 'success' })
+            this.$message({ message: this.$t('23a1c6ea.3fdaea'), type: 'success' })
             this.editVisible = false
             if (this.$refs.finder) {
               this.$refs.finder.refresh()

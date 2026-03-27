@@ -14,36 +14,40 @@
       height="580"
     >
       <el-table-column prop="template_id" label="ID" />
-      <el-table-column prop="name" label="运费模板名称" />
-      <el-table-column label="配送地区">
+      <el-table-column prop="name" :label="$t('647ce252.621f21')" />
+      <el-table-column :label="$t('647ce252.087003')">
         <template slot-scope="scope">
           {{ scope.row.area | formatCityData(district) }}
         </template>
       </el-table-column>
-      <el-table-column prop="start_standard" label="首重(kg)" />
-      <el-table-column prop="start_fee" label="首费(元)" />
-      <el-table-column prop="add_standard" label="续重(kg)" />
-      <el-table-column prop="add_fee" label="续费(元)" />
-      <el-table-column label="状态">
+      <el-table-column prop="start_standard" :label="$t('647ce252.e56878')" />
+      <el-table-column prop="start_fee" :label="$t('647ce252.23e30a')" />
+      <el-table-column prop="add_standard" :label="$t('647ce252.1ed90e')" />
+      <el-table-column prop="add_fee" :label="$t('647ce252.0dc2ad')" />
+      <el-table-column :label="$t('647ce252.3fea7c')">
         <template slot-scope="scope">
-          <span v-if="scope.row.status == true">启用</span>
-          <span v-else>关闭</span>
+          <span v-if="scope.row.status == true">{{ $t('647ce252.7854b5') }}</span>
+          <span v-else>{{ $t('647ce252.b15d91') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后修改时间">
+      <el-table-column :label="$t('647ce252.4b9676')">
         <template slot-scope="scope">
           <span>{{ scope.row.updated_at | datetime('YYYY-MM-DD') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="250">
+      <el-table-column :label="$t('647ce252.2b6bc0')" width="250">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <el-button type="text" @click="editTemplatesAction(scope.$index, scope.row)"
-              >编辑</el-button
-            >
-            <el-button type="text" @click="deleteTemplatesAction(scope.$index, scope.row)"
-              >删除</el-button
-            >
+            <el-button type="text" @click="editTemplatesAction(scope.$index, scope.row)">
+{{
+              $t('647ce252.95b351')
+            }}
+</el-button>
+            <el-button type="text" @click="deleteTemplatesAction(scope.$index, scope.row)">
+{{
+              $t('647ce252.2f4aad')
+            }}
+</el-button>
           </div>
         </template>
       </el-table-column>
@@ -130,16 +134,16 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor/') + row.template_id })
     },
     deleteTemplatesAction(index, row) {
-      this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('647ce252.e0d827'), this.$t('647ce252.02d981'), {
+        confirmButtonText: this.$t('647ce252.38cf16'),
+        cancelButtonText: this.$t('647ce252.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteShippingTemplates(row.template_id).then((response) => {
             this.weightTemplatesList.splice(index, 1)
             this.$message({
-              message: '删除运费模板成功',
+              message: this.$t('647ce252.9f3fee'),
               type: 'success',
               duration: 5 * 1000
             })
@@ -148,7 +152,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('647ce252.2111cc')
           })
         })
     },

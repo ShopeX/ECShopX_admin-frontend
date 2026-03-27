@@ -2,7 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
-const name = '财务'
+const name = '45b0dfb2.b8fe8d'
 import Layout from '@/view/layout' // 主框架
 
 export default {
@@ -11,12 +11,12 @@ export default {
   children: [
     {
       path: 'financialManage/servicepayment',
-      name: `交易单`,
+      name: '45b0dfb2.8ab066',
       component: () => import('@/view/mall/trade/list')
     },
     {
       path: 'financialManage/aftersalesrefundlist',
-      name: `退款单`,
+      name: '45b0dfb2.51e9e1',
       component: () => import('@/view/mall/aftersales/refundList'),
       children: [
         {
@@ -27,23 +27,23 @@ export default {
     },
     {
       path: 'financialManage/Refunderrorlogs',
-      name: `退款失败日志`,
+      name: '45b0dfb2.ea0ea2',
       component: () => import('@/view/mall/trade/refunderrorlogs')
     },
     {
       path: 'financialManage/financialaftersaleslist',
-      name: `售后单`,
+      name: '45b0dfb2.d1b93f',
       component: () => import('@/view/mall/aftersales/financial/list')
     },
 
     {
       path: 'financialManage/salesreportlist',
-      name: `销售报表`,
+      name: '45b0dfb2.87821b',
       component: () => import('@/view/mall/trade/financial/list')
     },
     {
       path: 'examine/transfer',
-      name: `转账审核`,
+      name: '45b0dfb2.2799ad',
       component: () => import('@/view/mall/trade/examineTransfer'),
       children: [
         {
@@ -56,12 +56,12 @@ export default {
 
     {
       path: 'splitBill/setting',
-      name: `基础配置`,
+      name: '45b0dfb2.b6453a',
       component: () => import('@/view/mall/splitbill/setting')
     },
     {
       path: 'splitBill/StoreInformation',
-      name: `店铺进件信息`,
+      name: '45b0dfb2.db2648',
       component: () => import('@/view/mall/splitbill/list'),
       children: [
         {
@@ -72,7 +72,7 @@ export default {
     },
     {
       path: 'splitBill/StoreFenSetting',
-      name: `商户提现设置`,
+      name: '45b0dfb2.358784',
       component: () => import('@/view/mall/splitbill/storesetting')
     },
     // {
@@ -82,7 +82,7 @@ export default {
     // },
     {
       path: 'adapay_member_audit',
-      name: `开户审批`,
+      name: '45b0dfb2.5bf3b3',
       component: () => import('@/view/mall/marketing/openingapproval'),
       children: [
         {
@@ -93,7 +93,7 @@ export default {
     },
     {
       path: 'settlement/summary',
-      name: `结算汇总`,
+      name: '45b0dfb2.070f26',
       component: () => import('@/view/financial/settlement/summary'),
       children: [
         {
@@ -104,12 +104,12 @@ export default {
     },
     {
       path: 'settlement/configure',
-      name: `结算配置`,
+      name: '45b0dfb2.3965e5',
       component: () => import('@/view/financial/settlement/configure')
     },
     {
       path: 'invoice/invoiceManagement',
-      name: `发票列表`,
+      name: '45b0dfb2.a4bb2f',
       component: () => import('@/view/financial/invoice/list'),
       children: [
         {
@@ -124,22 +124,22 @@ export default {
     },
     {
       path: 'invoice/invoiceSetting',
-      name: `发票配置`,
+      name: '45b0dfb2.bcd859',
       component: () => import('@/view/financial/invoice/setting')
     },
     {
       path: 'invoice/invoiceInfo',
-      name: `开票信息`,
+      name: '45b0dfb2.131871',
       component: () => import('@/view/financial/invoice/information')
     },
     {
       path: 'invoice/invoiceTax',
-      name: `开票税率`,
+      name: '45b0dfb2.e4a771',
       component: () => import('@/view/financial/invoice/invoiceTax')
     },
     {
       path: 'invoice/invoiceConfirmation',
-      name: '专票确认书',
+      name: '45b0dfb2.30117a',
       component: () => import('@/view/financial/invoice/invoiceConfirmation')
     }
   ]

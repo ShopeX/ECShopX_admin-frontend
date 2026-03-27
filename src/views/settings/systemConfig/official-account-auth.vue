@@ -6,26 +6,24 @@
 <template>
   <SpPage>
     <section class="section section-white">
-      <div class="section-header with-border mb-5">微信开放平台管理</div>
+      <div class="section-header with-border mb-5">{{ $t('3a2597f3.778dc1') }}</div>
       <div class="section-body">
         <el-alert
-          title="开通微信开放平台管理并且绑定小程序/公众号"
+          :title="$t('3a2597f3.1cd1ac')"
           type="warning"
-          description="为用户的公众号开通开放平台账号并且绑定小程序/公众号，用于打通用户的小程序和公众号用户和卡券等数据。如果未授权，
-    请手动开通微信开放平台并且绑定。"
+          :description="$t('3a2597f3.81a169')"
           show-icon
           :closable="false"
           class="mb-5"
         />
         <div class="mt-5">
-          <span class="frm-tips block leading-relaxed mb-4 text-red-500"
-            >如果手动绑定绑定后一定要执行【微信-> 粉丝管理->
-            同步微信粉丝】操作，不然会导致小程序用户和微信公众号用户不能打通</span
-          >
+          <span class="frm-tips block leading-relaxed mb-4 text-red-500">{{
+            $t('3a2597f3.1bb0a6')
+          }}</span>
           <el-form ref="form" class="mt-5">
             <el-form-item>
               <el-button v-loading="loading" type="primary" @click="onSubmit">
-                开通微信开放平台绑定小程序
+                {{ $t('3a2597f3.867285') }}
               </el-button>
             </el-form-item>
           </el-form>
@@ -50,7 +48,7 @@ export default {
         .then((response) => {
           this.$message({
             type: 'success',
-            message: '开通并绑定成功'
+            message: this.$t('3a2597f3.bd9c53')
           })
           this.loading = false
         })

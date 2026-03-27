@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="选择优惠券"
+    :title="$t('9aff5ab2.45bcee')"
     class="select-goods-box select-boxs"
     :append-to-body="true"
     :modal-append-to-body="false"
@@ -34,8 +34,8 @@
         </div>
       </el-transfer>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialog">取 消</el-button>
-        <el-button type="primary" @click="couponsComfirm">确 定</el-button>
+        <el-button @click="closeDialog">{{ $t('9aff5ab2.c08ab9') }}</el-button>
+        <el-button type="primary" @click="couponsComfirm">{{ $t('9aff5ab2.aa7527') }}</el-button>
       </span>
     </template>
   </el-dialog>
@@ -100,7 +100,7 @@ export default {
     couponsSelector(value, direction, movedKeys) {
       if (value.length > 3) {
         this.$message({
-          message: '最多选择三张优惠券',
+          message: this.$t('9aff5ab2.c8288d'),
           type: 'error',
           duration: 5 * 1000
         })

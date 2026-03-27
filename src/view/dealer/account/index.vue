@@ -7,16 +7,20 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="addLabels">添加账号</el-button>
+        <el-button type="primary" icon="plus" @click="addLabels">
+{{
+          $t('08833112.f0677c')
+        }}
+</el-button>
       </el-col>
       <el-col :span="12">
-        <el-input placeholder="手机号" v-model="mobile">
+        <el-input :placeholder="$t('08833112.8098e2')" v-model="mobile">
           <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-table :data="accountsList" v-loading="loading">
-      <el-table-column prop="mobile" label="手机号（账号名称）">
+      <el-table-column prop="mobile" :label="$t('08833112.99359a')">
         <template slot-scope="scope">
           {{ scope.row.mobile
           }}<el-tag
@@ -25,14 +29,18 @@
             size="small"
             style="margin-left: 10px"
           >
-            超级管理员
+            {{ $t('08833112.302ff0') }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="contact" label="姓名" />
-      <el-table-column label="操作">
+      <el-table-column prop="contact" :label="$t('08833112.60d045')" />
+      <el-table-column :label="$t('08833112.2b6bc0')">
         <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">
+{{
+            $t('08833112.95b351')
+          }}
+</el-button>
           <!--<el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)" v-if="scope.row.is_dealer_main == 0">删除</el-button
           >-->
         </template>
@@ -57,29 +65,29 @@
     >
       <template>
         <el-form ref="form" :rules="rules" :model="form" class="demo-ruleForm" label-width="120px">
-          <el-form-item label="登录账号" prop="mobile">
+          <el-form-item :label="$t('08833112.bb2cdf')" prop="mobile">
             <el-col :span="12" style="margin-right: 10px">
               <el-input v-model="form.mobile" v-if="!isEdit" :maxlength="11" />
               <el-input v-model="edit_mobile" :disabled="true" v-else />
             </el-col>
-            <p>只支持用手机号码作为登录账号</p>
+            <p>{{ $t('08833112.23b6de') }}</p>
           </el-form-item>
-          <el-form-item label="姓名" prop="contact">
+          <el-form-item :label="$t('08833112.60d045')" prop="contact">
             <el-col :span="12">
               <el-input v-model="form.contact" :disabled="isEdit" />
             </el-col>
           </el-form-item>
-          <el-form-item label="登录密码" prop="password">
+          <el-form-item :label="$t('08833112.2646b8')" prop="password">
             <el-col :span="12" style="margin-right: 10px">
               <el-input v-model="form.password" />
             </el-col>
-            <p>密码6-16位，支持字母、数字、下划线</p>
+            <p>{{ $t('08833112.c62756') }}</p>
           </el-form-item>
         </el-form>
       </template>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCancel">取消</el-button>
-        <el-button type="primary" @click="handleSumbit">保存</el-button>
+        <el-button @click.native="handleCancel">{{ $t('08833112.625fb2') }}</el-button>
+        <el-button type="primary" @click="handleSumbit">{{ $t('08833112.be5fbb') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -112,7 +120,7 @@ export default {
       operator_id: 0,
       dealer_parent_id: 0,
       rules: {
-        contact: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        contact: [{ required: true, message: this.$t('08833112.8093e3'), trigger: 'blur' }],
         mobile: [{ required: true, trigger: 'blur', validator: this.validateMobile }],
         password: [{ required: true, trigger: 'blur', validator: this.validateNumber }]
       }
@@ -137,14 +145,14 @@ export default {
     addLabels() {
       // 添加物料弹框
       this.handleCancel()
-      this.editTitle = '添加账号信息'
+      this.editTitle = this.$t('08833112.f1333f')
       this.editVisible = true
       this.isEdit = false
     },
     editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
-      this.editTitle = '编辑账号信息'
+      this.editTitle = this.$t('08833112.67b76a')
       this.editVisible = true
       this.isEdit = true
       this.form.mobile = row.mobile
@@ -156,14 +164,14 @@ export default {
     validateMobile(rule, value, callback) {
       console.log(value)
       if (value.length <= 0 && !isMobile(value)) {
-        callback(new Error('请输入正确的合法手机号'))
+        callback(new Error(this.$t('08833112.e56e22')))
       } else {
         callback()
       }
     },
     validateNumber(rule, value, callback) {
       if (value.length < 6 || value.length > 16) {
-        callback(new Error('请输入6-16位密码'))
+        callback(new Error(this.$t('08833112.360bd6')))
       } else {
         callback()
       }
@@ -192,7 +200,7 @@ export default {
               is_dealer_main: '0',
               dealer_parent_id: this.dealer_parent_id
             }).then((response) => {
-              this.$message.success('保存成功')
+              this.$message.success(this.$t('08833112.3b1083'))
               this.getAccountListData()
               this.handleCancel()
             })
@@ -214,32 +222,31 @@ export default {
       })
     },
     deleteAccountAction(index, row) {
-      this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('08833112.80ae2a'), this.$t('08833112.02d981'), {
+        confirmButtonText: this.$t('08833112.38cf16'),
+        cancelButtonText: this.$t('08833112.625fb2'),
         type: 'warning'
       })
         .then(() => {
           deleteDealer(row.operator_id)
             .then((response) => {
               this.$message({
-                message: '删除成功',
+                message: this.$t('08833112.0007d1'),
                 type: 'success'
               })
               this.getAccountListData()
             })
             .catch(() => {
-              // debugger
               this.$message({
                 type: 'error',
-                message: '删除失败'
+                message: this.$t('08833112.acf066')
               })
             })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('08833112.2111cc')
           })
         })
     }

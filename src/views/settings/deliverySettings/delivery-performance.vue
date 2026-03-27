@@ -39,55 +39,59 @@ export default {
         distributor_id: '',
         merchant_id: ''
       },
-      formItems: [
+      belonginStore: [],
+      belongingMerchant: []
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           fieldName: 'time',
-          label: '时间筛选',
+          label: this.$t('92dbc73e.77cccc'),
           component: 'datetimepicker',
           cellWidth: 2,
           componentProps: {
             type: 'datetimerange',
-            startPlaceholder: '开始日期',
-            endPlaceholder: '结束日期',
+            startPlaceholder: this.$t('92dbc73e.b44c0f'),
+            endPlaceholder: this.$t('92dbc73e.1d468b'),
             defaultTime: ['00:00:00', '23:59:59'],
             valueFormat: 'timestamp',
             size: 'default',
             clearable: true
           }
         },
-
         {
           fieldName: 'delivery_staff_name',
-          label: '配送员姓名',
+          label: this.$t('92dbc73e.9b3489'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入配送员姓名',
+            placeholder: this.$t('92dbc73e.c6c579'),
             size: 'default'
           }
         },
         {
           fieldName: 'delivery_staff_mobile',
-          label: '手机号',
+          label: this.$t('92dbc73e.8098e2'),
           component: 'input',
           componentProps: {
-            placeholder: '手机号',
+            placeholder: this.$t('92dbc73e.8098e2'),
             size: 'default'
           }
         },
         {
           fieldName: 'distributor_id',
-          label: '所属店铺',
+          label: this.$t('92dbc73e.baad7e'),
           component: (context) => {
             const { value, props, onInput, h } = context
             return h('SpSelectShop', {
               props: {
                 value,
                 clearable: true,
-                placeholder: '请选择',
+                placeholder: this.$t('92dbc73e.708c9d'),
                 size: 'small',
                 ...props
               },
-
               on: {
                 input: onInput
               }
@@ -95,14 +99,16 @@ export default {
           },
           componentProps: {}
         }
-      ],
-      setting: {
+      ]
+    },
+    setting() {
+      return {
         columns: [
-          { name: '配送员编号', key: 'staff_no', width: 110 },
-          { name: '配送员姓名', key: 'username', width: 110 },
-          { name: '手机号', key: 'mobile', width: 130 },
+          { name: this.$t('92dbc73e.fb92e9'), key: 'staff_no', width: 110 },
+          { name: this.$t('92dbc73e.9b3489'), key: 'username', width: 110 },
+          { name: this.$t('92dbc73e.8098e2'), key: 'mobile', width: 130 },
           {
-            name: '所属店铺',
+            name: this.$t('92dbc73e.baad7e'),
             key: 'distributor_ids',
             width: 300,
             render: (h, { row }) => {
@@ -120,17 +126,23 @@ export default {
             }
           },
           {
-            name: '配送结算方式',
+            name: this.$t('92dbc73e.737477'),
             width: 150,
             key: 'payment_method',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return (
+                <span>
+                  {row.payment_method === 'order'
+                    ? this.$t('92dbc73e.ed776f')
+                    : this.$t('92dbc73e.705abf')}
+                </span>
+              )
             }
           },
-          { name: '配送客户数', key: 'user_count', width: 110 },
-          { name: '配送订单量', key: 'order_count', width: 110 },
+          { name: this.$t('92dbc73e.cb60c1'), key: 'user_count', width: 110 },
+          { name: this.$t('92dbc73e.24b4bb'), key: 'order_count', width: 110 },
           {
-            name: '配送单价',
+            name: this.$t('92dbc73e.86ac6f'),
             key: 'payment_method',
             render: (h, { row }) => {
               return (
@@ -143,47 +155,53 @@ export default {
             }
           },
           {
-            name: '订单金额',
+            name: this.$t('92dbc73e.b1862e'),
             key: 'total_fee_count',
             render: (h, { row }) => {
               return <span>{row.total_fee_count / 100}</span>
             }
           },
           {
-            name: '配送费用',
+            name: this.$t('92dbc73e.d355df'),
             key: 'self_delivery_fee_count',
             render: (h, { row }) => {
               return <span>{row.self_delivery_fee_count / 100}</span>
             }
           },
           {
-            name: '配送员类型',
+            name: this.$t('92dbc73e.04dbf8'),
             width: 110,
             key: 'staff_type',
             render: (h, { row }) => {
               return (
                 <span>
                   {row.staff_type === 'platform'
-                    ? '平台'
+                    ? this.$t('92dbc73e.498128')
                     : row.staff_type === 'distributor'
-                    ? '店铺'
-                    : '商家'}
+                    ? this.$t('92dbc73e.295713')
+                    : this.$t('92dbc73e.0f09a8')}
                 </span>
               )
             }
           },
           {
-            name: '配送员属性',
+            name: this.$t('92dbc73e.95a141'),
             width: 110,
             key: 'staff_attribute',
             render: (h, { row }) => {
-              return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>
+              return (
+                <span>
+                  {row.staff_attribute === 'full_time'
+                    ? this.$t('92dbc73e.63f85b')
+                    : this.$t('92dbc73e.7c4f46')}
+                </span>
+              )
             }
           }
         ],
         actions: [
           {
-            name: '导出',
+            name: this.$t('92dbc73e.55405e'),
             key: 'add',
             type: 'button',
             slot: 'header',
@@ -203,7 +221,7 @@ export default {
                 if (response.status) {
                   this.$message({
                     type: 'success',
-                    message: '已加入执行队列，请在设置-导出列表中下载'
+                    message: this.$t('92dbc73e.3e1ddd')
                   })
                   this.$export_open(params.type)
                   return
@@ -214,7 +232,7 @@ export default {
                 } else {
                   this.$message({
                     type: 'error',
-                    message: '无内容可导出 或 执行失败，请检查重试'
+                    message: this.$t('92dbc73e.89ae53')
                   })
                   return
                 }
@@ -222,12 +240,9 @@ export default {
             }
           }
         ]
-      },
-      belonginStore: [],
-      belongingMerchant: []
+      }
     }
   },
-  computed: {},
   watch: {
     'params.time'(val) {
       if (!val) this.params.time = []

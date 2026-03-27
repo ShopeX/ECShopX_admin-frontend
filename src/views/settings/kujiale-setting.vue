@@ -22,34 +22,38 @@ export default {
     return {
       loading: false,
       lock: false,
-      formItems: [
+      formData: {
+        appKey: '',
+        appSecret: ''
+      }
+    }
+  },
+  computed: {
+    formItems() {
+      return [
         {
           component: 'input',
           componentProps: {
-            placeholder: '请输入appKey',
+            placeholder: this.$t('ac4d83f6.d9bebe'),
             clearable: true
           },
           fieldName: 'appKey',
           formItemClass: 'w-2/4',
           label: 'appKey',
-          rules: [{ required: true, message: '请输入appKey', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('ac4d83f6.d9bebe'), trigger: 'blur' }]
         },
         {
           component: 'input',
           componentProps: {
-            placeholder: '请输入appSecret',
+            placeholder: this.$t('ac4d83f6.c3744f'),
             clearable: true
           },
           fieldName: 'appSecret',
           formItemClass: 'w-2/4',
           label: 'appSecret',
-          rules: [{ required: true, message: '请输入appSecret', trigger: 'blur' }]
+          rules: [{ required: true, message: this.$t('ac4d83f6.c3744f'), trigger: 'blur' }]
         }
-      ],
-      formData: {
-        appKey: '',
-        appSecret: ''
-      }
+      ]
     }
   },
   mounted() {
@@ -73,7 +77,7 @@ export default {
       try {
         console.log(formData, '--')
         await this.$api.third.setKujialeSetting(formData)
-        this.$message.success('更新成功，重新登录后生效')
+        this.$message.success(this.$t('ac4d83f6.b374d9'))
       } catch (error) {
         console.log(error)
       }

@@ -6,7 +6,7 @@
 <template>
   <el-dialog
     width="60%"
-    title="选择软文"
+    :title="$t('86152db6.8f5d8d')"
     :visible.sync="show"
     :close-on-click-modal="false"
     append-to-body
@@ -16,7 +16,7 @@
         <el-col :span="12">
           <el-input
             v-model="params.title"
-            placeholder="输入软文名称"
+            :placeholder="$t('86152db6.39b051')"
             clearable
             class="input-with-select"
           >
@@ -37,8 +37,8 @@
       @select-all="handleSelectAll"
     >
       <el-table-column type="selection" :reserve-selection="true" width="50" />
-      <el-table-column prop="article_id" label="软文ID" width="70" />
-      <el-table-column prop="title" label="软文标题" />
+      <el-table-column prop="article_id" :label="$t('86152db6.83361c')" width="70" />
+      <el-table-column prop="title" :label="$t('86152db6.64cebd')" />
     </el-table>
     <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
@@ -49,8 +49,8 @@
       />
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button @click="cancelAction">{{ $t('86152db6.c08ab9') }}</el-button>
+      <el-button type="primary" @click="saveStoreAction">{{ $t('86152db6.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -168,7 +168,7 @@ export default {
     },
     handleSelectAll(val) {
       if (this.limitNum) {
-        this.$message({ message: '当前组件不支持全选', type: 'warning' })
+        this.$message({ message: this.$t('86152db6.4f180d'), type: 'warning' })
         this.$refs.multipleTable.clearSelection()
         this.itemsData.forEach((item) => {
           let checked = this.selectRows.find((n) => n.article_id === item.article_id)
@@ -200,7 +200,10 @@ export default {
         this.selectRows.splice(inChecked, 1)
       } else {
         if (this.limitNum && this.selectRows.length >= this.limitNum) {
-          this.$message({ message: `最多选择${this.limitNum}件商品`, type: 'warning' })
+          this.$message({
+            message: this.$t('86152db6.49e280', { n: this.limitNum }),
+            type: 'warning'
+          })
           this.$refs.multipleTable.clearSelection()
           this.selectRows.forEach((item) => {
             this.$refs.multipleTable.toggleRowSelection(item)

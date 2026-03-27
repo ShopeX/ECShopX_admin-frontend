@@ -12,12 +12,17 @@
         :label="item.name"
         :name="item.value"
       />
-      <el-table v-loading="loading" :data="list" element-loading-text="数据加载中" :size="size">
-        <el-table-column width="200" prop="order_id" label="订单信息">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        :element-loading-text="$t('37f26730.f09b12')"
+        :size="size"
+      >
+        <el-table-column width="200" prop="order_id" :label="$t('37f26730.a6d10d')">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.order_id }}
-              <el-tooltip effect="dark" content="复制" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('37f26730.79d3ab')" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopy"
@@ -26,13 +31,13 @@
               </el-tooltip>
             </div>
             <div v-if="scope.row.distributor_id !== '0'" class="order-store">
-              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('37f26730.8a0cc2')" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_name }}
             </div>
             <div class="order-time">
-              <el-tooltip effect="dark" content="下单时间" placement="top-start">
+              <el-tooltip effect="dark" :content="$t('37f26730.2240cc')" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -40,17 +45,17 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="total_fee" width="115" label="订单金额（¥）">
+        <el-table-column prop="total_fee" width="115" :label="$t('37f26730.d194d2')">
           <template slot-scope="scope">
             {{ (scope.row.total_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column width="90" label="运费（¥）">
+        <el-table-column width="90" :label="$t('37f26730.4dd437')">
           <template slot-scope="scope">
             {{ scope.row.freight_fee / 100 }}
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" width="120" label="客户手机号">
+        <el-table-column prop="mobile" width="120" :label="$t('37f26730.a32da1')">
           <template slot-scope="scope">
             <template v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'">
               <router-link
@@ -66,7 +71,12 @@
               >
                 {{ scope.row.mobile }}
               </router-link>
-              <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
+              <el-tooltip
+                v-if="dataPass == 0"
+                effect="dark"
+                :content="$t('37f26730.79d3ab')"
+                placement="top-start"
+              >
                 <i
                   v-clipboard:copy="scope.row.mobile"
                   v-clipboard:success="onCopy"
@@ -76,7 +86,12 @@
             </template>
             <template v-else slot-scope="scope">
               <span>{{ scope.row.mobile }}</span>
-              <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
+              <el-tooltip
+                v-if="dataPass == 0"
+                effect="dark"
+                :content="$t('37f26730.79d3ab')"
+                placement="top-start"
+              >
                 <i
                   v-clipboard:copy="scope.row.mobile"
                   v-clipboard:success="onCopy"
@@ -87,32 +102,31 @@
           </template>
         </el-table-column>
         <template v-if="$store.getters.login_type != 'merchant'">
-          <el-table-column v-if="!isMicorMall" width="90" label="订单类型">
+          <el-table-column v-if="!isMicorMall" width="90" :label="$t('37f26730.5cd56b')">
             <template slot-scope="scope">
               <span v-if="scope.row.order_class == 'normal'">
-                <span v-if="scope.row.type == '1'">跨境订单</span>
-                <span v-else>普通订单</span>
+                <span v-if="scope.row.type == '1'">{{ $t('37f26730.443aa4') }}</span>
+                <span v-else>{{ $t('37f26730.e7978e') }}</span>
               </span>
-              <span v-if="scope.row.order_class == 'groups'">团购订单</span>
-              <span v-if="scope.row.order_class == 'seckill'">秒杀订单</span>
-              <span v-if="scope.row.order_class == 'community'">社区订单</span>
-              <span v-if="scope.row.order_class == 'shopguide'">导购订单</span>
-              <span v-if="scope.row.order_class == 'bargain'">助力订单</span>
-              <span v-if="scope.row.order_class == 'excard'">兑换订单</span>
+              <span v-if="scope.row.order_class == 'groups'">{{ $t('37f26730.9b251e') }}</span>
+              <span v-if="scope.row.order_class == 'seckill'">{{ $t('37f26730.ee8bc9') }}</span>
+              <span v-if="scope.row.order_class == 'community'">{{ $t('37f26730.1ad244') }}</span>
+              <span v-if="scope.row.order_class == 'shopguide'">{{ $t('37f26730.7762db') }}</span>
+              <span v-if="scope.row.order_class == 'bargain'">{{ $t('37f26730.94b1e6') }}</span>
+              <span v-if="scope.row.order_class == 'excard'">{{ $t('37f26730.8e09cc') }}</span>
             </template>
           </el-table-column>
         </template>
-        <el-table-column width="100" prop="order_status" label="订单状态">
+        <el-table-column width="100" prop="order_status" :label="$t('37f26730.86f6cf')">
           <template slot-scope="scope">
-            <!-- 订单状态 -->
             <template v-if="scope.row.receipt_type == 'dada'">
-              <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
-              <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
-              <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
+              <span v-if="scope.row.order_status == 'NOTPAY'">{{ $t('37f26730.9246fe') }}</span>
+              <span v-if="scope.row.order_status == 'NOTPAY'">{{ $t('37f26730.9246fe') }}</span>
+              <span v-if="scope.row.order_status_des == 'CANCEL'">{{ $t('37f26730.2111cc') }}</span>
               <span v-if="scope.row.order_status_des == 'CLOSED'">{{
                 scope.row.order_status_msg
               }}</span>
-              <span v-if="scope.row.order_status == 'DONE'">已完成</span>
+              <span v-if="scope.row.order_status == 'DONE'">{{ $t('37f26730.fad522') }}</span>
               <template
                 v-if="
                   scope.row.order_status != 'CANCEL' &&
@@ -120,42 +134,49 @@
                   scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
                 "
               >
-                <!-- 发货状态 -->
-                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
+                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">{{
+                  $t('37f26730.57a640')
+                }}</span>
               </template>
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '0'"
-                >商家待接单</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '1'"
-                >骑士待接单</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '2'"
-                >待取货</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '100'"
-                >骑士到店</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '3'"
-                >配送中</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '9'"
-                >未妥投</span
-              >
-              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '10'"
-                >妥投异常</span
-              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '0'">{{
+                $t('37f26730.10afb8')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '1'">{{
+                $t('37f26730.47eacd')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '2'">{{
+                $t('37f26730.186671')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '100'">{{
+                $t('37f26730.b5b1a5')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '3'">{{
+                $t('37f26730.739c91')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '9'">{{
+                $t('37f26730.ed23e1')
+              }}</span>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '10'">{{
+                $t('37f26730.a40b85')
+              }}</span>
             </template>
             <template v-if="scope.row.receipt_type != 'dada'">
-              <span v-if="scope.row.order_status == 'PAYED'">已支付</span>
-              <span v-if="scope.row.order_status == 'NOTPAY'">未支付</span>
-              <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
+              <span v-if="scope.row.order_status == 'PAYED'">{{ $t('37f26730.8d02a5') }}</span>
+              <span v-if="scope.row.order_status == 'NOTPAY'">{{ $t('37f26730.608afd') }}</span>
+              <span v-if="scope.row.order_status_des == 'CANCEL'">{{ $t('37f26730.2111cc') }}</span>
               <span v-if="scope.row.order_status_des == 'CLOSED'">{{
                 scope.row.order_status_msg
               }}</span>
-              <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">待收货</span>
-              <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">已退款</span>
-              <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">等待成团</span>
-              <span v-if="scope.row.order_status == 'DONE'">已完成</span>
+              <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">{{
+                $t('37f26730.4933ca')
+              }}</span>
+              <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">{{
+                $t('37f26730.e85018')
+              }}</span>
+              <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">{{
+                $t('37f26730.425a40')
+              }}</span>
+              <span v-if="scope.row.order_status == 'DONE'">{{ $t('37f26730.fad522') }}</span>
               <template
                 v-if="
                   scope.row.order_status != 'CANCEL' &&
@@ -163,45 +184,49 @@
                   scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
                 "
               >
-                <!-- 发货状态 -->
-                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
-                <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
-                <span v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
-                  >待自提</span
+                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">{{
+                  $t('37f26730.57a640')
+                }}</span>
+                <span v-if="scope.row.delivery_status == 'PARTAIL'">{{
+                  $t('37f26730.5296ac')
+                }}</span>
+                <span
+                  v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
+                  >{{ $t('37f26730.25d532') }}</span
                 >
                 <span
                   v-if="
                     scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING'
                   "
-                  >待发货</span
+                  >{{ $t('37f26730.d8476e') }}</span
                 >
               </template>
             </template>
           </template>
         </el-table-column>
-        <el-table-column width="80" label="配送方式">
+        <el-table-column width="80" :label="$t('37f26730.edfe4c')">
           <template slot-scope="scope">
-            <span v-if="scope.row.receipt_type == 'logistics'">普通快递</span>
-            <span v-if="scope.row.receipt_type == 'ziti'">自提</span>
-            <span v-if="scope.row.receipt_type == 'dada'">同城配</span>
+            <span v-if="scope.row.receipt_type == 'logistics'">{{ $t('37f26730.249bfe') }}</span>
+            <span v-if="scope.row.receipt_type == 'ziti'">{{ $t('37f26730.b30d27') }}</span>
+            <span v-if="scope.row.receipt_type == 'dada'">{{ $t('37f26730.583dcd') }}</span>
           </template>
         </el-table-column>
         <el-table-column
           v-if="$store.getters.login_type != 'merchant'"
           width="120"
-          label="海关审批状态"
+          :label="$t('37f26730.1517c7')"
         >
           <template slot-scope="scope">
             <template v-if="scope.row.type == 1">
-              <span v-if="scope.row.audit_status == 'approved'">审核通过</span>
-              <span v-if="scope.row.audit_status == 'processing'">审核中</span>
-              <span v-if="scope.row.audit_status == 'rejected'">审核失败</span>
+              <span v-if="scope.row.audit_status == 'approved'">{{ $t('37f26730.871a30') }}</span>
+              <span v-if="scope.row.audit_status == 'processing'">{{ $t('37f26730.b720a6') }}</span>
+              <span v-if="scope.row.audit_status == 'rejected'">{{ $t('37f26730.fe3661') }}</span>
             </template>
             <template v-else> - </template>
           </template>
         </el-table-column>
 
-        <el-table-column prop="source_name" label="来源" />
+        <el-table-column prop="source_name" :label="$t('37f26730.26ca20')" />
 
         <!-- <el-table-column
           width="120"
@@ -209,7 +234,7 @@
           prop="delivery_corp"
         ></el-table-column> -->
 
-        <el-table-column width="200" label="操作">
+        <el-table-column width="200" :label="$t('37f26730.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text">
               <router-link
@@ -218,7 +243,7 @@
                   query: { orderId: scope.row.order_id, resource: $route.path }
                 }"
               >
-                详情
+                {{ $t('37f26730.f26225') }}
               </router-link>
             </el-button>
             <!-- 非同城配的取消订单按钮 -->
@@ -237,9 +262,8 @@
                 :size="size"
                 @click="cancelOrderAction(scope.row.order_id)"
               >
-                取消订单
+                {{ $t('37f26730.b21b5e') }}
               </el-button>
-              <!-- 同城配的取消订单按钮 -->
               <el-button
                 v-if="
                   (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
@@ -253,7 +277,7 @@
                 :size="size"
                 @click="cancelOrderAction(scope.row.order_id)"
               >
-                取消订单
+                {{ $t('37f26730.b21b5e') }}
               </el-button>
               <el-button type="text">
                 <router-link
@@ -262,7 +286,7 @@
                     query: { orderId: scope.row.order_id, resource: $route.path }
                   }"
                 >
-                  日志
+                  {{ $t('37f26730.456d29') }}
                 </router-link>
               </el-button>
               <el-button
@@ -276,7 +300,7 @@
                 type="text"
                 @click="writeoffOrderAction(scope.row.order_id)"
               >
-                核销
+                {{ $t('37f26730.e7d31e') }}
               </el-button>
               <el-button
                 v-if="
@@ -292,7 +316,7 @@
                 :size="size"
                 @click="businessReceiptAction(scope.row)"
               >
-                接单
+                {{ $t('37f26730.7d4577') }}
               </el-button>
 
               <el-button
@@ -306,7 +330,7 @@
                 :size="size"
                 @click="confirmBack(scope.row)"
               >
-                确认退回
+                {{ $t('37f26730.f1557d') }}
               </el-button>
 
               <template
@@ -326,7 +350,7 @@
                   :size="size"
                   @click="deliveryAction(scope.row)"
                 >
-                  发货
+                  {{ $t('37f26730.045315') }}
                 </el-button>
 
                 <el-button
@@ -337,7 +361,7 @@
                   type="text"
                   @click="confirmCancelOrderAction(scope.row.order_id)"
                 >
-                  退款
+                  {{ $t('37f26730.44c198') }}
                 </el-button>
               </template>
               <el-button
@@ -346,11 +370,11 @@
                 :size="size"
                 @click="IsInvoiced(scope.row, 1)"
               >
-                待开票
+                {{ $t('37f26730.963609') }}
               </el-button>
 
               <el-button type="text" :size="size" @click="clickShowRemark(scope.row, 'normalList')">
-                备注
+                {{ $t('37f26730.2432b5') }}
               </el-button>
             </template>
           </template>
@@ -401,20 +425,20 @@ export default {
       is_distributor: false,
       activeName: 'all',
       order_status_list: [
-        { name: '全部', value: 'all' },
-        { name: '待支付', value: 'notpay' },
-        { name: '待发货', value: 'notship' },
-        { name: '待收货', value: 'shipping' },
-        { name: '待退款', value: 'cancelapply' },
-        { name: '待自提', value: 'ziti' },
-        { name: '已取消', value: 'cancel' },
-        { name: '已完成', value: 'finish' },
-        { name: '待接单', value: 'dada_0' },
-        { name: '待骑士接单', value: 'dada_1' },
-        { name: '待取货', value: 'dada_2' },
-        { name: '骑士到店', value: 'dada_100' },
-        { name: '配送中', value: 'dada_3' },
-        { name: '未妥投', value: 'dada_9' }
+        { name: this.$t('37f26730.a8b0c2'), value: 'all' },
+        { name: this.$t('37f26730.9246fe'), value: 'notpay' },
+        { name: this.$t('37f26730.d8476e'), value: 'notship' },
+        { name: this.$t('37f26730.4933ca'), value: 'shipping' },
+        { name: this.$t('37f26730.6b715b'), value: 'cancelapply' },
+        { name: this.$t('37f26730.25d532'), value: 'ziti' },
+        { name: this.$t('37f26730.2111cc'), value: 'cancel' },
+        { name: this.$t('37f26730.fad522'), value: 'finish' },
+        { name: this.$t('37f26730.1ef6f1'), value: 'dada_0' },
+        { name: this.$t('37f26730.f8c921'), value: 'dada_1' },
+        { name: this.$t('37f26730.186671'), value: 'dada_2' },
+        { name: this.$t('37f26730.b5b1a5'), value: 'dada_100' },
+        { name: this.$t('37f26730.739c91'), value: 'dada_3' },
+        { name: this.$t('37f26730.ed23e1'), value: 'dada_9' }
       ]
     }
   },
@@ -430,7 +454,7 @@ export default {
   methods: {
     onCopy() {
       this.$notify({
-        message: '复制成功',
+        message: this.$t('37f26730.20a495'),
         type: 'success'
       })
     },
@@ -444,7 +468,7 @@ export default {
       getWriteoff(order_id).then((response) => {
         let writeoffOrderData = response.data.data
         if (writeoffOrderData.ziti_status == 'DONE') {
-          this.$message.error('该订单已核销!')
+          this.$message.error(this.$t('37f26730.c9045d'))
           return false
         }
         this.$emit('onChangeData', 'writeoffOrderData', writeoffOrderData)
@@ -453,15 +477,15 @@ export default {
       this.$emit('onChangeData', 'writeoffOrderForm', { order_id })
     },
     confirmBack(row) {
-      this.$confirm('确认退回', '确认退回提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('37f26730.f1557d'), this.$t('37f26730.df2e45'), {
+        confirmButtonText: this.$t('37f26730.38cf16'),
+        cancelButtonText: this.$t('37f26730.625fb2'),
         type: 'warning'
       })
         .then(() => {
           confirmBack(row.order_id).then((response) => {
             this.$message({
-              message: '退回成功',
+              message: this.$t('37f26730.2ab3ab'),
               type: 'success',
               duration: 2 * 1000
             }),
@@ -471,20 +495,20 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('37f26730.2111cc')
           })
         })
     },
     businessReceiptAction(row) {
-      this.$confirm('请在接单前确认商品当前库存', '接单提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('37f26730.f3e80d'), this.$t('37f26730.c1b226'), {
+        confirmButtonText: this.$t('37f26730.38cf16'),
+        cancelButtonText: this.$t('37f26730.625fb2'),
         type: 'warning'
       })
         .then(() => {
           doBusinessReceipt(row.order_id).then((response) => {
             this.$message({
-              message: '接单成功',
+              message: this.$t('37f26730.740ca1'),
               type: 'success',
               duration: 2 * 1000
             }),
@@ -494,7 +518,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('37f26730.2111cc')
           }),
             this.$emit('refreshList')
         })
@@ -520,7 +544,7 @@ export default {
         let deliveryData = response.data.data
         this.$emit('onChangeData', 'deliveryData', deliveryData)
         if (deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
-          this.$message.error('客户已经申请退款，请先处理退款操作再决定是否发货!')
+          this.$message.error(this.$t('37f26730.e406db'))
           return false
         }
         if (selectItemType == 'old') {
@@ -546,13 +570,13 @@ export default {
       if (!row.invoice) {
         this.$message({
           type: 'info',
-          message: '此订单无发票信息'
+          message: this.$t('37f26730.df2bb8')
         })
         return
       }
-      this.$confirm('确定更新该订单开票状态？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+      this.$confirm(this.$t('37f26730.23d4a7'), this.$t('37f26730.02d981'), {
+        cancelButtonText: this.$t('9ebd763b.625fb2'),
+        confirmButtonText: this.$t('9ebd763b.38cf16'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -564,13 +588,13 @@ export default {
               if (response.data.data.success) {
                 this.$message({
                   type: 'success',
-                  message: '已更新开票状态'
+                  message: this.$t('37f26730.ee73ff')
                 })
                 this.$emit('refreshList')
               } else {
                 this.$message({
                   type: 'error',
-                  message: '更新开票状态失败'
+                  message: this.$t('37f26730.34b438')
                 })
               }
             })
@@ -593,7 +617,7 @@ export default {
       getOrderDetail(order_id).then((response) => {
         let cancelOrderData = response.data.data
         if (cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
-          this.$message.error('该订单已取消!')
+          this.$message.error(this.$t('8906cb64.8f8a2c'))
           return false
         }
         this.$emit('onChangeData', 'cancelOrderData', cancelOrderData)

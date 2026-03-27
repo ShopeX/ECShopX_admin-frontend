@@ -2,6 +2,7 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+import { i18n } from '@/i18n'
 export const ICON_MAP = {
   'tachometer-alt': 'gaikuang',
   'shopping-bag': 'shangpin',
@@ -18,302 +19,237 @@ export const ICON_MAP = {
 }
 
 export const OPEN_STATUS_ARR = [
-  {
-    value: 'pending',
-    label: '待开票',
-    title: '待开票'
-  },
-  {
-    value: 'inProgress',
-    label: '开票中',
-    title: '开票中'
-  },
-  {
-    value: 'success',
-    label: '开票成功',
-    title: '开票成功'
-  },
-  {
-    value: 'waste',
-    label: '已红冲',
-    title: '已红冲'
-  },
-  {
-    value: 'failed',
-    label: '开票失败',
-    title: '开票失败'
-  },
-  {
-    value: 'cancel',
-    label: '取消',
-    title: '取消'
-  },
-  {
-    value: 'waitProgress',
-    label: '排队',
-    title: '排队'
-  }
+  { value: 'pending', label: i18n.t('e3a5dbf4.963609'), title: i18n.t('e3a5dbf4.963609') },
+  { value: 'inProgress', label: i18n.t('e3a5dbf4.030e4d'), title: i18n.t('e3a5dbf4.030e4d') },
+  { value: 'success', label: i18n.t('e3a5dbf4.186ded'), title: i18n.t('e3a5dbf4.186ded') },
+  { value: 'waste', label: i18n.t('e3a5dbf4.b7fc00'), title: i18n.t('e3a5dbf4.b7fc00') },
+  { value: 'failed', label: i18n.t('e3a5dbf4.65dcda'), title: i18n.t('e3a5dbf4.65dcda') },
+  { value: 'cancel', label: i18n.t('e3a5dbf4.625fb2'), title: i18n.t('e3a5dbf4.625fb2') },
+  { value: 'waitProgress', label: i18n.t('e3a5dbf4.0b5880'), title: i18n.t('e3a5dbf4.0b5880') }
 ]
 
 export const SALES_STATUS = [
-  { title: '前台可销售', value: 'onsale' },
-  { title: '前台不展示', value: 'offline_sale' },
-  { title: '前台仅展示', value: 'only_show' },
-  { title: '不可销售', value: 'instock' }
+  { title: i18n.t('e3a5dbf4.9b7481'), value: 'onsale' },
+  { title: i18n.t('e3a5dbf4.2c50a0'), value: 'offline_sale' },
+  { title: i18n.t('e3a5dbf4.acf86b'), value: 'only_show' },
+  { title: i18n.t('e3a5dbf4.ae83a3'), value: 'instock' }
 ]
 
 export const DISTRIBUTION_TYPE = [
-  { title: '全部', value: '' },
-  { title: '普通快递', value: 'logistics' },
-  { title: '同城配', value: 'dada' },
-  { title: '客户自提', value: 'ziti' },
-  { title: '商家自配送', value: 'merchant' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.249bfe'), value: 'logistics' },
+  { title: i18n.t('e3a5dbf4.583dcd'), value: 'dada' },
+  { title: i18n.t('e3a5dbf4.3f6ca2'), value: 'ziti' },
+  { title: i18n.t('e3a5dbf4.0e903e'), value: 'merchant' }
 ]
 
 export const DISTRIBUTION_STATUS = [
-  { title: '全部', value: '' },
-  { title: '待确认', value: 'CONFIRMING' },
-  { title: '已接单', value: 'RECEIVEORDER' },
-  { title: '已打包', value: 'PACKAGED' },
-  { title: '配送中', value: 'DELIVERING' },
-  { title: '已送达', value: 'DONE' }
-  // { title: '已取消', value: 'NOTMERCHANT' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.2a2772'), value: 'CONFIRMING' },
+  { title: i18n.t('e3a5dbf4.08fefc'), value: 'RECEIVEORDER' },
+  { title: i18n.t('e3a5dbf4.891cb5'), value: 'PACKAGED' },
+  { title: i18n.t('e3a5dbf4.739c91'), value: 'DELIVERING' },
+  { title: i18n.t('e3a5dbf4.f87f48'), value: 'DONE' }
 ]
 
 export const ORDER_STATUS = [
-  { title: '全部', value: '' },
-  { title: '待支付', value: 'notpay' },
-  { title: '待发货', value: 'notship' },
-  { title: '待收货', value: 'shipping' },
-  { title: '待退款', value: 'cancelapply' },
-  { title: '待自提', value: 'ziti' },
-  { title: '已取消', value: 'cancel' },
-  { title: '已完成', value: 'finish' },
-  { title: '待接单', value: 'dada_0' },
-  { title: '待骑士接单', value: 'dada_1' },
-  { title: '待取货', value: 'dada_2' },
-  { title: '骑士到店', value: 'dada_100' },
-  { title: '配送中', value: 'dada_3' },
-  { title: '未妥投', value: 'dada_9' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.9246fe'), value: 'notpay' },
+  { title: i18n.t('e3a5dbf4.d8476e'), value: 'notship' },
+  { title: i18n.t('e3a5dbf4.4933ca'), value: 'shipping' },
+  { title: i18n.t('e3a5dbf4.6b715b'), value: 'cancelapply' },
+  { title: i18n.t('e3a5dbf4.25d532'), value: 'ziti' },
+  { title: i18n.t('e3a5dbf4.2111cc'), value: 'cancel' },
+  { title: i18n.t('e3a5dbf4.fad522'), value: 'finish' },
+  { title: i18n.t('e3a5dbf4.1ef6f1'), value: 'dada_0' },
+  { title: i18n.t('e3a5dbf4.f8c921'), value: 'dada_1' },
+  { title: i18n.t('e3a5dbf4.186671'), value: 'dada_2' },
+  { title: i18n.t('e3a5dbf4.b5b1a5'), value: 'dada_100' },
+  { title: i18n.t('e3a5dbf4.739c91'), value: 'dada_3' },
+  { title: i18n.t('e3a5dbf4.ed23e1'), value: 'dada_9' }
 ]
 
 export const ORDER_ZITI_STATUS_MAP = {
-  PENDING: { lable: '待自提', type: 'danger' },
-  DONE: { lable: '已自提', type: 'success' }
+  PENDING: { label: i18n.t('e3a5dbf4.25d532'), type: 'danger' },
+  DONE: { label: i18n.t('e3a5dbf4.feb802'), type: 'success' }
 }
 
 export const ORDER_DELIVERY_STATUS_MAP = {
-  DONE: { lable: '已发货', type: 'success' },
-  PARTAIL: { lable: '部分发货', type: 'success' }
+  DONE: { label: i18n.t('e3a5dbf4.355409'), type: 'success' },
+  PARTAIL: { label: i18n.t('e3a5dbf4.5296ac'), type: 'success' }
 }
 
 export const ORDER_STATUS_MAP = {
-  PAYED: { lable: '已支付', type: 'success' },
-  NOTPAY: { lable: '未支付', type: 'info' },
-  CANCEL: { lable: '已取消', type: 'info' },
-  WAIT_BUYER_CONFIRM: { lable: '待收货', type: 'danger' }
-  // DONE: '已发货',
-  // PARTAIL: '部分发货',
-  // PENDING: '待自提',
+  PAYED: { label: i18n.t('e3a5dbf4.8d02a5'), type: 'success' },
+  NOTPAY: { label: i18n.t('e3a5dbf4.608afd'), type: 'info' },
+  CANCEL: { label: i18n.t('e3a5dbf4.2111cc'), type: 'info' },
+  WAIT_BUYER_CONFIRM: { label: i18n.t('e3a5dbf4.4933ca'), type: 'danger' }
 }
 
 export const GLOBAL_ORDER_STATUS_MAP = {
-  WAIT_GROUPS_SUCCESS: { label: '等待成团', type: 'warning' },
-  NOTPAY: { label: '待支付', type: 'info' },
-  SUPPLY_PRESCRIPTION_INFO: { label: '待补充处方信息', type: 'info' },
-  WAIT_PRESCRIPTION: { label: '待医生开方', type: 'info' },
-  WAIT_PAID_CONFIRM: { label: '支付待确认', type: 'warning' },
-  PAYED_WAIT_PROCESS: { label: '退款处理中', type: 'warning' },
-  PAYED_PENDING: { label: '待自提', type: 'warning' },
-  PAYED_PARTAIL: { label: '部分发货', type: 'warning' },
-  WAIT_BUYER_CONFIRM: { label: '待收货', type: 'warning' },
-  PAYED: { label: '待发货', type: 'warning' },
-  REVIEW_PASS_PARTAIL: { label: '部分出库', type: 'warning' },
-  REVIEW_PASS: { label: '审核完成,待出库', type: 'warning' },
-  CLOSED: { label: '已关闭', type: 'info' },
-  CANCEL: { label: '已取消', type: 'info' },
-  CANCEL_WAIT_PROCESS: { label: '退款处理中', type: 'warning' },
-  CANCEL_REFUND_PROCESS: { label: '退款处理中', type: 'warning' },
-  CANCEL_REFUND_FAIL: { label: '等待退款', type: 'warning' },
-  DONE: { label: '已完成', type: 'success' },
-  REFUND_PROCESS: { label: '退款处理中', type: 'warning' },
-  REFUND_SUCCESS: { label: '已退款', type: 'info' },
-  PART_PAYMENT: { label: '部分付款', type: 'warning' },
-  ORDER_ABERRANT: { label: '订单异常', type: 'danger' }
+  WAIT_GROUPS_SUCCESS: { label: i18n.t('e3a5dbf4.425a40'), type: 'warning' },
+  NOTPAY: { label: i18n.t('e3a5dbf4.9246fe'), type: 'info' },
+  SUPPLY_PRESCRIPTION_INFO: { label: i18n.t('e3a5dbf4.0f4547'), type: 'info' },
+  WAIT_PRESCRIPTION: { label: i18n.t('e3a5dbf4.81d6cc'), type: 'info' },
+  WAIT_PAID_CONFIRM: { label: i18n.t('e3a5dbf4.7ec818'), type: 'warning' },
+  PAYED_WAIT_PROCESS: { label: i18n.t('e3a5dbf4.73ce8f'), type: 'warning' },
+  PAYED_PENDING: { label: i18n.t('e3a5dbf4.25d532'), type: 'warning' },
+  PAYED_PARTAIL: { label: i18n.t('e3a5dbf4.5296ac'), type: 'warning' },
+  WAIT_BUYER_CONFIRM: { label: i18n.t('e3a5dbf4.4933ca'), type: 'warning' },
+  PAYED: { label: i18n.t('e3a5dbf4.d8476e'), type: 'warning' },
+  REVIEW_PASS_PARTAIL: { label: i18n.t('e3a5dbf4.d40bd5'), type: 'warning' },
+  REVIEW_PASS: { label: i18n.t('e3a5dbf4.36d3df'), type: 'warning' },
+  CLOSED: { label: i18n.t('e3a5dbf4.9c5850'), type: 'info' },
+  CANCEL: { label: i18n.t('e3a5dbf4.2111cc'), type: 'info' },
+  CANCEL_WAIT_PROCESS: { label: i18n.t('e3a5dbf4.73ce8f'), type: 'warning' },
+  CANCEL_REFUND_PROCESS: { label: i18n.t('e3a5dbf4.73ce8f'), type: 'warning' },
+  CANCEL_REFUND_FAIL: { label: i18n.t('e3a5dbf4.12e196'), type: 'warning' },
+  DONE: { label: i18n.t('e3a5dbf4.fad522'), type: 'success' },
+  REFUND_PROCESS: { label: i18n.t('e3a5dbf4.73ce8f'), type: 'warning' },
+  REFUND_SUCCESS: { label: i18n.t('e3a5dbf4.e85018'), type: 'info' },
+  PART_PAYMENT: { label: i18n.t('e3a5dbf4.38b508'), type: 'warning' },
+  ORDER_ABERRANT: { label: i18n.t('e3a5dbf4.d0e67b'), type: 'danger' }
 }
 
 export const ORDER_B2C_STATUS = [
-  { title: '全部', value: '' },
-  { title: '待支付', value: 'notpay' },
-  { title: '待发货', value: 'notship' },
-  { title: '待收货', value: 'shipping' },
-  { title: '待退款', value: 'cancelapply' },
-  // { title: '待自提', value: 'ziti' },
-  { title: '已取消', value: 'cancel' },
-  { title: '已完成', value: 'finish' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.9246fe'), value: 'notpay' },
+  { title: i18n.t('e3a5dbf4.d8476e'), value: 'notship' },
+  { title: i18n.t('e3a5dbf4.4933ca'), value: 'shipping' },
+  { title: i18n.t('e3a5dbf4.6b715b'), value: 'cancelapply' },
+  { title: i18n.t('e3a5dbf4.2111cc'), value: 'cancel' },
+  { title: i18n.t('e3a5dbf4.fad522'), value: 'finish' }
 ]
 
 export const IN_PURCHASE_STATUS = [
-  { title: '全部', value: '' },
-  { title: '待支付', value: 'notpay' },
-  { title: '待发货', value: 'notship' },
-  { title: '待收货', value: 'shipping' },
-  { title: '待退款', value: 'cancelapply' },
-  { title: '已取消', value: 'cancel' },
-  { title: '已完成', value: 'finish' }
-  // { title: '配送中', value: 'dada_3' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.9246fe'), value: 'notpay' },
+  { title: i18n.t('e3a5dbf4.d8476e'), value: 'notship' },
+  { title: i18n.t('e3a5dbf4.4933ca'), value: 'shipping' },
+  { title: i18n.t('e3a5dbf4.6b715b'), value: 'cancelapply' },
+  { title: i18n.t('e3a5dbf4.2111cc'), value: 'cancel' },
+  { title: i18n.t('e3a5dbf4.fad522'), value: 'finish' }
 ]
 
 export const ORDER_TYPE = [
-  { title: '全部', value: '' },
-  { title: '团购订单', value: 'groups' },
-  { title: '秒杀订单', value: 'seckill' },
-  { title: '普通订单', value: 'normal' },
-  { title: '社区团购订单', value: 'community' },
-  { title: '兑换订单', value: 'excard' },
-  { title: '门店订单', value: 'shopadmin' },
-  { title: '内购订单', value: 'employee_purchase' }
-  // { title: "导购订单", value: "shopguide" },
-  // { title: "跨境订单", value: "crossborder" },
-  // { title: "助力订单", value: "bargain" },
-  // { title: "服务类订单", value: "services" },
-  // { title: "兑换订单", value: "excard"}
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.9b251e'), value: 'groups' },
+  { title: i18n.t('e3a5dbf4.ee8bc9'), value: 'seckill' },
+  { title: i18n.t('e3a5dbf4.e7978e'), value: 'normal' },
+  { title: i18n.t('e3a5dbf4.991e15'), value: 'community' },
+  { title: i18n.t('e3a5dbf4.8e09cc'), value: 'excard' },
+  { title: i18n.t('e3a5dbf4.0f238d'), value: 'shopadmin' },
+  { title: i18n.t('e3a5dbf4.d753bc'), value: 'employee_purchase' }
 ]
 
 export const INVOICE_STATUS = [
-  { title: '全部', value: '' },
-  { title: '未开票', value: 0 },
-  { title: '已开票', value: 1 }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.5613ba'), value: 0 },
+  { title: i18n.t('e3a5dbf4.ca4355'), value: 1 }
 ]
 
 export const INVOICE_STATUS_ARR = [
-  {
-    value: 'all',
-    label: '全部',
-    title: '全部'
-  },
-  {
-    value: 'pending',
-    label: '待开票',
-    title: '待开票'
-  },
-  {
-    value: 'inProgress',
-    label: '开票中',
-    title: '开票中'
-  },
-  {
-    value: 'success',
-    label: '开票成功',
-    title: '开票成功'
-  },
-  {
-    value: 'failed',
-    label: '开票失败',
-    title: '开票失败'
-  },
-  {
-    value: 'waste',
-    label: '已红冲',
-    title: '已红冲'
-  }
+  { value: 'all', label: i18n.t('e3a5dbf4.a8b0c2'), title: i18n.t('e3a5dbf4.a8b0c2') },
+  { value: 'pending', label: i18n.t('e3a5dbf4.963609'), title: i18n.t('e3a5dbf4.963609') },
+  { value: 'inProgress', label: i18n.t('e3a5dbf4.030e4d'), title: i18n.t('e3a5dbf4.030e4d') },
+  { value: 'success', label: i18n.t('e3a5dbf4.186ded'), title: i18n.t('e3a5dbf4.186ded') },
+  { value: 'failed', label: i18n.t('e3a5dbf4.65dcda'), title: i18n.t('e3a5dbf4.65dcda') },
+  { value: 'waste', label: i18n.t('e3a5dbf4.b7fc00'), title: i18n.t('e3a5dbf4.b7fc00') }
 ]
 
 export const GOOD_CATEGORY = [
-  { title: '自营', value: 'self' },
-  { title: '商户商品', value: 'distributor' },
-  { title: '供应商商品', value: 'supplier' }
+  { title: i18n.t('e3a5dbf4.491c0c'), value: 'self' },
+  { title: i18n.t('e3a5dbf4.b1c9d7'), value: 'distributor' },
+  { title: i18n.t('e3a5dbf4.45a570'), value: 'supplier' }
 ]
 
 export const GOOD_CATEGORY_MAP = {
-  self: '自营',
-  distributor: '商户商品',
-  supplier: '供应商商品'
+  self: i18n.t('e3a5dbf4.491c0c'),
+  distributor: i18n.t('e3a5dbf4.b1c9d7'),
+  supplier: i18n.t('e3a5dbf4.45a570')
 }
 
 export const ORDER_CATEGORY = [
-  { title: '全部', value: '' },
-  { title: '自营订单', value: 'self' },
-  { title: '商家订单', value: 'distributor' },
-  { title: '供应商订单', value: 'supplier' },
-  { title: '自营+供应商订单', value: 'self_supplier' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: '' },
+  { title: i18n.t('e3a5dbf4.a509ca'), value: 'self' },
+  { title: i18n.t('e3a5dbf4.d25231'), value: 'distributor' },
+  { title: i18n.t('e3a5dbf4.185202'), value: 'supplier' },
+  { title: i18n.t('e3a5dbf4.d76790'), value: 'self_supplier' }
 ]
 
 export const SELF_ORDER_CATEGORY = [
-  { title: '全部', value: 'self,self_supplier' },
-  { title: '自营订单', value: 'self' },
-  { title: '自营+供应商订单', value: 'self_supplier' }
+  { title: i18n.t('e3a5dbf4.a8b0c2'), value: 'self,self_supplier' },
+  { title: i18n.t('e3a5dbf4.a509ca'), value: 'self' },
+  { title: i18n.t('e3a5dbf4.d76790'), value: 'self_supplier' }
 ]
 
 export const REFUND_STATUS = {
-  READY: '待审核',
-  AUDIT_SUCCESS: '审核成功待退款',
-  SUCCESS: '退款成功',
-  SHOP_CHECK_FAILS: '商家审核不通过',
-  CANCEL: '撤销退款',
-  PROCESSING: '已发起退款等待到账',
-  FAILS: '退款失败',
-  WAIT_CHECK: '待审核',
-  WAIT_REFUND: '等待退款'
+  READY: i18n.t('e3a5dbf4.5cb424'),
+  AUDIT_SUCCESS: i18n.t('e3a5dbf4.202a8b'),
+  SUCCESS: i18n.t('e3a5dbf4.d58cbd'),
+  SHOP_CHECK_FAILS: i18n.t('e3a5dbf4.0e14e3'),
+  CANCEL: i18n.t('e3a5dbf4.0a7dff'),
+  PROCESSING: i18n.t('e3a5dbf4.cd3291'),
+  FAILS: i18n.t('e3a5dbf4.7c2544'),
+  WAIT_CHECK: i18n.t('e3a5dbf4.5cb424'),
+  WAIT_REFUND: i18n.t('e3a5dbf4.12e196')
 }
 
 export const REFUND_PROCESS = {
-  0: '待处理',
-  1: '已取消',
-  2: '退款中',
-  3: '已完成',
-  4: '已驳回'
+  0: i18n.t('e3a5dbf4.047109'),
+  1: i18n.t('e3a5dbf4.2111cc'),
+  2: i18n.t('e3a5dbf4.07e608'),
+  3: i18n.t('e3a5dbf4.fad522'),
+  4: i18n.t('e3a5dbf4.dbf36d')
 }
 
 export const PROFIT_TYPE = {
-  1: '总部分润',
-  2: '自营门店分润',
-  3: '加盟门店分润'
+  1: i18n.t('e3a5dbf4.43d81b'),
+  2: i18n.t('e3a5dbf4.7635bc'),
+  3: i18n.t('e3a5dbf4.3c78d2')
 }
 
 export const PAY_TYPE = {
-  offline: '线下转账',
-  offline_pay: '线下转账',
-  wxpay: '微信支付',
-  amorepay: '微信支付',
-  wechat: '微信支付',
-  wepayjs: '微信支付',
-  wxpaypc: '微信PC支付',
-  wxpayh5: '微信H5支付',
-  alipay: '支付宝支付',
-  alipayh5: '支付宝H5支付',
-  deposit: '余额支付',
-  point: '积分支付',
-  // pos: 'POS银行卡支付',
-  pos: '现金支付',
-  wxpaypos: '微信扫码支付',
-  alipaypos: '支付宝扫码支付',
-  chinaums: '微信支付-银联',
-  // pay_channel
-  wx_lite: '微信支付',
-  wx_pub: '微信H5支付',
-  wx_qr: '微信PC支付',
-  alipay_wap: '支付宝H5支付',
-  alipay_qr: '支付宝PC支付',
-  alipaymini: '支付宝小程序',
-  localPay: '零元订单'
+  offline: i18n.t('e3a5dbf4.2d8019'),
+  offline_pay: i18n.t('e3a5dbf4.2d8019'),
+  wxpay: i18n.t('e3a5dbf4.bffe28'),
+  amorepay: i18n.t('e3a5dbf4.bffe28'),
+  wechat: i18n.t('e3a5dbf4.bffe28'),
+  wepayjs: i18n.t('e3a5dbf4.bffe28'),
+  wxpaypc: i18n.t('e3a5dbf4.67a318'),
+  wxpayh5: i18n.t('e3a5dbf4.df7033'),
+  alipay: i18n.t('e3a5dbf4.e3b206'),
+  alipayh5: i18n.t('e3a5dbf4.5a3c52'),
+  deposit: i18n.t('e3a5dbf4.89ac23'),
+  point: i18n.t('e3a5dbf4.accd19'),
+  pos: i18n.t('e3a5dbf4.330ef6'),
+  wxpaypos: i18n.t('e3a5dbf4.777d5d'),
+  alipaypos: i18n.t('e3a5dbf4.bd7030'),
+  chinaums: i18n.t('e3a5dbf4.1d7dae'),
+  wx_lite: i18n.t('e3a5dbf4.bffe28'),
+  wx_pub: i18n.t('e3a5dbf4.df7033'),
+  wx_qr: i18n.t('e3a5dbf4.67a318'),
+  alipay_wap: i18n.t('e3a5dbf4.5a3c52'),
+  alipay_qr: i18n.t('e3a5dbf4.e20bf0'),
+  alipaymini: i18n.t('e3a5dbf4.42d922'),
+  localPay: i18n.t('e3a5dbf4.941a4a')
 }
 
 export const PAY_STATUS = {
-  SUCCESS: '支付成功',
-  REFUND: '转入退款',
-  CANCEL_CLOSED: '已取消',
-  REFUND_SUCCESS: '退款成功',
-  NOTPAY: '未支付',
-  CLOSED: '已关闭',
-  REVOKED: '已撤销',
-  PAYERROR: '支付失败(其他原因，如银行返回失败)'
+  SUCCESS: i18n.t('e3a5dbf4.eb5dc9'),
+  REFUND: i18n.t('e3a5dbf4.8e2b9d'),
+  CANCEL_CLOSED: i18n.t('e3a5dbf4.2111cc'),
+  REFUND_SUCCESS: i18n.t('e3a5dbf4.d58cbd'),
+  NOTPAY: i18n.t('e3a5dbf4.608afd'),
+  CLOSED: i18n.t('e3a5dbf4.9c5850'),
+  REVOKED: i18n.t('e3a5dbf4.50239f'),
+  PAYERROR: i18n.t('e3a5dbf4.8e51b3')
 }
 
 export const PICKER_DATE_OPTIONS = {
   shortcuts: [
     {
-      text: '最近一周',
+      text: i18n.t('e3a5dbf4.56ee10'),
       onClick(picker) {
         const end = new Date()
         const start = new Date()
@@ -322,7 +258,7 @@ export const PICKER_DATE_OPTIONS = {
       }
     },
     {
-      text: '最近一个月',
+      text: i18n.t('e3a5dbf4.335dfc'),
       onClick(picker) {
         const end = new Date()
         const start = new Date()
@@ -331,7 +267,7 @@ export const PICKER_DATE_OPTIONS = {
       }
     },
     {
-      text: '最近三个月',
+      text: i18n.t('e3a5dbf4.d96eb4'),
       onClick(picker) {
         const end = new Date()
         const start = new Date()
@@ -353,60 +289,56 @@ export const FORM_COMP = {
 }
 
 export const LINK_PATH = {
-  'goods': '商品',
-  'store': '店铺',
-  'sale_category': '销售分类',
-  'category': '管理分类',
-  'tag': '商品标签',
-  'article': '文章',
-  'planting': '软文',
-  'link': '页面',
+  'goods': i18n.t('e3a5dbf4.9897d8'),
+  'store': i18n.t('e3a5dbf4.295713'),
+  'sale_category': i18n.t('e3a5dbf4.392d49'),
+  'category': i18n.t('e3a5dbf4.b3ed9f'),
+  'tag': i18n.t('e3a5dbf4.0f394b'),
+  'article': i18n.t('e3a5dbf4.c75625'),
+  'planting': i18n.t('e3a5dbf4.e8f87a'),
+  'link': i18n.t('e3a5dbf4.59ceff'),
   // 'marketing': '营销',
-  'regactivity': '活动报名',
-  'purchase_activity': '内购活动',
-  'seckill': '秒杀',
-  'custom_page': '自定义页面',
-  'liverooms': '直播',
-  'other_wxapp': '外部小程序',
-  'shop_tag': '商家',
-  'lottery': '抽奖活动'
+  'regactivity': i18n.t('e3a5dbf4.2bc045'),
+  'purchase_activity': i18n.t('e3a5dbf4.dc7202'),
+  'seckill': i18n.t('e3a5dbf4.55c758'),
+  'custom_page': i18n.t('e3a5dbf4.cee6eb'),
+  'liverooms': i18n.t('e3a5dbf4.7bbe8e'),
+  'other_wxapp': i18n.t('e3a5dbf4.f5a0d7'),
+  'shop_tag': i18n.t('e3a5dbf4.0f09a8'),
+  'lottery': i18n.t('e3a5dbf4.283be6'),
+  'customer_service': i18n.t('e3a5dbf4.e7dea7')
 }
 
 export const CARD_TYPE = {
-  discount: '折扣券',
-  cash: '满减券',
-  new_gift: '兑换券'
-
-  // 'minus': '立减券',
-  // 'gift': '兑换券'
+  discount: i18n.t('e3a5dbf4.9268f9'),
+  cash: i18n.t('e3a5dbf4.f23195'),
+  new_gift: i18n.t('e3a5dbf4.8bc752')
 }
 
 export const SECKILL_ACTIVITY_STATUS = {
-  waiting: '待开始',
-  in_the_notice: '预热中',
-  in_sale: '进行中',
-  it_has_ended: '已结束'
+  waiting: i18n.t('e3a5dbf4.1568ba'),
+  in_the_notice: i18n.t('e3a5dbf4.7e19ab'),
+  in_sale: i18n.t('e3a5dbf4.fb852f'),
+  it_has_ended: i18n.t('e3a5dbf4.047fab')
 }
 
-// 商品审核状态
 export const GOODS_APPLY_STATUS = {
-  submiting: '待提交',
-  approved: '已审核',
-  processing: '审核中',
-  rejected: '已拒绝'
+  submiting: i18n.t('e3a5dbf4.a9c09d'),
+  approved: i18n.t('e3a5dbf4.9d5b9b'),
+  processing: i18n.t('e3a5dbf4.b720a6'),
+  rejected: i18n.t('e3a5dbf4.81233d')
 }
 
-// 商品税率
 export const GOODS_TAX_RATE = [
   { title: '1%', value: 1 },
   { title: '6%', value: 6 },
   { title: '9%', value: 9 },
   { title: '13%', value: 13 },
-  { title: '免税', value: 0 }
+  { title: i18n.t('e3a5dbf4.9f3af5'), value: 0 }
 ]
 
 export const ROLE_LIST = [
-  { label: '普通用户', value: 1 },
-  { label: '企业员工', value: 6 },
-  { label: '员工亲友', value: 9 }
+  { label: i18n.t('e3a5dbf4.7527da'), value: 1 },
+  { label: i18n.t('e3a5dbf4.9597e9'), value: 6 },
+  { label: i18n.t('e3a5dbf4.5f6339'), value: 9 }
 ]

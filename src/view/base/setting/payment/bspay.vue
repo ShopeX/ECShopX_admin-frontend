@@ -5,7 +5,12 @@
 
 <template>
   <div>
-    <SpForm v-model="form" label-width="220px" :form-list="formList" @onSubmit="onSaveConfig" />
+    <SpForm
+      v-model="form"
+      label-width="220px"
+      :form-list="formListComputed"
+      @onSubmit="onSaveConfig"
+    />
   </div>
 </template>
 <script>
@@ -40,11 +45,30 @@ export default {
         admin_token_no: '',
         is_open: false
       },
-      formList: [
-        {
-          label: '基础配置',
-          type: 'group'
-        },
+      formList: [],
+      publicKeyDialog: false,
+      publicKeyDialogForm: {
+        rsa_public_key: ''
+      },
+      publicKeyDialogFormList: []
+    }
+  },
+  computed: {
+    payChannelOptions() {
+      const t = this.$t
+      const keys = {
+        wx_lite: '3c22fe4e.bffe28',
+        wx_pub: '3c22fe4e.f661cb',
+        wx_qr: '3c22fe4e.777d5d',
+        alipay_wap: '3c22fe4e.e3b206',
+        alipay_qr: '3c22fe4e.bd7030'
+      }
+      return BSPAY_PAYMENT_CHANNELS.map((c) => ({ name: t(keys[c.label]), label: c.label }))
+    },
+    formListComputed() {
+      const t = this.$t
+      return [
+        { label: t('3c22fe4e.b6453a'), type: 'group' },
         {
           label: 'sys_id',
           key: 'sys_id',
@@ -61,16 +85,8 @@ export default {
           inline: true,
           width: '960px'
         },
-        // {
-        //   label: '商户的汇付ID',
-        //   key: 'upper_huifu_id',
-        //   type: 'input',
-        //   required: true,
-        //   inline: true,
-        //   width: '960px'
-        // },
         {
-          label: '商户私钥',
+          label: t('3c22fe4e.00096b'),
           key: 'rsa_merch_private_key',
           required: true,
           type: 'textarea',
@@ -78,7 +94,7 @@ export default {
           width: '960px'
         },
         {
-          label: '汇付公钥',
+          label: t('3c22fe4e.895807'),
           key: 'rsa_huifu_public_key',
           required: true,
           type: 'textarea',
@@ -86,110 +102,74 @@ export default {
           width: '960px'
         },
         {
-          label: '绑卡序列号',
+          label: t('3c22fe4e.3a4fb2'),
           key: 'admin_token_no',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入绑卡序列号'
+          placeholder: t('3c22fe4e.5d72c5')
         },
+        { label: t('3c22fe4e.f302e6'), type: 'group' },
         {
-          label: '支付渠道设置',
-          type: 'group'
-        },
-        {
-          label: '支付渠道',
+          label: t('3c22fe4e.13022b'),
           key: 'pay_channel',
           type: 'checkbox',
-          options: BSPAY_PAYMENT_CHANNELS
+          options: this.payChannelOptions
         },
+        { label: t('3c22fe4e.49df01'), type: 'group' },
         {
-          label: '费率设置',
-          type: 'group'
-        },
-        {
-          label: '微信渠道费率类型',
+          label: t('3c22fe4e.9a02d9'),
           key: 'wxpay_fee_type',
           type: 'radio',
-          options: [{ name: '标准费率线上', label: 'online' }]
+          options: [{ name: t('3c22fe4e.d47e15'), label: 'online' }]
         },
         {
-          label: '微信小程序支付费率',
+          label: t('3c22fe4e.bec272'),
           key: 'wx_lite_online',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入费率，如：0.26'
+          placeholder: t('3c22fe4e.6cd5f1')
         },
         {
-          label: '微信公众号支付费率',
+          label: t('3c22fe4e.15dd13'),
           key: 'wx_pub_online',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入费率，如：0.26'
+          placeholder: t('3c22fe4e.6cd5f1')
         },
         {
-          label: '微信扫码支付费率',
+          label: t('3c22fe4e.a77c98'),
           key: 'wx_qr_online',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入费率，如：0.26'
+          placeholder: t('3c22fe4e.6cd5f1')
         },
-        // {
-        //   label: '微信小程序支付（线下）',
-        //   key: 'wx_lite_offline',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '480px'
-        // },
-        // {
-        //   label: '微信扫码支付（被扫-线下）',
-        //   key: 'wx_scan',
-        //   type: 'input',
-        //   inline: true,
-        //   width: '960px'
-        // },
         {
-          label: '支付宝渠道费率类型',
+          label: t('3c22fe4e.ede962'),
           key: 'alipay_fee_type',
           type: 'radio',
-          options: [{ name: '标准费率线上', label: 'online' }]
+          options: [{ name: t('3c22fe4e.d47e15'), label: 'online' }]
         },
         {
-          label: '支付宝支付费率',
+          label: t('3c22fe4e.c433c1'),
           key: 'alipay_call',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入费率，如：0.26'
+          placeholder: t('3c22fe4e.6cd5f1')
         },
         {
-          label: '支付宝扫码支付费率',
+          label: t('3c22fe4e.bb71ae'),
           key: 'alipay_qr_online',
           type: 'input',
           inline: true,
           width: '480px',
-          placeholder: '请输入费率，如：0.26'
+          placeholder: t('3c22fe4e.6cd5f1')
         },
-        {
-          label: '是否启用',
-          key: 'is_open',
-          type: 'switch'
-        }
-      ],
-      publicKeyDialog: false,
-      publicKeyDialogForm: {
-        rsa_public_key: ''
-      },
-      publicKeyDialogFormList: [
-        {
-          label: 'RSA公钥',
-          key: 'rsa_public_key',
-          type: 'textarea',
-          width: '480px'
-        }
+        { label: t('3c22fe4e.53c3dd'), key: 'is_open', type: 'switch' }
       ]
     }
   },
@@ -203,9 +183,9 @@ export default {
         pay_type: 'bspay'
       })
       if (status) {
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('3c22fe4e.3b1083'))
       } else {
-        this.$message.error('保存失败')
+        this.$message.error(this.$t('3c22fe4e.6de920'))
       }
     },
     async onSubmit(formName) {
@@ -216,10 +196,10 @@ export default {
             pay_type: 'bspay'
           })
           if (status) {
-            this.$message.success('保存成功')
+            this.$message.success(this.$t('3c22fe4e.3b1083'))
             this.getConfig()
           } else {
-            this.$message.error('保存失败')
+            this.$message.error(this.$t('3c22fe4e.6de920'))
           }
         } else {
           console.log('error submit!!')

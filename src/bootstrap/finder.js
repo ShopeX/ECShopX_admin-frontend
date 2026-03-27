@@ -4,6 +4,7 @@
  */
 import { initFinder } from '@shopex-ui/finder'
 import { requestClient } from '@/api/request'
+import { i18n } from '@/i18n'
 
 function install(Vue) {
   initFinder(Vue, {
@@ -46,17 +47,39 @@ function install(Vue) {
         }
       },
       locale: {
-        search: '搜索',
-        reset: '重置',
-        open: '展开',
-        retract: '收起',
-        operation: '操作',
-        enter: '请输入',
-        choose: '请选择',
-        more: '更多',
-        empty: '不能为空',
-        return: '返回',
-        save: '保存'
+        get search() {
+          return i18n.t('7b53c26a.e5f71f')
+        },
+        get reset() {
+          return i18n.t('7b53c26a.4b9c32')
+        },
+        get open() {
+          return i18n.t('7b53c26a.e2edde')
+        },
+        get retract() {
+          return i18n.t('7b53c26a.def9e9')
+        },
+        get operation() {
+          return i18n.t('7b53c26a.2b6bc0')
+        },
+        get enter() {
+          return i18n.t('7b53c26a.02cc4f')
+        },
+        get choose() {
+          return i18n.t('7b53c26a.708c9d')
+        },
+        get more() {
+          return i18n.t('7b53c26a.0ec9ea')
+        },
+        get empty() {
+          return i18n.t('7b53c26a.281bad')
+        },
+        get ['return']() {
+          return i18n.t('7b53c26a.5f4112')
+        },
+        get save() {
+          return i18n.t('7b53c26a.be5fbb')
+        }
       }
     }
   })

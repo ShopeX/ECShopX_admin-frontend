@@ -38,8 +38,8 @@
 </style>
 <template>
   <CompButton
-    placeholder="选择标签"
-    format="{0}个标品"
+    :placeholder="i18n.t('4d934d2c.f9b05d')"
+    :format="i18n.t('4d934d2c.faa5a7')"
     :disabled="disabledBtn"
     :value="value.length"
     @click="handleClickAdd"
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompButton from '../../comps/comp-button'
@@ -57,7 +58,7 @@ export default {
   components: { CompButton },
   props: ['value', 'distributor'],
   data() {
-    return {
+    return {i18n,
       localValue: []
     }
   },

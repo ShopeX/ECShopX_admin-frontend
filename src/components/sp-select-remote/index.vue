@@ -16,7 +16,7 @@
       :loading="remoteLoading"
       remote
       :remote-method="onRemote"
-      placeholder="输入商户名称搜索"
+      :placeholder="$t('492cf8d4.84d4a2')"
     >
       <el-option
         v-for="(item, index) in options"

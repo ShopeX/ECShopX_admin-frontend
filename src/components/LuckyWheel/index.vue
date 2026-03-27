@@ -67,10 +67,16 @@ export default {
           fonts: [{ text: '开始', top: '-10px' }]
         }
       ],
-      ruleBtn: '活动规则',
-      recordBtn: '抽奖记录',
       ruleBtnStyle: {},
       recordBtnStyle: {}
+    }
+  },
+  computed: {
+    ruleBtn() {
+      return this.$t('ca01abbc.02a217')
+    },
+    recordBtn() {
+      return this.$t('ca01abbc.8a69c2')
     }
   },
   watch: {
@@ -103,7 +109,7 @@ export default {
               imgs: [{ src: hotArea?.img }],
               radius: '35%',
               pointer: true,
-              fonts: [{ text: '开始', top: '-10px' }]
+              fonts: [{ text: this.$t('ca01abbc.a3e3b8'), top: '-10px' }]
             }
           ]
         }

@@ -4,14 +4,14 @@
 -->
 
 <template>
-  <CustomCard title="商品清单">
+  <CustomCard :title="$t('67233cd4.08ea4e')">
     <div v-if="orderInfo.order_type == 'service' || orderInfo.order_type == 'bargain'">
       <el-row>
-        <el-col :span="3"> 商品名称： </el-col>
+        <el-col :span="3"> {{ $t('67233cd4.90f08f') }} </el-col>
         <el-col :span="5">
           {{ orderInfo.title }}
         </el-col>
-        <el-col :span="3"> 商品数量： </el-col>
+        <el-col :span="3"> {{ $t('67233cd4.65b739') }} </el-col>
         <el-col :span="5">
           {{ orderInfo.item_num }}
         </el-col>
@@ -20,84 +20,89 @@
 
     <div v-else-if="orderInfo.order_type == 'normal'">
       <el-table :data="orderInfo.items" style="width: 100%" size="small">
-        <el-table-column prop="item_id" label="商品ID" width="80" />
-        <el-table-column class="goods-img" prop="pic" label="商品图片" width="120">
+        <el-table-column prop="item_id" :label="$t('67233cd4.858526')" width="80" />
+        <el-table-column class="goods-img" prop="pic" :label="$t('67233cd4.9b94b1')" width="120">
           <template slot-scope="scope">
             <span>
               <img
                 class="item-image"
                 :src="wximageurl + scope.row.pic"
                 :alt="scope.row.item_name"
-              />
+              >
             </span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="item_name" label="商品名称" width="180">
+        <el-table-column prop="item_name" :label="$t('67233cd4.1fd1d5')" width="180">
           <template slot-scope="scope">
             <div class="ell3">
               {{ scope.row.item_name }}
             </div>
             <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
-              赠品
+              {{ $t('67233cd4.d017cc') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="单价" width="80">
+        <el-table-column prop="price" :label="$t('67233cd4.da4abd')" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.price / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="item_spec_desc" label="规格" width="180">
+        <el-table-column prop="item_spec_desc" :label="$t('67233cd4.ea887b')" width="180">
           <template slot-scope="scope">
-            {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
+            {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : $t('67233cd4.048df4') }}
           </template>
         </el-table-column>
-        <el-table-column prop="num" label="数量" width="80" />
+        <el-table-column prop="num" :label="$t('67233cd4.0bf60b')" width="80" />
 
-        <el-table-column v-if="orderInfo.type == '1'" prop="price" label="计税单价" width="180">
+        <el-table-column
+          v-if="orderInfo.type == '1'"
+          prop="price"
+          :label="$t('67233cd4.18acc2')"
+          width="180"
+        >
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.taxable_fee / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="小计">
+        <el-table-column :label="$t('67233cd4.f599fc')">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.item_fee / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="会员优惠(元)" width="100">
+        <el-table-column :label="$t('67233cd4.4b7a91')" width="100">
           <template slot-scope="scope">
             <span
               >{{ scope.row.fee_symbol }}{{ (scope.row.member_discount / 100).toFixed(2) }}</span
             >
           </template>
         </el-table-column>
-        <el-table-column label="总支付价(元)" width="100">
+        <el-table-column :label="$t('67233cd4.6943ad')" width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.total_fee / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="总优惠(元)" width="100">
+        <el-table-column :label="$t('67233cd4.913be1')" width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.discount_fee / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="货币汇率">
+        <el-table-column :label="$t('67233cd4.f8d735')">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_rate }}</span>
           </template>
         </el-table-column>
         <template v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp">
-          <el-table-column label="发货状态">
-            <template slot-scope="scope">
-              <span>已发货</span>
+          <el-table-column :label="$t('67233cd4.c3c7a1')">
+            <template slot-scope="_">
+              <span>{{ $t('67233cd4.355409') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="快递公司" width="150px">
+          <el-table-column :label="$t('67233cd4.f3af96')" width="150px">
             <template slot-scope="scope">
               <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
-                <el-select v-model="scope.row.delivery_corp" placeholder="请选择快递公司">
+                <el-select v-model="scope.row.delivery_corp" :placeholder="$t('67233cd4.8367e8')">
                   <el-option
                     v-for="item in dlycorps"
                     :key="item.name"
@@ -109,19 +114,22 @@
               <span v-else>{{ scope.row.delivery_corp_name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="快递单号" width="200px">
+          <el-table-column :label="$t('67233cd4.3c016d')" width="200px">
             <template slot-scope="scope">
               <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                 <el-input
                   v-model="scope.row.delivery_code"
                   :maxlength="20"
-                  placeholder="物流公司单号"
+                  :placeholder="$t('67233cd4.0e9f1e')"
                 />
               </span>
               <span v-else>{{ scope.row.delivery_code }}</span>
             </template>
           </el-table-column>
-          <el-table-column v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" label="操作">
+          <el-table-column
+            v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'"
+            :label="$t('67233cd4.2b6bc0')"
+          >
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -130,7 +138,7 @@
                   update(scope.row.delivery_corp, scope.row.delivery_code, scope.row)
                 "
               >
-                确认修改
+                {{ $t('67233cd4.49e56c') }}
               </el-button>
             </template>
           </el-table-column>

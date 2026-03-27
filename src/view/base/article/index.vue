@@ -15,13 +15,15 @@
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="title" label="文章标题:">
-          <el-input v-model="params.title" placeholder="请输入文章标题" />
+        <SpFilterFormItem prop="title" :label="$t('03a73c13.67434a')">
+          <el-input v-model="params.title" :placeholder="$t('03a73c13.fc96ee')" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
+        <el-button type="primary" icon="plus" @click="articleAdd">
+          {{ $t('03a73c13.768d47') }}
+        </el-button>
       </div>
 
       <section v-loading="loading" class="articles">
@@ -53,8 +55,8 @@
                   v-clipboard:success="onCopySuccess"
                   class="footer-item copy-btn"
                 >
-                  <input v-model="item.link" class="copy-link" type="text" />
-                  复制文章链接
+                  <input v-model="item.link" class="copy-link" type="text">
+                  {{ $t('03a73c13.99a5da') }}
                 </div>
               </div>
               <div class="footer">
@@ -62,24 +64,32 @@
                   class="footer-item"
                   @click="handlePublish(item.article_id, item.release_status)"
                 >
-                  <template v-if="item.release_status"> 撤回 </template>
-                  <template v-else> <i class="iconfont icon-broadcast-tower" /> 发布 </template>
+                  <template v-if="item.release_status"> {{ $t('03a73c13.230505') }} </template>
+                  <template v-else>
+                    <i class="iconfont icon-broadcast-tower" /> {{ $t('03a73c13.83611a') }}
+                  </template>
                 </div>
                 <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
                   <div class="content-bottom-padded">
-                    <el-input v-model="item.sort" size="mini" placeholder="请输入排序" />
+                    <el-input
+                      v-model="item.sort"
+                      size="mini"
+                      :placeholder="$t('03a73c13.215aaa')"
+                    />
                   </div>
                   <div style="text-align: right; margin: 0">
                     <el-button size="mini" type="text" @click="item.visible = false">
-                      取消
+                      {{ $t('03a73c13.625fb2') }}
                     </el-button>
                     <el-button type="primary" size="mini" @click="handleSort(item.article_id)">
-                      确定
+                      {{ $t('03a73c13.38cf16') }}
                     </el-button>
                   </div>
-                  <div slot="reference">排序</div>
+                  <div slot="reference">{{ $t('03a73c13.c360e9') }}</div>
                 </el-popover>
-                <div class="footer-item" @click="articleDelete(item.article_id)">删除</div>
+                <div class="footer-item" @click="articleDelete(item.article_id)">
+                  {{ $t('03a73c13.2f4aad') }}
+                </div>
               </div>
             </div>
           </el-col>
@@ -138,11 +148,11 @@ export default {
     },
     articleDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前文章吗？').then((_) => {
+      this.$confirm(this.$t('03a73c13.c1f7ab')).then((_) => {
         deleteArticle(id).then((res) => {
           if (res.data.data.status) {
             this.$message({
-              message: '删除成功',
+              message: this.$t('03a73c13.0007d1'),
               type: 'success',
               onClose() {
                 _self.fetchList()
@@ -171,9 +181,9 @@ export default {
     handlePublish(id, status) {
       let msg = ''
       if (status) {
-        msg = '确定撤回本篇文章吗？'
+        msg = this.$t('03a73c13.ee4a84')
       } else {
-        msg = '确定发布本篇文章吗？'
+        msg = this.$t('03a73c13.1b1f11')
       }
       const _self = this
       this.$confirm(msg)

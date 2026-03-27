@@ -5,17 +5,17 @@
 
 <template>
   <section v-if="name === 'headline' || name === 'banner'" class="section">
-    <div class="section-header with-border">设置</div>
+    <div class="section-header with-border">{{ $t('6679a06d.e366cc') }}</div>
     <div class="section-body">
       <el-form label-width="100px">
         <template v-if="type == 'wxapp'">
-          <el-form-item label="标题">
+          <el-form-item :label="$t('6679a06d.32c65d')">
             <el-input v-model="base.title" />
           </el-form-item>
-          <el-form-item label="文字位置">
+          <el-form-item :label="$t('6679a06d.d1b490')">
             <el-radio-group v-model="base.float">
-              <el-radio label="center"> 居中 </el-radio>
-              <el-radio label="left"> 居左 </el-radio>
+              <el-radio label="center">{{ $t('6679a06d.0bbc2e') }}</el-radio>
+              <el-radio label="left">{{ $t('6679a06d.316a63') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </template>

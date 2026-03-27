@@ -14,47 +14,66 @@
     <!-- 2.6、开票方联系电话：设置开票方联系电话 -->
     <!-- 2.7、开票人：设置开票方联系人 -->
     <!-- 2.8、开票方联系地址：设置开票方联系地址 -->
-    <el-form-item label="发票开关">
+    <el-form-item :label="$t('d24a4871.3f677c')">
       <el-switch
         v-model="form.fapiao_switch"
         :width="60"
         active-value="true"
         inactive-value="false"
         inactive-color="#ccc"
-        active-text="开启"
-        inactive-text="关闭"
+        :active-text="$t('d24a4871.cc42dd')"
+        :inactive-text="$t('d24a4871.b15d91')"
         active-color="#13ce66"
       />
     </el-form-item>
-    <!-- 开票方信息  -->
-    <el-form-item label="【开票方】" />
-    <el-form-item label="名称(1)">
-      <el-input v-model="form.content" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.6c209b')" />
+    <el-form-item :label="$t('d24a4871.811b67')">
+      <el-input v-model="form.content" style="width: 500px" :placeholder="$t('d24a4871.a11cc7')" />
     </el-form-item>
-    <el-form-item label="税率(2)">
-      <el-input v-model="form.tax_rate" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.a24cea')">
+      <el-input v-model="form.tax_rate" style="width: 500px" :placeholder="$t('d24a4871.a11cc7')" />
     </el-form-item>
-    <el-form-item label="税号(3)">
-      <el-input v-model="form.registration_number" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.42a240')">
+      <el-input
+        v-model="form.registration_number"
+        style="width: 500px"
+        :placeholder="$t('d24a4871.a11cc7')"
+      />
     </el-form-item>
-    <el-form-item label="开户银行(4)">
-      <el-input v-model="form.bankname" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.e189ce')">
+      <el-input v-model="form.bankname" style="width: 500px" :placeholder="$t('d24a4871.a11cc7')" />
     </el-form-item>
-    <el-form-item label="银行账号(5)">
-      <el-input v-model="form.bankaccount" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.5c3060')">
+      <el-input
+        v-model="form.bankaccount"
+        style="width: 500px"
+        :placeholder="$t('d24a4871.a11cc7')"
+      />
     </el-form-item>
-    <el-form-item label="联系电话(6)">
-      <el-input v-model="form.company_phone" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.82fd4c')">
+      <el-input
+        v-model="form.company_phone"
+        style="width: 500px"
+        :placeholder="$t('d24a4871.a11cc7')"
+      />
     </el-form-item>
-    <el-form-item label="开票人员(7)">
-      <el-input v-model="form.user_name" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.adf175')">
+      <el-input
+        v-model="form.user_name"
+        style="width: 500px"
+        :placeholder="$t('d24a4871.a11cc7')"
+      />
     </el-form-item>
-    <el-form-item label="联系地址(8)">
-      <el-input v-model="form.company_address" style="width: 500px" placeholder="请输入内容" />
+    <el-form-item :label="$t('d24a4871.8c1cc0')">
+      <el-input
+        v-model="form.company_address"
+        style="width: 500px"
+        :placeholder="$t('d24a4871.a11cc7')"
+      />
     </el-form-item>
 
     <div class="section-footer with-border content-center">
-      <el-button type="primary" @click="onSubmit"> 发票配置保存 </el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('d24a4871.4dc84b') }}</el-button>
     </div>
   </el-form>
 </template>

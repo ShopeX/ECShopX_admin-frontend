@@ -7,7 +7,7 @@
   <SpPage>
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="本地图片" name="local">
+        <el-tab-pane :label="$t('72bc21f6.3354fe')" name="local">
           <!--localimages-list :active-name="activeName" :get-status="localpicStatus" /-->
           <picker-image
             :page-size="24"
@@ -41,7 +41,7 @@
           />
         </el-tab-pane> -->
 
-        <el-tab-pane label="本地视频" name="localvideo">
+        <el-tab-pane :label="$t('72bc21f6.9d1ba1')" name="localvideo">
           <localvideos-list :active-name="activeName" :get-status="localvideoStatus" />
         </el-tab-pane>
 

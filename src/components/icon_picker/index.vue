@@ -4,7 +4,12 @@
 -->
 
 <template>
-  <el-dialog title="选择图标" :visible="iconsVisible" width="732px" @close="closeDialog">
+  <el-dialog
+    :title="$t('18e6d9df.598f69')"
+    :visible="iconsVisible"
+    width="732px"
+    @close="closeDialog"
+  >
     <el-row class="icons-list" :gutter="10">
       <el-col v-for="item in icons" :key="item.index" :span="2">
         <div
@@ -20,8 +25,8 @@
       </el-col>
     </el-row>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog">取 消</el-button>
-      <el-button type="primary" @click="iconComfirm">确 定</el-button>
+      <el-button @click="closeDialog">{{ $t('18e6d9df.c08ab9') }}</el-button>
+      <el-button type="primary" @click="iconComfirm">{{ $t('18e6d9df.aa7527') }}</el-button>
     </span>
   </el-dialog>
 </template>

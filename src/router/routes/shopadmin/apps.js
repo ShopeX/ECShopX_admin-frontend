@@ -11,7 +11,7 @@ const routes = [
       aliasName: 'applications',
       icon: 'app-store',
       keepAlive: true,
-      title: '应用'
+      title: '837b3054.5b0520'
     },
     name: 'shopadminApplications',
     path: '/shopadmin/applications',
@@ -22,7 +22,7 @@ const routes = [
         meta: {
           aliasName: 'bspay_cash_audit',
           icon: 'pay-circle',
-          title: '提现审核',
+          title: '837b3054.91287f',
           permissions: ['applications.bspay.bspay_cash_audit']
         },
         component: () => import('@/view/mall/bspay_sub_account/withdraw_audit')
@@ -32,7 +32,7 @@ const routes = [
         path: 'dougong/withdraw',
         meta: {
           aliasName: 'dougong_withdraw',
-          title: '提现',
+          title: '837b3054.db7971',
           icon: 'pay-circle',
           permissions: ['applications.bspay.bspay_withdraw']
         },
@@ -45,7 +45,7 @@ const routes = [
         meta: {
           aliasName: 'user',
           icon: 'icon-user',
-          title: '进件管理',
+          title: '837b3054.d38018',
           permissions: ['applications.bspay.user']
         }
       },
@@ -56,7 +56,7 @@ const routes = [
         meta: {
           aliasName: 'trades',
           icon: 'icon-trades',
-          title: '分账明细',
+          title: '837b3054.85b2f8',
           permissions: ['applications.bspay.trades']
         },
         children: [
@@ -64,7 +64,7 @@ const routes = [
             path: 'detail/:order_id',
             component: () => import('@/view/mall/bspay_sub_account/detail'),
             meta: {
-              title: '分账明细详情',
+              title: '837b3054.ee8348',
               hidden: true
             }
           }
@@ -78,7 +78,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_member_entry',
           icon: 'icon-entry',
-          title: '进件管理',
+          title: '837b3054.d38018',
           permissions: ['applications.adapay.adapay_member_entry']
         }
       },
@@ -89,7 +89,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_trades',
           icon: 'icon-trades',
-          title: '分账',
+          title: '837b3054.98818a',
           permissions: ['applications.adapay.adapay_trades']
         },
         children: [
@@ -97,7 +97,7 @@ const routes = [
             path: 'detail/:order_id',
             component: () => import('@/view/mall/sub_account/detail'),
             meta: {
-              title: '分账详情',
+              title: '837b3054.f8f84a',
               hidden: true
             }
           }
@@ -110,7 +110,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_cash',
           icon: 'icon-cash',
-          title: '提现',
+          title: '837b3054.db7971',
           permissions: ['applications.adapay.adapay_cash']
         }
       },
@@ -121,7 +121,7 @@ const routes = [
         meta: {
           aliasName: 'adapay_member_info',
           icon: 'icon-info',
-          title: '进件信息',
+          title: '837b3054.7d9c7d',
           permissions: ['applications.adapay.adapay_member_info']
         }
       },
@@ -131,7 +131,7 @@ const routes = [
         meta: {
           aliasName: 'purchase-admin',
           icon: 'icon-purchase',
-          title: '活动管理',
+          title: '837b3054.d285a2',
           permissions: ['applications.ec.purchase-admin']
         },
         component: () => import('@/view/marketing/employee/list'),
@@ -140,7 +140,7 @@ const routes = [
             path: 'create/:id?',
             component: () => import('@/view/marketing/employee/purchase'),
             meta: {
-              title: '创建内购活动',
+              title: '837b3054.725d82',
               hidden: true
             }
           },
@@ -148,7 +148,7 @@ const routes = [
             path: 'result/:id',
             component: () => import('@/view/marketing/employee/result'),
             meta: {
-              title: '内购活动结果',
+              title: '837b3054.d24ac2',
               hidden: true
             }
           },
@@ -156,7 +156,7 @@ const routes = [
             path: 'goods/:id',
             component: () => import('@/view/marketing/employee/addGoods'),
             meta: {
-              title: '添加商品',
+              title: '837b3054.fa3aee',
               hidden: true
             }
           },
@@ -164,7 +164,7 @@ const routes = [
             path: 'dependents/:id',
             component: () => import('@/view/marketing/employee/dependents'),
             meta: {
-              title: '家属管理',
+              title: '837b3054.b08ef3',
               hidden: true
             }
           }
@@ -178,7 +178,7 @@ const routes = [
         meta: {
           aliasName: 'company-admin',
           icon: 'icon-company',
-          title: '企业管理',
+          title: '837b3054.07c516',
           permissions: ['applications.ec.company-admin']
         }
       },
@@ -189,7 +189,7 @@ const routes = [
         meta: {
           aliasName: 'employee-admin',
           icon: 'icon-employee',
-          title: '员工管理',
+          title: '837b3054.b33603',
           permissions: ['applications.ec.employee-admin']
         },
         children: [
@@ -197,7 +197,7 @@ const routes = [
             path: 'import',
             component: () => import('@/view/member/purchase/employeeImport'),
             meta: {
-              title: '白名单导入',
+              title: '837b3054.eba44e',
               hidden: true
             }
           }
@@ -210,7 +210,7 @@ const routes = [
         meta: {
           aliasName: 'purchase-list',
           icon: 'icon-order',
-          title: '订单管理',
+          title: '837b3054.afcd11',
           permissions: ['applications.ec.purchase-list']
         },
         children: [
@@ -218,7 +218,7 @@ const routes = [
             path: 'detail/:itemId?',
             component: () => import('@/view/mall/trade/order/detail'),
             meta: {
-              title: '订单详情',
+              title: '837b3054.8054f7',
               hidden: true,
               footerFixed: true
             }
@@ -227,7 +227,7 @@ const routes = [
             path: 'process/:itemId?',
             component: () => import('@/view/mall/trade/order/process'),
             meta: {
-              title: '订单处理',
+              title: '837b3054.afbe0f',
               hidden: true
             }
           },
@@ -235,7 +235,7 @@ const routes = [
             path: 'after-sale/:id?',
             component: () => import('@/view/mall/trade/order/afterSale'),
             meta: {
-              title: '售后服务',
+              title: '837b3054.d9a9d8',
               hidden: true
             }
           },
@@ -243,7 +243,7 @@ const routes = [
             path: 'logistics/:itemId?',
             component: () => import('@/view/mall/trade/order/logistics'),
             meta: {
-              title: '物流信息',
+              title: '837b3054.24bc07',
               hidden: true
             }
           }

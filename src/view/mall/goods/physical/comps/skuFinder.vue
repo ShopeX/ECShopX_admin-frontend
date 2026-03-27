@@ -48,16 +48,16 @@ export default {
       setting: createSetting({
         columns: [
           {
-            name: '商品编码',
+            name: this.$t('d41d8cd9.f9d8b1'),
             key: 'item_bn',
             width: 160
           },
           {
-            name: '规格',
+            name: this.$t('d41d8cd9.ea887b'),
             key: 'item_spec_desc'
           },
           {
-            name: '库存',
+            name: this.$t('d41d8cd9.0eac88'),
             key: 'store',
             width: 100,
             // showType: 'editable',
@@ -88,14 +88,14 @@ export default {
                           <el-input
                             v-model={this.skuEditInput}
                             class='edit-input'
-                            placeholder='请输入库存'
+                            placeholder={this.$t('d41d8cd9.63f10e')}
                           />
                           <el-button
                             type='primary'
                             size='mini'
                             on-click={this.onModifyItemSku.bind(this, row)}
                           >
-                            确定
+                            {this.$t('d41d8cd9.38cf16')}
                           </el-button>
                         </div>
                         <el-button slot='reference' type='text'>
@@ -109,7 +109,7 @@ export default {
             }
           },
           {
-            name: '商品价格（¥）',
+            name: this.$t('d41d8cd9.cf187a'),
             key: 'price',
             width: 160,
             render: (h, { row }) => {
@@ -129,14 +129,14 @@ export default {
                         <el-input
                           v-model={this.skuPriceEditInput}
                           class='edit-input'
-                          placeholder='请输入金额'
+                          placeholder={this.$t('d41d8cd9.d594b7')}
                         />
                         <el-button
                           type='primary'
                           size='mini'
                           on-click={this.onModifyItemPrice.bind(this, row)}
                         >
-                          确定
+                          {this.$t('d41d8cd9.38cf16')}
                         </el-button>
                       </div>
 
@@ -151,7 +151,7 @@ export default {
             }
           },
           {
-            name: '状态',
+            name: this.$t('d41d8cd9.3fea7c'),
             key: 'is_can_sale',
             render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
           }
@@ -196,10 +196,10 @@ export default {
     getApproveStatus(status) {
       // return status ? '前台可售' : '前台不可售'
       const approveStatus = {
-        onsale: '前台可销售',
-        offline_sale: '前台不展示'
+        onsale: this.$t('d41d8cd9.9b7481'),
+        offline_sale: this.$t('d41d8cd9.2c50a0')
       }
-      return approveStatus[status] || '不可销售'
+      return approveStatus[status] || this.$t('d41d8cd9.ae83a3')
     },
     onShowPopover({ store }, type) {
       if (type == 'store') {

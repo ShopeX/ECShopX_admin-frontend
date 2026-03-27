@@ -5,7 +5,7 @@
 
 <template>
   <SpPage>
-    <div v-for="item in list">
+    <div v-for="item in list" :key="item.name">
       <div class="section-header with-border">
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
       </div>
@@ -18,7 +18,7 @@
                   <p>{{ row.name }}</p>
                   <p>{{ row.desc }}</p>
                 </div>
-                <el-button @click="toForm(row.form)"> 选择 </el-button>
+                <el-button @click="toForm(row.form)"> {{ $t('d05d98c3.153fa6') }} </el-button>
               </div>
             </div>
           </el-col>
@@ -30,16 +30,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      list: [
+  computed: {
+    list() {
+      return [
         {
-          name: '会员特权',
-          desc: '会员福利，增加用户活跃度及粘性',
+          name: this.$t('d05d98c3.726f05'),
+          desc: this.$t('d05d98c3.136f7d'),
           itemList: [
             {
-              name: '指定日期额外积分',
-              desc: '如会员日关怀，指定日期会员可获取额外积分',
+              name: this.$t('d05d98c3.64540c'),
+              desc: this.$t('d05d98c3.40383f'),
               form: 'member_day'
             }
           ]

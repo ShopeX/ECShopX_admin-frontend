@@ -43,7 +43,7 @@
         >
           <div class="goods-wrap">
             <div class="thumbnail">
-              <img class="goods-img" :src="wximageurl + item.imgUrl" />
+              <img class="goods-img" :src="wximageurl + item.imgUrl">
             </div>
             <div class="caption">
               <img
@@ -54,7 +54,7 @@
                     ? wximageurl + item.brand
                     : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
                 "
-              />
+              >
               <div class="goods-title">
                 {{ item.title }}
               </div>
@@ -70,13 +70,13 @@
                   :key="i"
                   :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
                 >
-                  {{ s.tag_type == 'single_group' ? '团购' : '' }}
-                  {{ s.tag_type == 'full_minus' ? '满减' : '' }}
-                  {{ s.tag_type == 'full_discount' ? '满折' : '' }}
-                  {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
-                  {{ s.tag_type == 'normal' ? '秒杀' : '' }}
-                  {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
-                  {{ s.tag_type == 'plus_price_buy' ? '换购' : '' }}
+                  {{ s.tag_type == 'single_group' ? $t('fadd7bbe.f47464') : '' }}
+                  {{ s.tag_type == 'full_minus' ? $t('fadd7bbe.94b1fd') : '' }}
+                  {{ s.tag_type == 'full_discount' ? $t('fadd7bbe.1c120b') : '' }}
+                  {{ s.tag_type == 'full_gift' ? $t('fadd7bbe.8e2405') : '' }}
+                  {{ s.tag_type == 'normal' ? $t('fadd7bbe.55c758') : '' }}
+                  {{ s.tag_type == 'limited_time_sale' ? $t('fadd7bbe.a0aaca') : '' }}
+                  {{ s.tag_type == 'plus_price_buy' ? $t('fadd7bbe.1687b1') : '' }}
                 </p>
               </div>
             </div>
@@ -85,7 +85,7 @@
       </div>
     </div>
     <div class="goods-more">
-      <p class="more-btn">查看更多</p>
+      <p class="more-btn">{{ $t('fadd7bbe.90ef7c') }}</p>
     </div>
   </div>
 </template>

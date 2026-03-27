@@ -5,7 +5,7 @@
 
 <template>
   <el-dialog
-    title="通知消息"
+    :title="$t('d3a35fa3.59a702')"
     :visible.sync="visible"
     width="33%"
     :close-on-click-modal="false"
@@ -24,15 +24,19 @@
       label-position="top"
       label-width="140px"
     >
-      <el-form-item label="总部分账占比" prop="headquarters_proportion">
+      <el-form-item :label="$t('d3a35fa3.08605d')" prop="headquarters_proportion">
         <el-input v-model="form.headquarters_proportion" style="width: 70%">
           <i slot="suffix">%</i>
         </el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" size="small" plain @click="handleDialogClose"> 取 消 </el-button>
-      <el-button type="primary" size="small" @click="handleDialogChange"> 确 定 </el-button>
+      <el-button type="primary" size="small" plain @click="handleDialogClose">
+        {{ $t('d3a35fa3.625fb2') }}
+      </el-button>
+      <el-button type="primary" size="small" @click="handleDialogChange">
+        {{ $t('d3a35fa3.38cf16') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -78,7 +82,7 @@ export default {
         this.$emit('handleClick', false)
         this.form = {}
         this.$message({
-          message: '操作成功',
+          message: this.$t('d3a35fa3.33130f'),
           type: 'success'
         })
       })
@@ -88,15 +92,14 @@ export default {
       this.$emit('handleClick', false)
     },
     validateNumber(rule, value, callback) {
-      // 分账占比校验
       const reg = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
       if (!value) {
-        callback(new Error('请输入'))
+        callback(new Error(this.$t('d3a35fa3.02cc4f')))
       } else {
         if (!reg.test(value)) {
-          callback(new Error('请输入正确格式，最多保留两位小数'))
+          callback(new Error(this.$t('d3a35fa3.cc1ce5')))
         } else if (Number(value) > 100) {
-          callback(new Error('分账比例不能超过100'))
+          callback(new Error(this.$t('d3a35fa3.d19795')))
         } else {
           callback()
         }

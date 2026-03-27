@@ -6,38 +6,38 @@
 <template>
   <section class="section section-white content-padded" onload="init()">
     <el-form ref="form" :model="form" label-width="110px">
-      <el-form-item label="是否是国内门店">
+      <el-form-item :label="$t('c9579e27.a1bb9c')">
         <el-col :span="10">
           <el-radio-group
             v-if="form.wx_shop_id"
             v-model="form.is_domestic"
             @change="isDomesticChange"
           >
-            <el-radio :label="1" value="1" disabled> 国内 </el-radio>
-            <el-radio :label="2" value="2" disabled> 非国内 </el-radio>
+            <el-radio :label="1" value="1" disabled> {{ $t('c9579e27.227dd1') }} </el-radio>
+            <el-radio :label="2" value="2" disabled> {{ $t('c9579e27.cf4787') }} </el-radio>
           </el-radio-group>
           <el-radio-group v-else v-model="form.is_domestic" @change="isDomesticChange">
-            <el-radio :label="1" value="1"> 国内 </el-radio>
-            <el-radio :label="2" value="2"> 非国内 </el-radio>
+            <el-radio :label="1" value="1"> {{ $t('c9579e27.227dd1') }} </el-radio>
+            <el-radio :label="2" value="2"> {{ $t('c9579e27.cf4787') }} </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
-      <el-form-item label="是否是直营店">
+      <el-form-item :label="$t('c9579e27.0306b5')">
         <el-col :span="10">
           <el-radio-group v-model="form.is_direct_store">
-            <el-radio :label="1" value="1"> 直营店 </el-radio>
-            <el-radio :label="2" value="2"> 非直营店 </el-radio>
+            <el-radio :label="1" value="1"> {{ $t('aa338e9b.4b940c') }} </el-radio>
+            <el-radio :label="2" value="2"> {{ $t('aa338e9b.c26325') }} </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
-      <el-form-item label="门店名称">
+      <el-form-item :label="$t('c9579e27.740032')">
         <div>
           <el-col :span="8">
-            <el-input v-model="form.name" placeholder="请先完成下方地理位置的选择" />
+            <el-input v-model="form.name" :placeholder="$t('c9579e27.4b650a')" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == 1" label="地理位置">
+      <el-form-item v-if="form.is_domestic == 1" :label="$t('c9579e27.fc82aa')">
         <el-cascader
           v-model="form.regions_id"
           :options="regions"
@@ -47,80 +47,80 @@
         <el-input
           id="keyword"
           v-model="form.address"
-          placeholder="请输入地址"
+          :placeholder="$t('c9579e27.6107b3')"
           style="width: 500px"
         />
-        <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
+        <el-button type="primary" @click="searchKeyword()"> {{ $t('c9579e27.83546a') }} </el-button>
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == 1" label="地图定位">
+      <el-form-item v-if="form.is_domestic == 1" :label="$t('c9579e27.86188c')">
         <div id="qqmap_container" />
       </el-form-item>
-      <el-form-item v-if="form.is_domestic == '2'" label="具体地址">
+      <el-form-item v-if="form.is_domestic == '2'" :label="$t('c9579e27.a345de')">
         <div>
           <el-col :span="4">
-            <el-input v-model="form.country" placeholder="国家" />
+            <el-input v-model="form.country" :placeholder="$t('c9579e27.ee3f55')" />
           </el-col>
           <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="4">
-            <el-input v-model="form.city" placeholder="城市" />
+            <el-input v-model="form.city" :placeholder="$t('c9579e27.f7d29d')" />
           </el-col>
           <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="10">
-            <el-input v-model="form.address" placeholder="详细地址" />
+            <el-input v-model="form.address" :placeholder="$t('c9579e27.61a0ec')" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item inline="true" class="demo-form-inline" label="门店经纬度">
+      <el-form-item inline="true" class="demo-form-inline" :label="$t('c9579e27.8545dd')">
         <el-col :span="3">
-          <el-input v-model="form.lng" readonly placeholder="经度" />
+          <el-input v-model="form.lng" readonly :placeholder="$t('c9579e27.3d18ca')" />
         </el-col>
         <el-col :span="1" class="content-center"> - </el-col>
         <el-col :span="3">
-          <el-input v-model="form.lat" readonly placeholder="纬度" />
+          <el-input v-model="form.lat" readonly :placeholder="$t('c9579e27.6acaee')" />
         </el-col>
       </el-form-item>
-      <el-form-item label="联系人">
-        <el-input v-model="form.contact" placeholder="联系人" style="width: 55%" />
+      <el-form-item :label="$t('c9579e27.52409d')">
+        <el-input v-model="form.contact" :placeholder="$t('c9579e27.52409d')" style="width: 55%" />
       </el-form-item>
-      <el-form-item label="联系方式">
-        <el-input v-model="form.mobile" placeholder="请输入手机号" style="width: 55%" />
+      <el-form-item :label="$t('c9579e27.b58943')">
+        <el-input v-model="form.mobile" :placeholder="$t('c9579e27.6e4f4b')" style="width: 55%" />
       </el-form-item>
-      <el-form-item label="客服电话">
+      <el-form-item :label="$t('c9579e27.e84643')">
         <el-col :span="8">
           <el-input v-model="form.contract_phone" />
         </el-col>
         <el-col>
-          <p class="frm-tips">固定电话需加区号；区号、分机号均用“-”连接</p>
+          <p class="frm-tips">{{ $t('c9579e27.7b78e9') }}</p>
         </el-col>
       </el-form-item>
-      <el-form-item label="营业时间">
+      <el-form-item :label="$t('c9579e27.cc3307')">
         <el-time-select
           v-model="startTime"
-          placeholder="起始时间"
+          :placeholder="$t('c9579e27.26dac3')"
           :picker-options="{ start: '00:00', step: '00:30', end: '23:59' }"
         />
         <el-time-select
           v-model="endTime"
-          placeholder="结束时间"
+          :placeholder="$t('c9579e27.f78277')"
           :picker-options="{ start: '00:00', step: '00:30', end: '23:59', minTime: startTime }"
         />
-        <p class="frm-tips">24小时制，如10：00-20：30</p>
+        <p class="frm-tips">{{ $t('c9579e27.a7bd0e') }}</p>
       </el-form-item>
-      <el-form-item label="门店LOGO">
+      <el-form-item :label="$t('c9579e27.6bf24c')">
         <div class="upload-box" @click="handleImgPicker('logo')">
-          <img v-if="form.logo" :src="form.logo" class="avatar" />
+          <img v-if="form.logo" :src="form.logo" class="avatar">
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
-        <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
+        <div class="frm-tips">{{ $t('c9579e27.3f13f6') }}</div>
       </el-form-item>
-      <el-form-item v-if="VERSION_PLATFORM()" label="门店横幅广告">
+      <el-form-item v-if="VERSION_PLATFORM()" :label="$t('c9579e27.82d49d')">
         <div class="upload-box" @click="handleImgPicker('banner')">
-          <img v-if="form.banner" :src="form.banner" class="avatar" />
+          <img v-if="form.banner" :src="form.banner" class="avatar">
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
-        <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
+        <div class="frm-tips">{{ $t('c9579e27.3f13f6') }}</div>
       </el-form-item>
-      <el-form-item label="是否启用">
+      <el-form-item :label="$t('c9579e27.53c3dd')">
         <el-switch
           v-model="form.is_valid"
           active-value="true"
@@ -130,15 +130,17 @@
         />
       </el-form-item>
       <div class="section-footer with-border content-center">
-        <el-button size="large" @click.native.prevent> 取消 </el-button>
+        <el-button size="large" @click.native.prevent> {{ $t('c9579e27.625fb2') }} </el-button>
         <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
-          {{ submitLoading ? '提交中' : '保存' }}
+          {{ submitLoading ? $t('c9579e27.7ef44a') : $t('c9579e27.be5fbb') }}
         </el-button>
       </div>
     </el-form>
     <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button type="primary" @click="imp_poi(poi_info)"> 导入该位置信息 </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)">
+          {{ $t('c9579e27.e6c071') }}
+        </el-button>
       </el-col>
       <el-col>{{ poi_info.name }}</el-col>
       <div class="frm-tips">
@@ -249,7 +251,7 @@ export default {
       addDistributorShop(this.form)
         .then((res) => {
           this.submitLoading = false
-          this.$message({ type: 'success', message: '保存门店成功' })
+          this.$message({ type: 'success', message: this.$t('c9579e27.dd849a') })
           if (this.$store.getters.login_type != 'distributor') {
             this.$router.go(-1)
           }
@@ -268,10 +270,10 @@ export default {
       }
 
       if (
-        this.form.regions[0] == '北京市' ||
-        this.form.regions[0] == '天津市' ||
-        this.form.regions[0] == '上海市' ||
-        this.form.regions[0] == '重庆市'
+        this.form.regions[0] == this.$t('e67351f7.a8e562') ||
+        this.form.regions[0] == this.$t('e67351f7.727286') ||
+        this.form.regions[0] == this.$t('e67351f7.b67334') ||
+        this.form.regions[0] == this.$t('e67351f7.9bf8cb')
       ) {
         this.searchRegion = this.form.regions[0] + this.form.regions[2]
       } else {
@@ -328,7 +330,7 @@ export default {
         },
         //若服务请求失败，则运行以下函数
         error: function () {
-          this.$message.error('未查询到数据')
+          this.$message.error(this.$t('c9579e27.c954c4'))
         }
       })
     },
@@ -343,14 +345,14 @@ export default {
       //设置搜索的范围和关键字等属性
       if (!this.searchRegion) {
         this.$message({
-          message: '请选择地区',
+          message: this.$t('c9579e27.ad1a24'),
           type: 'warning'
         })
         return ''
       }
       if (!this.form.address) {
         this.$message({
-          message: '请输入具体位置',
+          message: this.$t('c9579e27.ef5ed8'),
           type: 'warning'
         })
         return ''

@@ -25,33 +25,45 @@
   <SpPage>
     <SpRouterView>
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="distributor_id" label="店铺:">
-          <SpSelectShop v-model="formQuery.distributor_id" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="distributor_id" :label="$t('dec78e3c.efa91f')">
+          <SpSelectShop
+            v-model="formQuery.distributor_id"
+            clearable
+            :placeholder="$t('dec78e3c.708c9d')"
+          />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="merchant_id" label="商家:">
-          <SpSelectMerchant v-model="formQuery.merchant_id" clearable placeholder="请选择" />
+        <SpFilterFormItem prop="merchant_id" :label="$t('dec78e3c.e29708')">
+          <SpSelectMerchant
+            v-model="formQuery.merchant_id"
+            clearable
+            :placeholder="$t('dec78e3c.708c9d')"
+          />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="statement_status" label="结算状态:">
-          <el-select v-model="formQuery.statement_status" clearable placeholder="请选择">
+        <SpFilterFormItem prop="statement_status" :label="$t('dec78e3c.b81f30')">
+          <el-select
+            v-model="formQuery.statement_status"
+            clearable
+            :placeholder="$t('dec78e3c.708c9d')"
+          >
             <el-option
               v-for="item in statusOption"
               :key="item.value"
-              :label="item.title"
+              :label="$t(item.titleKey)"
               size="mini"
               :value="item.value"
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="cycleTime" label="结算周期:" size="max">
+        <SpFilterFormItem prop="cycleTime" :label="$t('dec78e3c.78f74e')" size="max">
           <el-date-picker
             v-model="formQuery.cycleTime"
             clearable
             type="datetimerange"
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('dec78e3c.981cbe')"
+            :start-placeholder="$t('dec78e3c.b44c0f')"
+            :end-placeholder="$t('dec78e3c.1d468b')"
             prefix-icon="null"
             :default-time="defaultTime"
             :picker-options="pickerOptions"
@@ -60,14 +72,16 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+        <el-button type="primary" plain @click="exportData">
+          {{ $t('dec78e3c.55405e') }}
+        </el-button>
       </div>
 
       <div class="summary-info">
         <div class="summary-item">
           <SpImage :src="daijiesuan" :width="40" :height="40" />
           <div>
-            <div>待结算金额（元）</div>
+            <div>{{ $t('dec78e3c.46bc70') }}</div>
             <div class="daijiesuan">
               {{ feeReady }}
             </div>
@@ -76,7 +90,7 @@
         <div class="summary-item">
           <SpImage :src="yijiesuan" :width="40" :height="40" />
           <div>
-            <div>已结算金额（元）</div>
+            <div>{{ $t('dec78e3c.86e08f') }}</div>
             <div class="yijiesuan">
               {{ feeDone }}
             </div>
@@ -118,20 +132,24 @@ export default {
         cycleTime: []
       },
       statusOption: [
-        { title: '已结算', value: 'done' },
-        { title: '待平台结算', value: 'confirmed' },
-        { title: '待店铺确认', value: 'ready' }
+        { titleKey: 'dec78e3c.139304', value: 'done' },
+        { titleKey: 'dec78e3c.7f38dd', value: 'confirmed' },
+        { titleKey: 'dec78e3c.fcefe4', value: 'ready' }
       ],
       feeDone: 0,
       feeReady: 0,
       defaultTime: ['00:00:00', '23:59:59'],
       pickerOptions: PICKER_DATE_OPTIONS,
       merchantLoading: false,
-      merchantList: [],
-      setting: createSetting({
+      merchantList: []
+    }
+  },
+  computed: {
+    setting() {
+      return createSetting({
         actions: [
           {
-            name: '查看明细',
+            name: this.$t('dec78e3c.bc8a96'),
             key: 'detail',
             type: 'button',
             buttonType: 'text',
@@ -144,7 +162,7 @@ export default {
             }
           },
           {
-            name: this.IS_ADMIN() ? '结算' : '确认',
+            name: this.IS_ADMIN() ? this.$t('dec78e3c.89159f') : this.$t('dec78e3c.e83a25'),
             key: 'settlement',
             type: 'button',
             buttonType: 'text',
@@ -159,71 +177,58 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`结算单号【${row.statement_no}】，确认是否结算？`, '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消'
-                })
+                await this.$confirm(
+                  this.$t('dec78e3c.01aeec') + row.statement_no + this.$t('dec78e3c.b1d296'),
+                  this.$t('dec78e3c.02d981'),
+                  {
+                    confirmButtonText: this.$t('dec78e3c.38cf16'),
+                    cancelButtonText: this.$t('dec78e3c.625fb2')
+                  }
+                )
                 await this.$api.financial.confirmStatement(row.id)
-                this.$message.success('操作成功')
+                this.$message.success(this.$t('dec78e3c.33130f'))
                 this.onSearch()
               }
             }
           }
         ],
         columns: [
-          { name: '账单编号', key: 'statement_no', width: 160 },
+          { name: this.$t('dec78e3c.aea239'), key: 'statement_no', width: 160 },
+          { name: this.$t('dec78e3c.0f09a8'), key: 'merchant_name', width: 160 },
+          { name: this.$t('dec78e3c.295713'), key: 'distributor_name', width: 160 },
+          { name: this.$t('dec78e3c.317517'), key: 'order_num' },
           {
-            name: '商家',
-            key: 'merchant_name',
-            width: 160
-          },
-          {
-            name: '店铺',
-            key: 'distributor_name',
-            width: 160
-          },
-          {
-            name: '订单数量',
-            key: 'order_num'
-          },
-          {
-            name: '实付金额（¥）',
+            name: this.$t('dec78e3c.fddcee'),
             key: 'total_fee',
             width: 120,
             render: (h, { row }) => h('span', {}, row.total_fee / 100)
           },
           {
-            name: '运费（¥）',
+            name: this.$t('dec78e3c.4dd437'),
             key: 'freight_fee',
             width: 100,
             render: (h, { row }) => h('span', {}, row.freight_fee / 100)
           },
           {
-            name: '同城配（¥）',
+            name: this.$t('dec78e3c.e3a3c9'),
             key: 'intra_city_freight_fee',
             width: 100,
             render: (h, { row }) => h('span', {}, row.intra_city_freight_fee / 100)
           },
-          // {
-          //   name: '分销佣金（¥）',
-          //   key: 'rebate_fee',
-          //   width: 120,
-          //   render: (h, { row }) => h('span', {}, row.rebate_fee / 100)
-          // },
           {
-            name: '退款金额（¥）',
+            name: this.$t('dec78e3c.f4a147'),
             key: 'refund_fee',
             width: 120,
             render: (h, { row }) => h('span', {}, row.refund_fee / 100)
           },
           {
-            name: '结算金额（¥）',
+            name: this.$t('dec78e3c.a69a62'),
             key: 'statement_fee',
             width: 120,
             render: (h, { row }) => h('span', {}, row.statement_fee / 100)
           },
           {
-            name: '结算周期',
+            name: this.$t('dec78e3c.71412a'),
             key: 'alert_required_message',
             width: 160,
             formatter: (row, column) => {
@@ -236,7 +241,7 @@ export default {
             }
           },
           {
-            name: '结算时间',
+            name: this.$t('dec78e3c.a8b38b'),
             key: 'statement_time',
             width: 160,
             formatter: (row, column) => {
@@ -248,7 +253,7 @@ export default {
             }
           },
           {
-            name: '结算状态',
+            name: this.$t('dec78e3c.50cdff'),
             key: 'statement_status',
             width: 120,
             render: (h, { row }) => h('span', {}, this.getStateMentStatus(row.statement_status))
@@ -279,11 +284,11 @@ export default {
     },
     getStateMentStatus(status) {
       if (status == 'ready') {
-        return '待店铺确认'
+        return this.$t('dec78e3c.fcefe4')
       } else if (status == 'confirmed') {
-        return '待平台结算'
+        return this.$t('dec78e3c.7f38dd')
       } else if (status == 'done') {
-        return '已结算'
+        return this.$t('dec78e3c.139304')
       }
     },
     async exportData() {
@@ -294,7 +299,7 @@ export default {
         delete formQuery.cycleTime
       }
       await this.$api.financial.exportData(formQuery)
-      this.$message.success('导出成功')
+      this.$message.success(this.$t('dec78e3c.105c8a'))
     },
     remoteMerchantList: async function (name) {
       this.merchantLoading = true

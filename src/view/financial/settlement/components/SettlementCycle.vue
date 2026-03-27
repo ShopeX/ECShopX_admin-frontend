@@ -17,21 +17,21 @@
 </style>
 <template>
   <div class="comp-cycle">
-    <span class="label">每</span>
+    <span class="label">{{ $t('fd0c789f.a7e221') }}</span>
     <el-input
       v-model="cycle"
       :class="cycleClass"
       type="text"
       clearable
-      placeholder="请输入结算周期数"
+      :placeholder="$t('fd0c789f.9e91bf')"
       @change="onChange"
     />
-    <el-select v-model="unit" clearable placeholder="请选择" @change="onChange">
+    <el-select v-model="unit" clearable :placeholder="$t('fd0c789f.708c9d')" @change="onChange">
       <el-option
         v-for="item in units"
         :key="item.value"
         size="mini"
-        :label="item.label"
+        :label="$t(item.labelKey)"
         :value="item.value"
       />
     </el-select>
@@ -43,15 +43,19 @@ export default {
   name: 'SettlementCycle',
   props: ['value'],
   data() {
-    const { cycle = '', unit = '' } = this.value
+    const { cycle = '', unit = '' } = this.value || {}
     return {
-      units: [
-        { label: '天', value: 'day' },
-        { label: '周', value: 'week' },
-        { label: '月', value: 'month' }
-      ],
       cycle,
       unit
+    }
+  },
+  computed: {
+    units() {
+      return [
+        { labelKey: 'fd0c789f.249aba', value: 'day' },
+        { labelKey: 'fd0c789f.a657f4', value: 'week' },
+        { labelKey: 'fd0c789f.e42b99', value: 'month' }
+      ]
     }
   },
   computed: {
@@ -67,8 +71,8 @@ export default {
     }
   },
   watch: {
-    value(newVal, oldVal) {
-      const { cycle = '', unit = '' } = newVal
+    value(newVal) {
+      const { cycle = '', unit = '' } = newVal || {}
       this.cycle = cycle
       this.unit = unit
     }

@@ -151,10 +151,11 @@
 
 <script>
 import config from './config'
+import { i18n } from '@/i18n'
 import { getOuterStyle, getInnerStyle } from '../../comps/style-utils'
 export default {
   name: 'Classify',
-  wgtName: '商品分类',
+  wgtName: i18n.t('57f694b2.c3ece5'),
   wgtDesc: '',
   wgtIcon: 'all-application',
   wgtType: 2,

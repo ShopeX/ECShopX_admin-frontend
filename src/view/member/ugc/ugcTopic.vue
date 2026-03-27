@@ -7,9 +7,13 @@
   <SpPage>
     <el-row :gutter="20" class="action-container">
       <el-col :span="18">
-        <el-button type="primary" @click="editTocicShow(true)"> 新建话题 </el-button>
+        <el-button type="primary" @click="editTocicShow(true)">
+{{
+          $t('ab1a2e0d.4fee56')
+        }}
+</el-button>
 
-        <el-button @click="auditHandle"> 审核话题 </el-button>
+        <el-button @click="auditHandle">{{ $t('ab1a2e0d.6aac0d') }}</el-button>
         <!-- <el-button
           type="primary"
           plain
@@ -18,17 +22,21 @@
           删除话题(测试用)
         </el-button> -->
 
-        <el-button type="primary" plain @click="topicModalHide(true)"> 话题置顶设置 </el-button>
+        <el-button type="primary" plain @click="topicModalHide(true)">
+{{
+          $t('ab1a2e0d.f5816a')
+        }}
+</el-button>
         <span class="marbor" />
         <el-select
           v-model="params.source"
           class="searSelect"
-          placeholder="全部话题"
+          :placeholder="$t('ab1a2e0d.090a4c')"
           @change="searchData"
         >
-          <el-option label="全部话题" :value="null" />
-          <el-option label="官方创建" value="2" />
-          <el-option label="用户创建" value="1" />
+          <el-option :label="$t('ab1a2e0d.090a4c')" :value="null" />
+          <el-option :label="$t('ab1a2e0d.fd341c')" value="2" />
+          <el-option :label="$t('ab1a2e0d.0dec71')" value="1" />
         </el-select>
       </el-col>
       <el-col :span="6">
@@ -41,12 +49,12 @@
             slot="prepend"
             v-model="searchtype"
             class="barSelect"
-            placeholder="请选择"
+            :placeholder="$t('cadc1ce1.708c9d')"
             @change="changeName"
           >
-            <el-option label="用户昵称" value="nickname" />
-            <el-option label="用户手机号" value="mobile" />
-            <el-option label="话题关键字" value="topic_name" />
+            <el-option :label="$t('cadc1ce1.9a56bb')" value="nickname" />
+            <el-option :label="$t('cadc1ce1.18b642')" value="mobile" />
+            <el-option :label="$t('ab1a2e0d.4f377c')" value="topic_name" />
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="searchData('searchkey')" />
         </el-input>
@@ -54,7 +62,7 @@
     </el-row>
 
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="全部状态" name="first">
+      <el-tab-pane :label="$t('cadc1ce1.443483')" name="first">
         <topiclist
           ref="topictable"
           :tmp-data="topicList"
@@ -64,7 +72,7 @@
           @handleEdit="editTocicShow"
         />
       </el-tab-pane>
-      <el-tab-pane label="待审核" name="second">
+      <el-tab-pane :label="$t('cadc1ce1.5cb424')" name="second">
         <topiclist
           :tmp-data="topicList"
           :loading="loading"
@@ -72,7 +80,7 @@
           @selectNotes="selectNotes"
         />
       </el-tab-pane>
-      <el-tab-pane label="已通过" name="third">
+      <el-tab-pane :label="$t('cadc1ce1.ecfa64')" name="third">
         <topiclist
           :tmp-data="topicList"
           :loading="loading"
@@ -80,7 +88,7 @@
           @selectNotes="selectNotes"
         />
       </el-tab-pane>
-      <el-tab-pane label="已拒绝" name="fourth">
+      <el-tab-pane :label="$t('cadc1ce1.81233d')" name="fourth">
         <topiclist
           :tmp-data="topicList"
           :loading="loading"
@@ -120,23 +128,23 @@
       :before-close="editTocicShow"
       :visible.sync="editShow"
       :show-close="false"
-      :title="topicForm.topic_id ? '编辑话题' : '新建话题'"
+      :title="topicForm.topic_id ? $t('ab1a2e0d.d79a51') : $t('ab1a2e0d.4fee56')"
       width="30%"
     >
-      <div class="dialog-tips">确认后新建的话题将需要审核，<br />已经通过的话题依旧展示。</div>
+      <div class="dialog-tips" v-html="$t('ab1a2e0d.ace48a')" />
       <el-form ref="topicForm" :model="topicForm" :rules="topicFormRules" label-width="80px">
-        <el-form-item prop="topic_name" label="话题名称">
+        <el-form-item prop="topic_name" :label="$t('ab1a2e0d.220164')">
           <el-input
             v-model="topicForm.topic_name"
-            placeholder="话题名称"
+            :placeholder="$t('ab1a2e0d.220164')"
             maxlength="32"
             :show-word-limit="true"
           />
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="updataFalg"> 确认 </el-button>
-          <el-button @click="editTocicShow(false)"> 取消 </el-button>
+          <el-button type="primary" @click="updataFalg">{{ $t('09b91dec.e83a25') }}</el-button>
+          <el-button @click="editTocicShow(false)">{{ $t('09b91dec.625fb2') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -178,7 +186,7 @@ export default {
       exitsNew: false,
       searchkey: '',
       searchtype: 'nickname',
-      searPlace: '请输入昵称',
+      searPlace: '',
       auditdiff: false,
       dufStatus: null,
       auditDialogShow: false,
@@ -186,14 +194,19 @@ export default {
       topicForm: {
         topic_name: null
       },
-      topicFormRules: {
-        topic_name: [{ required: true, message: '请输入话题名称', trigger: 'blur' }]
-      },
+      topicFormRules: {},
       editShow: false
     }
   },
+  computed: {
+    topicFormRules() {
+      return {
+        topic_name: [{ required: true, message: this.$t('ab1a2e0d.f66b17'), trigger: 'blur' }]
+      }
+    }
+  },
   mounted() {
-    var query = this.$route.query
+    this.$data.searPlace = this.researchMsg(this.$data.searchtype)
     this.getDataList()
   },
   methods: {
@@ -221,11 +234,11 @@ export default {
       this.searchData()
     },
     researchMsg(type) {
-      var msg = '请输入昵称'
+      var msg = this.$t('cadc1ce1.916ff9')
       if (type == 'topic_name') {
-        msg = '请输入关键字'
+        msg = this.$t('cadc1ce1.db91cb')
       } else if (type == 'mobile') {
-        msg = '请输入手机号'
+        msg = this.$t('cadc1ce1.6e4f4b')
       }
       this.params.nickname = null
       this.params.topic_name = null
@@ -304,7 +317,7 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '请选择话题'
+          message: this.$t('ab1a2e0d.858c49')
         })
       }
     },
@@ -399,7 +412,7 @@ export default {
       if (id_set.length < 1) {
         this.$message({
           type: 'error',
-          message: '请选择话题'
+          message: this.$t('ab1a2e0d.858c49')
         })
         return false
       }

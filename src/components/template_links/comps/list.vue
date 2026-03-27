@@ -20,7 +20,7 @@
         />
         <el-table-column
           property="title"
-          :label="type === 'other_wxapp' ? '页面路径' : '标题名称'"
+          :label="type === 'other_wxapp' ? $t('14a23340.e3a8a6') : $t('14a23340.40ec7d')"
         />
       </el-table>
       <el-pagination
@@ -42,7 +42,7 @@
       @current-change="handleCurrentChange"
     >
       <el-table-column prop="id" label="ID" width="180" />
-      <el-table-column prop="title" label="分类名" />
+      <el-table-column prop="title" :label="$t('14a23340.28474c')" />
     </el-table>
   </div>
 </template>

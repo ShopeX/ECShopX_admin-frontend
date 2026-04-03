@@ -47144,7 +47144,6 @@
 	"bojjht5": {
 		"zh-cn": "1分账提现",
 		"en": "",
-		"zh-tw": "",
 		"ar": "سحب توزيع 1"
 	},
 	"4l0o5q9": {
@@ -50294,49 +50293,41 @@
 	"i5bxls4": {
 		"zh-cn": "请登录1",
 		"en": "Please log in",
-		"zh-tw": "",
 		"ar": "يرجى تسجيل الدخول"
 	},
 	"1ubti7": {
 		"zh-cn": " 选择商品",
 		"en": "Select product",
-		"zh-tw": "",
 		"ar": "اختيار المنتج"
 	},
 	"adabc28": {
 		"zh-cn": "商品产地",
 		"en": "Origin",
-		"zh-tw": "",
 		"ar": "بلد المنشأ"
 	},
 	"c4d8787": {
 		"zh-cn": "上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留15天。\n超过15天的错误描述文件将会删除，不再提供下载查看",
 		"en": "If any rows fail during file processing, an error file will be generated. Please check the error details, make corrections, and re-upload the file. Note that error files are only retained for 15 days. Error files older than 15 days will be automatically deleted and cannot be downloaded.",
-		"zh-tw": "",
 		"ar": "إذا فشل معالجة أي صفوف في الملف، سيتم إنشاء ملف خطأ. يرجى التحقق من تفاصيل الخطأ وتصحيحها ثم إعادة رفع الملف. تُحتفظ بملفات الأخطاء لمدة 15 يومًا فقط. سيتم حذف ملفات الأخطاء الأقدم من 15 يومًا تلقائيًا ولن تكون قابلة للتنزيل."
 	},
 	"f299684": {
 		"zh-cn": "单位",
 		"en": "Unit",
-		"zh-tw": "",
 		"ar": "الوحدة"
 	},
 	"4hldev6": {
 		"zh-cn": " 商品导出 ",
 		"en": "Export products",
-		"zh-tw": "",
 		"ar": "تصدير المنتجات"
 	},
 	"i9x3tc6": {
 		"zh-cn": "积分商品导出",
 		"en": "Export points products",
-		"zh-tw": "",
 		"ar": "تصدير منتجات النقاط"
 	},
 	"ffgvi64": {
 		"zh-cn": "直播管理",
 		"en": "Live streaming management",
-		"zh-tw": "",
 		"ar": "إدارة البث المباشر"
 	},
 	"11nehc5": {
@@ -50678,7 +50669,11 @@
 	"vb2zz46": {
 		"zh-cn": "- 角色权限",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"trsuf36": {
+		"zh-cn": "酷家乐案例库",
+		"en": "",
 		"ar": ""
 	},
 	"trsuf36": {
@@ -50690,7 +50685,11 @@
 	"l8tmwvg": {
 		"zh-cn": "请从左侧选择一个角色进行权限配置",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"cey9325": {
+		"zh-cn": "酷家乐实例",
+		"en": "",
 		"ar": ""
 	},
 	"cey9325": {
@@ -50702,7 +50701,11 @@
 	"jprn7b6": {
 		"zh-cn": "暂无权限数据",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"tpy2fp6": {
+		"zh-cn": "酷家乐实例库",
+		"en": "",
 		"ar": ""
 	},
 	"tpy2fp6": {
@@ -50714,7 +50717,11 @@
 	"paeh8nu": {
 		"zh-cn": "当前角色的权限有未保存的更改，是否要放弃更改并选择其他角色？",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"abaiyt5": {
+		"zh-cn": "注册导购:",
+		"en": "",
 		"ar": ""
 	},
 	"abaiyt5": {
@@ -50726,7 +50733,11 @@
 	"d64c964": {
 		"zh-cn": "放弃更改",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"dwa5vp7": {
+		"zh-cn": "输入导购手机号",
+		"en": "",
 		"ar": ""
 	},
 	"dwa5vp7": {
@@ -50738,7 +50749,6 @@
 	"nb1hl46": {
 		"zh-cn": "权限更新成功",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"abplbn5": {
@@ -52280,7 +52290,6 @@
 	"c7iry3": {
 		"zh-cn": "修改项",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"7kly45": {
@@ -52940,25 +52949,26 @@
 	"juxi1n7": {
 		"zh-cn": "请输入榜单名称",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"dnqluc4": {
 		"zh-cn": "榜单ID",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"do5it84": {
 		"zh-cn": "榜单名称",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"doc7l54": {
 		"zh-cn": "榜单类型",
 		"en": "",
-		"zh-tw": "",
+		"ar": ""
+	},
+	"cjvgjy4": {
+		"zh-cn": "店铺状态",
+		"en": "",
 		"ar": ""
 	},
 	"uig1vz6": {
@@ -52970,49 +52980,41 @@
 	"il0abd4": {
 		"zh-cn": "选择榜单",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"b7kvbn4": {
 		"zh-cn": "品类榜单",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"c9nwly4": {
 		"zh-cn": "平台榜单",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"z4uame7": {
 		"zh-cn": "当前店铺名称：",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"rid648l": {
 		"zh-cn": " 温馨提示：您绑定的企业支付宝账号必须开通",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"j8lmm57": {
 		"zh-cn": "请上传商户证书",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"kjgvxs9": {
 		"zh-cn": "请上传商户证书秘钥",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"7f8jfd6": {
 		"zh-cn": "请输入终端号",
 		"en": "",
-		"zh-tw": "",
 		"ar": ""
 	},
 	"9voouy8": {

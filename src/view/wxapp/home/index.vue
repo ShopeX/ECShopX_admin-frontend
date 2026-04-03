@@ -594,7 +594,7 @@ export default {
       const { tab_bar } = await this.$api.template.getPagesTemplateSetInfo({
         pages_template_id: templateId
       })
-      this.navForm = this.$options.data().navForm
+      this.navForm = this.$options.data.call(this).navForm
       this.navForm.pages_template_id = templateId
       if (tab_bar) {
         const { config, data } = JSON.parse(tab_bar)

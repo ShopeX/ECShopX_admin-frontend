@@ -54,6 +54,15 @@
       min-width: 0;
     }
 
+    .title-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      flex: 1;
+      min-width: 0;
+    }
+
     &.has-nearby {
       justify-content: flex-start;
 
@@ -218,6 +227,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -291,7 +301,7 @@ export default {
       }
     }
   },
-  created() { },
+  created() {},
   methods: {
     handleClickHeader() {
       this.$emit('change')

@@ -121,7 +121,29 @@ const routes = [
           permissions: ['sellers.salesetting.storemanager_setting']
         },
         component: () => import('@/view/mall/marketing/setting')
-      }
+      },
+      {
+        name: 'storeManageStoreCategory',
+        path: 'store-manage/store-category',
+        meta: {
+          aliasName: 'storecategory',
+          icon: 'icon-address',
+          title: 'fb06c42c.2419d0',
+          permissions: ['sellers.sellersmanager.storecategory']
+        },
+        component: () => import('@/views/store/store-category')
+      },
+      {
+        name: 'storeManageNearbyStoreInfo',
+        path: 'store-manage/nearby-store-info',
+        meta: {
+          aliasName: 'nearbystoreinfo',
+          icon: 'icon-address',
+          title: 'fb06c42c.84b1aa',
+          permissions: ['sellers.sellersmanager.nearbystoreinfo']
+        },
+        component: () => import('@/views/store/nearby-store-info')
+      },
     ]
   }
 ]

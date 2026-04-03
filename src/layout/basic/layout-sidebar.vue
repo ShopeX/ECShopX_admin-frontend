@@ -33,7 +33,7 @@
           <span
             class="text-sm mt-1 text-center"
             :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
-            >{{ item.name }}</span
+            >{{ menuDisplayName(item) }}</span
           >
         </li>
         <!-- <li @click="handleMainMenuClick({ alias_name: 'license' })" class="text-center text-gray-500 text-sm mt-2 mb-2 cursor-pointer">License</li> -->
@@ -66,7 +66,7 @@
                 <span
                   class="block w-full"
                   @click="handleSubmenuTitleClick(item.alias_name, $event)"
-                >{{ item.name }}</span>
+                >{{ menuDisplayName(item) }}</span>
               </template>
               <!-- 三级菜单 -->
               <template v-for="child in item.children">
@@ -77,7 +77,7 @@
                   :index="child.alias_name"
                   @click="handleSubMenuClick(child)"
                 >
-                  <span>{{ child.name }}</span>
+                  <span>{{ menuDisplayName(child) }}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -90,7 +90,7 @@
               :index="item.alias_name"
               @click="handleSubMenuClick(item)"
             >
-              <span>{{ item.name }}</span>
+              <span>{{ menuDisplayName(item) }}</span>
             </el-menu-item>
           </template>
         </template>
@@ -101,6 +101,7 @@
 
 <script>
 import { getBasePath, getSystemTitle } from '@/utils'
+import { getMenuDisplayName } from '@/utils/menuI18n'
 import Config from '@/config'
 
 export default {
@@ -122,7 +123,7 @@ export default {
       if (this.activeMainMenu) {
         const activeMenu = this.mainMenus.find((item) => item.alias_name === this.activeMainMenu)
         if (activeMenu) {
-          return activeMenu.name
+          return getMenuDisplayName(this, activeMenu)
         }
       }
       // 否则返回默认系统标题
@@ -180,6 +181,9 @@ export default {
     this.updateSubMenus()
   },
   methods: {
+    menuDisplayName(menuItem) {
+      return getMenuDisplayName(this, menuItem)
+    },
     // 更新中间二级菜单列表
     updateSubMenus() {
       const [mainRoute] = this.$route.matched
@@ -344,7 +348,7 @@ export default {
       if (menuItem) {
         for (const submenu of allSubmenus) {
           const titleEl = submenu.querySelector('.el-submenu__title')
-          if (titleEl && titleEl.textContent.trim() === menuItem.name) {
+          if (titleEl && titleEl.textContent.trim() === getMenuDisplayName(this, menuItem)) {
             return submenu
           }
         }
@@ -478,7 +482,7 @@ export default {
           const targetMenu = this.findMenuByAlias(activeIndex)
           if (targetMenu) {
             for (const menuItem of allMenuItems) {
-              if (menuItem.textContent.trim() === targetMenu.name) {
+              if (menuItem.textContent.trim() === getMenuDisplayName(this, targetMenu)) {
                 activeMenuItem = menuItem
                 break
               }

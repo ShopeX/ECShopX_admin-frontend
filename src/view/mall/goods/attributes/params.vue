@@ -108,7 +108,7 @@ const [ParamsForm, ParamsFormApi] = useForm({
                   />
                 </div>
                 <div
-                  class="cursor-pointer flex items-center text-gray-500 p-1 rounded"
+                  class='cursor-pointer flex items-center text-gray-500 p-1 rounded'
                   onClick={async () => {
                     try {
                       await Vue.prototype.$confirm(
@@ -128,15 +128,15 @@ const [ParamsForm, ParamsFormApi] = useForm({
                     }
                   }}
                 >
-                  <SpIcon name="delete" size={22} />
+                  <SpIcon name='delete' size={22} />
                 </div>
               </div>
             ))}
-            <div class="w-[110px] ml-0.8 border-gray-200">
+            <div class='w-[110px] ml-0.8 border-gray-200'>
               <el-button
-                type="default"
-                size="small"
-                class="border-dashed"
+                type='default'
+                size='small'
+                class='border-dashed'
                 onClick={() => {
                   if (list.length >= 50) {
                     Vue.prototype.$message({

@@ -157,6 +157,7 @@ export default {
         is_self_delivery: true,
         is_valid: 'true',
         show_salesperson: 0,
+        salesperson_type: 1,
         fixed_salesperson_qrcode_url: '',
         freight_time: 1,
         business: '',
@@ -881,6 +882,10 @@ export default {
           }
         }
         this.datapass_block = res.datapass_block
+        const showSalespersonApi = Number(res.show_salesperson)
+        const showSalespersonOn =
+          showSalespersonApi === 1 || showSalespersonApi === 2 ? 1 : 0
+        const salespersonTypeFromApi = showSalespersonApi === 2 ? 2 : 1
         this.form = {
           distribution_type: res.distribution_type,
           distributor_category_id: res.distributor_category_id,
@@ -909,10 +914,11 @@ export default {
           is_self_delivery: res.is_self_delivery,
           is_valid: res.is_valid,
           // show_salesperson: 0=关闭, 1=固定码, 2=导购
-          // 前端开关: 0=关闭, 1=开启
+          // 前端开关: 0=关闭, 1=开启（再按 salesperson_type 区分企微/导购）
           // salesperson_type: 1=上传企微码, 2=导购码
-          show_salesperson: res.show_salesperson === 0 ? 0 : 1,
-          salesperson_type: res.show_salesperson === 1 ? 1 : (res.show_salesperson === 2 ? 2 : 1),
+          // 接口未返回或为 null 时须默认关闭，避免「是否展示导购」被误判为开启（兼容字符串 "1"/"2"）
+          show_salesperson: showSalespersonOn,
+          salesperson_type: salespersonTypeFromApi,
           fixed_salesperson_qrcode_url: res.fixed_salesperson_qrcode_url || '',
           freight_time: res.freight_time,
           business: res.business,

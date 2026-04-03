@@ -2,14 +2,19 @@
  * Copyright © ShopeX （http://www.shopex.cn）. All rights reserved.
  * See LICENSE file for license details.
  */
+
+/**
+ * 以下为 vue-i18n 文案 key（src/i18n/locales/*.json），界面展示须通过 this.$t(key) 转换，
+ * 勿把 key 当作最终展示字符串使用。
+ */
 export const status = [
-  { value: 'all', label: '625757bc.a8b0c2' },
-  { value: 'pending', label: '625757bc.963609' },
-  { value: 'inProgress', label: '625757bc.030e4d' },
-  { value: 'success', label: '625757bc.186ded' },
-  { value: 'failed', label: '625757bc.65dcda' },
-  { value: 'waste', label: '625757bc.b7fc00' },
-  { value: 'cancel', label: '625757bc.625fb2' }
+  { value: 'all', i18nKey: '625757bc.a8b0c2' },
+  { value: 'pending', i18nKey: '625757bc.963609' },
+  { value: 'inProgress', i18nKey: '625757bc.030e4d' },
+  { value: 'success', i18nKey: '625757bc.186ded' },
+  { value: 'failed', i18nKey: '625757bc.65dcda' },
+  { value: 'waste', i18nKey: '625757bc.b7fc00' },
+  { value: 'cancel', i18nKey: '625757bc.625fb2' }
 ]
 
 export const open_status_map = {
@@ -32,12 +37,12 @@ export const invoice_type_code_map = {
 }
 
 export const open_status_arr = [
-  { value: 'pending', label: '625757bc.963609', title: '625757bc.963609' },
-  { value: 'inProgress', label: '625757bc.030e4d', title: '625757bc.030e4d' },
-  { value: 'success', label: '625757bc.186ded', title: '625757bc.186ded' },
-  { value: 'waste', label: '625757bc.b7fc00', title: '625757bc.b7fc00' },
-  { value: 'failed', label: '625757bc.65dcda', title: '625757bc.65dcda' },
-  { value: 'cancel', label: '625757bc.625fb2', title: '625757bc.625fb2' }
+  { value: 'pending', i18nKey: '625757bc.963609' },
+  { value: 'inProgress', i18nKey: '625757bc.030e4d' },
+  { value: 'success', i18nKey: '625757bc.186ded' },
+  { value: 'waste', i18nKey: '625757bc.b7fc00' },
+  { value: 'failed', i18nKey: '625757bc.65dcda' },
+  { value: 'cancel', i18nKey: '625757bc.625fb2' }
 ]
 
 export const invoice_source_map = {
@@ -46,8 +51,8 @@ export const invoice_source_map = {
 }
 
 export const invoice_source_arr = [
-  { value: 'user', label: '625757bc.52ffb1', title: '625757bc.52ffb1' },
-  { value: 'oms', label: '625757bc.6bd7ad', title: '625757bc.6bd7ad' }
+  { value: 'user', i18nKey: '625757bc.52ffb1' },
+  { value: 'oms', i18nKey: '625757bc.6bd7ad' }
 ]
 
 export const invoice_log_type_map = {

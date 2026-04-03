@@ -20,8 +20,5 @@ release.*
 .npm-cache/_update-notifier-last-checked
 AGENTS.md
 openspec/
-.claude/
 dist/
-.cursor/
-.agent/
-.codex/
+

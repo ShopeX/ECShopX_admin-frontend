@@ -12,7 +12,6 @@ import {
   open_status_step_map,
   invoice_type_code_map,
   invoice_source_map,
-  invoice_source_arr,
   invoice_log_type_map
 } from './constants'
 
@@ -297,8 +296,8 @@ export const formSchema = (vm) =>
         defaultValue: '',
         options: open_status_arr.map((item) => ({
           ...item,
-          label: vm.$t(item.label),
-          title: vm.$t(item.title)
+          label: vm.$t(item.i18nKey),
+          title: vm.$t(item.i18nKey)
         }))
       },
       {

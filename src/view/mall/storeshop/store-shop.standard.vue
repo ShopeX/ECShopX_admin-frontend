@@ -275,6 +275,23 @@ export default {
           }
         },
         {
+          fieldName: 'brand_id',
+          label: '品牌',
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: '商品/商标关键词',
+            remote: true,
+            filterable: true,
+            clearable: true,
+            remoteMethod: this.getGoodsBranchList,
+            options: this.goodsBranchList.map((item) => ({
+              label: item.attribute_name,
+              value: item.attribute_id
+            }))
+          }
+        },
+        {
           fieldName: 'item_bn',
           label: this.$t('8c556aa3.e9de29'),
           component: 'input',

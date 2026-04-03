@@ -255,20 +255,21 @@ export default {
           name: this.$t('8e2ca557.f55538'),
           value: parseInt(item.aftersales_count)
         })
+        // 与下方表格 formatter 一致：接口为分，图表纵轴与 tooltip 展示元
         amountData.push({
           time: item.count_date,
           name: this.$t('8e2ca557.9ca9e4'),
-          value: parseInt(item.gmv_count)
+          value: parseInt(item.gmv_count, 10) / 100
         })
         amountData.push({
           time: item.count_date,
           name: this.$t('8e2ca557.78aff0'),
-          value: parseInt(item.amount_payed_count)
+          value: parseInt(item.amount_payed_count, 10) / 100
         })
         amountData.push({
           time: item.count_date,
           name: this.$t('8e2ca557.d7cebd'),
-          value: parseInt(item.refunded_count)
+          value: parseInt(item.refunded_count, 10) / 100
         })
       })
 

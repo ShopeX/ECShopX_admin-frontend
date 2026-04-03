@@ -440,28 +440,28 @@ export default {
         tabList: [
           {
             pagePath: '/pages/index',
-            text: '83ced53b.db1c89',
+            text: this.$t('83ced53b.db1c89'),
             name: 'home',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/category/index',
-            text: '83ced53b.d0771a',
+            text: this.$t('83ced53b.d0771a'),
             name: 'category',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/cart/espier-index',
-            text: '83ced53b.c017be',
+            text: this.$t('83ced53b.c017be'),
             name: 'cart',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/member/index',
-            text: '83ced53b.07b181',
+            text: this.$t('83ced53b.07b181'),
             name: 'member',
             iconPath: '',
             selectedIconPath: ''
@@ -613,28 +613,28 @@ export default {
         data: [
           {
             pagePath: '/pages/index',
-            text: '83ced53b.db1c89',
+            text: this.$t('83ced53b.db1c89'),
             name: 'home',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/category/index',
-            text: '83ced53b.d0771a',
+            text: this.$t('83ced53b.d0771a'),
             name: 'category',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/cart/espier-index',
-            text: '83ced53b.c017be',
+            text: this.$t('83ced53b.c017be'),
             name: 'cart',
             iconPath: '',
             selectedIconPath: ''
           },
           {
             pagePath: '/pages/member/index',
-            text: '83ced53b.07b181',
+            text: this.$t('83ced53b.07b181'),
             name: 'member',
             iconPath: '',
             selectedIconPath: ''
@@ -1036,7 +1036,8 @@ export default {
       const { tab_bar } = await this.$api.template.getPagesTemplateSetInfo({
         pages_template_id: templateId
       })
-      this.navForm = this.$options.data().navForm
+      // 必须 call(this)，否则 data() 内 this.$t 等实例方法不可用
+      this.navForm = this.$options.data.call(this).navForm
       this.navForm.pages_template_id = templateId
       if (tab_bar) {
         const { config, data } = JSON.parse(tab_bar)
@@ -1076,7 +1077,7 @@ export default {
     },
     onChangePagePath(index, value) {
       const { label, name } = NAVS.find((item) => item.value == value)
-      this.navForm.tabList[index].text = label
+      this.navForm.tabList[index].text = this.$t(label)
       this.navForm.tabList[index].name = name
       if (value != 'customPage' && this.navForm.tabList[index]?.customPage) {
         this.$delete(this.navForm.tabList[index], 'customPage')

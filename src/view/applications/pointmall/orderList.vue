@@ -51,7 +51,7 @@
             <el-option
               v-for="item in open_status_arr"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.i18nKey)"
               :value="item.value"
             />
           </el-select>
@@ -259,12 +259,12 @@
             <el-table-column prop="invoice_status" :label="$t('829ad9f2.2af9f7')">
               <template slot-scope="scope">
                 <span v-if="scope.row.invoice_status === 'success'" style="color: green">
-                  {{ open_status_map[scope.row.invoice_status] }}
+                  {{ invoiceStatusText(scope.row.invoice_status) }}
                 </span>
                 <span v-else-if="scope.row.invoice_status === 'failed'" style="color: red">
-                  {{ open_status_map[scope.row.invoice_status] }}
+                  {{ invoiceStatusText(scope.row.invoice_status) }}
                 </span>
-                <span v-else> {{ open_status_map[scope.row.invoice_status] }} </span>
+                <span v-else> {{ invoiceStatusText(scope.row.invoice_status) }} </span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="source_name" label="来源"></el-table-column>
@@ -951,6 +951,11 @@ export default {
     this.getJstErpSetting()
   },
   methods: {
+    /** 开票状态：从 i18n key 转为当前语言文案 */
+    invoiceStatusText(status) {
+      const key = this.open_status_map[status]
+      return key ? this.$t(key) : ''
+    },
     getJstErpSetting() {
       this.$api.third.getJstErpSetting().then((res) => {
         this.jstErpSetting = res

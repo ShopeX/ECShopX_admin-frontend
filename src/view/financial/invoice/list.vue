@@ -31,9 +31,9 @@
             :placeholder="$t('364a6013.708c9d')"
           >
             <el-option
-              v-for="item in invoiceSourceList"
+              v-for="item in invoiceSourceOptions"
               :key="item.value"
-              :label="$t(item.title)"
+              :label="item.label"
               size="mini"
               :value="item.value"
             />
@@ -55,7 +55,7 @@
             <el-option
               v-for="item in typeList"
               :key="item.value"
-              :label="$t(item.title)"
+              :label="item.label"
               size="mini"
               :value="item.value"
             />
@@ -92,9 +92,9 @@
           <!-- 选择tab -->
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane
-              v-for="item in status"
+              v-for="item in invoiceStatusTabItems"
               :key="item.value"
-              :label="$t(item.label)"
+              :label="item.label"
               :name="item.value"
             />
           </el-tabs>
@@ -176,7 +176,6 @@ export default {
   data() {
     return {
       activeName: 'all',
-      status,
       selectedRows: [],
       editRow: null,
       areas: [],
@@ -205,7 +204,6 @@ export default {
         invoice_type_code:'',
         cycleTime:[]
       },
-      invoiceSourceList:invoice_source_arr,
       orderCategory: this.VERSION_STANDARD()
         ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
         : ORDER_CATEGORY,
@@ -218,10 +216,24 @@ export default {
     dialogRuleForm() {
       return formSchema(this)
     },
+    /** 开票状态 Tab：已翻译文案，随语言切换更新 */
+    invoiceStatusTabItems() {
+      return status.map((item) => ({
+        value: item.value,
+        label: this.$t(item.i18nKey)
+      }))
+    },
+    /** 发票来源筛选项 */
+    invoiceSourceOptions() {
+      return invoice_source_arr.map((item) => ({
+        value: item.value,
+        label: this.$t(item.i18nKey)
+      }))
+    },
     typeList() {
       return [
-        { value: '01', title: this.$t('364a6013.515a32') },
-        { value: '02', title: this.$t('364a6013.8a487a') }
+        { value: '01', label: this.$t('364a6013.515a32') },
+        { value: '02', label: this.$t('364a6013.8a487a') }
       ]
     }
   },

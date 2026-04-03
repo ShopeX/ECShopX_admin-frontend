@@ -50,10 +50,14 @@ export default {
   },
 
   data() {
-    const { title } = PickerType.resolvePickerConfig(this.type)
-    const { dialogTitle } = this.value
+    const { title: configTitle } = PickerType.resolvePickerConfig(this.type)
+    const { dialogTitle } = this.value || {}
+    // resolvePickerConfig 读到的是各 picker 静态 config.title（i18n key），此处必须翻译，否则弹窗显示 d81d8932.xxx
+    const resolved =
+      dialogTitle ||
+      (configTitle != null && configTitle !== '' ? i18n.t(String(configTitle)) : configTitle)
     return {
-      title: dialogTitle || title,
+      title: resolved,
       isLocalShow: false
     }
   },

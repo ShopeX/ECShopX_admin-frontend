@@ -21,7 +21,7 @@
     <div class="page-goods-salecategory">
       <div class="action-container flex items-center gap-4">
         <el-button type="primary" @click="addCategory"> {{ $t('0e7dabe2.c171b3') }} </el-button>
-        <div class="flex items-center gap-2">
+        <div v-if="!VERSION_PLATFORM()" class="flex items-center gap-2">
           <span>{{ $t('0e7dabe2.63cd0e') }}</span>
           <el-switch
             v-model="saleableEnabled"
@@ -110,7 +110,12 @@
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('0e7dabe2.e8f9a1')" width="120" align="center">
+        <el-table-column
+          v-if="!VERSION_PLATFORM()"
+          :label="$t('0e7dabe2.e8f9a1')"
+          width="120"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-switch
               :value="scope.row.is_show_front"
@@ -192,6 +197,7 @@ export default {
         {
           label: this.$t('0e7dabe2.e8f9a1'),
           key: 'is_show_front',
+          isShow: () => !this.VERSION_PLATFORM(),
           component: ({ key }, value) => <el-switch v-model={value[key]} active-value="1" inactive-value="0"/>,
         },
         {
@@ -215,7 +221,9 @@ export default {
   mounted() {
     this.init()
     this.fetchWechatList()
-    this.fetchSaleableFilter()
+    if (!this.VERSION_PLATFORM()) {
+      this.fetchSaleableFilter()
+    }
     // this.classification()
   },
   methods: {

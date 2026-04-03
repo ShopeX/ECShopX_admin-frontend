@@ -318,8 +318,8 @@
             </el-row>
           </div>
         </el-card>
-        <div v-if="!IS_SUPPLIER()" slot="header">{{ $t('3cdfcea1.954493') }}</div>
-        <div v-if="!IS_SUPPLIER()" class="card-panel">
+        <div slot="header">{{ $t('3cdfcea1.954493') }}</div>
+        <div class="card-panel">
           <el-table
             v-if="orderInfo"
             border

@@ -54,6 +54,7 @@
 <script>
 import DEFAULT_CONFIG from '@/config'
 import { getSystemTitle } from '@/utils'
+import { getMenuDisplayName } from '@/utils/menuI18n'
 import { micrApp } from '@/utils/micr-app'
 import LayoutSidebar from './layout-sidebar.vue'
 import LayoutContent from './layout-content.vue'
@@ -87,7 +88,7 @@ export default {
       if (this.activeMainMenu) {
         const activeMenu = this.mainMenus?.find((item) => item.alias_name === this.activeMainMenu)
         if (activeMenu) {
-          return activeMenu.name
+          return getMenuDisplayName(this, activeMenu)
         }
       }
       // 否则返回默认系统标题

@@ -52,7 +52,6 @@
 
 import { tableSchema, formSchema } from './informationSchema'
 import moment from 'moment'
-import { status } from './constants'
 import { generatorParams } from '@/utils/schemaHelper'
 import { pageMixin } from '@/mixins'
 import api from '@/api'
@@ -62,7 +61,6 @@ export default {
   data() {
     return {
       activeName: 'all',
-      status,
       selectedRows: [],
       editRow: null,
       areas: [],

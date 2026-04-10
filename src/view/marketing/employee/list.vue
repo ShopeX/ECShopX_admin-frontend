@@ -292,6 +292,7 @@ export default {
           }
         ],
         columns: [
+          { name: this.$t('bea3f44a.7a9e2d'), key: 'id', width: 120 },
           { name: this.$t('bea3f44a.39834b'), key: 'name', width: 180 },
           {
             name: this.$t('bea3f44a.ed13b6'),

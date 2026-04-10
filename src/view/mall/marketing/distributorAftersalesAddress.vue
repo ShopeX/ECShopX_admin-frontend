@@ -300,7 +300,10 @@ export default {
     async addStoreAction() {
       const distributor_ids = this.addressForm.distributors.map((item) => item.distributor_id)
       const { data } = await this.$picker.shop({
-        data: distributor_ids
+        data: distributor_ids,
+        queryParams: {
+          show_distributor_self: 1
+        }
       })
       this.addressForm.distributors = JSON.parse(JSON.stringify(data))
     },

@@ -39,19 +39,19 @@ const config = {
       },
       value: [
         {
-          content: 'cff31093.818d78',
+          content: i18n.t('cff31093.818d78'),
           imgUrl: ''
         },
         {
-          content: 'cff31093.4933ca',
+          content: i18n.t('cff31093.4933ca'),
           imgUrl: ''
         },
         {
-          content: 'cff31093.a48b28',
+          content: i18n.t('cff31093.a48b28'),
           imgUrl: ''
         },
         {
-          content: 'cff31093.59bd68',
+          content: i18n.t('cff31093.59bd68'),
           imgUrl: ''
         }
       ]

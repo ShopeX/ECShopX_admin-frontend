@@ -505,7 +505,7 @@ export default {
         //搜索银行选项label，bank_name
         label: `${item.bank_name}:${item.bank_account_no}`,
         //弹框下拉选项value，title
-        value: item.id,
+        value: item.id.toString(),
         title: item.bank_account_name
       }))
       this.bankList = _list

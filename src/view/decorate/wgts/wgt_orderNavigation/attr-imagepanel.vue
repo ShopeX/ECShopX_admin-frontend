@@ -21,6 +21,7 @@
 
 <script>
 import Vue from 'vue'
+import { i18n } from '@/i18n'
 import CompPickerLink from '../../comps/comp-pickerLink'
 import CompTodoList from '../../comps/comp-todoList'
 import CompButton from '../../comps/comp-button'
@@ -33,7 +34,7 @@ export default {
   methods: {
     handleClickAdd() {
       this.value.push({
-        content: 'c1030e12.8585af',
+        content: i18n.t('c1030e12.8585af'),
         imgUrl: ''
       })
     },

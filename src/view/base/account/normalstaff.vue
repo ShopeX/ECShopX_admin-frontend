@@ -40,6 +40,21 @@
       <el-table-column prop="login_name" :label="$t('81d2acb6.bb2cdf')" />
       <el-table-column prop="mobile" :label="$t('81d2acb6.8098e2')" />
       <el-table-column prop="username" :label="$t('81d2acb6.60d045')" />
+      <el-table-column :label="$t('f3a67ede.5c16c5')" min-width="180">
+        <template slot-scope="scope">
+          <template v-if="scope.row.distributor_ids && scope.row.distributor_ids.length">
+            <el-tag
+              v-for="item in scope.row.distributor_ids"
+              :key="item.distributor_id"
+              size="mini"
+              class="rel-distributor-tag"
+            >
+              {{ item.name }}
+            </el-tag>
+          </template>
+          <span v-else>—</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="roles" :label="$t('81d2acb6.464f3d')">
         <template slot-scope="scope">
           <el-tag
@@ -466,6 +481,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .el-tag + .el-tag {
+  margin-left: 5px;
+}
+.rel-distributor-tag + .rel-distributor-tag {
   margin-left: 5px;
 }
 .new-tag {

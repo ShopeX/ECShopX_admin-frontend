@@ -13,7 +13,7 @@
               <el-radio :label="1"> {{ $t('2d1c35f7.0a60ac') }} </el-radio>
               <el-radio :label="0"> {{ $t('2d1c35f7.c9744f') }} </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <span class="tip">{{ $t('2d1c35f7.d0c1da') }}</span>
           </el-form-item>
           <el-form-item :label="$t('2d1c35f7.0ee50e')">
@@ -30,7 +30,7 @@
               :max="100"
             />
             <span style="margin-left: 5px">%</span>
-            <br>
+            <br />
             <span class="tip"
               >{{ $t('2d1c35f7.a75b32') }}
               <a href="/entity/goodsbase/goodsmaincategory">{{ $t('2d1c35f7.a1a244') }}</a></span

@@ -145,10 +145,8 @@
         <el-table-column :label="$t('cb7af8ae.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text" @click.prevent="handleDown(scope.row)">
-{{
-              $t('cb7af8ae.f26ef9')
-            }}
-</el-button>
+              {{ $t('cb7af8ae.f26ef9') }}
+            </el-button>
           </template>
         </el-table-column>
         <el-table-column prop="log_id" label="ID" />

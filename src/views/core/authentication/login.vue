@@ -6,7 +6,7 @@
 <template>
   <div class="page-login bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="300">
+      <img src="/images/logo.png" alt="logo" width="300" />
       <!-- <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">总部</div> -->
       <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
       <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>

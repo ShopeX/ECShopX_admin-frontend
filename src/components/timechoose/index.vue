@@ -11,8 +11,7 @@
       <el-option :label="$t('79d48f9d.63f66f')" :value="2" />
       <el-option :label="$t('79d48f9d.457a6d')" :value="3" />
       <el-option :label="$t('79d48f9d.4e2196')" :value="4" />
-      <el-option :label="$t('79d48f9d.f1d4ff')" :value="5" />
-</el-select
+      <el-option :label="$t('79d48f9d.f1d4ff')" :value="5" /> </el-select
     >&nbsp;
     <span v-if="isNeardate"
       >{{ typeText

@@ -8,7 +8,13 @@ import { i18n } from '@/i18n'
 const config = {
   name: 'heading',
   setting: [
-    { label: i18n.t('f08d652e.32c65d'), key: 'title', component: 'textarea', rows: 6, value: '标题' },
+    {
+      label: i18n.t('f08d652e.32c65d'),
+      key: 'title',
+      component: 'textarea',
+      rows: 6,
+      value: '标题'
+    },
     {
       label: i18n.t('f08d652e.d1b490'),
       key: 'align',

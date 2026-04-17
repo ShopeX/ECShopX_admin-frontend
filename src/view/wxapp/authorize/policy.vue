@@ -44,7 +44,7 @@
     <div class="bd">
       <h3>《{{ weappName }}{{ $t('a6e63cec.c3907b') }}》</h3>
       <p>{{ $t('a6e63cec.b7a241') }}{{ weappName }}{{ $t('a6e63cec.dee550') }}</p>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.497acc') }}</h4>
       <p>{{ $t('a6e63cec.583ee9') }}</p>
       <div class="policy-container mtp-10">
@@ -61,10 +61,10 @@
           />{{ $t('a6e63cec.9afc01') }}{{ getPrivacyDesc(key) }}
         </div>
       </div>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.8c5689') }}</h4>
       <p>{{ weappName }}{{ $t('a6e63cec.ac8f57') }}</p>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.f83a44') }}</h4>
       <p>
         {{ $t('a6e63cec.2f584d') }}
@@ -89,7 +89,7 @@
           </el-select>
         </el-input>
       </div>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.128a33') }}</h4>
       <!-- <p>{{weappName}}小程序由商派软件有限公司代为开发，开发者保证，商派软件有限公司将在本指引规定范围内处理你的个人信息。</p> -->
       <div class="mtp-10">
@@ -108,7 +108,7 @@
           </el-radio>
         </div>
       </div>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.ed8480') }}</h4>
       <p>{{ $t('a6e63cec.022caa') }}</p>
       <p>{{ $t('a6e63cec.a5da2e') }}</p>
@@ -121,11 +121,11 @@
         />
         {{ $t('a6e63cec.96941c') }}
       </div>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.5008f6') }}</h4>
       <p>{{ $t('a6e63cec.e6ab60') }}</p>
       <p>{{ $t('a6e63cec.e6a9a6') }}</p>
-      <br>
+      <br />
       <h4>{{ $t('a6e63cec.7064ac') }}</h4>
       <p>{{ $t('a6e63cec.399604') }}</p>
       <div class="upload-block">

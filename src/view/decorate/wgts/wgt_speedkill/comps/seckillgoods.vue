@@ -9,7 +9,7 @@
             :src="value.titleImage"
             class="header-image"
             alt=""
-          >
+          />
           <span
             v-if="value.titleType === 'text' && value.titleText"
             class="header-text"
@@ -69,7 +69,7 @@
       >
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
           <!-- 补贴标签 -->
           <div v-if="getSubsidyAmount(item) > 0" class="subsidy-label">
             <el-image :src="seckillIcon" class="subsidy-icon" alt="" />
@@ -115,11 +115,7 @@ export default {
     }
   },
   data() {
-    return {i18n,
-      countdownInfo: null,
-      countdownTimer: null,
-      seckillIcon: seckillIcon
-    }
+    return { i18n, countdownInfo: null, countdownTimer: null, seckillIcon: seckillIcon }
   },
   mounted() {
     this.initCountdown()

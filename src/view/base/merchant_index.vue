@@ -514,12 +514,12 @@
       <el-col :span="4">
         <section v-show="activateInfo.source != 'demo'" class="section-card fn-b-20 card-right">
           <div class="phone-card">
-            <img class="phone-icon" :src="img.phone" :alt="$t('5bcdc5ca.e84643')">
+            <img class="phone-icon" :src="img.phone" :alt="$t('5bcdc5ca.e84643')" />
             <span class="phone-text">{{ $t('5bcdc5ca.e84643') }} </span>
           </div>
           <h4 class="phone-num">400-921-3522 转 3</h4>
           <div class="phone-btn">
-            <img class="phone-icon" :src="img.qq" :alt="$t('5bcdc5ca.7f72e8')">
+            <img class="phone-icon" :src="img.qq" :alt="$t('5bcdc5ca.7f72e8')" />
             <span
               ><a
                 href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
@@ -536,7 +536,7 @@
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
           <div class="sl-img-hd"><i class="el-icon-user-solid" />{{ $t('5bcdc5ca.e21f5a') }}</div>
-          <img :src="img.customerService" alt="" class="img-demo">
+          <img :src="img.customerService" alt="" class="img-demo" />
         </section>
       </el-col>
     </el-row>
@@ -564,7 +564,7 @@
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img :src="img.suo" alt="" class="suo">
+            <img :src="img.suo" alt="" class="suo" />
             <p>{{ $t('5bcdc5ca.b449e5') }}</p>
             <p>{{ $t('5bcdc5ca.0518b4') }}</p>
           </div>
@@ -582,11 +582,11 @@
         <div class="buy-item-ft">
           <div>
             <p>{{ $t('5bcdc5ca.c295e2') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.9b09a5') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.84e826') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.750080') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.eec9b5') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.91a39f') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.9b09a5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.84e826') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.750080') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.eec9b5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.91a39f') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('商城')">
@@ -605,13 +605,13 @@
           <div>
             <p>{{ $t('5bcdc5ca.15e72c') }}</p>
             <p>
-              <img :src="img.check" alt="" class="check-icon">
+              <img :src="img.check" alt="" class="check-icon" />
               {{ $t('5bcdc5ca.d21dc6') }}
             </p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.55ce58') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.a96b28') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.8d61a3') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('5bcdc5ca.3f4d02') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.55ce58') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.a96b28') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.8d61a3') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('5bcdc5ca.3f4d02') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('连锁')">

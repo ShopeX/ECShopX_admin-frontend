@@ -155,15 +155,11 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="exportInvoice">{{ $t('9cc48a0d.82f1ec') }}</el-dropdown-item>
           <el-dropdown-item command="exportDataMaster">
-{{
-            $t('9cc48a0d.067570')
-          }}
-</el-dropdown-item>
+            {{ $t('9cc48a0d.067570') }}
+          </el-dropdown-item>
           <el-dropdown-item command="exportDataNormal">
-{{
-            $t('9cc48a0d.7863ce')
-          }}
-</el-dropdown-item>
+            {{ $t('9cc48a0d.7863ce') }}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <el-tooltip effect="light" :content="$t('9cc48a0d.29119c')" placement="top-start">

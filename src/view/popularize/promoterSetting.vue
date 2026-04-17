@@ -72,7 +72,7 @@
                 class="grade-setting-col"
               >
                 <el-tag>{{ item.name }}</el-tag
-                ><br>
+                ><br />
                 <span class="title">{{ $t('d7e2997d.9d05c7') }}</span>
                 <el-input
                   v-model="form.grade[key].custom_name"

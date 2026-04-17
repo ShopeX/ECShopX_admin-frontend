@@ -29,10 +29,8 @@
         <el-row>
           <el-col :span="4">
             <el-checkbox v-model="is_top" @change="serialChanges">
-{{
-              $t('509e5e05.1b8e54')
-            }}
-</el-checkbox>
+              {{ $t('509e5e05.1b8e54') }}
+            </el-checkbox>
           </el-col>
           <el-col :span="20">
             <span class="text text-ml">{{ $t('509e5e05.bd797f') }}</span>

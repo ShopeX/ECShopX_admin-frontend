@@ -37,14 +37,14 @@
     <el-form label-width="120px" :inline="true">
       <el-form-item :label="$t('996865f0.332050')">
         <div class="upload-box" @click="handleImgPicker('logo')">
-          <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar">
+          <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar" />
           <i v-else class="el-icon-camera" />
         </div>
         <div class="form-item-tip">{{ $t('996865f0.42e8d1') }}</div>
       </el-form-item>
       <el-form-item :label="$t('996865f0.648aec')">
         <div class="upload-box" @click="handleImgPicker('banner')">
-          <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar">
+          <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar" />
           <i v-else class="el-icon-camera" />
         </div>
         <div class="form-item-tip">{{ $t('996865f0.186818') }}</div>

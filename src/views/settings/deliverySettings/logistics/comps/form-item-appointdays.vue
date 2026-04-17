@@ -35,17 +35,13 @@
   <div class="fi-connect-appointdays">
     <div class="appoint-item">
       <el-radio v-model="data.value" label="current" @change="onChange">
-{{
-        $t('97d0899b.2982d7')
-      }}
-</el-radio>
+        {{ $t('97d0899b.2982d7') }}
+      </el-radio>
     </div>
     <div class="appoint-item">
       <el-radio v-model="data.value" label="days" @change="onChange">
-{{
-        $t('97d0899b.e10228')
-      }}
-</el-radio>
+        {{ $t('97d0899b.e10228') }}
+      </el-radio>
       <el-select v-model="data.days" clearable @change="onChange">
         <el-option label="1" value="1" />
         <el-option label="2" value="2" />

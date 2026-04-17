@@ -7,7 +7,7 @@
   <div>
     <el-row class="section-white content-padded coupon-header">
       <el-col :span="6" class="coupon-img">
-        <img src="@/assets/img/webchat.png" :alt="$t('88683ec4.20def7')">
+        <img src="@/assets/img/webchat.png" :alt="$t('88683ec4.20def7')" />
       </el-col>
       <el-col :span="18" class="coupon-desc">
         <h3>

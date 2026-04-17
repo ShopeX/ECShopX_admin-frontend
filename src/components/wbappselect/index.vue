@@ -24,7 +24,7 @@
             >
               <div class="weapplink_item_inner">
                 <div class="weapplink_info clearfix">
-                  <img class="weapplink_avatar f_l" :src="wechatImg" alt="img">
+                  <img class="weapplink_avatar f_l" :src="wechatImg" alt="img" />
                   <strong class="f_l">商派小店</strong>
                 </div>
                 <div class="weapplink_select_mask">

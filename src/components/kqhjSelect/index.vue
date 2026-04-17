@@ -25,7 +25,7 @@
             <div class="shop_module_item shop_module_banner js_shopModuleWrapper">
               <strong class="shop_banner_title">Onex平台</strong>
               <!-- <span class="banner_logo"><img src="@/assets/img/logo2.31693aa.png" alt=""/></span> -->
-              <span class="banner_bg"><img src="" alt="" class="banner_pic"></span>
+              <span class="banner_bg"><img src="" alt="" class="banner_pic" /></span>
               <div class="pic_mask" />
             </div>
             <div class="list_section shop_module_item js_shopModuleWrapper">
@@ -48,7 +48,7 @@
               <ul class="list_row">
                 <li>
                   <a href="javascript:;">
-                    <img alt="img" src="">
+                    <img alt="img" src="" />
                   </a>
                 </li>
               </ul>
@@ -57,15 +57,15 @@
               <el-row :gutter="20" class="list_row_col">
                 <el-col :span="14">
                   <div class="ele_1">
-                    <a href="javascript:;"><img src="" alt="img"></a>
+                    <a href="javascript:;"><img src="" alt="img" /></a>
                   </div>
                 </el-col>
                 <el-col :span="10">
                   <div class="ele_2">
-                    <a href="javascript:;"><img src="" alt="img"></a>
+                    <a href="javascript:;"><img src="" alt="img" /></a>
                   </div>
                   <div class="ele_2">
-                    <a href="javascript:;"><img src="" alt="img"></a>
+                    <a href="javascript:;"><img src="" alt="img" /></a>
                   </div>
                 </el-col>
               </el-row>

@@ -55,7 +55,7 @@
                   v-clipboard:success="onCopySuccess"
                   class="footer-item copy-btn"
                 >
-                  <input v-model="item.link" class="copy-link" type="text">
+                  <input v-model="item.link" class="copy-link" type="text" />
                   {{ $t('03a73c13.99a5da') }}
                 </div>
               </div>

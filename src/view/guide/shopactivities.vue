@@ -7,10 +7,8 @@
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-button type="primary" @click="handleClickAddActivity">
-{{
-        $t('60e84c78.6f0c8f')
-      }}
-</el-button>
+        {{ $t('60e84c78.6f0c8f') }}
+      </el-button>
       <div class="articles">
         <el-row :gutter="10">
           <el-col v-for="(item, index) in list" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
@@ -45,13 +43,9 @@
                   <template v-if="item.is_show === '1'">
                     <i class="iconfont icon-undo-alt" />{{ $t('60e84c78.230505') }}
                   </template>
-                  <template v-else
-                    >
-<i class="iconfont icon-broadcast-tower" />{{
-                      $t('60e84c78.83611a')
-                    }}
-</template
-                  >
+                  <template v-else>
+                    <i class="iconfont icon-broadcast-tower" />{{ $t('60e84c78.83611a') }}
+                  </template>
                 </div>
                 <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
                   <div class="content-bottom-padded">

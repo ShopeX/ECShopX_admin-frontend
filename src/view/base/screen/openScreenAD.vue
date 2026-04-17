@@ -19,7 +19,7 @@
               <p class="frm-tips">{{ $t('94b9c64d.68986c') }}</p>
               <div>
                 <div class="upload-box" @click="handleImgChange">
-                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar">
+                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>

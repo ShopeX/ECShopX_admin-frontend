@@ -103,13 +103,13 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 85px; height: 85px"
-              >
+              />
               <img
                 v-if="item.audit_status === '3'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 92px; height: 92px"
-              >
+              />
             </el-col>
             <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1' ? 0 : 5">
               <router-link

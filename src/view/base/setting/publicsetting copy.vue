@@ -11,7 +11,7 @@
           <span>{{ $t('982b8845.2f859b') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.c90132')">
           <el-switch v-model="form.distributor_param_status" @change="paramShareChange()" />
@@ -32,7 +32,7 @@
           <span>{{ $t('982b8845.53ceb6') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.f4ecf1')">
           <el-switch v-model="form.rate_status" @change="rateStatusChange()" />
@@ -46,7 +46,7 @@
           <span>{{ $t('982b8845.1c7dda') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.15efe2')">
           <el-switch v-model="form.pickupcode_status" @change="presaleStatusChange()" />
@@ -59,7 +59,7 @@
         <span>{{ $t('982b8845.e1d267') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item :label="$t('982b8845.12cfe2')">
         <el-switch v-model="form.whitelist_status" @change="whitelistStatusChange()" />
@@ -72,7 +72,7 @@
           <span>{{ $t('982b8845.a59036') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <!-- <el-form v-model="form" label-width="200px">
         <el-form-item label="赠品是否扣门店库存">
           <el-switch
@@ -97,7 +97,7 @@
           <span>{{ $t('982b8845.154f22') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.aeb804')">
           <el-switch v-model="form.ziti_send_oms" @change="sendOmsChange('ziti_send_oms')" />
@@ -111,7 +111,7 @@
           <span>{{ $t('982b8845.8aa5e1') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.5e6422')">
           <el-switch v-model="form.nostores_status" @change="sendNoStoresChange" />
@@ -137,7 +137,7 @@
         <span>{{ $t('982b8845.cc9def') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item :label="$t('982b8845.89e3a5')">
         <el-switch v-model="form.repeat_cancel" @change="repeatCancelChange()" />
@@ -149,7 +149,7 @@
         <span>{{ $t('982b8845.256171') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item :label="$t('982b8845.f590ae')">
         <el-switch v-model="form.item_store_status" @change="itemStoreChange()" />
@@ -161,7 +161,7 @@
         <span>{{ $t('982b8845.63f039') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item :label="$t('982b8845.1a6e14')">
         <el-switch v-model="form.item_sales_status" @change="itemSalesChange()" />
@@ -174,7 +174,7 @@
           <span>{{ $t('982b8845.48fc91') }}</span>
         </h2>
       </div>
-      <hr style="border: 1px solid #efefef">
+      <hr style="border: 1px solid #efefef" />
       <el-form v-model="form" label-width="200px">
         <el-form-item :label="$t('982b8845.79ebf3')">
           <el-switch v-model="form.invoice_status" @change="invoiceStatusChange()" />
@@ -187,7 +187,7 @@
         <span>{{ $t('982b8845.61b24b') }}</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border: 1px solid #efefef" />
     <el-form v-model="form" label-width="200px">
       <el-form-item :label="$t('982b8845.fb9f26')">
         <el-switch v-model="form.dianwu_show_status" @change="dianwuShowStatusChange()" />

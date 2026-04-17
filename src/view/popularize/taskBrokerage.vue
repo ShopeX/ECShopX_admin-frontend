@@ -63,20 +63,14 @@
         <el-table-column :label="$t('1c4551e3.3fea7c')" min-width="60">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.status == 'finish'" type="success">
-{{
-              $t('1c4551e3.fad522')
-            }}
-</el-tag>
+              {{ $t('1c4551e3.fad522') }}
+            </el-tag>
             <el-tag v-if="scope.row.status == 'close'" type="info">
-{{
-              $t('1c4551e3.b15d91')
-            }}
-</el-tag>
+              {{ $t('1c4551e3.b15d91') }}
+            </el-tag>
             <el-tag v-if="scope.row.status == 'wait'" type="warning">
-{{
-              $t('1c4551e3.fde8d3')
-            }}
-</el-tag>
+              {{ $t('1c4551e3.fde8d3') }}
+            </el-tag>
           </template>
         </el-table-column>
       </el-table>

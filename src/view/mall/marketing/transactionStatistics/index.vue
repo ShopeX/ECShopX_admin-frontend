@@ -10,7 +10,7 @@
       <div slot="header" class="header_">
         <div>{{ $t('68f8d259.5d8376') }}</div>
         <div class="why" @mouseenter="mouseenterHandle(1)" @mouseout="mouseoverHandle(1)">
-          <img src="../../../../assets/img/wenhao.png" alt="">
+          <img src="../../../../assets/img/wenhao.png" alt="" />
 
           <div v-if="tips_1" class="tips">
             <div class="tips_content">
@@ -122,7 +122,7 @@
             </el-button>
           </div>
           <div class="why" @mouseenter="mouseenterHandle(2)" @mouseout="mouseoverHandle(2)">
-            <img src="../../../../assets/img/wenhao.png" alt="">
+            <img src="../../../../assets/img/wenhao.png" alt="" />
 
             <div v-if="tips_2" class="tips">
               <div class="tips_content">

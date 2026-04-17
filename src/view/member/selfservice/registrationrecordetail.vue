@@ -99,20 +99,14 @@
       <el-card :header="$t('b20b6711.c7557f')" shadow="naver">
         <el-form-item :label="$t('b20b6711.0dee1e')" prop="status">
           <el-tag v-if="recorddata.status == 'pending'" type="warning" size="mini">
-{{
-            $t('a0d7a294.5cb424')
-          }}
-</el-tag>
+            {{ $t('a0d7a294.5cb424') }}
+          </el-tag>
           <el-tag v-if="recorddata.status == 'passed'" type="success" size="mini">
-{{
-            $t('b20b6711.ecfa64')
-          }}
-</el-tag>
+            {{ $t('b20b6711.ecfa64') }}
+          </el-tag>
           <el-tag v-if="recorddata.status == 'rejected'" type="danger" size="mini">
-{{
-            $t('a0d7a294.81233d')
-          }}
-</el-tag>
+            {{ $t('a0d7a294.81233d') }}
+          </el-tag>
         </el-form-item>
         <el-form-item :label="$t('b20b6711.2271f0')">
           <el-card

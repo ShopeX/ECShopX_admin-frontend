@@ -75,7 +75,7 @@
           <el-table-column type="index" width="50" :label="$t('b264361a.faaadc')" />
           <el-table-column :label="$t('b264361a.9b94b1')" min-width="50">
             <template slot-scope="scope">
-              <img :src="wximageurl + scope.row.item_pic" width="50">
+              <img :src="wximageurl + scope.row.item_pic" width="50" />
             </template>
           </el-table-column>
           <el-table-column prop="item_name" :label="$t('b264361a.1fd1d5')" min-width="100" />

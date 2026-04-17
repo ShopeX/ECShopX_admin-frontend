@@ -139,10 +139,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer content-center">
         <el-button type="primary" @click="addSalespersonAction">
-{{
-          $t('5d24fd22.38cf16')
-        }}
-</el-button>
+          {{ $t('5d24fd22.38cf16') }}
+        </el-button>
       </div>
     </el-dialog>
     <el-dialog

@@ -14,7 +14,7 @@
           <div class="frm-tips">{{ $t('3c26d461.6113fc') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar">
+              <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -123,10 +123,8 @@
         <el-form-item :label="$t('3c26d461.3b9737')">
           <el-col :span="23">
             <el-button type="primary" class="el-icon-plus" @click="relItems">
-{{
-              $t('3c26d461.43d1e2')
-            }}
-</el-button>
+              {{ $t('3c26d461.43d1e2') }}
+            </el-button>
             <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
               <el-table-column label="ID" prop="item_id" width="60" />
               <el-table-column :label="$t('3c26d461.d7ec2d')" prop="item_name" />

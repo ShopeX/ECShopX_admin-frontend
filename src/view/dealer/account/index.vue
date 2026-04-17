@@ -8,10 +8,8 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addLabels">
-{{
-          $t('08833112.f0677c')
-        }}
-</el-button>
+          {{ $t('08833112.f0677c') }}
+        </el-button>
       </el-col>
       <el-col :span="12">
         <el-input :placeholder="$t('08833112.8098e2')" v-model="mobile">
@@ -37,10 +35,8 @@
       <el-table-column :label="$t('08833112.2b6bc0')">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">
-{{
-            $t('08833112.95b351')
-          }}
-</el-button>
+            {{ $t('08833112.95b351') }}
+          </el-button>
           <!--<el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)" v-if="scope.row.is_dealer_main == 0">删除</el-button
           >-->
         </template>

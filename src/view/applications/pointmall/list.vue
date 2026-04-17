@@ -93,52 +93,37 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="physicalupload">
-{{
-              $t('8312e7f7.9745ac')
-            }}
-</el-dropdown-item>
+              {{ $t('8312e7f7.9745ac') }}
+            </el-dropdown-item>
             <el-dropdown-item command="physicalstoreupload">
-{{
-              $t('8312e7f7.ac5320')
-            }}
-</el-dropdown-item>
+              {{ $t('8312e7f7.ac5320') }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-button type="primary" plain @click="addCategory">{{ $t('8312e7f7.51af77') }}</el-button>
         <el-button type="primary" plain @click="addTemplates">
-{{
-          $t('8312e7f7.a7aae3')
-        }}
-</el-button>
+          {{ $t('8312e7f7.a7aae3') }}
+        </el-button>
         <el-button type="primary" plain @click="batchItemsStore">
-{{
-          $t('8312e7f7.0648ad')
-        }}
-</el-button>
+          {{ $t('8312e7f7.0648ad') }}
+        </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('onsale')">
-{{
-          $t('8312e7f7.644c0d')
-        }}
-</el-button>
+          {{ $t('8312e7f7.644c0d') }}
+        </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('instock')">
-{{
-          $t('8312e7f7.d5e015')
-        }}
-</el-button>
+          {{ $t('8312e7f7.d5e015') }}
+        </el-button>
         <el-button v-if="isBindJstErp" plain type="primary" @click="uploadJstErpItems()">
           {{ $t('8312e7f7.78a38b') }}
         </el-button>
         <el-dropdown @command="exportItemsData">
           <el-button type="primary" plain>
-            {{ $t('8312e7f7.55405e') }} <i class="el-icon-arrow-down el-icon--right"
-          />
-</el-button>
+            {{ $t('8312e7f7.55405e') }} <i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="product-export">
-{{
-              $t('8312e7f7.f83133')
-            }}
-</el-dropdown-item>
+              {{ $t('8312e7f7.f83133') }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -154,10 +139,8 @@
             <el-input v-model="warning_store" value="warning_store">
               <template slot="prepend">{{ $t('8312e7f7.6d4036') }}</template>
               <el-button slot="append" @click="setWarningStore">
-{{
-                $t('8312e7f7.be5fbb')
-              }}
-</el-button>
+                {{ $t('8312e7f7.be5fbb') }}
+              </el-button>
             </el-input>
           </div>
           <el-table

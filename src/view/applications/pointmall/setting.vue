@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              {{ $t('13b44266.c95e74') }} <br>
+              {{ $t('13b44266.c95e74') }} <br />
               {{ $t('13b44266.518129') }}
             </span>
             <el-switch
@@ -35,7 +35,7 @@
               <el-radio :label="'cash'">{{ $t('13b44266.b7312f') }}</el-radio>
               <el-radio :label="'point'">{{ $t('13b44266.fcead5') }}</el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <span class="tip">{{ $t('13b44266.4e116d') }}</span>
           </el-form-item>
           <el-form-item v-if="form.freight_type == 'point'" :label="$t('13b44266.a6cd51')">
@@ -53,7 +53,7 @@
               <el-radio :label="'down'">{{ $t('13b44266.5a309d') }}</el-radio>
               <el-radio :label="'up'">{{ $t('13b44266.a0730b') }}</el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <!-- <span class="tip">说明：运费使用现金或积分支付</span> -->
           </el-form-item>
           <!-- <el-form-item size="large">

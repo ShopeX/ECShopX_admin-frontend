@@ -33,10 +33,8 @@
         </el-col>
         <el-col :span="2">
           <el-button class="fl" type="primary" @click="searchByKey">
-{{
-            $t('8f572562.e5f71f')
-          }}
-</el-button>
+            {{ $t('8f572562.e5f71f') }}
+          </el-button>
         </el-col>
       </el-row>
     </div>

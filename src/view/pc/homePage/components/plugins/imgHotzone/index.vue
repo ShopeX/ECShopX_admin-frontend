@@ -14,7 +14,7 @@
             'https://fakeimg.pl/1000x240/F8F8F8/CCC/?text=Image&font=helvetica'
           "
           alt=""
-        >
+        />
       </div>
     </div>
   </div>

@@ -271,10 +271,8 @@
                       :on-success="handleUploadSuccess"
                     >
                       <el-button size="small" type="primary" plain>
-{{
-                        $t('e748f88a.2c808b')
-                      }}
-</el-button>
+                        {{ $t('e748f88a.2c808b') }}
+                      </el-button>
                     </el-upload>
                   </div>
                 </el-form-item>

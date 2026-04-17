@@ -279,7 +279,7 @@
       <el-table v-loading="loading" :data="goodsList" style="width: 100%">
         <el-table-column :label="$t('88c304e0.1fd1d5')" class="goods-img">
           <template slot-scope="scope">
-            <img :src="scope.row.img_url"><span>{{ scope.row.name }}</span>
+            <img :src="scope.row.img_url" /><span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column :label="$t('88c304e0.0e9fd9')">

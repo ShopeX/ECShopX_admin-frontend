@@ -22,7 +22,7 @@
                 "
                 @click="chooseMenu(item.id, index)"
               >
-                <input type="hidden" name="parentmenu" :value="index">
+                <input type="hidden" name="parentmenu" :value="index" />
                 <a href="javascript:;" class="pre_menu_link"
                   ><i v-if="menuData.length <= 0" class="el-icon-plus" /><span>{{
                     item.name
@@ -35,7 +35,7 @@
                       :class="subItem.id === cid ? 'current' : ''"
                       @click.stop="chooseSubMenu(subItem.id, index, subIndex)"
                     >
-                      <input type="hidden" name="submenu" :value="index + '-' + subIndex">
+                      <input type="hidden" name="submenu" :value="index + '-' + subIndex" />
                       <a href="javascript:;">
                         <span class="sub_pre_menu_inner">{{ subItem.name }}</span>
                       </a>

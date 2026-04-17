@@ -20,7 +20,7 @@
                 src: item.url
               }
             ],
-            notSupportedMessage: this.$t('c9176f55.01c0da'),
+            notSupportedMessage: $t('c9176f55.01c0da'),
             controlBar: false
           }"
         />
@@ -75,7 +75,7 @@
                         src: item.url
                       }
                     ],
-                    notSupportedMessage: this.$t('c9176f55.01c0da'),
+                    notSupportedMessage: $t('c9176f55.01c0da'),
                     controlBar: false
                   }"
                 />
@@ -93,10 +93,10 @@
             <el-pagination
               background
               layout="total, sizes, prev, pager, next"
-              :current-page.sync="params.page"
+              :current-page.sync="localparams.page"
               :page-sizes="[10, 20, 50]"
               :total="total_count"
-              :page-size="params.pageSize"
+              :page-size="localparams.pageSize"
               @current-change="handleLocalCurrentChange"
               @size-change="handleLocalSizeChange"
             />
@@ -159,12 +159,19 @@ export default {
   },
   computed: {
     checkedVideoList() {
-      return this.checked.filter((item) => item.media_id)
+      if (!Array.isArray(this.checked)) {
+        return []
+      }
+      return this.checked.filter((item) => item && item.media_id)
     }
   },
   watch: {
     data: {
       handler(val) {
+        if (val == null) {
+          this.checked = []
+          return
+        }
         this.isArray = Object.prototype.toString.call(val).slice(8, -1) === 'Array'
         if (this.isArray) {
           this.checked = JSON.parse(JSON.stringify(val))
@@ -268,10 +275,15 @@ export default {
       this.localloading = true
       getQiniuVideoList(this.localparams)
         .then((response) => {
-          this.localvideoList = response.data.data.list
-          this.localloading = false
+          const payload = response?.data?.data
+          this.localvideoList = payload && Array.isArray(payload.list) ? payload.list : []
+          this.total_count =
+            payload && typeof payload.total_count === 'number' ? payload.total_count : 0
         })
-        .catch(function (error) {
+        .catch((err) => {
+          console.error(err)
+        })
+        .finally(() => {
           this.localloading = false
         })
     },
@@ -295,7 +307,7 @@ export default {
     handleLocalSizeChange(pageSize) {
       this.localparams.page = 1
       this.localparams.pageSize = pageSize
-      this.fetchVideos()
+      this.fetchLocalVideos()
     },
     checkLocalVideo(item) {
       if (this.multiple) {

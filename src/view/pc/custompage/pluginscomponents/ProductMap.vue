@@ -14,7 +14,7 @@
               <i class="el-icon-delete" />
             </div>
             <div @click="handleImgChange(index)">
-              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader">
+              <img v-if="item.imgUrl" :src="item.imgUrl" class="banner-uploader" />
               <div v-else class="banner-uploader">
                 <i class="el-icon-camera" />
                 {{ $t('22f1944e.ce6855') }}

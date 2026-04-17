@@ -52,10 +52,8 @@
               {{ $t('08fc23a1.538414') }}
             </el-button>
             <el-button type="primary" @click="exportData('normal_order')">
-{{
-              $t('08fc23a1.82b914')
-            }}
-</el-button>
+              {{ $t('08fc23a1.82b914') }}
+            </el-button>
           </el-button-group>
           <el-popover
             placement="top-start"
@@ -139,10 +137,8 @@
                 {{ $t('08fc23a1.8d02a5') }}
               </el-tag>
               <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini">
-{{
-                $t('08fc23a1.608afd')
-              }}
-</el-tag>
+                {{ $t('08fc23a1.608afd') }}
+              </el-tag>
               <el-tag v-else-if="scope.row.order_status_des == 'CANCEL'" type="danger" size="mini">
                 {{ $t('08fc23a1.2111cc') }}
               </el-tag>
@@ -354,10 +350,8 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click.native="handleCancel">{{ $t('08fc23a1.625fb2') }}</el-button>
           <el-button type="primary" @click="submitDeliveryAction">
-{{
-            $t('08fc23a1.38cf16')
-          }}
-</el-button>
+            {{ $t('08fc23a1.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
 
@@ -424,15 +418,11 @@
                 <el-col :span="20">
                   <template>
                     <el-radio v-model="cancelForm.check_cancel" label="0">
-{{
-                      $t('08fc23a1.1bf19c')
-                    }}
-</el-radio>
+                      {{ $t('08fc23a1.1bf19c') }}
+                    </el-radio>
                     <el-radio v-model="cancelForm.check_cancel" label="1">
-{{
-                      $t('08fc23a1.e61f2c')
-                    }}
-</el-radio>
+                      {{ $t('08fc23a1.e61f2c') }}
+                    </el-radio>
                   </template>
                 </el-col>
               </el-row>
@@ -454,10 +444,8 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click.native="handleCancelOrderCancel">{{ $t('08fc23a1.625fb2') }}</el-button>
           <el-button type="primary" @click="submitCancelConfirmAction">
-{{
-            $t('08fc23a1.38cf16')
-          }}
-</el-button>
+            {{ $t('08fc23a1.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
       <!-- 取消订单 -->
@@ -509,10 +497,8 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click.native="handleCancelOrder">{{ $t('08fc23a1.625fb2') }}</el-button>
           <el-button type="primary" @click="submitCancelOrderConfirmAction">
-{{
-            $t('08fc23a1.38cf16')
-          }}
-</el-button>
+            {{ $t('08fc23a1.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
     </div>

@@ -83,10 +83,8 @@
         <el-table-column :label="$t('822436ab.2b6bc0')" fixed="left">
           <template slot-scope="scope">
             <el-button type="text" @click="handleDetail(scope.row)">
-{{
-              $t('822436ab.f26225')
-            }}
-</el-button>
+              {{ $t('822436ab.f26225') }}
+            </el-button>
             <el-button
               v-if="
                 scope.row.refund_status == 'AUDIT_SUCCESS' &&

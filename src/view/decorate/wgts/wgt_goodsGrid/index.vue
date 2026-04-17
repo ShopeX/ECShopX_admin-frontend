@@ -191,11 +191,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      leftGoodsList: [],
-      rightGoodsList: [],
-      goodsList: []
-    }
+    return { i18n, leftGoodsList: [], rightGoodsList: [], goodsList: [] }
   },
   computed: {
     outerStyle() {

@@ -8,10 +8,8 @@
     <el-row :gutter="20" class="action-container">
       <el-col :span="18">
         <el-button type="primary" @click="editTocicShow(true)">
-{{
-          $t('ab1a2e0d.4fee56')
-        }}
-</el-button>
+          {{ $t('ab1a2e0d.4fee56') }}
+        </el-button>
 
         <el-button @click="auditHandle">{{ $t('ab1a2e0d.6aac0d') }}</el-button>
         <!-- <el-button
@@ -23,10 +21,8 @@
         </el-button> -->
 
         <el-button type="primary" plain @click="topicModalHide(true)">
-{{
-          $t('ab1a2e0d.f5816a')
-        }}
-</el-button>
+          {{ $t('ab1a2e0d.f5816a') }}
+        </el-button>
         <span class="marbor" />
         <el-select
           v-model="params.source"

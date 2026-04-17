@@ -49,9 +49,7 @@ export default {
     }
   },
   data() {
-    return {i18n,
-      localValue: []
-    }
+    return { i18n, localValue: [] }
   },
   watch: {
     localValue: {

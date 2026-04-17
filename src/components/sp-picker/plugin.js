@@ -40,7 +40,8 @@ export default {
       couponPackage: (args) => fn({ value: { ...args }, type: 'pickerCouponPackage' }, parent),
       video: (args) => fn({ value: { ...args }, type: 'pickerVideo', width: '855px' }, parent),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }, parent),
-      goodsList: (args) => fn({ value: { ...args }, type: 'pickerGoodsList', width: '1110px' }, parent),
+      goodsList: (args) =>
+        fn({ value: { ...args }, type: 'pickerGoodsList', width: '1110px' }, parent),
       goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' }, parent),
       goodsSku: (args) => fn({ value: { ...args }, type: 'pickerGoodsSku' }, parent),
       goodsParams: (args) => fn({ value: { ...args }, type: 'pickerGoodsParams' }, parent),
@@ -54,7 +55,8 @@ export default {
       path: (args) => fn({ value: { ...args }, type: 'pickerPath' }, parent),
       tag: (args) => fn({ value: { ...args }, type: 'pickerTag' }, parent),
       shopTag: (args) => fn({ value: { ...args }, type: 'pickerShopTag' }, parent),
-      editBoard: (args) => fn({ value: { ...args }, type: 'pickerEditBoard', width: '892px' }, parent),
+      editBoard: (args) =>
+        fn({ value: { ...args }, type: 'pickerEditBoard', width: '892px' }, parent),
       planting: (args) => fn({ value: { ...args }, type: 'pickerPlanting' }, parent),
       pages: (args) => fn({ value: { ...args }, type: 'pickerPages' }, parent),
       widget: (args) => fn({ value: { ...args }, type: 'pickerWidget' }, parent),
@@ -65,7 +67,8 @@ export default {
       crowds: (args) => fn({ value: { ...args }, type: 'pickerCrowds' }, parent),
       store: (args) => fn({ value: { ...args }, type: 'pickerStore' }, parent),
       groups: (args) => fn({ value: { ...args }, type: 'pickerGroups' }, parent),
-      activityCollection: (args) => fn({ value: { ...args }, type: 'pickerActivityCollection' }, parent),
+      activityCollection: (args) =>
+        fn({ value: { ...args }, type: 'pickerActivityCollection' }, parent),
       ranking: (args) => fn({ value: { ...args }, type: 'pickerRanking' }, parent)
     })
 

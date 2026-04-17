@@ -8,7 +8,7 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img :src="brand" alt="">
+          <img :src="brand" alt="" />
         </div>
         <div class="log-welcome">{{ $t('d0d0e09f.ab978c') }}</div>
       </div>
@@ -63,7 +63,7 @@
                   :src="yzmcode"
                   style="width: auto; height: 38px; cursor: pointer"
                   @click="getImageCode"
-                >
+                />
               </el-input>
             </el-form-item>
             <el-form-item class="smscode" prop="code">

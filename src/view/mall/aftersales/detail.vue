@@ -174,7 +174,7 @@
               width="180"
             >
               <template slot-scope="scope">
-                <span><img :src="scope.row.item_pic" :alt="scope.row.item_name"></span>
+                <span><img :src="scope.row.item_pic" :alt="scope.row.item_name" /></span>
               </template>
             </el-table-column>
             <el-table-column prop="item_name" :label="$t('e67351f7.1fd1d5')" width="180">

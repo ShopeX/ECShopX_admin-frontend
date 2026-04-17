@@ -81,7 +81,7 @@
         <el-form-item :label="$t('aef46509.8bfb27')">
           <div class="frm-tips">{{ $t('aef46509.876be1') }}</div>
           <div class="upload-box" @click="handleImgPicker">
-            <img v-if="form.image_url" :src="form.image_url" class="avatar">
+            <img v-if="form.image_url" :src="form.image_url" class="avatar" />
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>

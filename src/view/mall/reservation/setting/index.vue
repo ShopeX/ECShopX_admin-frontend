@@ -66,7 +66,7 @@
               {{ item.label }}
             </el-radio>
           </el-radio-group>
-          <br>
+          <br />
           <span v-if="form.limitType == 'limit_days'">
             <el-input v-model="form.limit" style="width: 80px" />{{ $t('01253601.2ecb00') }}
           </span>

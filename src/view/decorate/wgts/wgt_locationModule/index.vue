@@ -8,7 +8,7 @@
         :src="value.leftimgUrl"
         class="nav-indicator left"
         alt=""
-      >
+      />
 
       <!-- 导航项容器 -->
       <div ref="navScroller" class="nav-scroller" :style="navItemAreaStyle" @scroll="handleScroll">
@@ -27,7 +27,7 @@
               :src="activeIndex === index ? item.navitemactiveimg || item.imgUrl : item.imgUrl"
               class="nav-item-img"
               alt=""
-            >
+            />
             <!-- 文字类型 -->
             <span v-else class="nav-item-text">{{ item.navItemName }}</span>
             <!-- 选中底线 -->
@@ -46,7 +46,7 @@
         :src="value.rightimgUrl"
         class="nav-indicator right"
         alt=""
-      >
+      />
     </div>
 
     <!-- 内容区域：展示所有导航项的内容 -->

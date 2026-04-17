@@ -198,7 +198,7 @@
             <el-table-column prop="item_id" label="id" width="60" />
             <el-table-column prop="pics[0]" :label="$t('813908de.20def7')" width="80">
               <template slot-scope="scope">
-                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50">
+                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50" />
               </template>
             </el-table-column>
             <el-table-column prop="item_name" :label="$t('813908de.d7ec2d')" />

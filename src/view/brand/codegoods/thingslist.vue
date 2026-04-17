@@ -18,7 +18,7 @@
         <div class="list-item view-flex">
           <div class="view-flex view-flex-item">
             <div class="thumbnail">
-              <img :src="wximageurl + item.pic">
+              <img :src="wximageurl + item.pic" />
             </div>
             <div>
               <div class="item-title">

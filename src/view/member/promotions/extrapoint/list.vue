@@ -31,7 +31,7 @@
       <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
         <el-table-column prop="activity_id" label="ID" width="50" />
         <el-table-column :label="$t('c89b1fbd.39834b')" width="150">
-          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
+          <template slot-scope="scope"> {{ scope.row.title }}<br /> </template>
         </el-table-column>
         <el-table-column :label="$t('c89b1fbd.c799f5')">
           <template slot-scope="scope">

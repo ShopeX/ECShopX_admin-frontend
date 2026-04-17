@@ -597,7 +597,7 @@
                     authorizerData.head_img ||
                     'https://fakeimg.pl/70x70/EFEFEF/CCC/?text=brand&font=lobster'
                   "
-                >
+                />
                 <div class="name">
                   {{ authorizerData.principal_name }}
                 </div>
@@ -974,7 +974,7 @@
         </section> -->
         <section v-if="VERSION_PLATFORM() && VUE_APP_FREE" class="section-card fn-b-20 sound-img">
           <div class="sound-btn" @click="openUrl('https://support.qq.com/product/386118')" />
-          <img :src="img.sound" alt="" class="img-demo">
+          <img :src="img.sound" alt="" class="img-demo" />
         </section>
         <section
           v-if="VERSION_PLATFORM() && VUE_APP_FREE"
@@ -1020,7 +1020,7 @@
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
           <div class="sl-img-hd"><i class="el-icon-user-solid" />{{ $t('d7e708c9.e21f5a') }}</div>
-          <img :src="img.customerService" alt="" class="img-demo">
+          <img :src="img.customerService" alt="" class="img-demo" />
         </section>
       </el-col>
     </el-row>
@@ -1077,7 +1077,7 @@
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img :src="img.suo" alt="" class="suo">
+            <img :src="img.suo" alt="" class="suo" />
             <p>{{ $t('d7e708c9.b449e5') }}</p>
             <p>{{ $t('d7e708c9.0518b4') }}</p>
           </div>
@@ -1095,11 +1095,11 @@
         <div class="buy-item-ft">
           <div>
             <p>{{ $t('d7e708c9.c295e2') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.9b09a5') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.84e826') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.750080') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.eec9b5') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.91a39f') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.9b09a5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.84e826') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.750080') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.eec9b5') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.91a39f') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('商城')">
@@ -1118,13 +1118,13 @@
           <div>
             <p>{{ $t('d7e708c9.15e72c') }}</p>
             <p>
-              <img :src="img.check" alt="" class="check-icon">
+              <img :src="img.check" alt="" class="check-icon" />
               {{ $t('d7e708c9.d21dc6') }}
             </p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.55ce58') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.a96b28') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.8d61a3') }}</p>
-            <p><img :src="img.check" alt="" class="check-icon">{{ $t('d7e708c9.3f4d02') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.55ce58') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.a96b28') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.8d61a3') }}</p>
+            <p><img :src="img.check" alt="" class="check-icon" />{{ $t('d7e708c9.3f4d02') }}</p>
           </div>
           <div>
             <el-button size="medium" type="danger" @click="dingHandel('连锁')">

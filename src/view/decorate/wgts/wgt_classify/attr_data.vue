@@ -84,7 +84,8 @@ export default {
     }
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       list: [],
       props: {
         value: 'category_id',

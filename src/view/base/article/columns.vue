@@ -30,17 +30,17 @@
           <ul slot-scope="{ node, data }" class="custom-tree-node">
             <li>
               <i v-if="data.level == 0" /><i v-else>　├─</i>
-              <input v-model="data.category_name" :placeholder="$t('692f821b.0d4458')">
+              <input v-model="data.category_name" :placeholder="$t('692f821b.0d4458')" />
               <!-- <span class="add-child-category" v-if="data.level == 0"
                   @click="append(data.children, 1)">
             <i class="el-icon-plus"></i>增加子栏目 
           </span> -->
             </li>
             <li>
-              <input v-model="data.sort" :placeholder="$t('692f821b.0e2532')">
+              <input v-model="data.sort" :placeholder="$t('692f821b.0e2532')" />
             </li>
             <li v-clipboard:copy="data.link" v-clipboard:success="onCopy">
-              <input v-model="data.link" class="copy-link" type="text">
+              <input v-model="data.link" class="copy-link" type="text" />
               <i class="el-icon-copy-document" /> {{ $t('692f821b.25345a') }}
             </li>
             <li>

@@ -28,7 +28,7 @@
                 class="item-image"
                 :src="wximageurl + scope.row.pic"
                 :alt="scope.row.item_name"
-              >
+              />
             </span>
           </template>
         </el-table-column>

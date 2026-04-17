@@ -15,10 +15,8 @@
       <el-table-column :label="$t('8fe988ed.2b6bc0')" width="120">
         <template slot-scope="scope">
           <el-button icon="edit" type="text" @click="editSuperior(scope.row)">
-{{
-            $t('8fe988ed.23ced7')
-          }}
-</el-button>
+            {{ $t('8fe988ed.23ced7') }}
+          </el-button>
         </template>
       </el-table-column>
 
@@ -36,10 +34,8 @@
       <el-table-column prop="disabled" :label="$t('8fe988ed.3fea7c')">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
-{{
-            $t('8fe988ed.c6cc39')
-          }}
-</el-tag>
+            {{ $t('8fe988ed.c6cc39') }}
+          </el-tag>
           <el-tag v-else type="info" size="mini">{{ $t('8fe988ed.1abbb1') }}</el-tag>
         </template>
       </el-table-column>
@@ -85,10 +81,8 @@
         <el-table-column prop="disabled" :label="$t('8fe988ed.3fea7c')">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
-{{
-              $t('8fe988ed.c6cc39')
-            }}
-</el-tag>
+              {{ $t('8fe988ed.c6cc39') }}
+            </el-tag>
             <el-tag v-else type="info" size="mini">{{ $t('8fe988ed.1abbb1') }}</el-tag>
           </template>
         </el-table-column>
@@ -105,10 +99,8 @@
       <div slot="footer" class="dialog-footer content-center">
         <el-button @click.native="handleCancelSuperior">{{ $t('8fe988ed.625fb2') }}</el-button>
         <el-button type="primary" @click="submitSuperiorAction">
-{{
-          $t('8fe988ed.38cf16')
-        }}
-</el-button>
+          {{ $t('8fe988ed.38cf16') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>

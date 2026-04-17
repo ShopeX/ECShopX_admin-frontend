@@ -27,7 +27,7 @@
           :class="currentPage === index ? 'page active' : 'page'"
           @click="tabPage(index)"
         >
-          <img alt="" :src="item.imgurl" height="569" width="320">
+          <img alt="" :src="item.imgurl" height="569" width="320" />
         </div>
       </div>
       <div v-if="currentPage === 0" class="template-view">
@@ -60,7 +60,7 @@
             />
           </el-carousel>
           <div class="view-flex view-flex-middle activity">
-            <img src="@/assets/img/gift.png" class="activity-icon">
+            <img src="@/assets/img/gift.png" class="activity-icon" />
             <div class="view-flex-item">
               <div class="activity-title">{{ $t('eebf5c65.807688') }}</div>
               <div>{{ $t('eebf5c65.df0da4') }}</div>
@@ -69,15 +69,15 @@
           </div>
           <div class="view-flex view-flex-middle nav">
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/activity.png">{{ $t('eebf5c65.891313') }}
+              <img class="nav-icon" src="@/assets/img/activity.png" />{{ $t('eebf5c65.891313') }}
             </div>
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/reseveration.png">{{
+              <img class="nav-icon" src="@/assets/img/reseveration.png" />{{
                 $t('eebf5c65.26ad89')
               }}
             </div>
             <div class="view-flex view-flex-vertical view-flex-middle view-flex-item nav-item">
-              <img class="nav-icon" src="@/assets/img/buy.png">{{ $t('eebf5c65.554003') }}
+              <img class="nav-icon" src="@/assets/img/buy.png" />{{ $t('eebf5c65.554003') }}
             </div>
           </div>
           <div class="goods-list">
@@ -119,11 +119,11 @@
             </div>
             <div class="view-flex view-flex-center store-contact">
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_location.png">
+                <img class="store-icon" src="@/assets/img/store_location.png" />
                 <div>1220 km</div>
               </div>
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_phone.png">
+                <img class="store-icon" src="@/assets/img/store_phone.png" />
                 <div>{{ $t('eebf5c65.a74ccc') }}</div>
               </div>
             </div>
@@ -144,10 +144,10 @@
                   :src="wximageurl + item.url"
                   class="banner-uploader"
                   @click="handleImgChange(index, 'banner')"
-                >
+                />
                 <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
-                    <i class="el-icon-camera" /><br>
+                    <i class="el-icon-camera" /><br />
                     {{ $t('eebf5c65.ce6855') }}
                   </div>
                 </div>
@@ -369,15 +369,11 @@
                               </p>
                               <div class="content-center">
                                 <el-button @click="item.popVisible = false">
-{{
-                                  $t('eebf5c65.625fb2')
-                                }}
-</el-button>
+                                  {{ $t('eebf5c65.625fb2') }}
+                                </el-button>
                                 <el-button type="primary" @click="remove(index)">
-{{
-                                  $t('eebf5c65.38cf16')
-                                }}
-</el-button>
+                                  {{ $t('eebf5c65.38cf16') }}
+                                </el-button>
                               </div>
                               <a
                                 v-if="!isEditting"
@@ -492,10 +488,8 @@
         </el-transfer>
         <div class="section-footer with-border content-center" style="width: 100%">
           <el-button type="primary" @click="handleGoodsDialog">
-{{
-            $t('eebf5c65.38cf16')
-          }}
-</el-button>
+            {{ $t('eebf5c65.38cf16') }}
+          </el-button>
         </div>
       </template>
     </el-dialog>

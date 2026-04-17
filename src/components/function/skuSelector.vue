@@ -9,7 +9,7 @@
       <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img :src="item.pics[0]" alt="">
+            <img :src="item.pics[0]" alt="" />
           </div>
           <div class="goods-caption">
             <div class="goods-title">

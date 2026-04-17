@@ -147,10 +147,8 @@
           <el-table-column prop="is_close" :label="$t('56b6e44f.b5aa25')" min-width="50">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.is_close == true" type="warning">
-{{
-                $t('56b6e44f.139304')
-              }}
-</el-tag>
+                {{ $t('56b6e44f.139304') }}
+              </el-tag>
               <el-tag v-else type="info">{{ $t('56b6e44f.facb53') }}</el-tag>
             </template>
           </el-table-column>

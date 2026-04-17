@@ -65,7 +65,7 @@
 
 <script>
 import { i18n } from '@/i18n'
-import classifyDialog from "./classifyDialog.vue"
+import classifyDialog from './classifyDialog.vue'
 import { cloneDeep } from 'lodash'
 import CompButton from '../../comps/comp-button'
 import CompTodoList from '../../comps/comp-todoList'
@@ -74,9 +74,7 @@ export default {
   components: { CompButton, CompTodoList },
   props: ['value'],
   data() {
-    return {i18n,
-      localValue: []
-    }
+    return { i18n, localValue: [] }
   },
   watch: {
     localValue: {

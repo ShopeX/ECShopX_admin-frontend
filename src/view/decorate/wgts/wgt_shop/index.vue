@@ -75,11 +75,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      currentIndex: 1,
-      defaultShopLogo,
-      distributorData: null
-    }
+    return { i18n, currentIndex: 1, defaultShopLogo, distributorData: null }
   },
   computed: {
     outerStyle() {

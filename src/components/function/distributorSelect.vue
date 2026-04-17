@@ -57,10 +57,12 @@
       <el-button v-if="!isSynchronize" type="primary" @click="saveStoreAction">{{
         $t('f15fc38a.aa7527')
       }}</el-button>
-      <el-button v-else type="primary" @click="saveStoreAction">{{ $t('f15fc38a.38ee33') }}</el-button>
-      <el-button v-if="isSynchronize" type="primary" @click="saveAllStoreAction"
-        >{{ $t('f15fc38a.90d8ec') }}</el-button
-      >
+      <el-button v-else type="primary" @click="saveStoreAction">{{
+        $t('f15fc38a.38ee33')
+      }}</el-button>
+      <el-button v-if="isSynchronize" type="primary" @click="saveAllStoreAction">{{
+        $t('f15fc38a.90d8ec')
+      }}</el-button>
     </span>
   </el-dialog>
 </template>

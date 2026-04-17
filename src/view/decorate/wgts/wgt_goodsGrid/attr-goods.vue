@@ -51,7 +51,8 @@ export default {
     distributor: Object
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       localValue: {
         data: [],
         pointGoods: [],

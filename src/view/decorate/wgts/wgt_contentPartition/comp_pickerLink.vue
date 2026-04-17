@@ -75,7 +75,8 @@ export default {
     }
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       localValue: {
         linkType: 0,
         linkUrl: '',

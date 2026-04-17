@@ -66,7 +66,7 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -106,7 +106,7 @@
                 v-if="fileList.institution_code_img"
                 :src="fileList.institution_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -142,7 +142,7 @@
                 }
               "
             >
-              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar">
+              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -184,7 +184,7 @@
                 v-if="fileList.social_credit_code_img"
                 :src="fileList.social_credit_code_img"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
@@ -288,7 +288,7 @@
               }
             "
           >
-            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar">
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -305,7 +305,7 @@
               }
             "
           >
-            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar">
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
@@ -411,7 +411,7 @@
               }
             "
           >
-            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar">
+            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>

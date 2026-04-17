@@ -17,7 +17,7 @@
           class="box-card"
           @click="tabClick(index)"
         >
-          <img :src="item.img" alt="">
+          <img :src="item.img" alt="" />
           <span>{{ $t(item.titleKey) }}</span>
           <div v-if="index == 0" class="title">
             {{ aliyunsms_status ? $t('c5fcdb17.53ace4') : $t('c5fcdb17.463776') }}

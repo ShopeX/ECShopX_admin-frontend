@@ -143,7 +143,7 @@ const routes = [
           permissions: ['sellers.sellersmanager.nearbystoreinfo']
         },
         component: () => import('@/views/store/nearby-store-info')
-      },
+      }
     ]
   }
 ]

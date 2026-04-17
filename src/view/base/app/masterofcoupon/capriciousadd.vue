@@ -24,8 +24,7 @@
                 :indeterminate="isIndeterminate"
                 @change="handleCheckAllChange"
               >
-                {{ $t('8e88d5e8.66eeac') }}
-</el-checkbox
+                {{ $t('8e88d5e8.66eeac') }} </el-checkbox
               ><span style="line-height: 36px">{{ $t('8e88d5e8.816fa4') }}</span>
               <el-button type="text" class="f_r" @click="showAddMobile">
                 {{ $t('8e88d5e8.3a126e') }}

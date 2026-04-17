@@ -16,10 +16,8 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addData">
-{{
-          $t('5f814195.45609b')
-        }}
-</el-button>
+          {{ $t('5f814195.45609b') }}
+        </el-button>
         <el-button v-if="!VERSION_IN_PURCHASE()" type="primary" icon="plus" @click="setTips">
           {{ $t('5f814195.722010') }}
         </el-button>
@@ -42,15 +40,11 @@
       <el-table-column :label="$t('e240ae54.95b351')">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">
-{{
-            $t('e240ae54.95b351')
-          }}
-</el-button>
+            {{ $t('e240ae54.95b351') }}
+          </el-button>
           <el-button size="mini" @click="deleteAction(scope.$index, scope.row)">
-{{
-            $t('e240ae54.2f4aad')
-          }}
-</el-button>
+            {{ $t('e240ae54.2f4aad') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

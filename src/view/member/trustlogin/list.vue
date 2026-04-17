@@ -12,10 +12,8 @@
             <el-table-column :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
                 <el-button type="text" @click="handleEdit(scope.row, 'standard')">
-{{
-                  $t('b64b502c.224e2c')
-                }}
-</el-button>
+                  {{ $t('b64b502c.224e2c') }}
+                </el-button>
               </template>
             </el-table-column>
             <el-table-column :label="$t('b64b502c.d7ec2d')" width="150">
@@ -50,10 +48,8 @@
             <el-table-column :label="$t('8da83775.2b6bc0')" width="150">
               <template slot-scope="scope">
                 <el-button type="text" @click="handleEdit(scope.row, 'touch')">
-{{
-                  $t('b64b502c.224e2c')
-                }}
-</el-button>
+                  {{ $t('b64b502c.224e2c') }}
+                </el-button>
               </template>
             </el-table-column>
             <el-table-column :label="$t('b64b502c.d7ec2d')" width="150">
@@ -99,10 +95,8 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="statusChange(form)">
-{{
-              $t('b64b502c.939d53')
-            }}
-</el-button>
+              {{ $t('b64b502c.939d53') }}
+            </el-button>
           </el-form-item>
         </el-form>
       </sideBar>

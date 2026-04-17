@@ -93,7 +93,7 @@
               v-if="form.origincountry_img_url"
               :src="form.origincountry_img_url"
               class="avatar"
-            >
+            />
             <i v-else class="el-icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>

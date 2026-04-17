@@ -173,10 +173,8 @@
       </section>
       <section class="section-white content-center">
         <el-button class="btn-save" round type="primary" @click="saveConfig">
-{{
-          $t('df4287f5.4323be')
-        }}
-</el-button>
+          {{ $t('df4287f5.4323be') }}
+        </el-button>
       </section>
     </el-dialog>
   </div>

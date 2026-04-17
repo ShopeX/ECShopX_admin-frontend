@@ -30,20 +30,14 @@
       <el-table-column prop="order_status" :label="$t('63018193.86f6cf')">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.order_status == 'DONE'" type="success">
-{{
-            $t('63018193.fad522')
-          }}
-</el-tag>
+            {{ $t('63018193.fad522') }}
+          </el-tag>
           <el-tag v-else-if="scope.row.order_status == 'NOTPAY'">
-{{
-            $t('63018193.608afd')
-          }}
-</el-tag>
+            {{ $t('63018193.608afd') }}
+          </el-tag>
           <el-tag v-else-if="scope.row.order_status == 'CLOSED'" type="danger">
-{{
-            $t('63018193.2111cc')
-          }}
-</el-tag>
+            {{ $t('63018193.2111cc') }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('63018193.2b6bc0')">

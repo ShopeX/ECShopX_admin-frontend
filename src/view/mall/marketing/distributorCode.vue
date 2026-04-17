@@ -8,7 +8,7 @@
     <div v-if="wxaCodeImage" class="content-center">
       <el-row>
         <el-col>
-          <img :src="wxaCodeImage">
+          <img :src="wxaCodeImage" />
         </el-col>
         <el-col>
           <el-button type="primary" @click="downDistributorCode">

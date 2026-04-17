@@ -94,7 +94,7 @@
         <el-form-item :label="$t('d0bb1a49.364e87')">
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar">
+              <img v-if="form.imageUrl" :src="wximageurl + form.imageUrl" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>

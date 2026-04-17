@@ -52,8 +52,8 @@
                 v-if="scope.row.share_img"
                 :src="scope.row.share_img"
                 width="display:block;width:100px"
-              >
-              <img v-else src="https://fakeimg.pl/50x50/EFEFEF/CCC/?text=brand&font=lobster">
+              />
+              <img v-else src="https://fakeimg.pl/50x50/EFEFEF/CCC/?text=brand&font=lobster" />
             </template>
           </el-table-column>
           <el-table-column prop="name" :label="$t('111a6bde.6738c6')" />

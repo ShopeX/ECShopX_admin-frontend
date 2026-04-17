@@ -32,8 +32,7 @@
       <el-table-column prop="attribute_name" :label="$t('3526e299.d3ce40')">
         <template slot-scope="scope">
           <div>{{ scope.row.regionauth_name }}</div>
-        </template>
-</el-table-column
+        </template> </el-table-column
       ><el-table-column prop="attribute_name" :label="$t('3526e299.3fea7c')">
         <template slot-scope="scope">
           <el-switch

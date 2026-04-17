@@ -39,15 +39,11 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <el-button type="text" @click="editTemplatesAction(scope.$index, scope.row)">
-{{
-              $t('647ce252.95b351')
-            }}
-</el-button>
+              {{ $t('647ce252.95b351') }}
+            </el-button>
             <el-button type="text" @click="deleteTemplatesAction(scope.$index, scope.row)">
-{{
-              $t('647ce252.2f4aad')
-            }}
-</el-button>
+              {{ $t('647ce252.2f4aad') }}
+            </el-button>
           </div>
         </template>
       </el-table-column>

@@ -171,7 +171,7 @@
       :before-close="handleClose"
     >
       <el-dialog width="45%" :visible.sync="imgVisible" append-to-body>
-        <img width="100%" :src="Dialogpic">
+        <img width="100%" :src="Dialogpic" />
       </el-dialog>
       <div class="section-white">
         <div class="section-header with-border">
@@ -182,7 +182,7 @@
             <el-table :data="details.itemInfo" style="width: 100%">
               <el-table-column class="goods-img" prop="pic" :label="$t('7de71dd3.9b94b1')">
                 <template slot-scope="scope">
-                  <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100">
+                  <img :src="scope.row.pics[0]" :alt="scope.row.item_name" width="100" />
                 </template>
               </el-table-column>
               <el-table-column prop="item_name" :label="$t('7de71dd3.1fd1d5')" width="180" />
@@ -218,7 +218,7 @@
                 :src="pic"
                 width="100px"
                 @click="showImg(pic)"
-              >
+              />
             </el-col>
           </el-row>
           <el-row>

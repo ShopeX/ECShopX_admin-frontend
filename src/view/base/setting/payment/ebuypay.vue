@@ -7,7 +7,7 @@
   <el-form ref="form" label-width="100px">
     <el-form-item label="AppId">
       <el-input v-model="form.app_id" style="width: 300px" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item label="AppSecret">
       <el-input
@@ -16,7 +16,7 @@
         :rows="5"
         :placeholder="$t('e86b4ef3.a11cc7')"
       />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item :label="$t('e86b4ef3.eb4ed4')">
       <el-input
@@ -25,7 +25,7 @@
         :rows="5"
         :placeholder="$t('e86b4ef3.a11cc7')"
       />
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('e86b4ef3.fc6076') }}</span>
     </el-form-item>
     <!-- <el-form-item label="温馨提示">
@@ -33,10 +33,8 @@
     </el-form-item> -->
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('e86b4ef3.be5fbb')
-      }}
-</el-button>
+        {{ $t('e86b4ef3.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>

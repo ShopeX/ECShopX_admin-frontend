@@ -110,7 +110,7 @@ export default {
       const urlParams = new URLSearchParams(window.location.search)
       const distributor_id = urlParams.get('distributor_id')
       params = {
-        ...params,
+        ...params
         // is_valid: true
       }
       if (distributor_id) {

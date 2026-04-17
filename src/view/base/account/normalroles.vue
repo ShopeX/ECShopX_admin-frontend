@@ -28,10 +28,8 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">
-{{
-              $t('5a3a4a5f.95b351')
-            }}
-</el-button>
+              {{ $t('5a3a4a5f.95b351') }}
+            </el-button>
             <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)">
               {{ $t('5a3a4a5f.2f4aad') }}
             </el-button>

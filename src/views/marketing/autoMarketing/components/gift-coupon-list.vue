@@ -28,17 +28,13 @@
               />
             </div>
             <el-button type="text" @click="deleteCoupon(scope.row, index)">
-{{
-              $t('26a24c3a.2f4aad')
-            }}
-</el-button>
+              {{ $t('26a24c3a.2f4aad') }}
+            </el-button>
           </div>
           <div class="add-coupon">
             <el-button type="text" @click="addCoupon(scope.row)">
-{{
-              $t('26a24c3a.ae8c83')
-            }}
-</el-button>
+              {{ $t('26a24c3a.ae8c83') }}
+            </el-button>
           </div>
         </div>
       </template>

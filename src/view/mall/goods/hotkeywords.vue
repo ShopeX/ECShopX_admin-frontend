@@ -32,7 +32,7 @@
     <div class="section-footer content-center">
       <el-button type="primary" @click="saveContent"> {{ $t('dd43ad36.be5fbb') }} </el-button>
     </div>
-    <br>
+    <br />
   </el-col>
 </template>
 

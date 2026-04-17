@@ -61,7 +61,7 @@
                             "
                           >
                             <div class="pic_box">
-                              <img :src="item.image_full_url" class="pic">
+                              <img :src="item.image_full_url" class="pic" />
                             </div>
                             <span class="lbl_content">{{ item.image_name }}</span>
                             <div class="selected_mask">

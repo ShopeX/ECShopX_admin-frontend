@@ -64,9 +64,7 @@ export default {
   },
   props: ['value'],
   data() {
-    return {i18n,
-      localValue: []
-    }
+    return { i18n, localValue: [] }
   },
   watch: {
     localValue: function (nVal, oVal) {

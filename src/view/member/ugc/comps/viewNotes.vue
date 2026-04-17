@@ -19,10 +19,8 @@
             <el-col class="value" :span="20">
               <div class="serialBar">
                 <el-checkbox v-model="is_top" @change="serialChanges">
-{{
-                  $t('bf192462.1b8e54')
-                }}
-</el-checkbox>
+                  {{ $t('bf192462.1b8e54') }}
+                </el-checkbox>
                 <span class="text-ml">{{ $t('bf192462.bd797f') }}</span>
               </div>
               <div class="serialBar">
@@ -92,7 +90,7 @@
           <el-col class="value imgflxe" :span="20">
             <div v-if="post_info.video" class="img">
               <video id="video" class="video">
-                <source :src="post_info.video" type="video/mp4">
+                <source :src="post_info.video" type="video/mp4" />
               </video>
               <div class="upload-box" @click="magnifyImg(post_info.video, true)">
                 <div class="iconfont icon-play" />
@@ -104,7 +102,7 @@
               class="img"
               @click="magnifyImg(item.url)"
             >
-              <img :src="item.url" alt="">
+              <img :src="item.url" alt="" />
             </div>
           </el-col>
         </el-row>
@@ -121,7 +119,7 @@
           <el-col class="value imgflxe" :span="20">
             <div v-for="(item, index) in post_info.goods" :key="index" class="goods">
               <div class="pics">
-                <img :src="item.pics" alt="">
+                <img :src="item.pics" alt="" />
               </div>
               <div class="text">
                 {{ item.item_name }}
@@ -180,10 +178,10 @@
     >
       <div class="magnify" @click="magnifyHide">
         <video v-if="magnifyVideo" id="preview-video" class="video" controls autoplay>
-          <source :src="magnifyVideo" type="video/mp4">
+          <source :src="magnifyVideo" type="video/mp4" />
         </video>
 
-        <img v-if="magnifySrc" :src="magnifySrc" alt="">
+        <img v-if="magnifySrc" :src="magnifySrc" alt="" />
       </div>
     </el-dialog>
 

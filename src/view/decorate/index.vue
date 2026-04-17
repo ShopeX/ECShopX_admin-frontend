@@ -10,15 +10,11 @@
       <div class="hd-lf">{{ localTitle }}</div>
       <div class="hd-rg">
         <el-button v-if="mode == 'page'" plain @click="onExit">
-{{
-          $t('c3827da6.5094c1')
-        }}
-</el-button>
+          {{ $t('c3827da6.5094c1') }}
+        </el-button>
         <el-button v-if="mode == 'dialog'" plain @click="onClose">
-{{
-          $t('c3827da6.b15d91')
-        }}
-</el-button>
+          {{ $t('c3827da6.b15d91') }}
+        </el-button>
         <el-button type="primary" @click="onSaveTemplate">{{ $t('c3827da6.be5fbb') }}</el-button>
       </div>
     </div>
@@ -248,7 +244,13 @@ export default {
     },
     headerVisible() {
       // 商城装修(1001)、店铺装修(1003)、个人中心(1008)展示页面设置挂件，1007 分类模版等不展示
-      return this.mode == 'page' && (this.localScene == '1001' || this.localScene == '1003' || this.localScene == '1008' || this.localScene == '1004')
+      return (
+        this.mode == 'page' &&
+        (this.localScene == '1001' ||
+          this.localScene == '1003' ||
+          this.localScene == '1008' ||
+          this.localScene == '1004')
+      )
     },
     widgetCategories() {
       // 通用挂件：轮播、热区图、视频、文字轮播
@@ -355,7 +357,9 @@ export default {
     // 用 widgets 中注册的组件名（如 LocationModule）渲染，避免 config.name（如 locationModule）与 Vue 注册名大小写不一致导致预览不显示
     getComponentName(item) {
       if (!item?.name || !this.widgets.length) return item?.name || ''
-      const w = this.widgets.find((wgt) => (wgt.name || '').toLowerCase() === (item.name || '').toLowerCase())
+      const w = this.widgets.find(
+        (wgt) => (wgt.name || '').toLowerCase() === (item.name || '').toLowerCase()
+      )
       return w ? w.name : item.name
     },
     getComponentAttr(item) {

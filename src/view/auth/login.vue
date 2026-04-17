@@ -38,7 +38,7 @@
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    >
+                    />
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
@@ -56,7 +56,7 @@
                       :src="imageData"
                       style="width: auto; height: 38px; cursor: pointer"
                       @click="_getImagesCode"
-                    >
+                    />
                   </el-input>
                 </el-form-item>
               </el-tab-pane>
@@ -75,7 +75,7 @@
                     :src="imageData"
                     style="width: auto; height: 38px; cursor: pointer"
                     @click="_getImagesCode"
-                  >
+                  />
                 </el-input>
               </el-form-item>
             </div>

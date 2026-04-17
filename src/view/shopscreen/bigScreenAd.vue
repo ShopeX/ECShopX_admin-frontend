@@ -99,7 +99,7 @@
               :src="edit.thumb_img"
               class="banner-uploader"
               @click="handleImgChange('thumb_img')"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange('thumb_img')">
               <i class="el-icon-camera" />
               {{ $t('59eedf32.ce6855') }}
@@ -122,7 +122,7 @@
                 :src="edit.media_url"
                 class="banner-uploader"
                 @click="handleImgChange('media_url')"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange('media_url')">
                 <i class="el-icon-camera" />
                 {{ $t('59eedf32.ce6855') }}

@@ -32,15 +32,11 @@
             {{ $t('c27e774b.e3d663') }}
             <el-select v-model="store_type" @change="storeChange">
               <el-option :label="$t('c27e774b.4b940c')" :value="1">
-{{
-                $t('c27e774b.4b940c')
-              }}
-</el-option>
+                {{ $t('c27e774b.4b940c') }}
+              </el-option>
               <el-option :label="$t('c27e774b.c26325')" :value="2">
-{{
-                $t('c27e774b.c26325')
-              }}
-</el-option>
+                {{ $t('c27e774b.c26325') }}
+              </el-option>
             </el-select>
           </el-col>
           <el-col :span="12" class="content-right">
@@ -132,10 +128,8 @@
                 {{ $t('c27e774b.95b351') }}
               </el-button>
               <el-button v-else size="mini" type="text" :disabled="true">
-{{
-                $t('c27e774b.95b351')
-              }}
-</el-button>
+                {{ $t('c27e774b.95b351') }}
+              </el-button>
               <el-button size="mini" type="text" @click="wxShopsDetail(scope.$index, scope.row)">
                 {{ $t('c27e774b.f26225') }}
               </el-button>
@@ -243,7 +237,7 @@
               </el-col>
               <el-col :span="12">
                 <div class="grid-content">
-                  <img :src="wxShopsDetailData.qqmapimg">
+                  <img :src="wxShopsDetailData.qqmapimg" />
                 </div>
               </el-col>
             </el-row>
@@ -287,16 +281,14 @@
                 :span="1"
                 :offset="index > 0 ? 1 : 0"
               >
-                <img :src="wximageurl + pic" width="40" height="40">
+                <img :src="wximageurl + pic" width="40" height="40" />
               </el-col>
             </el-row>
           </template>
           <div slot="footer" class="dialog-footer">
             <el-button @click.native="wxShopsDetailVisible = false">
-{{
-              $t('c27e774b.625fb2')
-            }}
-</el-button>
+              {{ $t('c27e774b.625fb2') }}
+            </el-button>
           </div>
         </el-dialog>
         <!-- 微信门店详情-结束 -->

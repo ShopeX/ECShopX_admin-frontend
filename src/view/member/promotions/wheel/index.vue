@@ -224,7 +224,7 @@
                     >
                       <div class="div-text">
                         <div>{{ item.prize_name }}</div>
-                        <img :src="item.prize_image">
+                        <img :src="item.prize_image" />
                       </div>
                     </li>
                   </ul>

@@ -22,10 +22,10 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader square"
               @click="handleImgChange(index)"
-            >
+            />
             <div v-else class="banner-uploader square" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br>
+                <i class="el-icon-camera" /><br />
                 {{ $t('a0725930.ce6855') }}
               </div>
             </div>

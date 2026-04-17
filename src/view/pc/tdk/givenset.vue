@@ -17,10 +17,8 @@
       <el-table-column :label="$t('33ffbda2.2b6bc0')" width="150">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)">
-{{
-            $t('33ffbda2.95b351')
-          }}
-</el-button>
+            {{ $t('33ffbda2.95b351') }}
+          </el-button>
         </template>
       </el-table-column>
       <el-table-column

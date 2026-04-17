@@ -60,7 +60,7 @@
                   @mouseover.native="mouseoverHandle(index)"
                   @mouseleave.native="mouseleaveHandle()"
                 >
-                  <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="">
+                  <img class="thumbnail" :src="wximageurl + item.imgUrl" alt="" />
                   <div class="title">
                     {{ item.title }}
                   </div>
@@ -140,7 +140,7 @@
             :src="wximageurl + base.backgroundImg"
             class="banner-uploader"
             @click="handleImgChange('backImg')"
-          >
+          />
           <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
             <i class="el-icon-camera" />
             {{ $t('9e916548.ce6855') }}

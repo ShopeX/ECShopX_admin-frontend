@@ -113,9 +113,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      currentIndex: 1
-    }
+    return { i18n, currentIndex: 1 }
   },
   computed: {
     outerStyle() {

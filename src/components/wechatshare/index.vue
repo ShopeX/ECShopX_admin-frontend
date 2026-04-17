@@ -22,17 +22,17 @@
           ref="contentImg"
           :src="contentImgSrc"
           :class="{ normalImg: imgType === 0 || imgType === 2, heightImg: imgType === 1 }"
-        >
+        />
       </div>
       <div class="footer">
         <div class="link">
-          <img :src="link">
+          <img :src="link" />
         </div>
         <div>{{ footerText || $t('b7f0c43b.0ed510') }}</div>
       </div>
     </div>
     <div class="wechat-share-avatar">
-      <img :src="avatarImgSrc">
+      <img :src="avatarImgSrc" />
     </div>
     <div />
   </div>

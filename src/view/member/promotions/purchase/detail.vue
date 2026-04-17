@@ -12,7 +12,7 @@
           {{ detail.purchase_name }}
         </el-form-item>
         <el-form-item :label="$t('f60777f5.d89b24')">
-          <img class="detail-img" :src="detail.ad_pic">
+          <img class="detail-img" :src="detail.ad_pic" />
         </el-form-item>
         <el-form-item :label="$t('f60777f5.339045')" prop="activity_time">
           {{ detail.begin_date }} ~ {{ detail.end_date }}

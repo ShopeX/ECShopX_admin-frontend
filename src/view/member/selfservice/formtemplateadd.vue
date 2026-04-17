@@ -37,10 +37,8 @@
           <el-row :gutter="20">
             <el-col :span="5">
               <el-radio v-model="form.form_style" label="single">
-{{
-                $t('0493712c.0ba634')
-              }}
-</el-radio>
+                {{ $t('0493712c.0ba634') }}
+              </el-radio>
               <!-- <el-radio v-model="form.form_style" label="multiple">多页问卷(每页一项)</el-radio> -->
             </el-col>
             <el-col :span="10">
@@ -159,10 +157,8 @@
             </el-col>
             <el-col v-if="form.tem_type == 'ask_answer_paper'" :span="2">
               <el-button v-if="index == 0" circle type="primary" @click="addCard">
-{{
-                $t('c831a478.c0a0f2')
-              }}
-</el-button>
+                {{ $t('c831a478.c0a0f2') }}
+              </el-button>
               <el-button v-if="index != 0" circle type="primary" @click="delCard(index)">
                 {{ $t('0493712c.fe5c38') }}
               </el-button>

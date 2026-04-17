@@ -10,7 +10,7 @@
         <div v-if="wxapp_id && detail && detail.weapp && detail.weappTemplate">
           <div class="content-center">
             <div v-if="detail.head_img">
-              <img class="app-img" :src="wximageurl + detail.head_img" height="60">
+              <img class="app-img" :src="wximageurl + detail.head_img" height="60" />
             </div>
             <div v-else>
               <i class="el-icon-picture fa-3x" aria-hidden="true" />
@@ -24,7 +24,7 @@
                 class="demo-qrcode"
                 @click="downloadWxaCode"
               >
-                <img src="@/assets/img/code.png" alt="">
+                <img src="@/assets/img/code.png" alt="" />
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@
       </section>
       <el-dialog :title="$t('324626d5.b85b43')" :visible.sync="wxaCodeVisible">
         <div class="content-center">
-          <img :src="wxaCodeImage">
+          <img :src="wxaCodeImage" />
         </div>
       </el-dialog>
       <el-dialog
@@ -309,10 +309,8 @@
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="saveTemplate">
-{{
-                $t('324626d5.b75381')
-              }}
-</el-button>
+                {{ $t('324626d5.b75381') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -327,7 +325,7 @@
           show-icon
           :closable="false"
         />
-        <br>
+        <br />
         <el-form v-loading="domainloading" label-width="200px">
           <el-form-item :label="$t('324626d5.f554f2')">
             <el-input

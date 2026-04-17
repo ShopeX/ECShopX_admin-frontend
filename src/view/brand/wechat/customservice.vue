@@ -18,7 +18,7 @@
     <el-table v-loading="loading" :data="kflist" :height="wheight - 160">
       <el-table-column :label="$t('6c4d190a.6f0f2c')" width="180">
         <template slot-scope="img">
-          <img v-if="img.row.kf_headimgurl" :src="wximageurl + img.row.kf_headimgurl" height="40">
+          <img v-if="img.row.kf_headimgurl" :src="wximageurl + img.row.kf_headimgurl" height="40" />
         </template>
       </el-table-column>
       <el-table-column prop="kf_nick" :label="$t('6c4d190a.23eb0e')" />
@@ -93,7 +93,7 @@
               :show-file-list="false"
               :auto-upload="false"
             >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="300">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="300" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>

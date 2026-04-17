@@ -11,10 +11,8 @@
         <div class="color-picker-wrapper">
           <span class="color-code">{{ displayColor }}</span>
           <el-button type="text" size="mini" class="reset-btn" @click="handleResetColor">
-{{
-            $t('272c17f4.4b9c32')
-          }}
-</el-button>
+            {{ $t('272c17f4.4b9c32') }}
+          </el-button>
           <div class="color-swatch" :style="{ backgroundColor: displayColor }">
             <el-color-picker v-model="localValue.color" size="small" @change="handleChange" />
           </div>

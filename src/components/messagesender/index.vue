@@ -193,7 +193,7 @@
             <div v-else class="cardmsgArea inner">
               <div class="msg_card">
                 <div class="card_content clearfix">
-                  <img class="logo f_l" :src="wximageurl + data.card.logo_url">
+                  <img class="logo f_l" :src="wximageurl + data.card.logo_url" />
                   <div class="card_info">
                     <h4 class="card_title">
                       {{ data.card.title }}

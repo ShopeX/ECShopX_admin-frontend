@@ -13,7 +13,7 @@
             <div style="">
               <div class="good-img">
                 <!-- <a @click="openProduct(item.item_id)"> -->
-                <img :src="item.imgUrl">
+                <img :src="item.imgUrl" />
                 <!-- </a> -->
               </div>
               <h6 class="good-title" v-html="item.title">

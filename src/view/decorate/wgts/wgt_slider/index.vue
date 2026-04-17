@@ -9,47 +9,87 @@
     <div class="wgt-bd">
       <div class="wgt-bd-content" ref="sliderWrap">
         <!-- 挂件自定义部分：占位图撑开第一屏高度，加载后重新测量 -->
-        <SpImage class="placeholder-item" :src="value.data.length > 0 ? value.data[0].imgUrl : null" fit="contain"
-          @load="measureFirstScreenHeight" />
+        <SpImage
+          class="placeholder-item"
+          :src="value.data.length > 0 ? value.data[0].imgUrl : null"
+          fit="contain"
+          @load="measureFirstScreenHeight"
+        />
         <!-- <img class="placeholder-item" style="display: block;" :src="value.data.length > 0 ? value.data[0].imgUrl : null" width="100%" /> -->
-        <el-carousel class="slider-container" arrow="never" indicator-position="none" :interval="value.interval"
-          :autoplay="value.autoplay" @change="changeSlider">
-          <el-carousel-item v-for="(item, index) in value.data" :key="index" class="slider-item" :class="{
-            rounded: value.rounded
-          }">
+        <el-carousel
+          class="slider-container"
+          arrow="never"
+          indicator-position="none"
+          :interval="value.interval"
+          :autoplay="value.autoplay"
+          @change="changeSlider"
+        >
+          <el-carousel-item
+            v-for="(item, index) in value.data"
+            :key="index"
+            class="slider-item"
+            :class="{
+              rounded: value.rounded
+            }"
+          >
             <div class="slider-item-content">
-              <SpImage :src="item.imgUrl" fit="contain" v-if="!item.videoUrl || item.media_type !== 'video'"
-                class="image-item-img" />
-              <video :ref="`swiperVideo_${index}`" :poster="item.imgUrl" :src="item.videoUrl"
-                v-if="item.media_type == 'video' && item.videoUrl" class="image-item-video" muted="muted"
-                objectFit="cover">
-                <source :src="item.videoUrl">
+              <SpImage
+                :src="item.imgUrl"
+                fit="contain"
+                v-if="!item.videoUrl || item.media_type !== 'video'"
+                class="image-item-img"
+              />
+              <video
+                :ref="`swiperVideo_${index}`"
+                :poster="item.imgUrl"
+                :src="item.videoUrl"
+                v-if="item.media_type == 'video' && item.videoUrl"
+                class="image-item-video"
+                muted="muted"
+                objectFit="cover"
+              >
+                <source :src="item.videoUrl" />
               </video>
-              <SpImage :src="item.overlay" class="overlay-item" fit="contain" v-if="item.overlay"
-                :style="overlayStyle(item, index)" />
+              <SpImage
+                :src="item.overlay"
+                class="overlay-item"
+                fit="contain"
+                v-if="item.overlay"
+                :style="overlayStyle(item, index)"
+              />
             </div>
             <!-- 叠层内容 -->
             <div v-if="item.overlay" class="overlay-content" :style="overlayStyle(item, index)">
-              <SpImage :class="{
-                'transparent-transition': currentIndex !== index,
-                'transparent-transition-active': currentIndex == index
-              }" :src="item.overlay" class="over-lay" fit="contain" />
+              <SpImage
+                :class="{
+                  'transparent-transition': currentIndex !== index,
+                  'transparent-transition-active': currentIndex == index
+                }"
+                :src="item.overlay"
+                class="over-lay"
+                fit="contain"
+              />
             </div>
           </el-carousel-item>
         </el-carousel>
       </div>
-      <div :class="[
-        'slider-pagination',
-        value.dotLocation,
-        value.shape,
-        value.dotColor,
-        {
-          'cover-slider': value.dotCover
-        }
-      ]">
+      <div
+        :class="[
+          'slider-pagination',
+          value.dotLocation,
+          value.shape,
+          value.dotColor,
+          {
+            'cover-slider': value.dotCover
+          }
+        ]"
+      >
         <template v-if="value.dot">
-          <div v-for="(item, index) in value.data.length > 0 ? value.data : [1]" :key="`dot-item__${index}`"
-            :class="['dot-item', { active: currentIndex == index }]" />
+          <div
+            v-for="(item, index) in value.data.length > 0 ? value.data : [1]"
+            :key="`dot-item__${index}`"
+            :class="['dot-item', { active: currentIndex == index }]"
+          />
         </template>
         <template v-else>
           <div class="pagination-count">
@@ -104,7 +144,7 @@ export default {
       immediate: true
     }
   },
-  created() { },
+  created() {},
   mounted() {
     this.measureFirstScreenHeight()
   },

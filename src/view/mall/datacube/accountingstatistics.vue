@@ -285,10 +285,8 @@
       <el-card>
         <el-row type="flex" justify="end">
           <el-button size="small" type="primary" @click="onExportExcel()">
-{{
-            $t('c8d3d7a6.55405e')
-          }}
-</el-button>
+            {{ $t('c8d3d7a6.55405e') }}
+          </el-button>
         </el-row>
         <el-table v-loading="loading" :data="tableDataList" stripe border style="width: 100%">
           <el-table-column prop="create_time" :label="$t('c8d3d7a6.4ff1e7')" width="180" />

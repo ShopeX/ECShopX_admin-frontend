@@ -13,7 +13,7 @@
           <div class="brand-con">
             <div v-if="login_type === 'merchant'">
               <div class="img-wrap">
-                <img :src="brandIco" alt="">
+                <img :src="brandIco" alt="" />
               </div>
             </div>
             <router-link
@@ -28,7 +28,7 @@
               }`"
             >
               <div class="img-wrap">
-                <img :src="sys_logo" alt="">
+                <img :src="sys_logo" alt="" />
               </div>
             </router-link>
           </div>
@@ -117,7 +117,7 @@
             >
               <div class="popover-row base" @click="handleUserInfo">
                 <div class="avatar">
-                  <img v-if="avatar" class="user-avatar" :src="avatar">
+                  <img v-if="avatar" class="user-avatar" :src="avatar" />
                   <i v-else class="user-avatar iconfont icon-user-circle1" />
                 </div>
                 <div class="username">
@@ -129,7 +129,7 @@
                 {{ $t('28310bc9.44efd1') }}
               </div>
 
-              <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar">
+              <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar" />
               <i v-else slot="reference" class="iconfont icon-user-circle1" />
             </el-popover>
           </div>
@@ -141,15 +141,15 @@
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
         <div class="system-release flex justify-center items-center">
-          <img v-if="VERSION_B2C()" :src="loginBottomB2c" alt="" class="system-image">
+          <img v-if="VERSION_B2C()" :src="loginBottomB2c" alt="" class="system-image" />
           <img
             v-if="VERSION_IN_PURCHASE()"
             :src="loginBottomInpurchase"
             alt=""
             class="system-image"
-          >
-          <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image">
-          <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image">
+          />
+          <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image" />
+          <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image" />
         </div>
         <div id="design-view" />
       </el-main>

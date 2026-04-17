@@ -31,7 +31,7 @@
           <div class="frm-tips">{{ $t('ae01af00.3b1660') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -39,48 +39,10 @@
         <el-form-item :label="$t('ae01af00.e5ec03')">
           <div class="uploader-setting">
             <div class="goods-select">
-              <div
-                v-if="
-                  JSON.stringify(form.register_jump_path) != '{}' &&
-                  JSON.stringify(form.register_jump_path) != '[]'
-                "
-                class="link-content border px-2"
-              >
-                <span @click="handleGoodsChange()">
-                  <template v-if="form.register_jump_path.linkPage === 'goods'">{{
-                    $t('ae01af00.10fe9c')
-                  }}</template>
-                  <template v-if="form.register_jump_path.linkPage === 'category'">{{
-                    $t('ae01af00.e7d2e8')
-                  }}</template>
-                  <template v-if="form.register_jump_path.linkPage === 'article'">{{
-                    $t('ae01af00.8cb9b8')
-                  }}</template>
-                  <template v-if="form.register_jump_path.linkPage === 'planting'">{{
-                    $t('ae01af00.9dcd91')
-                  }}</template>
-                  <!--template v-if="form.register_jump_path.linkPage === 'planting'">种草：</template-->
-                  <template v-if="form.register_jump_path.linkPage === 'link'">{{
-                    $t('ae01af00.ffd741')
-                  }}</template>
-                  <template v-if="form.register_jump_path.linkPage === 'marketing'">{{
-                    $t('ae01af00.c78a2f')
-                  }}</template>
-                  <template v-if="form.register_jump_path.linkPage === 'custom_page'">{{
-                    $t('ae01af00.2a4e32')
-                  }}</template>
-                  {{ form.register_jump_path.title }}
-                </span>
+              <div v-if="hasRegisterJumpPath" class="link-content border px-2">
+                <span @click="handleGoodsChange()">{{ registerJumpPathSummary }}</span>
                 <span style="margin-left: 10px">
-                  <i
-                    v-if="
-                      JSON.stringify(form.register_jump_path) != '{}' &&
-                      JSON.stringify(form.register_jump_path) != '[]'
-                    "
-                    style="color: #f56c6c"
-                    class="el-icon-delete"
-                    @click="clear_pic_url"
-                  />
+                  <i style="color: #f56c6c" class="el-icon-delete" @click.stop="clear_pic_url" />
                 </span>
               </div>
               <div
@@ -285,28 +247,14 @@
         }}</el-button>
       </span>
     </el-dialog>
-    <linkSetter
-      :links="linksArr"
-      :visible="linksVisible"
-      :show_article="false"
-      :show_planting="false"
-      :show_page="false"
-      :show_marketing="false"
-      :show_store="false"
-      @setLink="setLink"
-      @closeDialog="closeDialog"
-    />
   </div>
 </template>
 <script>
 import { getItemsList } from '@/api/goods'
 import { getCardList, getEffectiveCardList } from '@/api/cardticket'
 import { saveRegisterPromotions, getRegisterPromotions } from '@/api/promotions'
-import linkSetter from '@/components/template_links' // 添加导航连接
+import { LINK_PATH } from '@/consts'
 export default {
-  components: {
-    linkSetter
-  },
   props: ['activeName'],
   data() {
     return {
@@ -350,14 +298,26 @@ export default {
           total: 0
         }
       },
-      card_type: 'all',
-      linksVisible: false, // 路径设置组件
-      linksArr: []
+      card_type: 'all'
     }
   },
   computed: {
     registerAdTitlePlaceholder() {
       return !this.VERSION_B2C() ? this.$t('ae01af00.194ebe') : this.$t('ae01af00.29ec5d')
+    },
+    hasRegisterJumpPath() {
+      const p = this.form.register_jump_path
+      if (!p || typeof p !== 'object') return false
+      const s = JSON.stringify(p)
+      if (s === '{}' || s === '[]') return false
+      return !!(p.linkPage || p.title || p.id)
+    },
+    registerJumpPathSummary() {
+      if (!this.hasRegisterJumpPath) return ''
+      const p = this.form.register_jump_path
+      const prefix = this.registerJumpPathPrefix(p.linkPage)
+      const title = p.title || ''
+      return prefix ? `${prefix}：${title}` : title
     }
   },
   watch: {
@@ -637,18 +597,34 @@ export default {
         }
       })
     },
-    handleGoodsChange() {
-      this.linksVisible = true
-    },
-    closeDialog() {
-      this.linksVisible = false
+    async handleGoodsChange() {
+      try {
+        const current = this.form.register_jump_path || {}
+        const res = await this.$picker.path({
+          data: current.id,
+          tab: current.linkPage || 'goods',
+          multiple: false,
+          dialogTitle: this.$t('ae01af00.4f2c29')
+        })
+        if (res && res.linkPage) {
+          this.form.register_jump_path = res
+        } else {
+          this.form.register_jump_path = {}
+        }
+      } catch (error) {
+        console.log('路径选择已取消')
+      }
     },
     clear_pic_url() {
       this.form.register_jump_path = {}
     },
-    setLink(data, type) {
-      let obj = Object.assign(data, { linkPage: type })
-      this.form.register_jump_path = obj
+    registerJumpPathPrefix(linkPage) {
+      if (!linkPage) return ''
+      if (LINK_PATH[linkPage]) return LINK_PATH[linkPage]
+      if (linkPage === 'live') return this.$t('d81d8932.7bbe8e')
+      if (linkPage === 'share_page') return this.$t('d81d8932.787963')
+      if (linkPage === 'marketing') return this.$t('ae01af00.c78a2f')
+      return ''
     }
   }
 }

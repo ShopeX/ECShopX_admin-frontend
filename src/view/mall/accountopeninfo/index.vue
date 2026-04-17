@@ -8,7 +8,7 @@
     <el-card>
       <el-row>
         <el-col :span="3">
-          <img class="cus-openaccount-img" src="@/assets/img/adapay/qiye.png" alt="">
+          <img class="cus-openaccount-img" src="@/assets/img/adapay/qiye.png" alt="" />
         </el-col>
         <el-col :span="20">
           <div class="cus-openaccount-flex">

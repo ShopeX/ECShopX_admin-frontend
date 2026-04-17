@@ -15,10 +15,8 @@
     />
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('20f6ad88.be5fbb')
-      }}
-</el-button>
+        {{ $t('20f6ad88.be5fbb') }}
+      </el-button>
     </div>
   </SpPage>
 </template>

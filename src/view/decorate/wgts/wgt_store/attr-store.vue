@@ -33,9 +33,7 @@ export default {
   components: { CompButton },
   props: ['value'],
   data() {
-    return {i18n,
-      localValue: null
-    }
+    return { i18n, localValue: null }
   },
   watch: {
     localValue: function (nVal, oVal) {

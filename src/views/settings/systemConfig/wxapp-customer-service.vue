@@ -25,7 +25,7 @@
 
       <div class="info">
         <div class="text">
-          <img :src="normal" class="img">
+          <img :src="normal" class="img" />
           <div>
             {{ $t('91deb7ee.42e3da') }}
           </div>
@@ -46,7 +46,7 @@
           >“<span class="weight">{{ $t('91deb7ee.d519b8') }}</span
           >{{ $t('91deb7ee.cfbd22') }}
 
-          <img :src="wechat" class="img">
+          <img :src="wechat" class="img" />
         </div>
       </div>
     </div>

@@ -139,7 +139,7 @@
                             {{ $t('35ec026d.87ae51') }}{{ scope.row.curFeeSymbol
                             }}{{ item.discount_fee / 100 }} {{ $t('35ec026d.c16655') }}
                           </p>
-                          <hr>
+                          <hr />
                         </div>
                       </div>
                       <div slot="reference" class="name-wrapper">

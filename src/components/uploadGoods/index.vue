@@ -12,7 +12,7 @@
     <div>
       <div class="tips">{{ $t('fc463ac7.fed838') }}</div>
       <div class="upload" @dragover="fileDragover" @drop="fileDrop">
-        <img class="upload-img" src="@/assets/img/upload.svg" alt="">
+        <img class="upload-img" src="@/assets/img/upload.svg" alt="" />
         <div class="upload-text">
           <span>{{ $t('fc463ac7.1ef03f') }}</span>
           <el-upload

@@ -122,7 +122,7 @@
                   @mouseenter="picsEnter(index)"
                   @mouseleave="picsLeave"
                 >
-                  <img :src="wximageurl + item">
+                  <img :src="wximageurl + item" />
                   <div
                     class="goodspic-mask"
                     :class="picsCurrent == index ? 'on' : ''"
@@ -233,17 +233,15 @@
             :show-file-list="false"
             :on-change="handleQualificationPicChange"
           >
-            <img v-if="qpic_url" :src="qpic_url" class="avatar">
+            <img v-if="qpic_url" :src="qpic_url" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-col>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" size="large" @click="onSubmit">
-{{
-          $t('345b9595.939d53')
-        }}
-</el-button>
+          {{ $t('345b9595.939d53') }}
+        </el-button>
         <el-button size="large" @click="cancelSubmit">{{ $t('345b9595.625fb2') }}</el-button>
       </el-form-item>
     </el-form>

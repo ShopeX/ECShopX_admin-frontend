@@ -139,25 +139,19 @@
               <el-tag size="mini">{{ $t('5e1e35aa.53e5df') }}</el-tag>
             </template>
             <el-tag v-else-if="scope.row.is_valid == '1'" size="mini" type="success">
-{{
-              $t('5e1e35aa.c6cc39')
-            }}
-</el-tag>
+              {{ $t('5e1e35aa.c6cc39') }}
+            </el-tag>
             <el-tag v-else size="mini">{{ $t('5e1e35aa.4d5ccd') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column :label="$t('5e1e35aa.2b6bc0')" min-width="200">
           <template slot-scope="scope">
             <el-button size="mini" @click="delayAction(scope.row)">
-{{
-              $t('5e1e35aa.e6095e')
-            }}
-</el-button>
+              {{ $t('5e1e35aa.e6095e') }}
+            </el-button>
             <el-button size="mini" @click="transferAction(scope.row)">
-{{
-              $t('5e1e35aa.9aa883')
-            }}
-</el-button>
+              {{ $t('5e1e35aa.9aa883') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

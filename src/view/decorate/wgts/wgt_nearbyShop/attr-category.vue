@@ -102,7 +102,8 @@ export default {
   components: { CompButton },
   props: ['value'],
   data() {
-    return {i18n,
+    return {
+      i18n,
       tagSelectVisible: false,
       localTagList: [],
       dragItemsOptions: {

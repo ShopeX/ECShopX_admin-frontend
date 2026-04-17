@@ -73,7 +73,7 @@ const SCENE_1003 = {
   WgtContentPartition,
   WgtHotRanking,
   WgtGoods,
-  ...(!VERSION_STANDARD() ? { WgtShop } : {}),
+  ...(!VERSION_STANDARD() ? { WgtShop } : {})
 }
 
 // 自定义页面装修

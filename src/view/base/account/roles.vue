@@ -28,15 +28,11 @@
         <template slot-scope="scope">
           <div class="operating-icons gap-2">
             <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">
-{{
-              $t('31921bc0.95b351')
-            }}
-</el-button>
+              {{ $t('31921bc0.95b351') }}
+            </el-button>
             <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)">
-{{
-              $t('31921bc0.2f4aad')
-            }}
-</el-button>
+              {{ $t('31921bc0.2f4aad') }}
+            </el-button>
           </div>
         </template>
       </el-table-column>

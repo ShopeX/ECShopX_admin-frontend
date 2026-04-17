@@ -40,7 +40,12 @@ const config = {
       value: 'all'
     },
     { label: i18n.t('9b7fb994.5ea469'), key: 'show_coupon', component: 'switch', value: false },
-    { label: i18n.t('9b7fb994.f417a5'), key: 'show_nearby_merchants', component: 'switch', value: false },
+    {
+      label: i18n.t('9b7fb994.f417a5'),
+      key: 'show_nearby_merchants',
+      component: 'switch',
+      value: false
+    },
     {
       label: i18n.t('9b7fb994.35f408'),
       key: 'merchantsNumber',

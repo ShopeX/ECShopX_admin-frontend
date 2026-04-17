@@ -164,8 +164,7 @@
                       :key="item.value"
                       :label="item.text"
                       :value="item.value"
-                    />
-</el-select
+                    /> </el-select
                   >&nbsp;{{ $t('dba53da0.b1aca7') }}&nbsp;
 
                   <el-input
@@ -268,15 +267,11 @@
               @change="usePlatformChange"
             >
               <el-radio v-if="is_distributor == false" label="store">
-{{
-                $t('dba53da0.1b38a1')
-              }}
-</el-radio>
+                {{ $t('dba53da0.1b38a1') }}
+              </el-radio>
               <el-radio v-if="form.card_type != 'gift'" label="mall">
-{{
-                $t('dba53da0.4448af')
-              }}
-</el-radio>
+                {{ $t('dba53da0.4448af') }}
+              </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
@@ -307,7 +302,7 @@
               <el-radio label="1">{{ $t('dba53da0.dedaee') }}</el-radio>
               <el-radio label="0">{{ $t('dba53da0.2a9882') }}</el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <el-input
               v-if="self_rcode === '1'"
               v-model="form.self_consume_code"
@@ -489,10 +484,8 @@
           </el-form-item>
           <div v-if="!zdShopHidden">
             <el-button type="primary" @click="addDistributorAction">
-{{
-              $t('dba53da0.afa2e6')
-            }}
-</el-button>
+              {{ $t('dba53da0.afa2e6') }}
+            </el-button>
             <el-table
               v-if="distributor_info.length > 0"
               :data="distributor_info"

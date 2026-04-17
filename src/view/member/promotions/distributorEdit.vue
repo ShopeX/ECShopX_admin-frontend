@@ -31,7 +31,7 @@
           <div class="frm-tips">{{ $t('ff601efd.3b1660') }}</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
-              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>

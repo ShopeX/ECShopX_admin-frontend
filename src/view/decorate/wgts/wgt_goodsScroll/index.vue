@@ -110,10 +110,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      subscriptImg: subscript,
-      goodsList: []
-    }
+    return { i18n, subscriptImg: subscript, goodsList: [] }
   },
   computed: {
     outerStyle() {

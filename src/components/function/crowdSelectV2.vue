@@ -7,10 +7,8 @@
       @change="handleTypeChange"
     >
       <el-radio-button v-for="item in options" :key="item.id" :label="item.id" :value="item.id">
-{{
-        item.name
-      }}
-</el-radio-button>
+        {{ item.name }}
+      </el-radio-button>
     </el-radio-group>
     <div class="crowd-select-header">
       <el-button

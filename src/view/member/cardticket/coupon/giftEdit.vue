@@ -67,8 +67,7 @@
               class="goods-input"
             >
               <el-button slot="append" icon="el-icon-search" @click="searchGoods" />
-            </el-input>
-</template
+            </el-input> </template
           >&nbsp;
 
           <el-button
@@ -98,7 +97,7 @@
                 <div>{{ item.itemId }}</div>
               </div>
               <div style="width: 50%" class="item goods-info">
-                <img v-if="item.pics" :src="item.pics[0]" alt="">
+                <img v-if="item.pics" :src="item.pics[0]" alt="" />
                 <div class="goods-sku">
                   <div>
                     {{ item.itemName }}

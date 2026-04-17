@@ -33,9 +33,7 @@ export default {
   components: { CompButton },
   props: ['value', 'distributor'],
   data() {
-    return {i18n,
-      localValue: []
-    }
+    return { i18n, localValue: [] }
   },
   computed: {
     disabledBtn() {

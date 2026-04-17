@@ -27,7 +27,7 @@
               :src="item.iconPath"
               class="icon-setter"
               @click="handleIconChange(index)"
-            >
+            />
             <div v-else class="icon-setter" @click="handleIconChange(index)">
               <i class="el-icon-picture muted" />
             </div>
@@ -36,7 +36,7 @@
               :src="item.selectedIconPath"
               class="icon-setter"
               @click="handleSelectedIconChange(index)"
-            >
+            />
             <div v-else class="icon-setter" @click="handleSelectedIconChange(index)">
               <i class="el-icon-picture muted" />
             </div>

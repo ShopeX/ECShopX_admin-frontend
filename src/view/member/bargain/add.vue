@@ -16,7 +16,7 @@
         <p class="frm-tips">{{ $t('82e97e47.c2c43a') }}</p>
         <div class="activity-poster">
           <div class="upload-box" @click="handleImgChange">
-            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
+            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
           </div>
         </div>
@@ -51,7 +51,7 @@
           <div class="pics-list">
             <template v-for="(item, index) in form.help_pics">
               <div class="pics-item">
-                <img :src="wximageurl + item">
+                <img :src="wximageurl + item" />
                 <div class="bg-mask">
                   <i class="icon el-icon-edit-outline" @click="picsEdit(index)" />
                   <i class="icon el-icon-delete" @click="picsDelete(index)" />
@@ -78,7 +78,7 @@
             <div class="logo-box">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>{{ $t('82e97e47.80193b') }}￥{{ goods.price }}</div>
@@ -177,7 +177,7 @@
         <el-table-column prop="itemName" :label="$t('82e97e47.1fd1d5')" />
         <el-table-column :label="$t('82e97e47.0f088d')">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" :label="$t('82e97e47.e29575')" :formatter="priceformatter" />

@@ -9,15 +9,11 @@
     <el-result icon="success" :title="$t('fb0e4a6f.04a691')" :sub-title="$t('fb0e4a6f.4f50ac')">
       <template slot="extra">
         <el-button type="primary" size="medium" @click="addGoods">
-{{
-          $t('fb0e4a6f.fa3aee')
-        }}
-</el-button>
+          {{ $t('fb0e4a6f.fa3aee') }}
+        </el-button>
         <el-button plain size="medium" @click="goActivityList">
-{{
-          $t('fb0e4a6f.0fdf19')
-        }}
-</el-button>
+          {{ $t('fb0e4a6f.0fdf19') }}
+        </el-button>
       </template>
     </el-result>
   </SpPage>

@@ -31,7 +31,11 @@
     </div>
 
     <!-- 积分商品 -->
-    <div v-if="type === 'pointsmall_items'" class="attr-data-specified" @click="handleSelectPointGoods">
+    <div
+      v-if="type === 'pointsmall_items'"
+      class="attr-data-specified"
+      @click="handleSelectPointGoods"
+    >
       <span class="specified-text">{{ pointGoodsDisplayText }}</span>
       <i class="el-icon-arrow-right" />
     </div>

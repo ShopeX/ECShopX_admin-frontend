@@ -203,9 +203,16 @@
   <div class="picker-video">
     <div class="picker-video-hd">
       <div class="btn-actions">
-        <el-upload class="btn-upload" action="" accept="video/mp4,.mov" :show-file-list="false"
-          :http-request="handleUpload" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
-          :on-error="uploadError">
+        <el-upload
+          class="btn-upload"
+          action=""
+          accept="video/mp4,.mov"
+          :show-file-list="false"
+          :http-request="handleUpload"
+          :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess"
+          :on-error="uploadError"
+        >
           <el-button>{{ i18n.t('24acd55e.afddcb') }}</el-button>
         </el-upload>
       </div>
@@ -216,21 +223,28 @@
     <div class="picker-video-bd">
       <div class="rg-container">
         <div v-loading="loading" class="image-list">
-          <div v-for="(item, index) in list" :key="`image-item-wrap__${index}`" class="image-item-wrap">
+          <div
+            v-for="(item, index) in list"
+            :key="`image-item-wrap__${index}`"
+            class="image-item-wrap"
+          >
             <div class="image-item" :style="{ color: '#fff' }">
-              <video-player class="picker-video-player" :options="{
-                // preload: 'auto',
-                aspectRatio: '16:9',
-                fluid: true,
-                sources: [
-                  {
-                    type: item.image_type,
-                    src: item.url
-                  }
-                ],
-                notSupportedMessage: i18n.t('24acd55e.01c0da'),
-                controlBar: false
-              }" />
+              <video-player
+                class="picker-video-player"
+                :options="{
+                  // preload: 'auto',
+                  aspectRatio: '16:9',
+                  fluid: true,
+                  sources: [
+                    {
+                      type: item.image_type,
+                      src: item.url
+                    }
+                  ],
+                  notSupportedMessage: i18n.t('24acd55e.01c0da'),
+                  controlBar: false
+                }"
+              />
               <div class="image-modal" @click="handleClickItem(item)">
                 <i class="el-icon-link" @click.stop="handleCopy(item.url)" />
               </div>
@@ -240,7 +254,10 @@
                 {{ item.image_name }}
               </p>
             </div>
-            <div v-show="multiple ? isActive(item) > -1 : isActive(item)" class="image-box-selected">
+            <div
+              v-show="multiple ? isActive(item) > -1 : isActive(item)"
+              class="image-box-selected"
+            >
               <div class="image-box-selected__right-angle" />
               <div class="image-box-selected__text">
                 <span v-show="multiple">{{ isActive(item) + 1 }}</span>
@@ -250,8 +267,13 @@
           </div>
           <el-empty v-if="list.length == 0" :description="i18n.t('24acd55e.21efd8')" />
         </div>
-        <el-pagination layout="total, prev, pager, next" :current-page.sync="pageCur" :page-size="pageSize"
-          :total="pageCount" @current-change="goPage" />
+        <el-pagination
+          layout="total, prev, pager, next"
+          :current-page.sync="pageCur"
+          :page-size="pageSize"
+          :total="pageCount"
+          @current-change="goPage"
+        />
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@
           :src="item.imgUrl"
           alt=""
         /> -->
-        <img :src="data[0].imgUrl || data[1].imgUrl" alt="">
+        <img :src="data[0].imgUrl || data[1].imgUrl" alt="" />
 
         <!-- <img class="png" :src="data[0].imgUrl" alt="">
         <img class="gif" :src="data[1].imgUrl" alt=""> -->

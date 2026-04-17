@@ -85,7 +85,7 @@
         </el-tab-pane>
       </el-tabs>
       <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" width="50">
-        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false" /><br>
+        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false" /><br />
         <el-card v-for="(carditem, index) in dialogContent" :key="index">
           <div slot="header">
             {{ carditem.title }}

@@ -154,11 +154,7 @@ export default {
         {
           component: () => {
             return (
-              <el-alert
-                title={t('63ede0f6.639e7b')}
-                type='warning'
-                closable={false}
-              ></el-alert>
+              <el-alert title={t('63ede0f6.639e7b')} type='warning' closable={false}></el-alert>
             )
           }
         },

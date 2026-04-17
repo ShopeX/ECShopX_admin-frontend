@@ -64,7 +64,8 @@ export default {
     value: Object
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       localValue: {
         data: [],
         secKillGoods: [],

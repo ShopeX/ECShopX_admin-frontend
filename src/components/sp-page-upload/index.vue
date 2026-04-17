@@ -19,10 +19,8 @@
       }}</span>
       <span v-else style="color: #67c23a; line-height: 40px">{{ $t('089d6e70.498a19') }}</span>
       <el-button v-if="exportPercent < 100" size="mini" type="warning" @click="hanleStop">
-{{
-        $t('089d6e70.84fac4')
-      }}
-</el-button>
+        {{ $t('089d6e70.84fac4') }}
+      </el-button>
     </div>
   </div>
 </template>

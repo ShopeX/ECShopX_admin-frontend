@@ -96,10 +96,8 @@
                   </el-form-item>
                 </div>
                 <el-button type="text" @click="handleContentRemove(index)">
-{{
-                  $t('c2fecd2a.2f4aad')
-                }}
-</el-button>
+                  {{ $t('c2fecd2a.2f4aad') }}
+                </el-button>
               </div>
               <el-button icon="el-icon-circle-plus" type="primary" plain @click="handleContentAdd">
                 {{ $t('c2fecd2a.f75488') }}

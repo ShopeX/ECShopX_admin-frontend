@@ -110,7 +110,7 @@
             <div class="grid-content">{{ $t('9fa1ac90.a73d17') }}</div>
           </el-col>
           <el-col :span="15">
-            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%">
+            <img :src="wxaCodeInfo.code_src" style="width: 100%; height: 100%" />
           </el-col>
         </el-row>
         <el-row class="row-bg">

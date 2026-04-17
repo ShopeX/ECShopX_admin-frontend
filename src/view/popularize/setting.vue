@@ -190,7 +190,7 @@
                   v-if="form.qrcode_bg_img"
                   :src="wximageurl + form.qrcode_bg_img"
                   class="avatar"
-                >
+                />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -211,7 +211,7 @@
             <el-form-item :label="$t('f7e8bd69.b8202e')">
               <div>
                 <div class="upload-box" @click="handleImgChange">
-                  <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar">
+                  <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
@@ -262,7 +262,7 @@
                         v-if="form.applets_share_img"
                         :src="wximageurl + form.applets_share_img"
                         class="avatar"
-                      >
+                      />
                       <i v-else class="el-icon-plus avatar-uploader-icon" />
                     </div>
                     <div class="frm-tips upload-box inline">{{ $t('f7e8bd69.db1b92') }}</div>
@@ -275,7 +275,7 @@
                         v-if="form.h5_share_img"
                         :src="wximageurl + form.h5_share_img"
                         class="avatar"
-                      >
+                      />
                       <i v-else class="el-icon-plus avatar-uploader-icon" />
                     </div>
                     <div class="frm-tips upload-box inline">{{ $t('f7e8bd69.51b729') }}</div>

@@ -333,7 +333,8 @@ export default {
     animate: String
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       dragOptions: {
         animation: 300,
         forceFallback: false,

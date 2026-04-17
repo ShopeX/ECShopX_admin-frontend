@@ -15,10 +15,8 @@
       width="80vw"
     >
       <el-button type="primary" size="small" @click="onAddCoupon">
-{{
-        i18n.t('dfd5d828.45bcee')
-      }}
-</el-button>
+        {{ i18n.t('dfd5d828.45bcee') }}
+      </el-button>
       <SpFinder
         ref="finder"
         no-selection
@@ -55,12 +53,7 @@ export default {
     }
   },
   data() {
-    return {i18n,
-      couponList: [],
-      mobCouponList: [],
-      dialogVisible: false,
-      activeTab: 'pro'
-    }
+    return { i18n, couponList: [], mobCouponList: [], dialogVisible: false, activeTab: 'pro' }
   },
   computed: {
     setting() {

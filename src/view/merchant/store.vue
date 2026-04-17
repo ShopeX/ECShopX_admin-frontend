@@ -353,13 +353,7 @@ export default {
           type: 'switch',
           display: 'inline',
           component: ({ key }, value) => {
-            return (
-              <el-switch
-                v-model={value[key]}
-                active-value={1}
-                inactive-value={0}
-              />
-            )
+            return <el-switch v-model={value[key]} active-value={1} inactive-value={0} />
           }
         },
         {
@@ -883,8 +877,7 @@ export default {
         }
         this.datapass_block = res.datapass_block
         const showSalespersonApi = Number(res.show_salesperson)
-        const showSalespersonOn =
-          showSalespersonApi === 1 || showSalespersonApi === 2 ? 1 : 0
+        const showSalespersonOn = showSalespersonApi === 1 || showSalespersonApi === 2 ? 1 : 0
         const salespersonTypeFromApi = showSalespersonApi === 2 ? 2 : 1
         this.form = {
           distribution_type: res.distribution_type,

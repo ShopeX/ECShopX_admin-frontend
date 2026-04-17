@@ -9,7 +9,7 @@
       <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img :src="item.pics[0]" alt="">
+            <img :src="item.pics[0]" alt="" />
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -33,10 +33,8 @@
     </el-row>
     <div>
       <el-button type="primary" @click="handleGoodsDialogShow">
-{{
-        $t('ea95ac26.43d1e2')
-      }}
-</el-button>
+        {{ $t('ea95ac26.43d1e2') }}
+      </el-button>
     </div>
     <!-- <el-dialog
       title="选择sku"

@@ -223,9 +223,8 @@
             {{ $t('d41d8cd9.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="exportItemsData"
-              >
-{{ $t('d41d8cd9.b433e6') }}
+            <el-dropdown-item command="exportItemsData">
+              {{ $t('d41d8cd9.b433e6') }}
             </el-dropdown-item>
             <el-dropdown-item
               command="exportItemsTagData"
@@ -499,7 +498,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               {{ $t('d41d8cd9.99e985') }}

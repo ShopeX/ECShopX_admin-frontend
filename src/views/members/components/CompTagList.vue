@@ -15,10 +15,8 @@
         @change="changeInput"
       />
       <el-button v-else size="mini" type="info" plain @click="addLabel">
-{{
-        $t('93ba5178.ed7823')
-      }}
-</el-button>
+        {{ $t('93ba5178.ed7823') }}
+      </el-button>
     </div>
     <div
       v-for="(item, index) in list"

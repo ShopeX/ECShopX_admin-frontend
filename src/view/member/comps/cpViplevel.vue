@@ -20,7 +20,7 @@
             <div>
               <div class="upload-box" @click="handleImgChange(item, index)">
                 <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
-                  <img :src="wximageurl + item.background_pic_url" class="avatar">
+                  <img :src="wximageurl + item.background_pic_url" class="avatar" />
                 </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>

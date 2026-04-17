@@ -85,10 +85,8 @@
 
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('aa950d87.be5fbb')
-      }}
-</el-button>
+        {{ $t('aa950d87.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>

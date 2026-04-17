@@ -254,7 +254,7 @@ export function putRulesInfo(query) {
     method: 'put',
     params: query,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      'Content-Type': 'application/json'
     }
   })
 }

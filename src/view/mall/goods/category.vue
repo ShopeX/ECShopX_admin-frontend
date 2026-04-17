@@ -109,13 +109,11 @@
               {{ $t('1ca86b46.82537d') }}
             </el-button>
             <el-button type="text" @click="editCategory(scope.row)">
-{{
-              $t('1ca86b46.95b351')
-            }}
-</el-button>
+              {{ $t('1ca86b46.95b351') }}
+            </el-button>
             <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl">
+                <img class="page-code" :src="appCodeUrl" />
                 <div class="page-btns">
                   <el-button
                     type="primary"

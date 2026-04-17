@@ -81,29 +81,23 @@
               <template slot-scope="scope">
                 <template v-if="scope.row.is_not_limit_num == 2">
                   <el-tag v-if="scope.row.total_num == scope.row.total_consum_num">
-{{
-                    $t('3bd3e3f4.535023')
-                  }}
-</el-tag>
+                    {{ $t('3bd3e3f4.535023') }}
+                  </el-tag>
                 </template>
                 <template v-if="scope.row.is_not_limit_num == 1">
                   <el-tag>{{ $t('3bd3e3f4.53e5df') }}</el-tag>
                 </template>
                 <el-tag v-else-if="scope.row.is_valid == '1'" type="success">
-{{
-                  $t('3bd3e3f4.c6cc39')
-                }}
-</el-tag>
+                  {{ $t('3bd3e3f4.c6cc39') }}
+                </el-tag>
                 <el-tag v-else>{{ $t('3bd3e3f4.4d5ccd') }}</el-tag>
               </template>
             </el-table-column>
             <el-table-column :label="$t('3bd3e3f4.2b6bc0')">
               <template slot-scope="scope">
                 <el-button size="mini" @click="delayAction(scope.row)">
-{{
-                  $t('3bd3e3f4.e6095e')
-                }}
-</el-button>
+                  {{ $t('3bd3e3f4.e6095e') }}
+                </el-button>
               </template>
             </el-table-column>
           </el-table>

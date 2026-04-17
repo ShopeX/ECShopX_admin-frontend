@@ -22,10 +22,10 @@
               :span="1"
               :offset="index > 0 ? 1 : 0"
             >
-              <img :src="wximageurl + pic" width="40" height="40">
+              <img :src="wximageurl + pic" width="40" height="40" />
             </el-col>
             <el-col v-if="col.type" :span="20" class="word-warp">
-              <img :src="col.type && info[col.field]" alt="">
+              <img :src="col.type && info[col.field]" alt="" />
             </el-col>
             <el-col v-else :span="span === 20 ? 20 : 13" class="word-warp">
               {{ col.filter ? col.filter(info[col.field]) || '-' : info[col.field] || '-' }}

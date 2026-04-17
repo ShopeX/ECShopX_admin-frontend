@@ -84,13 +84,13 @@
           <template slot="label"> {{ $t('bb662cf9.e0b8cc') }} </template>
           <a :href="editForm.business_license" target="_blank"
             ><img :src="editForm.business_license" height="100"
-          ></a>
+          /></a>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"> {{ $t('bb662cf9.939fdb') }} </template>
           <a :href="editForm.wechat_qrcode" target="_blank"
             ><img :src="editForm.wechat_qrcode" height="100"
-          ></a>
+          /></a>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"> {{ $t('bb662cf9.bd4097') }} </template>
@@ -129,8 +129,7 @@
         <div class="section-footer with-border content-center">
           <el-button v-loading="loading" type="primary" @click="editFormSubmit">
             {{ $t('bb662cf9.e83a25') }}
-</el-button
-          >
+          </el-button>
         </div>
       </el-form>
     </el-dialog>

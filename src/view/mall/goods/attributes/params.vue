@@ -95,8 +95,8 @@ const [ParamsForm, ParamsFormApi] = useForm({
         return (
           <div>
             {list.map((item, index) => (
-              <div key={index} class="flex items-center mb-2 bg-gray-50 rounded">
-                <div class="flex-1 mr-2.5">
+              <div key={index} class='flex items-center mb-2 bg-gray-50 rounded'>
+                <div class='flex-1 mr-2.5'>
                   <el-input
                     value={item.attribute_value}
                     placeholder={i18n.t('07504bf6.a0386a')}

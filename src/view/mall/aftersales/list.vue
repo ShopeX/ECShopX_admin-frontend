@@ -190,7 +190,7 @@
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                 />
-                <br>
+                <br />
                 <span class="frm-tips">{{ $t('4d1aec94.8f2914') }}</span>
               </el-form-item>
             </el-form>

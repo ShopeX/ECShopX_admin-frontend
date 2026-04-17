@@ -191,8 +191,8 @@
           >
             <el-checkbox
               v-for="vipdata in vipGrade"
-              :key="vipdata.vip_grade_id"
-              :label="vipdata.vip_grade_id"
+              :key="vipdata.lv_type"
+              :label="vipdata.lv_type"
             >
               {{ $t('81b3322f.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
@@ -340,13 +340,12 @@ export default {
       }))
     }
   },
-  mounted() {
+  async mounted() {
     if (this.$route.query.cardId) {
       this.form.card_id = this.$route.query.cardId
     }
-    this.getGradeList()
-    this.listVipGrade()
-    this.init()
+    await Promise.all([this.getGradeList(), this.listVipGrade()])
+    await this.init()
   },
   methods: {
     checkNumber(rule, value, callback) {
@@ -383,6 +382,20 @@ export default {
     },
     toTimeDate(time) {
       return dayjs(time * 1000).format('YYYY-MM-DD HH:mm:ss')
+    },
+    /** 详情接口可能返回 JSON 字符串，需转为数组才能与勾选框 label 对应 */
+    parseJsonIdArray(val) {
+      if (val == null || val === '') return []
+      if (Array.isArray(val)) return val.slice()
+      if (typeof val === 'string') {
+        try {
+          const parsed = JSON.parse(val)
+          return Array.isArray(parsed) ? parsed : []
+        } catch (e) {
+          return []
+        }
+      }
+      return []
     },
     cancelSubmit() {
       this.$router.go(-1)
@@ -490,7 +503,18 @@ export default {
         //   ]
         // }
         // initData.user_tag_ids = [{tag_id: '142',tag_name:'员工'}]
-        this.form = initData
+        const gradeIds = this.parseJsonIdArray(initData.grade_ids).map((id) =>
+          Number.isNaN(Number(id)) ? id : Number(id)
+        )
+        const vipGradeIds = this.parseJsonIdArray(initData.vip_grade_ids).map((id) =>
+          id === null || id === undefined ? id : String(id)
+        )
+        this.form = { ...initData, grade_ids: gradeIds, vip_grade_ids: vipGradeIds }
+        Object.keys(this.params).forEach((k) => {
+          if (Object.prototype.hasOwnProperty.call(this.form, k)) {
+            this.params[k] = this.form[k]
+          }
+        })
         console.log(this.form, 'this.form初始化')
       }
     },

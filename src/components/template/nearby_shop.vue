@@ -25,7 +25,7 @@
       </div>
       <div class="shopList">
         <div v-if="shoplist.length <= 0" class="noShop">
-          <img :src="img.noShopImg" alt="">
+          <img :src="img.noShopImg" alt="" />
           <p>{{ $t('6d548076.d17ff7') }}</p>
         </div>
         <div v-else class="content">
@@ -39,7 +39,7 @@
                 backgroundRepeat: 'no-repeat'
               }"
             >
-              <img class="logo" :src="item.logo || img.logoImg" alt="">
+              <img class="logo" :src="item.logo || img.logoImg" alt="" />
             </div>
             <!-- <img class="bg" :src="img.bgImg" alt="" /> -->
 

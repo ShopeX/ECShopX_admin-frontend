@@ -23,10 +23,8 @@
     <el-row class="content-bottom-padded" :gutter="20">
       <el-col :span="3">
         <el-button type="primary" icon="plus" @click="addResource">
-{{
-          $t('67f91254.ba6956')
-        }}
-</el-button>
+          {{ $t('67f91254.ba6956') }}
+        </el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="rightsList" border>
@@ -66,10 +64,8 @@
             <el-tag size="mini">{{ $t('67f91254.53e5df') }}</el-tag>
           </template>
           <el-tag v-else-if="scope.row.is_valid == '1'" type="success" size="mini">
-{{
-            $t('67f91254.c6cc39')
-          }}
-</el-tag>
+            {{ $t('67f91254.c6cc39') }}
+          </el-tag>
           <el-tag v-else size="mini">{{ $t('67f91254.4d5ccd') }}</el-tag>
         </template>
       </el-table-column>

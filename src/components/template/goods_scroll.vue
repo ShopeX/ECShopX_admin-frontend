@@ -55,10 +55,10 @@
         <div v-for="(item, index) in data.slice(0, 50)" :key="index" class="scroll-item">
           <div v-if="config.leaderboard" class="subscript">
             <div class="subscript-text">NO.{{ index + 1 }}</div>
-            <img class="subscript-img" :src="subscriptImg">
+            <img class="subscript-img" :src="subscriptImg" />
           </div>
           <div class="thumbnail">
-            <img class="goods-img" :src="wximageurl + item.imgUrl">
+            <img class="goods-img" :src="wximageurl + item.imgUrl" />
           </div>
           <div class="marketing-title">
             {{ item.title }}
@@ -92,7 +92,7 @@
         </div>
         <div v-if="base.backgroundImg" class="scroll-item">
           <div class="more">
-            <img :src="base.backgroundImg" alt="">
+            <img :src="base.backgroundImg" alt="" />
             <div>{{ $t('2ba94ca2.90ef7c') }}</div>
           </div>
         </div>

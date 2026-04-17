@@ -17,7 +17,7 @@
       <el-table-column :label="$t('c5ae46b6.95a43e')">
         <template slot-scope="scope">
           <div v-if="scope.row.userInfo">
-            {{ scope.row.userInfo.nickanme }}<br>{{ scope.row.userInfo.mobile }}
+            {{ scope.row.userInfo.nickanme }}<br />{{ scope.row.userInfo.mobile }}
           </div>
           <div v-else>{{ $t('c5ae46b6.b1dae9') }}</div>
         </template>
@@ -29,10 +29,8 @@
         <template slot-scope="scope">
           <div class="operating-icons">
             <el-button type="text" @click="viewDetails(scope.row, scope.$index)">
-{{
-              $t('a0d7a294.f26225')
-            }}
-</el-button>
+              {{ $t('a0d7a294.f26225') }}
+            </el-button>
 
             <el-button type="text" @click="auditNote(scope.row)">
               {{ resetText(scope.row) }}

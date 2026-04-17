@@ -94,9 +94,7 @@
                       :size="16"
                       class="mr-2 flex-shrink-0"
                     />
-                    <span
-                      v-html="highlightText(menu.name, keyword, selectedIndex === index)"
-                    />
+                    <span v-html="highlightText(menu.name, keyword, selectedIndex === index)" />
                   </div>
                   <div v-if="menu.path" class="text-xs text-gray-400 mt-1">{{ menu.path }}</div>
                 </div>

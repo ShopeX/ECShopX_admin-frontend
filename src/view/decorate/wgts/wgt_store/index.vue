@@ -70,10 +70,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      currentIndex: 1,
-      defaultShopLogo
-    }
+    return { i18n, currentIndex: 1, defaultShopLogo }
   },
   computed: {
     outerStyle() {

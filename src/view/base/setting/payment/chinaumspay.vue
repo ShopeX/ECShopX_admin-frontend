@@ -21,15 +21,15 @@
     </el-form-item> -->
     <el-form-item :label="$t('53e6f865.435ed4')">
       <el-input v-model="form.mid" style="width: 500px" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item :label="$t('53e6f865.bdbef9')">
       <el-input v-model="form.tid" style="width: 500px" :placeholder="$t('53e6f865.a11cc7')" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item :label="$t('53e6f865.1abce7')">
       <el-input v-model="form.rate" style="width: 200px" :placeholder="$t('53e6f865.a11cc7')" />%
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('53e6f865.2e9852') }}</span>
     </el-form-item>
     <el-form-item :label="$t('53e6f865.b1bbef')">
@@ -41,7 +41,7 @@
     </el-form-item>
     <el-form-item :label="$t('53e6f865.a81052')">
       <el-input v-model="form.password" style="width: 200px" :placeholder="$t('53e6f865.a11cc7')" />
-      <br>
+      <br />
     </el-form-item>
     <el-form-item :label="$t('53e6f865.486605')">
       <span v-if="form.rsa_public_path"> {{ form.rsa_public_name }}</span>
@@ -55,10 +55,8 @@
     </el-form-item>
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('53e6f865.be5fbb')
-      }}
-</el-button>
+        {{ $t('53e6f865.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>

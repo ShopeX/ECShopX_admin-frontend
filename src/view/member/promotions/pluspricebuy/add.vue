@@ -294,7 +294,7 @@
                 v-if="form.activity_background"
                 :src="wximageurl + form.activity_background"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -323,13 +323,17 @@
         </el-form-item>
         <el-form-item :label="$t('4262458d.6dbb6f')">
           <el-checkbox-group v-model="validGrade">
-            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
+            <el-checkbox
+              v-for="grade in memberGrade"
+              :key="grade.grade_id"
+              :label="String(grade.grade_id)"
+            >
               {{ grade.grade_name }}
             </el-checkbox>
             <el-checkbox
               v-for="vipdata in vipGrade"
               :key="vipdata.vip_grade_id"
-              :label="vipdata.lv_type"
+              :label="String(vipdata.lv_type)"
             >
               {{ $t('4262458d.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
@@ -634,9 +638,7 @@ export default {
         })
         // this.form.condition_value = JSON.stringify(this.conditionValue)
       }
-      if (this.validGrade.length > 0) {
-        this.form.valid_grade = this.validGrade
-      }
+      this.form.valid_grade = this.normalizeValidGradeForSubmit(this.validGrade)
 
       this.form.shop_ids = []
       if (this.relStores && this.relStores.length > 0) {
@@ -748,7 +750,7 @@ export default {
         }
         Object.assign(this.form, data)
         this.conditionValue = response.condition_value
-        this.validGrade = response.valid_grade
+        this.validGrade = this.normalizeValidGradeForView(response.valid_grade)
         this.activity_date = [response.start_time, response.end_time]
         this.relItems = response.itemTreeLists ? response.itemTreeLists : []
         this.relStores = response.storeLists ? response.storeLists : []
@@ -812,6 +814,17 @@ export default {
     deleteGiftRow: function (key, index) {
       this.setGiftStatus = false
       this.purchaseRules[key].gift_item.splice(index, 1)
+    },
+    normalizeValidGradeForView(list = []) {
+      if (!Array.isArray(list)) return []
+      return list.map((item) => String(item))
+    },
+    normalizeValidGradeForSubmit(list = []) {
+      if (!Array.isArray(list)) return []
+      return list.map((item) => {
+        const value = String(item)
+        return /^\d+$/.test(value) ? Number(value) : value
+      })
     },
     itemTypeChange: function (val) {
       this.relItems = []

@@ -52,7 +52,7 @@
             >
               <div class="view-flex view-flex-center">
                 <div class="member-card-avatar">
-                  <img class="member-card-avatar-img" :src="logo">
+                  <img class="member-card-avatar-img" :src="logo" />
                 </div>
                 <div class="view-flex view-flex-center view-flex-item view-flex-vertical">
                   <div class="store-name">源源客</div>
@@ -70,8 +70,8 @@
           </div>
           <div class="section section-white member-coupon">
             <div class="view-flex view-flex-center view-flex-middle code-toggle">
-              <img class="code-toggle-img" src="@/assets/img/qr_code.png">
-              <img class="item-icon" src="@/assets/img/icon_down.png">
+              <img class="code-toggle-img" src="@/assets/img/qr_code.png" />
+              <img class="item-icon" src="@/assets/img/icon_down.png" />
             </div>
             <div class="section-title content-center">{{ $t('d84f0154.de43bf') }}</div>
             <div class="section-body">
@@ -79,14 +79,14 @@
                 <div class="view-flex-item view-flex-vertical member-coupon-item">
                   <div>¥ 122.00</div>
                   <div>
-                    <img class="member-coupon-icons" src="@/assets/img/icon_01.png">
+                    <img class="member-coupon-icons" src="@/assets/img/icon_01.png" />
                     {{ $t('d84f0154.0ae749') }}
                   </div>
                 </div>
                 <div class="view-flex-item view-flex-vertical member-coupon-item">
                   <div>6 张</div>
                   <div>
-                    <img class="member-coupon-icons" src="@/assets/img/icon_02.png">
+                    <img class="member-coupon-icons" src="@/assets/img/icon_02.png" />
                     {{ $t('d84f0154.2f3635') }}
                   </div>
                 </div>
@@ -102,18 +102,18 @@
                 <div class="store-open-time">{{ $t('d84f0154.288491') }}</div>
               </div>
               <div class="view-flex view-flex-vertical view-flex-middle store-location">
-                <img class="store-location-img" src="@/assets/img/icon_location.png">12km
+                <img class="store-location-img" src="@/assets/img/icon_location.png" />12km
               </div>
             </div>
             <div
               class="view-flex view-flex-middle view-flex-right section-footer with-border content-right"
             >
-              {{ $t('d84f0154.a48948') }} <img class="icon-to-all" src="@/assets/img/icon_to.png">
+              {{ $t('d84f0154.a48948') }} <img class="icon-to-all" src="@/assets/img/icon_to.png" />
             </div>
           </div>
           <div class="appmsg">
             <div class="appmsg-header">
-              <img class="appmsg-header-img" :src="wximageurl + articals[0].thumb_url">
+              <img class="appmsg-header-img" :src="wximageurl + articals[0].thumb_url" />
               <div class="appmsg-header-caption">
                 <template v-if="articals[0].title != ''">
                   {{ articals[0].title }}
@@ -130,7 +130,7 @@
                   <template v-else> {{ $t('d84f0154.32c65d') }} </template>
                 </div>
                 <div class="appmsg-list-item-thumb">
-                  <img class="appmsg-list-item-thumb-img" :src="wximageurl + item.thumb_url">
+                  <img class="appmsg-list-item-thumb-img" :src="wximageurl + item.thumb_url" />
                 </div>
               </div>
             </div>

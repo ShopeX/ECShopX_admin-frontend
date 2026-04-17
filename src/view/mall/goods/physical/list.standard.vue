@@ -452,9 +452,7 @@
             />
             <el-table-column :label="$t('b7aea01d.63d68b')" width="120">
               <template slot-scope="scope">
-                <span
-                  v-if="scope.row.item_holder == 'distributor' && !scope.row.supplier_name"
-                />
+                <span v-if="scope.row.item_holder == 'distributor' && !scope.row.supplier_name" />
                 <span v-else>{{
                   scope.row.is_market == '1' ? $t('b7aea01d.434e17') : $t('b7aea01d.b37fb8')
                 }}</span>
@@ -470,10 +468,8 @@
                   {{ scope.row.is_can_sale ? $t('b7aea01d.d2379a') : $t('b7aea01d.4a5098') }}
                 </el-button>
                 <el-button type="text" @click="onClickLink(scope.row)">
-{{
-                  $t('b7aea01d.879058')
-                }}
-</el-button>
+                  {{ $t('b7aea01d.879058') }}
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -801,10 +797,8 @@
         </el-table>
         <div slot="footer">
           <el-button type="primary" :loading="submitLoading" @click="savePrice">
-{{
-            $t('b7aea01d.be5fbb')
-          }}
-</el-button>
+            {{ $t('b7aea01d.be5fbb') }}
+          </el-button>
         </div>
       </SideBar>
       <!-- 选择商品分类-结束 -->

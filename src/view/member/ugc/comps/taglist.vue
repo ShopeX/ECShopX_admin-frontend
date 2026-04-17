@@ -16,7 +16,7 @@
 
       <el-table-column v-if="handleType == 'view'" :label="$t('8f90518f.df9a42')">
         <template slot-scope="scope">
-          {{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}
+          {{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}
         </template>
       </el-table-column>
 

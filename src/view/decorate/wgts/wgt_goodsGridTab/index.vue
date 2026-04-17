@@ -133,12 +133,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      currentIndex: 1,
-      checked: 0,
-      goodsGridTabDeep: {},
-      data: null
-    }
+    return { i18n, currentIndex: 1, checked: 0, goodsGridTabDeep: {}, data: null }
   },
   computed: {
     outerStyle() {

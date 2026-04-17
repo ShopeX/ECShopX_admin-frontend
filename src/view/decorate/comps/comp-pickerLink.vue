@@ -73,10 +73,8 @@
       >
         <el-radio-button :label="0">{{ $t('4a0a5782.e3cf91') }}</el-radio-button>
         <el-radio-button :label="1">
-{{
-          $t('4a0a5782.4e99fd')
-        }}
-</el-radio-button>
+          {{ $t('4a0a5782.4e99fd') }}
+        </el-radio-button>
       </el-radio-group>
     </div>
     <div v-if="localValue.linkType == 0" class="tracking-params-wrapper" @click="onPickerPath">

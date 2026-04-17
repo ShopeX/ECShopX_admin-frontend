@@ -60,10 +60,8 @@
     </div>
     <div>
       <el-button class="btn-add" type="text" @click="addTimeSlot()">
-{{
-        $t('c89bb72c.96fd7a')
-      }}
-</el-button>
+        {{ $t('c89bb72c.96fd7a') }}
+      </el-button>
     </div>
   </div>
 </template>

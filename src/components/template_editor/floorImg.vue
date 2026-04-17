@@ -31,7 +31,7 @@
                 :src="wximageurl + base.backgroundImg"
                 class="banner-uploader"
                 @click="handleImgChange('backImg')"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange('backImg')">
                 <i class="el-icon-camera" />
                 {{ $t('7def7648.ce6855') }}
@@ -51,7 +51,7 @@
                   :src="wximageurl + item.imgUrl"
                   class="banner-uploader"
                   @click="handleImgChange(index)"
-                >
+                />
                 <div v-else class="banner-uploader" @click="handleImgChange(index)">
                   <i class="el-icon-camera" />
                   {{ $t('7def7648.ce6855') }}

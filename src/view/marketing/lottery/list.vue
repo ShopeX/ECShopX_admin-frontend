@@ -24,10 +24,8 @@
           <div class="action-container">
             <div style="height: 20px" />
             <el-button type="primary" plain @click="addHandle">
-{{
-              $t('f178a6ca.23b46b')
-            }}
-</el-button>
+              {{ $t('f178a6ca.23b46b') }}
+            </el-button>
           </div>
 
           <!-- 选择tab -->

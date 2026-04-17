@@ -30,10 +30,8 @@
       </div>
       <div class="section-footer content-center">
         <el-button v-loading="loading" type="primary" @click="saveConfig">
-{{
-          $t('d36c7c28.be5fbb')
-        }}
-</el-button>
+          {{ $t('d36c7c28.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
   </div>

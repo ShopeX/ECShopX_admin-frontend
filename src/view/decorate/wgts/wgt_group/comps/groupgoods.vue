@@ -9,7 +9,7 @@
             :src="value.titleText.image"
             class="header-image"
             alt=""
-          >
+          />
           <span
             v-if="value.titleText && value.titleText.text && value.titleText.type === 'text'"
             class="header-text"
@@ -43,7 +43,7 @@
 
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
         </div>
 
         <!-- 商品信息 -->
@@ -67,7 +67,8 @@
   </div>
 </template>
 
-<script>import { i18n } from '@/i18n'
+<script>
+import { i18n } from '@/i18n'
 
 export default {
   name: 'GroupGoods',

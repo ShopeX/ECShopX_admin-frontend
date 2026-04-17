@@ -33,7 +33,7 @@
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange(index)"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
                 {{ $t('9c3a7c75.ce6855') }}

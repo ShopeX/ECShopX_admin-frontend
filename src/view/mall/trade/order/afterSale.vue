@@ -287,8 +287,7 @@ export default {
         cancelButtonText: this.$t('9ebd763b.625fb2')
       })
       const { id: order_id } = this.$route.params
-      const reason =
-        this.reasonOptions.find((item) => item.value == this.form.reason)?.title || ''
+      const reason = this.reasonOptions.find((item) => item.value == this.form.reason)?.title || ''
       const params = {
         order_id,
         aftersales_type: this.form.aftersales_type,

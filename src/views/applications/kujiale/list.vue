@@ -20,10 +20,8 @@
       <!-- 操作按钮 -->
       <div class="action-container mt-4">
         <el-button type="primary" @click="handleSelectProduct">
-{{
-          $t('b6d1901c.ea9246')
-        }}
-</el-button>
+          {{ $t('b6d1901c.ea9246') }}
+        </el-button>
       </div>
 
       <!-- 商品列表 -->

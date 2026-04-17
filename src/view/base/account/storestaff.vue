@@ -15,16 +15,14 @@
         <li v-if="VERSION_PLATFORM()">
           {{ $t('ab2cdfe4.a36767')
           }}<el-link :href="origin + '/merchant/login'" target="_blank" type="primary">
-            {{ $t('ab2cdfe4.a792da') }}
-</el-link
+            {{ $t('ab2cdfe4.a792da') }} </el-link
           >。
         </li>
         <li>{{ $t('ab2cdfe4.09136f') }}</li>
         <li>
           {{ $t('ab2cdfe4.92eb56')
           }}<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">
-            {{ $t('ab2cdfe4.95ee58') }}
-</el-link
+            {{ $t('ab2cdfe4.95ee58') }} </el-link
           >。
         </li>
       </ul>

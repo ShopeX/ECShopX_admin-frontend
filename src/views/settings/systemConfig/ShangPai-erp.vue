@@ -19,7 +19,11 @@
           <el-button type="primary" @click="deleteCer">{{ $t('073515a8.7b49f4') }}</el-button>
         </el-col>
         <el-col :span="4">
-          <el-button v-if="showShopexBindBtn" type="primary" @click="dialogShopexBindVisible = true">
+          <el-button
+            v-if="showShopexBindBtn"
+            type="primary"
+            @click="dialogShopexBindVisible = true"
+          >
             {{ $t('073515a8.06cc65') }}
           </el-button>
         </el-col>
@@ -42,10 +46,8 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogBindVisible = false">
-{{
-          $t('073515a8.9d2578')
-        }}
-</el-button>
+          {{ $t('073515a8.9d2578') }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -55,14 +57,17 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogLookVisible = false">
-{{
-          $t('073515a8.9d2578')
-        }}
-</el-button>
+          {{ $t('073515a8.9d2578') }}
+        </el-button>
       </div>
     </el-dialog>
     <el-dialog :title="$t('073515a8.06cc65')" :visible.sync="dialogShopexBindVisible" width="480px">
-      <el-form ref="shopexBindForm" :model="shopexBindForm" :rules="shopexBindRules" label-width="100px">
+      <el-form
+        ref="shopexBindForm"
+        :model="shopexBindForm"
+        :rules="shopexBindRules"
+        label-width="100px"
+      >
         <el-form-item :label="$t('073515a8.4c7a7a')" prop="username">
           <el-input v-model="shopexBindForm.username" />
         </el-form-item>

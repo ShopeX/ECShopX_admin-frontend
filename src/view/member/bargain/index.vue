@@ -32,7 +32,7 @@
           <el-table-column prop="title" :label="$t('a483cf85.39834b')" />
           <el-table-column :label="$t('a483cf85.c799f5')" width="180">
             <template slot-scope="scope">
-              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br>
+              {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br />
               {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </template>
           </el-table-column>
@@ -92,7 +92,7 @@
             <div class="frm-tips">{{ $t('a483cf85.c03a1e') }}</div>
             <div>
               <div class="upload-box" @click="handleImgChange">
-                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic">
+                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic" />
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>

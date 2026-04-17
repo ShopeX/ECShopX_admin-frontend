@@ -121,10 +121,8 @@
             <div class="flex-right">
               <el-button @click="handleReset">{{ $t('a6226f20.4b9c32') }}</el-button>
               <el-button type="primary" @click="getCompanyDataList()">
-{{
-                $t('a6226f20.e5f71f')
-              }}
-</el-button>
+                {{ $t('a6226f20.e5f71f') }}
+              </el-button>
             </div>
           </el-col>
         </el-row>
@@ -163,10 +161,8 @@
     <el-card>
       <el-row type="flex" justify="end">
         <el-button type="primary" size="small" @click="onExportExcel()">
-{{
-          $t('a6226f20.55405e')
-        }}
-</el-button>
+          {{ $t('a6226f20.55405e') }}
+        </el-button>
       </el-row>
       <el-table v-loading="loading" :data="allListData" stripe border style="width: 100%">
         <el-table-column prop="created_at" :label="$t('a6226f20.4ff1e7')" width="170" />

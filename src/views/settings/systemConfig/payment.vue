@@ -17,7 +17,7 @@
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon">
+                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon" />
                 <span class="payment-title" v-else>{{ item.title }}</span>
                 <el-switch
                   v-model="item.enabled"
@@ -55,7 +55,7 @@
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon">
+                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon" />
                 <span class="payment-title" v-else>{{ item.title }}</span>
                 <el-switch
                   v-model="item.enabled"

@@ -34,10 +34,8 @@
       </div>
       <div class="section-footer content-center">
         <el-button v-loading="loading" type="primary" @click="saveConfig">
-{{
-          $t('cd911c54.be5fbb')
-        }}
-</el-button>
+          {{ $t('cd911c54.be5fbb') }}
+        </el-button>
       </div>
     </el-form>
     <imgPicker

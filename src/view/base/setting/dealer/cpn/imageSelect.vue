@@ -53,7 +53,7 @@
                             :class="isMost ? { selected: item.selected } : { selected: i == index }"
                           >
                             <div class="pic_box">
-                              <img :src="wximageurl + item.url" class="pic">
+                              <img :src="wximageurl + item.url" class="pic" />
                             </div>
                             <span class="lbl_content">{{ item.name }}</span>
                             <div class="selected_mask">
@@ -80,10 +80,8 @@
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="cancelAction">{{ $t('7dca8a0f.c08ab9') }}</el-button>
                   <el-button type="primary" @click="saveAction">
-{{
-                    $t('7dca8a0f.aa7527')
-                  }}
-</el-button>
+                    {{ $t('7dca8a0f.aa7527') }}
+                  </el-button>
                 </div>
               </div>
             </el-tab-pane>
@@ -124,7 +122,7 @@
                             "
                           >
                             <div class="pic_box">
-                              <img :src="item.image_full_url" class="pic">
+                              <img :src="item.image_full_url" class="pic" />
                             </div>
                             <span class="lbl_content">{{ item.image_name }}</span>
                             <div class="selected_mask">
@@ -152,10 +150,8 @@
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="cancelAction">{{ $t('7dca8a0f.c08ab9') }}</el-button>
                   <el-button type="primary" @click="localsaveAction">
-{{
-                    $t('7dca8a0f.aa7527')
-                  }}
-</el-button>
+                    {{ $t('7dca8a0f.aa7527') }}
+                  </el-button>
                 </div>
               </div>
             </el-tab-pane>

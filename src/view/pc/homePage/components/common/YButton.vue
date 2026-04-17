@@ -11,7 +11,7 @@
     :disabled="classStyle === 'disabled-btn'"
     :value="displayText"
     @click="btnClick($event)"
-  >
+  />
 </template>
 <script>
 export default {

@@ -60,13 +60,13 @@
                 <template v-if="item.begin == subItem.beginTime">
                   <el-tooltip effect="light" placement="top">
                     <div v-if="subItem.status == 'system'" slot="content">
-                      {{ $t('d41d8cd9.y3z4a5') }} <br><br>
+                      {{ $t('d41d8cd9.y3z4a5') }} <br /><br />
                       {{ $t('d41d8cd9.b6c7d8') }}{{ subItem.beginTime }}~{{ subItem.endTime }}
                     </div>
                     <div v-else slot="content">
-                      {{ $t('d41d8cd9.e9f0g1') }}{{ subItem.userName }} <br><br>
-                      {{ $t('d41d8cd9.h2i3j4') }}{{ subItem.mobile }} <br><br>
-                      {{ $t('d41d8cd9.k5l6m7') }}{{ subItem.labelName }} <br><br>
+                      {{ $t('d41d8cd9.e9f0g1') }}{{ subItem.userName }} <br /><br />
+                      {{ $t('d41d8cd9.h2i3j4') }}{{ subItem.mobile }} <br /><br />
+                      {{ $t('d41d8cd9.k5l6m7') }}{{ subItem.labelName }} <br /><br />
                       {{ $t('d41d8cd9.n8o9p0') }}{{ subItem.beginTime }}
                     </div>
                     <span v-if="subItem.userName">{{ subItem.userName }}</span>

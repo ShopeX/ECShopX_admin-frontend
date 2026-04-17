@@ -46,7 +46,7 @@
               muted="muted"
               objectFit="cover"
             >
-              <source :src="item.videoUrl">
+              <source :src="item.videoUrl" />
             </video>
             <!-- <video-player
               v-if="item.media_type == 'video' && item.videoUrl"

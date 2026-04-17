@@ -22,7 +22,7 @@
                 :src="wximageurl + t_data.config.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange">
                 <i class="el-icon-camera" />{{ $t('7c7921e5.ce6855') }}
               </div>

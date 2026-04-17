@@ -39,15 +39,12 @@
               v-if="activeCollapse.length === 0"
               size="small"
               @click="expandAll"
-              >
-{{ $t('b0eef2c3.699371') }}
-</el-button
             >
+              {{ $t('b0eef2c3.699371') }}
+            </el-button>
             <el-button type="text" v-else size="small" @click="collapseAll">
-{{
-              $t('b0eef2c3.b77295')
-            }}
-</el-button>
+              {{ $t('b0eef2c3.b77295') }}
+            </el-button>
           </div>
         </div>
         <el-collapse v-model="activeCollapse">
@@ -159,15 +156,9 @@
 
           <div class="py-1.5 px-4 border-t border-[#e4e7ed] flex items-center bg-white">
             <span class="pr-2">{{ $t('b0eef2c3.5df9fd', [estimateCount]) }}</span>
-            <el-button
-              type="primary"
-              size="small"
-              :disabled="!isEditMode"
-              @click="onSearchChange"
-              >
-{{ $t('b0eef2c3.bee912') }}
-</el-button
-            >
+            <el-button type="primary" size="small" :disabled="!isEditMode" @click="onSearchChange">
+              {{ $t('b0eef2c3.bee912') }}
+            </el-button>
           </div>
         </div>
         <div
@@ -182,10 +173,9 @@
               size="small"
               @click="showTagDialog = true"
               :disabled="!isEditMode"
-              >
-{{ $t('b0eef2c3.d2a769') }}
-</el-button
             >
+              {{ $t('b0eef2c3.d2a769') }}
+            </el-button>
 
             <!-- 已选标签展示 -->
             <div v-if="selectedTags.length > 0" class="mt-4">
@@ -217,15 +207,11 @@
     <template slot="page-footer">
       <div class="text-center">
         <el-button @click="handleCancel">
-{{
-          isEditMode ? $t('b0eef2c3.625fb2') : $t('b0eef2c3.5f4112')
-        }}
-</el-button>
+          {{ isEditMode ? $t('b0eef2c3.625fb2') : $t('b0eef2c3.5f4112') }}
+        </el-button>
         <el-button v-if="isEditMode" type="primary" @click="handleSave">
-{{
-          $t('b0eef2c3.be5fbb')
-        }}
-</el-button>
+          {{ $t('b0eef2c3.be5fbb') }}
+        </el-button>
       </div>
     </template>
   </SpPage>

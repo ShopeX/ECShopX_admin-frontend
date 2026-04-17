@@ -142,7 +142,8 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       defaultShopImg,
       defaultShopBanner,
       defaultShopLogo,

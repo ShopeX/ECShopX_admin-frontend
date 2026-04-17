@@ -21,7 +21,7 @@
               :src="
                 item.imgUrl || 'https://fakeimg.pl/1000x480/F8F8F8/CCC/?text=Image&font=helvetica'
               "
-            >
+            />
           </div>
         </transition>
       </div>
@@ -31,7 +31,7 @@
         :key="i"
         class="img2"
         :src="item.imgUrl || 'https://fakeimg.pl/1000x480/F8F8F8/CCC/?text=Image&font=helvetica'"
-      >
+      />
       <div class="page" :class="{ offset: config.offset }">
         <ul class="dots">
           <li

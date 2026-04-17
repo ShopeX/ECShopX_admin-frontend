@@ -121,7 +121,9 @@ export default {
   computed: {
     // 调用方通过 queryParams 指定了 is_valid 时，不再展示状态筛选
     isValidFixed() {
-      return this.value?.queryParams?.is_valid !== undefined && this.value?.queryParams?.is_valid !== ''
+      return (
+        this.value?.queryParams?.is_valid !== undefined && this.value?.queryParams?.is_valid !== ''
+      )
     },
     setting() {
       const t = this.$t.bind(this)

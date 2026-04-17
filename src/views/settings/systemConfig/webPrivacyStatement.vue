@@ -8,10 +8,8 @@
     <template slot="page-footer">
       <div class="text-center">
         <el-button :loading="loading" type="primary" @click="onSubmit">
-{{
-          $t('fea687f2.be5fbb')
-        }}
-</el-button>
+          {{ $t('fea687f2.be5fbb') }}
+        </el-button>
       </div>
     </template>
     <Form />

@@ -28,22 +28,16 @@
           </el-row>
         </el-form-item>
         <el-form-item :label="$t('5ccb7b76.8c53d5')">
-          <imgBox :img-url="form.logo" inline @click="handleImgChange('logo')" />
+          <imgBox :img-url="form.logo" inline @click="handleImgChange" />
           （ {{ $t('5ccb7b76.ee7ab2') }} ）
-        </el-form-item>
-        <el-form-item :label="$t('5ccb7b76.f2c380')">
-          <imgBox :img-url="form.background" inline @click="handleImgChange('background')" />
-          （ {{ $t('5ccb7b76.48bbbc') }} ）
         </el-form-item>
       </div>
     </el-form>
     <template slot="page-footer">
       <div class="text-center">
         <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-          $t('5ccb7b76.be5fbb')
-        }}
-</el-button>
+          {{ $t('5ccb7b76.be5fbb') }}
+        </el-button>
       </div>
     </template>
   </SpPage>
@@ -51,7 +45,6 @@
 
 <script>
 import { putSettingWxShops, getSettingWxShops } from '@/api/shop'
-import { uploadMaterial } from '@/api/wechat'
 import imgBox from '@/components/element/imgBox'
 export default {
   components: {
@@ -64,8 +57,7 @@ export default {
       form: {
         logo: '',
         intro: '',
-        brand_name: '',
-        background: ''
+        brand_name: ''
       },
       textarea: '',
       pic: '',
@@ -79,7 +71,6 @@ export default {
       this.pic = this.wximageurl + res.data.data.logo
       this.form.intro = res.data.data.intro
       this.form.brand_name = res.data.data.brand_name
-      this.form.background = res.data.data.background
       this.remnant = (res.data.data.intro || '').length
     })
   },
@@ -97,8 +88,7 @@ export default {
       params = {
         intro: this.form.intro,
         logo: this.form.logo,
-        brand_name: this.form.brand_name,
-        background: this.form.background
+        brand_name: this.form.brand_name
       }
       console.log(params)
       putSettingWxShops(params).then((response) => {
@@ -135,17 +125,9 @@ export default {
     countInput() {
       this.remnant = this.form.intro.length
     },
-    //门店LOGO和登录页背景图
-    async handleImgChange(type) {
+    async handleImgChange() {
       try {
-        // 根据不同的类型获取当前图片URL
-        let currentImgUrl = ''
-        if (type === 'logo') {
-          currentImgUrl = this.form.logo || ''
-        } else if (type === 'background') {
-          currentImgUrl = this.form.background || ''
-        }
-
+        const currentImgUrl = this.form.logo || ''
         const { data } = await this.$picker.image({
           data: currentImgUrl ? { url: currentImgUrl } : undefined
         })
@@ -159,13 +141,7 @@ export default {
           if (this.wximageurl && imgUrl.indexOf(this.wximageurl) === 0) {
             finalUrl = imgUrl.replace(this.wximageurl, '')
           }
-
-          // 根据不同的类型设置对应的字段
-          if (type === 'logo') {
-            this.form.logo = finalUrl
-          } else if (type === 'background') {
-            this.form.background = finalUrl
-          }
+          this.form.logo = finalUrl
         }
       } catch (error) {
         // 用户取消选择时不处理错误

@@ -56,7 +56,7 @@
         <el-table-column prop="seckill_id" label="ID" width="50" />
         <el-table-column :label="$t('41b41f1c.36c6f5')">
           <template slot-scope="scope">
-            {{ scope.row.activity_name }}<br>
+            {{ scope.row.activity_name }}<br />
             <span class="text-muted">{{ scope.row.description }}</span>
           </template>
         </el-table-column>

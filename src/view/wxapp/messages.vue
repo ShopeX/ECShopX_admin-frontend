@@ -74,10 +74,8 @@
           </div>
           <div class="item-footer">
             <el-button v-if="row.is_open" type="default" size="small">
-{{
-              $t('0918501c.c16e2e')
-            }}
-</el-button>
+              {{ $t('0918501c.c16e2e') }}
+            </el-button>
             <el-button v-else type="default" size="small">{{ $t('0918501c.463776') }}</el-button>
           </div>
         </div>

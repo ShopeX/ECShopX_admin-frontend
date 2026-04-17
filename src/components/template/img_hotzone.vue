@@ -18,7 +18,7 @@
       </div> -->
     </div>
     <div class="img-hotzone">
-      <img :src="config.imgUrl" alt="">
+      <img :src="config.imgUrl" alt="" />
       <div
         v-for="(item, index) in data"
         :key="index"

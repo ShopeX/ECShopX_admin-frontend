@@ -18,10 +18,10 @@
               :src="wximageurl + item.imgUrl"
               class="banner-uploader"
               @click="handleImgChange(index)"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="el-icon-camera" /><br>
+                <i class="el-icon-camera" /><br />
                 {{ $t('7a96016f.ce6855') }}
               </div>
             </div>
@@ -46,11 +46,11 @@
         {{ $t('7a96016f.22134f') }}
       </el-button>
     </div>
-    <br>
+    <br />
     <div class="section-footer with-border content-center">
       <el-button type="primary" @click="save"> {{ $t('7a96016f.be5fbb') }} </el-button>
     </div>
-    <br>
+    <br />
   </el-col>
 </template>
 

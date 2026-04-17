@@ -50,7 +50,11 @@
           :class="['wgt-couponcard-item-btn', { 'disabled': item.quantity - item.get_num <= 0 }]"
           :style="receiveBtnStyle"
         >
-          {{ item.quantity - item.get_num <= 0 ? i18n.t('4e8312aa.c6055e') : i18n.t('4e8312aa.d67527') }}
+          {{
+            item.quantity - item.get_num <= 0
+              ? i18n.t('4e8312aa.c6055e')
+              : i18n.t('4e8312aa.d67527')
+          }}
         </div>
       </div>
     </div>
@@ -72,10 +76,7 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
-      currentIndex: 1,
-      couponDeep: {}
-    }
+    return { i18n, currentIndex: 1, couponDeep: {} }
   },
   computed: {
     outerStyle() {

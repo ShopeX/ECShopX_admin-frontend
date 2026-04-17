@@ -14,13 +14,13 @@
               class="cus-approve-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            >
+            />
             <img
               v-if="operator_type === 'distributor'"
               class="cus-approve-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            >
+            />
           </el-col>
         </el-col>
         <el-col :span="20">

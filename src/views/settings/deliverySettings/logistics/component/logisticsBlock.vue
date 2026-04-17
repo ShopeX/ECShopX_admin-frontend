@@ -6,7 +6,7 @@
 <template>
   <div class="block">
     <div class="image">
-      <img :src="info.logo">
+      <img :src="info.logo" />
     </div>
     <div class="info">
       <div class="name">

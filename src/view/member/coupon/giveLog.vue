@@ -10,10 +10,8 @@
         <el-table-column width="140" :label="$t('b7927d9a.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text" @click="onDetail(scope.row)">
-{{
-              $t('b7927d9a.75ad4a')
-            }}
-</el-button>
+              {{ $t('b7927d9a.75ad4a') }}
+            </el-button>
           </template>
         </el-table-column>
         <el-table-column width="220" :label="$t('b7927d9a.0de30c')">

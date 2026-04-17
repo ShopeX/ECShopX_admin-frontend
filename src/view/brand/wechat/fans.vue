@@ -150,7 +150,7 @@
           <el-table-column type="selection" width="46" />
           <el-table-column prop="headimgurl" :label="$t('8d0b08f5.6e3541')" width="80">
             <template slot-scope="scope">
-              <img class="fan-avatar" :src="scope.row.headimgurl" alt="">
+              <img class="fan-avatar" :src="scope.row.headimgurl" alt="" />
             </template>
           </el-table-column>
           <el-table-column label="">
@@ -159,7 +159,7 @@
                 scope.row.remark
                   ? scope.row.remark + ' (' + scope.row.nickname + ')'
                   : scope.row.nickname
-              }}<br>
+              }}<br />
               <el-popover
                 ref="tag"
                 v-model="scope.row.tagpop"

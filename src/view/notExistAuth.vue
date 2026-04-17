@@ -7,7 +7,7 @@
   <div class="notExistAuth_page">
     <el-card class="box-card card">
       <div class="box">
-        <img :src="require('@/assets/img/warning.png')" alt="">
+        <img :src="require('@/assets/img/warning.png')" alt="" />
         <p>{{ $t('84bc684d.848bbe') }}</p>
       </div>
       <p class="message">

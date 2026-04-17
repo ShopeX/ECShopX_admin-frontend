@@ -8,7 +8,7 @@
           :src="value.titleText.image"
           class="header-image"
           alt=""
-        >
+        />
         <span
           v-if="value.titleText && value.titleText.type === 'text' && value.titleText.text"
           :style="{ color: value.titleColor }"
@@ -35,7 +35,7 @@
       >
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="getItemImg(item)" class="goods-image" alt="">
+          <img :src="getItemImg(item)" class="goods-image" alt="" />
           <!-- 已售罄标签 -->
           <div v-if="isSoldOut(item)" class="sold-out-mask">
             <span class="sold-out-text">{{ $t('82f6b6da.b12876') }}</span>
@@ -66,7 +66,10 @@
                 <span class="price-symbol">¥</span>
                 <span class="price-value">{{ formatPrice(item.price) }}</span>
               </div>
-              <div class="original-price" v-if="item.market_price && item.market_price > item.price">
+              <div
+                class="original-price"
+                v-if="item.market_price && item.market_price > item.price"
+              >
                 {{ formatPrice(item.market_price) }}
               </div>
             </template>

@@ -73,7 +73,7 @@
     font-size: 12px;
     cursor: default;
   }
-  .icon-qingchuFilled{
+  .icon-qingchuFilled {
     position: absolute;
     right: -7px;
     z-index: 99;

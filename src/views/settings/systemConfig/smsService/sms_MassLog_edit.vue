@@ -39,10 +39,8 @@
           <div class="subtitle">
             {{ $t('e06fc114.53f140') }}
             <router-link to="/setting/system-config/sms-service/sms_signatures/edit">
-{{
-              $t('e06fc114.f35ff3')
-            }}
-</router-link>
+              {{ $t('e06fc114.f35ff3') }}
+            </router-link>
           </div>
         </el-form-item>
         <el-form-item :label="$t('e06fc114.dbe8ba')" prop="template_id">
@@ -62,10 +60,8 @@
           <div class="subtitle">
             {{ $t('e06fc114.53f140') }}
             <router-link to="/setting/system-config/sms-service/sms_template/edit">
-{{
-              $t('e06fc114.6fef15')
-            }}
-</router-link>
+              {{ $t('e06fc114.6fef15') }}
+            </router-link>
             <p>{{ $t('e06fc114.35547d') }}</p>
           </div>
         </el-form-item>

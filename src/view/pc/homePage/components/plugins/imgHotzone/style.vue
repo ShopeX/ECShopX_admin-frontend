@@ -27,7 +27,7 @@
               :src="config.imgUrl"
               class="banner-uploader"
               @click="handleImgChange"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="el-icon-camera" />{{ $t('642420fa.ce6855') }}
             </div>

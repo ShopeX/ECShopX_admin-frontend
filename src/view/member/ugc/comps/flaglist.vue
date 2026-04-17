@@ -15,16 +15,12 @@
       <el-table-column :label="$t('8da83775.2b6bc0')" width="160" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)">
-{{
-            $t('e240ae54.95b351')
-          }}
-</el-button>
+            {{ $t('e240ae54.95b351') }}
+          </el-button>
 
           <el-button type="text" @click="handleDel(scope.row)">
-{{
-            $t('e240ae54.2f4aad')
-          }}
-</el-button>
+            {{ $t('e240ae54.2f4aad') }}
+          </el-button>
 
           <!-- <el-button
             type="text"

@@ -35,9 +35,7 @@ export default {
     distributor: Object
   },
   data() {
-    return {i18n,
-      localValue: []
-    }
+    return { i18n, localValue: [] }
   },
   computed: {
     goodsCount() {

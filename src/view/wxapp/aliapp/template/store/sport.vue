@@ -22,7 +22,7 @@
     <section class="section-white view-warp">
       <div class="pages-view">
         <div class="page active">
-          <img alt="" src="@/assets/img/wxapp_member_sport.jpg" height="569" width="320">
+          <img alt="" src="@/assets/img/wxapp_member_sport.jpg" height="569" width="320" />
         </div>
       </div>
       <div class="template-view">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="hot-more">
                   {{ $t('8caaf49d.0ec9ea') }}
-                  <img class="hot-more-img" src="@/assets/img/arrow.png">
+                  <img class="hot-more-img" src="@/assets/img/arrow.png" />
                 </div>
               </div>
             </div>
@@ -115,11 +115,11 @@
             </div>
             <div class="view-flex view-flex-center store-contact">
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_location.png">
+                <img class="store-icon" src="@/assets/img/store_location.png" />
                 <div>1220 km</div>
               </div>
               <div class="store-contact-item">
-                <img class="store-icon" src="@/assets/img/store_phone.png">
+                <img class="store-icon" src="@/assets/img/store_phone.png" />
                 <div>{{ $t('8caaf49d.a74ccc') }}</div>
               </div>
             </div>
@@ -140,10 +140,10 @@
                   :src="wximageurl + item.url"
                   class="banner-uploader"
                   @click="handleImgChange(index, 'banner')"
-                >
+                />
                 <div v-else class="banner-uploader" @click="handleImgChange(index, 'banner')">
                   <div class="content-center">
-                    <i class="el-icon-camera" /><br>
+                    <i class="el-icon-camera" /><br />
                     {{ $t('8caaf49d.ce6855') }}
                   </div>
                 </div>
@@ -186,10 +186,10 @@
                     :src="wximageurl + item.url"
                     class="banner-uploader"
                     @click="handleImgChange(index, 'hotGoods')"
-                  >
+                  />
                   <div v-else class="banner-uploader" @click="handleImgChange(index, 'hotGoods')">
                     <div class="content-center">
-                      <i class="el-icon-camera" /><br>
+                      <i class="el-icon-camera" /><br />
                       {{ $t('8caaf49d.ce6855') }}
                     </div>
                   </div>
@@ -278,10 +278,8 @@
         </el-form>
         <div class="section-footer with-border content-center" style="width: 100%">
           <el-button type="primary" @click="handleGoodsDialog">
-{{
-            $t('8caaf49d.38cf16')
-          }}
-</el-button>
+            {{ $t('8caaf49d.38cf16') }}
+          </el-button>
         </div>
       </template>
     </el-dialog>

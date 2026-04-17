@@ -48,10 +48,8 @@
               </div>
               <div class="right">
                 <el-button type="primary" class="btn" plain @click="fnEdit">
-{{
-                  $t('8cc9220c.95b351')
-                }}
-</el-button>
+                  {{ $t('8cc9220c.95b351') }}
+                </el-button>
               </div>
             </div>
           </div>

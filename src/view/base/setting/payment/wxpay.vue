@@ -9,27 +9,27 @@
       <el-input v-model="form.app_id" style="width: 300px" /><span class="frm-tips">{{
         $t('62b1cf9c.ab69af')
       }}</span>
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('62b1cf9c.777b9b') }}</span>
     </el-form-item>
     <el-form-item :label="$t('62b1cf9c.47e254')">
       <el-input v-model="form.app_app_id" style="width: 300px" /><span class="frm-tips">{{
         $t('62b1cf9c.ccb91e')
       }}</span>
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('62b1cf9c.460b81') }}</span>
     </el-form-item>
     <el-form-item :label="$t('62b1cf9c.f173b7')">
       <el-input v-model="form.merchant_id" style="width: 300px" /><span class="frm-tips">{{
         $t('62b1cf9c.ab69af')
       }}</span>
-      <br><span class="frm-tips">{{ $t('62b1cf9c.ff00eb') }}</span>
+      <br /><span class="frm-tips">{{ $t('62b1cf9c.ff00eb') }}</span>
     </el-form-item>
     <el-form-item :label="$t('62b1cf9c.6f5c56')">
       <el-input v-model="form.key" style="width: 300px" /><span class="frm-tips">{{
         $t('62b1cf9c.ab69af')
       }}</span>
-      <br><span class="frm-tips">{{ $t('62b1cf9c.a63cd4') }}</span>
+      <br /><span class="frm-tips">{{ $t('62b1cf9c.a63cd4') }}</span>
     </el-form-item>
     <el-form-item :label="$t('62b1cf9c.a5e041')">
       <el-switch v-model="form.is_servicer" active-color="#13ce66" inactive-color="#ff4949" />
@@ -60,10 +60,8 @@
     </el-form-item>
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('62b1cf9c.be5fbb')
-      }}
-</el-button>
+        {{ $t('62b1cf9c.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>

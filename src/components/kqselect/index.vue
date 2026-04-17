@@ -15,7 +15,7 @@
     <el-table v-loading.body="listLoading" :data="tableData">
       <el-table-column label="" width="50">
         <template slot-scope="scope">
-          <input type="radio" name="kq" :value="JSON.stringify(scope.row)">
+          <input type="radio" name="kq" :value="JSON.stringify(scope.row)" />
         </template>
       </el-table-column>
       <el-table-column :label="$t('e4e162b0.f47182')">

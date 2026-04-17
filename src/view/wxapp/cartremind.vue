@@ -15,10 +15,8 @@
     </el-form>
     <div slot="page-footer" class="text-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('12a24e54.be5fbb')
-      }}
-</el-button>
+        {{ $t('12a24e54.be5fbb') }}
+      </el-button>
     </div>
     <!-- <el-tabs
       v-model="activeName"

@@ -16,7 +16,7 @@
       <el-table-column prop="goods_info.itemName" :label="$t('f31a353f.1fd1d5')" />
       <el-table-column :label="$t('f31a353f.e7adc9')" width="160">
         <template slot-scope="scope">
-          {{ scope.row.start_time | datetime }}<br>{{ scope.row.end_time | datetime }}
+          {{ scope.row.start_time | datetime }}<br />{{ scope.row.end_time | datetime }}
         </template>
       </el-table-column>
       <el-table-column :label="$t('f31a353f.c5f711')" width="120">
@@ -45,10 +45,10 @@
           >
             <span v-if="scope.row.third_info.name"
               >{{ $t('f31a353f.842867') }}{{ scope.row.third_info.name }}</span
-            ><br>
+            ><br />
             <span v-if="scope.row.third_info.period"
               >{{ $t('f31a353f.d24a26') }}{{ scope.row.third_info.period }}</span
-            ><br>
+            ><br />
             <span v-if="scope.row.third_info.number"
               >{{ $t('f31a353f.e5aaf0') }}{{ scope.row.third_info.number }}</span
             >

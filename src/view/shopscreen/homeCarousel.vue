@@ -79,7 +79,7 @@
                 :src="item.url"
                 class="banner-uploader"
                 @click="handleImgChange(index)"
-              >
+              />
               <div v-else class="banner-uploader" @click="handleImgChange(index)">
                 <i class="el-icon-camera" />
                 {{ $t('7a67bff9.ce6855') }}

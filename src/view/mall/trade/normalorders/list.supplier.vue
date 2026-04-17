@@ -160,10 +160,8 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="exportDataNormal">
-{{
-            $t('637ccf98.a19dd9')
-          }}
-</el-dropdown-item>
+            {{ $t('637ccf98.a19dd9') }}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <el-tooltip

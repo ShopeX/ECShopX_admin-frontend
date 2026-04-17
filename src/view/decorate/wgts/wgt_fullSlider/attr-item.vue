@@ -141,7 +141,9 @@
               </p> -->
               <div>
                 {{
-                  scope.data.media_type == 'video' ? i18n.t('31fb3272.7fcf42') : i18n.t('31fb3272.20def7')
+                  scope.data.media_type == 'video'
+                    ? i18n.t('31fb3272.7fcf42')
+                    : i18n.t('31fb3272.20def7')
                 }}
               </div>
               <!-- <el-radio-group size="mini" v-model="scope.data.media_type"
@@ -230,13 +232,7 @@ export default {
     height: Number
   },
   data() {
-    return {i18n,
-      localValue: [],
-      dialog: false,
-      currentIndex: 0,
-      sliderForm: null,
-      refresh: true
-    }
+    return { i18n, localValue: [], dialog: false, currentIndex: 0, sliderForm: null, refresh: true }
   },
   watch: {
     localValue: {

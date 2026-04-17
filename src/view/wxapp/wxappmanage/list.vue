@@ -168,10 +168,8 @@
                   </el-button>
 
                   <el-button type="success" @click="tryRelease">
-{{
-                    $t('8b4e7ee3.c4a378')
-                  }}
-</el-button>
+                    {{ $t('8b4e7ee3.c4a378') }}
+                  </el-button>
                   <el-button type="success" @click="domain">{{ $t('8b4e7ee3.190980') }}</el-button>
                   <el-button
                     v-if="system_is_saas == 'false'"
@@ -200,7 +198,7 @@
                   v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid"
                   @click="downloadWxaCode(scope.row)"
                 >
-                  <img src="@/assets/img/code.png" alt="">
+                  <img src="@/assets/img/code.png" alt="" />
                 </div>
               </template>
             </el-table-column>
@@ -339,7 +337,7 @@
                   v-if="scope.row.authorizer_appid"
                   @click="downloadOffiaccountCode(scope.row.authorizer_appid)"
                 >
-                  <img src="@/assets/img/code.png" alt="">
+                  <img src="@/assets/img/code.png" alt="" />
                 </div>
               </template>
             </el-table-column>
@@ -449,7 +447,7 @@
 
     <el-dialog :title="getwxcodeTitle" :visible.sync="wxaCodeVisible" width="500px">
       <div class="content-center">
-        <img :src="wxaCodeImage">
+        <img :src="wxaCodeImage" />
       </div>
     </el-dialog>
 
@@ -597,7 +595,7 @@
         show-icon
         :closable="false"
       />
-      <br>
+      <br />
       <el-form v-loading="domainloading" label-width="200px">
         <el-form-item :label="$t('8b4e7ee3.f554f2')">
           <el-input

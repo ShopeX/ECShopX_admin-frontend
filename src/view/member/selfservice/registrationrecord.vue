@@ -26,7 +26,7 @@
         <SpFilterFormItem prop="mobile" :label="$t('6b57cb80.ce2bf3')">
           <el-input v-model="params.mobile" :placeholder="$t('6b57cb80.8098e2')" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" :label="$t('6b57cb80.374856')">
+        <SpFilterFormItem prop="create_time" :label="$t('a0d7a294.5ba072')">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
@@ -110,10 +110,8 @@
                   {{ $t('a0d7a294.cf13b1') }}
                 </el-button>
                 <el-button type="text" @click="onLinkChange(scope.row)">
-{{
-                  $t('a0d7a294.f26225')
-                }}
-</el-button>
+                  {{ $t('a0d7a294.f26225') }}
+                </el-button>
                 <el-button
                   type="text"
                   v-if="scope.row.status == 'passed'"
@@ -300,7 +298,8 @@ export default {
       const create_time = this.params.create_time
       if (create_time.length) {
         time.start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
-        time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 00:00:00')
+        // 结束日取 23:59:59，与列表列「申请时间」一致，且支持起止同一天
+        time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
       }
       let params = {
         ...this.params,
@@ -384,8 +383,7 @@ export default {
       this.$router.push({ path: this.matchRoutePath('editor') })
     },
     exportData() {
-      this.currentPage = 1
-      recordExport(this.params).then((response) => {
+      recordExport(this.getParams()).then((response) => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

@@ -552,7 +552,7 @@
                     class="item-image"
                     :src="wximageurl + scope.row.pic"
                     :alt="scope.row.item_name"
-                ></span>
+                /></span>
               </template>
             </el-table-column>
             <el-table-column prop="item_name" :label="$t('3a4ee48b.90f08f')" width="180">
@@ -748,7 +748,7 @@
           </el-col>
           <el-col :span="20">
             <span v-for="(item, index) in orderInfo.third_params.drug_list_image">
-              <img class="item-image" :src="item.url" @click="imagedetail(item.url)">
+              <img class="item-image" :src="item.url" @click="imagedetail(item.url)" />
             </span>
           </el-col>
         </el-row>
@@ -767,7 +767,7 @@
         :visible.sync="dialogVisible"
         width="80%"
       >
-        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%">
+        <img v-if="bigImageUrl" :src="bigImageUrl" style="width: 100%; max-width: 100%" />
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisible = false">{{
             $t('3a4ee48b.b15d91')

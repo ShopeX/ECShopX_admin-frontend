@@ -107,10 +107,7 @@ export default {
     }
   },
   data() {
-    return {i18n,
-      localValue: { ...DEFAULT_VALUE },
-      dialog: false
-    }
+    return { i18n, localValue: { ...DEFAULT_VALUE }, dialog: false }
   },
   watch: {
     localValue: {

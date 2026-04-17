@@ -104,10 +104,7 @@ export default {
     height: Number
   },
   data() {
-    return {i18n,
-      sliderForm: null,
-      h: '0px'
-    }
+    return { i18n, sliderForm: null, h: '0px' }
   },
   methods: {
     handleAdd(e, type) {

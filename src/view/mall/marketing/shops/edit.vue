@@ -108,14 +108,14 @@
       </el-form-item>
       <el-form-item :label="$t('c9579e27.6bf24c')">
         <div class="upload-box" @click="handleImgPicker('logo')">
-          <img v-if="form.logo" :src="form.logo" class="avatar">
+          <img v-if="form.logo" :src="form.logo" class="avatar" />
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">{{ $t('c9579e27.3f13f6') }}</div>
       </el-form-item>
       <el-form-item v-if="VERSION_PLATFORM()" :label="$t('c9579e27.82d49d')">
         <div class="upload-box" @click="handleImgPicker('banner')">
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.banner" :src="form.banner" class="avatar" />
           <i v-else class="el-icon-camera avatar-uploader-icon" />
         </div>
         <div class="frm-tips">{{ $t('c9579e27.3f13f6') }}</div>

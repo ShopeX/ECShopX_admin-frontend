@@ -30,7 +30,7 @@
       <el-table-column :label="$t('c5ae46b6.95a43e')">
         <template slot-scope="scope">
           <div v-if="scope.row.source == '2'">{{ $t('c5ae46b6.b1dae9') }}</div>
-          <div v-else>{{ scope.row.userInfo.nickname }}<br>{{ scope.row.userInfo.mobile }}</div>
+          <div v-else>{{ scope.row.userInfo.nickname }}<br />{{ scope.row.userInfo.mobile }}</div>
         </template>
       </el-table-column>
 

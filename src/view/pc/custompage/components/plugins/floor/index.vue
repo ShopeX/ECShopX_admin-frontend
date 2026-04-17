@@ -37,7 +37,7 @@
           </div>
           <!-- 左侧热图区 -->
           <div class="floor-left__footer">
-            <img :src="dataForm.leftImg.url">
+            <img :src="dataForm.leftImg.url" />
           </div>
         </div>
         <!-- 商品列表 -->
@@ -68,10 +68,10 @@
         <!-- 右侧热图区 -->
         <div class="floor-right">
           <div class="floor-right__top">
-            <img :src="dataForm.rightImg1.url">
+            <img :src="dataForm.rightImg1.url" />
           </div>
           <div class="floor-right__footer">
-            <img :src="dataForm.rightImg2.url">
+            <img :src="dataForm.rightImg2.url" />
           </div>
         </div>
       </div>

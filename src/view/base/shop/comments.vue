@@ -27,7 +27,7 @@
               <template slot-scope="scope">
                 <div class="comment-photo">
                   <template v-for="item in scope.row.pics">
-                    <img width="60" height="60" :src="item">
+                    <img width="60" height="60" :src="item" />
                   </template>
                 </div>
               </template>

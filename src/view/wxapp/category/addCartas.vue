@@ -286,7 +286,7 @@
   <div class="addCartas-view">
     <!-- 搜索框 -->
     <div class="search-box">
-      <img src="@/assets/imgs/search-for.png" alt="">
+      <img src="@/assets/imgs/search-for.png" alt="" />
       <div class="search-input">|</div>
       <span class="search-input">{{ $t('c1b823e8.e5f71f') }}</span>
     </div>
@@ -315,7 +315,7 @@
             }"
             :src="item.image_url"
             alt=""
-          >
+          />
           <span
             :class="{
               'one-level-item-titles': index != oneIndex,
@@ -325,7 +325,7 @@
           >
         </div>
         <div class="all">
-          {{ $t('c1b823e8.a8b0c2') }} <img src="@/assets/imgs/classification.png" alt="">
+          {{ $t('c1b823e8.a8b0c2') }} <img src="@/assets/imgs/classification.png" alt="" />
         </div>
       </div>
 
@@ -369,7 +369,7 @@
           <!-- 三级分类商品 -->
           <div class="three-level-item">
             <div v-for="(item, index) in goodsIndex" :key="index" class="three-list">
-              <img class="three-list-img" :src="item.pics[0]" alt="">
+              <img class="three-list-img" :src="item.pics[0]" alt="" />
               <div class="three-list-title">
                 <span class="name">{{ item.itemName }}</span>
                 <div class="price">
@@ -379,7 +379,7 @@
                     >
                     <span class="price3">{{ item.cost_price / 100 }}</span>
                   </div>
-                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="">
+                  <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="" />
                 </div>
               </div>
             </div>

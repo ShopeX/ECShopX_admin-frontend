@@ -25,15 +25,11 @@
     </div>
     <div slot="footer" class="tag-footer">
       <el-button type="primary" plain size="medium" @click="selectAll">
-{{
-        $t('debc18ae.296a44')
-      }}
-</el-button>
+        {{ $t('debc18ae.296a44') }}
+      </el-button>
       <el-button type="primary" size="medium" @click="submitTags">
-{{
-        $t('debc18ae.aa7527')
-      }}
-</el-button>
+        {{ $t('debc18ae.aa7527') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>

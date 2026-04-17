@@ -46,24 +46,18 @@
 
     <div v-loading="loading">
       <el-row :gutter="20">
-        <el-col :span="4"
-          >
-<el-statistic :value="total.order_count" :title="$t('8e2ca557.4c117f')"
-        />
-</el-col>
+        <el-col :span="4">
+          <el-statistic :value="total.order_count" :title="$t('8e2ca557.4c117f')" />
+        </el-col>
         <el-col :span="4">
           <el-statistic :value="total.order_payed_count" :title="$t('8e2ca557.7c922f')" />
         </el-col>
-        <el-col :span="4"
-          >
-<el-statistic :value="total.aftersales_count" :title="$t('8e2ca557.f55538')"
-        />
-</el-col>
-        <el-col :span="4"
-          >
-<el-statistic :value="total.gmv_count / 100" :title="$t('8e2ca557.3e8e62')"
-        />
-</el-col>
+        <el-col :span="4">
+          <el-statistic :value="total.aftersales_count" :title="$t('8e2ca557.f55538')" />
+        </el-col>
+        <el-col :span="4">
+          <el-statistic :value="total.gmv_count / 100" :title="$t('8e2ca557.3e8e62')" />
+        </el-col>
         <el-col :span="4">
           <el-statistic :value="total.amount_payed_count / 100" :title="$t('8e2ca557.efac17')" />
         </el-col>

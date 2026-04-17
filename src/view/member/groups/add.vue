@@ -21,7 +21,7 @@
             <div class="logo-box" @click="changeItem">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
-                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>{{ $t('cfc108c7.80193b') }}{{ goods.price }}</div>
@@ -186,7 +186,7 @@
         <el-table-column prop="itemName" :label="$t('cfc108c7.1fd1d5')" />
         <el-table-column :label="$t('cfc108c7.0f088d')">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" :label="$t('cfc108c7.e29575')" :formatter="priceformatter" />

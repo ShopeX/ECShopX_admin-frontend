@@ -92,7 +92,7 @@
                   : 'background:' + form.data[0].marketing
               "
             >
-              <img :src="item.img">
+              <img :src="item.img" />
               <div
                 v-if="index == 5"
                 class="ab-view"

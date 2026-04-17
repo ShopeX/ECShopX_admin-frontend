@@ -71,10 +71,10 @@
                 class="preview-cover_img"
                 src="@/assets/img/preview.png"
                 :alt="$t('6880d32e.645dbc')"
-              >
+              />
               <span class="preview-cover_text">{{ $t('6880d32e.645dbc') }}</span>
             </div>
-            <img class="template-pic" :src="item.template_pic">
+            <img class="template-pic" :src="item.template_pic" />
             <div v-if="item.template_type == 1" class="tag">{{ $t('6880d32e.55f872') }}</div>
           </div>
           <div class="template-name">
@@ -112,7 +112,7 @@
             <div v-if="!item.showTime" class="no-time">
               <div>{{ $t('6880d32e.b4f549') }}</div>
               <div class="picker-wrap">
-                <img class="time-img" src="@/assets/img/time-img.png">
+                <img class="time-img" src="@/assets/img/time-img.png" />
                 <span>{{ $t('6880d32e.33d8ff') }}</span>
                 <el-date-picker
                   v-model="item.timer_time"
@@ -161,7 +161,7 @@
           @click="AddOrEditDialog('add')"
         >
           <div class="template-wrap">
-            <img class="add-img" src="@/assets/img/add-template.png" :alt="$t('6880d32e.6fef15')">
+            <img class="add-img" src="@/assets/img/add-template.png" :alt="$t('6880d32e.6fef15')" />
             <div class="add-text">{{ $t('6880d32e.6fef15') }}</div>
           </div>
         </div>
@@ -311,12 +311,12 @@
               :src="
                 item.selectedIconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
               "
-            >
+            />
             <img
               v-else
               class="svg-icon"
               :src="item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'"
-            >
+            />
           </template>
           <div class="tab-text">
             {{ $t(item.text) }}

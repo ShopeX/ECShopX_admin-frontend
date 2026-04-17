@@ -13,7 +13,7 @@
         <el-form-item v-if="is_sms" style="justify-content: center">
           <el-checkbox-group v-model="form.is_sms">
             <el-checkbox :key="info[0].value" value="1">
-              {{ info[0].value }}<br>{{ $t('b9eb39af.92bdfa') }}
+              {{ info[0].value }}<br />{{ $t('b9eb39af.92bdfa') }}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>

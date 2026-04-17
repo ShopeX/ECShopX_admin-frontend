@@ -117,28 +117,48 @@
 </style>
 <template>
   <div class="wgt_slider_attr_item" v-if="refresh">
-    <CompTodoList v-model="localValue" @onAddItem="handleClickAdd" type="text" :btn-text="i18n.t('58595357.4cd62d')"
-      :show-title="true" @move="handleMove">
+    <CompTodoList
+      v-model="localValue"
+      @onAddItem="handleClickAdd"
+      type="text"
+      :btn-text="i18n.t('58595357.4cd62d')"
+      :show-title="true"
+      @move="handleMove"
+    >
       <template slot="header" slot-scope="scope">
         {{ i18n.t('58595357.a5987d') }} {{ scope.index + 1 }}
       </template>
       <template slot="body" slot-scope="scope">
         <div class="slider-item">
           <div class="slider-item-img">
-            <sp-image v-if="scope.data.media_type == 'img'" :src="scope.data.imgUrl" width="70" height="70"
-              @click.native="onSetHotZone(scope.data, scope.index)" />
-            <video v-else :src="scope.data.videoUrl &&
-              typeof scope.data.videoUrl === 'object' &&
-              scope.data.videoUrl.url
-              ? scope.data.videoUrl.url
-              : scope.data.videoUrl || ''
-              " width="70" height="70" @click="onSetHotZone(scope.data, scope.index)" />
+            <sp-image
+              v-if="scope.data.media_type == 'img'"
+              :src="scope.data.imgUrl"
+              width="70"
+              height="70"
+              @click.native="onSetHotZone(scope.data, scope.index)"
+            />
+            <video
+              v-else
+              :src="
+                scope.data.videoUrl &&
+                typeof scope.data.videoUrl === 'object' &&
+                scope.data.videoUrl.url
+                  ? scope.data.videoUrl.url
+                  : scope.data.videoUrl || ''
+              "
+              width="70"
+              height="70"
+              @click="onSetHotZone(scope.data, scope.index)"
+            />
           </div>
           <div class="slider-item-info">
             <div class="slider-item-type">
               <div>
                 {{
-                  scope.data.media_type == 'video' ? i18n.t('58595357.7fcf42') : i18n.t('58595357.20def7')
+                  scope.data.media_type == 'video'
+                    ? i18n.t('58595357.7fcf42')
+                    : i18n.t('58595357.20def7')
                 }}
               </div>
             </div>
@@ -158,24 +178,46 @@
                 </div>
               </div>
               <!-- 仅图片展示热区配置，视频不展示 -->
-              <div v-if="scope.data.media_type !== 'video' && (scope.data.hotData || []).length > 0" class="zone-group">
+              <div
+                v-if="scope.data.media_type !== 'video' && (scope.data.hotData || []).length > 0"
+                class="zone-group"
+              >
                 <div class="zone-group-title">{{ i18n.t('d7d37966.50da72') }}</div>
                 <div class="zone-item">
-                  <span v-for="(item, index) in scope.data.hotData" :key="`hot-${scope.index}-${index}`"
-                    class="zone-item-link">
-                    <CompPickerLink :is-show-h5-link="false" :value="item" wgt-type="hotzone"
-                      @change="(e) => onChangeLocalhotDate(e, scope.index, index)" />
+                  <span
+                    v-for="(item, index) in scope.data.hotData"
+                    :key="`hot-${scope.index}-${index}`"
+                    class="zone-item-link"
+                  >
+                    <CompPickerLink
+                      :is-show-h5-link="false"
+                      :value="item"
+                      wgt-type="hotzone"
+                      @change="(e) => onChangeLocalhotDate(e, scope.index, index)"
+                    />
                   </span>
                 </div>
               </div>
               <!-- 仅图片展示叠层热区配置，视频不展示 -->
-              <div v-if="scope.data.media_type !== 'video' && (scope.data.overlayHotData || []).length > 0" class="zone-group">
+              <div
+                v-if="
+                  scope.data.media_type !== 'video' && (scope.data.overlayHotData || []).length > 0
+                "
+                class="zone-group"
+              >
                 <div class="zone-group-title">{{ i18n.t('d7d37966.5cefe9') }}</div>
                 <div class="zone-item">
-                  <span v-for="(item, index) in scope.data.overlayHotData" :key="`overlay-${scope.index}-${index}`"
-                    class="zone-item-link">
-                    <CompPickerLink :is-show-h5-link="false" :value="item" wgt-type="hotzone"
-                      @change="(e) => onChangeLocaloverhotDate(e, scope.index, index)" />
+                  <span
+                    v-for="(item, index) in scope.data.overlayHotData"
+                    :key="`overlay-${scope.index}-${index}`"
+                    class="zone-item-link"
+                  >
+                    <CompPickerLink
+                      :is-show-h5-link="false"
+                      :value="item"
+                      wgt-type="hotzone"
+                      @change="(e) => onChangeLocaloverhotDate(e, scope.index, index)"
+                    />
                   </span>
                 </div>
               </div>

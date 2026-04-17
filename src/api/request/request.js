@@ -63,7 +63,11 @@ class RequestClient {
         const countryCode = langMap[lang]
         if (config.data) {
           if (typeof config.data === 'string') {
-            config.data = config.data + (config.data ? '&' : '') + 'country_code=' + encodeURIComponent(countryCode)
+            config.data =
+              config.data +
+              (config.data ? '&' : '') +
+              'country_code=' +
+              encodeURIComponent(countryCode)
           } else {
             config.data.country_code = countryCode
           }

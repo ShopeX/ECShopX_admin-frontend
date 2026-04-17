@@ -9,10 +9,8 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-button type="primary" icon="plus" @click="handleNew">
-{{
-            $t('f559bf82.11e5e6')
-          }}
-</el-button>
+            {{ $t('f559bf82.11e5e6') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="list" style="width: 100%" :height="wheight - 140">
@@ -20,10 +18,8 @@
         <el-table-column :label="$t('f559bf82.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text" @click="stopFapiao(scope.row, scope.$index)">
-{{
-              $t('f559bf82.8d63ef')
-            }}
-</el-button>
+              {{ $t('f559bf82.8d63ef') }}
+            </el-button>
             <router-link
               :to="{
                 path: matchRoutePath('detail'),

@@ -7,12 +7,12 @@
   <el-form ref="form" label-width="100px">
     <el-form-item :label="$t('ea670112.1e7316')">
       <el-input v-model="form.mer_cust_id" style="width: 300px" />
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('ea670112.bbe462') }}</span>
     </el-form-item>
     <el-form-item :label="$t('ea670112.a5f9af')">
       <el-input v-model="form.acct_id" style="width: 300px" />
-      <br>
+      <br />
       <span class="frm-tips">{{ $t('ea670112.06c08f') }}</span>
     </el-form-item>
     <el-form-item :label="$t('ea670112.476853')">
@@ -48,10 +48,8 @@
 
     <div class="section-footer with-border content-center">
       <el-button v-loading="loading" type="primary" @click="onSubmit">
-{{
-        $t('ea670112.be5fbb')
-      }}
-</el-button>
+        {{ $t('ea670112.be5fbb') }}
+      </el-button>
     </div>
   </el-form>
 </template>

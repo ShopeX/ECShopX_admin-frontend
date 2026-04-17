@@ -156,9 +156,11 @@ export default {
       const { list } = response.data.data
       if (this.value.data) {
         // 统一转换为字符串类型 不然incluses匹配不到
-        let dataArrayString = this.value.data.map(item => String(item))
-        
-        const selectRows = list.filter(item => dataArrayString.includes(String(item.attribute_id)))
+        let dataArrayString = this.value.data.map((item) => String(item))
+
+        const selectRows = list.filter((item) =>
+          dataArrayString.includes(String(item.attribute_id))
+        )
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

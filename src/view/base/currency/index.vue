@@ -8,10 +8,8 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addCurrency">
-{{
-          $t('7c0967bc.e4507b')
-        }}
-</el-button>
+          {{ $t('7c0967bc.e4507b') }}
+        </el-button>
       </el-col>
       <el-col :span="12">
         <el-input v-model="params.currency" :placeholder="$t('7c0967bc.2d2c55')">
@@ -36,10 +34,8 @@
       <el-table-column :label="$t('7c0967bc.2b6bc0')">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">
-{{
-            $t('7c0967bc.95b351')
-          }}
-</el-button>
+            {{ $t('7c0967bc.95b351') }}
+          </el-button>
           <el-button
             v-if="!scope.row.is_default"
             size="mini"

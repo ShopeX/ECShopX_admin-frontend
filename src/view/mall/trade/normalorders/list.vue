@@ -230,15 +230,11 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="exportInvoice">{{ $t('c95ea121.a17c19') }}</el-dropdown-item>
             <el-dropdown-item command="exportDataMaster">
-{{
-              $t('c95ea121.d4d21f')
-            }}
-</el-dropdown-item>
+              {{ $t('c95ea121.d4d21f') }}
+            </el-dropdown-item>
             <el-dropdown-item command="exportDataNormal">
-{{
-              $t('c95ea121.a19dd9')
-            }}
-</el-dropdown-item>
+              {{ $t('c95ea121.a19dd9') }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-tooltip
@@ -268,10 +264,8 @@
         </el-upload>
         <!-- v-if="IS_DISTRIBUTOR() || IS_MERCHANT()" -->
         <el-button type="primary" plain @click="assignPersonnel(true)">
-{{
-          $t('c95ea121.531827')
-        }}
-</el-button>
+          {{ $t('c95ea121.531827') }}
+        </el-button>
         <!-- <el-upload
         action=""
         class="btn-upload"
@@ -281,10 +275,8 @@
       > -->
         <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN()" -->
         <el-button type="primary" plain @click="assignPersonnel(false)">
-{{
-          $t('c95ea121.204fe4')
-        }}
-</el-button>
+          {{ $t('c95ea121.204fe4') }}
+        </el-button>
         <!-- </el-upload> -->
       </div>
 

@@ -60,10 +60,8 @@
         <div class="app-desc">{{ $t(appDesc) }}</div>
         <div class="app-action">
           <el-button type="primary" plain @click="onClickItem">
-{{
-            $t('c161091b.710d33')
-          }}
-</el-button>
+            {{ $t('c161091b.710d33') }}
+          </el-button>
         </div>
         <div v-if="!['miaosha', 'supplier'].includes(id)" class="app-image">
           <el-image class="desc-image" :src="require(`@/assets/img/ectapp/${id}_detail.png`)" />
@@ -88,10 +86,8 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">{{ $t('c161091b.c08ab9') }}</el-button>
           <el-button type="primary" @click="dialogVisible = true">
-{{
-            $t('c161091b.38cf16')
-          }}
-</el-button>
+            {{ $t('c161091b.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
     </div>

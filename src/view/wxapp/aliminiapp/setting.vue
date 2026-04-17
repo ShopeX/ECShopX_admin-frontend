@@ -17,10 +17,8 @@
           <el-form-item :label="$t('30fdcc72.040758')">
             <div>
               <el-radio v-model="form.api_sign_method" label="key">
-{{
-                $t('30fdcc72.cdb81c')
-              }}
-</el-radio>
+                {{ $t('30fdcc72.cdb81c') }}
+              </el-radio>
               <!-- <el-radio
                 v-model="form.api_sign_method"
                 label="cert"

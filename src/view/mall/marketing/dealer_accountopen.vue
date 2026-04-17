@@ -14,13 +14,13 @@
               class="cus-dealer-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            >
+            />
             <img
               v-if="loginType === 'distributor'"
               class="cus-dealer-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            >
+            />
           </el-col>
           <el-col :span="20">
             <div class="cus-dealer-flex">

@@ -36,13 +36,17 @@
         </el-form-item>
         <el-form-item :label="$t('f5a87ec7.6dbb6f')">
           <el-checkbox-group v-model="validGrade">
-            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
+            <el-checkbox
+              v-for="grade in memberGrade"
+              :key="grade.grade_id"
+              :label="String(grade.grade_id)"
+            >
               {{ grade.grade_name }}
             </el-checkbox>
             <el-checkbox
               v-for="vipdata in vipGrade"
               :key="vipdata.lv_type"
-              :label="vipdata.lv_type"
+              :label="String(vipdata.lv_type)"
             >
               {{ $t('f5a87ec7.310f84') }}{{ vipdata.grade_name }}
             </el-checkbox>
@@ -310,9 +314,7 @@ export default {
         this.form.end_time = this.activity_date[1]
       }
 
-      if (this.validGrade.length > 0) {
-        this.form.valid_grade = this.validGrade
-      }
+      this.form.valid_grade = this.normalizeValidGradeForSubmit(this.validGrade)
       this.form.day = this.rule.day
       this.form.limit = this.rule.limit
       let res = JSON.parse(JSON.stringify(this.form))
@@ -376,7 +378,7 @@ export default {
         Object.assign(this.form, data)
         this.rule = JSON.parse(response.data.data.rule)
         this.relItems = response.data.data.itemTreeLists
-        this.validGrade = response.data.data.valid_grade
+        this.validGrade = this.normalizeValidGradeForView(response.data.data.valid_grade)
         this.activity_date = [response.data.data.start_time, response.data.data.end_time]
         this.zdItemHidden = true
         this.categoryHidden = true
@@ -428,6 +430,17 @@ export default {
             this.memberGrade = result
           }
         }
+      })
+    },
+    normalizeValidGradeForView(list = []) {
+      if (!Array.isArray(list)) return []
+      return list.map((item) => String(item))
+    },
+    normalizeValidGradeForSubmit(list = []) {
+      if (!Array.isArray(list)) return []
+      return list.map((item) => {
+        const value = String(item)
+        return /^\d+$/.test(value) ? Number(value) : value
       })
     },
     itemTypeChange: function (val) {

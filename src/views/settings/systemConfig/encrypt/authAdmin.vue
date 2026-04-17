@@ -75,10 +75,8 @@
         </el-col>
         <el-col :span="24" style="text-align: left">
           <el-button type="primary" style="margin-top: 20px" @click="submit">
-{{
-            $t('d593459e.4372a5')
-          }}
-</el-button>
+            {{ $t('d593459e.4372a5') }}
+          </el-button>
         </el-col>
         <!-- <div style="text-align: right; width: 80%"> -->
 

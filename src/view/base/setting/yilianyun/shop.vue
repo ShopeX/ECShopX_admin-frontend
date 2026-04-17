@@ -8,10 +8,8 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addLabels">
-{{
-          $t('5f64f748.f77b58')
-        }}
-</el-button>
+          {{ $t('5f64f748.f77b58') }}
+        </el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="printerShopList">
@@ -19,15 +17,11 @@
       <el-table-column :label="$t('5f64f748.2b6bc0')">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">
-{{
-            $t('5f64f748.95b351')
-          }}
-</el-button>
+            {{ $t('5f64f748.95b351') }}
+          </el-button>
           <el-button size="mini" @click="deleteAction(scope.$index, scope.row)">
-{{
-            $t('5f64f748.2f4aad')
-          }}
-</el-button>
+            {{ $t('5f64f748.2f4aad') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

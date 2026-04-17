@@ -191,7 +191,8 @@ const config = {
       base: createTransformOutBase(['outerMargin'], ['outerMargin']),
       config: (v) => {
         const firstScreenWidth = Number(v.firstScreenWidth) > 0 ? Number(v.firstScreenWidth) : 375
-        const firstScreenHeight = Number(v.firstScreenHeight) > 0 ? Number(v.firstScreenHeight) : 667
+        const firstScreenHeight =
+          Number(v.firstScreenHeight) > 0 ? Number(v.firstScreenHeight) : 667
         return pickBy(v, {
           interval: 'interval',
           dot: 'dot',

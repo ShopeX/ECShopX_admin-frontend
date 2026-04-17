@@ -9,10 +9,8 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-button type="primary" icon="plus" @click="addTemplates">
-{{
-            $t('75c2575f.a8c029')
-          }}
-</el-button>
+            {{ $t('75c2575f.a8c029') }}
+          </el-button>
         </el-col>
       </el-row>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">

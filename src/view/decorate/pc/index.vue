@@ -10,15 +10,11 @@
       <div class="hd-lf">{{ localTitle }}</div>
       <div class="hd-rg">
         <el-button v-if="mode == 'page'" plain @click="onExit">
-{{
-          $t('cb5715dd.5094c1')
-        }}
-</el-button>
+          {{ $t('cb5715dd.5094c1') }}
+        </el-button>
         <el-button v-if="mode == 'dialog'" plain @click="onClose">
-{{
-          $t('cb5715dd.b15d91')
-        }}
-</el-button>
+          {{ $t('cb5715dd.b15d91') }}
+        </el-button>
         <el-button plain @click="onSaveTemplate">{{ $t('cb5715dd.be5fbb') }}</el-button>
       </div>
     </div>

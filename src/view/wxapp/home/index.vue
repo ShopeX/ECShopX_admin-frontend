@@ -66,7 +66,7 @@
             @click="addTemplate"
           >
             <div class="template-wrap flex-col items-center justify-center flex">
-              <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+              <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
               <div class="add-text">{{ $t('a066f499.6fef15') }}</div>
             </div>
           </div>
@@ -75,7 +75,7 @@
           <div class="template-item">
             <div class="img-wrap">
               <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
+                <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览" />
                 <span class="preview-cover_text">{{ $t('a066f499.645dbc') }}</span>
               </div>
               <el-image class="template-pic" :src="item.template_pic" fit="cover" />
@@ -114,7 +114,7 @@
               <div v-if="item.timer_status == 2" class="no-time">
                 <div>{{ $t('a066f499.b4f549') }}</div>
                 <div class="picker-wrap">
-                  <img class="time-img" src="@/assets/img/time-img.png">
+                  <img class="time-img" src="@/assets/img/time-img.png" />
                   <span>{{ $t('a066f499.33d8ff') }}</span>
                   <el-date-picker
                     v-model="item.timer_time"

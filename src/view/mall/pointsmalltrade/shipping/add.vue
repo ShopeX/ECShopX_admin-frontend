@@ -789,7 +789,7 @@
           <el-col :span="6">
             <el-row class="region-list">
               <el-col>
-                {{ $t('d41d8cd9.x8y9z0') }}<br>
+                {{ $t('d41d8cd9.x8y9z0') }}<br />
                 {{ conf_area | formatCityData(district, false) }}
               </el-col>
             </el-row>

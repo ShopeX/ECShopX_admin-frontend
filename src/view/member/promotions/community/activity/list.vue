@@ -8,10 +8,8 @@
     <el-row :gutter="20">
       <el-col :span="3">
         <el-button type="primary" icon="plus" @click="addActivityData">
-{{
-          $t('cada7636.23b46b')
-        }}
-</el-button>
+          {{ $t('cada7636.23b46b') }}
+        </el-button>
       </el-col>
       <el-col :span="6">
         <el-input v-model="params.name" :placeholder="$t('cada7636.39834b')">
@@ -54,7 +52,7 @@
         </el-table-column>
         <el-table-column prop="activity_id" :label="$t('cada7636.be3322')" width="80" />
         <el-table-column :label="$t('cada7636.39834b')">
-          <template slot-scope="scope"> {{ scope.row.activity_name }}<br> </template>
+          <template slot-scope="scope"> {{ scope.row.activity_name }}<br /> </template>
         </el-table-column>
         <el-table-column prop="activity_start_date" :label="$t('cada7636.592c59')" width="160" />
         <el-table-column prop="activity_end_date" :label="$t('cada7636.f78277')" width="160" />

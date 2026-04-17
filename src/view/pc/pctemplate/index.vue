@@ -10,10 +10,8 @@
         <div v-if="$route.path.indexOf('editor') === -1">
           <el-row class="mb-4">
             <el-button type="primary" @click="dialogVisible = true">
-{{
-              $t('8b0d1458.4c503b')
-            }}
-</el-button>
+              {{ $t('8b0d1458.4c503b') }}
+            </el-button>
           </el-row>
           <el-row>
             <el-tabs type="card" v-model="page_type" @tab-click="handleTabClick">
@@ -41,10 +39,8 @@
                   <template slot-scope="scope">
                     <div>
                       <el-tag v-if="scope.row.status === '1'" type="success">
-{{
-                        $t('8b0d1458.7854b5')
-                      }}
-</el-tag>
+                        {{ $t('8b0d1458.7854b5') }}
+                      </el-tag>
                       <el-tag v-else type="info">{{ $t('8b0d1458.463776') }}</el-tag>
                     </div>
                   </template>

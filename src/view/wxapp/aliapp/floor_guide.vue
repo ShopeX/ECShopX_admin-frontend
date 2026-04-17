@@ -349,7 +349,7 @@ $txt-placeholder: #f5f5f7;
                         class="store-img"
                         :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                         alt=""
-                      >
+                      />
                       <div class="store-caption">
                         <div class="store-name">
                           {{ item.name }}
@@ -451,7 +451,7 @@ $txt-placeholder: #f5f5f7;
               class="store-img"
               :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
               alt=""
-            >
+            />
             <div class="store-caption">
               {{ item.name }}
             </div>

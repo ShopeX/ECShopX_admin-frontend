@@ -165,10 +165,8 @@
           <el-table-column fixed="left" :label="$t('7ee70716.2b6bc0')" width="160">
             <template slot-scope="scope">
               <el-button type="text" @click="deleteItem(scope.row)">
-{{
-                $t('7ee70716.2f4aad')
-              }}
-</el-button>
+                {{ $t('7ee70716.2f4aad') }}
+              </el-button>
               <el-button type="text" class="btn-gap" @click="modifyItem(scope.row)">
                 {{ $t('7ee70716.85d8be') }}
               </el-button>

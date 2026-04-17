@@ -63,10 +63,8 @@
           <el-table-column :label="$t('85c4b37c.2b6bc0')">
             <template slot-scope="scope">
               <el-button type="text" @click="handleSkuEdit(scope.row)">
-{{
-                $t('85c4b37c.2b158b')
-              }}
-</el-button>
+                {{ $t('85c4b37c.2b158b') }}
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column :label="$t('85c4b37c.c1e70a')">

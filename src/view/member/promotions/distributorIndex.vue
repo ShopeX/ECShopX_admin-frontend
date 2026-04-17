@@ -36,8 +36,7 @@
             type="success"
             size="mini"
           >
-            {{ item.label }}
-</el-tag
+            {{ item.label }} </el-tag
           >&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
       </el-table-column>

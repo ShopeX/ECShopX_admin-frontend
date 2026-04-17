@@ -28,7 +28,7 @@
                 ? 'https://fakeimg.pl/80x80/EFEFEF/CCC/?text=img&font=lobster'
                 : 'https://fakeimg.pl/288x120/EFEFEF/CCC/?text=img&font=lobster')
             "
-          >
+          />
           <div class="caption">
             <div class="goods-title">
               {{ data[0].item_name || $t('37035f2d.07ec01') }}

@@ -106,7 +106,7 @@
             v-if="detailForm.imageUrl"
             :src="detailForm.imageUrl ? wximageurl + detailForm.imageUrl : ''"
             class="avatar"
-          >
+          />
           <span v-else>{{ $t('6e484b97.5423e2') }}</span>
         </el-form-item>
       </el-form>

@@ -786,7 +786,12 @@ export default {
               }
             }
           },
-          { name: this.$t('d41d8cd9.k8s9t0u'), key: 'store', align: 'right', headerAlign: 'center' },
+          {
+            name: this.$t('d41d8cd9.k8s9t0u'),
+            key: 'store',
+            align: 'right',
+            headerAlign: 'center'
+          },
           {
             name: this.$t('d41d8cd9.u0v1w2'),
             key: 'market_price',

@@ -39,27 +39,16 @@
           <el-button
             type="text"
             icon="el-icon-delete"
-            @click="removeTag(index,tagItem)"
+            @click="removeTag(index, tagItem)"
             :disabled="formData.tags.length <= 1"
             class="text-[#F56C6C] text-base"
           />
           <span class="text-sm ml-2">{{ $t('ec391ebb.391c76') }}</span>
-          <el-color-picker
-            v-model="tagItem.tag_color"
-            size="small"
-          />
+          <el-color-picker v-model="tagItem.tag_color" size="small" />
           <span class="text-sm ml-2">{{ $t('ec391ebb.9facbf') }}</span>
-          <el-color-picker
-            v-model="tagItem.font_color"
-            size="small"
-          />
+          <el-color-picker v-model="tagItem.font_color" size="small" />
         </div>
-        <el-button
-          type="text"
-          icon="el-icon-plus"
-          @click="addTag"
-          class="text-[#409EFF] pl-0"
-        >
+        <el-button type="text" icon="el-icon-plus" @click="addTag" class="text-[#409EFF] pl-0">
           {{ $t('ec391ebb.736eaa') }}
         </el-button>
       </el-form-item>
@@ -86,7 +75,7 @@ export default {
     form: {
       type: Object,
       default: null
-    },
+    }
   },
   data() {
     return {
@@ -105,7 +94,7 @@ export default {
         tags: [
           {
             validator: (rule, value, callback) => {
-              const tags = value.filter(tag => tag?.tag_name !== '')
+              const tags = value.filter((tag) => tag?.tag_name !== '')
               callback(tags.length === 0 ? new Error(this.$t('ec391ebb.cdb31f')) : undefined)
             },
             trigger: 'blur'
@@ -151,7 +140,7 @@ export default {
         const submitData = {
           group_id: this.isEdit ? this.formData.group_id : undefined,
           group_name: this.formData.group_name,
-          tags: this.formData.tags.map(tag => ({
+          tags: this.formData.tags.map((tag) => ({
             tag_name: tag.tag_name,
             tag_color: tag.tag_color || '',
             font_color: tag.font_color || '',
@@ -165,5 +154,3 @@ export default {
   }
 }
 </script>
-
-

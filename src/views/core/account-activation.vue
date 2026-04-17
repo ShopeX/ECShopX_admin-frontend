@@ -9,7 +9,7 @@
       <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
         <div class="slogn">
           <div class="logo-box">
-            <img :src="logoIcon" alt="">
+            <img :src="logoIcon" alt="" />
           </div>
           <div v-if="companyBrand == '超新星'">
             <h3>{{ $t('04ab0d65.43aa70') }}</h3>
@@ -41,7 +41,7 @@
       >
         <div class="brand">
           <div class="logo-box">
-            <img :src="logoIcon" alt="">
+            <img :src="logoIcon" alt="" />
           </div>
           <span>{{ resultTxt }}</span>
         </div>

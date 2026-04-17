@@ -9,7 +9,7 @@
             :src="value.titleText.image"
             class="header-image"
             alt=""
-          >
+          />
           <span
             v-if="value.titleText && value.titleText.type === 'text' && value.titleText.text"
             class="header-text"
@@ -44,7 +44,7 @@
 
         <!-- 商品图片 -->
         <div class="goods-img-wrapper">
-          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="">
+          <img :src="item.main_img || item.pics?.[0] || ''" class="goods-image" alt="" />
           <!-- 销量 -->
           <div class="goods-sales" v-if="item.score">
             <el-image :src="fireIcon" class="fire-icon" alt="" />
@@ -108,11 +108,7 @@ export default {
     }
   },
   data() {
-    return {i18n,
-      fireIcon: fireIcon,
-      activitySeckill,
-      memberPreferenceIcon
-    }
+    return { i18n, fireIcon: fireIcon, activitySeckill, memberPreferenceIcon }
   },
   methods: {
     // 格式化价格

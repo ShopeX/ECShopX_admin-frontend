@@ -89,7 +89,7 @@
                 v-if="pageForm.page_share_imageUrl"
                 :src="wximageurl + pageForm.page_share_imageUrl"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
             <imgPicker

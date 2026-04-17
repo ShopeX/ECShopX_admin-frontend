@@ -37,7 +37,7 @@
             </el-button>
             <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl">
+                <img class="page-code" :src="appCodeUrl" />
                 <div class="page-btns">
                   <el-button
                     type="primary"
@@ -116,7 +116,7 @@
                 v-if="pageForm.page_share_imageUrl"
                 :src="wximageurl + pageForm.page_share_imageUrl"
                 class="avatar"
-              >
+              />
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </el-form-item>

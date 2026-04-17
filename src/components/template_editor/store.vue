@@ -35,7 +35,7 @@
                         'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'
                       "
                       alt=""
-                    >
+                    />
                     <div class="store-name">
                       {{ store.name }}
                     </div>
@@ -46,7 +46,7 @@
                       :key="item.goodsId"
                       class="store-item"
                     >
-                      <img class="store-item-thumb" :src="item.imgUrl" alt="">
+                      <img class="store-item-thumb" :src="item.imgUrl" alt="" />
                       <div class="store-item-amount">
                         <span class="price">¥{{ item.price / 100 }}</span>
                       </div>
@@ -106,7 +106,7 @@
                 :src="wximageurl + base.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
-              >
+              />
             </div>
             <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="el-icon-camera" />{{ $t('43c29e65.ce6855') }}

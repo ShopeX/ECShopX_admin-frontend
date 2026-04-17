@@ -81,6 +81,9 @@
         <SpFilterFormItem v-if="!VERSION_SHUYUN()" prop="username" :label="$t('ff557c54.652ced')">
           <el-input v-model="params.username" :placeholder="$t('ff557c54.32b6e8')" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="login_email" :label="$t('ff557c54.d093f6')">
+          <el-input v-model="params.login_email" clearable :placeholder="$t('ff557c54.5692c0')" />
+        </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!VERSION_IN_PURCHASE()"
           prop="vip_grade"
@@ -221,10 +224,8 @@
 
       <div class="action-container">
         <el-button type="primary" @click="showTagDialog = true">
-{{
-          $t('ff557c54.fedbca')
-        }}
-</el-button>
+          {{ $t('ff557c54.fedbca') }}
+        </el-button>
         <el-button v-if="!VERSION_IN_PURCHASE()" type="primary" @click="onSelectCoupon">
           {{ $t('ff557c54.afa583') }}
         </el-button>
@@ -246,10 +247,8 @@
           {{ $t('ff557c54.1eaeee') }}
         </el-button>
         <el-button type="primary" @click="batchActionDialog('change_shop')">
-{{
-          $t('ff557c54.2b518f')
-        }}
-</el-button>
+          {{ $t('ff557c54.2b518f') }}
+        </el-button>
         <el-button type="primary" @click="exportData">{{ $t('ff557c54.55405e') }}</el-button>
       </div>
 
@@ -356,10 +355,8 @@
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="handleVipGradeDelay(true)">
-{{
-                $t('ff557c54.bb47cb')
-              }}
-</el-button>
+                {{ $t('ff557c54.bb47cb') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -389,10 +386,8 @@
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="gradeUpdateSubmit">
-{{
-                $t('ff557c54.49d2ff')
-              }}
-</el-button>
+                {{ $t('ff557c54.49d2ff') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -439,15 +434,11 @@
           />
           <div class="content-padded content-center">
             <el-button type="default" @click="dialogIsShow = false">
-{{
-              $t('ff557c54.625fb2')
-            }}
-</el-button>
+              {{ $t('ff557c54.625fb2') }}
+            </el-button>
             <el-button type="primary" @click="setSalesman(true)">
-{{
-              $t('ff557c54.38cf16')
-            }}
-</el-button>
+              {{ $t('ff557c54.38cf16') }}
+            </el-button>
           </div>
         </template>
 
@@ -465,6 +456,7 @@
                   :disabled="
                     key == 'mobile' ||
                     key == 'username' ||
+                    key == 'email' ||
                     (key == 'address' && datapass_block == 1)
                   "
                 />
@@ -532,10 +524,8 @@
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="infoUpdateSubmit">
-{{
-                $t('ff557c54.49d2ff')
-              }}
-</el-button>
+                {{ $t('ff557c54.49d2ff') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -560,10 +550,8 @@
             </el-form-item>
             <el-form-item class="content-center ml-[30px]">
               <el-button type="primary" @click="onEditMobileSubmit">
-{{
-                $t('ff557c54.b04fcb')
-              }}
-</el-button>
+                {{ $t('ff557c54.b04fcb') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -594,10 +582,8 @@
             </el-form-item>
             <el-form-item class="content-center ml-[50px]">
               <el-button type="primary" @click="editRemarks()">
-{{
-                $t('ff557c54.38cf16')
-              }}
-</el-button>
+                {{ $t('ff557c54.38cf16') }}
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -632,10 +618,8 @@
           <el-table-column prop="disabled" :label="$t('ff557c54.3fea7c')">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.disabled == '0'" type="success" size="mini">
-{{
-                $t('ff557c54.c6cc39')
-              }}
-</el-tag>
+                {{ $t('ff557c54.c6cc39') }}
+              </el-tag>
               <el-tag v-else type="info" size="mini">{{ $t('ff557c54.1abbb1') }}</el-tag>
             </template>
           </el-table-column>
@@ -652,10 +636,8 @@
         <div slot="footer" class="dialog-footer content-center">
           <el-button @click.native="handleCancelSuperior">{{ $t('ff557c54.625fb2') }}</el-button>
           <el-button type="primary" @click="submitSuperiorAction">
-{{
-            $t('ff557c54.38cf16')
-          }}
-</el-button>
+            {{ $t('ff557c54.38cf16') }}
+          </el-button>
         </div>
       </el-dialog>
 
@@ -790,6 +772,8 @@ export default {
         vip_grade: '',
         tag_id: '',
         mobile: '',
+        username: '',
+        login_email: '',
         have_consume: '',
         role: '',
         reg_distributor: '',
@@ -1117,6 +1101,8 @@ export default {
         vip_grade: '',
         tag_id: '',
         mobile: '',
+        username: '',
+        login_email: '',
         have_consume: '',
         role: '',
         reg_distributor: '',
@@ -1149,6 +1135,12 @@ export default {
         pageSize: params.pageSize || this.pageSize,
         ...this.params,
         tag_id: this.params.tag_id.length > 0 ? this.params.tag_id.join(',') : ''
+      }
+      if (finderParams.login_email != null && finderParams.login_email !== '') {
+        finderParams.login_email = String(finderParams.login_email).trim()
+        if (finderParams.login_email === '') {
+          delete finderParams.login_email
+        }
       }
       // // 处理日期范围
       // if (this.created && this.created.length === 2) {

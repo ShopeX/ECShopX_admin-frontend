@@ -51,7 +51,8 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {i18n,
+    return {
+      i18n,
       defaultBrandList: [
         {
           imgUrl: '',

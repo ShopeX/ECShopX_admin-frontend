@@ -57,6 +57,15 @@ export const finderSetting = (vm) =>
       },
       { name: vm.$t('c30d0a27.23eb0e'), key: 'username', width: 140 },
       {
+        name: vm.$t('287aad92.7148d5'),
+        key: 'email',
+        width: 200,
+        render: (h, { row }) => {
+          const v = row.email != null && row.email !== '' ? String(row.email) : ''
+          return h('span', v || '—')
+        }
+      },
+      {
         name: vm.$t('c30d0a27.787b56'),
         key: 'sex',
         width: 70,

@@ -108,7 +108,11 @@
           <el-input v-model="params.shop_code" :placeholder="$t('b2fe051e.f6d738')" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="distributor_category_id" :label="$t('b2fe051e.9d2c44')">
-          <el-select v-model="params.distributor_category_id" clearable :placeholder="$t('b2fe051e.459c3e')">
+          <el-select
+            v-model="params.distributor_category_id"
+            clearable
+            :placeholder="$t('b2fe051e.459c3e')"
+          >
             <el-option
               v-for="item in categoryList"
               :key="item.category_id"
@@ -117,7 +121,11 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="open_divided" :label="$t('b2fe051e.92e8f8')" v-if="VERSION_STANDARD()">
+        <SpFilterFormItem
+          prop="open_divided"
+          :label="$t('b2fe051e.92e8f8')"
+          v-if="VERSION_STANDARD()"
+        >
           <el-select v-model="params.open_divided" :placeholder="$t('b2fe051e.780afe')">
             <el-option
               v-for="(item, index) in isOpenList"
@@ -268,7 +276,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="120" prop="distributor_category_name" :label="$t('b2fe051e.2419d0')" />
+        <el-table-column
+          width="120"
+          prop="distributor_category_name"
+          :label="$t('b2fe051e.2419d0')"
+        />
         <el-table-column width="100" prop="shop_code" :label="$t('b2fe051e.f6d738')" />
         <el-table-column
           v-if="VERSION_STANDARD()"
@@ -640,7 +652,7 @@
             </el-tag>
           </div>
         </div>
-        <hr>
+        <hr />
         <div>
           <div class="label">{{ $t('b2fe051e.d0c49d') }}</div>
           <el-tag
@@ -804,7 +816,7 @@ export default {
       shop_code: undefined,
       open_divided: undefined,
       payment_subject: undefined,
-      distributor_category_id: undefined,
+      distributor_category_id: undefined
     }
 
     const validateLink = (rule, value, callback) => {

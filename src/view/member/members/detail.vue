@@ -20,7 +20,7 @@
               class="member-header"
               :src="member.wechatUserInfo.headimgurl || member.avatar"
               alt=""
-            >
+            />
             <div class="mobile-txt">
               <span>{{ member.mobile }}</span
               ><img
@@ -33,7 +33,7 @@
                     : ''
                 "
                 class="icon"
-              >
+              />
             </div>
             <div v-if="member.vipgrade && member.vipgrade.is_vip" class="level-txt">
               {{ member.vipgrade.grade_name }}
@@ -50,6 +50,11 @@
           <div class="info-item">
             <span class="txt">{{ $t('f14acdc9.8098e2') }}</span>
             <span>{{ member.mobile }}</span>
+          </div>
+          <div class="info-item">
+            <span class="txt">{{ $t('ff557c54.d093f6') }}</span>
+            <span v-if="member.login_email">{{ member.login_email }}</span>
+            <span v-else>--</span>
           </div>
           <div v-if="!VERSION_SHUYUN()" class="info-item">
             <span class="txt">{{ $t('f14acdc9.15f7b0') }}</span>
@@ -263,6 +268,7 @@ export default {
         company_id: '',
         grade_id: '',
         mobile: '',
+        login_email: '',
         user_card_code: '',
         username: '',
         sex: 1,

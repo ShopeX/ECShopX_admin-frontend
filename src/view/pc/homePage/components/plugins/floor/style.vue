@@ -93,7 +93,7 @@
                     :src="data.leftImg.url"
                     class="img-pendant__uploader"
                     @click="handleImgChange(0)"
-                  >
+                  />
                   <div v-else class="banner-uploader" @click="handleImgChange(0)">
                     <i class="el-icon-camera" />{{ $t('9549f378.ce6855') }}
                   </div>
@@ -147,7 +147,7 @@
                       :src="data.rightImg1.url"
                       class="img-pendant__uploader"
                       @click="handleImgChange(1)"
-                    >
+                    />
                   </div>
                   <div v-else class="banner-uploader" @click="handleImgChange(1)">
                     <i class="el-icon-camera" />{{ $t('9549f378.ce6855') }}
@@ -202,7 +202,7 @@
                       :src="data.rightImg2.url"
                       class="img-pendant__uploader"
                       @click="handleImgChange(2)"
-                    >
+                    />
                   </div>
                   <div v-else class="banner-uploader" @click="handleImgChange(2)">
                     <i class="el-icon-camera" />{{ $t('9549f378.ce6855') }}
@@ -289,7 +289,7 @@
                     :key="item.id"
                     class="setting-item item-selected"
                   >
-                    <img class="thumbnail" :src="wximageurl + item.pics[0]" alt="">
+                    <img class="thumbnail" :src="wximageurl + item.pics[0]" alt="" />
                     <div class="">
                       {{ item.item_name }}
                     </div>

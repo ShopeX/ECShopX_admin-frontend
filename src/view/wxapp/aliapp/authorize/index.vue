@@ -9,7 +9,7 @@
       <div v-if="ali_appid && detail">
         <div class="content-center">
           <div class="page-top">
-            <img class="app-img" src="@/assets/img/onexshop_logo.png" height="60">
+            <img class="app-img" src="@/assets/img/onexshop_logo.png" height="60" />
             <div class="page-right">
               <div class="app-name">
                 <span v-if="!detail.app_id">
@@ -129,7 +129,7 @@
     <el-dialog :title="$t('29eb91bc.b85b43')" :visible.sync="aLiCodeVisible">
       <div class="content-center">
         <!-- <img src="http://wx.qlogo.cn/mmopen/FXXXHOj2xs8temGVQEFLnFNBwY6ticka7ed0qF8ZNemAXOAFbap0AjgovibyJhQiaXCj71V3ic51BKuBPlxSL3RcdJiaorbFUpPFn/0" /> -->
-        <img :src="aLiCodeImage">
+        <img :src="aLiCodeImage" />
       </div>
     </el-dialog>
   </div>

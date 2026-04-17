@@ -168,7 +168,7 @@
                               @mouseenter="picsEnter(index)"
                               @mouseleave="picsLeave"
                             >
-                              <img :src="wximageurl + item">
+                              <img :src="wximageurl + item" />
                               <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
                                 <!-- <div class="el-icon-delete" /> -->
                                 <SpIcon name="delete" @click="removePicsImg(index)" />
@@ -307,7 +307,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item :label="$t('4b43f5ef.0eac88')">
+                <el-form-item :label="$t('4b43f5ef.fcd943')">
                   <el-input v-model="form.store" type="number" required min="0" placeholder="" />
                 </el-form-item>
               </el-col>
@@ -317,14 +317,14 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item :label="$t('4b43f5ef.fcd943')">
+                <el-form-item :label="$t('4b43f5ef.8c0d75')">
                   <el-input v-model="form.weight" type="number" required min="0" placeholder="">
                     <template slot="append"> kg </template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item :label="$t('4b43f5ef.972d5f')">
+                <el-form-item :label="$t('4b43f5ef.3b35fa')">
                   <el-input v-model="form.volume" type="number" required min="0" placeholder="">
                     <template slot="append"> m³ </template>
                   </el-input>
@@ -494,7 +494,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.0eac88')">
+              <el-table-column :label="$t('4b43f5ef.fcd943')">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.store"
@@ -516,12 +516,12 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.fcd943')">
+              <el-table-column :label="$t('4b43f5ef.8c0d75')">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.972d5f')">
+              <el-table-column :label="$t('4b43f5ef.3b35fa')">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
                 </template>
@@ -650,7 +650,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.0eac88')" :render-header="renderRequire">
+              <el-table-column :label="$t('4b43f5ef.fcd943')" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.store"

@@ -53,10 +53,8 @@
                 <span class="color-code">{{ displayBgColor }}</span>
                 <div class="color-controls-item">
                   <el-button type="text" size="mini" class="reset-btn" @click="onResetBgColor">
-{{
-                    $t('68f836e2.4b9c32')
-                  }}
-</el-button>
+                    {{ $t('68f836e2.4b9c32') }}
+                  </el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayBgColor }">
                     <el-color-picker v-model="form.bgColor" size="small" @change="handleChange" />
                   </div>
@@ -71,10 +69,8 @@
                 <span class="color-code">{{ displayStartColor }}</span>
                 <div class="color-controls-item">
                   <el-button type="text" size="mini" class="reset-btn" @click="onResetStartColor">
-{{
-                    $t('68f836e2.4b9c32')
-                  }}
-</el-button>
+                    {{ $t('68f836e2.4b9c32') }}
+                  </el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayStartColor }">
                     <el-color-picker
                       v-model="form.startColor"
@@ -91,10 +87,8 @@
                 <span class="color-code">{{ displayEndColor }}</span>
                 <div class="color-controls-item">
                   <el-button type="text" size="mini" class="reset-btn" @click="onResetEndColor">
-{{
-                    $t('68f836e2.4b9c32')
-                  }}
-</el-button>
+                    {{ $t('68f836e2.4b9c32') }}
+                  </el-button>
                   <div class="color-swatch" :style="{ backgroundColor: displayEndColor }">
                     <el-color-picker v-model="form.endColor" size="small" @change="handleChange" />
                   </div>

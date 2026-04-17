@@ -57,9 +57,7 @@ export default {
         category_name: ''
       },
       finderSetting: createSetting({
-        columns: [
-          { name: this.$t('9a30bc45.04d7d8'), key: 'category_name' }
-        ],
+        columns: [{ name: this.$t('9a30bc45.04d7d8'), key: 'category_name' }],
         actions: [
           {
             name: this.$t('9a30bc45.95b351'),

@@ -194,16 +194,25 @@
 <template>
   <div class="wgt-page" :style="headerStyle" @click="handleClickHeader">
     <div class="wgt-page-content" :style="contentStyle">
-      <div v-if="value && value.titleStyle != '0'" class="header-container"
-        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }" :style="containerStyle">
+      <div
+        v-if="value && value.titleStyle != '0'"
+        class="header-container"
+        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }"
+        :style="containerStyle"
+      >
         <div class="header-content-left">
           <!-- 功能区：热区图 -->
-          <div class="title-function"
-            v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl">
+          <div
+            class="title-function"
+            v-if="showFunctionArea && functionAreaType === 'hotzone' && functionAreaHotzone?.imgUrl"
+          >
             <sp-image class="title-function-image" :src="functionAreaHotzone.imgUrl" />
           </div>
           <!-- 功能区：附近门店 -->
-          <div v-if="showFunctionArea && functionAreaType === 'nearby'" class="title-function nearby-function">
+          <div
+            v-if="showFunctionArea && functionAreaType === 'nearby'"
+            class="title-function nearby-function"
+          >
             <p class="nearby-function-text">{{ i18n.t('33e085f7.e94e8b') }}</p>
             <i class="nearby-function-icon el-icon-arrow-down" />
             <!-- 附近门店组件，可根据需要添加 -->
@@ -214,7 +223,7 @@
           <div v-if="value.titleStyle == '3' && value.showSearchButton" class="title-search">
             <div class="search-container">
               <i class="el-icon-search search-icon" />
-              <input type="text" class="search-input" placeholder="">
+              <input type="text" class="search-input" placeholder="" />
               <div class="search-button" :style="searchButtonStyle">
                 <span>{{ i18n.t('33e085f7.e5f71f') }}</span>
               </div>
@@ -223,7 +232,11 @@
           <!-- 标题区：页面名称 -->
           <div v-if="value.titleStyle == '1'" class="title-text">{{ value.wgtName }}</div>
           <!-- 标题区：图片 -->
-          <sp-image v-if="value.titleStyle == '2'" class="title-image" :src="value.titleBackgroundImage" />
+          <sp-image
+            v-if="value.titleStyle == '2'"
+            class="title-image"
+            :src="value.titleBackgroundImage"
+          />
         </div>
       </div>
     </div>
@@ -237,7 +250,7 @@ import { i18n } from '@/i18n'
 import config from './config'
 export default {
   name: 'Page',
-  wgtName: i18n.t('33e085f7.a018ef'),   
+  wgtName: i18n.t('33e085f7.a018ef'),
   wgtDesc: '',
   config: config,
   props: {
@@ -266,10 +279,11 @@ export default {
     contentStyle() {
       const { navigateBackgroundColor } = this.value || {}
       return {
-        'background-image': `url(${this.isLight(this.get16ToRgb(navigateBackgroundColor))
+        'background-image': `url(${
+          this.isLight(this.get16ToRgb(navigateBackgroundColor))
             ? weappHeaderDark
             : weappHeaderLight
-          })`
+        })`
       }
     },
     containerStyle() {

@@ -79,6 +79,7 @@ function processConfig(config) {
       'ranking',
       'hotranking',
       'goods',
+      'goodsCard',
       'shop',
       'couponCard',
       'classify',

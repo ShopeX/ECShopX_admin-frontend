@@ -5,6 +5,17 @@
 
 <template>
   <div>
+    <div class="search-bar">
+      <el-input
+        v-model="params.mobile"
+        clearable
+        style="width: 240px"
+        :placeholder="$t('ff557c54.6e4f4b')"
+        @keyup.enter.native="onSearch"
+        @clear="onSearch"
+      />
+      <el-button type="primary" @click="onSearch">{{ $t('223cc8af.e5f71f') }}</el-button>
+    </div>
     <el-table v-loading="loading" :data="cardList" style="width: 100%" border height="600">
       <el-table-column prop="username" :label="$t('7c2974e3.5b95ee')" />
       <el-table-column prop="mobile" :label="$t('7c2974e3.8098e2')" />
@@ -43,6 +54,7 @@ export default {
       cardList: [],
       params: {
         card_id: 0,
+        mobile: '',
         page: 1,
         pageSize: 20
       }
@@ -61,6 +73,10 @@ export default {
     }
   },
   methods: {
+    onSearch() {
+      this.params.page = 1
+      this.getCardUserList()
+    },
     handleCurrentChange(val) {
       this.params.page = val
       this.getCardUserList()
@@ -90,4 +106,10 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+</style>

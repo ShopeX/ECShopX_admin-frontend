@@ -1890,7 +1890,7 @@ export default {
         distributorIds = data.map((item) => item.distributor_id)
       }
       if (this.selectionItems.length == 0) {
-        await this.$confirm(this.$t('d41d8cd9.y9z0a1'), this.$t('d41d8cd9.s3t4u5'))
+        await this.$confirm(this.$t('6f19b2ab.6b3d7e'), this.$t('d41d8cd9.02d981'))
         await this.$api.marketing.saveDistributorItems({
           distributor_ids: distributorIds,
           item_ids: '_all',

@@ -38,9 +38,11 @@
                 <el-table-column prop="status" :label="$t('8b0d1458.53c3dd')">
                   <template slot-scope="scope">
                     <div>
-                      <el-tag v-if="scope.row.status === '1'" type="success">
-                        {{ $t('8b0d1458.7854b5') }}
-                      </el-tag>
+                      <el-tag v-if="isTemplateEnabled(scope.row.status)" type="success">
+{{
+                        $t('8b0d1458.7854b5')
+                      }}
+</el-tag>
                       <el-tag v-else type="info">{{ $t('8b0d1458.463776') }}</el-tag>
                     </div>
                   </template>
@@ -50,7 +52,9 @@
                     <div>
                       <el-button type="text" size="mini" @click="handleDisable(scope.row)">
                         {{
-                          scope.row.status === '1' ? $t('8b0d1458.710ad0') : $t('8b0d1458.7854b5')
+                          isTemplateEnabled(scope.row.status)
+                            ? $t('8b0d1458.710ad0')
+                            : $t('8b0d1458.7854b5')
                         }}
                       </el-button>
                       <el-button type="text" size="mini" @click="handleDelete(scope.row)">
@@ -191,6 +195,10 @@ export default {
     this.getTemplateList()
   },
   methods: {
+    /** 接口可能返回 number 1 或 string '1' */
+    isTemplateEnabled(status) {
+      return status === 1 || status === '1' || status === true || status === 'true'
+    },
     handleDialogClose() {
       this.dialogVisible = false
       this.resetForm('myForm')
@@ -207,7 +215,7 @@ export default {
         this.formData.template_title = row.template_title
         this.formData.template_description = row.template_description
         this.formData.page_type = row.page_type
-        this.formData.status = row.status === '1'
+        this.formData.status = this.isTemplateEnabled(row.status)
       })
     },
     handleRenovation({ theme_pc_template_id }) {
@@ -217,7 +225,7 @@ export default {
       try {
         this.loading = true
         const res = await editPageTemplate({
-          status: status === '1' ? '2' : '1',
+          status: this.isTemplateEnabled(status) ? '2' : '1',
           ...rest
         })
         this.loading = false

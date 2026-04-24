@@ -1,12 +1,7 @@
-## 本次变更总结
+## 最近一次变更（2026-04-23）
 
-**时间**: 2026-04-16
+**一句话概括**: fix: 软文商品卡片 goodsCard 落库解析、样式转换与预览保存一致
 
-**涉及文件**:
-- `src/i18n/locales/zh-CN.json`、`en.json`、`ar.json`
+**要点**: `findWidgetForPersistedName` 统一按 `config.name` 找挂件；`goodsCard` 组件名与 transform 对齐；内层样式走 `getInnerStyle`；去掉「组件间距」开关与标题区 UI。
 
-**主要改动**:
-- `223cc8af.e366cc` → 切换语言（及 en/ar 对应译文）。
-- `d81d8932.4f2c29` → 设置路径（路径选择器标题，三语与语义对齐）。
-
-**一句话概括**: i18n: 路径弹窗标题恢复为设置路径；链接项 223cc8af 改为切换语言
+详见: `.cursor/commit-summary/2026-04-23-goodsCard-decorate.md`

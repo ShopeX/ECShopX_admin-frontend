@@ -265,7 +265,8 @@ export default {
         'Group',
         'hotranking',
         'Ranking',
-        'goods'
+        'goods',
+        'goodsCard'
       ]
       // 专用挂件：订单导航
       const dedicatedNames = ['OrderNavigation']
@@ -354,19 +355,32 @@ export default {
       })
     },
     resetDecorateTheme() {},
+    // 落库 name 多为 config.name（如 goodsCard），与 Vue 组件名（如 Goods）可能不一致
+    findWidgetForPersistedName(persistedName) {
+      const key = String(persistedName || '').toLowerCase()
+      if (!key || !this.widgets.length) return null
+      let w = this.widgets.find((item) => (item.name || '').toLowerCase() === key)
+      if (w) return w
+      w = this.widgets.find((item) => String(item.config?.name || '').toLowerCase() === key)
+      if (w) return w
+      if (String(this.localScene) === '1005' && key === 'goods') {
+        return (
+          this.widgets.find((item) => String(item.config?.name || '').toLowerCase() === 'goodscard') ||
+          this.widgets.find((item) => (item.name || '').toLowerCase() === 'goods') ||
+          null
+        )
+      }
+      return null
+    },
     // 用 widgets 中注册的组件名（如 LocationModule）渲染，避免 config.name（如 locationModule）与 Vue 注册名大小写不一致导致预览不显示
     getComponentName(item) {
       if (!item?.name || !this.widgets.length) return item?.name || ''
-      const w = this.widgets.find(
-        (wgt) => (wgt.name || '').toLowerCase() === (item.name || '').toLowerCase()
-      )
+      const w = this.findWidgetForPersistedName(item.name)
       return w ? w.name : item.name
     },
     getComponentAttr(item) {
       if (!item) return { wgtName: '', config: {} }
-      const wgt = this.widgets.find((wgt) => {
-        return wgt.name?.toLowerCase() == item.name?.toLowerCase()
-      })
+      const wgt = this.findWidgetForPersistedName(item.name)
       if (!wgt) return { wgtName: item.wgtName || item.name || '', ...(item.config || {}) }
       return {
         wgtName: wgt.wgtName,
@@ -470,7 +484,7 @@ export default {
 
       list.forEach((li) => {
         // 是否存在挂件
-        const wgt = this.widgets.find((item) => item.name?.toLowerCase() == li.name?.toLowerCase())
+        const wgt = this.findWidgetForPersistedName(li.name)
         if (wgt) {
           // console.log('getTemplateDetial wgt:', wgt)
           const wgtInitParams = this.cloneDefaultField(wgt)
@@ -575,7 +589,7 @@ export default {
     // 是否为有效挂件（在 widgets 中注册且可渲染）
     isValidContentComp(c) {
       if (!c || typeof c !== 'object' || !c.name) return false
-      return this.widgets.some((w) => (w.name || '').toLowerCase() === (c.name || '').toLowerCase())
+      return !!this.findWidgetForPersistedName(c.name)
     },
     // 检查是否可以添加挂件（互斥逻辑：店铺字母列表、整屏滑动 与其余挂件互斥）
     canAddWgt(wgtName) {
@@ -640,10 +654,9 @@ export default {
         return
       }
       const data = this.contentComps.map((item) => {
-        const { transformOut } = this.widgets.find(
-          (wgt) => wgt.name?.toLowerCase() == item.name?.toLowerCase()
-        )?.config
-        return transformOut(item, this.widgets)
+        const wgt = this.findWidgetForPersistedName(item.name)
+        const { transformOut } = wgt?.config || {}
+        return transformOut ? transformOut(item, this.widgets) : item
       })
       data.unshift(this.headerAttr.transformOut(this.headerData, this.widgets))
       const { id } = this.$route.query

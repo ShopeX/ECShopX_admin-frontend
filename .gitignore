@@ -21,4 +21,5 @@ release.*
 AGENTS.md
 openspec/
 dist/
+.cursor/commit-summary/
 

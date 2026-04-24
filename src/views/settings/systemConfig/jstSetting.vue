@@ -5,6 +5,13 @@
 
 <template>
   <SpPage>
+    <SpPlatformTip
+      v-if="!VERSION_SHUYUN()"
+      h5
+      app
+      alipay
+      :text-val="$t('20f6ad88.c5d4d8')"
+    />
     <SpFormPlus
       ref="form"
       v-model="form"

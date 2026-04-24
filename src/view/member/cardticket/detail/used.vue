@@ -5,6 +5,17 @@
 
 <template>
   <div>
+    <div class="search-bar">
+      <el-input
+        v-model="params.mobile"
+        clearable
+        style="width: 240px"
+        :placeholder="$t('ff557c54.6e4f4b')"
+        @keyup.enter.native="onSearch"
+        @clear="onSearch"
+      />
+      <el-button type="primary" @click="onSearch">{{ $t('223cc8af.e5f71f') }}</el-button>
+    </div>
     <el-table v-loading="loading" :data="cardList" style="width: 100%" border height="600">
       <!-- <el-table-column prop="title" label="优惠券名称" width="200"></el-table-column> -->
       <el-table-column prop="code" :label="$t('de5acab9.390c08')" width="120" />
@@ -47,6 +58,7 @@ export default {
       params: {
         card_id: 0,
         is_use: true,
+        mobile: '',
         page: 1,
         pageSize: 20
       }
@@ -65,6 +77,10 @@ export default {
     }
   },
   methods: {
+    onSearch() {
+      this.params.page = 1
+      this.getCardUserList()
+    },
     handleCurrentChange(val) {
       this.params.page = val
       this.getCardUserList()
@@ -94,4 +110,10 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+</style>

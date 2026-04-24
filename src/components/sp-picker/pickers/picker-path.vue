@@ -62,9 +62,6 @@
       <el-tab-pane :label="$t('d81d8932.0f394b')" name="tag">
         <PickerTag v-if="tabValue == 'tag'" ref="tag" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.c75625')" name="article">
-        <PickerArticle v-if="tabValue == 'article'" ref="article" :value="value" />
-      </el-tab-pane>
       <el-tab-pane :label="$t('d81d8932.e8f87a')" name="planting">
         <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
       </el-tab-pane>
@@ -118,7 +115,6 @@ import PickerGoods from './picker-goods'
 import PickerSaleCategory from './picker-saleCategory'
 import PickerCategory from './picker-category'
 import PickerTag from './picker-tag'
-import PickerArticle from './picker-article'
 import PickerPlanting from './picker-planting'
 import PickerLink from './picker-link'
 import PickerMarketing from './picker-marketing'
@@ -143,7 +139,6 @@ export default {
     PickerSaleCategory,
     PickerCategory,
     PickerTag,
-    PickerArticle,
     PickerPlanting,
     PickerLink,
     PickerMarketing,
@@ -172,9 +167,11 @@ export default {
   },
   data() {
     const { tab } = this.value
+    // 已下线「文章」路径；历史数据若仍为 article，打开弹窗时落到默认 tab
+    const safeTab = tab === 'article' ? 'goods' : tab
     return {
       pathValue: null,
-      tabValue: tab || 'goods'
+      tabValue: safeTab || 'goods'
     }
   },
   methods: {
@@ -227,12 +224,6 @@ export default {
           return pickBy(data, {
             id: 'tag_id',
             title: 'tag_name'
-          })
-        },
-        article: () => {
-          return pickBy(data, {
-            id: 'article_id',
-            title: 'title'
           })
         },
         planting: () => {

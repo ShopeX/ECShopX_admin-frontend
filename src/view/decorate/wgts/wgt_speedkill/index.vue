@@ -106,7 +106,7 @@ export default {
       let params = {
         data_type: dataType,
         data_value: this.value.data?.id || '',
-        data_count: this.value.dataCount,
+        num: this.value.dataCount,
         distributor_id: this.value.data?.distributor_id || '',
         pages_template_id: this.$route.query.id
       }
@@ -127,7 +127,7 @@ export default {
       let params = {
         data_type: dataType,
         data_value: this.value.data?.id || '',
-        data_count: this.value.dataCount,
+        num: this.value.dataCount,
         distributor_id: this.value.data?.distributor_id || '',
         pages_template_id: this.$route.query.id
       }

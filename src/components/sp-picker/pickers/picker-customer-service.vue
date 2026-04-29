@@ -78,7 +78,10 @@ export default {
     return {
       list: [
         { id: 'customerService', title: this.$t('cc5110aa.107a88') },
-        { id: 'guide_service', title: this.$t('cc5110aa.6f33a3') }
+        { id: 'guide_service', title: this.$t('cc5110aa.6f33a3') },
+        { id: 'officialProfile', title: this.$t('cc5110aa.a90321') },
+        { id: 'officialChat', title: this.$t('cc5110aa.b70432') },
+        { id: 'official', title: this.$t('cc5110aa.c40543') }
       ],
       multiple: this.value?.multiple ?? true
     }

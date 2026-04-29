@@ -77,11 +77,35 @@
         </el-radio-button>
       </el-radio-group>
     </div>
-    <div v-if="localValue.linkType == 0" class="tracking-params-wrapper" @click="onPickerPath">
-      <label class="tracking-params-label">{{ $t('4a0a5782.4f35e8') }}</label>
-      <div class="btn-linkpath">{{ getLabelName() }}</div>
-    </div>
-    <div class="tracking-params-wrapper" v-else>
+    <template v-if="localValue.linkType == 0">
+      <div class="tracking-params-wrapper" @click="onPickerPath">
+        <label class="tracking-params-label">{{ $t('4a0a5782.4f35e8') }}</label>
+        <div class="btn-linkpath">{{ getLabelName() }}</div>
+      </div>
+      <div v-if="needsOfficialRawId" class="tracking-params-wrapper">
+        <label class="tracking-params-label">{{ $t('cc5110aa.d10654') }}</label>
+        <el-input
+          v-model="localValue.officialAccountRawId"
+          class="tracking-params-input"
+          size="small"
+          type="text"
+          :placeholder="$t('cc5110aa.e20765')"
+          @input="onOfficialRawIdInput"
+        />
+      </div>
+      <div v-if="needsOfficialArticleLink" class="tracking-params-wrapper">
+        <label class="tracking-params-label">{{ $t('cc5110aa.f30876') }}</label>
+        <el-input
+          v-model="localValue.officialArticleLink"
+          class="tracking-params-input"
+          size="small"
+          type="text"
+          :placeholder="$t('cc5110aa.g40987')"
+          @input="onOfficialArticleLinkInput"
+        />
+      </div>
+    </template>
+    <div v-else class="tracking-params-wrapper">
       <label class="tracking-params-label">{{ $t('4a0a5782.4e99fd') }}</label>
       <el-input
         v-model="localValue.linkUrl"
@@ -107,7 +131,6 @@
 </template>
 
 <script>
-import { cloneDeep } from 'lodash'
 import { LINK_PATH } from '@/consts'
 import { i18n } from '@/i18n'
 export default {
@@ -131,8 +154,20 @@ export default {
         linkPage: '',
         id: '',
         title: '',
-        trackingParams: ''
+        trackingParams: '',
+        officialAccountRawId: '',
+        officialArticleLink: ''
       }
+    }
+  },
+  computed: {
+    needsOfficialRawId() {
+      const { linkPage, id } = this.localValue
+      return linkPage === 'customer_service' && (id === 'officialProfile' || id === 'officialChat')
+    },
+    needsOfficialArticleLink() {
+      const { linkPage, id } = this.localValue
+      return linkPage === 'customer_service' && id === 'official'
     }
   },
   watch: {
@@ -165,8 +200,36 @@ export default {
             ? true
             : false // 为了兼容导购装修模板
       })
-      this.$emit('input', res)
-      this.$emit('change', res)
+      const next = {
+        ...this.localValue,
+        ...res,
+        linkType: this.localValue.linkType
+      }
+      const needRaw =
+        res?.linkPage === 'customer_service' &&
+        (res?.id === 'officialProfile' || res?.id === 'officialChat')
+      const needArticle = res?.linkPage === 'customer_service' && res?.id === 'official'
+      if (needRaw) {
+        next.officialAccountRawId = this.localValue.officialAccountRawId || ''
+        next.officialArticleLink = ''
+      } else if (needArticle) {
+        next.officialArticleLink = this.localValue.officialArticleLink || ''
+        next.officialAccountRawId = ''
+      } else {
+        next.officialAccountRawId = ''
+        next.officialArticleLink = ''
+      }
+      this.localValue = next
+      this.$emit('input', next)
+      this.$emit('change', next)
+    },
+    onOfficialRawIdInput() {
+      this.$emit('input', { ...this.localValue })
+      this.$emit('change', { ...this.localValue })
+    },
+    onOfficialArticleLinkInput() {
+      this.$emit('input', { ...this.localValue })
+      this.$emit('change', { ...this.localValue })
     },
     onChangeLinkType() {
       this.$emit('input', this.localValue)

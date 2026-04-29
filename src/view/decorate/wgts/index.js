@@ -102,7 +102,8 @@ const SCENE_1008 = {
   WgtHotZone,
   WgtFilm,
   WgtMarquees,
-  wgtOrderNavigation
+  wgtOrderNavigation,
+  WgtGoods
 }
 
 // 分类页面（storeAlphabet 仅在此页可用；店铺挂件仅 BBC 展示）
@@ -112,7 +113,8 @@ const SCENE_1007 = {
   WgtFilm,
   ...(!VERSION_STANDARD() ? { WgtShop } : {}),
   WgtStoreAlphabet,
-  WgtClassify
+  WgtClassify,
+  WgtGoods
   // WgtTask
 }
 

@@ -46,7 +46,7 @@ const config = {
       component: function (h, { key }) {
         return <AttrHorizontal v-model={this.value[key]} />
       },
-      value: [{ title: '8fc92d38.cbc608' }]
+      value: [{ title: i18n.t('8fc92d38.cbc608') }]
     },
     {
       label: '',

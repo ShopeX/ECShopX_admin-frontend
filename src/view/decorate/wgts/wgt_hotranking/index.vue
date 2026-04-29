@@ -73,11 +73,11 @@ export default {
   methods: {
     // 获取热销榜单商品列表（按销量排序）
     async getHotRankingGoodsList() {
-      const effectiveDataCount = this.value?.dataCount ?? this.value?.base?.dataCount ?? 4
+      const effectiveDataCount = this.value?.dataCount ?? 4
       let params = {
         data_type: 'sales',
         data_value: '',
-        data_count: effectiveDataCount,
+        num: effectiveDataCount,
         distributor_id: ''
       }
 

@@ -39,10 +39,8 @@
                   <template slot-scope="scope">
                     <div>
                       <el-tag v-if="isTemplateEnabled(scope.row.status)" type="success">
-{{
-                        $t('8b0d1458.7854b5')
-                      }}
-</el-tag>
+                        {{ $t('8b0d1458.7854b5') }}
+                      </el-tag>
                       <el-tag v-else type="info">{{ $t('8b0d1458.463776') }}</el-tag>
                     </div>
                   </template>

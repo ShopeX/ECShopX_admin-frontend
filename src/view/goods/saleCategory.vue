@@ -110,11 +110,7 @@
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          :label="$t('0e7dabe2.e8f9a1')"
-          width="120"
-          align="center"
-        >
+        <el-table-column :label="$t('0e7dabe2.e8f9a1')" width="120" align="center">
           <template slot-scope="scope">
             <el-switch
               :value="scope.row.is_show_front"
@@ -196,7 +192,9 @@ export default {
         {
           label: this.$t('0e7dabe2.e8f9a1'),
           key: 'is_show_front',
-          component: ({ key }, value) => <el-switch v-model={value[key]} active-value="1" inactive-value="0"/>,
+          component: ({ key }, value) => (
+            <el-switch v-model={value[key]} active-value='1' inactive-value='0' />
+          )
         },
         {
           label: this.$t('0e7dabe2.dc1eed'),

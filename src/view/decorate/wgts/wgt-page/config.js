@@ -153,9 +153,6 @@ const config = {
       component: function (h, { key }) {
         return <AttrFunctionArea v-model={this.value[key]} />
       },
-      isShow: function () {
-        return this.value.titleStyle != '0'
-      },
       value: {
         type: 'hotzone',
         hotzone: { imgUrl: '', data: [] }

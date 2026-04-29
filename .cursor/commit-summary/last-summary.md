@@ -1,7 +1,7 @@
-## 最近一次变更（2026-04-23）
+## 最近一次变更（2026-04-27）
 
-**一句话概括**: fix: 软文商品卡片 goodsCard 落库解析、样式转换与预览保存一致
+**一句话概括**: fix: 跑马灯默认文案改为 i18n 翻译值
 
-**要点**: `findWidgetForPersistedName` 统一按 `config.name` 找挂件；`goodsCard` 组件名与 transform 对齐；内层样式走 `getInnerStyle`；去掉「组件间距」开关与标题区 UI。
+**要点**: `wgt_marquees` 的 `dataText` 默认值由 key 字符串改为 `i18n.t('8fc92d38.cbc608')`，新建/初始化挂件时可直接显示多语言文案。
 
-详见: `.cursor/commit-summary/2026-04-23-goodsCard-decorate.md`
+详见: `.cursor/commit-summary/2026-04-27-marquees-default-i18n.md`

@@ -166,11 +166,7 @@ export default {
         EMAIL_SENDER: this.strField(d, 'EMAIL_SENDER'),
         EMAIL_USER: this.strField(d, 'EMAIL_USER'),
         EMAIL_PASSWORD: this.strField(d, 'EMAIL_PASSWORD'),
-        EMAIL_ACTIVATION_H5_DOMAIN: this.strField(
-          d,
-          'EMAIL_ACTIVATION_H5_DOMAIN',
-          'EMAIL_H5_ACTIVATE_DOMAIN'
-        ),
+        EMAIL_ACTIVATION_H5_DOMAIN: this.strField(d, 'EMAIL_ACTIVATION_H5_DOMAIN', 'EMAIL_H5_ACTIVATE_DOMAIN'),
         EMAIL_ACTIVATION_PC_DOMAIN: this.strField(d, 'EMAIL_ACTIVATION_PC_DOMAIN')
       }
     },

@@ -49,7 +49,7 @@
 <template>
   <div
     :class="{
-      'wgt-goods-card': true
+      'wgt-goods-card': true,
     }"
     :style="outerStyle"
   >

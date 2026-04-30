@@ -45,9 +45,7 @@
         {{ getLabelName() }}
       </div>
       <div v-if="needsOfficialRawId" style="margin-top: 8px">
-        <div style="font-size: 12px; color: #333; margin-bottom: 4px">
-          {{ i18n.t('cc5110aa.d10654') }}
-        </div>
+        <div style="font-size: 12px; color: #333; margin-bottom: 4px">{{ i18n.t('cc5110aa.d10654') }}</div>
         <el-input
           v-model="localValue.officialAccountRawId"
           size="small"
@@ -56,9 +54,7 @@
         />
       </div>
       <div v-if="needsOfficialArticleLink" style="margin-top: 8px">
-        <div style="font-size: 12px; color: #333; margin-bottom: 4px">
-          {{ i18n.t('cc5110aa.f30876') }}
-        </div>
+        <div style="font-size: 12px; color: #333; margin-bottom: 4px">{{ i18n.t('cc5110aa.f30876') }}</div>
         <el-input
           v-model="localValue.officialArticleLink"
           size="small"
@@ -116,7 +112,10 @@ export default {
     ...mapGetters(['lang']),
     needsOfficialRawId() {
       const { linkPage, id } = this.localValue
-      return linkPage === 'customer_service' && (id === 'officialProfile' || id === 'officialChat')
+      return (
+        linkPage === 'customer_service' &&
+        (id === 'officialProfile' || id === 'officialChat')
+      )
     },
     needsOfficialArticleLink() {
       const { linkPage, id } = this.localValue
@@ -174,7 +173,8 @@ export default {
       const needRaw =
         res?.linkPage === 'customer_service' &&
         (res?.id === 'officialProfile' || res?.id === 'officialChat')
-      const needArticle = res?.linkPage === 'customer_service' && res?.id === 'official'
+      const needArticle =
+        res?.linkPage === 'customer_service' && res?.id === 'official'
       if (needRaw) {
         next.officialAccountRawId = this.localValue.officialAccountRawId || ''
         next.officialArticleLink = ''

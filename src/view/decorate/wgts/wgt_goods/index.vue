@@ -110,7 +110,7 @@ export default {
         }
       }
 
-      const effectiveDataCount = this.value?.dataCount ?? 4
+      const effectiveDataCount = this.value?.dataCount  ?? 4
       let params = {
         data_type: dataType,
         data_value: this.value.data?.id || '',

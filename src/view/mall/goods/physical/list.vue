@@ -1154,7 +1154,7 @@ export default {
             render: (h, scope) => (
               <div>
                 <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
-                {scope.row.audit_status == 'rejected' && loginType == 'supplier' && (
+                {scope.row.audit_status == 'rejected' && IS_SUPPLIER() && (
                   <div class='physical-cell-reason'>
                     {this.$t('d41d8cd9.a36d88')}
                     {scope.row.audit_reason}
@@ -1913,7 +1913,7 @@ export default {
         this.$message.error(this.$t('dc9cefd6.ace302'))
         return
       }
-      await this.$confirm(this.$t('d41d8cd9.b2c3d4'), this.$t('d41d8cd9.298be1'), {
+      await this.$confirm(this.$t('d41d8cd9.b1a2c3'), this.$t('d41d8cd9.298be1'), {
         confirmButtonText: this.$t('d41d8cd9.aa7527'),
         cancelButtonText: this.$t('d41d8cd9.625fb2')
       })

@@ -106,12 +106,15 @@ export default {
     },
     afterSearch(response) {
       const { list } = response.data.data
-      const { data = [] } = this.value
-      const selectRow = list.filter((item) => data.includes(item.pages_template_id))
-      const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
-
+      const raw = this.value?.data
+      if (raw == null || raw === '') return
+      const selectedIds = Array.isArray(raw) ? raw : [raw]
+      const selectRow = list.filter((item) => selectedIds.map(String).includes(String(item.pages_template_id)))
+      if (!selectRow.length) return
+      const finderTable = this.$refs.finder?.$refs?.finderTable
+      if (!finderTable?.$refs?.finderTable) return
       setTimeout(() => {
-        finderTable.setSelection(selectRow)
+        finderTable.$refs.finderTable.setSelection(selectRow)
       })
     },
     onSearch() {

@@ -197,13 +197,16 @@ export default {
     },
     afterSearch(response) {
       const { list } = response.data.data
-      if (this.value.data) {
-        const selectRows = list.filter((item) => this.value?.data.includes(item.card_id))
-        const { finderTable } = this.$refs.finder.$refs
-        setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection(selectRows)
-        })
-      }
+      const raw = this.value?.data
+      if (raw == null || raw === '') return
+      const selectedIds = Array.isArray(raw) ? raw : [raw]
+      const selectRows = list.filter((item) => selectedIds.map(String).includes(String(item.card_id)))
+      if (!selectRows.length) return
+      const finderTable = this.$refs.finder?.$refs?.finderTable
+      if (!finderTable?.$refs?.finderTable) return
+      setTimeout(() => {
+        finderTable.$refs.finderTable.setSelection(selectRows)
+      })
     },
     onSearch() {
       this.$refs.finder.refresh()

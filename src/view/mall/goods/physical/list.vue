@@ -1794,9 +1794,9 @@ export default {
       if (this.selectionItems.length > 0) {
         await this.$confirm(
           `${status == 'stop' ? this.$t('d41d8cd9.965407') : this.$t('d41d8cd9.1cc97f')}${this.$t(
-            'd41d8cd9.p0q1r2'
+            'd41d8cd9.g8h9i0j1'
           )}`,
-          this.$t('d41d8cd9.s3t4u5')
+          this.$t('d41d8cd9.02d981')
         )
         const params = {
           goods_id: this.selectionItems.map((item) => item.goods_id),
@@ -1809,9 +1809,9 @@ export default {
       } else {
         await this.$confirm(
           `${status == 'stop' ? this.$t('d41d8cd9.965407') : this.$t('d41d8cd9.1cc97f')}${this.$t(
-            'd41d8cd9.v6w7x8'
+            'd41d8cd9.k2l3m4n5'
           )}`,
-          this.$t('d41d8cd9.s3t4u5')
+          this.$t('d41d8cd9.02d981')
         )
         const params = {
           is_market: status == 'stop' ? '0' : '1',

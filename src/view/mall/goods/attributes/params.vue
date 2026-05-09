@@ -79,7 +79,7 @@ const [ParamsForm, ParamsFormApi] = useForm({
       fieldName: 'is_show',
       label: i18n.t('07504bf6.91bb21'),
       component: 'radio',
-      value: true,
+      value: false,
       componentProps: {
         options: [
           { label: i18n.t('07504bf6.159985'), value: true },
@@ -172,7 +172,7 @@ export default {
         attribute_id: '',
         attribute_name: '',
         attribute_memo: '',
-        is_show: true,
+        is_show: false,
         attribute_values: []
       },
       searchParams: {
@@ -214,7 +214,7 @@ export default {
           ParamsFormApi.setFieldsValue({
             attribute_name: '',
             attribute_memo: '',
-            is_show: true,
+            is_show: false,
             attribute_values: []
           })
         }
@@ -226,7 +226,7 @@ export default {
         attribute_id: '',
         attribute_name: '',
         attribute_memo: '',
-        is_show: true,
+        is_show: false,
         attribute_values: []
       }
     },

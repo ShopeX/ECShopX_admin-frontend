@@ -11,26 +11,9 @@
   .sp-finder-hd {
     display: none;
   }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      .el-table__fixed-body-wrapper {
-        top: 38px !important;
-      }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
     }
   }
   .el-pagination {
@@ -48,13 +31,18 @@
     </SpFilterForm> -->
     <SpFinder
       ref="finder"
-      :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        'max-height': 460
+        'max-height': 460,
+        'header-cell-class-name': cellClass
       }"
       url="/article/management"
       :fixed-row-action="true"
-      :setting="articleSetting"
+      :setting="{
+        columns: [
+          { name: 'ID', key: 'article_id', width: 80 },
+          { name: $t('9bbe0bc6.7526a0'), key: 'title' }
+        ]
+      }"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -69,23 +57,13 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerPages',
+  name: 'PickerArticle',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
     title: '选择文章'
   },
   props: ['value'],
-  computed: {
-    articleSetting() {
-      return {
-        columns: [
-          { name: 'ID', key: 'article_id', width: 80 },
-          { name: this.$t('9bbe0bc6.7526a0'), key: 'title' }
-        ]
-      }
-    }
-  },
   data() {
     return {
       formData: {
@@ -110,13 +88,16 @@ export default {
     },
     afterSearch(response) {
       const { list } = response.data.data
-      if (this.value.data) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.article_id))
-        const { finderTable } = this.$refs.finder.$refs
-        setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection(selectRows)
-        })
-      }
+      const raw = this.value?.data
+      if (raw == null || raw === '') return
+      const selectedIds = Array.isArray(raw) ? raw : [raw]
+      const selectRows = list.filter((item) => selectedIds.map(String).includes(String(item.article_id)))
+      if (!selectRows.length) return
+      const finderTable = this.$refs.finder?.$refs?.finderTable
+      if (!finderTable?.$refs?.finderTable) return
+      setTimeout(() => {
+        finderTable.$refs.finderTable.setSelection(selectRows)
+      })
     },
     onSearch() {
       this.$refs.finder.refresh(true)

@@ -21,20 +21,30 @@
           :key="item.alias_name"
           class="main-menu-item py-2 mx-1 my-1 flex flex-col items-center cursor-pointer"
           :class="{ 'main-menu-item--active': activeMainMenu === item.alias_name }"
-          @click="handleMainMenuClick(item)"
         >
-          <!-- {{ computedMenuIcon(item) }} -->
-          <SpIcon
-            class="menu-icon"
-            :name="computedMenuIcon(item)"
-            :size="18"
-            :fill="activeMainMenu === item.alias_name ? computedPrimaryColor : '#333'"
-          />
-          <span
-            class="text-sm mt-1 text-center"
-            :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
-            >{{ menuDisplayName(item) }}</span
+          <router-link
+            :to="getMainMenuPath(item)"
+            custom
+            v-slot="{ href }"
           >
+            <a
+              :href="href"
+              class="main-menu-item__link flex flex-col items-center no-underline text-inherit w-full"
+              @click="onMainMenuLinkClick($event, item)"
+            >
+              <SpIcon
+                class="menu-icon"
+                :name="computedMenuIcon(item)"
+                :size="18"
+                :fill="activeMainMenu === item.alias_name ? computedPrimaryColor : '#333'"
+              />
+              <span
+                class="text-sm mt-1 text-center"
+                :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
+                >{{ menuDisplayName(item) }}</span
+              >
+            </a>
+          </router-link>
         </li>
         <!-- <li @click="handleMainMenuClick({ alias_name: 'license' })" class="text-center text-gray-500 text-sm mt-2 mb-2 cursor-pointer">License</li> -->
       </ul>
@@ -76,9 +86,10 @@
                   v-if="child.is_menu"
                   :key="child.alias_name"
                   :index="child.alias_name"
-                  @click="handleSubMenuClick(child)"
                 >
-                  <span>{{ menuDisplayName(child) }}</span>
+                  <router-link class="sub-menu-link" :to="getSubMenuPath(child)">
+                    {{ menuDisplayName(child) }}
+                  </router-link>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -89,9 +100,10 @@
               v-if="item.is_menu"
               :key="item.alias_name"
               :index="item.alias_name"
-              @click="handleSubMenuClick(item)"
             >
-              <span>{{ menuDisplayName(item) }}</span>
+              <router-link class="sub-menu-link" :to="getSubMenuPath(item)">
+                {{ menuDisplayName(item) }}
+              </router-link>
             </el-menu-item>
           </template>
         </template>
@@ -220,44 +232,55 @@ export default {
     resolveChildren(children) {
       return children && children.length > 0 && children.some((child) => child.is_menu)
     },
+    /** 一级菜单下第一个可展示子菜单的 permission（与跳转逻辑一致，供 href 使用） */
+    resolveMainMenuFirstPermission(item) {
+      const subMenus = item?.children || []
+      const firstChild = (_submenu) => {
+        for (const it of _submenu) {
+          if (it.children) {
+            const result = firstChild(it.children)
+            if (result) return result
+          } else if (it.is_menu) {
+            return it?.permission
+          }
+        }
+        return null
+      }
+      if (subMenus.length === 0) {
+        return item.permission
+      }
+      return firstChild(subMenus)
+    },
+    getNotFoundPath() {
+      const basePath = getBasePath()
+      return basePath ? `/${basePath}/not-found` : '/not-found'
+    },
+    /** 主导航在新标签页打开时的目标路径 */
+    getMainMenuPath(item) {
+      const permission = this.resolveMainMenuFirstPermission(item)
+      const route = permission ? this.findRouteByPermission(permission) : null
+      return route?.path || this.getNotFoundPath()
+    },
+    /** 侧栏子菜单在新标签页打开时的目标路径（与旧 layout.vue 中 router-link 行为一致） */
+    getSubMenuPath(menuItem) {
+      const route = this.findRouteByPermission(menuItem.permission)
+      return route?.path || this.getNotFoundPath()
+    },
+    onMainMenuLinkClick(e, item) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+        return
+      }
+      e.preventDefault()
+      this.handleMainMenuClick(item)
+    },
     handleMainMenuClick(item) {
       if (item.alias_name == this.$route.matched?.[0]?.meta?.aliasName) {
         return
       }
       this.subMenus = item?.children || []
-      // 获取第一个子路由
-      const firstChild = (_submenu) => {
-        for (const item of _submenu) {
-          if (item.children) {
-            const result = firstChild(item.children)
-            if (result) return result
-          } else if (item.is_menu) {
-            return item?.permission
-          }
-        }
-        return null
-      }
-      // 如果只有一级菜单，就直接那当前一级菜单的权限
-      let permission = ''
-      if (this.subMenus.length === 0) {
-        permission = item.permission
-      } else {
-        permission = firstChild(this.subMenus)
-      }
-
-      const route = this.findRouteByPermission(permission)
+      const permission = this.resolveMainMenuFirstPermission(item)
+      const route = permission ? this.findRouteByPermission(permission) : null
       if (route) {
-        this.$router.push({ path: route.path })
-      } else {
-        this.toNotFound()
-      }
-    },
-    handleSubMenuClick(item) {
-      const route = this.findRouteByPermission(item.permission)
-      if (route) {
-        if (this.$route.path === route.path) {
-          return
-        }
         this.$router.push({ path: route.path })
       } else {
         this.toNotFound()
@@ -518,6 +541,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.main-menu-item__link {
+  outline: none;
+}
+
+:deep(.el-menu-item .sub-menu-link) {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
 .main-menu-list {
   .main-menu-item {
     &:hover {

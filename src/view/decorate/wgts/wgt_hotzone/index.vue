@@ -36,17 +36,11 @@
 </style>
 <template>
   <div class="wgt-hotzone" :style="outerStyle">
-    <div
-      class="wgt-hotzone-bd"
-      :class="{ 'wgt-hotzone-bd-vertical': value.animation === 'vertical' }"
-    >
-      <el-image
-        :src="value.data.imgUrl"
-        :style="{
-          height: value.animation === 'vertical' ? value.imgHeight + 'px' : 'auto',
-          display: 'block'
-        }"
-      >
+    <div class="wgt-hotzone-bd" :class="{ 'wgt-hotzone-bd-vertical': value.animation === 'vertical' }">
+      <el-image :src="value.data.imgUrl" :style="{
+        height: value.animation === 'vertical' ? value.imgHeight + 'px' : 'auto',
+        display: 'block'
+      }">
         <div slot="error" class="wgt-hotzone-error">
           <img :src="dImage" width="100%" height="100%" style="object-fit: cover" />
         </div>
@@ -81,7 +75,7 @@ export default {
       return getOuterStyle(this.value)
     }
   },
-  created() {},
+  created() { },
   methods: {}
 }
 </script>

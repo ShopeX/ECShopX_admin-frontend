@@ -16,7 +16,7 @@ const config = {
         { name: i18n.t('7a0ee76a.4f9974'), label: 'vertical' }
       ],
       tips: i18n.t('7a0ee76a.cc9f07'),
-      value: 'horizontal'
+      value: 'vertical'
     },
     {
       group: i18n.t('7a0ee76a.eeb8e8'),

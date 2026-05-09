@@ -89,7 +89,8 @@ export default {
       const t = this.$t.bind(this)
       return [
         { id: 'groups_list', title: t('9ef219f6.f38e72') },
-        { id: 'coupon_list', title: t('9ef219f6.2f3635') }
+        { id: 'coupon_list', title: t('223cc8af.2f3635') },
+        { id: 'my_coupon', title: t('223cc8af.a8f3e2') }
       ]
     },
     marketingSetting() {

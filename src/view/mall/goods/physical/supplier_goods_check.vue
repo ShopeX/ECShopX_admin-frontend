@@ -339,10 +339,15 @@
           </el-table>
         </SpDrawer>
 
-        <el-dialog :title="$t('d41d8cd9.s6t7u8')" :visible.sync="dialogVisibleExamine" width="30%">
+        <el-dialog
+          :title="$t('d41d8cd9.s6t7u8')"
+          :visible.sync="dialogVisibleExamine"
+          width="30%"
+          @closed="resetExamineForm"
+        >
           <el-form ref="form" :model="examineForm" label-width="80px">
             <el-form-item :label="$t('d41d8cd9.v9w0x1')">
-              <el-radio-group v-model="examineForm.audit_status">
+              <el-radio-group v-model="examineForm.audit_status" @change="onExamineAuditStatusChange">
                 <el-radio label="approved"> {{ $t('d41d8cd9.y2z3a4') }} </el-radio>
                 <el-radio label="rejected"> {{ $t('d41d8cd9.b5c6d7') }} </el-radio>
               </el-radio-group>
@@ -1090,6 +1095,17 @@ export default {
         this.$message.error(this.$t('58789194.ace302'))
       }
     },
+    resetExamineForm() {
+      this.examineForm = {
+        audit_status: 'approved',
+        audit_reason: ''
+      }
+    },
+    onExamineAuditStatusChange(val) {
+      if (val === 'approved') {
+        this.examineForm.audit_reason = ''
+      }
+    },
     // 批量审批
     Examine() {
       if (this.selectionItems.length === 0) {
@@ -1097,13 +1113,17 @@ export default {
         return false
       }
 
+      this.resetExamineForm()
       this.dialogVisibleExamine = true
     },
     // 审核确定
     onSubmitExamine() {
-      this.examineForm.item_ids = this.selectionItems.map((item) => item.item_id).join(',')
+      const payload = {
+        ...this.examineForm,
+        item_ids: this.selectionItems.map((item) => item.item_id).join(',')
+      }
       this.examineLoading = true
-      batchReviewItems(this.examineForm)
+      batchReviewItems(payload)
         .then((res) => {
           this.$message.success(this.$t('58789194.3b1083'))
           this.dialogVisibleExamine = false

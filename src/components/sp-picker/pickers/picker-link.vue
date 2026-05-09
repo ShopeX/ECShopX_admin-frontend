@@ -72,7 +72,7 @@ import { i18n } from '@/i18n'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerPages',
+  name: 'PickerLink',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
@@ -96,6 +96,7 @@ export default {
         { id: 'registActivity', title: this.$t('223cc8af.7fb92b') },
         { id: 'group', title: this.$t('223cc8af.75a1d2') },
         { id: 'coupon_list', title: this.$t('223cc8af.2f3635') },
+        { id: 'my_coupon', title: this.$t('223cc8af.a8f3e2') },
         { id: 'my_collect', title: this.$t('223cc8af.975ff6') },
         { id: 'address', title: this.$t('223cc8af.bca1ea') },
         { id: 'groups_list', title: this.$t('223cc8af.f38e72') },
@@ -128,18 +129,22 @@ export default {
     if (this.value.guide == 'share_page') {
       this.list = [
         { id: 'coupon_list', title: this.$t('223cc8af.9c356b') },
+        { id: 'my_coupon', title: this.$t('223cc8af.a8f3e2') },
         { id: 'page_index', title: this.$t('223cc8af.db1c89') },
         { id: 'category', title: this.$t('223cc8af.d0771a') },
         { id: 'hottopic', title: this.$t('223cc8af.26b2d6') }
       ]
     }
-    if (this.value.data) {
-      const selectRows = this.list.filter((item) => this.value.data.includes(item.id))
-      const { finderTable } = this.$refs.finder.$refs
-      setTimeout(() => {
-        finderTable.$refs.finderTable.setSelection(selectRows)
-      })
-    }
+    const raw = this.value?.data
+    if (raw == null || raw === '') return
+    const selectedIds = Array.isArray(raw) ? raw : [raw]
+    const selectRows = this.list.filter((item) => selectedIds.map(String).includes(String(item.id)))
+    if (!selectRows.length) return
+    const finderTable = this.$refs.finder?.$refs?.finderTable
+    if (!finderTable?.$refs?.finderTable) return
+    setTimeout(() => {
+      finderTable.$refs.finderTable.setSelection(selectRows)
+    })
   },
   methods: {
     onSearch() {

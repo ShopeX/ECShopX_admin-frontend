@@ -254,7 +254,8 @@ export default {
     }
   },
   created() {
-    this.localSelection = this.value.data || []
+    const raw = this.value?.data
+    this.localSelection = raw == null || raw === '' ? [] : Array.isArray(raw) ? raw : [raw]
     this.$options.config.title = this.$t('a7e61545.43d1e2')
   },
   mounted() {

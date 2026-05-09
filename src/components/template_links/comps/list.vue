@@ -333,7 +333,7 @@ export default {
         case 'link':
           let list = [
             {
-              title: '会员开通',
+              title: this.$t('223cc8af.f035ca'),
               id: 'vipgrades'
             },
             // {
@@ -341,7 +341,7 @@ export default {
             //   id: 'pointitems'
             // },
             {
-              title: '社区团长申请',
+              title: this.$t('223cc8af.38d966'),
               id: 'applyChief'
             }
           ]
@@ -358,12 +358,16 @@ export default {
         case 'marketing':
           this.list = [
             {
-              title: '限时团购',
+              title: this.$t('223cc8af.f38e72'),
               id: 'groups_list'
             },
             {
-              title: '优惠券',
+              title: this.$t('223cc8af.2f3635'),
               id: 'coupon_list'
+            },
+            {
+              title: this.$t('223cc8af.a8f3e2'),
+              id: 'my_coupon'
             }
           ]
           this.total = 1

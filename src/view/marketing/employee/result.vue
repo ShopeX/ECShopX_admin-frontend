@@ -33,7 +33,13 @@ export default {
       this.$router.push({ path: resUrl })
     },
     goActivityList() {
-      this.$router.go(-1)
+      const listPath = this.$route.path.split('/result/')[0]
+      this.$router.replace({
+        path: listPath,
+        query: {
+          refresh: '1'
+        }
+      })
     }
   }
 }

@@ -182,6 +182,7 @@ export default {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
                 this.companyForm.is_employee_check_enabled =
                   this.companyForm.is_employee_check_enabled == 'true'
+                this.normalizeCompanyFormAuthType()
                 this.isShowFooter = true
                 this.addDialog = true
               }
@@ -200,6 +201,7 @@ export default {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
                 this.companyForm.is_employee_check_enabled =
                   this.companyForm.is_employee_check_enabled == 'true'
+                this.normalizeCompanyFormAuthType()
                 this.isShowFooter = false
                 this.addDialog = true
               }
@@ -223,28 +225,28 @@ export default {
               }
             }
           },
-          {
-            name: () => t('63ede0f6.22b03c'),
-            key: 'modify',
-            type: 'button',
-            buttonType: 'text',
-            // visible: (row) => {
-            //   return row.auth_type == 'qr_code'
-            // },
-            action: {
-              handler: async ([row]) => {
-                const { base64Image } = await this.$api.member.getEnterpriseQrcode({
-                  enterprise_id: row.id
-                })
-                this.qrcodeUrl = base64Image
-                this.qrcodeName = row.name
-                if (row.qr_code_bg_image) {
-                  this.qrCodeBgImage = row.qr_code_bg_image
-                }
-                this.qrDialog = true
-              }
-            }
-          },
+          // {
+          //   name: () => t('63ede0f6.22b03c'),
+          //   key: 'modify',
+          //   type: 'button',
+          //   buttonType: 'text',
+          //   // visible: (row) => {
+          //   //   return row.auth_type == 'qr_code'
+          //   // },
+          //   action: {
+          //     handler: async ([row]) => {
+          //       const { base64Image } = await this.$api.member.getEnterpriseQrcode({
+          //         enterprise_id: row.id
+          //       })
+          //       this.qrcodeUrl = base64Image
+          //       this.qrcodeName = row.name
+          //       if (row.qr_code_bg_image) {
+          //         this.qrCodeBgImage = row.qr_code_bg_image
+          //       }
+          //       this.qrDialog = true
+          //     }
+          //   }
+          // },
           {
             name: () => t('63ede0f6.a6b8e9'),
             key: 'modify',
@@ -317,6 +319,9 @@ export default {
             name: t('63ede0f6.78cbe8'),
             key: 'auth_type',
             formatter: (value, { auth_type }, col) => {
+              if (auth_type === 'qr_code') {
+                return t('63ede0f6.22b03c')
+              }
               const authType = self.validateTypeList.find((item) => item.value == auth_type)
               return authType ? authType.name : ''
             }
@@ -403,8 +408,7 @@ export default {
           options: [
             { label: 'mobile', name: t('63ede0f6.8098e2') },
             { label: 'account', name: t('63ede0f6.7035c6') },
-            { label: 'email', name: t('63ede0f6.3bc5e6') },
-            { label: 'qr_code', name: t('63ede0f6.22b03c') }
+            { label: 'email', name: t('63ede0f6.3bc5e6') }
           ],
           validator: (rule, value, callback) => {
             if (value) {
@@ -492,7 +496,7 @@ export default {
         email: '63ede0f6.3bc5e6',
         qr_code: '63ede0f6.22b03c'
       }
-      return VALIDATE_TYPES.map((item) => ({
+      return VALIDATE_TYPES.filter((item) => item.value !== 'qr_code').map((item) => ({
         ...item,
         name: this.$t(keys[item.value] || '63ede0f6.a8b0c2')
       }))
@@ -500,6 +504,12 @@ export default {
   },
   created() {},
   methods: {
+    /** 登录方式已下线二维码：编辑历史数据时改为可选类型，避免单选无选中项 */
+    normalizeCompanyFormAuthType() {
+      if (this.companyForm.auth_type === 'qr_code') {
+        this.companyForm.auth_type = 'mobile'
+      }
+    },
     // 下载二维码
     handleDownload() {
       console.log('this.qrCodeBgImage', this.qrCodeBgImage)

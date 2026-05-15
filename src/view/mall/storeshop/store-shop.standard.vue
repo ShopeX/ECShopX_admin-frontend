@@ -217,7 +217,7 @@ export default {
                 clearable: true,
                 size: 'small',
                 placeholder: this.$t('8c556aa3.708c9d'),
-                queryParams: { is_valid: true }
+                queryParams: { is_valid: true, show_distributor_self: 1 }
               },
               ref: (vm) => {
                 if (vm) {
@@ -566,7 +566,8 @@ export default {
         const { list, total_count } = await this.$api.marketing.getDistributorList({
           page: 1,
           pageSize: 10,
-          is_valid: true
+          is_valid: true,
+          show_distributor_self: 1
         })
         if (list.length > 0) {
           const { distributor_id, name } = list[0]

@@ -32,6 +32,7 @@ const LANGUAGES = {
     locale: 'zh-CN',
     label: '简体中文',
     htmlLang: 'zh-CN',
+    countryCode: 'zh-CN',
     dir: 'ltr',
     messages: zhCN
   },
@@ -39,6 +40,7 @@ const LANGUAGES = {
     locale: 'en',
     label: 'English',
     htmlLang: 'en',
+    countryCode: 'en-CN',
     dir: 'ltr',
     messages: en
   },
@@ -46,6 +48,7 @@ const LANGUAGES = {
     locale: 'ar',
     label: 'العربية',
     htmlLang: 'ar-SA',
+    countryCode: 'ar-SA',
     dir: 'rtl',
     messages: ar
   }
@@ -97,6 +100,15 @@ export function changeLang(storeLang) {
   const config = LANGUAGES[storeLang] || LANGUAGES[DEFAULT_LANG]
   i18n.locale = config.locale
   setDocumentLang(storeLang)
+}
+
+/**
+ * 获取当前语言对应的 countryCode（用于后端 API country_code 参数）
+ */
+export function getCurrentCountryCode() {
+  const langKey = getStoredLang()
+  const cfg = LANGUAGES[langKey] || LANGUAGES[DEFAULT_LANG]
+  return cfg.countryCode
 }
 
 export { i18n, getStoredLang, LANGUAGES }

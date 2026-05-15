@@ -17,6 +17,7 @@
               multiple: true
             }"
             :columns="8"
+            :enable-source-tab="false"
           />
         </el-tab-pane>
 

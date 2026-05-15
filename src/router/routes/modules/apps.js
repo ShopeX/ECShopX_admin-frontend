@@ -218,6 +218,17 @@ const routes = [
           }
         ]
       },
+      {
+        name: 'enterprisePurchaseStoreHome',
+        path: 'enterprise-purchase/store-home',
+        meta: {
+          aliasName: 'enterprise-purchase-store-home',
+          icon: 'pay-circle',
+          title: '9d1e03c7.e8a401',
+          permissions: ['applications.ec.enterprise-purchase-store-home']
+        },
+        component: () => import('@/view/marketing/employee/storeHomePage')
+      },
 
       {
         name: 'guideAssistantWeChatSettings',

@@ -357,6 +357,16 @@
             />
           </template>
         </el-table-column> -->
+        <el-table-column width="120" :label="$t('b2fe051e.2e433b')">
+          <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_platform_store_buy"
+              active-color="#13ce66"
+              inactive-color="#cccccc"
+              @change="switchChange(scope.$index, scope.row)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column width="100" :label="$t('b2fe051e.0e903e')">
           <template slot-scope="scope">
             {{ scope.row.is_self_delivery ? $t('b2fe051e.0a60ac') : $t('b2fe051e.c9744f') }}
@@ -1367,6 +1377,7 @@ export default {
         is_ziti: row.is_ziti,
         is_delivery: row.is_delivery,
         is_open_salesman: row.is_open_salesman,
+        is_platform_store_buy: row.is_platform_store_buy,
         open_divided: row.open_divided
       }
       saveDistributor(params).then((response) => {

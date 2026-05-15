@@ -29,25 +29,38 @@ export function isInSalesCenter() {
   }
 }
 
+/** 与导出列表页路由一致，供 export_open / export_open_blank 共用 */
+export function getExportListPathWithTab(tab) {
+  const q = encodeURIComponent(tab || '')
+  const login_type = store.getters.login_type
+  if (login_type == 'distributor') {
+    return `/shopadmin/setting/export/list?tab=${q}`
+  }
+  if (login_type == 'merchant') {
+    return `/merchant/setting/baseexport?tab=${q}`
+  }
+  if (login_type == 'supplier') {
+    return `/supplier/setting/export/list?tab=${q}`
+  }
+  return `/data/report/export-record?tab=${q}`
+}
+
 export function export_open(tab) {
   setTimeout(() => {
-    const login_type = store.getters.login_type
-    let url = ''
-    if (login_type == 'distributor') {
-      url = `/shopadmin/setting/export/list?tab=${tab}`
-    } else if (login_type == 'merchant') {
-      url = `/merchant/setting/baseexport?tab=${tab}`
-    } else if (login_type == 'supplier') {
-      url = `/supplier/setting/export/list?tab=${tab}`
-    } else {
-      url = `/data/report/export-record?tab=${tab}`
-    }
-
+    const url = getExportListPathWithTab(tab)
     if (isInSalesCenter()) {
       this.$router.push(url)
     } else {
-      window.open(url)
+      window.open(url, '_blank')
     }
+  }, 1000)
+}
+
+/** 始终在浏览器新标签页打开导出列表（不替换当前页），用于异步导出成功后的引导 */
+export function export_open_blank(tab) {
+  setTimeout(() => {
+    const url = getExportListPathWithTab(tab)
+    window.open(url, '_blank')
   }, 1000)
 }
 

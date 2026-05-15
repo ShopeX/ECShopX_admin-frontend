@@ -688,13 +688,15 @@ export default {
             name: this.$t('d41d8cd9.c2d3e4'),
             key: 'item_id',
             align: 'right',
-            headerAlign: 'center'
+            headerAlign: 'center',
+            width: 120
           },
           {
             name: this.$t('d41d8cd9.f5g6h7'),
             key: 'main_item_id',
             align: 'right',
-            headerAlign: 'center'
+            headerAlign: 'center',
+            width: 120
           },
           {
             name: this.$t('d41d8cd9.i8j9k0'),
@@ -746,29 +748,29 @@ export default {
             }
           },
           { name: this.$t('d41d8cd9.0888fc'), key: 'item_bn' },
-          { name: this.$t('d41d8cd9.55c61d'), key: 'supplier_name' },
-          {
-            name: this.$t('d41d8cd9.g4h5i6'),
-            key: 'tagList',
-            render: (h, scope) => (
-              <div style='white-space: normal;'>
-                {scope.row.tagList.map((item) => (
-                  <span
-                    style={{
-                      color: item.font_color,
-                      'background-color': item.tag_color,
-                      'font-size': '12px',
-                      padding: '2px 5px',
-                      'border-radius': '2px',
-                      margin: '0 8px 8px 0'
-                    }}
-                  >
-                    {item.tag_name}
-                  </span>
-                ))}
-              </div>
-            )
-          },
+          { name: this.$t('d41d8cd9.55c61d'), key: 'supplier_name', width: 120 },
+          // {
+          //   name: this.$t('d41d8cd9.g4h5i6'),
+          //   key: 'tagList',
+          //   render: (h, scope) => (
+          //     <div style='white-space: normal;'>
+          //       {scope.row.tagList.map((item) => (
+          //         <span
+          //           style={{
+          //             color: item.font_color,
+          //             'background-color': item.tag_color,
+          //             'font-size': '12px',
+          //             padding: '2px 5px',
+          //             'border-radius': '2px',
+          //             margin: '0 8px 8px 0'
+          //           }}
+          //         >
+          //           {item.tag_name}
+          //         </span>
+          //       ))}
+          //     </div>
+          //   )
+          // },
           // {
           //   name: '商品税率',
           //   key: 'tax_rate',

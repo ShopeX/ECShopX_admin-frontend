@@ -139,9 +139,8 @@
                 {{ scope.row.order_id }}
                 <el-tooltip effect="dark" :content="$t('931fca81.79d3ab')" placement="top-start">
                   <i
-                    v-clipboard:copy="scope.row.order_id"
-                    v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
+                    @click.stop="copyRowText(scope.row.order_id)"
                   />
                 </el-tooltip>
               </div>
@@ -193,13 +192,12 @@
                   placement="top-start"
                 >
                   <i
-                    v-clipboard:copy="scope.row.mobile"
-                    v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
+                    @click.stop="copyRowText(scope.row.mobile)"
                   />
                 </el-tooltip>
               </template>
-              <template v-else slot-scope="scope">
+              <template v-else>
                 <span>{{ scope.row.mobile }}</span>
                 <el-tooltip
                   v-if="datapass_block == 0"
@@ -208,9 +206,8 @@
                   placement="top-start"
                 >
                   <i
-                    v-clipboard:copy="scope.row.mobile"
-                    v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
+                    @click.stop="copyRowText(scope.row.mobile)"
                   />
                 </el-tooltip>
               </template>
@@ -796,6 +793,44 @@ export default {
     })
   },
   methods: {
+    copyRowText(text) {
+      const str = text == null ? '' : String(text)
+      if (!str) {
+        return
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(str)
+          .then(() => {
+            this.onCopySuccess()
+          })
+          .catch(() => {
+            this.fallbackCopyRowText(str)
+          })
+      } else {
+        this.fallbackCopyRowText(str)
+      }
+    },
+    fallbackCopyRowText(str) {
+      const textArea = document.createElement('textarea')
+      textArea.value = str
+      textArea.style.top = '0'
+      textArea.style.left = '0'
+      textArea.style.position = 'fixed'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      try {
+        if (document.execCommand('copy')) {
+          this.onCopySuccess()
+        } else {
+          this.$message.error(this.$t('4d1aec94.5154ae'))
+        }
+      } catch (e) {
+        this.$message.error(this.$t('4d1aec94.5154ae'))
+      }
+      document.body.removeChild(textArea)
+    },
     getJstErpSetting() {
       this.$api.third.getJstErpSetting().then((res) => {
         this.jstErpSetting = res
@@ -1004,7 +1039,9 @@ export default {
           return this.$message.warning(this.$t('931fca81.72b354'))
         }
 
-        this.$refs['deliverGoodsDialogRef'].resetForm()
+        // SpDialog 关闭时不渲染 SpForm，此处 resetForm 在弹窗未打开时无效，需显式清空并待挂载后再 reset
+        this.deliverGoodsForm.delivery_corp = ''
+        this.deliverGoodsForm.delivery_code = ''
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.items = items.map((item) => {
           return {
@@ -1019,10 +1056,14 @@ export default {
           this.deliverGoodsFormList[0].disabled = true
           this.deliverGoodsFormList[1].options[4].isShow = true
         } else {
+          this.deliverGoodsForm.delivery_type = 'batch'
           this.deliverGoodsFormList[0].disabled = false
           this.deliverGoodsFormList[1].options[4].isShow = false
         }
         this.deliverGoodsDialog = true
+        this.$nextTick(() => {
+          this.$refs['deliverGoodsDialogRef'] && this.$refs['deliverGoodsDialogRef'].resetForm()
+        })
       } else if (key == 'writeOff') {
         this.$refs['writeOffDialogRef'].resetForm()
         this.writeOffForm.order_id = order_id

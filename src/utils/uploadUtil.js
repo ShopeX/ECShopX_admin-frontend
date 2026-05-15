@@ -161,18 +161,29 @@ class UploadUtil {
       // 生成文件名~
       // const fileName = this.setFileName()
       const res = await this.client.upload(file, data.key).catch((e) => console.error(e))
-      if (res.data || res.key) {
+
+      let out
+      if (res && (res.data || res.key)) {
         if (res.data && res.data.data) {
-          return {
-            key: res.data.data.image_url
-          }
+          out = { key: res.data.data.image_url }
+        } else {
+          out = res
         }
-        return res
       } else {
-        return {
-          key: `${data.dir}`
-        }
+        out = { key: `${data.dir}` }
       }
+
+      // 附带桶域名 + 完整 URL，方便上层不依赖 saveImage(POST /espier/image) 注册即可拿到可访问地址
+      // 不同 driver 字段名不一致（Qiniu/Local: domain+key；OSS: host+dir；Cos: domain+key），统一兜底
+      const finalKey = out.key || data.key || data.dir || ''
+      const domainCandidate = data.domain || data.host || ''
+      const domain = domainCandidate
+        ? String(domainCandidate).replace(/\/+$/, '')
+        : ''
+      const url = /^https?:\/\//i.test(finalKey)
+        ? finalKey
+        : (domain ? `${domain}/${String(finalKey).replace(/^\/+/, '')}` : finalKey)
+      return { ...out, key: finalKey, url, domain }
     } catch (e) {
       throw new Error(e)
     }

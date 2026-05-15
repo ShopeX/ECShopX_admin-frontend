@@ -21,6 +21,9 @@
             {{ $t('02f4f6e5.41c5ec') }}<strong>{{ $t('02f4f6e5.d99268') }}</strong
             >{{ $t('02f4f6e5.40d0ad') }}
           </p>
+          <p>
+            {{ $t('02f4f6e5.a1b2c3') }}
+          </p>
         </div>
         <el-form ref="form" label-width="100px">
           <div class="action-container">

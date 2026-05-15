@@ -276,7 +276,7 @@
           <el-col
             v-for="(item, index) in payList"
             v-if="item.is_show"
-            :key="`item__${index}`"
+            :key="`pay-grid__${index}`"
             class="card-panel-item"
             :span="6"
           >
@@ -284,6 +284,23 @@
             <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
           </el-col>
         </el-row>
+        <div class="pay-voucher-full-row">
+          <el-row class="card-panel pay-voucher-full-row__row">
+            <el-col :span="24" class="card-panel-item pay-voucher-full-row__inner">
+              <span class="card-panel__label">{{ $t('3cdfcea1.80930a') }}</span>
+              <span class="card-panel__value pay-voucher-full-row__value">
+                <el-image
+                  v-if="getFiledValue('pos_payment_voucher_url')"
+                  :src="getFiledValue('pos_payment_voucher_url')"
+                  class="img-item pay-voucher-thumb"
+                  fit="cover"
+                  :preview-src-list="[getFiledValue('pos_payment_voucher_url')]"
+                />
+                <span v-else>-</span>
+              </span>
+            </el-col>
+          </el-row>
+        </div>
       </el-card>
 
       <el-card v-if="!VERSION_IN_PURCHASE()" class="el-card--normal">
@@ -1251,7 +1268,8 @@ export default {
     handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
-        if (this.isBindOMS && this.IS_ADMIN()) {
+        // 已对接 OMS 时仅供应商端可发货，其余端不可操作
+        if (this.isBindOMS && !IS_SUPPLIER()) {
           return this.$message.warning(this.$t('3cdfcea1.72b354'))
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()
@@ -1314,6 +1332,35 @@ export default {
   width: 150px;
   height: 150px;
   margin: 0 20px 20px 0;
+}
+.pay-voucher-thumb {
+  width: 100px;
+  height: 100px;
+}
+.pay-voucher-full-row {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  clear: both;
+}
+.pay-voucher-full-row__row {
+  width: 100%;
+}
+.pay-voucher-full-row__inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.pay-voucher-full-row__value {
+  display: inline-flex;
+  align-items: center;
+}
+.pay-voucher-full-row__value ::v-deep .el-image {
+  display: inline-block;
+  vertical-align: middle;
+}
+.pay-voucher-full-row__value .img-item.pay-voucher-thumb {
+  margin: 0 0 0 8px;
 }
 .ml-16 {
   margin-left: 16px;

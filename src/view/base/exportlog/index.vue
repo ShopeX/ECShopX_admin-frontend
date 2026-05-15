@@ -5,143 +5,29 @@
 
 <template>
   <SpPage class="sp-export-log-page">
-    <div class="content-bottom-padded">
+    <div class="content-bottom-padded export-log-alert-wrap">
       <el-alert type="info" :title="$t('cb7af8ae.d42828')" show-icon>
         <div>{{ $t('cb7af8ae.7de565') }}</div>
       </el-alert>
     </div>
-    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <template v-if="$store.getters.login_type == 'dealer'">
+    <div ref="exportTieredNav" class="export-log-tiered-nav">
+      <el-tabs v-model="activeGroupName" class="group-tabs export-tier-1" @tab-click="handleGroupClick">
         <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.355262')"
-          name="adapay_tradedata"
+          v-for="group in exportGroups"
+          :key="group.name"
+          :label="group.label"
+          :name="group.name"
         />
-      </template>
-      <template v-else-if="$store.getters.login_type == 'merchant'">
-        <el-tab-pane :label="$t('cb7af8ae.c7af0d')" name="normal_master_order" />
-        <el-tab-pane :label="$t('cb7af8ae.97e27a')" name="normal_order" />
-        <el-tab-pane :label="$t('cb7af8ae.12f70e')" name="invoice" />
-        <el-tab-pane :label="$t('cb7af8ae.f12320')" name="aftersale_record_count" />
-        <el-tab-pane :label="$t('cb7af8ae.c67ce6')" name="tradedata" />
-        <el-tab-pane :label="$t('cb7af8ae.523cb3')" name="refund_record_count" />
-        <el-tab-pane :label="$t('cb7af8ae.d012d9')" name="goods_data" />
-        <el-tab-pane :label="$t('cb7af8ae.f83133')" name="items" />
-        <el-tab-pane :label="$t('cb7af8ae.9bb27d')" name="normal_items_tag" />
-        <el-tab-pane :label="$t('cb7af8ae.480b38')" name="itemcode" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" :label="$t('cb7af8ae.75a79c')" name="statements" />
-        <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.f7f2df')"
-          name="statement_details"
-        />
-        <el-tab-pane :label="$t('cb7af8ae.d8defc')" name="popularize" />
-        <el-tab-pane :label="$t('cb7af8ae.398e76')" name="popularizeStatic" />
-        <el-tab-pane :label="$t('cb7af8ae.41356e')" name="export_luckdraw_log" />
-        <el-tab-pane :label="$t('cb7af8ae.7d75ec')" name="popularizeOrder" />
-        <el-tab-pane :label="$t('cb7af8ae.03c9b1')" name="delivery_staffdata" />
-      </template>
-
-      <template v-else>
-        <el-tab-pane :label="$t('cb7af8ae.b8338a')" name="bspay_withdraw" />
-        <el-tab-pane :label="$t('cb7af8ae.e9cc0a')" name="member" />
-        <!-- <el-tab-pane
-          label="服务订单导出"
-          name="service_order"
-          v-if="!VERSION_IN_PURCHASE()"
-        /> -->
-        <el-tab-pane :label="$t('cb7af8ae.8045f7')" name="normal_master_order" />
-        <el-tab-pane :label="$t('cb7af8ae.b8ffd8')" name="normal_order" />
-        <el-tab-pane :label="$t('cb7af8ae.daa8e0')" name="normal_community_order" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" :label="$t('cb7af8ae.3c04c9')" name="invoice" />
-        <!-- <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE()"
-          label="药品需求单"
-          name="drug_order"
-        /> -->
-        <el-tab-pane :label="$t('cb7af8ae.d012d9')" name="goods_data" />
-        <el-tab-pane :label="$t('cb7af8ae.f83133')" name="items" />
-        <el-tab-pane :label="$t('cb7af8ae.e2ace4')" name="supplier_goods" />
-        <el-tab-pane :label="$t('cb7af8ae.41356e')" name="export_luckdraw_log" />
-        <!-- <el-tab-pane label="商品标签导出" name="normal_items_tag" /> -->
-        <el-tab-pane :label="$t('cb7af8ae.1be670')" name="member_point_logs" />
-        <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE()"
-          :label="$t('cb7af8ae.5f46b0')"
-          name="distributor_items"
-        />
-        <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE()"
-          :label="$t('cb7af8ae.42ff32')"
-          name="pointsmallitems"
-        />
-        <!-- <el-tab-pane
-          label="权益导出"
-          name="right"
-        /> -->
-        <!-- <el-tab-pane
-          label="权益核销记录导出"
-          name="right_consume"
-          v-if="!VERSION_IN_PURCHASE()"
-        /> -->
-        <el-tab-pane label="交易单导出" name="tradedata" />
-        <!-- <el-tab-pane
-          label="社区团购-积分提现记录导出"
-          name="community_withdraw"
-          v-if="!VERSION_IN_PURCHASE()"
-        /> -->
-        <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE()"
-          :label="$t('cb7af8ae.972304')"
-          name="selform_registration_record"
-        />
-        <el-tab-pane :label="$t('cb7af8ae.75bfab')" name="aftersale_record_count" />
-        <el-tab-pane :label="$t('cb7af8ae.ae300f')" name="refund_record_count" />
-        <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.3f1191')"
-          name="chinaums_division"
-        />
-        <!-- <el-tab-pane label="推广员业绩" name="popularize" />
-        <el-tab-pane label="业绩统计" name="popularizeStatic" />
-        <el-tab-pane label="业绩订单" name="popularizeOrder" /> -->
-        <!-- <el-tab-pane label="财务售后单导出" name="aftersale_financial" /> -->
-        <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.d5fc54')"
-          name="salesreport_financial"
-        />
-        <el-tab-pane :label="$t('cb7af8ae.c97d08')" name="hfpay_trade_record" />
-        <!-- <el-tab-pane
-          label="分账统计导出"
-          name="hfpay_order_record"
-        /> -->
-        <el-tab-pane :label="$t('cb7af8ae.b8338a')" name="hfpay_withdraw_record" />
-        <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.355262')"
-          name="adapay_tradedata"
-        />
-        <el-tab-pane :label="$t('cb7af8ae.480b38')" name="itemcode" />
-        <el-tab-pane v-if="!VERSION_SHUYUN()" :label="$t('cb7af8ae.75a79c')" name="statements" />
-        <el-tab-pane
-          v-if="!VERSION_SHUYUN()"
-          :label="$t('cb7af8ae.f7f2df')"
-          name="statement_details"
-        />
-        <el-tab-pane :label="$t('cb7af8ae.443bfc')" name="bspay_tradedata" />
-        <el-tab-pane :label="$t('cb7af8ae.03c9b1')" name="delivery_staffdata" />
-        <el-tab-pane v-if="IS_SUPPLIER()" :label="$t('cb7af8ae.c7af0d')" name="supplier_order" />
-        <el-tab-pane :label="$t('cb7af8ae.e222a6')" name="offline_payment" />
-        <el-tab-pane :label="$t('cb7af8ae.d04e78')" name="employee_purchase_employees" />
-        <el-tab-pane :label="$t('cb7af8ae.fa1b9f')" name="distributor_white_list" />
-      </template>
-
-      <el-tab-pane :label="$t('cb7af8ae.d8defc')" name="popularize" />
-      <el-tab-pane :label="$t('cb7af8ae.398e76')" name="popularizeStatic" />
-      <el-tab-pane :label="$t('cb7af8ae.7d75ec')" name="popularizeOrder" />
-
-      <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">
+      </el-tabs>
+      <div class="export-log-tier-1-caret" :style="tier1CaretStyle" aria-hidden="true" />
+      <el-tabs v-model="activeName" class="detail-tabs export-tier-2" @tab-click="handleClick">
+      <el-tab-pane
+        v-for="tab in currentExportTabs"
+        :key="tab.name"
+        :label="tab.label"
+        :name="tab.name"
+      />
+      <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 260">
         <el-table-column :label="$t('cb7af8ae.2b6bc0')">
           <template slot-scope="scope">
             <el-button type="text" @click.prevent="handleDown(scope.row)">
@@ -171,18 +57,19 @@
           @current-change="handleCurrentChange"
         />
       </div>
-    </el-tabs>
+      </el-tabs>
+    </div>
   </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
 import { ExportLogList, ExportLogFileDown } from '../../../api/trade'
 export default {
   props: ['getStatus'],
   data() {
     return {
       // activeName: this.$store.getters.login_type == 'dealer' ? 'adapay_tradedata' : 'member',
+      activeGroupName: '',
       activeName: '',
       create_time: '',
       exportLogLists: [],
@@ -194,39 +81,222 @@ export default {
         export_type: '',
         time_start_begin: '',
         time_start_end: ''
+      },
+      tier1CaretStyle: {
+        display: 'none'
       }
     }
   },
   mounted() {
     this.activeTabHandler()
+    window.addEventListener('resize', this.updateTier1CaretPosition)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.updateTier1CaretPosition)
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    exportGroups() {
+      const groups = []
+      const commonMarketingTabs = [
+        { label: this.$t('cb7af8ae.d8defc'), name: 'popularize' },
+        { label: this.$t('cb7af8ae.398e76'), name: 'popularizeStatic' },
+        { label: this.$t('cb7af8ae.7d75ec'), name: 'popularizeOrder' }
+      ]
+      if (this.$store.getters.login_type == 'dealer') {
+        const financeTabs = []
+        if (!this.VERSION_SHUYUN()) {
+          financeTabs.push({ label: this.$t('cb7af8ae.355262'), name: 'adapay_tradedata' })
+        }
+        groups.push(
+          { name: 'finance', label: '财务导出', tabs: financeTabs },
+          { name: 'marketing', label: '营销导出', tabs: commonMarketingTabs }
+        )
+      } else if (this.$store.getters.login_type == 'merchant') {
+        const orderTabs = [
+          { label: this.$t('cb7af8ae.c7af0d'), name: 'normal_master_order' },
+          { label: this.$t('cb7af8ae.97e27a'), name: 'normal_order' },
+          { label: this.$t('cb7af8ae.12f70e'), name: 'invoice' },
+          { label: this.$t('cb7af8ae.f12320'), name: 'aftersale_record_count' },
+          { label: this.$t('cb7af8ae.523cb3'), name: 'refund_record_count' }
+        ]
+        const goodsTabs = [
+          { label: this.$t('cb7af8ae.d012d9'), name: 'goods_data' },
+          { label: this.$t('cb7af8ae.f83133'), name: 'items' },
+          { label: this.$t('cb7af8ae.9bb27d'), name: 'normal_items_tag' },
+          { label: this.$t('cb7af8ae.480b38'), name: 'itemcode' }
+        ]
+        const financeTabs = [{ label: this.$t('cb7af8ae.c67ce6'), name: 'tradedata' }]
+        if (!this.VERSION_SHUYUN()) {
+          financeTabs.push(
+            { label: this.$t('cb7af8ae.75a79c'), name: 'statements' },
+            { label: this.$t('cb7af8ae.f7f2df'), name: 'statement_details' }
+          )
+        }
+        const marketingTabs = commonMarketingTabs.concat([
+          { label: this.$t('cb7af8ae.41356e'), name: 'export_luckdraw_log' },
+          { label: this.$t('cb7af8ae.03c9b1'), name: 'delivery_staffdata' }
+        ])
+        groups.push(
+          { name: 'order', label: '订单售后', tabs: orderTabs },
+          { name: 'goods', label: '商品导出', tabs: goodsTabs },
+          { name: 'finance', label: '财务导出', tabs: financeTabs },
+          { name: 'marketing', label: '营销导出', tabs: marketingTabs }
+        )
+      } else {
+        const memberTabs = [
+          { label: this.$t('cb7af8ae.e9cc0a'), name: 'member' },
+          { label: this.$t('cb7af8ae.1be670'), name: 'member_point_logs' },
+          { label: this.$t('cb7af8ae.fa1b9f'), name: 'distributor_white_list' },
+          { label: this.$t('cb7af8ae.d04e78'), name: 'employee_purchase_employees' },
+          { label: '活动码导出', name: 'employee_purchase_activity_qrcode' },
+          { label: '扫码统计导出', name: 'employee_purchase_activity_scan_stats' }
+        ]
+        const orderTabs = [
+          { label: this.$t('cb7af8ae.8045f7'), name: 'normal_master_order' },
+          { label: this.$t('cb7af8ae.b8ffd8'), name: 'normal_order' },
+          { label: this.$t('cb7af8ae.daa8e0'), name: 'normal_community_order' },
+          { label: this.$t('cb7af8ae.75bfab'), name: 'aftersale_record_count' },
+          { label: this.$t('cb7af8ae.ae300f'), name: 'refund_record_count' },
+          { label: this.$t('cb7af8ae.e222a6'), name: 'offline_payment' }
+        ]
+        if (!this.VERSION_IN_PURCHASE()) {
+          orderTabs.push({ label: this.$t('cb7af8ae.3c04c9'), name: 'invoice' })
+        }
+        const goodsTabs = [
+          { label: this.$t('cb7af8ae.d012d9'), name: 'goods_data' },
+          { label: this.$t('cb7af8ae.f83133'), name: 'items' },
+          { label: this.$t('cb7af8ae.e2ace4'), name: 'supplier_goods' },
+          { label: this.$t('cb7af8ae.480b38'), name: 'itemcode' }
+        ]
+        if (!this.VERSION_IN_PURCHASE()) {
+          goodsTabs.push(
+            { label: this.$t('cb7af8ae.5f46b0'), name: 'distributor_items' },
+            { label: this.$t('cb7af8ae.42ff32'), name: 'pointsmallitems' }
+          )
+        }
+        const financeTabs = [
+          { label: this.$t('cb7af8ae.b8338a'), name: 'bspay_withdraw' },
+          { label: '交易单导出', name: 'tradedata' },
+          { label: this.$t('cb7af8ae.c97d08'), name: 'hfpay_trade_record' },
+          { label: this.$t('cb7af8ae.b8338a'), name: 'hfpay_withdraw_record' },
+          { label: this.$t('cb7af8ae.443bfc'), name: 'bspay_tradedata' }
+        ]
+        if (!this.VERSION_SHUYUN()) {
+          financeTabs.push(
+            { label: this.$t('cb7af8ae.3f1191'), name: 'chinaums_division' },
+            { label: this.$t('cb7af8ae.d5fc54'), name: 'salesreport_financial' },
+            { label: this.$t('cb7af8ae.355262'), name: 'adapay_tradedata' },
+            { label: this.$t('cb7af8ae.75a79c'), name: 'statements' },
+            { label: this.$t('cb7af8ae.f7f2df'), name: 'statement_details' }
+          )
+        }
+        const marketingTabs = commonMarketingTabs.concat([
+          { label: this.$t('cb7af8ae.41356e'), name: 'export_luckdraw_log' }
+        ])
+        const otherTabs = [{ label: this.$t('cb7af8ae.03c9b1'), name: 'delivery_staffdata' }]
+        if (!this.VERSION_IN_PURCHASE()) {
+          otherTabs.push({ label: this.$t('cb7af8ae.972304'), name: 'selform_registration_record' })
+        }
+        if (this.IS_SUPPLIER()) {
+          otherTabs.push({ label: this.$t('cb7af8ae.c7af0d'), name: 'supplier_order' })
+        }
+        groups.push(
+          { name: 'member', label: '会员与企业内购', tabs: memberTabs },
+          { name: 'order', label: '订单售后', tabs: orderTabs },
+          { name: 'goods', label: '商品导出', tabs: goodsTabs },
+          { name: 'finance', label: '财务导出', tabs: financeTabs },
+          { name: 'marketing', label: '营销导出', tabs: marketingTabs },
+          { name: 'other', label: '其他', tabs: otherTabs }
+        )
+      }
+      return groups
+        .map((group) => ({
+          ...group,
+          tabs: group.tabs.filter(Boolean)
+        }))
+        .filter((group) => group.tabs.length > 0)
+    },
+    currentExportTabs() {
+      const activeGroup = this.exportGroups.find((group) => group.name === this.activeGroupName)
+      return activeGroup ? activeGroup.tabs : []
+    }
   },
   methods: {
-    activeTabHandler() {
-      const active = this.$store.getters.login_type
-      const { tab } = this.$route.query
-
-      if (tab) {
-        this.activeName = tab
-      } else {
-        if (active == 'dealer') {
-          this.activeName = 'adapay_tradedata'
-        } else if (active == 'merchant') {
-          this.activeName = 'normal_master_order'
-        } else {
-          this.activeName = 'member'
+    updateTier1CaretPosition() {
+      this.$nextTick(() => {
+        const nav = this.$refs.exportTieredNav
+        if (!nav || typeof nav.getBoundingClientRect !== 'function') {
+          return
         }
+        const active = nav.querySelector('.export-tier-1 .el-tabs__item.is-active')
+        const header = nav.querySelector('.export-tier-1 .el-tabs__header')
+        if (!active || !header) {
+          this.tier1CaretStyle = { display: 'none' }
+          return
+        }
+        const navRect = nav.getBoundingClientRect()
+        const tabRect = active.getBoundingClientRect()
+        const headerRect = header.getBoundingClientRect()
+        const cx = tabRect.left + tabRect.width / 2 - navRect.left
+        const lineY = headerRect.bottom - navRect.top
+        this.tier1CaretStyle = {
+          display: 'block',
+          left: `${cx}px`,
+          top: `${lineY}px`,
+          transform: 'translate(-50%, -3px)',
+          zIndex: 30
+        }
+      })
+    },
+    getDefaultTabByLoginType() {
+      const active = this.$store.getters.login_type
+      if (active == 'dealer') {
+        return 'adapay_tradedata'
       }
+      if (active == 'merchant') {
+        return 'normal_master_order'
+      }
+      return 'member'
+    },
+    findGroupByTab(tabName) {
+      return this.exportGroups.find((group) => group.tabs.some((tab) => tab.name === tabName))
+    },
+    activeTabHandler() {
+      const { tab } = this.$route.query
+      let targetTab = tab || this.getDefaultTabByLoginType()
+      let group = this.findGroupByTab(targetTab)
+
+      if (!group) {
+        group = this.exportGroups[0]
+        targetTab = group && group.tabs[0] ? group.tabs[0].name : ''
+      }
+      this.activeGroupName = group ? group.name : ''
+      this.activeName = targetTab
 
       // 设置完 activeName 后立即获取导出列表
       this.$nextTick(() => {
-        this.getExportLogLists(this.params)
+        if (this.activeName) {
+          this.getExportLogLists(this.params)
+        }
+        this.updateTier1CaretPosition()
       })
     },
+    // 切换一级分类
+    handleGroupClick(tab) {
+      this.activeGroupName = tab.name
+      const currentTabs = this.currentExportTabs
+      if (!currentTabs.some((item) => item.name === this.activeName)) {
+        this.activeName = currentTabs[0] ? currentTabs[0].name : ''
+      }
+      this.params.page = 1
+      if (this.activeName) {
+        this.getExportLogLists(this.params)
+      }
+      this.updateTier1CaretPosition()
+    },
     // 切换tab
-    handleClick(tab, event) {
+    handleClick(tab) {
       this.activeName = tab.name
       this.params.page = 1
       this.getExportLogLists(this.params)
@@ -287,6 +357,9 @@ export default {
       if (val) {
         this.getExportLogLists(this.params)
       }
+    },
+    activeGroupName() {
+      this.updateTier1CaretPosition()
     }
   }
 }
@@ -320,5 +393,110 @@ export default {
 }
 .text-muted {
   color: #999;
+}
+
+.export-log-alert-wrap {
+  margin-bottom: 5px;
+}
+
+/* 两级导出分类：参考工作台 / 子页 — 一级下三角 + 二级下划线 */
+.export-log-tiered-nav {
+  position: relative;
+  margin-bottom: 4px;
+  overflow: visible;
+}
+
+/* 一级无业务内容，收起 content 避免挡住下方表格 */
+.export-log-tiered-nav ::v-deep .export-tier-1 {
+  position: relative;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 .el-tabs__content {
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0 !important;
+  overflow: hidden;
+  border: none;
+  pointer-events: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 > .el-tabs__header {
+  position: relative;
+  margin: 0;
+  border: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 .el-tabs__nav-wrap::after {
+  display: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 .el-tabs__active-bar {
+  display: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 .el-tabs__item {
+  position: relative;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 20px 8px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-1 .el-tabs__item.is-active {
+  color: #409eff;
+  font-weight: 500;
+  background-color: #ecf5ff;
+  border-radius: 6px 6px 0 0;
+}
+
+/* 倒三角：独立浮动层，避免被二级 el-tabs 盖住（::after 在同兄弟树下无法压过后整块二级） */
+.export-log-tier-1-caret {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #409eff;
+  pointer-events: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-2 > .el-tabs__header {
+  position: relative;
+  margin: 0;
+  padding: 6px 8px 0;
+  border-top: 1px solid #ebeef5;
+  background: #fff;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-2 .el-tabs__nav-wrap::after {
+  display: none;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-2 .el-tabs__item {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 16px;
+  font-size: 13px;
+  color: #606266;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-2 .el-tabs__item.is-active {
+  color: #409eff;
+  font-weight: 500;
+}
+
+/* 二级选中：粗下划线 */
+.export-log-tiered-nav ::v-deep .export-tier-2 .el-tabs__active-bar {
+  height: 3px;
+  border-radius: 2px 2px 0 0;
+  background-color: #409eff;
+}
+
+.export-log-tiered-nav ::v-deep .export-tier-2 > .el-tabs__content {
+  padding: 0 12px 12px;
 }
 </style>

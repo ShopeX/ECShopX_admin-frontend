@@ -11,3 +11,11 @@ export function getAreaByAddress(params = {}) {
     params: params
   })
 }
+
+export function getDistributorCategory(params = {}) {
+  return fetch({
+    url: '/distributor/category',
+    method: 'get',
+    params: params
+  })
+}

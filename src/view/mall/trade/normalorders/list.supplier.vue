@@ -1077,7 +1077,8 @@ export default {
         this.cancelOrderForm.loading = true
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
-        if (this.isBindOMS && this.IS_ADMIN()) {
+        // 已对接 OMS 时仅供应商端可发货，其余端不可操作
+        if (this.isBindOMS && !IS_SUPPLIER()) {
           return this.$message.warning(this.$t('637ccf98.72b354'))
         }
 

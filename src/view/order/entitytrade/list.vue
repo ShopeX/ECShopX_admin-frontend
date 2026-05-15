@@ -423,7 +423,8 @@ import {
   VERSION_B2C,
   VERSION_IN_PURCHASE,
   IS_ADMIN,
-  IS_DISTRIBUTOR
+  IS_DISTRIBUTOR,
+  IS_SUPPLIER
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import CompTableView from './comps/comp-tableview'
@@ -1035,7 +1036,8 @@ export default {
         this.cancelOrderForm.loading = true
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
-        if (this.isBindOMS) {
+        // 已对接 OMS 时仅供应商端可发货，其余端不可操作
+        if (this.isBindOMS && !IS_SUPPLIER()) {
           return this.$message.warning('请至OMS处理订单发货')
         }
 

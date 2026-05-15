@@ -595,6 +595,40 @@ export function updatePurchaseActivity(activityId, params) {
   })
 }
 
+/**
+ * 内购口令码批量生成（管理端）
+ * 字段与路径见后端文档：ecshopx-api/docs/employeepurchase-passphrase-frontend.md §1.1
+ * 请求体为 JSON：`enterprise_ids: number[]`，可选 `count`（默认 1）、新建场景可选 `activity_id: 0`
+ */
+export function generatePassphraseCodes(params) {
+  const { enterprise_ids, count = 1, activity_id } = params || {}
+  return fetch({
+    url: '/employeepurchase/passphrase-codes/generate',
+    method: 'post',
+    params: {
+      enterprise_ids: Array.isArray(enterprise_ids) ? enterprise_ids : [],
+      count,
+      ...(activity_id != null && activity_id !== '' ? { activity_id } : {})
+    }
+  })
+}
+
+/**
+ * 按活动生成口令码（编辑时去重范围为该活动已保存口令）
+ * 见 ecshopx-api/docs/employeepurchase-passphrase-frontend.md §1.2 方式 A
+ */
+export function generatePassphraseCodesByActivity(activityId, params) {
+  const { enterprise_ids, count = 1 } = params || {}
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/passphrase-codes/generate`,
+    method: 'post',
+    params: {
+      enterprise_ids: Array.isArray(enterprise_ids) ? enterprise_ids : [],
+      count
+    }
+  })
+}
+
 // 内购活动添加商品
 export function addGoodsInActivity(params) {
   return fetch({
@@ -619,6 +653,30 @@ export function getPurchaseActivity(params) {
     url: '/employeepurchase/activities',
     method: 'get',
     params
+  })
+}
+
+/** 活动各企业扫码等行为统计（管理端） */
+export function getActivityEnterpriseBehaviorStats(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/enterprise-behavior-stats`,
+    method: 'get'
+  })
+}
+
+/** 下载活动二维码导出文件（export 服务返回 url） */
+export function downloadActivityQrcode(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/download-qrcode`,
+    method: 'get'
+  })
+}
+
+/** 下载活动扫码统计导出文件（export 服务返回 url） */
+export function downloadActivityEnterpriseBehaviorStats(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/enterprise-behavior-stats/download`,
+    method: 'get'
   })
 }
 
@@ -703,6 +761,46 @@ export function aheadPurchaseActivity(activityId) {
   return fetch({
     url: `/employeepurchase/activity/ahead/${activityId}`,
     method: 'post'
+  })
+}
+
+/** 内购模版（门店首页配置） */
+export function getStoreHomePageList(params) {
+  return fetch({
+    url: '/employeepurchase/store-home-page',
+    method: 'get',
+    params
+  })
+}
+
+/** 内购模版详情（单条） */
+export function getStoreHomePageInfo(id) {
+  return fetch({
+    url: `/employeepurchase/store-home-page/${id}`,
+    method: 'get'
+  })
+}
+
+export function createStoreHomePage(params) {
+  return fetch({
+    url: '/employeepurchase/store-home-page',
+    method: 'post',
+    params
+  })
+}
+
+export function updateStoreHomePage(id, params) {
+  return fetch({
+    url: `/employeepurchase/store-home-page/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+export function deleteStoreHomePage(id) {
+  return fetch({
+    url: `/employeepurchase/store-home-page/${id}`,
+    method: 'delete'
   })
 }
 

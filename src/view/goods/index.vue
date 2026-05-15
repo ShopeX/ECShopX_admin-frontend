@@ -98,6 +98,18 @@
       :form-list="applyFormList"
       @onSubmit="onApplySubmit"
     />
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="items"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </SpPage>
 </template>
 
@@ -108,6 +120,8 @@ import GoodsParams from './components/GoodsParams'
 import SpecParams from './components/SpecParams'
 import SkuParams from './components/SkuParams'
 import sku from '../../store/modules/sku'
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 export default {
   async beforeRouteLeave(to, from, next) {
     if (this.$refs['decorateRef']?.dialogVisible) {
@@ -124,6 +138,7 @@ export default {
       next()
     }
   },
+  mixins: [translateMixin],
   data() {
     const cascaderProps = {
       props: {
@@ -851,6 +866,7 @@ export default {
       submitLoading: false,
       loading: false,
       isLeave: false,
+      
       isShowPoint: false,
       // 管理分类上绑定的规格
       mainCategorySpec: [],
@@ -1600,29 +1616,46 @@ export default {
 
       this.submitLoading = true
       try {
-        if (itemId && !is_new) {
+        const isUpdate = !!(itemId && !is_new)
+        let translateItemId = itemId
+        if (isUpdate) {
           await this.$api.goods.updateItems(itemId, {
             ...params,
             item_id: itemId
           })
           this.$message.success(this.$t('de022579.55aa63'))
         } else {
-          await this.$api.goods.createItems(params)
+          const res = await this.$api.goods.createItems(params)
+          translateItemId = (res && res.data && res.data.data && (res.data.data.item_id || res.data.data.id)) || 0
           this.$message.success(this.$t('de022579.3fdaea'))
         }
         this.submitLoading = false
-        this.isLeave = true
-        // 安全调用父组件方法
-        if (this.$parent && typeof this.$parent.onActivated === 'function') {
-          this.$parent.onActivated()
+
+        if (translateItemId) {
+          // 创建/编辑保持一致：弹「同步翻译」弹框；仅保存/取消由 mixin 跳回列表
+          this.openTranslate(translateItemId, ['item_name', 'brief', 'item_unit'], [this.form.itemName || '', this.form.brief || '', this.form.itemUnit || ''])
+        } else {
+          this.navigateBack()
         }
-        setTimeout(() => {
-          this.$router.go(-1)
-        }, 200)
       } catch (e) {
         this.submitLoading = false
         console.log(e)
       }
+    },
+    navigateBack() {
+      this.isLeave = true
+      if (this.$parent && typeof this.$parent.onActivated === 'function') {
+        this.$parent.onActivated()
+      }
+      setTimeout(() => {
+        this.$router.go(-1)
+      }, 200)
+    },
+    onTranslateDone() {
+      this.navigateBack()
+    },
+    goBackTranslateList() {
+      this.navigateBack()
     },
     onApplyConfirm() {
       this.applyDialog = true

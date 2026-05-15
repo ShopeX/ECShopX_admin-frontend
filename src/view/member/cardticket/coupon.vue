@@ -228,13 +228,10 @@
             </el-table-column>
             <el-table-column width="120" :label="$t('9cc0c982.eb4307')">
               <template slot-scope="scope">
-                {{
-                  scope.row.use_all_shops == 1
-                    ? $t('9cc0c982.77678b')
-                    : $t('9cc0c982.fcf7d8')
-                }}
+                {{ scope.row.use_all_shops == 1 ? $t('9cc0c982.77678b') : $t('9cc0c982.fcf7d8') }}
               </template>
             </el-table-column>
+            <el-table-column width="200" prop="source_name" label="店铺" />
           </el-table>
           <div class="mt-4 text-right">
             <el-pagination

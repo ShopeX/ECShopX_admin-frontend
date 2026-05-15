@@ -329,6 +329,7 @@ export default {
         1002: this.$t('c3827da6.b4f5db'),
         1003: this.$t('c3827da6.eab3fc'),
         1004: this.$t('c3827da6.9d3c40'),
+        1010: this.$t('c3827da6.9d3c40'),
         1007: this.$t('c3827da6.38e3c7'),
         1008: this.$t('c3827da6.fbd049'),
         1009: this.$t('c3827da6.fa06ad')
@@ -433,6 +434,7 @@ export default {
       try {
         if (
           this.localScene == '1004' ||
+          this.localScene == '1010' ||
           this.localScene == '1006' ||
           this.localScene == '1007' ||
           this.localScene == '1008'
@@ -663,6 +665,7 @@ export default {
       console.log('onSaveTemplate data:', data)
       if (
         this.localScene == '1004' ||
+        this.localScene == '1010' ||
         this.localScene == '1006' ||
         this.localScene == '1008' ||
         this.localScene == '1007'

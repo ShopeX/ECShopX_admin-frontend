@@ -112,6 +112,11 @@ export default {
       component: () => import('@/view/member/purchase/company')
     },
     {
+      path: 'ec/store-home',
+      name: '2829eafb.e8a401',
+      component: () => import('@/view/marketing/employee/storeHomePage')
+    },
+    {
       path: 'ec/purchaseorder',
       name: '2829eafb.d753bc',
       component: () => import('@/view/order/entitytrade/purchase'),

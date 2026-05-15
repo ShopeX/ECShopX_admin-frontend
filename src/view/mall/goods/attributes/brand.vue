@@ -47,6 +47,18 @@
         </el-button>
       </div>
     </sideBar>
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="items_attributes"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </SpPage>
 </template>
 <script>
@@ -62,6 +74,8 @@ import sideBar from '@/components/element/sideBar'
 import { createSetting } from '@shopex-ui/finder'
 import { useForm } from '@/composables'
 import { i18n } from '@/i18n'
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 
 const [BrandForm, BrandFormApi] = useForm({
   formType: 'normalForm',
@@ -96,8 +110,10 @@ const [BrandForm, BrandFormApi] = useForm({
 export default {
   components: {
     sideBar,
-    BrandForm
+    BrandForm,
+    SpTranslatePopup
   },
+  mixins: [translateMixin],
   data() {
     return {
       form: {
@@ -199,15 +215,24 @@ export default {
           this.resetData()
           this.show_sideBar = false
           this.$refs.finder.refresh(true)
+          // 创建/编辑保持一致：弹「同步翻译」弹框
+          const newAttrId = (res && res.data && res.data.data && (res.data.data.attribute_id || res.data.data.id)) || 0
+          if (newAttrId) {
+            this.openTranslate(newAttrId, ['attribute_name'], [submitData.attribute_name || ''])
+          }
         })
       } else {
         updateGoodsAttr(submitData.attribute_id, submitData).then((res) => {
           this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.show_sideBar = false
           this.$refs.finder.refresh()
+          this.openTranslate(submitData.attribute_id, ['attribute_name'], [submitData.attribute_name || ''])
         })
       }
     },
+    onTranslateDone() {},
+    // 列表页内嵌表单：仅保存/取消停留在当前列表页
+    goBackTranslateList() {},
     syncBrand() {
       syncBrand().then((res) => {
         if (res.data.data.status == true) {

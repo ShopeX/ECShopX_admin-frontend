@@ -658,7 +658,7 @@ const routes = [
           permissions: ['setting.systemsetting.kjlsetting']
         },
         component: () => import('@/views/settings/kujiale-setting')
-      }
+      },
     ]
   }
 ]

@@ -444,17 +444,17 @@ export default {
         },
         {
           label: this.$t('77050e4f.d64589'),
-          component: () => <span>{this.addForm.bank_name || '-'}</span>,
+          component: () => <span>{this.addForm.bank_name || '-'}</span>
         },
         {
           label: this.$t('77050e4f.27d6ee'),
           key: 'bank_name',
-          component: () => <span>{this.addForm.bank_account_no || '-'}</span>,
+          component: () => <span>{this.addForm.bank_account_no || '-'}</span>
         },
         {
           label: this.$t('77050e4f.efce56'),
           key: 'china_ums_no',
-          component: () => <span>{this.addForm.china_ums_no || '-'}</span>,
+          component: () => <span>{this.addForm.china_ums_no || '-'}</span>
         },
 
         {

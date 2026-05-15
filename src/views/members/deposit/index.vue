@@ -4,8 +4,8 @@
 -->
 
 <template>
-  <div>
-    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+  <SpPage>
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane :label="$t('45e1eee6.08806e')" name="all">
         <total-view />
       </el-tab-pane>
@@ -27,7 +27,7 @@
       </el-tab-pane>
       -->
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

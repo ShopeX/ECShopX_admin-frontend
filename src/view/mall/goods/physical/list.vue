@@ -1885,7 +1885,7 @@ export default {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop({
-          queryParams: { is_valid: 'true' }
+          queryParams: { is_valid: 'true', show_distributor_self: 1 }
         })
         distributorIds = data.map((item) => item.distributor_id)
       }

@@ -141,10 +141,26 @@
         @onSubmit="onProfitFormSubmit"
       />
     </div>
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="items_category"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </SpPage>
 </template>
 <script>
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 export default {
+  components: { SpTranslatePopup },
+  mixins: [translateMixin],
   data() {
     return {
       loading: false,
@@ -383,8 +399,11 @@ export default {
           category_id
         })
         this.$message.success(this.$t('2dc17300.3bb47b'))
+        this.refreshNode(parent_id)
+        this.categoryDialog = false
+        this.openTranslate(category_id, ['category_name'], [category_name || ''])
       } else {
-        await this.$api.goods.addCategory({
+        const res = await this.$api.goods.addCategory({
           category_name,
           sort,
           is_main_category: 1,
@@ -392,10 +411,18 @@ export default {
           parent_id: parent_id != '0' ? parent_id : undefined
         })
         this.$message.success(this.$t('2dc17300.3fdaea'))
+        this.refreshNode(parent_id)
+        this.categoryDialog = false
+        // 创建/编辑保持一致：弹「同步翻译」弹框
+        const newCategoryId = (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
+        if (newCategoryId) {
+          this.openTranslate(newCategoryId, ['category_name'], [category_name || ''])
+        }
       }
-      this.refreshNode(parent_id)
-      this.categoryDialog = false
     },
+    onTranslateDone() {},
+    // 列表页内嵌表单：仅保存/取消停留在当前列表页
+    goBackTranslateList() {},
     async deleteCategory({ parent_id, category_id }) {
       await this.$confirm(this.$t('2dc17300.442ecc'), this.$t('2dc17300.02d981'), {
         confirmButtonText: this.$t('2dc17300.38cf16'),

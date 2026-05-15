@@ -5,13 +5,26 @@
 const install = function (Vue) {
   Vue.directive('scroll', {
     bind(el, binding) {
-      let SCROLL_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
-      SCROLL_DOM.addEventListener('scroll', function () {
+      const SCROLL_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
+      if (!SCROLL_DOM) return
+
+      const scrollHandler = function () {
         const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
-        if (scrollDistance === 0) {
+        if (scrollDistance <= 1) {
           binding.value(true)
         }
-      })
+      }
+
+      el.__scrollHandler__ = scrollHandler
+      el.__scrollDom__ = SCROLL_DOM
+      SCROLL_DOM.addEventListener('scroll', scrollHandler)
+    },
+    unbind(el) {
+      if (el.__scrollDom__ && el.__scrollHandler__) {
+        el.__scrollDom__.removeEventListener('scroll', el.__scrollHandler__)
+      }
+      delete el.__scrollHandler__
+      delete el.__scrollDom__
     }
   })
 

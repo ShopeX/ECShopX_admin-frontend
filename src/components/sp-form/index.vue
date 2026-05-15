@@ -71,6 +71,16 @@
     margin-bottom: 10px;
   }
 }
+
+/* 仅透明度；进出场同速同曲线 */
+.sp-form-item-fade-enter-active,
+.sp-form-item-fade-leave-active {
+  transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sp-form-item-fade-enter,
+.sp-form-item-fade-leave-to {
+  opacity: 0;
+}
 </style>
 
 <script>
@@ -114,6 +124,15 @@ export default {
     labelPosition: {
       type: String,
       default: ''
+    },
+    /** 为每项表单项包一层 transition，配合 v-show 做显隐过渡（如口令开关联动多项显示） */
+    itemTransition: {
+      type: Boolean,
+      default: false
+    },
+    itemTransitionName: {
+      type: String,
+      default: 'sp-form-item-fade'
     },
     value: [Number, String, Object]
   },
@@ -454,13 +473,18 @@ export default {
       >
         {formList.map((item, index) => {
           if (item.type == 'group') {
-            return (
+            const groupNode = (
               <div class='sp-form-group' v-show={this.getItemShow(item)}>
                 {item.label}
               </div>
             )
+            return this.itemTransition ? (
+              <transition name={this.itemTransitionName}>{groupNode}</transition>
+            ) : (
+              groupNode
+            )
           } else {
-            return (
+            const formItemNode = (
               <el-form-item
                 label={item.label ? `${item.label}:` : ''}
                 prop={item.key}
@@ -485,6 +509,11 @@ export default {
                 {getComponentByType(item)}
                 <div class='form-item-tip' domPropsInnerHTML={item.tip}></div>
               </el-form-item>
+            )
+            return this.itemTransition ? (
+              <transition name={this.itemTransitionName}>{formItemNode}</transition>
+            ) : (
+              formItemNode
             )
           }
         })}

@@ -15,7 +15,7 @@ import {
   getUrlPathByLoginType
 } from '@/utils'
 import store from '@/store'
-import { export_open } from './utils'
+import { export_open, export_open_blank } from './utils'
 // import moment from 'moment'
 // import district from '@/common/district.json'
 
@@ -120,6 +120,7 @@ function install(Vue) {
   Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
   Vue.prototype.$EventBus = new Vue()
   Vue.prototype.$export_open = export_open
+  Vue.prototype.$export_open_blank = export_open_blank
   Vue.prototype.VERSION_SHUYUN = VERSION_SHUYUN
 }
 

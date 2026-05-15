@@ -43,14 +43,30 @@
       @onSubmit="onCategoryFormSubmit"
       @input="onDialogInputChange"
     />
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="distribution_distributor_category"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </SpPage>
 </template>
 
 <script>
 import { createSetting } from '@shopex-ui/finder'
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 
 export default {
   name: 'StoreCategory',
+  components: { SpTranslatePopup },
+  mixins: [translateMixin],
   data() {
     return {
       searchParams: {
@@ -130,22 +146,31 @@ export default {
       const { category_id, category_code, category_name } = this.categoryForm
 
       try {
+        let translateCategoryId = category_id
         if (category_id) {
           // 编辑
           await this.$api.store.updateStoreCategory(category_id, { category_code, category_name })
           this.$message.success(this.$t('9a30bc45.55aa63'))
         } else {
           // 新增
-          await this.$api.store.createStoreCategory({ category_name })
+          const res = await this.$api.store.createStoreCategory({ category_name })
+          translateCategoryId = (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
           this.$message.success(this.$t('9a30bc45.3fdaea'))
         }
         this.categoryDialog = false
         this.$refs.finder.refresh(true)
+        // 创建/编辑保持一致：弹「同步翻译」弹框
+        if (translateCategoryId) {
+          this.openTranslate(translateCategoryId, ['category_name'], [category_name || ''])
+        }
       } catch (error) {
         // 错误已在拦截器中处理
         console.error('保存失败:', error)
       }
     },
+    onTranslateDone() {},
+    // 列表页内嵌表单：仅保存/取消停留在当前列表页
+    goBackTranslateList() {},
     async handleDelete(row) {
       try {
         await this.$confirm(this.$t('9a30bc45.442ecc'), this.$t('9a30bc45.02d981'), {

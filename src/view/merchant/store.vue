@@ -104,6 +104,18 @@
         {{ submitLoading ? $t('027707af.7ef44a') : $t('027707af.be5fbb') }}
       </el-button>
     </div>
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="distribution_distributor"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </SpPage>
 </template>
 
@@ -115,7 +127,11 @@ import district from '@/common/district.json'
 import DaoDianZiti from './components/DaoDianZiti'
 import RefundGoodsAddress from './components/RefundGoodsAddress'
 import RefundGoodsStore from './components/RefundGoodsStore'
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 export default {
+  components: { DaoDianZiti, RefundGoodsAddress, RefundGoodsStore, SpTranslatePopup },
+  mixins: [translateMixin],
   data() {
     let distributionTypeOptions = [
       {
@@ -475,7 +491,8 @@ export default {
             { name: this.$t('027707af.7854b5'), label: 'true' },
             { name: this.$t('027707af.710ad0'), label: 'false' },
             { name: this.$t('027707af.0044f6'), label: 'delete' }
-          ]
+          ],
+          isShow: () => this.distributor_self == 0
         },
         {
           label: this.$t('027707af.0581a1'),
@@ -606,20 +623,22 @@ export default {
         },
         {
           label: this.$t('027707af.93ab28'),
-          type: 'group'
+          type: 'group',
+          isShow: () => this.distributor_self == 0
         },
         {
           label: this.$t('027707af.93ab28'),
           key: 'is_ziti',
           type: 'switch',
           width: 'auto',
-          tip: this.$t('027707af.c3a20c')
+          tip: this.$t('027707af.c3a20c'),
+          isShow: () => this.distributor_self == 0
         },
         {
           label: '',
           width: '1000px',
           component: ({ key }, value) => <DaoDianZiti ref='daoDianZiti' />,
-          isShow: ({ key }, value) => value.is_ziti
+          isShow: ({ key }, value) => this.distributor_self == 0 && value.is_ziti
         },
         {
           label: this.$t('027707af.11b600'),
@@ -713,12 +732,15 @@ export default {
     }
   },
   created() {
-    const { distributor_type } = this.$route.query
+    const { distributor_type, distributor_id } = this.$route.query
     this.pageQuery = new Pages({
       pageSize: 10,
       fetch: this.getMerchantList
     })
     this.distributor_self = distributor_type === 'distributor_self' ? 1 : 0
+    if (distributor_type === 'distributor_self' && !distributor_id) {
+      this.form.is_delivery = true
+    }
     // 当distributor_self为1时，移除地理位置表单项的validator
     if (distributor_type === 'distributor_self') {
       const addressItem = this.formList.find((item) => item.key === 'address')
@@ -995,6 +1017,9 @@ export default {
       if (!params.distributor_category_id) {
         delete params.distributor_category_id
       }
+      if (this.distributor_self == 1) {
+        params.is_valid = 'true'
+      }
 
       // 处理 show_salesperson 的值
       if (this.form.show_salesperson === 0) {
@@ -1033,20 +1058,35 @@ export default {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)
           this.submitLoading = false
           this.$message.success(this.$t('027707af.c83614'))
+          this.openTranslate(distributor_id, ['name', 'address', 'introduce'], [this.form.name || '', this.form.address || '', this.form.introduce || ''])
         } else {
-          const ids = this.$refs['daoDianZiti'].finderData.map((item) => item.id)
-          await this.$api.marketing.saveDistributorInfo({
+          const ids = (this.$refs['daoDianZiti']?.finderData || []).map((item) => item.id)
+          const res = await this.$api.marketing.saveDistributorInfo({
             ...params,
             pickup_location: ids
           })
           this.submitLoading = false
           this.$message.success(this.$t('027707af.931e30'))
-        }
-        if (!this.IS_DISTRIBUTOR()) {
-          this.$router.go(-1)
+          // 创建/编辑保持一致：拿到新店铺 id 弹「同步翻译」弹框；取不到 id 时退回原行为
+          const newDistributorId = (res && res.data && res.data.data && (res.data.data.distributor_id || res.data.data.id)) || 0
+          if (newDistributorId) {
+            this.openTranslate(newDistributorId, ['name', 'address', 'introduce'], [this.form.name || '', this.form.address || '', this.form.introduce || ''])
+          } else if (!this.IS_DISTRIBUTOR()) {
+            this.$router.go(-1)
+          }
         }
       } catch (e) {
         this.submitLoading = false
+      }
+    },
+    onTranslateDone() {
+      if (!this.IS_DISTRIBUTOR()) {
+        this.$router.go(-1)
+      }
+    },
+    goBackTranslateList() {
+      if (!this.IS_DISTRIBUTOR()) {
+        this.$router.go(-1)
       }
     }
   }

@@ -297,6 +297,18 @@
         {{ $t('0ab3280d.be5fbb') }}
       </el-button>
     </div>
+
+    <SpTranslatePopup
+      ref="translatePopup"
+      table-name="promotions_seckill_activity"
+      :data-id="translateContext.dataId"
+      :fields="translateContext.fields"
+      :values="translateContext.values"
+      :source-language="translateContext.sourceLang"
+      @done="onTranslateDone"
+      @save-only="onTranslateSaveOnly"
+      @cancel="onTranslateCancel"
+    />
   </el-form>
 </template>
 <script>
@@ -312,18 +324,22 @@ import SkuSelector from '@/components/function/skuSelector'
 import StoreSelect from '@/components/function/distributorSelect'
 import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
+import SpTranslatePopup from '@/components/sp-translate-popup'
+import translateMixin from '@/mixins/translateMixin'
 import store from '@/store'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 
 export default {
   inject: ['refresh'],
+  mixins: [translateMixin],
   components: {
     StoreSelect,
     SkuSelector,
     imgPicker,
     imgBox,
-    Treeselect
+    Treeselect,
+    SpTranslatePopup
   },
   data() {
     return {
@@ -527,12 +543,13 @@ export default {
             this.$message({
               message: this.$t('0ab3280d.55aa63'),
               type: 'success',
-              duration: 2 * 1000,
-              onClose() {
-                that.refresh()
-                that.$router.go(-1)
-              }
+              duration: 2 * 1000
             })
+            this.openTranslate(
+              res.data.data.seckill_id,
+              ['activity_name', 'description'],
+              [this.form.activity_name || '', this.form.description || '']
+            )
           } else {
             this.$message.error(this.$t('0ab3280d.73b0d9'))
             return false
@@ -545,12 +562,15 @@ export default {
             this.$message({
               message: this.$t('0ab3280d.3fdaea'),
               type: 'success',
-              duration: 2 * 1000,
-              onClose() {
-                that.refresh()
-                that.$router.go(-1)
-              }
+              duration: 2 * 1000
             })
+            that.refresh()
+            // 创建/编辑保持一致：弹「同步翻译」弹框；仅保存/取消由 mixin 跳回列表
+            this.openTranslate(
+              res.data.data.seckill_id,
+              ['activity_name', 'description'],
+              [this.form.activity_name || '', this.form.description || '']
+            )
           } else {
             this.$message.error(this.$t('0ab3280d.73b0d9'))
             return false
@@ -638,6 +658,10 @@ export default {
       })
     },
     handleCancel: function () {
+      this.$router.go(-1)
+    },
+    onTranslateDone() {
+      this.refresh()
       this.$router.go(-1)
     },
     itemTypeChange(val) {

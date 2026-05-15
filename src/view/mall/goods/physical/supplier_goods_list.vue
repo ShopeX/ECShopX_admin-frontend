@@ -917,14 +917,10 @@ export default {
             action: {
               type: 'link',
               handler: async ([row]) => {
-                // 同步taglist选中状态
-                this.tagList.forEach((item) => {
-                  if (row.tagList.map((item) => item.tag_id).includes(item.tag_id)) {
-                    item.selected = true
-                  } else {
-                    item.selected = false
-                  }
-                })
+                if (!this.tagList?.length) {
+                  await this.getAllTagLists()
+                }
+                this.syncTagSelectionFromRows([row])
                 this.labelForm.item_id = row.item_id
                 this.labelDialog = true
               }
@@ -1537,12 +1533,38 @@ export default {
       }
     },
     async onChangePriceSubmit() {},
-    changeGoodsLabel() {
-      if (this.selectionItems.length > 0) {
-        this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
+    /**
+     * 根据选中商品行回显「已选标签」：多选时取各商品 tagList 的 tag_id 交集（与行内单条逻辑一致）
+     */
+    syncTagSelectionFromRows(rows) {
+      if (!this.tagList?.length) {
+        return
+      }
+      const tagIdSetOfRow = (row) => {
+        const tl = row?.tagList || []
+        return new Set(tl.map((t) => String(t.tag_id)))
+      }
+      if (!rows?.length) {
         this.tagList.forEach((item) => {
           item.selected = false
         })
+        return
+      }
+      const firstIds = tagIdSetOfRow(rows[0])
+      const commonIds = new Set(
+        [...firstIds].filter((id) => rows.slice(1).every((row) => tagIdSetOfRow(row).has(id)))
+      )
+      this.tagList.forEach((item) => {
+        item.selected = commonIds.has(String(item.tag_id))
+      })
+    },
+    async changeGoodsLabel() {
+      if (this.selectionItems.length > 0) {
+        this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
+        if (!this.tagList?.length) {
+          await this.getAllTagLists()
+        }
+        this.syncTagSelectionFromRows(this.selectionItems)
         this.labelDialog = true
       } else {
         this.$message.error(this.$t('d41d8cd9.ace302'))

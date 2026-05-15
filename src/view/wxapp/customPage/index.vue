@@ -270,9 +270,9 @@ export default {
       // this.pageForm.id = id
       // this.template_dialog = true
       if (this.activeTab == 'normal') {
-        this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1004`)
+        this.$router.push(`/wxapp/manage/decorate?id=${id}&scene=1004`)
       } else {
-        this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1008`)
+        this.$router.push(`/wxapp/manage/decorate?id=${id}&scene=1008`)
       }
     },
     closeDialog() {

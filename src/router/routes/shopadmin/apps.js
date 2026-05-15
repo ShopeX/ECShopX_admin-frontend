@@ -248,6 +248,17 @@ const routes = [
             }
           }
         ]
+      },
+      {
+        name: 'enterprisePurchaseStoreHome',
+        path: 'enterprise-purchase/store-home',
+        component: () => import('@/view/marketing/employee/storeHomePage'),
+        meta: {
+          aliasName: 'enterprise-purchase-store-home',
+          icon: 'icon-order',
+          title: '837b3054.e8a401',
+          permissions: ['applications.ec.enterprise-purchase-store-home']
+        }
       }
     ]
   }

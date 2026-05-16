@@ -1061,7 +1061,7 @@ export default {
           this.openTranslate(distributor_id, ['name', 'address', 'introduce'], [this.form.name || '', this.form.address || '', this.form.introduce || ''])
         } else {
           const ids = (this.$refs['daoDianZiti']?.finderData || []).map((item) => item.id)
-          const res = await this.$api.marketing.saveDistributorInfo({
+          await this.$api.marketing.saveDistributorInfo({
             ...params,
             pickup_location: ids
           })

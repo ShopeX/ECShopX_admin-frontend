@@ -70,26 +70,6 @@
     height: 120px;
     box-sizing: border-box;
     background: 50% 50% / cover no-repeat rgb(221, 221, 221);
-    overflow: hidden;
-    &--video,
-    &--audio {
-      background: #2a2a2a;
-    }
-    .media-preview {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .audio-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #c0c4cc;
-      font-size: 36px;
-      background: linear-gradient(135deg, #36383d 0%, #1f2024 100%);
-    }
     &:hover {
       .image-meta {
         display: block;
@@ -126,10 +106,6 @@
   .el-pagination {
     margin-top: 8px;
     text-align: right;
-  }
-  .picker-source-tabs {
-    .el-tabs__nav-wrap::after { height: 1px; }
-    .el-tabs__header { margin-bottom: 0; }
   }
   .image-box-selected {
     position: absolute;
@@ -186,28 +162,24 @@
 </style>
 <template>
   <div v-loading="loading" class="picker-image">
-    <div v-if="enableSourceTab" class="px-3 pt-2">
-      <el-tabs v-model="sourceTab" class="picker-source-tabs" @tab-click="onSourceTabChange">
-        <el-tab-pane label="原素材" name="normal" />
-        <el-tab-pane label="AI 素材" name="ai_generate" />
-      </el-tabs>
-    </div>
     <div class="p-3 flex justify-between">
       <div class="flex items-center gap-3">
-        <!-- AI tab 下不允许在 picker 现场上传：AI 素材只能从制作页"保存到素材库"流入 -->
         <SpImageUploader
-          v-if="sourceTab === 'normal'"
           :localpost-data="localpostData"
           :refresh="refresh"
           :current-category="selectCatgory"
         />
 
         <el-button @click="onAddGroup" class="h-[calc(1em+16px)]">
-          {{ addGroupBtnText }}
-        </el-button>
+{{
+          addGroupBtnText
+        }}
+</el-button>
         <el-button :disabled="disabledBtn" @click="onMoveGroup">
-          {{ moveGroupBtnText }}
-        </el-button>
+{{
+          moveGroupBtnText
+        }}
+</el-button>
         <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
         </el-button> -->
@@ -232,8 +204,10 @@
           下载
         </el-button> -->
         <el-button :disabled="disabledBtn" @click="handleCancelAll">
-          {{ cancelAllBtnText }}
-        </el-button>
+{{
+          cancelAllBtnText
+        }}
+</el-button>
       </div>
       <!-- <div>
         <el-input size="small" placeholder="请输入图片名称" suffix-icon="el-icon-search" />
@@ -280,35 +254,8 @@
           >
             <div
               class="image-item relative group"
-              :class="{
-                'image-item--video': mediaKindOf(item) === 'video',
-                'image-item--audio': mediaKindOf(item) === 'audio'
-              }"
-              :style="mediaKindOf(item) === 'image' ? { color: '#fff', backgroundImage: `url('${item.url}')` } : { color: '#fff' }"
+              :style="{ color: '#fff', backgroundImage: `url('${item.url}')` }"
             >
-              <!-- 视频缩略图：浏览器读首帧，时长由 onloadedmetadata 拿到塞到 item 上 -->
-              <video
-                v-if="mediaKindOf(item) === 'video'"
-                :src="item.url"
-                muted
-                preload="metadata"
-                class="media-preview"
-                @loadedmetadata="onMediaMeta(item, $event)"
-              />
-              <!-- 音频：大图标占位 -->
-              <div v-else-if="mediaKindOf(item) === 'audio'" class="media-preview audio-placeholder">
-                <i class="el-icon-headset" />
-              </div>
-
-              <!-- 媒体类型角标 + 时长 -->
-              <div
-                v-if="mediaKindOf(item) !== 'image'"
-                class="absolute top-1 left-1 px-1 rounded text-[11px] leading-[16px] bg-black/50"
-              >
-                {{ mediaKindOf(item) === 'video' ? '视频' : '音频' }}
-                <span v-if="item._duration"> · {{ formatDuration(item._duration) }}</span>
-              </div>
-
               <div
                 class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
@@ -332,9 +279,7 @@
                   fill="white"
                   @click.stop="handleCopy(item.url)"
                 />
-                <!-- 仅图片可裁剪 -->
                 <file-editing
-                  v-if="mediaKindOf(item) === 'image'"
                   theme="outline"
                   size="20"
                   fill="white"
@@ -416,7 +361,9 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cropperDialogShow = false">{{ cancelText }}</el-button>
-        <el-button type="primary" @click="cropperDialogShow = false">{{ confirmText }}</el-button>
+        <el-button type="primary" @click="cropperDialogShow = false">{{
+          confirmText
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -460,16 +407,6 @@ export default {
     columns: {
       type: Number,
       default: 6
-    },
-    /**
-     * 是否显示「原素材 / AI 素材」来源切换 tab。
-     * - 业务弹窗（如商品图选择）默认开启，便于跨库选图
-     * - 独立的素材管理页（/content/material/material-management）不需要这个 tab：
-     *   AI 素材有专门的管理页（/ai-material/material-library），素材管理页只负责原素材
-     */
-    enableSourceTab: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -513,9 +450,6 @@ export default {
       selected: data,
       catgoryList: [],
       selectCatgory: -1,
-      // 素材来源 tab：normal=原素材库 / ai_generate=AI素材库
-      // 通过 value.source 传入可初始定位（场景：从某些入口想直接打开 AI tab）
-      sourceTab: (this.value && this.value.source === 'ai_generate') ? 'ai_generate' : 'normal',
       groupDialog: false,
       groupForm: {
         groupId: '',
@@ -792,14 +726,12 @@ export default {
         await this.$api.picker.addImageCatgory({
           image_cat_id: groupId,
           image_cat_name: groupName,
-          parent_id: 0,
-          source: this.sourceTab
+          parent_id: 0
         })
       } else {
         await this.$api.picker.addImageCatgory({
           image_cat_name: groupName,
-          parent_id: 0,
-          source: this.sourceTab
+          parent_id: 0
         })
       }
       this.groupDialog = false
@@ -847,8 +779,7 @@ export default {
       let params = {
         type: 'image',
         page: page_no,
-        pageSize: page_size,
-        source: this.sourceTab
+        pageSize: page_size
       }
       if (this.selectCatgory != '-1') {
         params = {
@@ -861,53 +792,18 @@ export default {
       return { count: total_count }
     },
     async getImageAllCatgory() {
-      const { list } = await this.$api.picker.getImageAllCatgory({
-        image_cat_id: 0,
-        source: this.sourceTab
-      })
+      const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [
         { image_cat_id: -1, image_cat_name: i18n.t('4c4bec01.a8982a') },
         ...list.reverse()
       ]
+      console.log('catgoryList:', this.catgoryList)
       this.editFormListOptions = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
         }
       })
-    },
-    /** 切换原素材 / AI 素材 tab：分类树和列表都重拉，分类选中重置 */
-    async onSourceTabChange() {
-      this.selectCatgory = -1
-      await this.getImageAllCatgory()
-      this.refresh(true)
-    },
-    /** 按 image_type MIME 前缀 / image_url 后缀分辨媒体类型 */
-    mediaKindOf(item) {
-      const mime = (item && item.image_type) ? String(item.image_type).toLowerCase() : ''
-      if (mime.indexOf('video/') === 0) return 'video'
-      if (mime.indexOf('audio/') === 0) return 'audio'
-      if (mime.indexOf('image/') === 0) return 'image'
-      // 兜底用扩展名
-      const url = String((item && (item.url || item.image_full_url || item.image_url)) || '')
-      const ext = (url.split('?')[0].split('.').pop() || '').toLowerCase()
-      if (['mp4', 'mov', 'webm', 'm4v'].indexOf(ext) > -1) return 'video'
-      if (['mp3', 'wav', 'm4a', 'aac', 'ogg', 'flac'].indexOf(ext) > -1) return 'audio'
-      return 'image'
-    },
-    /** 浏览器读完视频/音频元数据后塞 _duration 到 item，复用既有响应式数组 */
-    onMediaMeta(item, ev) {
-      const dur = ev && ev.target && ev.target.duration
-      if (dur && isFinite(dur)) {
-        this.$set(item, '_duration', Math.round(dur))
-      }
-    },
-    formatDuration(sec) {
-      if (!sec) return ''
-      const s = Math.max(0, Math.round(Number(sec) || 0))
-      const m = Math.floor(s / 60)
-      const r = s % 60
-      return m + ':' + (r < 10 ? '0' + r : r)
     },
 
     handleClickCatgory({ image_cat_id }) {

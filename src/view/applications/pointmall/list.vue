@@ -323,8 +323,14 @@
           style="width: 500px"
           :placeholder="$t('8312e7f7.708c9d')"
           clearable
+          filterable
           :options="categoryList"
-          :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
+          :props="{
+            value: 'category_id',
+            label: 'category_name',
+            multiple: true,
+            children: 'children'
+          }"
         />
         <span slot="footer" class="dialog-footer">
           <el-button @click="addCategorydialogVisible = false">{{
@@ -687,27 +693,30 @@ export default {
       })
     },
     changeCategory() {
-      if (this.item_id.length) {
-        if (!this.category_id) {
-          this.$message({
-            type: 'error',
-            message: this.$t('8312e7f7.e4e928')
-          })
-          return false
-        }
-        this.addCategorydialogVisible = false
-        setItemsCategory({ category_id: this.category_id, item_id: this.item_id }).then(
-          (response) => {
-            this.getGoodsList()
-            this.category_id = []
-          }
-        )
-      } else {
+      if (!this.item_id.length) {
         this.$message({
           type: 'error',
           message: this.$t('8312e7f7.ace302')
         })
+        return
       }
+      if (!this.category_id || !this.category_id.length) {
+        this.$message({
+          type: 'error',
+          message: this.$t('8312e7f7.e4e928')
+        })
+        return
+      }
+      const _category_id = this.category_id.map((item) => item[item.length - 1])
+      this.addCategorydialogVisible = false
+      setItemsCategory({ category_id: _category_id, item_id: this.item_id }).then(() => {
+        this.getGoodsList()
+        this.category_id = []
+        this.$message({
+          type: 'success',
+          message: this.$t('8312e7f7.33130f')
+        })
+      })
     },
     addItems() {
       // 添加商品
@@ -725,6 +734,7 @@ export default {
     },
     addCategory() {
       if (this.item_id.length) {
+        this.category_id = []
         this.addCategorydialogVisible = true
       } else {
         this.$message({

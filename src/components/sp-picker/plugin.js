@@ -42,7 +42,8 @@ export default {
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }, parent),
       goodsList: (args) =>
         fn({ value: { ...args }, type: 'pickerGoodsList', width: '1110px' }, parent),
-      goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' }, parent),
+      goodsitem: (args) =>
+        fn({ value: { ...(args || {}), type: 'pickerGoodsItem' }, type: 'pickerGoodsItem' }, parent),
       goodsSku: (args) => fn({ value: { ...args }, type: 'pickerGoodsSku' }, parent),
       goodsParams: (args) => fn({ value: { ...args }, type: 'pickerGoodsParams' }, parent),
       supplier: (args) => fn({ value: { ...args }, type: 'pickerSupplier' }, parent),

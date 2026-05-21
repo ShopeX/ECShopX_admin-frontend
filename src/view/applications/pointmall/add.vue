@@ -131,15 +131,13 @@
                 </el-col> -->
                 <el-col :xs="24" :sm="12" :md="12">
                   <el-form-item :label="$t('4b43f5ef.728f47')" label-width="110px">
-                    <treeselect
+                    <el-cascader
                       v-model="form.item_category"
-                      :no-children-text="$t('4b43f5ef.6ef104')"
-                      :no-options-text="$t('4b43f5ef.4b327e')"
-                      :no-results-text="$t('4b43f5ef.f46047')"
-                      :options="categoryList"
-                      :show-count="true"
-                      :multiple="true"
-                      :disable-branch-nodes="true"
+                      clearable
+                      filterable
+                      :props="cascaderProps"
+                      :options="saleCategoryList"
+                      style="width: 100%"
                     />
                   </el-form-item>
                 </el-col>
@@ -854,7 +852,6 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
-import Treeselect from '@riophae/vue-treeselect'
 import draggable from 'vuedraggable'
 import { getItemsDetail, createItems, updateItems } from '@/api/pointsmall'
 import { getGoodsAttr, getCategory, getCategoryInfo } from '@/api/goods'
@@ -865,8 +862,6 @@ import richTextEditor from '@/components/function/richTextEditor'
 import imgBox from '@/components/element/imgBox'
 import district from '@/common/district.json'
 import { getOrigincountry } from '@/api/crossborder'
-import { transformTree } from '@/utils'
-
 export default {
   beforeRouteLeave(to, from, next) {
     if (this.$refs['decorateRef'].dialogVisible) {
@@ -877,14 +872,19 @@ export default {
   },
   components: {
     videoPicker,
-    Treeselect,
     draggable,
     richTextEditor,
     imgBox
   },
   inject: ['refresh'],
   data() {
+    const cascaderProps = {
+      multiple: true,
+      value: 'value',
+      children: 'children'
+    }
     return {
+      cascaderProps,
       // 跨境设置
       origincountry: [], // 产地国
       itemVideo: {},
@@ -916,7 +916,7 @@ export default {
         { title: '4b43f5ef.fe94ed', value: 'online' },
         { title: '4b43f5ef.30bee6', value: 'mix' }
       ],
-      categoryList: [],
+      saleCategoryList: [],
       brandList: [],
       content: [],
       dragIssuesOptions: {
@@ -1372,8 +1372,15 @@ export default {
       }
       this.form.spec_images = JSON.stringify(this.specImages)
       this.form.spec_items = JSON.stringify(formSkuItem)
+      const itemCategory = this.form.item_category || []
+      const submitForm = {
+        ...this.form,
+        item_category: itemCategory.map((item) =>
+          item && item.length ? item[item.length - 1] : item
+        )
+      }
       if (this.form.item_id && !this.is_new) {
-        updateItems(this.form.item_id, this.form)
+        updateItems(this.form.item_id, submitForm)
           .then((response) => {
             this.$message({
               message: this.$t('4b43f5ef.55aa63'),
@@ -1391,7 +1398,7 @@ export default {
             this.submitLoading = false
           })
       } else {
-        createItems(this.form)
+        createItems(submitForm)
           .then((response) => {
             this.$message({
               message: this.$t('4b43f5ef.3fdaea'),
@@ -1812,13 +1819,25 @@ export default {
       })
 
       getCategory({ is_show: false }).then((response) => {
-        this.categoryList = transformTree(response.data.data, {
-          id: 'category_id',
-          label: 'category_name',
-          children: 'children'
-        })
-        if (this.$route.params.itemId) {
-          this.form.item_category = this.form.item_category_temp
+        const res = response.data.data
+        function _deepCategory(cate, temp) {
+          cate.forEach((item) => {
+            const _temp = {
+              label: item.category_name,
+              value: item.category_id
+            }
+            if (item.children) {
+              _temp.children = []
+              _deepCategory(item.children, _temp.children)
+            }
+            temp.push(_temp)
+          })
+        }
+        const saleCategoryList = []
+        _deepCategory(res, saleCategoryList)
+        this.saleCategoryList = saleCategoryList
+        if (this.$route.params.itemId && this.form.item_category_temp) {
+          this.form.item_category = this.deepSalesCategory(this.form.item_category_temp)
           delete this.form.item_category_temp
         }
       })
@@ -1830,6 +1849,32 @@ export default {
     //     this.form.is_profit = false
     //   }
     // },
+    deepSalesCategory(value) {
+      const { saleCategoryList } = this
+      function findPathById(tree, id, path) {
+        if (typeof path === 'undefined') {
+          path = []
+        }
+        for (let i = 0; i < tree.length; i++) {
+          const tempPath = [...path]
+          tempPath.push(tree[i].value)
+          if (tree[i].value == id) {
+            return tempPath
+          }
+          if (tree[i].children) {
+            const result = findPathById(tree[i].children, id, tempPath)
+            if (result) {
+              return result
+            }
+          }
+        }
+      }
+      const list = []
+      value.forEach((v) => {
+        list.push(findPathById(saleCategoryList, v))
+      })
+      return list
+    },
     // select值变化
     paramsChange(e) {
       const params = this.params
@@ -1867,11 +1912,14 @@ export default {
 }
 </script>
 <style lang="scss">
-.vue-treeselect__placeholder {
-  line-height: 40px;
+.el-cascader {
+  width: 100%;
+
+  .el-input {
+    width: 100%;
+    max-width: initial;
+  }
 }
-</style>
-<style lang="scss">
 .fallback-class {
   width: 118px;
   height: 118px;

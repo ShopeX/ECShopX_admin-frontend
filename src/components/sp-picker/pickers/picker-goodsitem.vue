@@ -191,6 +191,8 @@ export default {
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {
+      type: 'pickerGoodsItem',
+      defaultVal: [],
       formData,
       salesStatus: SALES_STATUS,
       list: [],
@@ -206,7 +208,9 @@ export default {
       },
       categoryList: [],
       multiple: this.value?.multiple ?? true,
-      localSelection: []
+      localSelection: [],
+      rowKey: this.value?.rowKey || 'item_id',
+      restoringSelection: false
     }
   },
   computed: {
@@ -285,8 +289,8 @@ export default {
   },
   created() {
     this.$options.config.title = this.$t('3157a2d5.43d1e2')
-    this.localSelection = cloneDeep(this.value.data) || []
-    this.rowKey = this.value?.rowKey || 'item_id'
+    this.localSelection = this.normalizeSelectionList(this.value.data)
+    this.syncLocalValFromSelection()
   },
   mounted() {
     this.getGoodsBranchList()
@@ -316,16 +320,53 @@ export default {
       }
       return params
     },
+    rowId(row) {
+      if (!row) return ''
+      const id = row[this.rowKey] ?? row.item_id ?? row.itemId
+      return id != null && id !== '' ? String(id) : ''
+    },
+    normalizeSelectionList(list) {
+      if (!Array.isArray(list)) return []
+      const map = new Map()
+      list.forEach((item) => {
+        if (item == null) return
+        if (typeof item === 'string' || typeof item === 'number') {
+          const id = String(item)
+          map.set(id, { item_id: id, itemId: id })
+          return
+        }
+        const id = this.rowId(item)
+        if (id) {
+          map.set(id, {
+            ...item,
+            item_id: item.item_id ?? item.itemId ?? id,
+            itemId: item.itemId ?? item.item_id ?? id
+          })
+        }
+      })
+      return Array.from(map.values())
+    },
+    syncLocalValFromSelection() {
+      this.localVal = { data: this.localSelection }
+    },
+    dedupeSelectionList(list) {
+      return this.normalizeSelectionList(list)
+    },
     afterSearch(response) {
       const { list } = response.data.data
-      if (this.localSelection.length > 0) {
-        const { finderTable } = this.$refs.finder.$refs
-        const ids = this.localSelection.map((m) => m[this.rowKey])
-        const selectRows = list.filter((item) => ids.includes(item[this.rowKey]))
-        setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection(selectRows)
+      const idSet = new Set(this.localSelection.map((m) => this.rowId(m)).filter(Boolean))
+      if (!idSet.size) return
+      const selectRows = list.filter((item) => idSet.has(this.rowId(item)))
+      const finderTable = this.$refs.finder?.$refs?.finderTable?.$refs?.finderTable
+      if (!finderTable || !selectRows.length) return
+      this.restoringSelection = true
+      this.$nextTick(() => {
+        const sidSet = new Set((finderTable.selection || []).map((m) => this.rowId(m)))
+        finderTable.setSelection(selectRows.filter((f) => !sidSet.has(this.rowId(f))))
+        this.$nextTick(() => {
+          this.restoringSelection = false
         })
-      }
+      })
     },
     onReset() {
       this.$refs.finder.refresh(true)
@@ -334,24 +375,30 @@ export default {
       this.$refs.finder.initData(true)
     },
     onSelect(selection, row) {
+      if (this.restoringSelection) return
       if (!this.multiple) {
         const { finderTable } = this.$refs.finder.$refs
         finderTable.clearSelection()
-        this.localSelection = [row]
+        this.localSelection = row ? [row] : []
         this.$nextTick(() => {
           finderTable.$refs.finderTable.setSelection(selection.length > 0 ? [row] : [])
         })
       } else {
         const isAdd = selection.includes(row)
-        const idx = this.localSelection.findIndex((f) => f[this.rowKey] === row[this.rowKey])
+        const rowKeyVal = this.rowId(row)
+        const idx = this.localSelection.findIndex((f) => this.rowId(f) === rowKeyVal)
 
-        if (isAdd && idx === -1) {
-          this.localSelection.push(row)
-        } else if (!isAdd && idx !== -1) {
+        if (isAdd) {
+          if (idx === -1) {
+            this.localSelection.push(row)
+          } else {
+            this.localSelection.splice(idx, 1, row)
+          }
+        } else if (idx !== -1) {
           this.localSelection.splice(idx, 1)
         }
       }
-      this.localSelection = this.localSelection.filter((item) => item.itemId)
+      this.localSelection = this.dedupeSelectionList(this.localSelection)
       this.updateVal(this.localSelection)
     },
     /**
@@ -360,31 +407,27 @@ export default {
      * @param list 当前页勾选数据 如果localSelection存在未来页数据 那么页码切换的时候 list中也会有
      */
     async handleSelectAll(list) {
+      if (this.restoringSelection) return
       const { finderTable } = this.$refs.finder.$refs
       const currentPageData = finderTable.$refs.finderTable.list
-      const currentPageDataIds = currentPageData.map((m) => m[this.rowKey])
+      const currentPageIdSet = new Set(currentPageData.map((m) => this.rowId(m)).filter(Boolean))
 
-      // 获取当前页面已选中的数据
-      const currentPageSelectList = list.filter((item) =>
-        currentPageDataIds.includes(item[this.rowKey])
-      )
+      const currentPageSelectList = list.filter((item) => currentPageIdSet.has(this.rowId(item)))
 
-      // 先移除当前页的所有选中项
       this.localSelection = this.localSelection.filter(
-        (item) => !currentPageDataIds.includes(item[this.rowKey])
+        (item) => !currentPageIdSet.has(this.rowId(item))
       )
 
-      // 如果有选中项，则添加到 localSelection
       if (currentPageSelectList.length > 0) {
-        this.localSelection.push(...currentPageData)
+        this.localSelection.push(...currentPageSelectList)
       }
 
+      this.localSelection = this.dedupeSelectionList(this.localSelection)
       this.updateVal(this.localSelection)
 
-      // 更新表格选中状态
       this.$nextTick(() => {
         if (currentPageSelectList.length > 0) {
-          finderTable.$refs.finderTable.setSelection(currentPageData)
+          finderTable.$refs.finderTable.setSelection(currentPageSelectList)
         } else {
           finderTable.$refs.finderTable.clearSelection()
         }

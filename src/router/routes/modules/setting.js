@@ -598,6 +598,17 @@ const routes = [
         component: () => import('@/views/settings/systemConfig/ShangPai-erp')
       },
       {
+        name: `usercenter`,
+        path: 'ShangPai/usercenter',
+        meta: {
+          aliasName: 'usercenter',
+          icon: 'icon-products',
+          title: '商派用户中心',
+          permissions: ['setting.systemsetting.usercenter']
+        },
+        component: () => import('@/views/settings/systemConfig/ShangPai-usercenter')
+      },
+      {
         name: `shopmenus`,
         path: 'menumanage/shopmenus',
         meta: {

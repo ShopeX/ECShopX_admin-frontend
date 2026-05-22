@@ -255,6 +255,22 @@ export function getCertificate() {
   })
 }
 
+export function getUsercenterAuthorizeUrl(params) {
+  return fetch({
+    url: '/company/usercenter/authorizeurl',
+    method: 'get',
+    params
+  })
+}
+
+export function loginUsercenter(params) {
+  return fetch({
+    url: '/company/usercenter/login',
+    method: 'get',
+    params
+  })
+}
+
 export function deleteCertificateInfo() {
   return fetch({
     url: '/third/saascert/delete/certificate',

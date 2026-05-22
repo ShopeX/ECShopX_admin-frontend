@@ -16,13 +16,15 @@
 
     <el-form
       ref="form"
+      v-loading="pageLoading"
+      element-loading-custom-class="pointmall-add-loading"
       :model="form"
       label-width="auto"
       label-position="left"
       class="demo-ruleForm"
     >
       <template v-if="!isEditor || (isEditor && !form.item_main_cat_id)">
-        <el-card v-loading="mainCateLoader" shadow="never" :header="$t('4b43f5ef.c50637')">
+        <el-card shadow="never" :header="$t('4b43f5ef.c50637')">
           <el-cascader
             v-model="selectedMainCategory"
             :options="mainCategory"
@@ -31,7 +33,7 @@
           />
         </el-card>
       </template>
-      <div v-else v-loading="loader" class="content-padded flex items-center">
+      <div v-else-if="isEditor && form.item_main_cat_id" class="content-padded flex items-center">
         <div>{{ $t('4b43f5ef.ca079c') }}</div>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
           <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
@@ -40,7 +42,7 @@
         </el-breadcrumb>
       </div>
       <template v-if="(!isEditor && selectedMainCategory.length > 0) || isEditor">
-        <el-card v-loading="loader" shadow="never">
+        <el-card shadow="never">
           <div slot="header" class="clearfix">
             <span>{{ $t('4b43f5ef.6ea1fe') }}</span>
             <el-button
@@ -215,7 +217,7 @@
             <el-radio label="drug">处方药</el-radio>
           </el-radio-group>
         </el-card> -->
-        <el-card v-loading="loader" shadow="never">
+        <el-card shadow="never">
           <div slot="header" class="clearfix">
             <span>{{ $t('4b43f5ef.8686bb') }}</span>
             <el-button
@@ -263,7 +265,7 @@
             </div>
           </transition>
         </el-card>
-        <el-card v-loading="loader" shadow="never">
+        <el-card shadow="never">
           <div slot="header" class="flex">
             <div class="view-flex-item">{{ $t('4b43f5ef.5fceb3') }}</div>
             <template v-if="!isEditor">
@@ -825,7 +827,7 @@
           </el-form-item>
         </el-card> -->
 
-        <el-card v-loading="loader" :header="$t('4b43f5ef.7db2d6')" shadow="never">
+        <el-card :header="$t('4b43f5ef.7db2d6')" shadow="never">
           <el-form-item :label="$t('4b43f5ef.f0789e')">
             <el-radio-group v-model="mode">
               <el-radio :label="'richText'"> {{ $t('4b43f5ef.e2591e') }} </el-radio>
@@ -893,8 +895,7 @@ export default {
       mainCategory: [],
       selectedMainCategory: [],
       categoryNames: [],
-      mainCateLoader: false,
-      loader: true,
+      pageLoading: true,
       submitLoading: false,
       isEditor: false,
       isLeave: false,
@@ -1003,6 +1004,9 @@ export default {
     ...mapGetters(['editingSkus'])
   },
   mounted() {
+    if (this.$route.params.itemId) {
+      this.isEditor = true
+    }
     console.log(this.$route.path.split('/')[2])
     if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
       console.log('跨境商品')
@@ -1017,9 +1021,9 @@ export default {
       if (_self.$route.query.is_new) {
         _self.is_new = _self.$route.query.is_new
       }
+      _self.pageLoading = true
+      try {
       if (_self.$route.params.itemId) {
-        _self.isEditor = true
-        _self.mainCateLoader = true
         // 初始化门店数据
         const response = await getItemsDetail(_self.$route.params.itemId)
         let itemsDetailData = response.data.data
@@ -1082,7 +1086,7 @@ export default {
         }
         _self.picsOldLen = _self.form.pics.length
         if (!itemsDetailData.item_main_cat_id) {
-          _self.fetchMainCate()
+          await _self.fetchMainCate()
         } else {
           let category = itemsDetailData.item_category_main
           _self.categoryNames = [
@@ -1143,13 +1147,14 @@ export default {
         // .catch(error => {
         //   _self.$router.go(-1)
         // })
-        _self.loader = false
         _self.itemVideo = { media_id: _self.form.videos, url: _self.form.videos_url }
       } else {
-        _self.fetchMainCate()
-        _self.loader = false
+        await _self.fetchMainCate()
       }
       await _self.init()
+      } finally {
+        _self.pageLoading = false
+      }
     }
     onload()
     this.getOrigincountry()
@@ -1171,7 +1176,7 @@ export default {
       this.form.item_address_city = this.select_regions_value[1]
     },
     fetchMainCate() {
-      getCategory({ is_main_category: true }).then((res) => {
+      return getCategory({ is_main_category: true }).then((res) => {
         let list = []
         res.data.data.forEach((item) => {
           let obj = {
@@ -1201,7 +1206,6 @@ export default {
           list.push(obj)
         })
         this.mainCategory = list
-        this.mainCateLoader = false
       })
     },
     handleCategoryChange(val) {
@@ -1801,7 +1805,7 @@ export default {
     },
     init() {
       this.getBrandList('', true)
-      getShippingTemplatesList(this.templatesListParams).then((response) => {
+      const templatesPromise = getShippingTemplatesList(this.templatesListParams).then((response) => {
         if (response.data.data.list.length > 0) {
           for (var i in response.data.data.list) {
             this.templatesList.push({
@@ -1818,7 +1822,7 @@ export default {
         }
       })
 
-      getCategory({ is_show: false }).then((response) => {
+      const categoryPromise = getCategory({ is_show: false }).then((response) => {
         const res = response.data.data
         function _deepCategory(cate, temp) {
           cate.forEach((item) => {
@@ -1841,6 +1845,7 @@ export default {
           delete this.form.item_category_temp
         }
       })
+      return Promise.all([templatesPromise, categoryPromise])
     },
     // profitStatusChange(val) {
     //   if (val) {
@@ -1912,6 +1917,15 @@ export default {
 }
 </script>
 <style lang="scss">
+/* 表单很高时，默认 loading 会居中在整页表单中部；改为固定视口遮罩 */
+.pointmall-add-loading {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: 2000 !important;
+}
 .el-cascader {
   width: 100%;
 

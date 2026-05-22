@@ -152,6 +152,11 @@ export default {
       component: () => import('@/view/base/setting/certificate/index')
     },
     {
+      path: 'ShangPai/usercenter',
+      name: '商派用户中心',
+      component: () => import('@/views/settings/systemConfig/ShangPai-usercenter')
+    },
+    {
       path: 'systemsetting/wdtSetting',
       name: 'b51bc270.a891b2',
       component: () => import('@/views/settings/systemConfig/wdtSetting')
@@ -326,6 +331,11 @@ export default {
       path: 'systemsetting/certificate',
       name: 'b51bc270.e5549d',
       component: () => import('@/view/base/setting/certificate/index')
+    },
+    {
+      path: 'ShangPai/usercenter',
+      name: '商派用户中心',
+      component: () => import('@/views/settings/systemConfig/ShangPai-usercenter')
     },
     {
       path: 'systemsetting/damoCrm',

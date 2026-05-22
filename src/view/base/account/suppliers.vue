@@ -53,7 +53,6 @@
       :form="supplierForm"
       :form-list="supplierFormList"
       @onSubmit="onSupplierFormSubmit"
-      @input="onInputChange"
     />
   </SpPage>
 </template>
@@ -75,6 +74,7 @@ export default {
         operator_type: 'supplier',
         mobile: '',
         login_name: '',
+        supplier_name: '',
         username: '',
         password: ''
       }
@@ -125,6 +125,7 @@ export default {
                 this.supplierForm.id = row.operator_id
                 this.supplierForm.mobile = row.mobile
                 this.supplierForm.login_name = row.login_name
+                this.supplierForm.supplier_name = row.supplier_name || ''
                 this.supplierForm.username = row.username
                 this.supplierForm.password = ''
                 this.supplierFormListDisabled[1] = true
@@ -148,6 +149,14 @@ export default {
           message: emptyMsg
         },
         {
+          label: this.$t('9bd7ffcf.9190cc'),
+          key: 'supplier_name',
+          type: 'input',
+          required: true,
+          message: emptyMsg,
+          placeholder: this.$t('9bd7ffcf.f0c2bb')
+        },
+        {
           label: this.$t('9bd7ffcf.8098e2'),
           key: 'mobile',
           type: 'input',
@@ -167,15 +176,37 @@ export default {
           label: this.$t('9bd7ffcf.a81052'),
           key: 'password',
           type: 'input',
-          message: emptyMsg,
+          message: this.$t('9bd7ffcf.c4a882'),
+          placeholder: this.$t('9bd7ffcf.c4a882'),
+          // tip: this.$t('9bd7ffcf.d7e319'),
           validator: (rule, value, callback) => {
-            if (!value) {
-              callback(new Error(emptyMsg))
-            } else if (value.length < 6) {
-              callback(new Error(this.$t('9bd7ffcf.2586f0')))
-            } else {
+            const requiredMsg = this.$t('9bd7ffcf.c4a882')
+            const ruleMsg = this.$t('9bd7ffcf.d7e319')
+            const isEdit = !!this.supplierForm.id
+            const raw = value == null ? '' : String(value)
+            if (!isEdit) {
+              if (!raw.trim()) {
+                callback(new Error(requiredMsg))
+                return
+              }
+            } else if (!raw.trim()) {
               callback()
+              return
             }
+            const pwd = raw
+            if (pwd.length < 8) {
+              callback(new Error(ruleMsg))
+              return
+            }
+            const hasDigit = /\d/.test(pwd)
+            const hasLetter = /[a-zA-Z]/.test(pwd)
+            const hasSpecial = /[^a-zA-Z0-9]/.test(pwd)
+            const categories = [hasDigit, hasLetter, hasSpecial].filter(Boolean).length
+            if (categories < 2) {
+              callback(new Error(ruleMsg))
+              return
+            }
+            callback()
           }
         }
       ]
@@ -194,8 +225,6 @@ export default {
       return params
     },
     addSupplier() {
-      this.id = ''
-      this.supplierDialog = true
       this.supplierFormListDisabled[1] = false
       this.supplierFormListDisabled[2] = false
       this.supplierForm = {
@@ -203,22 +232,22 @@ export default {
         operator_type: 'supplier',
         mobile: '',
         login_name: '',
+        supplier_name: '',
         username: '',
         password: ''
       }
-    },
-    onInputChange() {
-      // this.supplierDialog = false
-      // this.supplierForm = {}
+      this.supplierDialog = true
     },
     async onSupplierFormSubmit() {
-      const { id: item_id } = this.supplierForm
-      delete this.supplierForm.id
+      const { id: item_id, ...payload } = this.supplierForm
+      if (item_id && (!payload.password || String(payload.password).trim() === '')) {
+        delete payload.password
+      }
       if (item_id) {
-        await this.$api.company.updateAccountInfo(item_id, this.supplierForm)
+        await this.$api.company.updateAccountInfo(item_id, payload)
         this.$message.success(this.$t('9bd7ffcf.55aa63'))
       } else {
-        await this.$api.company.createAccount({ ...this.supplierForm })
+        await this.$api.company.createAccount(payload)
         this.$message.success(this.$t('9bd7ffcf.3fdaea'))
       }
       this.supplierDialog = false

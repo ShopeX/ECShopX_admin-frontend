@@ -37,9 +37,7 @@ export default {
           leftPoint +=
             item.refundNum === item.left_aftersales_num
               ? item.remain_point / 100
-              : parseInt(
-                  (item.remain_point / 100 / item.left_aftersales_num) * item.refundNum
-                )
+              : parseInt((item.remain_point / 100 / item.left_aftersales_num) * item.refundNum)
         }
       })
       this.refundPoint = leftPoint

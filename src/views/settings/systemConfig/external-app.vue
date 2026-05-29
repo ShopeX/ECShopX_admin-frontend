@@ -6,8 +6,14 @@
 <template>
   <SpPage>
     <SpRouterView>
-      <SpFormPlus v-model="formData" form-type="searchForm" :form-items="formItems" @submit="onSearch" @reset="onSearch"
-        :inline="true" />
+      <SpFormPlus
+        v-model="formData"
+        form-type="searchForm"
+        :form-items="formItems"
+        @submit="onSearch"
+        @reset="onSearch"
+        :inline="true"
+      />
 
       <div class="action-container mt-5">
         <el-button type="primary" icon="plus" @click="showEditModal('')">
@@ -15,11 +21,30 @@
         </el-button>
       </div>
 
-      <SpFinder ref="finder" url="/wxexternalconfig/list" no-selection :setting="setting"
-        :hooks="{ beforeSearch: beforeSearch }" border />
+      <SpFinder
+        ref="finder"
+        url="/wxexternalconfig/list"
+        no-selection
+        :setting="setting"
+        :hooks="{ beforeSearch: beforeSearch }"
+        border
+      />
 
-      <el-dialog class="modal" width="30%" :title="modalTitle" :visible="showModal" @close="closeModal">
-        <el-form ref="editForm" label-suffix=":" label-width="120px" class="form" :rules="rules" :model="editInfo">
+      <el-dialog
+        class="modal"
+        width="30%"
+        :title="modalTitle"
+        :visible="showModal"
+        @close="closeModal"
+      >
+        <el-form
+          ref="editForm"
+          label-suffix=":"
+          label-width="120px"
+          class="form"
+          :rules="rules"
+          :model="editInfo"
+        >
           <el-form-item :label="$t('f06fa37c.d34f1f')" prop="app_name">
             <el-input v-model="editInfo.app_name" />
           </el-form-item>
@@ -27,8 +52,15 @@
             <el-input v-model="editInfo.app_id" />
           </el-form-item>
           <el-form-item :label="$t('f06fa37c.3bdd08')">
-            <el-input v-model="editInfo.app_desc" type="textarea" :placeholder="$t('f06fa37c.d51187')" resize="none"
-              maxlength="30" show-word-limit :rows="3" />
+            <el-input
+              v-model="editInfo.app_desc"
+              type="textarea"
+              :placeholder="$t('f06fa37c.d51187')"
+              resize="none"
+              maxlength="30"
+              show-word-limit
+              :rows="3"
+            />
           </el-form-item>
         </el-form>
         <div class="btns">

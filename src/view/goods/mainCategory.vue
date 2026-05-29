@@ -414,7 +414,8 @@ export default {
         this.refreshNode(parent_id)
         this.categoryDialog = false
         // 创建/编辑保持一致：弹「同步翻译」弹框
-        const newCategoryId = (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
+        const newCategoryId =
+          (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
         if (newCategoryId) {
           this.openTranslate(newCategoryId, ['category_name'], [category_name || ''])
         }

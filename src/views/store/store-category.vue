@@ -154,7 +154,9 @@ export default {
         } else {
           // 新增
           const res = await this.$api.store.createStoreCategory({ category_name })
-          translateCategoryId = (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
+          translateCategoryId =
+            (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) ||
+            0
           this.$message.success(this.$t('9a30bc45.3fdaea'))
         }
         this.categoryDialog = false

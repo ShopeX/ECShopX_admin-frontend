@@ -389,9 +389,18 @@ export default {
           this.show_sideBar = false
           this.fetchList()
           // 创建/编辑保持一致：弹「同步翻译」弹框
-          const newAttrId = (res && res.data && res.data.data && (res.data.data.attribute_id || res.data.data.id)) || 0
+          const newAttrId =
+            (res &&
+              res.data &&
+              res.data.data &&
+              (res.data.data.attribute_id || res.data.data.id)) ||
+            0
           if (newAttrId) {
-            this.openTranslate(newAttrId, ['attribute_name', 'attribute_memo'], [submitData.attribute_name || '', submitData.attribute_memo || ''])
+            this.openTranslate(
+              newAttrId,
+              ['attribute_name', 'attribute_memo'],
+              [submitData.attribute_name || '', submitData.attribute_memo || '']
+            )
           }
         })
       } else {
@@ -399,7 +408,11 @@ export default {
           this.$message({ type: 'success', message: this.$t('5db1387d.33130f') })
           this.show_sideBar = false
           this.fetchList()
-          this.openTranslate(params.attribute_id, ['attribute_name', 'attribute_memo'], [submitData.attribute_name || '', submitData.attribute_memo || ''])
+          this.openTranslate(
+            params.attribute_id,
+            ['attribute_name', 'attribute_memo'],
+            [submitData.attribute_name || '', submitData.attribute_memo || '']
+          )
         })
       }
     },

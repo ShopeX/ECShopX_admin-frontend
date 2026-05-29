@@ -1058,7 +1058,11 @@ export default {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)
           this.submitLoading = false
           this.$message.success(this.$t('027707af.c83614'))
-          this.openTranslate(distributor_id, ['name', 'address', 'introduce'], [this.form.name || '', this.form.address || '', this.form.introduce || ''])
+          this.openTranslate(
+            distributor_id,
+            ['name', 'address', 'introduce'],
+            [this.form.name || '', this.form.address || '', this.form.introduce || '']
+          )
         } else {
           const ids = (this.$refs['daoDianZiti']?.finderData || []).map((item) => item.id)
           await this.$api.marketing.saveDistributorInfo({
@@ -1068,9 +1072,18 @@ export default {
           this.submitLoading = false
           this.$message.success(this.$t('027707af.931e30'))
           // 创建/编辑保持一致：拿到新店铺 id 弹「同步翻译」弹框；取不到 id 时退回原行为
-          const newDistributorId = (res && res.data && res.data.data && (res.data.data.distributor_id || res.data.data.id)) || 0
+          const newDistributorId =
+            (res &&
+              res.data &&
+              res.data.data &&
+              (res.data.data.distributor_id || res.data.data.id)) ||
+            0
           if (newDistributorId) {
-            this.openTranslate(newDistributorId, ['name', 'address', 'introduce'], [this.form.name || '', this.form.address || '', this.form.introduce || ''])
+            this.openTranslate(
+              newDistributorId,
+              ['name', 'address', 'introduce'],
+              [this.form.name || '', this.form.address || '', this.form.introduce || '']
+            )
           } else if (!this.IS_DISTRIBUTOR()) {
             this.$router.go(-1)
           }

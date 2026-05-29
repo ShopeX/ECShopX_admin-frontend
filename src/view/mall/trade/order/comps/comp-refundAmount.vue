@@ -13,9 +13,7 @@
 <template>
   <div class="comp-refund-amount">
     <el-input v-model="fee" type="text" disabled @change="onChangeFee" />
-    <div class="refund-amount-tip">
-      {{ $t('8a5fac4d.eea9ab') }}{{ refundFee }}
-    </div>
+    <div class="refund-amount-tip">{{ $t('8a5fac4d.eea9ab') }}{{ refundFee }}</div>
   </div>
 </template>
 

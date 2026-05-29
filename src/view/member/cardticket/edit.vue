@@ -1115,7 +1115,11 @@ export default {
                     duration: 2 * 1000
                   })
                   this.refresh()
-                  this.openTranslate(this.form.card_id, ['title', 'description'], [this.form.title || '', this.form.description || ''])
+                  this.openTranslate(
+                    this.form.card_id,
+                    ['title', 'description'],
+                    [this.form.title || '', this.form.description || '']
+                  )
                 } else {
                   this.$message.error(this.$t('dba53da0.445eb0'))
                   this.submitDisabled = false
@@ -1137,7 +1141,11 @@ export default {
                   this.refresh()
                   // 创建/编辑保持一致：弹「同步翻译」弹框；仅保存/取消由 mixin 跳回列表
                   const newCardId = (res.data.data && res.data.data.card_id) || this.form.card_id
-                  this.openTranslate(newCardId, ['title', 'description'], [this.form.title || '', this.form.description || ''])
+                  this.openTranslate(
+                    newCardId,
+                    ['title', 'description'],
+                    [this.form.title || '', this.form.description || '']
+                  )
                 } else {
                   this.$message.error(this.$t('dba53da0.be28db'))
                   this.submitDisabled = false
@@ -1153,7 +1161,7 @@ export default {
         }
       })
     },
-    
+
     addStoreAction() {
       this.storeVisible = true
       this.setStatus = true

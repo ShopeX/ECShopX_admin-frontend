@@ -698,9 +698,17 @@ export default {
         updateMarketingActivity(this.form).then((res) => {
           if (res.data.data.marketing_id) {
             this.loading = false
-            this.$message({ message: this.$t('4262458d.55aa63'), type: 'success', duration: 2 * 1000 })
+            this.$message({
+              message: this.$t('4262458d.55aa63'),
+              type: 'success',
+              duration: 2 * 1000
+            })
             that.refresh()
-            this.openTranslate(res.data.data.marketing_id, ['marketing_name', 'marketing_desc'], [this.form.marketing_name || '', this.form.marketing_desc || ''])
+            this.openTranslate(
+              res.data.data.marketing_id,
+              ['marketing_name', 'marketing_desc'],
+              [this.form.marketing_name || '', this.form.marketing_desc || '']
+            )
           } else {
             this.$message.error(this.$t('4262458d.73b0d9'))
             return false
@@ -717,7 +725,11 @@ export default {
             })
             that.refresh()
             // 创建/编辑保持一致：弹「同步翻译」弹框；仅保存/取消由 mixin 跳回列表
-            this.openTranslate(res.data.data.marketing_id, ['marketing_name', 'marketing_desc'], [this.form.marketing_name || '', this.form.marketing_desc || ''])
+            this.openTranslate(
+              res.data.data.marketing_id,
+              ['marketing_name', 'marketing_desc'],
+              [this.form.marketing_name || '', this.form.marketing_desc || '']
+            )
           } else {
             this.$message.error(this.$t('4262458d.73b0d9'))
             return false
@@ -725,7 +737,7 @@ export default {
         })
       }
     },
-    
+
     getActivityDetail(id) {
       getMarketingActivityInfo({ marketing_id: id }).then((res) => {
         let response = res.data.data

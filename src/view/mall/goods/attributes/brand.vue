@@ -216,7 +216,12 @@ export default {
           this.show_sideBar = false
           this.$refs.finder.refresh(true)
           // 创建/编辑保持一致：弹「同步翻译」弹框
-          const newAttrId = (res && res.data && res.data.data && (res.data.data.attribute_id || res.data.data.id)) || 0
+          const newAttrId =
+            (res &&
+              res.data &&
+              res.data.data &&
+              (res.data.data.attribute_id || res.data.data.id)) ||
+            0
           if (newAttrId) {
             this.openTranslate(newAttrId, ['attribute_name'], [submitData.attribute_name || ''])
           }
@@ -226,7 +231,11 @@ export default {
           this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.show_sideBar = false
           this.$refs.finder.refresh()
-          this.openTranslate(submitData.attribute_id, ['attribute_name'], [submitData.attribute_name || ''])
+          this.openTranslate(
+            submitData.attribute_id,
+            ['attribute_name'],
+            [submitData.attribute_name || '']
+          )
         })
       }
     },

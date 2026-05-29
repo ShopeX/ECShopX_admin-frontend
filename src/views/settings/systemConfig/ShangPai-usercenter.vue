@@ -21,10 +21,7 @@
           <p v-if="pageInfo.description">{{ pageInfo.description }}</p>
         </div>
 
-        <div
-          v-if="!loading && goodsList.length === 0"
-          class="appcenter-empty"
-        >
+        <div v-if="!loading && goodsList.length === 0" class="appcenter-empty">
           {{ pageInfo.empty_text || '暂无可展示应用' }}
         </div>
         <div v-else class="appcenter-items appcenter-layout-grid">
@@ -66,10 +63,7 @@ import {
   getAppcenterGoods,
   loginUsercenter
 } from '@/api/company'
-import {
-  isUsercenterLoggedIn,
-  setUsercenterLoginSuccess
-} from '@/utils/usercenter-storage'
+import { isUsercenterLoggedIn, setUsercenterLoginSuccess } from '@/utils/usercenter-storage'
 
 export default {
   data() {
@@ -137,8 +131,7 @@ export default {
     async redirectToAppcenter() {
       const urlResponse = await getAppcenterUrl()
       const urlData = urlResponse?.data?.data
-      const appcenterUrl =
-        (typeof urlData === 'string' ? urlData : '') || urlData?.url || ''
+      const appcenterUrl = (typeof urlData === 'string' ? urlData : '') || urlData?.url || ''
       if (!appcenterUrl) {
         throw new Error('获取用户中心地址失败')
       }

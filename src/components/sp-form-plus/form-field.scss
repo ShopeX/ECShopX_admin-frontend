@@ -5,27 +5,29 @@
 .sp-form-plus {
   .form-field {
     margin-bottom: 22px;
+  }
 
-    &-group {
-      &:before {
-        position: absolute;
-        top: 11px;
-        bottom: 11px;
-        left: 0;
-        width: 2px;
-        background-color: var(--primary);
-        content: '';
-      }
-
-      padding: 8px;
-      color: #333;
-      // font-weight: 500;
-      font-size: 15px;
-      position: relative;
-      border-bottom: 1px solid #f1f2f5;
-      margin-bottom: 18px;
+  .form-field-divider {
+    &:before {
+      position: absolute;
+      top: 11px;
+      bottom: 11px;
+      left: 0;
+      width: 2px;
+      background-color: #298dff;
+      content: '';
     }
 
+    padding: 6px 0 6px 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    border-bottom: 1px solid #f1f2f5;
+    margin-bottom: 10px;
+  }
+
+  .form-field {
     // 可以添加更多样式
     .el-form-item {
       margin-bottom: 0;

@@ -1,0 +1,13 @@
+---
+description: Prefer TailwindCSS utilities over custom CSS classes for new development
+alwaysApply: true
+---
+
+# TailwindCSS First for New Work
+
+For any new requirement implementation in this repository:
+
+- Prefer TailwindCSS utility classes in templates/components.
+- Do not introduce new custom CSS classes in scoped/global style blocks unless there is a clear technical limitation.
+- If a custom class is unavoidable, keep it minimal and document the reason in the code comment near the style definition.
+- When modifying existing modules, do not refactor unrelated legacy styles unless the task explicitly asks for it.

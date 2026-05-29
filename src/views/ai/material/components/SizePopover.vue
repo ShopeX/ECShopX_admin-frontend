@@ -1,10 +1,5 @@
 <template>
-  <el-popover
-    placement="top"
-    width="480"
-    trigger="click"
-    popper-class="size-popover"
-  >
+  <el-popover placement="top" width="480" trigger="click" popper-class="size-popover">
     <div class="size-popover-content">
       <div class="section">
         <div class="section-title">分辨率</div>
@@ -17,7 +12,9 @@
             placement="top"
           >
             <span>
-              <el-radio-button :label="r.value" :disabled="r.disabled">{{ r.label }}</el-radio-button>
+              <el-radio-button :label="r.value" :disabled="r.disabled">{{
+                r.label
+              }}</el-radio-button>
             </span>
           </el-tooltip>
         </el-radio-group>
@@ -45,7 +42,11 @@
           <el-input v-model.number="innerW" placeholder="W" size="small" @change="onCustomChange">
             <template slot="prepend">W</template>
           </el-input>
-          <i :class="lockOn ? 'el-icon-link' : 'el-icon-close'" class="link-icon" @click="lockOn = !lockOn" />
+          <i
+            :class="lockOn ? 'el-icon-link' : 'el-icon-close'"
+            class="link-icon"
+            @click="lockOn = !lockOn"
+          />
           <el-input v-model.number="innerH" placeholder="H" size="small" @change="onCustomChange">
             <template slot="prepend">H</template>
           </el-input>
@@ -106,10 +107,18 @@ export default {
     }
   },
   watch: {
-    resolution(v) { this.innerResolution = v },
-    ratio(v) { this.innerRatio = v },
-    customW(v) { this.innerW = Number(v) || 0 },
-    customH(v) { this.innerH = Number(v) || 0 }
+    resolution(v) {
+      this.innerResolution = v
+    },
+    ratio(v) {
+      this.innerRatio = v
+    },
+    customW(v) {
+      this.innerW = Number(v) || 0
+    },
+    customH(v) {
+      this.innerH = Number(v) || 0
+    }
   },
   methods: {
     onRatioClick(v) {
@@ -124,7 +133,8 @@ export default {
       this.emitChange()
     },
     onChange() {
-      const sizeStr = SIZE_MAP[this.innerResolution] && SIZE_MAP[this.innerResolution][this.innerRatio]
+      const sizeStr =
+        SIZE_MAP[this.innerResolution] && SIZE_MAP[this.innerResolution][this.innerRatio]
       if (sizeStr) {
         const { w, h } = parseSize(sizeStr)
         this.innerW = w
@@ -152,30 +162,105 @@ export default {
 </script>
 
 <style scoped>
-.size-popover-content { padding: 4px; }
-.section { margin-bottom: 16px; }
-.section-title { font-size: 13px; color: #606266; margin-bottom: 8px; }
-.ratio-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
-.ratio-item {
-  border: 1px solid #dcdfe6; border-radius: 4px; padding: 6px 0;
-  display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: all .2s;
+.size-popover-content {
+  padding: 4px;
 }
-.ratio-item:hover { border-color: #409eff; }
-.ratio-item.active { border-color: #409eff; color: #409eff; background: #ecf5ff; }
-.ratio-icon { width: 22px; height: 22px; border: 1.5px solid currentColor; border-radius: 2px; margin-bottom: 4px; }
-.r-1-1 { width: 18px; height: 18px; }
-.r-3-4 { width: 14px; height: 18px; }
-.r-4-3 { width: 18px; height: 14px; }
-.r-16-9 { width: 22px; height: 12px; }
-.r-9-16 { width: 12px; height: 22px; }
-.r-3-2 { width: 21px; height: 14px; }
-.r-2-3 { width: 14px; height: 21px; }
-.r-21-9 { width: 24px; height: 10px; }
-.ratio-label { font-size: 11px; }
-.size-inputs { display: flex; align-items: center; gap: 8px; }
-.size-inputs .el-input { flex: 1; }
-.link-icon { font-size: 18px; color: #909399; cursor: pointer; }
-.error-tip { color: #f56c6c; font-size: 12px; margin-top: 4px; }
-.btn-chip { font-weight: 400; }
-.chip-divider { margin: 0 4px; color: #c0c4cc; }
+.section {
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: 13px;
+  color: #606266;
+  margin-bottom: 8px;
+}
+.ratio-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+.ratio-item {
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ratio-item:hover {
+  border-color: #409eff;
+}
+.ratio-item.active {
+  border-color: #409eff;
+  color: #409eff;
+  background: #ecf5ff;
+}
+.ratio-icon {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+.r-1-1 {
+  width: 18px;
+  height: 18px;
+}
+.r-3-4 {
+  width: 14px;
+  height: 18px;
+}
+.r-4-3 {
+  width: 18px;
+  height: 14px;
+}
+.r-16-9 {
+  width: 22px;
+  height: 12px;
+}
+.r-9-16 {
+  width: 12px;
+  height: 22px;
+}
+.r-3-2 {
+  width: 21px;
+  height: 14px;
+}
+.r-2-3 {
+  width: 14px;
+  height: 21px;
+}
+.r-21-9 {
+  width: 24px;
+  height: 10px;
+}
+.ratio-label {
+  font-size: 11px;
+}
+.size-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.size-inputs .el-input {
+  flex: 1;
+}
+.link-icon {
+  font-size: 18px;
+  color: #909399;
+  cursor: pointer;
+}
+.error-tip {
+  color: #f56c6c;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.btn-chip {
+  font-weight: 400;
+}
+.chip-divider {
+  margin: 0 4px;
+  color: #c0c4cc;
+}
 </style>

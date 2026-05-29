@@ -4,6 +4,7 @@
  */
 import { BasicLayout } from '@/layout/basic' // 主框架
 import { VERSION_SHUYUN } from '@/utils'
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
       aliasName: 'setting',
       icon: 'setting-config',
       keepAlive: true,
-      title: '181fc9cc.e366cc'
+      title: i18n.t('181fc9cc.e366cc')
     },
     name: 'setting',
     path: '/setting',
@@ -23,7 +24,7 @@ const routes = [
         meta: {
           aliasName: 'platformstaff',
           icon: 'icon-products',
-          title: '181fc9cc.26d82e',
+          title: i18n.t('181fc9cc.26d82e'),
           permissions: ['setting.staff.platformstaff']
         },
         component: () => import('@/view/base/account/normalstaff')
@@ -34,7 +35,7 @@ const routes = [
         meta: {
           aliasName: 'platformstaffroles',
           icon: 'icon-products',
-          title: '181fc9cc.7e337d',
+          title: i18n.t('181fc9cc.7e337d'),
           permissions: ['setting.staff.platformstaffroles']
         },
         component: () => import('@/views/settings/role-admin')
@@ -45,7 +46,7 @@ const routes = [
         meta: {
           aliasName: 'merchantstaff',
           icon: 'icon-products',
-          title: '181fc9cc.f629da',
+          title: i18n.t('181fc9cc.f629da'),
           permissions: ['setting.staff.merchantstaff']
         },
         component: () => import('@/view/base/account/storestaff')
@@ -57,7 +58,7 @@ const routes = [
         meta: {
           aliasName: 'storemanager_account',
           icon: 'icon-products',
-          title: '181fc9cc.2fda42',
+          title: i18n.t('181fc9cc.2fda42'),
           permissions: ['setting.staff.storemanager_account']
         },
         component: () => import('@/view/mall/marketing/merchantAccount')
@@ -69,7 +70,7 @@ const routes = [
         meta: {
           aliasName: 'shopmenus',
           icon: 'icon-products',
-          title: '181fc9cc.712fef',
+          title: i18n.t('181fc9cc.712fef'),
           permissions: ['setting.menumanage.shopmenus']
         },
         component: () => import('@/view/menus/shopmenu')
@@ -80,7 +81,7 @@ const routes = [
         meta: {
           aliasName: 'distributormenu',
           icon: 'icon-products',
-          title: '181fc9cc.5e1308',
+          title: i18n.t('181fc9cc.5e1308'),
           permissions: ['setting.menumanage.distributormenu']
         },
         component: () => import('@/view/menus/distributormenu')
@@ -91,7 +92,7 @@ const routes = [
         meta: {
           aliasName: 'merchantmenu',
           icon: 'icon-products',
-          title: '181fc9cc.86be9a',
+          title: i18n.t('181fc9cc.86be9a'),
           permissions: ['setting.menumanage.merchantmenu']
         },
         component: () => import('@/view/menus/merchantmenu')
@@ -102,7 +103,7 @@ const routes = [
         meta: {
           aliasName: 'suppliermenus',
           icon: 'icon-products',
-          title: '181fc9cc.f6b769',
+          title: i18n.t('181fc9cc.f6b769'),
           permissions: ['setting.menumanage.suppliermenus']
         },
         component: () => import('@/view/menus/supplier')
@@ -114,7 +115,7 @@ const routes = [
         meta: {
           aliasName: 'publicsetting',
           icon: 'icon-products',
-          title: '181fc9cc.91a229',
+          title: i18n.t('181fc9cc.91a229'),
           permissions: ['setting.systemsetting.publicsetting']
         },
         component: () => import('@/views/settings/systemConfig/publicsetting')
@@ -140,7 +141,7 @@ const routes = [
         meta: {
           aliasName: 'invoinceConfiguration',
           icon: 'icon-products',
-          title: '181fc9cc.1275c1',
+          title: i18n.t('181fc9cc.1275c1'),
           permissions: ['setting.systemsetting.invoinceConfiguration']
         },
         component: () => import('@/views/settings/systemConfig/invoiceConfiguration/baiSetting')
@@ -151,7 +152,7 @@ const routes = [
         meta: {
           aliasName: 'assetpayment',
           icon: 'icon-products',
-          title: '181fc9cc.1c3835',
+          title: i18n.t('181fc9cc.1c3835'),
           permissions: ['setting.systemsetting.assetpayment']
         },
         component: () => import('@/views/settings/systemConfig/payment')
@@ -162,7 +163,7 @@ const routes = [
         meta: {
           aliasName: 'datamessage',
           icon: 'icon-products',
-          title: '181fc9cc.ffa488',
+          title: i18n.t('181fc9cc.ffa488'),
           permissions: ['setting.systemsetting.datamessage']
         },
         component: () => {
@@ -251,7 +252,7 @@ const routes = [
         meta: {
           aliasName: 'Yilianyun',
           icon: 'icon-products',
-          title: '181fc9cc.bf34e4',
+          title: i18n.t('181fc9cc.bf34e4'),
           permissions: ['setting.systemsetting.Yilianyun']
         },
         component: () => import('@/views/settings/systemConfig/yilianyun/index')
@@ -262,7 +263,7 @@ const routes = [
         meta: {
           aliasName: 'ugctpos',
           icon: 'icon-products',
-          title: '181fc9cc.b28ada',
+          title: i18n.t('181fc9cc.b28ada'),
           permissions: ['setting.systemsetting.ugctpos']
         },
         component: () => import('@/views/settings/systemConfig/ugcTPOS')
@@ -273,7 +274,7 @@ const routes = [
         meta: {
           aliasName: 'wxaindex',
           icon: 'icon-products',
-          title: '181fc9cc.10aa76',
+          title: i18n.t('181fc9cc.10aa76'),
           permissions: ['setting.systemsetting.wxaindex']
         },
         component: () => import('@/view/wxapp/wxappmanage/list')
@@ -284,7 +285,7 @@ const routes = [
         meta: {
           aliasName: 'editdashboard',
           icon: 'icon-products',
-          title: '181fc9cc.6450d8',
+          title: i18n.t('181fc9cc.6450d8'),
           permissions: ['setting.systemsetting.editdashboard']
         },
         component: () => import('@/view/wxapp/statistics/dataanalysis/index')
@@ -295,7 +296,7 @@ const routes = [
         meta: {
           aliasName: 'editsourcemanagement',
           icon: 'icon-products',
-          title: '181fc9cc.21058f',
+          title: i18n.t('181fc9cc.21058f'),
           permissions: ['setting.systemsetting.editsourcemanagement']
         },
         component: () => import('@/view/wxapp/statistics/sourcemanagement/index'),
@@ -304,7 +305,7 @@ const routes = [
             path: 'detail/:monitorId?',
             component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail'),
             meta: {
-              title: '181fc9cc.b76938',
+              title: i18n.t('181fc9cc.b76938'),
               hidden: true
             }
           }
@@ -316,7 +317,7 @@ const routes = [
         meta: {
           aliasName: 'noticemessage',
           icon: 'icon-products',
-          title: '181fc9cc.579cc5',
+          title: i18n.t('181fc9cc.579cc5'),
           permissions: ['setting.systemsetting.noticemessage']
         },
         component: () => import('@/view/wxapp/messages')
@@ -328,7 +329,7 @@ const routes = [
         meta: {
           aliasName: '',
           icon: 'icon-products',
-          title: '181fc9cc.cbf7c8',
+          title: i18n.t('181fc9cc.cbf7c8'),
           permissions: ['setting.systemsetting.brand']
         },
         component: () => import('@/views/settings/systemConfig/official-account-auth')
@@ -339,7 +340,7 @@ const routes = [
         meta: {
           aliasName: 'wxappchat',
           icon: 'icon-products',
-          title: '181fc9cc.107a88',
+          title: i18n.t('181fc9cc.107a88'),
           permissions: ['setting.systemsetting.wxappchat']
         },
         component: () => import('@/views/settings/systemConfig/wxapp-customer-service')
@@ -350,7 +351,7 @@ const routes = [
         meta: {
           aliasName: 'EChat',
           icon: 'icon-products',
-          title: '181fc9cc.e66efe',
+          title: i18n.t('181fc9cc.e66efe'),
           permissions: ['setting.systemsetting.EChat']
         },
         component: () => import('@/views/settings/systemConfig/echat')
@@ -361,7 +362,7 @@ const routes = [
         meta: {
           aliasName: 'meiqia',
           icon: 'icon-products',
-          title: '181fc9cc.7ef177',
+          title: i18n.t('181fc9cc.7ef177'),
           permissions: ['setting.systemsetting.meiqia']
         },
         component: () => import('@/views/settings/systemConfig/meiqia')
@@ -372,7 +373,7 @@ const routes = [
         meta: {
           aliasName: 'wdtSetting',
           icon: 'icon-products',
-          title: '181fc9cc.152925',
+          title: i18n.t('181fc9cc.152925'),
           permissions: ['setting.systemsetting.wdtSetting']
         },
         component: () => import('@/views/settings/systemConfig/wdtSetting')
@@ -383,7 +384,7 @@ const routes = [
         meta: {
           aliasName: 'jstSetting',
           icon: 'icon-products',
-          title: '181fc9cc.deb133',
+          title: i18n.t('181fc9cc.deb133'),
           permissions: ['setting.systemsetting.jstSetting']
         },
         component: () => import('@/views/settings/systemConfig/jstSetting')
@@ -394,7 +395,7 @@ const routes = [
         meta: {
           aliasName: 'domain_setting',
           icon: 'icon-products',
-          title: '181fc9cc.93c728',
+          title: i18n.t('181fc9cc.93c728'),
           permissions: ['setting.systemsetting.domain_setting']
         },
         component: () => import('@/views/settings/systemConfig/domain')
@@ -405,7 +406,7 @@ const routes = [
         meta: {
           aliasName: 'approveDataPass',
           icon: 'icon-products',
-          title: '181fc9cc.1fb869',
+          title: i18n.t('181fc9cc.1fb869'),
           permissions: ['setting.systemsetting.approveDataPass']
         },
         component: () => import('@/views/settings/systemConfig/encrypt/authAdmin.vue')
@@ -416,7 +417,7 @@ const routes = [
         meta: {
           aliasName: 'applyDataPass',
           icon: 'icon-products',
-          title: '181fc9cc.18dbfa',
+          title: i18n.t('181fc9cc.18dbfa'),
           permissions: ['setting.systemsetting.applyDataPass']
         },
         component: () => import('@/views/settings/systemConfig/authorityapproval'),
@@ -425,7 +426,7 @@ const routes = [
             path: 'approve/:id?',
             component: () => import('@/views/settings/systemConfig/authorityapproval/approve'),
             meta: {
-              title: '181fc9cc.d58eae',
+              title: i18n.t('181fc9cc.d58eae'),
               hidden: true
             }
           }
@@ -437,7 +438,7 @@ const routes = [
         meta: {
           aliasName: 'webPrivacyStatement',
           icon: 'icon-products',
-          title: '181fc9cc.dd2c2d',
+          title: i18n.t('181fc9cc.dd2c2d'),
           permissions: ['setting.systemsetting.webPrivacyStatement']
         },
         component: () => import('@/views/settings/systemConfig/webPrivacyStatement')
@@ -448,7 +449,7 @@ const routes = [
         meta: {
           aliasName: 'extminilink',
           icon: 'icon-products',
-          title: '181fc9cc.04a911',
+          title: i18n.t('181fc9cc.04a911'),
           permissions: ['setting.systemsetting.extminilink']
         },
         component: () => import('@/views/settings/systemConfig/external-app'),
@@ -457,7 +458,7 @@ const routes = [
             path: 'editor',
             component: () => import('@/views/settings/systemConfig/extMiniLinkDetail'),
             meta: {
-              title: '181fc9cc.3ddd64',
+              title: i18n.t('181fc9cc.3ddd64'),
               hidden: true
             }
           }
@@ -469,7 +470,7 @@ const routes = [
         meta: {
           aliasName: 'logistics',
           icon: 'icon-products',
-          title: '181fc9cc.46da27',
+          title: i18n.t('181fc9cc.46da27'),
           permissions: ['setting.delivery.logistics']
         },
         component: () => import('@/views/settings/deliverySettings/logistics/index'),
@@ -478,7 +479,7 @@ const routes = [
             path: 'editor/:id?',
             component: () => import('@/views/settings/deliverySettings/logistics/add-ziti'),
             meta: {
-              title: '181fc9cc.f36bc9',
+              title: i18n.t('181fc9cc.f36bc9'),
               hidden: true
             }
           }
@@ -490,7 +491,7 @@ const routes = [
         meta: {
           aliasName: 'shippingtemplates',
           icon: 'icon-products',
-          title: '181fc9cc.416fd4',
+          title: i18n.t('181fc9cc.416fd4'),
           permissions: ['setting.delivery.shippingtemplates']
         },
         component: () => import('@/view/mall/trade/shipping/templates'),
@@ -499,7 +500,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/mall/trade/shipping/add'),
             meta: {
-              title: '181fc9cc.889dfe',
+              title: i18n.t('181fc9cc.889dfe'),
               hidden: true
             }
           }
@@ -511,7 +512,7 @@ const routes = [
         meta: {
           aliasName: 'kdniao',
           icon: 'icon-products',
-          title: '181fc9cc.ddc703',
+          title: i18n.t('181fc9cc.ddc703'),
           permissions: ['setting.delivery.kdniao']
         },
         component: () => import('@/views/settings/deliverySettings/logistics-inquiry')
@@ -522,7 +523,7 @@ const routes = [
         meta: {
           aliasName: 'setting_staffself_deliverystaff',
           icon: 'icon-products',
-          title: '181fc9cc.1a05d5',
+          title: i18n.t('181fc9cc.1a05d5'),
           permissions: ['setting.delivery.setting_staffself_deliverystaff']
         },
         component: () => import('@/views/settings/deliverySettings/delivery-management')
@@ -533,7 +534,7 @@ const routes = [
         meta: {
           aliasName: 'companydata_deliverystaffstatistics',
           icon: 'icon-products',
-          title: '181fc9cc.d6f79b',
+          title: i18n.t('181fc9cc.d6f79b'),
           permissions: ['setting.delivery.companydata_deliverystaffstatistics']
         },
         component: () => import('@/views/settings/deliverySettings/delivery-performance')
@@ -544,7 +545,7 @@ const routes = [
         meta: {
           aliasName: 'dada',
           icon: 'icon-products',
-          title: '181fc9cc.52ec0e',
+          title: i18n.t('181fc9cc.52ec0e'),
           permissions: ['setting.delivery.dada']
         },
         component: () => import('@/views/settings/deliverySettings/dada-account')
@@ -556,7 +557,7 @@ const routes = [
         meta: {
           aliasName: 'operatLorogs',
           icon: 'icon-products',
-          title: '181fc9cc.cda84b',
+          title: i18n.t('181fc9cc.cda84b'),
           permissions: ['setting.systeminfo.operator-logs']
         }
       },
@@ -569,7 +570,7 @@ const routes = [
         meta: {
           aliasName: 'omssetting',
           icon: 'icon-products',
-          title: '181fc9cc.1d62c8',
+          title: i18n.t('181fc9cc.1d62c8'),
           permissions: ['setting.omssetting']
         },
         component: () => import('@/views/settings/role-admin') //后期修复
@@ -581,7 +582,7 @@ const routes = [
         meta: {
           aliasName: 'mapsetting',
           icon: 'icon-products',
-          title: '181fc9cc.5e6abb',
+          title: i18n.t('181fc9cc.5e6abb'),
           permissions: ['setting.systemsetting.mapsetting']
         },
         component: () => import('@/views/settings/systemConfig/map-setting')
@@ -592,7 +593,7 @@ const routes = [
         meta: {
           aliasName: 'certificate',
           icon: 'icon-products',
-          title: '181fc9cc.e5549d',
+          title: i18n.t('181fc9cc.e5549d'),
           permissions: ['setting.systemsetting.certificate']
         },
         component: () => import('@/views/settings/systemConfig/ShangPai-erp')
@@ -613,7 +614,7 @@ const routes = [
         path: 'menumanage/shopmenus',
         meta: {
           icon: 'icon-products',
-          title: '181fc9cc.712fef',
+          title: i18n.t('181fc9cc.712fef'),
           permissions: ['setting.menumanage.shopmenus']
         },
         component: () => import('@/view/menus/shopmenu')
@@ -623,7 +624,7 @@ const routes = [
         path: 'menumanage/distributormenu',
         meta: {
           icon: 'icon-products',
-          title: '181fc9cc.5e1308',
+          title: i18n.t('181fc9cc.5e1308'),
           permissions: ['setting.menumanage.distributormenu']
         },
         component: () => import('@/view/menus/distributormenu')
@@ -633,7 +634,7 @@ const routes = [
         path: 'menumanage/suppliermenus',
         meta: {
           icon: 'icon-products',
-          title: '181fc9cc.f6b769',
+          title: i18n.t('181fc9cc.f6b769'),
           permissions: ['setting.menumanage.suppliermenus']
         },
         component: () => import('@/view/menus/supplier')
@@ -643,7 +644,7 @@ const routes = [
         path: 'menumanage/merchantmenu',
         meta: {
           icon: 'icon-products',
-          title: '181fc9cc.86be9a',
+          title: i18n.t('181fc9cc.86be9a'),
           permissions: ['setting.menumanage.merchantmenu']
         },
         component: () => import('@/view/menus/merchantmenu')
@@ -654,7 +655,7 @@ const routes = [
         meta: {
           aliasName: 'damoCrm',
           icon: 'icon-products',
-          title: '181fc9cc.a21aa1',
+          title: i18n.t('181fc9cc.a21aa1'),
           permissions: ['setting.systemsetting.damoCrm']
         },
         component: () => import('@/views/settings/systemConfig/damoCrm/index')
@@ -665,11 +666,11 @@ const routes = [
         meta: {
           aliasName: 'kjlsetting',
           icon: 'icon-products',
-          title: '181fc9cc.782f66',
+          title: i18n.t('181fc9cc.782f66'),
           permissions: ['setting.systemsetting.kjlsetting']
         },
         component: () => import('@/views/settings/kujiale-setting')
-      },
+      }
     ]
   }
 ]

@@ -12,10 +12,9 @@
 </style>
 <template>
   <div class="comp-refund-amount">
-    <el-input v-model="fee" type="text" @change="onChangeFee" />
+    <el-input v-model="fee" type="text" disabled @change="onChangeFee" />
     <div class="refund-amount-tip">
       {{ $t('8a5fac4d.eea9ab') }}{{ refundFee }}
-      <el-button type="text" @click="refundAll">{{ $t('8a5fac4d.3593b9') }}</el-button>
     </div>
   </div>
 </template>
@@ -47,9 +46,6 @@ export default {
     },
     onChangeFee() {
       this.$emit('onChangeFee', this.fee)
-    },
-    refundAll() {
-      this.$emit('onChange')
     }
   }
 }

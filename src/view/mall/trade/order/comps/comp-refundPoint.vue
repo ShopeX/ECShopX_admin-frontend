@@ -12,8 +12,8 @@
 </style>
 <template>
   <div class="comp-refund-amount">
-    <el-input v-model="fee" type="text" @change="onChangeFee" />
-    <div class="refund-amount-tip">{{ $t('2a4a2da7.a81a1b') }}{{ getTotalFee() }}</div>
+    <el-input v-model="fee" type="text" disabled @change="onChangeFee" />
+    <div class="refund-amount-tip">{{ $t('2a4a2da7.a81a1b') }}{{ refundPoint }}</div>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
   props: ['value'],
   data() {
     return {
-      fee: 0
+      fee: 0,
+      refundPoint: 0
     }
   },
   created() {},
@@ -33,22 +34,21 @@ export default {
       let leftPoint = 0
       items.forEach((item) => {
         if (item.checked) {
-          item.refundNum === item.left_aftersales_num
-            ? (leftPoint = item.remain_point / 100)
-            : (leftPoint = parseInt(
-                (item.remain_point / 100 / item.left_aftersales_num) * item.refundNum
-              ))
+          leftPoint +=
+            item.refundNum === item.left_aftersales_num
+              ? item.remain_point / 100
+              : parseInt(
+                  (item.remain_point / 100 / item.left_aftersales_num) * item.refundNum
+                )
         }
       })
+      this.refundPoint = leftPoint
+      this.fee = leftPoint
+      this.$emit('onChange', leftPoint)
       return leftPoint
     },
     onChangeFee() {
       this.$emit('onChange', this.fee)
-    },
-    refundAll() {
-      const refundFee = this.getTotalFee()
-      this.fee = refundFee
-      this.$emit('onChange', refundFee)
     }
   }
 }

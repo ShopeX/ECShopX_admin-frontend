@@ -112,7 +112,7 @@
       <el-form-item :label="$t('509e5e05.e0418a')" prop="video">
         <el-row>
           <el-col :span="16">
-            <SpVideoPicker v-model="ruleForm.video" />
+            <VideoPicker v-model="ruleForm.video" />
           </el-col>
         </el-row>
       </el-form-item>
@@ -173,6 +173,7 @@ import { uploadQiniuPic } from '@/api/qiniu'
 import { getNotesDetail, notesCreate } from '@/api/ugc'
 import flagModal from './comps/flagModal'
 import topicModal from './comps/topicModal'
+import VideoPicker from '@/components/sp-picker-plus/VideoPicker.vue'
 export default {
   provide() {
     return {
@@ -185,7 +186,8 @@ export default {
     draggable,
     SkuSelector,
     flagModal,
-    topicModal
+    topicModal,
+    VideoPicker
   },
   data() {
     return {

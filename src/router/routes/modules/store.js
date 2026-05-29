@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic' // 主框架
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -11,7 +12,7 @@ const routes = [
       aliasName: 'store',
       icon: 'application',
       keepAlive: true,
-      title: '6478e260.295713'
+      title: i18n.t('6478e260.295713')
     },
     name: 'store',
     path: '/store',
@@ -23,7 +24,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistributor',
           icon: 'icon-shop',
-          title: '6478e260.1b1b01',
+          title: i18n.t('6478e260.1b1b01'),
           permissions: ['store.storemanager.marketingdistributor']
         },
         children: [
@@ -31,7 +32,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/merchant/store'),
             meta: {
-              title: '6478e260.922ec0',
+              title: i18n.t('6478e260.922ec0'),
               hidden: true
             }
           },
@@ -39,7 +40,7 @@ const routes = [
             path: 'template',
             component: () => import('@/view/mall/marketing/distributor_template'),
             meta: {
-              title: '6478e260.5da484',
+              title: i18n.t('6478e260.5da484'),
               hidden: true
             }
           },
@@ -47,7 +48,7 @@ const routes = [
             path: 'details/:id?',
             component: () => import('@/view/mall/marketing/distributor_details'),
             meta: {
-              title: '6478e260.9d54ec',
+              title: i18n.t('6478e260.9d54ec'),
               hidden: true
             }
           },
@@ -55,7 +56,7 @@ const routes = [
             path: 'wxpaysetting',
             component: () => import('@/view/mall/marketing/distributor_wxpaysetting'),
             meta: {
-              title: '6478e260.bd5e8a',
+              title: i18n.t('6478e260.bd5e8a'),
               hidden: true
             }
           },
@@ -63,7 +64,7 @@ const routes = [
             path: 'alipaysetting',
             component: () => import('@/view/mall/marketing/distributor_alipaysetting'),
             meta: {
-              title: '6478e260.135e7b',
+              title: i18n.t('6478e260.135e7b'),
               hidden: true
             }
           },
@@ -71,7 +72,7 @@ const routes = [
             path: 'storeupload',
             component: () => import('@/view/mall/marketing/shopUpload'),
             meta: {
-              title: '6478e260.081090',
+              title: i18n.t('6478e260.081090'),
               hidden: true
             }
           }
@@ -84,7 +85,7 @@ const routes = [
         meta: {
           aliasName: 'storewhitelist',
           icon: 'icon-whitelist',
-          title: '6478e260.899e90',
+          title: i18n.t('6478e260.899e90'),
           permissions: ['store.storemanager.storewhitelist']
         },
         children: [
@@ -92,7 +93,7 @@ const routes = [
             path: 'storewhitelistUpload',
             component: () => import('@/view/mall/marketing/storewhitelistUpload'),
             meta: {
-              title: '6478e260.ba584c',
+              title: i18n.t('6478e260.ba584c'),
               hidden: true
             }
           }
@@ -104,7 +105,7 @@ const routes = [
         meta: {
           aliasName: 'storerules',
           icon: 'icon-address',
-          title: '6478e260.08894b',
+          title: i18n.t('6478e260.08894b'),
           permissions: ['store.storemanager.storerules']
         },
         component: () => import('@/views/store/storeRules/store-rules')
@@ -115,7 +116,7 @@ const routes = [
         meta: {
           aliasName: 'storecategory',
           icon: 'icon-address',
-          title: '6478e260.2419d0',
+          title: i18n.t('6478e260.2419d0'),
           permissions: ['store.storemanager.storecategory']
         },
         component: () => import('@/views/store/store-category')
@@ -126,7 +127,7 @@ const routes = [
         meta: {
           aliasName: 'nearbystoreinfo',
           icon: 'icon-address',
-          title: '6478e260.84b1aa',
+          title: i18n.t('6478e260.84b1aa'),
           permissions: ['store.storemanager.nearbystoreinfo']
         },
         component: () => import('@/views/store/nearby-store-info')
@@ -137,7 +138,7 @@ const routes = [
         meta: {
           aliasName: 'distributoraftersalesaddress',
           icon: 'icon-address',
-          title: '6478e260.6356a8',
+          title: i18n.t('6478e260.6356a8'),
           permissions: ['store.storemanager.distributoraftersalesaddress']
         },
         component: () => import('@/view/mall/marketing/distributorAftersalesAddress')

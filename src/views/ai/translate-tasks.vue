@@ -1,7 +1,9 @@
 <template>
   <SpPage>
     <div slot="page-header" class="page-header">
-      <el-button type="primary" size="small" @click="openCreateDialog">{{ $t('2a2a72e5.87da21') }}</el-button>
+      <el-button type="primary" size="small" @click="openCreateDialog">{{
+        $t('2a2a72e5.87da21')
+      }}</el-button>
       <el-button size="small" @click="fetchTasks">{{ $t('2a2a72e5.694fc5') }}</el-button>
     </div>
 
@@ -13,7 +15,9 @@
       </el-table-column>
       <el-table-column :label="$t('2a2a72e5.3fea7c')" width="100">
         <template slot-scope="{ row }">
-          <el-tag :type="statusTagType(row.status)" size="small">{{ getStatusLabel(row.status) }}</el-tag>
+          <el-tag :type="statusTagType(row.status)" size="small">{{
+            getStatusLabel(row.status)
+          }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('2a2a72e5.129d05')" min-width="160">
@@ -36,13 +40,16 @@
       </el-table-column>
       <el-table-column :label="$t('2a2a72e5.2b6bc0')" width="120">
         <template slot-scope="{ row }">
-          <el-button type="text" size="small" @click="openDetail(row)">{{ $t('2a2a72e5.f26225') }}</el-button>
+          <el-button type="text" size="small" @click="openDetail(row)">{{
+            $t('2a2a72e5.f26225')
+          }}</el-button>
           <el-button
             v-if="row.status === 'failed' || row.status === 'partial_success'"
             type="text"
             size="small"
             @click="handleRetry(row)"
-          >{{ $t('2a2a72e5.132c5c') }}</el-button>
+            >{{ $t('2a2a72e5.132c5c') }}</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -53,7 +60,12 @@
         :page-size="pageSize"
         :total="total"
         layout="total, prev, pager, next"
-        @current-change="(p) => { page = p; fetchTasks() }"
+        @current-change="
+          (p) => {
+            page = p
+            fetchTasks()
+          }
+        "
       />
     </div>
 
@@ -89,13 +101,15 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="$t('2a2a72e5.129d05')" prop="target_languages" :rules="[{ type: 'array', required: true, message: $t('2a2a72e5.c91ca0'), trigger: 'change' }]">
+        <el-form-item
+          :label="$t('2a2a72e5.129d05')"
+          prop="target_languages"
+          :rules="[
+            { type: 'array', required: true, message: $t('2a2a72e5.c91ca0'), trigger: 'change' }
+          ]"
+        >
           <el-checkbox-group v-model="createForm.target_languages">
-            <el-checkbox
-              v-for="(label, code) in langLabels"
-              :key="code"
-              :label="code"
-            >
+            <el-checkbox v-for="(label, code) in langLabels" :key="code" :label="code">
               {{ label }}
             </el-checkbox>
           </el-checkbox-group>
@@ -113,10 +127,14 @@
                 :data="selectorData"
                 border
                 size="small"
-                :row-key="currentConfig && currentConfig.rowKey || 'id'"
+                :row-key="(currentConfig && currentConfig.rowKey) || 'id'"
                 :lazy="currentConfig && currentConfig.isTree"
                 :load="currentConfig && currentConfig.isTree ? loadCategoryChildren : undefined"
-                :tree-props="currentConfig && currentConfig.isTree ? { children: 'children', hasChildren: 'has_children' } : undefined"
+                :tree-props="
+                  currentConfig && currentConfig.isTree
+                    ? { children: 'children', hasChildren: 'has_children' }
+                    : undefined
+                "
                 style="width: 100%"
                 @selection-change="onSelectionChange"
               >
@@ -125,17 +143,24 @@
                   :label="'ID'"
                   :width="currentConfig && currentConfig.isTree ? 140 : 90"
                 >
-                  <template slot-scope="{ row }">{{ row[currentConfig && currentConfig.rowKey || 'id'] }}</template>
+                  <template slot-scope="{ row }">{{
+                    row[(currentConfig && currentConfig.rowKey) || 'id']
+                  }}</template>
                 </el-table-column>
                 <el-table-column :label="getNameColumnLabel()">
                   <template slot-scope="{ row }">{{ getRowName(row) }}</template>
                 </el-table-column>
                 <el-table-column v-if="showTypeColumn" :label="$t('2a2a72e5.226b09')" width="120">
-                  <template slot-scope="{ row }">{{ getMarketingTypeLabel(row.marketing_type) }}</template>
+                  <template slot-scope="{ row }">{{
+                    getMarketingTypeLabel(row.marketing_type)
+                  }}</template>
                 </el-table-column>
               </el-table>
 
-              <div v-if="currentConfig && !currentConfig.isTree" style="margin-top: 8px; text-align: right">
+              <div
+                v-if="currentConfig && !currentConfig.isTree"
+                style="margin-top: 8px; text-align: right"
+              >
                 <el-pagination
                   :current-page="selectorPage"
                   :page-size="selectorPageSize"
@@ -161,7 +186,8 @@
           :loading="submitting"
           :disabled="selectedIds.length === 0 || createForm.target_languages.length === 0"
           @click="handleCreateTask"
-        >{{ $t('2a2a72e5.f5f585') }}</el-button>
+          >{{ $t('2a2a72e5.f5f585') }}</el-button
+        >
       </span>
     </el-dialog>
 
@@ -174,19 +200,43 @@
     >
       <div v-if="detailTask">
         <el-descriptions :column="2" border size="small">
-          <el-descriptions-item :label="$t('2a2a72e5.3a3778')">{{ detailTask.task_id }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.5ebda1')">{{ getTypeLabel(detailTask.task_type) }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.3a3778')">{{
+            detailTask.task_id
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.5ebda1')">{{
+            getTypeLabel(detailTask.task_type)
+          }}</el-descriptions-item>
           <el-descriptions-item :label="$t('2a2a72e5.3fea7c')">
-            <el-tag :type="statusTagType(detailTask.status)" size="small">{{ getStatusLabel(detailTask.status) }}</el-tag>
+            <el-tag :type="statusTagType(detailTask.status)" size="small">{{
+              getStatusLabel(detailTask.status)
+            }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.129d05')">{{ formatLangs(detailTask.target_languages) }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.330363')">{{ detailTask.success_count || 0 }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.acd5cb')">{{ detailTask.failed_count || 0 }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.599b5a')">{{ detailTask.total_count || 0 }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.eca37c')">{{ formatTime(detailTask.created) }}</el-descriptions-item>
-          <el-descriptions-item :label="$t('2a2a72e5.a001a2')">{{ formatTime(detailTask.updated) }}</el-descriptions-item>
-          <el-descriptions-item v-if="detailTask.error_msg || detailTask.error_message" :label="$t('2a2a72e5.4604d5')" :span="2">
-            <span style="color: #F56C6C">{{ detailTask.error_msg || detailTask.error_message }}</span>
+          <el-descriptions-item :label="$t('2a2a72e5.129d05')">{{
+            formatLangs(detailTask.target_languages)
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.330363')">{{
+            detailTask.success_count || 0
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.acd5cb')">{{
+            detailTask.failed_count || 0
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.599b5a')">{{
+            detailTask.total_count || 0
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.eca37c')">{{
+            formatTime(detailTask.created)
+          }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('2a2a72e5.a001a2')">{{
+            formatTime(detailTask.updated)
+          }}</el-descriptions-item>
+          <el-descriptions-item
+            v-if="detailTask.error_msg || detailTask.error_message"
+            :label="$t('2a2a72e5.4604d5')"
+            :span="2"
+          >
+            <span style="color: #f56c6c">{{
+              detailTask.error_msg || detailTask.error_message
+            }}</span>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -195,7 +245,12 @@
 </template>
 
 <script>
-import { getTranslateTasks, createTranslateTask, getTranslateTask, retryTranslateTask } from '@/api/translation'
+import {
+  getTranslateTasks,
+  createTranslateTask,
+  getTranslateTask,
+  retryTranslateTask
+} from '@/api/translation'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { getCardList } from '@/api/cardticket'
 import { getMarketingActivityList, seckillActivityGetList } from '@/api/promotions'
@@ -268,9 +323,7 @@ export default {
         },
         {
           label: this.$t('2a2a72e5.2f3635'),
-          types: [
-            { value: 'marketing.coupon', label: this.$t('2a2a72e5.2f3635') }
-          ]
+          types: [{ value: 'marketing.coupon', label: this.$t('2a2a72e5.2f3635') }]
         },
         {
           label: this.$t('2a2a72e5.252caa'),
@@ -298,9 +351,12 @@ export default {
       return this.getTypeConfig(this.createForm.task_type)
     },
     showTypeColumn() {
-      return ['marketing.fulldiscount', 'marketing.fullminus', 'marketing.fullgift', 'marketing.pluspricebuy'].includes(
-        this.createForm.task_type
-      )
+      return [
+        'marketing.fulldiscount',
+        'marketing.fullminus',
+        'marketing.fullgift',
+        'marketing.pluspricebuy'
+      ].includes(this.createForm.task_type)
     }
   },
   created() {
@@ -325,7 +381,10 @@ export default {
           nameField: 'category_name',
           isTree: true,
           fetchLevel: (parentId) =>
-            getCategory({ parent_id: parentId !== undefined ? parentId : 0, is_main_category: true })
+            getCategory({
+              parent_id: parentId !== undefined ? parentId : 0,
+              is_main_category: true
+            })
         },
         'goods.category.sale': {
           rowKey: 'category_id',
@@ -342,17 +401,20 @@ export default {
         'goods.brand': {
           rowKey: 'attribute_id',
           nameField: 'attribute_name',
-          fetch: (p) => getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'brand' })
+          fetch: (p) =>
+            getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'brand' })
         },
         'goods.params': {
           rowKey: 'attribute_id',
           nameField: 'attribute_name',
-          fetch: (p) => getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'item_params' })
+          fetch: (p) =>
+            getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'item_params' })
         },
         'goods.spec': {
           rowKey: 'attribute_id',
           nameField: 'attribute_name',
-          fetch: (p) => getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'item_spec' })
+          fetch: (p) =>
+            getGoodsAttr({ page: p.page, pageSize: p.pageSize, attribute_type: 'item_spec' })
         },
         'shop.category': {
           rowKey: 'category_id',
@@ -377,7 +439,12 @@ export default {
         'marketing.package': {
           rowKey: 'package_id',
           nameField: 'package_name',
-          fetch: (p) => getMarketingActivityList({ page: p.page, pageSize: p.pageSize, marketing_type: 'package' })
+          fetch: (p) =>
+            getMarketingActivityList({
+              page: p.page,
+              pageSize: p.pageSize,
+              marketing_type: 'package'
+            })
         }
       }
       if (marketingTypeMap[taskType]) {
@@ -437,7 +504,9 @@ export default {
       const d = new Date(num * 1000)
       if (isNaN(d.getTime())) return ''
       const pad = (n) => String(n).padStart(2, '0')
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
+        d.getHours()
+      )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
     },
 
     openCreateDialog() {
@@ -602,7 +671,9 @@ export default {
 
     async handleRetry(row) {
       try {
-        await this.$confirm(this.$t('2a2a72e5.d84b07'), this.$t('2a2a72e5.e83a25'), { type: 'warning' })
+        await this.$confirm(this.$t('2a2a72e5.d84b07'), this.$t('2a2a72e5.e83a25'), {
+          type: 'warning'
+        })
         await retryTranslateTask(row.task_id)
         this.$message.success(this.$t('2a2a72e5.bcbe11'))
         this.fetchTasks()

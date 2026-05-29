@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="p-4">
+  <div>
     <div class="grid grid-cols-3 gap-4">
       <div v-for="(item, index) in realTimeData" :key="index">
         <div class="flex flex-col bg-white rounded-lg px-6">

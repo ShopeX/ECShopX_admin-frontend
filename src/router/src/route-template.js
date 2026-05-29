@@ -83,12 +83,12 @@ export default {
     {
       path: 'pcmall/loginPageSetting',
       name: '390b6df9.b9f357',
-      component: () => import('@/view/pc/pctemplate/login')
+      component: () => import('@/views/decoration/web-config')
     },
     {
       path: 'pcmall/seo',
       name: '390b6df9.e807b2',
-      component: () => import('@/view/pc/tdk/globalset')
+      component: () => import('@/views/decoration/web-config')
     },
     {
       path: 'pcmall/pageseo',

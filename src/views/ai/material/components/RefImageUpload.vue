@@ -30,7 +30,11 @@
             <i class="el-icon-headset"></i>
           </div>
         </div>
-        <i v-show="hoverIdx === idx || previewIdx === idx" class="el-icon-error remove" @click.stop="remove(idx)"></i>
+        <i
+          v-show="hoverIdx === idx || previewIdx === idx"
+          class="el-icon-error remove"
+          @click.stop="remove(idx)"
+        ></i>
       </div>
 
       <el-upload
@@ -47,7 +51,9 @@
         <div class="ref-item placeholder">
           <i v-if="!uploading" :class="placeholderIcon"></i>
           <i v-else class="el-icon-loading"></i>
-          <div class="hint">{{ urls.length === 0 ? placeholderLabel : `${urls.length}/${max}` }}</div>
+          <div class="hint">
+            {{ urls.length === 0 ? placeholderLabel : `${urls.length}/${max}` }}
+          </div>
         </div>
       </el-upload>
 
@@ -87,7 +93,9 @@
               <div class="prog-fill" :style="{ width: audioProgressPct + '%' }"></div>
             </div>
           </div>
-          <span class="audio-time">{{ formatMmSs(audioCur) }} / {{ formatMmSs(durations[urls[previewIdx]]) }}</span>
+          <span class="audio-time"
+            >{{ formatMmSs(audioCur) }} / {{ formatMmSs(durations[urls[previewIdx]]) }}</span
+          >
           <audio
             :src="urls[previewIdx]"
             preload="metadata"
@@ -159,7 +167,9 @@ export default {
       if (this.kind === 'audio') return VIDEO_MAX_REF_AUDIOS
       return MAX_REF_IMAGES
     },
-    acceptStr() { return this.allowedMime.join(',') },
+    acceptStr() {
+      return this.allowedMime.join(',')
+    },
     placeholderIcon() {
       if (this.kind === 'video') return 'el-icon-video-camera'
       if (this.kind === 'audio') return 'el-icon-microphone'
@@ -195,14 +205,17 @@ export default {
     }
   },
   watch: {
-    value(v) { this.urls = [...v] }
+    value(v) {
+      this.urls = [...v]
+    }
   },
   methods: {
     beforeUpload(file) {
       if (this.allowedMime.length && !this.allowedMime.includes(file.type)) {
-        const tip = this.kind === 'video'
-          ? '视频格式仅支持 MP4 / MOV'
-          : this.kind === 'audio'
+        const tip =
+          this.kind === 'video'
+            ? '视频格式仅支持 MP4 / MOV'
+            : this.kind === 'audio'
             ? '音频格式仅支持 MP3 / WAV'
             : '图片格式仅支持 JPEG/PNG/WEBP/BMP/TIFF/GIF'
         this.$message.error(tip)
@@ -285,7 +298,7 @@ export default {
       const targetIdx = idx == null ? this.previewIdx : idx
       if (targetIdx < 0) return
       const items = this.$refs.items
-      const list = Array.isArray(items) ? items : (items ? [items] : [])
+      const list = Array.isArray(items) ? items : items ? [items] : []
       const el = list[targetIdx]
       if (!el) return
       const thumb = el.querySelector ? el.querySelector('.thumb') : null
@@ -298,13 +311,23 @@ export default {
     },
     stopAudio() {
       const a = this.getAudioEl()
-      if (a) { try { a.pause() } catch (_) { /* noop */ } }
+      if (a) {
+        try {
+          a.pause()
+        } catch (_) {
+          /* noop */
+        }
+      }
     },
     toggleAudio() {
       const a = this.getAudioEl()
       if (!a) return
       if (a.paused) {
-        a.play().then(() => { this.audioPlaying = true }).catch(() => {})
+        a.play()
+          .then(() => {
+            this.audioPlaying = true
+          })
+          .catch(() => {})
       } else {
         a.pause()
         this.audioPlaying = false
@@ -338,8 +361,12 @@ export default {
       tag.preload = 'metadata'
       tag.muted = true
       tag.src = url
-      tag.onloadedmetadata = () => { this.$set(this.durations, url, tag.duration || 0) }
-      tag.onerror = () => { this.$set(this.durations, url, 0) }
+      tag.onloadedmetadata = () => {
+        this.$set(this.durations, url, tag.duration || 0)
+      }
+      tag.onerror = () => {
+        this.$set(this.durations, url, 0)
+      }
     },
     formatSec(sec) {
       const s = Math.max(0, Math.round(sec || 0))
@@ -387,132 +414,236 @@ export default {
 
 <style scoped>
 .ref-img-upload {
-  display: inline-block; position: relative;
-  border-radius: 10px; transition: background-color .15s, box-shadow .15s;
+  display: inline-block;
+  position: relative;
+  border-radius: 10px;
+  transition: background-color 0.15s, box-shadow 0.15s;
 }
 .ref-img-upload.is-dragover {
-  background: rgba(64, 158, 255, .06);
+  background: rgba(64, 158, 255, 0.06);
   box-shadow: 0 0 0 2px #409eff inset;
 }
-.ref-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; position: relative; }
+.ref-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  position: relative;
+}
 .drop-mask {
-  position: absolute; inset: -4px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(64, 158, 255, .12); color: #1989fa; font-size: 12px;
-  border: 1px dashed #409eff; border-radius: 10px;
+  position: absolute;
+  inset: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(64, 158, 255, 0.12);
+  color: #1989fa;
+  font-size: 12px;
+  border: 1px dashed #409eff;
+  border-radius: 10px;
   pointer-events: none;
 }
 .ref-item {
-  position: relative; width: 56px;
+  position: relative;
+  width: 56px;
 }
 .ref-item .thumb {
-  position: relative; width: 56px; height: 56px; border-radius: 8px; overflow: hidden;
-  border: 1px solid #ebeef5; background: #fafbfc; cursor: pointer;
-  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ebeef5;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.ref-item .thumb:hover { border-color: #c0c4cc; }
+.ref-item .thumb:hover {
+  border-color: #c0c4cc;
+}
 .ref-item.active .thumb {
   border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64, 158, 255, .25);
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.25);
 }
 .ref-item .thumb img,
-.ref-item .thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ref-item .thumb .audio-tile {
-  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #e7f8f3, #b8eedc); color: #2eb389;
+.ref-item .thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.ref-item .thumb .audio-tile i { font-size: 22px; }
+.ref-item .thumb .audio-tile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e7f8f3, #b8eedc);
+  color: #2eb389;
+}
+.ref-item .thumb .audio-tile i {
+  font-size: 22px;
+}
 
 .ref-item.placeholder {
-  width: 56px; height: 56px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: #909399; border: 1px dashed #dcdfe6; background: #fafbfc; border-radius: 8px;
-  cursor: pointer; transition: border-color .15s, color .15s;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #909399;
+  border: 1px dashed #dcdfe6;
+  background: #fafbfc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
 }
-.ref-item.placeholder:hover { border-color: #409eff; color: #409eff; }
-.ref-item.placeholder i { font-size: 18px; }
-.ref-item.placeholder .hint { font-size: 11px; margin-top: 2px; }
+.ref-item.placeholder:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+.ref-item.placeholder i {
+  font-size: 18px;
+}
+.ref-item.placeholder .hint {
+  font-size: 11px;
+  margin-top: 2px;
+}
 .remove {
-  position: absolute; top: -4px; right: -4px;
-  color: #fff; background: rgba(0,0,0,.55);
-  border-radius: 50%; cursor: pointer;
-  font-size: 16px; padding: 1px;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 1px;
   z-index: 2;
 }
-.ref-uploader >>> .el-upload { display: block; }
+.ref-uploader >>> .el-upload {
+  display: block;
+}
 
 /* —— 浮动预览卡（fixed 定位 + 自身向上偏移） —— */
 .preview-card {
   position: fixed;
   transform: translate(-50%, calc(-100% - 10px));
-  background: #fff; border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
   padding: 6px;
   z-index: 9999;
 }
 .preview-card::after {
-  content: ''; position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%); margin-top: -1px;
-  border: 6px solid transparent; border-top-color: #fff;
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -1px;
+  border: 6px solid transparent;
+  border-top-color: #fff;
 }
 /* 图片 / 视频预览：尺寸统一 */
 .p-image .p-img {
   display: block;
-  width: 280px; max-height: 200px;
+  width: 280px;
+  max-height: 200px;
   object-fit: contain;
   border-radius: 6px;
 }
-.preview-card.p-video { padding: 0; line-height: 0; }
+.preview-card.p-video {
+  padding: 0;
+  line-height: 0;
+}
 .preview-card.p-video .p-video-el {
   display: block;
-  width: 280px; height: 158px;
+  width: 280px;
+  height: 158px;
   object-fit: contain;
-  background: #000; border-radius: 6px;
+  background: #000;
+  border-radius: 6px;
 }
 .p-video-badge {
-  position: absolute; left: 12px; bottom: 12px;
-  background: rgba(0, 0, 0, .55); color: #fff;
-  font-size: 12px; padding: 2px 8px; border-radius: 10px;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
   line-height: 1.4;
 }
 
 /* 音频播放器 */
-.p-audio { padding: 8px 10px; }
+.p-audio {
+  padding: 8px 10px;
+}
 .p-audio-player {
-  display: flex; align-items: center; gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 260px;
 }
 .p-audio-player .play-btn {
   flex: 0 0 auto;
-  width: 28px; height: 28px; border-radius: 50%;
-  border: none; padding: 0; cursor: pointer;
-  background: #409eff; color: #fff;
-  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #409eff;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
-  transition: background-color .15s;
+  transition: background-color 0.15s;
 }
-.p-audio-player .play-btn:hover { background: #66b1ff; }
+.p-audio-player .play-btn:hover {
+  background: #66b1ff;
+}
 .p-audio-player .audio-body {
-  flex: 1 1 auto; min-width: 0;
-  display: flex; flex-direction: column; gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .p-audio-player .audio-name {
-  font-size: 12px; color: #303133;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 12px;
+  color: #303133;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1;
 }
 .p-audio-player .prog-bar {
-  width: 100%; height: 4px; border-radius: 2px;
-  background: #ebeef5; cursor: pointer; overflow: hidden;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #ebeef5;
+  cursor: pointer;
+  overflow: hidden;
 }
 .p-audio-player .prog-fill {
-  height: 100%; background: #409eff; border-radius: 2px;
-  transition: width .1s linear;
+  height: 100%;
+  background: #409eff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
 }
 .p-audio-player .audio-time {
   flex: 0 0 auto;
-  font-size: 11px; color: #909399; font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: #909399;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
 }
-.p-audio-player audio { display: none; }
+.p-audio-player audio {
+  display: none;
+}
 </style>

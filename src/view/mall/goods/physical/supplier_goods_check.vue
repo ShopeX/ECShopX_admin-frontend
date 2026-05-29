@@ -347,7 +347,10 @@
         >
           <el-form ref="form" :model="examineForm" label-width="80px">
             <el-form-item :label="$t('d41d8cd9.v9w0x1')">
-              <el-radio-group v-model="examineForm.audit_status" @change="onExamineAuditStatusChange">
+              <el-radio-group
+                v-model="examineForm.audit_status"
+                @change="onExamineAuditStatusChange"
+              >
                 <el-radio label="approved"> {{ $t('d41d8cd9.y2z3a4') }} </el-radio>
                 <el-radio label="rejected"> {{ $t('d41d8cd9.b5c6d7') }} </el-radio>
               </el-radio-group>

@@ -38,12 +38,20 @@
             {{ $t('0255d436.6343df') }}
           </el-button>
           <el-button type="text" class="m-0 px-1">
-            <a href="javascript:void(0)" class="no-underline text-inherit" @click="openDialog(scope.row)">
+            <a
+              href="javascript:void(0)"
+              class="no-underline text-inherit"
+              @click="openDialog(scope.row)"
+            >
               {{ $t('0255d436.95b351') }}
             </a>
           </el-button>
           <el-button type="text" class="m-0 pl-2">
-            <a href="javascript:void(0)" class="no-underline text-inherit" @click="delPage(scope.row.id)">
+            <a
+              href="javascript:void(0)"
+              class="no-underline text-inherit"
+              @click="delPage(scope.row.id)"
+            >
               {{ $t('0255d436.2f4aad') }}
             </a>
           </el-button>
@@ -68,13 +76,25 @@
     >
       <el-form v-model="pageForm" label-width="200px">
         <el-form-item :label="$t('0255d436.b78454')">
-          <el-input v-model="pageForm.page_name" :placeholder="$t('0255d436.b78454')" style="width: 55%" />
+          <el-input
+            v-model="pageForm.page_name"
+            :placeholder="$t('0255d436.b78454')"
+            style="width: 55%"
+          />
         </el-form-item>
         <el-form-item :label="$t('0255d436.abf8f4')">
-          <el-input v-model="pageForm.page_description" :placeholder="$t('0255d436.abf8f4')" style="width: 55%" />
+          <el-input
+            v-model="pageForm.page_description"
+            :placeholder="$t('0255d436.abf8f4')"
+            style="width: 55%"
+          />
         </el-form-item>
         <el-form-item :label="$t('0255d436.382e6f')">
-          <el-input v-model="pageForm.page_share_title" :placeholder="$t('0255d436.382e6f')" style="width: 55%" />
+          <el-input
+            v-model="pageForm.page_share_title"
+            :placeholder="$t('0255d436.382e6f')"
+            style="width: 55%"
+          />
         </el-form-item>
         <el-form-item :label="$t('0255d436.106d52')">
           <div class="upload-box" @click="handleImgChange()">

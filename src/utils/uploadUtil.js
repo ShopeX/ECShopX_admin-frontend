@@ -177,12 +177,12 @@ class UploadUtil {
       // 不同 driver 字段名不一致（Qiniu/Local: domain+key；OSS: host+dir；Cos: domain+key），统一兜底
       const finalKey = out.key || data.key || data.dir || ''
       const domainCandidate = data.domain || data.host || ''
-      const domain = domainCandidate
-        ? String(domainCandidate).replace(/\/+$/, '')
-        : ''
+      const domain = domainCandidate ? String(domainCandidate).replace(/\/+$/, '') : ''
       const url = /^https?:\/\//i.test(finalKey)
         ? finalKey
-        : (domain ? `${domain}/${String(finalKey).replace(/^\/+/, '')}` : finalKey)
+        : domain
+        ? `${domain}/${String(finalKey).replace(/^\/+/, '')}`
+        : finalKey
       return { ...out, key: finalKey, url, domain }
     } catch (e) {
       throw new Error(e)

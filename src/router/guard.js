@@ -35,17 +35,17 @@ function setupCommonGuard(router) {
 
 function setupAccessGuard(router) {
   router.beforeEach(async (to, from, next) => {
-    if (to.path == '/decoration/web/template/edit') {
-      const { id } = to.query
-      console.log(`【shop】pageid is: ${id}`)
-      actions.setGlobalState({
-        mode: 'pc',
-        token: store.state.user.token,
-        pageid: id,
-        baseUrl: process.env.VUE_APP_BASE_API,
-        language: langMap[window.localStorage.getItem('lang') || 'zhcn']
-      })
-    }
+    // if (to.path == '/decoration/web/template/edit') {
+    //   const { id } = to.query
+    //   console.log(`【shop】pageid is: ${id}`)
+    //   actions.setGlobalState({
+    //     mode: 'pc',
+    //     token: store.state.user.token,
+    //     pageid: id,
+    //     baseUrl: process.env.VUE_APP_BASE_API,
+    //     language: langMap[window.localStorage.getItem('lang') || 'zhcn']
+    //   })
+    // }
 
     const hasToken = store.state.user.token
     if (!hasToken) {

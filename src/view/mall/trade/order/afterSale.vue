@@ -125,6 +125,7 @@ export default {
               on-onChange={(e) => {
                 this.form.items = e
                 this.$refs['compRefundRef'].getTotalFee()
+                this.$refs['compRefundPointRef']?.getTotalFee()
               }}
             />
           ),
@@ -141,6 +142,7 @@ export default {
           key: 'refund_point',
           component: () => (
             <CompRefundPoint
+              ref='compRefundPointRef'
               value={this.orderInfo}
               on-onChange={(e) => {
                 this.form.refund_point = e

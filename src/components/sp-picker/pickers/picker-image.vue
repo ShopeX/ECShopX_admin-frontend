@@ -171,15 +171,11 @@
         />
 
         <el-button @click="onAddGroup" class="h-[calc(1em+16px)]">
-{{
-          addGroupBtnText
-        }}
-</el-button>
+          {{ addGroupBtnText }}
+        </el-button>
         <el-button :disabled="disabledBtn" @click="onMoveGroup">
-{{
-          moveGroupBtnText
-        }}
-</el-button>
+          {{ moveGroupBtnText }}
+        </el-button>
         <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
         </el-button> -->
@@ -204,10 +200,8 @@
           下载
         </el-button> -->
         <el-button :disabled="disabledBtn" @click="handleCancelAll">
-{{
-          cancelAllBtnText
-        }}
-</el-button>
+          {{ cancelAllBtnText }}
+        </el-button>
       </div>
       <!-- <div>
         <el-input size="small" placeholder="请输入图片名称" suffix-icon="el-icon-search" />
@@ -361,9 +355,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cropperDialogShow = false">{{ cancelText }}</el-button>
-        <el-button type="primary" @click="cropperDialogShow = false">{{
-          confirmText
-        }}</el-button>
+        <el-button type="primary" @click="cropperDialogShow = false">{{ confirmText }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -394,10 +386,7 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: ''
-  },
-  created() {
-    this.$options.config.title = i18n.t('4c4bec01.e757d0')
+    title: i18n.t('4c4bec01.e757d0')
   },
   props: {
     value: {

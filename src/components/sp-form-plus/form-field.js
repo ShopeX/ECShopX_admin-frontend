@@ -3,7 +3,8 @@
  * See LICENSE file for license details.
  */
 import { isString } from '@/utils'
-import { h } from 'vue'
+// 与实例 render(h) 使用同一套 h，避免弹窗/动态挂载场景下与 import 的 h 混用导致子树不更新
+import { h as hCompat } from 'vue'
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import { isFunction } from '@/utils/src/type-helper'
 import './form-field.scss'
@@ -85,11 +86,10 @@ export default {
 
       this.componentProps.onChange?.(val, this.formData)
     },
-    // 渲染 input 组件
-    renderInput() {
-      return h('el-input', {
+    renderInput(props = {}, hCreate = hCompat) {
+      return hCreate('el-input', {
         attrs: {
-          ...this.componentProps,
+          ...props,
           size: this.size
         },
         props: {
@@ -100,12 +100,34 @@ export default {
         }
       })
     },
-    // 渲染 select 组件
-    renderSelect(props = {}) {
-      const options = (props.options || []).map((option) =>
-        h('el-option', {
+    renderTextarea(props = {}, hCreate = hCompat) {
+      return this.renderInput(
+        {
+          rows: 3,
+          ...props,
+          type: 'textarea'
+        },
+        hCreate
+      )
+    },
+    renderDivider(props = {}) {
+      const label = props.label || this.label
+      return <div class='form-field-divider'>{label}</div>
+    },
+    // 渲染 select 组件（options 仅用于生成 el-option 子节点，不可传入 el-select）
+    // style/class 须放在 vnode 根上；el-option 的 key 须为 vnode.key（勿放在 props 内，否则弹窗/表格内可能不渲染）
+    // hCreate 须传入 render(h) 的 h，保证与父级同一渲染上下文（弹窗内内置 select 必传）
+    renderSelect(props = {}, hCreate = hCompat) {
+      const {
+        options: rawOptions = [],
+        style: selectStyle,
+        class: selectClass,
+        ...selectRest
+      } = props
+      const optionVnodes = (rawOptions || []).map((option, idx) =>
+        hCreate('el-option', {
+          key: option.value != null ? String(option.value) : `opt-${idx}`,
           props: {
-            key: option.value,
             label: option.label,
             value: option.value,
             disabled: option.disabled
@@ -113,28 +135,31 @@ export default {
         })
       )
 
-      return h(
+      return hCreate(
         'el-select',
         {
+          class: selectClass,
+          style: selectStyle,
           attrs: {
             size: this.size
           },
           props: {
             value: this.modelValue,
             placeholder: this.$t('1bb56920.708c9d') + (this.label || '').replace(/:$/, ''),
-            ...props
+            popperAppendToBody: true,
+            ...selectRest
           },
           on: {
             input: this.handleInput
           }
         },
-        options
+        optionVnodes
       )
     },
     // 渲染 radio 组件
-    renderRadio(props = {}) {
+    renderRadio(props = {}, hCreate = hCompat) {
       const radios = (props.options || []).map((option) =>
-        h(
+        hCreate(
           'el-radio',
           {
             props: {
@@ -146,7 +171,7 @@ export default {
         )
       )
 
-      return h(
+      return hCreate(
         'el-radio-group',
         {
           props: {
@@ -161,10 +186,10 @@ export default {
       )
     },
     // 渲染 checkbox 组件（el-checkbox-group 的 value 必须为数组，否则会出现勾选一个则全部勾选等问题）
-    renderCheckbox(props = {}) {
+    renderCheckbox(props = {}, hCreate = hCompat) {
       const { options = [], ...restProps } = props
       const checkboxes = options.map((option) =>
-        h(
+        hCreate(
           'el-checkbox',
           {
             props: {
@@ -181,7 +206,7 @@ export default {
         ? [].concat(this.modelValue)
         : []
 
-      return h(
+      return hCreate(
         'el-checkbox-group',
         {
           props: {
@@ -196,8 +221,8 @@ export default {
       )
     },
     // 渲染 button 组件
-    renderButton(props = {}) {
-      return h(
+    renderButton(props = {}, hCreate = hCompat) {
+      return hCreate(
         'el-button',
         {
           props: {
@@ -263,8 +288,8 @@ export default {
     renderImagePicker(props = {}) {
       return <SpImagePicker value={this.modelValue} {...props} on-onChange={this.handleInput} />
     },
-    renderCascader(props = {}) {
-      return h('el-cascader', {
+    renderCascader(props = {}, hCreate = hCompat) {
+      return hCreate('el-cascader', {
         attrs: {
           ...props,
           size: this.size || 'small'
@@ -292,7 +317,7 @@ export default {
     },
 
     // 渲染 upload 组件
-    renderUpload(props = {}) {
+    renderUpload(props = {}, hCreate = hCompat) {
       const uploadProps = {
         action: props.action || '',
         'auto-upload': props.autoUpload,
@@ -301,16 +326,16 @@ export default {
         ...props
       }
 
-      return h('div', {}, [
-        h('span', { style: {} }, props.title),
-        h(
+      return hCreate('div', {}, [
+        hCreate('span', { style: {} }, props.title),
+        hCreate(
           'el-upload',
           {
             class: props.class || '',
             props: uploadProps
           },
           [
-            h(
+            hCreate(
               'el-button',
               {
                 props: {
@@ -325,24 +350,27 @@ export default {
       ])
     },
 
-    // 获取组件渲染函数
-    getComponentRender() {
+    // 获取组件渲染函数（传入 render(h) 的 h，与当前实例同一渲染上下文）
+    getComponentRender(hRender) {
+      const hFn = hRender || hCompat
       if (isString(this.component)) {
         const type = this.component.toLowerCase()
         const renderMap = {
-          button: this.renderButton,
-          checkbox: this.renderCheckbox,
-          datepicker: this.renderDatePicker,
-          datetimepicker: this.renderDateTimePicker,
-          input: this.renderInput,
-          imagepicker: this.renderImagePicker,
-          radio: this.renderRadio,
-          select: this.renderSelect,
-          switch: this.renderSwitch,
-          upload: this.renderUpload,
-          cascader: this.renderCascader
+          button: (props) => this.renderButton(props, hFn),
+          checkbox: (props) => this.renderCheckbox(props, hFn),
+          datepicker: (props) => this.renderDatePicker(props),
+          datetimepicker: (props) => this.renderDateTimePicker(props),
+          divider: (props) => this.renderDivider(props),
+          input: (props) => this.renderInput(props, hFn),
+          imagepicker: (props) => this.renderImagePicker(props),
+          radio: (props) => this.renderRadio(props, hFn),
+          select: (props) => this.renderSelect(props, hFn),
+          switch: () => this.renderSwitch(),
+          textarea: (props) => this.renderTextarea(props, hFn),
+          upload: (props) => this.renderUpload(props, hFn),
+          cascader: (props) => this.renderCascader(props, hFn)
         }
-        return renderMap[type] || this.renderInput
+        return renderMap[type] || ((props) => this.renderInput(props, hFn))
       }
 
       if (typeof this.component === 'function') {
@@ -351,12 +379,12 @@ export default {
             value: this.modelValue,
             props: this.componentProps,
             onInput: this.handleInput,
-            h,
+            h: hFn,
             formData: this.formData
           })
       }
 
-      return this.renderInput
+      return (props) => this.renderInput(props, hFn)
     }
   },
   watch: {
@@ -368,10 +396,6 @@ export default {
     }
   },
   render(h) {
-    if (this.component === 'group') {
-      return <div class='form-field-group'>{this.label}</div>
-    }
-
     // 检查是否应该显示该字段
     const shouldShow = this.isShow ? this.isShow(this.modelValue) : true
     if (!shouldShow) {
@@ -379,8 +403,14 @@ export default {
       return null
     }
 
-    // 获取对应的渲染函数
-    const renderComponent = this.getComponentRender()
+    const isDivider =
+      isString(this.component) && ['group', 'divider'].includes(this.component.toLowerCase())
+    if (isDivider) {
+      return this.renderDivider(this.componentProps)
+    }
+
+    // 获取对应的渲染函数（与当前 render 共用 h）
+    const renderComponent = this.getComponentRender(h)
 
     // 渲染表单项
     const divProps = {

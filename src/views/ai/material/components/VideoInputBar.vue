@@ -42,12 +42,14 @@
         type="text"
         icon="el-icon-magic-stick"
         @click="$emit('open-template')"
-      >模板</el-button>
+        >模板</el-button
+      >
     </div>
 
     <!-- 提示文案：仅在参考生成且有素材时显示 -->
     <div v-if="form.mode === 'reference' && hasAnyRef" class="ref-tip">
-      使用 @ 可快速引用上传的文件，如：参考 @视频1 中的动作，生成 @图片2 和 @图片3 中的角色打斗的视频。
+      使用 @ 可快速引用上传的文件，如：参考 @视频1 中的动作，生成 @图片2 和 @图片3
+      中的角色打斗的视频。
     </div>
 
     <!-- 工具条 -->
@@ -109,7 +111,9 @@
                   class="seg-cell"
                   :class="{ active: form.resolution === r.value }"
                   @click="form.resolution = r.value"
-                >{{ r.label }}</div>
+                >
+                  {{ r.label }}
+                </div>
               </div>
             </div>
 
@@ -121,12 +125,16 @@
                   class="seg-cell"
                   :class="{ active: !form.durationSmart }"
                   @click="form.durationSmart = false"
-                >按秒数</div>
+                >
+                  按秒数
+                </div>
                 <div
                   class="seg-cell"
                   :class="{ active: form.durationSmart }"
                   @click="form.durationSmart = true"
-                >智能时长</div>
+                >
+                  智能时长
+                </div>
               </div>
               <div v-if="!form.durationSmart" class="slider-row">
                 <el-slider
@@ -179,10 +187,13 @@
             :plain="!form.generateAudio"
             icon="el-icon-headset"
             @click="form.generateAudio = !form.generateAudio"
-          >{{ form.generateAudio ? '有声' : '输出声音' }}</el-button>
+            >{{ form.generateAudio ? '有声' : '输出声音' }}</el-button
+          >
         </el-tooltip>
 
-        <el-button size="small" plain icon="el-icon-setting" @click="$emit('open-settings')">详细设置</el-button>
+        <el-button size="small" plain icon="el-icon-setting" @click="$emit('open-settings')"
+          >详细设置</el-button
+        >
       </div>
 
       <div class="toolbar-right">
@@ -250,23 +261,42 @@ export default {
     }
   },
   computed: {
-    videoRatios() { return VIDEO_RATIOS },
-    videoResolutions() { return VIDEO_RESOLUTIONS },
-    videoDurations() { return VIDEO_DURATIONS },
-    durationMin() { return VIDEO_DURATIONS[0] || 4 },
-    durationMax() { return VIDEO_DURATIONS[VIDEO_DURATIONS.length - 1] || 15 },
-    ratioLabel() { return this.form.smartRatio ? '智能比例' : this.form.ratio },
-    durationLabel() { return this.form.durationSmart ? '智能时长' : `${this.form.duration}秒` },
-    modeLabel() { return MODE_LABELS[this.form.mode] || '参考生成' },
+    videoRatios() {
+      return VIDEO_RATIOS
+    },
+    videoResolutions() {
+      return VIDEO_RESOLUTIONS
+    },
+    videoDurations() {
+      return VIDEO_DURATIONS
+    },
+    durationMin() {
+      return VIDEO_DURATIONS[0] || 4
+    },
+    durationMax() {
+      return VIDEO_DURATIONS[VIDEO_DURATIONS.length - 1] || 15
+    },
+    ratioLabel() {
+      return this.form.smartRatio ? '智能比例' : this.form.ratio
+    },
+    durationLabel() {
+      return this.form.durationSmart ? '智能时长' : `${this.form.duration}秒`
+    },
+    modeLabel() {
+      return MODE_LABELS[this.form.mode] || '参考生成'
+    },
     promptPlaceholder() {
       return this.form.mode === 'first_last'
         ? '描述首尾帧之间的动作，比如：从左侧缓慢推近...'
         : '描述你想生成的视频，比如：海浪拍打沙滩，镜头缓慢推近...'
     },
     hasAnyRef() {
-      return (this.form.referenceImages || []).length
-        + (this.form.referenceVideos || []).length
-        + (this.form.referenceAudios || []).length > 0
+      return (
+        (this.form.referenceImages || []).length +
+          (this.form.referenceVideos || []).length +
+          (this.form.referenceAudios || []).length >
+        0
+      )
     },
     /** 提示词 @ 引用候选：按 图片N / 视频N / 音频N 编号的扁平列表 */
     refItems() {
@@ -277,12 +307,20 @@ export default {
       })
     },
     firstFrameWrap: {
-      get() { return this.form.imageStart ? [this.form.imageStart] : [] },
-      set(v) { this.form.imageStart = (v && v[0]) || '' }
+      get() {
+        return this.form.imageStart ? [this.form.imageStart] : []
+      },
+      set(v) {
+        this.form.imageStart = (v && v[0]) || ''
+      }
     },
     lastFrameWrap: {
-      get() { return this.form.imageEnd ? [this.form.imageEnd] : [] },
-      set(v) { this.form.imageEnd = (v && v[0]) || '' }
+      get() {
+        return this.form.imageEnd ? [this.form.imageEnd] : []
+      },
+      set(v) {
+        this.form.imageEnd = (v && v[0]) || ''
+      }
     }
   },
   watch: {
@@ -295,7 +333,9 @@ export default {
         if (JSON.stringify(next) === JSON.stringify(this.form)) return
         this._syncing = true
         this.form = next
-        this.$nextTick(() => { this._syncing = false })
+        this.$nextTick(() => {
+          this._syncing = false
+        })
       }
     },
     form: {
@@ -304,7 +344,9 @@ export default {
         if (this._syncing) return
         this._syncing = true
         this.$emit('input', { ...v })
-        this.$nextTick(() => { this._syncing = false })
+        this.$nextTick(() => {
+          this._syncing = false
+        })
       }
     }
   },
@@ -324,7 +366,9 @@ export default {
       }
       this.form = next
       this.$emit('input', { ...next })
-      this.$nextTick(() => { this._syncing = false })
+      this.$nextTick(() => {
+        this._syncing = false
+      })
     },
     onPickRatio(v) {
       this.form.ratio = v
@@ -338,9 +382,9 @@ export default {
       const map = {
         '21:9': 'r-2109',
         '16:9': 'r-169',
-        '4:3':  'r-43',
-        '1:1':  'r-11',
-        '3:4':  'r-34',
+        '4:3': 'r-43',
+        '1:1': 'r-11',
+        '3:4': 'r-34',
         '9:16': 'r-916'
       }
       return 'ratio-shape ' + (map[v] || 'r-11')
@@ -365,111 +409,260 @@ export default {
 </script>
 
 <style scoped>
-.video-input-bar { width: 100%; }
-.bar-top { display: flex; align-items: flex-start; gap: 12px; }
-.ref-area { flex-shrink: 0; min-width: 80px; }
-
-.frame-rows { display: flex; align-items: center; gap: 6px; }
-.frame-col { display: flex; flex-direction: column; align-items: center; }
-.frame-label { font-size: 12px; color: #909399; margin-top: 4px; }
-.frame-label .required { color: #f56c6c; }
-.divider { font-size: 18px; color: #c0c4cc; }
-
-.prompt-input { flex: 1; }
-.prompt-input >>> .el-textarea__inner {
-  border: none; box-shadow: none; padding: 6px 4px; font-size: 14px;
-  background: transparent; resize: none;
+.video-input-bar {
+  width: 100%;
 }
-.prompt-input >>> .el-textarea__inner:focus { box-shadow: none; }
-.tpl-trigger { flex-shrink: 0; padding: 0; font-size: 13px; color: #606266; }
-.tpl-trigger:hover { color: #409eff; }
+.bar-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.ref-area {
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.frame-rows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.frame-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.frame-label {
+  font-size: 12px;
+  color: #909399;
+  margin-top: 4px;
+}
+.frame-label .required {
+  color: #f56c6c;
+}
+.divider {
+  font-size: 18px;
+  color: #c0c4cc;
+}
+
+.prompt-input {
+  flex: 1;
+}
+.prompt-input >>> .el-textarea__inner {
+  border: none;
+  box-shadow: none;
+  padding: 6px 4px;
+  font-size: 14px;
+  background: transparent;
+  resize: none;
+}
+.prompt-input >>> .el-textarea__inner:focus {
+  box-shadow: none;
+}
+.tpl-trigger {
+  flex-shrink: 0;
+  padding: 0;
+  font-size: 13px;
+  color: #606266;
+}
+.tpl-trigger:hover {
+  color: #409eff;
+}
 
 .ref-tip {
-  font-size: 12px; color: #909399; line-height: 1.5;
+  font-size: 12px;
+  color: #909399;
+  line-height: 1.5;
   margin: 6px 0 -2px;
 }
 
 .bar-toolbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 0 0; gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 0;
+  gap: 12px;
   border-top: 1px solid #f5f7fa;
   margin-top: 8px;
 }
-.toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.toolbar-right { display: flex; align-items: center; gap: 8px; }
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 /* —— 聚合按钮（智能比例 | 720p | 5秒 | 1条）—— */
 .agg-btn {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 10px;
 }
-.agg-btn .agg-icon { font-size: 14px; color: #606266; transform: rotate(90deg); }
-.agg-btn .agg-seg { font-size: 13px; color: #303133; }
-.agg-btn .agg-sep { color: #dcdfe6; font-weight: 300; }
+.agg-btn .agg-icon {
+  font-size: 14px;
+  color: #606266;
+  transform: rotate(90deg);
+}
+.agg-btn .agg-seg {
+  font-size: 13px;
+  color: #303133;
+}
+.agg-btn .agg-sep {
+  color: #dcdfe6;
+  font-weight: 300;
+}
 
 /* —— 聚合 popover —— */
-.params-pop { padding: 4px 4px 0; }
-.params-pop .pop-section { margin-bottom: 14px; }
-.params-pop .pop-section:last-child { margin-bottom: 0; }
-.params-pop .pop-section-title {
-  font-size: 13px; color: #303133; font-weight: 500; margin-bottom: 8px;
+.params-pop {
+  padding: 4px 4px 0;
 }
-.params-pop .pop-tip { font-size: 12px; color: #909399; margin-top: 6px; }
+.params-pop .pop-section {
+  margin-bottom: 14px;
+}
+.params-pop .pop-section:last-child {
+  margin-bottom: 0;
+}
+.params-pop .pop-section-title {
+  font-size: 13px;
+  color: #303133;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.params-pop .pop-tip {
+  font-size: 12px;
+  color: #909399;
+  margin-top: 6px;
+}
 
 /* 比例网格：每格上方一个示意图标，下方文字 */
 .ratio-grid {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
 }
 .ratio-cell {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 8px 4px; border: 1px solid #ebeef5; border-radius: 6px;
-  cursor: pointer; transition: all .15s; background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border: 1px solid #ebeef5;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fff;
 }
-.ratio-cell:hover { border-color: #409eff; }
-.ratio-cell.active { background: #ecf5ff; border-color: #409eff; }
-.ratio-cell .ratio-label { font-size: 12px; color: #606266; margin-top: 4px; }
-.ratio-cell.active .ratio-label { color: #409eff; }
+.ratio-cell:hover {
+  border-color: #409eff;
+}
+.ratio-cell.active {
+  background: #ecf5ff;
+  border-color: #409eff;
+}
+.ratio-cell .ratio-label {
+  font-size: 12px;
+  color: #606266;
+  margin-top: 4px;
+}
+.ratio-cell.active .ratio-label {
+  color: #409eff;
+}
 
 /* 比例缩略图：用纯 CSS 绘制不同长宽比的小矩形 */
-.ratio-icon { display: block; }
+.ratio-icon {
+  display: block;
+}
 .ratio-shape {
-  border: 1.5px solid #909399; border-radius: 2px; background: transparent;
+  border: 1.5px solid #909399;
+  border-radius: 2px;
+  background: transparent;
 }
-.ratio-cell.active .ratio-shape { border-color: #409eff; }
-.ratio-shape.r-2109 { width: 28px; height: 12px; }
-.ratio-shape.r-169  { width: 26px; height: 14px; }
-.ratio-shape.r-43   { width: 22px; height: 16px; }
-.ratio-shape.r-11   { width: 18px; height: 18px; }
-.ratio-shape.r-34   { width: 14px; height: 18px; }
-.ratio-shape.r-916  { width: 12px; height: 20px; }
+.ratio-cell.active .ratio-shape {
+  border-color: #409eff;
+}
+.ratio-shape.r-2109 {
+  width: 28px;
+  height: 12px;
+}
+.ratio-shape.r-169 {
+  width: 26px;
+  height: 14px;
+}
+.ratio-shape.r-43 {
+  width: 22px;
+  height: 16px;
+}
+.ratio-shape.r-11 {
+  width: 18px;
+  height: 18px;
+}
+.ratio-shape.r-34 {
+  width: 14px;
+  height: 18px;
+}
+.ratio-shape.r-916 {
+  width: 12px;
+  height: 20px;
+}
 .ratio-icon.smart {
-  font-size: 18px; color: #909399;
+  font-size: 18px;
+  color: #909399;
 }
-.ratio-cell.active .ratio-icon.smart { color: #409eff; }
+.ratio-cell.active .ratio-icon.smart {
+  color: #409eff;
+}
 
 /* 分段控件：分辨率 / 时长模式 */
 .seg-row {
-  display: flex; gap: 0;
-  background: #f5f7fa; border-radius: 6px; padding: 3px;
+  display: flex;
+  gap: 0;
+  background: #f5f7fa;
+  border-radius: 6px;
+  padding: 3px;
 }
 .seg-cell {
-  flex: 1; text-align: center; padding: 6px 0; cursor: pointer;
-  font-size: 13px; color: #606266; border-radius: 4px;
-  transition: all .15s;
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: #606266;
+  border-radius: 4px;
+  transition: all 0.15s;
 }
-.seg-cell:hover { color: #409eff; }
+.seg-cell:hover {
+  color: #409eff;
+}
 .seg-cell.active {
-  background: #fff; color: #303133; font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+  background: #fff;
+  color: #303133;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .slider-row {
-  display: flex; align-items: center; margin-top: 12px;
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
 }
 .num-display {
-  width: 64px; text-align: center;
-  border: 1px solid #dcdfe6; border-radius: 4px;
-  padding: 4px 0; font-size: 13px; color: #303133;
+  width: 64px;
+  text-align: center;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 4px 0;
+  font-size: 13px;
+  color: #303133;
 }
-.num-display .unit { color: #909399; font-size: 12px; margin-left: 2px; }
+.num-display .unit {
+  color: #909399;
+  font-size: 12px;
+  margin-left: 2px;
+}
 </style>

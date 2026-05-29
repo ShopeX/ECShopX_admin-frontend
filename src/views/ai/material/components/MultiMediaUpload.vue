@@ -23,7 +23,9 @@
         <div class="media-item placeholder">
           <i v-if="!uploading" class="el-icon-plus"></i>
           <i v-else class="el-icon-loading"></i>
-          <div class="hint">{{ items.length === 0 ? placeholder : (items.length + '/' + totalMax) }}</div>
+          <div class="hint">
+            {{ items.length === 0 ? placeholder : items.length + '/' + totalMax }}
+          </div>
         </div>
       </el-upload>
 
@@ -99,7 +101,9 @@
               <div class="prog-fill" :style="{ width: audioProgressPct + '%' }"></div>
             </div>
           </div>
-          <span class="audio-time">{{ formatMmSs(audioCur) }} / {{ formatMmSs(durations[activeItem.url]) }}</span>
+          <span class="audio-time"
+            >{{ formatMmSs(audioCur) }} / {{ formatMmSs(durations[activeItem.url]) }}</span
+          >
           <audio
             :src="activeItem.url"
             preload="metadata"
@@ -169,11 +173,15 @@ export default {
         return { ...it, label: KIND_LABELS[it.kind] + counts[it.kind] }
       })
     },
-    totalMax() { return this.maxImages + this.maxVideos + this.maxAudios },
+    totalMax() {
+      return this.maxImages + this.maxVideos + this.maxAudios
+    },
     canUploadMore() {
-      return this.images.length < this.maxImages
-        || this.videos.length < this.maxVideos
-        || this.audios.length < this.maxAudios
+      return (
+        this.images.length < this.maxImages ||
+        this.videos.length < this.maxVideos ||
+        this.audios.length < this.maxAudios
+      )
     },
     acceptStr() {
       return [...ALLOWED_MIME, ...VIDEO_ALLOWED_MIME, ...AUDIO_ALLOWED_MIME].join(',')
@@ -330,7 +338,7 @@ export default {
       const targetIdx = idx == null ? this.previewIdx : idx
       if (targetIdx < 0) return
       const items = this.$refs.items
-      const list = Array.isArray(items) ? items : (items ? [items] : [])
+      const list = Array.isArray(items) ? items : items ? [items] : []
       const el = list[targetIdx]
       if (!el) return
       const thumb = el.querySelector ? el.querySelector('.thumb') : null
@@ -343,13 +351,23 @@ export default {
     },
     stopAudio() {
       const a = this.getAudioEl()
-      if (a) { try { a.pause() } catch (_) { /* noop */ } }
+      if (a) {
+        try {
+          a.pause()
+        } catch (_) {
+          /* noop */
+        }
+      }
     },
     toggleAudio() {
       const a = this.getAudioEl()
       if (!a) return
       if (a.paused) {
-        a.play().then(() => { this.audioPlaying = true }).catch(() => {})
+        a.play()
+          .then(() => {
+            this.audioPlaying = true
+          })
+          .catch(() => {})
       } else {
         a.pause()
         this.audioPlaying = false
@@ -387,7 +405,9 @@ export default {
       tag.onloadedmetadata = () => {
         this.$set(this.durations, url, tag.duration || 0)
       }
-      tag.onerror = () => { this.$set(this.durations, url, 0) }
+      tag.onerror = () => {
+        this.$set(this.durations, url, 0)
+      }
     },
     formatSec(sec) {
       const s = Math.max(0, Math.round(sec || 0))
@@ -428,152 +448,268 @@ export default {
 
 <style scoped>
 .multi-media-upload {
-  display: block; position: relative;
-  border-radius: 10px; transition: background-color .15s, box-shadow .15s;
+  display: block;
+  position: relative;
+  border-radius: 10px;
+  transition: background-color 0.15s, box-shadow 0.15s;
 }
 .multi-media-upload.is-dragover {
-  background: rgba(64, 158, 255, .06);
+  background: rgba(64, 158, 255, 0.06);
   box-shadow: 0 0 0 2px #409eff inset;
 }
 .media-list {
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;
-  position: relative; min-height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  position: relative;
+  min-height: 80px;
 }
 .drop-mask {
-  position: absolute; inset: -4px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(64, 158, 255, .12); color: #1989fa; font-size: 12px;
-  border: 1px dashed #409eff; border-radius: 10px;
+  position: absolute;
+  inset: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(64, 158, 255, 0.12);
+  color: #1989fa;
+  font-size: 12px;
+  border: 1px dashed #409eff;
+  border-radius: 10px;
   pointer-events: none;
 }
 
 /* —— 单项缩略 + 标签 —— */
 .media-item {
   position: relative;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
   width: 56px;
 }
 .media-item .thumb {
   position: relative;
-  width: 56px; height: 56px; border-radius: 8px; overflow: hidden;
-  border: 1px solid #ebeef5; background: #fafbfc; cursor: pointer;
-  transition: border-color .2s, box-shadow .2s;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ebeef5;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.media-item .thumb:hover { border-color: #c0c4cc; }
+.media-item .thumb:hover {
+  border-color: #c0c4cc;
+}
 .media-item.active .thumb {
   border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64, 158, 255, .25);
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.25);
 }
 .media-item .thumb img,
 .media-item .thumb video {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .media-item .thumb .audio-tile {
-  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #e7f8f3, #b8eedc); color: #2eb389;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e7f8f3, #b8eedc);
+  color: #2eb389;
 }
-.media-item .thumb .audio-tile i { font-size: 22px; }
-.media-item.k-image .thumb-label { color: #606266; }
-.media-item.k-video .thumb-label { color: #606266; }
-.media-item.k-audio .thumb-label { color: #2eb389; }
-.media-item.active .thumb-label { color: #409eff; font-weight: 500; }
+.media-item .thumb .audio-tile i {
+  font-size: 22px;
+}
+.media-item.k-image .thumb-label {
+  color: #606266;
+}
+.media-item.k-video .thumb-label {
+  color: #606266;
+}
+.media-item.k-audio .thumb-label {
+  color: #2eb389;
+}
+.media-item.active .thumb-label {
+  color: #409eff;
+  font-weight: 500;
+}
 
-.thumb-label { font-size: 12px; color: #606266; line-height: 1; }
+.thumb-label {
+  font-size: 12px;
+  color: #606266;
+  line-height: 1;
+}
 
 /* —— 占位 —— */
 .media-item.placeholder {
-  width: 56px; height: 56px; border-radius: 8px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: #909399; border: 1px dashed #dcdfe6; background: #fafbfc;
-  cursor: pointer; transition: border-color .15s, color .15s;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #909399;
+  border: 1px dashed #dcdfe6;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
 }
-.media-item.placeholder:hover { border-color: #409eff; color: #409eff; }
-.media-item.placeholder i { font-size: 18px; }
-.media-item.placeholder .hint { font-size: 11px; margin-top: 2px; line-height: 1.2; text-align: center; }
+.media-item.placeholder:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+.media-item.placeholder i {
+  font-size: 18px;
+}
+.media-item.placeholder .hint {
+  font-size: 11px;
+  margin-top: 2px;
+  line-height: 1.2;
+  text-align: center;
+}
 
 .remove {
-  position: absolute; top: -4px; right: -4px;
-  color: #fff; background: rgba(0,0,0,.55);
-  border-radius: 50%; cursor: pointer;
-  font-size: 16px; padding: 1px;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 1px;
   z-index: 2;
 }
-.media-uploader >>> .el-upload { display: block; }
+.media-uploader >>> .el-upload {
+  display: block;
+}
 
 /* —— 浮动预览卡（fixed 定位 + 自身向上偏移） —— */
 .preview-card {
   position: fixed;
   /* left/top 由 :style 指定为缩略图顶边中心，整张卡再向上&左半宽偏移 */
   transform: translate(-50%, calc(-100% - 10px));
-  background: #fff; border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
   padding: 6px;
   z-index: 9999;
 }
 .preview-card::after {
-  content: ''; position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%); margin-top: -1px;
-  border: 6px solid transparent; border-top-color: #fff;
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -1px;
+  border: 6px solid transparent;
+  border-top-color: #fff;
 }
 
 /* 图片 / 视频预览：尺寸统一 */
 .p-image .p-img {
   display: block;
-  width: 280px; max-height: 200px;
+  width: 280px;
+  max-height: 200px;
   object-fit: contain;
   border-radius: 6px;
 }
-.preview-card.p-video { padding: 0; line-height: 0; }
+.preview-card.p-video {
+  padding: 0;
+  line-height: 0;
+}
 .preview-card.p-video .p-video-el {
   display: block;
-  width: 280px; height: 158px;
+  width: 280px;
+  height: 158px;
   object-fit: contain;
-  background: #000; border-radius: 6px;
+  background: #000;
+  border-radius: 6px;
 }
 .p-video-badge {
-  position: absolute; left: 12px; bottom: 12px;
-  background: rgba(0, 0, 0, .55); color: #fff;
-  font-size: 12px; padding: 2px 8px; border-radius: 10px;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
   line-height: 1.4;
 }
 
 /* 音频播放器 */
-.p-audio { padding: 8px 10px; }
+.p-audio {
+  padding: 8px 10px;
+}
 .p-audio-player {
-  display: flex; align-items: center; gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 260px;
 }
 .p-audio-player .play-btn {
   flex: 0 0 auto;
-  width: 28px; height: 28px; border-radius: 50%;
-  border: none; padding: 0; cursor: pointer;
-  background: #409eff; color: #fff;
-  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #409eff;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
-  transition: background-color .15s;
+  transition: background-color 0.15s;
 }
-.p-audio-player .play-btn:hover { background: #66b1ff; }
+.p-audio-player .play-btn:hover {
+  background: #66b1ff;
+}
 .p-audio-player .audio-body {
-  flex: 1 1 auto; min-width: 0;
-  display: flex; flex-direction: column; gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .p-audio-player .audio-name {
-  font-size: 12px; color: #303133;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 12px;
+  color: #303133;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1;
 }
 .p-audio-player .prog-bar {
-  width: 100%; height: 4px; border-radius: 2px;
-  background: #ebeef5; cursor: pointer; overflow: hidden;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #ebeef5;
+  cursor: pointer;
+  overflow: hidden;
 }
 .p-audio-player .prog-fill {
-  height: 100%; background: #409eff; border-radius: 2px;
-  transition: width .1s linear;
+  height: 100%;
+  background: #409eff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
 }
 .p-audio-player .audio-time {
   flex: 0 0 auto;
-  font-size: 11px; color: #909399; font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: #909399;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
 }
-.p-audio-player audio { display: none; }
+.p-audio-player audio {
+  display: none;
+}
 </style>

@@ -5,28 +5,27 @@
 
 <template>
   <div
-    class="sp-page p-4 flex flex-col"
+    class="sp-page w-full min-h-full rounded-[6px] flex flex-col"
     :class="{
       'sp-page--no-header': !hasHeader,
       'sp-page--no-footer': !hasFooter,
       'sp-page--sticky': isSticky
     }"
+    :style="{ background: bgColor }"
     ref="pageContainer"
   >
-    <div :style="{ background: bgColor }" class="rounded-[6px]">
-      <div class="sp-page__header py-4 pl-5 pr-4 flex items-end" ref="header">
-        <div class="sp-page__header-title mr-4">{{ title }}</div>
-        <div class="sp-page__header-toolbar flex-1">
-          <slot name="page-header" />
-        </div>
+    <div class="sp-page__header py-4 pl-5 pr-4 flex items-end" ref="header">
+      <div class="sp-page__header-title mr-4">{{ title }}</div>
+      <div class="sp-page__header-toolbar flex-1">
+        <slot name="page-header" />
       </div>
-      <div class="sp-page__content p-4 flex-1">
-        <slot />
-      </div>
-      <div class="sp-page__footer">
-        <div class="footer-content py-4">
-          <slot name="page-footer" />
-        </div>
+    </div>
+    <div class="sp-page__content p-4 flex-1">
+      <slot />
+    </div>
+    <div class="sp-page__footer">
+      <div class="footer-content py-4">
+        <slot name="page-footer" />
       </div>
     </div>
   </div>
@@ -104,7 +103,7 @@ export default {
   &--sticky {
     .sp-page__footer {
       position: sticky;
-      bottom: 0;
+      bottom: -14px;
       z-index: 100;
       .footer-content {
         background: color-mix(in srgb, var(--primary) 8%, transparent);

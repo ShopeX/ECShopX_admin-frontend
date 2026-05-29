@@ -33,12 +33,7 @@
         >
           <span class="m-thumb" :class="'k-' + it.kind">
             <img v-if="it.kind === 'image'" :src="it.url" alt="" />
-            <video
-              v-else-if="it.kind === 'video'"
-              :src="it.url"
-              muted
-              preload="metadata"
-            />
+            <video v-else-if="it.kind === 'video'" :src="it.url" muted preload="metadata" />
             <i v-else class="el-icon-headset"></i>
           </span>
           <span class="m-label">{{ it.label }}</span>
@@ -110,7 +105,9 @@ export default {
       if (next === this._lastEmitted) return
       this._syncing = true
       this.renderFromText(next)
-      this.$nextTick(() => { this._syncing = false })
+      this.$nextTick(() => {
+        this._syncing = false
+      })
     },
     items: {
       deep: true,
@@ -249,7 +246,8 @@ export default {
       const itemsMap = new Map(this.items.map((it) => [it.kind + '|' + it.url, it]))
       let mutated = false
       chips.forEach((chip) => {
-        const key = (chip.getAttribute('data-kind') || '') + '|' + (chip.getAttribute('data-url') || '')
+        const key =
+          (chip.getAttribute('data-kind') || '') + '|' + (chip.getAttribute('data-url') || '')
         const item = itemsMap.get(key)
         if (!item) {
           chip.remove()
@@ -286,7 +284,8 @@ export default {
         }
         if (e.key === 'ArrowUp') {
           e.preventDefault()
-          this.mentionActive = (this.mentionActive - 1 + this.mentionFiltered.length) % this.mentionFiltered.length
+          this.mentionActive =
+            (this.mentionActive - 1 + this.mentionFiltered.length) % this.mentionFiltered.length
           return
         }
         if (e.key === 'Enter' && !this.composing) {
@@ -316,7 +315,9 @@ export default {
     },
     onBlur() {
       // 延迟关闭，留给候选项 click 事件抢先触发
-      setTimeout(() => { this.closeMention() }, 150)
+      setTimeout(() => {
+        this.closeMention()
+      }, 150)
     },
     onDocMouseDown(e) {
       if (!this.mentionOpen) return
@@ -379,7 +380,9 @@ export default {
           const cr = r.getBoundingClientRect()
           if (cr && (cr.left || cr.right)) caretLeft = cr.left
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) {
+        /* ignore */
+      }
 
       const itemH = 36
       const padding = 8
@@ -408,7 +411,7 @@ export default {
       if (!sel || sel.rangeCount === 0) return this.closeMention()
       const range = sel.getRangeAt(0)
       const text = node.textContent
-      const endOffset = (range.startContainer === node) ? range.startOffset : text.length
+      const endOffset = range.startContainer === node ? range.startOffset : text.length
       const before = text.slice(0, at)
       const after = text.slice(endOffset)
       const parent = node.parentNode
@@ -441,8 +444,14 @@ export default {
 </script>
 
 <style scoped>
-.prompt-input-wrap { position: relative; width: 100%; }
-.prompt-input-wrap.is-disabled { opacity: .6; pointer-events: none; }
+.prompt-input-wrap {
+  position: relative;
+  width: 100%;
+}
+.prompt-input-wrap.is-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
 
 .prompt-editor {
   width: 100%;
@@ -510,7 +519,12 @@ export default {
 }
 
 /* host 占位（无可视样式）：只是 mounted 后被搬到 body 的容器 */
-.prompt-mention-host { position: absolute; width: 0; height: 0; overflow: visible; }
+.prompt-mention-host {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: visible;
+}
 </style>
 
 <!-- 弹窗会被 mounted 时搬到 document.body，scoped 选择器不再生效，所以这里用非 scoped 全局样式 -->
@@ -525,7 +539,7 @@ export default {
   background: #fff;
   border: 1px solid #ebeef5;
   border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   padding: 4px 0;
 }
 .prompt-mention-pop .mention-item {
@@ -563,5 +577,7 @@ export default {
   font-size: 13px;
   color: #909399;
 }
-.prompt-mention-pop .mention-item .m-label { flex: 1; }
+.prompt-mention-pop .mention-item .m-label {
+  flex: 1;
+}
 </style>

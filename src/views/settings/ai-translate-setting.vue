@@ -26,7 +26,9 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" :loading="submitting" @click="handleSubmit">{{ $t('038c104d.be5fbb') }}</el-button>
+          <el-button type="primary" :loading="submitting" @click="handleSubmit">{{
+            $t('038c104d.be5fbb')
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>

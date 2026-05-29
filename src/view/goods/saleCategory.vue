@@ -110,11 +110,7 @@
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          :label="$t('0e7dabe2.e8f9a1')"
-          width="120"
-          align="center"
-        >
+        <el-table-column :label="$t('0e7dabe2.e8f9a1')" width="120" align="center">
           <template slot-scope="scope">
             <el-switch
               :value="scope.row.is_show_front"
@@ -149,27 +145,11 @@
         @onSubmit="onCategoryFormSubmit"
       />
     </div>
-
-    <SpTranslatePopup
-      ref="translatePopup"
-      table-name="items_category"
-      :data-id="translateContext.dataId"
-      :fields="translateContext.fields"
-      :values="translateContext.values"
-      :source-language="translateContext.sourceLang"
-      @done="onTranslateDone"
-      @save-only="onTranslateSaveOnly"
-      @cancel="onTranslateCancel"
-    />
   </SpPage>
 </template>
 <script>
 import Vue from 'vue'
-import SpTranslatePopup from '@/components/sp-translate-popup'
-import translateMixin from '@/mixins/translateMixin'
 export default {
-  components: { SpTranslatePopup },
-  mixins: [translateMixin],
   data() {
     return {
       loading: false,
@@ -212,7 +192,9 @@ export default {
         {
           label: this.$t('0e7dabe2.e8f9a1'),
           key: 'is_show_front',
-          component: ({ key }, value) => <el-switch v-model={value[key]} active-value="1" inactive-value="0"/>,
+          component: ({ key }, value) => (
+            <el-switch v-model={value[key]} active-value='1' inactive-value='0' />
+          )
         },
         {
           label: this.$t('0e7dabe2.dc1eed'),
@@ -408,11 +390,8 @@ export default {
           is_show_front
         })
         this.$message.success(this.$t('0e7dabe2.3bb47b'))
-        this.refreshNode(parent_id)
-        this.categoryDialog = false
-        this.openTranslate(category_id, ['category_name'], [category_name || ''])
       } else {
-        const res = await this.$api.goods.addCategory({
+        await this.$api.goods.addCategory({
           category_name,
           sort,
           image_url,
@@ -421,18 +400,10 @@ export default {
           parent_id: parent_id != '0' ? parent_id : undefined
         })
         this.$message.success(this.$t('0e7dabe2.3fdaea'))
-        this.refreshNode(parent_id)
-        this.categoryDialog = false
-        // 创建/编辑保持一致：弹「同步翻译」弹框
-        const newCategoryId = (res && res.data && res.data.data && (res.data.data.category_id || res.data.data.id)) || 0
-        if (newCategoryId) {
-          this.openTranslate(newCategoryId, ['category_name'], [category_name || ''])
-        }
       }
+      this.refreshNode(parent_id)
+      this.categoryDialog = false
     },
-    onTranslateDone() {},
-    // 列表页内嵌表单：仅保存/取消停留在当前列表页，不返回上一级
-    goBackTranslateList() {},
     async deleteCategory(row) {
       await this.$confirm(this.$t('0e7dabe2.442ecc'), this.$t('0e7dabe2.02d981'), {
         confirmButtonText: this.$t('0e7dabe2.38cf16'),

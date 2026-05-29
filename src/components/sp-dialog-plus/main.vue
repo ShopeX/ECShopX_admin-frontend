@@ -15,12 +15,11 @@
       <slot name="title" />
     </template>
 
-    <template v-if="$slots.body">
+    <!-- 勿用 v-if($slots.body)/v-else 二选一：在部分路由 + $dialog.open 场景下会误判，导致正文整段空白 -->
+    <div class="sp-dialog-plus__body">
       <slot name="body" />
-    </template>
-    <template v-else>
       <slot />
-    </template>
+    </div>
 
     <span slot="footer" class="dialog-footer">
       <div>
@@ -69,15 +68,15 @@ export default {
       })
     },
     width: {
-      type: String,
-      default: '1008px'
+      type: String
     },
     value: {
       type: Object,
       default: () => ({})
     },
     size: {
-      type: String
+      type: String,
+      default: 'medium'
     },
     isShow: Boolean
   },
@@ -89,7 +88,7 @@ export default {
         small: '800px',
         mini: '600px'
       }
-      return SIZE[this.size] || '1200px'
+      return this.width || SIZE[this.size] || '1200px'
     },
     computedButtonCancel() {
       return {

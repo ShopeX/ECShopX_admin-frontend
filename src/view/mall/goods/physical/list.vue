@@ -1473,12 +1473,17 @@ export default {
       this.is_pharma_industry = res.medicine_setting?.is_pharma_industry == '1'
     },
     async fetchWechatList() {
-      const { list } = await this.$api.minimanage.gettemplateweapplist()
-      list.forEach((item, i) => {
-        if (item.key_name == 'yykweishop') {
-          this.appID = item.authorizer.authorizer_appid
-        }
-      })
+      try {
+        const data = (await this.$api.minimanage.gettemplateweapplist()) || {}
+        const list = data.list || []
+        list.forEach((item) => {
+          if (item.key_name === 'yykweishop' && item.authorizer) {
+            this.appID = item.authorizer.authorizer_appid
+          }
+        })
+      } catch (_) {
+        // 微信模板接口不可用时跳过，不影响商品列表主流程
+      }
     },
 
     beforeSearch(params) {

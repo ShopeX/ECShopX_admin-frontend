@@ -22,4 +22,5 @@ AGENTS.md
 openspec/
 dist/
 .cursor/commit-summary/
+.codegraph/
 

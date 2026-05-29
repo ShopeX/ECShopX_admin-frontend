@@ -4,11 +4,9 @@
 -->
 
 <template>
-  <el-container class="h-full">
-    <div id="page-container" class="w-full h-full bg-background-deep overflow-y-auto">
-      <slot />
-    </div>
-  </el-container>
+  <div id="page-container" class="w-full h-full p-4 bg-background-deep overflow-y-auto">
+    <slot />
+  </div>
 </template>
 
 <script>

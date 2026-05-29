@@ -194,8 +194,12 @@
 <template>
   <div class="wgt-page" :style="headerStyle" @click="handleClickHeader">
     <div class="wgt-page-content" :style="contentStyle">
-      <div v-if="value" class="header-container"
-        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }" :style="containerStyle">
+      <div
+        v-if="value"
+        class="header-container"
+        :class="{ 'has-nearby': showFunctionArea && functionAreaType === 'nearby' }"
+        :style="containerStyle"
+      >
         <div class="header-content-left">
           <!-- 功能区：热区图 -->
           <div

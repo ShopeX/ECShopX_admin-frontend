@@ -132,7 +132,7 @@
               height="64"
               @click="onSetHotZone(scope.data, scope.index)"
             />
-            <!-- <SpVideoPicker v-else v-model="scope.data.videoUrl" size='small' /> -->
+            <!-- <VideoPicker v-else v-model="scope.data.videoUrl" size='small' /> -->
           </div>
           <div class="slider-item-info">
             <div class="slider-item-type">

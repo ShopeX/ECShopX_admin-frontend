@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic'
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
       icon: 'ad-product',
       // icon: 'application',
       keepAlive: true,
-      title: '55038796.104fec'
+      title: i18n.t('55038796.104fec')
     },
     name: 'supply',
     path: '/supply',
@@ -23,7 +24,7 @@ const routes = [
         meta: {
           aliasName: 'supplier_goods_list',
           icon: 'pay-circle',
-          title: '55038796.5782b6',
+          title: i18n.t('55038796.5782b6'),
           permissions: ['supply.supplygoods.supplier_goods_list']
         },
         component: () => import('@/view/mall/goods/physical/supplier_goods_list'),
@@ -59,7 +60,7 @@ const routes = [
         meta: {
           aliasName: 'goods_suppliergoods',
           icon: 'pay-circle',
-          title: '55038796.a453a5',
+          title: i18n.t('55038796.a453a5'),
           permissions: ['supply.supplygoods.goods_suppliergoods']
         },
         component: () => import('@/view/mall/goods/physical/supplier_goods_check'),
@@ -79,7 +80,7 @@ const routes = [
         meta: {
           aliasName: 'supplier_list',
           icon: 'pay-circle',
-          title: '55038796.1e4a8e',
+          title: i18n.t('55038796.1e4a8e'),
           permissions: ['supply.supplymanage.supplier_list']
         },
         component: () => import('@/view/mall/supplier/supplier_list')
@@ -90,7 +91,7 @@ const routes = [
         meta: {
           aliasName: 'supplier',
           icon: 'pay-circle',
-          title: '55038796.55c7cb',
+          title: i18n.t('55038796.55c7cb'),
           permissions: ['supply.supplymanage.supplier']
         },
         component: () => import('@/view/base/account/suppliers')

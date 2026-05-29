@@ -158,7 +158,11 @@
             }}</el-descriptions-item>
           </el-descriptions>
           <el-table :data="statsDialogList" border stripe max-height="420" style="margin-top: 12px">
-            <el-table-column prop="enterprise_name" :label="$t('bea3f44a.e01a0b')" min-width="140" />
+            <el-table-column
+              prop="enterprise_name"
+              :label="$t('bea3f44a.e01a0b')"
+              min-width="140"
+            />
             <el-table-column prop="enterprise_sn" :label="$t('bea3f44a.e01a0c')" min-width="120" />
             <el-table-column prop="scan_count" :label="$t('bea3f44a.e01a02')" width="100" />
             <el-table-column prop="scan_user_count" :label="$t('bea3f44a.e01a03')" width="100" />
@@ -511,8 +515,7 @@ export default {
         /\/activity-management\/(create|result\/|goods\/|dependents\/)/.test(fromPath) ||
         /\/employee\/purchase\/(create|result\/|goods\/|dependents\/)/.test(fromPath)
       const needRefresh =
-        isListRoot &&
-        (String((to.query || {}).refresh || '') === '1' || fromActivitySubRoute)
+        isListRoot && (String((to.query || {}).refresh || '') === '1' || fromActivitySubRoute)
       if (needRefresh) {
         this.$nextTick(() => {
           this.$refs['finder'] && this.$refs['finder'].refresh()

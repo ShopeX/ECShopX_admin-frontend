@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/lukaijie/Documents/ECSHOPX/raw/**)",
+      "Bash(mkdir -p /Users/lukaijie/Documents/ECSHOPX/raw/ECX-admin)",
+      "Bash(grep:*)"
+    ]
+  }
+}

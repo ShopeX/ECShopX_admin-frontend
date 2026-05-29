@@ -263,6 +263,22 @@ export function getUsercenterAuthorizeUrl(params) {
   })
 }
 
+export function getAppcenterGoods(params) {
+  return fetch({
+    url: '/company/appcenter/goods',
+    method: 'get',
+    params
+  })
+}
+
+export function getAppcenterUrl(params) {
+  return fetch({
+    url: '/company/appcenter/url',
+    method: 'get',
+    params
+  })
+}
+
 export function loginUsercenter(params) {
   return fetch({
     url: '/company/usercenter/login',

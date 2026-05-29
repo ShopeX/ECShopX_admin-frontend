@@ -5,7 +5,6 @@
 
 <style lang="scss">
 .marketing-employee-purchase {
-
   .activity-name,
   .activity-title {
     max-width: 480px;
@@ -218,23 +217,53 @@
     </template>
     <div class="marketing-employee-purchase">
       <el-card class="el-card--normal" :header="$t('39e3acc2.6ea1fe')">
-        <SpForm ref="formBase" v-model="formBase" class="base-form" show-message :form-list="formBaseList"
-          :submit="false" />
+        <SpForm
+          ref="formBase"
+          v-model="formBase"
+          class="base-form"
+          show-message
+          :form-list="formBaseList"
+          :submit="false"
+        />
       </el-card>
       <el-card class="el-card--normal" :header="$t('39e3acc2.02a217')">
-        <SpForm ref="activityRule" v-model="activityRule" class="base-form" show-message
-          :form-list="activityRuleListComputed" :submit="false" item-transition />
+        <SpForm
+          ref="activityRule"
+          v-model="activityRule"
+          class="base-form"
+          show-message
+          :form-list="activityRuleListComputed"
+          :submit="false"
+          item-transition
+        />
       </el-card>
     </div>
 
-    <el-dialog :title="$t('39e3acc2.c4750a')" :visible.sync="storeHomePickerVisible" width="800px" append-to-body
-      custom-class="purchase-store-home-picker-dialog" @open="onStoreHomePickerOpen">
+    <el-dialog
+      :title="$t('39e3acc2.c4750a')"
+      :visible.sync="storeHomePickerVisible"
+      width="800px"
+      append-to-body
+      custom-class="purchase-store-home-picker-dialog"
+      @open="onStoreHomePickerOpen"
+    >
       <div v-if="IS_ADMIN()" class="purchase-store-home-picker__filter">
-        <SpSelectShop v-model="storeHomePickerFilterDistributorId" clearable :placeholder="$t('0255d436.708c9d')"
-          class="purchase-store-home-picker__shop" @change="onStoreHomePickerFilterChange" />
+        <SpSelectShop
+          v-model="storeHomePickerFilterDistributorId"
+          clearable
+          :placeholder="$t('0255d436.708c9d')"
+          class="purchase-store-home-picker__shop"
+          @change="onStoreHomePickerFilterChange"
+        />
       </div>
-      <el-table v-loading="storeHomePickerLoading" border :data="storeHomeList" highlight-current-row max-height="360"
-        @row-click="onStoreHomeTableRowClick">
+      <el-table
+        v-loading="storeHomePickerLoading"
+        border
+        :data="storeHomeList"
+        highlight-current-row
+        max-height="360"
+        @row-click="onStoreHomeTableRowClick"
+      >
         <el-table-column width="52" align="center">
           <template slot-scope="scope">
             <el-radio v-model="storeHomePickerPickedId" :label="scope.row.id">&nbsp;</el-radio>
@@ -246,13 +275,20 @@
         <el-table-column prop="template_name" :label="$t('0255d436.49bcb8')" min-width="120" />
       </el-table>
       <div class="mt-4 text-right">
-        <el-pagination background layout="prev, pager, next" :current-page="storeHomeParams.page"
-          :total="storeHomeTotal" :page-size="storeHomeParams.pageSize"
-          @current-change="handleStoreHomePickerPageChange" />
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :current-page="storeHomeParams.page"
+          :total="storeHomeTotal"
+          :page-size="storeHomeParams.pageSize"
+          @current-change="handleStoreHomePickerPageChange"
+        />
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="storeHomePickerVisible = false">{{ $t('bea3f44a.625fb2') }}</el-button>
-        <el-button type="primary" @click="confirmStoreHomePicker">{{ $t('d8d84692.be5fbb') }}</el-button>
+        <el-button type="primary" @click="confirmStoreHomePicker">{{
+          $t('d8d84692.be5fbb')
+        }}</el-button>
       </div>
     </el-dialog>
   </SpPage>
@@ -379,25 +415,17 @@ export default {
     },
     /** 进行中或已暂停（pending）：活动规则与口令配置强锁，与接口语义一致 */
     isActivityRuleEditLocked() {
-      return (
-        this.activityStatus === 'ongoing' || this.activityStatus === 'pending'
-      )
+      return this.activityStatus === 'ongoing' || this.activityStatus === 'pending'
     },
     /** 强锁且已开启口令：仅口令企业表的 participate_quota 允许编辑 */
     isPassphraseQuotaOnlyEditMode() {
-      return (
-        this.isActivityRuleEditLocked &&
-        !!this.activityRule.is_passphrase_enabled
-      )
+      return this.isActivityRuleEditLocked && !!this.activityRule.is_passphrase_enabled
     },
     footerSaveDisabled() {
       if (this.activityStatus === 'cancel' || this.activityStatus === 'over') {
         return true
       }
-      if (
-        this.isActivityRuleEditLocked &&
-        !this.activityRule.is_passphrase_enabled
-      ) {
+      if (this.isActivityRuleEditLocked && !this.activityRule.is_passphrase_enabled) {
         return true
       }
       return false
@@ -564,8 +592,18 @@ export default {
                   border
                   size='small'
                 >
-                  <el-table-column label={t('39e3acc2.e8b1a5')} prop='name' min-width='180' show-overflow-tooltip />
-                  <el-table-column label={t('39e3acc2.e8b1a6')} prop='enterprise_sn' min-width='140' show-overflow-tooltip />
+                  <el-table-column
+                    label={t('39e3acc2.e8b1a5')}
+                    prop='name'
+                    min-width='180'
+                    show-overflow-tooltip
+                  />
+                  <el-table-column
+                    label={t('39e3acc2.e8b1a6')}
+                    prop='enterprise_sn'
+                    min-width='140'
+                    show-overflow-tooltip
+                  />
                   <el-table-column
                     min-width='200'
                     scopedSlots={{
@@ -675,7 +713,9 @@ export default {
                             }}
                           >
                             <div class='passphrase-batch-fill-popover'>
-                              <p class='passphrase-batch-code-popover__tip'>{t('39e3acc2.e8b1b3')}</p>
+                              <p class='passphrase-batch-code-popover__tip'>
+                                {t('39e3acc2.e8b1b3')}
+                              </p>
                               <div class='passphrase-batch-fill-popover__actions'>
                                 <el-button
                                   type='text'
@@ -810,10 +850,7 @@ export default {
                 <div class='form-item-tip'>{t('39e3acc2.f5552d')}</div>
               </div>
               <transition name='purchase-inline-fade'>
-                <div
-                  class='form-item-content'
-                  v-show={!self.activityRule.is_passphrase_enabled}
-                >
+                <div class='form-item-content' v-show={!self.activityRule.is_passphrase_enabled}>
                   <div class='content-item'>
                     <label>{t('39e3acc2.769491')}</label>
                     <SpInput
@@ -1128,17 +1165,17 @@ export default {
       console.log('priceData', priceData)
 
       const phraseMap = {}
-        ; (res.passphrase_enterprises || []).forEach((pe) => {
-          const eid = pe.enterprise_id
-          phraseMap[eid] = {
-            participate_quota: pe.participate_quota,
-            passphrase_code: pe.passphrase_code || '',
-            passphrase_limitfee:
-              pe.passphrase_limitfee != null && pe.passphrase_limitfee !== ''
-                ? Number(pe.passphrase_limitfee) / 100
-                : ''
-          }
-        })
+      ;(res.passphrase_enterprises || []).forEach((pe) => {
+        const eid = pe.enterprise_id
+        phraseMap[eid] = {
+          participate_quota: pe.participate_quota,
+          passphrase_code: pe.passphrase_code || '',
+          passphrase_limitfee:
+            pe.passphrase_limitfee != null && pe.passphrase_limitfee !== ''
+              ? Number(pe.passphrase_limitfee) / 100
+              : ''
+        }
+      })
       const passphraseRows = list.map((c) => {
         const pm = phraseMap[c.id]
         return {
@@ -1173,7 +1210,8 @@ export default {
         ...priceData,
         is_discount_description_enabled: res.is_discount_description_enabled == 'true',
         discount_description: res.discount_description,
-        is_passphrase_enabled: res.is_passphrase_enabled === 'true' || res.is_passphrase_enabled === true,
+        is_passphrase_enabled:
+          res.is_passphrase_enabled === 'true' || res.is_passphrase_enabled === true,
         passphraseRows
       }
       this.onRadioChange(res.if_share_limitfee ? '2' : '1')
@@ -1286,7 +1324,8 @@ export default {
           enterprise_sn: c.enterprise_sn || '',
           participate_quota: old ? old.participate_quota : '',
           passphrase_code: old ? old.passphrase_code : '',
-          passphrase_limitfee: old && old.passphrase_limitfee !== undefined ? old.passphrase_limitfee : ''
+          passphrase_limitfee:
+            old && old.passphrase_limitfee !== undefined ? old.passphrase_limitfee : ''
         }
       })
     },
@@ -1442,7 +1481,10 @@ export default {
           (passphraseRows || []).map((r) => ({
             enterprise_id: Number(r.enterprise_id),
             participate_quota: Number(r.participate_quota),
-            passphrase_limitfee: Math.max(0, Math.round((Number(r.passphrase_limitfee) || 0) * 100)),
+            passphrase_limitfee: Math.max(
+              0,
+              Math.round((Number(r.passphrase_limitfee) || 0) * 100)
+            ),
             passphrase_code: String(r.passphrase_code || '').trim()
           }))
         )

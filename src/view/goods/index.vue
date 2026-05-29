@@ -107,6 +107,7 @@ import { isObject, isString, isArray, IS_SUPPLIER, getRegionNameById } from '@/u
 import GoodsParams from './components/GoodsParams'
 import SpecParams from './components/SpecParams'
 import SkuParams from './components/SkuParams'
+import VideoPicker from '@/components/sp-picker-plus/VideoPicker.vue'
 import sku from '../../store/modules/sku'
 export default {
   async beforeRouteLeave(to, from, next) {
@@ -631,7 +632,7 @@ export default {
                 />
               )} */}
               {/* !disabled */}
-              <SpVideoPicker v-model={value[key]} disabled={disabled} />
+              <VideoPicker v-model={value[key]} disabled={disabled} />
             </div>
           )
         },
@@ -747,7 +748,9 @@ export default {
             if (this.form.isSpecs) {
               const { specItems, skus } = value
               const isSkuFieldFilled = (v) => v != null && v !== ''
-              const approveStatus = specItems.find(({ approve_status }) => isSkuFieldFilled(approve_status))
+              const approveStatus = specItems.find(({ approve_status }) =>
+                isSkuFieldFilled(approve_status)
+              )
               const store = specItems.find(({ store }) => isSkuFieldFilled(store))
               const price = specItems.find(({ price }) => isSkuFieldFilled(price))
               const max_num = specItems.find(({ max_num }) => isSkuFieldFilled(max_num))

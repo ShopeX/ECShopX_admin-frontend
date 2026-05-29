@@ -154,7 +154,7 @@ const config = {
         return <AttrFunctionArea v-model={this.value[key]} />
       },
       value: {
-        type: 'hotzone',
+        type: 'none',
         hotzone: { imgUrl: '', data: [] }
       },
       tip: scene != '1001' ? 'f44e2c51.5bc6b6' : 'f44e2c51.37a58e'
@@ -205,7 +205,7 @@ const config = {
       pageBackgroundStyle,
       pageBackgroundColor,
       pageBackgroundImage,
-      pTitleHotSetting = { imgUrl: '', data: [] },
+      pTitleHotSetting = { type: 'none', hotzone: { imgUrl: '', data: [] } },
       isImmersive,
       immersiveScrollBgColor,
       showSearchButton,
@@ -213,13 +213,16 @@ const config = {
     } = base || {}
     // 兼容旧数据格式：如果 pTitleHotSetting 直接是热区图对象，转换为新格式
     if (pTitleHotSetting && pTitleHotSetting.imgUrl !== undefined && !pTitleHotSetting.type) {
+      const hasHotzoneContent =
+        Boolean(pTitleHotSetting.imgUrl) ||
+        (Array.isArray(pTitleHotSetting.data) && pTitleHotSetting.data.length > 0)
       pTitleHotSetting = {
-        type: 'hotzone',
-        hotzone: pTitleHotSetting
+        type: hasHotzoneContent ? 'hotzone' : 'none',
+        hotzone: { imgUrl: pTitleHotSetting.imgUrl || '', data: pTitleHotSetting.data || [] }
       }
     } else if (!pTitleHotSetting || !pTitleHotSetting.type) {
       pTitleHotSetting = {
-        type: 'hotzone',
+        type: 'none',
         hotzone: { imgUrl: '', data: [] }
       }
     }

@@ -44,28 +44,69 @@ export default {
     }
   },
   computed: {
-    isVideo() { return this.mediaType === 'video' },
-    drawerTitle() { return this.isVideo ? '视频提示词指南' : '图片提示词指南' },
-    sections() { return this.isVideo ? PROMPT_GUIDE_SECTIONS_VIDEO : PROMPT_GUIDE_SECTIONS_IMAGE },
-    externalLink() { return this.isVideo ? PROMPT_GUIDE_LINK_VIDEO : PROMPT_GUIDE_LINK_IMAGE }
+    isVideo() {
+      return this.mediaType === 'video'
+    },
+    drawerTitle() {
+      return this.isVideo ? '视频提示词指南' : '图片提示词指南'
+    },
+    sections() {
+      return this.isVideo ? PROMPT_GUIDE_SECTIONS_VIDEO : PROMPT_GUIDE_SECTIONS_IMAGE
+    },
+    externalLink() {
+      return this.isVideo ? PROMPT_GUIDE_LINK_VIDEO : PROMPT_GUIDE_LINK_IMAGE
+    }
   },
   watch: {
-    value(v) { this.visible = v },
-    visible(v) { if (v !== this.value) this.$emit('input', v) }
+    value(v) {
+      this.visible = v
+    },
+    visible(v) {
+      if (v !== this.value) this.$emit('input', v)
+    }
   }
 }
 </script>
 
 <style scoped>
-.guide-drawer { padding: 0 24px 24px; overflow-y: auto; height: calc(100vh - 80px); }
-.external-link { padding: 12px 16px; background: #ecf5ff; border-radius: 4px; margin-bottom: 20px; }
-.external-link a { color: #409eff; text-decoration: none; font-size: 13px; }
-.external-link a:hover { text-decoration: underline; }
-.guide-section { margin-bottom: 24px; }
-.guide-title {
-  font-size: 14px; font-weight: 600; color: #303133; margin: 0 0 8px;
-  padding-left: 8px; border-left: 3px solid #409eff;
+.guide-drawer {
+  padding: 0 24px 24px;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
 }
-.guide-list { padding-left: 20px; margin: 0; color: #606266; font-size: 13px; line-height: 1.8; }
-.guide-list li { margin-bottom: 4px; }
+.external-link {
+  padding: 12px 16px;
+  background: #ecf5ff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.external-link a {
+  color: #409eff;
+  text-decoration: none;
+  font-size: 13px;
+}
+.external-link a:hover {
+  text-decoration: underline;
+}
+.guide-section {
+  margin-bottom: 24px;
+}
+.guide-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #303133;
+  margin: 0 0 8px;
+  padding-left: 8px;
+  border-left: 3px solid #409eff;
+}
+.guide-list {
+  padding-left: 20px;
+  margin: 0;
+  color: #606266;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.guide-list li {
+  margin-bottom: 4px;
+}
 </style>

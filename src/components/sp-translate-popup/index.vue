@@ -13,11 +13,7 @@
       <div class="translate-lang-box">
         <p class="translate-lang-label">{{ $t('41f42a3e.8085da') }}</p>
         <el-checkbox-group v-model="selectedLangs">
-          <el-checkbox
-            v-for="lang in availableLangs"
-            :key="lang.key"
-            :label="lang.key"
-          >
+          <el-checkbox v-for="lang in availableLangs" :key="lang.key" :label="lang.key">
             {{ lang.label }}
           </el-checkbox>
         </el-checkbox-group>

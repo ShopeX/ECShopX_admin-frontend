@@ -167,10 +167,7 @@
                   >
                     {{ $t('ff141a64.3ae7e4') }}
                   </el-button>
-                  <span
-                    v-if="scope.row.status == 'waiting'"
-                    class="pluspricebuy-waiting-actions"
-                  >
+                  <span v-if="scope.row.status == 'waiting'" class="pluspricebuy-waiting-actions">
                     <i
                       class="el-icon-edit-outline"
                       @click="editActivityAction(scope.$index, scope.row)"

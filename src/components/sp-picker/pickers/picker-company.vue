@@ -92,7 +92,12 @@ export default {
             key: 'disabled',
             width: 88,
             formatter: (value, row) => {
-              if (row == null || row.disabled === undefined || row.disabled === null || row.disabled === '') {
+              if (
+                row == null ||
+                row.disabled === undefined ||
+                row.disabled === null ||
+                row.disabled === ''
+              ) {
                 return '—'
               }
               const d = row.disabled
@@ -149,10 +154,7 @@ export default {
         if (id == null) {
           return
         }
-        const row =
-          typeof entry === 'object' && entry != null
-            ? { ...entry }
-            : { id }
+        const row = typeof entry === 'object' && entry != null ? { ...entry } : { id }
         const prev = this.selectedById[id]
         next[id] = prev && typeof prev === 'object' ? { ...prev, ...row } : row
       })

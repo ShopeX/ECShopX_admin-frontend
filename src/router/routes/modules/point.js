@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic'
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -11,7 +12,7 @@ const routes = [
       aliasName: 'rewardsStore',
       icon: 'funds',
       keepAlive: true,
-      title: 'a0c3da4f.a13364'
+      title: i18n.t('a0c3da4f.a13364')
     },
     name: 'rewardsStore',
     path: '/rewardsStore',
@@ -22,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'rewardItemManagement',
           icon: 'pay-circle',
-          title: 'a0c3da4f.5782b6',
+          title: i18n.t('a0c3da4f.5782b6'),
           permissions: ['rewardsStore.rewardItemManagement']
         },
         component: () => import('@/view/applications/pointmall/list'),
@@ -49,7 +50,7 @@ const routes = [
         meta: {
           aliasName: 'rewardordermanagement',
           icon: 'pay-circle',
-          title: 'a0c3da4f.afcd11',
+          title: i18n.t('a0c3da4f.afcd11'),
           permissions: ['rewardsStore.rewardordermanagement']
         },
         component: () => import('@/view/applications/pointmall/orderList'),
@@ -66,7 +67,7 @@ const routes = [
         meta: {
           aliasName: 'basicSettings',
           icon: 'pay-circle',
-          title: 'a0c3da4f.0aeca0',
+          title: i18n.t('a0c3da4f.0aeca0'),
           permissions: ['rewardsStore.basicSettings']
         },
         component: () => import('@/view/applications/pointmall/setting')

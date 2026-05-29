@@ -10,16 +10,21 @@
     class="flex items-center justify-center hover:bg-gray-100 transition-all duration-300 cursor-pointer"
     @click.stop="onButtonClick"
   >
-    <component :is="icon" :size="size" :fill="fill" />
+    <component :is="icon" :size="size" v-bind="iconExtraProps" />
     <slot />
   </div>
 
-  <component v-else :is="icon" :size="size" :fill="fill" v-on="$listeners" />
+  <component v-else :is="icon" :size="size" v-bind="iconExtraProps" v-on="$listeners" />
 </template>
 
 <script>
-// import * as icons from 'lucide-vue'
-import * as icons from '@icon-park/vue'
+import * as iconParkIcons from '@icon-park/vue'
+import { LUCIDE_ICONS } from './lucide-registry'
+
+function nameToPascal(name) {
+  return name.replace(/(?:^|-)([a-z])/g, (_, letter) => letter.toUpperCase())
+}
+
 export default {
   name: 'SpIcon',
   props: {
@@ -48,9 +53,20 @@ export default {
     return {}
   },
   computed: {
+    pascalName() {
+      return nameToPascal(this.name)
+    },
     icon() {
-      return icons[this.name.replace(/(?:^|-)([a-z])/g, (_, letter) => letter.toUpperCase())]
-      // return icons[this.name]
+      const lucide = LUCIDE_ICONS[this.pascalName]
+      if (lucide) return lucide
+      return iconParkIcons[this.pascalName]
+    },
+    /** Lucide 走 stroke/currentColor；IconPark 用 fill */
+    iconExtraProps() {
+      if (LUCIDE_ICONS[this.pascalName]) {
+        return { color: this.fill, strokeWidth: 2 }
+      }
+      return { fill: this.fill }
     },
     buttonClass() {
       return this.button

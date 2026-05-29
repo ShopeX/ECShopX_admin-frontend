@@ -21,7 +21,9 @@
               placement="top"
             >
               <span>
-                <el-radio-button :label="r.value" :disabled="r.disabled">{{ r.label }}</el-radio-button>
+                <el-radio-button :label="r.value" :disabled="r.disabled">{{
+                  r.label
+                }}</el-radio-button>
               </span>
             </el-tooltip>
           </el-radio-group>
@@ -45,11 +47,21 @@
         <div class="section">
           <div class="section-title">图片尺寸</div>
           <div class="size-inputs">
-            <el-input v-model.number="form.customW" placeholder="W" size="small" @change="onCustomChange">
+            <el-input
+              v-model.number="form.customW"
+              placeholder="W"
+              size="small"
+              @change="onCustomChange"
+            >
               <template slot="prepend">W</template>
             </el-input>
             <i class="el-icon-link link-icon" />
-            <el-input v-model.number="form.customH" placeholder="H" size="small" @change="onCustomChange">
+            <el-input
+              v-model.number="form.customH"
+              placeholder="H"
+              size="small"
+              @change="onCustomChange"
+            >
               <template slot="prepend">H</template>
             </el-input>
           </div>
@@ -59,8 +71,20 @@
         <div class="section">
           <div class="section-title">最大生成张数</div>
           <div class="slider-row">
-            <el-slider v-model="form.maxImages" :min="1" :max="15" style="flex: 1; margin-right: 16px" />
-            <el-input-number v-model="form.maxImages" :min="1" :max="15" size="small" :controls="false" style="width: 80px" />
+            <el-slider
+              v-model="form.maxImages"
+              :min="1"
+              :max="15"
+              style="flex: 1; margin-right: 16px"
+            />
+            <el-input-number
+              v-model="form.maxImages"
+              :min="1"
+              :max="15"
+              size="small"
+              :controls="false"
+              style="width: 80px"
+            />
           </div>
         </div>
 
@@ -83,7 +107,10 @@
         <div class="section">
           <div class="section-row">
             <span class="section-title-inline">水印</span>
-            <el-switch :value="form.watermark === 1" @change="(v) => (form.watermark = v ? 1 : 0)" />
+            <el-switch
+              :value="form.watermark === 1"
+              @change="(v) => (form.watermark = v ? 1 : 0)"
+            />
           </div>
         </div>
       </template>
@@ -96,7 +123,9 @@
             <el-radio-button label="reference">参考生成</el-radio-button>
             <el-radio-button label="first_last">首尾帧</el-radio-button>
           </el-radio-group>
-          <div class="hint">参考生成支持参考图/参考视频/参考音频；首尾帧仅支持首帧（必填）+ 尾帧（可选）</div>
+          <div class="hint">
+            参考生成支持参考图/参考视频/参考音频；首尾帧仅支持首帧（必填）+ 尾帧（可选）
+          </div>
         </div>
 
         <div class="section">
@@ -112,21 +141,39 @@
               {{ r.label }}
             </div>
           </div>
-          <el-checkbox v-model="form.smartRatio" style="margin-top: 8px" @change="onToggleSmart">智能比例（adaptive）</el-checkbox>
+          <el-checkbox v-model="form.smartRatio" style="margin-top: 8px" @change="onToggleSmart"
+            >智能比例（adaptive）</el-checkbox
+          >
         </div>
 
         <div class="section">
           <div class="section-title">分辨率</div>
           <el-radio-group v-model="form.resolution" size="small">
-            <el-radio-button v-for="r in videoResolutions" :key="r.value" :label="r.value">{{ r.label }}</el-radio-button>
+            <el-radio-button v-for="r in videoResolutions" :key="r.value" :label="r.value">{{
+              r.label
+            }}</el-radio-button>
           </el-radio-group>
         </div>
 
         <div class="section">
           <div class="section-title">视频时长（秒）</div>
           <div class="slider-row">
-            <el-slider v-model="form.duration" :min="4" :max="15" :step="1" style="flex: 1; margin-right: 16px" />
-            <el-input-number v-model="form.duration" :min="4" :max="15" :step="1" size="small" :controls="false" style="width: 80px" />
+            <el-slider
+              v-model="form.duration"
+              :min="4"
+              :max="15"
+              :step="1"
+              style="flex: 1; margin-right: 16px"
+            />
+            <el-input-number
+              v-model="form.duration"
+              :min="4"
+              :max="15"
+              :step="1"
+              size="small"
+              :controls="false"
+              style="width: 80px"
+            />
           </div>
         </div>
 
@@ -162,8 +209,17 @@
 
         <div class="section">
           <div class="section-title">随机种子（可选）</div>
-          <el-input-number v-model="form.seed" :min="0" :max="2147483647" size="small" :controls="false" style="width: 100%" />
-          <div class="hint">种子值用于控制生成内容的随机性，相同的种子值会生成类似的视频内容，-1代表随机数</div>
+          <el-input-number
+            v-model="form.seed"
+            :min="0"
+            :max="2147483647"
+            size="small"
+            :controls="false"
+            style="width: 100%"
+          />
+          <div class="hint">
+            种子值用于控制生成内容的随机性，相同的种子值会生成类似的视频内容，-1代表随机数
+          </div>
         </div>
       </template>
 
@@ -207,7 +263,9 @@ export default {
       this.visible = v
       if (v) this.form = this.normalize(this.params, this.mediaType)
     },
-    visible(v) { if (v !== this.value) this.$emit('input', v) }
+    visible(v) {
+      if (v !== this.value) this.$emit('input', v)
+    }
   },
   methods: {
     normalize(p, mediaType) {
@@ -274,23 +332,79 @@ export default {
 </script>
 
 <style scoped>
-.adv-drawer { padding: 0 20px 20px; overflow-y: auto; }
-.section { margin-bottom: 20px; }
-.section-title { font-size: 13px; color: #606266; margin-bottom: 8px; }
-.section-row { display: flex; align-items: center; justify-content: space-between; }
-.section-title-inline { font-size: 13px; color: #606266; }
-.hint { font-size: 12px; color: #909399; margin-top: 4px; }
-.ratio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.ratio-item {
-  border: 1px solid #dcdfe6; border-radius: 4px; padding: 8px 0;
-  text-align: center; cursor: pointer; font-size: 13px; transition: all .2s;
+.adv-drawer {
+  padding: 0 20px 20px;
+  overflow-y: auto;
 }
-.ratio-item:hover { border-color: #409eff; }
-.ratio-item.active { border-color: #409eff; color: #409eff; background: #ecf5ff; }
-.size-inputs { display: flex; align-items: center; gap: 8px; }
-.size-inputs .el-input { flex: 1; }
-.link-icon { font-size: 18px; color: #909399; }
-.error-tip { color: #f56c6c; font-size: 12px; margin-top: 4px; }
-.slider-row { display: flex; align-items: center; }
-.actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.section {
+  margin-bottom: 20px;
+}
+.section-title {
+  font-size: 13px;
+  color: #606266;
+  margin-bottom: 8px;
+}
+.section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-title-inline {
+  font-size: 13px;
+  color: #606266;
+}
+.hint {
+  font-size: 12px;
+  color: #909399;
+  margin-top: 4px;
+}
+.ratio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.ratio-item {
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 8px 0;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.ratio-item:hover {
+  border-color: #409eff;
+}
+.ratio-item.active {
+  border-color: #409eff;
+  color: #409eff;
+  background: #ecf5ff;
+}
+.size-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.size-inputs .el-input {
+  flex: 1;
+}
+.link-icon {
+  font-size: 18px;
+  color: #909399;
+}
+.error-tip {
+  color: #f56c6c;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.slider-row {
+  display: flex;
+  align-items: center;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
 </style>

@@ -138,10 +138,7 @@
               <div class="order-num">
                 {{ scope.row.order_id }}
                 <el-tooltip effect="dark" :content="$t('931fca81.79d3ab')" placement="top-start">
-                  <i
-                    class="el-icon-document-copy"
-                    @click.stop="copyRowText(scope.row.order_id)"
-                  />
+                  <i class="el-icon-document-copy" @click.stop="copyRowText(scope.row.order_id)" />
                 </el-tooltip>
               </div>
               <div v-if="scope.row.distributor_id !== '0'" class="order-store">
@@ -191,10 +188,7 @@
                   :content="$t('931fca81.79d3ab')"
                   placement="top-start"
                 >
-                  <i
-                    class="el-icon-document-copy"
-                    @click.stop="copyRowText(scope.row.mobile)"
-                  />
+                  <i class="el-icon-document-copy" @click.stop="copyRowText(scope.row.mobile)" />
                 </el-tooltip>
               </template>
               <template v-else>
@@ -205,10 +199,7 @@
                   :content="$t('931fca81.79d3ab')"
                   placement="top-start"
                 >
-                  <i
-                    class="el-icon-document-copy"
-                    @click.stop="copyRowText(scope.row.mobile)"
-                  />
+                  <i class="el-icon-document-copy" @click.stop="copyRowText(scope.row.mobile)" />
                 </el-tooltip>
               </template>
             </template>

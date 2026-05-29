@@ -8,6 +8,7 @@ import VuexPersistence from 'vuex-persist'
 import accessStore from './modules/access'
 import userStore from './modules/user'
 import systemStore from './modules/system'
+import decorationStore from './modules/decoration'
 
 import sku from './modules/sku'
 import getters from './getters'
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
     access: accessStore,
     user: userStore,
     system: systemStore,
+    decoration: decorationStore,
     sku
   },
   getters,

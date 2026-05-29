@@ -49,7 +49,7 @@ export function deleteZitiLocation(id) {
 // 自提点关联门店
 export function bindZitiLocation(params) {
   return fetch({
-    url: `pickuplocation/reldistributor`,
+    url: '/pickuplocation/reldistributor',
     method: 'post',
     params
   })
@@ -58,7 +58,7 @@ export function bindZitiLocation(params) {
 // 自提点取消关联门店
 export function unbindZitiLocation(params) {
   return fetch({
-    url: `pickuplocation/reldistributor/cancel`,
+    url: '/pickuplocation/reldistributor/cancel',
     method: 'post',
     params
   })

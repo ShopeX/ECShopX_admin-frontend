@@ -142,7 +142,9 @@ export default {
       if (w) return w
       if (String(this.scene) === '1005' && key === 'goods') {
         return (
-          this.widgets.find((item) => String(item.config?.name || '').toLowerCase() === 'goodscard') ||
+          this.widgets.find(
+            (item) => String(item.config?.name || '').toLowerCase() === 'goodscard'
+          ) ||
           this.widgets.find((item) => (item.name || '').toLowerCase() === 'goods') ||
           null
         )

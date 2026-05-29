@@ -1023,135 +1023,137 @@ export default {
       }
       _self.pageLoading = true
       try {
-      if (_self.$route.params.itemId) {
-        // 初始化门店数据
-        const response = await getItemsDetail(_self.$route.params.itemId)
-        let itemsDetailData = response.data.data
-        const categoryInfoRes = await getCategoryInfo(itemsDetailData.item_main_cat_id, {
-          is_point: 1,
-          item_id: _self.$route.params.itemId
-        })
-        const categoryInfoDetail = categoryInfoRes.data.data
-        if (itemsDetailData.regions_id) {
-          _self.select_regions_value = itemsDetailData.regions_id
-        }
-        _self.form.pics = itemsDetailData.pics
-        // 处理图片列表
-        var picList = []
-        for (var item in itemsDetailData.pics) {
-          var newpic = {}
-          newpic.url = _self.wximageurl + itemsDetailData.pics[item]
-          picList.push(newpic)
-        }
-        _self.picsList = picList
-        let obj = _self.form
-        _self.form = { obj } = {
-          item_id: _self.is_new ? '' : itemsDetailData.item_id,
-          item_source: itemsDetailData.item_source,
-          item_type: itemsDetailData.item_type,
-          special_type: itemsDetailData.special_type,
-          item_category_temp:
-            itemsDetailData.item_category.length > 0 ? itemsDetailData.item_category : [],
-          item_name: itemsDetailData.item_name,
-          sort: itemsDetailData.sort,
-          tax_rate: itemsDetailData.tax_rate,
-          item_bn: _self.is_new ? '' : itemsDetailData.item_bn,
-          brief: itemsDetailData.brief,
-          weight: itemsDetailData.weight,
-          volume: itemsDetailData.volume,
-          price: itemsDetailData.price / 100,
-          market_price: itemsDetailData.market_price / 100,
-          cost_price: itemsDetailData.cost_price / 100,
-          point: itemsDetailData.point,
-          pay_class: itemsDetailData.pay_class,
-          barcode: itemsDetailData.barcode,
-          item_unit: itemsDetailData.item_unit,
-          // rebate: itemsDetailData.rebate/100,
-          store: itemsDetailData.store,
-          brand_id: itemsDetailData.brand_id,
-          templates_id: itemsDetailData.templates_id ? itemsDetailData.templates_id.toString() : '',
-          approve_status: itemsDetailData.approve_status,
-          pics: itemsDetailData.pics,
-          videos: itemsDetailData.videos,
-          videos_url: itemsDetailData.videos_url,
-          nospec: itemsDetailData.nospec,
-          is_show_specimg: itemsDetailData.is_show_specimg,
-          item_params: itemsDetailData.item_params,
-          item_main_cat_id: itemsDetailData.item_main_cat_id,
-          // is_gift: itemsDetailData.is_gift,
-          crossborder_tax_rate: itemsDetailData.crossborder_tax_rate,
-          origincountry_id: itemsDetailData.origincountry_id,
-          type: itemsDetailData.type
-          // is_profit: itemsDetailData.is_profit,
-        }
-        _self.picsOldLen = _self.form.pics.length
-        if (!itemsDetailData.item_main_cat_id) {
-          await _self.fetchMainCate()
-        } else {
-          let category = itemsDetailData.item_category_main
-          _self.categoryNames = [
-            category[0].category_name,
-            category[0].children[0].category_name,
-            category[0].children[0].children[0].category_name
-          ]
-          _self.generateParams(itemsDetailData.item_params_list)
-        }
-        if (!_self.form.nospec) {
-          _self.generateSpec(categoryInfoDetail.goods_spec, itemsDetailData.spec_items)
-          _self.specImages = itemsDetailData.spec_images
-          // 恢复规格勾选状态
-          itemsDetailData.spec_items.forEach((item) => {
-            item.item_spec.forEach((child) => {
-              let checkedIndex = _self.skus.findIndex((n) => child.spec_id === n.sku_id)
-              if (checkedIndex > -1) {
-                let isin = _self.skus[checkedIndex].checked_sku.findIndex(
-                  (k) => child.spec_value_id === k
-                )
-                if (isin === -1) {
-                  _self.skus[checkedIndex].checked_sku.push(child.spec_value_id)
+        if (_self.$route.params.itemId) {
+          // 初始化门店数据
+          const response = await getItemsDetail(_self.$route.params.itemId)
+          let itemsDetailData = response.data.data
+          const categoryInfoRes = await getCategoryInfo(itemsDetailData.item_main_cat_id, {
+            is_point: 1,
+            item_id: _self.$route.params.itemId
+          })
+          const categoryInfoDetail = categoryInfoRes.data.data
+          if (itemsDetailData.regions_id) {
+            _self.select_regions_value = itemsDetailData.regions_id
+          }
+          _self.form.pics = itemsDetailData.pics
+          // 处理图片列表
+          var picList = []
+          for (var item in itemsDetailData.pics) {
+            var newpic = {}
+            newpic.url = _self.wximageurl + itemsDetailData.pics[item]
+            picList.push(newpic)
+          }
+          _self.picsList = picList
+          let obj = _self.form
+          _self.form = { obj } = {
+            item_id: _self.is_new ? '' : itemsDetailData.item_id,
+            item_source: itemsDetailData.item_source,
+            item_type: itemsDetailData.item_type,
+            special_type: itemsDetailData.special_type,
+            item_category_temp:
+              itemsDetailData.item_category.length > 0 ? itemsDetailData.item_category : [],
+            item_name: itemsDetailData.item_name,
+            sort: itemsDetailData.sort,
+            tax_rate: itemsDetailData.tax_rate,
+            item_bn: _self.is_new ? '' : itemsDetailData.item_bn,
+            brief: itemsDetailData.brief,
+            weight: itemsDetailData.weight,
+            volume: itemsDetailData.volume,
+            price: itemsDetailData.price / 100,
+            market_price: itemsDetailData.market_price / 100,
+            cost_price: itemsDetailData.cost_price / 100,
+            point: itemsDetailData.point,
+            pay_class: itemsDetailData.pay_class,
+            barcode: itemsDetailData.barcode,
+            item_unit: itemsDetailData.item_unit,
+            // rebate: itemsDetailData.rebate/100,
+            store: itemsDetailData.store,
+            brand_id: itemsDetailData.brand_id,
+            templates_id: itemsDetailData.templates_id
+              ? itemsDetailData.templates_id.toString()
+              : '',
+            approve_status: itemsDetailData.approve_status,
+            pics: itemsDetailData.pics,
+            videos: itemsDetailData.videos,
+            videos_url: itemsDetailData.videos_url,
+            nospec: itemsDetailData.nospec,
+            is_show_specimg: itemsDetailData.is_show_specimg,
+            item_params: itemsDetailData.item_params,
+            item_main_cat_id: itemsDetailData.item_main_cat_id,
+            // is_gift: itemsDetailData.is_gift,
+            crossborder_tax_rate: itemsDetailData.crossborder_tax_rate,
+            origincountry_id: itemsDetailData.origincountry_id,
+            type: itemsDetailData.type
+            // is_profit: itemsDetailData.is_profit,
+          }
+          _self.picsOldLen = _self.form.pics.length
+          if (!itemsDetailData.item_main_cat_id) {
+            await _self.fetchMainCate()
+          } else {
+            let category = itemsDetailData.item_category_main
+            _self.categoryNames = [
+              category[0].category_name,
+              category[0].children[0].category_name,
+              category[0].children[0].children[0].category_name
+            ]
+            _self.generateParams(itemsDetailData.item_params_list)
+          }
+          if (!_self.form.nospec) {
+            _self.generateSpec(categoryInfoDetail.goods_spec, itemsDetailData.spec_items)
+            _self.specImages = itemsDetailData.spec_images
+            // 恢复规格勾选状态
+            itemsDetailData.spec_items.forEach((item) => {
+              item.item_spec.forEach((child) => {
+                let checkedIndex = _self.skus.findIndex((n) => child.spec_id === n.sku_id)
+                if (checkedIndex > -1) {
+                  let isin = _self.skus[checkedIndex].checked_sku.findIndex(
+                    (k) => child.spec_value_id === k
+                  )
+                  if (isin === -1) {
+                    _self.skus[checkedIndex].checked_sku.push(child.spec_value_id)
+                  }
                 }
-              }
-            })
-          })
-
-          itemsDetailData.spec_items.forEach((item) => {
-            let sku = Object.assign({}, item)
-            sku.market_price = item.market_price / 100
-            sku.cost_price = item.cost_price / 100
-            sku.price = item.price / 100
-            sku.item_bn = _self.is_new ? '' : item.item_bn
-            let itemId = []
-            let specs = []
-            item.item_spec.forEach((sub) => {
-              specs.push({
-                spec_id: sub.spec_id,
-                spec_value_id: sub.spec_value_id,
-                spec_value_name: sub.spec_value_name,
-                spec_custom_value_name: sub.spec_custom_value_name || ''
               })
-              itemId.push(sub.spec_value_id)
             })
-            sku.item_spec = specs
-            itemId = itemId.join('_')
-            Object.assign(sku, { sku_id: itemId })
-            store.dispatch('setSku', sku)
-          })
-          _self.updateSku()
-        }
-        if (typeof itemsDetailData.intro === 'object') {
-          _self.mode = 'component'
-          _self.content = itemsDetailData.intro
+
+            itemsDetailData.spec_items.forEach((item) => {
+              let sku = Object.assign({}, item)
+              sku.market_price = item.market_price / 100
+              sku.cost_price = item.cost_price / 100
+              sku.price = item.price / 100
+              sku.item_bn = _self.is_new ? '' : item.item_bn
+              let itemId = []
+              let specs = []
+              item.item_spec.forEach((sub) => {
+                specs.push({
+                  spec_id: sub.spec_id,
+                  spec_value_id: sub.spec_value_id,
+                  spec_value_name: sub.spec_value_name,
+                  spec_custom_value_name: sub.spec_custom_value_name || ''
+                })
+                itemId.push(sub.spec_value_id)
+              })
+              sku.item_spec = specs
+              itemId = itemId.join('_')
+              Object.assign(sku, { sku_id: itemId })
+              store.dispatch('setSku', sku)
+            })
+            _self.updateSku()
+          }
+          if (typeof itemsDetailData.intro === 'object') {
+            _self.mode = 'component'
+            _self.content = itemsDetailData.intro
+          } else {
+            _self.form.intro = itemsDetailData.intro
+          }
+          // .catch(error => {
+          //   _self.$router.go(-1)
+          // })
+          _self.itemVideo = { media_id: _self.form.videos, url: _self.form.videos_url }
         } else {
-          _self.form.intro = itemsDetailData.intro
+          await _self.fetchMainCate()
         }
-        // .catch(error => {
-        //   _self.$router.go(-1)
-        // })
-        _self.itemVideo = { media_id: _self.form.videos, url: _self.form.videos_url }
-      } else {
-        await _self.fetchMainCate()
-      }
-      await _self.init()
+        await _self.init()
       } finally {
         _self.pageLoading = false
       }
@@ -1805,22 +1807,24 @@ export default {
     },
     init() {
       this.getBrandList('', true)
-      const templatesPromise = getShippingTemplatesList(this.templatesListParams).then((response) => {
-        if (response.data.data.list.length > 0) {
-          for (var i in response.data.data.list) {
-            this.templatesList.push({
-              template_id: response.data.data.list[i].template_id,
-              name: response.data.data.list[i].name
+      const templatesPromise = getShippingTemplatesList(this.templatesListParams).then(
+        (response) => {
+          if (response.data.data.list.length > 0) {
+            for (var i in response.data.data.list) {
+              this.templatesList.push({
+                template_id: response.data.data.list[i].template_id,
+                name: response.data.data.list[i].name
+              })
+            }
+          } else {
+            this.$message({
+              type: 'error',
+              message: this.$t('4b43f5ef.e9d74f')
             })
+            this.$router.push({ path: this.matchInternalRoute('shippingtemplates') })
           }
-        } else {
-          this.$message({
-            type: 'error',
-            message: this.$t('4b43f5ef.e9d74f')
-          })
-          this.$router.push({ path: this.matchInternalRoute('shippingtemplates') })
         }
-      })
+      )
 
       const categoryPromise = getCategory({ is_show: false }).then((response) => {
         const res = response.data.data

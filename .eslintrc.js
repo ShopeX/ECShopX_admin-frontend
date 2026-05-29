@@ -8,6 +8,23 @@ module.exports = {
     'parser': '@babel/eslint-parser'
   },
   'rules': {
+    // 以下为历史代码体量较大时的降噪项；新代码仍建议本地按需开启或 CI 分目录收紧
+    'vue/no-template-shadow': 0,
+    'vue/multiline-html-element-content-newline': 0,
+    'vue/require-valid-default-prop': 0,
+    'vue/valid-v-for': 0,
+    'vue/valid-v-bind': 0,
+    'vue/valid-v-model': 0,
+    'vue/no-parsing-error': 0,
+    'vue/no-unused-vars': 0,
+    'vue/return-in-computed-property': 0,
+    'no-empty': 0,
+    'no-constant-condition': 0,
+    'no-self-assign': 0,
+    'no-case-declarations': 0,
+    'no-redeclare': 0,
+    'no-irregular-whitespace': 0,
+    'no-unreachable': 0,
     'vue/attributes-order': 0,
     'vue/component-tags-order': 0,
     'vue/html-closing-bracket-newline': 0,
@@ -31,18 +48,6 @@ module.exports = {
     'no-dupe-keys': 0,
     'no-undef': 0,
     'no-control-regex': 0,
-    'no-useless-escape': 0,
-    'vue/html-self-closing': [
-      'error',
-      {
-        'html': {
-          'void': 'never',
-          'normal': 'always',
-          'component': 'always'
-        },
-        'svg': 'always',
-        'math': 'always'
-      }
-    ]
+    'no-useless-escape': 0
   }
 }

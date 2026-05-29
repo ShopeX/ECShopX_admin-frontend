@@ -11,7 +11,11 @@
       </el-alert>
     </div>
     <div ref="exportTieredNav" class="export-log-tiered-nav">
-      <el-tabs v-model="activeGroupName" class="group-tabs export-tier-1" @tab-click="handleGroupClick">
+      <el-tabs
+        v-model="activeGroupName"
+        class="group-tabs export-tier-1"
+        @tab-click="handleGroupClick"
+      >
         <el-tab-pane
           v-for="group in exportGroups"
           :key="group.name"
@@ -21,42 +25,44 @@
       </el-tabs>
       <div class="export-log-tier-1-caret" :style="tier1CaretStyle" aria-hidden="true" />
       <el-tabs v-model="activeName" class="detail-tabs export-tier-2" @tab-click="handleClick">
-      <el-tab-pane
-        v-for="tab in currentExportTabs"
-        :key="tab.name"
-        :label="tab.label"
-        :name="tab.name"
-      />
-      <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 260">
-        <el-table-column :label="$t('cb7af8ae.2b6bc0')">
-          <template slot-scope="scope">
-            <el-button type="text" @click.prevent="handleDown(scope.row)">
-              {{ $t('cb7af8ae.f26ef9') }}
-            </el-button>
-          </template>
-        </el-table-column>
-        <el-table-column prop="log_id" label="ID" />
-        <el-table-column prop="file_name" :label="$t('cb7af8ae.d2e256')" />
-        <el-table-column prop="finish_date" :label="$t('cb7af8ae.475dea')" />
-        <el-table-column prop="handle_status" :label="$t('cb7af8ae.21b314')">
-          <template slot-scope="scope">
-            <span v-if="scope.row.handle_status == 'wait'">{{ $t('cb7af8ae.1e57c1') }}</span>
-            <span v-if="scope.row.handle_status == 'finish'">{{ $t('cb7af8ae.7be39b') }}</span>
-            <span v-if="scope.row.handle_status == 'processing'">{{ $t('cb7af8ae.5d459d') }}</span>
-            <span v-if="scope.row.handle_status == 'fail'">{{ $t('cb7af8ae.1012e0') }}</span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
-        <el-pagination
-          background
-          layout="prev, pager, next, total"
-          :current-page.sync="params.page"
-          :total="total_count"
-          :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
+        <el-tab-pane
+          v-for="tab in currentExportTabs"
+          :key="tab.name"
+          :label="tab.label"
+          :name="tab.name"
         />
-      </div>
+        <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 260">
+          <el-table-column :label="$t('cb7af8ae.2b6bc0')">
+            <template slot-scope="scope">
+              <el-button type="text" @click.prevent="handleDown(scope.row)">
+                {{ $t('cb7af8ae.f26ef9') }}
+              </el-button>
+            </template>
+          </el-table-column>
+          <el-table-column prop="log_id" label="ID" />
+          <el-table-column prop="file_name" :label="$t('cb7af8ae.d2e256')" />
+          <el-table-column prop="finish_date" :label="$t('cb7af8ae.475dea')" />
+          <el-table-column prop="handle_status" :label="$t('cb7af8ae.21b314')">
+            <template slot-scope="scope">
+              <span v-if="scope.row.handle_status == 'wait'">{{ $t('cb7af8ae.1e57c1') }}</span>
+              <span v-if="scope.row.handle_status == 'finish'">{{ $t('cb7af8ae.7be39b') }}</span>
+              <span v-if="scope.row.handle_status == 'processing'">{{
+                $t('cb7af8ae.5d459d')
+              }}</span>
+              <span v-if="scope.row.handle_status == 'fail'">{{ $t('cb7af8ae.1012e0') }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
+          <el-pagination
+            background
+            layout="prev, pager, next, total"
+            :current-page.sync="params.page"
+            :total="total_count"
+            :page-size="params.pageSize"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </el-tabs>
     </div>
   </SpPage>

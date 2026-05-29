@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic' // 主框架
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -11,7 +12,7 @@ const routes = [
       aliasName: 'entity',
       icon: 'commodity',
       keepAlive: true,
-      title: '2c432cc1.9897d8'
+      title: i18n.t('2c432cc1.9897d8')
     },
     name: 'products',
     path: '/products',
@@ -23,7 +24,7 @@ const routes = [
         meta: {
           aliasName: 'goodsphysical',
           icon: 'icon-products',
-          title: '2c432cc1.81a684',
+          title: i18n.t('2c432cc1.81a684'),
           permissions: ['entity.goods.goodsphysical']
         },
         children: [
@@ -31,7 +32,7 @@ const routes = [
             path: 'editor/:itemId?',
             component: () => import('@/view/goods/index'),
             meta: {
-              title: '2c432cc1.27fabd',
+              title: i18n.t('2c432cc1.27fabd'),
               hidden: true
             }
           },
@@ -39,7 +40,7 @@ const routes = [
             path: 'physicalupload/:itemId?',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload.vue'),
             meta: {
-              title: '2c432cc1.a4c910',
+              title: i18n.t('2c432cc1.a4c910'),
               hidden: true
             }
           },
@@ -47,7 +48,7 @@ const routes = [
             path: 'stock-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
             meta: {
-              title: '2c432cc1.ac5320',
+              title: i18n.t('2c432cc1.ac5320'),
               hidden: true
             }
           },
@@ -55,7 +56,7 @@ const routes = [
             path: 'profit-sharing-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload'),
             meta: {
-              title: '2c432cc1.022564',
+              title: i18n.t('2c432cc1.022564'),
               hidden: true
             }
           },
@@ -63,7 +64,7 @@ const routes = [
             path: 'product-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload'),
             meta: {
-              title: '2c432cc1.9745ac',
+              title: i18n.t('2c432cc1.9745ac'),
               hidden: true
             }
           }
@@ -76,7 +77,7 @@ const routes = [
         meta: {
           aliasName: 'storeshopitemanagement',
           icon: 'icon-products',
-          title: '2c432cc1.8065fb',
+          title: i18n.t('2c432cc1.8065fb'),
           permissions: ['entity.goods.storeshopitemanagement']
         }
       },
@@ -87,7 +88,7 @@ const routes = [
         meta: {
           aliasName: 'goodsaudit',
           icon: 'icon-products',
-          title: '2c432cc1.b1c9d7',
+          title: i18n.t('2c432cc1.b1c9d7'),
           permissions: ['entity.goods.goodsaudit']
         },
         children: [
@@ -97,7 +98,7 @@ const routes = [
             component: () => import('@/view/goods/index'),
             meta: {
               icon: 'icon-products',
-              title: '2c432cc1.241aca',
+              title: i18n.t('2c432cc1.241aca'),
               hidden: true
             }
           }
@@ -108,7 +109,7 @@ const routes = [
         path: 'product-category/management-category',
         component: () => import('@/view/goods/mainCategory'),
         meta: {
-          title: '2c432cc1.b3ed9f',
+          title: i18n.t('2c432cc1.b3ed9f'),
           permissions: ['entity.goodsgroup.goodsmaincategory']
         }
       },
@@ -117,7 +118,7 @@ const routes = [
         path: 'product-category/sale-category',
         component: () => import('@/view/goods/saleCategory'),
         meta: {
-          title: '2c432cc1.392d49',
+          title: i18n.t('2c432cc1.392d49'),
           permissions: ['entity.goodsgroup.goodscategory']
         }
       },
@@ -126,7 +127,7 @@ const routes = [
         path: 'product-category/product-tag',
         component: () => import('@/view/mall/goods/tags'),
         meta: {
-          title: '2c432cc1.0f394b',
+          title: i18n.t('2c432cc1.0f394b'),
           permissions: ['entity.goodsgroup.itemtags']
         }
       },
@@ -135,7 +136,7 @@ const routes = [
         path: 'base-config/product-sku',
         component: () => import('@/view/mall/goods/attributes/attributes'),
         meta: {
-          title: '2c432cc1.5fceb3',
+          title: i18n.t('2c432cc1.5fceb3'),
           permissions: ['entity.goodsbase.goodsattributes']
         }
       },
@@ -144,7 +145,7 @@ const routes = [
         path: 'base-config/minimum-order-quantity',
         component: () => import('@/view/mall/goods/attributes/goodsattributes'),
         meta: {
-          title: '2c432cc1.ed52fd',
+          title: i18n.t('2c432cc1.ed52fd'),
           permissions: ['entity.goodsbase.goodsstartnum']
         }
       },
@@ -153,7 +154,7 @@ const routes = [
         path: 'base-config/product-brand',
         component: () => import('@/view/mall/goods/attributes/brand'),
         meta: {
-          title: '2c432cc1.ef6fc3',
+          title: i18n.t('2c432cc1.ef6fc3'),
           permissions: ['entity.goodsbase.goodsbrand']
         }
       },
@@ -162,7 +163,7 @@ const routes = [
         path: 'base-config/product-params',
         component: () => import('@/view/mall/goods/attributes/params'),
         meta: {
-          title: '2c432cc1.8686bb',
+          title: i18n.t('2c432cc1.8686bb'),
           permissions: ['entity.goodsbase.goodsparams']
         }
       },
@@ -171,7 +172,7 @@ const routes = [
         path: 'base-config/ranking-list',
         component: () => import('@/view/mall/goods/ranking/index'),
         meta: {
-          title: '2c432cc1.1db489',
+          title: i18n.t('2c432cc1.1db489'),
           permissions: ['entity.goodsbase.rankingList']
         }
       },
@@ -180,7 +181,7 @@ const routes = [
         path: 'product-manage/exportstoreitems',
         component: () => import('@/view/mall/marketing/productUpdate'),
         meta: {
-          title: '2c432cc1.068bb6',
+          title: i18n.t('2c432cc1.068bb6'),
           permissions: ['entity.goods.exportstoreitems']
         }
       }

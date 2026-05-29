@@ -32,7 +32,7 @@ export function useForm(options = {}) {
     data() {
       return {
         localFormItems: formItems,
-        formData: {},
+        formData: { ...(this.value || {}) },
         formRules: rules // 表单校验规则
       }
     },
@@ -155,7 +155,7 @@ export function useForm(options = {}) {
           labelInline: labelInline,
           showDefaultActions: showDefaultActions,
           hideFieldRequiredMark: hideFieldRequiredMark,
-          value: this.value
+          value: this.formData
         },
         on: {
           // 'field-change': ({ fieldName, value }) => {

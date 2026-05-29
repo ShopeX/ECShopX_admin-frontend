@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic' // 主框架
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -11,7 +12,7 @@ const routes = [
       aliasName: 'order',
       icon: 'order',
       keepAlive: true,
-      title: 'c15892aa.4c117f'
+      title: i18n.t('c15892aa.4c117f')
     },
     name: 'orders',
     path: '/order',
@@ -22,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'tradenormalorders',
           icon: 'icon-products',
-          title: 'c15892aa.07166e',
+          title: i18n.t('c15892aa.07166e'),
           permissions: ['order.entitytrade.tradenormalorders']
         },
         component: () => import('@/view/mall/trade/normalorders/list'),
@@ -51,7 +52,7 @@ const routes = [
         meta: {
           aliasName: 'tradenormalshoporders',
           icon: 'icon-products',
-          title: 'c15892aa.a509ca',
+          title: i18n.t('c15892aa.a509ca'),
           permissions: ['order.entitytrade.tradenormalshoporders']
         },
         children: [
@@ -68,7 +69,7 @@ const routes = [
         meta: {
           aliasName: 'normalordersupload',
           icon: 'icon-products',
-          title: 'c15892aa.425991',
+          title: i18n.t('c15892aa.425991'),
           permissions: ['order.entitytrade.normalordersupload']
         }
       },
@@ -79,7 +80,7 @@ const routes = [
         meta: {
           aliasName: 'aftersaleslist',
           icon: 'icon-products',
-          title: 'c15892aa.75bfab',
+          title: i18n.t('c15892aa.75bfab'),
           permissions: ['order.aftersales.aftersaleslist']
         },
         children: [
@@ -96,7 +97,7 @@ const routes = [
         meta: {
           aliasName: 'ordersettingdetail',
           icon: 'icon-products',
-          title: 'c15892aa.66cd47',
+          title: i18n.t('c15892aa.66cd47'),
           permissions: ['order.ordersetting.ordersettingdetail']
         }
       },
@@ -107,7 +108,7 @@ const routes = [
         meta: {
           aliasName: 'tradesetting',
           icon: 'icon-products',
-          title: 'c15892aa.6d923e',
+          title: i18n.t('c15892aa.6d923e'),
           permissions: ['order.ordersetting.tradesetting']
         }
       },
@@ -118,7 +119,7 @@ const routes = [
         meta: {
           aliasName: 'aftersalesreason',
           icon: 'icon-products',
-          title: 'c15892aa.160adc',
+          title: i18n.t('c15892aa.160adc'),
           permissions: ['order.ordersetting.aftersalesreason']
         }
       },
@@ -131,7 +132,7 @@ const routes = [
         meta: {
           aliasName: 'cartremind',
           icon: 'icon-products',
-          title: 'c15892aa.b8c40b',
+          title: i18n.t('c15892aa.b8c40b'),
           permissions: ['order.ordersetting.cartremind']
         }
       },
@@ -142,7 +143,7 @@ const routes = [
         meta: {
           aliasName: 'goodslimit',
           icon: 'icon-products',
-          title: 'c15892aa.44d46e',
+          title: i18n.t('c15892aa.44d46e'),
           permissions: ['order.ordersetting.goodslimit']
         },
         children: [
@@ -181,7 +182,7 @@ const routes = [
         meta: {
           aliasName: 'marketingdistribution_orders',
           icon: 'icon-products',
-          title: 'c15892aa.aae16d',
+          title: i18n.t('c15892aa.aae16d'),
           permissions: ['order.entitytrade.marketingdistribution_orders']
         },
         component: () => import('@/view/mall/marketing/distributionOrders'),

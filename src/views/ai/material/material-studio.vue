@@ -10,9 +10,13 @@
       </div>
 
       <div class="header-actions">
-        <el-button size="small" plain icon="el-icon-magic-stick" @click="guideOpen = true">提示词指南</el-button>
+        <el-button size="small" plain icon="el-icon-magic-stick" @click="guideOpen = true"
+          >提示词指南</el-button
+        >
         <router-link :to="{ name: 'aiMaterialLibrary' }">
-          <el-button size="small" type="primary" plain icon="el-icon-folder-opened">素材库</el-button>
+          <el-button size="small" type="primary" plain icon="el-icon-folder-opened"
+            >素材库</el-button
+          >
         </router-link>
       </div>
     </div>
@@ -21,7 +25,9 @@
     <div
       class="studio-body"
       v-loading="generating"
-      :element-loading-text="mode === 'video' ? '正在提交视频任务，请稍候...' : '正在生成图片，请稍候...'"
+      :element-loading-text="
+        mode === 'video' ? '正在提交视频任务，请稍候...' : '正在生成图片，请稍候...'
+      "
     >
       <!-- 历史会话流（按时间倒序、上滑加载更多） -->
       <div ref="conversationsRef" class="conv-stream" @scroll="onStreamScroll">
@@ -34,7 +40,11 @@
           <div class="conv-meta">
             <span class="conv-time">{{ c.created_at }}</span>
             <el-tag v-if="c.status === 'failed'" type="danger" size="mini">失败</el-tag>
-            <el-tag v-else-if="c.status === 'pending' || c.status === 'running'" type="warning" size="mini">
+            <el-tag
+              v-else-if="c.status === 'pending' || c.status === 'running'"
+              type="warning"
+              size="mini"
+            >
               <i class="el-icon-loading"></i> 生成中
             </el-tag>
           </div>
@@ -44,17 +54,31 @@
           <div class="conv-params">
             <el-tag size="mini" effect="plain">{{ formatSize(c) }}</el-tag>
             <template v-if="(c.media_type || mode) === 'video'">
-              <el-tag v-if="c.params && c.params.duration" size="mini" effect="plain">{{ c.params.duration }}s</el-tag>
-              <el-tag v-if="c.params && c.params.generate_audio" size="mini" effect="plain">有声</el-tag>
-              <el-tag v-if="c.params && c.params.mode === 'first_last'" size="mini" effect="plain">首尾帧</el-tag>
-              <el-tag v-if="c.params && c.params.smart_ratio" size="mini" effect="plain">智能比例</el-tag>
+              <el-tag v-if="c.params && c.params.duration" size="mini" effect="plain"
+                >{{ c.params.duration }}s</el-tag
+              >
+              <el-tag v-if="c.params && c.params.generate_audio" size="mini" effect="plain"
+                >有声</el-tag
+              >
+              <el-tag v-if="c.params && c.params.mode === 'first_last'" size="mini" effect="plain"
+                >首尾帧</el-tag
+              >
+              <el-tag v-if="c.params && c.params.smart_ratio" size="mini" effect="plain"
+                >智能比例</el-tag
+              >
             </template>
             <template v-else>
-              <el-tag size="mini" effect="plain">{{ (c.params && c.params.output_format) || 'png' }}</el-tag>
-              <el-tag v-if="c.params && c.params.use_web_search" size="mini" effect="plain">联网</el-tag>
+              <el-tag size="mini" effect="plain">{{
+                (c.params && c.params.output_format) || 'png'
+              }}</el-tag>
+              <el-tag v-if="c.params && c.params.use_web_search" size="mini" effect="plain"
+                >联网</el-tag
+              >
               <el-tag v-if="c.params && c.params.watermark" size="mini" effect="plain">水印</el-tag>
             </template>
-            <el-tag v-if="c.input_images && c.input_images.length" size="mini" effect="plain">参考素材 {{ c.input_images.length }}</el-tag>
+            <el-tag v-if="c.input_images && c.input_images.length" size="mini" effect="plain"
+              >参考素材 {{ c.input_images.length }}</el-tag
+            >
           </div>
 
           <div v-if="c.input_images && c.input_images.length" class="conv-input-imgs">
@@ -74,9 +98,13 @@
           <div v-if="c.status === 'pending' || c.status === 'running'" class="conv-loading">
             <div class="skeleton-card" />
             <div class="skeleton-text">
-              {{ (c.media_type || mode) === 'video'
-                ? (c.task_id ? `视频生成中（${c.polling_status || 'queued'}），通常需要 1-3 分钟...` : '视频任务提交中...')
-                : '生成中，预计 10-30 秒...' }}
+              {{
+                (c.media_type || mode) === 'video'
+                  ? c.task_id
+                    ? `视频生成中（${c.polling_status || 'queued'}），通常需要 1-3 分钟...`
+                    : '视频任务提交中...'
+                  : '生成中，预计 10-30 秒...'
+              }}
             </div>
           </div>
 
@@ -107,7 +135,7 @@
               <div v-else class="result-img" @click="previewImage(u)">
                 <img :src="u" />
               </div>
-              <div v-if="isVideoUrl(u) && (c.params && c.params.result_duration)" class="video-meta">
+              <div v-if="isVideoUrl(u) && c.params && c.params.result_duration" class="video-meta">
                 {{ c.params.result_duration }}s
               </div>
             </div>
@@ -121,7 +149,8 @@
               icon="el-icon-edit-outline"
               :disabled="c.status === 'pending' || c.status === 'running'"
               @click="onReedit(c)"
-            >重新编辑</el-button>
+              >重新编辑</el-button
+            >
 
             <el-button
               type="text"
@@ -129,7 +158,8 @@
               icon="el-icon-collection"
               :disabled="!hasSavableOutput(c)"
               @click="onSaveDialog(c)"
-            >保存到素材库</el-button>
+              >保存到素材库</el-button
+            >
 
             <el-button
               type="text"
@@ -137,9 +167,14 @@
               icon="el-icon-magic-stick"
               :disabled="!hasSavableOutput(c)"
               @click="onTemplateDialog(c)"
-            >设为模板</el-button>
+              >设为模板</el-button
+            >
 
-            <el-dropdown trigger="click" placement="bottom-start" @command="onMoreCommand($event, c)">
+            <el-dropdown
+              trigger="click"
+              placement="bottom-start"
+              @command="onMoreCommand($event, c)"
+            >
               <el-button type="text" size="mini" icon="el-icon-more"></el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="delete" icon="el-icon-delete">删除</el-dropdown-item>
@@ -180,7 +215,8 @@
         <!-- 图片模式输入条 -->
         <template v-else>
           <div v-if="inputImages.length" class="bar-tip">
-            使用 <span class="ref-mark">@</span> 可快速引用上传的素材，如：参考 @图片1 中的风格生成。
+            使用 <span class="ref-mark">@</span> 可快速引用上传的素材，如：参考 @图片1
+            中的风格生成。
           </div>
           <div class="bar-top">
             <RefImageUpload v-model="inputImages" kind="image" />
@@ -189,7 +225,11 @@
               ref="promptInput"
               v-model="promptText"
               :items="imageRefItems"
-              :placeholder="inputImages.length ? '结合图片,输入创意描述' : '描述你想生成的图片，比如：电商珠宝摄影...'"
+              :placeholder="
+                inputImages.length
+                  ? '结合图片,输入创意描述'
+                  : '描述你想生成的图片，比如：电商珠宝摄影...'
+              "
               :min-rows="2"
               :max-rows="6"
               class="prompt-input"
@@ -200,7 +240,8 @@
               type="text"
               icon="el-icon-magic-stick"
               @click="templateOpen = !templateOpen"
-            >模板</el-button>
+              >模板</el-button
+            >
           </div>
 
           <div class="bar-toolbar">
@@ -211,7 +252,9 @@
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item v-for="n in 4" :key="n" :command="n">{{ n }}张</el-dropdown-item>
+                  <el-dropdown-item v-for="n in 4" :key="n" :command="n"
+                    >{{ n }}张</el-dropdown-item
+                  >
                 </el-dropdown-menu>
               </el-dropdown>
 
@@ -223,12 +266,21 @@
                 @change="onSizeChange"
               />
 
-              <el-button size="small" plain icon="el-icon-setting" @click="settingsOpen = true">详细设置</el-button>
+              <el-button size="small" plain icon="el-icon-setting" @click="settingsOpen = true"
+                >详细设置</el-button
+              >
             </div>
 
             <div class="toolbar-right">
               <span v-if="quotaText" class="quota">{{ quotaText }}</span>
-              <el-button v-if="lastResultUrl && inputImages.length === 0" size="small" plain icon="el-icon-back" @click="useLastAsInput">使用上次结果</el-button>
+              <el-button
+                v-if="lastResultUrl && inputImages.length === 0"
+                size="small"
+                plain
+                icon="el-icon-back"
+                @click="useLastAsInput"
+                >使用上次结果</el-button
+              >
               <el-button
                 type="primary"
                 size="small"
@@ -256,7 +308,11 @@
 
     <!-- 大图预览 -->
     <el-dialog :visible.sync="previewVisible" width="auto" top="6vh" :modal="true">
-      <img v-if="previewUrl" :src="previewUrl" style="max-width: 80vw; max-height: 80vh; display: block; margin: 0 auto" />
+      <img
+        v-if="previewUrl"
+        :src="previewUrl"
+        style="max-width: 80vw; max-height: 80vh; display: block; margin: 0 auto"
+      />
     </el-dialog>
 
     <!-- 保存到素材库弹窗 -->
@@ -284,7 +340,9 @@
             </el-select>
             <el-button size="small" icon="el-icon-plus" @click="onAddAiCat">新建分组</el-button>
           </div>
-          <div class="form-tip">AI 素材会落到老素材库的「AI 素材」分类下，与商品图共用一套挂载体系</div>
+          <div class="form-tip">
+            AI 素材会落到老素材库的「AI 素材」分类下，与商品图共用一套挂载体系
+          </div>
         </el-form-item>
         <el-form-item label="预览">
           <video
@@ -317,7 +375,12 @@
     <el-dialog title="设为模板" :visible.sync="tplVisible" width="520px" append-to-body>
       <el-form :model="tplForm" label-width="80px">
         <el-form-item label="模板标题">
-          <el-input v-model="tplForm.title" placeholder="给模板取个标题，便于他人识别" maxlength="60" show-word-limit />
+          <el-input
+            v-model="tplForm.title"
+            placeholder="给模板取个标题，便于他人识别"
+            maxlength="60"
+            show-word-limit
+          />
         </el-form-item>
         <el-form-item label="预览">
           <video
@@ -337,7 +400,9 @@
       </el-form>
       <div slot="footer">
         <el-button @click="tplVisible = false">取消</el-button>
-        <el-button type="primary" :loading="tplSaving" @click="onTemplateConfirm">设为模板</el-button>
+        <el-button type="primary" :loading="tplSaving" @click="onTemplateConfirm"
+          >设为模板</el-button
+        >
       </div>
     </el-dialog>
   </SpPage>
@@ -386,7 +451,15 @@ const DEFAULT_VIDEO_FORM = () => ({
 
 export default {
   name: 'MaterialStudio',
-  components: { SizePopover, AdvancedSettingsDrawer, TemplateGallery, PromptGuideDrawer, RefImageUpload, VideoInputBar, PromptInput },
+  components: {
+    SizePopover,
+    AdvancedSettingsDrawer,
+    TemplateGallery,
+    PromptGuideDrawer,
+    RefImageUpload,
+    VideoInputBar,
+    PromptInput
+  },
   data() {
     const defaultSize = parseSize((SIZE_MAP['2K'] && SIZE_MAP['2K']['1:1']) || '2048x2048')
     return {
@@ -427,8 +500,11 @@ export default {
       saveVisible: false,
       saving: false,
       saveForm: {
-        url: '', conversation_id: 0, name: '',
-        media_type: 'image', mime: '',
+        url: '',
+        conversation_id: 0,
+        name: '',
+        media_type: 'image',
+        mime: '',
         image_cat_id: 0
       },
       // AI 素材分组（espier_uploadimages_cat where source=ai_generate），弹窗里下拉选择
@@ -437,7 +513,10 @@ export default {
       tplVisible: false,
       tplSaving: false,
       tplForm: {
-        url: '', conversation_id: 0, title: '', media_type: 'image'
+        url: '',
+        conversation_id: 0,
+        title: '',
+        media_type: 'image'
       },
 
       _pollTimer: null
@@ -448,7 +527,9 @@ export default {
       const c = this.conversations.find((x) => x.output_images && x.output_images.length > 0)
       return c ? c.output_images[0] : ''
     },
-    quotaText() { return '' /* 后续接配额接口 */ },
+    quotaText() {
+      return '' /* 后续接配额接口 */
+    },
     /** 图片模式 PromptInput 的 @ 引用候选 */
     imageRefItems() {
       return buildRefItems({ images: this.inputImages })
@@ -551,14 +632,17 @@ export default {
         // 后端返回 { list: [...] }
         const list = (data && data.list) || (data && data.data && data.data.list) || []
         this.aiCatList = list
-      } catch (e) { /* silent */ }
+      } catch (e) {
+        /* silent */
+      }
     },
     async onAddAiCat() {
       try {
         const { value } = await this.$prompt('请输入分组名称', '新建 AI 素材分组', {
           confirmButtonText: '创建',
           cancelButtonText: '取消',
-          inputValidator: (v) => (v && v.trim().length > 0 && v.length <= 20) || '名称必填且不超过 20 字'
+          inputValidator: (v) =>
+            (v && v.trim().length > 0 && v.length <= 20) || '名称必填且不超过 20 字'
         })
         const name = (value || '').trim()
         await addImageCatgory({
@@ -597,10 +681,11 @@ export default {
       }
     },
     async pollVideoTasks() {
-      const targets = this.conversations.filter((c) =>
-        (c.media_type || '') === 'video'
-        && (c.status === 'pending' || c.status === 'running')
-        && c.conversation_id
+      const targets = this.conversations.filter(
+        (c) =>
+          (c.media_type || '') === 'video' &&
+          (c.status === 'pending' || c.status === 'running') &&
+          c.conversation_id
       )
       if (!targets.length) return
       for (const c of targets) {
@@ -610,7 +695,9 @@ export default {
           if (!fresh) continue
           const idx = this.conversations.findIndex((x) => x.conversation_id === c.conversation_id)
           if (idx >= 0) this.$set(this.conversations, idx, fresh)
-        } catch (e) { /* silent */ }
+        } catch (e) {
+          /* silent */
+        }
       }
     },
     onSizeChange(v) {
@@ -626,7 +713,9 @@ export default {
         this.form = { ...this.form, ...v }
       }
     },
-    onMaxImagesChange(n) { this.form.maxImages = n },
+    onMaxImagesChange(n) {
+      this.form.maxImages = n
+    },
     onUseTemplate(t) {
       const tplMedia = t.media_type || 'image'
       // 模板类型与当前模式不一致时自动切换
@@ -650,12 +739,14 @@ export default {
         next.useWebSearch = !!(p.use_web_search || p.useWebSearch)
         next.watermark = !!p.watermark
         next.seed = Number(p.seed || 0) || 0
-        next.imageStart = (p.image_start || p.imageStart || '')
-        next.imageEnd = (p.image_end || p.imageEnd || '')
+        next.imageStart = p.image_start || p.imageStart || ''
+        next.imageEnd = p.image_end || p.imageEnd || ''
         // 输入素材是混合数组（图/视频/音频），按 URL 后缀拆分回三个引用列表
         const inputs = Array.isArray(t.input_images)
           ? t.input_images.filter((u) => typeof u === 'string' && u)
-          : (Array.isArray(p.reference_images) ? p.reference_images.filter(Boolean) : [])
+          : Array.isArray(p.reference_images)
+          ? p.reference_images.filter(Boolean)
+          : []
         const imgs = []
         const vids = []
         const auds = []
@@ -678,7 +769,9 @@ export default {
           next.imageEnd = ''
         }
         this.videoForm = next
-        this.$nextTick(() => this.$refs.videoBar && this.$refs.videoBar.focus && this.$refs.videoBar.focus())
+        this.$nextTick(
+          () => this.$refs.videoBar && this.$refs.videoBar.focus && this.$refs.videoBar.focus()
+        )
         return
       }
       // 图片
@@ -733,12 +826,13 @@ export default {
         next.useWebSearch = !!(p.use_web_search || p.useWebSearch)
         next.watermark = !!p.watermark
         next.seed = Number(p.seed || 0) || 0
-        next.imageStart = (p.image_start || '')
-        next.imageEnd = (p.image_end || '')
+        next.imageStart = p.image_start || ''
+        next.imageEnd = p.image_end || ''
         // 优先用混合 input_images（按后缀拆分），回退到 params.reference_*
-        const inputs = Array.isArray(c.input_images) && c.input_images.length
-          ? c.input_images.filter((u) => typeof u === 'string' && u)
-          : []
+        const inputs =
+          Array.isArray(c.input_images) && c.input_images.length
+            ? c.input_images.filter((u) => typeof u === 'string' && u)
+            : []
         if (inputs.length) {
           const imgs = []
           const vids = []
@@ -752,11 +846,18 @@ export default {
           next.referenceVideos = vids.slice(0, 3)
           next.referenceAudios = auds.slice(0, 3)
         } else {
-          next.referenceImages = Array.isArray(p.reference_images) ? p.reference_images.filter(Boolean).slice(0, 9) : []
-          next.referenceVideos = Array.isArray(p.reference_videos)
-            ? p.reference_videos.map((v) => (typeof v === 'string' ? v : (v && v.video_url) || '')).filter(Boolean).slice(0, 3)
+          next.referenceImages = Array.isArray(p.reference_images)
+            ? p.reference_images.filter(Boolean).slice(0, 9)
             : []
-          next.referenceAudios = Array.isArray(p.reference_audios) ? p.reference_audios.filter(Boolean).slice(0, 3) : []
+          next.referenceVideos = Array.isArray(p.reference_videos)
+            ? p.reference_videos
+                .map((v) => (typeof v === 'string' ? v : (v && v.video_url) || ''))
+                .filter(Boolean)
+                .slice(0, 3)
+            : []
+          next.referenceAudios = Array.isArray(p.reference_audios)
+            ? p.reference_audios.filter(Boolean).slice(0, 3)
+            : []
         }
         this.videoForm = next
         this.$nextTick(() => {
@@ -800,11 +901,16 @@ export default {
           c.conversation_id ? x.conversation_id !== c.conversation_id : x._tempId !== c._tempId
         )
         this.$message.success('已删除')
-      } catch (e) { /* canceled */ }
+      } catch (e) {
+        /* canceled */
+      }
     },
     async onGenerate() {
       const prompt = (this.promptText || '').trim()
-      if (!prompt) { this.$message.warning('请输入提示词'); return }
+      if (!prompt) {
+        this.$message.warning('请输入提示词')
+        return
+      }
 
       const params = {
         resolution: this.form.resolution,
@@ -888,7 +994,10 @@ export default {
       this.fetchAiCats()
     },
     async onSaveConfirm() {
-      if (!this.saveForm.url) { this.$message.warning('未找到可保存的素材 URL'); return }
+      if (!this.saveForm.url) {
+        this.$message.warning('未找到可保存的素材 URL')
+        return
+      }
       this.saving = true
       try {
         await saveToLibrary({
@@ -922,7 +1031,10 @@ export default {
         return
       }
       const title = (this.tplForm.title || '').trim()
-      if (!title) { this.$message.warning('请填写模板标题'); return }
+      if (!title) {
+        this.$message.warning('请填写模板标题')
+        return
+      }
       this.tplSaving = true
       try {
         await createTemplate({
@@ -941,21 +1053,42 @@ export default {
     },
 
     _guessMediaType(conv, url) {
-      if (conv && (conv.media_type === 'video' || conv.media_type === 'audio' || conv.media_type === 'image')) {
+      if (
+        conv &&
+        (conv.media_type === 'video' || conv.media_type === 'audio' || conv.media_type === 'image')
+      ) {
         return conv.media_type
       }
-      const ext = String(url || '').split('?')[0].split('.').pop().toLowerCase()
+      const ext = String(url || '')
+        .split('?')[0]
+        .split('.')
+        .pop()
+        .toLowerCase()
       if (['mp4', 'mov', 'webm', 'm4v'].indexOf(ext) > -1) return 'video'
       if (['mp3', 'wav', 'm4a', 'aac', 'ogg', 'flac'].indexOf(ext) > -1) return 'audio'
       return 'image'
     },
     _guessMimeFromUrl(url, mediaType) {
-      const ext = String(url || '').split('?')[0].split('.').pop().toLowerCase()
+      const ext = String(url || '')
+        .split('?')[0]
+        .split('.')
+        .pop()
+        .toLowerCase()
       const map = {
-        png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
-        webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp',
-        mp4: 'video/mp4', mov: 'video/quicktime', webm: 'video/webm',
-        mp3: 'audio/mpeg', wav: 'audio/wav', m4a: 'audio/mp4', aac: 'audio/aac', ogg: 'audio/ogg'
+        png: 'image/png',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        webp: 'image/webp',
+        gif: 'image/gif',
+        bmp: 'image/bmp',
+        mp4: 'video/mp4',
+        mov: 'video/quicktime',
+        webm: 'video/webm',
+        mp3: 'audio/mpeg',
+        wav: 'audio/wav',
+        m4a: 'audio/mp4',
+        aac: 'audio/aac',
+        ogg: 'audio/ogg'
       }
       if (map[ext]) return map[ext]
       if (mediaType === 'video') return 'video/mp4'
@@ -968,7 +1101,10 @@ export default {
      */
     async onGenerateVideo(form) {
       const prompt = (form.prompt || '').trim()
-      if (!prompt) { this.$message.warning('请输入提示词'); return }
+      if (!prompt) {
+        this.$message.warning('请输入提示词')
+        return
+      }
 
       const params = {
         mode: form.mode,
@@ -990,11 +1126,11 @@ export default {
         prompt,
         mode: form.mode,
         params,
-        image_start: form.mode === 'first_last' ? (form.imageStart || '') : '',
-        image_end: form.mode === 'first_last' ? (form.imageEnd || '') : '',
-        reference_images: form.mode === 'reference' ? (form.referenceImages || []) : [],
-        reference_videos: form.mode === 'reference' ? (form.referenceVideos || []) : [],
-        reference_audios: form.mode === 'reference' ? (form.referenceAudios || []) : []
+        image_start: form.mode === 'first_last' ? form.imageStart || '' : '',
+        image_end: form.mode === 'first_last' ? form.imageEnd || '' : '',
+        reference_images: form.mode === 'reference' ? form.referenceImages || [] : [],
+        reference_videos: form.mode === 'reference' ? form.referenceVideos || [] : [],
+        reference_audios: form.mode === 'reference' ? form.referenceAudios || [] : []
       }
 
       const inputThumbs = []
@@ -1063,19 +1199,36 @@ export default {
 </script>
 
 <style scoped>
-.material-studio { display: flex; flex-direction: column; height: 100%; }
-.studio-header { display: flex; align-items: center; justify-content: space-between; }
-.header-actions { display: flex; gap: 8px; }
+.material-studio {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.studio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
 
 .studio-body {
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
   height: calc(100vh - 220px);
   min-height: 520px;
-  background: #f5f7fa; border-radius: 8px; overflow: hidden; position: relative;
+  background: #f5f7fa;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
 }
 
 .conv-stream {
-  flex: 1; overflow-y: auto; overflow-anchor: none;
+  flex: 1;
+  overflow-y: auto;
+  overflow-anchor: none;
   padding: 20px 24px 220px;
   display: flex;
   /* 聊天式布局：服务端 DESC 顺序不动，column-reverse 把"最新"渲染到底部 */
@@ -1083,111 +1236,257 @@ export default {
   gap: 16px;
 }
 .conv-card {
-  background: #fff; border-radius: 10px; padding: 16px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
-.conv-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: #909399; }
-.meta-spacer { flex: 1; }
-.conv-prompt { color: #303133; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
-.conv-params { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.conv-input-imgs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.thumb.sm { position: relative; width: 48px; height: 48px; border-radius: 4px; overflow: hidden; border: 1px solid #ebeef5; background: #f5f7fa; }
+.conv-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #909399;
+}
+.meta-spacer {
+  flex: 1;
+}
+.conv-prompt {
+  color: #303133;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.conv-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.conv-input-imgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.thumb.sm {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #ebeef5;
+  background: #f5f7fa;
+}
 .thumb.sm img,
-.thumb.sm video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.sm video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .thumb.sm.k-video::after {
   content: '\25B6';
-  position: absolute; right: 2px; bottom: 0;
-  color: #fff; font-size: 10px;
-  text-shadow: 0 0 2px rgba(0,0,0,.6);
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  color: #fff;
+  font-size: 10px;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
-.thumb.sm.k-audio { display: flex; align-items: center; justify-content: center; }
-.thumb.sm .thumb-icon { font-size: 22px; color: #909399; }
+.thumb.sm.k-audio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb.sm .thumb-icon {
+  font-size: 22px;
+  color: #909399;
+}
 
-.conv-output { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+.conv-output {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
 .result-card {
-  width: 220px; border: 1px solid #ebeef5; border-radius: 8px; overflow: hidden;
+  width: 220px;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  overflow: hidden;
   background: #fafafa;
 }
-.result-img { cursor: zoom-in; }
-.result-img img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
-.result-card.video { width: 320px; position: relative; }
-.result-video { width: 100%; display: block; background: #000; max-height: 320px; }
+.result-img {
+  cursor: zoom-in;
+}
+.result-img img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.result-card.video {
+  width: 320px;
+  position: relative;
+}
+.result-video {
+  width: 100%;
+  display: block;
+  background: #000;
+  max-height: 320px;
+}
 .video-meta {
-  position: absolute; right: 6px; bottom: 6px;
-  background: rgba(0,0,0,.55); color: #fff; font-size: 11px;
-  padding: 1px 6px; border-radius: 3px;
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 3px;
 }
 
 .conv-error {
-  background: #fef0f0; color: #f56c6c; font-size: 13px;
-  padding: 10px 12px; border-radius: 6px; border-left: 3px solid #f56c6c;
+  background: #fef0f0;
+  color: #f56c6c;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #f56c6c;
   margin-bottom: 8px;
 }
 
 .conv-loading {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 .skeleton-card {
-  width: 220px; height: 220px; border-radius: 8px;
+  width: 220px;
+  height: 220px;
+  border-radius: 8px;
   background: linear-gradient(90deg, #f5f7fa 0%, #ebeef5 50%, #f5f7fa 100%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.4s ease infinite;
 }
-.skeleton-text { color: #909399; font-size: 13px; }
+.skeleton-text {
+  color: #909399;
+  font-size: 13px;
+}
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .conv-actions {
-  display: flex; align-items: center; gap: 8px;
-  padding-top: 8px; border-top: 1px dashed #f0f2f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #f0f2f5;
 }
-.conv-actions .el-button + .el-button { margin-left: 0; }
+.conv-actions .el-button + .el-button {
+  margin-left: 0;
+}
 
 .load-more-tip {
-  text-align: center; color: #909399; font-size: 12px; padding: 8px 0;
+  text-align: center;
+  color: #909399;
+  font-size: 12px;
+  padding: 8px 0;
 }
-.load-more-tip.end { color: #c0c4cc; }
+.load-more-tip.end {
+  color: #c0c4cc;
+}
 
 /* —— 输入条 —— */
 .input-bar {
-  position: absolute; left: 24px; right: 24px; bottom: 16px;
-  background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
-  border: 1px solid #ebeef5; z-index: 10;
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 16px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ebeef5;
+  z-index: 10;
   padding: 12px 14px;
 }
 .bar-tip {
-  font-size: 12px; color: #909399; line-height: 1.5;
+  font-size: 12px;
+  color: #909399;
+  line-height: 1.5;
   margin: 0 0 6px;
 }
-.bar-tip .ref-mark { color: #409eff; font-weight: 600; }
+.bar-tip .ref-mark {
+  color: #409eff;
+  font-weight: 600;
+}
 .bar-top {
-  display: flex; align-items: flex-start; gap: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 .prompt-input {
   flex: 1;
 }
 .prompt-input >>> .el-textarea__inner {
-  border: none; box-shadow: none; padding: 6px 4px; font-size: 14px;
-  background: transparent; resize: none;
+  border: none;
+  box-shadow: none;
+  padding: 6px 4px;
+  font-size: 14px;
+  background: transparent;
+  resize: none;
 }
-.prompt-input >>> .el-textarea__inner:focus { box-shadow: none; }
+.prompt-input >>> .el-textarea__inner:focus {
+  box-shadow: none;
+}
 .tpl-trigger {
-  flex-shrink: 0; padding: 0;
-  font-size: 13px; color: #606266;
+  flex-shrink: 0;
+  padding: 0;
+  font-size: 13px;
+  color: #606266;
 }
-.tpl-trigger:hover { color: #409eff; }
+.tpl-trigger:hover {
+  color: #409eff;
+}
 
 .bar-toolbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 0 0; gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 0;
+  gap: 12px;
   border-top: 1px solid #f5f7fa;
   margin-top: 8px;
 }
-.toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.toolbar-right { display: flex; align-items: center; gap: 8px; }
-.quota { color: #909399; font-size: 12px; }
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.quota {
+  color: #909399;
+  font-size: 12px;
+}
 
-.form-tip { color: #909399; font-size: 12px; line-height: 1.5; margin-top: 4px; }
+.form-tip {
+  color: #909399;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
 </style>

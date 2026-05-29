@@ -21,30 +21,20 @@
           :key="item.alias_name"
           class="main-menu-item py-2 mx-1 my-1 flex flex-col items-center cursor-pointer"
           :class="{ 'main-menu-item--active': activeMainMenu === item.alias_name }"
+          @click="handleMainMenuClick(item)"
         >
-          <router-link
-            :to="getMainMenuPath(item)"
-            custom
-            v-slot="{ href }"
+          <!-- {{ computedMenuIcon(item) }} -->
+          <SpIcon
+            class="menu-icon"
+            :name="computedMenuIcon(item)"
+            :size="18"
+            :fill="activeMainMenu === item.alias_name ? computedPrimaryColor : '#333'"
+          />
+          <span
+            class="text-sm mt-1 text-center"
+            :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
+            >{{ item.name }}</span
           >
-            <a
-              :href="href"
-              class="main-menu-item__link flex flex-col items-center no-underline text-inherit w-full"
-              @click="onMainMenuLinkClick($event, item)"
-            >
-              <SpIcon
-                class="menu-icon"
-                :name="computedMenuIcon(item)"
-                :size="18"
-                :fill="activeMainMenu === item.alias_name ? computedPrimaryColor : '#333'"
-              />
-              <span
-                class="text-sm mt-1 text-center"
-                :style="{ color: activeMainMenu === item.alias_name ? computedPrimaryColor : '#333' }"
-                >{{ menuDisplayName(item) }}</span
-              >
-            </a>
-          </router-link>
         </li>
         <!-- <li @click="handleMainMenuClick({ alias_name: 'license' })" class="text-center text-gray-500 text-sm mt-2 mb-2 cursor-pointer">License</li> -->
       </ul>
@@ -76,7 +66,7 @@
                 <span
                   class="block w-full"
                   @click="handleSubmenuTitleClick(item.alias_name, $event)"
-                  >{{ menuDisplayName(item) }}</span
+                  >{{ item.name }}</span
                 >
               </template>
               <!-- 三级菜单 -->
@@ -86,10 +76,9 @@
                   v-if="child.is_menu"
                   :key="child.alias_name"
                   :index="child.alias_name"
+                  @click="handleSubMenuClick(child)"
                 >
-                  <router-link class="sub-menu-link" :to="getSubMenuPath(child)">
-                    {{ menuDisplayName(child) }}
-                  </router-link>
+                  <span>{{ child.name }}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -100,10 +89,9 @@
               v-if="item.is_menu"
               :key="item.alias_name"
               :index="item.alias_name"
+              @click="handleSubMenuClick(item)"
             >
-              <router-link class="sub-menu-link" :to="getSubMenuPath(item)">
-                {{ menuDisplayName(item) }}
-              </router-link>
+              <span>{{ item.name }}</span>
             </el-menu-item>
           </template>
         </template>
@@ -114,7 +102,6 @@
 
 <script>
 import { getBasePath, getSystemTitle } from '@/utils'
-import { getMenuDisplayName } from '@/utils/menuI18n'
 import Config from '@/config'
 
 export default {
@@ -136,7 +123,7 @@ export default {
       if (this.activeMainMenu) {
         const activeMenu = this.mainMenus.find((item) => item.alias_name === this.activeMainMenu)
         if (activeMenu) {
-          return getMenuDisplayName(this, activeMenu)
+          return activeMenu.name
         }
       }
       // 否则返回默认系统标题
@@ -194,9 +181,6 @@ export default {
     this.updateSubMenus()
   },
   methods: {
-    menuDisplayName(menuItem) {
-      return getMenuDisplayName(this, menuItem)
-    },
     // 更新中间二级菜单列表
     updateSubMenus() {
       const [mainRoute] = this.$route.matched
@@ -232,55 +216,44 @@ export default {
     resolveChildren(children) {
       return children && children.length > 0 && children.some((child) => child.is_menu)
     },
-    /** 一级菜单下第一个可展示子菜单的 permission（与跳转逻辑一致，供 href 使用） */
-    resolveMainMenuFirstPermission(item) {
-      const subMenus = item?.children || []
-      const firstChild = (_submenu) => {
-        for (const it of _submenu) {
-          if (it.children) {
-            const result = firstChild(it.children)
-            if (result) return result
-          } else if (it.is_menu) {
-            return it?.permission
-          }
-        }
-        return null
-      }
-      if (subMenus.length === 0) {
-        return item.permission
-      }
-      return firstChild(subMenus)
-    },
-    getNotFoundPath() {
-      const basePath = getBasePath()
-      return basePath ? `/${basePath}/not-found` : '/not-found'
-    },
-    /** 主导航在新标签页打开时的目标路径 */
-    getMainMenuPath(item) {
-      const permission = this.resolveMainMenuFirstPermission(item)
-      const route = permission ? this.findRouteByPermission(permission) : null
-      return route?.path || this.getNotFoundPath()
-    },
-    /** 侧栏子菜单在新标签页打开时的目标路径（与旧 layout.vue 中 router-link 行为一致） */
-    getSubMenuPath(menuItem) {
-      const route = this.findRouteByPermission(menuItem.permission)
-      return route?.path || this.getNotFoundPath()
-    },
-    onMainMenuLinkClick(e, item) {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
-        return
-      }
-      e.preventDefault()
-      this.handleMainMenuClick(item)
-    },
     handleMainMenuClick(item) {
       if (item.alias_name == this.$route.matched?.[0]?.meta?.aliasName) {
         return
       }
       this.subMenus = item?.children || []
-      const permission = this.resolveMainMenuFirstPermission(item)
-      const route = permission ? this.findRouteByPermission(permission) : null
+      // 获取第一个子路由
+      const firstChild = (_submenu) => {
+        for (const item of _submenu) {
+          if (item.children) {
+            const result = firstChild(item.children)
+            if (result) return result
+          } else if (item.is_menu) {
+            return item?.permission
+          }
+        }
+        return null
+      }
+      // 如果只有一级菜单，就直接那当前一级菜单的权限
+      let permission = ''
+      if (this.subMenus.length === 0) {
+        permission = item.permission
+      } else {
+        permission = firstChild(this.subMenus)
+      }
+
+      const route = this.findRouteByPermission(permission)
       if (route) {
+        this.$router.push({ path: route.path })
+      } else {
+        this.toNotFound()
+      }
+    },
+    handleSubMenuClick(item) {
+      const route = this.findRouteByPermission(item.permission)
+      if (route) {
+        if (this.$route.path === route.path) {
+          return
+        }
         this.$router.push({ path: route.path })
       } else {
         this.toNotFound()
@@ -372,7 +345,7 @@ export default {
       if (menuItem) {
         for (const submenu of allSubmenus) {
           const titleEl = submenu.querySelector('.el-submenu__title')
-          if (titleEl && titleEl.textContent.trim() === getMenuDisplayName(this, menuItem)) {
+          if (titleEl && titleEl.textContent.trim() === menuItem.name) {
             return submenu
           }
         }
@@ -506,7 +479,7 @@ export default {
           const targetMenu = this.findMenuByAlias(activeIndex)
           if (targetMenu) {
             for (const menuItem of allMenuItems) {
-              if (menuItem.textContent.trim() === getMenuDisplayName(this, targetMenu)) {
+              if (menuItem.textContent.trim() === targetMenu.name) {
                 activeMenuItem = menuItem
                 break
               }
@@ -541,19 +514,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.main-menu-item__link {
-  outline: none;
-}
-
-:deep(.el-menu-item .sub-menu-link) {
-  color: inherit;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
 .main-menu-list {
   .main-menu-item {
     &:hover {

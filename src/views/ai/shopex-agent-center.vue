@@ -17,11 +17,11 @@
         </el-col>
         <el-col :span="8">
           <el-card shadow="never">
-              <div class="wallet-kv-label">余额</div>
-              <div class="flex">
-                <div class="wallet-kv-value">¥ {{ wallet.balance.cash_balance || 0 }}</div>
-                <el-button type="text">充值</el-button>
-              </div>
+            <div class="wallet-kv-label">余额</div>
+            <div class="flex">
+              <div class="wallet-kv-value">¥ {{ wallet.balance.cash_balance || 0 }}</div>
+              <el-button type="text">充值</el-button>
+            </div>
           </el-card>
         </el-col>
       </el-row>
@@ -37,9 +37,16 @@
         </div>
       </div>
       <el-row :gutter="16" class="app-grid">
-        <el-col v-for="row in filteredApplications" :key="row.app_id" :xs="24" :sm="12" :md="8" :lg="6">
+        <el-col
+          v-for="row in filteredApplications"
+          :key="row.app_id"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+        >
           <el-card shadow="hover" class="app-card">
-            <div class='flex'>
+            <div class="flex">
               <div class="app-icon-box">
                 <img
                   v-if="isHttpImageUrl(row.icon_url)"
@@ -80,17 +87,12 @@
         </el-table>
       </el-dialog>
 
-      <el-dialog
-        title="应用用量"
-        :visible.sync="usageDialogVisible"
-        width="900px"
-        destroy-on-close
-      >
+      <el-dialog title="应用用量" :visible.sync="usageDialogVisible" width="900px" destroy-on-close>
         <div class="usage-toolbar">
-          <div class="usage-app-title">
-            {{ usageContext.app_name }} ({{ usageContext.app_id }})
-          </div>
-          <el-button type="primary" size="small" :loading="usageLoading" @click="loadUsage">刷新用量</el-button>
+          <div class="usage-app-title">{{ usageContext.app_name }} ({{ usageContext.app_id }})</div>
+          <el-button type="primary" size="small" :loading="usageLoading" @click="loadUsage"
+            >刷新用量</el-button
+          >
         </div>
 
         <el-row :gutter="12" style="margin-top: 12px">
@@ -141,7 +143,13 @@
         </el-row>
 
         <div style="margin-top: 16px; font-weight: 600">每日明细</div>
-        <el-table v-loading="usageLoading" :data="usageTimeSeries" stripe style="margin-top: 8px" size="small">
+        <el-table
+          v-loading="usageLoading"
+          :data="usageTimeSeries"
+          stripe
+          style="margin-top: 8px"
+          size="small"
+        >
           <el-table-column prop="period" label="日期" min-width="120" />
           <el-table-column prop="request_count" label="请求数" width="90" align="center" />
           <el-table-column prop="success_count" label="成功" width="80" align="center" />

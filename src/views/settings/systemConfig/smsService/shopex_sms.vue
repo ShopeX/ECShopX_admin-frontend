@@ -63,8 +63,8 @@
               </div>
               <div class="section-body">
                 <div
-                  v-for="(row, index) in items"
-                  :key="`item__${index}`"
+                  v-for="(row, rowIndex) in items"
+                  :key="`item__${rowIndex}`"
                   class="item"
                   :class="row.is_open == 'true' ? 'succ-open-sms' : 'not-open-sms'"
                   @click="toDetail(row)"

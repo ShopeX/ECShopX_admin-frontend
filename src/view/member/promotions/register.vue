@@ -42,11 +42,7 @@
               <div v-if="hasRegisterJumpPath" class="link-content border px-2">
                 <span @click="handleGoodsChange()">{{ registerJumpPathSummary }}</span>
                 <span style="margin-left: 10px">
-                  <i
-                    style="color: #f56c6c"
-                    class="el-icon-delete"
-                    @click.stop="clear_pic_url"
-                  />
+                  <i style="color: #f56c6c" class="el-icon-delete" @click.stop="clear_pic_url" />
                 </span>
               </div>
               <div

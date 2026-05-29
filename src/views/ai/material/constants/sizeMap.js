@@ -49,7 +49,14 @@ export const ASPECT_MIN = 1 / 16
 export const ASPECT_MAX = 16
 export const MAX_REF_IMAGES = 14
 export const MAX_FILE_SIZE_MB = 10
-export const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/bmp', 'image/tiff', 'image/gif']
+export const ALLOWED_MIME = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/bmp',
+  'image/tiff',
+  'image/gif'
+]
 
 // —— 视频生成常量（Seedance 2.0）——
 export const VIDEO_RESOLUTIONS = [

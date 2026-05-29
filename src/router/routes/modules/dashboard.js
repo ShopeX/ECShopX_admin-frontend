@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import { BasicLayout } from '@/layout/basic' // 主框架
+import { i18n } from '@/i18n'
 
 const routes = [
   {
@@ -10,7 +11,7 @@ const routes = [
     meta: {
       aliasName: 'index',
       icon: 'all-application',
-      title: 'a4b9392f.863853'
+      title: i18n.t('a4b9392f.863853')
     },
     path: '/',
     children: [
@@ -22,7 +23,7 @@ const routes = [
         meta: {
           aliasName: 'index',
           icon: 'all-application',
-          title: 'a4b9392f.863853',
+          title: i18n.t('a4b9392f.863853'),
           permissions: ['index']
         }
       }

@@ -87,11 +87,13 @@ import { cloneDeep } from 'lodash'
 import { getImageAttribute, getVideoAttribute } from './utils'
 import { proportions } from '@/consts'
 import SpForm from '@/components/sp-form'
+import VideoPicker from '@/components/sp-picker-plus/VideoPicker.vue'
 export default {
   name: 'SliderDialog',
   componrnts: {},
   components: {
     SpForm,
+    VideoPicker,
     hotzone,
     // CompHotPicker,
     CompPickerLink
@@ -235,7 +237,7 @@ export default {
             return (
               <div class='video-list'>
                 {media_type == 'video' && (
-                  <SpVideoPicker v-model={this.sliderForm[key]} size='small' class='video-link' />
+                  <VideoPicker v-model={this.sliderForm[key]} size='small' class='video-link' />
                 )}
                 {media_type == 'img' && (
                   <div class='zone-list'>

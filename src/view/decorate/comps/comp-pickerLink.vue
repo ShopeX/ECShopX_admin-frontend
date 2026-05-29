@@ -116,7 +116,7 @@
         @change="onChangeLinkUrl"
       />
     </div>
-    <div class="tracking-params-wrapper">
+    <div v-if="showTrackingParams" class="tracking-params-wrapper">
       <label class="tracking-params-label">{{ $t('4a0a5782.965470') }}</label>
       <el-input
         v-model="localValue.trackingParams"
@@ -144,6 +144,10 @@ export default {
       // 不展示自定义链接label true：展示
       type: Boolean,
       default: true
+    },
+    showTrackingParams: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -163,10 +167,7 @@ export default {
   computed: {
     needsOfficialRawId() {
       const { linkPage, id } = this.localValue
-      return (
-        linkPage === 'customer_service' &&
-        (id === 'officialProfile' || id === 'officialChat')
-      )
+      return linkPage === 'customer_service' && (id === 'officialProfile' || id === 'officialChat')
     },
     needsOfficialArticleLink() {
       const { linkPage, id } = this.localValue
@@ -211,8 +212,7 @@ export default {
       const needRaw =
         res?.linkPage === 'customer_service' &&
         (res?.id === 'officialProfile' || res?.id === 'officialChat')
-      const needArticle =
-        res?.linkPage === 'customer_service' && res?.id === 'official'
+      const needArticle = res?.linkPage === 'customer_service' && res?.id === 'official'
       if (needRaw) {
         next.officialAccountRawId = this.localValue.officialAccountRawId || ''
         next.officialArticleLink = ''

@@ -187,6 +187,8 @@
               <el-form-item :label="$t('4d1aec94.53c3dd')">
                 <el-switch
                   v-model="aftersalesRemindForm.is_open"
+                  active-value="true"
+                  inactive-value="false"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                 />
@@ -282,7 +284,7 @@ export default {
       ],
       aftersalesRemindForm: {
         intro: '',
-        is_open: false
+        is_open: 'false'
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: i18n.t('4d1aec94.117b5a'),
@@ -816,11 +818,17 @@ export default {
         })
       }
     },
+    normalizeAftersalesRemindIsOpen(value) {
+      return value === 'true' || value === true || value === 1 || value === '1' ? 'true' : 'false'
+    },
     async aftersalesRemindAction() {
       // 请求提醒数据
       const data = await this.$api.aftersales.getAftersalesRemind()
       if (data) {
-        this.aftersalesRemindForm = data
+        this.aftersalesRemindForm = {
+          intro: data.intro || '',
+          is_open: this.normalizeAftersalesRemindIsOpen(data.is_open)
+        }
       }
       this.aftersalesRemindVisible = true
     },
@@ -830,12 +838,12 @@ export default {
     handleCancel() {
       this.aftersalesRemindVisible = false
       this.aftersalesRemindForm.intro = ''
-      this.aftersalesRemindForm.is_open = false
+      this.aftersalesRemindForm.is_open = 'false'
     },
     async submitAftersalesRemind() {
       let params = {
         intro: this.aftersalesRemindForm.intro,
-        is_open: this.aftersalesRemindForm.is_open
+        is_open: this.normalizeAftersalesRemindIsOpen(this.aftersalesRemindForm.is_open)
       }
       await this.$api.aftersales.setAftersalesRemind(params)
       this.$message({
@@ -843,6 +851,9 @@ export default {
         message: this.$t('4d1aec94.3b1083')
       })
       this.aftersalesRemindVisible = false
+      this.$nextTick(() => {
+        this.$refs.finder?.refresh()
+      })
     },
     handleSelectionChange(val) {
       console.log('handleSelectionChange', val)

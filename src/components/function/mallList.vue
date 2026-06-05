@@ -44,6 +44,7 @@
         <el-button type="text" style="margin-right: 10px" @click="handleShowConfig">
           <i class="el-icon-setting" style="color: #8080ff" /> {{ $t('6880d32e.701fa5') }}
         </el-button>
+        <!-- ECX-8712: 总部/店铺模版装修隐藏导航配置 -->
         <el-button type="text" @click="handleShowTabConfig">
           <i class="el-icon-setting" style="color: #8080ff" /> {{ $t('6880d32e.f9a598') }}
         </el-button>
@@ -134,9 +135,12 @@
             <span class="btn" @click="copyTemplate(item.pages_template_id)">{{
               $t('6880d32e.79d3ab')
             }}</span>
+            <!-- ECX-8712: 总部/店铺模版装修隐藏导航配置 -->
+            <!--
             <span class="btn" @click="handleClickNav(item.pages_template_id)">{{
               $t('6880d32e.056f2d')
             }}</span>
+            -->
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">{{
               $t('6880d32e.0044f6')
             }}</span>

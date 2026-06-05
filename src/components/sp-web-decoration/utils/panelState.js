@@ -51,16 +51,8 @@ export function normalizeProductTabBlockSettings(settings = {}) {
   nextSettings.limit = Number.isFinite(Number(nextSettings.limit))
     ? Math.min(24, Math.max(2, Number(nextSettings.limit)))
     : 8
-  if (
-    nextSettings.size !== undefined &&
-    !['xsmall', 'small', 'medium', 'large', 'xlarge'].includes(nextSettings.size)
-  ) {
-    delete nextSettings.size
-    delete nextSettings.size_override
-  }
-  if (!nextSettings.size_override) {
-    delete nextSettings.size_override
-  }
+  delete nextSettings.size
+  delete nextSettings.size_override
   if (nextSettings.columns !== undefined) {
     nextSettings.columns = [2, 3, 4].includes(Number(nextSettings.columns))
       ? Number(nextSettings.columns)

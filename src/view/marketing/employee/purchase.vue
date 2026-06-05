@@ -346,6 +346,7 @@ export default {
         title: '',
         linkHome: null,
         share_pic: '',
+        list_pic: '',
         pic: ''
       },
       formBaseList: [],
@@ -501,6 +502,19 @@ export default {
           validator: (rule, value, callback) => {
             if (isEmpty(self.formBase.share_pic)) {
               callback(new Error(t('39e3acc2.9742f1')))
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: t('39e3acc2.a8c1e2'),
+          key: 'list_pic',
+          component: () => <SpImagePicker v-model={self.formBase.list_pic} />,
+          tip: t('39e3acc2.818403'),
+          validator: (rule, value, callback) => {
+            if (isEmpty(self.formBase.list_pic)) {
+              callback(new Error(t('39e3acc2.b9d3f4')))
             } else {
               callback()
             }
@@ -1091,6 +1105,7 @@ export default {
         title: res.title,
         linkHome,
         share_pic: res.share_pic,
+        list_pic: res.list_pic || res.pic || '',
         pic: res.pic
       }
 
@@ -1158,11 +1173,31 @@ export default {
         enterprise_id: res.enterprise_id
       })
 
-      // res.price_display_config = {"cart_page": {"sale_price": "true", "market_price": "false", "activity_price": "false"}, "items_page": {"sale_price": "true", "market_price": "true", "activity_price": "false"}, "checkout_page": {"sale_price": "true", "market_price": "false", "activity_price": "false"}, "order_detail_page": {"sale_price": "true", "market_price": "false", "activity_price": "true"}}
-      //价格展示处理
       const priceData = this.priceShowData(res.price_display_config, 'detail')
 
-      console.log('priceData', priceData)
+      const phraseMap = {}
+      ;(res.passphrase_enterprises || []).forEach((pe) => {
+        const eid = pe.enterprise_id
+        phraseMap[eid] = {
+          participate_quota: pe.participate_quota,
+          passphrase_code: pe.passphrase_code || '',
+          passphrase_limitfee:
+            pe.passphrase_limitfee != null && pe.passphrase_limitfee !== ''
+              ? Number(pe.passphrase_limitfee) / 100
+              : ''
+        }
+      })
+      const passphraseRows = list.map((c) => {
+        const pm = phraseMap[c.id]
+        return {
+          enterprise_id: c.id,
+          name: c.name,
+          enterprise_sn: c.enterprise_sn || '',
+          participate_quota: pm ? pm.participate_quota : '',
+          passphrase_code: pm ? pm.passphrase_code : '',
+          passphrase_limitfee: pm ? pm.passphrase_limitfee : ''
+        }
+      })
 
       const phraseMap = {}
       ;(res.passphrase_enterprises || []).forEach((pe) => {
@@ -1383,33 +1418,48 @@ export default {
         this.passphraseBatchCodeGenerating = false
       }
     },
-    priceShowData(form, isDetail) {
-      //接口需要
-      // cart_page: {sale_price: "true", market_price: "false", activity_price: "false"},
-      // items_page: {sale_price: "true", market_price: "false", activity_price: "false"},
-      // checkout_page: {sale_price: "true", market_price: "false", activity_price: "false"},
-      // order_detail_page: {sale_price: "true", market_price: "false", activity_price: "false"}
-
-      let keys = ['items_page', 'cart_page', 'order_detail_page', 'checkout_page']
-      let prices = ['sale_price', 'market_price', 'activity_price']
-      if (isDetail) {
-        //编辑获取详情数据处理
-        return keys.reduce((prev, cur) => {
-          let _arr = []
-          prices.forEach((item) => {
-            _arr = Object.keys(form[cur]).filter((item2) => form[cur][item2] == 'true')
-            console.log(Object.keys(form[cur]))
-          })
-          prev[cur] = _arr
-          return prev
-        }, {})
+    normalizePriceDisplayConfig(raw) {
+      const defaultChecked = ['sale_price', 'activity_price']
+      const pageKeys = ['items_page', 'cart_page', 'order_detail_page', 'checkout_page']
+      const priceKeys = ['sale_price', 'market_price', 'activity_price']
+      let config = raw
+      if (config == null || config === '') {
+        config = {}
+      } else if (typeof config === 'string') {
+        try {
+          config = JSON.parse(config)
+        } catch (e) {
+          config = {}
+        }
       }
-      return keys.reduce((prev, cur) => {
-        let _obj = {}
-        prices.forEach((item) => {
-          _obj[item] = form[cur].includes(item) + ''
-        })
-        prev[cur] = _obj
+      if (typeof config !== 'object') {
+        config = {}
+      }
+      return pageKeys.reduce((prev, pageKey) => {
+        const pageConfig = config[pageKey]
+        if (pageConfig && typeof pageConfig === 'object' && !Array.isArray(pageConfig)) {
+          prev[pageKey] = priceKeys.filter((k) => pageConfig[k] === 'true' || pageConfig[k] === true)
+        } else if (Array.isArray(pageConfig)) {
+          prev[pageKey] = pageConfig
+        } else {
+          prev[pageKey] = defaultChecked.slice()
+        }
+        return prev
+      }, {})
+    },
+    priceShowData(form, isDetail) {
+      const pageKeys = ['items_page', 'cart_page', 'order_detail_page', 'checkout_page']
+      const priceKeys = ['sale_price', 'market_price', 'activity_price']
+      if (isDetail) {
+        return this.normalizePriceDisplayConfig(form)
+      }
+      const normalized = this.normalizePriceDisplayConfig(form)
+      return pageKeys.reduce((prev, cur) => {
+        const checked = normalized[cur] || []
+        prev[cur] = priceKeys.reduce((obj, item) => {
+          obj[item] = String(checked.includes(item))
+          return obj
+        }, {})
         return prev
       }, {})
     },
@@ -1421,6 +1471,7 @@ export default {
         title,
         linkHome: { pages_template_id },
         share_pic,
+        list_pic,
         pic
       } = this.formBase
       const {
@@ -1458,6 +1509,7 @@ export default {
         title,
         pages_template_id,
         share_pic: share_pic,
+        list_pic: list_pic,
         pic: pic,
         enterprise_id: companyList.map((item) => item.id),
         display_time: preheatMoment.unix(),

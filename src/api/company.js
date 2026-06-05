@@ -282,7 +282,7 @@ export function getAppcenterUrl(params) {
 export function loginUsercenter(params) {
   return fetch({
     url: '/company/usercenter/login',
-    method: 'get',
+    method: 'post',
     params
   })
 }

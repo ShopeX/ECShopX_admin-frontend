@@ -98,22 +98,6 @@
         @input="updateField('tab_label', $event)"
       />
     </section>
-
-    <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">规格</div>
-      <el-select
-        :value="settings.size || sectionSize"
-        size="small"
-        class="w-full"
-        @change="updateSize"
-      >
-        <el-option value="xsmall" label="特小" />
-        <el-option value="small" label="小" />
-        <el-option value="medium" label="中" />
-        <el-option value="large" label="大" />
-        <el-option value="xlarge" label="特大" />
-      </el-select>
-    </section>
   </div>
 </template>
 
@@ -154,10 +138,6 @@ export default {
       return this.selectedProducts.map(
         (id) => snapshotMap.get(id) || { item_id: id, item_name: id }
       )
-    },
-    sectionSize() {
-      const value = this.section?.settings?.size
-      return ['xsmall', 'small', 'medium', 'large', 'xlarge'].includes(value) ? value : 'medium'
     }
   },
   methods: {
@@ -172,9 +152,6 @@ export default {
         product_ids: snapshots.map((product) => product.item_id),
         product_snapshots: snapshots
       })
-    },
-    updateSize(value) {
-      this.$emit('change', { size: value, size_override: true })
     },
     clearProducts() {
       this.$emit('change', { product_ids: [], product_snapshots: [] })

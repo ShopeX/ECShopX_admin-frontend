@@ -27,7 +27,6 @@
       :scene="scene"
       :template-id="templateId"
       :title="decorationTitle"
-      @back="decorationHandleBack"
       @save="decorationHandleSave"
     />
   </div>

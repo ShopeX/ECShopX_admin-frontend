@@ -405,6 +405,11 @@ export default {
       path: 'community/chiefupload',
       name: '5286ac37.5ad881',
       component: () => import('@/view/member/members/upload_chief')
+    },
+    {
+      path: 'shopex/appcenter',
+      name: '商派用户中心',
+      component: () => import('@/views/applications/application-center/shopex-appcenter')
     }
   ]
 }

@@ -4,9 +4,12 @@
       class="box-border flex min-h-14 items-center justify-between gap-3 border-b border-[#e6e9ef] bg-white/95 px-[14px] py-2 max-[1360px]:flex-wrap max-[1360px]:items-stretch"
     >
       <div class="flex min-w-0 items-center gap-2.5">
-        <el-button class="!shrink-0" circle size="mini" @click="$emit('back')">
-          <ArrowLeft :size="16" class="text-[#606266]" :stroke-width="2" />
-        </el-button>
+        <span
+          class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#eef4ff] text-[#2563eb]"
+          aria-hidden="true"
+        >
+          <LayoutTemplate :size="18" :stroke-width="2" />
+        </span>
         <div class="flex min-w-0 flex-col items-start gap-0.5">
           <div class="text-sm font-semibold leading-5 text-[#18222f]">{{ titleText }}</div>
           <div class="flex items-center gap-2 whitespace-nowrap text-[11px] text-[#6b7785]">

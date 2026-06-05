@@ -138,12 +138,15 @@
               <span class="btn" @click="copyTemplate(item.pages_template_id)">{{
                 $t('a066f499.79d3ab')
               }}</span>
+              <!-- ECX-8712: 总部/店铺模版装修隐藏导航配置 -->
+              <!--
               <span
                 v-if="!isDistributorTemplate"
                 class="btn"
                 @click="handleClickNav(item.pages_template_id)"
                 >{{ $t('a066f499.056f2d') }}</span
               >
+              -->
               <span class="btn" @click="abandonTemplate(item.pages_template_id)">{{
                 $t('a066f499.0044f6')
               }}</span>

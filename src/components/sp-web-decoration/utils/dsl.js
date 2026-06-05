@@ -367,6 +367,13 @@ export function serializeDsl(dsl) {
   const nextDsl = cloneValue(dsl)
   Object.keys(nextDsl.sections || {}).forEach((sectionId) => {
     const section = nextDsl.sections[sectionId]
+    Object.keys(section.blocks || {}).forEach((blockId) => {
+      const block = section.blocks[blockId]
+      if (block?.type === 'product-tab' && block.settings) {
+        delete block.settings.size
+        delete block.settings.size_override
+      }
+    })
     section.block_order = cloneValue(section.blockOrder || [])
   })
   return nextDsl

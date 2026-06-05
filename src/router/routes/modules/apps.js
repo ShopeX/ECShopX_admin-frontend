@@ -438,6 +438,17 @@ const routes = [
           permissions: ['applications.kujiale.kujiale-products']
         },
         component: () => import('@/views/applications/kujiale/list')
+      },
+      {
+        name: 'appcenter',
+        path: 'shopex/appcenter',
+        meta: {
+          aliasName: 'shopex-appcenter',
+          icon: 'icon-products',
+          title: '商派应用中心',
+          permissions: ['applications.shopex-appcenter']
+        },
+        component: () => import('@/views/applications/application-center/shopex-appcenter')
       }
     ]
   }

@@ -1199,30 +1199,6 @@ export default {
         }
       })
 
-      const phraseMap = {}
-      ;(res.passphrase_enterprises || []).forEach((pe) => {
-        const eid = pe.enterprise_id
-        phraseMap[eid] = {
-          participate_quota: pe.participate_quota,
-          passphrase_code: pe.passphrase_code || '',
-          passphrase_limitfee:
-            pe.passphrase_limitfee != null && pe.passphrase_limitfee !== ''
-              ? Number(pe.passphrase_limitfee) / 100
-              : ''
-        }
-      })
-      const passphraseRows = list.map((c) => {
-        const pm = phraseMap[c.id]
-        return {
-          enterprise_id: c.id,
-          name: c.name,
-          enterprise_sn: c.enterprise_sn || '',
-          participate_quota: pm ? pm.participate_quota : '',
-          passphrase_code: pm ? pm.passphrase_code : '',
-          passphrase_limitfee: pm ? pm.passphrase_limitfee : ''
-        }
-      })
-
       this.activityRule = {
         companyList: list,
         preheatTime: res.display_time * 1000,

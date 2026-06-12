@@ -86,7 +86,6 @@ export default {
     }
   },
   mounted() {
-    this.getShippingTemplatesList()
     this.getAddress()
   },
   methods: {

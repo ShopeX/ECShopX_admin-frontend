@@ -1615,13 +1615,9 @@ export default {
         }
         this.submitLoading = false
         this.isLeave = true
-        // 安全调用父组件方法
-        if (this.$parent && typeof this.$parent.onActivated === 'function') {
-          this.$parent.onActivated()
-        }
-        setTimeout(() => {
-          this.$router.go(-1)
-        }, 200)
+        const parent = this.$parent
+        this.$router.go(-1)
+        setTimeout(() => parent?.onActivated?.(), 100)
       } catch (e) {
         this.submitLoading = false
         console.log(e)

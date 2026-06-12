@@ -75,48 +75,7 @@
             </el-input>
           </el-form-item>
           <el-form-item :label="$t('94b9c64d.bf490f')">
-            <!-- <el-input type="text" v-model="form.ad_url" placeholder="请输入URL" ></el-input>-->
-            <div class="uploader-setting">
-              <div class="goods-select">
-                <div v-if="JSON.stringify(form.ad_url) !== '{}'" class="link-content">
-                  <span @click="handleGoodsChange()">
-                    <template v-if="form.ad_url.linkPage === 'goods'">{{
-                      $t('94b9c64d.10fe9c')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'category'">{{
-                      $t('94b9c64d.e7d2e8')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'article'">{{
-                      $t('94b9c64d.8cb9b8')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'planting'">{{
-                      $t('94b9c64d.9dcd91')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'link'">{{
-                      $t('94b9c64d.ffd741')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'marketing'">{{
-                      $t('94b9c64d.c78a2f')
-                    }}</template>
-                    <template v-if="form.ad_url.linkPage === 'custom_page'">{{
-                      $t('94b9c64d.2a4e32')
-                    }}</template>
-                    {{ form.ad_url.title }}
-                  </span>
-                  <span style="margin-left: 10px">
-                    <i
-                      v-if="JSON.stringify(form.ad_url) !== '{}'"
-                      style="color: #f56c6c"
-                      class="el-icon-delete"
-                      @click="clear_ad_url"
-                    />
-                  </span>
-                </div>
-                <div v-else class="content-center" @click="handleGoodsChange()">
-                  <i class="el-icon-link" />{{ $t('94b9c64d.4f2c29') }}
-                </div>
-              </div>
-            </div>
+            <SpPathSelector v-model="adUrlSelector" />
           </el-form-item>
           <!-- <el-form-item label="应用端">
   <el-checkbox-group v-model="is_app">
@@ -128,17 +87,6 @@
         </el-form>
       </div>
 
-      <linkSetter
-        :links="linksArr"
-        :visible="linksVisible"
-        :show_article="false"
-        :show_planting="false"
-        :show_page="false"
-        :show_marketing="false"
-        :show_store="false"
-        @setLink="setLink"
-        @closeDialog="closeDialog"
-      />
     </el-card>
     <template slot="page-footer">
       <div class="text-center">
@@ -149,21 +97,18 @@
   </SpPage>
 </template>
 <script>
-import linkSetter from '@/components/template_links' // 添加导航连接
+import SpPathSelector from '@/components/sp-path-selector/index.vue'
 import videoPicker from '@/components/videoselect'
 import { mapGetters } from 'vuex'
 import { getOpenScreenADSet, saveOpenScreenADSet } from '../../../api/openscreenad'
 
 export default {
   components: {
-    linkSetter,
+    SpPathSelector,
     videoPicker
   },
   data() {
     return {
-      // linksArr: ['goods', 'store', 'custom_page', 'category'],
-      linksArr: [],
-      linksVisible: false, // 路径设置组件
       itemVideo: {},
       loading: false,
       ad_pic: '',
@@ -190,21 +135,8 @@ export default {
     this.getInfo()
   },
   methods: {
-    clear_ad_url() {
-      this.form.ad_url = {}
-    },
     input_waiting_time() {
       this.form.waiting_time = Number(this.form.waiting_time.replace(/\D+/, ''))
-    },
-    handleGoodsChange() {
-      this.linksVisible = true
-    },
-    setLink(data, type) {
-      let obj = Object.assign(data, { linkPage: type })
-      this.form.ad_url = obj
-    },
-    closeDialog() {
-      this.linksVisible = false
     },
     async handleImgChange() {
       try {
@@ -311,7 +243,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    adUrlSelector: {
+      get() {
+        const url = this.form.ad_url
+        if (!url || typeof url !== 'object') return null
+        if (!(url.linkPage || url.title || url.id)) return null
+        return url
+      },
+      set(val) {
+        this.form.ad_url = val || {}
+      }
+    }
   }
 }
 </script>

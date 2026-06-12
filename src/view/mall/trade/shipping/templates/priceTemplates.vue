@@ -82,7 +82,6 @@ export default {
   },
   mounted() {
     this.getAddress()
-    this.getShippingTemplatesList()
   },
   methods: {
     handleCurrentChange(pageNum) {

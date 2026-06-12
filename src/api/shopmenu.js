@@ -15,28 +15,31 @@ export function getShopMenu(query) {
   })
 }
 
+function buildMenuParams(query) {
+  const params = { ...query }
+  if (query.is_menu !== undefined) {
+    params.is_menu = query.is_menu ? 'true' : 'false'
+  }
+  if (query.is_show !== undefined) {
+    params.is_show = query.is_show ? 'true' : 'false'
+  }
+  return params
+}
+
 export function saveMenu(isEdit, query) {
   let data, msg
   if (isEdit) {
     data = fetch({
       url: '/shopmenu',
       method: 'put',
-      params: {
-        ...query,
-        is_menu: query.is_menu ? 'true' : 'false',
-        is_show: query.is_show ? 'true' : 'false'
-      }
+      params: buildMenuParams(query)
     })
     msg = i18n.t('995dc510.7d662b')
   } else {
     data = fetch({
       url: '/shopmenu',
       method: 'post',
-      params: {
-        ...query,
-        is_menu: query.is_menu ? 'true' : 'false',
-        is_show: query.is_show ? 'true' : 'false'
-      }
+      params: buildMenuParams(query)
     })
     msg = i18n.t('995dc510.5e6ef1')
   }

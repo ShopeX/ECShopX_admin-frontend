@@ -822,7 +822,6 @@ import { getAddress } from '../../../../api/common'
 // import this.district from '../../../../common/this.district.json'
 //匹配省市区
 export default {
-  inject: ['refresh'],
   data() {
     return {
       loading: true,
@@ -1053,9 +1052,8 @@ export default {
             this.$message({
               message: this.$t('e06d340d.55aa63'),
               type: 'success',
-              duration: 2 * 1000,
+              duration: 1500,
               onClose() {
-                that.refresh()
                 that.$router.go(-1)
               }
             })
@@ -1067,9 +1065,8 @@ export default {
             this.$message({
               message: this.$t('e06d340d.3fdaea'),
               type: 'success',
-              duration: 2 * 1000,
+              duration: 1500,
               onClose() {
-                that.refresh()
                 that.$router.go(-1)
               }
             })

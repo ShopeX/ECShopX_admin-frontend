@@ -201,8 +201,8 @@ export default {
   },
   data() {
     return {
-      activeDomestic: 'wxpay',
-      activeInternational: 'paypal',
+      activeDomestic: '',
+      activeInternational: '',
       isHfpay: false,
       loading: false,
 
@@ -421,10 +421,8 @@ export default {
         const res = await hfpayVersionStatus()
         const data = res.data.data
         if (data.hfpay_version_status) {
-          this.activeDomestic = 'hfpay'
           this.isHfpay = true
         } else {
-          this.activeDomestic = 'offline_pay'
           this.isHfpay = false
         }
       } catch (error) {

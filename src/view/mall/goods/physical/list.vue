@@ -1464,7 +1464,7 @@ export default {
     this.getBaseSetting()
 
     this.$activated = () => {
-      this.$refs['finder'].refresh()
+      this.$refs['finder']?.refresh?.()
     }
   },
   methods: {

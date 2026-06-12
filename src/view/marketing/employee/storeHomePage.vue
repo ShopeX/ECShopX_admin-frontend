@@ -188,11 +188,13 @@ export default {
         this.$message.warning(this.$t('9d1e03c7.c1d902'))
         return
       }
+      const distributorId = Number(row.distributor_id)
       this.$router.push({
         path: '/wxapp/manage/decorate',
         query: {
           id: String(cid),
-          scene: '1010'
+          scene: '1010',
+          version: distributorId > 0 ? `shop_${distributorId}` : 'v1.0.1'
         }
       })
     },

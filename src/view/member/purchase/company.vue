@@ -60,6 +60,8 @@
     <SpFinder
       ref="finder"
       no-selection
+      fixed-row-action
+      row-actions-width="220px"
       :setting="setting"
       :row-actions-align="'left'"
       :hooks="{

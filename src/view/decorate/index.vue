@@ -432,6 +432,10 @@ export default {
       const { setting } = wgt.config
       return setting
     },
+    resolveCustomPageVersion() {
+      const { version } = this.$route.query || {}
+      return version || 'v1.0.1'
+    },
     async getTemplateDetial() {
       const { id } = this.$route.query
       let list = []
@@ -446,7 +450,7 @@ export default {
           const resTemplate = await this.$api.wxa.getParamByTempName({
             template_name: 'yykweishop',
             page_name: `custom_${id}`,
-            version: 'v1.0.1'
+            version: this.resolveCustomPageVersion()
           })
           list = resTemplate?.list || []
         } else {
@@ -677,7 +681,7 @@ export default {
         await this.$api.wxa.savePageParams({
           template_name: 'yykweishop',
           page_name: `custom_${id}`,
-          version: 'v1.0.1',
+          version: this.resolveCustomPageVersion(),
           config: JSON.stringify(data)
         })
       } else {

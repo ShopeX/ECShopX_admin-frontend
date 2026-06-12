@@ -431,7 +431,10 @@ export default {
       this.setApisForm.is_menu = row.is_menu
     },
     actionSetMenuApis() {
-      saveMenu(true, this.setApisForm).then((res) => {
+      saveMenu(true, {
+        shopmenu_id: this.setApisForm.shopmenu_id,
+        apis: this.setApisForm.apis
+      }).then((res) => {
         this.editApisVisible = false
         this.getMenuTrees()
       })

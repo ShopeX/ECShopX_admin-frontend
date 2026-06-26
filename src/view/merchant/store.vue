@@ -490,6 +490,7 @@ export default {
           options: [
             { name: this.$t('027707af.7854b5'), label: 'true' },
             { name: this.$t('027707af.710ad0'), label: 'false' },
+            { name: this.$t('027707af.d2b1c3'), label: 'closed' },
             { name: this.$t('027707af.0044f6'), label: 'delete' }
           ],
           isShow: () => this.distributor_self == 0

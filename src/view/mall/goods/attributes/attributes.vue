@@ -290,7 +290,8 @@ export default {
       imgIndex: 0,
       brand_name: '',
       total_count: 0,
-      show_sideBar: false
+      show_sideBar: false,
+      editingAttributeId: ''
     }
   },
   mounted() {
@@ -323,12 +324,15 @@ export default {
             attribute_name: '',
             attribute_memo: '',
             is_image: false,
-            attribute_values: [{ attribute_value: '', image_url: '' }]
+            attribute_values: [{ attribute_value: '', image_url: '' }],
+            attribute_id: '',
+            attribute_type: 'item_spec'
           })
         }
       })
     },
     resetData() {
+      this.editingAttributeId = ''
       this.form = {
         is_image: false,
         attribute_type: 'item_spec',
@@ -339,29 +343,31 @@ export default {
       }
     },
     handleEdit(data) {
+      const isImage = this.normalizeIsImage(data.is_image)
+      let attributeValues = (data.attribute_values && data.attribute_values.list) || []
+      if (attributeValues.length === 0) {
+        attributeValues = [{ attribute_value: '', image_url: '' }]
+      }
+
+      this.editingAttributeId = data.attribute_id
+      this.form = {
+        is_image: isImage,
+        attribute_id: data.attribute_id,
+        attribute_type: data.attribute_type || 'item_spec',
+        attribute_name: data.attribute_name,
+        attribute_memo: data.attribute_memo,
+        attribute_values: attributeValues
+      }
       this.show_sideBar = true
       this.$nextTick(() => {
-        const isImage = this.normalizeIsImage(data.is_image)
-        let attributeValues = (data.attribute_values && data.attribute_values.list) || []
-        // 如果为空，设置默认值
-        if (attributeValues.length === 0) {
-          attributeValues = [{ attribute_value: '', image_url: '' }]
-        }
-
         SpecFormApi.setFieldsValue({
           attribute_name: data.attribute_name,
           attribute_memo: data.attribute_memo,
           is_image: isImage,
-          attribute_values: attributeValues
-        })
-        this.form = {
-          is_image: isImage,
+          attribute_values: attributeValues,
           attribute_id: data.attribute_id,
-          attribute_type: data.attribute_type,
-          attribute_name: data.attribute_name,
-          attribute_memo: data.attribute_memo,
-          attribute_values: attributeValues
-        }
+          attribute_type: data.attribute_type || 'item_spec'
+        })
       })
     },
     async handleFormSubmit() {
@@ -374,14 +380,16 @@ export default {
       }
     },
     onFormSubmit(formData) {
+      const attributeId = this.editingAttributeId || this.form.attribute_id || formData.attribute_id
       const submitData = {
         ...this.form,
-        ...formData
+        ...formData,
+        attribute_id: attributeId,
+        attribute_type: formData.attribute_type || this.form.attribute_type || 'item_spec'
       }
       const params = JSON.parse(JSON.stringify(submitData))
       params.attribute_values = JSON.stringify(params.attribute_values)
-      // 如果没有id，则表示为新增
-      if (!submitData.attribute_id) {
+      if (!attributeId) {
         addGoodsAttr(params).then((res) => {
           this.$message({ type: 'success', message: this.$t('5db1387d.33130f') })
           this.page.pageIndex = 1
@@ -404,7 +412,7 @@ export default {
           }
         })
       } else {
-        updateGoodsAttr(params.attribute_id, params).then((res) => {
+        updateGoodsAttr(attributeId, params).then((res) => {
           this.$message({ type: 'success', message: this.$t('5db1387d.33130f') })
           this.show_sideBar = false
           this.fetchList()

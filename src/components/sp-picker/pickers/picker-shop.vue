@@ -56,9 +56,10 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!isValidFixed" prop="is_valid">
-        <el-select v-model="formData.is_valid" clearable :placeholder="$t('3a1ca73b.3fea7c')">
+        <el-select v-model="formData.is_valid" clearable :placeholder="$t('a523b3a5.e1c965')">
           <el-option value="true" :label="$t('3a1ca73b.7854b5')" />
           <el-option value="false" :label="$t('3a1ca73b.710ad0')" />
+          <el-option value="closed" :label="$t('3a1ca73b.621f97')" />
           <el-option value="delete" :label="$t('3a1ca73b.0044f6')" />
         </el-select>
       </SpFilterFormItem>
@@ -119,11 +120,13 @@ export default {
     }
   },
   computed: {
-    // 调用方通过 queryParams 指定了 is_valid 时，不再展示状态筛选
+    // 调用方固定 is_valid 为 true/false/closed/delete 时不展示；cloud_all 为默认范围，仍允许按状态筛选
     isValidFixed() {
-      return (
-        this.value?.queryParams?.is_valid !== undefined && this.value?.queryParams?.is_valid !== ''
-      )
+      const fixed = this.value?.queryParams?.is_valid
+      if (fixed === undefined || fixed === '' || fixed === 'cloud_all') {
+        return false
+      }
+      return true
     },
     setting() {
       const t = this.$t.bind(this)
@@ -153,6 +156,8 @@ export default {
               ? t('3a1ca73b.7854b5')
               : value == 'false'
               ? t('3a1ca73b.710ad0')
+              : value == 'closed'
+              ? t('3a1ca73b.621f97')
               : value == 'delete'
               ? t('3a1ca73b.0044f6')
               : ''
@@ -186,6 +191,10 @@ export default {
         getRegionLabel(this.district, 0)
       }
       const [province = '', city = '', area = ''] = regionLabels
+      const isValid =
+        this.formData.is_valid !== '' && this.formData.is_valid != null
+          ? this.formData.is_valid
+          : queryParams.is_valid || undefined
       params = {
         ...params,
         name: this.formData.keywords,
@@ -195,8 +204,8 @@ export default {
         city: city,
         area: area,
         distribution_type: this.value?.distribution_type,
-        is_valid: this.formData.is_valid,
-        ...queryParams
+        ...queryParams,
+        is_valid: isValid
       }
       return params
     },

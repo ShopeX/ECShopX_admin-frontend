@@ -17,7 +17,7 @@
         beforeSearch: beforeSearch
       }"
     >
-      <template slot="tableTop" v-if="!dmcrmIsOpen">
+      <template slot="tableTop" v-if="!dmcrmIsOpen && !shuyunOpenPlatformEnabled">
         <div class="action-container">
           <el-button @click="updatePoint">{{ $t('39c803f6.5546a2') }}</el-button>
         </div>
@@ -48,6 +48,7 @@ export default {
         point: ''
       },
       dmcrmIsOpen: false,
+      shuyunOpenPlatformEnabled: false,
       pointFormList: [
         {
           label: '调整方式',
@@ -108,8 +109,17 @@ export default {
     this.$api.third.getDmcrmSetting().then((response) => {
       this.dmcrmIsOpen = response.is_open
     })
+    this.loadShuyunOpenPlatformFlag()
   },
   methods: {
+    async loadShuyunOpenPlatformFlag() {
+      try {
+        const data = await this.$api.third.getShuyunCrmSetting()
+        this.shuyunOpenPlatformEnabled = Boolean(data && data.is_enabled)
+      } catch (e) {
+        this.shuyunOpenPlatformEnabled = false
+      }
+    },
     beforeSearch(params) {
       const { user_id } = this.$route.query
       params = {

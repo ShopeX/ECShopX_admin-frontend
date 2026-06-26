@@ -34,7 +34,7 @@
               </el-radio>
               <p class="frm-tips">{{ $t('e06d340d.e28fdd') }}</p>
             </el-form-item>
-            <el-form-item v-show="form.is_free == 0" :label="$t('e06d340d.99caba')">
+            <el-form-item v-if="form.is_free == 0" :label="$t('e06d340d.99caba')">
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="1">
                 {{ $t('e06d340d.f0af47') }}
               </el-radio>
@@ -65,7 +65,7 @@
               <el-radio v-model="form.status" label="1"> {{ $t('e06d340d.7854b5') }} </el-radio>
               <el-radio v-model="form.status" label="0"> {{ $t('e06d340d.710ad0') }} </el-radio>
             </el-form-item>
-            <el-form-item v-show="form.is_free == 1" :label="$t('e06d340d.411d4a')">
+            <el-form-item v-if="form.is_free == 1" :label="$t('e06d340d.411d4a')">
               <section class="section section-white shipping-calc">
                 <p class="font-bold">{{ $t('e06d340d.e9690a') }}</p>
                 <p v-if="nopost_self_conf && nopost_self_conf.length > 0" class="font-bold nopost">
@@ -81,8 +81,8 @@
             </el-form-item>
           </section>
         </el-col>
-        <el-col v-show="form.is_free == 0" :span="16">
-          <section v-show="form.valuation == 1" class="section section-white">
+        <el-col v-if="form.is_free == 0" :span="16">
+          <section v-if="form.valuation == 1" class="section section-white">
             <p class="font-bold">{{ $t('e06d340d.3864bd') }}</p>
             <section class="section section-white shipping-calc">
               <p class="font-bold">{{ $t('e06d340d.068877') }}</p>
@@ -253,7 +253,7 @@
               </div>
             </section>
           </section>
-          <section v-show="form.valuation == 2" class="section section-white">
+          <section v-if="form.valuation == 2" class="section section-white">
             <p class="font-bold">{{ $t('e06d340d.3864bd') }}</p>
             <section class="section section-white shipping-calc">
               <p class="font-bold">{{ $t('e06d340d.068877') }}</p>
@@ -431,7 +431,7 @@
               </div>
             </section>
           </section>
-          <section v-show="form.valuation == 3" class="section section-white">
+          <section v-if="form.valuation == 3" class="section section-white">
             <section class="section section-white shipping-calc">
               <p class="font-bold">{{ $t('e06d340d.170335') }}</p>
               <el-table :data="fee_money_conf" style="width: 100%" border>
@@ -535,7 +535,7 @@
               </div>
             </section>
           </section>
-          <section v-show="form.valuation == 4" class="section section-white">
+          <section v-if="form.valuation == 4" class="section section-white">
             <p class="font-bold">{{ $t('e06d340d.3864bd') }}</p>
             <section class="section section-white shipping-calc">
               <p class="font-bold">{{ $t('e06d340d.068877') }}</p>

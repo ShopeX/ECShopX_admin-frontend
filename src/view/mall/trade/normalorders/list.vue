@@ -192,6 +192,7 @@
             v-model="params.distributor_id"
             clearable
             :placeholder="$t('c95ea121.708c9d')"
+            :query-params="{ show_distributor_self: 1 }"
           />
         </SpFilterFormItem>
         <SpFilterFormItem

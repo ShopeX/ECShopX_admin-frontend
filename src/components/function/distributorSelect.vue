@@ -87,6 +87,11 @@ export default {
       type: Boolean,
       default: false
     },
+    /** 请求 /distributors 时的 is_valid 参数，默认 true；传 cloud_all 时与后端云店全量筛选一致 */
+    isValidFilter: {
+      type: String,
+      default: 'true'
+    },
     storeVisible: {
       type: Boolean,
       default: false
@@ -109,6 +114,10 @@ export default {
     distribution_type: {
       type: String,
       default: ''
+    },
+    queryParams: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -122,7 +131,7 @@ export default {
       params: {
         page: 1,
         pageSize: 10,
-        is_valid: 'true',
+        is_valid: '',
         is_app: 0,
         distribution_type: ''
       },
@@ -173,7 +182,12 @@ export default {
     },
     getDistributor() {
       this.params.distribution_type = this.distribution_type
-      getDistributorList(this.params).then((response) => {
+      this.params.is_valid = this.isValidFilter
+      const requestParams = {
+        ...this.params,
+        ...this.queryParams
+      }
+      getDistributorList(requestParams).then((response) => {
         if (this.storeData.length > 0) this.isFristLoad = false
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)

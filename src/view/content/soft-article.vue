@@ -33,8 +33,8 @@
 </style>
 
 <template>
-  <SpPage>
-    <SpRouterView>
+  <SpRouterView>
+    <SpPage>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
       <SpFilterForm :model="searchForm" @onSearch="onSearch" @onReset="onSearch">
@@ -99,18 +99,13 @@
           @onSubmit="onSubmitCreateArticle"
         />
       </SpDrawer>
-    </SpRouterView>
-  </SpPage>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>
 import { INDUSTRY } from './consts'
 export default {
-  provide() {
-    return {
-      refresh: () => this.$refs['paginationRef'].refresh()
-    }
-  },
   data() {
     return {
       activeTab: 'all',
@@ -204,11 +199,16 @@ export default {
   },
   mounted() {
     this.getArticleCategory()
-    this.$activated = (to, from) => {
-      if (from.meta.name == 'edit') {
-        this.$refs['paginationRef'].refresh()
-      } else if (from.meta.name == 'create') {
-        this.$refs['paginationRef'].refresh(true)
+  },
+  watch: {
+    $route(to, from) {
+      if (from && from.path.includes('editor') && to && !to.path.includes('editor')) {
+        this.$nextTick(() => {
+          const ref = this.$refs.paginationRef
+          if (ref) {
+            ref.refresh(!from.query.id)
+          }
+        })
       }
     }
   },

@@ -10,7 +10,7 @@
         <div class="section-header with-border clearfix">
           <h3 class="f_l"><span v-if="item.lv_type == 'vip'">VIP</span><span v-else>SVIP</span></h3>
           <span
-            v-if="index != 0 && levelData.length - 1 == index"
+            v-if="!shuyunOpenPlatformEnabled && index != 0 && levelData.length - 1 == index"
             class="el-icon-close f_r"
             @click="remove(index)"
           />
@@ -42,7 +42,7 @@
                 :maxlength="32"
                 :placeholder="$t('da789d63.cdc01b')"
                 :name="index + ''"
-                :disabled="VERSION_SHUYUN()"
+                :disabled="VERSION_SHUYUN() || shuyunOpenPlatformEnabled"
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/32</span>
               <el-input v-model="item.lv_type" type="hidden" :name="index + ''" />
@@ -185,6 +185,12 @@ export default {
   components: {
     imgPicker,
     couponSelect
+  },
+  props: {
+    shuyunOpenPlatformEnabled: {
+      type: Boolean,
+      default: false
+    }
   },
   filters: {
     numberToCharacter(val) {

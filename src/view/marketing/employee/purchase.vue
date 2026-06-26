@@ -768,7 +768,7 @@ export default {
                           v-model={scope.row.passphrase_code}
                           disabled={codeCellDisabled}
                           maxlength={64}
-                          placeholder={t('39e3acc2.e8b1a9')}
+                          placeholder={t('39e3acc2.e8b1b4')}
                           size='small'
                         />
                       )

@@ -107,9 +107,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button size="small" type="primary" @click="updateBatchGoods">
-          {{ $t('dc9cefd6.0904d7') }}
-        </el-button>
       </div>
 
       <SpPageUpload />
@@ -1890,7 +1887,7 @@ export default {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop({
-          queryParams: { is_valid: 'true', show_distributor_self: 1 }
+          queryParams: { is_valid: 'cloud_all', show_distributor_self: 1 }
         })
         distributorIds = data.map((item) => item.distributor_id)
       }
@@ -2141,12 +2138,6 @@ export default {
             message: this.$t('d41d8cd9.t0u1v2')
           })
         }
-      })
-    },
-    updateBatchGoods() {
-      this.$api.goods.updateBatchGoods().then((res) => {
-        this.$message.success(this.$t('dc9cefd6.bbdee9'))
-        this.$refs['finder'].refresh()
       })
     }
   }

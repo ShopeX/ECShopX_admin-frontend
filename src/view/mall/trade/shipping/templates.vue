@@ -4,34 +4,33 @@
 -->
 
 <template>
-  <SpRouterView>
-    <SpPage>
-      <div>
-        <div class="action-container">
-          <el-button type="primary" icon="plus" @click="addTemplates">
-            {{ $t('c8abf6d9.a8c029') }}
-          </el-button>
-        </div>
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-          <el-tab-pane lazy :label="$t('c8abf6d9.882490')" name="first">
-            <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
-          </el-tab-pane>
-          <el-tab-pane lazy :label="$t('c8abf6d9.843135')" name="second">
-            <weightTemplates ref="weightTemplates" :get-status="weightTemplates" />
-          </el-tab-pane>
-          <el-tab-pane lazy :label="$t('c8abf6d9.5555b9')" name="third">
-            <numberTemplates ref="numberTemplates" :get-status="numberTemplates" />
-          </el-tab-pane>
-          <el-tab-pane lazy :label="$t('c8abf6d9.877ec9')" name="fourth">
-            <priceTemplates ref="priceTemplates" :get-status="priceTemplates" />
-          </el-tab-pane>
-          <el-tab-pane lazy :label="$t('c8abf6d9.a95569')" name="fifth">
-            <volumeTemplates ref="volumeTemplates" :get-status="volumeTemplates" />
-          </el-tab-pane>
-        </el-tabs>
+  <div>
+    <router-view v-if="isEditorRoute" :key="$route.fullPath" />
+    <SpPage v-else>
+      <div class="action-container">
+        <el-button type="primary" icon="plus" @click="addTemplates">
+          {{ $t('c8abf6d9.a8c029') }}
+        </el-button>
       </div>
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane lazy :label="$t('c8abf6d9.882490')" name="first">
+          <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
+        </el-tab-pane>
+        <el-tab-pane lazy :label="$t('c8abf6d9.843135')" name="second">
+          <weightTemplates ref="weightTemplates" :get-status="weightTemplates" />
+        </el-tab-pane>
+        <el-tab-pane lazy :label="$t('c8abf6d9.5555b9')" name="third">
+          <numberTemplates ref="numberTemplates" :get-status="numberTemplates" />
+        </el-tab-pane>
+        <el-tab-pane lazy :label="$t('c8abf6d9.877ec9')" name="fourth">
+          <priceTemplates ref="priceTemplates" :get-status="priceTemplates" />
+        </el-tab-pane>
+        <el-tab-pane lazy :label="$t('c8abf6d9.a95569')" name="fifth">
+          <volumeTemplates ref="volumeTemplates" :get-status="volumeTemplates" />
+        </el-tab-pane>
+      </el-tabs>
     </SpPage>
-  </SpRouterView>
+  </div>
 </template>
 
 <script>
@@ -59,6 +58,11 @@ export default {
       volumeTemplates: false,
       activeName: 'first',
       list: []
+    }
+  },
+  computed: {
+    isEditorRoute() {
+      return /\/editor(?:\/|$)/.test(this.$route.path)
     }
   },
   mounted() {

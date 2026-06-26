@@ -165,7 +165,9 @@ export function useForm(options = {}) {
             this.$emit('submit', formData)
           },
           input: (formData) => {
-            this.formData = formData
+            Object.keys(formData).forEach((key) => {
+              this.$set(this.formData, key, formData[key])
+            })
           },
           reset: () => {
             this.resetFields()

@@ -31,7 +31,7 @@
         </el-form-item>
         <div>
           <el-form-item
-            v-if="!VERSION_SHUYUN() && form.isOpenMemberPoint == 'true'"
+            v-if="showPointGainBlock"
             :label="$t('031f6b81.c5c99b')"
           >
             <el-radio-group v-model="form.access" @change="changeAccess">
@@ -42,7 +42,7 @@
             <p v-if="access == 'items'" class="frm-tips">{{ $t('031f6b81.85f868') }}</p>
           </el-form-item>
           <el-form-item
-            v-if="!VERSION_SHUYUN() && form.isOpenMemberPoint == 'true' && access == 'order'"
+            v-if="showPointGainBlock && access == 'order'"
             :label="$t('031f6b81.d85f77')"
           >
             {{ $t('031f6b81.37d64c')
@@ -57,7 +57,7 @@
           </el-form-item>
 
           <el-form-item
-            v-if="!VERSION_SHUYUN() && form.isOpenMemberPoint == 'true' && access == 'order'"
+            v-if="showPointGainBlock && access == 'order'"
             :label="$t('031f6b81.73b492')"
           >
             <el-radio-group v-model="form.include_freight">
@@ -72,7 +72,7 @@
             </p>
           </el-form-item>
           <el-form-item
-            v-if="!VERSION_SHUYUN() && form.isOpenMemberPoint == 'true'"
+            v-if="showPointGainBlock"
             :label="$t('031f6b81.643445')"
           >
             {{ $t('031f6b81.86f31c')
@@ -87,7 +87,7 @@
             <div class="frm-tips">{{ $t('031f6b81.385b7a') }}</div>
           </el-form-item>
           <el-form-item
-            v-if="!VERSION_SHUYUN() && form.isOpenMemberPoint == 'true'"
+            v-if="showPointGainBlock"
             :label="$t('031f6b81.d45a0c')"
           >
             {{ $t('031f6b81.c1a80c')
@@ -199,6 +199,7 @@ import { savePointRule, getPointRule } from '../../../api/promotions'
 export default {
   data() {
     return {
+      shuyunOpenPlatformEnabled: false,
       form: {
         isOpenMemberPoint: 'false',
         gain_point: 1,
@@ -217,10 +218,32 @@ export default {
       include_freight: 'true'
     }
   },
+  computed: {
+    /** 获取方式～获取时间：数云版或开启数云开放平台时不展示 */
+    showPointGainBlock() {
+      return (
+        !this.VERSION_SHUYUN() &&
+        !this.shuyunOpenPlatformEnabled &&
+        this.form.isOpenMemberPoint == 'true'
+      )
+    }
+  },
   mounted() {
+    this.loadShuyunOpenPlatformFlag()
     this.getPointRule()
   },
+  activated() {
+    this.loadShuyunOpenPlatformFlag()
+  },
   methods: {
+    async loadShuyunOpenPlatformFlag() {
+      try {
+        const data = await this.$api.third.getShuyunCrmSetting()
+        this.shuyunOpenPlatformEnabled = Boolean(data && data.is_enabled)
+      } catch (e) {
+        this.shuyunOpenPlatformEnabled = false
+      }
+    },
     isOpenMemberPointHandle(val) {
       if (val == 'false') {
         this.$confirm(this.$t('031f6b81.db6cb8'), this.$t('031f6b81.02d981'), {

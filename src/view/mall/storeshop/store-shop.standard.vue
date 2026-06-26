@@ -66,12 +66,6 @@
           <el-dropdown-item command="2">
             <span>{{ $t('8c556aa3.d5e015') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item command="3">
-            <span>{{ $t('8c556aa3.7fcc60') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="4">
-            <span>{{ $t('8c556aa3.12e91b') }}</span>
-          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -217,7 +211,7 @@ export default {
                 clearable: true,
                 size: 'small',
                 placeholder: this.$t('8c556aa3.708c9d'),
-                queryParams: { is_valid: true, show_distributor_self: 1 }
+                queryParams: { is_valid: 'cloud_all', show_distributor_self: 1 }
               },
               ref: (vm) => {
                 if (vm) {
@@ -566,7 +560,7 @@ export default {
         const { list, total_count } = await this.$api.marketing.getDistributorList({
           page: 1,
           pageSize: 10,
-          is_valid: true,
+          is_valid: 'cloud_all',
           show_distributor_self: 1
         })
         if (list.length > 0) {
@@ -590,6 +584,7 @@ export default {
         ...searchParams,
         is_can_sale: this.activeTab == 'second' ? true : this.activeTab == 'third' ? false : '_all'
       }
+      delete params.is_sku
       return params
     },
     afterSearch({ data }) {
@@ -647,7 +642,10 @@ export default {
     async handleExport() {
       const exportParams = {
         ...this.searchParams,
-        goods_ids: this.selectItems.map((item) => item.goods_id)
+        goods_ids: this.selectItems.map((item) => item.goods_id),
+        is_can_sale:
+          this.activeTab == 'second' ? true : this.activeTab == 'third' ? false : '_all',
+        is_sku: true
       }
       const { status } = await this.$api.marketing.exportDistributorItems(exportParams)
       if (status) {

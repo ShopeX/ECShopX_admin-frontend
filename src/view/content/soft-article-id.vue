@@ -33,9 +33,9 @@
 
 <script>
 export default {
-  inject: ['refresh'],
   data() {
     return {
+      submitting: false,
       articleForm: {
         title: '',
         summary: '',
@@ -123,10 +123,16 @@ export default {
     if (this.$route.query.id) {
       this.getArticle()
     }
-    this.$route.meta.name = this.$route.query.id ? 'edit' : 'create'
     this.getArticleCategory()
   },
   methods: {
+    backToList() {
+      const listPath = this.$route.path.replace(/\/editor(\/.*)?$/, '')
+      if (!listPath || listPath === this.$route.path) {
+        return Promise.resolve()
+      }
+      return this.$router.replace({ path: listPath }).catch(() => {})
+    },
     async getArticle() {
       const res = await this.$api.article.getArticleInfo(this.$route.query.id)
       if (res) {
@@ -164,21 +170,26 @@ export default {
       this.articleForm.region_name = region_name
     },
     async onSubmitTabList() {
-      const params = {
-        ...this.articleForm,
-        article_type: 'bring',
-        content: this.content
+      if (this.submitting) {
+        return
       }
-      if (this.$route.query.id) {
-        await this.$api.article.updateArticle(this.$route.query.id, params)
-        this.$message.success(this.$t('5815f596.6d2221'))
-        this.refresh()
-        this.$router.go(-1)
-      } else {
-        await this.$api.article.createArticle(params)
-        this.$message.success(this.$t('5815f596.e04b36'))
-        this.refresh()
-        this.$router.go(-1)
+      this.submitting = true
+      try {
+        const params = {
+          ...this.articleForm,
+          article_type: 'bring',
+          content: this.content
+        }
+        if (this.$route.query.id) {
+          await this.$api.article.updateArticle(this.$route.query.id, params)
+          this.$message.success(this.$t('5815f596.6d2221'))
+        } else {
+          await this.$api.article.createArticle(params)
+          this.$message.success(this.$t('5815f596.e04b36'))
+        }
+        await this.backToList()
+      } finally {
+        this.submitting = false
       }
     }
   }

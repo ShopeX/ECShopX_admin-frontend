@@ -12,8 +12,15 @@ export default {
     }
   },
   computed: {
+    routeViewDepth() {
+      const depth = this.$parent?.$vnode?.data?.routerViewDepth
+      return typeof depth === 'number' ? depth : null
+    },
     showRouterView() {
       const { matched } = this.$route
+      if (this.routeViewDepth !== null) {
+        return matched.length > this.routeViewDepth + 1
+      }
       return matched.length === 3
     }
   },

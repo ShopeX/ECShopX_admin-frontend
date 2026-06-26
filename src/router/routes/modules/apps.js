@@ -449,6 +449,17 @@ const routes = [
           permissions: ['applications.shopex-appcenter']
         },
         component: () => import('@/views/applications/application-center/shopex-appcenter')
+      },
+      {
+        name: 'shuyunCrmSetting',
+        path: 'shuyun-data-winner/crm-setting',
+        meta: {
+          aliasName: 'crm-setting',
+          title: i18n.t('9d1e03c7.e8a301'),
+          icon: 'pay-circle',
+          permissions: ['applications.shuyun-data-winner.crm-setting']
+        },
+        component: () => import('@/views/applications/shuyun/crm-setting')
       }
     ]
   }

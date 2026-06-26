@@ -34,6 +34,14 @@ export function updateGrade(query) {
   })
 }
 
+export function syncLoyaltyGrade() {
+  return fetch({
+    url: '/shuyun/open-platform/loyalty/grade/sync',
+    method: 'post',
+    showError: false
+  })
+}
+
 export function getDefaultGrade() {
   return fetch({
     url: '/membercard/defaultGrade',

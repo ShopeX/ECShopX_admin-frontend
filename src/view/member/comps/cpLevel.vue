@@ -13,7 +13,12 @@
             ><span v-else>{{ getLevelLabel(index) }}</span>
           </h3>
           <span
-            v-if="!item.default_grade && item.member_count == 0 && levelData.length - 1 == index"
+            v-if="
+              !shuyunOpenPlatformEnabled &&
+              !item.default_grade &&
+              item.member_count == 0 &&
+              levelData.length - 1 == index
+            "
             class="el-icon-close f_r"
             @click="remove(index)"
           />
@@ -50,14 +55,18 @@
             <p class="content-center">{{ $t('11dd4b4a.76d1bc') }}</p>
           </div>
           <div class="item-content f_l">
-            <div style="display: flex; align-items: center">
+            <div
+              class="grade-name-row"
+              style="display: flex; align-items: center"
+              :class="{ 'grade-name-row--readonly': gradeNameDisabled }"
+            >
               <span class="txt">{{ $t('11dd4b4a.9d05c7') }}</span
               ><el-input
                 v-model="item.grade_name"
                 :maxlength="32"
                 :placeholder="$t('11dd4b4a.cdc01b')"
                 :name="index + ''"
-                :disabled="VERSION_SHUYUN()"
+                :disabled="gradeNameDisabled"
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/32</span>
             </div>
@@ -70,7 +79,7 @@
               <span class="txt">{{ $t('11dd4b4a.43559d') }}</span
               ><el-input v-model="item.dm_grade_code" :placeholder="$t('11dd4b4a.a11cc7')" />
             </div>
-            <div v-if="!VERSION_SHUYUN()" class="clearfix">
+            <div v-if="showUpgradeCondition" class="clearfix">
               <span class="txt f_l">{{ $t('11dd4b4a.f41256') }}</span>
               <span v-if="item.default_grade" class="txt-none">{{ $t('11dd4b4a.d81bb2') }}</span>
               <template v-else>
@@ -185,6 +194,12 @@ export default {
     imgPicker,
     couponSelect
   },
+  props: {
+    shuyunOpenPlatformEnabled: {
+      type: Boolean,
+      default: false
+    }
+  },
   filters: {
     numberToCharacter(val) {
       switch (val) {
@@ -209,6 +224,14 @@ export default {
         case 10:
           return '十一'
       }
+    }
+  },
+  computed: {
+    gradeNameDisabled() {
+      return this.VERSION_SHUYUN() || this.shuyunOpenPlatformEnabled
+    },
+    showUpgradeCondition() {
+      return !this.VERSION_SHUYUN() && !this.shuyunOpenPlatformEnabled
     }
   },
   data() {
@@ -399,7 +422,7 @@ export default {
           this.$message({ message: this.$t('11dd4b4a.775081'), type: 'error' })
           break
         }
-        if (i > 0) {
+        if (i > 0 && this.showUpgradeCondition) {
           if (this.levelData[i].promotion_condition.total_consumption == '') {
             isflag = true
             this.$message({ message: this.$t('11dd4b4a.ed17f5'), type: 'error' })
@@ -593,6 +616,12 @@ export default {
 }
 .item-content .el-checkbox {
   color: inherit;
+}
+.grade-name-row--readonly .txt {
+  color: #c0c4cc;
+}
+.grade-name-row--readonly .frm-tips {
+  color: #c0c4cc;
 }
 .upload-box {
   display: inline-block;

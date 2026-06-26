@@ -685,15 +685,15 @@ export default {
           this.loading = false
         }
       } else if (command == '3' || command == '4') {
-        this.loading = true
-        let remainItems = []
+        let remainItems = this.selectItems
         if (this.IS_ADMIN() && this.VERSION_STANDARD()) {
           remainItems = this.selectItems.filter((item) => item.supplier_id == '0')
         }
         if (!remainItems.length) {
-          this.$refs.finder.refresh(true)
+          this.$message.error(this.$t('8c556aa3.20e46f'))
           return
         }
+        this.loading = true
         try {
           await this.$api.marketing.updateDistributorItem({
             distributor_id: this.searchParams.distributor_id,
@@ -701,7 +701,7 @@ export default {
             is_total_store: command == '3'
           })
           this.$message.success(this.$t('8c556aa3.33130f'))
-          this.$refs.finder.refresh(true)
+          this.$refs.finder.refresh()
         } catch (error) {
           this.$message.error(this.$t('8c556aa3.5fa802'))
         } finally {

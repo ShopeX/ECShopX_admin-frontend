@@ -19,7 +19,9 @@
     "commit:comment": "引导设置规范化的提交信息",
     "commit": "git-cz",
     "husky": "npx husky install",
-    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'"
+    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
+    "export:decoration-schema": "node scripts/export-decoration-schema.mjs ../ecshopx-web/app/decoration-engine/schema/decoration-schema.json",
+    "lint:decoration-contract": "node scripts/check-decoration-contract.mjs && npm run export:decoration-schema"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",

@@ -1,9 +1,12 @@
 import { i18n } from '@/i18n'
+import { blockFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'video',
   name: i18n.t('bdd52c70.7fcf42'),
-  defaultSettings: {
+  fields: blockFields.video,
+  defaultSettings: toDefaultSettings(blockFields.video),
+  legacyDefaultSettings: {
     videoUrl: '',
     posterUrl: '',
     mobileVideoUrl: '',

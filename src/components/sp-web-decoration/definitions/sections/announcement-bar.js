@@ -1,10 +1,13 @@
 import { i18n } from '@/i18n'
+import { sectionFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'announcement-bar',
   scope: 'header',
   name: i18n.t('d65dbcac.3921b6'),
-  defaultSettings: {
+  fields: sectionFields['announcement-bar'],
+  defaultSettings: toDefaultSettings(sectionFields['announcement-bar']),
+  legacyDefaultSettings: {
     full_width: false,
     auto_rotate: false,
     enable_country_selector: false,

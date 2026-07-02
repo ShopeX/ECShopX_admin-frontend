@@ -1,9 +1,12 @@
 import { i18n } from '@/i18n'
+import { blockFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'header_collection_product_list',
   name: '产品系列菜单',
-  defaultSettings: {
+  fields: blockFields.header_collection_product_list,
+  defaultSettings: toDefaultSettings(blockFields.header_collection_product_list),
+  legacyDefaultSettings: {
     title: '',
     link: '',
     columns_desktop: 4,

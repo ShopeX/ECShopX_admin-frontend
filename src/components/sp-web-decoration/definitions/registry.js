@@ -19,6 +19,14 @@ import footerLinkBlock from './blocks/footer-link.js'
 import footerMenuBlock from './blocks/footer-menu.js'
 import footerImageBlock from './blocks/footer-image.js'
 import footerTextBlock from './blocks/footer-text.js'
+import {
+  blockTypeAliases,
+  getBlockFields,
+  getSectionFields,
+  resolveBlockType,
+  resolveSectionType,
+  sectionTypeAliases
+} from './schema.js'
 
 const sectionDefinitions = {
   [headerSection.type]: headerSection,
@@ -53,11 +61,11 @@ function getSectionTypesByScope(scope) {
 }
 
 export function getTypedSectionDefinition(type) {
-  return sectionDefinitions[type] || null
+  return sectionDefinitions[resolveSectionType(type)] || null
 }
 
 export function getTypedBlockDefinition(type) {
-  return blockDefinitions[type] || null
+  return blockDefinitions[resolveBlockType(type)] || null
 }
 
 export function getSectionDefaultSettings(type) {
@@ -66,6 +74,14 @@ export function getSectionDefaultSettings(type) {
 
 export function getBlockDefaultSettings(type) {
   return getTypedBlockDefinition(type)?.defaultSettings || null
+}
+
+export function getSectionSchemaFields(type) {
+  return getSectionFields(type)
+}
+
+export function getBlockSchemaFields(type) {
+  return getBlockFields(type)
 }
 
 export function getAllowedBlockTypes(sectionType) {
@@ -80,7 +96,15 @@ export function getSectionBlockTypes(sectionType) {
   return getAllowedBlockTypes(sectionType)
 }
 
-export { sectionDefinitions, blockDefinitions, getSectionTypesByScope }
+export {
+  sectionDefinitions,
+  blockDefinitions,
+  sectionTypeAliases,
+  blockTypeAliases,
+  getSectionTypesByScope,
+  resolveSectionType,
+  resolveBlockType
+}
 
 export default {
   sectionDefinitions,
@@ -89,8 +113,12 @@ export default {
   getTypedBlockDefinition,
   getSectionDefaultSettings,
   getBlockDefaultSettings,
+  getSectionSchemaFields,
+  getBlockSchemaFields,
   getAllowedBlockTypes,
   getSectionTypes,
   getSectionBlockTypes,
-  getSectionTypesByScope
+  getSectionTypesByScope,
+  resolveSectionType,
+  resolveBlockType
 }

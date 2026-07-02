@@ -1,9 +1,12 @@
 import { i18n } from '@/i18n'
+import { blockFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'image',
   name: '图片',
-  defaultSettings: {
+  fields: blockFields.image,
+  defaultSettings: toDefaultSettings(blockFields.image),
+  legacyDefaultSettings: {
     pc_image: '',
     mobile_image: '',
     introduction: '提供背景或介绍，吸引用户注意',

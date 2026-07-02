@@ -3,7 +3,7 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">标题</div>
       <SpRichTextEditor
-        :value="value.title"
+        :value="settings.title"
         placeholder="请输入标题"
         @input="updateField('title', $event)"
       />
@@ -46,7 +46,7 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">规格</div>
       <el-select
-        :value="value.size || 'small'"
+        :value="settings.size"
         size="small"
         class="w-full"
         @change="updateField('size', $event)"
@@ -62,7 +62,7 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">对齐方式</div>
       <el-radio-group
-        :value="value.alignment || 'left'"
+        :value="settings.alignment"
         size="small"
         @input="updateField('alignment', $event)"
       >
@@ -76,7 +76,7 @@
       <div class="text-sm text-muted-foreground">占列宽度</div>
       <div class="flex items-center gap-3">
         <el-input-number
-          :value="value.column_span || 3"
+          :value="settings.column_span"
           :min="1"
           :max="12"
           size="small"
@@ -85,7 +85,7 @@
           @change="updateField('column_span', $event)"
         />
         <el-slider
-          :value="value.column_span || 3"
+          :value="settings.column_span"
           :min="1"
           :max="12"
           :step="1"
@@ -103,6 +103,7 @@ import { Menu as MenuIcon, Trash2 } from 'lucide-vue'
 import WebNavPicker from '@/components/sp-picker-plus/WebNavPicker.vue'
 import SpRichTextEditor from '@/components/sp-rich-text-editor/index.vue'
 import { normalizeSelectedMenu, pickMenuValue } from '../utils/menuSelection.js'
+import { normalizeTypedBlockSettings } from '../utils/panelState.js'
 
 export default {
   name: 'FooterMenuBlockPanel',
@@ -123,8 +124,11 @@ export default {
     }
   },
   computed: {
+    settings() {
+      return normalizeTypedBlockSettings('footer-menu', this.value)
+    },
     currentMenu() {
-      return normalizeSelectedMenu(pickMenuValue(this.value))
+      return normalizeSelectedMenu(pickMenuValue(this.settings))
     },
     currentMenuLabel() {
       return this.currentMenu?.name || this.menuNameCache || '未选择菜单'

@@ -1,3 +1,5 @@
+import { sectionFields, toDefaultSettings } from '../schema.js'
+
 export default {
   type: 'native-product-list',
   scope: 'template',
@@ -6,7 +8,9 @@ export default {
   native: true,
   locked: true,
   addable: false,
-  defaultSettings: {
+  fields: sectionFields['native-product-list'],
+  defaultSettings: toDefaultSettings(sectionFields['native-product-list']),
+  legacyDefaultSettings: {
     locked: true
   },
   defaultBlocks: [],

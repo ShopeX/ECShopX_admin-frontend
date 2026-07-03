@@ -1414,7 +1414,9 @@ export default {
       return pageKeys.reduce((prev, pageKey) => {
         const pageConfig = config[pageKey]
         if (pageConfig && typeof pageConfig === 'object' && !Array.isArray(pageConfig)) {
-          prev[pageKey] = priceKeys.filter((k) => pageConfig[k] === 'true' || pageConfig[k] === true)
+          prev[pageKey] = priceKeys.filter(
+            (k) => pageConfig[k] === 'true' || pageConfig[k] === true
+          )
         } else if (Array.isArray(pageConfig)) {
           prev[pageKey] = pageConfig
         } else {

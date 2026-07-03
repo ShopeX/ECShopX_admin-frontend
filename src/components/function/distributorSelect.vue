@@ -12,14 +12,20 @@
     :before-close="cancelAction"
   >
     <!-- :show-close="isSynchronize?true:false" -->
-    <div style="margin-bottom: 15px">
+    <div style="margin-bottom: 15px; display: flex; gap: 10px">
       <el-input
         v-model="name"
         :placeholder="isSynchronize ? $t('f15fc38a.336865') : $t('f15fc38a.240fdb')"
         clearable
-      >
-        <el-button slot="append" icon="el-icon-search" @click="handleIconClick" />
-      </el-input>
+        @keyup.enter.native="handleIconClick"
+      />
+      <el-input
+        v-model="shop_code"
+        :placeholder="$t('a523b3a5.68f04a')"
+        clearable
+        @keyup.enter.native="handleIconClick"
+      />
+      <el-button icon="el-icon-search" @click="handleIconClick" />
     </div>
     <el-table
       v-if="storeVisible"
@@ -33,6 +39,7 @@
     >
       <el-table-column type="selection" :reserve-selection="true" width="50" />
       <el-table-column prop="name" :label="$t('f15fc38a.0d4934')" />
+      <el-table-column prop="shop_code" :label="$t('a523b3a5.f6d738')" width="120" />
       <el-table-column prop="contact" :label="$t('f15fc38a.52409d')" />
       <el-table-column prop="is_valid" :label="$t('f15fc38a.3fea7c')">
         <template slot-scope="scope">
@@ -136,6 +143,7 @@ export default {
         distribution_type: ''
       },
       name: '',
+      shop_code: '',
       selectRows: [],
       isFristLoad: true
     }
@@ -172,6 +180,8 @@ export default {
     initState() {
       this.isFristLoad = true
       this.storeData = []
+      this.name = ''
+      this.shop_code = ''
       // this.selectRows = []
       // this.params = {
       //   page: 1,
@@ -213,7 +223,9 @@ export default {
       this.getDistributor()
     },
     handleIconClick() {
+      this.params.page = 1
       this.params.name = this.name
+      this.params.shop_code = this.shop_code
       this.getDistributor()
     },
     toggleSelection(rows) {

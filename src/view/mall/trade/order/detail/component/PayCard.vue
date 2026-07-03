@@ -88,15 +88,14 @@ export default {
       return `${this.orderInfo.fee_symbol}${(this.orderInfo.total_fee / 100).toFixed(2)}`
     },
     realTotalFilter() {
-      let returnValue = ''
+      const feeSymbol = this.orderInfo.fee_symbol || '¥'
       if (this.tradeInfo.payType === 'point') {
-        returnValue = `￥0`
-      } else if (this.tradeInfo.tradeState === 'NOTPAY') {
-        returnValue = `￥0`
-      } else {
-        returnValue = `${this.orderInfo.fee_symbol}${(this.orderInfo.total_fee / 100).toFixed(2)}`
+        return `${feeSymbol}0.00`
       }
-      return returnValue
+      if (this.tradeInfo.tradeState === 'NOTPAY') {
+        return `${feeSymbol}0.00`
+      }
+      return `${this.orderInfo.fee_symbol || '¥'}${(this.orderInfo.total_fee / 100).toFixed(2)}`
     },
     orderTotalFilter() {
       return `${this.orderInfo.fee_symbol}${

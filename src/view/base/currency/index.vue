@@ -18,10 +18,14 @@
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="currencyList" :height="wheight - 160">
-      <el-table-column prop="title" :label="$t('7c0967bc.dfeeea')" />
+      <el-table-column prop="title" :label="$t('7c0967bc.dfeeea')">
+        <template slot-scope="scope">
+          {{ getCurrencyTitle(scope.row.currency, scope.row.title) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="currency" :label="$t('7c0967bc.64bc57')" />
       <el-table-column prop="symbol" :label="$t('7c0967bc.61134f')" />
-      <el-table-column prop="rate" :label="$t('7c0967bc.f8d735')" />
+      <!-- <el-table-column prop="rate" :label="$t('7c0967bc.f8d735')" /> -->
       <el-table-column prop="is_default" :label="$t('7c0967bc.69c562')">
         <template slot-scope="scope">
           <el-switch
@@ -33,9 +37,6 @@
       </el-table-column>
       <el-table-column :label="$t('7c0967bc.2b6bc0')">
         <template slot-scope="scope">
-          <el-button size="mini" @click="editAction(scope.$index, scope.row)">
-            {{ $t('7c0967bc.95b351') }}
-          </el-button>
           <el-button
             v-if="!scope.row.is_default"
             size="mini"
@@ -55,42 +56,40 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <!-- 添加、编辑标识-开始 -->
-    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
+    <!-- 添加货币-开始 -->
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :before-close="handleCancel">
       <template>
         <el-form ref="form" :model="form" :rules="rules" class="demo-ruleForm" label-width="220px">
-          <el-form-item :label="$t('7c0967bc.7e9638')" prop="title">
+          <el-form-item :label="$t('7c0967bc.c3a8f1')" prop="selectedCurrency">
             <el-col :span="10">
-              <el-input v-model="form.title" required :placeholder="$t('7c0967bc.f84b1b')" />
+              <el-select
+                v-model="form.selectedCurrency"
+                :placeholder="$t('7c0967bc.f9b2e4')"
+                class="w-full"
+                @change="handleCurrencyChange"
+              >
+                <el-option
+                  v-for="item in currencyOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-col>
+          </el-form-item>
+          <el-form-item :label="$t('7c0967bc.7e9638')">
+            <el-col :span="10">
+              <el-input :value="selectedCurrencyTitle" disabled />
             </el-col>
           </el-form-item>
           <el-form-item :label="$t('7c0967bc.928964')" prop="currency">
             <el-col :span="10">
-              <el-input v-model="form.currency" required :placeholder="$t('7c0967bc.55f991')" />
+              <el-input v-model="form.currency" disabled />
             </el-col>
           </el-form-item>
           <el-form-item :label="$t('7c0967bc.61134f')" prop="symbol">
             <el-col :span="10">
-              <el-input v-model="form.symbol" required :placeholder="$t('7c0967bc.0875ef')" />
-            </el-col>
-          </el-form-item>
-          <el-form-item :label="$t('7c0967bc.f8d735')" prop="rate">
-            <el-col :span="10">
-              <el-input v-model="form.rate" required placeholder="1" />
-            </el-col>
-            <el-col v-if="form.rate && form.title" :span="10">
-              1 {{ form.title }}({{ form.symbol }}) = {{ form.rate }} {{ $t('7c0967bc.880692') }}
-            </el-col>
-            <el-col v-else-if="form.rate && form.currency" :span="10">
-              1 {{ form.currency }} = {{ form.rate }} RMB
-            </el-col>
-          </el-form-item>
-
-          <el-form-item :label="$t('7c0967bc.e84cc3')" prop="rate">
-            <el-col :span="10">
-              <el-radio v-model="form.use_platform" label="normal" value="normal">
-                {{ $t('7c0967bc.635670') }}
-              </el-radio>
+              <el-input v-model="form.symbol" disabled />
             </el-col>
           </el-form-item>
         </el-form>
@@ -104,14 +103,34 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
 import {
   createCurrencyInfo,
   getCurrencytLists,
-  updateCurrencyInfo,
   deleteCurrencyInfo,
   setDefaultCurrency
 } from '../../../api/company'
+
+const CURRENCY_PRESET_META = {
+  CNY: {
+    titleKey: '7c0967bc.e8a1c0',
+    titleStore: '中国人民币',
+    currency: 'CNY',
+    symbol: '￥'
+  },
+  HKD: {
+    titleKey: '7c0967bc.e8h1k0',
+    titleStore: '香港港币',
+    currency: 'HKD',
+    symbol: 'HK$'
+  },
+  USD: {
+    titleKey: '7c0967bc.e8u1s0',
+    titleStore: '美国美元',
+    currency: 'USD',
+    symbol: '$'
+  }
+}
+
 export default {
   data() {
     return {
@@ -120,13 +139,13 @@ export default {
       inputVisible: false,
       inputStoreVisible: false,
       inputValue: '',
-      editVisible: false,
-      editTitle: '',
+      dialogVisible: false,
+      dialogTitle: '',
       form: {
+        selectedCurrency: '',
         symbol: '',
         currency: '',
-        title: '',
-        rate: '',
+        rate: 1,
         is_default: false,
         use_platform: 'normal'
       },
@@ -140,61 +159,69 @@ export default {
         pageSize: 20,
         currency: ''
       },
-      id: 0,
       rules: {
-        title: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
-        currency: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
-        symbol: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }],
-        rate: [{ required: true, message: this.$t('7c0967bc.02cc4f'), trigger: 'blur' }]
+        selectedCurrency: [
+          { required: true, message: this.$t('7c0967bc.f9b2e4'), trigger: 'change' }
+        ]
       }
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    currencyOptions() {
+      return [
+        { value: 'CNY', label: this.$t('7c0967bc.b2e5f0') },
+        { value: 'HKD', label: this.$t('7c0967bc.c4f6a1') },
+        { value: 'USD', label: this.$t('7c0967bc.d5f7b2') }
+      ]
+    },
+    selectedCurrencyTitle() {
+      const meta = CURRENCY_PRESET_META[this.form.selectedCurrency]
+      return meta ? this.$t(meta.titleKey) : ''
+    }
   },
   mounted() {
     this.getCurrencytListData()
   },
   methods: {
     handleCancel() {
-      this.editVisible = false
+      this.dialogVisible = false
+      this.form.selectedCurrency = ''
       this.form.symbol = ''
       this.form.currency = ''
-      this.form.title = ''
-      this.form.rate = ''
+      this.form.rate = 1
       this.form.is_default = false
-      this.id = ''
     },
     handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getCurrencytListData()
     },
     addCurrency() {
-      // 添加物料弹框
-      this.editTitle = this.$t('7c0967bc.55f870')
-      this.editVisible = true
+      this.dialogTitle = this.$t('7c0967bc.55f870')
+      this.dialogVisible = true
+      this.form.selectedCurrency = ''
       this.form.symbol = ''
       this.form.currency = ''
-      this.form.title = ''
-      this.form.rate = ''
+      this.form.rate = 1
       this.form.is_default = false
-      this.id = ''
     },
-    editAction(index, row) {
-      // 编辑物料弹框
-      this.editTitle = this.$t('7c0967bc.1c519d')
-      this.editVisible = true
-      this.form.currency = row.currency
-      this.form.title = row.title
-      this.form.symbol = row.symbol
-      this.form.rate = row.rate
-      this.form.is_default = row.is_default
-      this.form.use_platform = 'normal'
-      this.id = row.id
+    getCurrencyTitle(currencyCode, fallbackTitle) {
+      const meta = CURRENCY_PRESET_META[currencyCode]
+      if (meta) {
+        return this.$t(meta.titleKey)
+      }
+      return fallbackTitle
+    },
+    handleCurrencyChange(value) {
+      const meta = CURRENCY_PRESET_META[value]
+      if (!meta) {
+        return
+      }
+      this.form.currency = meta.currency
+      this.form.symbol = meta.symbol
     },
     submitAction() {
-      // 提交物料
-      if (!this.form.currency || !this.form.title || !this.form.symbol || !this.form.rate) {
+      if (!this.form.selectedCurrency || !this.form.currency) {
         this.$message({
           type: 'error',
           message: this.$t('7c0967bc.d14d9c')
@@ -202,29 +229,30 @@ export default {
         return
       }
 
-      let reg = /^\d+(\.\d{1,4})?$/
-      if (!reg.test(this.form.rate)) {
+      const exists = this.currencyList.some((item) => item.currency === this.form.currency)
+      if (exists) {
         this.$message({
           type: 'error',
-          message: this.$t('7c0967bc.99589d')
+          message: this.$t('7c0967bc.a7d1c8')
         })
         return
       }
-      if (this.id) {
-        updateCurrencyInfo(this.id, this.form).then((response) => {
-          this.detailData = response.data.data
-          this.editVisible = false
-          this.getCurrencytListData()
-          this.handleCancel()
-        })
-      } else {
-        createCurrencyInfo(this.form).then((response) => {
-          this.detailData = response.data.data
-          this.editVisible = false
-          this.getCurrencytListData()
-          this.handleCancel()
-        })
+
+      const meta = CURRENCY_PRESET_META[this.form.selectedCurrency]
+      const payload = {
+        currency: meta.currency,
+        title: meta.titleStore,
+        symbol: meta.symbol,
+        rate: 1,
+        is_default: this.form.is_default,
+        use_platform: this.form.use_platform
       }
+
+      createCurrencyInfo(payload).then(() => {
+        this.dialogVisible = false
+        this.getCurrencytListData()
+        this.handleCancel()
+      })
     },
     dataSearch() {
       this.params.page = 1

@@ -44,6 +44,25 @@ VUE_APP_LOCAL_DELIVERY_DIRVER=
 VUE_APP_DEFAULT_LANG=en
 ```
 
+### Cloud Deployment: Backend API Base URL
+
+When deploying to a server or cloud host, login fails until `VUE_APP_BASE_API` points at your **own** backend instead of the default.
+
+- **Which variable / file?** Set `VUE_APP_BASE_API` in `.env`, or in `.env.local` which overrides `.env` and is git-ignored (recommended for per-deployment values). If it is left empty the app falls back to `/`, so API calls hit the frontend host itself and login fails.
+- **Do I need the port?** Only when the backend is reached directly on a non-standard port — the PHP API listens on `8005` by default. Behind a domain proxied by Nginx on 80/443, omit the port.
+- **Rebuild after every change.** `VUE_APP_*` variables are baked into the static bundle at build time. After editing the env file you must re-run the build for the new address to take effect. Run the build from the project root (where `package.json` lives); inside a container, run it in that same directory.
+
+```shell
+# Behind a domain (Nginx on 80/443) — no port needed, end with /api
+VUE_APP_BASE_API=https://your-domain.com/api
+# Direct public IP on a non-standard port — include the port
+VUE_APP_BASE_API=http://1.2.3.4:8005/api
+
+# Rebuild after changing the value
+npm run build:b2c   # B2C
+npm run build:bbc   # B2B2C
+```
+
 ### Installation
 ```
 cd ECShopX_admin-frontend

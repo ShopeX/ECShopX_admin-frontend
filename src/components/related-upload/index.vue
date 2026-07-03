@@ -22,7 +22,12 @@
 <template>
   <div>
     <div class="action-container">
-      <el-upload action="" :on-change="uploadHandleChange" :auto-upload="false" :show-file-list="false">
+      <el-upload
+        action=""
+        :on-change="uploadHandleChange"
+        :auto-upload="false"
+        :show-file-list="false"
+      >
         <el-button size="small" type="primary"> {{ $t('5f45d286.2c808b') }} </el-button>
       </el-upload>
       <el-button size="small" type="primary" @click="uploadHandleTemplate()">
@@ -156,7 +161,11 @@ export default {
         ...this.extraParams,
         file_type: this.fileType
       }
-      if (this.relatedId !== '' && this.relatedId !== null && typeof this.relatedId !== 'undefined') {
+      if (
+        this.relatedId !== '' &&
+        this.relatedId !== null &&
+        typeof this.relatedId !== 'undefined'
+      ) {
         params.relation_id = this.relatedId
       }
       return params

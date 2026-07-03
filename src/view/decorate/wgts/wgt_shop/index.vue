@@ -34,10 +34,7 @@
             class="product-item"
           >
             <div class="product-image">
-              <el-image
-                :src="productImage(product)"
-                alt="商品图片"
-              >
+              <el-image :src="productImage(product)" alt="商品图片">
                 <div slot="error" class="image-slot" />
               </el-image>
             </div>

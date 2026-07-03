@@ -1,11 +1,19 @@
 module.exports = {
   extends: ['@commitlint/config-conventional', 'cz'],
+  // 支持 GitLab 强制要求的 [TBID:ECX-xxxx] 前缀，后跟 type(scope)?: subject
+  parserPreset: {
+    parserOpts: {
+      headerPattern: /^\[TBID:[A-Za-z0-9]+-\d+\]\s+(\w+)(?:\(([^)]+)\))?\s*:?\s+(.+)$/,
+      headerCorrespondence: ['type', 'scope', 'subject']
+    }
+  },
   rules: {
     'type-enum': [
       2,
       'always',
       [
         'feature', // 新功能（feature）
+        'feat', // 新功能（简写，与历史提交兼容）
         'bug', // 此项特别针对bug号，用于向测试反馈bug列表的bug修改情况
         'fix', // 修补bug
         'ui', // 更新 ui
@@ -26,8 +34,8 @@ module.exports = {
     'type-case': [2, 'always', 'lower-case'],
     // <type> 不能为空
     'type-empty': [2, 'never'],
-    // <scope> 范围不能为空
-    'scope-empty': [2, 'never'],
+    // <scope> 可选（团队惯例多为 [TBID:xxx] type: subject，不写 scope）
+    'scope-empty': [0],
     // <scope> 范围格式
     'scope-case': [0],
     // <subject> 主要 message 不能为空

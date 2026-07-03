@@ -227,13 +227,13 @@
             <span v-if="scope.row.pay_type == 'hfpay'">{{ $t('822436ab.bb68ee') }}</span>
             <span v-if="scope.row.pay_type == 'chinaums'">{{ $t('822436ab.1d7dae') }}</span>
             <span v-if="scope.row.pay_type == 'offline_pay'">{{ $t('822436ab.2d8019') }}</span>
+            <span v-if="scope.row.pay_type == 'doumen_intl'">{{ $t('822436ab.e37lpb') }}</span>
           </template>
         </el-table-column>
         <el-table-column width="180" :label="$t('822436ab.a0cd4c')">
           <template slot-scope="scope">
             <div class="order-num mark">
-              <span class="cur">{{ scope.row.cur_fee_symbol }}</span
-              >{{ scope.row.refund_fee / 100 }}
+              {{ formatMoneyWithSymbol(scope.row.refund_fee, getCurrencySymbol(scope.row)) }}
             </div>
             <div v-if="scope.row.refund_point" class="order-num mark">
               {{ scope.row.refund_point }}{{ $t('822436ab.9f68a8') }}
@@ -248,7 +248,11 @@
         </el-table-column>
         <el-table-column width="180" :label="$t('822436ab.3034f2')">
           <template slot-scope="scope">
-            {{ scope.row.freight_type == 'cash' ? scope.row.freight / 100 : 0 }}
+            {{
+              scope.row.freight_type == 'cash'
+                ? formatMoneyWithSymbol(scope.row.freight, getCurrencySymbol(scope.row))
+                : 0
+            }}
           </template>
         </el-table-column>
         <el-table-column width="180" :label="$t('822436ab.ff5669')">
@@ -333,6 +337,7 @@ import { mapGetters } from 'vuex'
 import { exportRefundList } from '@/api/aftersales'
 import mixin, { pageMixin } from '@/mixins'
 import { i18n } from '@/i18n'
+import { formatMoneyWithSymbol, getCurrencySymbol } from '@/utils'
 export default {
   mixins: [mixin, pageMixin],
   data() {
@@ -475,6 +480,8 @@ export default {
     this.getJstErpSetting()
   },
   methods: {
+    formatMoneyWithSymbol,
+    getCurrencySymbol,
     handleDetail(row) {
       this.$router.push({
         path: this.matchRoutePath('detail'),
@@ -580,9 +587,10 @@ export default {
         })
       }
     },
-    async handleRefund({ order_id, refund_bn, refund_fee }) {
+    async handleRefund({ order_id, refund_bn, refund_fee, cur_fee_symbol }) {
       const { bank_account_name, bank_account_no, bank_name } =
         await this.$api.aftersales.getOfflineInfo({ order_id })
+      const symbol = cur_fee_symbol || '¥'
       this.refundForm = {
         order_id,
         refund_bn,
@@ -593,7 +601,7 @@ export default {
         refund_account_bank: bank_account_no,
         refund_account_no: bank_name,
         pay_type: 'offline_pay',
-        refund_fee: refund_fee / 100
+        refund_fee: `${symbol}${refund_fee / 100}`
       }
       this.refundDialog = true
     },

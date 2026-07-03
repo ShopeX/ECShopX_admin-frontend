@@ -38,10 +38,7 @@ export default {
     RelatedUpload
   },
   data() {
-    const paneList = [
-      { name: 'upload_tb_items', label: i18n.t('5f45d286.f1968b') },
-      { name: 'normal_goods', label: i18n.t('5f45d286.9e6dce') }
-    ]
+    const paneList = [{ name: 'normal_goods', label: i18n.t('5f45d286.9e6dce') }]
 
     if (!IS_SUPPLIER()) {
       paneList.push({ name: 'employee_purchase_activity_items', label: i18n.t('5f45d286.4482b6') })
@@ -63,7 +60,8 @@ export default {
   },
   mounted() {
     const { file_type = 'normal_goods', relation_id = '' } = this.$route.query
-    this.activeName = file_type
+    const validNames = this.pane_list.map((item) => item.name)
+    this.activeName = validNames.includes(file_type) ? file_type : 'normal_goods'
     this.relatedId = relation_id
   },
   methods: {

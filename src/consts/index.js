@@ -232,7 +232,8 @@ export const PAY_TYPE = {
   alipay_wap: i18n.t('e3a5dbf4.5a3c52'),
   alipay_qr: i18n.t('e3a5dbf4.e20bf0'),
   alipaymini: i18n.t('e3a5dbf4.42d922'),
-  localPay: i18n.t('e3a5dbf4.941a4a')
+  localPay: i18n.t('e3a5dbf4.941a4a'),
+  doumen_intl: i18n.t('822436ab.e37lpb')
 }
 
 export const PAY_STATUS = {

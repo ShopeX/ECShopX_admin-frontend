@@ -177,7 +177,11 @@
             </SpFilterFormItem>
             <div class="filter-row-break" />
             <SpFilterFormItem prop="shelf_status" :label="$t('d41d8cd9.3fea7c')">
-              <el-select v-model="queryForm.shelf_status" clearable :placeholder="$t('b7aea01d.a8b0c2')">
+              <el-select
+                v-model="queryForm.shelf_status"
+                clearable
+                :placeholder="$t('b7aea01d.a8b0c2')"
+              >
                 <el-option :label="$t('b7aea01d.4a5098')" :value="1" />
                 <el-option :label="$t('b7aea01d.d2379a')" :value="0" />
               </el-select>
@@ -460,17 +464,26 @@
               v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
               slot-scope="scope"
             >
-              <span>{{ Number(scope.row.shelf_status) === 1 ? $t('b7aea01d.4a5098') : $t('b7aea01d.d2379a') }}</span>
+              <span>{{
+                Number(scope.row.shelf_status) === 1 ? $t('b7aea01d.4a5098') : $t('b7aea01d.d2379a')
+              }}</span>
             </template>
           </el-table-column>
           <el-table-column fixed="left" :label="$t('2ff5650c.2b6bc0')" width="120px">
             <template slot-scope="scope">
               <el-button
-                v-if="!adminDisabled && ((scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true')"
+                v-if="
+                  !adminDisabled &&
+                  ((scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true')
+                "
                 type="text"
                 @click="toggleShelfStatus(scope.row)"
               >
-                {{ Number(scope.row.shelf_status) === 1 ? $t('b7aea01d.d2379a') : $t('b7aea01d.4a5098') }}
+                {{
+                  Number(scope.row.shelf_status) === 1
+                    ? $t('b7aea01d.d2379a')
+                    : $t('b7aea01d.4a5098')
+                }}
               </el-button>
             </template>
           </el-table-column>
@@ -815,14 +828,20 @@ export default {
         item['limit_fee'] = item.limit_fee / 100
         item['tid'] = ++tindex
         item['checked'] = false
-        item['shelf_status'] = item.shelf_status === undefined || item.shelf_status === null ? 1 : Number(item.shelf_status)
+        item['shelf_status'] =
+          item.shelf_status === undefined || item.shelf_status === null
+            ? 1
+            : Number(item.shelf_status)
         if (typeof item.spec_items != 'undefined') {
           item.spec_items.forEach((sitem) => {
             sitem['is_sku'] = true
             sitem['activity_price'] = sitem.activity_price / 100
             sitem['limit_fee'] = sitem.limit_fee / 100
             sitem['tid'] = ++tindex
-            sitem['shelf_status'] = sitem.shelf_status === undefined || sitem.shelf_status === null ? 1 : Number(sitem.shelf_status)
+            sitem['shelf_status'] =
+              sitem.shelf_status === undefined || sitem.shelf_status === null
+                ? 1
+                : Number(sitem.shelf_status)
           })
         }
       })

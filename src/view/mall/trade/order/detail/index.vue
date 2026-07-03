@@ -150,12 +150,12 @@
             </el-table-column>
             <el-table-column prop="cost_price" :label="$t('3cdfcea1.17b4aa')" width="100">
               <template slot-scope="scope">
-                {{ (scope.row.cost_price / 100).toFixed(2) }}
+                {{ formatOrderMoney(scope.row.cost_price, scope.row.fee_symbol) }}
               </template>
             </el-table-column>
             <el-table-column prop="cost_price" :label="$t('3cdfcea1.066804')" width="100">
               <template slot-scope="scope">
-                {{ (scope.row.cost_price / 100).toFixed(2) }}
+                {{ formatOrderMoney(scope.row.cost_price, scope.row.fee_symbol) }}
               </template>
             </el-table-column>
             <el-table-column prop="num" :label="$t('3cdfcea1.0bf60b')" width="80" />
@@ -182,7 +182,7 @@
             </el-table-column>
             <el-table-column :label="$t('3cdfcea1.1f1eac')" width="120">
               <template slot-scope="scope">
-                {{ (scope.row.cost_fee / 100).toFixed(2) }}
+                {{ formatOrderMoney(scope.row.cost_fee, scope.row.fee_symbol) }}
               </template>
             </el-table-column>
             <el-table-column
@@ -196,12 +196,12 @@
             </el-table-column>
             <el-table-column :label="$t('3cdfcea1.2ecbc8')" width="120">
               <template slot-scope="scope">
-                {{ (scope.row.point_fee / 100).toFixed(2) }}
+                {{ formatOrderMoney(scope.row.point_fee, scope.row.fee_symbol) }}
               </template>
             </el-table-column>
             <el-table-column :label="$t('3cdfcea1.e95382')" width="120">
               <template slot-scope="scope">
-                {{ (scope.row.total_fee / 100).toFixed(2) }}
+                {{ formatOrderMoney(scope.row.total_fee, scope.row.fee_symbol) }}
               </template>
             </el-table-column>
             <el-table-column :label="$t('3cdfcea1.aae045')" width="100">
@@ -934,6 +934,13 @@ export default {
     this.getLogisticsList()
   },
   methods: {
+    formatOrderMoney(amount, feeSymbol) {
+      const symbol = feeSymbol || this.orderInfo?.fee_symbol || '¥'
+      if (amount === null || amount === undefined || amount === '') {
+        return `${symbol}0.00`
+      }
+      return `${symbol}${(Number(amount) / 100).toFixed(2)}`
+    },
     invoiceFilter(item) {
       return OPEN_STATUS_ARR.find((el) => el.value === item)?.title || ''
     },
@@ -1034,6 +1041,8 @@ export default {
         memberDiscount = `${100 - gradeInfo.privileges.discount}%`
       }
 
+      const feeSymbol = orderInfo.fee_symbol || '¥'
+
       this.orderInfo = {
         ...orderInfo,
         create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
@@ -1059,47 +1068,51 @@ export default {
               })
           : [],
         profit_type: PROFIT_TYPE[profit.profit_type],
-        profit_totalPrice: profit.total_fee ? `¥${profit.total_fee / 100}` : '￥0.00',
+        profit_totalPrice: profit.total_fee
+          ? this.formatOrderMoney(profit.total_fee, feeSymbol)
+          : this.formatOrderMoney(0, feeSymbol),
         ...tradeInfo,
         mobile: orderInfo.mobile,
         goodsPrice:
           orderInfo.order_type != 'bargain'
             ? orderInfo.item_fee
-              ? `¥${(orderInfo.item_fee / 100).toFixed(2)}`
-              : '￥0.00'
+              ? this.formatOrderMoney(orderInfo.item_fee, feeSymbol)
+              : this.formatOrderMoney(0, feeSymbol)
             : orderInfo.item_price
-            ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
-            : '￥0.00',
+            ? this.formatOrderMoney(orderInfo.item_price, feeSymbol)
+            : this.formatOrderMoney(0, feeSymbol),
         freightFee:
           orderInfo.freight_fee || orderInfo.freight_point_fee
-            ? `¥${(
-                ((orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0)) /
-                100
-              ).toFixed(2)}`
-            : '￥0.00',
+            ? this.formatOrderMoney(
+                (orderInfo.freight_fee || 0) + (orderInfo.freight_point_fee || 0),
+                feeSymbol
+              )
+            : this.formatOrderMoney(0, feeSymbol),
         memberDiscountPrice: orderInfo.member_discount
-          ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`
-          : '￥0.00',
+          ? `-${this.formatOrderMoney(orderInfo.member_discount, feeSymbol)}`
+          : this.formatOrderMoney(0, feeSymbol),
         couponDiscount: orderInfo.coupon_discount
-          ? `-¥${(orderInfo.coupon_discount / 100).toFixed(2)}`
-          : '￥0.00',
+          ? `-${this.formatOrderMoney(orderInfo.coupon_discount, feeSymbol)}`
+          : this.formatOrderMoney(0, feeSymbol),
         totalDiscount: orderInfo.discount_fee
-          ? `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`
-          : '￥0.00',
-        totalPrice: orderInfo.total_fee ? `¥${(orderInfo.total_fee / 100).toFixed(2)}` : '￥0.00',
-        pointFee: orderInfo.point_fee ? `¥${(orderInfo.point_fee / 100).toFixed(2)}` : '￥0.00',
+          ? `-${this.formatOrderMoney(orderInfo.discount_fee, feeSymbol)}`
+          : this.formatOrderMoney(0, feeSymbol),
+        totalPrice: orderInfo.total_fee
+          ? this.formatOrderMoney(orderInfo.total_fee, feeSymbol)
+          : this.formatOrderMoney(0, feeSymbol),
+        pointFee: orderInfo.point_fee
+          ? this.formatOrderMoney(orderInfo.point_fee, feeSymbol)
+          : this.formatOrderMoney(0, feeSymbol),
         realPrice: (() => {
-          let returnValue = ''
           if (tradeInfo.payType === 'point') {
-            returnValue = `￥0`
-          } else if (tradeInfo.tradeState === 'NOTPAY') {
-            returnValue = `￥0`
-          } else {
-            returnValue = orderInfo.total_fee
-              ? `¥${(orderInfo.total_fee / 100).toFixed(2)}`
-              : '￥0.00'
+            return this.formatOrderMoney(0, feeSymbol)
           }
-          return returnValue
+          if (tradeInfo.tradeState === 'NOTPAY') {
+            return this.formatOrderMoney(0, feeSymbol)
+          }
+          return orderInfo.total_fee
+            ? this.formatOrderMoney(orderInfo.total_fee, feeSymbol)
+            : this.formatOrderMoney(0, feeSymbol)
         })(),
         payTypeTxt: tradeInfo.payChannel
           ? PAY_TYPE[tradeInfo.payChannel]

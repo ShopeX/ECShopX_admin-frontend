@@ -670,6 +670,17 @@ const routes = [
           permissions: ['setting.systemsetting.kjlsetting']
         },
         component: () => import('@/views/settings/kujiale-setting')
+      },
+      {
+        name: `basecurrency`,
+        path: 'system-config/basecurrency',
+        meta: {
+          aliasName: 'basecurrency',
+          icon: 'icon-products',
+          title: i18n.t('b51bc270.f68fc6'),
+          permissions: ['setting.systemsetting.basecurrency']
+        },
+        component: () => import('@/view/base/currency/index')
       }
     ]
   }

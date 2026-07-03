@@ -48,8 +48,8 @@
                     <el-form-item :label="$t('3ec151aa.0202dc')" prop="license_validity_type">
                       <el-switch
                         v-model="form.license_validity_type"
-                        active-value="1"
-                        inactive-value="0"
+                        :active-value="1"
+                        :inactive-value="0"
                       />
                     </el-form-item>
                   </el-col>
@@ -136,8 +136,8 @@
                   <el-form-item :label="$t('3ec151aa.15ed38')" prop="legal_cert_validity_type">
                     <el-switch
                       v-model="form.legal_cert_validity_type"
-                      active-value="1"
-                      inactive-value="0"
+                      :active-value="1"
+                      :inactive-value="0"
                     />
                   </el-form-item>
                 </el-col>
@@ -226,9 +226,10 @@
                   <el-form-item
                     v-if="form.card_type == 0"
                     :label="$t('3ec151aa.fb4d4e')"
-                    prop="bank_code"
+                    prop="branch_code"
+                    required
                   >
-                    <el-input v-model="form.bank_code" />
+                    <el-input v-model="form.branch_code" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -331,8 +332,8 @@
                   <el-form-item :label="$t('3ec151aa.15ed38')" prop="cert_validity_type">
                     <el-switch
                       v-model="indvForm.cert_validity_type"
-                      active-value="1"
-                      inactive-value="0"
+                      :active-value="1"
+                      :inactive-value="0"
                     />
                   </el-form-item>
                 </el-col>
@@ -477,7 +478,7 @@ export default {
         // card_name: '', //银行卡对应的户名，若银行账户类型是对公，必须与企业名称一致,
         card_no: '', //银行卡号
         card_regions_id: '', // 银行卡开户省市id
-        bank_code: '', // 银行号
+        branch_code: '', // 支行联行号
         branch_name: '', // 支行名称
         // cert_no: '',// 持卡人身份证号必填
         // cert_validity_type: 0,// 持卡人身份证有效期类型
@@ -519,7 +520,7 @@ export default {
           message: '请选择开户行所在省市',
           trigger: 'change'
         },
-        // bank_code: [requiredRules('银行号'), MaxRules(40)],
+        branch_code: requiredRules('支行联行号'),
         // cert_no: [requiredRules('持卡人身份证号'), MaxRules(18)],
         // cert_begin_date: {
         //   required: true,
@@ -759,17 +760,29 @@ export default {
       if (this.user_type == 'ent') {
         this.form = await this.$api.bspay.getUserEnt()
         this.processed = '未填'
+        if (this.form.license_validity_type != null && this.form.license_validity_type !== '') {
+          this.form.license_validity_type = Number(this.form.license_validity_type)
+        }
+        if (this.form.legal_cert_validity_type != null && this.form.legal_cert_validity_type !== '') {
+          this.form.legal_cert_validity_type = Number(this.form.legal_cert_validity_type)
+        }
         this.form.license_regions_id = [
           this.form.reg_prov_id,
           this.form.reg_area_id,
           this.form.reg_district_id
         ]
         this.form.card_regions_id = [this.form.prov_id, this.form.area_id]
+        if (!this.form.branch_code && this.form.bank_code) {
+          this.form.branch_code = this.form.bank_code
+        }
         console.log('ent---------', this.form)
       } else {
         this.indvForm = await this.$api.bspay.getUserIndv()
         this.processed = '未填'
         this.activeName = 'indv'
+        if (this.indvForm.cert_validity_type != null && this.indvForm.cert_validity_type !== '') {
+          this.indvForm.cert_validity_type = Number(this.indvForm.cert_validity_type)
+        }
         this.indvForm.card_regions_id = [this.indvForm.prov_id, this.indvForm.area_id]
         console.log('indv---------', this.indvForm)
       }

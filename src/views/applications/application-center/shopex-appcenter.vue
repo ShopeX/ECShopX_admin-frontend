@@ -4,11 +4,7 @@
 -->
 
 <template>
-  <SpPage
-    v-loading="loading && viewMode !== 'iframe'"
-    class="user-center-page"
-    :no-sticky="true"
-  >
+  <SpPage v-loading="loading && viewMode !== 'iframe'" class="user-center-page" :no-sticky="true">
     <div v-if="viewMode === 'goods'" v-loading="loading" class="appcenter-embed">
       <div class="appcenter-workspace">
         <div class="appcenter-tabs appcenter-tabs--no-user">
@@ -18,10 +14,7 @@
         </div>
 
         <div class="appcenter-tab-panel active">
-          <div
-            v-if="!loading && goodsList.length === 0"
-            class="appcenter-empty"
-          >
+          <div v-if="!loading && goodsList.length === 0" class="appcenter-empty">
             {{ pageInfo.empty_text || '暂无可展示应用' }}
           </div>
           <div v-else class="appcenter-items appcenter-layout-grid">
@@ -39,10 +32,7 @@
                   <span>价格：¥{{ formatPrice(item.goods?.price) }}</span>
                 </div>
               </div>
-              <form
-                class="appcenter-buy-form"
-                @submit.prevent="handleAppClick(item)"
-              >
+              <form class="appcenter-buy-form" @submit.prevent="handleAppClick(item)">
                 <button
                   type="submit"
                   class="appcenter-action"
@@ -218,8 +208,7 @@ export default {
     async fetchAppcenterUrl() {
       const urlResponse = await getAppcenterUrl()
       const urlData = urlResponse?.data?.data
-      const url =
-        (typeof urlData === 'string' ? urlData : '') || urlData?.url || ''
+      const url = (typeof urlData === 'string' ? urlData : '') || urlData?.url || ''
       if (!url) {
         throw new Error('获取应用中心地址失败')
       }

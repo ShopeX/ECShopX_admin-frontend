@@ -13,6 +13,29 @@ export function formatPrice(price, thousandth = true, prefix = '¥', suffix = ''
   return `${prefix}${formattedPrice}${suffix}`
 }
 
+export function getCurrencySymbol(
+  row = {},
+  keys = ['cur_fee_symbol', 'curFeeSymbol', 'fee_symbol', 'feeSymbol']
+) {
+  for (const key of keys) {
+    if (row[key]) {
+      return row[key]
+    }
+  }
+  return '¥'
+}
+
+export function formatMoneyWithSymbol(amountInCents, symbol = '¥') {
+  if (amountInCents === null || amountInCents === undefined || amountInCents === '') {
+    return `${symbol}0.00`
+  }
+  const normalized = Number(amountInCents)
+  if (Number.isNaN(normalized)) {
+    return `${symbol}0.00`
+  }
+  return `${symbol}${(normalized / 100).toFixed(2)}`
+}
+
 export function formatNumber(price, thousandth = false) {
   let formattedPrice = price / 100
   if (thousandth && formattedPrice >= 1000) {

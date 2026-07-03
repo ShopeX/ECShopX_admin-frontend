@@ -357,7 +357,7 @@
             header-align="center"
           >
             <template slot-scope="scope">
-              {{ (scope.row.total_fee / 100).toFixed(2) }}
+              {{ scope.row.fee_symbol || '¥' }}{{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column
@@ -368,7 +368,7 @@
             header-align="center"
           >
             <template slot-scope="scope">
-              {{ (scope.row.point_fee / 100).toFixed(2) }}
+              {{ scope.row.fee_symbol || '¥' }}{{ (scope.row.point_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column
@@ -379,7 +379,7 @@
             header-align="center"
           >
             <template slot-scope="scope">
-              {{ (scope.row.cost_fee / 100).toFixed(2) }}
+              {{ scope.row.fee_symbol || '¥' }}{{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column
@@ -389,7 +389,10 @@
             header-align="center"
           >
             <template slot-scope="scope">
-              {{ (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2) }}
+              {{ scope.row.fee_symbol || '¥'
+              }}{{
+                (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2)
+              }}
             </template>
           </el-table-column>
 

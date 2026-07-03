@@ -40,6 +40,7 @@
 <script>
 import SpFormPlus from '@/components/sp-form-plus'
 import SpTable from '@/components/sp-table'
+import { getCurrentCountryCode } from '@/i18n'
 
 function normalizeProduct(row = {}) {
   return {
@@ -219,6 +220,7 @@ export default {
         item_type: 'normal',
         audit_status: 'approved',
         is_sku: false,
+        country_code: getCurrentCountryCode(),
         category: Array.isArray(category) ? category[category.length - 1] : category
       }
     },

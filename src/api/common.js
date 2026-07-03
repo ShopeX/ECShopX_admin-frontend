@@ -65,11 +65,22 @@ export function getFileBlob(url) {
       responseType: 'arraybuffer',
       headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then((data) => {
-        resolve(data.data)
+      .then((response) => {
+        const contentType = response.headers['content-type'] || ''
+        if (contentType.includes('application/json') || contentType.includes('text/')) {
+          try {
+            const text = new TextDecoder().decode(response.data)
+            const err = JSON.parse(text)
+            reject(err.message || err.msg || text)
+          } catch {
+            reject('文件下载失败')
+          }
+          return
+        }
+        resolve(response.data)
       })
       .catch((error) => {
-        reject(error.toString())
+        reject(typeof error === 'string' ? error : error.toString())
       })
   })
 }

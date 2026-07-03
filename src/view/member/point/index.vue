@@ -30,10 +30,7 @@
           </el-tooltip>
         </el-form-item>
         <div>
-          <el-form-item
-            v-if="showPointGainBlock"
-            :label="$t('031f6b81.c5c99b')"
-          >
+          <el-form-item v-if="showPointGainBlock" :label="$t('031f6b81.c5c99b')">
             <el-radio-group v-model="form.access" @change="changeAccess">
               <el-radio label="order"> {{ $t('031f6b81.4c117f') }} </el-radio>
               <el-radio label="items"> {{ $t('031f6b81.9897d8') }} </el-radio>
@@ -71,10 +68,7 @@
               {{ $t('031f6b81.45f8c7') }}
             </p>
           </el-form-item>
-          <el-form-item
-            v-if="showPointGainBlock"
-            :label="$t('031f6b81.643445')"
-          >
+          <el-form-item v-if="showPointGainBlock" :label="$t('031f6b81.643445')">
             {{ $t('031f6b81.86f31c')
             }}<el-input
               v-model="form.gain_limit"
@@ -86,10 +80,7 @@
             />{{ $t('031f6b81.9f68a8') }}
             <div class="frm-tips">{{ $t('031f6b81.385b7a') }}</div>
           </el-form-item>
-          <el-form-item
-            v-if="showPointGainBlock"
-            :label="$t('031f6b81.d45a0c')"
-          >
+          <el-form-item v-if="showPointGainBlock" :label="$t('031f6b81.d45a0c')">
             {{ $t('031f6b81.c1a80c')
             }}<el-input
               v-model="form.gain_time"

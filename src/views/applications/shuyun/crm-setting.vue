@@ -101,8 +101,8 @@ export default {
         data.app_id != null && data.app_id !== ''
           ? data.app_id
           : data.app_key != null && data.app_key !== ''
-            ? data.app_key
-            : ''
+          ? data.app_key
+          : ''
       this.form.app_id = id == null ? '' : String(id)
       const masked =
         data.app_secret_masked != null && String(data.app_secret_masked).trim() !== ''

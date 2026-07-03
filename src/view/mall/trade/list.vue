@@ -143,7 +143,7 @@
                         </div>
                       </div>
                       <div slot="reference" class="name-wrapper">
-                        {{ scope.row.discountFee / 100 }}{{ $t('35ec026d.c16655') }}
+                        {{ formatMoneyWithSymbol(scope.row.discountFee, getCurrencySymbol(scope.row)) }}
                       </div>
                     </el-popover>
                   </el-form-item>
@@ -184,6 +184,16 @@
             <el-table-column :label="$t('35ec026d.a6d10d')" width="200">
               <template slot-scope="scope">
                 <div class="order-num">
+                  {{ scope.row.orderId }}
+                  <el-tooltip effect="dark" :content="$t('35ec026d.79d3ab')" placement="top-start">
+                    <i
+                      v-clipboard:copy="scope.row.orderId"
+                      v-clipboard:success="onCopySuccess"
+                      class="el-icon-document-copy"
+                    />
+                  </el-tooltip>
+                </div>
+                <div class="order-num">
                   <el-tooltip effect="dark" :content="$t('35ec026d.b58943')" placement="top-start">
                     <i class="el-icon-mobile" />
                   </el-tooltip>
@@ -210,8 +220,7 @@
                   <span class="mark">{{ scope.row.payFee }} {{ $t('35ec026d.9f68a8') }}</span>
                 </div>
                 <div v-else>
-                  <span>￥</span>
-                  <span>{{ scope.row.payFee / 100 }}</span>
+                  <span>{{ formatMoneyWithSymbol(scope.row.payFee, getCurrencySymbol(scope.row)) }}</span>
                 </div>
               </template>
             </el-table-column>
@@ -253,13 +262,12 @@
                   <span>{{ scope.row.payFee }} {{ $t('35ec026d.9f68a8') }}</span>
                 </template>
                 <template v-else>
-                  <span v-if="scope.row.curPayFee"
-                    ><span class="cur">￥</span>{{ scope.row.curPayFee / 100 }}</span
-                  >
-                  <span v-else
-                    ><span class="cur">{{ scope.row.curFeeSymbol }}</span
-                    >{{ scope.row.totalFee / 100 }}</span
-                  >
+                  <span v-if="scope.row.curPayFee">{{
+                    formatMoneyWithSymbol(scope.row.curPayFee, getCurrencySymbol(scope.row))
+                  }}</span>
+                  <span v-else>{{
+                    formatMoneyWithSymbol(scope.row.totalFee, getCurrencySymbol(scope.row))
+                  }}</span>
                 </template>
               </template>
             </el-table-column>
@@ -271,8 +279,9 @@
             <el-table-column :label="$t('35ec026d.1138a9')">
               <template slot-scope="scope">
                 {{
-                  scope.row.self_delivery_fee &&
-                  scope.row.self_delivery_fee / 100 + $t('35ec026d.c16655')
+                  scope.row.self_delivery_fee
+                    ? formatMoneyWithSymbol(scope.row.self_delivery_fee, getCurrencySymbol(scope.row))
+                    : ''
                 }}
               </template>
             </el-table-column>
@@ -358,6 +367,7 @@
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
 import { PAY_TYPE, DISTRIBUTION_TYPE } from '@/consts'
+import { formatMoneyWithSymbol, getCurrencySymbol } from '@/utils'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -394,6 +404,8 @@ export default {
     this.fetchList()
   },
   methods: {
+    formatMoneyWithSymbol,
+    getCurrencySymbol,
     fitlerPayType(payChannel, payType) {
       return payChannel ? PAY_TYPE[payChannel] : PAY_TYPE[payType]
     },

@@ -400,7 +400,7 @@ export default {
     },
 
     {
-      path: 'basecurrency',
+      path: 'systemsetting/basecurrency',
       name: 'b51bc270.f68fc6',
       component: () => import('@/view/base/currency/index')
     },

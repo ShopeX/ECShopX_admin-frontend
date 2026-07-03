@@ -47,9 +47,11 @@
         <el-button icon="plus" type="primary" @click="handleCreateArticle">
           {{ $t('5f65b998.7bc00e') }}
         </el-button>
+        <!-- ECX-9136: 下线 AI 创作入口
         <el-button icon="plus" type="primary" @click="createArticleByAI">
           {{ $t('5f65b998.b956ea') }}
         </el-button>
+        -->
       </div>
 
       <el-tabs v-model="activeTab" type="card" @tab-click="onTabChange">

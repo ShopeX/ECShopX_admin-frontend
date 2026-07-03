@@ -42,8 +42,8 @@ export default {
         author: '',
         head_portrait: '',
         category_id: '',
-        region_id: [],
-        region_name: [],
+        regions_id: [],
+        regions: [],
         image_url: '',
         share_image_url: ''
       },
@@ -78,7 +78,7 @@ export default {
         },
         {
           label: this.$t('5815f596.9b711a'),
-          key: 'region_id',
+          key: 'regions_id',
           component: ({ key }, form) => {
             return (
               <div class='flex gap-2'>
@@ -136,14 +136,15 @@ export default {
     async getArticle() {
       const res = await this.$api.article.getArticleInfo(this.$route.query.id)
       if (res) {
+        const categoryId = res.category_id
         this.articleForm = {
           title: res.title,
           summary: res.summary,
           author: res.author,
           head_portrait: res.head_portrait,
-          category_id: res.category_id,
-          region_id: res.regions_id,
-          region_name: res.regions,
+          category_id: categoryId !== '' && categoryId != null ? Number(categoryId) : categoryId,
+          regions_id: res.regions_id,
+          regions: res.regions,
           image_url: res.image_url,
           share_image_url: res.share_image_url
         }
@@ -164,10 +165,11 @@ export default {
     },
     asyncToArticleTitle() {
       const title = this.articleForm.title.replace(/^\[(.+?)\]/g, '')
-      this.articleForm.title = `[${this.articleForm.region_name.join('')}]${title}`
+      this.articleForm.title = `[${this.articleForm.regions?.join('')}]${title}`
     },
-    handleRegionChange({ region_name }) {
-      this.articleForm.region_name = region_name
+    handleRegionChange(data) {
+      const { region_name } = data
+      this.articleForm.regions = region_name
     },
     async onSubmitTabList() {
       if (this.submitting) {
@@ -179,6 +181,10 @@ export default {
           ...this.articleForm,
           article_type: 'bring',
           content: this.content
+        }
+        if (!params.regions_id?.length) {
+          delete params.regions_id
+          delete params.regions
         }
         if (this.$route.query.id) {
           await this.$api.article.updateArticle(this.$route.query.id, params)

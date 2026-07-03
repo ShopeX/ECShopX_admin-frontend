@@ -7,7 +7,6 @@
   <div class="extMiniLinkDetail">
     <el-card class="elCard">
       <div slot="header">
-        <h3>{{ $t('965e5755.f015a4') }}</h3>
         <h5>{{ $t('965e5755.060fc4') }}</h5>
       </div>
       <div class="search">

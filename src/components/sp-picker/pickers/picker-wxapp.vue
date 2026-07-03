@@ -60,7 +60,7 @@
       :other-config="{
         'max-height': 460
       }"
-      url="/wxexternalconfig/list"
+      url="/wxexternalconfigroutes/list"
       :fixed-row-action="true"
       :setting="{
         columns: [

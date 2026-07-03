@@ -259,6 +259,14 @@ export default {
           icon: require('@/assets/pay_logo/paypal.png'),
           enabled: false,
           isShow: true
+        },
+        {
+          name: 'doumen_intl',
+          title: '斗门国际',
+          descriptionKey: '10d92d52.ed7207',
+          icon: '',
+          enabled: false,
+          isShow: true
         }
       ],
 
@@ -269,7 +277,8 @@ export default {
         chinaumspay: {},
         offline_pay: {},
         bspay: {},
-        paypal: {}
+        paypal: {},
+        doumen_intl: {}
       },
       publicKeyDialogForm: {
         rsa_public_key: ''
@@ -339,6 +348,10 @@ export default {
     paypalFormItems() {
       // PayPal
       return this.getPaypalFormItems()
+    },
+    doumenIntlFormItems() {
+      // 斗门国际
+      return this.getDoumenIntlFormItems()
     },
     accountsSetting() {
       return {
@@ -443,7 +456,8 @@ export default {
         'adapay',
         'offline_pay',
         'bspay',
-        'paypal'
+        'paypal',
+        'doumen_intl'
       ]
 
       for (const payType of paymentTypes) {
@@ -508,7 +522,8 @@ export default {
         chinaumspay: this.getChinaumspayFormItems(),
         offline_pay: this.getOfflineFormItems(),
         bspay: this.getBspayFormItems(),
-        paypal: this.getPaypalFormItems()
+        paypal: this.getPaypalFormItems(),
+        doumen_intl: this.getDoumenIntlFormItems()
       }
 
       return formConfigs[payType] || []
@@ -1059,6 +1074,67 @@ export default {
       ]
     },
 
+    // 斗门国际表单配置
+    getDoumenIntlFormItems() {
+      const formData = this.paymentForms.doumen_intl || {}
+      const maskedSecret = this.isMaskedSecret(formData['X-SecretKey'])
+      return [
+        {
+          fieldName: 'group1',
+          label: '基础配置',
+          component: 'group'
+        },
+        {
+          fieldName: 'X-AccessCode',
+          label: 'X-AccessCode',
+          component: 'input',
+          value: formData['X-AccessCode'] || '',
+          componentProps: {
+            placeholder: '请输入 X-AccessCode',
+            style: 'width: 300px'
+          }
+        },
+        {
+          fieldName: 'X-SecretKey',
+          label: 'X-SecretKey',
+          component: 'input',
+          value: maskedSecret ? '' : formData['X-SecretKey'] || '',
+          componentProps: {
+            type: 'password',
+            placeholder: maskedSecret
+              ? `${formData['X-SecretKey']}（留空则不修改）`
+              : '请输入 X-SecretKey',
+            style: 'width: 300px'
+          }
+        },
+        {
+          fieldName: 'appId',
+          label: 'appId',
+          component: 'input',
+          value: formData.appId || '',
+          componentProps: {
+            placeholder: '请输入 appId',
+            style: 'width: 300px'
+          }
+        },
+        {
+          fieldName: 'return_url',
+          label: 'return_url',
+          component: 'input',
+          formItemClass: 'w-3/4',
+          value: formData.return_url || '',
+          componentProps: {
+            placeholder: '请输入支付完成跳转地址',
+            style: 'width: 600px'
+          }
+        }
+      ]
+    },
+
+    isMaskedSecret(value) {
+      return typeof value === 'string' && value.startsWith('****')
+    },
+
     // PayPal表单配置
     getPaypalFormItems() {
       const formData = this.paymentForms.paypal || {}
@@ -1111,10 +1187,46 @@ export default {
       ]
     },
 
+    isDoumenIntlEnabled() {
+      const doumenItem = this.allPaymentList.find((item) => item.name === 'doumen_intl')
+      return !!(doumenItem && doumenItem.enabled)
+    },
+
     // 处理支付平台开关切换
-    handleTogglePayment(paymentItem) {
+    async handleTogglePayment(paymentItem) {
+      const newEnabled = paymentItem.enabled
+
+      if (newEnabled && paymentItem.name !== 'doumen_intl' && this.isDoumenIntlEnabled()) {
+        this.$message.warning('请先关闭斗门国际收银台')
+        paymentItem.enabled = false
+        return
+      }
+
+      if (newEnabled && paymentItem.name === 'doumen_intl') {
+        try {
+          await this.$confirm(
+            '请确认是否启用斗门国际收银台，启用会默认关闭其他支付方式',
+            '提示',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }
+          )
+        } catch {
+          paymentItem.enabled = false
+          return
+        }
+      }
+
       this.$set(this.paymentForms[paymentItem.name], 'is_open', paymentItem.enabled)
-      this.savePaymentConfig(paymentItem.name)
+
+      try {
+        await this.savePaymentConfig(paymentItem.name)
+      } catch (error) {
+        paymentItem.enabled = !newEnabled
+        this.$set(this.paymentForms[paymentItem.name], 'is_open', paymentItem.enabled)
+      }
     },
 
     // 强制刷新表单数据
@@ -1125,6 +1237,23 @@ export default {
     // 处理表单提交
     async handleSubmit(payType) {
       await this.savePaymentConfig(payType)
+    },
+
+    extractApiErrorMessage(error, fallback) {
+      const data = error?.response?.data
+      if (typeof data === 'string' && data) {
+        return data
+      }
+      if (data?.message) {
+        return data.message
+      }
+      if (data?.error?.message) {
+        return data.error.message
+      }
+      if (error?.message) {
+        return error.message
+      }
+      return fallback
     },
 
     // 保存支付配置
@@ -1154,12 +1283,33 @@ export default {
           delete params.cert_key_name
           delete params.cert_key_url
         }
+        if (payType === 'doumen_intl') {
+          const secretKey = params['X-SecretKey']
+          if (!secretKey || this.isMaskedSecret(secretKey)) {
+            params['X-SecretKey'] = ''
+          }
+        }
+
+        if (
+          payType !== 'doumen_intl' &&
+          params.is_open === 'true' &&
+          this.isDoumenIntlEnabled()
+        ) {
+          throw new Error('请先关闭斗门国际收银台')
+        }
 
         await this.$api.trade.setPaymentSetting(params)
+
+        if (payType === 'doumen_intl' && params.is_open === 'true') {
+          await this.loadAllPaymentConfigs()
+        }
+
         this.$message.success(this.$t('10d92d52.3b1083'))
       } catch (error) {
-        this.$message.error(this.$t('10d92d52.6de920'))
+        const message = this.extractApiErrorMessage(error, this.$t('10d92d52.6de920'))
+        this.$message.error(message)
         console.error('保存支付配置失败:', error)
+        throw error
       } finally {
         this.loading = false
       }

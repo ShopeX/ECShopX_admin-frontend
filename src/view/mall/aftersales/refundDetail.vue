@@ -38,11 +38,15 @@
         </el-row>
         <el-row>
           <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.030517') }} </el-col>
-          <el-col :span="20"> ￥{{ refundDetail.refund_fee / 100 }} </el-col>
+          <el-col :span="20">
+            {{ formatMoneyWithSymbol(refundDetail.refund_fee, refundCurrencySymbol) }}
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.bbdb6f') }} </el-col>
-          <el-col :span="20"> ￥{{ refundDetail.refunded_fee / 100 }} </el-col>
+          <el-col :span="20">
+            {{ formatMoneyWithSymbol(refundDetail.refunded_fee, refundCurrencySymbol) }}
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.886abd') }} </el-col>
@@ -128,7 +132,11 @@
         <el-row>
           <el-col :span="3" class="col-3 content-right"> {{ $t('eb172bd4.85df68') }} </el-col>
           <el-col :span="20">
-            {{ refundDetail.freight_type == 'cash' ? (refundDetail.freight / 100).toFixed(2) : 0 }}
+            {{
+              refundDetail.freight_type == 'cash'
+                ? formatMoneyWithSymbol(refundDetail.freight, refundCurrencySymbol)
+                : 0
+            }}
           </el-col>
         </el-row>
         <el-row>
@@ -153,6 +161,7 @@
             <span v-if="refundDetail.pay_type == 'ebuy'">{{ $t('eb172bd4.a2e703') }}</span>
             <span v-if="refundDetail.pay_type == 'point'">{{ $t('eb172bd4.accd19') }}</span>
             <span v-if="refundDetail.pay_type == 'pos'">{{ $t('eb172bd4.d37dec') }}</span>
+            <span v-if="refundDetail.pay_type == 'doumen_intl'">斗门国际</span>
           </el-col>
         </el-row>
         <el-row>
@@ -254,6 +263,7 @@ import {
   sendConfirm
 } from '../../../api/aftersales'
 import { i18n } from '@/i18n'
+import { formatMoneyWithSymbol, getCurrencySymbol } from '@/utils'
 export default {
   data() {
     return {
@@ -331,6 +341,11 @@ export default {
       ]
     }
   },
+  computed: {
+    refundCurrencySymbol() {
+      return getCurrencySymbol(this.refundDetail)
+    }
+  },
   mounted() {
     if (this.$route.query.refund_bn) {
       this.refund_bn = this.$route.query.refund_bn
@@ -339,6 +354,7 @@ export default {
     this.refundsInfo()
   },
   methods: {
+    formatMoneyWithSymbol,
     refundsInfo() {
       getRefundsDetail(this.refund_bn).then((response) => {
         let data = response.data.data

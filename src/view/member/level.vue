@@ -14,10 +14,7 @@
           <card-setting />
         </el-tab-pane> -->
         <el-tab-pane :label="$t('c5e8d16d.795682')" name="second">
-          <card-level
-            ref="cardLevel"
-            :shuyun-open-platform-enabled="shuyunOpenPlatformEnabled"
-          />
+          <card-level ref="cardLevel" :shuyun-open-platform-enabled="shuyunOpenPlatformEnabled" />
         </el-tab-pane>
         <el-tab-pane :label="$t('c5e8d16d.de2408')" name="thrid">
           <card-viplevel
@@ -109,9 +106,7 @@ export default {
         .then((res) => {
           const d = res.data && res.data.data ? res.data.data : {}
           const ok =
-            d.ok === true ||
-            d.status === true ||
-            (d.ok !== false && d.synced_count != null)
+            d.ok === true || d.status === true || (d.ok !== false && d.synced_count != null)
           if (ok) {
             const n = d.synced_count != null ? d.synced_count : 0
             this.$message.success(this.$t('c5e8d16d.8b6161', [n]))

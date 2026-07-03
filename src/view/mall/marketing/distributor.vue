@@ -396,12 +396,12 @@
             >
               <span v-if="scope.row.is_valid == 'true'" class="green">
                 <el-button type="success" size="mini" plain
-                  >{{ $t('b2fe051e.7854b5') }}<i class="el-icon-edit"
+                  >{{ storeStatusLabel('enable') }}<i class="el-icon-edit"
                 /></el-button>
               </span>
               <span v-else-if="scope.row.is_valid == 'false'" class="red">
                 <el-button type="danger" size="mini" plain
-                  >{{ $t('b2fe051e.710ad0') }}<i class="el-icon-edit"
+                  >{{ storeStatusLabel('disable') }}<i class="el-icon-edit"
                 /></el-button>
               </span>
               <span v-else-if="scope.row.is_valid == 'closed'" class="muted">
@@ -705,8 +705,8 @@
             v-model="editValidData.is_valid"
             @change="editValidSubmit"
           >
-            <el-radio label="true"> {{ $t('b2fe051e.7854b5') }} </el-radio>
-            <el-radio label="false"> {{ $t('b2fe051e.710ad0') }} </el-radio>
+            <el-radio label="true"> {{ storeStatusLabel('enable') }} </el-radio>
+            <el-radio label="false"> {{ storeStatusLabel('disable') }} </el-radio>
             <el-radio label="closed"> {{ $t('b2fe051e.d2b1c3') }} </el-radio>
             <el-radio label="delete"> {{ $t('b2fe051e.0044f6') }} </el-radio>
           </el-radio-group>
@@ -892,13 +892,6 @@ export default {
       is_distributor: false,
       dialogVisible: false,
       current: '', // 当前店铺id
-      isValidList: [
-        { name: this.$t('b2fe051e.a8b0c2'), value: undefined },
-        { name: this.$t('b2fe051e.7854b5'), value: 'true' },
-        { name: this.$t('b2fe051e.710ad0'), value: 'false' },
-        { name: this.$t('b2fe051e.d2b1c3'), value: 'closed' },
-        { name: this.$t('b2fe051e.0044f6'), value: 'delete' }
-      ],
       isOpenList: [
         { name: this.$t('b2fe051e.789372'), value: true },
         { name: this.$t('b2fe051e.70264a'), value: false }
@@ -1127,6 +1120,15 @@ export default {
       return (
         this.$store.getters.login_type === 'admin' || this.$store.getters.login_type === 'admin'
       )
+    },
+    isValidList() {
+      return [
+        { name: this.$t('b2fe051e.a8b0c2'), value: undefined },
+        { name: this.storeStatusLabel('enable'), value: 'true' },
+        { name: this.storeStatusLabel('disable'), value: 'false' },
+        { name: this.$t('b2fe051e.d2b1c3'), value: 'closed' },
+        { name: this.$t('b2fe051e.0044f6'), value: 'delete' }
+      ]
     }
   },
 
@@ -1146,6 +1148,14 @@ export default {
     this.getPaymentSubjectStatus()
   },
   methods: {
+    storeStatusLabel(type) {
+      const isCloudStore = this.VERSION_STANDARD()
+      const keyMap = {
+        enable: isCloudStore ? 'b2fe051e.c8f21a' : 'b2fe051e.7854b5',
+        disable: isCloudStore ? 'b2fe051e.d9e32b' : 'b2fe051e.710ad0'
+      }
+      return this.$t(keyMap[type])
+    },
     // 导入店铺
     uploadHandleChange(file, fileList) {
       this.$router.push({ path: this.matchRoutePath('storeupload') })
@@ -1574,9 +1584,9 @@ export default {
     editValidSubmit(val) {
       let msg = ''
       if (val === 'true') {
-        msg = this.$t('b2fe051e.31ffeb')
+        msg = this.$t(this.VERSION_STANDARD() ? 'b2fe051e.e0f43c' : 'b2fe051e.31ffeb')
       } else if (val === 'false') {
-        msg = this.$t('b2fe051e.3abe79')
+        msg = this.$t(this.VERSION_STANDARD() ? 'b2fe051e.f1a54d' : 'b2fe051e.3abe79')
       } else if (val === 'closed') {
         msg = this.$t('b2fe051e.c9d4e1')
       } else if (val === 'delete') {

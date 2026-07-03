@@ -1760,7 +1760,10 @@ export default {
       if (this.selectionItems.length > 0) {
         this.saleCategoryForm.item_id = this.selectionItems.map((item) => item.item_id)
         const categoryIds = await this.resolveSelectionSaleCategoryIds()
-        this.saleCategoryForm.category_id = this.getSaleCategoryPaths(this.categoryList, categoryIds)
+        this.saleCategoryForm.category_id = this.getSaleCategoryPaths(
+          this.categoryList,
+          categoryIds
+        )
         this.saleCategoryDialog = true
       } else {
         this.$message.error(this.$t('dc9cefd6.ace302'))

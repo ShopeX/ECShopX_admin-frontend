@@ -143,7 +143,9 @@
                         </div>
                       </div>
                       <div slot="reference" class="name-wrapper">
-                        {{ formatMoneyWithSymbol(scope.row.discountFee, getCurrencySymbol(scope.row)) }}
+                        {{
+                          formatMoneyWithSymbol(scope.row.discountFee, getCurrencySymbol(scope.row))
+                        }}
                       </div>
                     </el-popover>
                   </el-form-item>
@@ -220,7 +222,9 @@
                   <span class="mark">{{ scope.row.payFee }} {{ $t('35ec026d.9f68a8') }}</span>
                 </div>
                 <div v-else>
-                  <span>{{ formatMoneyWithSymbol(scope.row.payFee, getCurrencySymbol(scope.row)) }}</span>
+                  <span>{{
+                    formatMoneyWithSymbol(scope.row.payFee, getCurrencySymbol(scope.row))
+                  }}</span>
                 </div>
               </template>
             </el-table-column>
@@ -280,7 +284,10 @@
               <template slot-scope="scope">
                 {{
                   scope.row.self_delivery_fee
-                    ? formatMoneyWithSymbol(scope.row.self_delivery_fee, getCurrencySymbol(scope.row))
+                    ? formatMoneyWithSymbol(
+                        scope.row.self_delivery_fee,
+                        getCurrencySymbol(scope.row)
+                      )
                     : ''
                 }}
               </template>

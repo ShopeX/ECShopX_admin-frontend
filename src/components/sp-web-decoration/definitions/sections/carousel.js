@@ -1,10 +1,13 @@
 import { i18n } from '@/i18n'
+import { sectionFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'main-carousel',
   scope: 'template',
   name: i18n.t('d65dbcac.0c0180'),
-  defaultSettings: {
+  fields: sectionFields['main-carousel'],
+  defaultSettings: toDefaultSettings(sectionFields['main-carousel']),
+  legacyDefaultSettings: {
     image_height: 'medium',
     paginate_type: 'point',
     paginate_size: 'medium',

@@ -1,8 +1,12 @@
+import { sectionFields, toDefaultSettings } from '../schema.js'
+
 export default {
   type: 'product-tab-shelf',
   scope: 'template',
   name: 'Tab产品系列',
-  defaultSettings: {
+  fields: sectionFields['product-tab-shelf'],
+  defaultSettings: toDefaultSettings(sectionFields['product-tab-shelf']),
+  legacyDefaultSettings: {
     title: '',
     intro: '新品',
     size: 'medium',

@@ -1,9 +1,12 @@
 import { i18n } from '@/i18n'
+import { blockFields, toDefaultSettings } from '../schema.js'
 
 export default {
   type: 'mega_menu',
   name: '超级菜单',
-  defaultSettings: {
+  fields: blockFields.mega_menu,
+  defaultSettings: toDefaultSettings(blockFields.mega_menu),
+  legacyDefaultSettings: {
     mega_menu_item: '',
     alignment: 'page',
     image_position: 'right',

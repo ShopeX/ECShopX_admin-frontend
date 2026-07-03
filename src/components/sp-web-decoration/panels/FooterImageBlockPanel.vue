@@ -3,14 +3,14 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">图片</div>
       <div class="rounded-xl border border-border bg-card p-3">
-        <SpImagePicker :value="value.image" @input="updateField('image', $event)" />
+        <SpImagePicker :value="settings.image" @input="updateField('image', $event)" />
       </div>
     </section>
 
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">对齐方式</div>
       <el-radio-group
-        :value="value.alignment || 'left'"
+        :value="settings.alignment"
         size="small"
         @input="updateField('alignment', $event)"
       >
@@ -23,7 +23,7 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">图片宽度</div>
       <el-radio-group
-        :value="value.width || '100'"
+        :value="settings.width"
         size="small"
         @input="updateField('width', $event)"
       >
@@ -37,7 +37,7 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">圆角</div>
       <el-radio-group
-        :value="value.radius || 'medium'"
+        :value="settings.radius"
         size="small"
         @input="updateField('radius', $event)"
       >
@@ -53,7 +53,7 @@
       <div class="text-sm text-muted-foreground">占列宽度</div>
       <div class="flex items-center gap-3">
         <el-input-number
-          :value="value.column_span || 4"
+          :value="settings.column_span"
           :min="1"
           :max="12"
           size="small"
@@ -62,7 +62,7 @@
           @change="updateField('column_span', $event)"
         />
         <el-slider
-          :value="value.column_span || 4"
+          :value="settings.column_span"
           :min="1"
           :max="12"
           :step="1"
@@ -77,6 +77,7 @@
 
 <script>
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
+import { normalizeTypedBlockSettings } from '../utils/panelState.js'
 
 export default {
   name: 'FooterImageBlockPanel',
@@ -85,6 +86,11 @@ export default {
     value: {
       type: Object,
       default: () => ({})
+    }
+  },
+  computed: {
+    settings() {
+      return normalizeTypedBlockSettings('footer-image', this.value)
     }
   },
   methods: {

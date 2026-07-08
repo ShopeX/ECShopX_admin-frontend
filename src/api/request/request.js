@@ -63,12 +63,15 @@ class RequestClient {
         const countryCode = langMap[lang]
         if (config.data) {
           if (typeof config.data === 'string') {
-            config.data =
-              config.data +
-              (config.data ? '&' : '') +
-              'country_code=' +
-              encodeURIComponent(countryCode)
-          } else {
+            const hasCountryCode = /(?:^|&)country_code=/.test(config.data)
+            if (!hasCountryCode) {
+              config.data =
+                config.data +
+                (config.data ? '&' : '') +
+                'country_code=' +
+                encodeURIComponent(countryCode)
+            }
+          } else if (!config.data.country_code) {
             config.data.country_code = countryCode
           }
         } else {

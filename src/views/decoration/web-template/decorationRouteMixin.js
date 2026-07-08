@@ -80,7 +80,7 @@ export default {
           footerDsl
         })
         if (this.templateId) {
-          await Promise.all([
+          const [, pageResult] = await Promise.all([
             saveHeaderDslToApi({ dsl: headerDsl }),
             savePageDslToApi({
               templateId: this.templateId,
@@ -90,6 +90,9 @@ export default {
             }),
             saveFooterDslToApi({ dsl: footerDsl })
           ])
+          if (pageResult?.contentRowId) {
+            this.contentRowId = pageResult.contentRowId
+          }
           this.$message.success(this.$t('732e5057.3b1083'))
         } else {
           const result = await saveHomeDecoration({

@@ -19,9 +19,21 @@ import {
 import { createGlobalSections } from '../definitions/documents/global.js'
 
 export const DSL_ROW_TYPE = 'ECX_SP_WEB_DECORATION_DSL_V1'
+export const DEFAULT_COUNTRY_CODE = 'zh-CN'
 const LEGACY_GLOBAL_DECORATION_PAGE_NAME = 'ecx_sp_web_decoration_global'
 export const HEADER_DECORATION_PAGE_NAME = 'header'
 export const FOOTER_DECORATION_PAGE_NAME = 'footer'
+
+export function getCurrentCountryCode() {
+  const lang = window.localStorage.getItem('lang')
+  const langMap = {
+    zhcn: 'zh-CN',
+    en: 'en-CN',
+    zhtw: 'zh-TW',
+    ar: 'ar-SA'
+  }
+  return langMap[lang] || DEFAULT_COUNTRY_CODE
+}
 
 function createPageFallback(templateId, scene, pageType = 'home') {
   if (pageType === 'custom') {
@@ -164,12 +176,12 @@ function unwrapPayload(res) {
   return current == null ? null : current
 }
 
-function parsePageDslRows(payload, templateId, scene, pageType = 'home') {
+export function parsePageDslRows(payload, templateId, scene, pageType = 'home') {
   const rows = Array.isArray(payload)
     ? payload
     : payload && typeof payload === 'object'
-    ? [payload]
-    : []
+      ? [payload]
+      : []
   if (!rows.length) return null
 
   for (const row of rows) {
@@ -191,23 +203,22 @@ function parsePageDslRows(payload, templateId, scene, pageType = 'home') {
       continue
     }
     const target = Array.isArray(cfg)
-      ? cfg.find((item) => item && item.type === DSL_ROW_TYPE)
-      : cfg && cfg.type === DSL_ROW_TYPE && cfg.dsl
-      ? cfg
-      : cfg && cfg.pageType && cfg.sections
-      ? { dsl: cfg }
-      : null
+      ? cfg.find((item) => item && (item.type === DSL_ROW_TYPE || (item.pageType && item.sections)))
+      : cfg && (cfg.type === DSL_ROW_TYPE || (cfg.pageType && cfg.sections))
+        ? cfg
+        : null
+    const targetDsl = target?.dsl || target
     console.log('[sp-web-decoration] page config parsed target', {
       templateId,
       rowId: row?.id,
       isArray: Array.isArray(cfg),
       hasTarget: Boolean(target),
-      targetDsl: target?.dsl
+      targetDsl
     })
-    if (!target || !target.dsl) continue
+    if (!targetDsl) continue
     return {
-      dsl: normalizePageDsl(target.dsl, templateId, scene, pageType),
-      contentRowId: row.id || 0,
+      dsl: normalizePageDsl(targetDsl, templateId, scene, pageType),
+      contentRowId: row.id || target.id || 0,
       source: 'api'
     }
   }
@@ -262,6 +273,54 @@ export async function loadPageDslFromApi({ templateId, scene, pageType = 'home' 
   return fallback
 }
 
+export function buildPageContentPayload({ normalizedDsl, contentRowId }) {
+  const payload = {
+    type: DSL_ROW_TYPE,
+    ...serializeDsl(normalizedDsl)
+  }
+
+  if (contentRowId) {
+    payload.id = contentRowId
+  }
+
+  return payload
+}
+
+async function loadDefaultPageRow({ templateId, scene, pageType }) {
+  const raw = await getDecorationContent({
+    page_name: 'page',
+    theme_pc_template_id: templateId,
+    country_code: DEFAULT_COUNTRY_CODE
+  })
+  const list = unwrapPayload(raw)
+  return parsePageDslRows(list, templateId, scene, pageType)
+}
+
+async function ensureDefaultPageRow({ templateId, contentRowId, normalizedDsl, scene, pageType }) {
+  if (getCurrentCountryCode() === DEFAULT_COUNTRY_CODE) {
+    return contentRowId || 0
+  }
+
+  const existing = await loadDefaultPageRow({ templateId, scene, pageType })
+  if (existing?.contentRowId) {
+    return existing.contentRowId
+  }
+
+  const payload = buildPageContentPayload({
+    normalizedDsl,
+    contentRowId: 0
+  })
+
+  await saveTemplateContent({
+    theme_pc_template_id: templateId,
+    config: JSON.stringify([payload]),
+    country_code: DEFAULT_COUNTRY_CODE
+  })
+
+  const created = await loadDefaultPageRow({ templateId, scene, pageType })
+  return created?.contentRowId || contentRowId || 0
+}
+
 export async function savePageDslToApi({
   templateId,
   contentRowId,
@@ -270,10 +329,17 @@ export async function savePageDslToApi({
   pageType = 'home'
 }) {
   const normalizedDsl = normalizePageDsl(dsl, templateId, scene, pageType)
-  const payload = {
-    type: DSL_ROW_TYPE,
-    dsl: serializeDsl(normalizedDsl)
-  }
+  const stableContentRowId = await ensureDefaultPageRow({
+    templateId,
+    contentRowId,
+    normalizedDsl,
+    scene,
+    pageType
+  })
+  const payload = buildPageContentPayload({
+    normalizedDsl,
+    contentRowId: stableContentRowId || contentRowId
+  })
   const config = JSON.stringify([payload])
   const body = {
     theme_pc_template_id: templateId,
@@ -286,9 +352,15 @@ export async function savePageDslToApi({
 
   await saveTemplateContent(body)
 
+  const latest = await loadPageDslFromApi({
+    templateId,
+    scene,
+    pageType
+  })
+
   return {
     dsl: normalizedDsl,
-    contentRowId: contentRowId || 0
+    contentRowId: latest.contentRowId || stableContentRowId || contentRowId || 0
   }
 }
 
@@ -426,12 +498,34 @@ export async function loadDecorationContentFromApi({ templateId, scene, pageType
   }
 }
 
-function saveScopedDslToApi({ pageName, dsl }) {
-  const payload = {
+async function ensureDefaultScopedRow({ pageName, dsl }) {
+  if (getCurrentCountryCode() === DEFAULT_COUNTRY_CODE) {
+    return
+  }
+
+  const raw = await getDecorationContent({
+    page_name: pageName,
+    page_type: pageName,
+    country_code: DEFAULT_COUNTRY_CODE
+  })
+  const payload = unwrapPayload(raw)
+  if (payload?.id || payload?.config) {
+    return
+  }
+
+  await saveHeaderOrFooter({
+    page_name: pageName,
+    config: JSON.stringify(serializeDsl(dsl)),
+    country_code: DEFAULT_COUNTRY_CODE
+  })
+}
+
+async function saveScopedDslToApi({ pageName, dsl }) {
+  await ensureDefaultScopedRow({ pageName, dsl })
+  return saveHeaderOrFooter({
     page_name: pageName,
     config: JSON.stringify(serializeDsl(dsl))
-  }
-  return saveHeaderOrFooter(payload)
+  })
 }
 
 export async function saveHeaderDslToApi({ dsl }) {

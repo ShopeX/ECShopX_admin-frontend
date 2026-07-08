@@ -1,5 +1,33 @@
 import { normalizeDecorationPageType, resolveDecorationPreviewPath } from './pageTypes'
 
+const ADMIN_TO_WEB_LOCALE_PREFIX = {
+  en: '/en',
+  ar: '/ar',
+  zhcn: '',
+  zhtw: ''
+}
+
+function getCurrentAdminLang() {
+  if (typeof window === 'undefined') return ''
+  try {
+    return String(window.localStorage?.getItem('lang') || '').toLowerCase()
+  } catch {
+    return ''
+  }
+}
+
+function resolveWebLocalePrefix(lang = getCurrentAdminLang()) {
+  return ADMIN_TO_WEB_LOCALE_PREFIX[lang] || ''
+}
+
+function joinPreviewPath(localePrefix, routePath) {
+  const prefix = String(localePrefix || '').replace(/\/+$/, '')
+  const path = String(routePath || '/')
+  if (!prefix) return path || '/'
+  const suffix = path.replace(/^\/+/, '')
+  return suffix ? `${prefix}/${suffix}` : prefix
+}
+
 function resolvePreviewWebsiteOrigin(websiteUrl) {
   if (!websiteUrl) return ''
   try {
@@ -66,7 +94,8 @@ export function createDecorationMessenger(websiteUrl) {
       if (!base.pathname || base.pathname === '') {
         base.pathname = '/'
       }
-      base.pathname = resolveDecorationPreviewPath(normalizedPageType, pageId)
+      const routePath = resolveDecorationPreviewPath(normalizedPageType, pageId)
+      base.pathname = joinPreviewPath(resolveWebLocalePrefix(), routePath)
       base.searchParams.set('designMode', '1')
       base.searchParams.set('pageType', normalizedPageType)
       base.searchParams.set('pageId', String(pageId))
@@ -78,7 +107,8 @@ export function createDecorationMessenger(websiteUrl) {
         pageType: String(normalizedPageType),
         pageId: String(pageId)
       })
-      const path = resolveDecorationPreviewPath(normalizedPageType, pageId).replace(/\/$/, '')
+      const routePath = resolveDecorationPreviewPath(normalizedPageType, pageId)
+      const path = joinPreviewPath(resolveWebLocalePrefix(), routePath).replace(/\/$/, '')
       return `${originOnly}${path}/?${qs.toString()}`
     }
   }

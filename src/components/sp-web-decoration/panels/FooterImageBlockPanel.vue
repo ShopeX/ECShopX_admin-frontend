@@ -22,11 +22,7 @@
 
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">图片宽度</div>
-      <el-radio-group
-        :value="settings.width"
-        size="small"
-        @input="updateField('width', $event)"
-      >
+      <el-radio-group :value="settings.width" size="small" @input="updateField('width', $event)">
         <el-radio-button label="25">25%</el-radio-button>
         <el-radio-button label="50">50%</el-radio-button>
         <el-radio-button label="75">75%</el-radio-button>
@@ -36,11 +32,7 @@
 
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">圆角</div>
-      <el-radio-group
-        :value="settings.radius"
-        size="small"
-        @input="updateField('radius', $event)"
-      >
+      <el-radio-group :value="settings.radius" size="small" @input="updateField('radius', $event)">
         <el-radio-button label="none">无</el-radio-button>
         <el-radio-button label="small">小</el-radio-button>
         <el-radio-button label="medium">中</el-radio-button>

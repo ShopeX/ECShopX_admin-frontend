@@ -14,19 +14,19 @@
       </div>
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane lazy :label="$t('c8abf6d9.882490')" name="first">
-          <buyerTemplates ref="buyerTemplates" :get-status="buyerTemplates" />
+          <buyerTemplates ref="buyerTemplates" />
         </el-tab-pane>
         <el-tab-pane lazy :label="$t('c8abf6d9.843135')" name="second">
-          <weightTemplates ref="weightTemplates" :get-status="weightTemplates" />
+          <weightTemplates ref="weightTemplates" />
         </el-tab-pane>
         <el-tab-pane lazy :label="$t('c8abf6d9.5555b9')" name="third">
-          <numberTemplates ref="numberTemplates" :get-status="numberTemplates" />
+          <numberTemplates ref="numberTemplates" />
         </el-tab-pane>
         <el-tab-pane lazy :label="$t('c8abf6d9.877ec9')" name="fourth">
-          <priceTemplates ref="priceTemplates" :get-status="priceTemplates" />
+          <priceTemplates ref="priceTemplates" />
         </el-tab-pane>
         <el-tab-pane lazy :label="$t('c8abf6d9.a95569')" name="fifth">
-          <volumeTemplates ref="volumeTemplates" :get-status="volumeTemplates" />
+          <volumeTemplates ref="volumeTemplates" />
         </el-tab-pane>
       </el-tabs>
     </SpPage>
@@ -51,11 +51,6 @@ export default {
   data() {
     return {
       loading: false,
-      buyerTemplates: false,
-      weightTemplates: false,
-      numberTemplates: false,
-      priceTemplates: false,
-      volumeTemplates: false,
       activeName: 'first',
       list: []
     }
@@ -82,18 +77,8 @@ export default {
     addTemplates() {
       this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    handleClick(tab, event) {
-      if (this.activeName === 'first') {
-        this.buyerTemplates = true
-      } else if (this.activeName === 'second') {
-        this.weightTemplates = true
-      } else if (this.activeName === 'third') {
-        this.numberTemplates = true
-      } else if (this.activeName === 'fourth') {
-        this.priceTemplates = true
-      } else if (this.activeName === 'fifth') {
-        this.volumeTemplates = true
-      }
+    handleClick() {
+      this.$nextTick(() => this.getList())
     },
     getActiveTabRef() {
       const refMap = {

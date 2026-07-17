@@ -1,14 +1,11 @@
-import { i18n } from '@/i18n'
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'footer',
   scope: 'footer',
   fixedId: 'footer',
-  name: i18n.t('d65dbcac.4eb88f'),
-  fields: sectionFields.footer,
-  defaultSettings: toDefaultSettings(sectionFields.footer),
-  legacyDefaultSettings: {
+  name: i18nValue('d65dbcac.4eb88f', '页脚'),
+  defaultSettings: {
     content_alignment: 'center',
     title: '',
     copyright: '',

@@ -4,10 +4,12 @@
 -->
 
 <template>
-  <SpPage title="商城全局配置">
+  <SpPage :title="$t('42c71eaf.1d2582')">
     <template slot="page-footer">
       <div class="text-center">
-        <el-button type="primary" :loading="loading" @click="onSubmit">保存</el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">{{
+          $t('42c71eaf.be5fbb')
+        }}</el-button>
       </div>
     </template>
     <Form class="mx-4" />
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+import { i18n } from '@/i18n'
 import { useForm } from '@/composables'
 
 const IMAGE_PICKER_PROPS = {
@@ -28,45 +31,45 @@ const [Form, FormApi] = useForm({
     {
       component: 'Divider',
       fieldName: 'divider_logo',
-      label: '商城 Logo'
+      label: i18n.t('42c71eaf.73a7f4')
     },
     {
       component: 'ImagePicker',
       componentProps: IMAGE_PICKER_PROPS,
       fieldName: 'logo_light',
-      label: '浅色 Logo'
+      label: i18n.t('42c71eaf.02f5fe')
     },
     {
       component: 'ImagePicker',
       componentProps: IMAGE_PICKER_PROPS,
       fieldName: 'logo_dark',
-      label: '深色 Logo'
+      label: i18n.t('42c71eaf.e22e6e')
     },
     {
       component: 'Divider',
       fieldName: 'divider_login',
-      label: '登录页'
+      label: i18n.t('42c71eaf.7de289')
     },
     {
       component: 'ImagePicker',
       componentProps: IMAGE_PICKER_PROPS,
       fieldName: 'login_background',
-      label: '背景图'
+      label: i18n.t('42c71eaf.543aa6')
     },
     {
       component: 'Divider',
       fieldName: 'divider_seo',
-      label: 'SEO 配置'
+      label: i18n.t('42c71eaf.1efa53')
     },
     {
       component: 'Input',
       fieldName: 'title',
-      label: '网站标题'
+      label: i18n.t('42c71eaf.276aff')
     },
     {
       component: 'Input',
       fieldName: 'mate_description',
-      label: '站点描述'
+      label: i18n.t('42c71eaf.fefb77')
     },
     {
       component: 'Textarea',
@@ -74,8 +77,8 @@ const [Form, FormApi] = useForm({
         rows: 3
       },
       fieldName: 'mate_keywords',
-      label: '关键词',
-      tip: '多个关键词请使用英文逗号隔开'
+      label: i18n.t('42c71eaf.9699a5'),
+      tip: i18n.t('42c71eaf.7dfe5d')
     }
   ],
   showDefaultActions: false
@@ -131,7 +134,7 @@ export default {
             mate_keywords: values.mate_keywords
           })
         ])
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('42c71eaf.3b1083'))
       } finally {
         this.loading = false
       }

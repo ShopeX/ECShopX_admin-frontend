@@ -1,11 +1,8 @@
 import {
   getTypedBlockDefinition,
-  getBlockDefaultSettings,
-  getBlockSchemaFields,
   getSectionDefaultSettings,
-  getSectionSchemaFields
+  getBlockDefaultSettings
 } from '../definitions/registry.js'
-import { normalizeBySchema } from './schemaNormalize.js'
 
 function cloneValue(value) {
   return JSON.parse(JSON.stringify(value))
@@ -29,6 +26,7 @@ function clampCoordinate(value) {
 function normalizeProductShelfCompatibleSettings(settings) {
   const nextSettings = { ...settings }
 
+  nextSettings.displayMode = nextSettings.displayMode || nextSettings.sourceMode || 'category'
   nextSettings.itemIds = Array.isArray(nextSettings.itemIds)
     ? nextSettings.itemIds.filter(Boolean).slice(0, nextSettings.limit || 8)
     : []
@@ -75,10 +73,7 @@ function normalizeHotspotCompatibleSettings(settings) {
 }
 
 function normalizeSectionSettings(type, settings = {}) {
-  const fields = getSectionSchemaFields(type)
-  const nextSettings = fields
-    ? normalizeBySchema(fields, settings)
-    : mergeWithDefaults(getSectionDefaultSettings(type), settings)
+  const nextSettings = mergeWithDefaults(getSectionDefaultSettings(type), settings)
 
   if (type === 'product-shelf') return normalizeProductShelfCompatibleSettings(nextSettings)
   if (type === 'product-tab-shelf') return normalizeProductTabShelfSettings(nextSettings)
@@ -86,10 +81,7 @@ function normalizeSectionSettings(type, settings = {}) {
 }
 
 function normalizeBlockSettingsValue(type, settings = {}) {
-  const fields = getBlockSchemaFields(type)
-  const nextSettings = fields
-    ? normalizeBySchema(fields, settings)
-    : mergeWithDefaults(getBlockDefaultSettings(type), settings)
+  const nextSettings = mergeWithDefaults(getBlockDefaultSettings(type), settings)
 
   if (type === 'hotspot') return normalizeHotspotCompatibleSettings(nextSettings)
   if (type === 'product-tab') return normalizeProductTabBlockSettings(nextSettings)

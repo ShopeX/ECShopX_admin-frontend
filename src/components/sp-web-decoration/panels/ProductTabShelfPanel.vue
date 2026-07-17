@@ -1,48 +1,48 @@
 <template>
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">引言</div>
+      <div class="text-sm text-muted-foreground">{{ $t('936301c9.e45688') }}</div>
       <SpRichTextEditor
         :value="settings.intro"
-        placeholder="请输入引言"
+        :placeholder="$t('936301c9.5cae49')"
         @input="updateField('intro', $event)"
       />
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">规格</div>
+      <div class="text-sm text-muted-foreground">{{ $t('936301c9.ea887b') }}</div>
       <el-select
         :value="settings.size"
         size="small"
         class="w-full"
         @change="updateField('size', $event)"
       >
-        <el-option value="xsmall" label="特小" />
-        <el-option value="small" label="小" />
-        <el-option value="medium" label="中" />
-        <el-option value="large" label="大" />
-        <el-option value="xlarge" label="特大" />
+        <el-option value="xsmall" :label="$t('936301c9.f72ce9')" />
+        <el-option value="small" :label="$t('936301c9.391b8f')" />
+        <el-option value="medium" :label="$t('936301c9.aed1df')" />
+        <el-option value="large" :label="$t('936301c9.ab18e3')" />
+        <el-option value="xlarge" :label="$t('936301c9.3386da')" />
       </el-select>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">对齐方式</div>
+      <div class="text-sm text-muted-foreground">{{ $t('936301c9.d5bc35') }}</div>
       <el-radio-group
         :value="settings.alignment"
         size="small"
         @input="updateField('alignment', $event)"
       >
-        <el-radio-button label="left">左</el-radio-button>
-        <el-radio-button label="center">中</el-radio-button>
-        <el-radio-button label="right">右</el-radio-button>
+        <el-radio-button label="left">{{ $t('936301c9.d2aff1') }}</el-radio-button>
+        <el-radio-button label="center">{{ $t('936301c9.aed1df') }}</el-radio-button>
+        <el-radio-button label="right">{{ $t('936301c9.4d9c32') }}</el-radio-button>
       </el-radio-group>
     </section>
 
     <div class="space-y-5 border-t border-border pt-5">
-      <div class="text-sm font-semibold text-foreground">内容</div>
+      <div class="text-sm font-semibold text-foreground">{{ $t('936301c9.2d711b') }}</div>
 
       <section class="space-y-2">
-        <div class="text-sm text-muted-foreground">产品卡列数</div>
+        <div class="text-sm text-muted-foreground">{{ $t('936301c9.3bc17d') }}</div>
         <div class="flex items-center gap-3">
           <el-input-number
             :value="settings.columns"
@@ -66,16 +66,16 @@
       </section>
 
       <section class="space-y-2">
-        <div class="text-sm text-muted-foreground">间距</div>
+        <div class="text-sm text-muted-foreground">{{ $t('936301c9.60bac4') }}</div>
         <el-radio-group
           :value="settings.spacing"
           size="small"
           @input="updateField('spacing', $event)"
         >
-          <el-radio-button label="none">无</el-radio-button>
-          <el-radio-button label="small">小</el-radio-button>
-          <el-radio-button label="medium">中</el-radio-button>
-          <el-radio-button label="large">大</el-radio-button>
+          <el-radio-button label="none">{{ $t('936301c9.d81bb2') }}</el-radio-button>
+          <el-radio-button label="small">{{ $t('936301c9.391b8f') }}</el-radio-button>
+          <el-radio-button label="medium">{{ $t('936301c9.aed1df') }}</el-radio-button>
+          <el-radio-button label="large">{{ $t('936301c9.ab18e3') }}</el-radio-button>
         </el-radio-group>
       </section>
     </div>

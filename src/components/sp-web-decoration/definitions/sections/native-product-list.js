@@ -1,16 +1,14 @@
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'native-product-list',
   scope: 'template',
-  name: '商品列表',
+  name: i18nValue('fb77d862.437974', '商品列表'),
   fixedId: 'product_list',
   native: true,
   locked: true,
   addable: false,
-  fields: sectionFields['native-product-list'],
-  defaultSettings: toDefaultSettings(sectionFields['native-product-list']),
-  legacyDefaultSettings: {
+  defaultSettings: {
     locked: true
   },
   defaultBlocks: [],

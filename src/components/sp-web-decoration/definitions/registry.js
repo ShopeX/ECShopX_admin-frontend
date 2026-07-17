@@ -19,14 +19,7 @@ import footerLinkBlock from './blocks/footer-link.js'
 import footerMenuBlock from './blocks/footer-menu.js'
 import footerImageBlock from './blocks/footer-image.js'
 import footerTextBlock from './blocks/footer-text.js'
-import {
-  blockTypeAliases,
-  getBlockFields,
-  getSectionFields,
-  resolveBlockType,
-  resolveSectionType,
-  sectionTypeAliases
-} from './schema.js'
+import { resolveDecorationI18nValue } from '../utils/i18n.js'
 
 const sectionDefinitions = {
   [headerSection.type]: headerSection,
@@ -61,27 +54,19 @@ function getSectionTypesByScope(scope) {
 }
 
 export function getTypedSectionDefinition(type) {
-  return sectionDefinitions[resolveSectionType(type)] || null
+  return sectionDefinitions[type] || null
 }
 
 export function getTypedBlockDefinition(type) {
-  return blockDefinitions[resolveBlockType(type)] || null
+  return blockDefinitions[type] || null
 }
 
 export function getSectionDefaultSettings(type) {
-  return getTypedSectionDefinition(type)?.defaultSettings || null
+  return resolveDecorationI18nValue(getTypedSectionDefinition(type)?.defaultSettings || null)
 }
 
 export function getBlockDefaultSettings(type) {
-  return getTypedBlockDefinition(type)?.defaultSettings || null
-}
-
-export function getSectionSchemaFields(type) {
-  return getSectionFields(type)
-}
-
-export function getBlockSchemaFields(type) {
-  return getBlockFields(type)
+  return resolveDecorationI18nValue(getTypedBlockDefinition(type)?.defaultSettings || null)
 }
 
 export function getAllowedBlockTypes(sectionType) {
@@ -96,15 +81,7 @@ export function getSectionBlockTypes(sectionType) {
   return getAllowedBlockTypes(sectionType)
 }
 
-export {
-  sectionDefinitions,
-  blockDefinitions,
-  sectionTypeAliases,
-  blockTypeAliases,
-  getSectionTypesByScope,
-  resolveSectionType,
-  resolveBlockType
-}
+export { sectionDefinitions, blockDefinitions, getSectionTypesByScope }
 
 export default {
   sectionDefinitions,
@@ -113,12 +90,8 @@ export default {
   getTypedBlockDefinition,
   getSectionDefaultSettings,
   getBlockDefaultSettings,
-  getSectionSchemaFields,
-  getBlockSchemaFields,
   getAllowedBlockTypes,
   getSectionTypes,
   getSectionBlockTypes,
-  getSectionTypesByScope,
-  resolveSectionType,
-  resolveBlockType
+  getSectionTypesByScope
 }

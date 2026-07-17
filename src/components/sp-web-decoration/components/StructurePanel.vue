@@ -455,13 +455,57 @@ import StructureBlockRow from './StructureBlockRow.vue'
 import StructureSectionRow from './StructureSectionRow.vue'
 import StructureAddAction from './StructureAddAction.vue'
 
-import { getTypedBlockDefinition as getBlockDefinition } from '../definitions/registry.js'
+import {
+  getTypedSectionDefinition as getSectionDefinition,
+  getTypedBlockDefinition as getBlockDefinition
+} from '../definitions/registry.js'
 import {
   createSectionPickerItems,
   createSectionPickerItemsForTypes,
   createBlockPickerItems
 } from '../utils/insertPicker.js'
 import { getAreaSectionInsertPolicy } from '../definitions/areas.js'
+import { LANGUAGES } from '@/i18n'
+import { resolveDecorationI18nValue } from '../utils/i18n.js'
+
+function normalizeDisplayTitle(value) {
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+export function getDefinitionDefaultTitleCandidates(definition, languages = LANGUAGES) {
+  const name = definition?.name
+  if (!name) return []
+
+  const candidates = []
+  if (typeof name === 'string') {
+    candidates.push(name)
+  } else if (name && typeof name === 'object' && name.__decorationI18n === true) {
+    candidates.push(name.fallback)
+    Object.values(languages || {}).forEach((config) => {
+      candidates.push(config?.messages?.[name.key])
+    })
+  }
+
+  return Array.from(
+    new Set(candidates.map((value) => normalizeDisplayTitle(value)).filter(Boolean))
+  )
+}
+
+export function resolveStructureDisplayTitle(title, definition, fallback = '') {
+  const rawTitle = typeof title === 'string' ? title : ''
+  const normalizedTitle = normalizeDisplayTitle(rawTitle)
+  const localizedTitle = resolveDecorationI18nValue(definition?.name || '') || ''
+  if (!normalizedTitle) {
+    return localizedTitle || fallback || ''
+  }
+
+  const defaultTitleCandidates = getDefinitionDefaultTitleCandidates(definition)
+  if (localizedTitle) {
+    defaultTitleCandidates.push(normalizeDisplayTitle(localizedTitle))
+  }
+
+  return defaultTitleCandidates.includes(normalizedTitle) ? localizedTitle || rawTitle : rawTitle
+}
 
 export default {
   name: 'StructurePanel',
@@ -840,7 +884,8 @@ export default {
     getSectionDisplayLabel(sectionId) {
       const section = this.getSection(sectionId)
       if (!section) return ''
-      return section.title || ''
+      const definition = getSectionDefinition(section.type)
+      return resolveStructureDisplayTitle(section.title, definition, section.type || '')
     },
     getBlockPickerItems(sectionType) {
       if (sectionType === 'footer') {
@@ -857,7 +902,7 @@ export default {
       const block = section?.blocks?.[blockId]
       if (!block) return ''
       const definition = getBlockDefinition(block.type)
-      return block.title || definition?.name || block.type || ''
+      return resolveStructureDisplayTitle(block.title, definition, block.type || '')
     },
     handleOrderChange() {
       this.$emit('reorder-sections', this.localOrder.slice())

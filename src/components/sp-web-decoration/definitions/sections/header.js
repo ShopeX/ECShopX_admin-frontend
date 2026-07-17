@@ -1,14 +1,11 @@
-import { i18n } from '@/i18n'
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'header',
   scope: 'header',
   fixedId: 'header',
-  name: i18n.t('d65dbcac.917f14'),
-  fields: sectionFields.header,
-  defaultSettings: toDefaultSettings(sectionFields.header),
-  legacyDefaultSettings: {
+  name: i18nValue('d65dbcac.917f14', '标头'),
+  defaultSettings: {
     color_mode: 'dark',
     full_width: false,
     sticky_header_type: 'none',

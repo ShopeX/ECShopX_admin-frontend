@@ -1,21 +1,18 @@
-import { i18n } from '@/i18n'
-import { blockFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'image',
-  name: '图片',
-  fields: blockFields.image,
-  defaultSettings: toDefaultSettings(blockFields.image),
-  legacyDefaultSettings: {
+  name: i18nValue('0e42b54b.20def7', '图片'),
+  defaultSettings: {
     pc_image: '',
     mobile_image: '',
-    introduction: '提供背景或介绍，吸引用户注意',
+    introduction: i18nValue('0e42b54b.272f12', '提供背景或介绍，吸引用户注意'),
     introduction_size: 's',
-    heading: '关键主题或焦点，简明直接',
+    heading: i18nValue('0e42b54b.563009', '关键主题或焦点，简明直接'),
     heading_size: 'm',
-    description: '简要概述幻灯片内容，突出重点',
+    description: i18nValue('0e42b54b.23614c', '简要概述幻灯片内容，突出重点'),
     description_size: 's',
-    button_text: '按钮文字',
+    button_text: i18nValue('0e42b54b.24bdc7', '按钮文字'),
     button_size: 'large',
     button_style: 'primary',
     button_scheme: 'brand',

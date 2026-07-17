@@ -1,12 +1,9 @@
-import { i18n } from '@/i18n'
-import { blockFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'footer-text',
-  name: '文本',
-  fields: blockFields['footer-text'],
-  defaultSettings: toDefaultSettings(blockFields['footer-text']),
-  legacyDefaultSettings: {
+  name: i18nValue('2aa23f1e.97d076', '文本'),
+  defaultSettings: {
     title: '',
     content: '',
     title_size: 'medium',

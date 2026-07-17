@@ -2,29 +2,25 @@
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">{{ $t('6c727f2c.5a02fa') }}</div>
-      <el-input :value="settings.title" size="small" @input="updateField('title', $event)" />
+      <el-input :value="value.title" size="small" @input="updateField('title', $event)" />
     </section>
 
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">{{ $t('6c727f2c.f0c7e9') }}</div>
       <el-select
-        :value="settings.displayMode"
+        :value="value.sourceMode"
         size="small"
         class="w-full"
-        @input="updateField('displayMode', $event)"
+        @input="updateField('sourceMode', $event)"
       >
         <el-option :label="$t('6c727f2c.68924b')" value="manual" />
         <el-option :label="$t('6c727f2c.d282eb')" value="category" />
       </el-select>
     </section>
 
-    <section v-if="settings.displayMode === 'category'" class="space-y-2">
+    <section v-if="value.sourceMode === 'category'" class="space-y-2">
       <div class="text-sm text-muted-foreground">{{ $t('6c727f2c.ae8c70') }}</div>
-      <el-input
-        :value="settings.categoryId"
-        size="small"
-        @input="updateField('categoryId', $event)"
-      />
+      <el-input :value="value.categoryId" size="small" @input="updateField('categoryId', $event)" />
     </section>
 
     <section v-else class="space-y-2">
@@ -42,7 +38,7 @@
       <section class="space-y-2">
         <div class="text-sm text-muted-foreground">{{ $t('6c727f2c.eb22d4') }}</div>
         <el-input-number
-          :value="settings.columns"
+          :value="value.columns"
           :min="2"
           :max="6"
           size="small"
@@ -55,7 +51,7 @@
       <section class="space-y-2">
         <div class="text-sm text-muted-foreground">{{ $t('6c727f2c.d57936') }}</div>
         <el-input-number
-          :value="settings.limit"
+          :value="value.limit"
           :min="1"
           :max="50"
           size="small"
@@ -66,13 +62,12 @@
       </section>
     </div>
 
-    <SectionAppearancePanel :value="settings" @change="updateField" />
+    <SectionAppearancePanel :value="value" @change="updateField" />
   </div>
 </template>
 
 <script>
 import SectionAppearancePanel from './SectionAppearancePanel.vue'
-import { normalizeTypedSectionSettings } from '../utils/panelState.js'
 
 export default {
   name: 'ProductShelfPanel',
@@ -84,11 +79,8 @@ export default {
     }
   },
   computed: {
-    settings() {
-      return normalizeTypedSectionSettings('product-shelf', this.value)
-    },
     itemIdsText() {
-      return Array.isArray(this.settings.itemIds) ? this.settings.itemIds.join(',') : ''
+      return Array.isArray(this.value.itemIds) ? this.value.itemIds.join(',') : ''
     }
   },
   methods: {

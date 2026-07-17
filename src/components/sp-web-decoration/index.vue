@@ -145,13 +145,13 @@ import {
 } from './utils/insertPicker.js'
 
 const PAGE_TYPE_LABEL_MAP = {
-  home: '首页模板',
-  index: '首页模板',
-  custom: '自定义页模板',
-  list: '列表页模板',
-  product_list: '商品列表模板',
-  header: '标头模板',
-  footer: '页脚模板'
+  home: '30ac5b9e.3c92ff',
+  index: '30ac5b9e.3c92ff',
+  custom: '30ac5b9e.91ab06',
+  list: '30ac5b9e.23b864',
+  product_list: '30ac5b9e.0416ce',
+  header: '30ac5b9e.9a8d77',
+  footer: '30ac5b9e.97ef6e'
 }
 
 function cloneValue(value) {
@@ -250,13 +250,13 @@ export default {
       return getSectionTypesByScope('template').map((type) => getTypedSectionDefinition(type))
     },
     pageTypeLabel() {
-      return PAGE_TYPE_LABEL_MAP[this.pageType] || PAGE_TYPE_LABEL_MAP.home
+      return this.$t(PAGE_TYPE_LABEL_MAP[this.pageType] || PAGE_TYPE_LABEL_MAP.home)
     },
     titleText() {
-      return this.title || `${this.pageTypeLabel}装修`
+      return this.title || `${this.pageTypeLabel}${this.$t('30ac5b9e.81b2cb')}`
     },
     subtitleText() {
-      return `${this.pageTypeLabel}编辑`
+      return `${this.pageTypeLabel}${this.$t('30ac5b9e.95b351')}`
     },
     canUndo() {
       return this.historyPast.length > 1

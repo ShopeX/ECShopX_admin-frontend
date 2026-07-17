@@ -1,13 +1,10 @@
-import { i18n } from '@/i18n'
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'announcement-bar',
   scope: 'header',
-  name: i18n.t('d65dbcac.3921b6'),
-  fields: sectionFields['announcement-bar'],
-  defaultSettings: toDefaultSettings(sectionFields['announcement-bar']),
-  legacyDefaultSettings: {
+  name: i18nValue('d65dbcac.3921b6', '公告栏'),
+  defaultSettings: {
     full_width: false,
     auto_rotate: false,
     enable_country_selector: false,

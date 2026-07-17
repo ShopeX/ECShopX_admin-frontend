@@ -4,7 +4,7 @@ const ADMIN_TO_WEB_LOCALE_PREFIX = {
   en: '/en',
   ar: '/ar',
   zhcn: '',
-  zhtw: ''
+  zhtw: 'zh-TW'
 }
 
 function getCurrentAdminLang() {
@@ -118,14 +118,14 @@ export function createDecorationMessenger(websiteUrl) {
     const target = previewOrigin || (isDevEnv() ? '*' : '')
     if (!target) {
       console.warn(
-        '[sp-web-decoration] 无法向预览 iframe 发送消息：缺少商城 origin（请检查 VUE_APP_WEBSITE）'
+        '[sp-web-decoration] Cannot send message to preview iframe: missing storefront origin (check VUE_APP_WEBSITE)'
       )
       return
     }
     try {
       iframeWindow.postMessage({ type, payload }, target)
     } catch (err) {
-      console.warn('[sp-web-decoration] postMessage 失败:', err)
+      console.warn('[sp-web-decoration] postMessage failed:', err)
     }
   }
 

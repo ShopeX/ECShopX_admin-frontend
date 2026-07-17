@@ -32,7 +32,7 @@
     />
     <sideBar
       :visible.sync="show_sideBar"
-      :title="form.attribute_id ? $t('07504bf6.b51408') : $t('07504bf6.4c0eea')"
+      :title="editingAttributeId ? $t('07504bf6.b51408') : $t('07504bf6.4c0eea')"
     >
       <ParamsForm :value="form" @submit="onFormSubmit" />
       <div slot="footer">
@@ -195,7 +195,8 @@ export default {
         attribute_type: 'item_params',
         attribute_name: ''
       },
-      show_sideBar: false
+      show_sideBar: false,
+      editingAttributeId: ''
     }
   },
   mounted() {},
@@ -220,23 +221,23 @@ export default {
         .catch((_) => {})
     },
     handleNew() {
-      this.show_sideBar = true
       this.resetData()
-      this.$nextTick(() => {
-        if (ParamsFormApi.resetFields) {
-          ParamsFormApi.resetFields()
-        }
-        if (ParamsFormApi.setFieldsValue) {
-          ParamsFormApi.setFieldsValue({
-            attribute_name: '',
-            attribute_memo: '',
-            is_show: false,
-            attribute_values: []
-          })
-        }
-      })
+      if (ParamsFormApi.setFieldsValue) {
+        ParamsFormApi.setFieldsValue({
+          attribute_id: '',
+          attribute_name: '',
+          attribute_memo: '',
+          is_show: false,
+          attribute_values: []
+        })
+      }
+      if (ParamsFormApi.resetFields) {
+        ParamsFormApi.resetFields()
+      }
+      this.show_sideBar = true
     },
     resetData() {
+      this.editingAttributeId = ''
       this.form = {
         attribute_type: 'item_params',
         attribute_id: '',
@@ -247,51 +248,53 @@ export default {
       }
     },
     handleEdit(data) {
+      let isShow = data.is_show
+      if (typeof data.is_show === 'string') {
+        try {
+          if (data.is_show.trim() === '') {
+            isShow = false
+          } else {
+            isShow = JSON.parse(data.is_show)
+          }
+        } catch (e) {
+          isShow = data.is_show === 'true' || data.is_show === true
+        }
+      }
+
+      let attributeValues = []
+      if (data.attribute_values) {
+        if (typeof data.attribute_values === 'string') {
+          try {
+            const parsed = JSON.parse(data.attribute_values)
+            attributeValues = parsed.list || parsed || []
+          } catch (e) {
+            attributeValues = []
+          }
+        } else if (data.attribute_values.list) {
+          attributeValues = data.attribute_values.list
+        } else if (Array.isArray(data.attribute_values)) {
+          attributeValues = data.attribute_values
+        }
+      }
+
+      this.editingAttributeId = data.attribute_id
+      this.form = {
+        attribute_id: data.attribute_id,
+        attribute_type: data.attribute_type,
+        attribute_name: data.attribute_name,
+        attribute_memo: data.attribute_memo,
+        is_show: isShow,
+        attribute_values: attributeValues
+      }
       this.show_sideBar = true
       this.$nextTick(() => {
-        let isShow = data.is_show
-        if (typeof data.is_show === 'string') {
-          try {
-            if (data.is_show.trim() === '') {
-              isShow = false
-            } else {
-              isShow = JSON.parse(data.is_show)
-            }
-          } catch (e) {
-            isShow = data.is_show === 'true' || data.is_show === true
-          }
-        }
-
-        let attributeValues = []
-        if (data.attribute_values) {
-          if (typeof data.attribute_values === 'string') {
-            try {
-              const parsed = JSON.parse(data.attribute_values)
-              attributeValues = parsed.list || parsed || []
-            } catch (e) {
-              attributeValues = []
-            }
-          } else if (data.attribute_values.list) {
-            attributeValues = data.attribute_values.list
-          } else if (Array.isArray(data.attribute_values)) {
-            attributeValues = data.attribute_values
-          }
-        }
-
         ParamsFormApi.setFieldsValue({
+          attribute_id: data.attribute_id,
           attribute_name: data.attribute_name,
           attribute_memo: data.attribute_memo,
           is_show: isShow,
           attribute_values: attributeValues
         })
-        this.form = {
-          attribute_id: data.attribute_id,
-          attribute_type: data.attribute_type,
-          attribute_name: data.attribute_name,
-          attribute_memo: data.attribute_memo,
-          is_show: isShow,
-          attribute_values: attributeValues
-        }
       })
     },
     async handleFormSubmit() {
@@ -304,9 +307,11 @@ export default {
       }
     },
     onFormSubmit(formData) {
+      const attributeId = this.editingAttributeId
       const submitData = {
         ...this.form,
-        ...formData
+        ...formData,
+        attribute_id: attributeId
       }
       if (submitData.attribute_values.length === 0 && submitData.is_show == true) {
         this.$message({ type: 'error', message: this.$t('07504bf6.ad4589') })
@@ -314,7 +319,7 @@ export default {
       }
       const params = JSON.parse(JSON.stringify(submitData))
       params.attribute_values = JSON.stringify(params.attribute_values)
-      if (!submitData.attribute_id) {
+      if (!attributeId) {
         addGoodsAttr(params).then((res) => {
           this.$message({ type: 'success', message: this.$t('07504bf6.33130f') })
           this.resetData()
@@ -336,7 +341,7 @@ export default {
           }
         })
       } else {
-        updateGoodsAttr(params.attribute_id, params).then((res) => {
+        updateGoodsAttr(attributeId, params).then((res) => {
           this.$message({ type: 'success', message: this.$t('07504bf6.33130f') })
           this.show_sideBar = false
           this.$refs.finder.refresh()

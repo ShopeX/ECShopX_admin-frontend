@@ -66,7 +66,7 @@
                 <span
                   class="block w-full"
                   @click="handleSubmenuTitleClick(item.alias_name, $event)"
-                  >{{ item.name }}</span
+                  >{{ menuDisplayName(item) }}</span
                 >
               </template>
               <!-- 三级菜单 -->

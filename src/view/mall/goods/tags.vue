@@ -32,7 +32,7 @@
     />
     <sideBar
       :visible.sync="show_sideBar"
-      :title="form.tag_id ? $t('e1bd2c70.9d98ce') : $t('e1bd2c70.01d3b0')"
+      :title="editingTagId ? $t('e1bd2c70.9d98ce') : $t('e1bd2c70.01d3b0')"
     >
       <TagForm :value="form" @submit="onFormSubmit" />
       <div slot="footer">
@@ -167,6 +167,7 @@ export default {
     return {
       show_sideBar: false,
       isEdit: false,
+      editingTagId: '',
       searchParams: {
         tag_name: '',
         tag_source: 'all'
@@ -288,6 +289,12 @@ export default {
     }
   },
   methods: {
+    normalizeFrontShow(value) {
+      if (value === true || value === 1 || value === '1') {
+        return '1'
+      }
+      return '0'
+    },
     onSearch() {
       this.$refs.finder.refresh(true)
     },
@@ -298,25 +305,24 @@ export default {
       }
     },
     addTemplate() {
-      // 添加商品
-      this.show_sideBar = true
       this.resetData()
-      this.$nextTick(() => {
-        if (TagFormApi.resetFields) {
-          TagFormApi.resetFields()
-        }
-        if (TagFormApi.setFieldsValue) {
-          TagFormApi.setFieldsValue({
-            tag_name: '',
-            description: '',
-            tag_color: '#ff1939',
-            font_color: '#ffffff',
-            front_show: '0'
-          })
-        }
-      })
+      if (TagFormApi.setFieldsValue) {
+        TagFormApi.setFieldsValue({
+          tag_id: '',
+          tag_name: '',
+          description: '',
+          tag_color: '#ff1939',
+          font_color: '#ffffff',
+          front_show: '0'
+        })
+      }
+      if (TagFormApi.resetFields) {
+        TagFormApi.resetFields()
+      }
+      this.show_sideBar = true
     },
     resetData() {
+      this.editingTagId = ''
       this.form = {
         tag_id: '',
         tag_name: '',
@@ -327,17 +333,26 @@ export default {
       }
     },
     editAction(index, row) {
-      // 编辑商品弹框
+      const frontShow = this.normalizeFrontShow(row.front_show)
+      this.editingTagId = row.tag_id
+      this.form = {
+        tag_id: row.tag_id,
+        tag_name: row.tag_name,
+        tag_color: row.tag_color,
+        font_color: row.font_color,
+        description: row.description || '',
+        front_show: frontShow
+      }
       this.show_sideBar = true
       this.$nextTick(() => {
         TagFormApi.setFieldsValue({
+          tag_id: row.tag_id,
           tag_name: row.tag_name,
-          description: row.description,
+          description: row.description || '',
           tag_color: row.tag_color,
           font_color: row.font_color,
-          front_show: row.front_show
+          front_show: frontShow
         })
-        this.form = { ...row }
       })
     },
     preview(index, row) {
@@ -398,11 +413,16 @@ export default {
       }
     },
     onFormSubmit(formData) {
+      const tagId = this.editingTagId
       const submitData = {
         ...this.form,
-        ...formData
+        ...formData,
+        tag_id: tagId,
+        front_show: this.normalizeFrontShow(
+          formData.front_show != null ? formData.front_show : this.form.front_show
+        )
       }
-      if (submitData.tag_id) {
+      if (tagId) {
         updateTag(submitData).then((res) => {
           if (res.data.data) {
             this.$message({

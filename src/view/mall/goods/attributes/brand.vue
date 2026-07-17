@@ -127,7 +127,8 @@ export default {
         attribute_name: ''
       },
       brand_name: '',
-      show_sideBar: false
+      show_sideBar: false,
+      editingAttributeId: ''
     }
   },
   mounted() {},
@@ -161,17 +162,17 @@ export default {
         .catch((_) => {})
     },
     handleNew() {
-      this.show_sideBar = true
       this.resetData()
-      this.$nextTick(() => {
-        BrandFormApi.resetFields()
-        BrandFormApi.setFieldsValue({
-          attribute_name: '',
-          image_url: ''
-        })
+      BrandFormApi.setFieldsValue({
+        attribute_id: '',
+        attribute_name: '',
+        image_url: ''
       })
+      BrandFormApi.resetFields()
+      this.show_sideBar = true
     },
     resetData() {
+      this.editingAttributeId = ''
       this.form = {
         attribute_id: '',
         attribute_type: 'brand',
@@ -180,18 +181,20 @@ export default {
       }
     },
     handleEdit(data) {
+      this.editingAttributeId = data.attribute_id
+      this.form = {
+        attribute_id: data.attribute_id,
+        attribute_type: data.attribute_type,
+        attribute_name: data.attribute_name,
+        image_url: data.image_url
+      }
       this.show_sideBar = true
       this.$nextTick(() => {
         BrandFormApi.setFieldsValue({
+          attribute_id: data.attribute_id,
           attribute_name: data.attribute_name,
           image_url: data.image_url
         })
-        this.form = {
-          attribute_id: data.attribute_id,
-          attribute_type: data.attribute_type,
-          attribute_name: data.attribute_name,
-          image_url: data.image_url
-        }
       })
     },
     async handleFormSubmit() {
@@ -204,12 +207,13 @@ export default {
       }
     },
     onFormSubmit(formData) {
+      const attributeId = this.editingAttributeId
       const submitData = {
         ...this.form,
-        ...formData
+        ...formData,
+        attribute_id: attributeId
       }
-      // 如果没有id，则表示为新增
-      if (!submitData.attribute_id) {
+      if (!attributeId) {
         addGoodsAttr(submitData).then((res) => {
           this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.resetData()
@@ -227,7 +231,7 @@ export default {
           }
         })
       } else {
-        updateGoodsAttr(submitData.attribute_id, submitData).then((res) => {
+        updateGoodsAttr(attributeId, submitData).then((res) => {
           this.$message({ type: 'success', message: this.$t('6ec569f9.33130f') })
           this.show_sideBar = false
           this.$refs.finder.refresh()

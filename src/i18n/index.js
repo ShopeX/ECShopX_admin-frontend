@@ -12,6 +12,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import zhCN from './locales/zh-CN.json'
+import zhTW from './locales/zh-TW.json'
 import en from './locales/en.json'
 import ar from './locales/ar.json'
 
@@ -35,6 +36,14 @@ const LANGUAGES = {
     countryCode: 'zh-CN',
     dir: 'ltr',
     messages: zhCN
+  },
+  zhtw: {
+    locale: 'zh-TW',
+    label: '繁體中文',
+    htmlLang: 'zh-TW',
+    countryCode: 'zh-TW',
+    dir: 'ltr',
+    messages: zhTW
   },
   en: {
     locale: 'en',

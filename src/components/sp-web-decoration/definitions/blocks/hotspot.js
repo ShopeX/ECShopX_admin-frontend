@@ -1,12 +1,9 @@
-import { i18n } from '@/i18n'
-import { blockFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'hotspot',
-  name: i18n.t('d65dbcac.50da72'),
-  fields: blockFields.hotspot,
-  defaultSettings: toDefaultSettings(blockFields.hotspot),
-  legacyDefaultSettings: {
+  name: i18nValue('d65dbcac.50da72', '热区'),
+  defaultSettings: {
     label: '',
     x: 0,
     y: 0,

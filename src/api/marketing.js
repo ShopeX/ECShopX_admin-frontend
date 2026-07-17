@@ -689,6 +689,14 @@ export function getActivityItems(params) {
   })
 }
 
+export function exportActivityItems(params) {
+  return fetch({
+    url: '/employeepurchase/activity/items/export',
+    method: 'get',
+    params
+  })
+}
+
 // 获取内购活动详情
 export function getActivityItemDetail(activityId) {
   return fetch({

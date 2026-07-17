@@ -1,14 +1,12 @@
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'product-tab-shelf',
   scope: 'template',
-  name: 'Tab产品系列',
-  fields: sectionFields['product-tab-shelf'],
-  defaultSettings: toDefaultSettings(sectionFields['product-tab-shelf']),
-  legacyDefaultSettings: {
+  name: i18nValue('6daca440.78964b', 'Tab产品系列'),
+  defaultSettings: {
     title: '',
-    intro: '新品',
+    intro: i18nValue('6daca440.5f3ca6', '新品'),
     size: 'medium',
     alignment: 'center',
     columns: 4,
@@ -22,7 +20,10 @@ export default {
     padding_bottom: 'm'
   },
   defaultBlocks: [
-    { type: 'product-tab', settings: { tab_label: '产品系列', product_ids: [], limit: 8 } }
+    {
+      type: 'product-tab',
+      settings: { tab_label: i18nValue('6daca440.81af76', '产品系列'), product_ids: [], limit: 8 }
+    }
   ],
   blocks: {
     allowed: ['product-tab'],

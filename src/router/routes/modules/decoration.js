@@ -141,7 +141,7 @@ const routes = [
         meta: {
           aliasName: 'loginPageSetting',
           icon: 'pay-circle',
-          title: '商城全局配置',
+          title: '42c71eaf.1d2582',
           permissions: ['wxapp-template.pcmall.loginPageSetting']
         },
         component: () => import('@/views/decoration/web-config')
@@ -172,7 +172,8 @@ const routes = [
         name: 'webMenu',
         path: 'web-menu',
         meta: {
-          title: i18n.t('7d3fbb6d.950dc2'),
+          aliasName: 'web-menus',
+          title: '738edee2.ff36f6',
           permissions: ['wxapp-template.pcmall.web-menus']
         },
         component: () => import('@/views/decoration/web-menu/index')
@@ -181,7 +182,7 @@ const routes = [
         name: 'webMenuCreate',
         path: 'web-menu/create',
         meta: {
-          title: i18n.t('7d3fbb6d.ba750e'),
+          title: '7d3fbb6d.ba750e',
           permissions: ['wxapp-template.pcmall.web-menus']
         },
         component: () => import('@/views/decoration/web-menu/_id')
@@ -190,7 +191,7 @@ const routes = [
         name: 'webMenuItems',
         path: 'web-menu/:id',
         meta: {
-          title: i18n.t('7d3fbb6d.ca3472'),
+          title: '7d3fbb6d.ca3472',
           // 须与列表页 webMenu 一致，否则 generateAccess 会过滤掉本路由，进入详情会空白/404
           permissions: ['wxapp-template.pcmall.web-menus']
         },

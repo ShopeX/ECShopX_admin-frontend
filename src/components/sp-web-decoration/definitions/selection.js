@@ -1,3 +1,5 @@
+import { i18nValue } from '../utils/i18n.js'
+
 export function isGlobalSectionId({ headerDsl, footerDsl } = {}, sectionId) {
   return Boolean(
     sectionId && (headerDsl?.sections?.[sectionId] || footerDsl?.sections?.[sectionId])
@@ -33,36 +35,36 @@ export const selectionManifest = {
 export const selectionRules = {
   header: {
     id: 'header',
-    label: '标头',
+    label: i18nValue('f5e431be.917f14', '标头'),
     strategy: 'globalSectionIfExists',
     globalSectionId: 'header'
   },
   footer: {
     id: 'footer',
-    label: '页脚',
+    label: i18nValue('f5e431be.4eb88f', '页脚'),
     strategy: 'globalSectionIfExists',
     globalSectionId: 'footer'
   },
   carousel: {
     id: 'carousel',
-    label: '幻灯片',
+    label: i18nValue('f5e431be.40bdf1', '幻灯片'),
     strategy: 'firstCarouselSection'
   },
   'product-shelf': {
     id: 'product-shelf',
-    label: '产品系列列表',
+    label: i18nValue('f5e431be.6c3721', '产品系列列表'),
     strategy: 'firstPageSectionOfType',
     sectionType: 'product-shelf'
   },
   'image-hotspot': {
     id: 'image-hotspot',
-    label: '图片横幅',
+    label: i18nValue('f5e431be.0548c9', '图片横幅'),
     strategy: 'firstPageSectionOfType',
     sectionType: 'image-hotspot'
   },
   fallback: {
     id: 'fallback',
-    label: '页面分区顺序第一项',
+    label: i18nValue('f5e431be.b86993', '页面分区顺序第一项'),
     strategy: 'firstPageSectionInOrder'
   }
 }

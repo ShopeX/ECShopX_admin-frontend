@@ -1,12 +1,9 @@
-import { i18n } from '@/i18n'
-import { blockFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'footer-image',
-  name: '图片',
-  fields: blockFields['footer-image'],
-  defaultSettings: toDefaultSettings(blockFields['footer-image']),
-  legacyDefaultSettings: {
+  name: i18nValue('a553a5f4.20def7', '图片'),
+  defaultSettings: {
     image: '',
     alignment: 'left',
     width: '100',

@@ -1,15 +1,15 @@
 <template>
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">颜色模式</div>
+      <div class="text-sm text-muted-foreground">{{ $t('c62ed11e.f0ee28') }}</div>
       <el-radio-group :value="value.color_mode" size="small" @input="updateColorMode">
-        <el-radio-button label="light">浅色</el-radio-button>
-        <el-radio-button label="dark">深色</el-radio-button>
+        <el-radio-button label="light">{{ $t('c62ed11e.48d0a0') }}</el-radio-button>
+        <el-radio-button label="dark">{{ $t('c62ed11e.41e8e8') }}</el-radio-button>
       </el-radio-group>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">背景颜色</div>
+      <div class="text-sm text-muted-foreground">{{ $t('c62ed11e.4573a7') }}</div>
       <div class="grid grid-cols-5 gap-2">
         <button
           v-for="scheme in colorSchemes"
@@ -25,13 +25,13 @@
           @click="updateField('color_scheme', scheme.value)"
         >
           <span>A</span>
-          <span>{{ scheme.label }}</span>
+          <span>{{ $t(scheme.labelKey) }}</span>
         </button>
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">顶部间距</div>
+      <div class="text-sm text-muted-foreground">{{ $t('c62ed11e.0083f7') }}</div>
       <el-select
         :value="value.padding_top"
         size="small"
@@ -41,14 +41,14 @@
         <el-option
           v-for="option in paddingOptions"
           :key="option.value"
-          :label="option.label"
+          :label="$t(option.labelKey)"
           :value="option.value"
         />
       </el-select>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">底部间距</div>
+      <div class="text-sm text-muted-foreground">{{ $t('c62ed11e.205d10') }}</div>
       <el-select
         :value="value.padding_bottom"
         size="small"
@@ -58,14 +58,14 @@
         <el-option
           v-for="option in paddingOptions"
           :key="option.value"
-          :label="option.label"
+          :label="$t(option.labelKey)"
           :value="option.value"
         />
       </el-select>
     </section>
 
     <section v-if="showFullWidth" class="flex items-center justify-between gap-3">
-      <span class="text-sm text-muted-foreground">全屏</span>
+      <span class="text-sm text-muted-foreground">{{ $t('c62ed11e.185926') }}</span>
       <el-switch :value="value.full_width" @input="updateField('full_width', $event)" />
     </section>
   </div>

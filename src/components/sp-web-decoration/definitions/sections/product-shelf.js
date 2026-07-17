@@ -1,13 +1,10 @@
-import { i18n } from '@/i18n'
-import { sectionFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'product-shelf',
   scope: 'template',
-  name: i18n.t('d65dbcac.4a02ad'),
-  fields: sectionFields['product-shelf'],
-  defaultSettings: toDefaultSettings(sectionFields['product-shelf']),
-  legacyDefaultSettings: {
+  name: i18nValue('d65dbcac.4a02ad', '商品货架'),
+  defaultSettings: {
     title: '',
     sourceMode: 'manual',
     itemIds: [],

@@ -1,16 +1,16 @@
 <template>
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">标题</div>
+      <div class="text-sm text-muted-foreground">{{ $t('513d370a.32c65d') }}</div>
       <SpRichTextEditor
         :value="settings.title"
-        placeholder="请输入标题"
+        :placeholder="$t('513d370a.96641a')"
         @input="updateField('title', $event)"
       />
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">菜单</div>
+      <div class="text-sm text-muted-foreground">{{ $t('513d370a.4ccbdc') }}</div>
       <div class="rounded-lg border border-border bg-background p-3">
         <div class="flex items-center gap-3">
           <div
@@ -38,42 +38,42 @@
           class="h-8 flex-1 rounded-lg border-0 bg-muted px-3 text-sm font-medium text-foreground hover:bg-muted/80"
           @click="openMenuPicker"
         >
-          更改
+          {{ $t('513d370a.fe3cd2') }}
         </button>
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">规格</div>
+      <div class="text-sm text-muted-foreground">{{ $t('513d370a.ea887b') }}</div>
       <el-select
         :value="settings.size"
         size="small"
         class="w-full"
         @change="updateField('size', $event)"
       >
-        <el-option value="xsmall" label="特小" />
-        <el-option value="small" label="小" />
-        <el-option value="medium" label="中" />
-        <el-option value="large" label="大" />
-        <el-option value="xlarge" label="特大" />
+        <el-option value="xsmall" :label="$t('513d370a.f72ce9')" />
+        <el-option value="small" :label="$t('513d370a.391b8f')" />
+        <el-option value="medium" :label="$t('513d370a.aed1df')" />
+        <el-option value="large" :label="$t('513d370a.ab18e3')" />
+        <el-option value="xlarge" :label="$t('513d370a.3386da')" />
       </el-select>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">对齐方式</div>
+      <div class="text-sm text-muted-foreground">{{ $t('513d370a.d5bc35') }}</div>
       <el-radio-group
         :value="settings.alignment"
         size="small"
         @input="updateField('alignment', $event)"
       >
-        <el-radio-button label="left">左</el-radio-button>
-        <el-radio-button label="center">中</el-radio-button>
-        <el-radio-button label="right">右</el-radio-button>
+        <el-radio-button label="left">{{ $t('513d370a.d2aff1') }}</el-radio-button>
+        <el-radio-button label="center">{{ $t('513d370a.aed1df') }}</el-radio-button>
+        <el-radio-button label="right">{{ $t('513d370a.4d9c32') }}</el-radio-button>
       </el-radio-group>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">占列宽度</div>
+      <div class="text-sm text-muted-foreground">{{ $t('513d370a.3f7bf6') }}</div>
       <div class="flex items-center gap-3">
         <el-input-number
           :value="settings.column_span"
@@ -131,7 +131,7 @@ export default {
       return normalizeSelectedMenu(pickMenuValue(this.settings))
     },
     currentMenuLabel() {
-      return this.currentMenu?.name || this.menuNameCache || '未选择菜单'
+      return this.currentMenu?.name || this.menuNameCache || this.$t('513d370a.013608')
     },
     hasSelectedMenu() {
       return Boolean(this.currentMenu || this.menuNameCache)
@@ -174,7 +174,7 @@ export default {
     },
     async openMenuPicker() {
       const selected = await this.$dialog.open(WebNavPicker, {
-        title: '选择导航菜单',
+        title: this.$t('513d370a.ccf820'),
         props: {
           initialSelected: this.currentMenu
         }

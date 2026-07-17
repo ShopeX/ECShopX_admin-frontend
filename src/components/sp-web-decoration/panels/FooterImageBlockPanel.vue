@@ -1,28 +1,32 @@
 <template>
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">图片</div>
+      <div class="text-sm text-muted-foreground">{{ $t('6438e9ed.20def7') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
-        <SpImagePicker :value="settings.image" @input="updateField('image', $event)" />
+        <SpImagePicker :value="value.image" @input="updateField('image', $event)" />
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">对齐方式</div>
+      <div class="text-sm text-muted-foreground">{{ $t('6438e9ed.d5bc35') }}</div>
       <el-radio-group
-        :value="settings.alignment"
+        :value="value.alignment || 'left'"
         size="small"
         @input="updateField('alignment', $event)"
       >
-        <el-radio-button label="left">左</el-radio-button>
-        <el-radio-button label="center">中</el-radio-button>
-        <el-radio-button label="right">右</el-radio-button>
+        <el-radio-button label="left">{{ $t('6438e9ed.d2aff1') }}</el-radio-button>
+        <el-radio-button label="center">{{ $t('6438e9ed.aed1df') }}</el-radio-button>
+        <el-radio-button label="right">{{ $t('6438e9ed.4d9c32') }}</el-radio-button>
       </el-radio-group>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">图片宽度</div>
-      <el-radio-group :value="settings.width" size="small" @input="updateField('width', $event)">
+      <div class="text-sm text-muted-foreground">{{ $t('6438e9ed.b676c9') }}</div>
+      <el-radio-group
+        :value="value.width || '100'"
+        size="small"
+        @input="updateField('width', $event)"
+      >
         <el-radio-button label="25">25%</el-radio-button>
         <el-radio-button label="50">50%</el-radio-button>
         <el-radio-button label="75">75%</el-radio-button>
@@ -31,21 +35,25 @@
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">圆角</div>
-      <el-radio-group :value="settings.radius" size="small" @input="updateField('radius', $event)">
-        <el-radio-button label="none">无</el-radio-button>
-        <el-radio-button label="small">小</el-radio-button>
-        <el-radio-button label="medium">中</el-radio-button>
-        <el-radio-button label="large">大</el-radio-button>
-        <el-radio-button label="full">圆形</el-radio-button>
+      <div class="text-sm text-muted-foreground">{{ $t('6438e9ed.0103eb') }}</div>
+      <el-radio-group
+        :value="value.radius || 'medium'"
+        size="small"
+        @input="updateField('radius', $event)"
+      >
+        <el-radio-button label="none">{{ $t('6438e9ed.d81bb2') }}</el-radio-button>
+        <el-radio-button label="small">{{ $t('6438e9ed.391b8f') }}</el-radio-button>
+        <el-radio-button label="medium">{{ $t('6438e9ed.aed1df') }}</el-radio-button>
+        <el-radio-button label="large">{{ $t('6438e9ed.ab18e3') }}</el-radio-button>
+        <el-radio-button label="full">{{ $t('6438e9ed.2db0fc') }}</el-radio-button>
       </el-radio-group>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">占列宽度</div>
+      <div class="text-sm text-muted-foreground">{{ $t('6438e9ed.3f7bf6') }}</div>
       <div class="flex items-center gap-3">
         <el-input-number
-          :value="settings.column_span"
+          :value="value.column_span || 4"
           :min="1"
           :max="12"
           size="small"
@@ -54,7 +62,7 @@
           @change="updateField('column_span', $event)"
         />
         <el-slider
-          :value="settings.column_span"
+          :value="value.column_span || 4"
           :min="1"
           :max="12"
           :step="1"
@@ -69,7 +77,6 @@
 
 <script>
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
-import { normalizeTypedBlockSettings } from '../utils/panelState.js'
 
 export default {
   name: 'FooterImageBlockPanel',
@@ -78,11 +85,6 @@ export default {
     value: {
       type: Object,
       default: () => ({})
-    }
-  },
-  computed: {
-    settings() {
-      return normalizeTypedBlockSettings('footer-image', this.value)
     }
   },
   methods: {

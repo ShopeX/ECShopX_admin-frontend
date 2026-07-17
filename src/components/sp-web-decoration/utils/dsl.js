@@ -6,7 +6,6 @@ import { createFooterDocumentDsl } from '../definitions/documents/footer.js'
 import { createGlobalSections } from '../definitions/documents/global.js'
 import { createTypedSection } from '../definitions/factory.js'
 import { generateBlockId } from './nanoid.js'
-import { normalizeTypedBlockSettings, normalizeTypedSectionSettings } from './panelState.js'
 
 function cloneValue(value) {
   return JSON.parse(JSON.stringify(value))
@@ -368,12 +367,8 @@ export function serializeDsl(dsl) {
   const nextDsl = cloneValue(dsl)
   Object.keys(nextDsl.sections || {}).forEach((sectionId) => {
     const section = nextDsl.sections[sectionId]
-    section.settings = normalizeTypedSectionSettings(section.type, section.settings)
     Object.keys(section.blocks || {}).forEach((blockId) => {
       const block = section.blocks[blockId]
-      if (block?.type) {
-        block.settings = normalizeTypedBlockSettings(block.type, block.settings)
-      }
       if (block?.type === 'product-tab' && block.settings) {
         delete block.settings.size
         delete block.settings.size_override

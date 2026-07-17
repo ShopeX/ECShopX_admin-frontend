@@ -1,12 +1,10 @@
-import { blockFields, toDefaultSettings } from '../schema.js'
+import { i18nValue } from '../../utils/i18n.js'
 
 export default {
   type: 'product-tab',
-  name: '产品系列',
-  fields: blockFields['product-tab'],
-  defaultSettings: toDefaultSettings(blockFields['product-tab']),
-  legacyDefaultSettings: {
-    tab_label: '产品系列',
+  name: i18nValue('cbced609.81af76', '产品系列'),
+  defaultSettings: {
+    tab_label: i18nValue('cbced609.81af76', '产品系列'),
     product_ids: [],
     limit: 8
   }

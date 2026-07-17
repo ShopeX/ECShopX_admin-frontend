@@ -21,9 +21,9 @@ import SpFormPlus from '@/components/sp-form-plus'
 import { i18n } from '@/i18n'
 
 const DEFAULT_TAB_LIST = [
-  { name: 'index', label: i18n.t('8b0d1458.db1c89') },
-  { name: 'custom', label: i18n.t('8b0d1458.ec20e4') },
-  { name: 'product_list', label: '列表页' }
+  { name: 'index', labelKey: '8b0d1458.db1c89' },
+  { name: 'custom', labelKey: '8b0d1458.ec20e4' },
+  { name: 'product_list', labelKey: '895a87f9.d35756' }
 ]
 
 export default {
@@ -58,7 +58,7 @@ export default {
     pageTypeOptions() {
       return this.tabListResolved.map((row) => ({
         value: row.name,
-        label: row.label != null && row.label !== '' ? row.label : i18n.t(row.labelKey)
+        label: row.labelKey ? i18n.t(row.labelKey) : row.label || ''
       }))
     },
     formItems() {

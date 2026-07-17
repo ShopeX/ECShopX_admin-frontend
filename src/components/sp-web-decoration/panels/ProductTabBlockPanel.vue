@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-5 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm font-semibold text-foreground">产品系列</div>
+      <div class="text-sm font-semibold text-foreground">{{ $t('f504c8cf.81af76') }}</div>
       <div class="rounded-lg border border-border bg-background p-3">
         <draggable
           v-if="selectedProductItems.length"
@@ -52,7 +52,9 @@
           >
             <ImageIcon :size="16" :stroke-width="1.8" />
           </div>
-          <div class="min-w-0 flex-1 truncate text-sm text-foreground">全部产品</div>
+          <div class="min-w-0 flex-1 truncate text-sm text-foreground">
+            {{ $t('f504c8cf.ce1f19') }}
+          </div>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -61,13 +63,13 @@
           class="h-8 flex-1 rounded-lg border-0 bg-muted px-3 text-sm font-medium text-foreground hover:bg-muted/80"
           @click="openProductPicker"
         >
-          {{ selectedProductItems.length ? '继续添加' : '添加商品' }}
+          {{ selectedProductItems.length ? $t('f504c8cf.47a049') : $t('f504c8cf.fa3aee') }}
         </button>
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">最大产品数</div>
+      <div class="text-sm text-muted-foreground">{{ $t('f504c8cf.933d90') }}</div>
       <div class="flex items-center gap-3">
         <el-input-number
           :value="settings.limit"
@@ -91,10 +93,10 @@
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">标题</div>
+      <div class="text-sm text-muted-foreground">{{ $t('f504c8cf.32c65d') }}</div>
       <SpRichTextEditor
         :value="settings.tab_label"
-        placeholder="请输入标题"
+        :placeholder="$t('f504c8cf.96641a')"
         @input="updateField('tab_label', $event)"
       />
     </section>
@@ -106,6 +108,7 @@ import draggable from 'vuedraggable'
 import { GripVertical, Image as ImageIcon, Trash2 } from 'lucide-vue'
 import { GoodsPicker } from '@/components/sp-picker-plus'
 import { normalizeProductTabBlockSettings } from '../utils/panelState.js'
+import { fetchProductTabProducts, mergeProductTabProducts } from '../utils/productTabProducts.js'
 
 function normalizeProductSnapshot(product = {}) {
   return {
@@ -124,6 +127,20 @@ export default {
     block: { type: Object, default: null },
     value: { type: Object, default: () => ({}) }
   },
+  data() {
+    return {
+      remoteProductItems: [],
+      productRefreshSeq: 0
+    }
+  },
+  watch: {
+    selectedProductKey: {
+      immediate: true,
+      handler() {
+        this.refreshProductItems()
+      }
+    }
+  },
   computed: {
     settings() {
       return normalizeProductTabBlockSettings(this.value)
@@ -131,12 +148,14 @@ export default {
     selectedProducts() {
       return Array.isArray(this.settings.product_ids) ? this.settings.product_ids : []
     },
+    selectedProductKey() {
+      return this.selectedProducts.join(',')
+    },
     selectedProductItems() {
-      const snapshotMap = new Map(
-        (this.settings.product_snapshots || []).map((product) => [product.item_id, product])
-      )
-      return this.selectedProducts.map(
-        (id) => snapshotMap.get(id) || { item_id: id, item_name: id }
+      return mergeProductTabProducts(
+        this.selectedProducts,
+        this.remoteProductItems,
+        this.settings.product_snapshots || []
       )
     }
   },
@@ -148,12 +167,29 @@ export default {
       const snapshots = products
         .map((product) => normalizeProductSnapshot(product))
         .filter((product) => product.item_id)
+      this.remoteProductItems = snapshots
       this.$emit('change', {
         product_ids: snapshots.map((product) => product.item_id),
         product_snapshots: snapshots
       })
     },
+    async refreshProductItems() {
+      const productIds = this.selectedProducts.slice()
+      const refreshSeq = ++this.productRefreshSeq
+      if (!productIds.length) {
+        this.remoteProductItems = []
+        return
+      }
+      try {
+        const latestProducts = await fetchProductTabProducts(productIds)
+        if (refreshSeq !== this.productRefreshSeq) return
+        this.remoteProductItems = latestProducts
+      } catch (error) {
+        if (refreshSeq === this.productRefreshSeq) this.remoteProductItems = []
+      }
+    },
     clearProducts() {
+      this.remoteProductItems = []
       this.$emit('change', { product_ids: [], product_snapshots: [] })
     },
     removeProduct(productId) {
@@ -167,7 +203,7 @@ export default {
     async openProductPicker() {
       const result = await this.$dialog.open(GoodsPicker, {
         parent: this,
-        title: '选择商品',
+        title: this.$t('f504c8cf.43d1e2'),
         props: {
           multiple: true,
           initialSelected: this.selectedProductItems

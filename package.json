@@ -131,9 +131,12 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,scss}": [
-      "npm run eslint",
-      "npm run prettier"
+    "*.{js,jsx}": [
+      "eslint --fix --ignore-path .eslintignore",
+      "prettier --write"
+    ],
+    "*.{vue,mjs,scss}": [
+      "prettier --write"
     ]
   },
   "overrides": {

@@ -37,13 +37,13 @@ import decorationRouteMixin from './decorationRouteMixin'
 import { normalizeDecorationPageType } from '@/components/sp-web-decoration/utils/pageTypes'
 
 const PAGE_TYPE_LABEL_MAP = {
-  home: '首页模板',
-  index: '首页模板',
-  custom: '自定义页模板',
-  list: '列表页模板',
-  product_list: '商品列表模板',
-  header: '标头模板',
-  footer: '页脚模板'
+  home: 'f9eb643d.3c92ff',
+  index: 'f9eb643d.3c92ff',
+  custom: 'f9eb643d.91ab06',
+  list: 'f9eb643d.23b864',
+  product_list: 'f9eb643d.0416ce',
+  header: 'f9eb643d.9a8d77',
+  footer: 'f9eb643d.97ef6e'
 }
 
 /**
@@ -64,8 +64,8 @@ export default {
       return normalizeDecorationPageType(queryPageType || this.$route.params.pageType || 'home')
     },
     decorationTitle() {
-      const label = PAGE_TYPE_LABEL_MAP[this.routePageType] || PAGE_TYPE_LABEL_MAP.home
-      return `${label}装修`
+      const labelKey = PAGE_TYPE_LABEL_MAP[this.routePageType] || PAGE_TYPE_LABEL_MAP.home
+      return `${this.$t(labelKey)}${this.$t('f9eb643d.81b2cb')}`
     },
     isSupportedScene() {
       return this.scene === '1001'

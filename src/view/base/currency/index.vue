@@ -128,6 +128,12 @@ const CURRENCY_PRESET_META = {
     titleStore: '美国美元',
     currency: 'USD',
     symbol: '$'
+  },
+  TWD: {
+    titleKey: '7c0967bc.e8t1w0',
+    titleStore: '台湾台币',
+    currency: 'TWD',
+    symbol: 'NT$'
   }
 }
 
@@ -172,7 +178,8 @@ export default {
       return [
         { value: 'CNY', label: this.$t('7c0967bc.b2e5f0') },
         { value: 'HKD', label: this.$t('7c0967bc.c4f6a1') },
-        { value: 'USD', label: this.$t('7c0967bc.d5f7b2') }
+        { value: 'USD', label: this.$t('7c0967bc.d5f7b2') },
+        { value: 'TWD', label: this.$t('7c0967bc.e6t8w0') }
       ]
     },
     selectedCurrencyTitle() {

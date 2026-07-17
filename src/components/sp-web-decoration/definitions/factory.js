@@ -1,4 +1,5 @@
 import { generateSectionId, generateBlockId } from '../utils/nanoid.js'
+import { resolveDecorationI18nValue } from '../utils/i18n.js'
 import {
   getTypedSectionDefinition,
   getTypedBlockDefinition,
@@ -23,14 +24,18 @@ export function createTypedBlock(sectionType, blockType, options = {}) {
   }
 
   const id = options.id || generateBlockId(blockType)
+  const defaultSettings = resolveDecorationI18nValue(
+    cloneValue(getBlockDefaultSettings(blockType) || {})
+  )
+  const optionSettings = resolveDecorationI18nValue(cloneValue(options.settings || {}))
   return {
     id,
     type: blockType,
     disabled: Boolean(options.disabled),
-    title: definition.name || '',
+    title: resolveDecorationI18nValue(definition.name || ''),
     settings: {
-      ...cloneValue(getBlockDefaultSettings(blockType) || {}),
-      ...cloneValue(options.settings || {})
+      ...defaultSettings,
+      ...optionSettings
     }
   }
 }
@@ -61,14 +66,19 @@ export function createTypedSection(type, options = {}) {
     blockOrder.push(block.id)
   })
 
+  const defaultSettings = resolveDecorationI18nValue(
+    cloneValue(getSectionDefaultSettings(type) || {})
+  )
+  const optionSettings = resolveDecorationI18nValue(cloneValue(options.settings || {}))
+
   return {
     id: sectionId,
     type: definition.type,
-    title: definition.name || '',
+    title: resolveDecorationI18nValue(definition.name || ''),
     disabled: Boolean(options.disabled),
     settings: {
-      ...cloneValue(getSectionDefaultSettings(type) || {}),
-      ...cloneValue(options.settings || {})
+      ...defaultSettings,
+      ...optionSettings
     },
     blocks,
     blockOrder

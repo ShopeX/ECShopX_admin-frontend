@@ -38,7 +38,10 @@ test('locked native product list section cannot be edited like ordinary sections
   assert.match(store, /function isLockedSection/)
   assert.match(store, /duplicateSection\(state, sectionId\)[\s\S]*isLockedSection/)
   assert.match(store, /removeSection\(state, sectionId\)[\s\S]*isLockedSection/)
-  assert.match(store, /setSectionDisabled\(state, \{ sectionId, disabled \}\)[\s\S]*isLockedSection/)
+  assert.match(
+    store,
+    /setSectionDisabled\(state, \{ sectionId, disabled \}\)[\s\S]*isLockedSection/
+  )
   assert.match(structurePanel, /canDeletePageSection/)
   assert.match(structurePanel, /canTogglePageSection/)
   assert.match(configPanel, /showLockedSectionNotice/)
@@ -51,10 +54,19 @@ test('decoration editor title follows current page type', () => {
   const route = read('src/views/decoration/web-template/index.vue')
 
   assert.match(editor, /PAGE_TYPE_LABEL_MAP/)
-  assert.match(editor, /product_list:\s*'商品列表模板'/)
-  assert.match(editor, /titleText\(\)[\s\S]*this\.title \|\| `\$\{this\.pageTypeLabel\}装修`/)
-  assert.match(editor, /subtitleText\(\)[\s\S]*`\$\{this\.pageTypeLabel\}编辑`/)
+  assert.match(editor, /product_list:\s*'30ac5b9e\.0416ce'/)
+  assert.match(
+    editor,
+    /titleText\(\)[\s\S]*this\.title \|\| `\$\{this\.pageTypeLabel\}\$\{this\.\$t\('30ac5b9e\.81b2cb'\)\}`/
+  )
+  assert.match(
+    editor,
+    /subtitleText\(\)[\s\S]*`\$\{this\.pageTypeLabel\}\$\{this\.\$t\('30ac5b9e\.95b351'\)\}`/
+  )
   assert.match(route, /:title="decorationTitle"/)
-  assert.match(route, /decorationTitle\(\)[\s\S]*routePageType[\s\S]*装修/)
+  assert.match(
+    route,
+    /decorationTitle\(\)[\s\S]*routePageType[\s\S]*this\.\$t\(labelKey\)[\s\S]*this\.\$t\('f9eb643d\.81b2cb'\)/
+  )
   assert.doesNotMatch(route, /:title="\$t\('f9eb643d\.6741a0'\)"/)
 })

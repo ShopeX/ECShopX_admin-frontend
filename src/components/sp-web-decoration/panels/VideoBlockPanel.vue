@@ -1,21 +1,21 @@
 <template>
   <div class="space-y-4 text-foreground">
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">视频</div>
+      <div class="text-sm text-muted-foreground">{{ $t('ab6232d1.7fcf42') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
         <VideoPicker v-model="localValue.videoUrl" />
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">视频封面</div>
+      <div class="text-sm text-muted-foreground">{{ $t('ab6232d1.39b75e') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
         <SpImagePicker v-model="localValue.posterUrl" />
       </div>
     </section>
 
     <section class="space-y-2">
-      <div class="text-sm text-muted-foreground">移动视频</div>
+      <div class="text-sm text-muted-foreground">{{ $t('ab6232d1.bba058') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
         <VideoPicker v-model="localValue.mobileVideoUrl" />
       </div>

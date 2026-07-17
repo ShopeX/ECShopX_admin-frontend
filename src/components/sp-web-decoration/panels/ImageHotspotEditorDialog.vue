@@ -2,10 +2,12 @@
   <div class="image-hotspot-editor">
     <div class="mb-3 flex items-center justify-between gap-3">
       <el-radio-group v-model="activeDevice" size="small">
-        <el-radio-button label="pc">PC端</el-radio-button>
-        <el-radio-button label="mobile">移动端</el-radio-button>
+        <el-radio-button label="pc">{{ $t('de39c0e5.07a426') }}</el-radio-button>
+        <el-radio-button label="mobile">{{ $t('de39c0e5.c95e74') }}</el-radio-button>
       </el-radio-group>
-      <div class="text-xs text-muted-foreground">已添加 {{ activeHotspots.length }} 个热区</div>
+      <div class="text-xs text-muted-foreground">
+        {{ $t('de39c0e5.b18955') }} {{ activeHotspots.length }} {{ $t('de39c0e5.c9ac7e') }}
+      </div>
     </div>
 
     <div class="grid grid-cols-[minmax(0,1fr)_320px] gap-4">
@@ -23,12 +25,14 @@
           v-else
           class="flex h-[420px] items-center justify-center rounded-lg border border-dashed border-border bg-card text-sm text-muted-foreground"
         >
-          请先上传{{ activeDevice === 'pc' ? 'PC图片' : '移动图片' }}
+          {{ $t('de39c0e5.ce5e19') }}{{ activeDeviceImageLabel }}
         </div>
       </div>
 
       <div class="min-h-[420px] rounded-xl border border-border bg-card p-3">
-        <div class="mb-3 text-[13px] font-semibold text-foreground">热区链接</div>
+        <div class="mb-3 text-[13px] font-semibold text-foreground">
+          {{ $t('de39c0e5.6e52f6') }}
+        </div>
         <div v-if="activeHotspots.length" class="space-y-3">
           <div
             v-for="(hotspot, index) in activeHotspots"
@@ -36,9 +40,11 @@
             class="rounded-lg border border-border bg-background p-3"
           >
             <div class="mb-2 flex items-center justify-between gap-2">
-              <span class="text-xs font-medium text-foreground">热区 {{ index + 1 }}</span>
+              <span class="text-xs font-medium text-foreground">
+                {{ $t('de39c0e5.50da72') }} {{ index + 1 }}
+              </span>
               <el-button type="text" class="!p-0 !text-xs" @click="removeHotspot(index)">
-                删除
+                {{ $t('de39c0e5.2f4aad') }}
               </el-button>
             </div>
             <CompPickerLink
@@ -52,7 +58,7 @@
           v-else
           class="flex h-[360px] items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground"
         >
-          在左侧图片上拖拽框选热区
+          {{ $t('de39c0e5.1bfed3') }}
         </div>
       </div>
     </div>
@@ -160,6 +166,9 @@ export default {
     },
     activeHotspots() {
       return this.localSettings[this.activeHotspotKey] || []
+    },
+    activeDeviceImageLabel() {
+      return this.activeDevice === 'pc' ? this.$t('de39c0e5.61e5e3') : this.$t('de39c0e5.a761f4')
     },
     hotzoneZones() {
       return this.activeHotspots.map((item) => ({

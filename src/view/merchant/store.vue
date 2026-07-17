@@ -746,6 +746,13 @@ export default {
   },
   mounted() {},
   methods: {
+    normalizeCategoryId(value) {
+      if (value === '' || value == null) {
+        return ''
+      }
+      const num = Number(value)
+      return Number.isNaN(num) ? value : num
+    },
     async getOrderSetting() {
       const res = await this.$api.trade.getOrderSetting()
       this.offline_freight_status = res.is_refund_freight != 1
@@ -849,7 +856,7 @@ export default {
         this.formList.forEach((item) => {
           if (item.key === 'distributor_category_id') {
             item.options = this.categoryList.map((category) => ({
-              value: category.category_id,
+              value: this.normalizeCategoryId(category.category_id),
               title: category.category_name
             }))
           }
@@ -889,7 +896,7 @@ export default {
         const salespersonTypeFromApi = showSalespersonApi === 2 ? 2 : 1
         this.form = {
           distribution_type: res.distribution_type,
-          distributor_category_id: res.distributor_category_id,
+          distributor_category_id: this.normalizeCategoryId(res.distributor_category_id),
           merchant_id: res.merchant_id,
           shop_code: res.shop_code,
           name: res.name,

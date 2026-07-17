@@ -21,7 +21,7 @@
           v-if="showLockedSectionNotice"
           class="rounded-lg border border-dashed border-[#d7dde7] bg-[#fbfbfc] p-4 text-sm leading-6 text-[#6b7785]"
         >
-          这是页面固定业务组件，会在前台渲染原有商品列表逻辑。可在结构树中调整它与其他装修组件的顺序，但不能编辑、隐藏、复制或删除。
+          {{ $t('250dc970.7c8a9d') }}
         </div>
 
         <component
@@ -62,6 +62,7 @@ import {
   getTypedSectionDefinition as getSectionDefinition,
   getTypedBlockDefinition as getBlockDefinition
 } from '../definitions/registry.js'
+import { resolveDecorationI18nValue } from '../utils/i18n.js'
 
 const sectionPanelMap = {
   'announcement-bar': AnnouncementBarPanel,
@@ -141,14 +142,18 @@ export default {
     sectionTitle() {
       if (!this.section) return ''
       const definition = getSectionDefinition(this.section.type)
-      return this.section.settings?.title || definition?.name || this.$t(this.section.titleKey)
+      return (
+        this.section.settings?.title ||
+        resolveDecorationI18nValue(definition?.name || '') ||
+        this.$t(this.section.titleKey)
+      )
     },
     blockTitle() {
       if (!this.block) return ''
       const definition = getBlockDefinition(this.block.type)
       return (
         this.block.settings?.label ||
-        definition?.name ||
+        resolveDecorationI18nValue(definition?.name || '') ||
         this.$t(definition?.titleKey || '250dc970.7f56ad')
       )
     },

@@ -3,11 +3,12 @@ import {
   getTypedBlockDefinition as getBlockDefinition,
   getTypedSectionDefinition as getSectionDefinition
 } from '../definitions/registry.js'
+import { resolveDecorationI18nValue } from './i18n.js'
 
 function normalizePickerItem(item) {
   return {
     ...item,
-    label: item.label || item.title || item.type
+    label: resolveDecorationI18nValue(item.label || item.title || item.type)
   }
 }
 

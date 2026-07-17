@@ -155,6 +155,7 @@ export default {
           { label: this.$t('cb7af8ae.1be670'), name: 'member_point_logs' },
           { label: this.$t('cb7af8ae.fa1b9f'), name: 'distributor_white_list' },
           { label: this.$t('cb7af8ae.d04e78'), name: 'employee_purchase_employees' },
+          { label: '活动商品导出', name: 'employee_purchase_activity_items' },
           { label: '活动码导出', name: 'employee_purchase_activity_qrcode' },
           { label: '扫码统计导出', name: 'employee_purchase_activity_scan_stats' }
         ]

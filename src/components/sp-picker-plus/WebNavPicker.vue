@@ -29,9 +29,9 @@
       v-if="selectedRows.length"
       class="mt-3 flex items-center justify-between rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm text-foreground"
     >
-      <span>已选 {{ selectedRows.length }} 个导航菜单</span>
+      <span>{{ $t('26e67baf.e24780', { count: selectedRows.length }) }}</span>
       <el-button type="text" class="!p-0 !text-muted-foreground" @click="clearSelectedRow">
-        清空
+        {{ $t('eac538c8.288f0c') }}
       </el-button>
     </div>
   </div>
@@ -100,10 +100,10 @@ export default {
       return [
         {
           fieldName: 'name',
-          label: '菜单名称',
+          label: this.$t('738edee2.8ee9f2'),
           component: 'input',
           componentProps: {
-            placeholder: '请输入菜单名称',
+            placeholder: this.$t('738edee2.4cd562'),
             clearable: true
           }
         }
@@ -111,9 +111,9 @@ export default {
     },
     columns() {
       return [
-        { name: '导航菜单', key: 'name', minWidth: 260 },
+        { name: this.$t('738edee2.ff36f6'), key: 'name', minWidth: 260 },
         {
-          name: '菜单项',
+          name: this.$t('738edee2.7419d6'),
           key: 'top_level_item_names',
           minWidth: 420,
           render: {
@@ -207,7 +207,9 @@ export default {
     },
     submit() {
       if (!this.selectedRows.length) {
-        this.$message.warning(this.multiple ? '请至少选择一个导航菜单' : '请先选择一个导航菜单')
+        this.$message.warning(
+          this.multiple ? this.$t('26e67baf.ce7866') : this.$t('26e67baf.061239')
+        )
         return
       }
       this.$emit('close', this.multiple ? this.selectedRows : this.selectedRows[0])

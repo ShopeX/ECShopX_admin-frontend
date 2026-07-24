@@ -1,5 +1,4 @@
 const path = require('path')
-const QiniuPlugin = require('qiniu-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackAliyunOss = require('webpack-aliyun-oss')
 const TerserPlugin = require('terser-webpack-plugin')

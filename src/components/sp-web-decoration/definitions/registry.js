@@ -81,7 +81,11 @@ export function getSectionBlockTypes(sectionType) {
   return getAllowedBlockTypes(sectionType)
 }
 
-export { sectionDefinitions, blockDefinitions, getSectionTypesByScope }
+export {
+  sectionDefinitions,
+  blockDefinitions,
+  getSectionTypesByScope
+}
 
 export default {
   sectionDefinitions,

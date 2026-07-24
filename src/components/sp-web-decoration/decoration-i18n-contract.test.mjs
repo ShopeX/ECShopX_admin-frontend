@@ -27,10 +27,7 @@ const visibleUiFiles = [
 ]
 
 function stripComments(source) {
-  return source
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/\/\*[\s\S]*?\*\//g, '')
-    .replace(/\/\/.*$/gm, '')
+  return source.replace(/<!--[\s\S]*?-->/g, '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '')
 }
 
 function findChineseLines(filePath) {
@@ -46,7 +43,9 @@ function loadSectionAppearance() {
     .replace(/export\s+function\s+/g, 'function ')
     .replace(/export\s+default\s+\{[\s\S]*$/, '')
 
-  return new Function(`${source}\nreturn { SECTION_PADDING_OPTIONS, SECTION_COLOR_SCHEMES }`)()
+  return new Function(
+    `${source}\nreturn { SECTION_PADDING_OPTIONS, SECTION_COLOR_SCHEMES }`
+  )()
 }
 
 function loadDecorationI18nHelper(locale = 'en') {

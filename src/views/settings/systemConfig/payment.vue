@@ -1204,11 +1204,15 @@ export default {
 
       if (newEnabled && paymentItem.name === 'doumen_intl') {
         try {
-          await this.$confirm('请确认是否启用斗门国际收银台，启用会默认关闭其他支付方式', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
+          await this.$confirm(
+            '请确认是否启用斗门国际收银台，启用会默认关闭其他支付方式',
+            '提示',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }
+          )
         } catch {
           paymentItem.enabled = false
           return
@@ -1286,7 +1290,11 @@ export default {
           }
         }
 
-        if (payType !== 'doumen_intl' && params.is_open === 'true' && this.isDoumenIntlEnabled()) {
+        if (
+          payType !== 'doumen_intl' &&
+          params.is_open === 'true' &&
+          this.isDoumenIntlEnabled()
+        ) {
           throw new Error('请先关闭斗门国际收银台')
         }
 

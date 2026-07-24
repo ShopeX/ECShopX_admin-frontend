@@ -108,8 +108,7 @@ import Vue from 'vue'
 import plugins from './components/plugins/index'
 // import { Footer, Header, Nav } from "./components/common";
 import { savePageParams, getParamByTempName } from '@/api/pctemplate'
-const generate = require('nanoid/generate')
-const str = '1234567890abcdef'
+import generateComponentUuid from '@/utils/nanoidAlphabet'
 export default {
   components: { draggable },
   props: {
@@ -300,7 +299,7 @@ export default {
     onStart(evt) {
       if (evt.target.className === 'components-view') {
         let item = this.initData[evt.oldIndex]
-        item.uuid = generate(str, 10)
+        item.uuid = generateComponentUuid()
         this.saveInit = JSON.stringify(item)
       } else {
         console.log('onstart')

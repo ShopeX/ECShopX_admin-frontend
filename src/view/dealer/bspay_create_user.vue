@@ -763,10 +763,7 @@ export default {
         if (this.form.license_validity_type != null && this.form.license_validity_type !== '') {
           this.form.license_validity_type = Number(this.form.license_validity_type)
         }
-        if (
-          this.form.legal_cert_validity_type != null &&
-          this.form.legal_cert_validity_type !== ''
-        ) {
+        if (this.form.legal_cert_validity_type != null && this.form.legal_cert_validity_type !== '') {
           this.form.legal_cert_validity_type = Number(this.form.legal_cert_validity_type)
         }
         this.form.license_regions_id = [

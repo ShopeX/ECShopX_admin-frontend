@@ -4,7 +4,7 @@ const ADMIN_TO_WEB_LOCALE_PREFIX = {
   en: '/en',
   ar: '/ar',
   zhcn: '',
-  zhtw: 'zh-TW'
+  zhtw: 'zh-TW',
 }
 
 function getCurrentAdminLang() {

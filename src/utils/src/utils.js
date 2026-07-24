@@ -13,10 +13,7 @@ export function formatPrice(price, thousandth = true, prefix = '¥', suffix = ''
   return `${prefix}${formattedPrice}${suffix}`
 }
 
-export function getCurrencySymbol(
-  row = {},
-  keys = ['cur_fee_symbol', 'curFeeSymbol', 'fee_symbol', 'feeSymbol']
-) {
+export function getCurrencySymbol(row = {}, keys = ['cur_fee_symbol', 'curFeeSymbol', 'fee_symbol', 'feeSymbol']) {
   for (const key of keys) {
     if (row[key]) {
       return row[key]

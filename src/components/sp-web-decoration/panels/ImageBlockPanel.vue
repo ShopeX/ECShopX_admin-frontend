@@ -3,26 +3,47 @@
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">{{ $t('94f92572.61e5e3') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
-        <SpImagePicker v-model="localValue.pc_image" />
+        <SpImagePicker :value="settings.pc_image" @input="updateField('pc_image', $event)" />
       </div>
     </section>
 
     <section class="space-y-2">
       <div class="text-sm text-muted-foreground">{{ $t('94f92572.a761f4') }}</div>
       <div class="rounded-xl border border-border bg-card p-3">
-        <SpImagePicker v-model="localValue.mobile_image" />
+        <SpImagePicker :value="settings.mobile_image" @input="updateField('mobile_image', $event)" />
+      </div>
+    </section>
+
+    <section class="space-y-2">
+      <div class="text-sm text-muted-foreground">跳转路径</div>
+      <div class="rounded-xl border border-border bg-card p-3">
+        <CompPickerLink
+          :value="settings.link || {}"
+          :show-tracking-params="false"
+          @change="updateLink"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { cloneDeep } from 'lodash'
 import SpImagePicker from '@/components/sp-image-picker/index.vue'
+import CompPickerLink from '@/view/decorate/comps/comp-pickerLink.vue'
+import { normalizeTypedBlockSettings } from '../utils/panelState.js'
+
+function normalizeLink(link = {}) {
+  const next = cloneDeep(link)
+  delete next.trackingParams
+  return next
+}
 
 export default {
   name: 'ImageBlockPanel',
   components: {
-    SpImagePicker
+    SpImagePicker,
+    CompPickerLink
   },
   props: {
     value: {
@@ -31,8 +52,8 @@ export default {
     }
   },
   computed: {
-    localValue() {
-      return this.value
+    settings() {
+      return normalizeTypedBlockSettings('image', this.value)
     }
   },
   methods: {
@@ -40,6 +61,9 @@ export default {
       this.$emit('change', {
         [field]: fieldValue
       })
+    },
+    updateLink(value) {
+      this.updateField('link', normalizeLink(value))
     }
   }
 }

@@ -180,8 +180,8 @@ export function parsePageDslRows(payload, templateId, scene, pageType = 'home') 
   const rows = Array.isArray(payload)
     ? payload
     : payload && typeof payload === 'object'
-    ? [payload]
-    : []
+      ? [payload]
+      : []
   if (!rows.length) return null
 
   for (const row of rows) {
@@ -205,8 +205,8 @@ export function parsePageDslRows(payload, templateId, scene, pageType = 'home') 
     const target = Array.isArray(cfg)
       ? cfg.find((item) => item && (item.type === DSL_ROW_TYPE || (item.pageType && item.sections)))
       : cfg && (cfg.type === DSL_ROW_TYPE || (cfg.pageType && cfg.sections))
-      ? cfg
-      : null
+        ? cfg
+        : null
     const targetDsl = target?.dsl || target
     console.log('[sp-web-decoration] page config parsed target', {
       templateId,

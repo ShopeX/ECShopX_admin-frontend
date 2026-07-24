@@ -168,7 +168,9 @@ export default {
       return this.localSettings[this.activeHotspotKey] || []
     },
     activeDeviceImageLabel() {
-      return this.activeDevice === 'pc' ? this.$t('de39c0e5.61e5e3') : this.$t('de39c0e5.a761f4')
+      return this.activeDevice === 'pc'
+        ? this.$t('de39c0e5.61e5e3')
+        : this.$t('de39c0e5.a761f4')
     },
     hotzoneZones() {
       return this.activeHotspots.map((item) => ({

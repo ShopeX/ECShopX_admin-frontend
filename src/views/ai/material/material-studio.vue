@@ -488,7 +488,7 @@ export default {
       pageSize: 10,
       total: 0,
       hasMore: true,
-      _scrollLockMs: 0,
+      scrollLockMs: 0,
 
       settingsOpen: false,
       templateOpen: false,
@@ -519,7 +519,7 @@ export default {
         media_type: 'image'
       },
 
-      _pollTimer: null
+      pollTimer: null
     }
   },
   computed: {
@@ -672,12 +672,12 @@ export default {
      */
     startPolling() {
       this.stopPolling()
-      this._pollTimer = setInterval(() => this.pollVideoTasks(), 5000)
+      this.pollTimer = setInterval(() => this.pollVideoTasks(), 5000)
     },
     stopPolling() {
-      if (this._pollTimer) {
-        clearInterval(this._pollTimer)
-        this._pollTimer = null
+      if (this.pollTimer) {
+        clearInterval(this.pollTimer)
+        this.pollTimer = null
       }
     },
     async pollVideoTasks() {

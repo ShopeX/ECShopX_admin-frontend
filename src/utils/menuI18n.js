@@ -44,7 +44,9 @@ function findRouteForMenu(vm, menuItem) {
 
   // 多路由共用同一 permission 时，用 aliasName 精确匹配（如 publicsetting vs mailService）
   if (alias && candidates.length > 1) {
-    const byAlias = candidates.filter((route) => normalizeAlias(route.meta?.aliasName) === alias)
+    const byAlias = candidates.filter(
+      (route) => normalizeAlias(route.meta?.aliasName) === alias
+    )
     if (byAlias.length) {
       candidates = byAlias
     }
@@ -57,7 +59,8 @@ function findRouteForMenu(vm, menuItem) {
     candidates = routes.filter((route) => {
       const perms = route.meta?.permissions
       return (
-        Array.isArray(perms) && perms.some((perm) => perm === alias || perm.endsWith('.' + alias))
+        Array.isArray(perms) &&
+        perms.some((perm) => perm === alias || perm.endsWith('.' + alias))
       )
     })
   }

@@ -12,7 +12,7 @@
       <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>
     </div>
 
-    <div class="mt-8 ml-2">
+    <div class="mt-8 ml-2" data-testid="admin-login-form">
       <LoginForm ref="formRef" />
     </div>
 
@@ -20,6 +20,7 @@
       <el-button
         round
         class="h-[50px] !bg-black !text-white"
+        data-testid="admin-login-submit"
         :loading="loading"
         @click="handleLogin"
       >
@@ -32,7 +33,7 @@
 <script>
 import { useForm } from '@/composables'
 import Config from '@/config'
-import { getSystemTitle } from '@/utils'
+import { decodeJwtPayload, getSystemTitle } from '@/utils'
 import { i18n } from '@/i18n'
 
 const [Form, FormApi] = useForm({
@@ -41,7 +42,8 @@ const [Form, FormApi] = useForm({
       label: i18n.t('24b2720c.819767'),
       component: 'Input',
       componentProps: {
-        placeholder: i18n.t('24b2720c.08b1fa')
+        placeholder: i18n.t('24b2720c.08b1fa'),
+        'data-testid': 'admin-login-account'
       },
       fieldName: 'account',
       rules: [{ required: true, message: i18n.t('24b2720c.08b1fa') }]
@@ -51,7 +53,8 @@ const [Form, FormApi] = useForm({
       component: 'Input',
       componentProps: {
         type: 'password',
-        placeholder: i18n.t('24b2720c.a81052')
+        placeholder: i18n.t('24b2720c.a81052'),
+        'data-testid': 'admin-login-password'
       },
       fieldName: 'pwd',
       rules: [{ required: true, message: i18n.t('24b2720c.e39ffe') }]
@@ -117,8 +120,7 @@ export default {
           // agreement_id
         })
         if (token) {
-          const tokenArray = token.split('.')
-          const { menu_type } = JSON.parse(atob(tokenArray[1]))
+          const { menu_type } = decodeJwtPayload(token)
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: formData.loginType })

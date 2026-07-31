@@ -15,6 +15,8 @@ export * from './src/type-helper'
 
 export * from './src/utils'
 
+export * from './jwt'
+
 export { install as VuePrototype } from './src/prototype'
 
 // 云店

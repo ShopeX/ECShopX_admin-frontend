@@ -40,8 +40,8 @@
      
       </div>
    -->
-    <addCartas v-if="classify" />
-    <List v-else ref="list" />
+    <!-- <addCartas v-if="classify" /> -->
+    <List ref="list" />
     <!-- <section v-if="classify" class="content-padded-s section-white content-center">
         <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
       </section> -->
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import addCartas from './addCartas.vue'
+// import addCartas from './addCartas.vue'
 import index from './index.vue'
 import List from './list.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    addCartas,
+    // addCartas,
     List
   },
   data() {

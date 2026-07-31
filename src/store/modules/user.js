@@ -3,6 +3,7 @@
  * See LICENSE file for license details.
  */
 import api from '@/api'
+import { decodeJwtPayload } from '@/utils/jwt'
 
 const userStore = {
   namespaced: true,
@@ -195,9 +196,7 @@ const userStore = {
     setToken({ commit }, token) {
       commit('setToken', token)
       // 解析token中的user信息，并且保存
-      let tokenArray = token.split('.')
-      let user = atob(tokenArray[1])
-      user = JSON.parse(user)
+      const user = decodeJwtPayload(token)
       commit('setTokenExp', user.exp)
       commit('setUserName', user.mobile)
       commit('setAuthorizer', user.is_authorizer)

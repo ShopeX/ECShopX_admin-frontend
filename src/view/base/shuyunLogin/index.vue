@@ -11,7 +11,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { unescape } from '@/utils'
+import { decodeJwtPayload, unescape } from '@/utils'
 export default {
   data() {
     return {
@@ -79,9 +79,8 @@ export default {
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()
-      let base64Url = token.split('.')[1]
       // const { menu_type } = await this.$api.wechat.getAuthorizerInfo()
-      const { menu_type } = JSON.parse(atob(base64Url))
+      const { menu_type } = decodeJwtPayload(token)
       console.log('menu_type', menu_type)
       this.SET_USERINFO(userInfo)
       this.SET_LOGIN_TYPE({ loginType: this.loginType || userInfo.logintype })

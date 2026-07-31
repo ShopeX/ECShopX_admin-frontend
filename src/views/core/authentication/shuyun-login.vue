@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { decodeJwtPayload } from '@/utils'
 export default {
   name: 'Login',
   data() {
@@ -34,8 +35,7 @@ export default {
       try {
         const { token } = await this.$api.auth.shunyunLogin({ code: this.code })
         if (token) {
-          const tokenArray = token.split('.')
-          const { menu_type } = JSON.parse(atob(tokenArray[1]))
+          const { menu_type } = decodeJwtPayload(token)
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: 'admin' })

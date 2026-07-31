@@ -116,7 +116,7 @@ const login_bg_ecshopx = require(`@/assets/imgs/login-b2b2c.jpg`)
 const login_bg_free_ecshopx = require(`@/assets/imgs/login-free-ecshopx.jpg`)
 import { mapMutations } from 'vuex'
 import { requiredRules, MinRules } from '@/utils/validate'
-import { unescape } from '@/utils'
+import { decodeJwtPayload, unescape } from '@/utils'
 import loadingBtn from '@/components/loading-btn'
 export default {
   components: {
@@ -277,8 +277,7 @@ export default {
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()
-      let base64Url = token.split('.')[1]
-      const { menu_type } = JSON.parse(atob(base64Url))
+      const { menu_type } = decodeJwtPayload(token)
       console.log('menu_type', menu_type)
       this.SET_USERINFO(userInfo)
       if (this.loginType == 'distributor') {

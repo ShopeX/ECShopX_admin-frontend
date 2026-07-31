@@ -37,6 +37,12 @@
       <SpFilterFormItem prop="username" :label="$t('ab2cdfe4.75d152')">
         <el-input v-model="params.username" :placeholder="$t('ab2cdfe4.8093e3')" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="shop_name" :label="$t('ab2cdfe4.0d4934')">
+        <el-input v-model="params.shop_name" clearable :placeholder="$t('ab2cdfe4.867738')" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="shop_code" :label="$t('ab2cdfe4.f6d738')">
+        <el-input v-model="params.shop_code" clearable :placeholder="$t('ab2cdfe4.68f04a')" />
+      </SpFilterFormItem>
     </SpFilterForm>
 
     <el-table v-loading="loading" border :data="accountsList">
@@ -66,6 +72,17 @@
         <template slot-scope="scope">
           <el-tag v-for="item in scope.row.distributor_ids" :key="item.distributor_id" size="mini">
             {{ item.name }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('ab2cdfe4.f6d738')">
+        <template slot-scope="scope">
+          <el-tag
+            v-for="item in scope.row.distributor_ids"
+            :key="'code-' + item.distributor_id"
+            size="mini"
+          >
+            {{ item.shop_code }}
           </el-tag>
         </template>
       </el-table-column>
@@ -282,6 +299,10 @@ export default {
       total_count: 0,
       params: {
         mobile: '',
+        login_name: '',
+        username: '',
+        shop_name: '',
+        shop_code: '',
         operator_type: 'distributor'
       },
       operator_id: 0,

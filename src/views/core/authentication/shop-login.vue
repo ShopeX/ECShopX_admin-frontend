@@ -31,7 +31,7 @@
 <script>
 import { useForm } from '@/composables'
 import Config from '@/config'
-import { getSystemTitle } from '@/utils'
+import { decodeJwtPayload, getSystemTitle } from '@/utils'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -96,8 +96,7 @@ export default {
           // agreement_id
         })
         if (token) {
-          const tokenArray = token.split('.')
-          const { menu_type } = JSON.parse(atob(tokenArray[1]))
+          const { menu_type } = decodeJwtPayload(token)
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: 'distributor' })

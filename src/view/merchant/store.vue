@@ -516,9 +516,14 @@ export default {
           display: 'inline',
           options: [
             { name: this.$t('027707af.9cfec5'), label: 1 },
-            { name: this.$t('027707af.29189f'), label: 2 }
+            // BBC 去除「导购码」选项，仅保留上传企微码
+            ...(!this.VERSION_PLATFORM()
+              ? [{ name: this.$t('027707af.29189f'), label: 2 }]
+              : [])
           ],
-          isShow: ({ key }, value) => value.show_salesperson !== 0
+          // BBC 仅一种码类型，无需再展示「码类型」单选
+          isShow: ({ key }, value) =>
+            value.show_salesperson !== 0 && !this.VERSION_PLATFORM()
         },
         {
           label: this.$t('027707af.80384a'),
@@ -528,7 +533,10 @@ export default {
             return <SpImagePicker v-model={value[key]} />
           },
           validator: (rule, value, callback) => {
-            if (this.form.show_salesperson === 1 && this.form.salesperson_type === 1) {
+            const needQrcode =
+              this.form.show_salesperson === 1 &&
+              (this.VERSION_PLATFORM() || this.form.salesperson_type === 1)
+            if (needQrcode) {
               if (!value) {
                 callback(new Error(this.$t('027707af.e90339')))
               } else {
@@ -538,7 +546,9 @@ export default {
               callback()
             }
           },
-          isShow: ({ key }, value) => value.show_salesperson === 1 && value.salesperson_type === 1
+          isShow: ({ key }, value) =>
+            value.show_salesperson === 1 &&
+            (this.VERSION_PLATFORM() || value.salesperson_type === 1)
         },
         {
           label: this.$t('027707af.6a9e57'),
@@ -893,7 +903,12 @@ export default {
         this.datapass_block = res.datapass_block
         const showSalespersonApi = Number(res.show_salesperson)
         const showSalespersonOn = showSalespersonApi === 1 || showSalespersonApi === 2 ? 1 : 0
-        const salespersonTypeFromApi = showSalespersonApi === 2 ? 2 : 1
+        // BBC 已去除导购码，历史 show_salesperson=2 回显为开启 + 企微码
+        const salespersonTypeFromApi = this.VERSION_PLATFORM()
+          ? 1
+          : showSalespersonApi === 2
+            ? 2
+            : 1
         this.form = {
           distribution_type: res.distribution_type,
           distributor_category_id: this.normalizeCategoryId(res.distributor_category_id),
@@ -1022,11 +1037,12 @@ export default {
         delete params.salesperson_type
       } else if (this.form.show_salesperson === 1) {
         // 开启时，根据 salesperson_type 设置 show_salesperson
-        if (this.form.salesperson_type === 1) {
+        // BBC 仅支持上传企微码（show_salesperson=1）
+        if (this.VERSION_PLATFORM() || this.form.salesperson_type === 1) {
           // 上传企微码
           params.show_salesperson = 1
         } else if (this.form.salesperson_type === 2) {
-          // 导购码
+          // 导购码（非 BBC）
           params.show_salesperson = 2
           delete params.fixed_salesperson_qrcode_url
         }

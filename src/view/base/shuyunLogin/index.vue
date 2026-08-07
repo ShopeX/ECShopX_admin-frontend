@@ -11,7 +11,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { decodeJwtPayload, unescape } from '@/utils'
+import { decodeJwtPayload, unescape, resolveAppPath } from '@/utils'
 export default {
   data() {
     return {
@@ -98,7 +98,7 @@ export default {
       } else if (this.loginType == 'merchant') {
         this.$router.push({ path: '/merchant' })
       } else {
-        window.location.href = '/'
+        window.location.href = resolveAppPath('/')
       }
     },
     async getAgreementContent() {

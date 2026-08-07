@@ -175,6 +175,14 @@ export function regActivityUpdate(query) {
   })
 }
 
+export function regActivitySetIsShow(query) {
+  return fetch({
+    url: '/selfhelp/registrationActivity/setIsShow',
+    method: 'put',
+    params: query
+  })
+}
+
 // 活动
 export function regActivityInvalid(query) {
   return fetch({

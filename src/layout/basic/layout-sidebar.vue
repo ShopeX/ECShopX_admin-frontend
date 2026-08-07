@@ -9,7 +9,7 @@
       <div class="flex items-center mt-2 px-2">
         <SpImage
           class="bg-white mx-auto"
-          :src="$store.state.system?.logo || '/images/logo.png'"
+          :src="$store.state.system?.logo || defaultLogo"
           height="38"
           fit="contain"
         />
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { getBasePath, getSystemTitle } from '@/utils'
+import { getBasePath, getSystemTitle, resolvePublicAsset } from '@/utils'
 import Config from '@/config'
 
 export default {
@@ -111,7 +111,8 @@ export default {
       mainMenus: [],
       subMenus: [],
       //当前打开的二级菜单标识列表
-      openedMenus: []
+      openedMenus: [],
+      defaultLogo: resolvePublicAsset('images/logo.png')
     }
   },
   computed: {

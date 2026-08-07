@@ -8,7 +8,16 @@
     <SpPage>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
-      <SearchForm class="mb-4" @submit="handleSearch" />
+      <SpFormPlus
+        ref="searchForm"
+        class="mb-4"
+        v-model="searchParams"
+        form-type="searchForm"
+        :inline="true"
+        :form-items="searchFormItems"
+        @submit="handleSearch"
+        @reset="handleSearch"
+      />
 
       <SpTabs :tab-list="tabList" v-model="activeTab" @change="handleTabChange" />
 
@@ -46,69 +55,6 @@ import hqbdlycorp from '@/common/hqbdlycorp.json'
 import { i18n } from '@/i18n'
 
 const LOCAL_ORDER_TYPE = _map(ORDER_TYPE, (item) => ({ label: item.title, value: item.value }))
-
-const [SearchForm, SearchFormApi] = useForm({
-  formType: 'searchForm',
-  formItems: [
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: i18n.t('2345face.6e4f4b')
-      },
-      fieldName: 'mobile',
-      // formItemClass: 'col-start-3',
-      label: i18n.t('2345face.8098e2'),
-      value: ''
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: i18n.t('2345face.e9e836')
-      },
-      fieldName: 'order_id',
-      label: i18n.t('2345face.1e8dc2'),
-      value: ''
-    },
-    {
-      component: 'Select',
-      componentProps: {
-        placeholder: i18n.t('2345face.249ee7'),
-        options: LOCAL_ORDER_TYPE
-      },
-      fieldName: 'order_class',
-      label: i18n.t('2345face.5cd56b'),
-      value: ''
-    },
-    {
-      component: 'DateTimePicker',
-      componentProps: {
-        type: 'datetimerange'
-      },
-      fieldName: 'create_time',
-      formItemClass: 'col-span-2',
-      label: i18n.t('2345face.56e3f8'),
-      value: []
-    }
-    // {
-    //   component: ({ h, value, onInput }) => {
-    //     return (
-    //       <SpSelectShop
-    //         value={value}
-    //         size="small"
-    //         placeholder="请选择店铺"
-    //         onChange={val => {
-    //           onInput(val)
-    //         }}
-    //       />
-    //     )
-    //   },
-    //   fieldName: 'distributor_id',
-    //   label: '店铺',
-    //   value: ''
-    // }
-  ],
-  inline: true
-})
 
 const [DeliveryForm, DeliveryFormApi] = useForm({
   formItems: [
@@ -165,11 +111,14 @@ const [DeliveryForm, DeliveryFormApi] = useForm({
 })
 
 export default {
-  components: {
-    SearchForm: SearchForm
-  },
   data() {
     return {
+      searchParams: {
+        mobile: '',
+        order_id: '',
+        order_class: '',
+        create_time: []
+      },
       datapass_block: 1,
       finderSetting: createSetting({
         actions: [
@@ -318,11 +267,53 @@ export default {
       ]
     }
   },
-  mounted() {},
+  computed: {
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'mobile',
+          label: this.$t('2345face.8098e2'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('2345face.6e4f4b')
+          }
+        },
+        {
+          fieldName: 'order_id',
+          label: this.$t('2345face.1e8dc2'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('2345face.e9e836')
+          }
+        },
+        {
+          fieldName: 'order_class',
+          label: this.$t('2345face.5cd56b'),
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('2345face.249ee7'),
+            options: LOCAL_ORDER_TYPE
+          }
+        },
+        {
+          fieldName: 'create_time',
+          label: this.$t('2345face.56e3f8'),
+          component: 'datetimepicker',
+          cellWidth: 2,
+          componentProps: {
+            type: 'datetimerange'
+          }
+        }
+      ]
+    }
+  },
   methods: {
     beforeSearch(params) {
-      const { create_time, mobile, order_id, order_class, distributor_id } =
-        SearchFormApi.getFieldsValue()
+      const { create_time, mobile, order_id, order_class, distributor_id } = this.searchParams
       const _params = {
         ...params,
         order_type: 'normal',
@@ -330,9 +321,13 @@ export default {
         is_distribution: 1
       }
 
-      if (create_time.length > 0) {
-        _params.time_start_begin = create_time[0].getTime() / 1000
-        _params.time_start_end = create_time[1].getTime() / 1000
+      if (create_time && create_time.length > 0) {
+        const start = create_time[0]
+        const end = create_time[1]
+        _params.time_start_begin =
+          typeof start?.getTime === 'function' ? start.getTime() / 1000 : start / 1000
+        _params.time_start_end =
+          typeof end?.getTime === 'function' ? end.getTime() / 1000 : end / 1000
       }
 
       order_id && (_params.order_id = order_id)
@@ -352,7 +347,7 @@ export default {
     handleTabChange(tab) {
       this.$refs.finder.refresh(true)
     },
-    handleSearch(form) {
+    handleSearch() {
       this.$refs.finder.refresh(true)
     }
   }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { decodeJwtPayload } from '@/utils'
+import { decodeJwtPayload, resolveAppPath } from '@/utils'
 export default {
   name: 'Login',
   data() {
@@ -43,7 +43,7 @@ export default {
           await this.$store.dispatch('user/fetchAccessMenus')
           await this.$store.dispatch('user/fetchAccountInfo')
           setTimeout(() => {
-            window.location.href = '/'
+            window.location.href = resolveAppPath('/')
           }, 700)
         }
       } catch (error) {

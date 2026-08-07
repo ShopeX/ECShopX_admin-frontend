@@ -14,7 +14,8 @@ import {
   isInMerchant,
   isObject,
   IS_DISTRIBUTOR,
-  IS_SUPPLIER
+  IS_SUPPLIER,
+  resolveAppPath
 } from '@/utils'
 
 function resolveGetMethod(inst) {
@@ -55,13 +56,13 @@ export function errorToast(data) {
     // Router.push( { path: '/auth/login', replace: true } )
     // 如果是商家入驻
     if (isInMerchant()) {
-      window.location.href = '/merchant'
+      window.location.href = resolveAppPath('/merchant')
     } else if (IS_DISTRIBUTOR()) {
-      window.location.href = '/shopadmin'
+      window.location.href = resolveAppPath('/shopadmin')
     } else if (IS_SUPPLIER()) {
-      window.location.href = '/supplier'
+      window.location.href = resolveAppPath('/supplier')
     } else {
-      window.location.href = '/'
+      window.location.href = resolveAppPath('/')
     }
   } else {
     Vue.prototype.$message.error(message)

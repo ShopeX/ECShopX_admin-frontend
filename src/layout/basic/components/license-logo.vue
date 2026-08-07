@@ -8,7 +8,7 @@
     <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
     <div class="style-medium size-13 text-[#B3B3B3]">Powered by</div>
     <SpImage
-      src="/images/logo-powerby.png"
+      :src="logoPowerBySrc"
       class="cursor-pointer mt-1"
       height="15"
       fit="contain"
@@ -18,11 +18,14 @@
 </template>
 
 <script>
+import { resolvePublicAsset } from '@/utils'
+
 export default {
   name: 'LicenseLogo',
   data() {
     return {
-      isYD: process.env.VUE_APP_PLATFORM == 'yd'
+      isYD: process.env.VUE_APP_PLATFORM == 'yd',
+      logoPowerBySrc: resolvePublicAsset('images/logo-powerby.png')
     }
   },
   computed: {},

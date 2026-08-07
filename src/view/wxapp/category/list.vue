@@ -12,7 +12,7 @@
     <SpDialog
       ref="groupDialogRef"
       v-model="showSettingSaleClassify"
-      :title="$t('c7eb6efa.7b3c0e')"
+      :title="linkCategoryLabel"
       :form="saleClassifyForm"
       :form-list="saleClassifyFormList"
       @onSubmit="onSaleClassifyFormSubmit"
@@ -68,6 +68,18 @@ export default {
     }
   },
   computed: {
+    isB2B2C() {
+      return this.VERSION_PLATFORM()
+    },
+    linkCategoryLabel() {
+      return this.isB2B2C ? this.$t('c7eb6efa.a1a244') : this.$t('c7eb6efa.7b3c0e')
+    },
+    categoryFormLabel() {
+      return this.isB2B2C ? this.$t('d81d8932.b3ed9f') : this.$t('c7eb6efa.392d49')
+    },
+    categoryFormPlaceholder() {
+      return this.isB2B2C ? this.$t('92f7db48.1ff189') : this.$t('c7eb6efa.8f1896')
+    },
     setting() {
       return createSetting({
         search: [
@@ -95,7 +107,7 @@ export default {
           },
           {
             key: 'category_name',
-            name: this.$t('c7eb6efa.7b3c0e'),
+            name: this.linkCategoryLabel,
             minWidth: 120
           },
           {
@@ -157,16 +169,16 @@ export default {
             }
           },
           {
-            name: this.$t('c7eb6efa.7b3c0e'),
+            name: this.linkCategoryLabel,
             key: 'link',
             type: 'button',
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
                 this.categoryList = []
-                const res = await this.$api.goods.getCategory({
-                  parent_id: 0
-                })
+                const res = await this.$api.goods.getCategory(
+                  this.isB2B2C ? { is_main_category: true } : { parent_id: 0 }
+                )
                 const list = res.map((item) => ({
                   title: item.category_name,
                   value: item.category_id
@@ -230,11 +242,11 @@ export default {
     saleClassifyFormList() {
       return [
         {
-          label: this.$t('c7eb6efa.392d49'),
+          label: this.categoryFormLabel,
           key: 'category_id',
           type: 'select',
           maxlength: 150,
-          placeholder: this.$t('c7eb6efa.8f1896'),
+          placeholder: this.categoryFormPlaceholder,
           required: true,
           message: this.$t('c7eb6efa.281bad'),
           options: this.categoryList

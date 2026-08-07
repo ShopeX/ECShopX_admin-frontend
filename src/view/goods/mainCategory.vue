@@ -112,6 +112,21 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+          v-if="showIsShowFront"
+          :label="$t('2dc17300.6891b4')"
+          width="120"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-switch
+              :value="scope.row.is_show_front"
+              active-value="1"
+              inactive-value="0"
+              @change="(val) => onIsShowFrontChange(scope.row, val)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="sort" :label="$t('2dc17300.53eb44')" width="140">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
@@ -177,7 +192,8 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: ''
+        image_url: '',
+        is_show_front: '1'
       },
       categoryFormList: [
         {
@@ -187,11 +203,6 @@ export default {
           placeholder: this.$t('2dc17300.68363f'),
           required: true,
           message: this.$t('2dc17300.281bad')
-        },
-        {
-          label: this.$t('2dc17300.53eb44'),
-          key: 'sort',
-          type: 'number'
         },
         {
           label: this.$t('2dc17300.dc1eed'),
@@ -204,6 +215,19 @@ export default {
           label: this.$t('2dc17300.b34dc8'),
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
+        },
+        {
+          label: this.$t('2dc17300.6891b4'),
+          key: 'is_show_front',
+          isShow: () => this.showIsShowFront,
+          component: ({ key }, value) => (
+            <el-switch v-model={value[key]} active-value='1' inactive-value='0' />
+          )
+        },
+        {
+          label: this.$t('2dc17300.53eb44'),
+          key: 'sort',
+          type: 'number'
         }
       ],
       profitDialog: false,
@@ -244,6 +268,12 @@ export default {
       ]
     }
   },
+  computed: {
+    // 仅 B2B2C：bbc 构建 + platform 运行时展示「前台是否显示」
+    showIsShowFront() {
+      return process.env.VUE_APP_PLATFORM === 'bbc' && this.VERSION_PLATFORM()
+    }
+  },
   created() {
     this.mapData = new Map()
   },
@@ -277,18 +307,21 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: ''
+        image_url: '',
+        is_show_front: '1'
       }
       this.categoryDialog = true
     },
-    // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url }) {
+    // 编辑分类（与列表「前台是否显示」开关保持一致：统一为 '1'/'0'）
+    editCategory({ parent_id, category_id, category_name, sort, image_url, is_show_front }) {
+      const showFront = is_show_front === 1 || is_show_front === '1' || is_show_front === true
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
-        image_url
+        image_url,
+        is_show_front: showFront ? '1' : '0'
       }
       this.categoryDialog = true
     },
@@ -302,9 +335,22 @@ export default {
         sort: 0,
         parent_id: category_id,
         parent_name: category_name,
-        image_url: ''
+        image_url: '',
+        is_show_front: '1'
       }
       this.categoryDialog = true
+    },
+    async onIsShowFrontChange(row, val) {
+      try {
+        await this.$api.goods.editCategory({
+          category_id: row.category_id,
+          is_show_front: val
+        })
+        this.$set(row, 'is_show_front', val)
+        this.$message.success(this.$t('2dc17300.3bb47b'))
+      } catch (e) {
+        this.$message.error(e?.message || this.$t('2dc17300.02d981'))
+      }
     },
     // 分润配置
     handleProfitPrice({
@@ -375,10 +421,13 @@ export default {
         is_main_category: true
       })
       const list = res.map((item) => {
+        const showFront =
+          item.is_show_front === 1 || item.is_show_front === '1' || item.is_show_front === true
         return {
           ...item,
           image_url: item.image_url || '',
-          hasChildren: item.has_children == '1'
+          hasChildren: item.has_children == '1',
+          is_show_front: showFront ? '1' : '0'
         }
       })
       return list
@@ -390,13 +439,16 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, parent_id, category_id } = this.categoryForm
+      const { category_name, sort, image_url, parent_id, category_id, is_show_front } =
+        this.categoryForm
+      const showFrontParams = this.showIsShowFront ? { is_show_front } : {}
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,
           sort,
           image_url,
-          category_id
+          category_id,
+          ...showFrontParams
         })
         this.$message.success(this.$t('2dc17300.3bb47b'))
         this.refreshNode(parent_id)
@@ -408,7 +460,8 @@ export default {
           sort,
           is_main_category: 1,
           image_url,
-          parent_id: parent_id != '0' ? parent_id : undefined
+          parent_id: parent_id != '0' ? parent_id : undefined,
+          ...showFrontParams
         })
         this.$message.success(this.$t('2dc17300.3fdaea'))
         this.refreshNode(parent_id)

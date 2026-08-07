@@ -7,59 +7,17 @@
   <div>
     <SpPage>
       <div v-if="$route.path.indexOf('editor') === -1">
-        <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-          <SpFilterFormItem prop="keywords" :label="$t('c43c7afc.752597')">
-            <el-input v-model="params.keywords" :placeholder="$t('c43c7afc.d83187')" />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="goods_bn" :label="$t('c43c7afc.288587')">
-            <el-input v-model="params.goods_bn" :placeholder="$t('c43c7afc.36438f')" />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="item_bn" :label="$t('c43c7afc.8dd62f')">
-            <el-input v-model="params.item_bn" :placeholder="$t('c43c7afc.983e9f')" />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="regions_id" :label="$t('c43c7afc.efcb2d')">
-            <el-cascader
-              v-model="params.regions_id"
-              clearable
-              :placeholder="$t('c43c7afc.708c9d')"
-              :options="regions"
-            />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="approve_status" :label="$t('c43c7afc.2253ba')">
-            <el-select
-              v-model="params.approve_status"
-              clearable
-              :placeholder="$t('c43c7afc.708c9d')"
-            >
-              <el-option
-                v-for="item in salesStatus"
-                :key="item.value"
-                :label="item.title"
-                size="mini"
-                :value="item.value"
-              />
-            </el-select>
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="distributor_id" :label="$t('c43c7afc.efa91f')">
-            <SpSelectShop
-              v-model="params.distributor_id"
-              @change="onDistributorChange"
-              clearable
-              :placeholder="$t('c43c7afc.708c9d')"
-            />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="main_cat_id" :label="$t('c43c7afc.e73602')">
-            <el-cascader
-              v-model="params.main_cat_id"
-              :placeholder="$t('c43c7afc.708c9d')"
-              clearable
-              :options="itemCategoryList"
-              :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
-            />
-          </SpFilterFormItem>
-        </SpFilterForm>
+        <SpFormPlus
+          ref="searchForm"
+          v-model="params"
+          form-type="searchForm"
+          :inline="true"
+          :form-items="searchFormItems"
+          @submit="onSearch"
+          @reset="onSearch"
+        />
 
-        <div class="action-container">
+        <div class="action-container mt-4">
           <el-button type="primary" plain @click="Examine">{{ $t('c43c7afc.9fface') }}</el-button>
           <el-button type="primary" plain @click="batchItemsStatus('onsale')">
             {{ $t('c43c7afc.644c0d') }}
@@ -376,6 +334,92 @@ export default {
     ...mapGetters(['wheight']),
     tabList() {
       return this.tabListData.map((item) => ({ label: this.$t(item.labelKey), name: item.name }))
+    },
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'keywords',
+          label: this.$t('c43c7afc.752597'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('c43c7afc.d83187')
+          }
+        },
+        {
+          fieldName: 'goods_bn',
+          label: this.$t('c43c7afc.288587'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('c43c7afc.36438f')
+          }
+        },
+        {
+          fieldName: 'item_bn',
+          label: this.$t('c43c7afc.8dd62f'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('c43c7afc.983e9f')
+          }
+        },
+        {
+          fieldName: 'regions_id',
+          label: this.$t('c43c7afc.efcb2d'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c43c7afc.708c9d'),
+            options: this.regions
+          }
+        },
+        {
+          fieldName: 'approve_status',
+          label: this.$t('c43c7afc.2253ba'),
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c43c7afc.708c9d'),
+            options: this.salesStatus.map((item) => ({
+              label: item.title,
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'distributor_id',
+          label: this.$t('c43c7afc.efa91f'),
+          cellWidth: 1.3,
+          component: ({ h, value, onInput }) => {
+            return h('SpSelectShop', {
+              props: {
+                value,
+                clearable: true,
+                size: 'small',
+                placeholder: this.$t('c43c7afc.708c9d')
+              },
+              on: {
+                input: (val) => onInput(val || 'all_distributor')
+              }
+            })
+          }
+        },
+        {
+          fieldName: 'main_cat_id',
+          label: this.$t('c43c7afc.e73602'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c43c7afc.708c9d'),
+            options: this.itemCategoryList,
+            props: { value: 'category_id', label: 'category_name', checkStrictly: true }
+          }
+        }
+      ]
     }
   },
   created() {
@@ -389,9 +433,6 @@ export default {
     this.fetchList()
   },
   methods: {
-    onDistributorChange(value) {
-      this.params.distributor_id = value ? value : 'all_distributor'
-    },
     async getMainCategory() {
       //管理分类
       const res = await this.$api.goods.getCategory({ is_main_category: true })
@@ -584,9 +625,6 @@ export default {
   img {
     width: 90%;
   }
-}
-.sp-filter-form {
-  margin-bottom: 16px;
 }
 .el-col {
   border-radius: 4px;

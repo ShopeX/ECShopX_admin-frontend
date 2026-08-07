@@ -88,6 +88,9 @@ export default {
         ...params,
         name: this.formData.keywords
       }
+      if (this.value.rel_distributor_id) {
+        params.rel_distributor_id = this.value.rel_distributor_id
+      }
       return params
     },
     afterSearch(response) {

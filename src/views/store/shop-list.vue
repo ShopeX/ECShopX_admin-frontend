@@ -22,6 +22,7 @@ import moment from 'moment'
 import { createSetting } from '@shopex-ui/finder'
 import { LayoutHeader } from '@/layout/basic'
 import DEFAULT_CONFIG from '@/config'
+import { resolveAppPath } from '@/utils'
 
 export default {
   components: {
@@ -74,7 +75,7 @@ export default {
                 })
                 if (res.status) {
                   this.$store.commit('user/setShopId', { shopId: row.distributor_id })
-                  window.location.href = '/shopadmin'
+                  window.location.href = resolveAppPath('/shopadmin')
                 } else {
                   this.$message.error(this.$t('16bb187d.4a3301'))
                 }

@@ -80,7 +80,7 @@ const routes = [
           aliasName: 'storemanager_application',
           icon: 'pay-circle',
           title: i18n.t('fb06c42c.20d385'),
-          permissions: ['sellers.sellersmanager.storemanager_application']
+          permissions: ['sellers.salesorganization.application']
         },
         component: () => import('@/view/mall/marketing/merchantVerify'),
         children: [

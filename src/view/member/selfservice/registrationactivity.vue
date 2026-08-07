@@ -8,38 +8,17 @@
     <SpRouterView>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
 
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="field_title" :label="$t('15ecc99b.1cadc0')">
-          <el-input v-model="params.field_title" :placeholder="$t('15ecc99b.39834b')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="status" :label="$t('15ecc99b.13b5c7')">
-          <el-select v-model="params.status" :placeholder="$t('15ecc99b.3fea7c')">
-            <el-option
-              v-for="(item, index) in statusOption"
-              :key="index"
-              :label="$t(item.nameKey)"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" :label="$t('6b57cb80.374856')">
-          <el-date-picker
-            v-model="params.create_time"
-            type="daterange"
-            value-format="yyyy/MM/dd"
-            :placeholder="$t('6b57cb80.e08045')"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="distributor_id" :label="$t('6b57cb80.4de1b7')">
-          <SpSelectShop
-            v-model="params.distributor_id"
-            clearable
-            :placeholder="$t('ac2a6290.708c9d')"
-          />
-        </SpFilterFormItem>
-      </SpFilterForm>
+      <SpFormPlus
+        ref="searchForm"
+        v-model="params"
+        form-type="searchForm"
+        :inline="true"
+        :form-items="searchFormItems"
+        @submit="onSearch"
+        @reset="onReset"
+      />
 
-      <div class="action-container">
+      <div class="action-container mt-4">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
           {{ $t('15ecc99b.e8c939') }}
         </el-button>
@@ -79,6 +58,17 @@
             <el-button type="text" @click="onOperationChange(scope.row, 'record')">
               {{ $t('15ecc99b.42a5b5') }}
             </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('5cceb5ec.ae57b1')" width="100">
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_show"
+              :active-value="1"
+              :inactive-value="0"
+              :disabled="IS_DISTRIBUTOR()"
+              @change="onIsShowChange(scope.row)"
+            />
           </template>
         </el-table-column>
         <el-table-column prop="activity_id" :label="$t('15ecc99b.c515f3')" width="100" />
@@ -144,7 +134,7 @@ export default {
   },
   data() {
     const initialParams = {
-      field_title: undefined,
+      field_title: '',
       status: '',
       create_time: [],
       distributor_id: ''
@@ -164,6 +154,75 @@ export default {
       shopList: [],
       dialogData: {},
       dialogVisible: false
+    }
+  },
+  computed: {
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'field_title',
+          label: this.$t('15ecc99b.39834b'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('15ecc99b.39834b'),
+            clearable: true
+          }
+        },
+        {
+          fieldName: 'status',
+          label: this.$t('15ecc99b.3fea7c'),
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('15ecc99b.3fea7c'),
+            options: this.statusOption.map((item) => ({
+              label: this.$t(item.nameKey),
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'distributor_id',
+          label: this.$t('6b57cb80.4de1b7'),
+          cellWidth: 1.3,
+          component: ({ h, value, onInput }) => {
+            return h('SpSelectShop', {
+              props: {
+                value,
+                clearable: true,
+                size: 'small',
+                placeholder: this.$t('ac2a6290.708c9d')
+              },
+              on: {
+                input: onInput
+              }
+            })
+          }
+        },
+        {
+          fieldName: 'create_time',
+          label: this.$t('6b57cb80.374856'),
+          cellWidth: 2,
+          component: ({ h, value, onInput }) => {
+            return h('el-date-picker', {
+              props: {
+                value: value || [],
+                type: 'daterange',
+                valueFormat: 'yyyy/MM/dd',
+                clearable: true,
+                size: 'small',
+                startPlaceholder: this.$t('6b57cb80.e08045'),
+                endPlaceholder: this.$t('6b57cb80.e08045')
+              },
+              on: {
+                input: (val) => onInput(val || [])
+              }
+            })
+          }
+        }
+      ]
     }
   },
   watch: {},
@@ -189,7 +248,7 @@ export default {
     getParams() {
       const time = {}
       const create_time = this.params.create_time
-      if (create_time.length) {
+      if (Array.isArray(create_time) && create_time.length >= 2) {
         time.start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
         time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 00:00:00')
       }
@@ -209,7 +268,10 @@ export default {
         ...this.getParams()
       }
       const { list, total_count } = await this.$api.selfhelpform.regActivityList(params)
-      this.tableList = list
+      this.tableList = (list || []).map((item) => ({
+        ...item,
+        is_show: item.is_show === false || item.is_show === 0 || item.is_show === '0' ? 0 : 1
+      }))
       this.page.total = total_count
       this.loading = false
     },
@@ -255,7 +317,7 @@ export default {
             regActivityInvalid({ activity_id: row.activity_id }).then((res) => {
               this.fetchList()
               this.$message({
-                message: this.$t('15ecc99b.b69694'),
+                message: this.$t('15ecc99b.69be67'),
                 type: 'success',
                 duration: 5 * 1000
               })
@@ -264,6 +326,19 @@ export default {
           done()
         }
       })
+    },
+    async onIsShowChange(row) {
+      const nextValue = row.is_show
+      try {
+        await this.$api.selfhelpform.regActivitySetIsShow({
+          activity_id: row.activity_id,
+          is_show: nextValue
+        })
+        this.$message.success(this.$t('15ecc99b.69be67'))
+        this.fetchList()
+      } catch (e) {
+        row.is_show = nextValue === 1 ? 0 : 1
+      }
     },
     onShowChange(row) {
       this.dialogData = row
@@ -286,10 +361,6 @@ export default {
   img {
     width: 90%;
   }
-}
-
-.sp-filter-form {
-  margin-bottom: 16px;
 }
 
 .el-col {

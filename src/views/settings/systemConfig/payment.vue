@@ -102,7 +102,7 @@ const [BatchStatusForm, BatchStatusFormApi] = useForm({
   showDefaultActions: false
 })
 
-// 创建收款账户表单配置
+// 创建收款账户表单配置（勿在 formItems 写死 value，否则 SpFormPlus 会覆盖弹框传入的回显数据）
 const [AccountForm, AccountFormApi] = useForm({
   formType: 'normalForm',
   labelWidth: '120px',
@@ -113,7 +113,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '收款人户名',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入收款人户名'
       },
@@ -124,7 +123,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '银行账号',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入银行账号'
       },
@@ -135,7 +133,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '开户银行',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入开户银行'
       },
@@ -146,7 +143,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '银联号',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入银联号'
       },
@@ -156,7 +152,6 @@ const [AccountForm, AccountFormApi] = useForm({
       fieldName: 'pic',
       label: '银行LOGO',
       component: 'imagepicker',
-      value: '',
       componentProps: {
         multiple: false,
         limit: 1,
@@ -171,7 +166,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '备注',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         type: 'textarea',
         rows: 3,
@@ -182,7 +176,6 @@ const [AccountForm, AccountFormApi] = useForm({
       fieldName: 'is_default',
       label: '是否默认',
       component: 'radio',
-      value: 'false',
       componentProps: {
         options: [
           { label: '是', value: 'true' },
@@ -1344,7 +1337,7 @@ export default {
           is_default: 'false'
         }
       }
-      await this.$dialog.open({
+      const dialogPromise = this.$dialog.open({
         title: type == 'edit' ? this.$t('10d92d52.27e12d') : this.$t('10d92d52.89beb5'),
         size: 'medium',
         content: <CompAccountForm ref='accountsForm' value={this.accountsForm} />,
@@ -1356,6 +1349,22 @@ export default {
           }
         }
       })
+      // 弹框挂载后再回填，避免 SpFormPlus 初始化用空值覆盖
+      await this.$nextTick()
+      if (AccountFormApi.setFieldsValue) {
+        const form = this.accountsForm || {}
+        AccountFormApi.setFieldsValue({
+          bank_account_name: form.bank_account_name || '',
+          bank_account_no: form.bank_account_no || '',
+          bank_name: form.bank_name || '',
+          china_ums_no: form.china_ums_no || '',
+          pic: form.pic || '',
+          remark: form.remark || '',
+          is_default:
+            form.is_default === true || form.is_default === 'true' ? 'true' : 'false'
+        })
+      }
+      await dialogPromise
       const formData = await AccountFormApi.getFieldsValue()
       // 使用深拷贝避免引用问题
       let params = JSON.parse(JSON.stringify(formData))

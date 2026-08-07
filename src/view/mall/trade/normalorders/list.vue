@@ -6,224 +6,18 @@
 <template>
   <SpRouterView>
     <SpPage>
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="mobile" :label="$t('c95ea121.ce2bf3')">
-          <el-input v-model="params.mobile" :placeholder="$t('c95ea121.c746c6')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="order_id" :label="$t('c95ea121.070dce')">
-          <el-input v-model="params.order_id" :placeholder="$t('c95ea121.e9e836')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" :label="$t('c95ea121.b6ae11')">
-          <el-select v-model="params.receipt_type" clearable :placeholder="$t('c95ea121.708c9d')">
-            <el-option
-              v-for="item in distributionType"
-              :key="item.value"
-              size="mini"
-              :label="$t(item.title)"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!VERSION_IN_PURCHASE()"
-          prop="source_id"
-          :label="$t('c95ea121.b36ea7')"
-        >
-          <el-select v-model="params.source_id" clearable :placeholder="$t('c95ea121.708c9d')">
-            <el-option
-              v-for="item in orderSourceList"
-              :key="item.value"
-              size="mini"
-              :label="item.title"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="VERSION_STANDARD() || IS_ADMIN()"
-          prop="supplier_name"
-          :label="$t('c95ea121.a54fd2')"
-        >
-          <el-input v-model="params.supplier_name" :placeholder="$t('c95ea121.55c61d')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!VERSION_IN_PURCHASE()"
-          prop="order_class"
-          :label="$t('c95ea121.0e83be')"
-        >
-          <el-select v-model="params.order_class" clearable :placeholder="$t('c95ea121.708c9d')">
-            <el-option
-              v-for="item in orderType"
-              :key="item.value"
-              size="mini"
-              :label="$t(item.title)"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <!-- 是否处方药 -->
-        <SpFilterFormItem
-          v-if="is_pharma_industry"
-          prop="is_prescription_order"
-          :label="$t('c95ea121.b7a604')"
-        >
-          <el-select
-            v-model="params.is_prescription_order"
-            clearable
-            :placeholder="$t('c95ea121.708c9d')"
-          >
-            <el-option :label="$t('c95ea121.a8b0c2')" value="" />
-            <el-option :label="$t('c95ea121.0a60ac')" value="1" />
-            <el-option :label="$t('c95ea121.c9744f')" value="0" />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem v-if="is_pharma_industry" prop="serial_no" :label="$t('c95ea121.4465a6')">
-          <el-input v-model="params.serial_no" :placeholder="$t('c95ea121.43d6ec')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="is_pharma_industry"
-          prop="user_family_name"
-          :label="$t('c95ea121.f3f325')"
-        >
-          <el-input v-model="params.user_family_name" :placeholder="$t('c95ea121.e5d7bb')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!VERSION_IN_PURCHASE()"
-          prop="delivery_staff_id"
-          :label="$t('c95ea121.7f6b70')"
-        >
-          <el-select
-            v-model="params.delivery_staff_id"
-            clearable
-            :placeholder="$t('c95ea121.708c9d')"
-          >
-            <el-option
-              v-for="item in deliveryPersonnel"
-              :key="item.value"
-              size="mini"
-              :label="item.title"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <!-- <SpFilterFormItem prop="salespersonname" label="业务员:">
-          <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
-        </SpFilterFormItem> -->
-        <SpFilterFormItem prop="role" :label="$t('c95ea121.e1f833')">
-          <el-select v-model="params.role" :placeholder="$t('c95ea121.708c9d')" clearable>
-            <el-option
-              v-for="item in roleList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" :label="$t('c95ea121.43c297')" size="max">
-          <el-date-picker
-            v-model="params.create_time"
-            clearable
-            type="datetimerange"
-            align="right"
-            format="yyyy-MM-dd HH:mm:ss"
-            :range-separator="$t('c95ea121.981cbe')"
-            :start-placeholder="$t('c95ea121.b44c0f')"
-            :end-placeholder="$t('c95ea121.1d468b')"
-            prefix-icon="null"
-            :default-time="defaultTime"
-            :picker-options="pickerOptions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
-          prop="invoice_status"
-          :label="$t('c95ea121.dfc420')"
-        >
-          <el-select v-model="params.invoice_status" clearable :placeholder="$t('c95ea121.708c9d')">
-            <el-option
-              v-for="item in invoiceStatusArr"
-              :key="item.value"
-              size="mini"
-              :label="$t(item.title)"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="delivery_time" :label="$t('c95ea121.21524c')" size="max">
-          <el-date-picker
-            v-model="params.delivery_time"
-            clearable
-            type="datetimerange"
-            align="right"
-            format="yyyy-MM-dd HH:mm:ss"
-            :range-separator="$t('c95ea121.981cbe')"
-            :start-placeholder="$t('c95ea121.b44c0f')"
-            :end-placeholder="$t('c95ea121.1d468b')"
-            prefix-icon="null"
-            :default-time="defaultTime"
-            :picker-options="pickerOptions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!(VERSION_SHUYUN() || VERSION_B2C())"
-          prop="order_holder"
-          :label="$t('c95ea121.e56a5e')"
-        >
-          <el-select v-model="params.order_holder" clearable :placeholder="$t('c95ea121.708c9d')">
-            <el-option
-              v-for="item in orderCategory"
-              :key="item.value"
-              size="mini"
-              :label="$t(item.title)"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="
-            (!isMicorMall || login_type != 'distributor') &&
-            !VERSION_B2C() &&
-            !VERSION_IN_PURCHASE()
-          "
-          prop="distributor_id"
-          :label="$t('c95ea121.16f2bc')"
-        >
-          <SpSelectShop
-            v-model="params.distributor_id"
-            clearable
-            :placeholder="$t('c95ea121.708c9d')"
-            :query-params="{ show_distributor_self: 1 }"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!VERSION_SHUYUN() && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
-          prop="subDistrict"
-          :label="$t('c95ea121.d3063b')"
-        >
-          <el-cascader
-            v-model="params.subDistrict"
-            clearable
-            :props="{
-              value: 'id',
-              checkStrictly: true
-            }"
-            :options="subDistrictList"
-          />
-        </SpFilterFormItem>
-        <!-- <SpFilterFormItem prop="self_delivery_status" label="配送状态:">
-          <el-select v-model="params.self_delivery_status" clearable placeholder="请选择">
-            <el-option
-              v-for="item in distributionStatus"
-              :key="item.value"
-              size="mini"
-              :label="item.title"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem> -->
-      </SpFilterForm>
+      <SpFormPlus
+        ref="searchForm"
+        :value="params"
+        form-type="searchForm"
+        :inline="true"
+        :form-items="searchFormItems"
+        @input="onSearchFormInput"
+        @submit="onSearch"
+        @reset="onSearch"
+      />
 
-      <div class="action-container">
+      <div class="action-container mt-4">
         <el-dropdown @command="handleExport">
           <el-button type="primary" plain>
             {{ $t('c95ea121.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
@@ -760,7 +554,9 @@ export default {
         distributor_id: '', // 店铺
         subDistrict: [],
         salespersonname: '',
-        role: ''
+        role: '',
+        create_time: [],
+        delivery_time: []
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏
@@ -1390,7 +1186,233 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['login_type', 'isMicorMall'])
+    ...mapGetters(['login_type', 'isMicorMall']),
+    searchFormItems() {
+      return [
+        {
+          fieldName: 'mobile',
+          label: this.$t('c95ea121.ce2bf3'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('c95ea121.c746c6')
+          }
+        },
+        {
+          fieldName: 'order_id',
+          label: this.$t('c95ea121.070dce'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('c95ea121.e9e836')
+          }
+        },
+        {
+          fieldName: 'receipt_type',
+          label: this.$t('c95ea121.b6ae11'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !this.isMicorMall,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.distributionType.map((item) => ({
+              label: this.$t(item.title),
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'source_id',
+          label: this.$t('c95ea121.b36ea7'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !this.VERSION_IN_PURCHASE(),
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.orderSourceList.map((item) => ({
+              label: item.title,
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'supplier_name',
+          label: this.$t('c95ea121.a54fd2'),
+          component: 'input',
+          cellWidth: 1.3,
+          isShow: () => this.VERSION_STANDARD() || this.IS_ADMIN(),
+          componentProps: {
+            placeholder: this.$t('c95ea121.55c61d')
+          }
+        },
+        {
+          fieldName: 'order_class',
+          label: this.$t('c95ea121.0e83be'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !this.VERSION_IN_PURCHASE(),
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.orderType.map((item) => ({
+              label: this.$t(item.title),
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'is_prescription_order',
+          label: this.$t('c95ea121.b7a604'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => this.is_pharma_industry,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: [
+              { label: this.$t('c95ea121.a8b0c2'), value: '' },
+              { label: this.$t('c95ea121.0a60ac'), value: '1' },
+              { label: this.$t('c95ea121.c9744f'), value: '0' }
+            ]
+          }
+        },
+        {
+          fieldName: 'serial_no',
+          label: this.$t('c95ea121.4465a6'),
+          component: 'input',
+          cellWidth: 1.3,
+          isShow: () => this.is_pharma_industry,
+          componentProps: {
+            placeholder: this.$t('c95ea121.43d6ec')
+          }
+        },
+        {
+          fieldName: 'user_family_name',
+          label: this.$t('c95ea121.f3f325'),
+          component: 'input',
+          cellWidth: 1.3,
+          isShow: () => this.is_pharma_industry,
+          componentProps: {
+            placeholder: this.$t('c95ea121.e5d7bb')
+          }
+        },
+        {
+          fieldName: 'delivery_staff_id',
+          label: this.$t('c95ea121.7f6b70'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !this.VERSION_IN_PURCHASE(),
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.deliveryPersonnel.map((item) => ({
+              label: item.title,
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'role',
+          label: this.$t('c95ea121.e1f833'),
+          component: 'select',
+          cellWidth: 1.3,
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.roleList
+          }
+        },
+        {
+          fieldName: 'invoice_status',
+          label: this.$t('c95ea121.dfc420'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !this.isMicorMall && !this.VERSION_IN_PURCHASE(),
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.invoiceStatusArr.map((item) => ({
+              label: this.$t(item.title),
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'order_holder',
+          label: this.$t('c95ea121.e56a5e'),
+          component: 'select',
+          cellWidth: 1.3,
+          isShow: () => !(this.VERSION_SHUYUN() || this.VERSION_B2C()),
+          componentProps: {
+            clearable: true,
+            placeholder: this.$t('c95ea121.708c9d'),
+            options: this.orderCategory.map((item) => ({
+              label: this.$t(item.title),
+              value: item.value
+            }))
+          }
+        },
+        {
+          fieldName: 'distributor_id',
+          label: this.$t('c95ea121.16f2bc'),
+          cellWidth: 1.3,
+          isShow: () =>
+            (!this.isMicorMall || this.login_type != 'distributor') &&
+            !this.VERSION_B2C() &&
+            !this.VERSION_IN_PURCHASE(),
+          component: ({ h, value, onInput }) => {
+            return h('SpSelectShop', {
+              props: {
+                value,
+                clearable: true,
+                size: 'small',
+                placeholder: this.$t('c95ea121.708c9d'),
+                queryParams: { show_distributor_self: 1 }
+              },
+              on: {
+                input: onInput
+              }
+            })
+          }
+        },
+        {
+          fieldName: 'subDistrict',
+          label: this.$t('c95ea121.d3063b'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          isShow: () =>
+            !this.VERSION_SHUYUN() && !this.VERSION_B2C() && !this.VERSION_IN_PURCHASE(),
+          componentProps: {
+            clearable: true,
+            options: this.subDistrictList,
+            props: {
+              value: 'id',
+              checkStrictly: true
+            }
+          }
+        },
+        {
+          fieldName: 'create_time',
+          label: this.$t('c95ea121.43c297'),
+          component: 'datetimepicker',
+          cellWidth: 2,
+          componentProps: {
+            type: 'datetimerange'
+          }
+        },
+        {
+          fieldName: 'delivery_time',
+          label: this.$t('c95ea121.21524c'),
+          component: 'datetimepicker',
+          cellWidth: 2,
+          componentProps: {
+            type: 'datetimerange'
+          }
+        },
+      ]
+    }
   },
   watch: {
     'deliverGoodsForm.delivery_way'(e) {
@@ -1455,6 +1477,9 @@ export default {
     })
   },
   methods: {
+    onSearchFormInput(val) {
+      Object.assign(this.params, val)
+    },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
@@ -2378,10 +2403,6 @@ export default {
 }
 </script>
 <style lang="scss" scope>
-.sp-filter-form {
-  margin-bottom: 16px;
-}
-
 .dialog-changeprice,
 .dialog-cancelorder,
 .dialog-salesafter {

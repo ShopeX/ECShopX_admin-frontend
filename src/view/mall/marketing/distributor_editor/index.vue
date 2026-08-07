@@ -367,7 +367,8 @@ export default {
     },
     async onSelectZiti() {
       const { data } = await this.$picker.zitiList({
-        data: this.zitiList.map((item) => item.id)
+        data: this.zitiList.map((item) => item.id),
+        rel_distributor_id: this.distributor_id
       })
 
       console.log(this.zitiList.map((item) => item.id))

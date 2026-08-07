@@ -16,6 +16,7 @@ export * from './src/type-helper'
 export * from './src/utils'
 
 export * from './jwt'
+export { getPublicPath, resolvePublicAsset, resolveAppPath } from './publicPath'
 
 export { install as VuePrototype } from './src/prototype'
 

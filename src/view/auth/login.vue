@@ -116,7 +116,7 @@ const login_bg_ecshopx = require(`@/assets/imgs/login-b2b2c.jpg`)
 const login_bg_free_ecshopx = require(`@/assets/imgs/login-free-ecshopx.jpg`)
 import { mapMutations } from 'vuex'
 import { requiredRules, MinRules } from '@/utils/validate'
-import { decodeJwtPayload, unescape } from '@/utils'
+import { decodeJwtPayload, unescape, resolveAppPath } from '@/utils'
 import loadingBtn from '@/components/loading-btn'
 export default {
   components: {
@@ -300,7 +300,7 @@ export default {
           this.$router.push({ path: '/supplier/setting/supplier_register' })
         }
       } else {
-        window.location.href = '/'
+        window.location.href = resolveAppPath('/')
       }
     }
   }

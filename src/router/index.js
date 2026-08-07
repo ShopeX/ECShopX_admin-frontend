@@ -11,6 +11,8 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
+  // 与 vue.config.js publicPath / VUE_APP_PUBLIC_PATH 对齐（宝塔部署为 /admin/）
+  base: process.env.VUE_APP_PUBLIC_PATH || '/',
   routes
 })
 

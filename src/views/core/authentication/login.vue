@@ -6,7 +6,7 @@
 <template>
   <div class="page-login bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="300" />
+      <img :src="logoSrc" alt="logo" width="300" />
       <!-- <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">总部</div> -->
       <!-- If you remove or alter Shopex brand identifiers, you must obtain a branding removal license from Shopex.  Contact us at:  http://www.shopex.cn to purchase a branding removal license.   -->
       <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>
@@ -33,7 +33,7 @@
 <script>
 import { useForm } from '@/composables'
 import Config from '@/config'
-import { decodeJwtPayload, getSystemTitle } from '@/utils'
+import { decodeJwtPayload, getSystemTitle, resolveAppPath, resolvePublicAsset } from '@/utils'
 import { i18n } from '@/i18n'
 
 const [Form, FormApi] = useForm({
@@ -93,7 +93,8 @@ export default {
     return {
       formApi: FormApi,
       loading: false,
-      recoderNumber: Config.recoder_number
+      recoderNumber: Config.recoder_number,
+      logoSrc: resolvePublicAsset('images/logo.png')
     }
   },
   computed: {
@@ -131,11 +132,11 @@ export default {
           // this.$router.push('/')
           setTimeout(() => {
             if (accessMenus.length == 1 && accessMenus[0].url == '/activelicense') {
-              window.location.href = '/activelicense'
+              window.location.href = resolveAppPath('/activelicense')
             } else if (accessMenus.length == 1 && accessMenus[0].url == '/login') {
-              window.location.href = '/login'
+              window.location.href = resolveAppPath('/login')
             } else {
-              window.location.href = '/'
+              window.location.href = resolveAppPath('/')
             }
             // this.$router.push('/')
           }, 700)

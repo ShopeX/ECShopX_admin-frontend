@@ -136,17 +136,23 @@
       <template>
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item :label="$t('ab2cdfe4.bb2cdf')">
-            <el-col :span="10">
+            <div class="flex flex-col items-start">
               <el-input
                 v-if="!editLoginName"
                 v-model="form.login_name"
+                class="!w-[250px]"
                 :minlength="4"
                 :maxlength="16"
                 :placeholder="$t('ab2cdfe4.2b668a')"
               />
-              <el-input v-else v-model="form.login_name" :disabled="true" />
-            </el-col>
-            <p class="frm-tips">{{ $t('ab2cdfe4.d59d95') }}</p>
+              <el-input
+                v-else
+                v-model="form.login_name"
+                class="!w-[250px]"
+                :disabled="true"
+              />
+              <p class="frm-tips whitespace-nowrap !pb-0">{{ $t('ab2cdfe4.d59d95') }}</p>
+            </div>
           </el-form-item>
           <el-form-item :label="$t('ab2cdfe4.8098e2')">
             <el-col :span="10">
@@ -168,20 +174,24 @@
             </el-col>
           </el-form-item>
           <el-form-item :label="$t('ab2cdfe4.baad7e')">
-            <el-tag
-              v-for="(item, index) in relDistributors"
-              :key="item.distributor_id"
-              class="new-tag"
-              closable
-              :disable-transitions="false"
-              @close="DistributoreHandleClose(index)"
-            >
-              {{ item.name }}
-            </el-tag>
-            <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
-              {{ $t('ab2cdfe4.a5d26b') }}
-            </el-button>
-            <p class="frm-tips">{{ $t('ab2cdfe4.2242ee') }}</p>
+            <div class="flex flex-col items-start">
+              <div>
+                <el-tag
+                  v-for="(item, index) in relDistributors"
+                  :key="item.distributor_id"
+                  class="new-tag"
+                  closable
+                  :disable-transitions="false"
+                  @close="DistributoreHandleClose(index)"
+                >
+                  {{ item.name }}
+                </el-tag>
+                <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
+                  {{ $t('ab2cdfe4.a5d26b') }}
+                </el-button>
+              </div>
+              <p class="frm-tips whitespace-nowrap !pb-0">{{ $t('ab2cdfe4.2242ee') }}</p>
+            </div>
           </el-form-item>
           <el-form-item
             v-if="login_type == 'distributor' && is_distributor_main != true"

@@ -4,9 +4,10 @@
 -->
 
 <template>
-  <SpRouterView>
-    <SpPage>
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+  <div>
+    <router-view v-if="isEditorRoute" :key="$route.fullPath" />
+    <SpPage v-else>
+      <el-tabs v-model="activeName" type="card" lazy @tab-click="handleClick">
         <el-tab-pane :label="$t('73136f25.249bfe')" name="normal">
           <Normal />
         </el-tab-pane>
@@ -30,7 +31,7 @@
         </el-tab-pane>
       </el-tabs>
     </SpPage>
-  </SpRouterView>
+  </div>
 </template>
 
 <script>
@@ -55,7 +56,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMicorMall'])
+    ...mapGetters(['isMicorMall']),
+    isEditorRoute() {
+      return /\/editor(?:\/|$)/.test(this.$route.path)
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (from && from.path.includes('/editor') && to && !to.path.includes('/editor')) {
+        this.$nextTick(() => {
+          this.$EventBus.$emit('event.zitilist.refresh')
+        })
+      }
+    }
   },
   methods: {
     handleClick(tab) {

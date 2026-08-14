@@ -252,10 +252,15 @@ export default {
     handleSubMenuClick(item) {
       const route = this.findRouteByPermission(item.permission)
       if (route) {
-        if (this.$route.path === route.path) {
+        const targetPath = route.path
+        const currentPath = this.$route.path
+        if (currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)) {
+          if (currentPath !== targetPath) {
+            this.$router.push({ path: targetPath })
+          }
           return
         }
-        this.$router.push({ path: route.path })
+        this.$router.push({ path: targetPath })
       } else {
         this.toNotFound()
       }

@@ -107,7 +107,7 @@ export default {
             action: {
               handler: ([row]) => {
                 this.$router.push({
-                  path: `${this.$route.path}/editor/${row.id}`
+                  path: `${this.getLogisticsBasePath()}/editor/${row.id}`
                 })
               }
             }
@@ -187,9 +187,12 @@ export default {
     onSearch() {
       this.$refs['finder'].refresh()
     },
+    getLogisticsBasePath() {
+      return this.$route.path.replace(/\/editor(?:\/.*)?$/, '')
+    },
     createZitiAddress() {
       this.$router.push({
-        path: `${this.$route.path}/editor`
+        path: `${this.getLogisticsBasePath()}/editor`
       })
     },
     onShowPopover() {},

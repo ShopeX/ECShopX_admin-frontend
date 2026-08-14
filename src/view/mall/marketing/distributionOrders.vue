@@ -133,7 +133,7 @@ export default {
                   path: `${this.$route.path}/detail`,
                   query: {
                     orderId: row.order_id,
-                    resource: '/mall/trade/normalorders'
+                    resource: this.isSelfOrderList ? this.$route.path : '/mall/trade/normalorders'
                   }
                 })
               }
@@ -268,6 +268,9 @@ export default {
     }
   },
   computed: {
+    isSelfOrderList() {
+      return this.$route.meta?.aliasName === 'tradenormalshoporders'
+    },
     searchFormItems() {
       return [
         {
@@ -316,9 +319,17 @@ export default {
       const { create_time, mobile, order_id, order_class, distributor_id } = this.searchParams
       const _params = {
         ...params,
-        order_type: 'normal',
-        order_class_exclude: 'community',
-        is_distribution: 1
+        order_type: 'normal'
+      }
+
+      if (this.isSelfOrderList) {
+        // 自营订单：仅线上店铺订单，对齐旧 shopList 筛选
+        _params.order_class_exclude = 'drug,pointsmall'
+        _params.order_holder = 'self,self_supplier'
+        _params.distributor_id = 0
+      } else {
+        _params.order_class_exclude = 'community'
+        _params.is_distribution = 1
       }
 
       if (create_time && create_time.length > 0) {

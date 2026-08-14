@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.13.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.12.0...v4.13.0) (2026-08-14)
+
 ## [4.12.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.11.0...v4.12.0) (2026-08-07)
 
 ## [4.11.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.10.0...v4.11.0) (2026-07-31)

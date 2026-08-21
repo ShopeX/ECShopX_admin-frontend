@@ -148,6 +148,11 @@ export default {
     showTrackingParams: {
       type: Boolean,
       default: true
+    },
+    // web：PC/Web 自定义页面；空：移动端自定义页面
+    platform: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -198,7 +203,9 @@ export default {
       const res = await this.$picker.path({
         data: id,
         tab: linkPage,
+        title: this.localValue.title || '',
         multiple: false,
+        platform: this.platform,
         guide:
           this.$route.path.indexOf(pathLink[0]) > -1 || this.$route.path.indexOf(pathLink[1]) > -1
             ? true

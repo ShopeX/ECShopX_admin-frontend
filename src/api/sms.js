@@ -76,6 +76,14 @@ export function deleteTheSignature(id) {
   })
 }
 
+// 从阿里云同步短信签名（异步入队，立即返回）
+export function syncSmsSignatures() {
+  return fetch({
+    url: '/aliyunsms/sign/sync',
+    method: 'post'
+  })
+}
+
 // 发送短信
 
 // 短信场景列表
@@ -201,6 +209,14 @@ export function deleteSmsTemplate(id) {
   return fetch({
     url: `/aliyunsms/template/delete/${id}`,
     method: 'delete'
+  })
+}
+
+// 从阿里云同步短信模板（异步入队，立即返回）
+export function syncSmsTemplates() {
+  return fetch({
+    url: '/aliyunsms/template/sync',
+    method: 'post'
   })
 }
 

@@ -22,6 +22,9 @@
         <template #tableTop>
           <div class="mb-5">
             <el-button type="primary" @click="addSignature">{{ $t('523e1e97.156c42') }}</el-button>
+            <el-button :loading="syncLoading" @click="syncSignature">{{
+              $t('523e1e97.23e901')
+            }}</el-button>
           </div>
         </template>
       </SpFinder>
@@ -32,11 +35,19 @@
 
 <script>
 import setting_ from '../../../../view/base/shortmessage/finder-setting/sms_signatures'
-import { deleteTheSignature } from '@/api/sms'
+import { deleteTheSignature, syncSmsSignatures } from '@/api/sms'
 export default {
   data() {
     return {
-      failVisible: false
+      failVisible: false,
+      syncLoading: false,
+      syncRefreshTimer: null
+    }
+  },
+  beforeDestroy() {
+    if (this.syncRefreshTimer) {
+      clearTimeout(this.syncRefreshTimer)
+      this.syncRefreshTimer = null
     }
   },
   computed: {
@@ -59,6 +70,27 @@ export default {
       return { ...params }
     },
     afterSearch() {},
+    async syncSignature() {
+      if (this.syncLoading) return
+      this.syncLoading = true
+      try {
+        const result = await syncSmsSignatures()
+        if (result?.data?.data?.status) {
+          // 异步入队成功：仅提示已提交，不展示统计
+          this.$message.success(result.data.data.message || this.$t('523e1e97.124550'))
+          if (this.syncRefreshTimer) {
+            clearTimeout(this.syncRefreshTimer)
+          }
+          // 延迟刷新列表以感知 upsert / 孤儿清理结果
+          this.syncRefreshTimer = setTimeout(() => {
+            this.$refs.finder && this.$refs.finder.refresh(true)
+            this.syncRefreshTimer = null
+          }, 3000)
+        }
+      } finally {
+        this.syncLoading = false
+      }
+    },
     async deleteSignatureHandle(id) {
       const result = await deleteTheSignature(id)
       this.$message.success(this.$t('523e1e97.0007d1'))

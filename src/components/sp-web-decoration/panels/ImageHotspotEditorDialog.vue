@@ -49,6 +49,7 @@
             </div>
             <CompPickerLink
               :value="hotspot.link || {}"
+              platform="web"
               :show-tracking-params="false"
               @change="(value) => updateHotspotLink(index, value)"
             />

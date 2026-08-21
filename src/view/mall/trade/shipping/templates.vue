@@ -157,6 +157,17 @@ export default {
       const refName = refMap[this.activeName]
       return refName ? this.$refs[refName] : null
     },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
     getList() {
       const ref = this.getActiveTabRef()
       if (ref && typeof ref.getShippingTemplatesList === 'function') {

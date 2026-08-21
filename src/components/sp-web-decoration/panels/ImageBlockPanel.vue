@@ -19,6 +19,7 @@
       <div class="rounded-xl border border-border bg-card p-3">
         <CompPickerLink
           :value="settings.link || {}"
+          platform="web"
           :show-tracking-params="false"
           @change="updateLink"
         />

@@ -17,7 +17,7 @@ export const PATH_SELECTOR_TYPES = [
 ]
 
 export const PATH_SELECTOR_PLATFORM_TYPES = {
-  web: ['goods', 'sale_category', 'category', 'custom_page']
+  web: ['goods', 'sale_category', 'category', 'custom_page', 'regactivity']
 }
 
 export function getPathSelectorTypes(platform) {

@@ -69,16 +69,28 @@
                   >{{ item.name }}</span
                 >
               </template>
-              <!-- 三级菜单 -->
+              <!-- 三级菜单：router-link 支持右键新标签页打开 -->
               <template v-for="child in item.children">
                 <el-menu-item
                   class="third-menu-item"
                   v-if="child.is_menu"
                   :key="child.alias_name"
                   :index="child.alias_name"
-                  @click="handleSubMenuClick(child)"
                 >
-                  <span>{{ child.name }}</span>
+                  <router-link
+                    v-if="getMenuPath(child)"
+                    class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-[34px]"
+                    :to="getMenuPath(child)"
+                  >
+                    {{ child.name }}
+                  </router-link>
+                  <span
+                    v-else
+                    class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-[34px]"
+                    @click="toNotFound"
+                  >
+                    {{ child.name }}
+                  </span>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -89,9 +101,21 @@
               v-if="item.is_menu"
               :key="item.alias_name"
               :index="item.alias_name"
-              @click="handleSubMenuClick(item)"
             >
-              <span>{{ item.name }}</span>
+              <router-link
+                v-if="getMenuPath(item)"
+                class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-5"
+                :to="getMenuPath(item)"
+              >
+                {{ item.name }}
+              </router-link>
+              <span
+                v-else
+                class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-5"
+                @click="toNotFound"
+              >
+                {{ item.name }}
+              </span>
             </el-menu-item>
           </template>
         </template>
@@ -249,21 +273,10 @@ export default {
         this.toNotFound()
       }
     },
-    handleSubMenuClick(item) {
+    getMenuPath(item) {
+      if (!item?.permission) return null
       const route = this.findRouteByPermission(item.permission)
-      if (route) {
-        const targetPath = route.path
-        const currentPath = this.$route.path
-        if (currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)) {
-          if (currentPath !== targetPath) {
-            this.$router.push({ path: targetPath })
-          }
-          return
-        }
-        this.$router.push({ path: targetPath })
-      } else {
-        this.toNotFound()
-      }
+      return route?.path || null
     },
     findRouteByPermission(permission) {
       return this.$router.getRoutes().find((route) => route.meta?.permissions?.includes(permission))
@@ -545,6 +558,7 @@ export default {
 }
 
 :deep(.el-menu-item) {
+  position: relative;
   border-radius: 6px;
   height: 42px;
   display: flex;

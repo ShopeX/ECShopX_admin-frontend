@@ -71,9 +71,10 @@ export default {
   },
   methods: {
     fnChangePassword(row) {
-      const message = `<p>${this.$t('6bfa2979.183307')}<br/><span class='tips'>（${this.$t(
-        '6bfa2979.1e9e7b'
-      )}）</span></p>`
+      const merchantName = row.merchant_name || ''
+      const message = `<p>${this.$t('6bfa2979.183307', {
+        name: merchantName
+      })}<br/><span class='tips'>（${this.$t('6bfa2979.1e9e7b')}）</span></p>`
       this.$confirm(message, this.$t('6bfa2979.02d981'), {
         confirmButtonText: this.$t('6bfa2979.38cf16'),
         cancelButtonText: this.$t('6bfa2979.625fb2'),
@@ -89,8 +90,6 @@ export default {
           })
         }
       })
-
-      console.log(row)
     },
     beforeSearch(params) {
       return { ...params }

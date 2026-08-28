@@ -7989,7 +7989,7 @@
   "6bfa2979.c62756": "Password 6-16 characters, letters, numbers, underscore",
   "6bfa2979.c08ab9": "Cancel",
   "6bfa2979.aa7527": "Confirm",
-  "6bfa2979.183307": "Confirm reset password for [Merchant Name]",
+  "6bfa2979.183307": "Confirm reset password for [{name}]",
   "6bfa2979.1e9e7b": "New password will be sent by SMS to the mobile number; SMS fee will be deducted from the SMS balance",
   "6bfa2979.02d981": "Prompt",
   "6bfa2979.38cf16": "Confirm",

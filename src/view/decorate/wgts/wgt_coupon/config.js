@@ -8,12 +8,6 @@ import { transformInBase, createTransformOutBase } from '../../comps/transform-u
 const config = {
   name: 'couponCard',
   setting: [
-    {
-      label: i18n.t('7c96f122.aebb0a'),
-      key: 'wgtCustName',
-      component: 'input',
-      value: ''
-    },
     // {
     //   label: '埋点上报参数',
     //   key: 'track',
@@ -187,7 +181,6 @@ const config = {
         // 使用公共函数处理 outerMargin 转换，同时保留其他字段
         const baseData = createTransformOutBase(
           [
-            'wgtCustName',
             'track',
             'outerMargin',
             'innerPadding',

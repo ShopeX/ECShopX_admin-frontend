@@ -1615,9 +1615,11 @@ export default {
         }
         this.submitLoading = false
         this.isLeave = true
+        // 新建回第 1 页；编辑保留列表当前页（ECX-9768）
+        const resetPage = !itemId || !!is_new
         const parent = this.$parent
         this.$router.go(-1)
-        setTimeout(() => parent?.onActivated?.(), 100)
+        setTimeout(() => parent?.onActivated?.(resetPage), 100)
       } catch (e) {
         this.submitLoading = false
         console.log(e)

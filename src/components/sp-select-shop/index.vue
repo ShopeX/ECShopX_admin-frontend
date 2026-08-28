@@ -100,7 +100,16 @@ export default {
         }
       })
       if (data) {
-        if (data.length > 1) {
+        if (this.multiple) {
+          const distributorIds = data.map((item) => item.distributor_id)
+          this.onChange({
+            name:
+              data.length === 1
+                ? data[0].name
+                : this.$t('d6d1dfc8.013ecd', { n: data.length }),
+            value: distributorIds
+          })
+        } else if (data.length > 1) {
           const distributorIds = data.map((item) => item.distributor_id)
           this.onChange({
             name: this.$t('d6d1dfc8.013ecd', { n: data.length }),
@@ -116,7 +125,7 @@ export default {
       } else {
         this.onChange({
           name: '',
-          value: ''
+          value: this.multiple ? [] : ''
         })
       }
     },
@@ -128,7 +137,7 @@ export default {
     handleClear() {
       this.onChange({
         name: '',
-        value: ''
+        value: this.multiple ? [] : ''
       })
     }
   }

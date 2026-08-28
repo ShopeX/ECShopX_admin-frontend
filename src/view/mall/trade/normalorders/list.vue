@@ -571,7 +571,7 @@ export default {
           ? IN_PURCHASE_STATUS
           : ORDER_STATUS,
       openStatus: OPEN_STATUS_ARR,
-      orderType: ORDER_TYPE,
+      orderType: ORDER_TYPE.filter((item) => item.value !== 'seckill'),
       invoiceStatus: INVOICE_STATUS,
       invoiceStatusArr: INVOICE_STATUS_ARR,
       orderCategory: this.VERSION_STANDARD()

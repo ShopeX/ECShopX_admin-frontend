@@ -1636,7 +1636,7 @@ export default {
         cancelButtonText: this.$t('d41d8cd9.625fb2')
       })
       await this.$api.goods.updateGoodsInfo({
-        goods_id: this.selectionItems.map((item) => item.item_id),
+        goods_id: this.selectionItems.map((item) => item.goods_id),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: 'processing'
       })

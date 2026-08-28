@@ -175,21 +175,16 @@
           </el-form-item>
           <el-form-item :label="$t('ab2cdfe4.baad7e')">
             <div class="flex flex-col items-start">
-              <div>
-                <el-tag
-                  v-for="(item, index) in relDistributors"
-                  :key="item.distributor_id"
-                  class="new-tag"
-                  closable
-                  :disable-transitions="false"
-                  @close="DistributoreHandleClose(index)"
-                >
-                  {{ item.name }}
-                </el-tag>
-                <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
-                  {{ $t('ab2cdfe4.a5d26b') }}
-                </el-button>
-              </div>
+              <SpSelectShop
+                ref="shopSelect"
+                v-model="selectedDistributorIds"
+                multiple
+                clearable
+                class="!w-[250px]"
+                :placeholder="$t('ab2cdfe4.a5d26b')"
+                :query-params="{ distribution_type: distributionType }"
+                @change="onShopSelectChange"
+              />
               <p class="frm-tips whitespace-nowrap !pb-0">{{ $t('ab2cdfe4.2242ee') }}</p>
             </div>
           </el-form-item>
@@ -230,19 +225,6 @@
         <el-button type="primary" @click="submitAction"> {{ $t('ab2cdfe4.be5fbb') }} </el-button>
       </div>
     </el-dialog>
-    <template v-if="DistributorVisible">
-      <DistributorSelect
-        :store-visible="DistributorVisible"
-        :is-valid="isValid"
-        :get-status="DistributorStatus"
-        :rel-data-ids="relDistributors"
-        :old-data="oldData"
-        :is-single="isSingle"
-        :distribution_type="distributionType"
-        @chooseStore="DistributorChooseAction"
-        @closeStoreDialog="closeDialogAction"
-      />
-    </template>
   </SpPage>
 </template>
 <script>
@@ -258,14 +240,11 @@ import {
   getRolesList
 } from '../../../api/company'
 import { pageMixin } from '@/mixins'
-// import StoresSelect from '@/components/storeListSelect'
 import { getDistributorList } from '@/api/marketing'
 import { changeOperatorStatus } from '@/api/login'
 
-import DistributorSelect from '@/components/function/distributorSelect'
 export default {
   components: {
-    DistributorSelect,
     tips
   },
   mixins: [pageMixin],
@@ -277,12 +256,8 @@ export default {
   },
   data() {
     return {
-      isSingle: false,
-      oldData: [],
-      isValid: true,
       relDistributors: [],
-      DistributorVisible: false,
-      DistributorStatus: false,
+      selectedDistributorIds: [],
       login_type: 'default',
       isEdit: false,
       editVisible: false,
@@ -343,19 +318,34 @@ export default {
       console.log(`getSubDistrictList:`, res)
       this.subDistrictList = res
     },
-    DistributoreHandleClose(index) {
-      this.DistributorVisible = false
-      this.relDistributors.splice(index, 1)
+    onShopSelectChange(val) {
+      const ids = val == null || val === '' ? [] : Array.isArray(val) ? val : [val]
+      this.selectedDistributorIds = ids
+      if (ids.length > 0) {
+        this.getDistributor(ids)
+      } else {
+        this.relDistributors = []
+      }
     },
-    addDistributoreAction() {
-      this.DistributorStatus = true
-      this.DistributorVisible = true
+    syncShopSelectLabel() {
+      this.$nextTick(() => {
+        const shopSelect = this.$refs.shopSelect
+        if (!shopSelect) return
+        const list = this.relDistributors
+        if (!list.length) {
+          shopSelect.selectValue = ''
+          return
+        }
+        shopSelect.selectValue =
+          list.length === 1 ? list[0].name : this.$t('d6d1dfc8.013ecd', { n: list.length })
+      })
     },
     getDistributor(ids) {
       let param = { distributor_id: ids }
       getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
-        this.oldData = [...res.data.data.list]
+        this.selectedDistributorIds = this.relDistributors.map((item) => item.distributor_id)
+        this.syncShopSelectLabel()
       })
     },
     handleCancel() {
@@ -370,6 +360,8 @@ export default {
       this.form.distributor_ids = []
       this.form.shop_ids = []
       this.relDistributors = []
+      this.selectedDistributorIds = []
+      this.syncShopSelectLabel()
     },
     addLabels() {
       // 添加物料弹框
@@ -531,49 +523,11 @@ export default {
       getRolesList(params).then((res) => {
         this.rolesListData = res.data.data.list
       })
-    },
-    DistributorChooseAction(data) {
-      console.log(data)
-      this.DistributorVisible = false
-      if (data === null || data.length <= 0) return
-
-      this.relDistributors = data
-      this.oldData = data
-    },
-    closeDialogAction() {
-      this.DistributorVisible = false
-      this.relDistributors = this.oldData
-      this.DistributorStatus = false
-
-      // this.relDistributors = []
-      // this.getDistributor();
     }
   }
 }
 </script>
 <style scoped lang="scss">
-.el-tag + .el-tag {
-  margin-left: 5px;
-}
-.new-tag {
-  height: 40px;
-  line-height: 40px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.button-new-tag {
-  height: 40px;
-  line-height: 40px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.input-new-tag {
-  height: 40px;
-  line-height: 40px;
-  width: 138px;
-  vertical-align: bottom;
-}
-
 .el-row {
   margin-bottom: 20px;
   &:last-child {
@@ -582,20 +536,6 @@ export default {
 }
 .el-col {
   border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 10px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
 }
 .sp-filter-form {
   margin-bottom: 16px;

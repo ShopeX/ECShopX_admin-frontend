@@ -1483,8 +1483,9 @@ export default {
     this.checkJstErpBind()
     this.getBaseSetting()
 
-    this.$activated = () => {
-      this.$refs['finder']?.refresh?.()
+    // resetPage=true 回第 1 页（新建）；false/缺省保留当前页（编辑）
+    this.$activated = (_from, _to, resetPage = false) => {
+      this.$refs['finder']?.refresh?.(!!resetPage)
     }
   },
   methods: {
@@ -2005,7 +2006,7 @@ export default {
         cancelButtonText: this.$t('d41d8cd9.625fb2')
       })
       await this.$api.goods.updateGoodsInfo({
-        goods_id: this.selectionItems.map((item) => item.item_id),
+        goods_id: this.selectionItems.map((item) => item.goods_id),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: 'processing'
       })

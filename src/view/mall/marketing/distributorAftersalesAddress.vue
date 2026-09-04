@@ -128,10 +128,11 @@
 
 <script>
 import mixin, { pageMixin } from '@/mixins'
+import districtOptions from '@/mixins/districtOptions'
 import { getRegionNameById } from '@/utils'
 
 export default {
-  mixins: [mixin, pageMixin],
+  mixins: [mixin, pageMixin, districtOptions],
   data() {
     return {
       params: {
@@ -220,10 +221,6 @@ export default {
         }
       ]
     }
-  },
-  async created() {
-    const res = await this.$api.common.getAddress()
-    this.regions = res
   },
   mounted() {
     this.fetchList()

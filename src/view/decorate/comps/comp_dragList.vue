@@ -104,7 +104,12 @@
       >
         {{ btnText }}
       </el-button>
-      <el-dropdown v-if="isShow && btnType == 'drop'" class="comp-button" @command="handleCommand">
+      <el-dropdown
+        v-if="isShow && btnType == 'drop'"
+        class="comp-button"
+        trigger="click"
+        @command="handleCommand"
+      >
         <el-button type="primary" size="small">
           <p class="bc">
             <span class="line">{{ $t('67867fc8.b58c75') }}</span

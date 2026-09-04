@@ -409,6 +409,7 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { Message } from 'element-ui'
 import {
   regActivityAdd,
@@ -417,7 +418,6 @@ import {
   getTemplateList
 } from '@/api/selfhelpform'
 import imgBox from '@/components/element/imgBox'
-import district from '@/common/district.json'
 import { listVipGrade } from '@/api/cardticket'
 import { getGradeList } from '@/api/membercard'
 import richTextEditor from '@/components/function/richTextEditor'
@@ -427,6 +427,7 @@ import DistributorSelect from '@/components/storeListSelect'
 import draggable from 'vuedraggable'
 
 export default {
+  mixins: [districtOptions],
   components: {
     imgBox,
     richTextEditor,
@@ -468,7 +469,7 @@ export default {
       picsList: [],
       useAllDistributor: false, // 适用店铺
       memberLevelList: [], // 适用会员等级
-      regions: district,
+      regions: [],
       is_activitytime_show: 1, // 活动有效时间-前端是否展示
       is_activitycity_show: 1, // 活动城市-前端是否展示
       is_activityplace_show: 1, // 活动地点-前端是否展示

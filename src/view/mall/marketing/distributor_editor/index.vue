@@ -121,9 +121,9 @@
   </div>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
 import { IS_DISTRIBUTOR, getRegionNameById } from '@/utils'
-import district from '@/common/district.json'
 import DadaForm from './components/DadaForm'
 import FashionForm from './components/FashionForm'
 import ImageForm from './components/ImageForm'
@@ -133,6 +133,7 @@ import IntroduceForm from './components/IntroduceForm.vue'
 import ReturnGoodsForm from './components/ReturnGoodsForm.vue'
 
 export default {
+  mixins: [districtOptions],
   components: {
     DadaForm,
     FashionForm,
@@ -323,7 +324,7 @@ export default {
           is_delivery: res.is_delivery,
           is_audit_goods: res.is_audit_goods,
           auto_sync_goods: res.auto_sync_goods,
-          is_require_subdistrict: res.is_require_subdistrict,
+          is_require_subdistrict: res.is_require_subdistrict: [],
           is_require_building: res.is_require_building,
           datapass_block: res.datapass_block,
           distributor_self: res.distributor_self,
@@ -420,10 +421,10 @@ export default {
       this.submitLoading = true
       const { distributor_id, distributor_type } = this.$route.query
       const aftersales = this.baseForm.offline_aftersales_address
-      const aftersales_regions = getRegionNameById(aftersales.regions_id, district)
+      const aftersales_regions = getRegionNameById(aftersales.regions_id, this.district)
       const params = {
         ...this.baseForm,
-        regions: getRegionNameById(this.baseForm.regions_id, district),
+        regions: getRegionNameById(this.baseForm.regions_id, this.district),
         hour: `${this.baseForm.startTime}-${this.baseForm.endTime}`,
         offline_aftersales_address: {
           ...aftersales,

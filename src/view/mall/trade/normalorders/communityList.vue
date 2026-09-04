@@ -166,7 +166,7 @@
           </SpFilterForm>
 
           <div class="action-container">
-            <el-dropdown>
+            <el-dropdown trigger="click">
               <el-button type="primary" plain>
                 {{ $t('273931a4.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
               </el-button>

@@ -154,7 +154,7 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <el-dropdown @command="handleExport">
+      <el-dropdown trigger="click" @command="handleExport">
         <el-button type="primary" plain>
           {{ $t('637ccf98.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
         </el-button>

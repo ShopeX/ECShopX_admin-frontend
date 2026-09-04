@@ -50,7 +50,7 @@
             (IS_SUPPLIER() || !form.supplier_id) && !routerParams.detail && !routerParams.supplier
           "
           type="primary"
-          :loading="submitLoading"
+          :disabled="submitLoading"
           @click="onFormSubmit('submiting')"
         >
           {{ $t('de022579.be5fbb') }}
@@ -58,7 +58,7 @@
         <el-button
           v-if="IS_SUPPLIER() && !routerParams.detail"
           type="primary"
-          :loading="submitLoading"
+          :disabled="submitLoading"
           @click.native="onFormSubmit('processing')"
         >
           {{ $t('de022579.646db0') }}
@@ -66,7 +66,7 @@
         <el-button
           v-if="IS_ADMIN() && form.audit_status == 'processing'"
           type="primary"
-          :loading="submitLoading"
+          :disabled="submitLoading"
           @click.native="onApplyConfirm"
         >
           {{ $t('de022579.388305') }}
@@ -109,7 +109,9 @@ import SpecParams from './components/SpecParams'
 import SkuParams from './components/SkuParams'
 import VideoPicker from '@/components/sp-picker-plus/VideoPicker.vue'
 import sku from '../../store/modules/sku'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   async beforeRouteLeave(to, from, next) {
     if (this.$refs['decorateRef']?.dialogVisible) {
       this.$refs['decorateRef'].resetDecorateTheme()
@@ -1264,7 +1266,7 @@ export default {
     },
     // 获取地区列表
     async getAddress() {
-      const res = await this.$api.common.getAddress()
+      const res = await this.loadDistrictOptions()
       this.regionsList = res
       const _all_obj = {
         value: 'all',

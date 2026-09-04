@@ -225,8 +225,8 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { get_all, exportData } from '@/api/transactionStatistics'
-import district from '@/common/district.json'
 import { getDistributorList } from '@/api/marketing'
 
 // 取选中地区的值
@@ -242,6 +242,7 @@ function getCascaderObj(val, opt) {
   })
 }
 export default {
+  mixins: [districtOptions],
   data() {
     return {
       // 平台账户收入
@@ -255,7 +256,7 @@ export default {
       tips_2: false,
       dateValue: [],
       select_regions_value: [],
-      regions: district,
+      regions: [],
       // 总页数
       total_count: 0,
       pickerOptions: {

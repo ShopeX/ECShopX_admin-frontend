@@ -97,7 +97,7 @@
       <el-table-column prop="total_fee" :label="$t('72034cff.95e6d7')" width="100" />
       <el-table-column width="160">
         <template #header>
-          <el-dropdown @command="toggleChangePriceType">
+          <el-dropdown trigger="click" @command="toggleChangePriceType">
             <span class="el-dropdown-link">
               {{ changeType == 'change_price' ? $t('72034cff.f2153d') : $t('72034cff.c3d538') }}
               <i class="el-icon-arrow-down el-icon--right" />

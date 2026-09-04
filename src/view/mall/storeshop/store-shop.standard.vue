@@ -55,7 +55,7 @@
 
       <el-button type="primary" @click="handleExport"> {{ $t('8c556aa3.55405e') }} </el-button>
 
-      <el-dropdown @command="onPatchAction">
+      <el-dropdown trigger="click" @command="onPatchAction">
         <el-button type="primary">
           {{ $t('8c556aa3.7f7c62') }}<i class="el-icon-arrow-down el-icon--right" />
         </el-button>

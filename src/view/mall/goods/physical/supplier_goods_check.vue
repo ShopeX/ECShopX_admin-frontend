@@ -380,8 +380,10 @@ import moment from 'moment'
 import { IS_SUPPLIER } from '@/utils'
 import { GOODS_APPLY_STATUS } from '@/consts'
 import { batchReviewItems } from '@/api/goods'
+import districtOptions from '@/mixins/districtOptions'
 
 export default {
+  mixins: [districtOptions],
   data() {
     const loginType = this.$store.getters.login_type
     let statusOption
@@ -892,7 +894,6 @@ export default {
   },
   mounted() {
     this.init()
-    this.getAddress()
     this.getShippingTemplatesList()
     this.$activated = () => {
       this.$refs['finder'].refresh()
@@ -1160,11 +1161,6 @@ export default {
       this.labelDialog = false
       this.$message.success(this.$t('58789194.33130f'))
       this.$refs['finder'].refresh()
-    },
-    // 获取地区列表
-    async getAddress() {
-      const res = await this.$api.common.getAddress()
-      this.regions = res
     },
     // 同步至店铺
     async syncToShop(isAll) {

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { CARD_TYPE } from '@/consts'
 import moment from 'moment'
 import BasePicker from './base'
@@ -61,7 +61,7 @@ import PageMixin from '../mixins/page'
 export default {
   name: 'PickerCoupon',
   extends: BasePicker,
-  mixins: [PageMixin],
+  mixins: [PageMixin, districtOptions],
   config: {
     title: '选择优惠券'
   },
@@ -115,7 +115,7 @@ export default {
         region: [],
         keywords: ''
       },
-      district,
+      district: [],
       regionArea: [],
       loading: false,
       multiple: this.value?.multiple ?? true

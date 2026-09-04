@@ -84,7 +84,7 @@
                 v-model="form.select_regions_value"
                 style="width: 100%"
                 :placeholder="$t('23a1f83f.075488')"
-                :options="area"
+                :options="regions"
                 @change="regionChange"
               />
             </el-form-item>
@@ -174,12 +174,13 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import ResultCpn from './cpn/result.vue'
 import loadingBtn from '@/components/loading-btn'
 import { MaxRules, requiredRules } from './tools'
 import checkBox from './cpn/checkBox.vue'
 export default {
+  mixins: [districtOptions],
   components: {
     ResultCpn,
     loadingBtn,
@@ -190,7 +191,7 @@ export default {
       allPro: '',
       allCity: [],
       allCountry: [],
-      area: district,
+      area: [],
       fee_type_options: [],
       mer_type_options: [],
       model_type_options: [],

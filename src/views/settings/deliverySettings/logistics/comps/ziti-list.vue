@@ -45,10 +45,11 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
-import district from '@/common/district.json'
 import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN, IS_DISTRIBUTOR } from '@/utils'
 export default {
+  mixins: [districtOptions],
   name: 'ZitiList',
   data() {
     return {
@@ -56,7 +57,7 @@ export default {
         region: [],
         keywords: ''
       },
-      district
+      district: []
     }
   },
   computed: {
@@ -173,7 +174,7 @@ export default {
   methods: {
     beforeSearch(params) {
       const { region } = this.formData
-      const [province, city, area] = getRegionNameById(region, district)
+      const [province, city, area] = getRegionNameById(region, this.district)
       const _params = {
         ...params,
         name: this.formData.keywords,

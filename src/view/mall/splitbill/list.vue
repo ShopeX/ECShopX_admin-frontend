@@ -140,11 +140,10 @@
   </div>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import shopSelect from '@/components/shopSelect'
 import { getEnterapplyList, upHfkaihu } from '@/api/fenzhang'
-
-import district from '@/common/district.json'
 
 import store from '@/store'
 // 取选中地区的值
@@ -161,6 +160,7 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   components: {
     shopSelect
   },
@@ -168,7 +168,7 @@ export default {
     return {
       dialogVisible: false,
       current: '', // 当前店铺id
-      regions: district,
+      regions: [],
       total_count: 0,
       statusText: {
         1: this.$t('d41d8cd9.p0q1r2'),

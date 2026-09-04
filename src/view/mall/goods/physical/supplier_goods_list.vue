@@ -218,7 +218,7 @@
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
 
-        <el-dropdown @command="handleExport">
+        <el-dropdown trigger="click" @command="handleExport">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             {{ $t('d41d8cd9.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -239,7 +239,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
+        <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()" trigger="click">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             {{ $t('d41d8cd9.5aa3a7') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -522,8 +522,10 @@ import { exportItemsData, exportItemsTagData } from '@/api/goods'
 import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import districtOptions from '@/mixins/districtOptions'
 
 export default {
+  mixins: [districtOptions],
   data() {
     const loginType = this.$store.getters.login_type
     let updateStatusOption = [
@@ -1240,7 +1242,6 @@ export default {
   },
   mounted() {
     this.init()
-    this.getAddress()
     this.getShippingTemplatesList()
     this.fetchWechatList()
     this.searchParams.operator_name = this.$route.query.operator_name
@@ -1593,17 +1594,12 @@ export default {
       this.$message.success(this.$t('d41d8cd9.33130f'))
       this.$refs['finder'].refresh()
     },
-    // 获取地区列表
-    async getAddress() {
-      const res = await this.$api.common.getAddress()
-      this.regions = res
-    },
     // 同步至店铺
     async syncToShop(isAll) {
       let distributorIds = '_all'
       if (!isAll) {
         const { data } = await this.$picker.shop({
-          queryParams: { is_valid: 'true' }
+          queryParams: { show_distributor_self: 1 }
         })
         distributorIds = data.map((item) => item.distributor_id)
       }

@@ -156,7 +156,7 @@
   </section>
 </template>
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { getDistributorList, addDistributorShop } from '@/api/marketing'
 import { uploadMaterial, getAuthorizerInfo } from '@/api/wechat'
 import imgPicker from '@/components/imageselect'
@@ -175,6 +175,7 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   components: {
     imgPicker
   },
@@ -196,7 +197,7 @@ export default {
       distributor_id: 0,
       searchRegion: '',
       qqmap_infowin_flag: false,
-      regions: district,
+      regions: [],
       searchService: [],
       markers: [],
       poi_info: []

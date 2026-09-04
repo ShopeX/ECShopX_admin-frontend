@@ -41,7 +41,7 @@
         <template slot-scope="scope">
           <el-checkbox
             v-model="scope.row.checked"
-            :disabled="!scope.row.left_aftersales_num"
+            :disabled="!scope.row.refundableNum"
             class="item-checkbox"
             @change="onChangeItem"
           />
@@ -63,10 +63,10 @@
             <el-input-number
               v-model="scope.row.refundNum"
               size="mini"
-              :disabled="!scope.row.left_aftersales_num"
+              :disabled="!scope.row.refundableNum"
               :step="1"
               :min="1"
-              :max="scope.row.left_aftersales_num"
+              :max="scope.row.refundableNum"
               @change="onChangeItem"
             />
           </div>
@@ -160,9 +160,9 @@ export default {
     },
     setSelectAllGoods() {
       this.items.forEach((item) => {
-        if (item.left_aftersales_num) {
+        if (item.refundableNum) {
           item.checked = true
-          item.refundNum = item.left_aftersales_num
+          item.refundNum = item.refundableNum
         }
       })
       this.onChangeItem()

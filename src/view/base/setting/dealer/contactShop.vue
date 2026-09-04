@@ -161,11 +161,12 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { getDistributorList, adapayMemberBind } from '@/api/marketing'
 import newShopSelects from '@/components/newShopSelects'
 
 export default {
+  mixins: [districtOptions],
   components: { newShopSelects },
   data() {
     return {
@@ -193,7 +194,7 @@ export default {
       total_count: 0,
       loading: false,
 
-      regions: district,
+      regions: [],
       list: []
     }
   },

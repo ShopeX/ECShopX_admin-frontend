@@ -32,6 +32,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          :current-page="params.page"
           :total="pagers.total"
           :page-size="params.pageSize"
           @size-change="handleSizeChange"
@@ -63,7 +64,7 @@ export default {
       checkFlag: null,
       params: {
         page: 1,
-        pageSize: 8,
+        pageSize: 10,
         status: 'ongoing'
       },
       pagers: {
@@ -101,18 +102,22 @@ export default {
     },
     getFetch() {
       const that = this
-      const { dufCheckFlag } = this.$props
-      //console.log('modeal flag',dufCheckFlag)
       that.$data.modalLoad = true
-      getBadge({}).then((res) => {
-        var { list, total_count } = res.data.data
-        if (list && this.flagList.length < 1) {
-          list.unshift({ badge_id: null, badge_name: null, badge_name_key: '09b91dec.d81bb2' })
+      getBadge(this.params).then(
+        (res) => {
+          var { list, total_count } = res.data.data
+          list = list ? [...list] : []
+          if (this.params.page === 1) {
+            list.unshift({ badge_id: null, badge_name: null, badge_name_key: '09b91dec.d81bb2' })
+          }
+          that.$data.flagList = list
+          that.$data.pagers = { total: total_count }
+          that.$data.modalLoad = false
+        },
+        () => {
+          that.$data.modalLoad = false
         }
-        that.$data.flagList = list
-        that.$data.pagers = { total: total_count }
-        that.$data.modalLoad = false
-      })
+      )
     },
     handleCancelLabelsDialog() {
       this.$emit('cancelLabelsDialog', false)

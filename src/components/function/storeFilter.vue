@@ -37,11 +37,12 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import api from '@/api'
-import district from '@/common/district.json'
 import storeList from './storeList'
 
 export default {
+  mixins: [districtOptions],
   components: {
     storeList
   },
@@ -73,7 +74,7 @@ export default {
       },
       total: 0,
       list: [],
-      regions: district,
+      regions: [],
       checked: {},
       currentStoreName: '',
       storeList: null

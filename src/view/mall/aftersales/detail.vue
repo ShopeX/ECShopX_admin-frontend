@@ -883,6 +883,7 @@ img {
 </style>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import {
   getAftersalesDetail,
   reviewAftersales,
@@ -893,7 +894,6 @@ import {
 } from '../../../api/aftersales'
 import { isBind, updateAftersalesSendBack } from '../../../api/trade'
 import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
-import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
 import { isArray, isObject, IS_SUPPLIER, getUrlPathByLoginType } from '@/utils'
@@ -918,7 +918,7 @@ export default {
   components: {
     RemarkModal
   },
-  mixins: [remarkMixin],
+  mixins: [remarkMixin, districtOptions],
   data() {
     return {
       aftersales_bn: '',
@@ -971,7 +971,7 @@ export default {
       form: {
         regions_id: []
       },
-      regions: district,
+      regions: [],
       sendbackInfo: {
         corp_code: '',
         logi_no: ''

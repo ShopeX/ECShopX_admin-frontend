@@ -797,6 +797,7 @@
   </SpPage>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import SpForm from '@/components/sp-form'
 import {
@@ -808,7 +809,6 @@ import {
 } from '@/api/marketing'
 import { getTagList, distributorRelTags, getDistance, setDistance } from '@/api/marketing'
 import { getDistributorMeiQia, setDistributorMeiQia } from '@/api/im'
-import district from '../../../common/district.json'
 import shopDecoration from '@/components/function/shopDecoration'
 import pcDecoration from '@/view/pc/homePage/default'
 import { getSetting } from '@/api/fenzhang'
@@ -832,7 +832,7 @@ function getCascaderObj(val, opt) {
 
 export default {
   components: { shopDecoration, pcDecoration },
-  mixins: [mixin, pageMixin],
+  mixins: [mixin, pageMixin, districtOptions],
   data() {
     const initialParams = {
       is_valid: undefined,
@@ -918,7 +918,7 @@ export default {
       },
       list: [],
       categoryList: [],
-      regions: district,
+      regions: [],
       codetype: 'index',
       rowdata: {},
       downDistributorVal: false,

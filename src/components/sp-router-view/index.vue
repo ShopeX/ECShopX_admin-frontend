@@ -18,6 +18,28 @@
 </template>
 
 <script>
+function findHostMatchedIndex(vm, matched) {
+  let parent = vm.$parent
+  while (parent) {
+    const index = matched.findIndex(
+      (record) => record.instances && record.instances.default === parent
+    )
+    if (index !== -1) return index
+    parent = parent.$parent
+  }
+  return -1
+}
+
+function findHostRouterViewDepth(vm) {
+  let parent = vm.$parent
+  while (parent) {
+    const depth = parent.$vnode?.data?.routerViewDepth
+    if (typeof depth === 'number') return depth
+    parent = parent.$parent
+  }
+  return null
+}
+
 export default {
   name: 'SpRouterView',
   data() {
@@ -26,23 +48,18 @@ export default {
     }
   },
   computed: {
-    routeViewDepth() {
-      const depth = this.$parent?.$vnode?.data?.routerViewDepth
-      return typeof depth === 'number' ? depth : null
-    },
+    // 只看「当前匹配是否深过本列表页」，不看路径叫 editor 还是 alipaysetting
     showRouterView() {
       const { matched } = this.$route
-      if (this.routeViewDepth !== null) {
-        return matched.length > this.routeViewDepth + 1
+      const hostIndex = findHostMatchedIndex(this, matched)
+      if (hostIndex !== -1) {
+        return hostIndex < matched.length - 1
       }
-      // 通过父页面在 matched 中的位置判断，避免 matched.length === 3 在不同路由层级失效
-      const parentIndex = matched.findIndex(
-        (record) => record.instances && record.instances.default === this.$parent
-      )
-      if (parentIndex !== -1) {
-        return matched.length > parentIndex + 1
+      const depth = findHostRouterViewDepth(this)
+      if (depth !== null) {
+        return matched.length > depth + 1
       }
-      return /\/(editor|detail|info)(?:\/|$)/.test(this.$route.path)
+      return false
     },
     routerViewKey() {
       return this.showRouterView ? this.$route.fullPath : 'sp-router-view-list'
@@ -66,8 +83,13 @@ export default {
   },
   methods: {
     onActivated(resetPage) {
-      if (typeof this.$parent.$activated === 'function') {
-        this.$parent.$activated(this.currentRoute, this.$route, resetPage)
+      let parent = this.$parent
+      while (parent) {
+        if (typeof parent.$activated === 'function') {
+          parent.$activated(this.currentRoute, this.$route, resetPage)
+          return
+        }
+        parent = parent.$parent
       }
     }
   }

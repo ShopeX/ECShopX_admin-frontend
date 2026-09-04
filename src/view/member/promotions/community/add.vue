@@ -156,7 +156,7 @@
   </section>
 </template>
 <script>
-import district from '../../../../common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { communityCreate, communityUpdate, getCommunityDetail } from '../../../../api/community'
 
 // 取选中地区的值
@@ -173,6 +173,7 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   inject: ['refresh'],
   data() {
     return {
@@ -197,7 +198,7 @@ export default {
         site_number: ''
       },
       qqmap_infowin_flag: false,
-      regions: district,
+      regions: [],
       searchService: [],
       markers: [],
       poi_info: [],

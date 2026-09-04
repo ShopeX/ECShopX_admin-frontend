@@ -73,10 +73,11 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import api from '@/api'
-import district from '@/common/district.json'
 
 export default {
+  mixins: [districtOptions],
   props: {
     data: [],
     multiple: {
@@ -104,7 +105,7 @@ export default {
       total: 0,
       list: [],
       checkedRegions: '',
-      regions: district,
+      regions: [],
       current: '',
       checked: ''
     }

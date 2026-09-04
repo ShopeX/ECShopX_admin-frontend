@@ -34,10 +34,13 @@ export default {
       let leftPoint = 0
       items.forEach((item) => {
         if (item.checked) {
+          // 部分发货+仅退款时 refundableNum 为 left_refund_only_num，left_aftersales_num 可能为 0
+          const refundableNum = item.refundableNum || item.left_aftersales_num
+          if (!refundableNum) return
           leftPoint +=
-            item.refundNum === item.left_aftersales_num
+            item.refundNum === refundableNum
               ? item.remain_point / 100
-              : parseInt((item.remain_point / 100 / item.left_aftersales_num) * item.refundNum)
+              : parseInt((item.remain_point / 100 / refundableNum) * item.refundNum)
         }
       })
       this.refundPoint = leftPoint

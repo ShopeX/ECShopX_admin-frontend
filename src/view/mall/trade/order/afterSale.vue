@@ -106,6 +106,7 @@ export default {
             } else {
               this.formList[6].isShow = false
             }
+            this.syncItemsRefundNum(e)
           }
         },
         {
@@ -263,11 +264,35 @@ export default {
   },
   created() {},
   methods: {
+    getRefundableNum(item, orderInfo = this.orderInfo, aftersalesType = this.form.aftersales_type) {
+      if (orderInfo?.delivery_status === 'PARTAIL' && aftersalesType === 'ONLY_REFUND') {
+        return item.left_refund_only_num
+      }
+      return item.left_aftersales_num
+    },
+    syncItemsRefundNum(aftersalesType = this.form.aftersales_type) {
+      if (!this.orderInfo?.items) return
+      this.orderInfo.items.forEach((item) => {
+        const refundableNum = this.getRefundableNum(item, this.orderInfo, aftersalesType)
+        item.refundableNum = refundableNum
+        item.refundNum = refundableNum
+        if (!refundableNum) {
+          item.checked = false
+        }
+      })
+      this.$nextTick(() => {
+        this.$refs['compGoodsRef']?.onChangeItem()
+        this.$refs['compRefundRef']?.getTotalFee()
+        this.$refs['compRefundPointRef']?.getTotalFee()
+      })
+    },
     onLoad({ orderInfo }) {
       orderInfo.items = orderInfo.items.map((item) => {
+        const refundableNum = this.getRefundableNum(item, orderInfo)
         return {
           ...item,
-          refundNum: item.left_aftersales_num,
+          refundableNum,
+          refundNum: refundableNum,
           checked: false
         }
       })

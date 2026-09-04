@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { getRegionauth } from '@/api/regionauth'
 import { getDistributorInfo } from '@/api/marketing'
 
@@ -100,10 +100,11 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   inject: ['content'],
   data() {
     return {
-      regions: district,
+      regions: [],
       typeList: [],
       regionauthList: [],
       searchService: [],
@@ -242,7 +243,7 @@ export default {
         return
       }
 
-      const provice = district.find((item) => item.value == regions_id[0])
+      const provice = this.regions.find((item) => item.value == regions_id[0])
       const city = provice.children.find((item) => item.value == regions_id[1])
       const country = city.children.find((item) => item.value == regions_id[2])
 

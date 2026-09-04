@@ -61,12 +61,12 @@
 
 <script>
 import { getShippingTemplatesList, deleteShippingTemplates } from '../../../../../api/shipping'
-import { getAddress } from '../../../../../api/common'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   props: ['getStatus'],
   data() {
     return {
-      district: {},
       loading: false,
       templateName: '',
       weightTemplatesList: [],
@@ -87,7 +87,6 @@ export default {
     }
   },
   mounted() {
-    this.getAddress()
     this.getShippingTemplatesList()
   },
   methods: {
@@ -166,11 +165,6 @@ export default {
           }
         }
       }
-    },
-    getAddress() {
-      getAddress().then((res) => {
-        this.district = res.data.data
-      })
     }
   }
 }

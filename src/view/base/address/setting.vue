@@ -56,9 +56,9 @@
   </div>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import { getSelfDeliveryAddress, setSelfDeliveryAddress } from '@/api/company'
-import district from '../../../common/district.json'
 
 // 取选中地区的值
 function getCascaderObj(val, opt) {
@@ -74,6 +74,7 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   data() {
     return {
       form: [
@@ -90,7 +91,7 @@ export default {
         }
       ],
       detailDialog: false,
-      regions: district,
+      regions: [],
       isShow: true,
       regionsIndex: 0
     }

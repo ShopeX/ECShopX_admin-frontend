@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
 
 // 取选中地区的值
@@ -52,12 +52,13 @@ function getCascaderObj(val, opt) {
   )
 }
 export default {
+  mixins: [districtOptions],
   data() {
     return {
       province: '',
       city: '',
       area: '',
-      regions: district,
+      regions: [],
       checkedRegions: []
     }
   },

@@ -184,7 +184,9 @@
           >
             <template slot-scope="scope">
               {{ scope.row.fee_symbol || '¥'
-              }}{{ (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2) }}
+              }}{{
+                (scope.row.freight_fee / 100 + scope.row.freight_point_fee / 100).toFixed(2)
+              }}
             </template>
           </el-table-column>
 
@@ -1408,7 +1410,7 @@ export default {
           componentProps: {
             type: 'datetimerange'
           }
-        }
+        },
       ]
     }
   },

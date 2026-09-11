@@ -57,7 +57,7 @@ export default {
         region: [],
         keywords: ''
       },
-      district: []
+      district: [],
     }
   },
   computed: {

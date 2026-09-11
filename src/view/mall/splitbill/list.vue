@@ -145,6 +145,7 @@ import { mapGetters } from 'vuex'
 import shopSelect from '@/components/shopSelect'
 import { getEnterapplyList, upHfkaihu } from '@/api/fenzhang'
 
+
 import store from '@/store'
 // 取选中地区的值
 function getCascaderObj(val, opt) {

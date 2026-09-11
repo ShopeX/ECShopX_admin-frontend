@@ -173,6 +173,7 @@ export default {
         const goodsTabs = [
           { label: this.$t('cb7af8ae.d012d9'), name: 'goods_data' },
           { label: this.$t('cb7af8ae.f83133'), name: 'items' },
+          { label: this.$t('cb7af8ae.9bb27d'), name: 'normal_items_tag' },
           { label: this.$t('cb7af8ae.e2ace4'), name: 'supplier_goods' },
           { label: this.$t('cb7af8ae.480b38'), name: 'itemcode' }
         ]

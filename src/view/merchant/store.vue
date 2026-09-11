@@ -514,10 +514,13 @@ export default {
           options: [
             { name: this.$t('027707af.9cfec5'), label: 1 },
             // BBC 去除「导购码」选项，仅保留上传企微码
-            ...(!this.VERSION_PLATFORM() ? [{ name: this.$t('027707af.29189f'), label: 2 }] : [])
+            ...(!this.VERSION_PLATFORM()
+              ? [{ name: this.$t('027707af.29189f'), label: 2 }]
+              : [])
           ],
           // BBC 仅一种码类型，无需再展示「码类型」单选
-          isShow: ({ key }, value) => value.show_salesperson !== 0 && !this.VERSION_PLATFORM()
+          isShow: ({ key }, value) =>
+            value.show_salesperson !== 0 && !this.VERSION_PLATFORM()
         },
         {
           label: this.$t('027707af.80384a'),
@@ -906,8 +909,8 @@ export default {
         const salespersonTypeFromApi = this.VERSION_PLATFORM()
           ? 1
           : showSalespersonApi === 2
-          ? 2
-          : 1
+            ? 2
+            : 1
         this.form = {
           distribution_type: res.distribution_type,
           distributor_category_id: this.normalizeCategoryId(res.distributor_category_id),

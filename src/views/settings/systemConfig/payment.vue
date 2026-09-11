@@ -482,8 +482,10 @@ export default {
         }
         this.$set(this.paymentForms, payType, formData)
 
-        // 更新开关状态
-        const paymentItem = this.allPaymentList.find((item) => item.name === payType)
+        // 更新开关状态（须写回 domestic/international 源数据，computed 副本不会驱动视图）
+        const paymentItem =
+          this.domesticPaymentList.find((item) => item.name === payType) ||
+          this.internationalPaymentList.find((item) => item.name === payType)
         if (paymentItem) {
           paymentItem.enabled = data.is_open === 'true' || data.is_open === true
         }
@@ -1181,7 +1183,7 @@ export default {
     },
 
     isDoumenIntlEnabled() {
-      const doumenItem = this.allPaymentList.find((item) => item.name === 'doumen_intl')
+      const doumenItem = this.internationalPaymentList.find((item) => item.name === 'doumen_intl')
       return !!(doumenItem && doumenItem.enabled)
     },
 
@@ -1293,7 +1295,8 @@ export default {
 
         await this.$api.trade.setPaymentSetting(params)
 
-        if (payType === 'doumen_intl' && params.is_open === 'true') {
+        // 斗门国际开关会影响其他支付方式状态，开启/关闭后均需重新拉取
+        if (payType === 'doumen_intl') {
           await this.loadAllPaymentConfigs()
         }
 

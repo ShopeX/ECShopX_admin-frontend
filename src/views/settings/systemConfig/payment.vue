@@ -487,7 +487,7 @@ export default {
           this.domesticPaymentList.find((item) => item.name === payType) ||
           this.internationalPaymentList.find((item) => item.name === payType)
         if (paymentItem) {
-          paymentItem.enabled = data.is_open === 'true' || data.is_open === true
+          paymentItem.enabled = data.is_open === 'true' || data.is_open === true || data.is_open == 1 
         }
 
         // 强制刷新表单数据

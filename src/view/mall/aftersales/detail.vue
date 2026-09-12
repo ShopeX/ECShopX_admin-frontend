@@ -733,6 +733,14 @@
     >
       <template>
         <el-table v-loading="loading" :data="relShop.list" @row-click="handleRowClick">
+          <el-table-column :label="$t('e67351f7.153fa6')" width="60" align="center">
+            <template slot-scope="scope">
+              <el-radio v-model="aftersales_select" :label="scope.row.address_id">
+                {{ '' }}
+              </el-radio>
+            </template>
+          </el-table-column>
+          <el-table-column prop="address_id" :label="$t('45a63912.b718ad')" width="80" />
           <el-table-column prop="address" :label="$t('e67351f7.c096c4')" width="300">
             <template slot-scope="scope">
               <i class="el-icon-place" />
@@ -756,11 +764,6 @@
           <el-table-column prop="is_default" :label="$t('e67351f7.d1c357')">
             <template slot-scope="scope">
               {{ scope.row.is_default == 1 ? $t('e67351f7.0a60ac') : $t('e67351f7.c9744f') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="address_id" :label="$t('e67351f7.153fa6')">
-            <template slot-scope="scope">
-              <el-radio v-model="aftersales_select" :label="scope.row.address_id" />
             </template>
           </el-table-column>
         </el-table>

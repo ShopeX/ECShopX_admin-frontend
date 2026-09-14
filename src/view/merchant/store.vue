@@ -547,7 +547,6 @@ export default {
           type: 'switch',
           width: 'auto',
           tip: this.$t('027707af.ed46b7'),
-          disabled: () => !this.dadaEnable,
           isShow: () => this.distributor_self == 0
         },
         {
@@ -566,7 +565,7 @@ export default {
                 <el-radio v-model={value[key]} label={true}>
                   {this.$t('027707af.0e903e')}
                 </el-radio>
-                <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>
+                <el-radio v-model={value[key]} label={false}>
                   {this.$t('027707af.bcb155')}
                 </el-radio>
               </div>
@@ -725,8 +724,7 @@ export default {
       map: null,
       mapMarker: null,
       datapass_block: 0,
-      distributor_self: 0, // 总店=1
-      dadaEnable: false
+      distributor_self: 0 // 总店=1
     }
   },
   created() {
@@ -759,6 +757,13 @@ export default {
       }
       const num = Number(value)
       return Number.isNaN(num) ? value : num
+    },
+    normalizeBusiness(value) {
+      if (value == null || value === '' || value == 0) {
+        return ''
+      }
+      const num = Number(value)
+      return Number.isNaN(num) || num === 0 ? '' : num
     },
     async getOrderSetting() {
       const res = await this.$api.trade.getOrderSetting()
@@ -823,7 +828,7 @@ export default {
       this.mapMarker.setPosition(latlng)
     },
     async getDadaInfo() {
-      const { business_list, is_open } = await this.$api.dada.getDadaInfo()
+      const { business_list } = await this.$api.dada.getDadaInfo()
       const typeList = Object.keys(business_list).reduce((total, current, index) => {
         return total.concat({
           value: Number(current),
@@ -835,10 +840,9 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open == '1'
     },
     async getShansongInfo() {
-      const { business_list, is_open } = await this.$api.dada.getShansongInfo()
+      const { business_list } = await this.$api.dada.getShansongInfo()
       const typeList = Object.keys(business_list).reduce((total, current, index) => {
         return total.concat({
           value: Number(current),
@@ -850,7 +854,6 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open == '1'
     },
     async getCategoryList() {
       try {
@@ -941,7 +944,7 @@ export default {
           salesperson_type: salespersonTypeFromApi,
           fixed_salesperson_qrcode_url: res.fixed_salesperson_qrcode_url || '',
           freight_time: res.freight_time,
-          business: res.business,
+          business: this.normalizeBusiness(res.business),
           is_ziti: res.is_ziti,
           offline_aftersales: res.offline_aftersales == 1,
           offline_aftersales_other: res.offline_aftersales_other == 1,

@@ -26,8 +26,19 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import VueHtml5Editor from 'vue-html5-editor'
+import { i18n } from '@/i18n'
+
+// vue-html5-editor 会改写内置模块的共享对象（dashboard = null）。
+// 每个实例 new 一次会让后续编辑器的下拉工具栏全部失效，所以全站只构造一次。
+let sharedEditor = null
+
+function getSharedEditor() {
+  if (!sharedEditor) {
+    sharedEditor = new VueHtml5Editor(getOptions((key) => i18n.t(key)))
+  }
+  return sharedEditor
+}
 
 function getOptions(t) {
   return {
@@ -169,8 +180,7 @@ export default {
     }
   },
   created() {
-    const t = this.$t.bind(this)
-    this.Editor = new VueHtml5Editor(getOptions(t))
+    this.Editor = getSharedEditor()
   },
   methods: {
     updateData(e) {

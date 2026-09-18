@@ -733,6 +733,14 @@
     >
       <template>
         <el-table v-loading="loading" :data="relShop.list" @row-click="handleRowClick">
+          <el-table-column :label="$t('e67351f7.153fa6')" width="60" align="center">
+            <template slot-scope="scope">
+              <el-radio v-model="aftersales_select" :label="scope.row.address_id">
+                {{ '' }}
+              </el-radio>
+            </template>
+          </el-table-column>
+          <el-table-column prop="address_id" :label="$t('45a63912.b718ad')" width="80" />
           <el-table-column prop="address" :label="$t('e67351f7.c096c4')" width="300">
             <template slot-scope="scope">
               <i class="el-icon-place" />
@@ -756,11 +764,6 @@
           <el-table-column prop="is_default" :label="$t('e67351f7.d1c357')">
             <template slot-scope="scope">
               {{ scope.row.is_default == 1 ? $t('e67351f7.0a60ac') : $t('e67351f7.c9744f') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="address_id" :label="$t('e67351f7.153fa6')">
-            <template slot-scope="scope">
-              <el-radio v-model="aftersales_select" :label="scope.row.address_id" />
             </template>
           </el-table-column>
         </el-table>
@@ -817,8 +820,8 @@
         </el-form-item>
         <el-form-item :label="$t('e67351f7.d1c357')">
           <el-select v-model="is_default" :placeholder="$t('e67351f7.708c9d')">
-            <el-option :label="$t('e67351f7.0a60ac')" value="1" />
-            <el-option :label="$t('e67351f7.c9744f')" value="2" />
+            <el-option :label="$t('e67351f7.0a60ac')" :value="1" />
+            <el-option :label="$t('e67351f7.c9744f')" :value="2" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -1028,7 +1031,7 @@ export default {
           this.aftersales_contact = data.aftersales_address.aftersales_contact
           this.aftersales_mobile = data.aftersales_address.aftersales_mobile
           this.aftersales_address_id = data.aftersales_address.aftersales_address_id
-          this.is_default = data.aftersales_address.is_default
+          this.is_default = this.normalizeIsDefault(data.aftersales_address.is_default)
         }
         if (data.sendback_data.length == 0) {
           this.aftersalesInfo.sendback_data = null
@@ -1067,7 +1070,7 @@ export default {
             this.aftersales_contact = data.aftersales_address.aftersales_contact
             this.aftersales_mobile = data.aftersales_address.aftersales_mobile
             this.aftersales_address_id = data.aftersales_address.aftersales_address_id
-            this.is_default = data.aftersales_address.is_default
+            this.is_default = this.normalizeIsDefault(data.aftersales_address.is_default)
           }
           if (data.sendback_data.length == 0) {
             this.aftersalesInfo.sendback_data = null
@@ -1243,7 +1246,7 @@ export default {
         this.aftersales_contact = fd.contact
         this.aftersales_mobile = fd.mobile
         this.aftersales_address = fd.province + fd.city + fd.area + fd.address
-        this.is_default = fd.is_default
+        this.is_default = this.normalizeIsDefault(fd.is_default)
       }
       this.relShop.relShopVisible = false
     },
@@ -1301,7 +1304,7 @@ export default {
           this.aftersales_contact = fd.contact
           this.aftersales_mobile = fd.mobile
           this.aftersales_address = fd.province + fd.city + fd.area + fd.address
-          this.is_default = fd.is_default
+          this.is_default = this.normalizeIsDefault(fd.is_default)
         } else {
           this.$message({
             message: this.$t('e67351f7.6452a0'),
@@ -1313,6 +1316,9 @@ export default {
     },
     onAddAddress() {
       this.dialogVisible = true
+    },
+    normalizeIsDefault(val) {
+      return val == 1 ? 1 : 2
     }
   }
 }

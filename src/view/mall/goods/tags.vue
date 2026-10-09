@@ -41,18 +41,6 @@
         </el-button>
       </div>
     </sideBar>
-
-    <SpTranslatePopup
-      ref="translatePopup"
-      table-name="items_tags"
-      :data-id="translateContext.dataId"
-      :fields="translateContext.fields"
-      :values="translateContext.values"
-      :source-language="translateContext.sourceLang"
-      @done="onTranslateDone"
-      @save-only="onTranslateSaveOnly"
-      @cancel="onTranslateCancel"
-    />
   </SpPage>
 </template>
 <script>
@@ -60,8 +48,6 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { saveTag, getTagList, getTagInfo, updateTag, deleteTag } from '../../../api/goods'
 import sideBar from '@/components/element/sideBar'
-import SpTranslatePopup from '@/components/sp-translate-popup'
-import translateMixin from '@/mixins/translateMixin'
 import { createSetting } from '@shopex-ui/finder'
 import { useForm } from '@/composables'
 import { i18n } from '@/i18n'
@@ -159,10 +145,8 @@ const [TagForm, TagFormApi] = useForm({
 export default {
   components: {
     sideBar,
-    TagForm,
-    SpTranslatePopup
+    TagForm
   },
-  mixins: [translateMixin],
   data() {
     return {
       show_sideBar: false,
@@ -431,7 +415,6 @@ export default {
             })
             this.show_sideBar = false
             this.$refs.finder.refresh()
-            this.openTranslate(submitData.tag_id, ['tag_name'], [submitData.tag_name || ''])
           }
         })
       } else {
@@ -443,18 +426,10 @@ export default {
             })
             this.show_sideBar = false
             this.$refs.finder.refresh()
-            // 创建/编辑保持一致：弹「同步翻译」弹框
-            const newTagId = (res.data.data && (res.data.data.tag_id || res.data.data.id)) || 0
-            if (newTagId) {
-              this.openTranslate(newTagId, ['tag_name'], [submitData.tag_name || ''])
-            }
           }
         })
       }
-    },
-    onTranslateDone() {},
-    // 列表页内嵌表单：仅保存/取消停留在当前列表页
-    goBackTranslateList() {}
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "4.18.0",
+  "version": "4.18.1",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -9,7 +9,7 @@
     "build:bbc": "PLATFORM=bbc vue-cli-service build",
     "build:b2c": "PLATFORM=b2c vue-cli-service build",
     "dev:bbc": "PLATFORM=bbc vue-cli-service serve",
-    "dev:b2c": "PLATFORM=b2c vue-cli-service serve",
+    "dev:b2c": "cross-env PLATFORM=b2c vue-cli-service serve",
     "sh": "node ./cli.js",
     "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'",
     "eslint:comment": "使用EsLint检查并自动修复src目录下所有扩展名为.js和.jsx",
@@ -19,7 +19,9 @@
     "commit:comment": "引导设置规范化的提交信息",
     "commit": "git-cz",
     "husky": "npx husky install",
-    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'"
+    "husky:add": "npx husky add .husky/pre-commit 'npx --no-install lint-staged' & npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
+    "export:decoration-schema": "node scripts/export-decoration-schema.mjs ../ecshopx-web/app/decoration-engine/schema/decoration-schema.json",
+    "lint:decoration-contract": "node scripts/check-decoration-contract.mjs && npm run export:decoration-schema"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.35",

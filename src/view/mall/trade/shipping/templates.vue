@@ -51,11 +51,6 @@ export default {
   data() {
     return {
       loading: false,
-      buyerTemplates: false,
-      weightTemplates: false,
-      numberTemplates: false,
-      priceTemplates: false,
-      volumeTemplates: false,
       activeName: 'first',
       list: []
     }
@@ -82,18 +77,140 @@ export default {
     addTemplates() {
       this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    handleClick(tab, event) {
-      if (this.activeName === 'first') {
-        this.buyerTemplates = true
-      } else if (this.activeName === 'second') {
-        this.weightTemplates = true
-      } else if (this.activeName === 'third') {
-        this.numberTemplates = true
-      } else if (this.activeName === 'fourth') {
-        this.priceTemplates = true
-      } else if (this.activeName === 'fifth') {
-        this.volumeTemplates = true
+    handleClick() {
+      this.$nextTick(() => this.getList())
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
       }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
+    },
+    getActiveTabRef() {
+      const refMap = {
+        first: 'buyerTemplates',
+        second: 'weightTemplates',
+        third: 'numberTemplates',
+        fourth: 'priceTemplates',
+        fifth: 'volumeTemplates'
+      }
+      const refName = refMap[this.activeName]
+      return refName ? this.$refs[refName] : null
     },
     getActiveTabRef() {
       const refMap = {

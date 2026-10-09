@@ -68,6 +68,19 @@ export default {
   created() {
     this.currentRoute = this.$route
   },
+  render(h) {
+    if (this.showRouterView) {
+      return h('router-view')
+    }
+    const nodes = this.$slots.default
+    if (!nodes || !nodes.length) {
+      return h('span', { style: { display: 'none' }, attrs: { 'aria-hidden': 'true' } })
+    }
+    if (nodes.length === 1) {
+      return nodes[0]
+    }
+    return h('div', { style: { display: 'contents' } }, nodes)
+  },
   methods: {
     onActivated(resetPage) {
       let parent = this.$parent

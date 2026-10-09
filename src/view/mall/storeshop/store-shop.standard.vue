@@ -66,12 +66,6 @@
           <el-dropdown-item command="2">
             <span>{{ $t('8c556aa3.d5e015') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item command="3">
-            <span>{{ $t('8c556aa3.7fcc60') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="4">
-            <span>{{ $t('8c556aa3.12e91b') }}</span>
-          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

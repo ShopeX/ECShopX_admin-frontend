@@ -155,7 +155,7 @@ module.exports = {
       }
 
       // 在主构建流程中添加文件复制插件
-      config.plugins.push(new CopyWebpackPlugin(getNewpcCopyConfig()))
+      // config.plugins.push(new CopyWebpackPlugin(getNewpcCopyConfig()))
     }
 
     // OSS CDN 上传配置

@@ -7,7 +7,7 @@ import Vue from 'vue'
 import qs from 'qs'
 import store from '../store'
 import Router from '../router'
-import { i18n } from '@/i18n'
+import { getCurrentCountryCode, i18n } from '@/i18n'
 import {
   isInSalesCenter,
   goLink,
@@ -88,25 +88,12 @@ function createAxios(inst, isJson = true) {
     // 添加 country_code 语言参数；若传入 skipCountryCode 则不添加
     const skipCountryCode = config.skipCountryCode === true
     if (skipCountryCode) delete config.skipCountryCode
-    const lang = window.localStorage.getItem('lang')
-    const langMap = {
-      zhcn: 'zh-CN',
-      en: 'en-CN',
-      zhtw: 'zh-TW',
-      ar: 'ar-SA'
-    }
-    if (lang && langMap[lang] && !skipCountryCode) {
-      if (isGetMethod || isDeleteMethod) {
-        // GET/DELETE 请求添加到 params
-        config.params = config.params || {}
-        config.params.country_code = langMap[lang]
-        console.log('[utils/fetch] 2. GET/DELETE 请求添加 country_code 到 params:', langMap[lang])
-      } else {
-        // POST/PUT 请求添加到 params（后续会转换为 data）
-        config.params = config.params || {}
-        config.params.country_code = langMap[lang]
-        console.log('[utils/fetch] 2. POST/PUT 请求添加 country_code 到 params:', langMap[lang])
-      }
+    const countryCode = getCurrentCountryCode()
+    config.headers['Accept-Language'] = countryCode
+    if (!skipCountryCode) {
+      config.params = config.params || {}
+      config.params.country_code = countryCode
+      console.log('[utils/fetch] 2. 请求添加 country_code:', countryCode)
     }
     if (isGetMethod || isDeleteMethod) {
       if (isObject(config.params)) {

@@ -7,7 +7,7 @@ import Vue from 'vue'
 import store from '@/store'
 import router from '@/router'
 import { isObject, getBasePath } from '@/utils'
-import { langMap, i18n } from '@/i18n'
+import { getCurrentCountryCode, i18n } from '@/i18n'
 import { RequestClient } from './request'
 
 // 请求队列
@@ -63,11 +63,8 @@ function createRequestClient() {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
-      // 多语言处理
-      const lang = window.localStorage.getItem('lang')
-      if (lang) {
-        config.headers['Accept-Language'] = langMap[lang]
-      }
+      // 与 country_code 保持一致（如 en-CN / ar-SA / ja-JP / ru-RU），勿用 htmlLang
+      config.headers['Accept-Language'] = getCurrentCountryCode()
 
       if (config.method === 'get') {
         config.params = {

@@ -84,8 +84,8 @@ export default {
     const t = this.$t.bind(this)
     this.searchFormItems = [
       {
-        formItemClass: 'w-2/4',
         component: 'input',
+        cellWidth: 1.5,
         componentProps: {
           placeholder: t('a190be57.3605b8'),
           clearable: true

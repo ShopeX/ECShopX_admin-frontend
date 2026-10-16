@@ -4,6 +4,7 @@
  * 保存仍维持 page 与 header/footer 分开调用，兼容现有后端存储。
  */
 import { getDecorationContent, saveTemplateContent, saveHeaderOrFooter } from '@/api/webtemplate'
+import { getCurrentCountryCode } from '@/i18n'
 import {
   createHomeDsl,
   createCustomDsl,
@@ -18,22 +19,13 @@ import {
 } from '../utils/dsl.js'
 import { createGlobalSections } from '../definitions/documents/global.js'
 
+export { getCurrentCountryCode }
+
 export const DSL_ROW_TYPE = 'ECX_SP_WEB_DECORATION_DSL_V1'
 export const DEFAULT_COUNTRY_CODE = 'zh-CN'
 const LEGACY_GLOBAL_DECORATION_PAGE_NAME = 'ecx_sp_web_decoration_global'
 export const HEADER_DECORATION_PAGE_NAME = 'header'
 export const FOOTER_DECORATION_PAGE_NAME = 'footer'
-
-export function getCurrentCountryCode() {
-  const lang = window.localStorage.getItem('lang')
-  const langMap = {
-    zhcn: 'zh-CN',
-    en: 'en-CN',
-    zhtw: 'zh-TW',
-    ar: 'ar-SA'
-  }
-  return langMap[lang] || DEFAULT_COUNTRY_CODE
-}
 
 function createPageFallback(templateId, scene, pageType = 'home') {
   if (pageType === 'custom') {

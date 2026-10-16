@@ -4,7 +4,7 @@
  */
 import { initFinder } from '@shopex-ui/finder'
 import { requestClient } from '@/api/request'
-import { i18n } from '@/i18n'
+import { getCurrentCountryCode, i18n } from '@/i18n'
 
 function install(Vue) {
   initFinder(Vue, {
@@ -13,22 +13,12 @@ function install(Vue) {
       qs: false,
       globalHooks: {
         beforeQuery: (p) => {
-          const lang = window.localStorage.getItem('lang')
-          const langMap = {
-            zhcn: 'zh-CN',
-            en: 'en-CN',
-            zhtw: 'zh-TW',
-            ar: 'ar-SA'
-          }
-
           let params = {
             ...p,
             pageSize: p.pageSize,
             page: p.pageNum,
-            finderId: 100
-          }
-          if (lang) {
-            params.country_code = langMap[lang]
+            finderId: 100,
+            country_code: getCurrentCountryCode()
           }
           // delete params.pageSize
           delete params.pageNum

@@ -760,7 +760,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.d42050')">
+              <el-table-column :label="$t('4b43f5ef.c98674')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"

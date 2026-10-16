@@ -81,8 +81,8 @@ export default {
     searchFormItems() {
       return [
         {
-          formItemClass: 'w-2/4',
           component: 'input',
+          cellWidth: 1.5,
           componentProps: {
             placeholder: this.$t('45a63912.3605b8'),
             clearable: true

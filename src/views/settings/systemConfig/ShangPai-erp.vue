@@ -14,31 +14,26 @@
         label-width="150px"
         :show-default-actions="false"
       />
-      <el-row class="mb-10">
-        <el-col :span="4">
-          <el-button type="primary" @click="deleteCer">{{ $t('073515a8.7b49f4') }}</el-button>
-        </el-col>
-        <el-col :span="4">
-          <el-button
-            v-if="showShopexBindBtn"
-            type="primary"
-            @click="dialogShopexBindVisible = true"
-          >
-            {{ $t('073515a8.06cc65') }}
-          </el-button>
-        </el-col>
-      </el-row>
+      <!-- flex 跟随 html[dir=rtl] 自动镜像；el-col float 不会随 direction 翻转 -->
+      <div class="mb-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <el-button type="primary" @click="deleteCer">{{ $t('073515a8.7b49f4') }}</el-button>
+        <el-button
+          v-if="showShopexBindBtn"
+          type="primary"
+          @click="dialogShopexBindVisible = true"
+        >
+          {{ $t('073515a8.06cc65') }}
+        </el-button>
+      </div>
     </div>
     <div class="cer-box">
-      <el-row>
-        <el-col :span="4" class="col-right">{{ $t('073515a8.8ad285') }}</el-col>
-        <el-col :span="4">
-          <el-button type="primary" @click="bindRelation">{{ $t('073515a8.1c5b43') }}</el-button>
-        </el-col>
-        <el-col :span="4">
-          <el-button type="primary" @click="lookRelation">{{ $t('073515a8.4fc632') }}</el-button>
-        </el-col>
-      </el-row>
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
+        <span class="inline-flex min-w-[150px] items-center text-sm leading-8 text-gray-700">
+          {{ $t('073515a8.8ad285') }}
+        </span>
+        <el-button type="primary" @click="bindRelation">{{ $t('073515a8.1c5b43') }}</el-button>
+        <el-button type="primary" @click="lookRelation">{{ $t('073515a8.4fc632') }}</el-button>
+      </div>
     </div>
     <el-dialog :title="$t('073515a8.1c5b43')" :visible.sync="dialogBindVisible" fullscreen>
       <div>

@@ -16489,8 +16489,8 @@
   "4b43f5ef.d87166": "Bulk fill",
   "4b43f5ef.47f00b": "Status",
   "4b43f5ef.9b979b": "Item no.",
-  "4b43f5ef.94d502": "Fill",
-  "4b43f5ef.3fea7c": "Spec value",
+  "4b43f5ef.94d502": "Spec value",
+  "4b43f5ef.3fea7c": "Status",
   "4b43f5ef.8c0d75": "Weight(kg)",
   "4b43f5ef.3b35fa": "Volume(m³)",
   "4b43f5ef.4403fc": "Clear",
@@ -23170,5 +23170,7 @@
   "523e1e97.124550": "Sync task submitted",
   "ed356575.d4bb3f": "Signatures under review cannot be edited",
   "ed356575.b20524": "Cannot delete a signature that is under review",
-  "872a1908.dbd4f1": "Edit SMS signature"
+  "872a1908.dbd4f1": "Edit SMS signature",
+  "4b43f5ef.756e44": "Fill",
+  "4b43f5ef.c98674": "Points value"
 }

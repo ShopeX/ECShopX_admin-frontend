@@ -112,7 +112,9 @@ export function changeLang(storeLang) {
 }
 
 /**
- * 获取当前语言对应的 countryCode（用于后端 API country_code 参数）
+ * 获取当前语言对应的 countryCode
+ * 同时用于：请求参数 country_code、请求头 Accept-Language
+ *（与 htmlLang 可能不同，如英文 htmlLang=en、countryCode=en-CN）
  */
 export function getCurrentCountryCode() {
   const langKey = getStoredLang()

@@ -2045,7 +2045,7 @@ export default {
         pageSize: 1000,
         distributor_id: 0
       })
-      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.k1l2m3')}${item.item_name}】`
+      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.g5h6i7')}${item.item_name}】`
       this.itemSkuList = list || []
       this.showItemSkuDrawer = true
       this.itemSkuList = list

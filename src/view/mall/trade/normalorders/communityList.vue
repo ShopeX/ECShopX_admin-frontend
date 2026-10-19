@@ -411,7 +411,8 @@
           <SpDialog
             ref="deliverGoodsDialogRef"
             v-model="deliverGoodsDialog"
-            width="1000px"
+            class="dialog-delivery"
+            width="1200px"
             :title="$t('273931a4.ff1901', { orderId: deliverGoodsForm.order_id })"
             :form="deliverGoodsForm"
             :form-list="deliverGoodsFormList"
@@ -1177,5 +1178,10 @@ export default {
 <style lang="scss" scope>
 .sp-filter-form {
   margin-bottom: 16px;
+}
+.dialog-delivery {
+  .el-form {
+    margin-right: 0 !important;
+  }
 }
 </style>

@@ -268,7 +268,8 @@
       <SpDialog
         ref="deliverGoodsDialogRef"
         v-model="deliverGoodsDialog"
-        width="1000px"
+        class="dialog-delivery"
+        width="1200px"
         :title="`${$t('d41d8cd9.a4b5c6')}${deliverGoodsForm.order_id}】`"
         :form="deliverGoodsForm"
         :form-list="deliverGoodsFormList"
@@ -1326,6 +1327,7 @@ export default {
   margin-bottom: 16px;
 }
 
+.dialog-delivery,
 .dialog-changeprice,
 .dialog-cancelorder,
 .dialog-salesafter {

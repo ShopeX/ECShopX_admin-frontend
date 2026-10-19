@@ -414,7 +414,8 @@
       <SpDialog
         ref="deliverGoodsDialogRef"
         v-model="deliverGoodsDialog"
-        width="1000px"
+        class="dialog-delivery"
+        width="1200px"
         :confirm-status="confirmStatus"
         :title="`${$t('c95ea121.045315')}【${$t('c95ea121.4c117f')}:${deliverGoodsForm.order_id}】`"
         :form="deliverGoodsForm"
@@ -750,7 +751,7 @@ export default {
             {
               title: this.$t('c95ea121.066804'),
               key: 'cost_price',
-              width: 100,
+              width: 120,
               render: (row, column, cell) => {
                 return row.cost_price / 100
               }
@@ -2403,6 +2404,7 @@ export default {
 }
 </script>
 <style lang="scss" scope>
+.dialog-delivery,
 .dialog-changeprice,
 .dialog-cancelorder,
 .dialog-salesafter {

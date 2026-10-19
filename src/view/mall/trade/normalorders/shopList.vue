@@ -353,7 +353,7 @@
         :title="deliveryTitle"
         :visible.sync="deliveryVisible"
         :before-close="handleCancel"
-        width="57%"
+        width="80%"
       >
         <template>
           <el-form
@@ -453,7 +453,7 @@
         :title="deliveryTitle"
         :visible.sync="deliveryVisibleNew"
         :before-close="handleCancel"
-        width="65%"
+        width="80%"
       >
         <template>
           <el-form

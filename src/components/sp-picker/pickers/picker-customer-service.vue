@@ -53,7 +53,8 @@
       :setting="{
         columns: [
           { name: 'ID', key: 'id' },
-          { name: $t('cc5110aa.d7ec2d'), key: 'title' }
+          { name: $t('cc5110aa.d7ec2d'), key: 'title' },
+          { name: $t('cc5110aa.f411d0'), key: 'remark' }
         ]
       }"
       @select="onSelect"
@@ -75,13 +76,14 @@ export default {
   },
   props: ['value'],
   data() {
+    const remark = this.$t('cc5110aa.73f586')
     return {
       list: [
-        { id: 'customerService', title: this.$t('cc5110aa.107a88') },
-        { id: 'guide_service', title: this.$t('cc5110aa.6f33a3') },
-        { id: 'officialProfile', title: this.$t('cc5110aa.a90321') },
-        { id: 'officialChat', title: this.$t('cc5110aa.b70432') },
-        { id: 'official', title: this.$t('cc5110aa.c40543') }
+        { id: 'customerService', title: this.$t('cc5110aa.107a88'), remark },
+        { id: 'guide_service', title: this.$t('cc5110aa.6f33a3'), remark },
+        { id: 'officialProfile', title: this.$t('cc5110aa.a90321'), remark },
+        { id: 'officialChat', title: this.$t('cc5110aa.b70432'), remark },
+        { id: 'official', title: this.$t('cc5110aa.c40543'), remark }
       ],
       multiple: this.value?.multiple ?? true
     }

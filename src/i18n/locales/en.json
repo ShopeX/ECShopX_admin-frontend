@@ -17671,7 +17671,7 @@
   "de022579.24b9c6": "Please select sales category",
   "de022579.5352d4": "Product images",
   "de022579.4d1ed9": "Please upload product images",
-  "de022579.fd4ce6": "1. Up to 9 images, bmp/png/jpeg/jpg/gif, max 2M (recommended 500×500px)<br />2. Album share mini-program code",
+  "de022579.fd4ce6": "1. Up to 9 images, bmp/png/jpeg/jpg/gif, max 2M (recommended 500×500px)<br />2. Whether Moments album share generates a mini-program code<br />3. Do not include spaces or symbols in the image file name",
   "de022579.face4f": "Product video",
   "de022579.8686bb": "Product params",
   "de022579.5fceb3": "Product spec",

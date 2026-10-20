@@ -993,10 +993,24 @@ export default {
           {
             name: this.$t('dc9cefd6.07ec01'),
             key: 'itemName',
-            width: 280,
+            width: 320,
             render: (h, scope) => {
+              const pic =
+                (Array.isArray(scope.row.pics) && scope.row.pics[0]) ||
+                scope.row.pic ||
+                scope.row.image_url ||
+                ''
               return (
-                <div>
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0;'>
                   <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
@@ -1044,6 +1058,7 @@ export default {
                         style='margin-left: 4px;'
                       />
                     </el-tooltip>
+                  </div>
                   </div>
                 </div>
               )

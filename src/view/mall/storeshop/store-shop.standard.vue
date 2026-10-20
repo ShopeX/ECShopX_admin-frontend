@@ -342,7 +342,28 @@ export default {
           {
             name: this.$t('8c556aa3.1fd1d5'),
             key: 'item_name',
-            width: 160
+            width: 280,
+            render: (h, { row }) => {
+              const pic =
+                (Array.isArray(row.pics) && row.pics[0]) ||
+                row.pic ||
+                row.image_url ||
+                ''
+              const title = row.item_name || row.itemName || ''
+              return (
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0; white-space: normal;'>{title}</div>
+                </div>
+              )
+            }
           },
           {
             name: this.$t('8c556aa3.0888fc'),

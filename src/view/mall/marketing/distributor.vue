@@ -264,7 +264,7 @@
           align="center"
           :label="$t('b2fe051e.66eeac')"
         />
-        <el-table-column width="50" prop="distributor_id" label="ID" />
+        <el-table-column width="88" prop="distributor_id" label="ID" align="right" header-align="center" />
         <el-table-column :label="$t('b2fe051e.295713')" min-width="180">
           <template slot-scope="scope">
             <div class="store-name">

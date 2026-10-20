@@ -273,32 +273,42 @@
               align="right"
               header-align="center"
             />
-            <el-table-column prop="item_bn" :label="$t('b7aea01d.58cac1')" width="150" />
-            <el-table-column prop="itemName" :label="$t('b7aea01d.9897d8')" width="300">
+            <el-table-column prop="itemName" :label="$t('b7aea01d.9897d8')" width="320">
               <template slot-scope="scope">
-                <div class="goods-title">
-                  {{ scope.row.item_name }}
-                  <el-tag
-                    v-if="!scope.row.nospec"
-                    size="mini"
-                    effect="plain"
-                    type="primary"
-                    style="margin-left: 4px; cursor: default"
-                    @click="handleViewSkuInfo(scope.row)"
-                  >
-                    {{ $t('b7aea01d.7b1568') }}
-                    <i class="ecx-icon icon-sousuo" style="font-size: 12px; margin-left: 2px" />
-                  </el-tag>
-                </div>
-                <div class="goods-code">
-                  {{ $t('b7aea01d.2c8af9') }}{{ scope.row.goods_bn }}
-                  <el-tooltip effect="dark" :content="$t('b7aea01d.79d3ab')" placement="top-start">
-                    <i
-                      v-clipboard:copy="scope.row.goods_bn"
-                      v-clipboard:success="onCopySuccess"
-                      class="el-icon-document-copy"
-                    />
-                  </el-tooltip>
+                <div class="flex items-start gap-2">
+                  <SpImage
+                    :src="goodsListPic(scope.row)"
+                    :width="56"
+                    :height="56"
+                    fit="cover"
+                    class="shrink-0"
+                  />
+                  <div class="min-w-0 flex-1">
+                    <div class="goods-title">
+                      {{ scope.row.item_name }}
+                      <el-tag
+                        v-if="!scope.row.nospec"
+                        size="mini"
+                        effect="plain"
+                        type="primary"
+                        style="margin-left: 4px; cursor: default"
+                        @click="handleViewSkuInfo(scope.row)"
+                      >
+                        {{ $t('b7aea01d.7b1568') }}
+                        <i class="ecx-icon icon-sousuo" style="font-size: 12px; margin-left: 2px" />
+                      </el-tag>
+                    </div>
+                    <div class="goods-code">
+                      {{ $t('b7aea01d.2c8af9') }}{{ scope.row.goods_bn }}
+                      <el-tooltip effect="dark" :content="$t('b7aea01d.79d3ab')" placement="top-start">
+                        <i
+                          v-clipboard:copy="scope.row.goods_bn"
+                          v-clipboard:success="onCopySuccess"
+                          class="el-icon-document-copy"
+                        />
+                      </el-tooltip>
+                    </div>
+                  </div>
                 </div>
               </template>
             </el-table-column>
@@ -1144,6 +1154,23 @@ export default {
     console.log(111)
   },
   methods: {
+    goodsListPic(row) {
+      if (!row) {
+        return ''
+      }
+      let pics = row.pics
+      if (typeof pics === 'string' && pics.trim()) {
+        try {
+          pics = JSON.parse(pics)
+        } catch (e) {
+          pics = []
+        }
+      }
+      if (Array.isArray(pics) && pics[0]) {
+        return pics[0]
+      }
+      return row.pic || row.image_url || ''
+    },
     onItemSkuFormSubmit() {
       this.itemSkuDialog = false
       this.itemShowSkuStore = false

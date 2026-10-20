@@ -775,7 +775,6 @@ export default {
               )
             }
           },
-          { name: this.$t('d41d8cd9.0888fc'), key: 'item_bn' },
           { name: this.$t('d41d8cd9.55c61d'), key: 'supplier_name', width: 120 },
           // {
           //   name: this.$t('d41d8cd9.g4h5i6'),

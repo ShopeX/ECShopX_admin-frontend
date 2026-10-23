@@ -74,7 +74,6 @@ export default {
         operator_type: 'supplier',
         mobile: '',
         login_name: '',
-        supplier_name: '',
         username: '',
         password: ''
       }
@@ -125,7 +124,6 @@ export default {
                 this.supplierForm.id = row.operator_id
                 this.supplierForm.mobile = row.mobile
                 this.supplierForm.login_name = row.login_name
-                this.supplierForm.supplier_name = row.supplier_name || ''
                 this.supplierForm.username = row.username
                 this.supplierForm.password = ''
                 this.supplierFormListDisabled[1] = true
@@ -147,14 +145,6 @@ export default {
           type: 'input',
           required: true,
           message: emptyMsg
-        },
-        {
-          label: this.$t('9bd7ffcf.9190cc'),
-          key: 'supplier_name',
-          type: 'input',
-          required: true,
-          message: emptyMsg,
-          placeholder: this.$t('9bd7ffcf.f0c2bb')
         },
         {
           label: this.$t('9bd7ffcf.8098e2'),
@@ -232,7 +222,6 @@ export default {
         operator_type: 'supplier',
         mobile: '',
         login_name: '',
-        supplier_name: '',
         username: '',
         password: ''
       }

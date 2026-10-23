@@ -993,10 +993,32 @@ export default {
           {
             name: this.$t('dc9cefd6.07ec01'),
             key: 'itemName',
-            width: 280,
+            width: 320,
             render: (h, scope) => {
+              let pics = scope.row.pics
+              if (typeof pics === 'string' && pics.trim()) {
+                try {
+                  pics = JSON.parse(pics)
+                } catch (e) {
+                  pics = []
+                }
+              }
+              const pic =
+                (Array.isArray(pics) && pics[0]) ||
+                scope.row.pic ||
+                scope.row.image_url ||
+                ''
               return (
-                <div>
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0;'>
                   <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
@@ -1045,6 +1067,7 @@ export default {
                       />
                     </el-tooltip>
                   </div>
+                  </div>
                 </div>
               )
             }
@@ -1055,13 +1078,6 @@ export default {
           //   width: 150,
           //   render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
           // },
-          {
-            name: this.$t('d41d8cd9.0888fc'),
-            key: 'item_bn',
-            width: 160,
-            align: 'right',
-            headerAlign: 'center'
-          },
           {
             name: this.$t('dc9cefd6.14d342'),
             width: 180,
@@ -1330,6 +1346,40 @@ export default {
             }
           }
         },
+        // SKU编码
+        {
+          fieldName: 'item_bn',
+          label: this.$t('d41d8cd9.8a2c1f'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.6e19f2')
+          }
+        },
+        // SPU编码
+        {
+          fieldName: 'goods_bn',
+          label: this.$t('d41d8cd9.c3a815'),
+          cellWidth: 1.3,
+          component: 'input',
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.7d3a61')
+          }
+        },
+        // 商品标签（非供应商）
+        {
+          fieldName: 'tag_id',
+          label: this.$t('d41d8cd9.f1a62d'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          isShow: () => !this.IS_SUPPLIER(),
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.2c9b17'),
+            clearable: true,
+            options: this.tagList,
+            props: { value: 'tag_id', label: 'tag_name' }
+          }
+        },
         // 运费模板
         {
           fieldName: 'templates_id',
@@ -1363,52 +1413,6 @@ export default {
             }))
           }
         },
-        // SKU编码
-        {
-          fieldName: 'item_bn',
-          label: this.$t('d41d8cd9.8a2c1f'),
-          component: 'input',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.6e19f2')
-          }
-        },
-        // SPU编码
-        {
-          fieldName: 'goods_bn',
-          label: this.$t('d41d8cd9.c3a815'),
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.7d3a61')
-          }
-        },
-        // 商品产地
-        {
-          fieldName: 'regions_id',
-          label: this.$t('d41d8cd9.d82b43'),
-          component: 'cascader',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.3e1b0a'),
-            clearable: true,
-            options: this.regions
-          }
-        },
-        // 商品标签（非供应商）
-        {
-          fieldName: 'tag_id',
-          label: this.$t('d41d8cd9.f1a62d'),
-          component: 'cascader',
-          cellWidth: 1.3,
-          isShow: () => !this.IS_SUPPLIER(),
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.2c9b17'),
-            clearable: true,
-            options: this.tagList,
-            props: { value: 'tag_id', label: 'tag_name' }
-          }
-        },
         // 赠品
         {
           fieldName: 'is_gift',
@@ -1438,6 +1442,18 @@ export default {
               { label: this.$t('d41d8cd9.e7f3a5'), value: '1' },
               { label: this.$t('d41d8cd9.c6e8d4'), value: '0' }
             ]
+          }
+        },
+        // 商品产地
+        {
+          fieldName: 'regions_id',
+          label: this.$t('d41d8cd9.d82b43'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.3e1b0a'),
+            clearable: true,
+            options: this.regions
           }
         }
       ]
@@ -2158,7 +2174,7 @@ export default {
         page: 1,
         pageSize: 1000
       })
-      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.k1l2m3')}${item.item_name}】`
+      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.g5h6i7')}${item.item_name}】`
       this.itemSkuList = list || []
       this.showItemSkuDrawer = true
       this.itemSkuList = list
@@ -2235,13 +2251,12 @@ export default {
   margin-bottom: 16px;
 }
 .tab-tools {
-  text-align: right;
-  @include clearfix();
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 8px;
   .warn-input {
     display: flex;
     align-items: center;
-    float: right;
     .el-input {
       width: 120px;
       margin: 0 8px;

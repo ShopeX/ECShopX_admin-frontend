@@ -299,7 +299,8 @@
       <SpDialog
         ref="deliverGoodsDialogRef"
         v-model="deliverGoodsDialog"
-        width="1000px"
+        class="dialog-delivery"
+        width="1200px"
         :title="$t('931fca81.b70c69', [deliverGoodsForm.order_id])"
         :form="deliverGoodsForm"
         :form-list="deliverGoodsFormList"
@@ -881,7 +882,8 @@ export default {
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
             ['NOTPAY', 'PAYED'].includes(order_status) &&
-            ziti_status != 'DONE'
+            ziti_status != 'DONE' &&
+            delivery_status != 'PARTAIL' // 部分发货不可整单取消
           ) {
             // 非同城配的取消订单按钮
             if (!isDada || (isDada && ['0', '1'].includes(dada.data_status))) {
@@ -1421,6 +1423,7 @@ export default {
   margin-bottom: 16px;
 }
 
+.dialog-delivery,
 .dialog-changeprice,
 .dialog-cancelorder,
 .dialog-salesafter {

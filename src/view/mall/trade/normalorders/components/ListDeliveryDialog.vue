@@ -10,7 +10,7 @@
       :title="$t('9d6ebbf1.045315')"
       :visible.sync="visible"
       :before-close="handleCancel"
-      width="65%"
+      width="80%"
     >
       <template>
         <el-form ref="deliveryForm" :model="deliveryForm" label-width="100px">
@@ -105,7 +105,7 @@
       :title="$t('9d6ebbf1.045315')"
       :visible.sync="newVisible"
       :before-close="handleCancel"
-      width="65%"
+      width="80%"
     >
       <template>
         <el-form :model="deliveryForm" label-width="100px">

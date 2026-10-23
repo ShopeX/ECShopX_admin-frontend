@@ -21,13 +21,12 @@
   margin-right: 8px;
 }
 .tab-tools {
-  text-align: right;
-  @include clearfix();
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 8px;
   .warn-input {
     display: flex;
     align-items: center;
-    float: right;
     .el-input {
       width: 120px;
       margin: 0 8px;
@@ -142,6 +141,12 @@
             <el-option value="rejected" label="审核拒绝" />
           </el-select>
         </SpFilterFormItem> -->
+        <SpFilterFormItem prop="item_bn" :label="$t('b7aea01d.8dd62f')">
+          <el-input v-model="params.item_bn" :placeholder="$t('b7aea01d.983e9f')" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="goods_bn" :label="$t('b7aea01d.288587')">
+          <el-input v-model="params.goods_bn" :placeholder="$t('b7aea01d.36438f')" />
+        </SpFilterFormItem>
         <SpFilterFormItem prop="templates_id" :label="$t('b7aea01d.63fc58')">
           <el-select v-model="params.templates_id" :placeholder="$t('b7aea01d.708c9d')" clearable>
             <el-option
@@ -172,6 +177,13 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem prop="is_gift" :label="$t('b7aea01d.d017cc') + ':'">
+          <el-select v-model="params.is_gift">
+            <el-option :value="undefined" :label="$t('b7aea01d.a8b0c2')" />
+            <el-option :value="true" :label="$t('b7aea01d.0a60ac')" />
+            <el-option :value="false" :label="$t('b7aea01d.c9744f')" />
+          </el-select>
+        </SpFilterFormItem>
         <SpFilterFormItem prop="regions_id" :label="$t('b7aea01d.efcb2d')">
           <el-cascader
             v-model="params.regions_id"
@@ -187,24 +199,11 @@
         <!--            <el-option value="default_date" label="默认发货日期" />-->
         <!--          </el-select>-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="item_bn" :label="$t('b7aea01d.8dd62f')">
-          <el-input v-model="params.item_bn" :placeholder="$t('b7aea01d.983e9f')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="goods_bn" :label="$t('b7aea01d.288587')">
-          <el-input v-model="params.goods_bn" :placeholder="$t('b7aea01d.36438f')" />
-        </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="params.operator_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem> -->
         <SpFilterFormItem prop="supplier_name" :label="$t('b7aea01d.40b1be') + ':'">
           <el-input v-model="params.supplier_name" :placeholder="$t('b7aea01d.5765f1')" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="is_gift" :label="$t('b7aea01d.d017cc') + ':'">
-          <el-select v-model="params.is_gift">
-            <el-option :value="undefined" :label="$t('b7aea01d.a8b0c2')" />
-            <el-option :value="true" :label="$t('b7aea01d.0a60ac')" />
-            <el-option :value="false" :label="$t('b7aea01d.c9744f')" />
-          </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="item_holder" :label="$t('b7aea01d.2af133') + ':'">
           <el-select v-model="params.item_holder" :placeholder="$t('b7aea01d.77ccd0')" clearable>
@@ -273,32 +272,42 @@
               align="right"
               header-align="center"
             />
-            <el-table-column prop="item_bn" :label="$t('b7aea01d.58cac1')" width="150" />
-            <el-table-column prop="itemName" :label="$t('b7aea01d.9897d8')" width="300">
+            <el-table-column prop="itemName" :label="$t('b7aea01d.9897d8')" width="320">
               <template slot-scope="scope">
-                <div class="goods-title">
-                  {{ scope.row.item_name }}
-                  <el-tag
-                    v-if="!scope.row.nospec"
-                    size="mini"
-                    effect="plain"
-                    type="primary"
-                    style="margin-left: 4px; cursor: default"
-                    @click="handleViewSkuInfo(scope.row)"
-                  >
-                    {{ $t('b7aea01d.7b1568') }}
-                    <i class="ecx-icon icon-sousuo" style="font-size: 12px; margin-left: 2px" />
-                  </el-tag>
-                </div>
-                <div class="goods-code">
-                  {{ $t('b7aea01d.2c8af9') }}{{ scope.row.goods_bn }}
-                  <el-tooltip effect="dark" :content="$t('b7aea01d.79d3ab')" placement="top-start">
-                    <i
-                      v-clipboard:copy="scope.row.goods_bn"
-                      v-clipboard:success="onCopySuccess"
-                      class="el-icon-document-copy"
-                    />
-                  </el-tooltip>
+                <div class="flex items-start gap-2">
+                  <SpImage
+                    :src="goodsListPic(scope.row)"
+                    :width="56"
+                    :height="56"
+                    fit="cover"
+                    class="shrink-0"
+                  />
+                  <div class="min-w-0 flex-1">
+                    <div class="goods-title">
+                      {{ scope.row.item_name }}
+                      <el-tag
+                        v-if="!scope.row.nospec"
+                        size="mini"
+                        effect="plain"
+                        type="primary"
+                        style="margin-left: 4px; cursor: default"
+                        @click="handleViewSkuInfo(scope.row)"
+                      >
+                        {{ $t('b7aea01d.7b1568') }}
+                        <i class="ecx-icon icon-sousuo" style="font-size: 12px; margin-left: 2px" />
+                      </el-tag>
+                    </div>
+                    <div class="goods-code">
+                      {{ $t('b7aea01d.2c8af9') }}{{ scope.row.goods_bn }}
+                      <el-tooltip effect="dark" :content="$t('b7aea01d.79d3ab')" placement="top-start">
+                        <i
+                          v-clipboard:copy="scope.row.goods_bn"
+                          v-clipboard:success="onCopySuccess"
+                          class="el-icon-document-copy"
+                        />
+                      </el-tooltip>
+                    </div>
+                  </div>
                 </div>
               </template>
             </el-table-column>
@@ -1144,6 +1153,23 @@ export default {
     console.log(111)
   },
   methods: {
+    goodsListPic(row) {
+      if (!row) {
+        return ''
+      }
+      let pics = row.pics
+      if (typeof pics === 'string' && pics.trim()) {
+        try {
+          pics = JSON.parse(pics)
+        } catch (e) {
+          pics = []
+        }
+      }
+      if (Array.isArray(pics) && pics[0]) {
+        return pics[0]
+      }
+      return row.pic || row.image_url || ''
+    },
     onItemSkuFormSubmit() {
       this.itemSkuDialog = false
       this.itemShowSkuStore = false
@@ -2045,7 +2071,7 @@ export default {
         pageSize: 1000,
         distributor_id: 0
       })
-      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.k1l2m3')}${item.item_name}】`
+      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.g5h6i7')}${item.item_name}】`
       this.itemSkuList = list || []
       this.showItemSkuDrawer = true
       this.itemSkuList = list

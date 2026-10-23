@@ -8,13 +8,12 @@
   margin-bottom: 16px;
 }
 .tab-tools {
-  text-align: right;
-  @include clearfix();
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 8px;
   .warn-input {
     display: flex;
     align-items: center;
-    float: right;
     .el-input {
       width: 120px;
       margin: 0 8px;
@@ -1020,10 +1019,32 @@ export default {
           {
             name: this.$t('d41d8cd9.9897d8'),
             key: 'itemName',
-            width: 280,
+            width: 320,
             render: (h, scope) => {
+              let pics = scope.row.pics
+              if (typeof pics === 'string' && pics.trim()) {
+                try {
+                  pics = JSON.parse(pics)
+                } catch (e) {
+                  pics = []
+                }
+              }
+              const pic =
+                (Array.isArray(pics) && pics[0]) ||
+                scope.row.pic ||
+                scope.row.image_url ||
+                ''
               return (
-                <div>
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0;'>
                   <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
@@ -1073,6 +1094,7 @@ export default {
                       />
                     </el-tooltip>
                   </div>
+                  </div>
                 </div>
               )
             }
@@ -1109,13 +1131,6 @@ export default {
           {
             name: this.$t('d41d8cd9.0eac88'),
             key: 'store',
-            align: 'right',
-            headerAlign: 'center'
-          },
-          {
-            name: this.$t('d41d8cd9.0888fc'),
-            key: 'item_bn',
-            width: 150,
             align: 'right',
             headerAlign: 'center'
           },

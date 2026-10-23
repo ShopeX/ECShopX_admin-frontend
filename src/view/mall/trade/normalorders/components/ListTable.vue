@@ -256,7 +256,8 @@
                   scope.row.receipt_type != 'dada' &&
                   scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
                   (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
-                  scope.row.ziti_status != 'DONE'
+                  scope.row.ziti_status != 'DONE' &&
+                  scope.row.delivery_status != 'PARTAIL'
                 "
                 type="text"
                 :size="size"
@@ -271,6 +272,7 @@
                   scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
                   (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
                   scope.row.ziti_status != 'DONE' &&
+                  scope.row.delivery_status != 'PARTAIL' &&
                   (scope.row.dada.dada_status == '0' || scope.row.dada.dada_status == '1')
                 "
                 type="text"

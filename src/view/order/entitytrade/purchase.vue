@@ -882,7 +882,8 @@ export default {
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
             ['NOTPAY', 'PAYED'].includes(order_status) &&
-            ziti_status != 'DONE'
+            ziti_status != 'DONE' &&
+            delivery_status != 'PARTAIL' // 部分发货不可整单取消
           ) {
             // 非同城配的取消订单按钮
             if (!isDada || (isDada && ['0', '1'].includes(dada.data_status))) {

@@ -3,7 +3,7 @@
  * See LICENSE file for license details.
  */
 import { createSetting } from '@shopex-ui/finder'
-import { Divider, Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 export default (vm) => {
   const formatDate = (timestamp) => {
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -116,6 +116,11 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
+            // status=0 审核中不可改；仅审核通过/失败可编辑
+            if (val[0].status == 0 || val[0].status === '0') {
+              Message.warning(vm.$t('ed356575.d4bb3f'))
+              return
+            }
             vm.$router.push({
               path: vm.matchRoutePath('edit'),
               query: { type: 'edit', id: val[0].id }
@@ -123,7 +128,7 @@ export default (vm) => {
           }
         },
         visible: (val) => {
-          return val.status == '2'
+          return val.status == 1 || val.status == 2
         }
       },
       {
@@ -134,11 +139,15 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
+            if (val[0].status == 0 || val[0].status === '0') {
+              Message.warning(vm.$t('ed356575.b20524'))
+              return
+            }
             vm.deleteSignatureHandle(val[0].id)
           }
         },
         visible: (val) => {
-          return val.status != '0'
+          return val.status != 0 && val.status !== '0'
         }
       }
     ]

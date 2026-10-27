@@ -4,11 +4,6 @@
 -->
 
 <style lang="scss">
-.related-upload__table-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
-}
 .related-upload__operation-tip {
   margin-bottom: 12px;
 
@@ -42,7 +37,7 @@
       show-icon
       :closable="false"
     />
-    <div class="related-upload__table-toolbar">
+    <div class="mb-2 flex justify-start">
       <el-button size="mini" icon="el-icon-refresh" :loading="loading" @click="handleRefreshList">
         {{ $t('5f45d286.694fc5') }}
       </el-button>

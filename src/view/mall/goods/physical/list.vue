@@ -52,7 +52,7 @@
           {{ $t('d41d8cd9.1cc97f') }}
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
-        <el-dropdown @command="handleImport">
+        <el-dropdown trigger="click" @command="handleImport">
           <el-button type="primary" icon="iconfont icon-daorucaozuo-01">
             {{ $t('d41d8cd9.8d9a07') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -68,7 +68,7 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown @command="handleExport">
+        <el-dropdown trigger="click" @command="handleExport">
           <el-button type="primary">
             {{ $t('d41d8cd9.55405e') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -94,7 +94,7 @@
         <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()">
           {{ $t('d41d8cd9.fe2216') }}
         </el-button>
-        <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
+        <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()" trigger="click">
           <el-button type="primary">
             {{ $t('d41d8cd9.5aa3a7') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -417,8 +417,10 @@ import { GOODS_APPLY_STATUS } from '@/consts'
 import { createTbAddForm } from './schema'
 import SpPageUpload from '@/components/sp-page-upload'
 import { createSetting } from '@shopex-ui/finder'
+import districtOptions from '@/mixins/districtOptions'
 
 export default {
+  mixins: [districtOptions],
   components: {
     SpPageUpload
   },
@@ -991,10 +993,32 @@ export default {
           {
             name: this.$t('dc9cefd6.07ec01'),
             key: 'itemName',
-            width: 280,
+            width: 320,
             render: (h, scope) => {
+              let pics = scope.row.pics
+              if (typeof pics === 'string' && pics.trim()) {
+                try {
+                  pics = JSON.parse(pics)
+                } catch (e) {
+                  pics = []
+                }
+              }
+              const pic =
+                (Array.isArray(pics) && pics[0]) ||
+                scope.row.pic ||
+                scope.row.image_url ||
+                ''
               return (
-                <div>
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0;'>
                   <div style='white-space: normal;'>
                     {scope.row.itemName}
                     {!scope.row.nospec && (
@@ -1043,6 +1067,7 @@ export default {
                       />
                     </el-tooltip>
                   </div>
+                  </div>
                 </div>
               )
             }
@@ -1053,13 +1078,6 @@ export default {
           //   width: 150,
           //   render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
           // },
-          {
-            name: this.$t('d41d8cd9.0888fc'),
-            key: 'item_bn',
-            width: 160,
-            align: 'right',
-            headerAlign: 'center'
-          },
           {
             name: this.$t('dc9cefd6.14d342'),
             width: 180,
@@ -1328,6 +1346,40 @@ export default {
             }
           }
         },
+        // SKU编码
+        {
+          fieldName: 'item_bn',
+          label: this.$t('d41d8cd9.8a2c1f'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.6e19f2')
+          }
+        },
+        // SPU编码
+        {
+          fieldName: 'goods_bn',
+          label: this.$t('d41d8cd9.c3a815'),
+          cellWidth: 1.3,
+          component: 'input',
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.7d3a61')
+          }
+        },
+        // 商品标签（非供应商）
+        {
+          fieldName: 'tag_id',
+          label: this.$t('d41d8cd9.f1a62d'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          isShow: () => !this.IS_SUPPLIER(),
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.2c9b17'),
+            clearable: true,
+            options: this.tagList,
+            props: { value: 'tag_id', label: 'tag_name' }
+          }
+        },
         // 运费模板
         {
           fieldName: 'templates_id',
@@ -1361,52 +1413,6 @@ export default {
             }))
           }
         },
-        // SKU编码
-        {
-          fieldName: 'item_bn',
-          label: this.$t('d41d8cd9.8a2c1f'),
-          component: 'input',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.6e19f2')
-          }
-        },
-        // SPU编码
-        {
-          fieldName: 'goods_bn',
-          label: this.$t('d41d8cd9.c3a815'),
-          cellWidth: 1.3,
-          component: 'input',
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.7d3a61')
-          }
-        },
-        // 商品产地
-        {
-          fieldName: 'regions_id',
-          label: this.$t('d41d8cd9.d82b43'),
-          component: 'cascader',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.3e1b0a'),
-            clearable: true,
-            options: this.regions
-          }
-        },
-        // 商品标签（非供应商）
-        {
-          fieldName: 'tag_id',
-          label: this.$t('d41d8cd9.f1a62d'),
-          component: 'cascader',
-          cellWidth: 1.3,
-          isShow: () => !this.IS_SUPPLIER(),
-          componentProps: {
-            placeholder: this.$t('d41d8cd9.2c9b17'),
-            clearable: true,
-            options: this.tagList,
-            props: { value: 'tag_id', label: 'tag_name' }
-          }
-        },
         // 赠品
         {
           fieldName: 'is_gift',
@@ -1436,6 +1442,18 @@ export default {
               { label: this.$t('d41d8cd9.e7f3a5'), value: '1' },
               { label: this.$t('d41d8cd9.c6e8d4'), value: '0' }
             ]
+          }
+        },
+        // 商品产地
+        {
+          fieldName: 'regions_id',
+          label: this.$t('d41d8cd9.d82b43'),
+          component: 'cascader',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.3e1b0a'),
+            clearable: true,
+            options: this.regions
           }
         }
       ]
@@ -1475,7 +1493,6 @@ export default {
   },
   mounted() {
     this.init()
-    this.getAddress()
     this.getShippingTemplatesList()
     this.searchParams.operator_name = this.$route.query.operator_name
     this.fetchWechatList()
@@ -1483,8 +1500,9 @@ export default {
     this.checkJstErpBind()
     this.getBaseSetting()
 
-    this.$activated = () => {
-      this.$refs['finder']?.refresh?.()
+    // resetPage=true 回第 1 页（新建）；false/缺省保留当前页（编辑）
+    this.$activated = (_from, _to, resetPage = false) => {
+      this.$refs['finder']?.refresh?.(!!resetPage)
     }
   },
   methods: {
@@ -1962,11 +1980,6 @@ export default {
       this.$message.success(this.$t('dc9cefd6.33130f'))
       this.$refs['finder'].refresh()
     },
-    // 获取地区列表
-    async getAddress() {
-      const res = await this.$api.common.getAddress()
-      this.regions = res
-    },
     // 同步至店铺
     async syncToShop(isAll) {
       let distributorIds = '_all'
@@ -2005,7 +2018,7 @@ export default {
         cancelButtonText: this.$t('d41d8cd9.625fb2')
       })
       await this.$api.goods.updateGoodsInfo({
-        goods_id: this.selectionItems.map((item) => item.item_id),
+        goods_id: this.selectionItems.map((item) => item.goods_id),
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: 'processing'
       })
@@ -2161,7 +2174,7 @@ export default {
         page: 1,
         pageSize: 1000
       })
-      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.k1l2m3')}${item.item_name}】`
+      this.itemSkuDrawerTitle = `${this.$t('d41d8cd9.g5h6i7')}${item.item_name}】`
       this.itemSkuList = list || []
       this.showItemSkuDrawer = true
       this.itemSkuList = list
@@ -2238,13 +2251,12 @@ export default {
   margin-bottom: 16px;
 }
 .tab-tools {
-  text-align: right;
-  @include clearfix();
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 8px;
   .warn-input {
     display: flex;
     align-items: center;
-    float: right;
     .el-input {
       width: 120px;
       margin: 0 8px;

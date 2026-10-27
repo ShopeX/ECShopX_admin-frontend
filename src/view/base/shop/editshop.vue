@@ -255,7 +255,7 @@
   </section>
 </template>
 <script>
-import district from '../../../common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { createWxShops, updateWxShops, getWxShopsDetail } from '../../../api/shop'
 import { uploadMaterial, getAuthorizerInfo } from '../../../api/wechat'
 import imgPicker from '../../../components/imageselect'
@@ -273,6 +273,7 @@ function getCascaderObj(val, opt) {
 }
 
 export default {
+  mixins: [districtOptions],
   inject: ['refresh'],
   components: {
     imgPicker
@@ -305,7 +306,7 @@ export default {
       },
       opentime: '',
       qqmap_infowin_flag: false,
-      regions: district,
+      regions: [],
       searchService: [],
       markers: [],
       poi_info: [],

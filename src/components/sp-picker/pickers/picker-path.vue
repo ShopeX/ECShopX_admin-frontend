@@ -22,7 +22,16 @@
           <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
         </el-tab-pane>
         <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
-          <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+          <WebCustomPagePicker
+            v-if="tabValue == 'custom_page' && isWebPlatform"
+            ref="custom_page"
+            :initial-selected="webCustomPageInitialSelected"
+          />
+          <PickerPages
+            v-else-if="tabValue == 'custom_page'"
+            ref="custom_page"
+            :value="value"
+          />
         </el-tab-pane>
         <el-tab-pane :label="$t('d81d8932.2f3635')" name="coupon">
           <PickerCoupon v-if="tabValue == 'coupon'" ref="coupon" :value="value" />
@@ -42,36 +51,61 @@
           <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
         </el-tab-pane>
         <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
-          <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+          <WebCustomPagePicker
+            v-if="tabValue == 'custom_page' && isWebPlatform"
+            ref="custom_page"
+            :initial-selected="webCustomPageInitialSelected"
+          />
+          <PickerPages
+            v-else-if="tabValue == 'custom_page'"
+            ref="custom_page"
+            :value="value"
+          />
         </el-tab-pane>
       </template>
     </el-tabs>
     <el-tabs v-else v-model="tabValue" :tab-position="'left'">
-      <el-tab-pane :label="$t('d81d8932.9897d8')" name="goods">
+      <el-tab-pane v-if="isTabVisible('goods')" :label="$t('d81d8932.9897d8')" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
       </el-tab-pane>
-      <el-tab-pane v-if="VERSION_PLATFORM()" :label="$t('d81d8932.295713')" name="store">
+      <el-tab-pane
+        v-if="VERSION_PLATFORM() && isTabVisible('store')"
+        :label="$t('d81d8932.295713')"
+        name="store"
+      >
         <PickerShop v-if="tabValue == 'store'" ref="store" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.392d49')" name="sale_category">
+      <el-tab-pane
+        v-if="isTabVisible('sale_category')"
+        :label="$t('d81d8932.392d49')"
+        name="sale_category"
+      >
         <PickerSaleCategory v-if="tabValue == 'sale_category'" ref="sale_category" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.b3ed9f')" name="category">
+      <el-tab-pane v-if="isTabVisible('category')" :label="$t('d81d8932.b3ed9f')" name="category">
         <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.0f394b')" name="tag">
+      <el-tab-pane v-if="isTabVisible('tag')" :label="$t('d81d8932.0f394b')" name="tag">
         <PickerTag v-if="tabValue == 'tag'" ref="tag" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.e8f87a')" name="planting">
+      <el-tab-pane v-if="isTabVisible('planting')" :label="$t('d81d8932.e8f87a')" name="planting">
         <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.59ceff')" name="link">
+      <el-tab-pane v-if="isTabVisible('link')" :label="$t('d81d8932.59ceff')" name="link">
         <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.2bc045')" name="regactivity">
+      <el-tab-pane
+        v-if="isTabVisible('regactivity')"
+        :label="$t('d81d8932.2bc045')"
+        name="regactivity"
+      >
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.dc7202')" name="purchase_activity">
+      <el-tab-pane
+        v-if="isTabVisible('purchase_activity')"
+        :label="$t('d81d8932.dc7202')"
+        name="purchase_activity"
+      >
         <PickerPurchaseActivity
           v-if="tabValue == 'purchase_activity'"
           ref="purchase_activity"
@@ -81,22 +115,47 @@
       <el-tab-pane v-if="false" :label="$t('d81d8932.55c758')" name="seckill">
         <PickerSeckill v-if="tabValue == 'seckill'" ref="seckill" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.cee6eb')" name="custom_page">
-        <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+      <el-tab-pane
+        v-if="isTabVisible('custom_page')"
+        :label="$t('d81d8932.cee6eb')"
+        name="custom_page"
+      >
+        <WebCustomPagePicker
+          v-if="tabValue == 'custom_page' && isWebPlatform"
+          ref="custom_page"
+          :initial-selected="webCustomPageInitialSelected"
+        />
+        <PickerPages
+          v-else-if="tabValue == 'custom_page'"
+          ref="custom_page"
+          :value="value"
+        />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.7bbe8e')" name="live">
+      <el-tab-pane v-if="isTabVisible('live')" :label="$t('d81d8932.7bbe8e')" name="live">
         <PickerLive v-if="tabValue == 'live'" ref="live" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.f5a0d7')" name="other_wxapp">
+      <el-tab-pane
+        v-if="isTabVisible('other_wxapp')"
+        :label="$t('d81d8932.f5a0d7')"
+        name="other_wxapp"
+      >
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.283be6')" name="lottery">
+      <el-tab-pane v-if="isTabVisible('lottery')" :label="$t('d81d8932.283be6')" name="lottery">
         <PickerLottery v-if="tabValue == 'lottery'" ref="lottery" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.787963')" name="share_page">
+      <el-tab-pane
+        v-if="isTabVisible('share_page')"
+        :label="$t('d81d8932.787963')"
+        name="share_page"
+      >
         <PickerSharePage v-if="tabValue == 'share_page'" ref="share_page" :value="value" />
       </el-tab-pane>
-      <el-tab-pane :label="$t('d81d8932.e7dea7')" name="customer_service">
+      <el-tab-pane
+        v-if="isTabVisible('customer_service')"
+        :label="$t('d81d8932.e7dea7')"
+        name="customer_service"
+      >
         <PickerCustomerService
           v-if="tabValue == 'customer_service'"
           ref="customer_service"
@@ -131,6 +190,8 @@ import PickerLottery from './picker-lottery'
 import PickerSharePage from './picker-share-page'
 import PickerCoupon from './picker-coupon'
 import PickerCustomerService from './picker-customer-service'
+import WebCustomPagePicker from '@/components/sp-picker-plus/WebCustomPagePicker.vue'
+import { PATH_SELECTOR_PLATFORM_TYPES } from '@/components/sp-path-selector/config'
 
 export default {
   name: 'PickerPath',
@@ -154,7 +215,8 @@ export default {
     PickerLottery,
     PickerSharePage,
     PickerCoupon,
-    PickerCustomerService
+    PickerCustomerService,
+    WebCustomPagePicker
   },
   // extends: BasePicker,
   config: {
@@ -166,15 +228,39 @@ export default {
     this.pathValue = this.value
   },
   data() {
-    const { tab } = this.value
+    const { tab } = this.value || {}
     // 已下线「文章」路径；历史数据若仍为 article，打开弹窗时落到默认 tab
     const safeTab = tab === 'article' ? 'goods' : tab
+    const platformTabs = PATH_SELECTOR_PLATFORM_TYPES[this.value?.platform]
+    const initialTab =
+      platformTabs && safeTab && !platformTabs.includes(safeTab)
+        ? platformTabs[0]
+        : safeTab || (platformTabs ? platformTabs[0] : 'goods')
     return {
       pathValue: null,
-      tabValue: safeTab || 'goods'
+      tabValue: initialTab
+    }
+  },
+  computed: {
+    isWebPlatform() {
+      return this.value?.platform === 'web'
+    },
+    webCustomPageInitialSelected() {
+      const raw = this.value?.data
+      const id = Array.isArray(raw) ? raw[0] : raw
+      if (id == null || id === '') return null
+      return {
+        id,
+        title: this.value?.title || ''
+      }
     }
   },
   methods: {
+    isTabVisible(name) {
+      const platformTabs = PATH_SELECTOR_PLATFORM_TYPES[this.value?.platform]
+      if (!platformTabs) return true
+      return platformTabs.includes(name)
+    },
     getVal() {
       const { data } = this.$refs[this.tabValue]?.getVal?.()
       if (data.length > 0) {

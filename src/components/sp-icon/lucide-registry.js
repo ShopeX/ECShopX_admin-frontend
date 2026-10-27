@@ -61,11 +61,17 @@ export const LUCIDE_ICONS = {
   Trash2
 }
 
+/** 与 HTML/内置名冲突时，全局注册用别名；LUCIDE_ICONS 键名不变，SpIcon 仍可用 name="image" */
+const GLOBAL_NAME_ALIASES = {
+  Image: 'ImageIcon'
+}
+
 /**
  * @param {import('vue').default} Vue
  */
 export function installLucideGlobal(Vue) {
   Object.keys(LUCIDE_ICONS).forEach((name) => {
-    Vue.component(name, LUCIDE_ICONS[name])
+    const globalName = GLOBAL_NAME_ALIASES[name] || name
+    Vue.component(globalName, LUCIDE_ICONS[name])
   })
 }

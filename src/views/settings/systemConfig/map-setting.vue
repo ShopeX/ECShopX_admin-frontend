@@ -39,7 +39,7 @@ export default {
               <div class='head-tips'>
                 {this.$t('caf9668f.626669')}
                 <el-link
-                  href='https://developer.amap.com/?ref=http%3A%2F%2Flbs.gaode.com%2Fdev%2F'
+                  href='https://lbs.qq.com'
                   target='_blank'
                   type='primary'
                 >

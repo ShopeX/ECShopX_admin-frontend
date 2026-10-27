@@ -234,7 +234,6 @@ const config = {
 
         // 提取其他 base 字段
         const otherBaseData = pickBy(v, {
-          wgtCustName: 'wgtCustName',
           track: 'track',
           navSticky: 'navSticky',
           statusBarBgColor: 'statusBarBgColor',

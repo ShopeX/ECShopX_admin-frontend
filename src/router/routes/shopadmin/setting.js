@@ -36,7 +36,7 @@ const routes = [
           title: '55c94d66.c115e5',
           permissions: ['shopsetting.distributor-staff.platformstaffroles']
         },
-        component: () => import('@/view/base/account/storeroles')
+        component: () => import('@/views/settings/role-store')
       },
       {
         name: `systemAccountDeliveryPersonManagement`,

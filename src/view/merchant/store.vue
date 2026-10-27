@@ -111,11 +111,12 @@
 import { isObject, isArray, isEmpty, getRegionNameById } from '@/utils'
 import Pages from '@/utils/pages'
 import { loadMap } from '@/utils/load-map'
-import district from '@/common/district.json'
 import DaoDianZiti from './components/DaoDianZiti'
 import RefundGoodsAddress from './components/RefundGoodsAddress'
 import RefundGoodsStore from './components/RefundGoodsStore'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   data() {
     let distributionTypeOptions = [
       {
@@ -437,7 +438,7 @@ export default {
           component: ({ key }, value) => {
             return (
               <div class='address-block'>
-                <el-cascader v-model={value['regions_id']} class='regions' options={district} />
+                <el-cascader v-model={value['regions_id']} class='regions' options={this.regions} />
                 <el-input
                   v-model={value['address']}
                   class='address'
@@ -500,9 +501,14 @@ export default {
           display: 'inline',
           options: [
             { name: this.$t('027707af.9cfec5'), label: 1 },
-            { name: this.$t('027707af.29189f'), label: 2 }
+            // BBC 去除「导购码」选项，仅保留上传企微码
+            ...(!this.VERSION_PLATFORM()
+              ? [{ name: this.$t('027707af.29189f'), label: 2 }]
+              : [])
           ],
-          isShow: ({ key }, value) => value.show_salesperson !== 0
+          // BBC 仅一种码类型，无需再展示「码类型」单选
+          isShow: ({ key }, value) =>
+            value.show_salesperson !== 0 && !this.VERSION_PLATFORM()
         },
         {
           label: this.$t('027707af.80384a'),
@@ -512,7 +518,10 @@ export default {
             return <SpImagePicker v-model={value[key]} />
           },
           validator: (rule, value, callback) => {
-            if (this.form.show_salesperson === 1 && this.form.salesperson_type === 1) {
+            const needQrcode =
+              this.form.show_salesperson == 1 &&
+              (this.VERSION_PLATFORM() || this.form.salesperson_type == 1)
+            if (needQrcode) {
               if (!value) {
                 callback(new Error(this.$t('027707af.e90339')))
               } else {
@@ -522,13 +531,15 @@ export default {
               callback()
             }
           },
-          isShow: ({ key }, value) => value.show_salesperson === 1 && value.salesperson_type === 1
+          isShow: ({ key }, value) =>
+            value.show_salesperson == 1 &&
+            (this.VERSION_PLATFORM() || value.salesperson_type == 1)
         },
         {
           label: this.$t('027707af.6a9e57'),
           type: 'group',
           tip: this.$t('027707af.408f9b'),
-          isShow: () => this.dadaEnable
+          isShow: () => this.distributor_self == 0
         },
         {
           label: this.$t('027707af.6a9e57'),
@@ -536,7 +547,7 @@ export default {
           type: 'switch',
           width: 'auto',
           tip: this.$t('027707af.ed46b7'),
-          isShow: () => this.dadaEnable
+          isShow: () => this.distributor_self == 0
         },
         {
           label: this.$t('027707af.c3bf69'),
@@ -547,14 +558,14 @@ export default {
           // { name: '达达同城配', label: false }
           // { name: '闪送', label: 6 }
           // ],
-          isShow: ({ key }, value) => value.is_dada,
+          isShow: ({ key }, value) => this.distributor_self == 0 && value.is_dada,
           component: ({ key }, value) => {
             return (
               <div style='margin-top: 14px;display:flex'>
                 <el-radio v-model={value[key]} label={true}>
                   {this.$t('027707af.0e903e')}
                 </el-radio>
-                <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>
+                <el-radio v-model={value[key]} label={false}>
                   {this.$t('027707af.bcb155')}
                 </el-radio>
               </div>
@@ -563,7 +574,8 @@ export default {
         },
         {
           key: 'freight_time',
-          isShow: ({ key }, value) => value.is_self_delivery && value.is_dada,
+          isShow: ({ key }, value) =>
+            this.distributor_self == 0 && value.is_self_delivery && value.is_dada,
           component: ({ key }, value) => {
             return (
               <div style='margin-left: 27px;display:flex'>
@@ -584,10 +596,15 @@ export default {
           key: 'business',
           type: 'select',
           options: [],
-          isShow: ({ key }, value) => !value.is_self_delivery && value.is_dada,
+          isShow: ({ key }, value) =>
+            this.distributor_self == 0 && !value.is_self_delivery && value.is_dada,
           validator: (rule, value, callback) => {
             console.log('value:', value)
-            if (!this.form.is_self_delivery && value?.is_dada) {
+            if (
+              this.distributor_self == 0 &&
+              !this.form.is_self_delivery &&
+              value?.is_dada
+            ) {
               if (!value) {
                 callback(new Error(this.$t('027707af.bf756d')))
               } else {
@@ -632,7 +649,10 @@ export default {
           label: this.$t('027707af.efdb86'),
           width: 'auto',
           component: ({ key }, value) => (
-            <RefundGoodsAddress v-model={value['offline_aftersales_address']} />
+            <RefundGoodsAddress
+              v-model={value['offline_aftersales_address']}
+              regions={this.regions}
+            />
           )
         },
         {
@@ -698,14 +718,13 @@ export default {
       merchantList: [],
       categoryList: [],
       remoteLoading: false,
-      regions: district,
+      regions: [],
       submitLoading: false,
       searchService: null,
       map: null,
       mapMarker: null,
       datapass_block: 0,
-      distributor_self: 0, // 总店=1
-      dadaEnable: false
+      distributor_self: 0 // 总店=1
     }
   },
   created() {
@@ -714,8 +733,8 @@ export default {
       pageSize: 10,
       fetch: this.getMerchantList
     })
-    this.distributor_self = distributor_type === 'distributor_self' ? 1 : 0
-    if (distributor_type === 'distributor_self' && !distributor_id) {
+    this.distributor_self = distributor_type == 'distributor_self' ? 1 : 0
+    if (distributor_type == 'distributor_self' && !distributor_id) {
       this.form.is_delivery = true
     }
     console.log(process.env.VUE_APP_LOCAL_DELIVERY_DIRVER)
@@ -724,18 +743,27 @@ export default {
     } else {
       this.getDadaInfo()
     }
-    this.getStoreInfo()
+    this.loadDistrictOptions().then(() => {
+      this.getStoreInfo()
+    })
     this.getOrderSetting()
     this.getCategoryList()
   },
   mounted() {},
   methods: {
     normalizeCategoryId(value) {
-      if (value === '' || value == null) {
+      if (value == '' || value == null) {
         return ''
       }
       const num = Number(value)
       return Number.isNaN(num) ? value : num
+    },
+    normalizeBusiness(value) {
+      if (value == null || value === '' || value == 0) {
+        return ''
+      }
+      const num = Number(value)
+      return Number.isNaN(num) || num === 0 ? '' : num
     },
     async getOrderSetting() {
       const res = await this.$api.trade.getOrderSetting()
@@ -779,7 +807,7 @@ export default {
         this.$message.error(this.$t('027707af.ef5ed8'))
         return
       }
-      const [province, city, country] = getRegionNameById(regions_id, district)
+      const [province, city, country] = getRegionNameById(regions_id, this.regions)
 
       const locationRes = await this.$api.distributor.getAreaByAddress({
         address: `${province}${city}${country}${address}`
@@ -800,7 +828,7 @@ export default {
       this.mapMarker.setPosition(latlng)
     },
     async getDadaInfo() {
-      const { business_list, is_open } = await this.$api.dada.getDadaInfo()
+      const { business_list } = await this.$api.dada.getDadaInfo()
       const typeList = Object.keys(business_list).reduce((total, current, index) => {
         return total.concat({
           value: Number(current),
@@ -812,10 +840,9 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'
     },
     async getShansongInfo() {
-      const { business_list, is_open } = await this.$api.dada.getShansongInfo()
+      const { business_list } = await this.$api.dada.getShansongInfo()
       const typeList = Object.keys(business_list).reduce((total, current, index) => {
         return total.concat({
           value: Number(current),
@@ -827,7 +854,6 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'
     },
     async getCategoryList() {
       try {
@@ -838,7 +864,7 @@ export default {
         this.categoryList = res.list || []
         // 更新 formList 中的选项
         this.formList.forEach((item) => {
-          if (item.key === 'distributor_category_id') {
+          if (item.key == 'distributor_category_id') {
             item.options = this.categoryList.map((category) => ({
               value: this.normalizeCategoryId(category.category_id),
               title: category.category_name
@@ -876,8 +902,13 @@ export default {
         }
         this.datapass_block = res.datapass_block
         const showSalespersonApi = Number(res.show_salesperson)
-        const showSalespersonOn = showSalespersonApi === 1 || showSalespersonApi === 2 ? 1 : 0
-        const salespersonTypeFromApi = showSalespersonApi === 2 ? 2 : 1
+        const showSalespersonOn = showSalespersonApi == 1 || showSalespersonApi == 2 ? 1 : 0
+        // BBC 已去除导购码，历史 show_salesperson=2 回显为开启 + 企微码
+        const salespersonTypeFromApi = this.VERSION_PLATFORM()
+          ? 1
+          : showSalespersonApi == 2
+            ? 2
+            : 1
         this.form = {
           distribution_type: res.distribution_type,
           distributor_category_id: this.normalizeCategoryId(res.distributor_category_id),
@@ -913,10 +944,10 @@ export default {
           salesperson_type: salespersonTypeFromApi,
           fixed_salesperson_qrcode_url: res.fixed_salesperson_qrcode_url || '',
           freight_time: res.freight_time,
-          business: res.business,
+          business: this.normalizeBusiness(res.business),
           is_ziti: res.is_ziti,
-          offline_aftersales: res.offline_aftersales === 1,
-          offline_aftersales_other: res.offline_aftersales_other === 1,
+          offline_aftersales: res.offline_aftersales == 1,
+          offline_aftersales_other: res.offline_aftersales_other == 1,
           is_refund_freight: res.is_refund_freight == 1,
           offline_aftersales_address: {
             name: res.offline_aftersales_address.name,
@@ -966,13 +997,13 @@ export default {
       const { distributor_id, distributor_type } = this.$route.query
       const { offline_aftersales_address } = this.form
       const { regions_id, startTime, endTime } = offline_aftersales_address
-      const [province, city, area] = getRegionNameById(regions_id, district)
+      const [province, city, area] = getRegionNameById(regions_id, this.regions)
 
       const params = {
         ...this.form,
         is_refund_freight: this.form.is_refund_freight ? 1 : 0,
         distributor_self: this.distributor_self,
-        regions: getRegionNameById(this.form.regions_id, district),
+        regions: getRegionNameById(this.form.regions_id, this.regions),
         hour: `${this.form.startTime}-${this.form.endTime}`,
         offline_aftersales_address: {
           ...offline_aftersales_address,
@@ -999,25 +1030,29 @@ export default {
       }
 
       // 处理 show_salesperson 的值
-      if (this.form.show_salesperson === 0) {
+      if (this.form.show_salesperson == 0) {
         // 关闭时，show_salesperson 为 0
         params.show_salesperson = 0
         delete params.fixed_salesperson_qrcode_url
         delete params.salesperson_type
-      } else if (this.form.show_salesperson === 1) {
+      } else if (this.form.show_salesperson == 1) {
         // 开启时，根据 salesperson_type 设置 show_salesperson
-        if (this.form.salesperson_type === 1) {
+        // BBC 仅支持上传企微码（show_salesperson=1）
+        if (this.VERSION_PLATFORM() || this.form.salesperson_type == 1) {
           // 上传企微码
           params.show_salesperson = 1
-        } else if (this.form.salesperson_type === 2) {
-          // 导购码
+        } else if (this.form.salesperson_type == 2) {
+          // 导购码（非 BBC）
           params.show_salesperson = 2
           delete params.fixed_salesperson_qrcode_url
         }
         delete params.salesperson_type
       }
 
-      if (this.form.is_dada) {
+      if (this.distributor_self == 1) {
+        params.is_dada = 0
+        params.is_self_delivery = false
+      } else if (this.form.is_dada) {
         if (this.form.is_self_delivery) {
           params.is_dada = 0
           params.is_self_delivery = true

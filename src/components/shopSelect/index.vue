@@ -55,10 +55,10 @@
   </div>
 </template>
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { shoplistMixin } from '@/mixins/fetchShoplist'
 export default {
-  mixins: [shoplistMixin],
+  mixins: [shoplistMixin, districtOptions],
   props: {
     shopIdDefault: {
       type: String,
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       list: [],
-      regions: district,
+      regions: [],
       params: {
         page: 1,
         pageSize: 20,
@@ -166,7 +166,6 @@ export default {
         city: '',
         area: ''
       }
-      this.regions = district
       this.selected_params.regions_value = []
       this.selected_params.shop_id = ''
       this.exist_shop = true

@@ -18,7 +18,6 @@ const SHARED_BASE_KEYS = [
   'innerPadding',
   'outerBackground',
   'innerBackground',
-  'wgtCustName',
   'track',
   ...NEARBY_SETTING_KEYS
 ]
@@ -60,12 +59,6 @@ function buildNearbySetting() {
 const config = {
   name: 'shop',
   setting: [
-    {
-      label: i18n.t('ca99873f.aebb0a'),
-      key: 'wgtCustName',
-      component: 'input',
-      value: ''
-    },
     {
       label: i18n.t('ca99873f.095e43'),
       key: 'track',
@@ -129,7 +122,6 @@ const config = {
       name: 'shop',
       dataType: nearby ? 'nearby' : base.dataType || 'specify',
       ...transformedBase,
-      wgtCustName: base.wgtCustName ?? '',
       track: v.track ?? base.track ?? '',
       tags
     }

@@ -9,7 +9,7 @@
       <div class="flex items-center mt-2 px-2">
         <SpImage
           class="bg-white mx-auto"
-          :src="$store.state.system?.logo || '/images/logo.png'"
+          :src="$store.state.system?.logo || defaultLogo"
           height="38"
           fit="contain"
         />
@@ -66,19 +66,31 @@
                 <span
                   class="block w-full"
                   @click="handleSubmenuTitleClick(item.alias_name, $event)"
-                  >{{ menuDisplayName(item) }}</span
+                  >{{ item.name }}</span
                 >
               </template>
-              <!-- 三级菜单 -->
+              <!-- 三级菜单：router-link 支持右键新标签页打开 -->
               <template v-for="child in item.children">
                 <el-menu-item
                   class="third-menu-item"
                   v-if="child.is_menu"
                   :key="child.alias_name"
                   :index="child.alias_name"
-                  @click="handleSubMenuClick(child)"
                 >
-                  <span>{{ menuDisplayName(child) }}</span>
+                  <router-link
+                    v-if="getMenuPath(child)"
+                    class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-[34px]"
+                    :to="getMenuPath(child)"
+                  >
+                    {{ child.name }}
+                  </router-link>
+                  <span
+                    v-else
+                    class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-[34px]"
+                    @click="toNotFound"
+                  >
+                    {{ child.name }}
+                  </span>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -89,9 +101,21 @@
               v-if="item.is_menu"
               :key="item.alias_name"
               :index="item.alias_name"
-              @click="handleSubMenuClick(item)"
             >
-              <span>{{ menuDisplayName(item) }}</span>
+              <router-link
+                v-if="getMenuPath(item)"
+                class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-5"
+                :to="getMenuPath(item)"
+              >
+                {{ item.name }}
+              </router-link>
+              <span
+                v-else
+                class="absolute inset-0 flex items-center box-border text-inherit no-underline pr-3 pl-5"
+                @click="toNotFound"
+              >
+                {{ item.name }}
+              </span>
             </el-menu-item>
           </template>
         </template>
@@ -101,8 +125,7 @@
 </template>
 
 <script>
-import { getBasePath, getSystemTitle } from '@/utils'
-import { getMenuDisplayName } from '@/utils/menuI18n'
+import { getBasePath, getSystemTitle, resolvePublicAsset } from '@/utils'
 import Config from '@/config'
 
 export default {
@@ -112,7 +135,8 @@ export default {
       mainMenus: [],
       subMenus: [],
       //当前打开的二级菜单标识列表
-      openedMenus: []
+      openedMenus: [],
+      defaultLogo: resolvePublicAsset('images/logo.png')
     }
   },
   computed: {
@@ -182,9 +206,6 @@ export default {
     this.updateSubMenus()
   },
   methods: {
-    menuDisplayName(menuItem) {
-      return getMenuDisplayName(this, menuItem)
-    },
     // 更新中间二级菜单列表
     updateSubMenus() {
       const [mainRoute] = this.$route.matched
@@ -252,16 +273,10 @@ export default {
         this.toNotFound()
       }
     },
-    handleSubMenuClick(item) {
+    getMenuPath(item) {
+      if (!item?.permission) return null
       const route = this.findRouteByPermission(item.permission)
-      if (route) {
-        if (this.$route.path === route.path) {
-          return
-        }
-        this.$router.push({ path: route.path })
-      } else {
-        this.toNotFound()
-      }
+      return route?.path || null
     },
     findRouteByPermission(permission) {
       return this.$router.getRoutes().find((route) => route.meta?.permissions?.includes(permission))
@@ -543,6 +558,7 @@ export default {
 }
 
 :deep(.el-menu-item) {
+  position: relative;
   border-radius: 6px;
   height: 42px;
   display: flex;

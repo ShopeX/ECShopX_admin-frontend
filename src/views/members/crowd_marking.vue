@@ -100,8 +100,8 @@ export default {
     const t = this.$t.bind(this)
     this.searchFormItems = [
       {
-        formItemClass: 'w-1/3',
         component: 'input',
+        cellWidth: 1.5,
         componentProps: {
           placeholder: t('c9953411.6f81f3'),
           clearable: true
@@ -110,8 +110,8 @@ export default {
         label: t('c9953411.341fe8')
       },
       {
-        formItemClass: 'w-2/4',
         component: 'datetimepicker',
+        cellWidth: 2,
         componentProps: {
           type: 'datetimerange',
           rangeSeparator: t('c9953411.981cbe'),

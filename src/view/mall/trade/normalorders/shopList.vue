@@ -135,7 +135,8 @@
               <el-button
                 v-if="
                   scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
+                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
+                  scope.row.delivery_status != 'PARTAIL'
                 "
                 type="text"
                 style="margin-right: 5px"
@@ -353,7 +354,7 @@
         :title="deliveryTitle"
         :visible.sync="deliveryVisible"
         :before-close="handleCancel"
-        width="57%"
+        width="80%"
       >
         <template>
           <el-form
@@ -453,7 +454,7 @@
         :title="deliveryTitle"
         :visible.sync="deliveryVisibleNew"
         :before-close="handleCancel"
-        width="65%"
+        width="80%"
       >
         <template>
           <el-form

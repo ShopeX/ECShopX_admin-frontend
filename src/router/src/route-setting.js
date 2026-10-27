@@ -26,7 +26,7 @@ export default {
     {
       path: 'staff/Merchantstaffroles',
       name: 'b51bc270.910b4e',
-      component: () => import('@/view/base/account/storeroles')
+      component: () => import('@/views/settings/role-store')
     },
     {
       path: 'delivery/logistics',
@@ -150,6 +150,11 @@ export default {
       path: 'systemsetting/certificate',
       name: 'b51bc270.e5549d',
       component: () => import('@/view/base/setting/certificate/index')
+    },
+    {
+      path: 'ShangPai/usercenter',
+      name: '商派用户中心',
+      component: () => import('@/views/settings/systemConfig/ShangPai-usercenter')
     },
     {
       path: 'systemsetting/wdtSetting',
@@ -326,6 +331,11 @@ export default {
       path: 'systemsetting/certificate',
       name: 'b51bc270.e5549d',
       component: () => import('@/view/base/setting/certificate/index')
+    },
+    {
+      path: 'ShangPai/usercenter',
+      name: '商派用户中心',
+      component: () => import('@/views/settings/systemConfig/ShangPai-usercenter')
     },
     {
       path: 'systemsetting/damoCrm',

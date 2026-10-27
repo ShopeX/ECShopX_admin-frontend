@@ -1,5 +1,4 @@
 const path = require('path')
-const QiniuPlugin = require('qiniu-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackAliyunOss = require('webpack-aliyun-oss')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -156,7 +155,7 @@ module.exports = {
       }
 
       // 在主构建流程中添加文件复制插件
-      config.plugins.push(new CopyWebpackPlugin(getNewpcCopyConfig()))
+      // config.plugins.push(new CopyWebpackPlugin(getNewpcCopyConfig()))
     }
 
     // OSS CDN 上传配置

@@ -99,14 +99,15 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   name: 'SpSelectMerchantPanel',
   props: {},
   inject: ['selectMerchant'],
   data() {
     return {
-      district,
+      district: [],
       region: [],
       keywords: '',
       list: [],

@@ -141,15 +141,16 @@
   </SpPage>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import district from '@/common/district.json'
 import { getOpenApprovedList } from '@/api/adapay/dealer'
 export default {
+  mixins: [districtOptions],
   data() {
     return {
       loading: true,
-      regions: district,
+      regions: [],
       created: '',
       params: {
         page: 1,

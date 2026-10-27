@@ -111,6 +111,18 @@ export default {
         return
       }
       this.$emit('close', this.selectedRow)
+    },
+    // 兼容 $picker.path / PickerPath 的 getVal 协议
+    getVal() {
+      if (!this.selectedRow) return { data: [] }
+      return {
+        data: [
+          {
+            id: this.selectedRow.id,
+            page_name: this.selectedRow.title
+          }
+        ]
+      }
     }
   }
 }

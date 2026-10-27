@@ -158,7 +158,6 @@ const config = {
       name: 'name',
       base: (v) => {
         const baseData = pickBy(v, {
-          wgtCustName: 'wgtCustName',
           track: 'track',
           dataCount: 'dataCount',
           outerMargin: 'outerMargin',

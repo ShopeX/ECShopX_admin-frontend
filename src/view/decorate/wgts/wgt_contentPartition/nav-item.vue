@@ -288,7 +288,7 @@
             class="scope-content"
             @click="handleClickWidget(scope.data, item, index)"
           >
-            <span>{{ item.wgtCustName || item.wgtName }}</span>
+            <span>{{ item.wgtName }}</span>
             <div class="scope-content-icon">
               <i class="icon-shoudongpaixu el-icon-sort" />
               <i class="el-icon-delete" @click.stop="handleDeleteWidget(scope.index, index)" />

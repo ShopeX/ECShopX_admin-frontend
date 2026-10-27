@@ -4,6 +4,7 @@
  */
 import axios from 'axios'
 import { merge, bindMethods } from '@/utils'
+import { getCurrentCountryCode } from '@/i18n'
 import { InterceptorManager } from './interceptor'
 
 class RequestClient {
@@ -52,15 +53,8 @@ class RequestClient {
       if (config.skipCountryCode) {
         delete config.skipCountryCode
       }
-      const lang = window.localStorage.getItem('lang')
-      const langMap = {
-        zhcn: 'zh-CN',
-        en: 'en-CN',
-        zhtw: 'zh-TW',
-        ar: 'ar-SA'
-      }
-      if (lang && !skipCountryCode) {
-        const countryCode = langMap[lang]
+      if (!skipCountryCode) {
+        const countryCode = getCurrentCountryCode()
         if (config.data) {
           if (typeof config.data === 'string') {
             const hasCountryCode = /(?:^|&)country_code=/.test(config.data)

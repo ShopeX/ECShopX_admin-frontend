@@ -10,15 +10,20 @@
       <h3 class="section-title">{{ $t('10d92d52.737661') }}</h3>
       <el-collapse v-model="activeDomestic" accordion>
         <el-collapse-item
-          v-for="item in domesticPaymentListWithTitle.filter((i) => i.isShow)"
+          v-for="item in visibleDomesticPayments"
           :key="item.name"
           :name="item.name"
         >
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon" />
-                <span class="payment-title" v-else>{{ item.title }}</span>
+                <img
+                  :src="item.icon"
+                  v-if="item.icon"
+                  :alt="item.title || $t(item.titleKey)"
+                  class="payment-icon"
+                />
+                <span class="payment-title" v-else>{{ item.title || $t(item.titleKey) }}</span>
                 <el-switch
                   v-model="item.enabled"
                   active-color="#13ce66"
@@ -26,7 +31,9 @@
                   @change="handleTogglePayment(item)"
                   @click.native.stop
                 />
-                <span class="payment-description">{{ item.description }}</span>
+                <span class="payment-description">{{
+                  item.descriptionKey ? $t(item.descriptionKey) : item.description
+                }}</span>
               </div>
             </div>
           </template>
@@ -48,15 +55,22 @@
       <h3 class="section-title">{{ $t('10d92d52.0760e2') }}</h3>
       <el-collapse v-model="activeInternational" accordion>
         <el-collapse-item
-          v-for="item in internationalPaymentListWithTitle.filter((i) => i.isShow)"
+          v-for="item in visibleInternationalPayments"
           :key="item.name"
           :name="item.name"
         >
           <template slot="title">
             <div class="payment-item-header">
               <div class="payment-info">
-                <img :src="item.icon" v-if="item.icon" :alt="item.title" class="payment-icon" />
-                <span class="payment-title" v-else>{{ item.title }}</span>
+                <img
+                  :src="item.icon"
+                  v-if="item.icon"
+                  :alt="item.title || (item.titleKey ? $t(item.titleKey) : '')"
+                  class="payment-icon"
+                />
+                <span class="payment-title" v-else>{{
+                  item.title || (item.titleKey ? $t(item.titleKey) : '')
+                }}</span>
                 <el-switch
                   v-model="item.enabled"
                   active-color="#13ce66"
@@ -64,7 +78,9 @@
                   @change="handleTogglePayment(item)"
                   @click.native.stop
                 />
-                <span class="payment-description">{{ item.description }}</span>
+                <span class="payment-description">{{
+                  item.descriptionKey ? $t(item.descriptionKey) : item.description
+                }}</span>
               </div>
             </div>
           </template>
@@ -102,7 +118,7 @@ const [BatchStatusForm, BatchStatusFormApi] = useForm({
   showDefaultActions: false
 })
 
-// 创建收款账户表单配置
+// 创建收款账户表单配置（勿在 formItems 写死 value，否则 SpFormPlus 会覆盖弹框传入的回显数据）
 const [AccountForm, AccountFormApi] = useForm({
   formType: 'normalForm',
   labelWidth: '120px',
@@ -113,7 +129,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '收款人户名',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入收款人户名'
       },
@@ -124,7 +139,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '银行账号',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入银行账号'
       },
@@ -135,7 +149,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '开户银行',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入开户银行'
       },
@@ -146,7 +159,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '银联号',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         placeholder: '请输入银联号'
       },
@@ -156,7 +168,6 @@ const [AccountForm, AccountFormApi] = useForm({
       fieldName: 'pic',
       label: '银行LOGO',
       component: 'imagepicker',
-      value: '',
       componentProps: {
         multiple: false,
         limit: 1,
@@ -171,7 +182,6 @@ const [AccountForm, AccountFormApi] = useForm({
       label: '备注',
       component: 'input',
       formItemClass: 'w-2/4',
-      value: '',
       componentProps: {
         type: 'textarea',
         rows: 3,
@@ -182,7 +192,6 @@ const [AccountForm, AccountFormApi] = useForm({
       fieldName: 'is_default',
       label: '是否默认',
       component: 'radio',
-      value: 'false',
       componentProps: {
         options: [
           { label: '是', value: 'true' },
@@ -306,22 +315,15 @@ export default {
     }
   },
   computed: {
-    domesticPaymentListWithTitle() {
-      return this.domesticPaymentList.map((item) => ({
-        ...item,
-        title: item.title || this.$t(item.titleKey),
-        description: this.$t(item.descriptionKey)
-      }))
+    // filter 保留源对象引用，避免 {...item} 副本导致开关 v-model 无法写回/刷新
+    visibleDomesticPayments() {
+      return this.domesticPaymentList.filter((item) => item.isShow)
     },
-    internationalPaymentListWithTitle() {
-      return this.internationalPaymentList.map((item) => ({
-        ...item,
-        title: item.title || (item.titleKey ? this.$t(item.titleKey) : ''),
-        description: item.descriptionKey ? this.$t(item.descriptionKey) : item.description || ''
-      }))
+    visibleInternationalPayments() {
+      return this.internationalPaymentList.filter((item) => item.isShow)
     },
     allPaymentList() {
-      return [...this.domesticPaymentListWithTitle, ...this.internationalPaymentListWithTitle]
+      return [...this.visibleDomesticPayments, ...this.visibleInternationalPayments]
     },
 
     // 动态生成表单配置，确保数据回显
@@ -477,7 +479,7 @@ export default {
 
         // 更新表单数据（使用深拷贝避免引用问题）
         const formData = JSON.parse(JSON.stringify(data))
-        formData.is_open = data.is_open === 'true' || data.is_open === true
+        formData.is_open = this.isPaymentOpen(data.is_open)
         // 汇付支付渠道：接口可能返回字符串，统一转为数组，避免勾选错乱
         if (payType === 'bspay' && formData.pay_channel != null) {
           formData.pay_channel = Array.isArray(formData.pay_channel)
@@ -489,10 +491,12 @@ export default {
         }
         this.$set(this.paymentForms, payType, formData)
 
-        // 更新开关状态
-        const paymentItem = this.allPaymentList.find((item) => item.name === payType)
+        // 更新开关状态（须写回 domestic/international 源数据，computed 副本不会驱动视图）
+        const paymentItem =
+          this.domesticPaymentList.find((item) => item.name === payType) ||
+          this.internationalPaymentList.find((item) => item.name === payType)
         if (paymentItem) {
-          paymentItem.enabled = data.is_open === 'true' || data.is_open === true
+          this.$set(paymentItem, 'enabled', this.isPaymentOpen(data.is_open))
         }
 
         // 强制刷新表单数据
@@ -1187,8 +1191,12 @@ export default {
       ]
     },
 
+    isPaymentOpen(isOpen) {
+      return isOpen === 'true' || isOpen === true || isOpen === 1 || isOpen === '1'
+    },
+
     isDoumenIntlEnabled() {
-      const doumenItem = this.allPaymentList.find((item) => item.name === 'doumen_intl')
+      const doumenItem = this.internationalPaymentList.find((item) => item.name === 'doumen_intl')
       return !!(doumenItem && doumenItem.enabled)
     },
 
@@ -1300,9 +1308,8 @@ export default {
 
         await this.$api.trade.setPaymentSetting(params)
 
-        if (payType === 'doumen_intl' && params.is_open === 'true') {
-          await this.loadAllPaymentConfigs()
-        }
+        // 任意支付开关保存后都重新拉取，避免后端联动关闭其他方式时页面只提示成功、开关不刷新
+        await this.loadAllPaymentConfigs()
 
         this.$message.success(this.$t('10d92d52.3b1083'))
       } catch (error) {
@@ -1344,7 +1351,7 @@ export default {
           is_default: 'false'
         }
       }
-      await this.$dialog.open({
+      const dialogPromise = this.$dialog.open({
         title: type == 'edit' ? this.$t('10d92d52.27e12d') : this.$t('10d92d52.89beb5'),
         size: 'medium',
         content: <CompAccountForm ref='accountsForm' value={this.accountsForm} />,
@@ -1356,6 +1363,22 @@ export default {
           }
         }
       })
+      // 弹框挂载后再回填，避免 SpFormPlus 初始化用空值覆盖
+      await this.$nextTick()
+      if (AccountFormApi.setFieldsValue) {
+        const form = this.accountsForm || {}
+        AccountFormApi.setFieldsValue({
+          bank_account_name: form.bank_account_name || '',
+          bank_account_no: form.bank_account_no || '',
+          bank_name: form.bank_name || '',
+          china_ums_no: form.china_ums_no || '',
+          pic: form.pic || '',
+          remark: form.remark || '',
+          is_default:
+            form.is_default === true || form.is_default === 'true' ? 'true' : 'false'
+        })
+      }
+      await dialogPromise
       const formData = await AccountFormApi.getFieldsValue()
       // 使用深拷贝避免引用问题
       let params = JSON.parse(JSON.stringify(formData))

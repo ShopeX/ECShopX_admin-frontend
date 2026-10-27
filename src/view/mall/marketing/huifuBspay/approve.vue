@@ -175,8 +175,8 @@
   </div>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
-import district from '@/common/district.json'
 import { getDistributorList } from '@/api/marketing'
 // import { getOpenApproveDetail } from '@/api/adapay/dealer'
 import BaseModal from '@/view/mall/marketing/component/BaseModal'
@@ -186,11 +186,12 @@ import StoreModal from './component/StoreModal'
 import drawer from './component/drawer.vue'
 
 export default {
+  mixins: [districtOptions],
   components: { BaseModal, RegisterInfo, AccountInfo, StoreModal, drawer },
   data() {
     return {
       loading: true,
-      regions: district,
+      regions: [],
       activeName: 'first',
       subTitle: '',
       isBool: false,

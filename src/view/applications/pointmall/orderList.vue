@@ -292,7 +292,8 @@
                   v-if="
                     (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                     scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                    (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
+                    (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
+                    scope.row.delivery_status != 'PARTAIL'
                   "
                   type="text"
                   @click="cancelOrderAction(scope.row.order_id)"

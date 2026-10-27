@@ -6,7 +6,7 @@
 <template>
   <div class="bg-white relative flex flex-col justify-center">
     <div>
-      <img src="/images/logo.png" alt="logo" width="300" />
+      <img :src="logoSrc" alt="logo" width="300" />
       <div class="text-[14px] mt-2 ml-2 text-[#BЗBЗB3]">{{ $t('2b0e6049.7849c8') }}</div>
       <div class="text-[28px] font-helvca mt-8 ml-2 text-[#333]">{{ $t('24b2720c.7d1eb0') }}</div>
     </div>
@@ -31,7 +31,7 @@
 <script>
 import { useForm } from '@/composables'
 import Config from '@/config'
-import { getSystemTitle } from '@/utils'
+import { decodeJwtPayload, getSystemTitle, resolveAppPath, resolvePublicAsset } from '@/utils'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -69,7 +69,8 @@ export default {
     return {
       formApi: FormApi,
       loading: false,
-      recoderNumber: Config.recoder_number
+      recoderNumber: Config.recoder_number,
+      logoSrc: resolvePublicAsset('images/logo.png')
     }
   },
   computed: {
@@ -96,8 +97,7 @@ export default {
           // agreement_id
         })
         if (token) {
-          const tokenArray = token.split('.')
-          const { menu_type } = JSON.parse(atob(tokenArray[1]))
+          const { menu_type } = decodeJwtPayload(token)
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
           this.$store.commit('user/setLoginType', { login_type: 'merchant' })
@@ -105,7 +105,7 @@ export default {
           await this.$store.dispatch('user/fetchAccessMenus')
           await this.$store.dispatch('user/fetchAccountInfo')
           setTimeout(() => {
-            window.location.href = '/merchant'
+            window.location.href = resolveAppPath('/merchant')
           }, 700)
         }
       } catch (error) {

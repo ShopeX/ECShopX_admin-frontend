@@ -44,14 +44,15 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { getRegionNameById, getRegionIdByName } from '@/utils'
-import district from '@/common/district.json'
 import FormItemZitiAddress from './comps/form-item-zitiaddress'
 import FormItemConnectPhone from './comps/form-item-connectphone'
 import FormItemTimeSlot from './comps/form-item-timeslot'
 import FormItemAppointDays from './comps/form-item-appointdays'
 import FormItemAppointZiti from './comps/form-item-appointziti'
 export default {
+  mixins: [districtOptions],
   name: '',
   // components: {
   //   FormItemZitiAddress,
@@ -169,6 +170,7 @@ export default {
   },
   methods: {
     async fetchZitiInfo(id) {
+      await this.loadDistrictOptions()
       const {
         name,
         province,
@@ -187,7 +189,7 @@ export default {
       this.form = {
         name,
         zitiAddress: {
-          region: getRegionIdByName([province, city, area], district),
+          region: getRegionIdByName([province, city, area], this.district),
           address
         },
         connectPhone: {
@@ -236,7 +238,7 @@ export default {
       const { region, address } = zitiAddress
       const { areaNo, phone } = connectPhone
       const { value, days } = waitPickupDays
-      const [province, city, area] = getRegionNameById(region, district)
+      const [province, city, area] = getRegionNameById(region, this.district)
       let params = {
         name,
         province,

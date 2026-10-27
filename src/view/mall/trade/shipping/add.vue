@@ -818,14 +818,13 @@ import {
   createShippingTemplates,
   updateShippingTemplates
 } from '../../../../api/shipping'
-import { getAddress } from '../../../../api/common'
-// import this.district from '../../../../common/this.district.json'
+import districtOptions from '@/mixins/districtOptions'
 //匹配省市区
 export default {
+  mixins: [districtOptions],
   data() {
     return {
       loading: true,
-      district: {},
       templatesId: '',
       numberFreeStatus: true,
       priceFreeStatus: true,
@@ -1728,13 +1727,11 @@ export default {
       }
     },
     getAddress() {
-      getAddress().then((res) => {
-        let that = this
-        this.district = res.data.data
-        this.district.forEach(function (provinceItem) {
-          that.areaInfoCount[provinceItem.value] = provinceItem.children.length
-          provinceItem.children.forEach(function (cityItem) {
-            that.areaInfoCount[cityItem.value] = cityItem.children.length
+      this.loadDistrictOptions().then((list) => {
+        list.forEach((provinceItem) => {
+          this.areaInfoCount[provinceItem.value] = provinceItem.children?.length || 0
+          ;(provinceItem.children || []).forEach((cityItem) => {
+            this.areaInfoCount[cityItem.value] = cityItem.children?.length || 0
           })
         })
         this.loading = false

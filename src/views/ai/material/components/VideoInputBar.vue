@@ -244,7 +244,7 @@ const MODE_LABELS = {
 }
 
 /**
- * 注意：value/form 双向同步使用 _syncing 标志位防止反复触发引发的递归（点击切换模式时表现为页面卡死）。
+ * 注意：value/form 双向同步使用 syncing 标志位防止反复触发引发的递归（点击切换模式时表现为页面卡死）。
  */
 export default {
   name: 'VideoInputBar',
@@ -257,7 +257,7 @@ export default {
     return {
       form: { ...DEFAULT_FORM, ...(this.value || {}) },
       paramsPopoverOpen: false,
-      _syncing: false
+      syncing: false
     }
   },
   computed: {
@@ -327,25 +327,25 @@ export default {
     value: {
       deep: true,
       handler(v) {
-        if (this._syncing) return
+        if (this.syncing) return
         // 仅当父侧 value 与本地 form 实质不同时再回填，避免与 form watcher 形成回环
         const next = { ...DEFAULT_FORM, ...(v || {}) }
         if (JSON.stringify(next) === JSON.stringify(this.form)) return
-        this._syncing = true
+        this.syncing = true
         this.form = next
         this.$nextTick(() => {
-          this._syncing = false
+          this.syncing = false
         })
       }
     },
     form: {
       deep: true,
       handler(v) {
-        if (this._syncing) return
-        this._syncing = true
+        if (this.syncing) return
+        this.syncing = true
         this.$emit('input', { ...v })
         this.$nextTick(() => {
-          this._syncing = false
+          this.syncing = false
         })
       }
     }
@@ -354,7 +354,7 @@ export default {
     setMode(m) {
       if (this.form.mode === m) return
       // 一次性整包替换，避免多个独立属性 mutation 触发的多轮 emit
-      this._syncing = true
+      this.syncing = true
       const next = { ...this.form, mode: m }
       if (m === 'reference') {
         next.imageStart = ''
@@ -367,7 +367,7 @@ export default {
       this.form = next
       this.$emit('input', { ...next })
       this.$nextTick(() => {
-        this._syncing = false
+        this.syncing = false
       })
     },
     onPickRatio(v) {

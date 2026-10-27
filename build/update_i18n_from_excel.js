@@ -5,7 +5,49 @@
  */
 const fs = require('fs')
 const path = require('path')
-const XLSX = require('xlsx')
+const ExcelJS = require('exceljs')
+
+/**
+ * 将 worksheet 转为二维数组（兼容原 xlsx sheet_to_json header:1 格式）
+ */
+function worksheetToArray(worksheet) {
+  const jsonData = []
+  worksheet.eachRow({ includeEmpty: true }, (row) => {
+    const rowData = []
+    const maxCol = Math.max(worksheet.columnCount || 0, row.cellCount || 0)
+    for (let col = 1; col <= maxCol; col++) {
+      const cell = row.getCell(col)
+      let value = cell.value
+      if (value == null) {
+        value = ''
+      } else if (typeof value === 'object') {
+        if (value.richText) {
+          value = value.richText.map((item) => item.text).join('')
+        } else if (value.text) {
+          value = value.text
+        } else if (value.result !== undefined) {
+          value = value.result
+        } else if (value instanceof Date) {
+          value = value.toISOString()
+        } else {
+          value = String(value)
+        }
+      }
+      rowData.push(value)
+    }
+    jsonData.push(rowData)
+  })
+  return jsonData
+}
+
+/**
+ * 读取 Excel 工作簿
+ */
+async function readWorkbook(excelPath) {
+  const workbook = new ExcelJS.Workbook()
+  await workbook.xlsx.readFile(excelPath)
+  return workbook
+}
 
 /**
  * 判断文本是否包含中文字符
@@ -262,9 +304,10 @@ function detectColumns(headers) {
  * @param {Object} data - 可选的JSON数据对象（用于批量处理时共享数据）
  * @returns {Object} 统计信息和更新后的数据对象
  */
-function updateJsonFromExcel(excelPath, jsonPath, data = null) {
+async function updateJsonFromExcel(excelPath, jsonPath, data = null) {
   console.log(`正在读取 Excel 文件: ${excelPath}`)
-  const workbook = XLSX.readFile(excelPath)
+  const workbook = await readWorkbook(excelPath)
+  const sheetNames = workbook.worksheets.map((sheet) => sheet.name)
 
   // 读取现有 JSON 文件（如果未提供数据对象）
   if (!data) {
@@ -282,7 +325,7 @@ function updateJsonFromExcel(excelPath, jsonPath, data = null) {
 
   // 统计信息
   const stats = {
-    totalSheets: workbook.SheetNames.length,
+    totalSheets: sheetNames.length,
     totalRows: 0,
     updated: [],
     failed: [],
@@ -290,22 +333,20 @@ function updateJsonFromExcel(excelPath, jsonPath, data = null) {
   }
 
   // 遍历所有 sheet
-  console.log(`\n发现 ${workbook.SheetNames.length} 个 Sheet: ${workbook.SheetNames.join(', ')}\n`)
+  console.log(`\n发现 ${sheetNames.length} 个 Sheet: ${sheetNames.join(', ')}\n`)
   console.log('开始处理所有 Sheet...\n')
 
   const processedSheets = []
 
-  for (const sheetName of workbook.SheetNames) {
+  for (const sheetName of sheetNames) {
     console.log('='.repeat(60))
     console.log(
-      `处理 Sheet: ${sheetName} (${workbook.SheetNames.indexOf(sheetName) + 1}/${
-        workbook.SheetNames.length
-      })`
+      `处理 Sheet: ${sheetName} (${sheetNames.indexOf(sheetName) + 1}/${sheetNames.length})`
     )
     console.log('='.repeat(60))
 
-    const worksheet = workbook.Sheets[sheetName]
-    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' })
+    const worksheet = workbook.getWorksheet(sheetName)
+    const jsonData = worksheet ? worksheetToArray(worksheet) : []
 
     if (jsonData.length === 0) {
       console.log(`Sheet '${sheetName}' 为空，跳过\n`)
@@ -576,7 +617,7 @@ function updateJsonFromExcel(excelPath, jsonPath, data = null) {
 }
 
 // 主函数
-function main() {
+async function main() {
   const jsonPath = 'src/i18n/lang/index.json'
 
   // 支持命令行参数指定 Excel 文件，或使用默认的4个文件
@@ -611,7 +652,7 @@ function main() {
     console.log('='.repeat(80))
 
     try {
-      const result = updateJsonFromExcel(excelPath, jsonPath, sharedData)
+      const result = await updateJsonFromExcel(excelPath, jsonPath, sharedData)
       sharedData = result.data // 更新共享的数据对象
       allStats.push({ file: excelPath, stats: result.stats })
       totalFailed += result.stats.failed.length
@@ -658,7 +699,11 @@ function main() {
 
 // 运行主函数
 if (require.main === module) {
-  main()
+  main().catch((error) => {
+    console.error(`\n❌ 发生错误: ${error.message}`)
+    console.error(error.stack)
+    process.exit(1)
+  })
 }
 
 module.exports = { updateJsonFromExcel }

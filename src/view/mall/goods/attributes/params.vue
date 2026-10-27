@@ -388,10 +388,6 @@ export default {
             width: 200
           },
           {
-            name: this.$t('07504bf6.dc14a1'),
-            key: 'attribute_memo'
-          },
-          {
             name: this.$t('07504bf6.bfed49'),
             key: 'attribute_values',
             render: (h, scope) => {
@@ -414,6 +410,10 @@ export default {
                 )
               )
             }
+          },
+          {
+            name: this.$t('07504bf6.dc14a1'),
+            key: 'attribute_memo'
           }
         ]
       })

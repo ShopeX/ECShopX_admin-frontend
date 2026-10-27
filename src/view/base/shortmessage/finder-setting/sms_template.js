@@ -29,6 +29,12 @@ export default (vm) => {
   return createSetting({
     search: [
       { key: 'status', name: vm.$t('7adabfaf.b6d0e9'), type: 'select', options: vm.search_options },
+      {
+        key: 'scene_id_assigned',
+        name: '场景绑定',
+        type: 'select',
+        options: vm.sceneAssignedOptions
+      },
       { key: 'template_name', name: vm.$t('7adabfaf.a5d1c5') }
     ],
     columns: [
@@ -110,7 +116,7 @@ export default (vm) => {
           }
         },
         visible: (val) => {
-          return val.status == '2'
+          return val.status == '1' || val.status == '2'
         }
       },
       {

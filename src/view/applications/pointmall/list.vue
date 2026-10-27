@@ -87,7 +87,7 @@
           {{ $t('8312e7f7.fa3aee') }}
         </el-button>
 
-        <el-dropdown @command="handleImport">
+        <el-dropdown trigger="click" @command="handleImport">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             {{ $t('8312e7f7.8d9a07') }}<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -116,7 +116,7 @@
         <el-button v-if="isBindJstErp" plain type="primary" @click="uploadJstErpItems()">
           {{ $t('8312e7f7.78a38b') }}
         </el-button>
-        <el-dropdown @command="exportItemsData">
+        <el-dropdown trigger="click" @command="exportItemsData">
           <el-button type="primary" plain>
             {{ $t('8312e7f7.55405e') }} <i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -371,12 +371,12 @@
   </SpRouterView>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import Treeselect from '@riophae/vue-treeselect'
 import SideBar from '@/components/element/sideBar'
 import { getShippingTemplatesList } from '@/api/shipping'
 import { getDefaultCurrency } from '@/api/company'
-import district from '@/common/district.json'
 import {
   getItemsList,
   setItemsTemplate,
@@ -396,6 +396,7 @@ import {
 } from '@/api/pointsmall'
 
 export default {
+  mixins: [districtOptions],
   components: {
     Treeselect,
     SideBar
@@ -416,7 +417,7 @@ export default {
         { value: 'normal', name: this.$t('8312e7f7.0f7a66') },
         { value: 'drug', name: this.$t('8312e7f7.e8b7e1') }
       ],
-      regions: district,
+      regions: [],
       current: '',
       currentId: '',
       currentPrice: '',

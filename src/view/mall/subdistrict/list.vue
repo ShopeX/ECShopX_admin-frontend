@@ -88,7 +88,7 @@
         :data="categoryList"
         row-key="id"
         default-expand-all
-        :height="-180"
+        :height="wheight - 260"
         :tree-props="{ children: 'children' }"
         style="width: 100%"
         size="small"
@@ -101,7 +101,7 @@
         <el-table-column prop="distributor" :label="$t('92b45fc2.5c16c5')" width="480">
           <template slot-scope="scope">
             <span
-              v-for="(item, index) in scope.row.distributor"
+              v-for="(item, index) in scope.row.distributor || []"
               :key="index"
               class="storeL"
               style="
@@ -202,7 +202,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['login_type'])
+    ...mapGetters(['login_type', 'wheight'])
   },
 
   mounted() {
@@ -407,13 +407,15 @@ export default {
         // debugger
         this.categoryList = response.data.data
         this.categoryList.forEach((d) => {
-          d.distributor_list = d.distributor_id.map((dd, index) => {
+          const distributorIds = d.distributor_id || []
+          const distributors = d.distributor || []
+          d.distributor_list = distributorIds.map((dd, index) => {
             return {
               id: dd + '',
-              name: d.distributor[index]
+              name: distributors[index]
             }
           })
-          d.distributor_id = d.distributor_id.map((item) => {
+          d.distributor_id = distributorIds.map((item) => {
             return item + ''
           })
         })

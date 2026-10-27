@@ -55,7 +55,7 @@
 
       <el-button type="primary" @click="handleExport"> {{ $t('8c556aa3.55405e') }} </el-button>
 
-      <el-dropdown @command="onPatchAction">
+      <el-dropdown trigger="click" @command="onPatchAction">
         <el-button type="primary">
           {{ $t('8c556aa3.7f7c62') }}<i class="el-icon-arrow-down el-icon--right" />
         </el-button>
@@ -65,12 +65,6 @@
           </el-dropdown-item>
           <el-dropdown-item command="2">
             <span>{{ $t('8c556aa3.d5e015') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="3">
-            <span>{{ $t('8c556aa3.7fcc60') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="4">
-            <span>{{ $t('8c556aa3.12e91b') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -258,40 +252,6 @@ export default {
           }
         },
         {
-          fieldName: 'brand_id',
-          label: '品牌',
-          component: 'select',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: '商品/商标关键词',
-            remote: true,
-            filterable: true,
-            clearable: true,
-            remoteMethod: this.getGoodsBranchList,
-            options: this.goodsBranchList.map((item) => ({
-              label: item.attribute_name,
-              value: item.attribute_id
-            }))
-          }
-        },
-        {
-          fieldName: 'brand_id',
-          label: '品牌',
-          component: 'select',
-          cellWidth: 1.3,
-          componentProps: {
-            placeholder: '商品/商标关键词',
-            remote: true,
-            filterable: true,
-            clearable: true,
-            remoteMethod: this.getGoodsBranchList,
-            options: this.goodsBranchList.map((item) => ({
-              label: item.attribute_name,
-              value: item.attribute_id
-            }))
-          }
-        },
-        {
           fieldName: 'item_bn',
           label: this.$t('8c556aa3.e9de29'),
           component: 'input',
@@ -382,12 +342,59 @@ export default {
           {
             name: this.$t('8c556aa3.1fd1d5'),
             key: 'item_name',
-            width: 160
-          },
-          {
-            name: this.$t('8c556aa3.0888fc'),
-            key: 'item_bn',
-            width: 150
+            width: 320,
+            render: (h, { row }) => {
+              let pics = row.pics
+              if (typeof pics === 'string' && pics.trim()) {
+                try {
+                  pics = JSON.parse(pics)
+                } catch (e) {
+                  pics = []
+                }
+              }
+              const pic =
+                (Array.isArray(pics) && pics[0]) ||
+                row.pic ||
+                row.image_url ||
+                ''
+              const title = row.item_name || row.itemName || ''
+              const vm = this
+              return (
+                <div style='display: flex; align-items: flex-start; gap: 8px;'>
+                  {h('SpImage', {
+                    props: {
+                      src: pic,
+                      width: 56,
+                      height: 56,
+                      fit: 'cover'
+                    }
+                  })}
+                  <div style='flex: 1; min-width: 0;'>
+                    <div style='white-space: normal;'>{title}</div>
+                    {row.goods_bn ? (
+                      <div style='color: #666;'>
+                        {`${vm.$t('d41d8cd9.b1f6ae')}${row.goods_bn}`}
+                        <el-tooltip
+                          effect='dark'
+                          content={vm.$t('dc9cefd6.79d3ab')}
+                          placement='top-start'
+                        >
+                          <i
+                            on-click={() => {
+                              vm.$copyText(row.goods_bn).then(() => {
+                                vm.$message.success(vm.$t('dc9cefd6.20a495'))
+                              })
+                            }}
+                            class='el-icon-document-copy'
+                            style='margin-left: 4px; cursor: pointer;'
+                          />
+                        </el-tooltip>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              )
+            }
           },
           {
             name: this.$t('8c556aa3.24bc52'),

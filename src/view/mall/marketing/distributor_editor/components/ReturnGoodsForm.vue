@@ -94,13 +94,14 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
 export default {
+  mixins: [districtOptions],
   inject: ['content'],
   data() {
     return {
-      regions: district,
+      regions: [],
       finderData: [],
       finderUrl: '',
       setting: createSetting({

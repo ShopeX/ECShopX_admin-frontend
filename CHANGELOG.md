@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.19.0...v4.20.0) (2026-10-23)
+
+## [4.19.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.18.1...v4.19.0) (2026-10-16)
+
+## [4.18.1](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.18.0...v4.18.1) (2026-10-09)
+
+## [4.18.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.17.0...v4.18.0) (2026-09-18)
+
+## [4.17.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.16.0...v4.17.0) (2026-09-11)
+
+## [4.16.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.15.0...v4.16.0) (2026-09-04)
+
+## [4.14.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.13.0...v4.14.0) (2026-08-21)
+
+## [4.13.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.12.0...v4.13.0) (2026-08-14)
+
+## [4.12.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.11.0...v4.12.0) (2026-08-07)
+
+## [4.11.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.10.0...v4.11.0) (2026-07-31)
+
+## [4.10.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.9.1...v4.10.0) (2026-07-24)
+
+### [4.9.1](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.9.0...v4.9.1) (2026-07-18)
+
+## [4.9.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.8.1...v4.9.0) (2026-07-17)
+
 ### [4.8.1](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.8.0...v4.8.1) (2026-07-15)
 
 ## [4.8.0](https://github.com/shopeX-2002/ECShopX_AdminFrontend/compare/v4.7.0...v4.8.0) (2026-07-03)

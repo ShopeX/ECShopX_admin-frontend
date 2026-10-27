@@ -5,12 +5,12 @@
 
 <template>
   <div class="sms_signatures_edit">
-    <h4>{{ $t('872a1908.6aefb6') }}</h4>
+    <h4>{{ pageTitle }}</h4>
     <el-form ref="form" :model="form" :rules="rules" label-width="150px" class="demo-ruleForm">
       <el-form-item :label="$t('872a1908.59592b')" prop="sign_name">
         <el-input
           v-model="form.sign_name"
-          :disabled="disabled || disabled_edit"
+          :disabled="disabled || isEdit"
           minlength="2"
           maxlength="12"
           show-word-limit
@@ -194,7 +194,6 @@ export default {
     return {
       // 页面状态
       disabled: false,
-      disabled_edit: false,
       // 图片选择
       imgDialog: false,
       isGetImage: false,
@@ -219,23 +218,29 @@ export default {
       }
     }
   },
+  computed: {
+    isEdit() {
+      return this.$route.query.type === 'edit'
+    },
+    pageTitle() {
+      if (this.isEdit) {
+        return this.$t('872a1908.dbd4f1')
+      }
+      return this.$t('872a1908.6aefb6')
+    }
+  },
   mounted() {
     this.init()
   },
   methods: {
     async init() {
       const { type, id } = this.$route.query
-      console.log(type, id)
 
       if (type) {
         const result = await getTheSignature({ id })
         this.resultHandler(result)
         if (type == 'detail') {
           this.disabled = true
-        }
-
-        if (type == 'edit') {
-          this.disabled_edit = true
         }
       }
     },
@@ -249,14 +254,14 @@ export default {
         third_party,
         qualification_id
       } = result.data.data
-      console.log(sign_name)
       this.form = {
         sign_name,
         sign_source: sign_source + '',
         remark,
         sign_file,
         delegate_file,
-        third_party,
+        // 详情接口为 'true'/'false' 字符串
+        third_party: third_party === true || third_party === 'true' ? 'true' : 'false',
         qualification_id
       }
     },
@@ -266,7 +271,24 @@ export default {
         if (valid) {
           try {
             if (type == 'edit') {
-              const result = await editTheSignature({ id, ...this.form })
+              // modify 不传 sign_name（签名名只读，改名需走阿里云控制台）
+              const {
+                sign_source,
+                remark,
+                third_party,
+                qualification_id,
+                sign_file,
+                delegate_file
+              } = this.form
+              const result = await editTheSignature({
+                id,
+                sign_source,
+                remark,
+                third_party,
+                qualification_id,
+                sign_file,
+                delegate_file
+              })
               this.submitFormResult(result)
             } else {
               const result = await setTheNewSignature(this.form)

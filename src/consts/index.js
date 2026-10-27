@@ -165,6 +165,7 @@ export const GOOD_CATEGORY = [
 
 export const GOOD_CATEGORY_MAP = {
   self: i18n.t('e3a5dbf4.491c0c'),
+  platform: i18n.t('e3a5dbf4.491c0c'),
   distributor: i18n.t('e3a5dbf4.b1c9d7'),
   supplier: i18n.t('e3a5dbf4.45a570')
 }

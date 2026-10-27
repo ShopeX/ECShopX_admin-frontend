@@ -16,8 +16,9 @@
   </el-row>
 </template>
 <script>
-import { getAddress } from '@/api/common'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   props: {
     defaultAddress: {
       type: Array,
@@ -45,8 +46,7 @@ export default {
   },
   methods: {
     getDistrict() {
-      getAddress().then(({ data }) => {
-        this.regions = data.data
+      this.loadDistrictOptions().then(() => {
         this.RegionChangeSearch(this.selected_values)
       })
     },

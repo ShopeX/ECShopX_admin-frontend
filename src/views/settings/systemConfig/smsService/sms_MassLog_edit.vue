@@ -255,7 +255,7 @@ export default {
         this.sign_options = res.data.data.list
       })
 
-      getSmsTemplateList({ params: { status: '1', template_type: '2' } }).then((res) => {
+      getSmsTemplateList({ params: { status: '1', template_type: '2', scene_id_assigned: '1' } }).then((res) => {
         this.template_options = res.data.data.list
       })
     },

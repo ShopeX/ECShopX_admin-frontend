@@ -14,10 +14,10 @@ export function getTrustLoginList(query) {
 }
 
 // 保存信任登录状态
-export function saveStatusSetting(query) {
+export function saveStatusSetting(data) {
   return fetch({
     url: 'members/trustlogin/setting',
-    method: 'put',
-    params: query
+    method: 'post',
+    params: data
   })
 }

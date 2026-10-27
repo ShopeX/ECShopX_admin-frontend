@@ -313,6 +313,7 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import Treeselect from '@riophae/vue-treeselect'
 import draggable from 'vuedraggable'
 import imgPicker from '@/components/imageselect'
@@ -326,8 +327,8 @@ import {
   getGoodsAttr,
   getCategoryInfo
 } from '@/api/goods'
-import district from '@/common/district.json'
 export default {
+  mixins: [districtOptions],
   name: 'CmBaseForm',
   components: {
     imgPicker,
@@ -342,7 +343,7 @@ export default {
       brandList: [],
       categoryList: [],
       loading: true,
-      regions: district,
+      regions: [],
       picsDialog: false,
       isGetPics: false,
       multiple: false,

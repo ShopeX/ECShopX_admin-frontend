@@ -225,7 +225,6 @@ const config = {
 
         // 添加其他字段
         const otherBaseData = pickBy(v, {
-          wgtCustName: 'wgtCustName',
           track: 'track',
           dataType: 'dataType',
           dataCount: 'dataCount',

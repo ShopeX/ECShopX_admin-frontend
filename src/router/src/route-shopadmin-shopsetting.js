@@ -17,7 +17,7 @@ export default {
     {
       path: 'staff/Merchantstaffroles',
       name: '9e5a95d6.910b4e',
-      component: () => import('@/view/base/account/storeroles')
+      component: () => import('@/views/settings/role-store')
     },
     {
       path: 'staff/selfdeliverystaff',

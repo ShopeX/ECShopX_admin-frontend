@@ -87,15 +87,15 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
 import { i18n } from '@/i18n'
-import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
   name: 'PickerShop',
   extends: BasePicker,
-  mixins: [PageMixin],
+  mixins: [PageMixin, districtOptions],
   config: {
     title: i18n.t('3a1ca73b.afa2e6')
   },
@@ -112,7 +112,7 @@ export default {
         distributor_category_id: '',
         is_valid: ''
       },
-      district,
+      district: [],
       categoryList: [],
       regionArea: [],
       loading: false,

@@ -191,13 +191,14 @@
   </div>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import shopSelect from '@/components/shopSelect'
-import district from '@/common/district.json'
 import { getItemsListAll, updateGoodsInfo } from '@/api/goods'
 
 export default {
+  mixins: [districtOptions],
   components: {
     shopSelect
   },
@@ -211,7 +212,7 @@ export default {
     return {
       dialogVisible: false,
       select_regions_value: [],
-      regions: district,
+      regions: [],
       form: {
         audit_status: 'approved',
         audit_reason: ''

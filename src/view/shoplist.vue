@@ -57,7 +57,7 @@
 import { Message } from 'element-ui'
 import { getDistributorList } from '@/api/marketing'
 import { shopLoginSelectShopId } from '@/api/company'
-import { VERSION_STANDARD } from '@/utils'
+import { VERSION_STANDARD, resolveAppPath } from '@/utils'
 export default {
   data() {
     const system = VERSION_STANDARD() ? 'onex' : 'ecshopx'
@@ -85,7 +85,7 @@ export default {
       shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then((res) => {
         if (res.data.data.status) {
           this.$store.dispatch('setShopId', data.distributor_id)
-          window.location.href = '/'
+          window.location.href = resolveAppPath('/')
           // console.log(this.$store.getters.menus)
           // this.$router.push({ path: this.$store.getters.menus[0].children[0].url })
         }

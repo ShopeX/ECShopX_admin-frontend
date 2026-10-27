@@ -58,6 +58,7 @@
     size="small"
     split-button
     plain
+    trigger="click"
     :disabled="disabled"
     @click="handleClick"
     @command="handleCommand"

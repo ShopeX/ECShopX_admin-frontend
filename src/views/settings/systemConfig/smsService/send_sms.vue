@@ -265,7 +265,7 @@ export default {
     },
     async getSMSTemplateList({ page, pageSize }) {
       const { list, total_count } = await this.$api.sms.getSmsTemplateList({
-        params: { status: '1', scene_id: this.form.scene_id },
+        params: { status: '1', scene_id: this.form.scene_id, scene_id_assigned: '1' },
         page,
         pageSize
       })

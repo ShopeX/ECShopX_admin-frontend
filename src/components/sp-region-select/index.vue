@@ -8,9 +8,10 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 import { getRegionNameById, getRegionIdByName } from '@/utils'
 export default {
+  mixins: [districtOptions],
   name: 'SpRegionSelect',
   props: {
     level: {
@@ -28,17 +29,18 @@ export default {
   },
   computed: {
     options() {
-      return this.filterDistrictByLevel(district, this.level)
+      return this.filterDistrictByLevel(this.district, this.level)
     }
   },
   methods: {
     /**
      * 按层级递归筛选行政区划
-     * @param {Array} data district.json解析出来的数组
+     * @param {Array} data /espier/address 返回的省市区树
      * @param {number} level 1=省，2=省+市，3=省+市+区
      * @returns {Array}
      */
     filterDistrictByLevel(data, level) {
+      if (!Array.isArray(data) || data.length === 0) return []
       // 递归处理每一层
       function deepFilter(list, currentLevel) {
         return list.map((item) => {
@@ -59,7 +61,7 @@ export default {
       this.$emit('input', value)
       this.$emit('change', {
         region_id: value,
-        region_name: getRegionNameById(value, district)
+        region_name: getRegionNameById(value, this.district)
       })
     }
   }

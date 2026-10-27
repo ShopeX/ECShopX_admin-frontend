@@ -236,7 +236,6 @@ const config = {
 
         // 提取其他 base 字段
         const otherBaseData = pickBy(v, {
-          wgtCustName: 'wgtCustName',
           track: 'track',
           animate: () => 'horizontal', // 固定为横向
           navSticky: 'navSticky',

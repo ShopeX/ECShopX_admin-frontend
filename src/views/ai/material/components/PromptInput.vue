@@ -54,7 +54,7 @@ import { atRefRegex, LABEL_KIND_MAP } from '../utils/refItems'
  *   - props.items 变更时，对应 URL 已不在列表的 chip 静默从 DOM 移除（同时 emit 新文本）
  *   - 回填字符串时，按 @(图片|视频|音频)\d+ 正则反向解析为 chip（命中 items 即 chip，否则保留字面量）
  *
- * 防回环：emit 之前记录 _lastEmitted；watch(value) 收到与 _lastEmitted 相同的文本时跳过整体重渲，
+ * 防回环：emit 之前记录 lastEmitted；watch(value) 收到与 lastEmitted 相同的文本时跳过整体重渲，
  * 避免抢光标。
  */
 export default {
@@ -77,8 +77,8 @@ export default {
       mentionAnchorOffset: 0,
       mentionPos: { x: 0, y: 0 },
       isEmpty: !(this.value || '').trim().length,
-      _lastEmitted: this.value || '',
-      _syncing: false
+      lastEmitted: this.value || '',
+      syncing: false
     }
   },
   computed: {
@@ -100,13 +100,13 @@ export default {
   },
   watch: {
     value(v) {
-      if (this._syncing) return
+      if (this.syncing) return
       const next = v || ''
-      if (next === this._lastEmitted) return
-      this._syncing = true
+      if (next === this.lastEmitted) return
+      this.syncing = true
       this.renderFromText(next)
       this.$nextTick(() => {
-        this._syncing = false
+        this.syncing = false
       })
     },
     items: {
@@ -163,7 +163,7 @@ export default {
     },
     emitText() {
       const t = this.extractText(this.$refs.editor)
-      this._lastEmitted = t
+      this.lastEmitted = t
       // 浏览器在清空 contenteditable 时常残留 <br> 等，导致 t === '\n'，所以用 trim 判空
       this.isEmpty = !t.trim().length
       this.$emit('input', t)
@@ -233,7 +233,7 @@ export default {
       if (lastIdx < t.length) {
         editor.appendChild(document.createTextNode(t.slice(lastIdx)))
       }
-      this._lastEmitted = t
+      this.lastEmitted = t
       this.isEmpty = !t.trim().length
     },
 

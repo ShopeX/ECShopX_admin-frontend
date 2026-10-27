@@ -142,7 +142,7 @@ export default {
       durations: {},
       audioPlaying: false,
       audioCur: 0,
-      _dragDepth: 0
+      dragDepth: 0
     }
   },
   beforeDestroy() {
@@ -380,18 +380,18 @@ export default {
     },
 
     onDragEnter() {
-      this._dragDepth += 1
+      this.dragDepth += 1
       this.dragOver = true
     },
     onDragOver(e) {
       if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'
     },
     onDragLeave() {
-      this._dragDepth = Math.max(0, this._dragDepth - 1)
-      if (this._dragDepth === 0) this.dragOver = false
+      this.dragDepth = Math.max(0, this.dragDepth - 1)
+      if (this.dragDepth === 0) this.dragOver = false
     },
     async onDrop(e) {
-      this._dragDepth = 0
+      this.dragDepth = 0
       this.dragOver = false
       const files = Array.from((e.dataTransfer && e.dataTransfer.files) || [])
       if (files.length === 0) return

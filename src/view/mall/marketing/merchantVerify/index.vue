@@ -143,13 +143,13 @@
   </SpPage>
 </template>
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import district from '@/common/district.json'
 import mixin, { pageMixin } from '@/mixins'
 import { i18n } from '@/i18n'
 export default {
-  mixins: [mixin, pageMixin],
+  mixins: [mixin, pageMixin, districtOptions],
   data() {
     const initialParams = {
       audit_status: undefined,
@@ -161,7 +161,7 @@ export default {
     return {
       initialParams,
       params: { ...initialParams },
-      regions: district,
+      regions: [],
       loading: true,
       approveStatusList: [
         { name: i18n.t('52713abc.b0bf01'), value: '1' },

@@ -252,7 +252,7 @@ export default {
             size={this.size || 'small'}
             type='date'
             value={this.modelValue}
-            prefix-icon={false}
+            prefix-icon=""
             {...props}
             on-input={this.handleInput}
           />
@@ -279,7 +279,7 @@ export default {
                 text: this.$t(s.text)
               }))
             }}
-            prefix-icon={false}
+            prefix-icon=""
             onInput={this.handleInput}
           />
         </div>

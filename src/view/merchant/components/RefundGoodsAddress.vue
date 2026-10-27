@@ -84,13 +84,11 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
 export default {
   name: 'RefundGoodsAddress',
-  props: ['value'],
+  props: ['value', 'regions'],
   data() {
     return {
-      district: district,
       form: {
         name: '',
         regions_id: '',
@@ -115,7 +113,7 @@ export default {
           component: ({ key }, value) => {
             return (
               <div class='refund-address'>
-                <el-cascader v-model={value['regions_id']} options={district} />
+                <el-cascader v-model={value['regions_id']} options={this.regions} />
                 <el-input
                   v-model={value['address']}
                   class='address'

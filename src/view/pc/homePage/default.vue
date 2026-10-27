@@ -189,8 +189,7 @@ import { Footer, Header, Navbar } from './components/common'
 import { getCategory } from '@/api/goods'
 import { savePageParams, getParamByTempName } from '@/api/pctemplate'
 import sideBar from '@/components/element/sideBar'
-const generate = require('nanoid/generate')
-const str = '1234567890abcdef'
+import generateComponentUuid from '@/utils/nanoidAlphabet'
 
 export default {
   components: {
@@ -425,7 +424,7 @@ export default {
     onStart(evt) {
       if (evt.target.className === 'components-view') {
         let item = this.initData[evt.oldIndex]
-        item.uuid = generate(str, 10)
+        item.uuid = generateComponentUuid()
         this.saveInit = JSON.stringify(item)
       } else {
         console.log('onstart')

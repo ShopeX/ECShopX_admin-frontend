@@ -627,7 +627,9 @@ export default {
       }
 
       if (tab_bar) {
-        this.globalTabbar = JSON.parse(tab_bar)
+        const tabBarData = JSON.parse(tab_bar)
+        this.globalTabbar = tabBarData
+        this.tabs = tabBarData
       }
     },
     async getList() {
@@ -922,6 +924,10 @@ export default {
         }
       }
       await this.$api.template.setPagesTemplate(params)
+      // 以后端为准重新拉取，避免本地状态与落库结果不一致
+      if (!pages_template_id) {
+        await this.getTemplateSetInfo()
+      }
       this.navDrawerShow = false
       this.$message.success(i18n.t('a066f499.33130f'))
     }

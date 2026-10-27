@@ -22,6 +22,7 @@
         <template #tableTop>
           <div class="mb-5">
             <el-button type="primary" @click="addTemplate">{{ $t('ae4ac261.6fef15') }}</el-button>
+            <el-button :loading="syncLoading" @click="syncTemplate">同步已有模板</el-button>
           </div>
         </template>
       </SpFinder>
@@ -32,11 +33,19 @@
 
 <script>
 import setting_ from '../../../../view/base/shortmessage/finder-setting/sms_template'
-import { deleteSmsTemplate } from '@/api/sms'
+import { deleteSmsTemplate, syncSmsTemplates } from '@/api/sms'
 export default {
   data() {
     return {
-      failVisible: false
+      failVisible: false,
+      syncLoading: false,
+      syncRefreshTimer: null
+    }
+  },
+  beforeDestroy() {
+    if (this.syncRefreshTimer) {
+      clearTimeout(this.syncRefreshTimer)
+      this.syncRefreshTimer = null
     }
   },
   computed: {
@@ -45,6 +54,13 @@ export default {
         { label: this.$t('ae4ac261.b720a6'), value: '0' },
         { label: this.$t('ae4ac261.871a30'), value: '1' },
         { label: this.$t('ae4ac261.fe3661'), value: '2' }
+      ]
+    },
+    sceneAssignedOptions() {
+      return [
+        { label: '全部', value: '' },
+        { label: '仅看已绑定场景模板', value: '1' },
+        { label: '仅看未分配模板', value: '0' }
       ]
     },
     setting() {
@@ -59,6 +75,25 @@ export default {
       return { ...params }
     },
     afterSearch() {},
+    async syncTemplate() {
+      if (this.syncLoading) return
+      this.syncLoading = true
+      try {
+        const result = await syncSmsTemplates()
+        if (result?.data?.data?.status) {
+          this.$message.success(result.data.data.message || '同步任务已提交')
+          if (this.syncRefreshTimer) {
+            clearTimeout(this.syncRefreshTimer)
+          }
+          this.syncRefreshTimer = setTimeout(() => {
+            this.$refs.finder && this.$refs.finder.refresh(true)
+            this.syncRefreshTimer = null
+          }, 3000)
+        }
+      } finally {
+        this.syncLoading = false
+      }
+    },
     async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
       this.$message.success(this.$t('ae4ac261.0007d1'))

@@ -54,8 +54,9 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import districtOptions from '@/mixins/districtOptions'
 export default {
+  mixins: [districtOptions],
   name: 'FormItemZitiAddress',
   props: {
     value: {
@@ -64,7 +65,7 @@ export default {
   },
   data() {
     return {
-      district,
+      district: [],
       data: {
         region: [],
         address: ''

@@ -104,6 +104,7 @@
           v-model="formData.distributor_id"
           clearable
           :placeholder="$t('3157a2d5.06accf')"
+          :query-params="{ show_distributor_self: 1 }"
           @change="onSearch"
         />
       </SpFilterFormItem>

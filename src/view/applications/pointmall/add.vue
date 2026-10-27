@@ -760,7 +760,7 @@
                   <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('4b43f5ef.d42050')">
+              <el-table-column :label="$t('4b43f5ef.c98674')">
                 <template slot-scope="scope">
                   <el-input
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
@@ -852,6 +852,7 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
@@ -862,9 +863,9 @@ import { uploadMaterial } from '@/api/wechat'
 import videoPicker from '@/components/videoselect'
 import richTextEditor from '@/components/function/richTextEditor'
 import imgBox from '@/components/element/imgBox'
-import district from '@/common/district.json'
 import { getOrigincountry } from '@/api/crossborder'
 export default {
+  mixins: [districtOptions],
   beforeRouteLeave(to, from, next) {
     if (this.$refs['decorateRef'].dialogVisible) {
       this.$refs['decorateRef'].resetDecorateTheme()
@@ -891,7 +892,7 @@ export default {
       origincountry: [], // 产地国
       itemVideo: {},
       select_regions_value: [],
-      regions: district,
+      regions: [],
       mainCategory: [],
       selectedMainCategory: [],
       categoryNames: [],

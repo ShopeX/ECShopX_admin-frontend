@@ -61,15 +61,15 @@
 </template>
 
 <script>
+import districtOptions from '@/mixins/districtOptions'
 import { createSetting } from '@shopex-ui/finder'
 import { cloneDeep } from 'lodash'
-import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
   name: 'PickerShop',
   extends: BasePicker,
-  mixins: [PageMixin],
+  mixins: [PageMixin, districtOptions],
   config: {
     title: '选择店铺'
   },
@@ -86,7 +86,7 @@ export default {
         shop_code: '',
         is_valid: ''
       },
-      district,
+      district: [],
       regionArea: [],
       loading: false,
       multiple: this.value?.multiple ?? true,

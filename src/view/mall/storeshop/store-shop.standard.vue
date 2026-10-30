@@ -150,6 +150,7 @@ export default {
         distributor_id: '',
         keywords: '',
         item_bn: '',
+        goods_bn: '',
         barcode: '',
         supplier_name: '',
         approve_status: '',
@@ -258,6 +259,15 @@ export default {
           cellWidth: 1.3,
           componentProps: {
             placeholder: this.$t('8c556aa3.35a59c')
+          }
+        },
+        {
+          fieldName: 'goods_bn',
+          label: this.$t('d41d8cd9.c3a815'),
+          component: 'input',
+          cellWidth: 1.3,
+          componentProps: {
+            placeholder: this.$t('d41d8cd9.7d3a61')
           }
         },
         {

@@ -603,6 +603,7 @@ export default {
             name: i18n.t('4d1aec94.d4e4ff'),
             key: 'aftersales_type',
             width: 100,
+            block: 'header', // 紧跟操作列之后
             render: (h, { row }) => {
               const typeMap = {
                 'ONLY_REFUND': { text: i18n.t('4d1aec94.6b8821'), type: 'info' },
@@ -625,6 +626,7 @@ export default {
             name: i18n.t('4d1aec94.5101e8'),
             key: 'aftersales_status',
             width: 100,
+            block: 'header', // 紧跟操作列之后
             render: (h, { row }) => {
               const statusMap = {
                 '0': { text: i18n.t('4d1aec94.047109'), type: '' },

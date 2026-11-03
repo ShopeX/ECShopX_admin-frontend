@@ -133,7 +133,8 @@ export default {
           fieldName: 'EMAIL_ACTIVATION_H5_DOMAIN',
           label: vm.$t('0677a420.a4e76a'),
           component: 'input',
-          componentProps: domainInputProps('0677a420.cbd9b8')
+          componentProps: domainInputProps('0677a420.cbd9b8'),
+          rules: [{ required: true, message: vm.$t('0677a420.cbd9b8'), trigger: 'blur' }]
         }
         /* PC 邮箱激活根地址（暂不开放编辑，恢复时取消注释并恢复 mailSettingPayload 内同字段提交）
         ,

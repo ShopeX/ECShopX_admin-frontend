@@ -87,9 +87,14 @@ export default {
       this.componentProps.onChange?.(val, this.formData)
     },
     renderInput(props = {}, hCreate = hCompat) {
+      // style/class 必须挂在 el-input 根节点；若放进 attrs 会落到 .el-input__inner，
+      // 导致 show-password / clearable / show-word-limit 的后缀图标相对全宽容器漂到右侧
+      const { style: inputStyle, class: inputClass, ...inputRest } = props
       return hCreate('el-input', {
+        class: inputClass,
+        style: inputStyle,
         attrs: {
-          ...props,
+          ...inputRest,
           size: this.size
         },
         props: {

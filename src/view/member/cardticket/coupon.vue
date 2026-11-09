@@ -77,7 +77,13 @@
                         >
                           {{ $t('9cc0c982.99e985') }}
                         </el-button>
-                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                        <el-button
+                          v-clipboard:copy="curPageUrl"
+                          v-clipboard:success="onCopySuccess"
+                          type="primary"
+                          plain
+                          size="mini"
+                        >
                           {{ $t('9cc0c982.879058') }}
                         </el-button>
                       </div>
